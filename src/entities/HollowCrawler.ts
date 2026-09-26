@@ -28,6 +28,8 @@ export class HollowCrawler {
   private knockback: Vec2 = { x: 0, y: 0 };
   private attackCommitted = false;
   private spawn: Vec2;
+  private travelPhase = 0;
+  private hurtTilt = 0;
 
   constructor(private scene: Phaser.Scene, x: number, y: number) {
     this.position = { x, y };
@@ -106,13 +108,19 @@ export class HollowCrawler {
       }
     }
 
+    const beforeX = this.position.x;
+    const beforeY = this.position.y;
     moveWithCollisions(this.position, this.velocity, Math.min(dt, 0.04), this.radius, obstacles);
-    this.view.setPosition(this.position.x, this.position.y).setRotation(Math.atan2(direction.y, direction.x)).setDepth(this.position.y);
-    const moving = this.state === 'CHASE' || this.state === 'DETECT';
-    const gait = moving ? Math.sin(now * 0.028) * 0.14 : Math.sin(now * 0.006) * 0.04;
-    this.forelimbs.setRotation(gait);
-    this.rearLimbs.setRotation(-gait);
-    this.view.setScale(this.state === 'ATTACK' ? 1.12 : 1 + Math.sin(now * 0.006) * 0.025);
+    const travelled = Math.hypot(this.position.x - beforeX, this.position.y - beforeY);
+    const moving = travelled > 0.1 && this.state !== 'HURT';
+    if (moving) this.travelPhase += travelled / 46 * Math.PI * 2;
+    const gait = moving ? Math.sin(this.travelPhase) : 0;
+    this.forelimbs.setPosition(gait * 2, gait * 1.4).setRotation(gait * 0.16);
+    this.rearLimbs.setPosition(-gait * 2, -gait * 1.4).setRotation(-gait * 0.16);
+    this.hurtTilt *= Math.max(0, 1 - dt * 12);
+    const lift = moving ? -1.4 - Math.abs(gait) * 1.5 : this.state === 'HURT' ? 0.5 : 0;
+    this.view.setPosition(this.position.x, this.position.y + lift).setRotation(Math.atan2(direction.y, direction.x) + this.hurtTilt).setDepth(this.position.y);
+    this.view.setScale(this.state === 'ATTACK' ? 1.12 : 1 + Math.sin(now * 0.006) * 0.018);
     this.core.setFillStyle(this.state === 'ATTACK' ? 0xffad84 : 0x80d5c0);
     this.core.setScale(this.state === 'ATTACK' ? 1.3 : 0.9 + Math.sin(now * 0.008) * 0.12);
     this.shadow.setPosition(this.position.x, this.position.y + 15).setDepth(this.position.y - 2);
@@ -128,6 +136,7 @@ export class HollowCrawler {
     this.attackCommitted = true;
     const push = normalized(this.position.x - from.x, this.position.y - from.y);
     this.knockback = { x: push.x * 300, y: push.y * 300 };
+    this.hurtTilt = push.y >= 0 ? 0.19 : -0.19;
     this.hitFlash.setAlpha(0.9);
     this.scene.tweens.add({ targets: this.hitFlash, alpha: 0, duration: 170 });
     this.healthBack.setVisible(true);

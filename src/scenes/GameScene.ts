@@ -37,7 +37,7 @@ export class GameScene extends Phaser.Scene {
     SPAWNS.forEach(point => this.enemies.push(new HollowCrawler(this, point.x, point.y)));
     this.hud = new Hud(this, () => this.restart());
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-      if (pointer.leftButtonDown() && !this.player.isDead && this.attack.canUse(this.time.now)) this.strike(this.time.now);
+      if (pointer.leftButtonDown() && !this.player.isDead) this.beginStrike(this.time.now);
     });
     this.cameras.main.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT).startFollow(this.player.view, false, 0.1, 0.1);
     this.cameras.main.setBackgroundColor('#102d2c');
@@ -56,14 +56,17 @@ export class GameScene extends Phaser.Scene {
       this.sounds.dash();
       this.dashBurst(input);
     }
+    if (this.controls.attacking) this.beginStrike(time);
+    const pose = this.attack.pose(time, aim);
     const wasDashing = this.player.isDashing;
-    this.player.update(time, dt, input, aim, this.arena.obstacles);
+    this.player.update(time, dt, input, aim, this.arena.obstacles, pose);
     if (wasDashing && !this.player.isDashing) this.dashEnd();
     if (this.player.isDashing && time - this.lastDashTrail > 30) {
       this.lastDashTrail = time;
       this.dashTrail();
     }
-    if (this.controls.attacking && this.attack.canUse(time)) this.strike(time);
+    const sweep = this.attack.advance(time, this.player.position, aim, this.enemies);
+    this.resolveSaberHits(time, sweep.hits);
     for (const enemy of this.enemies) {
       enemy.update(time, dt, this.player.position, this.player.isDead, this.arena.obstacles, () => this.enemyStrike(enemy));
     }
@@ -71,29 +74,18 @@ export class GameScene extends Phaser.Scene {
     this.hud.update(this.player.hp, this.player.maxHp, this.player.dashProgress);
   }
 
-  private strike(now: number): void {
+  private beginStrike(now: number): void {
+    if (!this.attack.start(now)) return;
     const facing = this.controls.aimFrom(this.player.position);
     this.player.rotation = facing;
     this.player.view.setRotation(facing);
-    const hits = this.attack.use(now, this.player.position, facing, this.enemies);
+    this.player.weapon.render(this.player.position, facing, this.attack.pose(now, facing), 0, this.player.isDashing);
     this.sounds.swing();
-    const slash = this.add.graphics().setDepth(15000);
-    const { x, y } = this.player.position;
-    slash.fillStyle(0x7bdbea, 0.095);
-    slash.moveTo(x, y);
-    slash.arc(x, y, PLAYER.attackRange, facing - PLAYER.attackHalfAngle, facing + PLAYER.attackHalfAngle, false);
-    slash.closePath().fillPath();
-    slash.lineStyle(23, 0x4abed8, 0.18);
-    slash.beginPath().arc(x, y, PLAYER.attackRange - 7, facing - PLAYER.attackHalfAngle, facing + PLAYER.attackHalfAngle).strokePath();
-    slash.lineStyle(10, 0x78e6f3, 0.67);
-    slash.beginPath().arc(x, y, PLAYER.attackRange - 7, facing - PLAYER.attackHalfAngle, facing + PLAYER.attackHalfAngle).strokePath();
-    slash.lineStyle(3, 0xf0fffa, 0.94);
-    slash.beginPath().arc(x, y, PLAYER.attackRange - 7, facing - PLAYER.attackHalfAngle, facing + PLAYER.attackHalfAngle).strokePath();
-    slash.lineStyle(2, 0xa7f6f4, 0.64).lineBetween(x + Math.cos(facing - PLAYER.attackHalfAngle) * 42, y + Math.sin(facing - PLAYER.attackHalfAngle) * 42, x + Math.cos(facing - PLAYER.attackHalfAngle) * 93, y + Math.sin(facing - PLAYER.attackHalfAngle) * 93);
-    this.tweens.add({ targets: slash, alpha: 0, duration: 175, onComplete: () => slash.destroy() });
+  }
+
+  private resolveSaberHits(now: number, hits: HollowCrawler[]): void {
     if (hits.length) this.cameras.main.shake(55, 0.0024);
-    for (const index of hits) {
-      const enemy = this.enemies[index];
+    for (const enemy of hits) {
       const result = applyDamage(enemy.health, this.player.attackDamage);
       if (!result.applied) continue;
       this.sounds.hit();

@@ -17,3 +17,11 @@
 - O sabre agora usa uma trajetória com núcleo claro e borda suave. Acertos geram flash, quatro faíscas curtas e número de dano; a morte do Hollow inclui colapso e poucos fragmentos. O dash ganhou um marcador de término.
 - HUD mantém as informações existentes em painéis compactos. O canvas permanece em 1280×720 e escala com `Phaser.Scale.FIT`.
 - Smoke test local em Chrome headless passou em 1280×720, 1366×768 e 1920×1080, sem erros de JavaScript. Em 1280×720 também verificou WASD, mira, ataque, dano, dash, morte, respawn pelo botão e pela tecla R, e remoção do inimigo. A medição pontual do loop foi de cerca de 49 FPS no ambiente headless; ela não representa FPS garantido em outras máquinas.
+
+## Sprint 01.6 — movimento e sabre
+
+- `EnergySaber` é um elemento visual separado do corpo. O cabo, a guarda, o emissor e a lâmina têm formas próprias; o indicador e o trail usam dois objetos `Graphics` reutilizados.
+- O movimento funcional permanece em `Player.update`. A distância realmente percorrida avança o ciclo das botas; corpo e braços recebem uma oscilação pequena. Sem deslocamento, botas e corpo voltam imediatamente ao repouso. A sombra fica no plano do chão e marcas de contato breves reforçam os passos.
+- `SaberAttack` mantém o cooldown de 340 ms e o alcance de 106 unidades. A animação usa preparação de 32 ms, swing de 128 ms e recuperação de 94 ms. A cada frame, a detecção cobre o setor angular percorrido desde o frame anterior. Cada alvo recebe no máximo um acerto por golpe. O indicador e a lâmina usam a mesma pose angular.
+- O personagem segue se movendo durante o ataque. Dash, HP, morte e respawn mantêm as regras anteriores. O Hollow recebeu uma passada baseada na distância e uma pequena inclinação ao levar dano; a IA e o knockback funcional não mudaram.
+- Smoke test em Chrome headless verificou movimento cardinal e diagonal, parada sem deslize, mira, cooldown, varredura contra três alvos em frame atrasado, ataque real, ataque contra dois Hollows, movimento durante o golpe, dash, dano recebido, perseguição, morte, respawn e console sem erros. A aparência do ciclo de caminhada ainda requer avaliação humana em movimento; capturas isoladas não demonstram toda a animação.
