@@ -1,0 +1,166 @@
+import Phaser from 'phaser';
+import { SaberAttack } from '../combat/Attack';
+import { applyDamage } from '../combat/Damage';
+import { PLAYER, CRAWLER, WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
+import { HollowCrawler } from '../entities/HollowCrawler';
+import { Player } from '../entities/Player';
+import { Controls } from '../input/Controls';
+import { Arena } from '../systems/Arena';
+import { SoundEffects } from '../systems/Sound';
+import { Hud } from '../ui/Hud';
+import { distance, normalized, type Vec2 } from '../utils/math';
+
+const SPAWNS: Vec2[] = [
+  { x: 1255, y: 565 }, { x: 1380, y: 810 }, { x: 935, y: 945 },
+  { x: 805, y: 550 }, { x: 1510, y: 570 }, { x: 1160, y: 1040 },
+  { x: 650, y: 830 }, { x: 1540, y: 1030 },
+];
+
+export class GameScene extends Phaser.Scene {
+  private player!: Player;
+  private controls!: Controls;
+  private arena!: Arena;
+  private enemies: HollowCrawler[] = [];
+  private attack = new SaberAttack();
+  private sounds = new SoundEffects();
+  private hud!: Hud;
+  private lastDashTrail = 0;
+
+  constructor() { super('Game'); }
+
+  create(): void {
+    this.attack = new SaberAttack();
+    this.enemies = [];
+    this.arena = new Arena(this);
+    this.player = new Player(this, 1100, 740);
+    this.controls = new Controls(this);
+    SPAWNS.forEach(point => this.enemies.push(new HollowCrawler(this, point.x, point.y)));
+    this.hud = new Hud(this, () => this.restart());
+    this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+      if (pointer.leftButtonDown() && !this.player.isDead && this.attack.canUse(this.time.now)) this.strike(this.time.now);
+    });
+    this.cameras.main.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT).startFollow(this.player.view, false, 0.1, 0.1);
+    this.cameras.main.setBackgroundColor('#102d2c');
+    this.input.setDefaultCursor('crosshair');
+  }
+
+  update(time: number, delta: number): void {
+    if (this.player.isDead) {
+      if (this.controls.restartPressed) this.restart();
+      return;
+    }
+    const dt = Math.min(delta / 1000, 0.04);
+    const input = this.controls.movement();
+    const aim = this.controls.aimFrom(this.player.position);
+    if (this.controls.dashPressed && this.player.startDash(time, input)) {
+      this.sounds.dash();
+      this.dashBurst(input);
+    }
+    const wasDashing = this.player.isDashing;
+    this.player.update(time, dt, input, aim, this.arena.obstacles);
+    if (wasDashing && !this.player.isDashing) this.dashEnd();
+    if (this.player.isDashing && time - this.lastDashTrail > 30) {
+      this.lastDashTrail = time;
+      this.dashTrail();
+    }
+    if (this.controls.attacking && this.attack.canUse(time)) this.strike(time);
+    for (const enemy of this.enemies) {
+      enemy.update(time, dt, this.player.position, this.player.isDead, this.arena.obstacles, () => this.enemyStrike(enemy));
+    }
+    this.enemies = this.enemies.filter(enemy => !enemy.isDead);
+    this.hud.update(this.player.hp, this.player.maxHp, this.player.dashProgress);
+  }
+
+  private strike(now: number): void {
+    const facing = this.controls.aimFrom(this.player.position);
+    this.player.rotation = facing;
+    this.player.view.setRotation(facing);
+    const hits = this.attack.use(now, this.player.position, facing, this.enemies);
+    this.sounds.swing();
+    const slash = this.add.graphics().setDepth(15000);
+    const { x, y } = this.player.position;
+    slash.fillStyle(0x7bdbea, 0.095);
+    slash.moveTo(x, y);
+    slash.arc(x, y, PLAYER.attackRange, facing - PLAYER.attackHalfAngle, facing + PLAYER.attackHalfAngle, false);
+    slash.closePath().fillPath();
+    slash.lineStyle(23, 0x4abed8, 0.18);
+    slash.beginPath().arc(x, y, PLAYER.attackRange - 7, facing - PLAYER.attackHalfAngle, facing + PLAYER.attackHalfAngle).strokePath();
+    slash.lineStyle(10, 0x78e6f3, 0.67);
+    slash.beginPath().arc(x, y, PLAYER.attackRange - 7, facing - PLAYER.attackHalfAngle, facing + PLAYER.attackHalfAngle).strokePath();
+    slash.lineStyle(3, 0xf0fffa, 0.94);
+    slash.beginPath().arc(x, y, PLAYER.attackRange - 7, facing - PLAYER.attackHalfAngle, facing + PLAYER.attackHalfAngle).strokePath();
+    slash.lineStyle(2, 0xa7f6f4, 0.64).lineBetween(x + Math.cos(facing - PLAYER.attackHalfAngle) * 42, y + Math.sin(facing - PLAYER.attackHalfAngle) * 42, x + Math.cos(facing - PLAYER.attackHalfAngle) * 93, y + Math.sin(facing - PLAYER.attackHalfAngle) * 93);
+    this.tweens.add({ targets: slash, alpha: 0, duration: 175, onComplete: () => slash.destroy() });
+    if (hits.length) this.cameras.main.shake(55, 0.0024);
+    for (const index of hits) {
+      const enemy = this.enemies[index];
+      const result = applyDamage(enemy.health, this.player.attackDamage);
+      if (!result.applied) continue;
+      this.sounds.hit();
+      this.impact(enemy.position, 0xaafce1, result.amount);
+      if (result.died) {
+        this.deathEffect(enemy.position);
+        enemy.die();
+      } else enemy.hurt(now, this.player.position);
+    }
+  }
+
+  private enemyStrike(enemy: HollowCrawler): void {
+    if (this.player.isDead || this.player.invulnerable || distance(enemy.position, this.player.position) > CRAWLER.attackRange + PLAYER.radius) return;
+    const result = applyDamage(this.player.health, CRAWLER.attackDamage);
+    if (!result.applied) return;
+    this.sounds.hurt();
+    this.player.flashHurt();
+    this.impact(this.player.position, 0xff8f82, result.amount);
+    const hurtRing = this.add.circle(this.player.position.x, this.player.position.y, 19).setStrokeStyle(4, 0xffa087, 0.8).setDepth(15001);
+    this.tweens.add({ targets: hurtRing, scale: 2.2, alpha: 0, duration: 210, onComplete: () => hurtRing.destroy() });
+    this.cameras.main.shake(90, 0.004);
+    // Enemy swings are spaced by cooldown; this short grace period stops overlap bursts.
+    this.player.setHurtGrace(this.time.now + PLAYER.hurtCooldown);
+    if (result.died) {
+      this.player.die();
+      this.sounds.death();
+      this.time.delayedCall(550, () => this.hud.showDeath());
+    }
+  }
+
+  private impact(position: Vec2, color: number, damage: number): void {
+    const burst = this.add.circle(position.x, position.y, 10, color, 0.85).setDepth(15001);
+    this.tweens.add({ targets: burst, scale: 2.6, alpha: 0, duration: 170, onComplete: () => burst.destroy() });
+    for (let i = 0; i < 4; i++) {
+      const angle = i * Math.PI / 2 + Math.PI / 4;
+      const spark = this.add.ellipse(position.x, position.y, 11, 3, color, 0.9).setRotation(angle).setDepth(15002);
+      this.tweens.add({ targets: spark, x: position.x + Math.cos(angle) * 28, y: position.y + Math.sin(angle) * 28, alpha: 0, scaleX: 0.35, duration: 180, onComplete: () => spark.destroy() });
+    }
+    const label = this.add.text(position.x, position.y - 31, `${damage}`, { fontFamily: 'Barlow Condensed, sans-serif', fontSize: '24px', fontStyle: 'bold', color: color === 0xff8f82 ? '#ff968a' : '#d4ffe9', stroke: '#14312d', strokeThickness: 4 }).setOrigin(0.5).setDepth(15002);
+    this.tweens.add({ targets: label, y: label.y - 32, alpha: 0, duration: 520, onComplete: () => label.destroy() });
+  }
+
+  private deathEffect(position: Vec2): void {
+    const ring = this.add.circle(position.x, position.y, 16).setStrokeStyle(3, 0x9ddcca, 0.7).setDepth(15000);
+    this.tweens.add({ targets: ring, scale: 3.1, alpha: 0, duration: 330, onComplete: () => ring.destroy() });
+    for (let i = 0; i < 6; i++) {
+      const angle = i * Math.PI / 3;
+      const fragment = this.add.triangle(position.x, position.y, 0, 0, 5, 3, 0, 7, i % 2 ? 0x668b84 : 0xb5dece, 0.9).setDepth(15001);
+      this.tweens.add({ targets: fragment, x: position.x + Math.cos(angle) * 40, y: position.y + Math.sin(angle) * 35, alpha: 0, angle: 110, duration: 390, onComplete: () => fragment.destroy() });
+    }
+  }
+
+  private dashTrail(): void {
+    const ghost = this.add.ellipse(this.player.position.x, this.player.position.y, 50, 30, 0x8de5e5, 0.25).setRotation(this.player.rotation).setDepth(this.player.position.y - 1);
+    this.tweens.add({ targets: ghost, scaleX: 1.3, scaleY: 0.25, alpha: 0, duration: 210, onComplete: () => ghost.destroy() });
+  }
+
+  private dashBurst(input: Vec2): void {
+    const direction = input.x || input.y ? input : normalized(Math.cos(this.player.rotation), Math.sin(this.player.rotation));
+    const ring = this.add.circle(this.player.position.x - direction.x * 15, this.player.position.y - direction.y * 15, 15).setStrokeStyle(3, 0xa1e9ee, 0.8).setDepth(15000);
+    this.tweens.add({ targets: ring, scale: 2.6, alpha: 0, duration: 230, onComplete: () => ring.destroy() });
+  }
+
+  private dashEnd(): void {
+    const ring = this.add.circle(this.player.position.x, this.player.position.y, 18).setStrokeStyle(2, 0x9ed9e1, 0.55).setDepth(this.player.position.y + 1);
+    this.tweens.add({ targets: ring, scale: 1.8, alpha: 0, duration: 180, onComplete: () => ring.destroy() });
+  }
+
+  private restart(): void { this.scene.restart(); }
+}
