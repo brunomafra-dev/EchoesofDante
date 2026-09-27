@@ -1,8 +1,8 @@
-# Echoes of Dante — Sprint 01.7 Hotfix 2
+# Echoes of Dante — Sprint 01.8
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
-Protótipo de combate em arena para navegador. A segunda hotfix da Sprint 01.7 sincroniza a orientação das pernas com o torso e a Energy Saber, mantendo a passada ligada ao deslocamento real.
+Protótipo de combate em arena para navegador. A Sprint 01.8 reforça o contato da Energy Saber e a reação do Hollow Crawler, mantendo os controles e as regras de combate existentes.
 
 ## Stack
 
@@ -42,7 +42,7 @@ npm run preview
 - Arena única com câmera suave, limites, vegetação alienígena em camadas, marcas minerais, ruínas e rochas com colisão.
 - Galactic Warrior com silhueta de traje espacial, capacete, mochila de campo, torso e pernas orientados pela mira, botas alternadas pela distância e direção percorridas, sombra no chão, Energy Saber separada do corpo, HP, movimento, dash e invulnerabilidade breve.
 - Oito Hollow Crawlers biomecânicos com núcleo luminoso, membros articulados, detecção, perseguição, preparação visível do ataque, reação ao dano e morte.
-- Golpe com preparação, varredura e recuperação; arco e trail ligados à posição da lâmina; dano aplicado durante a varredura. Flash e fragmentos de impacto, números de dano, efeito de início/fim do dash, HUD de exploração, sons opcionais e tela de respawn.
+- Golpe com preparação, varredura e recuperação; arco e trail ligados à posição da lâmina; dano aplicado durante a varredura. Contato curto orientado pelo sabre, contração e recuo visual do Hollow, números de dano, efeito de início/fim do dash, HUD de exploração, sons opcionais e tela de respawn.
 
 ## Limitações conhecidas
 
@@ -56,6 +56,6 @@ npm run preview
 
 ## Próximos passos
 
-Avaliar com jogadores a leitura da caminhada corrigida e dos efeitos. Os valores de combate da Sprint 01 permanecem inalterados. Sistemas de progressão e mundo ficam para sprints posteriores.
+Avaliar com jogadores a leitura do impacto e da reação do Hollow, além da caminhada ainda simples. Os valores de combate da Sprint 01 permanecem inalterados. Sistemas de progressão e mundo ficam para sprints posteriores.
 
 As decisões técnicas desta sprint estão em [docs/technical-decisions.md](docs/technical-decisions.md).

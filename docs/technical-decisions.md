@@ -44,3 +44,9 @@
 - `legsRig` e `bodyRig` já eram filhos de `Player.view`. A rotação local `-aim - π/2` de `legsRig` cancelava a mira do contêiner; removê-la faz as pernas herdar a mesma orientação do torso sem aplicar o ângulo duas vezes.
 - As posições das botas já eram locais. Apenas os offsets da passada passaram a converter a direção real de deslocamento do mundo para os eixos locais da mira. Fase, amplitude, retorno ao repouso, sombra, bob e sistema de combate permanecem iguais.
 - Chrome headless verificou oito direções de mira parado, mudanças rápidas de mira, seis trajetórias de caminhada, mira durante caminhada e swing, ataque/cooldown, dash parado e andando, dano, morte e respawn. Capturas das direções cardinais e da caminhada com mira diagonal foram inspecionadas. A naturalidade da silhueta 2D em movimento ainda requer avaliação humana.
+
+## Sprint 01.8 — impacto e reação do Hollow
+
+- O acerto continua sendo decidido por `SaberAttack.advance` durante o swing. `GameScene` passa apenas o ângulo da pose ao efeito já existente: o clarão de contato fica estreito e acompanha a direção do sabre. Número de dano, quatro faíscas, áudio e shake mantêm o mesmo momento e a mesma lógica.
+- O Hollow usa sua janela `HURT` de 170 ms para comprimir brevemente o corpo, recolher os membros e clarear o núcleo. O flash existente ficou mais curto e suave. O knockback mantém velocidade e desaceleração anteriores; no golpe fatal, o flash acompanha o colapso já existente.
+- Não foi adicionado hit stop para não interferir no input. O Chrome headless verificou golpe no vazio, acerto e número no frame do swing, flash, contração, deslocamento pelo knockback, recuperação, golpe fatal, ataque andando e após dash, mudança de mira durante swing, dano recebido, morte, respawn e ausência de erros de JavaScript. A sensação de peso ainda precisa de avaliação humana jogando.

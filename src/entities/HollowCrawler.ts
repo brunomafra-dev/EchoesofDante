@@ -6,6 +6,8 @@ import { distance, normalized, type Vec2 } from '../utils/math';
 
 export type CrawlerState = 'IDLE' | 'DETECT' | 'CHASE' | 'ATTACK' | 'HURT' | 'DEAD';
 
+const HURT_REACTION_MS = 170;
+
 export class HollowCrawler {
   readonly position: Vec2;
   readonly velocity: Vec2 = { x: 0, y: 0 };
@@ -115,14 +117,16 @@ export class HollowCrawler {
     const moving = travelled > 0.1 && this.state !== 'HURT';
     if (moving) this.travelPhase += travelled / 46 * Math.PI * 2;
     const gait = moving ? Math.sin(this.travelPhase) : 0;
-    this.forelimbs.setPosition(gait * 2, gait * 1.4).setRotation(gait * 0.16);
-    this.rearLimbs.setPosition(-gait * 2, -gait * 1.4).setRotation(-gait * 0.16);
+    const recoil = this.state === 'HURT' ? Math.max(0, (this.hurtUntil - now) / HURT_REACTION_MS) : 0;
+    this.forelimbs.setPosition(gait * 2 - recoil * 4, gait * 1.4).setRotation(gait * 0.16 - recoil * 0.12);
+    this.rearLimbs.setPosition(-gait * 2 - recoil * 2, -gait * 1.4).setRotation(-gait * 0.16 + recoil * 0.06);
     this.hurtTilt *= Math.max(0, 1 - dt * 12);
     const lift = moving ? -1.4 - Math.abs(gait) * 1.5 : this.state === 'HURT' ? 0.5 : 0;
     this.view.setPosition(this.position.x, this.position.y + lift).setRotation(Math.atan2(direction.y, direction.x) + this.hurtTilt).setDepth(this.position.y);
-    this.view.setScale(this.state === 'ATTACK' ? 1.12 : 1 + Math.sin(now * 0.006) * 0.018);
-    this.core.setFillStyle(this.state === 'ATTACK' ? 0xffad84 : 0x80d5c0);
-    this.core.setScale(this.state === 'ATTACK' ? 1.3 : 0.9 + Math.sin(now * 0.008) * 0.12);
+    const baseScale = this.state === 'ATTACK' ? 1.12 : 1 + Math.sin(now * 0.006) * 0.018;
+    this.view.setScale(baseScale * (1 - recoil * 0.15), baseScale * (1 + recoil * 0.07));
+    this.core.setFillStyle(this.state === 'ATTACK' ? 0xffad84 : recoil > 0 ? 0xbdf2e1 : 0x80d5c0);
+    this.core.setScale(this.state === 'ATTACK' ? 1.3 : 0.9 + Math.sin(now * 0.008) * 0.12 + recoil * 0.2);
     this.shadow.setPosition(this.position.x, this.position.y + 15).setDepth(this.position.y - 2);
     this.telegraph.setPosition(this.position.x, this.position.y).setDepth(this.position.y - 1).setVisible(this.state === 'ATTACK');
     this.telegraph.setAlpha(0.65 + Math.sin(now * 0.035) * 0.25);
@@ -132,13 +136,13 @@ export class HollowCrawler {
 
   hurt(now: number, from: Vec2): void {
     this.state = 'HURT';
-    this.hurtUntil = now + 170;
+    this.hurtUntil = now + HURT_REACTION_MS;
     this.attackCommitted = true;
     const push = normalized(this.position.x - from.x, this.position.y - from.y);
     this.knockback = { x: push.x * 300, y: push.y * 300 };
     this.hurtTilt = push.y >= 0 ? 0.19 : -0.19;
-    this.hitFlash.setAlpha(0.9);
-    this.scene.tweens.add({ targets: this.hitFlash, alpha: 0, duration: 170 });
+    this.hitFlash.setAlpha(0.62);
+    this.scene.tweens.add({ targets: this.hitFlash, alpha: 0, duration: 110 });
     this.healthBack.setVisible(true);
     this.healthFill.setVisible(true).setDisplaySize(38 * this.health.current / this.health.max, 4);
   }
@@ -146,6 +150,8 @@ export class HollowCrawler {
   die(): void {
     this.isDead = true;
     this.state = 'DEAD';
+    this.hitFlash.setAlpha(0.62);
+    this.core.setFillStyle(0xcdf8e6);
     this.healthBack.destroy();
     this.healthFill.destroy();
     this.telegraph.destroy();

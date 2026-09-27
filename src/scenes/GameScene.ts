@@ -66,7 +66,7 @@ export class GameScene extends Phaser.Scene {
       this.dashTrail();
     }
     const sweep = this.attack.advance(time, this.player.position, aim, this.enemies);
-    this.resolveSaberHits(time, sweep.hits);
+    this.resolveSaberHits(time, sweep.hits, sweep.pose.worldAngle);
     for (const enemy of this.enemies) {
       enemy.update(time, dt, this.player.position, this.player.isDead, this.arena.obstacles, () => this.enemyStrike(enemy));
     }
@@ -83,13 +83,13 @@ export class GameScene extends Phaser.Scene {
     this.sounds.swing();
   }
 
-  private resolveSaberHits(now: number, hits: HollowCrawler[]): void {
+  private resolveSaberHits(now: number, hits: HollowCrawler[], saberAngle: number): void {
     if (hits.length) this.cameras.main.shake(55, 0.0024);
     for (const enemy of hits) {
       const result = applyDamage(enemy.health, this.player.attackDamage);
       if (!result.applied) continue;
       this.sounds.hit();
-      this.impact(enemy.position, 0xaafce1, result.amount);
+      this.impact(enemy.position, 0xaafce1, result.amount, saberAngle);
       if (result.died) {
         this.deathEffect(enemy.position);
         enemy.die();
@@ -116,9 +116,11 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
-  private impact(position: Vec2, color: number, damage: number): void {
-    const burst = this.add.circle(position.x, position.y, 10, color, 0.85).setDepth(15001);
-    this.tweens.add({ targets: burst, scale: 2.6, alpha: 0, duration: 170, onComplete: () => burst.destroy() });
+  private impact(position: Vec2, color: number, damage: number, saberAngle?: number): void {
+    const saberHit = saberAngle !== undefined;
+    const burst = this.add.ellipse(position.x, position.y, saberHit ? 34 : 20, saberHit ? 9 : 20, color, 0.85).setDepth(15001);
+    if (saberHit) burst.setRotation(saberAngle + Math.PI / 2);
+    this.tweens.add({ targets: burst, scaleX: saberHit ? 1.25 : 2.6, scaleY: saberHit ? 0.55 : 2.6, alpha: 0, duration: saberHit ? 140 : 170, onComplete: () => burst.destroy() });
     for (let i = 0; i < 4; i++) {
       const angle = i * Math.PI / 2 + Math.PI / 4;
       const spark = this.add.ellipse(position.x, position.y, 11, 3, color, 0.9).setRotation(angle).setDepth(15002);
