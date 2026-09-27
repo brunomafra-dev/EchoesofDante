@@ -152,9 +152,9 @@ export class Player {
     const lift = this.gaitLift;
     const cosAim = Math.cos(aim);
     const sinAim = Math.sin(aim);
-    // The lower body stays grounded; rotate travel into its upright local axes.
-    const footX = -this.travelDirection.y * stride * 8;
-    const footY = this.travelDirection.x * stride * 8;
+    // The root faces the mouse; convert world travel into local stride offsets.
+    const footX = (this.travelDirection.x * cosAim + this.travelDirection.y * sinAim) * stride * 8;
+    const footY = (this.travelDirection.y * cosAim - this.travelDirection.x * sinAim) * stride * 8;
     this.leftLeg.setPosition(footX, -14 + footY);
     this.rightLeg.setPosition(-footX, 14 - footY);
     if (this.isDashing) {
@@ -171,7 +171,6 @@ export class Player {
     const attackTwist = pose.phase === 'READY' ? 0 : clamp(pose.relativeAngle * 0.075, -0.1, 0.1);
     this.bodyRig.setPosition((this.isDashing ? 5 : 0) + bob * sinAim, bob * cosAim + (this.isDashing ? -1 : 0));
     this.bodyRig.setRotation((walking ? stride * 0.015 : 0) + attackTwist);
-    this.legsRig.setRotation(-aim - Math.PI / 2);
     this.supportArm.setRotation(walking ? -stride * 0.075 : 0);
     this.saberArm.setRotation(pose.phase === 'READY' ? (walking ? stride * 0.05 : 0) : pose.relativeAngle * 0.18);
     this.hurtOverlay.setAlpha(now < this.hitFlashUntil ? 0.72 : 0);

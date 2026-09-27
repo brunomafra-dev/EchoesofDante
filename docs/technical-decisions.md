@@ -35,6 +35,12 @@
 
 ## Sprint 01.7 Hotfix — orientação da mira
 
-- `Player.view` continua recebendo o ângulo calculado pelo mouse. O torso e o capacete herdam esse ângulo; apenas um balanço local pequeno é somado durante a passada e o golpe. As botas continuam em uma orientação de chão independente e os offsets da passada usam o deslocamento real em coordenadas de mundo.
+- `Player.view` continua recebendo o ângulo calculado pelo mouse. O torso e o capacete herdam esse ângulo; apenas um balanço local pequeno é somado durante a passada e o golpe. Nesta primeira hotfix, as botas ainda ficaram em uma orientação independente, corrigida abaixo.
 - O bob do torso e da Energy Saber é convertido para um pequeno deslocamento vertical na tela. A espada mantém seu ângulo relativo de prontidão/swing; alcance, hitbox, movimento, dash e IA não mudaram.
 - O Chrome headless verificou oito direções de mira parado, mudanças rápidas de mira, quatro direções de caminhada e duas diagonais, mira durante o movimento, mudança de mira durante o swing, ataque e cooldown, dash parado e andando, dano, morte e respawn. Capturas das quatro direções cardinais foram inspecionadas; a avaliação final da postura em movimento ainda depende de jogo manual.
+
+## Sprint 01.7 Hotfix 2 — orientação das pernas
+
+- `legsRig` e `bodyRig` já eram filhos de `Player.view`. A rotação local `-aim - π/2` de `legsRig` cancelava a mira do contêiner; removê-la faz as pernas herdar a mesma orientação do torso sem aplicar o ângulo duas vezes.
+- As posições das botas já eram locais. Apenas os offsets da passada passaram a converter a direção real de deslocamento do mundo para os eixos locais da mira. Fase, amplitude, retorno ao repouso, sombra, bob e sistema de combate permanecem iguais.
+- Chrome headless verificou oito direções de mira parado, mudanças rápidas de mira, seis trajetórias de caminhada, mira durante caminhada e swing, ataque/cooldown, dash parado e andando, dano, morte e respawn. Capturas das direções cardinais e da caminhada com mira diagonal foram inspecionadas. A naturalidade da silhueta 2D em movimento ainda requer avaliação humana.

@@ -1,8 +1,8 @@
-# Echoes of Dante — Sprint 01.7 Hotfix
+# Echoes of Dante — Sprint 01.7 Hotfix 2
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
-Protótipo de combate em arena para navegador. A hotfix da Sprint 01.7 restaura a orientação do torso e capacete pelo mouse, mantendo as botas apoiadas no chão e a passada ligada ao deslocamento real.
+Protótipo de combate em arena para navegador. A segunda hotfix da Sprint 01.7 sincroniza a orientação das pernas com o torso e a Energy Saber, mantendo a passada ligada ao deslocamento real.
 
 ## Stack
 
@@ -40,7 +40,7 @@ npm run preview
 ## Escopo implementado
 
 - Arena única com câmera suave, limites, vegetação alienígena em camadas, marcas minerais, ruínas e rochas com colisão.
-- Galactic Warrior com silhueta de traje espacial, capacete, mochila de campo, torso orientado pela mira, botas alternadas pela distância e direção percorridas, sombra no chão, Energy Saber separada do corpo, HP, movimento, dash e invulnerabilidade breve.
+- Galactic Warrior com silhueta de traje espacial, capacete, mochila de campo, torso e pernas orientados pela mira, botas alternadas pela distância e direção percorridas, sombra no chão, Energy Saber separada do corpo, HP, movimento, dash e invulnerabilidade breve.
 - Oito Hollow Crawlers biomecânicos com núcleo luminoso, membros articulados, detecção, perseguição, preparação visível do ataque, reação ao dano e morte.
 - Golpe com preparação, varredura e recuperação; arco e trail ligados à posição da lâmina; dano aplicado durante a varredura. Flash e fragmentos de impacto, números de dano, efeito de início/fim do dash, HUD de exploração, sons opcionais e tela de respawn.
 
