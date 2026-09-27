@@ -29,6 +29,12 @@
 ## Sprint 01.7 — correção da caminhada
 
 - O deslocamento real após colisões determina a fase e a direção da passada. As botas ficam em um contêiner visual próprio, independente da rotação de mira usada pela arma e pela hitbox.
-- Corpo e botas mantêm orientação visual quase vertical na tela; o torso inclina apenas alguns graus conforme a mira. A Energy Saber continua girando com o mouse. Nenhum cálculo de velocidade, ataque, dash ou IA foi alterado.
+- Na implementação inicial, corpo e botas ficaram quase verticais na tela. A compensação de `-aim` no torso cancelava a rotação do contêiner do jogador e causou a regressão de orientação corrigida na hotfix abaixo.
 - Ao começar a andar, a fase reinicia no começo de um passo e acompanha o movimento no primeiro frame. Ao parar, velocidade e posição respondem como antes, enquanto botas e bob retornam ao repouso em poucos frames.
 - Smoke test em Chrome headless verificou WASD cardinal e diagonal, parada, orientação visual, sombra, mira, ataque e cooldown, morte de Hollow, dash, dano recebido, morte e respawn. Capturas foram inspecionadas em repouso e caminhada. A avaliação final da naturalidade do ciclo depende de jogo manual.
+
+## Sprint 01.7 Hotfix — orientação da mira
+
+- `Player.view` continua recebendo o ângulo calculado pelo mouse. O torso e o capacete herdam esse ângulo; apenas um balanço local pequeno é somado durante a passada e o golpe. As botas continuam em uma orientação de chão independente e os offsets da passada usam o deslocamento real em coordenadas de mundo.
+- O bob do torso e da Energy Saber é convertido para um pequeno deslocamento vertical na tela. A espada mantém seu ângulo relativo de prontidão/swing; alcance, hitbox, movimento, dash e IA não mudaram.
+- O Chrome headless verificou oito direções de mira parado, mudanças rápidas de mira, quatro direções de caminhada e duas diagonais, mira durante o movimento, mudança de mira durante o swing, ataque e cooldown, dash parado e andando, dano, morte e respawn. Capturas das quatro direções cardinais foram inspecionadas; a avaliação final da postura em movimento ainda depende de jogo manual.

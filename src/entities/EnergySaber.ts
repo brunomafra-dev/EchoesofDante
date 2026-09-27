@@ -30,7 +30,7 @@ export class EnergySaber {
   }
 
   render(position: Vec2, facing: number, pose: SaberPose, bob: number, dashing: boolean): void {
-    this.view.setPosition(20 + (dashing ? 3 : 0), -19 + bob);
+    this.view.setPosition(20 + (dashing ? 3 : 0) + bob * Math.sin(facing), -19 + bob * Math.cos(facing));
     this.view.setRotation(pose.phase === 'READY' && dashing ? -0.68 : pose.relativeAngle);
     this.view.setScale(pose.phase === 'SWING' ? 1.06 : 1);
     this.indicator.clear().setDepth(position.y - 1);

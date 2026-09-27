@@ -3,7 +3,7 @@ import type { SaberPose } from '../combat/Attack';
 import { Health } from '../combat/Health';
 import { PLAYER } from '../config/game';
 import { moveWithCollisions, type Obstacle } from '../systems/Movement';
-import { angleDifference, clamp, normalized, type Vec2 } from '../utils/math';
+import { clamp, normalized, type Vec2 } from '../utils/math';
 import { EnergySaber } from './EnergySaber';
 
 export type PlayerAnimationState = 'IDLE' | 'WALK' | 'ATTACK_WINDUP' | 'ATTACK_SWING' | 'ATTACK_RECOVERY' | 'DASH' | 'HURT' | 'DEAD';
@@ -150,8 +150,11 @@ export class Player {
     this.gaitLift += ((walking ? Math.abs(Math.sin(this.stepPhase)) : 0) - this.gaitLift) * settle;
     const stride = this.gaitStride;
     const lift = this.gaitLift;
-    const footX = this.travelDirection.y * stride * 8;
-    const footY = -this.travelDirection.x * stride * 8;
+    const cosAim = Math.cos(aim);
+    const sinAim = Math.sin(aim);
+    // The lower body stays grounded; rotate travel into its upright local axes.
+    const footX = -this.travelDirection.y * stride * 8;
+    const footY = this.travelDirection.x * stride * 8;
     this.leftLeg.setPosition(footX, -14 + footY);
     this.rightLeg.setPosition(-footX, 14 - footY);
     if (this.isDashing) {
@@ -166,9 +169,8 @@ export class Player {
 
     const bob = -lift * 1.9;
     const attackTwist = pose.phase === 'READY' ? 0 : clamp(pose.relativeAngle * 0.075, -0.1, 0.1);
-    this.bodyRig.setPosition(this.isDashing ? 5 : 0, bob + (this.isDashing ? -1 : 0));
-    const aimLean = clamp(angleDifference(aim, -Math.PI / 2) * 0.07, -0.11, 0.11);
-    this.bodyRig.setRotation(-aim - Math.PI / 2 + aimLean + (walking ? stride * 0.015 : 0) + attackTwist);
+    this.bodyRig.setPosition((this.isDashing ? 5 : 0) + bob * sinAim, bob * cosAim + (this.isDashing ? -1 : 0));
+    this.bodyRig.setRotation((walking ? stride * 0.015 : 0) + attackTwist);
     this.legsRig.setRotation(-aim - Math.PI / 2);
     this.supportArm.setRotation(walking ? -stride * 0.075 : 0);
     this.saberArm.setRotation(pose.phase === 'READY' ? (walking ? stride * 0.05 : 0) : pose.relativeAngle * 0.18);
