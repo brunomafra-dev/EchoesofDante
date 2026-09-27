@@ -3,7 +3,7 @@ import type { SaberPose } from '../combat/Attack';
 import { Health } from '../combat/Health';
 import { PLAYER } from '../config/game';
 import { moveWithCollisions, type Obstacle } from '../systems/Movement';
-import { clamp, normalized, type Vec2 } from '../utils/math';
+import { angleDifference, clamp, normalized, type Vec2 } from '../utils/math';
 import { EnergySaber } from './EnergySaber';
 
 export type PlayerAnimationState = 'IDLE' | 'WALK' | 'ATTACK_WINDUP' | 'ATTACK_SWING' | 'ATTACK_RECOVERY' | 'DASH' | 'HURT' | 'DEAD';
@@ -24,6 +24,7 @@ export class Player {
   private groundContact: Phaser.GameObjects.Ellipse;
   private leftLeg: Phaser.GameObjects.Graphics;
   private rightLeg: Phaser.GameObjects.Graphics;
+  private legsRig: Phaser.GameObjects.Container;
   private bodyRig: Phaser.GameObjects.Container;
   private supportArm: Phaser.GameObjects.Graphics;
   private saberArm: Phaser.GameObjects.Graphics;
@@ -32,6 +33,10 @@ export class Player {
   private hitFlashUntil = 0;
   private stepPhase = 0;
   private lastStepIndex = 0;
+  private gaitStride = 0;
+  private gaitLift = 0;
+  private wasWalking = false;
+  private travelDirection: Vec2 = { x: 0, y: -1 };
   animationState: PlayerAnimationState = 'IDLE';
   rotation = 0;
   isDashing = false;
@@ -47,6 +52,7 @@ export class Player {
     this.groundContact = scene.add.ellipse(x, y + 12, 31, 11, 0x061a20, 0.32).setDepth(y - 2);
     this.leftLeg = this.makeLeg(-13);
     this.rightLeg = this.makeLeg(13);
+    this.legsRig = scene.add.container(0, 0, [this.leftLeg, this.rightLeg]);
 
     const torso = scene.add.graphics();
     torso.fillStyle(0x102c3b).fillRoundedRect(-24, -23, 32, 46, 9);
@@ -84,7 +90,7 @@ export class Player {
     this.hurtOverlay.setAlpha(0);
     this.bodyRig = scene.add.container(0, 0, [torso, this.supportArm, this.saberArm, this.hurtOverlay]);
     this.weapon = new EnergySaber(scene);
-    this.view = scene.add.container(x, y, [this.leftLeg, this.rightLeg, this.bodyRig, this.weapon.view]).setDepth(y);
+    this.view = scene.add.container(x, y, [this.legsRig, this.bodyRig, this.weapon.view]).setDepth(y);
     this.ring = scene.add.circle(x, y, 33).setStrokeStyle(1, 0x89d9d2, 0.28).setFillStyle(0, 0).setDepth(y - 1);
   }
 
@@ -123,18 +129,31 @@ export class Player {
     const previousX = this.position.x;
     const previousY = this.position.y;
     moveWithCollisions(this.position, this.velocity, Math.min(deltaSeconds, 0.04), this.radius, obstacles);
-    const travelled = Math.hypot(this.position.x - previousX, this.position.y - previousY);
+    const movedX = this.position.x - previousX;
+    const movedY = this.position.y - previousY;
+    const travelled = Math.hypot(movedX, movedY);
     const walking = !this.isDashing && travelled > 0.1;
     if (walking) {
+      if (!this.wasWalking) {
+        this.stepPhase = 0;
+        this.lastStepIndex = 0;
+      }
+      this.travelDirection = normalized(movedX, movedY);
       this.stepPhase += travelled / 108 * Math.PI * 2;
       const stepIndex = Math.floor(this.stepPhase / Math.PI);
       if (stepIndex !== this.lastStepIndex) this.footstep(stepIndex);
       this.lastStepIndex = stepIndex;
     }
-    const stride = walking ? Math.sin(this.stepPhase) : 0;
-    const lift = walking ? Math.abs(Math.sin(this.stepPhase)) : 0;
-    this.leftLeg.setPosition(stride * 7, -14 + Math.max(0, stride) * -1.8);
-    this.rightLeg.setPosition(-stride * 7, 14 + Math.max(0, -stride) * 1.8);
+    this.wasWalking = walking;
+    const settle = walking ? 1 : Math.min(1, deltaSeconds * 20);
+    this.gaitStride += ((walking ? Math.sin(this.stepPhase) : 0) - this.gaitStride) * settle;
+    this.gaitLift += ((walking ? Math.abs(Math.sin(this.stepPhase)) : 0) - this.gaitLift) * settle;
+    const stride = this.gaitStride;
+    const lift = this.gaitLift;
+    const footX = this.travelDirection.y * stride * 8;
+    const footY = -this.travelDirection.x * stride * 8;
+    this.leftLeg.setPosition(footX, -14 + footY);
+    this.rightLeg.setPosition(-footX, 14 - footY);
     if (this.isDashing) {
       this.leftLeg.setPosition(-5, -13);
       this.rightLeg.setPosition(-7, 13);
@@ -145,10 +164,12 @@ export class Player {
     else if (pose.phase !== 'READY') this.animationState = `ATTACK_${pose.phase}` as PlayerAnimationState;
     else this.animationState = walking ? 'WALK' : 'IDLE';
 
-    const bob = walking ? -lift * 1.9 : 0;
+    const bob = -lift * 1.9;
     const attackTwist = pose.phase === 'READY' ? 0 : clamp(pose.relativeAngle * 0.075, -0.1, 0.1);
     this.bodyRig.setPosition(this.isDashing ? 5 : 0, bob + (this.isDashing ? -1 : 0));
-    this.bodyRig.setRotation((walking ? stride * 0.025 : 0) + attackTwist);
+    const aimLean = clamp(angleDifference(aim, -Math.PI / 2) * 0.07, -0.11, 0.11);
+    this.bodyRig.setRotation(-aim - Math.PI / 2 + aimLean + (walking ? stride * 0.015 : 0) + attackTwist);
+    this.legsRig.setRotation(-aim - Math.PI / 2);
     this.supportArm.setRotation(walking ? -stride * 0.075 : 0);
     this.saberArm.setRotation(pose.phase === 'READY' ? (walking ? stride * 0.05 : 0) : pose.relativeAngle * 0.18);
     this.hurtOverlay.setAlpha(now < this.hitFlashUntil ? 0.72 : 0);
@@ -168,7 +189,7 @@ export class Player {
   }
 
   private footstep(stepIndex: number): void {
-    const direction = normalized(this.velocity.x, this.velocity.y);
+    const direction = this.travelDirection;
     const side = stepIndex % 2 ? 1 : -1;
     const x = this.position.x - direction.x * 17 - direction.y * side * 10;
     const y = this.position.y - direction.y * 17 + direction.x * side * 10;

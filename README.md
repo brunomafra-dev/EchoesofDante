@@ -1,8 +1,8 @@
-# Echoes of Dante — Sprint 01.6
+# Echoes of Dante — Sprint 01.7
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
-Protótipo de combate em arena para navegador. A Sprint 01.6 adiciona caminhada visual e um swing de Energy Saber sincronizado com o dano, preservando o controle, a arena e os parâmetros de combate validados nas sprints anteriores.
+Protótipo de combate em arena para navegador. A Sprint 01.7 corrige a orientação e a transição do ciclo de caminhada, preservando o controle, a espada, o dash, a arena e os parâmetros de combate validados nas sprints anteriores.
 
 ## Stack
 
@@ -40,7 +40,7 @@ npm run preview
 ## Escopo implementado
 
 - Arena única com câmera suave, limites, vegetação alienígena em camadas, marcas minerais, ruínas e rochas com colisão.
-- Galactic Warrior com silhueta de traje espacial, capacete, mochila de campo, botas alternadas por distância percorrida, sombra no chão, Energy Saber separada do corpo, HP, movimento, dash e invulnerabilidade breve.
+- Galactic Warrior com silhueta de traje espacial, capacete, mochila de campo, botas alternadas pela distância e direção percorridas, corpo orientado para leitura ereta, sombra no chão, Energy Saber separada do corpo, HP, movimento, dash e invulnerabilidade breve.
 - Oito Hollow Crawlers biomecânicos com núcleo luminoso, membros articulados, detecção, perseguição, preparação visível do ataque, reação ao dano e morte.
 - Golpe com preparação, varredura e recuperação; arco e trail ligados à posição da lâmina; dano aplicado durante a varredura. Flash e fragmentos de impacto, números de dano, efeito de início/fim do dash, HUD de exploração, sons opcionais e tela de respawn.
 
@@ -50,12 +50,12 @@ npm run preview
 - Os inimigos derrotados só retornam ao reiniciar a arena.
 - A vegetação é decorativa; apenas as rochas principais bloqueiam movimento.
 - A câmera e a arte usam visão superior 2D, sem profundidade isométrica real.
-- O ciclo de passos usa transformações de formas 2D; em escala pequena, a articulação das botas ainda pode parecer simples.
+- O ciclo de passos usa transformações de formas 2D; a articulação das botas ainda é simples e precisa de avaliação humana em movimento.
 - As fontes web dependem de conexão; o jogo usa fonte alternativa do sistema se não carregarem.
 - O build inclui o Phaser em um único bundle grande; o Vite avisa sobre tamanho do chunk, embora a saída seja válida.
 
 ## Próximos passos
 
-Avaliar com jogadores a leitura das novas silhuetas e efeitos. Os valores de combate da Sprint 01 permanecem inalterados. Sistemas de progressão e mundo ficam para sprints posteriores.
+Avaliar com jogadores a leitura da caminhada corrigida e dos efeitos. Os valores de combate da Sprint 01 permanecem inalterados. Sistemas de progressão e mundo ficam para sprints posteriores.
 
 As decisões técnicas desta sprint estão em [docs/technical-decisions.md](docs/technical-decisions.md).

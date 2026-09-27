@@ -25,3 +25,10 @@
 - `SaberAttack` mantém o cooldown de 340 ms e o alcance de 106 unidades. A animação usa preparação de 32 ms, swing de 128 ms e recuperação de 94 ms. A cada frame, a detecção cobre o setor angular percorrido desde o frame anterior. Cada alvo recebe no máximo um acerto por golpe. O indicador e a lâmina usam a mesma pose angular.
 - O personagem segue se movendo durante o ataque. Dash, HP, morte e respawn mantêm as regras anteriores. O Hollow recebeu uma passada baseada na distância e uma pequena inclinação ao levar dano; a IA e o knockback funcional não mudaram.
 - Smoke test em Chrome headless verificou movimento cardinal e diagonal, parada sem deslize, mira, cooldown, varredura contra três alvos em frame atrasado, ataque real, ataque contra dois Hollows, movimento durante o golpe, dash, dano recebido, perseguição, morte, respawn e console sem erros. A aparência do ciclo de caminhada ainda requer avaliação humana em movimento; capturas isoladas não demonstram toda a animação.
+
+## Sprint 01.7 — correção da caminhada
+
+- O deslocamento real após colisões determina a fase e a direção da passada. As botas ficam em um contêiner visual próprio, independente da rotação de mira usada pela arma e pela hitbox.
+- Corpo e botas mantêm orientação visual quase vertical na tela; o torso inclina apenas alguns graus conforme a mira. A Energy Saber continua girando com o mouse. Nenhum cálculo de velocidade, ataque, dash ou IA foi alterado.
+- Ao começar a andar, a fase reinicia no começo de um passo e acompanha o movimento no primeiro frame. Ao parar, velocidade e posição respondem como antes, enquanto botas e bob retornam ao repouso em poucos frames.
+- Smoke test em Chrome headless verificou WASD cardinal e diagonal, parada, orientação visual, sombra, mira, ataque e cooldown, morte de Hollow, dash, dano recebido, morte e respawn. Capturas foram inspecionadas em repouso e caminhada. A avaliação final da naturalidade do ciclo depende de jogo manual.
