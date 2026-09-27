@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
+import { FOREST_CLEARINGS, FOREST_PATHS, FOREST_ROCKS } from '../config/forest';
 import type { Obstacle } from './Movement';
 
 export class Arena {
@@ -20,51 +21,96 @@ export class Arena {
     for (let i = 0; i < 25; i++) {
       this.patch(floor, 80 + this.random() * 2040, 80 + this.random() * 1340, 95 + this.random() * 220, 60 + this.random() * 135, i % 3 === 0 ? 0x173d3d : 0x123239, 0.75);
     }
-    this.patch(floor, 1100, 750, 760, 525, 0x244840, 0.95);
-    this.patch(floor, 1100, 750, 560, 360, 0x294e44, 0.7);
-    this.patch(floor, 1100, 750, 370, 245, 0x315548, 0.65);
+    // Broad, connected soil trails leave room to dodge and read nearby enemies.
+    for (const path of FOREST_PATHS) {
+      for (let i = 1; i < path.points.length; i++) {
+        const a = path.points[i - 1];
+        const b = path.points[i];
+        floor.lineStyle(path.width, 0x284a40).lineBetween(a.x, a.y, b.x, b.y);
+        floor.fillStyle(0x284a40).fillCircle(a.x, a.y, path.width / 2).fillCircle(b.x, b.y, path.width / 2);
+        floor.lineStyle(path.width * 0.38, 0x496353, 0.24).lineBetween(a.x, a.y, b.x, b.y);
+      }
+    }
+    for (const clearing of FOREST_CLEARINGS) {
+      this.patch(floor, clearing.x, clearing.y, clearing.rx, clearing.ry, 0x2d5144, 0.85);
+      this.patch(floor, clearing.x, clearing.y, clearing.rx * 0.7, clearing.ry * 0.65, 0x3c5c49, 0.3);
+    }
     for (let i = 0; i < 18; i++) {
       const x = 130 + this.random() * 1940;
       const y = 120 + this.random() * 1250;
       this.patch(floor, x, y, 26 + this.random() * 65, 12 + this.random() * 32, i % 2 ? 0x53766b : 0x294e52, 0.2);
     }
-    // Ancient rings are almost swallowed by the clearing.
-    floor.lineStyle(8, 0x577b70, 0.24).strokeCircle(1100, 750, 230);
-    floor.lineStyle(2, 0x90b7a2, 0.2).strokeCircle(1100, 750, 212);
-    for (let i = 0; i < 12; i++) {
-      const angle = i * Math.PI / 6;
-      const x = 1100 + Math.cos(angle) * 230;
-      const y = 750 + Math.sin(angle) * 230;
-      floor.lineStyle(4, i % 3 === 0 ? 0x788ab0 : 0x77ab9d, 0.35).lineBetween(x, y, x + Math.cos(angle) * 22, y + Math.sin(angle) * 22);
+    // A modest survey pad establishes the origin; worn paving suggests a route north.
+    floor.fillStyle(0x40595a).fillRoundedRect(310, 1180, 180, 130, 14);
+    floor.lineStyle(3, 0xa0bdb1, 0.55).strokeRoundedRect(320, 1190, 160, 110, 10);
+    for (let y = 1195; y < 1270; y += 25) {
+      floor.lineStyle(4, 0xa5c5bd, 0.55).lineBetween(380, y + 12, 400, y);
+      floor.lineBetween(400, y, 420, y + 12);
     }
-    floor.lineStyle(31, 0x071e25).strokeRect(30, 30, WORLD_WIDTH - 60, WORLD_HEIGHT - 60);
-    floor.lineStyle(2, 0x477e77, 0.55).strokeRect(56, 56, WORLD_WIDTH - 112, WORLD_HEIGHT - 112);
+    for (let i = 0; i < 5; i++) {
+      floor.fillStyle(0x6b8378, 0.45).fillRoundedRect(1440 + i * 28, 375 - i * 18, 20, 35, 3);
+    }
     for (let i = 0; i < 290; i++) {
       const x = 72 + this.random() * (WORLD_WIDTH - 144);
       const y = 72 + this.random() * (WORLD_HEIGHT - 144);
       const r = 1 + this.random() * 2.8;
       floor.fillStyle(this.random() > 0.84 ? 0x8fb69b : 0x648d78, 0.17 + this.random() * 0.28).fillCircle(x, y, r);
     }
-    for (let i = 0; i < 57; i++) {
-      const x = 95 + this.random() * (WORLD_WIDTH - 190);
-      const y = 95 + this.random() * (WORLD_HEIGHT - 190);
-      const central = Math.hypot(x - 1100, y - 750) < 355;
-      if (central) continue;
-      const size = 24 + this.random() * 38;
-      this.plant(x, y, size);
+    FOREST_ROCKS.forEach(([x, y, radius]) => this.rock(x, y, radius));
+    // Visible rock banks cover the existing world clamp. No extra collision system.
+    for (let x = 100; x <= WORLD_WIDTH - 100; x += 125) {
+      const north = 100 + Math.sin(x * 0.009) * 24;
+      const south = WORLD_HEIGHT - 100 + Math.sin(x * 0.007) * 20;
+      this.rock(x, north, 90 + this.random() * 22);
+      this.rock(x, south, 90 + this.random() * 22);
+      this.plant(x + this.random() * 24, north - 35, 45 + this.random() * 35);
+      this.plant(x - this.random() * 24, south + 35, 45 + this.random() * 35);
+    }
+    for (let y = 225; y < WORLD_HEIGHT - 100; y += 125) {
+      const west = 100 + Math.sin(y * 0.009) * 25;
+      const east = WORLD_WIDTH - 100 + Math.sin(y * 0.008) * 25;
+      this.rock(west, y, 90 + this.random() * 22);
+      this.rock(east, y, 90 + this.random() * 22);
+      this.plant(west - 40, y, 45 + this.random() * 35);
+      this.plant(east + 40, y, 45 + this.random() * 35);
+    }
+    let trees = 0;
+    for (let i = 0; i < 240 && trees < 80; i++) {
+      const x = 210 + this.random() * (WORLD_WIDTH - 420);
+      const y = 210 + this.random() * (WORLD_HEIGHT - 420);
+      if (this.nearRoute(x, y, 65)) continue;
+      if (this.obstacles.some(rock => Math.hypot(x - rock.x, y - rock.y) < rock.radius + 55)) continue;
+      this.plant(x, y, 32 + this.random() * 34, trees % 16 === 0);
+      trees++;
     }
     for (let i = 0; i < 35; i++) {
       const x = 100 + this.random() * 2000;
       const y = 110 + this.random() * 1280;
-      if (Math.hypot(x - 1100, y - 750) < 160) continue;
+      if (this.nearRoute(x, y, 0)) continue;
       this.fern(x, y, 8 + this.random() * 12);
     }
-    [[570, 430, 32], [1620, 460, 38], [605, 1055, 42], [1550, 1110, 35], [900, 360, 24], [1370, 925, 27], [380, 720, 38], [1850, 810, 40]].forEach(([x, y, radius]) => this.rock(x, y, radius));
-    this.ruin(1100, 280);
-    this.ruin(1100, 1260);
-    this.beacon(770, 700);
-    this.beacon(1430, 700);
+    this.plant(420, 390, 110, true);
+    this.obstacles.push({ x: 420, y: 390, radius: 25 });
+    this.ruin(1500, 285);
+    [-70, 0, 70].forEach(offset => this.obstacles.push({ x: 1500 + offset, y: 285, radius: 35 }));
+    this.rock(1930, 1020, 67);
+    this.rock(1900, 1110, 45);
+    this.beacon(1860, 1120);
+    this.beacon(290, 1220);
+    this.beacon(510, 1220);
+    this.beacon(1740, 220);
     this.motes();
+  }
+
+  private nearRoute(x: number, y: number, margin: number): boolean {
+    if (FOREST_CLEARINGS.some(c => ((x - c.x) / (c.rx + margin)) ** 2 + ((y - c.y) / (c.ry + margin)) ** 2 < 1)) return true;
+    return FOREST_PATHS.some(path => path.points.slice(1).some((b, i) => {
+      const a = path.points[i];
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const t = Phaser.Math.Clamp(((x - a.x) * dx + (y - a.y) * dy) / (dx * dx + dy * dy), 0, 1);
+      return Math.hypot(x - a.x - t * dx, y - a.y - t * dy) < path.width / 2 + margin;
+    }));
   }
 
   private patch(g: Phaser.GameObjects.Graphics, x: number, y: number, rx: number, ry: number, color: number, alpha: number): void {
@@ -79,7 +125,7 @@ export class Arena {
     g.closePath().fillPath();
   }
 
-  private plant(x: number, y: number, size: number): void {
+  private plant(x: number, y: number, size: number, sway = false): void {
     const shade = this.random();
     const g = this.scene.add.graphics().setDepth(y + 2).setPosition(x, y);
     g.fillStyle(0x041a20, 0.5).fillEllipse(8, 10, size * 1.9, size * 0.62);
@@ -95,7 +141,7 @@ export class Arena {
     canopy.lineStyle(2, 0x8bbaa2, 0.5).strokeEllipse(0, -size * 0.38, size * 1.08, size * 0.77);
     canopy.fillStyle(shade < 0.3 ? 0x9bb3c3 : 0xa9d4a8, 0.7).fillCircle(size * 0.23, -size * 0.48, 2.6);
     canopy.fillCircle(-size * 0.38, -size * 0.06, 2);
-    this.scene.tweens.add({ targets: canopy, angle: 2.5, duration: 2200 + this.random() * 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    if (sway) this.scene.tweens.add({ targets: canopy, angle: 2.5, duration: 2200 + this.random() * 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
   }
 
   private fern(x: number, y: number, size: number): void {

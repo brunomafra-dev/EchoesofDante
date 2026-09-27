@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { SaberAttack } from '../combat/Attack';
 import { applyDamage } from '../combat/Damage';
 import { PLAYER, CRAWLER, WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
+import { FOREST_ENTRY, FOREST_SPAWNS } from '../config/forest';
 import { HollowCrawler } from '../entities/HollowCrawler';
 import { Player } from '../entities/Player';
 import { Controls } from '../input/Controls';
@@ -9,12 +10,6 @@ import { Arena } from '../systems/Arena';
 import { SoundEffects } from '../systems/Sound';
 import { Hud } from '../ui/Hud';
 import { distance, normalized, type Vec2 } from '../utils/math';
-
-const SPAWNS: Vec2[] = [
-  { x: 1255, y: 565 }, { x: 1380, y: 810 }, { x: 935, y: 945 },
-  { x: 805, y: 550 }, { x: 1510, y: 570 }, { x: 1160, y: 1040 },
-  { x: 650, y: 830 }, { x: 1540, y: 1030 },
-];
 
 export class GameScene extends Phaser.Scene {
   private player!: Player;
@@ -32,9 +27,9 @@ export class GameScene extends Phaser.Scene {
     this.attack = new SaberAttack();
     this.enemies = [];
     this.arena = new Arena(this);
-    this.player = new Player(this, 1100, 740);
+    this.player = new Player(this, FOREST_ENTRY.x, FOREST_ENTRY.y);
     this.controls = new Controls(this);
-    SPAWNS.forEach(point => this.enemies.push(new HollowCrawler(this, point.x, point.y)));
+    FOREST_SPAWNS.forEach(point => this.enemies.push(new HollowCrawler(this, point.x, point.y)));
     this.hud = new Hud(this, () => this.restart());
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       if (pointer.leftButtonDown() && !this.player.isDead) this.beginStrike(this.time.now);

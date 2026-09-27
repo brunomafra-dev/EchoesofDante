@@ -1,8 +1,8 @@
-# Echoes of Dante — Sprint 01.8
+# Echoes of Dante — Sprint 01.9
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
-Protótipo de combate em arena para navegador. A Sprint 01.8 reforça o contato da Energy Saber e a reação do Hollow Crawler, mantendo os controles e as regras de combate existentes.
+Protótipo de action RPG sci-fi para navegador. A Sprint 01.9 organiza Dante Forest como uma pequena área explorável, mantendo os controles e as regras de combate existentes.
 
 ## Stack
 
@@ -39,16 +39,17 @@ npm run preview
 
 ## Escopo implementado
 
-- Arena única com câmera suave, limites, vegetação alienígena em camadas, marcas minerais, ruínas e rochas com colisão.
+- Dante Forest de 2200×1500 unidades: entrada ao sudoeste, trilha principal rumo às ruínas ao norte e desvios para uma árvore maior a oeste e uma formação mineral a leste. Clareiras conectadas, vegetação em camadas e bancos de rochas delimitam o espaço; câmera suave e zoom preservados.
 - Galactic Warrior com silhueta de traje espacial, capacete, mochila de campo, torso e pernas orientados pela mira, botas alternadas pela distância e direção percorridas, sombra no chão, Energy Saber separada do corpo, HP, movimento, dash e invulnerabilidade breve.
-- Oito Hollow Crawlers biomecânicos com núcleo luminoso, membros articulados, detecção, perseguição, preparação visível do ataque, reação ao dano e morte.
+- Oito Hollow Crawlers distribuídos em quatro pares ao longo da exploração, com núcleo luminoso, membros articulados, detecção, perseguição, preparação visível do ataque, reação ao dano e morte. A entrada fica fora do alcance inicial de detecção.
 - Golpe com preparação, varredura e recuperação; arco e trail ligados à posição da lâmina; dano aplicado durante a varredura. Contato curto orientado pelo sabre, contração e recuo visual do Hollow, números de dano, efeito de início/fim do dash, HUD de exploração, sons opcionais e tela de respawn.
 
 ## Limitações conhecidas
 
 - Controles voltados a desktop com teclado e mouse; sem suporte dedicado a toque.
 - Os inimigos derrotados só retornam ao reiniciar a arena.
-- A vegetação é decorativa; apenas as rochas principais bloqueiam movimento.
+- A vegetação comum é decorativa; rochas, tronco da árvore maior e base da ruína bloqueiam movimento.
+- A IA mantém perseguição direta, sem navegação por caminhos; Hollows podem ficar presos em rochas ao perseguir fora das trilhas.
 - A câmera e a arte usam visão superior 2D, sem profundidade isométrica real.
 - O ciclo de passos usa transformações de formas 2D; a articulação das botas ainda é simples e precisa de avaliação humana em movimento.
 - As fontes web dependem de conexão; o jogo usa fonte alternativa do sistema se não carregarem.
@@ -56,6 +57,6 @@ npm run preview
 
 ## Próximos passos
 
-Avaliar com jogadores a leitura do impacto e da reação do Hollow, além da caminhada ainda simples. Os valores de combate da Sprint 01 permanecem inalterados. Sistemas de progressão e mundo ficam para sprints posteriores.
+Avaliar manualmente a orientação pelos caminhos, os encontros e a leitura dos pontos de interesse. Arte, bordas naturais e caminhada ainda são provisórias. Refinamentos posteriores dependem dessa avaliação; não há progressão ou novas regiões implementadas.
 
 As decisões técnicas desta sprint estão em [docs/technical-decisions.md](docs/technical-decisions.md).
