@@ -30,6 +30,8 @@ export class GameScene extends Phaser.Scene {
     const assetBase = `${import.meta.env.BASE_URL}assets/visual/`;
     const art = [
       'warrior-body',
+      'warrior-body-back',
+      'warrior-body-side',
       'warrior-boot',
       'warrior-support-arm',
       'warrior-saber-arm',
@@ -104,8 +106,7 @@ export class GameScene extends Phaser.Scene {
   private beginStrike(now: number): void {
     if (!this.attack.start(now)) return;
     const facing = this.controls.aimFrom(this.player.position);
-    this.player.rotation = facing;
-    this.player.view.setRotation(facing);
+    this.player.setAim(facing);
     this.player.weapon.render(this.player.position, facing, this.attack.pose(now, facing), 0, this.player.isDashing);
     this.sounds.swing();
   }

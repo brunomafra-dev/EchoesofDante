@@ -26,6 +26,7 @@ export class Player {
   private rightLeg: Phaser.GameObjects.Image;
   private legsRig: Phaser.GameObjects.Container;
   private bodyRig: Phaser.GameObjects.Container;
+  private torso: Phaser.GameObjects.Image;
   private supportArm: Phaser.GameObjects.Image;
   private saberArm: Phaser.GameObjects.Image;
   private ring: Phaser.GameObjects.Arc;
@@ -48,27 +49,43 @@ export class Player {
 
   constructor(private scene: Phaser.Scene, x: number, y: number) {
     this.position = { x, y };
-    this.shadow = scene.add.ellipse(x, y + 17, 68, 23, 0x020e14, 0.39).setDepth(y - 3);
-    this.groundContact = scene.add.ellipse(x, y + 12, 31, 11, 0x061a20, 0.32).setDepth(y - 2);
-    this.leftLeg = this.makeLeg(-13);
-    this.rightLeg = this.makeLeg(13);
+    this.shadow = scene.add.ellipse(x, y + 39, 57, 16, 0x020e14, 0.39).setDepth(y - 3);
+    this.groundContact = scene.add.ellipse(x, y + 39, 32, 9, 0x061a20, 0.32).setDepth(y - 2);
+    this.leftLeg = this.makeLeg(-10);
+    this.rightLeg = this.makeLeg(10);
     this.legsRig = scene.add.container(0, 0, [this.leftLeg, this.rightLeg]);
 
-    const torso = scene.add.image(0, 0, 'warrior-body').setDisplaySize(112, 90);
-    this.supportArm = scene.add.image(0, 0, 'warrior-support-arm').setDisplaySize(96, 88);
-    this.saberArm = scene.add.image(0, 0, 'warrior-saber-arm').setDisplaySize(96, 88);
+    this.torso = scene.add.image(0, 0, 'warrior-body').setDisplaySize(90, 100);
+    this.supportArm = scene.add.image(-18, -8, 'warrior-support-arm').setDisplaySize(33, 16).setOrigin(0, 0.5).setRotation(Math.PI / 2);
+    this.saberArm = scene.add.image(18, -8, 'warrior-saber-arm').setDisplaySize(30, 16).setOrigin(0, 0.5);
 
     this.hurtOverlay = scene.add.graphics();
-    this.hurtOverlay.fillStyle(0xff9a7f, 0.8).fillEllipse(7, 0, 51, 56);
+    this.hurtOverlay.fillStyle(0xff9a7f, 0.8).fillEllipse(0, -8, 61, 80);
     this.hurtOverlay.setAlpha(0);
-    this.bodyRig = scene.add.container(0, 0, [torso, this.supportArm, this.saberArm, this.hurtOverlay]);
+    this.bodyRig = scene.add.container(0, 0, [this.supportArm, this.saberArm, this.torso, this.hurtOverlay]);
     this.weapon = new EnergySaber(scene);
     this.view = scene.add.container(x, y, [this.legsRig, this.bodyRig, this.weapon.view]).setDepth(y);
-    this.ring = scene.add.circle(x, y, 33).setStrokeStyle(1, 0x89d9d2, 0.28).setFillStyle(0, 0).setDepth(y - 1);
+    this.ring = scene.add.circle(x, y + 39, 33).setStrokeStyle(1, 0x89d9d2, 0.28).setFillStyle(0, 0).setDepth(y - 1);
+    this.setAim(0);
   }
 
-  private makeLeg(y: number): Phaser.GameObjects.Image {
-    return this.scene.add.image(0, y, 'warrior-boot').setDisplaySize(144, 36);
+  private makeLeg(x: number): Phaser.GameObjects.Image {
+    return this.scene.add.image(x, 0, 'warrior-boot').setDisplaySize(40, 100);
+  }
+
+  // Keep the logical aim and saber root rotating; cancel that rotation on the
+  // upright body and legs. Directional torso art shows where the human faces.
+  setAim(aim: number, bodyLean = 0): void {
+    this.rotation = aim;
+    this.view.setRotation(aim);
+    this.legsRig.setRotation(-aim);
+    this.bodyRig.setRotation(-aim + bodyLean);
+    const x = Math.cos(aim);
+    const y = Math.sin(aim);
+    const vertical = Math.abs(y) > Math.abs(x);
+    const texture = vertical ? (y > 0 ? 'warrior-body' : 'warrior-body-back') : 'warrior-body-side';
+    if (this.torso.texture.key !== texture) this.torso.setTexture(texture);
+    this.torso.setFlipX(!vertical && x < 0);
   }
 
   get hp(): number { return this.health.current; }
@@ -120,14 +137,12 @@ export class Player {
     const lift = this.gaitLift;
     const cosAim = Math.cos(aim);
     const sinAim = Math.sin(aim);
-    // The root faces the mouse; convert world travel into local stride offsets.
-    const footX = (this.travelDirection.x * cosAim + this.travelDirection.y * sinAim) * stride * 8;
-    const footY = (this.travelDirection.y * cosAim - this.travelDirection.x * sinAim) * stride * 8;
-    this.leftLeg.setPosition(footX, -14 + footY);
-    this.rightLeg.setPosition(-footX, 14 - footY);
+    // Each boot stays below the upright torso and alternates with real travel.
+    this.leftLeg.setPosition(-10 + stride * 2, -stride * 5);
+    this.rightLeg.setPosition(10 - stride * 2, stride * 5);
     if (this.isDashing) {
-      this.leftLeg.setPosition(-5, -13);
-      this.rightLeg.setPosition(-7, 13);
+      this.leftLeg.setPosition(-9, -2);
+      this.rightLeg.setPosition(9, -2);
     }
 
     if (this.isDashing) this.animationState = 'DASH';
@@ -138,15 +153,20 @@ export class Player {
     const bob = -lift * 1.9;
     const attackTwist = pose.phase === 'READY' ? 0 : clamp(pose.relativeAngle * 0.075, -0.1, 0.1);
     this.bodyRig.setPosition((this.isDashing ? 5 : 0) + bob * sinAim, bob * cosAim + (this.isDashing ? -1 : 0));
-    this.bodyRig.setRotation((walking ? stride * 0.015 : 0) + attackTwist);
-    this.supportArm.setRotation(walking ? -stride * 0.075 : 0);
-    this.saberArm.setRotation(pose.phase === 'READY' ? (walking ? stride * 0.05 : 0) : pose.relativeAngle * 0.18);
+    this.setAim(aim, (walking ? stride * 0.015 : 0) + attackTwist);
+    this.supportArm.setRotation(Math.PI / 2 + (walking ? -stride * 0.075 : 0));
+    // The hand follows the existing saber grip as it orbits with mouse aim.
+    const gripX = 16 * cosAim + 19 * sinAim;
+    const gripY = 16 * sinAim - 19 * cosAim;
+    const armX = gripX - 18;
+    const armY = gripY + 8;
+    this.saberArm.setRotation(Math.atan2(armY, armX)).setDisplaySize(Math.max(16, Math.hypot(armX, armY)), 16);
     this.hurtOverlay.setAlpha(now < this.hitFlashUntil ? 0.72 : 0);
 
-    this.view.setPosition(this.position.x, this.position.y).setRotation(this.rotation).setDepth(this.position.y);
-    this.shadow.setPosition(this.position.x, this.position.y + 17).setDepth(this.position.y - 3);
-    this.groundContact.setPosition(this.position.x, this.position.y + 12).setDepth(this.position.y - 2);
-    this.ring.setPosition(this.position.x, this.position.y).setDepth(this.position.y - 1);
+    this.view.setPosition(this.position.x, this.position.y).setDepth(this.position.y);
+    this.shadow.setPosition(this.position.x, this.position.y + 39).setDepth(this.position.y - 3);
+    this.groundContact.setPosition(this.position.x, this.position.y + 39).setDepth(this.position.y - 2);
+    this.ring.setPosition(this.position.x, this.position.y + 39).setDepth(this.position.y - 1);
     this.ring.setStrokeStyle(1.5, this.isDashing ? 0xd7fff7 : 0x89d9d2, this.isDashing ? 0.78 : 0.28);
     this.view.setAlpha(this.isDashing ? 0.74 : now < this.invulnerableUntil ? 0.7 + Math.sin(now * 0.045) * 0.25 : 1);
     this.weapon.render(this.position, aim, pose, bob, this.isDashing);
@@ -161,7 +181,7 @@ export class Player {
     const direction = this.travelDirection;
     const side = stepIndex % 2 ? 1 : -1;
     const x = this.position.x - direction.x * 17 - direction.y * side * 10;
-    const y = this.position.y - direction.y * 17 + direction.x * side * 10;
+    const y = this.position.y - direction.y * 17 + direction.x * side * 10 + 39;
     const mark = this.scene.add.ellipse(x, y, 14, 6, 0x9bb6aa, 0.2).setDepth(y - 2);
     this.scene.tweens.add({ targets: mark, alpha: 0, scale: 0.65, duration: 290, onComplete: () => mark.destroy() });
   }

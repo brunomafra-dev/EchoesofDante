@@ -98,3 +98,9 @@
 - A captura do primeiro recorte mostrava uma mochila larga, braços curtos e botas quase cobertas pelo torso. O novo desenho separa capacete, pescoço, ombros, torso, braços, coxas, joelhos e botas; a mochila foi reduzida. A direção frontal local continua sendo +X, para que o rig existente gire o conjunto com a mira.
 - Dois SVGs de braço substituem os desenhos `Graphics` anteriores dentro do mesmo `bodyRig`. As duas imagens de perna permanecem no `legsRig`; posições, rotações, passada, ataque e arma mantêm o código anterior. O Phaser carrega os dois novos arquivos uma vez no `preload`.
 - Capturas do Chrome headless foram inspecionadas em repouso, nas quatro direções de mira, caminhando, no swing e durante o dash. Em 1366×768, o teste registrou 235 unidades em 950 ms de W, 127 unidades em 500 ms na diagonal, acerto de 34 HP, patrulha, morte e respawn, sem erro de console. O build de produção abriu em 1920×1080 sem requisições 4xx. A leitura final da silhueta e a sensação da passada ainda dependem de avaliação humana jogando.
+
+## Correção visual — Galactic Warrior ereto
+
+- A rotação integral do contêiner de mira deixava o corpo horizontal ao apontar para os lados. O contêiner ainda orienta o sabre, mas `bodyRig` e `legsRig` recebem a rotação inversa; o torso seleciona vista frontal, lateral ou traseira segundo o ângulo do mouse. A pequena inclinação de ataque continua local ao torso.
+- Os SVGs do corpo e das botas foram redesenhados em postura vertical. Braços e contato com o chão acompanham essa postura; a mão direita se estende até o cabo existente. Nenhuma velocidade, hitbox, alcance, dano ou estado de combate foi alterado.
+- Capturas e interação no Chrome headless em 1366×768 e 1920×1080 verificaram as quatro direções, caminhada, parada, golpe, dash, acerto de 34 HP, dano recebido, morte e respawn sem erro de console. A avaliação da naturalidade artística permanece com o jogador.

@@ -1,33 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="224" height="180" viewBox="-56 -45 112 90">
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="200" viewBox="-45 -50 90 100">
   <defs>
-    <linearGradient id="plate" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f2eee0"/><stop offset=".6" stop-color="#b9c6bb"/><stop offset="1" stop-color="#7d9691"/></linearGradient>
-    <linearGradient id="helmet" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fcf8e9"/><stop offset=".65" stop-color="#c9d2c7"/><stop offset="1" stop-color="#839a98"/></linearGradient>
+    <linearGradient id="armor" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5f0df"/><stop offset=".58" stop-color="#bccbc0"/><stop offset="1" stop-color="#849e98"/></linearGradient>
+    <linearGradient id="helm" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff9e9"/><stop offset="1" stop-color="#91aaa5"/></linearGradient>
   </defs>
-  <!-- +X is forward. The backpack stays behind the waist and the helmet leads. -->
-  <path d="M-31-11 L-22-16 L-18-11 L-18 11 L-23 16 L-32 10 Z" fill="#1b353d" stroke="#0b2029" stroke-width="2.5"/>
-  <path d="M-29-10 L-23-11 L-22 8 L-29 10 Z" fill="#5b746e"/>
-  <path d="M-31-4 L-22-4 M-31 4 L-22 4" stroke="#e0863f" stroke-width="1.5" opacity=".8"/>
-  <path d="M-25-17 Q-18-22-9-22 L8-22 Q18-20 21-12 L20 12 Q15 20 7 22 L-12 21 Q-22 19-26 11 Z" fill="#102932" stroke="#071d26" stroke-width="3"/>
-  <path d="M-21-14 Q-12-18 8-18 L14-11 L14 11 L6 17 L-18 15 L-22 7 Z" fill="#506a69"/>
-  <path d="M-20-13 Q-11-17 5-16 L11-10 L10 9 L4 15 L-16 13 L-21 6 Z" fill="url(#plate)" stroke="#486461" stroke-width="2"/>
-  <path d="M-21-12 L-9-17 L-5 14 L-18 12 Z" fill="#778f88" opacity=".9"/>
-  <path d="M-7-14 L10-11 L10 9 L-5 12 Z" fill="#d8d9ca"/>
-  <path d="M-4-9 L8-7 L8 7 L-3 9 Z" fill="#839b93"/>
-  <path d="M-19-2 L8-2" stroke="#334e50" stroke-width="2" opacity=".65"/>
-  <path d="M-19-12 L9 5" stroke="#e0863f" stroke-width="3.5" stroke-linecap="round"/>
-  <path d="M-17-11 L7 4" stroke="#f1b476" stroke-width="1" opacity=".85"/>
-  <path d="M-22 12 L-15 19 L4 20 L10 12" fill="none" stroke="#c6a486" stroke-width="3"/>
-  <path d="M-25-16 L-10-20 L-4-17 L-7-12 L-18-10 Z" fill="#d8dfd2" stroke="#3d5958" stroke-width="2"/>
-  <path d="M-25 16 L-10 20 L-4 17 L-7 12 L-18 10 Z" fill="#c7d1c5" stroke="#3d5958" stroke-width="2"/>
-  <path d="M1-22 Q10-29 18-26 L21-19 L11-14 L3-16 Z" fill="#d5d7c8" stroke="#314c4f" stroke-width="2"/>
-  <path d="M1 22 Q10 29 18 26 L21 19 L11 14 L3 16 Z" fill="#c6d0c4" stroke="#314c4f" stroke-width="2"/>
-  <path d="M7-25 L16-25 L19-21 L8-18 Z" fill="#e0863f"/>
-  <path d="M8 18 L19 21 L16 25 L8 25 Z" fill="#8b9e93"/>
-  <path d="M14-10 L22-12 L26-7 L26 7 L22 12 L14 10 Z" fill="#273f43" stroke="#0d2630" stroke-width="2"/>
-  <path d="M22-15 Q31-21 42-14 Q51-9 52 0 Q51 10 42 15 Q31 21 22 15 Q17 10 17 0 Q17-10 22-15 Z" fill="#172d36" stroke="#071c27" stroke-width="3"/>
-  <path d="M23-14 Q31-19 42-12 Q48-8 49 0 Q48 9 41 13 Q31 18 23 13 Q19 7 19 0 Q19-8 23-14 Z" fill="url(#helmet)"/>
-  <path d="M31-11 Q38-15 44-9 L47-5 L47 5 L44 9 Q38 15 31 11 Q26 6 26 0 Q26-6 31-11 Z" fill="#405c5f"/>
-  <path d="M38-8 Q45-9 48-4 L50 0 L48 5 Q44 9 38 8 L36 2 L36-2 Z" fill="#123744" stroke="#0b2632" stroke-width="1.5"/>
-  <path d="M42-6 Q48-4 48 0 Q48 4 42 6" fill="none" stroke="#5fe6d8" stroke-width="3" stroke-linecap="round"/>
-  <path d="M28-15 L34-18 M28 15 L34 18" stroke="#e0863f" stroke-width="2"/>
+  <!-- Upright front view: helmet above shoulders, boots are separate sprites below the belt. -->
+  <path d="M-25-13 L-17-17 L-15 15 L-23 18 L-28 12 L-27-7 Z" fill="#233c43" stroke="#0b222a" stroke-width="2"/>
+  <path d="M-27-5 L-22-7 L-21 9 L-26 10 Z" fill="#68817a"/>
+  <path d="M-21-14 Q-13-19 0-18 Q13-19 21-14 L25 11 L16 21 L-16 21 L-25 11 Z" fill="#102b34" stroke="#071e28" stroke-width="3"/>
+  <path d="M-19-13 L-5-17 L13-15 L20-9 L19 10 L13 16 L-13 16 L-20 10 Z" fill="url(#armor)" stroke="#42625f" stroke-width="2"/>
+  <path d="M-18-12 L-7-14 L-5 13 L-17 10 Z" fill="#718e86"/>
+  <path d="M-4-15 L13-13 L16 10 L-2 13 Z" fill="#dce0d0"/>
+  <path d="M-17-10 L14 10" stroke="#e0863f" stroke-width="4" stroke-linecap="round"/>
+  <path d="M-14-11 L14 8" stroke="#f4c388" stroke-width="1" opacity=".8"/>
+  <path d="M-21-14 L-10-17 L-13-2 L-26 1 L-29-5 Z" fill="#d6dfd1" stroke="#29474a" stroke-width="2"/>
+  <path d="M21-14 L10-17 L13-2 L26 1 L29-5 Z" fill="#c7d4c9" stroke="#29474a" stroke-width="2"/>
+  <path d="M-25-12 L-15-16 L-17-10 L-27-5 Z" fill="#e0863f"/>
+  <path d="M-17 15 L-12 22 L12 22 L17 15" fill="#344b4c" stroke="#132e35" stroke-width="2"/>
+  <path d="M-10 18 L10 18" stroke="#c29b73" stroke-width="2"/>
+  <path d="M-12-20 L-9-15 L9-15 L12-20" fill="#253f44" stroke="#0b2630" stroke-width="2"/>
+  <path d="M-15-39 Q-12-47 0-47 Q12-47 15-39 L17-27 Q15-20 9-18 L-9-18 Q-15-21-17-28 Z" fill="#172f38" stroke="#071c27" stroke-width="3"/>
+  <path d="M-13-38 Q-10-44 0-44 Q10-44 13-38 L14-27 Q11-22 7-21 L-7-21 Q-11-23-14-28 Z" fill="url(#helm)"/>
+  <path d="M-12-34 Q0-38 12-34 L11-26 Q0-23-11-26 Z" fill="#143541" stroke="#08222f" stroke-width="1.5"/>
+  <path d="M-9-31 Q0-34 9-31 L8-27 Q0-25-8-27 Z" fill="#5fe6d8"/>
+  <path d="M-13-41 L-9-44 M9-44 L13-41" stroke="#e0863f" stroke-width="2"/>
 </svg>
