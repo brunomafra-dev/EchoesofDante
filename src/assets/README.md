@@ -1,1 +1,1 @@
-Não há arquivos de imagem ou som nesta sprint. A arena, personagens, efeitos e áudio são gerados em código.
+Os SVGs do primeiro protótipo visual ficam em `public/assets/visual/` para que o Phaser os carregue como arquivos estáticos. As partes móveis mantêm seus contêineres e animações atuais; sabre, efeitos e áudio continuam gerados em código.

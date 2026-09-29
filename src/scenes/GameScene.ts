@@ -26,6 +26,23 @@ export class GameScene extends Phaser.Scene {
 
   constructor() { super('Game'); }
 
+  preload(): void {
+    const assetBase = `${import.meta.env.BASE_URL}assets/visual/`;
+    const art = [
+      'warrior-body',
+      'warrior-boot',
+      'hollow-body',
+      'hollow-rear-limbs',
+      'hollow-forelimbs',
+      'dante-tree-trunk',
+      'dante-canopy-green',
+      'dante-canopy-blue',
+    ] as const;
+    for (const key of art) {
+      if (!this.textures.exists(key)) this.load.svg(key, `${assetBase}${key}.svg`);
+    }
+  }
+
   create(): void {
     this.attack = new SaberAttack();
     this.enemies = [];

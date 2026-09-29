@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="176" viewBox="-48 -44 96 88">
+  <defs>
+    <linearGradient id="armor" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f0e9d6"/><stop offset=".55" stop-color="#a8b4aa"/><stop offset="1" stop-color="#576f70"/></linearGradient>
+    <linearGradient id="pack" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5e7b7b"/><stop offset="1" stop-color="#223c43"/></linearGradient>
+    <linearGradient id="visor" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#1d626b"/><stop offset=".7" stop-color="#5fe6d8"/><stop offset="1" stop-color="#d5fff1"/></linearGradient>
+  </defs>
+  <!-- Forward is +X. All parts stay in the player's existing aim container. -->
+  <path d="M-36-21 Q-41-15-40-5 L-39 16 Q-36 27-26 27 L-17 17 L-17-18 Z" fill="#192f38" stroke="#0c222a" stroke-width="2"/>
+  <path d="M-37-20 L-23-25 L-19-15 L-23 6 L-37 10 Z" fill="url(#pack)" stroke="#78918a" stroke-width="1.5"/>
+  <path d="M-33 14 L-23 10 L-21 26 L-33 28 Z" fill="#36555a" stroke="#83958a" stroke-width="1.5"/>
+  <path d="M-32-14 L-23-16 M-33 1 L-24-1 M-31 20 L-23 18" stroke="#e0863f" stroke-width="2" opacity=".9"/>
+  <path d="M-23-24 Q-17-29 1-25 L17-19 Q24-7 21 10 L10 24 L-13 25 L-24 15 Z" fill="#132b35" stroke="#091c26" stroke-width="3"/>
+  <path d="M-20-20 Q-2-26 14-17 L18-4 L10 19 Q-2 26-18 17 L-22 3 Z" fill="url(#armor)" stroke="#30484d" stroke-width="2"/>
+  <path d="M-17-9 Q-9-14 4-12 L12-3 L8 13 L-8 17 L-17 7 Z" fill="#394e52"/>
+  <path d="M-12-6 L1-10 L7-4 L-7 1 Z" fill="#718d87"/>
+  <path d="M-11 7 L6 4 L3 12 L-8 13 Z" fill="#223e43"/>
+  <path d="M-18 19 Q-15 29-4 31 L9 25 L1 20 Z" fill="#65756b" stroke="#263c40" stroke-width="2"/>
+  <path d="M-12 22 L-5 29 M-3 21 L4 27" stroke="#d7b888" stroke-width="2"/>
+  <path d="M-12-24 Q-2-35 14-30 L19-21 L9-14 L-8-14 Z" fill="#e0863f" stroke="#593d34" stroke-width="2.5"/>
+  <path d="M-8-26 L8-29 L14-23 L4-19 L-10-20 Z" fill="#f7bd71" opacity=".55"/>
+  <path d="M-11 22 Q3 28 14 19 L19 26 L4 34 L-8 31 Z" fill="#d5d0bb" stroke="#4a5d5d" stroke-width="2"/>
+  <path d="M-3 25 L10 24" stroke="#e0863f" stroke-width="2"/>
+  <path d="M9-15 Q16-22 27-17 L35-10 Q40 0 34 11 L26 18 L13 15 Q7 3 9-15 Z" fill="#e8e7d8" stroke="#18343c" stroke-width="3"/>
+  <path d="M16-13 L26-15 L34-8 L36 5 L28 12 L14 10 L11 0 Z" fill="#607979"/>
+  <path d="M22-10 L35-7 L39-1 L37 8 L26 10 L22 3 Z" fill="url(#visor)" stroke="#173b48" stroke-width="2"/>
+  <path d="M26-7 L35-5" stroke="#e4fff5" stroke-width="1.5" opacity=".8"/>
+  <path d="M15 14 L26 18 L32 12" fill="none" stroke="#e0863f" stroke-width="2"/>
+  <path d="M-25-3 L-19-5 L-17 8 L-24 9 Z" fill="#5fe6d8" stroke="#164d55" stroke-width="2"/>
+</svg>

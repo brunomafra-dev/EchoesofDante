@@ -22,8 +22,8 @@ export class Player {
   readonly weapon: EnergySaber;
   private shadow: Phaser.GameObjects.Ellipse;
   private groundContact: Phaser.GameObjects.Ellipse;
-  private leftLeg: Phaser.GameObjects.Graphics;
-  private rightLeg: Phaser.GameObjects.Graphics;
+  private leftLeg: Phaser.GameObjects.Image;
+  private rightLeg: Phaser.GameObjects.Image;
   private legsRig: Phaser.GameObjects.Container;
   private bodyRig: Phaser.GameObjects.Container;
   private supportArm: Phaser.GameObjects.Graphics;
@@ -54,35 +54,17 @@ export class Player {
     this.rightLeg = this.makeLeg(13);
     this.legsRig = scene.add.container(0, 0, [this.leftLeg, this.rightLeg]);
 
-    const torso = scene.add.graphics();
-    torso.fillStyle(0x102c3b).fillRoundedRect(-24, -23, 32, 46, 9);
-    torso.fillStyle(0x477183).fillRoundedRect(-22, -20, 10, 40, 4);
-    torso.lineStyle(2, 0x88c9cb, 0.75).strokeRoundedRect(-22, -20, 10, 40, 4);
-    torso.fillStyle(0x243e50).fillRoundedRect(-13, -25, 33, 50, 12);
-    torso.fillStyle(0xdce6de).fillRoundedRect(-10, -22, 29, 44, 10);
-    torso.fillStyle(0x779a9c).fillRoundedRect(-4, -15, 18, 30, 5);
-    torso.fillStyle(0x102e3c).fillRoundedRect(0, -12, 14, 24, 4);
-    torso.fillStyle(0x61d5dc).fillRoundedRect(5, -8, 4, 16, 2);
-    torso.fillStyle(0xeff1e7).fillEllipse(-3, -25, 28, 15);
-    torso.fillEllipse(-3, 25, 28, 15);
-    torso.fillStyle(0x325d6b).fillEllipse(1, -25, 17, 9);
-    torso.fillEllipse(1, 25, 17, 9);
-    torso.lineStyle(2, 0x91cdd0).lineBetween(-12, -27, 8, -27);
-    torso.lineBetween(-12, 27, 8, 27);
-    torso.fillStyle(0x0d2633).fillEllipse(17, 0, 31, 30);
-    torso.fillStyle(0xe6eee6).fillEllipse(17, 0, 27, 26);
-    torso.fillStyle(0x2e5665).fillEllipse(23, 0, 15, 22);
-    torso.fillStyle(0x061b28).fillEllipse(29, 0, 11, 18);
-    torso.fillStyle(0x70e2e4).fillRoundedRect(26, -7, 4, 14, 2);
-    torso.fillStyle(0xb8ffff, 0.7).fillRoundedRect(29, -5, 2, 10, 1);
+    const torso = scene.add.image(0, 0, 'warrior-body').setDisplaySize(96, 88);
 
     this.supportArm = scene.add.graphics();
     this.supportArm.fillStyle(0x254859).fillRoundedRect(7, 22, 24, 10, 4);
     this.supportArm.fillStyle(0xd9e8df).fillRoundedRect(11, 24, 18, 7, 3);
+    this.supportArm.lineStyle(2, 0xe0863f).lineBetween(14, 26, 26, 26);
     this.supportArm.fillStyle(0x102936).fillCircle(29, 27, 5);
     this.saberArm = scene.add.graphics();
     this.saberArm.fillStyle(0x254859).fillRoundedRect(7, -31, 25, 10, 4);
     this.saberArm.fillStyle(0xd9e8df).fillRoundedRect(12, -30, 18, 7, 3);
+    this.saberArm.lineStyle(2, 0xe0863f).lineBetween(16, -29, 28, -29);
     this.saberArm.fillStyle(0x12323d).fillCircle(30, -25, 5);
 
     this.hurtOverlay = scene.add.graphics();
@@ -94,13 +76,8 @@ export class Player {
     this.ring = scene.add.circle(x, y, 33).setStrokeStyle(1, 0x89d9d2, 0.28).setFillStyle(0, 0).setDepth(y - 1);
   }
 
-  private makeLeg(y: number): Phaser.GameObjects.Graphics {
-    const leg = this.scene.add.graphics().setPosition(0, y);
-    leg.fillStyle(0x081c28).fillRoundedRect(-40, -6, 32, 12, 4);
-    leg.fillStyle(0x315365).fillRoundedRect(-39, -5, 24, 10, 3);
-    leg.fillStyle(0x9ebfbc).fillRoundedRect(-39, -5, 7, 10, 2);
-    leg.lineStyle(1, 0x80b0b4, 0.7).lineBetween(-17, -4, -11, -4);
-    return leg;
+  private makeLeg(y: number): Phaser.GameObjects.Image {
+    return this.scene.add.image(0, y, 'warrior-boot').setDisplaySize(80, 30);
   }
 
   get hp(): number { return this.health.current; }

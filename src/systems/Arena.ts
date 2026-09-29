@@ -214,11 +214,27 @@ export class Arena {
   private rock(x: number, y: number, radius: number): void {
     this.obstacles.push({ x, y, radius: radius * 0.72 });
     const g = this.scene.add.graphics().setDepth(y - 6).setPosition(x, y);
-    g.fillStyle(0x061b23, 0.7).fillEllipse(8, radius * 0.5, radius * 2.4, radius * 0.8);
-    g.fillStyle(0x253f48).fillEllipse(0, 0, radius * 2, radius * 1.53);
-    g.fillStyle(0x59767c).fillEllipse(-radius * 0.24, -radius * 0.25, radius * 1.34, radius * 0.67);
-    g.lineStyle(2, 0x9ab4a8, 0.5).lineBetween(-radius * 0.62, -radius * 0.08, radius * 0.24, radius * 0.08);
-    g.lineStyle(3, 0x456966, 0.7).lineBetween(radius * 0.15, radius * 0.07, radius * 0.36, radius * 0.44);
+    const r = radius;
+    const skew = Math.sin(x * 0.019 + y * 0.023) * r * 0.11;
+    g.fillStyle(0x061b23, 0.56).fillEllipse(8, r * 0.55, r * 2.25, r * 0.69);
+    g.fillStyle(0x223c43).beginPath()
+      .moveTo(-r * 0.98, -r * 0.12).lineTo(-r * 0.76, -r * 0.62)
+      .lineTo(-r * 0.3 + skew, -r * 0.77).lineTo(r * 0.34, -r * 0.67)
+      .lineTo(r * 0.88, -r * 0.26).lineTo(r * 0.94, r * 0.25)
+      .lineTo(r * 0.53, r * 0.67).lineTo(-r * 0.18, r * 0.73)
+      .lineTo(-r * 0.78, r * 0.47).closePath().fillPath();
+    g.fillStyle(0x607d7c).beginPath()
+      .moveTo(-r * 0.76, -r * 0.62).lineTo(-r * 0.3 + skew, -r * 0.77)
+      .lineTo(r * 0.34, -r * 0.67).lineTo(r * 0.88, -r * 0.26)
+      .lineTo(r * 0.21, r * 0.04).lineTo(-r * 0.52, r * 0.1)
+      .lineTo(-r * 0.98, -r * 0.12).closePath().fillPath();
+    g.fillStyle(0x36575b).beginPath()
+      .moveTo(r * 0.21, r * 0.04).lineTo(r * 0.88, -r * 0.26)
+      .lineTo(r * 0.94, r * 0.25).lineTo(r * 0.53, r * 0.67)
+      .lineTo(-r * 0.18, r * 0.73).lineTo(-r * 0.52, r * 0.1)
+      .closePath().fillPath();
+    g.lineStyle(2, 0xa6b6a2, 0.58).lineBetween(-r * 0.65, -r * 0.41, -r * 0.17, -r * 0.52);
+    g.lineStyle(2, 0x8fa698, 0.46).lineBetween(r * 0.21, r * 0.04, r * 0.47, r * 0.38);
   }
 
   private beacon(x: number, y: number): void {
