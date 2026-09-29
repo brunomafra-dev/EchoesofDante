@@ -1,8 +1,8 @@
-# Echoes of Dante — Sprint 01.9
+# Echoes of Dante — Sprint 02.0
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
-Protótipo de action RPG sci-fi para navegador. A Sprint 01.9 organiza Dante Forest como uma pequena área explorável, mantendo os controles e as regras de combate existentes.
+Protótipo de action RPG sci-fi para navegador. A Sprint 02.0 transforma as ruínas do norte em uma descoberta ambiental: uma estrutura antiga reage à investigação e emite um sinal de origem desconhecida.
 
 ## Stack
 
@@ -36,9 +36,11 @@ npm run preview
 | Saber Strike | Clique esquerdo; segure para repetir após o cooldown |
 | Void Dash | Espaço; segue a direção de movimento ou da mira se parado |
 | Respawn após morrer | R ou botão na tela |
+| Investigar as ruínas | E quando o prompt aparecer perto da estrutura |
 
 ## Escopo implementado
 
+- First Discovery: estrutura parcialmente soterrada nas ruínas do norte, inscrições, fragmentos e vegetação. Investigar produz um pulso, som opcional e a mensagem temporária “SIGNAL DETECTED / SOURCE: UNKNOWN”. As inscrições permanecem acesas; a descoberta reinicia com o respawn, sem persistência ou recompensa.
 - Dante Forest de 2200×1500 unidades: entrada ao sudoeste, trilha principal rumo às ruínas ao norte e desvios para uma árvore maior a oeste e uma formação mineral a leste. Clareiras conectadas, vegetação em camadas e bancos de rochas delimitam o espaço; câmera suave e zoom preservados.
 - Galactic Warrior com silhueta de traje espacial, capacete, mochila de campo, torso e pernas orientados pela mira, botas alternadas pela distância e direção percorridas, sombra no chão, Energy Saber separada do corpo, HP, movimento, dash e invulnerabilidade breve.
 - Oito Hollow Crawlers distribuídos em quatro pares ao longo da exploração, com núcleo luminoso, membros articulados, detecção, perseguição, preparação visível do ataque, reação ao dano e morte. A entrada fica fora do alcance inicial de detecção.
@@ -57,6 +59,6 @@ npm run preview
 
 ## Próximos passos
 
-Avaliar manualmente a orientação pelos caminhos, os encontros e a leitura dos pontos de interesse. Arte, bordas naturais e caminhada ainda são provisórias. Refinamentos posteriores dependem dessa avaliação; não há progressão ou novas regiões implementadas.
+Avaliar manualmente se a estrutura desperta curiosidade ao chegar às ruínas e se o prompt, o pulso e a mensagem são percebidos durante a exploração. Refinar esse momento conforme o feedback antes de expandir o conteúdo.
 
 As decisões técnicas desta sprint estão em [docs/technical-decisions.md](docs/technical-decisions.md).

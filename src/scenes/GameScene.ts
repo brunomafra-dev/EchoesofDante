@@ -8,6 +8,7 @@ import { Player } from '../entities/Player';
 import { Controls } from '../input/Controls';
 import { Arena } from '../systems/Arena';
 import { SoundEffects } from '../systems/Sound';
+import { NorthernDiscovery } from '../systems/NorthernDiscovery';
 import { Hud } from '../ui/Hud';
 import { distance, normalized, type Vec2 } from '../utils/math';
 
@@ -19,6 +20,7 @@ export class GameScene extends Phaser.Scene {
   private attack = new SaberAttack();
   private sounds = new SoundEffects();
   private hud!: Hud;
+  private discovery!: NorthernDiscovery;
   private lastDashTrail = 0;
 
   constructor() { super('Game'); }
@@ -27,6 +29,7 @@ export class GameScene extends Phaser.Scene {
     this.attack = new SaberAttack();
     this.enemies = [];
     this.arena = new Arena(this);
+    this.discovery = new NorthernDiscovery(this);
     this.player = new Player(this, FOREST_ENTRY.x, FOREST_ENTRY.y);
     this.controls = new Controls(this);
     FOREST_SPAWNS.forEach(point => this.enemies.push(new HollowCrawler(this, point.x, point.y)));
@@ -40,6 +43,14 @@ export class GameScene extends Phaser.Scene {
   }
 
   update(time: number, delta: number): void {
+    const interact = this.controls.interactPressed;
+    const nearDiscovery = this.discovery.canInvestigate(this.player.position, this.player.isDead);
+    if (nearDiscovery && interact) {
+      this.discovery.activate();
+      this.hud.showDiscovery();
+      this.sounds.discovery();
+    }
+    this.hud.setDiscoveryPrompt(nearDiscovery && !this.discovery.activated);
     if (this.player.isDead) {
       if (this.controls.restartPressed) this.restart();
       return;

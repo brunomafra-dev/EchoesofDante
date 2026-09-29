@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { VIEW_HEIGHT, VIEW_WIDTH } from '../config/game';
+import { NORTHERN_DISCOVERY } from '../config/discovery';
 
 export class Hud {
   private hpFill: Phaser.GameObjects.Rectangle;
@@ -7,8 +8,10 @@ export class Hud {
   private dashFill: Phaser.GameObjects.Rectangle;
   private dashText: Phaser.GameObjects.Text;
   private deathGroup: Array<{ setVisible(value: boolean): unknown }> = [];
+  private discoveryPrompt: Phaser.GameObjects.Text;
+  private discoveryMessage: Phaser.GameObjects.Text;
 
-  constructor(scene: Phaser.Scene, onRestart: () => void) {
+  constructor(private scene: Phaser.Scene, onRestart: () => void) {
     const text = (x: number, y: number, value: string, size: number, color = '#e8f1ed', condensed = false) => scene.add.text(x, y, value, {
       fontFamily: condensed ? 'Barlow Condensed, sans-serif' : 'DM Sans, sans-serif',
       fontSize: `${size}px`, color, fontStyle: condensed ? 'bold' : 'normal', letterSpacing: condensed ? 1.8 : 0.4,
@@ -50,6 +53,10 @@ export class Hud {
     key(449, 63, 'LMB', 'SABER STRIKE');
     key(748, 82, 'SPACE', 'VOID DASH');
     text(1107, VIEW_HEIGHT - 51, 'DANTE  /  01', 15, '#7fa7a5', true);
+    this.discoveryPrompt = text(VIEW_WIDTH / 2, VIEW_HEIGHT - 115, '[ E ]  INVESTIGATE', 20, '#c4e5d9', true)
+      .setOrigin(0.5).setBackgroundColor('#0b2730').setPadding(16, 9).setVisible(false);
+    this.discoveryMessage = text(VIEW_WIDTH / 2, VIEW_HEIGHT - 164, 'SIGNAL DETECTED\nSOURCE: UNKNOWN', 22, '#c4e5d9', true)
+      .setOrigin(0.5, 0).setAlign('center').setBackgroundColor('#0b2730').setPadding(22, 12).setVisible(false);
 
     const veil = scene.add.rectangle(0, 0, VIEW_WIDTH, VIEW_HEIGHT, 0x05141b, 0.79).setOrigin(0).setScrollFactor(0).setDepth(30000).setVisible(false);
     const frame = scene.add.graphics().setScrollFactor(0).setDepth(30001).setVisible(false);
@@ -76,5 +83,16 @@ export class Hud {
     this.dashText.setColor(dashProgress >= 1 ? '#a4e5e6' : '#7b9c9c');
   }
 
-  showDeath(): void { this.deathGroup.forEach(item => item.setVisible(true)); }
+  setDiscoveryPrompt(visible: boolean): void { this.discoveryPrompt.setVisible(visible); }
+
+  showDiscovery(): void {
+    this.discoveryMessage.setVisible(true);
+    this.scene.time.delayedCall(NORTHERN_DISCOVERY.messageDuration, () => this.discoveryMessage.setVisible(false));
+  }
+
+  showDeath(): void {
+    this.discoveryPrompt.setVisible(false);
+    this.discoveryMessage.setVisible(false);
+    this.deathGroup.forEach(item => item.setVisible(true));
+  }
 }

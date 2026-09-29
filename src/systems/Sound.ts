@@ -24,4 +24,5 @@ export class SoundEffects {
   hurt(): void { this.tone(260, 75, 0.24, 0.085, 'sawtooth'); }
   dash(): void { this.tone(140, 450, 0.19, 0.045, 'triangle'); }
   death(): void { this.tone(230, 45, 0.55, 0.07, 'triangle'); }
+  discovery(): void { this.tone(320, 640, 0.7, 0.035, 'sine'); }
 }

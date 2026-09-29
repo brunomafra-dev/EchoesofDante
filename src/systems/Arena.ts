@@ -91,7 +91,6 @@ export class Arena {
     }
     this.plant(420, 390, 110, true);
     this.obstacles.push({ x: 420, y: 390, radius: 25 });
-    this.ruin(1500, 285);
     [-70, 0, 70].forEach(offset => this.obstacles.push({ x: 1500 + offset, y: 285, radius: 35 }));
     this.rock(1930, 1020, 67);
     this.rock(1900, 1110, 45);
@@ -163,22 +162,6 @@ export class Arena {
     g.fillStyle(0x59767c).fillEllipse(-radius * 0.24, -radius * 0.25, radius * 1.34, radius * 0.67);
     g.lineStyle(2, 0x9ab4a8, 0.5).lineBetween(-radius * 0.62, -radius * 0.08, radius * 0.24, radius * 0.08);
     g.lineStyle(3, 0x456966, 0.7).lineBetween(radius * 0.15, radius * 0.07, radius * 0.36, radius * 0.44);
-  }
-
-  private ruin(x: number, y: number): void {
-    const g = this.scene.add.graphics().setDepth(y - 20).setPosition(x, y);
-    g.fillStyle(0x071c23, 0.72).fillEllipse(8, 27, 212, 71);
-    g.fillStyle(0x405c62).fillRoundedRect(-91, -26, 182, 58, 8);
-    g.fillStyle(0x69807b).fillRoundedRect(-82, -28, 166, 17, 5);
-    g.fillStyle(0x172f39).fillRoundedRect(-70, -11, 140, 35, 5);
-    g.lineStyle(3, 0x6fb1a8, 0.58).strokeRoundedRect(-65, -8, 130, 28, 3);
-    g.lineStyle(2, 0x8d85ac, 0.8).lineBetween(-18, 4, 18, 4);
-    g.lineBetween(0, -5, 0, 15);
-    g.fillStyle(0x9b8dbd).fillCircle(0, 4, 4);
-    g.fillStyle(0x536d71).fillRect(-101, -56, 25, 84);
-    g.fillRect(76, -56, 25, 84);
-    g.fillStyle(0x8ba09a).fillRect(-101, -56, 25, 8);
-    g.fillRect(76, -56, 25, 8);
   }
 
   private beacon(x: number, y: number): void {
