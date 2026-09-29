@@ -17,6 +17,15 @@ export const PLAYER = {
   hurtCooldown: 650,
 } as const;
 
+export const KINETIC_CHARGE = {
+  speed: 600,
+  duration: 180,
+  cooldown: 3200,
+  damage: 30,
+  hitRange: 44,
+  hitHalfAngle: 0.45,
+} as const;
+
 export const CRAWLER = {
   maxHp: 68,
   speed: 115,

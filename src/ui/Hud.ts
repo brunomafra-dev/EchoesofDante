@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { VIEW_HEIGHT, VIEW_WIDTH } from '../config/game';
+import { KINETIC_CHARGE, VIEW_HEIGHT, VIEW_WIDTH } from '../config/game';
 import { NORTHERN_DISCOVERY } from '../config/discovery';
 
 export class Hud {
@@ -7,6 +7,7 @@ export class Hud {
   private hpText: Phaser.GameObjects.Text;
   private dashFill: Phaser.GameObjects.Rectangle;
   private dashText: Phaser.GameObjects.Text;
+  private chargeText: Phaser.GameObjects.Text;
   private deathGroup: Array<{ setVisible(value: boolean): unknown }> = [];
   private discoveryPrompt: Phaser.GameObjects.Text;
   private discoveryMessage: Phaser.GameObjects.Text;
@@ -41,6 +42,7 @@ export class Hud {
     scene.add.rectangle(990, 57, 135, 13, 0x17343c).setOrigin(0).setScrollFactor(0).setDepth(20000);
     this.dashFill = scene.add.rectangle(992, 59, 131, 9, 0x8fd9df).setOrigin(0).setScrollFactor(0).setDepth(20001);
     this.dashText = text(1144, 48, 'READY', 19, '#a4e5e6', true);
+    this.chargeText = text(918, 77, '[Q]  KINETIC READY', 12, '#a4e5e6');
 
     const key = (x: number, w: number, name: string, action: string) => {
       panel.fillStyle(0x24434c, 0.8).fillRoundedRect(x, VIEW_HEIGHT - 58, w, 28, 5);
@@ -74,13 +76,15 @@ export class Hud {
     this.deathGroup = [veil, frame, overline, title, subtitle, button, buttonText];
   }
 
-  update(hp: number, maxHp: number, dashProgress: number): void {
+  update(hp: number, maxHp: number, dashProgress: number, chargeProgress: number): void {
     this.hpFill.width = 260 * hp / maxHp;
     this.hpFill.setFillStyle(hp < maxHp * 0.3 ? 0xdb8c81 : 0x9fd9c1);
     this.hpText.setText(`${hp} / ${maxHp} HP`);
     this.dashFill.width = 131 * dashProgress;
     this.dashText.setText(dashProgress >= 1 ? 'READY' : `${Math.ceil((1 - dashProgress) * 1.7 * 10) / 10}s`);
     this.dashText.setColor(dashProgress >= 1 ? '#a4e5e6' : '#7b9c9c');
+    this.chargeText.setText(chargeProgress >= 1 ? '[Q]  KINETIC READY' : `[Q]  KINETIC ${((1 - chargeProgress) * KINETIC_CHARGE.cooldown / 1000).toFixed(1)}s`);
+    this.chargeText.setColor(chargeProgress >= 1 ? '#a4e5e6' : '#7b9c9c');
   }
 
   setDiscoveryPrompt(visible: boolean): void { this.discoveryPrompt.setVisible(visible); }

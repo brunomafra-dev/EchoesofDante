@@ -29,14 +29,19 @@ export class EnergySaber {
     this.trail = scene.add.graphics();
   }
 
-  render(position: Vec2, facing: number, pose: SaberPose, bob: number, dashing: boolean): void {
+  render(position: Vec2, facing: number, pose: SaberPose, bob: number, dashing: boolean, charging = false): void {
     this.view.setPosition(20 + (dashing ? 3 : 0) + bob * Math.sin(facing), -19 + bob * Math.cos(facing));
-    this.view.setRotation(pose.phase === 'READY' && dashing ? -0.68 : pose.relativeAngle);
-    this.view.setScale(pose.phase === 'SWING' ? 1.06 : 1);
+    this.view.setRotation(charging ? 0 : pose.phase === 'READY' && dashing ? -0.68 : pose.relativeAngle);
+    this.view.setScale(charging ? 1.08 : pose.phase === 'SWING' ? 1.06 : 1);
     this.indicator.clear().setDepth(position.y - 1);
     this.trail.clear().setDepth(position.y + 2);
 
-    if (pose.phase === 'WINDUP') {
+    if (charging) {
+      const x = Math.cos(facing);
+      const y = Math.sin(facing);
+      this.trail.lineStyle(9, 0x5fe6d8, 0.16).lineBetween(position.x + x * 32, position.y + y * 32, position.x + x * 82, position.y + y * 82);
+      this.trail.lineStyle(3, 0xd7fff7, 0.48).lineBetween(position.x + x * 42, position.y + y * 42, position.x + x * 82, position.y + y * 82);
+    } else if (pose.phase === 'WINDUP') {
       this.indicator.lineStyle(2, 0x82dce3, 0.28);
       this.indicator.beginPath().arc(position.x, position.y, PLAYER.attackRange, facing - PLAYER.attackHalfAngle, facing + PLAYER.attackHalfAngle).strokePath();
     } else if (pose.phase === 'SWING') {

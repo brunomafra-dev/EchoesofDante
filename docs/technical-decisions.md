@@ -104,3 +104,10 @@
 - A rotação integral do contêiner de mira deixava o corpo horizontal ao apontar para os lados. O contêiner ainda orienta o sabre, mas `bodyRig` e `legsRig` recebem a rotação inversa; o torso seleciona vista frontal, lateral ou traseira segundo o ângulo do mouse. A pequena inclinação de ataque continua local ao torso.
 - Os SVGs do corpo e das botas foram redesenhados em postura vertical. Braços e contato com o chão acompanham essa postura; a mão direita se estende até o cabo existente. Nenhuma velocidade, hitbox, alcance, dano ou estado de combate foi alterado.
 - Capturas e interação no Chrome headless em 1366×768 e 1920×1080 verificaram as quatro direções, caminhada, parada, golpe, dash, acerto de 34 HP, dano recebido, morte e respawn sem erro de console. A avaliação da naturalidade artística permanece com o jogador.
+
+## Sprint 02.2 — Kinetic Charge
+
+- Não havia especificação concreta da habilidade no código, documentação, Art Bible ou histórico. A versão mínima usa Q, direção da mira capturada no início, 600 unidades/s por 180 ms, 30 de dano, arco frontal de 44 unidades e 0,45 radiano, cooldown de 3200 ms. Todos os valores ficam em `config/game.ts`.
+- `KineticCharge` guarda duração, cooldown, direção e alvos já atingidos. A detecção reutiliza `inMeleeArc` nas posições anterior e posterior ao movimento corrigido por `moveWithCollisions`; cada Hollow recebe no máximo um impacto por ativação. `GameScene` usa o mesmo fluxo de dano, reação e morte do Saber Strike.
+- Durante a carga, o movimento segue a mira fixada e a lâmina aponta para frente; ataque básico e Dash aguardam a janela de 180 ms. A habilidade não concede invulnerabilidade e é encerrada quando o Warrior morre. O HUD mostra Q e o cooldown, sem sistema de recursos.
+- Chrome headless verificou direção cardinal e diagonal, Q andando, cooldown, dois alvos com 30 de dano cada, morte de Hollow, bloqueio pela rocha, ataque e Dash após a carga, dano recebido, morte durante a carga, respawn e First Discovery. Houve cerca de 60 FPS depois do carregamento na execução medida, sem erro de console; sensação e balanceamento ainda exigem avaliação humana.

@@ -1,12 +1,12 @@
 import Phaser from 'phaser';
 import type { SaberPose } from '../combat/Attack';
 import { Health } from '../combat/Health';
-import { PLAYER } from '../config/game';
+import { KINETIC_CHARGE, PLAYER } from '../config/game';
 import { moveWithCollisions, type Obstacle } from '../systems/Movement';
 import { clamp, normalized, type Vec2 } from '../utils/math';
 import { EnergySaber } from './EnergySaber';
 
-export type PlayerAnimationState = 'IDLE' | 'WALK' | 'ATTACK_WINDUP' | 'ATTACK_SWING' | 'ATTACK_RECOVERY' | 'DASH' | 'HURT' | 'DEAD';
+export type PlayerAnimationState = 'IDLE' | 'WALK' | 'ATTACK_WINDUP' | 'ATTACK_SWING' | 'ATTACK_RECOVERY' | 'DASH' | 'CHARGE' | 'HURT' | 'DEAD';
 
 export class Player {
   readonly position: Vec2;
@@ -103,12 +103,13 @@ export class Player {
     return true;
   }
 
-  update(now: number, deltaSeconds: number, input: Vec2, aim: number, obstacles: ReadonlyArray<Obstacle>, pose: SaberPose): void {
+  update(now: number, deltaSeconds: number, input: Vec2, aim: number, obstacles: ReadonlyArray<Obstacle>, pose: SaberPose, chargeDirection: Vec2 | null): void {
     if (this.isDead) return;
     this.rotation = aim;
     if (this.isDashing && now >= this.dashUntil) this.isDashing = false;
-    const direction = this.isDashing ? this.dashVector : input;
-    const speed = this.isDashing ? PLAYER.dashSpeed : PLAYER.speed;
+    const charging = chargeDirection !== null;
+    const direction = charging ? chargeDirection : this.isDashing ? this.dashVector : input;
+    const speed = charging ? KINETIC_CHARGE.speed : this.isDashing ? PLAYER.dashSpeed : PLAYER.speed;
     this.velocity.x = direction.x * speed;
     this.velocity.y = direction.y * speed;
     const previousX = this.position.x;
@@ -117,7 +118,7 @@ export class Player {
     const movedX = this.position.x - previousX;
     const movedY = this.position.y - previousY;
     const travelled = Math.hypot(movedX, movedY);
-    const walking = !this.isDashing && travelled > 0.1;
+    const walking = !this.isDashing && !charging && travelled > 0.1;
     if (walking) {
       if (!this.wasWalking) {
         this.stepPhase = 0;
@@ -145,14 +146,15 @@ export class Player {
       this.rightLeg.setPosition(9, -2);
     }
 
-    if (this.isDashing) this.animationState = 'DASH';
+    if (charging) this.animationState = 'CHARGE';
+    else if (this.isDashing) this.animationState = 'DASH';
     else if (now < this.hitFlashUntil) this.animationState = 'HURT';
     else if (pose.phase !== 'READY') this.animationState = `ATTACK_${pose.phase}` as PlayerAnimationState;
     else this.animationState = walking ? 'WALK' : 'IDLE';
 
     const bob = -lift * 1.9;
     const attackTwist = pose.phase === 'READY' ? 0 : clamp(pose.relativeAngle * 0.075, -0.1, 0.1);
-    this.bodyRig.setPosition((this.isDashing ? 5 : 0) + bob * sinAim, bob * cosAim + (this.isDashing ? -1 : 0));
+    this.bodyRig.setPosition((this.isDashing ? 5 : charging ? 3 : 0) + bob * sinAim, bob * cosAim + (this.isDashing ? -1 : 0));
     this.setAim(aim, (walking ? stride * 0.015 : 0) + attackTwist);
     this.supportArm.setRotation(Math.PI / 2 + (walking ? -stride * 0.075 : 0));
     // The hand follows the existing saber grip as it orbits with mouse aim.
@@ -167,9 +169,9 @@ export class Player {
     this.shadow.setPosition(this.position.x, this.position.y + 39).setDepth(this.position.y - 3);
     this.groundContact.setPosition(this.position.x, this.position.y + 39).setDepth(this.position.y - 2);
     this.ring.setPosition(this.position.x, this.position.y + 39).setDepth(this.position.y - 1);
-    this.ring.setStrokeStyle(1.5, this.isDashing ? 0xd7fff7 : 0x89d9d2, this.isDashing ? 0.78 : 0.28);
+    this.ring.setStrokeStyle(charging ? 2.5 : 1.5, charging ? 0x5fe6d8 : this.isDashing ? 0xd7fff7 : 0x89d9d2, charging ? 0.86 : this.isDashing ? 0.78 : 0.28);
     this.view.setAlpha(this.isDashing ? 0.74 : now < this.invulnerableUntil ? 0.7 + Math.sin(now * 0.045) * 0.25 : 1);
-    this.weapon.render(this.position, aim, pose, bob, this.isDashing);
+    this.weapon.render(this.position, aim, pose, bob, this.isDashing, charging);
   }
 
   flashHurt(): void {

@@ -2,10 +2,10 @@ import Phaser from 'phaser';
 import { normalized, type Vec2 } from '../utils/math';
 
 export class Controls {
-  private keys: Record<'W' | 'A' | 'S' | 'D' | 'SPACE' | 'R' | 'E', Phaser.Input.Keyboard.Key>;
+  private keys: Record<'W' | 'A' | 'S' | 'D' | 'Q' | 'SPACE' | 'R' | 'E', Phaser.Input.Keyboard.Key>;
 
   constructor(private scene: Phaser.Scene) {
-    this.keys = scene.input.keyboard!.addKeys('W,A,S,D,SPACE,R,E') as typeof this.keys;
+    this.keys = scene.input.keyboard!.addKeys('W,A,S,D,Q,SPACE,R,E') as typeof this.keys;
     scene.input.mouse?.disableContextMenu();
   }
 
@@ -21,6 +21,7 @@ export class Controls {
 
   get attacking(): boolean { return this.scene.input.activePointer.isDown && this.scene.input.activePointer.leftButtonDown(); }
   get dashPressed(): boolean { return Phaser.Input.Keyboard.JustDown(this.keys.SPACE); }
+  get chargePressed(): boolean { return Phaser.Input.Keyboard.JustDown(this.keys.Q); }
   get restartPressed(): boolean { return Phaser.Input.Keyboard.JustDown(this.keys.R); }
   get interactPressed(): boolean { return Phaser.Input.Keyboard.JustDown(this.keys.E); }
 }

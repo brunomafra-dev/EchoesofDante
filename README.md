@@ -1,8 +1,8 @@
-# Echoes of Dante — Galactic Warrior ereto
+# Echoes of Dante — Sprint 02.2
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
-Protótipo de action RPG sci-fi para navegador. O Galactic Warrior mantém uma silhueta humana ereta ao mirar, com vistas frontal, lateral e traseira dentro da direção Organic Sci-Fi da [Art Bible](docs/art-bible/). Hollow Crawler, Dante Forest, movimento, combate, exploração e descoberta nas ruínas permanecem disponíveis.
+Protótipo de action RPG sci-fi para navegador. Kinetic Charge acrescenta uma investida ofensiva ao Galactic Warrior, cuja silhueta segue a direção Organic Sci-Fi da [Art Bible](docs/art-bible/). Hollow Crawler, Dante Forest, movimento, combate, exploração e descoberta nas ruínas permanecem disponíveis.
 
 ## Stack
 
@@ -35,11 +35,13 @@ npm run preview
 | Mirar | Mouse |
 | Saber Strike | Clique esquerdo; segure para repetir após o cooldown |
 | Void Dash | Espaço; segue a direção de movimento ou da mira se parado |
+| Kinetic Charge | Q; investida ofensiva na direção da mira |
 | Respawn após morrer | R ou botão na tela |
 | Investigar as ruínas | E quando o prompt aparecer perto da estrutura |
 
 ## Escopo implementado
 
+- Kinetic Charge: Q fixa a direção da mira por 180 ms e avança até cerca de 108 unidades em terreno livre. O impacto frontal causa 30 de dano uma vez por Hollow; o cooldown é de 3,2 s e aparece no HUD. A carga não concede invulnerabilidade. Ataque e Dash voltam ao fim da investida.
 - Quatro Hollows, em dois pares, percorrem rotas curtas nas clareiras central e leste. Ao perceber o jogador, usam a perseguição e o combate existentes; ao perder contato, voltam ao ponto inicial e retomam a patrulha. Os demais continuam em seus postos.
 - A formação mineral a leste emite um pulso breve e discreto de tempos em tempos. O fenômeno não exige interação, não cria missão e reutiliza os mesmos objetos visuais.
 - First Discovery: estrutura parcialmente soterrada nas ruínas do norte, inscrições, fragmentos e vegetação. Investigar produz um pulso, som opcional e a mensagem temporária “SIGNAL DETECTED / SOURCE: UNKNOWN”. As inscrições permanecem acesas; a descoberta reinicia com o respawn, sem persistência ou recompensa.
@@ -51,7 +53,8 @@ npm run preview
 
 ## Limitações conhecidas
 
-- Este primeiro recorte não substitui HUD, Energy Saber, VFX, Mineral Pulse nem First Discovery; o restante do terreno ainda usa arte provisória. A leitura final do novo visual requer avaliação humana jogando.
+- Kinetic Charge usa um arco frontal curto e colisões circulares existentes; ainda não possui animação própria de corpo ou ajuste fino de balanceamento. A direção fica fixa durante os 180 ms da investida.
+- HUD e Energy Saber receberam apenas o feedback necessário para a habilidade; sua arte base, Mineral Pulse, First Discovery e parte do terreno ainda são provisórios.
 - Controles voltados a desktop com teclado e mouse; sem suporte dedicado a toque.
 - Os inimigos derrotados só retornam ao reiniciar a arena.
 - A vegetação comum é decorativa; rochas, tronco da árvore maior e base da ruína bloqueiam movimento.
@@ -64,6 +67,6 @@ npm run preview
 
 ## Próximos passos
 
-Avaliar manualmente o novo recorte visual durante combate e exploração antes de ampliar a substituição de arte. O desempenho em outra GPU ou resolução pode ser diferente do Chrome headless medido nos testes.
+Avaliar manualmente o alcance, o dano e o ritmo do Kinetic Charge em combate antes de ajustar seus valores. O desempenho em outra GPU ou resolução pode ser diferente do Chrome headless medido nos testes.
 
 As decisões técnicas desta sprint estão em [docs/technical-decisions.md](docs/technical-decisions.md).
