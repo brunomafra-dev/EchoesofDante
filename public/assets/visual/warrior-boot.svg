@@ -1,7 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="160" height="60" viewBox="-40 -15 80 30">
-  <path d="M-38-9 L-24-11 L-9-7 L-7 4 L-20 10 L-36 8 L-40 2 Z" fill="#142d37" stroke="#0a1e27" stroke-width="2.5"/>
-  <path d="M-37-8 L-27-10 L-23 8 L-35 7 Z" fill="#c3cabc" stroke="#3a5659" stroke-width="2"/>
-  <path d="M-26-10 L-10-6 L-9 1 L-23 4 Z" fill="#718b87"/>
-  <path d="M-21 5 L-8 2 L-9 7 L-20 10 Z" fill="#e0863f"/>
-  <path d="M-37 8 L-20 11 L-8 7" fill="none" stroke="#071a22" stroke-width="2"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="288" height="72" viewBox="-72 -18 144 36">
+  <!-- Hip at -19, knee at -41, boot at -63; each leg stays a separate image. -->
+  <path d="M-20-7 L-31-9 L-40-6 L-43 4 L-34 9 L-20 7 L-16 1 Z" fill="#526c69" stroke="#152f37" stroke-width="2.5"/>
+  <path d="M-21-5 L-30-7 L-37-5 L-38 5 L-28 6 L-19 4 Z" fill="#c6d0c3"/>
+  <path d="M-41-8 Q-45-11-49-8 L-52 7 L-44 10 L-39 5 Z" fill="#243e44" stroke="#102831" stroke-width="2"/>
+  <path d="M-47-6 L-50 4 L-44 6 L-41-5 Z" fill="#e0863f"/>
+  <path d="M-52-9 L-63-9 L-67-4 L-67 5 L-60 10 L-50 7 L-49-3 Z" fill="#162e38" stroke="#071b27" stroke-width="2.5"/>
+  <path d="M-53-8 L-62-7 L-65-2 L-63 6 L-51 5 Z" fill="#aabbb0"/>
+  <path d="M-65 5 L-58 9 L-50 7" fill="none" stroke="#e1e4d2" stroke-width="2"/>
 </svg>

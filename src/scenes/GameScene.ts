@@ -31,6 +31,8 @@ export class GameScene extends Phaser.Scene {
     const art = [
       'warrior-body',
       'warrior-boot',
+      'warrior-support-arm',
+      'warrior-saber-arm',
       'hollow-body',
       'hollow-rear-limbs',
       'hollow-forelimbs',

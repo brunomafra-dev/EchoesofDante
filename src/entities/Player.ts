@@ -26,8 +26,8 @@ export class Player {
   private rightLeg: Phaser.GameObjects.Image;
   private legsRig: Phaser.GameObjects.Container;
   private bodyRig: Phaser.GameObjects.Container;
-  private supportArm: Phaser.GameObjects.Graphics;
-  private saberArm: Phaser.GameObjects.Graphics;
+  private supportArm: Phaser.GameObjects.Image;
+  private saberArm: Phaser.GameObjects.Image;
   private ring: Phaser.GameObjects.Arc;
   private hurtOverlay: Phaser.GameObjects.Graphics;
   private hitFlashUntil = 0;
@@ -48,24 +48,15 @@ export class Player {
 
   constructor(private scene: Phaser.Scene, x: number, y: number) {
     this.position = { x, y };
-    this.shadow = scene.add.ellipse(x, y + 17, 52, 20, 0x020e14, 0.39).setDepth(y - 3);
+    this.shadow = scene.add.ellipse(x, y + 17, 68, 23, 0x020e14, 0.39).setDepth(y - 3);
     this.groundContact = scene.add.ellipse(x, y + 12, 31, 11, 0x061a20, 0.32).setDepth(y - 2);
     this.leftLeg = this.makeLeg(-13);
     this.rightLeg = this.makeLeg(13);
     this.legsRig = scene.add.container(0, 0, [this.leftLeg, this.rightLeg]);
 
-    const torso = scene.add.image(0, 0, 'warrior-body').setDisplaySize(96, 88);
-
-    this.supportArm = scene.add.graphics();
-    this.supportArm.fillStyle(0x254859).fillRoundedRect(7, 22, 24, 10, 4);
-    this.supportArm.fillStyle(0xd9e8df).fillRoundedRect(11, 24, 18, 7, 3);
-    this.supportArm.lineStyle(2, 0xe0863f).lineBetween(14, 26, 26, 26);
-    this.supportArm.fillStyle(0x102936).fillCircle(29, 27, 5);
-    this.saberArm = scene.add.graphics();
-    this.saberArm.fillStyle(0x254859).fillRoundedRect(7, -31, 25, 10, 4);
-    this.saberArm.fillStyle(0xd9e8df).fillRoundedRect(12, -30, 18, 7, 3);
-    this.saberArm.lineStyle(2, 0xe0863f).lineBetween(16, -29, 28, -29);
-    this.saberArm.fillStyle(0x12323d).fillCircle(30, -25, 5);
+    const torso = scene.add.image(0, 0, 'warrior-body').setDisplaySize(112, 90);
+    this.supportArm = scene.add.image(0, 0, 'warrior-support-arm').setDisplaySize(96, 88);
+    this.saberArm = scene.add.image(0, 0, 'warrior-saber-arm').setDisplaySize(96, 88);
 
     this.hurtOverlay = scene.add.graphics();
     this.hurtOverlay.fillStyle(0xff9a7f, 0.8).fillEllipse(7, 0, 51, 56);
@@ -77,7 +68,7 @@ export class Player {
   }
 
   private makeLeg(y: number): Phaser.GameObjects.Image {
-    return this.scene.add.image(0, y, 'warrior-boot').setDisplaySize(80, 30);
+    return this.scene.add.image(0, y, 'warrior-boot').setDisplaySize(144, 36);
   }
 
   get hp(): number { return this.health.current; }

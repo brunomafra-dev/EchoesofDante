@@ -1,8 +1,8 @@
-# Echoes of Dante — Visual Prototype 01
+# Echoes of Dante — Visual Prototype 01.1
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
-Protótipo de action RPG sci-fi para navegador. O primeiro recorte visual aplica a direção Organic Sci-Fi da [Art Bible](docs/art-bible/) ao Galactic Warrior, Hollow Crawler e kit básico da Dante Forest. Movimento, combate, exploração e a descoberta nas ruínas permanecem disponíveis.
+Protótipo de action RPG sci-fi para navegador. O Visual Prototype 01.1 refina a silhueta humana do Galactic Warrior dentro da direção Organic Sci-Fi da [Art Bible](docs/art-bible/). Hollow Crawler, Dante Forest, movimento, combate, exploração e descoberta nas ruínas permanecem disponíveis.
 
 ## Stack
 
@@ -45,7 +45,7 @@ npm run preview
 - First Discovery: estrutura parcialmente soterrada nas ruínas do norte, inscrições, fragmentos e vegetação. Investigar produz um pulso, som opcional e a mensagem temporária “SIGNAL DETECTED / SOURCE: UNKNOWN”. As inscrições permanecem acesas; a descoberta reinicia com o respawn, sem persistência ou recompensa.
 - Dante Forest de 2200×1500 unidades: entrada ao sudoeste, trilha principal rumo às ruínas ao norte e desvios para uma árvore maior a oeste e uma formação mineral a leste. Clareiras conectadas, vegetação em camadas e bancos de rochas delimitam o espaço; câmera suave e zoom preservados.
 - O solo e os desenhos estáticos da floresta são renderizados uma vez em camadas. Copas e troncos usam três SVGs compartilhados; rochas têm facetas irregulares. Profundidade e animações existentes foram preservadas.
-- Galactic Warrior com armadura espacial em camadas, capacete, mochila de campo e acentos industriais laranja; torso e botas em SVG acompanham a mira e o ciclo de passos existentes. Sombra, Energy Saber, HP, movimento, dash e invulnerabilidade breve permanecem.
+- Galactic Warrior com capacete destacado, torso mais estreito, braços articulados, duas pernas expostas e mochila menor. Torso, braços e botas em SVG usam o mesmo rig de mira, passada e ataque. Sombra, Energy Saber, HP, movimento, dash e invulnerabilidade breve permanecem.
 - Oito Hollow Crawlers distribuídos em quatro pares ao longo da exploração, agora com carapaça e membros orgânicos em SVG e núcleo quente. Detecção, perseguição, preparação do ataque, reação ao dano e morte continuam iguais. A entrada fica fora do alcance inicial de detecção.
 - Golpe com preparação, varredura e recuperação; arco e trail ligados à posição da lâmina; dano aplicado durante a varredura. Contato curto orientado pelo sabre, contração e recuo visual do Hollow, números de dano, efeito de início/fim do dash, HUD de exploração, sons opcionais e tela de respawn.
 
