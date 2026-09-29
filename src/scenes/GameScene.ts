@@ -2,11 +2,12 @@ import Phaser from 'phaser';
 import { SaberAttack } from '../combat/Attack';
 import { applyDamage } from '../combat/Damage';
 import { PLAYER, CRAWLER, WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
-import { FOREST_ENTRY, FOREST_SPAWNS } from '../config/forest';
+import { FOREST_ENTRY, FOREST_PATROLS, FOREST_SPAWNS } from '../config/forest';
 import { HollowCrawler } from '../entities/HollowCrawler';
 import { Player } from '../entities/Player';
 import { Controls } from '../input/Controls';
 import { Arena } from '../systems/Arena';
+import { MineralPulse } from '../systems/MineralPulse';
 import { SoundEffects } from '../systems/Sound';
 import { NorthernDiscovery } from '../systems/NorthernDiscovery';
 import { Hud } from '../ui/Hud';
@@ -29,10 +30,11 @@ export class GameScene extends Phaser.Scene {
     this.attack = new SaberAttack();
     this.enemies = [];
     this.arena = new Arena(this);
+    new MineralPulse(this);
     this.discovery = new NorthernDiscovery(this);
     this.player = new Player(this, FOREST_ENTRY.x, FOREST_ENTRY.y);
     this.controls = new Controls(this);
-    FOREST_SPAWNS.forEach(point => this.enemies.push(new HollowCrawler(this, point.x, point.y)));
+    FOREST_SPAWNS.forEach((point, index) => this.enemies.push(new HollowCrawler(this, point.x, point.y, FOREST_PATROLS[index])));
     this.hud = new Hud(this, () => this.restart());
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       if (pointer.leftButtonDown() && !this.player.isDead) this.beginStrike(this.time.now);

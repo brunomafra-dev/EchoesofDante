@@ -30,10 +30,13 @@ export class HollowCrawler {
   private knockback: Vec2 = { x: 0, y: 0 };
   private attackCommitted = false;
   private spawn: Vec2;
+  private patrolIndex = 1;
+  private patrolPauseUntil = 0;
+  private returningFromCombat = false;
   private travelPhase = 0;
   private hurtTilt = 0;
 
-  constructor(private scene: Phaser.Scene, x: number, y: number) {
+  constructor(private scene: Phaser.Scene, x: number, y: number, private patrol?: readonly Vec2[]) {
     this.position = { x, y };
     this.spawn = { x, y };
     this.shadow = scene.add.ellipse(x, y + 15, 51, 19, 0x030f17, 0.55).setDepth(y - 2);
@@ -75,8 +78,10 @@ export class HollowCrawler {
   update(now: number, dt: number, player: Vec2, playerDead: boolean, obstacles: ReadonlyArray<Obstacle>, onAttack: () => void): void {
     if (this.isDead) return;
     const gap = distance(this.position, player);
-    const direction = normalized(player.x - this.position.x, player.y - this.position.y);
+    let direction = normalized(player.x - this.position.x, player.y - this.position.y);
     this.velocity.x = this.velocity.y = 0;
+
+    if (this.patrol && !playerDead && gap <= CRAWLER.detectionRange) this.returningFromCombat = true;
 
     if (now < this.hurtUntil) {
       this.state = 'HURT';
@@ -86,10 +91,28 @@ export class HollowCrawler {
       this.knockback.y *= Math.max(0, 1 - dt * 10);
     } else if (playerDead || gap > CRAWLER.detectionRange) {
       this.state = 'IDLE';
-      const home = normalized(this.spawn.x - this.position.x, this.spawn.y - this.position.y);
-      if (distance(this.position, this.spawn) > 22) {
-        this.velocity.x = home.x * 45;
-        this.velocity.y = home.y * 45;
+      if (!this.patrol || playerDead || this.returningFromCombat) {
+        const home = normalized(this.spawn.x - this.position.x, this.spawn.y - this.position.y);
+        if (distance(this.position, this.spawn) > 22) {
+          this.velocity.x = home.x * 45;
+          this.velocity.y = home.y * 45;
+          if (this.patrol) direction = home;
+        } else if (this.patrol && !playerDead) {
+          this.returningFromCombat = false;
+          this.patrolIndex = 1;
+          this.patrolPauseUntil = now + 400;
+        }
+      } else if (now >= this.patrolPauseUntil) {
+        const target = this.patrol[this.patrolIndex];
+        const toTarget = normalized(target.x - this.position.x, target.y - this.position.y);
+        if (distance(this.position, target) < 12) {
+          this.patrolIndex = (this.patrolIndex + 1) % this.patrol.length;
+          this.patrolPauseUntil = now + 550;
+        } else {
+          this.velocity.x = toTarget.x * 45;
+          this.velocity.y = toTarget.y * 45;
+          direction = toTarget;
+        }
       }
     } else if (this.state === 'ATTACK' && now < this.windupUntil) {
       // Telegraph remains stationary and can be escaped with a dash.

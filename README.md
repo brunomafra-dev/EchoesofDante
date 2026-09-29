@@ -1,8 +1,8 @@
-# Echoes of Dante — Sprint 02.0.1
+# Echoes of Dante — Sprint 02.1
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
-Protótipo de action RPG sci-fi para navegador. A Sprint 02.0.1 corrige a lentidão dos primeiros segundos sem alterar velocidade, combate ou exploração. As ruínas do norte continuam oferecendo a primeira descoberta ambiental.
+Protótipo de action RPG sci-fi para navegador. A Sprint 02.1 acrescenta movimento independente do jogador em duas clareiras e um pulso mineral discreto. Movimento, combate, exploração e a descoberta nas ruínas permanecem disponíveis.
 
 ## Stack
 
@@ -40,6 +40,8 @@ npm run preview
 
 ## Escopo implementado
 
+- Quatro Hollows, em dois pares, percorrem rotas curtas nas clareiras central e leste. Ao perceber o jogador, usam a perseguição e o combate existentes; ao perder contato, voltam ao ponto inicial e retomam a patrulha. Os demais continuam em seus postos.
+- A formação mineral a leste emite um pulso breve e discreto de tempos em tempos. O fenômeno não exige interação, não cria missão e reutiliza os mesmos objetos visuais.
 - First Discovery: estrutura parcialmente soterrada nas ruínas do norte, inscrições, fragmentos e vegetação. Investigar produz um pulso, som opcional e a mensagem temporária “SIGNAL DETECTED / SOURCE: UNKNOWN”. As inscrições permanecem acesas; a descoberta reinicia com o respawn, sem persistência ou recompensa.
 - Dante Forest de 2200×1500 unidades: entrada ao sudoeste, trilha principal rumo às ruínas ao norte e desvios para uma árvore maior a oeste e uma formação mineral a leste. Clareiras conectadas, vegetação em camadas e bancos de rochas delimitam o espaço; câmera suave e zoom preservados.
 - O solo e os desenhos estáticos da floresta são renderizados uma vez em camadas. Copas e troncos usam três pequenas texturas procedurais compartilhadas e mantêm sua profundidade e animações.
@@ -61,6 +63,6 @@ npm run preview
 
 ## Próximos passos
 
-Avaliar manualmente o início da partida no Chrome usado para jogar, além da leitura da descoberta nas ruínas. O desempenho em outra GPU ou resolução pode ser diferente do Chrome headless medido nesta auditoria.
+Avaliar manualmente se as patrulhas e o pulso mineral tornam a floresta mais viva sem distrair do combate. O desempenho em outra GPU ou resolução pode ser diferente do Chrome headless medido nos testes.
 
 As decisões técnicas desta sprint estão em [docs/technical-decisions.md](docs/technical-decisions.md).

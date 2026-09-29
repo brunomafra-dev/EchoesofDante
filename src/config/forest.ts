@@ -21,6 +21,13 @@ export const FOREST_SPAWNS: Vec2[] = [
   { x: 1440, y: 500 }, { x: 1580, y: 450 },
   { x: 1770, y: 980 }, { x: 1830, y: 1050 },
 ];
+// Short, authored loops in the two open clearings; other Hollows remain at their spawns.
+export const FOREST_PATROLS: Partial<Record<number, readonly Vec2[]>> = {
+  0: [FOREST_SPAWNS[0], { x: 900, y: 875 }, { x: 835, y: 835 }],
+  1: [FOREST_SPAWNS[1], { x: 960, y: 785 }, { x: 915, y: 820 }],
+  6: [FOREST_SPAWNS[6], { x: 1700, y: 935 }, { x: 1740, y: 1030 }],
+  7: [FOREST_SPAWNS[7], { x: 1780, y: 1110 }, { x: 1720, y: 1065 }],
+};
 export const FOREST_ROCKS = [
   [290, 1060, 48], [650, 1190, 58], [680, 700, 65],
   [920, 1100, 55], [990, 610, 68], [1190, 940, 60],
