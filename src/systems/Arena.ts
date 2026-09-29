@@ -7,7 +7,73 @@ export class Arena {
   readonly obstacles: Obstacle[] = [];
   private seed = 92341;
 
-  constructor(private scene: Phaser.Scene) { this.draw(); }
+  constructor(private scene: Phaser.Scene) {
+    this.createTreeTextures();
+    this.draw();
+    this.bakeStaticScenery();
+  }
+
+  private createTreeTextures(): void {
+    const size = 100;
+    if (!this.scene.textures.exists('dante-tree-trunk')) {
+      const g = this.scene.add.graphics().setVisible(false);
+      g.fillStyle(0x041a20, 0.5).fillEllipse(118, 110, size * 1.9, size * 0.62);
+      g.fillStyle(0x345a54).fillRoundedRect(98, 10, size * 0.25, size * 1.05, 5);
+      g.lineStyle(3, 0x608677, 0.7).lineBetween(110, 28, 114, 100);
+      g.generateTexture('dante-tree-trunk', 220, 155);
+      g.destroy();
+    }
+    for (const blue of [true, false]) {
+      const key = blue ? 'dante-canopy-blue' : 'dante-canopy-green';
+      if (this.scene.textures.exists(key)) continue;
+      const g = this.scene.add.graphics().setVisible(false);
+      const ox = 100;
+      const oy = 90;
+      g.fillStyle(0x071e27, 0.45).fillEllipse(ox + 5, oy + 9, size * 1.55, size * 0.75);
+      g.fillStyle(blue ? 0x244655 : 0x245348);
+      g.fillEllipse(ox - size * 0.34, oy - size * 0.09, size * 0.98, size * 0.82);
+      g.fillEllipse(ox + size * 0.36, oy - size * 0.18, size * 0.95, size * 0.87);
+      g.fillStyle(blue ? 0x406a76 : 0x39765e).fillEllipse(ox, oy - size * 0.38, size * 1.08, size * 0.77);
+      g.lineStyle(2, 0x8bbaa2, 0.5).strokeEllipse(ox, oy - size * 0.38, size * 1.08, size * 0.77);
+      g.fillStyle(blue ? 0x9bb3c3 : 0xa9d4a8, 0.7).fillCircle(ox + size * 0.23, oy - size * 0.48, 2.6);
+      g.fillCircle(ox - size * 0.38, oy - size * 0.06, 2);
+      g.generateTexture(key, 200, 150);
+      g.destroy();
+    }
+  }
+
+  private bakeStaticScenery(): void {
+    // Graphics are costly to replay every frame. Capture the static art once,
+    // keeping narrow depth bands so the player can still pass among the trees.
+    const graphics = this.scene.children.list.filter((object): object is Phaser.GameObjects.Graphics =>
+      object instanceof Phaser.GameObjects.Graphics);
+    const floor = graphics.find(object => object.depth === -10000);
+    if (floor) {
+      this.scene.add.renderTexture(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
+        .setOrigin(0).setDepth(floor.depth).draw(floor);
+    }
+    const bandHeight = 100;
+    const bands = new Map<number, Phaser.GameObjects.Graphics[]>();
+    for (const object of graphics) {
+      if (object === floor) continue;
+      const band = Math.floor(Phaser.Math.Clamp(object.depth, 0, WORLD_HEIGHT - 1) / bandHeight);
+      const group = bands.get(band) ?? [];
+      group.push(object);
+      bands.set(band, group);
+    }
+    for (const [band, group] of bands) {
+      const top = Math.max(0, band * bandHeight - 170);
+      const bottom = Math.min(WORLD_HEIGHT, (band + 1) * bandHeight + 150);
+      const layer = this.scene.add.renderTexture(0, top, WORLD_WIDTH, bottom - top)
+        .setOrigin(0).setDepth(band * bandHeight + bandHeight / 2);
+      layer.beginDraw();
+      for (const object of group.sort((a, b) => a.depth - b.depth)) {
+        layer.batchDraw(object, object.x, object.y - top);
+      }
+      layer.endDraw();
+    }
+    graphics.forEach(object => object.destroy());
+  }
 
   private random(): number {
     this.seed = (this.seed * 1664525 + 1013904223) >>> 0;
@@ -126,21 +192,12 @@ export class Arena {
 
   private plant(x: number, y: number, size: number, sway = false): void {
     const shade = this.random();
-    const g = this.scene.add.graphics().setDepth(y + 2).setPosition(x, y);
-    g.fillStyle(0x041a20, 0.5).fillEllipse(8, 10, size * 1.9, size * 0.62);
-    g.fillStyle(0x345a54).fillRoundedRect(-size * 0.12, -size * 0.9, size * 0.25, size * 1.05, 5);
-    g.lineStyle(3, 0x608677, 0.7).lineBetween(0, -size * 0.72, size * 0.04, 0);
-    const canopy = this.scene.add.graphics().setDepth(y + 12).setPosition(x, y - size * 0.9);
-    const deep = shade < 0.3 ? 0x244655 : 0x245348;
-    const mid = shade < 0.3 ? 0x406a76 : 0x39765e;
-    canopy.fillStyle(0x071e27, 0.45).fillEllipse(5, 9, size * 1.55, size * 0.75);
-    canopy.fillStyle(deep).fillEllipse(-size * 0.34, -size * 0.09, size * 0.98, size * 0.82);
-    canopy.fillEllipse(size * 0.36, -size * 0.18, size * 0.95, size * 0.87);
-    canopy.fillStyle(mid).fillEllipse(0, -size * 0.38, size * 1.08, size * 0.77);
-    canopy.lineStyle(2, 0x8bbaa2, 0.5).strokeEllipse(0, -size * 0.38, size * 1.08, size * 0.77);
-    canopy.fillStyle(shade < 0.3 ? 0x9bb3c3 : 0xa9d4a8, 0.7).fillCircle(size * 0.23, -size * 0.48, 2.6);
-    canopy.fillCircle(-size * 0.38, -size * 0.06, 2);
-    if (sway) this.scene.tweens.add({ targets: canopy, angle: 2.5, duration: 2200 + this.random() * 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    this.scene.add.image(x, y, 'dante-tree-trunk').setOrigin(0.5, 100 / 155).setScale(size / 100).setDepth(y + 2);
+    const canopy = this.scene.add.image(x, y - size * 0.9, shade < 0.3 ? 'dante-canopy-blue' : 'dante-canopy-green')
+      .setOrigin(0.5, 0.6).setScale(size / 100).setDepth(y + 12);
+    if (sway) {
+      this.scene.tweens.add({ targets: canopy, angle: 2.5, duration: 2200 + this.random() * 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    }
   }
 
   private fern(x: number, y: number, size: number): void {

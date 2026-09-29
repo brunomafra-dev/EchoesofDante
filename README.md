@@ -1,8 +1,8 @@
-# Echoes of Dante — Sprint 02.0
+# Echoes of Dante — Sprint 02.0.1
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
-Protótipo de action RPG sci-fi para navegador. A Sprint 02.0 transforma as ruínas do norte em uma descoberta ambiental: uma estrutura antiga reage à investigação e emite um sinal de origem desconhecida.
+Protótipo de action RPG sci-fi para navegador. A Sprint 02.0.1 corrige a lentidão dos primeiros segundos sem alterar velocidade, combate ou exploração. As ruínas do norte continuam oferecendo a primeira descoberta ambiental.
 
 ## Stack
 
@@ -42,6 +42,7 @@ npm run preview
 
 - First Discovery: estrutura parcialmente soterrada nas ruínas do norte, inscrições, fragmentos e vegetação. Investigar produz um pulso, som opcional e a mensagem temporária “SIGNAL DETECTED / SOURCE: UNKNOWN”. As inscrições permanecem acesas; a descoberta reinicia com o respawn, sem persistência ou recompensa.
 - Dante Forest de 2200×1500 unidades: entrada ao sudoeste, trilha principal rumo às ruínas ao norte e desvios para uma árvore maior a oeste e uma formação mineral a leste. Clareiras conectadas, vegetação em camadas e bancos de rochas delimitam o espaço; câmera suave e zoom preservados.
+- O solo e os desenhos estáticos da floresta são renderizados uma vez em camadas. Copas e troncos usam três pequenas texturas procedurais compartilhadas e mantêm sua profundidade e animações.
 - Galactic Warrior com silhueta de traje espacial, capacete, mochila de campo, torso e pernas orientados pela mira, botas alternadas pela distância e direção percorridas, sombra no chão, Energy Saber separada do corpo, HP, movimento, dash e invulnerabilidade breve.
 - Oito Hollow Crawlers distribuídos em quatro pares ao longo da exploração, com núcleo luminoso, membros articulados, detecção, perseguição, preparação visível do ataque, reação ao dano e morte. A entrada fica fora do alcance inicial de detecção.
 - Golpe com preparação, varredura e recuperação; arco e trail ligados à posição da lâmina; dano aplicado durante a varredura. Contato curto orientado pelo sabre, contração e recuo visual do Hollow, números de dano, efeito de início/fim do dash, HUD de exploração, sons opcionais e tela de respawn.
@@ -56,9 +57,10 @@ npm run preview
 - O ciclo de passos usa transformações de formas 2D; a articulação das botas ainda é simples e precisa de avaliação humana em movimento.
 - As fontes web dependem de conexão; o jogo usa fonte alternativa do sistema se não carregarem.
 - O build inclui o Phaser em um único bundle grande; o Vite avisa sobre tamanho do chunk, embora a saída seja válida.
+- O carregamento inicial ainda precisa preparar as texturas da cena; a auditoria mediu cerca de 1,8 segundo até a cena ficar disponível no Chrome headless testado. A composição em faixas de 100 unidades pode mudar levemente a sobreposição de rochas e pequenos elementos em relação ao desenho original.
 
 ## Próximos passos
 
-Avaliar manualmente se a estrutura desperta curiosidade ao chegar às ruínas e se o prompt, o pulso e a mensagem são percebidos durante a exploração. Refinar esse momento conforme o feedback antes de expandir o conteúdo.
+Avaliar manualmente o início da partida no Chrome usado para jogar, além da leitura da descoberta nas ruínas. O desempenho em outra GPU ou resolução pode ser diferente do Chrome headless medido nesta auditoria.
 
 As decisões técnicas desta sprint estão em [docs/technical-decisions.md](docs/technical-decisions.md).
