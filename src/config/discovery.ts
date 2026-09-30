@@ -22,5 +22,6 @@ export const SIGNAL_THRESHOLD = {
   mechanismX: 1670,
   mechanismY: 230,
   mechanismRadius: 85,
-  openingMessage: 'DANTE RESPONDS\nPASSAGE OPEN',
+  openingMessage: 'SIGNAL RESPONSE: ACTIVE\nPASSAGE OPENING',
+  openedMessage: 'PASSAGE OPEN\nSOURCE: BELOW',
 } as const;

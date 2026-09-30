@@ -4,7 +4,7 @@ import { applyDamage } from '../combat/Damage';
 import { KineticCharge } from '../combat/KineticCharge';
 import { PLAYER, CRAWLER, KINETIC_CHARGE, WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
 import { FOREST_ENTRY, FOREST_PATROLS, FOREST_SPAWNS } from '../config/forest';
-import { CAVERN_ENTRY, CAVERN_HOLLOWS } from '../config/cavern';
+import { CAVERN_DEPTH_OPENING, CAVERN_ENTRY, CAVERN_HOLLOWS } from '../config/cavern';
 import { FOREST_ECHOES, SIGNAL_THRESHOLD } from '../config/discovery';
 import { HollowCrawler } from '../entities/HollowCrawler';
 import { Player } from '../entities/Player';
@@ -30,6 +30,7 @@ export class GameScene extends Phaser.Scene {
   private area: 'forest' | 'cavern' = 'forest';
   private transferHp?: number;
   private transitioning = false;
+  private cavernDepthSeen = false;
   private gateObstacle?: Obstacle;
   private enemies: HollowCrawler[] = [];
   private hollowSpawnIds = new Map<HollowCrawler, number>();
@@ -112,7 +113,7 @@ export class GameScene extends Phaser.Scene {
     });
     this.hud = new Hud(this, () => this.restart());
     this.updateProgressHud();
-    this.hud.setSignalObjective(this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen, this.area === 'cavern');
+    this.hud.setSignalObjective(this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen, this.area === 'cavern', this.cavernDepthSeen);
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       if (pointer.leftButtonDown() && !this.player.isDead) this.beginStrike(this.time.now);
     });
@@ -148,12 +149,15 @@ export class GameScene extends Phaser.Scene {
       this.hud.setSignalObjective(true, true);
       this.sounds.discovery();
     } else if (interact && nearMechanism && this.progression.openPassage()) {
-      this.mechanism?.activate();
-      this.threshold?.open(() => {
-        if (!this.gateObstacle) return;
-        const index = this.arena.obstacles.indexOf(this.gateObstacle);
-        if (index >= 0) this.arena.obstacles.splice(index, 1);
-        this.gateObstacle = undefined;
+      this.mechanism?.activate(() => {
+        this.threshold?.open(() => {
+          if (this.gateObstacle) {
+            const index = this.arena.obstacles.indexOf(this.gateObstacle);
+            if (index >= 0) this.arena.obstacles.splice(index, 1);
+            this.gateObstacle = undefined;
+          }
+          this.hud.showDiscovery(SIGNAL_THRESHOLD.openedMessage);
+        });
       });
       this.hud.showDiscovery(SIGNAL_THRESHOLD.openingMessage);
       this.hud.setSignalObjective(true, true, true);
@@ -204,6 +208,11 @@ export class GameScene extends Phaser.Scene {
     this.enemies = this.enemies.filter(enemy => !enemy.isDead);
     this.hud.update(this.player.hp, this.player.maxHp, this.player.dashProgress, this.charge.getProgress(time), heavy.phase, heavy.level);
     if (this.area === 'forest' && this.progression.passageOpen && !this.gateObstacle && this.threshold?.isInside(this.player.position)) this.enterCavern();
+    if (this.area === 'cavern' && !this.cavernDepthSeen && distance(this.player.position, CAVERN_DEPTH_OPENING) <= CAVERN_DEPTH_OPENING.radius) {
+      this.cavernDepthSeen = true;
+      this.hud.showDiscovery('SIGNAL CONTINUES\nDEPTH: UNKNOWN');
+      this.hud.setSignalObjective(true, true, true, true, true);
+    }
   }
 
   private enterCavern(): void {
