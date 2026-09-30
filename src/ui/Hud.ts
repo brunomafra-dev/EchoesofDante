@@ -16,6 +16,7 @@ export class Hud {
   private levelMessage: Phaser.GameObjects.Text;
   private signalPanel: Phaser.GameObjects.Graphics;
   private signalObjective: Phaser.GameObjects.Text;
+  private areaSubtitle: Phaser.GameObjects.Text;
   private discoveryTimer?: Phaser.Time.TimerEvent;
   private levelTimer?: Phaser.Time.TimerEvent;
 
@@ -39,7 +40,7 @@ export class Hud {
     panel.fillStyle(0x82c9cb, 0.65).fillRect(39, VIEW_HEIGHT - 68, 46, 2);
 
     text(45, 24, 'ECHOES OF DANTE', 26, '#ecf5ee', true);
-    text(47, 61, 'DANTE FOREST   /   COMBAT PROTOTYPE', 12, '#83a8a8');
+    this.areaSubtitle = text(47, 61, 'DANTE FOREST   /   COMBAT PROTOTYPE', 12, '#83a8a8');
     this.progressText = text(44, 112, 'LV 1   XP 0 / 60   ECHOES 0 / 3', 17, '#d8e9dc', true);
     this.signalPanel = scene.add.graphics().setScrollFactor(0).setDepth(19990).setVisible(false);
     this.signalPanel.fillStyle(0x071b24, 0.88).fillRoundedRect(24, 156, 340, 43, 8);
@@ -109,10 +110,11 @@ export class Hud {
     this.progressText.setText(`LV ${level}   XP ${nextLevelXp === null ? `${xp} / MAX` : `${xp} / ${nextLevelXp}`}   ECHOES ${echoes} / ${ECHO_COUNT}`);
   }
 
-  setSignalObjective(synchronized: boolean, sourceLocated: boolean): void {
+  setSignalObjective(synchronized: boolean, sourceLocated: boolean, passageOpen = false, inCavern = false): void {
     this.signalPanel.setVisible(synchronized);
     this.signalObjective.setVisible(synchronized);
-    if (synchronized) this.signalObjective.setText(sourceLocated ? 'SIGNAL SOURCE LOCATED' : 'FOLLOW THE SIGNAL  /  NORTH');
+    this.areaSubtitle.setText(inCavern ? 'CAVERN   /   FIRST DESCENT' : 'DANTE FOREST   /   COMBAT PROTOTYPE');
+    if (synchronized) this.signalObjective.setText(inCavern ? 'FOLLOW THE SIGNAL  /  BELOW' : passageOpen ? 'ENTER THE CAVERN' : sourceLocated ? 'INVESTIGATE THE MECHANISM' : 'FOLLOW THE SIGNAL  /  NORTH');
   }
 
   showDiscovery(message: string): void {

@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { Health } from '../combat/Health';
 import { CRAWLER } from '../config/game';
-import { moveWithCollisions, type Obstacle } from '../systems/Movement';
+import { moveWithCollisions, type MovementBounds, type Obstacle } from '../systems/Movement';
 import { distance, normalized, type Vec2 } from '../utils/math';
 
 export type CrawlerState = 'IDLE' | 'DETECT' | 'CHASE' | 'ATTACK' | 'HURT' | 'DEAD';
@@ -52,7 +52,7 @@ export class HollowCrawler {
     this.healthFill = scene.add.rectangle(x - 19, y - 34, 38, 4, 0x9bd6b4).setOrigin(0, 0.5).setDepth(10001).setVisible(false);
   }
 
-  update(now: number, dt: number, player: Vec2, playerDead: boolean, obstacles: ReadonlyArray<Obstacle>, onAttack: () => void): void {
+  update(now: number, dt: number, player: Vec2, playerDead: boolean, obstacles: ReadonlyArray<Obstacle>, onAttack: () => void, bounds?: MovementBounds): void {
     if (this.isDead) return;
     const gap = distance(this.position, player);
     let direction = normalized(player.x - this.position.x, player.y - this.position.y);
@@ -112,7 +112,7 @@ export class HollowCrawler {
 
     const beforeX = this.position.x;
     const beforeY = this.position.y;
-    moveWithCollisions(this.position, this.velocity, Math.min(dt, 0.04), this.radius, obstacles);
+    moveWithCollisions(this.position, this.velocity, Math.min(dt, 0.04), this.radius, obstacles, bounds);
     const travelled = Math.hypot(this.position.x - beforeX, this.position.y - beforeY);
     const moving = travelled > 0.1 && this.state !== 'HURT';
     if (moving) this.travelPhase += travelled / 46 * Math.PI * 2;

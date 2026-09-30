@@ -19,4 +19,8 @@ export const SIGNAL_THRESHOLD = {
   obstacleRadius: 62,
   synchronizedMessage: 'SIGNAL SYNCHRONIZED\nORIGIN: NORTHERN RIDGE',
   thresholdMessage: 'SIGNAL SOURCE: BELOW\nPASSAGE: SEALED',
+  mechanismX: 1670,
+  mechanismY: 230,
+  mechanismRadius: 85,
+  openingMessage: 'DANTE RESPONDS\nPASSAGE OPEN',
 } as const;

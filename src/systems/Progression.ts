@@ -7,6 +7,7 @@ export class Progression {
   level = 1;
   readonly echoes = new Set<string>();
   sourceLocated = false;
+  passageOpen = false;
   private rewardedHollows = new Set<number>();
 
   get maxHp(): number { return PROGRESSION.baseMaxHp + (this.level - 1) * PROGRESSION.maxHpPerLevel; }
@@ -16,6 +17,12 @@ export class Progression {
   locateSource(): boolean {
     if (!this.signalSynchronized || this.sourceLocated) return false;
     this.sourceLocated = true;
+    return true;
+  }
+
+  openPassage(): boolean {
+    if (!this.sourceLocated || this.passageOpen) return false;
+    this.passageOpen = true;
     return true;
   }
 

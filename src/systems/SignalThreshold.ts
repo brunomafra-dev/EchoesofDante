@@ -6,13 +6,17 @@ import type { Vec2 } from '../utils/math';
 export class SignalThreshold {
   activated: boolean;
   sourceLocated: boolean;
+  opened: boolean;
   private glyphs: Phaser.GameObjects.Graphics;
   private ambient: Phaser.GameObjects.Ellipse;
   private flash: Phaser.GameObjects.Graphics;
+  private leftSeal: Phaser.GameObjects.Graphics;
+  private rightSeal: Phaser.GameObjects.Graphics;
 
-  constructor(private scene: Phaser.Scene, synchronized: boolean, sourceLocated: boolean) {
+  constructor(private scene: Phaser.Scene, synchronized: boolean, sourceLocated: boolean, opened = false) {
     this.activated = synchronized;
     this.sourceLocated = sourceLocated;
+    this.opened = opened;
     const x = SITE.x;
     const y = SITE.y;
     const stone = scene.add.graphics().setPosition(x, y).setDepth(y - 8);
@@ -29,6 +33,22 @@ export class SignalThreshold {
     stone.fillStyle(0x536768).fillPoints([{ x: 23, y: -61 }, { x: 67, y: -37 }, { x: 78, y: -7 }, { x: 37, y: -27 }], true);
     stone.fillStyle(0x304d42).fillEllipse(-67, 29, 53, 17).fillEllipse(67, 27, 56, 18);
     stone.lineStyle(3, 0x52745c, 0.8).lineBetween(-75, 22, -64, -3).lineBetween(73, 21, 81, -5);
+
+    // Two heavy plates visibly cover the fissure until the buried resonator answers.
+    this.leftSeal = scene.add.graphics().setPosition(x, y).setDepth(y - 5);
+    this.leftSeal.fillStyle(0x566365).fillPoints([
+      { x: -42, y: -29 }, { x: -5, y: -23 }, { x: 0, y: 23 }, { x: -49, y: 23 },
+    ], true);
+    this.leftSeal.lineStyle(3, 0x7d8580, 0.65).lineBetween(-5, -21, 0, 21);
+    this.rightSeal = scene.add.graphics().setPosition(x, y).setDepth(y - 5);
+    this.rightSeal.fillStyle(0x46575a).fillPoints([
+      { x: 5, y: -23 }, { x: 40, y: -31 }, { x: 49, y: 23 }, { x: 0, y: 23 },
+    ], true);
+    this.rightSeal.lineStyle(3, 0xffbd54, 0.38).lineBetween(5, -21, 0, 21);
+    if (opened) {
+      this.leftSeal.x -= 40;
+      this.rightSeal.x += 40;
+    }
 
     this.ambient = scene.add.ellipse(x, y - 4, 119, 48, 0xa98cff, 0.2)
       .setDepth(y - 9).setAlpha(synchronized ? 0.45 : 0);
@@ -63,6 +83,19 @@ export class SignalThreshold {
     if (this.sourceLocated) return;
     this.sourceLocated = true;
     this.pulse();
+  }
+
+  open(onOpened: () => void): void {
+    if (this.opened) return;
+    this.opened = true;
+    this.pulse();
+    this.ambient.setAlpha(0.8);
+    this.scene.tweens.add({ targets: this.leftSeal, x: SITE.x - 40, duration: 680, ease: 'Cubic.easeInOut' });
+    this.scene.tweens.add({ targets: this.rightSeal, x: SITE.x + 40, duration: 680, ease: 'Cubic.easeInOut', onComplete: onOpened });
+  }
+
+  isInside(position: Vec2): boolean {
+    return this.opened && Math.hypot(position.x - SITE.x, position.y - SITE.y) < 42;
   }
 
   private breathe(): void {

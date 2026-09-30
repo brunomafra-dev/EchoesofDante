@@ -4,24 +4,33 @@ import { applyDamage } from '../combat/Damage';
 import { KineticCharge } from '../combat/KineticCharge';
 import { PLAYER, CRAWLER, KINETIC_CHARGE, WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
 import { FOREST_ENTRY, FOREST_PATROLS, FOREST_SPAWNS } from '../config/forest';
+import { CAVERN_ENTRY, CAVERN_HOLLOWS } from '../config/cavern';
 import { FOREST_ECHOES, SIGNAL_THRESHOLD } from '../config/discovery';
 import { HollowCrawler } from '../entities/HollowCrawler';
 import { Player } from '../entities/Player';
 import { Controls } from '../input/Controls';
 import { Arena } from '../systems/Arena';
+import { CavernArea } from '../systems/CavernArea';
 import { MineralPulse } from '../systems/MineralPulse';
 import { SoundEffects } from '../systems/Sound';
 import { NorthernDiscovery } from '../systems/NorthernDiscovery';
 import { ForestEcho, type EchoSite } from '../systems/EchoSite';
 import { Progression } from '../systems/Progression';
 import { SignalThreshold } from '../systems/SignalThreshold';
+import { PassageMechanism } from '../systems/PassageMechanism';
+import type { MovementBounds, Obstacle } from '../systems/Movement';
 import { Hud } from '../ui/Hud';
 import { distance, normalized, type Vec2 } from '../utils/math';
 
 export class GameScene extends Phaser.Scene {
   private player!: Player;
   private controls!: Controls;
-  private arena!: Arena;
+  private arena!: Arena | CavernArea;
+  private movementBounds?: MovementBounds;
+  private area: 'forest' | 'cavern' = 'forest';
+  private transferHp?: number;
+  private transitioning = false;
+  private gateObstacle?: Obstacle;
   private enemies: HollowCrawler[] = [];
   private hollowSpawnIds = new Map<HollowCrawler, number>();
   private readonly progression = new Progression();
@@ -30,7 +39,8 @@ export class GameScene extends Phaser.Scene {
   private sounds = new SoundEffects();
   private hud!: Hud;
   private echoSites: EchoSite[] = [];
-  private threshold!: SignalThreshold;
+  private threshold?: SignalThreshold;
+  private mechanism?: PassageMechanism;
   private kineticWave!: Phaser.GameObjects.Graphics;
   private waveDrawn = false;
   private lastDashTrail = 0;
@@ -64,38 +74,64 @@ export class GameScene extends Phaser.Scene {
     this.waveDrawn = false;
     this.enemies = [];
     this.hollowSpawnIds.clear();
-    this.arena = new Arena(this);
-    this.arena.obstacles.push({ x: SIGNAL_THRESHOLD.x, y: SIGNAL_THRESHOLD.y, radius: SIGNAL_THRESHOLD.obstacleRadius });
-    new MineralPulse(this);
-    this.echoSites = [
-      new NorthernDiscovery(this, this.progression.echoes.has('northern-ruin')),
-      new ForestEcho(this, FOREST_ECHOES.mineral, this.progression.echoes.has(FOREST_ECHOES.mineral.id)),
-      new ForestEcho(this, FOREST_ECHOES.trace, this.progression.echoes.has(FOREST_ECHOES.trace.id)),
-    ];
-    this.threshold = new SignalThreshold(this, this.progression.signalSynchronized, this.progression.sourceLocated);
-    this.player = new Player(this, FOREST_ENTRY.x, FOREST_ENTRY.y, this.progression.maxHp);
+    this.transitioning = false;
+    this.gateObstacle = undefined;
+    this.threshold = undefined;
+    this.mechanism = undefined;
+    this.echoSites = [];
+    if (this.area === 'forest') {
+      this.arena = new Arena(this);
+      this.movementBounds = undefined;
+      if (!this.progression.passageOpen) {
+        this.gateObstacle = { x: SIGNAL_THRESHOLD.x, y: SIGNAL_THRESHOLD.y, radius: SIGNAL_THRESHOLD.obstacleRadius };
+        this.arena.obstacles.push(this.gateObstacle);
+      }
+      new MineralPulse(this);
+      this.echoSites = [
+        new NorthernDiscovery(this, this.progression.echoes.has('northern-ruin')),
+        new ForestEcho(this, FOREST_ECHOES.mineral, this.progression.echoes.has(FOREST_ECHOES.mineral.id)),
+        new ForestEcho(this, FOREST_ECHOES.trace, this.progression.echoes.has(FOREST_ECHOES.trace.id)),
+      ];
+      this.threshold = new SignalThreshold(this, this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen);
+      this.mechanism = new PassageMechanism(this, this.progression.sourceLocated, this.progression.passageOpen);
+    } else {
+      this.arena = new CavernArea(this);
+      this.movementBounds = this.arena.bounds;
+    }
+    const entry = this.area === 'forest' ? FOREST_ENTRY : CAVERN_ENTRY;
+    this.player = new Player(this, entry.x, entry.y, this.progression.maxHp);
+    if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
+    this.transferHp = undefined;
     this.kineticWave = this.add.graphics().setDepth(14999);
     this.controls = new Controls(this);
-    FOREST_SPAWNS.forEach((point, index) => {
-      const enemy = new HollowCrawler(this, point.x, point.y, FOREST_PATROLS[index]);
+    const spawns = this.area === 'forest' ? FOREST_SPAWNS : CAVERN_HOLLOWS;
+    spawns.forEach((point, index) => {
+      const enemy = new HollowCrawler(this, point.x, point.y, this.area === 'forest' ? FOREST_PATROLS[index] : undefined);
       this.enemies.push(enemy);
-      this.hollowSpawnIds.set(enemy, index);
+      this.hollowSpawnIds.set(enemy, this.area === 'forest' ? index : FOREST_SPAWNS.length + index);
     });
     this.hud = new Hud(this, () => this.restart());
     this.updateProgressHud();
-    this.hud.setSignalObjective(this.progression.signalSynchronized, this.progression.sourceLocated);
+    this.hud.setSignalObjective(this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen, this.area === 'cavern');
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       if (pointer.leftButtonDown() && !this.player.isDead) this.beginStrike(this.time.now);
     });
     this.cameras.main.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT).startFollow(this.player.view, false, 0.1, 0.1);
-    this.cameras.main.setBackgroundColor('#102d2c');
+    this.cameras.main.setBackgroundColor(this.area === 'forest' ? '#102d2c' : '#07151c');
+    if (this.area === 'cavern') {
+      this.cameras.main.centerOn(entry.x, entry.y);
+      this.cameras.main.fadeIn(260, 5, 15, 20);
+    }
     this.input.setDefaultCursor('crosshair');
   }
 
   update(time: number, delta: number): void {
+    if (this.transitioning) return;
     const interact = this.controls.interactPressed;
     const nearbyEcho = this.echoSites.find(site => site.canInvestigate(this.player.position, this.player.isDead));
     const nearDiscovery = nearbyEcho !== undefined;
+    const nearThreshold = this.threshold?.canInvestigate(this.player.position, this.player.isDead) ?? false;
+    const nearMechanism = this.mechanism?.canInvestigate(this.player.position, this.player.isDead) ?? false;
     if (nearDiscovery && interact) {
       const wasSynchronized = this.progression.signalSynchronized;
       nearbyEcho.activate();
@@ -105,13 +141,25 @@ export class GameScene extends Phaser.Scene {
       if (leveledUp) this.levelUp();
       this.sounds.discovery();
       if (!wasSynchronized && this.progression.signalSynchronized) this.synchronizeSignal();
-    } else if (interact && this.threshold.canInvestigate(this.player.position, this.player.isDead) && this.progression.locateSource()) {
-      this.threshold.locateSource();
+    } else if (interact && nearThreshold && this.progression.locateSource()) {
+      this.threshold?.locateSource();
+      this.mechanism?.arm();
       this.hud.showDiscovery(SIGNAL_THRESHOLD.thresholdMessage);
       this.hud.setSignalObjective(true, true);
       this.sounds.discovery();
+    } else if (interact && nearMechanism && this.progression.openPassage()) {
+      this.mechanism?.activate();
+      this.threshold?.open(() => {
+        if (!this.gateObstacle) return;
+        const index = this.arena.obstacles.indexOf(this.gateObstacle);
+        if (index >= 0) this.arena.obstacles.splice(index, 1);
+        this.gateObstacle = undefined;
+      });
+      this.hud.showDiscovery(SIGNAL_THRESHOLD.openingMessage);
+      this.hud.setSignalObjective(true, true, true);
+      this.sounds.discovery();
     }
-    this.hud.setDiscoveryPrompt(nearDiscovery || this.threshold.canInvestigate(this.player.position, this.player.isDead));
+    this.hud.setDiscoveryPrompt(nearDiscovery || nearThreshold || nearMechanism);
     if (this.player.isDead) {
       if (this.controls.restartPressed) this.restart();
       return;
@@ -137,7 +185,7 @@ export class GameScene extends Phaser.Scene {
     if (this.controls.attacking && !heavyBusy) this.beginStrike(time);
     const pose = this.attack.pose(time, facing);
     const wasDashing = this.player.isDashing;
-    this.player.update(time, dt, input, facing, this.arena.obstacles, pose, heavy);
+    this.player.update(time, dt, input, facing, this.arena.obstacles, pose, heavy, this.movementBounds);
     if (wasDashing && !this.player.isDashing) this.dashEnd();
     if (this.player.isDashing && time - this.lastDashTrail > 30) {
       this.lastDashTrail = time;
@@ -151,10 +199,21 @@ export class GameScene extends Phaser.Scene {
     const sweep = this.attack.advance(time, this.player.position, facing, this.enemies);
     this.resolveSaberHits(time, sweep.hits, sweep.pose.worldAngle);
     for (const enemy of this.enemies) {
-      enemy.update(time, dt, this.player.position, this.player.isDead, this.arena.obstacles, () => this.enemyStrike(enemy));
+      enemy.update(time, dt, this.player.position, this.player.isDead, this.arena.obstacles, () => this.enemyStrike(enemy), this.movementBounds);
     }
     this.enemies = this.enemies.filter(enemy => !enemy.isDead);
     this.hud.update(this.player.hp, this.player.maxHp, this.player.dashProgress, this.charge.getProgress(time), heavy.phase, heavy.level);
+    if (this.area === 'forest' && this.progression.passageOpen && !this.gateObstacle && this.threshold?.isInside(this.player.position)) this.enterCavern();
+  }
+
+  private enterCavern(): void {
+    this.transitioning = true;
+    this.transferHp = this.player.hp;
+    this.cameras.main.fadeOut(220, 5, 15, 20);
+    this.time.delayedCall(240, () => {
+      this.area = 'cavern';
+      this.scene.restart();
+    });
   }
 
   private beginStrike(now: number): void {
@@ -293,7 +352,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private synchronizeSignal(): void {
-    this.threshold.activate();
+    this.threshold?.activate();
     // Give the third site's own discovery a moment before the shared response.
     this.time.delayedCall(1150, () => {
       if (this.player.isDead || this.progression.sourceLocated) return;

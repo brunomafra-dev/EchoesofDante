@@ -2,15 +2,16 @@ import { clamp, distance, normalized, type Vec2 } from '../utils/math';
 import { WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
 
 export type Obstacle = { x: number; y: number; radius: number };
+export type MovementBounds = { left: number; right: number; top: number; bottom: number };
 
-export function moveWithCollisions(position: Vec2, velocity: Vec2, deltaSeconds: number, radius: number, obstacles: ReadonlyArray<Obstacle>): void {
+export function moveWithCollisions(position: Vec2, velocity: Vec2, deltaSeconds: number, radius: number, obstacles: ReadonlyArray<Obstacle>, bounds?: MovementBounds): void {
   // Resolve axes separately so the character slides along rocks instead of sticking to them.
   position.x += velocity.x * deltaSeconds;
   resolve(position, radius, obstacles);
   position.y += velocity.y * deltaSeconds;
   resolve(position, radius, obstacles);
-  position.x = clamp(position.x, 56 + radius, WORLD_WIDTH - 56 - radius);
-  position.y = clamp(position.y, 56 + radius, WORLD_HEIGHT - 56 - radius);
+  position.x = clamp(position.x, (bounds?.left ?? 56) + radius, (bounds?.right ?? WORLD_WIDTH - 56) - radius);
+  position.y = clamp(position.y, (bounds?.top ?? 56) + radius, (bounds?.bottom ?? WORLD_HEIGHT - 56) - radius);
 }
 
 function resolve(position: Vec2, radius: number, obstacles: ReadonlyArray<Obstacle>): void {

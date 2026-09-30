@@ -3,7 +3,7 @@ import type { SaberPose } from '../combat/Attack';
 import type { KineticPose } from '../combat/KineticCharge';
 import { Health } from '../combat/Health';
 import { PLAYER } from '../config/game';
-import { moveWithCollisions, type Obstacle } from '../systems/Movement';
+import { moveWithCollisions, type MovementBounds, type Obstacle } from '../systems/Movement';
 import { clamp, normalized, type Vec2 } from '../utils/math';
 import { EnergySaber } from './EnergySaber';
 
@@ -125,7 +125,7 @@ export class Player {
     return true;
   }
 
-  update(now: number, deltaSeconds: number, input: Vec2, aim: number, obstacles: ReadonlyArray<Obstacle>, pose: SaberPose, heavy: KineticPose): void {
+  update(now: number, deltaSeconds: number, input: Vec2, aim: number, obstacles: ReadonlyArray<Obstacle>, pose: SaberPose, heavy: KineticPose, bounds?: MovementBounds): void {
     if (this.isDead) return;
     this.rotation = aim;
     if (this.isDashing && now >= this.dashUntil) this.isDashing = false;
@@ -136,7 +136,7 @@ export class Player {
     this.velocity.y = heavyBusy ? 0 : direction.y * speed;
     const previousX = this.position.x;
     const previousY = this.position.y;
-    moveWithCollisions(this.position, this.velocity, Math.min(deltaSeconds, 0.04), this.radius, obstacles);
+    moveWithCollisions(this.position, this.velocity, Math.min(deltaSeconds, 0.04), this.radius, obstacles, bounds);
     const movedX = this.position.x - previousX;
     const movedY = this.position.y - previousY;
     const travelled = Math.hypot(movedX, movedY);
