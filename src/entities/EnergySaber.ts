@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
-import { PLAYER } from '../config/game';
+import { KINETIC_CHARGE, PLAYER } from '../config/game';
 import type { SaberPose } from '../combat/Attack';
+import type { KineticPose } from '../combat/KineticCharge';
 import type { Vec2 } from '../utils/math';
 
 export class EnergySaber {
@@ -24,23 +25,36 @@ export class EnergySaber {
     art.fillStyle(0xe8fffb, 0.95).fillTriangle(20, -2, 70, -1, 76, 0);
     art.fillTriangle(20, 2, 70, 1, 76, 0);
     art.fillStyle(0xffffff).fillCircle(17, 0, 2.4);
-    this.view = scene.add.container(20, -19, [art]);
+    // Shift the art, not the pivot: local (0, 0) stays exactly at the glove as the blade rotates.
+    art.setPosition(6, 0);
+    this.view = scene.add.container(0, 0, [art]);
     this.indicator = scene.add.graphics();
     this.trail = scene.add.graphics();
   }
 
-  render(position: Vec2, facing: number, pose: SaberPose, bob: number, dashing: boolean, charging = false): void {
-    this.view.setPosition(20 + (dashing ? 3 : 0) + bob * Math.sin(facing), -19 + bob * Math.cos(facing));
-    this.view.setRotation(charging ? 0 : pose.phase === 'READY' && dashing ? -0.68 : pose.relativeAngle);
-    this.view.setScale(charging ? 1.08 : pose.phase === 'SWING' ? 1.06 : 1);
+  render(position: Vec2, grip: Vec2, facing: number, bodyLean: number, pose: SaberPose, heavy: KineticPose, dashing: boolean): void {
+    const heavyAngle = heavy.phase === 'CHARGING' ? -0.9 : -0.9 + 1.8 * heavy.swingProgress;
+    const localAngle = heavy.phase !== 'READY' ? heavyAngle : pose.phase === 'READY' && dashing ? -0.68 : pose.relativeAngle;
+    this.view.setPosition(0, 0).setRotation(facing - bodyLean + localAngle);
+    this.view.setScale(heavy.phase === 'CHARGING' ? 1 + heavy.level * 0.08 : heavy.phase === 'RELEASE' ? 1.12 : pose.phase === 'SWING' ? 1.06 : 1);
     this.indicator.clear().setDepth(position.y - 1);
     this.trail.clear().setDepth(position.y + 2);
 
-    if (charging) {
-      const x = Math.cos(facing);
-      const y = Math.sin(facing);
-      this.trail.lineStyle(9, 0x5fe6d8, 0.16).lineBetween(position.x + x * 32, position.y + y * 32, position.x + x * 82, position.y + y * 82);
-      this.trail.lineStyle(3, 0xd7fff7, 0.48).lineBetween(position.x + x * 42, position.y + y * 42, position.x + x * 82, position.y + y * 82);
+    if (heavy.phase === 'CHARGING') {
+      this.indicator.lineStyle(2, 0x5fe6d8, 0.16).strokeCircle(position.x, position.y, 48);
+      this.indicator.lineStyle(4, 0x5fe6d8, 0.68);
+      this.indicator.beginPath().arc(position.x, position.y, 48, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * heavy.level).strokePath();
+      const angle = facing + localAngle;
+      this.trail.lineStyle(8, 0x5fe6d8, 0.12 + heavy.level * 0.24);
+      this.trail.lineBetween(grip.x + Math.cos(angle) * 18, grip.y + Math.sin(angle) * 18, grip.x + Math.cos(angle) * 82, grip.y + Math.sin(angle) * 82);
+    } else if (heavy.phase === 'RELEASE') {
+      this.indicator.lineStyle(3, 0x5fe6d8, 0.35);
+      this.indicator.beginPath().arc(position.x, position.y, KINETIC_CHARGE.hitRange, facing - KINETIC_CHARGE.hitHalfAngle, facing + KINETIC_CHARGE.hitHalfAngle).strokePath();
+      const angle = facing + localAngle;
+      this.trail.lineStyle(17, 0x5fe6d8, 0.23);
+      this.trail.beginPath().arc(grip.x, grip.y, 83, angle - 0.42, angle).strokePath();
+      this.trail.lineStyle(6, 0xd7fff7, 0.68);
+      this.trail.beginPath().arc(grip.x, grip.y, 83, angle - 0.42, angle).strokePath();
     } else if (pose.phase === 'WINDUP') {
       this.indicator.lineStyle(2, 0x82dce3, 0.28);
       this.indicator.beginPath().arc(position.x, position.y, PLAYER.attackRange, facing - PLAYER.attackHalfAngle, facing + PLAYER.attackHalfAngle).strokePath();

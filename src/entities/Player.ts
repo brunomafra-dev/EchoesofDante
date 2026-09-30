@@ -1,12 +1,13 @@
 import Phaser from 'phaser';
 import type { SaberPose } from '../combat/Attack';
+import type { KineticPose } from '../combat/KineticCharge';
 import { Health } from '../combat/Health';
-import { KINETIC_CHARGE, PLAYER } from '../config/game';
+import { PLAYER } from '../config/game';
 import { moveWithCollisions, type Obstacle } from '../systems/Movement';
 import { clamp, normalized, type Vec2 } from '../utils/math';
 import { EnergySaber } from './EnergySaber';
 
-export type PlayerAnimationState = 'IDLE' | 'WALK' | 'ATTACK_WINDUP' | 'ATTACK_SWING' | 'ATTACK_RECOVERY' | 'DASH' | 'CHARGE' | 'HURT' | 'DEAD';
+export type PlayerAnimationState = 'IDLE' | 'WALK' | 'ATTACK_WINDUP' | 'ATTACK_SWING' | 'ATTACK_RECOVERY' | 'DASH' | 'CHARGE' | 'CHARGE_RELEASE' | 'HURT' | 'DEAD';
 
 export class Player {
   readonly position: Vec2;
@@ -29,6 +30,9 @@ export class Player {
   private torso: Phaser.GameObjects.Image;
   private supportArm: Phaser.GameObjects.Image;
   private saberArm: Phaser.GameObjects.Image;
+  private handAnchor: Phaser.GameObjects.Container;
+  private gripWorld: Vec2 = { x: 0, y: 0 };
+  private bodyLean = 0;
   private ring: Phaser.GameObjects.Arc;
   private hurtOverlay: Phaser.GameObjects.Graphics;
   private hitFlashUntil = 0;
@@ -62,9 +66,11 @@ export class Player {
     this.hurtOverlay = scene.add.graphics();
     this.hurtOverlay.fillStyle(0xff9a7f, 0.8).fillEllipse(0, -8, 61, 80);
     this.hurtOverlay.setAlpha(0);
-    this.bodyRig = scene.add.container(0, 0, [this.supportArm, this.saberArm, this.torso, this.hurtOverlay]);
     this.weapon = new EnergySaber(scene);
-    this.view = scene.add.container(x, y, [this.legsRig, this.bodyRig, this.weapon.view]).setDepth(y);
+    const glove = scene.add.circle(0, 0, 5, 0x203d47).setStrokeStyle(1.5, 0x9bb8b3);
+    this.handAnchor = scene.add.container(0, 0, [this.weapon.view, glove]);
+    this.bodyRig = scene.add.container(0, 0, [this.supportArm, this.torso, this.saberArm, this.handAnchor, this.hurtOverlay]);
+    this.view = scene.add.container(x, y, [this.legsRig, this.bodyRig]).setDepth(y);
     this.ring = scene.add.circle(x, y + 39, 33).setStrokeStyle(1, 0x89d9d2, 0.28).setFillStyle(0, 0).setDepth(y - 1);
     this.setAim(0);
   }
@@ -73,10 +79,10 @@ export class Player {
     return this.scene.add.image(x, 0, 'warrior-boot').setDisplaySize(40, 100);
   }
 
-  // Keep the logical aim and saber root rotating; cancel that rotation on the
-  // upright body and legs. Directional torso art shows where the human faces.
-  setAim(aim: number, bodyLean = 0): void {
+  // The body remains upright; the saber rotates around the glove inside bodyRig.
+  setAim(aim: number, bodyLean = 0, handReach = 0, sweep = 0): void {
     this.rotation = aim;
+    this.bodyLean = bodyLean;
     this.view.setRotation(aim);
     this.legsRig.setRotation(-aim);
     this.bodyRig.setRotation(-aim + bodyLean);
@@ -86,6 +92,18 @@ export class Player {
     const texture = vertical ? (y > 0 ? 'warrior-body' : 'warrior-body-back') : 'warrior-body-side';
     if (this.torso.texture.key !== texture) this.torso.setTexture(texture);
     this.torso.setFlipX(!vertical && x < 0);
+    const shoulderX = 17;
+    const handX = 30 * x + 32 * (1 - Math.abs(x)) + x * handReach - y * sweep;
+    const handY = -8 + y * (12 + handReach) + x * sweep;
+    this.handAnchor.setPosition(handX, handY);
+    const bodyX = this.position.x + this.bodyRig.x * x - this.bodyRig.y * y;
+    const bodyY = this.position.y + this.bodyRig.x * y + this.bodyRig.y * x;
+    this.gripWorld.x = bodyX + handX * Math.cos(bodyLean) - handY * Math.sin(bodyLean);
+    this.gripWorld.y = bodyY + handX * Math.sin(bodyLean) + handY * Math.cos(bodyLean);
+    const armX = handX - shoulderX;
+    const armY = handY + 8;
+    this.saberArm.setPosition(shoulderX, -8).setRotation(Math.atan2(armY, armX)).setDisplaySize(Math.max(16, Math.hypot(armX, armY)), 16);
+    this.supportArm.setPosition(-18, -8);
   }
 
   get hp(): number { return this.health.current; }
@@ -103,22 +121,22 @@ export class Player {
     return true;
   }
 
-  update(now: number, deltaSeconds: number, input: Vec2, aim: number, obstacles: ReadonlyArray<Obstacle>, pose: SaberPose, chargeDirection: Vec2 | null): void {
+  update(now: number, deltaSeconds: number, input: Vec2, aim: number, obstacles: ReadonlyArray<Obstacle>, pose: SaberPose, heavy: KineticPose): void {
     if (this.isDead) return;
     this.rotation = aim;
     if (this.isDashing && now >= this.dashUntil) this.isDashing = false;
-    const charging = chargeDirection !== null;
-    const direction = charging ? chargeDirection : this.isDashing ? this.dashVector : input;
-    const speed = charging ? KINETIC_CHARGE.speed : this.isDashing ? PLAYER.dashSpeed : PLAYER.speed;
-    this.velocity.x = direction.x * speed;
-    this.velocity.y = direction.y * speed;
+    const heavyBusy = heavy.phase !== 'READY';
+    const direction = this.isDashing ? this.dashVector : input;
+    const speed = this.isDashing ? PLAYER.dashSpeed : PLAYER.speed;
+    this.velocity.x = heavyBusy ? 0 : direction.x * speed;
+    this.velocity.y = heavyBusy ? 0 : direction.y * speed;
     const previousX = this.position.x;
     const previousY = this.position.y;
     moveWithCollisions(this.position, this.velocity, Math.min(deltaSeconds, 0.04), this.radius, obstacles);
     const movedX = this.position.x - previousX;
     const movedY = this.position.y - previousY;
     const travelled = Math.hypot(movedX, movedY);
-    const walking = !this.isDashing && !charging && travelled > 0.1;
+    const walking = !this.isDashing && !heavyBusy && travelled > 0.1;
     if (walking) {
       if (!this.wasWalking) {
         this.stepPhase = 0;
@@ -146,7 +164,8 @@ export class Player {
       this.rightLeg.setPosition(9, -2);
     }
 
-    if (charging) this.animationState = 'CHARGE';
+    if (heavy.phase === 'CHARGING') this.animationState = 'CHARGE';
+    else if (heavy.phase === 'RELEASE') this.animationState = 'CHARGE_RELEASE';
     else if (this.isDashing) this.animationState = 'DASH';
     else if (now < this.hitFlashUntil) this.animationState = 'HURT';
     else if (pose.phase !== 'READY') this.animationState = `ATTACK_${pose.phase}` as PlayerAnimationState;
@@ -154,24 +173,24 @@ export class Player {
 
     const bob = -lift * 1.9;
     const attackTwist = pose.phase === 'READY' ? 0 : clamp(pose.relativeAngle * 0.075, -0.1, 0.1);
-    this.bodyRig.setPosition((this.isDashing ? 5 : charging ? 3 : 0) + bob * sinAim, bob * cosAim + (this.isDashing ? -1 : 0));
-    this.setAim(aim, (walking ? stride * 0.015 : 0) + attackTwist);
+    this.bodyRig.setPosition((this.isDashing ? 5 : 0) + bob * sinAim, bob * cosAim + (this.isDashing ? -1 : 0));
+    const heavyLean = heavy.phase === 'CHARGING' ? -0.03 - heavy.level * 0.04 : heavy.phase === 'RELEASE' ? (1 - heavy.swingProgress) * 0.08 : 0;
+    const handReach = heavy.phase === 'CHARGING' ? -4 - heavy.level * 4 : heavy.phase === 'RELEASE' ? Math.sin(heavy.swingProgress * Math.PI) * 8 : 0;
+    this.setAim(aim, (walking ? stride * 0.015 : 0) + attackTwist + heavyLean, handReach, pose.phase === 'READY' ? 0 : pose.relativeAngle * 3);
     this.supportArm.setRotation(Math.PI / 2 + (walking ? -stride * 0.075 : 0));
-    // The hand follows the existing saber grip as it orbits with mouse aim.
-    const gripX = 16 * cosAim + 19 * sinAim;
-    const gripY = 16 * sinAim - 19 * cosAim;
-    const armX = gripX - 18;
-    const armY = gripY + 8;
-    this.saberArm.setRotation(Math.atan2(armY, armX)).setDisplaySize(Math.max(16, Math.hypot(armX, armY)), 16);
     this.hurtOverlay.setAlpha(now < this.hitFlashUntil ? 0.72 : 0);
 
     this.view.setPosition(this.position.x, this.position.y).setDepth(this.position.y);
     this.shadow.setPosition(this.position.x, this.position.y + 39).setDepth(this.position.y - 3);
     this.groundContact.setPosition(this.position.x, this.position.y + 39).setDepth(this.position.y - 2);
     this.ring.setPosition(this.position.x, this.position.y + 39).setDepth(this.position.y - 1);
-    this.ring.setStrokeStyle(charging ? 2.5 : 1.5, charging ? 0x5fe6d8 : this.isDashing ? 0xd7fff7 : 0x89d9d2, charging ? 0.86 : this.isDashing ? 0.78 : 0.28);
+    this.ring.setStrokeStyle(heavyBusy ? 2.5 : 1.5, heavyBusy ? 0x5fe6d8 : this.isDashing ? 0xd7fff7 : 0x89d9d2, heavyBusy ? 0.5 + heavy.level * 0.36 : this.isDashing ? 0.78 : 0.28);
     this.view.setAlpha(this.isDashing ? 0.74 : now < this.invulnerableUntil ? 0.7 + Math.sin(now * 0.045) * 0.25 : 1);
-    this.weapon.render(this.position, aim, pose, bob, this.isDashing, charging);
+    this.renderWeapon(aim, pose, heavy);
+  }
+
+  renderWeapon(aim: number, pose: SaberPose, heavy: KineticPose): void {
+    this.weapon.render(this.position, this.gripWorld, aim, this.bodyLean, pose, heavy, this.isDashing);
   }
 
   flashHurt(): void {

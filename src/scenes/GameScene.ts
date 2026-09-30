@@ -25,7 +25,6 @@ export class GameScene extends Phaser.Scene {
   private hud!: Hud;
   private discovery!: NorthernDiscovery;
   private lastDashTrail = 0;
-  private lastChargeTrail = 0;
 
   constructor() { super('Game'); }
 
@@ -53,7 +52,6 @@ export class GameScene extends Phaser.Scene {
   create(): void {
     this.attack = new SaberAttack();
     this.charge = new KineticCharge();
-    this.lastChargeTrail = 0;
     this.enemies = [];
     this.arena = new Arena(this);
     new MineralPulse(this);
@@ -86,33 +84,33 @@ export class GameScene extends Phaser.Scene {
     const dt = Math.min(delta / 1000, 0.04);
     const input = this.controls.movement();
     const aim = this.controls.aimFrom(this.player.position);
-    if (this.controls.chargePressed && !this.player.isDashing && this.attack.pose(time, aim).phase === 'READY' && this.charge.start(time, aim)) {
+    this.charge.tick(time);
+    if (this.controls.chargePressed && !this.player.isDashing && this.attack.pose(time, aim).phase === 'READY' && this.charge.start(time)) {
       this.sounds.charge();
+    }
+    if ((this.controls.chargeReleased || (this.charge.phase === 'CHARGING' && !this.controls.chargeHeld)) && this.charge.release(time, aim)) {
+      this.sounds.swing();
       this.chargeBurst();
     }
-    const chargeDirection = this.charge.active(time) ? this.charge.direction : null;
-    const facing = chargeDirection ? this.charge.angle : aim;
-    if (this.controls.dashPressed && !chargeDirection && this.player.startDash(time, input)) {
+    const heavy = this.charge.pose(time);
+    const heavyBusy = heavy.phase !== 'READY';
+    const facing = heavy.phase === 'RELEASE' ? this.charge.angle : aim;
+    if (this.controls.dashPressed && !heavyBusy && this.player.startDash(time, input)) {
       this.sounds.dash();
       this.dashBurst(input);
     }
-    if (this.controls.attacking && !chargeDirection) this.beginStrike(time);
+    if (this.controls.attacking && !heavyBusy) this.beginStrike(time);
     const pose = this.attack.pose(time, facing);
     const wasDashing = this.player.isDashing;
-    const beforeCharge = chargeDirection ? { ...this.player.position } : null;
-    this.player.update(time, dt, input, facing, this.arena.obstacles, pose, chargeDirection);
+    this.player.update(time, dt, input, facing, this.arena.obstacles, pose, heavy);
     if (wasDashing && !this.player.isDashing) this.dashEnd();
     if (this.player.isDashing && time - this.lastDashTrail > 30) {
       this.lastDashTrail = time;
       this.dashTrail();
     }
-    if (chargeDirection && beforeCharge) {
-      const hits = this.charge.advance(beforeCharge, this.player.position, this.enemies);
-      this.resolvePlayerHits(time, hits, KINETIC_CHARGE.damage, facing, 0x5fe6d8, beforeCharge, true);
-      if (time - this.lastChargeTrail > 34) {
-        this.lastChargeTrail = time;
-        this.chargeTrail();
-      }
+    if (heavy.phase === 'RELEASE') {
+      const hits = this.charge.takeHits(time, this.player.position, this.enemies);
+      this.resolvePlayerHits(time, hits, this.charge.damage, facing, 0x5fe6d8, this.player.position, true);
     }
     const sweep = this.attack.advance(time, this.player.position, facing, this.enemies);
     this.resolveSaberHits(time, sweep.hits, sweep.pose.worldAngle);
@@ -120,15 +118,15 @@ export class GameScene extends Phaser.Scene {
       enemy.update(time, dt, this.player.position, this.player.isDead, this.arena.obstacles, () => this.enemyStrike(enemy));
     }
     this.enemies = this.enemies.filter(enemy => !enemy.isDead);
-    this.hud.update(this.player.hp, this.player.maxHp, this.player.dashProgress, this.charge.getProgress(time));
+    this.hud.update(this.player.hp, this.player.maxHp, this.player.dashProgress, this.charge.getProgress(time), heavy.phase, heavy.level);
   }
 
   private beginStrike(now: number): void {
-    if (this.charge.active(now)) return;
+    if (this.charge.phase !== 'READY') return;
     if (!this.attack.start(now)) return;
     const facing = this.controls.aimFrom(this.player.position);
     this.player.setAim(facing);
-    this.player.weapon.render(this.player.position, facing, this.attack.pose(now, facing), 0, this.player.isDashing);
+    this.player.renderWeapon(facing, this.attack.pose(now, facing), this.charge.pose(now));
     this.sounds.swing();
   }
 
@@ -137,7 +135,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private resolvePlayerHits(now: number, hits: HollowCrawler[], damage: number, angle: number, color: number, from: Vec2, chargeHit: boolean): void {
-    if (hits.length) this.cameras.main.shake(55, 0.0024);
+    if (hits.length) this.cameras.main.shake(chargeHit ? 75 : 55, chargeHit ? 0.003 : 0.0024);
     for (const enemy of hits) {
       const result = applyDamage(enemy.health, damage);
       if (!result.applied) continue;
@@ -150,7 +148,7 @@ export class GameScene extends Phaser.Scene {
       if (result.died) {
         this.deathEffect(enemy.position);
         enemy.die();
-      } else enemy.hurt(now, from);
+      } else enemy.hurt(now, from, chargeHit ? KINETIC_CHARGE.knockback : 300);
     }
   }
 
@@ -204,19 +202,10 @@ export class GameScene extends Phaser.Scene {
   }
 
   private chargeBurst(): void {
-    const direction = this.charge.direction;
-    const x = this.player.position.x + direction.x * 22;
-    const y = this.player.position.y + direction.y * 22;
-    const burst = this.add.ellipse(x, y, 34, 16, 0x5fe6d8, 0.38).setRotation(this.charge.angle).setDepth(y + 1);
-    this.tweens.add({ targets: burst, scaleX: 2.5, scaleY: 1.35, alpha: 0, duration: 160, onComplete: () => burst.destroy() });
-  }
-
-  private chargeTrail(): void {
-    const direction = this.charge.direction;
-    const x = this.player.position.x - direction.x * 18;
-    const y = this.player.position.y - direction.y * 18;
-    const trail = this.add.ellipse(x, y, 27, 10, 0x5fe6d8, 0.31).setRotation(this.charge.angle).setDepth(y - 1);
-    this.tweens.add({ targets: trail, x: x - direction.x * 24, y: y - direction.y * 24, scaleX: 0.4, alpha: 0, duration: 170, onComplete: () => trail.destroy() });
+    const x = this.player.position.x;
+    const y = this.player.position.y;
+    const burst = this.add.ellipse(x, y, 54, 18, 0x5fe6d8, 0.28).setRotation(this.charge.angle).setDepth(y - 1);
+    this.tweens.add({ targets: burst, scaleX: 2.1, scaleY: 0.65, alpha: 0, duration: 190, onComplete: () => burst.destroy() });
   }
 
   private dashBurst(input: Vec2): void {

@@ -18,12 +18,16 @@ export const PLAYER = {
 } as const;
 
 export const KINETIC_CHARGE = {
-  speed: 600,
-  duration: 180,
+  minCharge: 80,
+  maxCharge: 800,
+  releaseDuration: 200,
+  hitDelay: 80,
   cooldown: 3200,
-  damage: 30,
-  hitRange: 44,
-  hitHalfAngle: 0.45,
+  minDamage: 50,
+  maxDamage: 76,
+  hitRange: 135,
+  hitHalfAngle: 0.75,
+  knockback: 500,
 } as const;
 
 export const CRAWLER = {

@@ -1,8 +1,8 @@
-# Echoes of Dante — Sprint 02.2
+# Echoes of Dante — Sprint 02.3
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
-Protótipo de action RPG sci-fi para navegador. Kinetic Charge acrescenta uma investida ofensiva ao Galactic Warrior, cuja silhueta segue a direção Organic Sci-Fi da [Art Bible](docs/art-bible/). Hollow Crawler, Dante Forest, movimento, combate, exploração e descoberta nas ruínas permanecem disponíveis.
+Protótipo de action RPG sci-fi para navegador. Kinetic Charge é um golpe pesado carregado com Q; o Energy Saber acompanha a mão do Galactic Warrior. A silhueta segue a direção Organic Sci-Fi da [Art Bible](docs/art-bible/). Hollow Crawler, Dante Forest, movimento, combate, exploração e descoberta nas ruínas permanecem disponíveis.
 
 ## Stack
 
@@ -35,13 +35,14 @@ npm run preview
 | Mirar | Mouse |
 | Saber Strike | Clique esquerdo; segure para repetir após o cooldown |
 | Void Dash | Espaço; segue a direção de movimento ou da mira se parado |
-| Kinetic Charge | Q; investida ofensiva na direção da mira |
+| Kinetic Charge | Segure Q para carregar; solte para golpear na direção da mira |
 | Respawn após morrer | R ou botão na tela |
 | Investigar as ruínas | E quando o prompt aparecer perto da estrutura |
 
 ## Escopo implementado
 
-- Kinetic Charge: Q fixa a direção da mira por 180 ms e avança até cerca de 108 unidades em terreno livre. O impacto frontal causa 30 de dano uma vez por Hollow; o cooldown é de 3,2 s e aparece no HUD. A carga não concede invulnerabilidade. Ataque e Dash voltam ao fim da investida.
+- Kinetic Charge: segurar Q carrega energia sem deslocar o Warrior; soltar desfere um golpe frontal na direção atual da mira. Carga de até 800 ms, dano de 50 a 76, alcance de 135 unidades, recuo de 500 unidades/s e cooldown de 3,2 s. Cada Hollow recebe no máximo um impacto por golpe. A carga não concede invulnerabilidade; LMB, movimento e Dash voltam após o golpe de 200 ms.
+- Energy Saber: cabo, luva e braço compartilham um pivô visual no `bodyRig`; a lâmina gira a partir da mão sem alterar o alcance, arco, dano ou janela do Saber Strike.
 - Quatro Hollows, em dois pares, percorrem rotas curtas nas clareiras central e leste. Ao perceber o jogador, usam a perseguição e o combate existentes; ao perder contato, voltam ao ponto inicial e retomam a patrulha. Os demais continuam em seus postos.
 - A formação mineral a leste emite um pulso breve e discreto de tempos em tempos. O fenômeno não exige interação, não cria missão e reutiliza os mesmos objetos visuais.
 - First Discovery: estrutura parcialmente soterrada nas ruínas do norte, inscrições, fragmentos e vegetação. Investigar produz um pulso, som opcional e a mensagem temporária “SIGNAL DETECTED / SOURCE: UNKNOWN”. As inscrições permanecem acesas; a descoberta reinicia com o respawn, sem persistência ou recompensa.
@@ -53,7 +54,7 @@ npm run preview
 
 ## Limitações conhecidas
 
-- Kinetic Charge usa um arco frontal curto e colisões circulares existentes; ainda não possui animação própria de corpo ou ajuste fino de balanceamento. A direção fica fixa durante os 180 ms da investida.
+- O golpe pesado usa um arco frontal único e a detecção circular existente. Seus valores e a naturalidade das poses do braço ainda precisam de avaliação humana em combate.
 - HUD e Energy Saber receberam apenas o feedback necessário para a habilidade; sua arte base, Mineral Pulse, First Discovery e parte do terreno ainda são provisórios.
 - Controles voltados a desktop com teclado e mouse; sem suporte dedicado a toque.
 - Os inimigos derrotados só retornam ao reiniciar a arena.
@@ -67,6 +68,6 @@ npm run preview
 
 ## Próximos passos
 
-Avaliar manualmente o alcance, o dano e o ritmo do Kinetic Charge em combate antes de ajustar seus valores. O desempenho em outra GPU ou resolução pode ser diferente do Chrome headless medido nos testes.
+Avaliar manualmente o alcance, o dano e o ritmo do golpe pesado e a leitura do sabre em movimento. O desempenho em outra GPU ou resolução pode ser diferente do Chrome headless medido nos testes.
 
 As decisões técnicas desta sprint estão em [docs/technical-decisions.md](docs/technical-decisions.md).

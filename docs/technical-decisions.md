@@ -111,3 +111,9 @@
 - `KineticCharge` guarda duração, cooldown, direção e alvos já atingidos. A detecção reutiliza `inMeleeArc` nas posições anterior e posterior ao movimento corrigido por `moveWithCollisions`; cada Hollow recebe no máximo um impacto por ativação. `GameScene` usa o mesmo fluxo de dano, reação e morte do Saber Strike.
 - Durante a carga, o movimento segue a mira fixada e a lâmina aponta para frente; ataque básico e Dash aguardam a janela de 180 ms. A habilidade não concede invulnerabilidade e é encerrada quando o Warrior morre. O HUD mostra Q e o cooldown, sem sistema de recursos.
 - Chrome headless verificou direção cardinal e diagonal, Q andando, cooldown, dois alvos com 30 de dano cada, morte de Hollow, bloqueio pela rocha, ataque e Dash após a carga, dano recebido, morte durante a carga, respawn e First Discovery. Houve cerca de 60 FPS depois do carregamento na execução medida, sem erro de console; sensação e balanceamento ainda exigem avaliação humana.
+
+## Sprint 02.3 — golpe pesado e ancoragem do sabre
+
+- Q agora inicia `CHARGING`; soltar Q usa a mira daquele instante para `RELEASE`. O Player permanece parado durante as duas fases, sem invulnerabilidade nova. `KineticCharge` reutiliza `inMeleeArc` e dispara uma única janela de impacto após 80 ms; o fluxo de dano e morte continua em `GameScene`.
+- O golpe pesado usa 50–76 de dano conforme até 800 ms de carga, alcance de 135, abertura frontal de 0,75 radiano, knockback inicial de 500 e cooldown de 3200 ms. LMB, Dash e velocidades normais não mudaram. O HUD existente mostra o percentual de carga e o cooldown.
+- `EnergySaber.view` fica sob `handAnchor`, filho do `bodyRig`, junto da luva. O braço vai do ombro até essa âncora, e a arte do cabo foi deslocada dentro do contêiner para girar exatamente no ponto da mão. O torso continua ereto e a espada segue a mira; efeitos de trilha permanecem em coordenadas de mundo.

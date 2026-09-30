@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { KINETIC_CHARGE, VIEW_HEIGHT, VIEW_WIDTH } from '../config/game';
 import { NORTHERN_DISCOVERY } from '../config/discovery';
+import type { KineticPhase } from '../combat/KineticCharge';
 
 export class Hud {
   private hpFill: Phaser.GameObjects.Rectangle;
@@ -76,15 +77,15 @@ export class Hud {
     this.deathGroup = [veil, frame, overline, title, subtitle, button, buttonText];
   }
 
-  update(hp: number, maxHp: number, dashProgress: number, chargeProgress: number): void {
+  update(hp: number, maxHp: number, dashProgress: number, chargeProgress: number, chargePhase: KineticPhase, chargeLevel: number): void {
     this.hpFill.width = 260 * hp / maxHp;
     this.hpFill.setFillStyle(hp < maxHp * 0.3 ? 0xdb8c81 : 0x9fd9c1);
     this.hpText.setText(`${hp} / ${maxHp} HP`);
     this.dashFill.width = 131 * dashProgress;
     this.dashText.setText(dashProgress >= 1 ? 'READY' : `${Math.ceil((1 - dashProgress) * 1.7 * 10) / 10}s`);
     this.dashText.setColor(dashProgress >= 1 ? '#a4e5e6' : '#7b9c9c');
-    this.chargeText.setText(chargeProgress >= 1 ? '[Q]  KINETIC READY' : `[Q]  KINETIC ${((1 - chargeProgress) * KINETIC_CHARGE.cooldown / 1000).toFixed(1)}s`);
-    this.chargeText.setColor(chargeProgress >= 1 ? '#a4e5e6' : '#7b9c9c');
+    this.chargeText.setText(chargePhase === 'CHARGING' ? `[Q]  CHARGING ${Math.round(chargeLevel * 100)}%` : chargePhase === 'RELEASE' ? '[Q]  KINETIC STRIKE' : chargeProgress >= 1 ? '[Q]  HOLD FOR KINETIC STRIKE' : `[Q]  KINETIC ${((1 - chargeProgress) * KINETIC_CHARGE.cooldown / 1000).toFixed(1)}s`);
+    this.chargeText.setColor(chargePhase !== 'READY' || chargeProgress >= 1 ? '#a4e5e6' : '#7b9c9c');
   }
 
   setDiscoveryPrompt(visible: boolean): void { this.discoveryPrompt.setVisible(visible); }

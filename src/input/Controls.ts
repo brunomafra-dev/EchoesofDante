@@ -22,6 +22,8 @@ export class Controls {
   get attacking(): boolean { return this.scene.input.activePointer.isDown && this.scene.input.activePointer.leftButtonDown(); }
   get dashPressed(): boolean { return Phaser.Input.Keyboard.JustDown(this.keys.SPACE); }
   get chargePressed(): boolean { return Phaser.Input.Keyboard.JustDown(this.keys.Q); }
+  get chargeReleased(): boolean { return Phaser.Input.Keyboard.JustUp(this.keys.Q); }
+  get chargeHeld(): boolean { return this.keys.Q.isDown; }
   get restartPressed(): boolean { return Phaser.Input.Keyboard.JustDown(this.keys.R); }
   get interactPressed(): boolean { return Phaser.Input.Keyboard.JustDown(this.keys.E); }
 }

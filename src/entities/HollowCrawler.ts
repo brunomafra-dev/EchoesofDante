@@ -134,12 +134,12 @@ export class HollowCrawler {
     this.healthFill.setPosition(this.position.x - 19, this.position.y - 34);
   }
 
-  hurt(now: number, from: Vec2): void {
+  hurt(now: number, from: Vec2, force = 300): void {
     this.state = 'HURT';
     this.hurtUntil = now + HURT_REACTION_MS;
     this.attackCommitted = true;
     const push = normalized(this.position.x - from.x, this.position.y - from.y);
-    this.knockback = { x: push.x * 300, y: push.y * 300 };
+    this.knockback = { x: push.x * force, y: push.y * force };
     this.hurtTilt = push.y >= 0 ? 0.19 : -0.19;
     this.hitFlash.setAlpha(0.62);
     this.scene.tweens.add({ targets: this.hitFlash, alpha: 0, duration: 110 });
