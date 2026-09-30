@@ -1,8 +1,8 @@
-# Echoes of Dante — Sprint 05.1
+# Echoes of Dante — Sprint 05.2
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
-Protótipo de action RPG sci-fi para navegador. O jogador explora Dante Forest, combate Hollows e investiga três Echoes. Depois de sincronizar os sinais, pode ativar a passagem antiga e explorar a primeira parte da Cavern. A direção Organic Sci-Fi segue a [Art Bible](docs/art-bible/).
+Protótipo de action RPG sci-fi para navegador. O jogador explora Dante Forest, combate Hollows e investiga três Echoes. Depois de sincronizar os sinais, pode ativar a passagem antiga, explorar a Cavern e seguir o sinal além do desabamento. A direção Organic Sci-Fi segue a [Art Bible](docs/art-bible/).
 
 ## Stack
 
@@ -44,6 +44,7 @@ npm run preview
 - The Signal: após o terceiro Echo, os três locais pulsam em violeta e uma fissura antiga no fim da trilha norte começa a emitir sinal. Investigar a fissura revela `SIGNAL SOURCE: BELOW / PASSAGE: SEALED` e torna o mecanismo próximo responsivo.
 - The Sealed Passage: investigar o mecanismo depois de 3/3 Echoes faz um sinal violeta percorrer a pedra até a fissura; em seguida as placas se abrem e a colisão é removida. Caminhar pela abertura leva à Cavern. HP atual, XP, nível e Echoes acompanham a travessia; o respawn ocorre na Cavern e conserva o estado da sessão.
 - Cavern Depths: a área de aproximadamente 1200×740 unidades possui descida de entrada, bacia mineral lateral, caminho principal, face antiga e um corredor curto até um desabamento visível. Dois Hollow Crawlers habitam zonas diferentes; é possível avançar sem derrotá-los. Aproximar-se da segunda abertura indica que o sinal continua abaixo, sem iniciar outra região ou conceder recompensa.
+- The Deep Signal: ao chegar ao desabamento, inscrições violetas acendem e duas placas deslocam-se, revelando uma passagem curta. Além dela há um bolso subterrâneo de cerca de 700 unidades, onde raízes e minerais cobrem uma estrutura antiga parcialmente enterrada. O sinal se intensifica sem conceder XP ou explicar sua origem. A travessia, o ponto de interesse e o retorno não exigem derrotar Hollows; o acesso permanece aberto após morrer na mesma sessão.
 - Três Echoes de sessão: ruína norte, sinal mineral a leste e vestígio antigo no desvio oeste. Aproximar-se mostra `[ E ] INVESTIGATE`; cada descoberta exibe um pulso e uma mensagem curta, atualiza o contador e concede 40 XP apenas uma vez por sessão. A mensagem original da ruína permanece.
 - Progressão curta: cada Hollow derrotado pela primeira vez em seu ponto de spawn concede 15 XP. Nível 2 aos 60 XP e nível 3 aos 140 XP; cada nível concede +10 de HP máximo e restaura o HP. O HUD mostra nível, XP e Echoes 0–3. Morte/respawn preserva esse progresso; atualizar a página inicia uma nova sessão.
 - Kinetic Charge: segurar Q carrega energia sem deslocar o Warrior; soltar lança uma onda de corte ciano/branco na direção atual da mira. Ela começa à frente do Warrior, tem 120 unidades de largura e avança 133 unidades, a distância percorrida pelo Void Dash em terreno livre. Carga de até 800 ms, dano de 50 a 76, recuo de 500 unidades/s e cooldown de 3,2 s. Cada Hollow recebe no máximo um impacto por onda. A carga não concede invulnerabilidade; LMB, movimento e Dash voltam após o gesto de 200 ms, mesmo enquanto a onda ainda avança.
@@ -59,7 +60,7 @@ npm run preview
 
 ## Limitações conhecidas
 
-- A Cavern contém somente a primeira área e um corredor curto. A face antiga é visual; o desabamento marca o limite jogável, sem transição ou interação adicional nesta versão.
+- A Cavern contém a primeira área e um pequeno bolso profundo. A face antiga e a estrutura profunda são pontos visuais; o limite após a estrutura não tem outra região jogável nesta versão.
 - O nível está limitado a 3 e o progresso existe somente na aba atual: recarregar a página reinicia XP, Echoes e recompensas. Não há salvamento.
 - A onda usa uma faixa frontal móvel e não tem interação especial com rochas. Seus valores e a naturalidade das poses do braço ainda precisam de avaliação humana em combate.
 - HUD e Energy Saber receberam apenas o feedback necessário para a habilidade; sua arte base, Mineral Pulse, First Discovery e parte do terreno ainda são provisórios.
@@ -75,6 +76,6 @@ npm run preview
 
 ## Próximos passos
 
-Avaliar em uma partida normal a clareza da ligação entre mecanismo e fissura e se as zonas da Cavern passam sensação de exploração. A continuação depois do desabamento fica para uma etapa futura. O desempenho em outra GPU pode ser diferente do Chrome headless medido nos testes.
+Avaliar em uma partida normal se a travessia do desabamento e a presença da tecnologia antiga despertam curiosidade. A continuação além da área profunda fica para uma etapa futura. O desempenho em outra GPU pode ser diferente do Chrome headless medido nos testes.
 
 As decisões técnicas desta sprint estão em [docs/technical-decisions.md](docs/technical-decisions.md).

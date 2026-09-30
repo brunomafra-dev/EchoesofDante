@@ -110,11 +110,11 @@ export class Hud {
     this.progressText.setText(`LV ${level}   XP ${nextLevelXp === null ? `${xp} / MAX` : `${xp} / ${nextLevelXp}`}   ECHOES ${echoes} / ${ECHO_COUNT}`);
   }
 
-  setSignalObjective(synchronized: boolean, sourceLocated: boolean, passageOpen = false, inCavern = false, depthSeen = false): void {
+  setSignalObjective(synchronized: boolean, sourceLocated: boolean, passageOpen = false, inCavern = false, depthSeen = false, deepAreaSeen = false): void {
     this.signalPanel.setVisible(synchronized);
     this.signalObjective.setVisible(synchronized);
     this.areaSubtitle.setText(inCavern ? 'CAVERN   /   FIRST DESCENT' : 'DANTE FOREST   /   COMBAT PROTOTYPE');
-    if (synchronized) this.signalObjective.setText(inCavern ? depthSeen ? 'SIGNAL CONTINUES  /  BELOW' : 'EXPLORE THE CAVERN' : passageOpen ? 'ENTER THE CAVERN' : sourceLocated ? 'INVESTIGATE THE MECHANISM' : 'FOLLOW THE SIGNAL  /  NORTH');
+    if (synchronized) this.signalObjective.setText(inCavern ? deepAreaSeen ? 'FOLLOW THE SIGNAL  /  BELOW' : depthSeen ? 'SIGNAL CONTINUES  /  BELOW' : 'EXPLORE THE CAVERN' : passageOpen ? 'ENTER THE CAVERN' : sourceLocated ? 'INVESTIGATE THE MECHANISM' : 'FOLLOW THE SIGNAL  /  NORTH');
   }
 
   showDiscovery(message: string): void {

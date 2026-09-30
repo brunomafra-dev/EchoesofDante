@@ -1,17 +1,23 @@
 import Phaser from 'phaser';
-import { CAVERN_BOUNDS } from '../config/cavern';
-import type { Obstacle } from './Movement';
+import { CAVERN_BOUNDS, DEEP_AREA, DEEP_OBSTACLES } from '../config/cavern';
+import { DeepSignal } from './DeepSignal';
+import type { MovementBounds, Obstacle } from './Movement';
 
-// One authored chamber; static art is captured once so it does not replay every frame.
+// One continuous authored Cavern; static art is captured once per section.
 export class CavernArea {
-  readonly bounds = CAVERN_BOUNDS;
+  readonly bounds: MovementBounds;
   readonly obstacles: Obstacle[] = [
     { x: 885, y: 595, radius: 56 },
     { x: 1190, y: 1000, radius: 63 },
     { x: 1490, y: 850, radius: 67 },
+    ...DEEP_OBSTACLES,
   ];
+  private readonly collapseObstacle: Obstacle = { x: DEEP_AREA.collapseX, y: DEEP_AREA.collapseY, radius: 64 };
+  private readonly deepSignal: DeepSignal;
 
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Phaser.Scene, deepPassageOpen = false) {
+    this.bounds = { ...CAVERN_BOUNDS, right: deepPassageOpen ? DEEP_AREA.right : CAVERN_BOUNDS.right };
+    if (!deepPassageOpen) this.obstacles.push(this.collapseObstacle);
     const art = scene.add.graphics().setVisible(false);
     art.fillStyle(0x07151c).fillRect(350, 250, 1500, 1000);
     art.fillStyle(0x1d3035).fillPoints([
@@ -57,7 +63,7 @@ export class CavernArea {
     }
     art.lineStyle(7, 0x416e57, 0.69).lineBetween(866, 943, 941, 995).lineBetween(1091, 947, 1037, 1002);
 
-    // A short natural corridor continues behind the old face and ends at a visible rockfall.
+    // A short natural corridor continues behind the old face to the buried passage.
     art.fillStyle(0x0d1b23).fillPoints([
       { x: 1460, y: 604 }, { x: 1539, y: 528 }, { x: 1636, y: 438 },
       { x: 1772, y: 385 }, { x: 1790, y: 536 }, { x: 1696, y: 577 }, { x: 1578, y: 676 },
@@ -70,15 +76,6 @@ export class CavernArea {
       { x: 1729, y: 457 }, { x: 1700, y: 505 }, { x: 1615, y: 576 }, { x: 1552, y: 645 },
     ], true);
     art.lineStyle(5, 0xa98cff, 0.29).lineBetween(1542, 637, 1620, 551).lineBetween(1620, 551, 1700, 508);
-    art.fillStyle(0x65716a).fillPoints([
-      { x: 1670, y: 390 }, { x: 1714, y: 388 }, { x: 1753, y: 443 },
-      { x: 1720, y: 480 }, { x: 1686, y: 467 },
-    ], true);
-    art.fillStyle(0x4b5655).fillPoints([
-      { x: 1688, y: 505 }, { x: 1743, y: 475 }, { x: 1783, y: 530 },
-      { x: 1739, y: 557 }, { x: 1698, y: 544 },
-    ], true);
-    art.lineStyle(3, 0xa98cff, 0.5).lineBetween(1700, 507, 1725, 490);
 
     // The forest fissure opens into a rough descent, framed by old stone rather than a clean door.
     art.fillStyle(0x111f27, 0.8).fillPoints([
@@ -135,6 +132,7 @@ export class CavernArea {
       art.lineStyle(3, 0x668968, 0.6).lineBetween(x + 18, y + (i % 2 ? -48 : 46), x + 42, y + (i % 2 ? -69 : 68));
     }
     for (const rock of this.obstacles) {
+      if (rock === this.collapseObstacle || rock.x > CAVERN_BOUNDS.right) continue; // Deep art owns those rocks.
       art.fillStyle(0x0a1c23, 0.5).fillEllipse(rock.x + 8, rock.y + 22, rock.radius * 2.7, rock.radius);
       art.fillStyle(0x50605b).fillPoints([
         { x: rock.x - rock.radius, y: rock.y + 12 }, { x: rock.x - rock.radius * 0.62, y: rock.y - rock.radius * 0.7 },
@@ -186,5 +184,15 @@ export class CavernArea {
     scene.tweens.add({ targets: glow, alpha: { from: 0.13, to: 0.35 }, scale: { from: 0.9, to: 1.1 }, duration: 2000, yoyo: true, repeat: -1 });
     const seam = scene.add.ellipse(1703, 486, 48, 14, 0xffbd54, 0.12).setDepth(480);
     scene.tweens.add({ targets: seam, alpha: { from: 0.1, to: 0.27 }, duration: 2300, yoyo: true, repeat: -1 });
+    this.deepSignal = new DeepSignal(scene, deepPassageOpen);
+  }
+
+  revealDeep(onOpened: () => void): void {
+    this.deepSignal.reveal(() => {
+      const index = this.obstacles.indexOf(this.collapseObstacle);
+      if (index >= 0) this.obstacles.splice(index, 1);
+      this.bounds.right = DEEP_AREA.right;
+      onOpened();
+    });
   }
 }

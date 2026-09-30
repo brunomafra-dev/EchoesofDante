@@ -4,7 +4,7 @@ import { applyDamage } from '../combat/Damage';
 import { KineticCharge } from '../combat/KineticCharge';
 import { PLAYER, CRAWLER, KINETIC_CHARGE, WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
 import { FOREST_ENTRY, FOREST_PATROLS, FOREST_SPAWNS } from '../config/forest';
-import { CAVERN_DEPTH_OPENING, CAVERN_ENTRY, CAVERN_HOLLOWS } from '../config/cavern';
+import { CAVERN_DEPTH_OPENING, CAVERN_ENTRY, CAVERN_HOLLOWS, DEEP_AREA } from '../config/cavern';
 import { FOREST_ECHOES, SIGNAL_THRESHOLD } from '../config/discovery';
 import { HollowCrawler } from '../entities/HollowCrawler';
 import { Player } from '../entities/Player';
@@ -26,11 +26,15 @@ export class GameScene extends Phaser.Scene {
   private player!: Player;
   private controls!: Controls;
   private arena!: Arena | CavernArea;
+  private cavern?: CavernArea;
   private movementBounds?: MovementBounds;
   private area: 'forest' | 'cavern' = 'forest';
   private transferHp?: number;
   private transitioning = false;
   private cavernDepthSeen = false;
+  private deepOpening = false;
+  private deepPassageOpen = false;
+  private deepAreaSeen = false;
   private gateObstacle?: Obstacle;
   private enemies: HollowCrawler[] = [];
   private hollowSpawnIds = new Map<HollowCrawler, number>();
@@ -76,6 +80,8 @@ export class GameScene extends Phaser.Scene {
     this.enemies = [];
     this.hollowSpawnIds.clear();
     this.transitioning = false;
+    this.deepOpening = false;
+    this.cavern = undefined;
     this.gateObstacle = undefined;
     this.threshold = undefined;
     this.mechanism = undefined;
@@ -96,7 +102,8 @@ export class GameScene extends Phaser.Scene {
       this.threshold = new SignalThreshold(this, this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen);
       this.mechanism = new PassageMechanism(this, this.progression.sourceLocated, this.progression.passageOpen);
     } else {
-      this.arena = new CavernArea(this);
+      this.cavern = new CavernArea(this, this.deepPassageOpen);
+      this.arena = this.cavern;
       this.movementBounds = this.arena.bounds;
     }
     const entry = this.area === 'forest' ? FOREST_ENTRY : CAVERN_ENTRY;
@@ -113,11 +120,12 @@ export class GameScene extends Phaser.Scene {
     });
     this.hud = new Hud(this, () => this.restart());
     this.updateProgressHud();
-    this.hud.setSignalObjective(this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen, this.area === 'cavern', this.cavernDepthSeen);
+    this.hud.setSignalObjective(this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen, this.area === 'cavern', this.cavernDepthSeen, this.deepAreaSeen);
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       if (pointer.leftButtonDown() && !this.player.isDead) this.beginStrike(this.time.now);
     });
-    this.cameras.main.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT).startFollow(this.player.view, false, 0.1, 0.1);
+    this.cameras.main.setBounds(0, 0, this.area === 'cavern' ? DEEP_AREA.cameraWidth : WORLD_WIDTH, WORLD_HEIGHT)
+      .startFollow(this.player.view, false, 0.1, 0.1);
     this.cameras.main.setBackgroundColor(this.area === 'forest' ? '#102d2c' : '#07151c');
     if (this.area === 'cavern') {
       this.cameras.main.centerOn(entry.x, entry.y);
@@ -208,10 +216,22 @@ export class GameScene extends Phaser.Scene {
     this.enemies = this.enemies.filter(enemy => !enemy.isDead);
     this.hud.update(this.player.hp, this.player.maxHp, this.player.dashProgress, this.charge.getProgress(time), heavy.phase, heavy.level);
     if (this.area === 'forest' && this.progression.passageOpen && !this.gateObstacle && this.threshold?.isInside(this.player.position)) this.enterCavern();
-    if (this.area === 'cavern' && !this.cavernDepthSeen && distance(this.player.position, CAVERN_DEPTH_OPENING) <= CAVERN_DEPTH_OPENING.radius) {
+    if (this.area === 'cavern' && !this.deepPassageOpen && !this.deepOpening && distance(this.player.position, CAVERN_DEPTH_OPENING) <= CAVERN_DEPTH_OPENING.radius) {
       this.cavernDepthSeen = true;
-      this.hud.showDiscovery('SIGNAL CONTINUES\nDEPTH: UNKNOWN');
-      this.hud.setSignalObjective(true, true, true, true, true);
+      this.deepOpening = true;
+      this.hud.showDiscovery('SIGNAL CONTINUES\nSTONE RESPONDING');
+      this.hud.setSignalObjective(true, true, true, true, true, false);
+      this.cavern?.revealDeep(() => {
+        this.deepOpening = false;
+        this.deepPassageOpen = true;
+        this.hud.showDiscovery('PASSAGE REVEALED\nSIGNAL: BELOW');
+      });
+    }
+    if (this.area === 'cavern' && this.deepPassageOpen && !this.deepAreaSeen &&
+      Math.hypot(this.player.position.x - DEEP_AREA.signalX, this.player.position.y - DEEP_AREA.signalY) <= DEEP_AREA.signalRadius) {
+      this.deepAreaSeen = true;
+      this.hud.showDiscovery('ANCIENT PATTERN\nSOURCE: STILL BELOW');
+      this.hud.setSignalObjective(true, true, true, true, true, true);
     }
   }
 
