@@ -6,6 +6,8 @@ import type { Vec2 } from '../utils/math';
 
 export class EnergySaber {
   readonly view: Phaser.GameObjects.Container;
+  // Local handle point behind the dominant hand; both grips rotate with this view.
+  readonly supportGripX = -10;
   private indicator: Phaser.GameObjects.Graphics;
   private trail: Phaser.GameObjects.Graphics;
 

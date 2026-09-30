@@ -2,7 +2,7 @@
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
-Protótipo de action RPG sci-fi para navegador. Kinetic Charge é um golpe pesado carregado com Q; o Energy Saber acompanha a mão do Galactic Warrior. A silhueta segue a direção Organic Sci-Fi da [Art Bible](docs/art-bible/). Hollow Crawler, Dante Forest, movimento, combate, exploração e descoberta nas ruínas permanecem disponíveis.
+Protótipo de action RPG sci-fi para navegador. Kinetic Charge é um golpe pesado carregado com Q; o Galactic Warrior segura o Energy Saber com as duas mãos. A silhueta segue a direção Organic Sci-Fi da [Art Bible](docs/art-bible/). Hollow Crawler, Dante Forest, movimento, combate, exploração e descoberta nas ruínas permanecem disponíveis.
 
 ## Stack
 
@@ -42,7 +42,7 @@ npm run preview
 ## Escopo implementado
 
 - Kinetic Charge: segurar Q carrega energia sem deslocar o Warrior; soltar desfere um golpe frontal na direção atual da mira. Carga de até 800 ms, dano de 50 a 76, alcance de 135 unidades, recuo de 500 unidades/s e cooldown de 3,2 s. Cada Hollow recebe no máximo um impacto por golpe. A carga não concede invulnerabilidade; LMB, movimento e Dash voltam após o golpe de 200 ms.
-- Energy Saber: cabo, luva e braço compartilham um pivô visual no `bodyRig`; a lâmina gira a partir da mão sem alterar o alcance, arco, dano ou janela do Saber Strike.
+- Energy Saber: a mão principal e a mão de apoio acompanham dois pontos do mesmo cabo no `bodyRig`. O braço de apoio dobra no cotovelo para manter as duas mãos legíveis em todas as direções, sem alterar alcance, arco, dano ou janela do Saber Strike.
 - Quatro Hollows, em dois pares, percorrem rotas curtas nas clareiras central e leste. Ao perceber o jogador, usam a perseguição e o combate existentes; ao perder contato, voltam ao ponto inicial e retomam a patrulha. Os demais continuam em seus postos.
 - A formação mineral a leste emite um pulso breve e discreto de tempos em tempos. O fenômeno não exige interação, não cria missão e reutiliza os mesmos objetos visuais.
 - First Discovery: estrutura parcialmente soterrada nas ruínas do norte, inscrições, fragmentos e vegetação. Investigar produz um pulso, som opcional e a mensagem temporária “SIGNAL DETECTED / SOURCE: UNKNOWN”. As inscrições permanecem acesas; a descoberta reinicia com o respawn, sem persistência ou recompensa.

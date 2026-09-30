@@ -117,3 +117,7 @@
 - Q agora inicia `CHARGING`; soltar Q usa a mira daquele instante para `RELEASE`. O Player permanece parado durante as duas fases, sem invulnerabilidade nova. `KineticCharge` reutiliza `inMeleeArc` e dispara uma única janela de impacto após 80 ms; o fluxo de dano e morte continua em `GameScene`.
 - O golpe pesado usa 50–76 de dano conforme até 800 ms de carga, alcance de 135, abertura frontal de 0,75 radiano, knockback inicial de 500 e cooldown de 3200 ms. LMB, Dash e velocidades normais não mudaram. O HUD existente mostra o percentual de carga e o cooldown.
 - `EnergySaber.view` fica sob `handAnchor`, filho do `bodyRig`, junto da luva. O braço vai do ombro até essa âncora, e a arte do cabo foi deslocada dentro do contêiner para girar exatamente no ponto da mão. O torso continua ereto e a espada segue a mira; efeitos de trilha permanecem em coordenadas de mundo.
+
+## Ajuste visual — empunhadura com duas mãos
+
+- A mão de apoio acompanha um segundo ponto local do cabo em `EnergySaber.view`; o braço de apoio possui dois segmentos com cotovelo calculado no `bodyRig`. Ambos os pontos giram com o mesmo sabre durante mira, caminhada, LMB, Q e Dash. As peças são criadas uma vez por Player; hitboxes, dano, velocidade e cooldowns não mudaram.

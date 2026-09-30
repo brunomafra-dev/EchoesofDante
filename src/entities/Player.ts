@@ -29,7 +29,9 @@ export class Player {
   private bodyRig: Phaser.GameObjects.Container;
   private torso: Phaser.GameObjects.Image;
   private supportArm: Phaser.GameObjects.Image;
+  private supportUpperArm: Phaser.GameObjects.Image;
   private saberArm: Phaser.GameObjects.Image;
+  private supportGlove: Phaser.GameObjects.Arc;
   private handAnchor: Phaser.GameObjects.Container;
   private gripWorld: Vec2 = { x: 0, y: 0 };
   private bodyLean = 0;
@@ -60,7 +62,8 @@ export class Player {
     this.legsRig = scene.add.container(0, 0, [this.leftLeg, this.rightLeg]);
 
     this.torso = scene.add.image(0, 0, 'warrior-body').setDisplaySize(90, 100);
-    this.supportArm = scene.add.image(-18, -8, 'warrior-support-arm').setDisplaySize(33, 16).setOrigin(0, 0.5).setRotation(Math.PI / 2);
+    this.supportUpperArm = scene.add.image(-18, -8, 'warrior-support-arm').setDisplaySize(18, 16).setOrigin(0, 0.5);
+    this.supportArm = scene.add.image(-18, -8, 'warrior-support-arm').setDisplaySize(18, 16).setOrigin(0, 0.5);
     this.saberArm = scene.add.image(18, -8, 'warrior-saber-arm').setDisplaySize(30, 16).setOrigin(0, 0.5);
 
     this.hurtOverlay = scene.add.graphics();
@@ -68,8 +71,9 @@ export class Player {
     this.hurtOverlay.setAlpha(0);
     this.weapon = new EnergySaber(scene);
     const glove = scene.add.circle(0, 0, 5, 0x203d47).setStrokeStyle(1.5, 0x9bb8b3);
+    this.supportGlove = scene.add.circle(0, 0, 4.5, 0x203d47).setStrokeStyle(1.5, 0xd4dbce);
     this.handAnchor = scene.add.container(0, 0, [this.weapon.view, glove]);
-    this.bodyRig = scene.add.container(0, 0, [this.supportArm, this.torso, this.saberArm, this.handAnchor, this.hurtOverlay]);
+    this.bodyRig = scene.add.container(0, 0, [this.torso, this.supportUpperArm, this.supportArm, this.saberArm, this.handAnchor, this.supportGlove, this.hurtOverlay]);
     this.view = scene.add.container(x, y, [this.legsRig, this.bodyRig]).setDepth(y);
     this.ring = scene.add.circle(x, y + 39, 33).setStrokeStyle(1, 0x89d9d2, 0.28).setFillStyle(0, 0).setDepth(y - 1);
     this.setAim(0);
@@ -103,7 +107,6 @@ export class Player {
     const armX = handX - shoulderX;
     const armY = handY + 8;
     this.saberArm.setPosition(shoulderX, -8).setRotation(Math.atan2(armY, armX)).setDisplaySize(Math.max(16, Math.hypot(armX, armY)), 16);
-    this.supportArm.setPosition(-18, -8);
   }
 
   get hp(): number { return this.health.current; }
@@ -177,7 +180,6 @@ export class Player {
     const heavyLean = heavy.phase === 'CHARGING' ? -0.03 - heavy.level * 0.04 : heavy.phase === 'RELEASE' ? (1 - heavy.swingProgress) * 0.08 : 0;
     const handReach = heavy.phase === 'CHARGING' ? -4 - heavy.level * 4 : heavy.phase === 'RELEASE' ? Math.sin(heavy.swingProgress * Math.PI) * 8 : 0;
     this.setAim(aim, (walking ? stride * 0.015 : 0) + attackTwist + heavyLean, handReach, pose.phase === 'READY' ? 0 : pose.relativeAngle * 3);
-    this.supportArm.setRotation(Math.PI / 2 + (walking ? -stride * 0.075 : 0));
     this.hurtOverlay.setAlpha(now < this.hitFlashUntil ? 0.72 : 0);
 
     this.view.setPosition(this.position.x, this.position.y).setDepth(this.position.y);
@@ -191,6 +193,22 @@ export class Player {
 
   renderWeapon(aim: number, pose: SaberPose, heavy: KineticPose): void {
     this.weapon.render(this.position, this.gripWorld, aim, this.bodyLean, pose, heavy, this.isDashing);
+    const offset = this.weapon.supportGripX * this.weapon.view.scaleX;
+    const gripX = this.handAnchor.x + Math.cos(this.weapon.view.rotation) * offset;
+    const gripY = this.handAnchor.y + Math.sin(this.weapon.view.rotation) * offset;
+    const armX = gripX + 18;
+    const armY = gripY + 8;
+    const armLength = Math.max(1, Math.hypot(armX, armY));
+    const bend = 12 * clamp(gripX / 18, -1, 1);
+    const elbowX = -18 + armX * 0.5 - armY / armLength * bend;
+    const elbowY = -8 + armY * 0.5 + armX / armLength * bend;
+    const upperX = elbowX + 18;
+    const upperY = elbowY + 8;
+    const lowerX = gripX - elbowX;
+    const lowerY = gripY - elbowY;
+    this.supportUpperArm.setPosition(-18, -8).setRotation(Math.atan2(upperY, upperX)).setDisplaySize(Math.max(7, Math.hypot(upperX, upperY)), 16);
+    this.supportArm.setPosition(elbowX, elbowY).setRotation(Math.atan2(lowerY, lowerX)).setDisplaySize(Math.max(7, Math.hypot(lowerX, lowerY)), 16);
+    this.supportGlove.setPosition(gripX, gripY);
   }
 
   flashHurt(): void {
