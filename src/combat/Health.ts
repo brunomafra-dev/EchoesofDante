@@ -1,5 +1,5 @@
 export class Health {
-  readonly max: number;
+  max: number;
   current: number;
 
   constructor(max: number) {
@@ -11,6 +11,11 @@ export class Health {
     if (this.current <= 0) return false;
     this.current = Math.max(0, this.current - amount);
     return this.current === 0;
+  }
+
+  setMaxAndRestore(max: number): void {
+    this.max = max;
+    this.current = max;
   }
 
   get isDead(): boolean { return this.current === 0; }

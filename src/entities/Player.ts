@@ -12,8 +12,7 @@ export type PlayerAnimationState = 'IDLE' | 'WALK' | 'ATTACK_WINDUP' | 'ATTACK_S
 export class Player {
   readonly position: Vec2;
   readonly velocity: Vec2 = { x: 0, y: 0 };
-  readonly health = new Health(PLAYER.maxHp);
-  readonly maxHp = PLAYER.maxHp;
+  readonly health: Health;
   readonly movementSpeed = PLAYER.speed;
   readonly attackDamage = PLAYER.attackDamage;
   readonly attackCooldown = PLAYER.attackCooldown;
@@ -53,7 +52,8 @@ export class Player {
   private dashVector: Vec2 = { x: 1, y: 0 };
   private invulnerableUntil = 0;
 
-  constructor(private scene: Phaser.Scene, x: number, y: number) {
+  constructor(private scene: Phaser.Scene, x: number, y: number, maxHp: number = PLAYER.maxHp) {
+    this.health = new Health(maxHp);
     this.position = { x, y };
     this.shadow = scene.add.ellipse(x, y + 39, 57, 16, 0x020e14, 0.39).setDepth(y - 3);
     this.groundContact = scene.add.ellipse(x, y + 39, 32, 9, 0x061a20, 0.32).setDepth(y - 2);
@@ -110,6 +110,7 @@ export class Player {
   }
 
   get hp(): number { return this.health.current; }
+  get maxHp(): number { return this.health.max; }
   get dashReady(): boolean { return !this.isDead && this.scene.time.now - this.lastDashAt >= PLAYER.dashCooldown; }
   get dashProgress(): number { return clamp((this.scene.time.now - this.lastDashAt) / PLAYER.dashCooldown, 0, 1); }
   get invulnerable(): boolean { return this.isDashing || this.scene.time.now < this.invulnerableUntil; }

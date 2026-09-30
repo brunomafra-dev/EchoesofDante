@@ -1,14 +1,17 @@
 import Phaser from 'phaser';
 import { NORTHERN_DISCOVERY as SITE } from '../config/discovery';
 import type { Vec2 } from '../utils/math';
+import type { EchoSite } from './EchoSite';
 
-// One local discovery. Its state lasts only for this scene, like defeated Hollows.
-export class NorthernDiscovery {
-  activated = false;
+export class NorthernDiscovery implements EchoSite {
+  readonly id = 'northern-ruin';
+  readonly message = 'SIGNAL DETECTED\nSOURCE: UNKNOWN';
+  activated: boolean;
   private inscriptions: Phaser.GameObjects.Graphics;
   private pulse: Phaser.GameObjects.Ellipse;
 
-  constructor(private scene: Phaser.Scene) {
+  constructor(private scene: Phaser.Scene, discovered = false) {
+    this.activated = discovered;
     const g = scene.add.graphics().setPosition(SITE.x, SITE.y).setDepth(SITE.y - 20);
     g.fillStyle(0x071c23, 0.65).fillEllipse(8, 27, 232, 75);
     // Unequal, fractured plates embedded in an older foundation, not an entrance.
@@ -28,7 +31,7 @@ export class NorthernDiscovery {
     for (let i=0;i<4;i++) {
       g.fillStyle(i%2 ? 0x62816b : 0x3f6859).fillEllipse(-78+i*4,12-i*9,17,8);
     }
-    this.inscriptions = scene.add.graphics().setPosition(SITE.x,SITE.y).setDepth(SITE.y-19).setAlpha(0.32);
+    this.inscriptions = scene.add.graphics().setPosition(SITE.x,SITE.y).setDepth(SITE.y-19).setAlpha(discovered ? 0.65 : 0.32);
     this.inscriptions.lineStyle(2,0x9bd2c7).strokeTriangle(-13,-62,1,-73,13,-61);
     this.inscriptions.lineBetween(-13,-56,0,-40).lineBetween(0,-40,13,-56);
     this.inscriptions.lineBetween(0,-30,0,4).lineBetween(-7,-23,7,-23);

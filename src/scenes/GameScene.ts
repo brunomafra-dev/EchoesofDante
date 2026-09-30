@@ -4,6 +4,7 @@ import { applyDamage } from '../combat/Damage';
 import { KineticCharge } from '../combat/KineticCharge';
 import { PLAYER, CRAWLER, KINETIC_CHARGE, WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
 import { FOREST_ENTRY, FOREST_PATROLS, FOREST_SPAWNS } from '../config/forest';
+import { FOREST_ECHOES } from '../config/discovery';
 import { HollowCrawler } from '../entities/HollowCrawler';
 import { Player } from '../entities/Player';
 import { Controls } from '../input/Controls';
@@ -11,6 +12,8 @@ import { Arena } from '../systems/Arena';
 import { MineralPulse } from '../systems/MineralPulse';
 import { SoundEffects } from '../systems/Sound';
 import { NorthernDiscovery } from '../systems/NorthernDiscovery';
+import { ForestEcho, type EchoSite } from '../systems/EchoSite';
+import { Progression } from '../systems/Progression';
 import { Hud } from '../ui/Hud';
 import { distance, normalized, type Vec2 } from '../utils/math';
 
@@ -19,11 +22,13 @@ export class GameScene extends Phaser.Scene {
   private controls!: Controls;
   private arena!: Arena;
   private enemies: HollowCrawler[] = [];
+  private hollowSpawnIds = new Map<HollowCrawler, number>();
+  private readonly progression = new Progression();
   private attack = new SaberAttack();
   private charge = new KineticCharge();
   private sounds = new SoundEffects();
   private hud!: Hud;
-  private discovery!: NorthernDiscovery;
+  private echoSites: EchoSite[] = [];
   private kineticWave!: Phaser.GameObjects.Graphics;
   private waveDrawn = false;
   private lastDashTrail = 0;
@@ -56,14 +61,24 @@ export class GameScene extends Phaser.Scene {
     this.charge = new KineticCharge();
     this.waveDrawn = false;
     this.enemies = [];
+    this.hollowSpawnIds.clear();
     this.arena = new Arena(this);
     new MineralPulse(this);
-    this.discovery = new NorthernDiscovery(this);
-    this.player = new Player(this, FOREST_ENTRY.x, FOREST_ENTRY.y);
+    this.echoSites = [
+      new NorthernDiscovery(this, this.progression.echoes.has('northern-ruin')),
+      new ForestEcho(this, FOREST_ECHOES.mineral, this.progression.echoes.has(FOREST_ECHOES.mineral.id)),
+      new ForestEcho(this, FOREST_ECHOES.trace, this.progression.echoes.has(FOREST_ECHOES.trace.id)),
+    ];
+    this.player = new Player(this, FOREST_ENTRY.x, FOREST_ENTRY.y, this.progression.maxHp);
     this.kineticWave = this.add.graphics().setDepth(14999);
     this.controls = new Controls(this);
-    FOREST_SPAWNS.forEach((point, index) => this.enemies.push(new HollowCrawler(this, point.x, point.y, FOREST_PATROLS[index])));
+    FOREST_SPAWNS.forEach((point, index) => {
+      const enemy = new HollowCrawler(this, point.x, point.y, FOREST_PATROLS[index]);
+      this.enemies.push(enemy);
+      this.hollowSpawnIds.set(enemy, index);
+    });
     this.hud = new Hud(this, () => this.restart());
+    this.updateProgressHud();
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       if (pointer.leftButtonDown() && !this.player.isDead) this.beginStrike(this.time.now);
     });
@@ -74,13 +89,17 @@ export class GameScene extends Phaser.Scene {
 
   update(time: number, delta: number): void {
     const interact = this.controls.interactPressed;
-    const nearDiscovery = this.discovery.canInvestigate(this.player.position, this.player.isDead);
+    const nearbyEcho = this.echoSites.find(site => site.canInvestigate(this.player.position, this.player.isDead));
+    const nearDiscovery = nearbyEcho !== undefined;
     if (nearDiscovery && interact) {
-      this.discovery.activate();
-      this.hud.showDiscovery();
+      nearbyEcho.activate();
+      const leveledUp = this.progression.discover(nearbyEcho.id);
+      this.hud.showDiscovery(nearbyEcho.message);
+      this.updateProgressHud();
+      if (leveledUp) this.levelUp();
       this.sounds.discovery();
     }
-    this.hud.setDiscoveryPrompt(nearDiscovery && !this.discovery.activated);
+    this.hud.setDiscoveryPrompt(nearDiscovery);
     if (this.player.isDead) {
       if (this.controls.restartPressed) this.restart();
       return;
@@ -153,6 +172,13 @@ export class GameScene extends Phaser.Scene {
       if (result.died) {
         this.deathEffect(enemy.position);
         enemy.die();
+        const spawnIndex = this.hollowSpawnIds.get(enemy);
+        if (spawnIndex !== undefined) {
+          const reward = this.progression.defeatHollow(spawnIndex);
+          if (reward.awarded) this.updateProgressHud();
+          if (reward.leveledUp) this.levelUp();
+          this.hollowSpawnIds.delete(enemy);
+        }
       } else enemy.hurt(now, from, chargeHit ? KINETIC_CHARGE.knockback : 300);
     }
   }
@@ -248,6 +274,18 @@ export class GameScene extends Phaser.Scene {
   private dashEnd(): void {
     const ring = this.add.circle(this.player.position.x, this.player.position.y, 18).setStrokeStyle(2, 0x9ed9e1, 0.55).setDepth(this.player.position.y + 1);
     this.tweens.add({ targets: ring, scale: 1.8, alpha: 0, duration: 180, onComplete: () => ring.destroy() });
+  }
+
+  private updateProgressHud(): void {
+    this.hud.setProgress(this.progression.level, this.progression.xp, this.progression.nextLevelXp, this.progression.echoes.size);
+  }
+
+  private levelUp(): void {
+    this.player.health.setMaxAndRestore(this.progression.maxHp);
+    this.hud.showLevelUp(this.progression.level);
+    const ring = this.add.circle(this.player.position.x, this.player.position.y, 25)
+      .setStrokeStyle(3, 0xffbd54, 0.8).setDepth(15000);
+    this.tweens.add({ targets: ring, scale: 2.6, alpha: 0, duration: 450, onComplete: () => ring.destroy() });
   }
 
   private restart(): void { this.scene.restart(); }

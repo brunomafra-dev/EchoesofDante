@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { KINETIC_CHARGE, VIEW_HEIGHT, VIEW_WIDTH } from '../config/game';
-import { NORTHERN_DISCOVERY } from '../config/discovery';
+import { ECHO_COUNT, NORTHERN_DISCOVERY } from '../config/discovery';
 import type { KineticPhase } from '../combat/KineticCharge';
 
 export class Hud {
@@ -12,6 +12,10 @@ export class Hud {
   private deathGroup: Array<{ setVisible(value: boolean): unknown }> = [];
   private discoveryPrompt: Phaser.GameObjects.Text;
   private discoveryMessage: Phaser.GameObjects.Text;
+  private progressText: Phaser.GameObjects.Text;
+  private levelMessage: Phaser.GameObjects.Text;
+  private discoveryTimer?: Phaser.Time.TimerEvent;
+  private levelTimer?: Phaser.Time.TimerEvent;
 
   constructor(private scene: Phaser.Scene, onRestart: () => void) {
     const text = (x: number, y: number, value: string, size: number, color = '#e8f1ed', condensed = false) => scene.add.text(x, y, value, {
@@ -25,6 +29,7 @@ export class Hud {
       panel.fillStyle(0x82c9cb, 0.65).fillRect(x + 12, y, 34, 2);
     };
     box(24, 16, 340, 79);
+    box(24, 103, 340, 45);
     box(380, 16, 500, 79);
     box(896, 16, 360, 79);
     panel.fillStyle(0x071b24, 0.86).fillRoundedRect(24, VIEW_HEIGHT - 68, 1232, 48, 8);
@@ -33,6 +38,7 @@ export class Hud {
 
     text(45, 24, 'ECHOES OF DANTE', 26, '#ecf5ee', true);
     text(47, 61, 'DANTE FOREST   /   COMBAT PROTOTYPE', 12, '#83a8a8');
+    this.progressText = text(44, 112, 'LV 1   XP 0 / 60   ECHOES 0 / 3', 17, '#d8e9dc', true);
     text(401, 25, 'GALACTIC WARRIOR', 19, '#eaf3ec', true);
     text(402, 58, 'VITALS', 12, '#8eb8b5', true);
     scene.add.rectangle(474, 57, 264, 13, 0x17343c).setOrigin(0).setScrollFactor(0).setDepth(20000);
@@ -60,6 +66,8 @@ export class Hud {
       .setOrigin(0.5).setBackgroundColor('#0b2730').setPadding(16, 9).setVisible(false);
     this.discoveryMessage = text(VIEW_WIDTH / 2, VIEW_HEIGHT - 164, 'SIGNAL DETECTED\nSOURCE: UNKNOWN', 22, '#c4e5d9', true)
       .setOrigin(0.5, 0).setAlign('center').setBackgroundColor('#0b2730').setPadding(22, 12).setVisible(false);
+    this.levelMessage = text(VIEW_WIDTH / 2, 115, 'LEVEL UP', 25, '#e4f6dc', true)
+      .setOrigin(0.5, 0).setAlign('center').setBackgroundColor('#0b2730').setPadding(20, 8).setVisible(false);
 
     const veil = scene.add.rectangle(0, 0, VIEW_WIDTH, VIEW_HEIGHT, 0x05141b, 0.79).setOrigin(0).setScrollFactor(0).setDepth(30000).setVisible(false);
     const frame = scene.add.graphics().setScrollFactor(0).setDepth(30001).setVisible(false);
@@ -90,14 +98,27 @@ export class Hud {
 
   setDiscoveryPrompt(visible: boolean): void { this.discoveryPrompt.setVisible(visible); }
 
-  showDiscovery(): void {
+  setProgress(level: number, xp: number, nextLevelXp: number | null, echoes: number): void {
+    this.progressText.setText(`LV ${level}   XP ${nextLevelXp === null ? `${xp} / MAX` : `${xp} / ${nextLevelXp}`}   ECHOES ${echoes} / ${ECHO_COUNT}`);
+  }
+
+  showDiscovery(message: string): void {
+    this.discoveryTimer?.remove(false);
+    this.discoveryMessage.setText(message);
     this.discoveryMessage.setVisible(true);
-    this.scene.time.delayedCall(NORTHERN_DISCOVERY.messageDuration, () => this.discoveryMessage.setVisible(false));
+    this.discoveryTimer = this.scene.time.delayedCall(NORTHERN_DISCOVERY.messageDuration, () => this.discoveryMessage.setVisible(false));
+  }
+
+  showLevelUp(level: number): void {
+    this.levelTimer?.remove(false);
+    this.levelMessage.setText(`LEVEL UP   /   LEVEL ${level}\nHP RESTORED`).setVisible(true);
+    this.levelTimer = this.scene.time.delayedCall(2000, () => this.levelMessage.setVisible(false));
   }
 
   showDeath(): void {
     this.discoveryPrompt.setVisible(false);
     this.discoveryMessage.setVisible(false);
+    this.levelMessage.setVisible(false);
     this.deathGroup.forEach(item => item.setVisible(true));
   }
 }

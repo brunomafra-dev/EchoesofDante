@@ -1,8 +1,8 @@
-# Echoes of Dante — Sprint 02.3
+# Echoes of Dante — Sprint 03.0
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
-Protótipo de action RPG sci-fi para navegador. Kinetic Charge lança uma onda de corte de energia ao soltar Q; o Galactic Warrior segura o Energy Saber com as duas mãos. A silhueta segue a direção Organic Sci-Fi da [Art Bible](docs/art-bible/). Hollow Crawler, Dante Forest, movimento, combate, exploração e descoberta nas ruínas permanecem disponíveis.
+Protótipo de action RPG sci-fi para navegador. O jogador explora Dante Forest, combate Hollows e investiga três Echoes para ganhar XP e alcançar o nível 3. Kinetic Charge lança uma onda de corte de energia ao soltar Q; a direção Organic Sci-Fi segue a [Art Bible](docs/art-bible/).
 
 ## Stack
 
@@ -37,15 +37,17 @@ npm run preview
 | Void Dash | Espaço; segue a direção de movimento ou da mira se parado |
 | Kinetic Charge | Segure Q para carregar; solte para lançar a onda na direção da mira |
 | Respawn após morrer | R ou botão na tela |
-| Investigar as ruínas | E quando o prompt aparecer perto da estrutura |
+| Investigar Echo | E quando o prompt aparecer perto de um local de descoberta |
 
 ## Escopo implementado
 
+- Três Echoes de sessão: ruína norte, sinal mineral a leste e vestígio antigo no desvio oeste. Aproximar-se mostra `[ E ] INVESTIGATE`; cada descoberta exibe um pulso e uma mensagem curta, atualiza o contador e concede 40 XP apenas uma vez por sessão. A mensagem original da ruína permanece.
+- Progressão curta: cada Hollow derrotado pela primeira vez em seu ponto de spawn concede 15 XP. Nível 2 aos 60 XP e nível 3 aos 140 XP; cada nível concede +10 de HP máximo e restaura o HP. O HUD mostra nível, XP e Echoes 0–3. Morte/respawn preserva esse progresso; atualizar a página inicia uma nova sessão.
 - Kinetic Charge: segurar Q carrega energia sem deslocar o Warrior; soltar lança uma onda de corte ciano/branco na direção atual da mira. Ela começa à frente do Warrior, tem 120 unidades de largura e avança 133 unidades, a distância percorrida pelo Void Dash em terreno livre. Carga de até 800 ms, dano de 50 a 76, recuo de 500 unidades/s e cooldown de 3,2 s. Cada Hollow recebe no máximo um impacto por onda. A carga não concede invulnerabilidade; LMB, movimento e Dash voltam após o gesto de 200 ms, mesmo enquanto a onda ainda avança.
 - Energy Saber: a mão principal e a mão de apoio acompanham dois pontos do mesmo cabo no `bodyRig`. O braço de apoio dobra no cotovelo para manter as duas mãos legíveis em todas as direções, sem alterar alcance, arco, dano ou janela do Saber Strike.
 - Quatro Hollows, em dois pares, percorrem rotas curtas nas clareiras central e leste. Ao perceber o jogador, usam a perseguição e o combate existentes; ao perder contato, voltam ao ponto inicial e retomam a patrulha. Os demais continuam em seus postos.
-- A formação mineral a leste emite um pulso breve e discreto de tempos em tempos. O fenômeno não exige interação, não cria missão e reutiliza os mesmos objetos visuais.
-- First Discovery: estrutura parcialmente soterrada nas ruínas do norte, inscrições, fragmentos e vegetação. Investigar produz um pulso, som opcional e a mensagem temporária “SIGNAL DETECTED / SOURCE: UNKNOWN”. As inscrições permanecem acesas; a descoberta reinicia com o respawn, sem persistência ou recompensa.
+- A formação mineral a leste continua emitindo um pulso breve e discreto; o Echo no local adiciona investigação sem interromper o fenômeno.
+- First Discovery: estrutura parcialmente soterrada nas ruínas do norte, inscrições, fragmentos e vegetação. Investigar produz um pulso, som opcional e a mensagem temporária “SIGNAL DETECTED / SOURCE: UNKNOWN”. As inscrições permanecem acesas após o respawn na mesma sessão.
 - Dante Forest de 2200×1500 unidades: entrada ao sudoeste, trilha principal rumo às ruínas ao norte e desvios para uma árvore maior a oeste e uma formação mineral a leste. Clareiras conectadas, vegetação em camadas e bancos de rochas delimitam o espaço; câmera suave e zoom preservados.
 - O solo e os desenhos estáticos da floresta são renderizados uma vez em camadas. Copas e troncos usam três SVGs compartilhados; rochas têm facetas irregulares. Profundidade e animações existentes foram preservadas.
 - Galactic Warrior com capacete destacado, torso, braços e duas pernas visíveis. O corpo permanece ereto em vistas frontal, lateral e traseira; o sabre continua seguindo a mira e as pernas mantêm o ciclo de passos. Sombra, HP, movimento, dash e invulnerabilidade breve permanecem.
@@ -54,6 +56,7 @@ npm run preview
 
 ## Limitações conhecidas
 
+- O nível está limitado a 3 e o progresso existe somente na aba atual: recarregar a página reinicia XP, Echoes e recompensas. Não há salvamento.
 - A onda usa uma faixa frontal móvel e não tem interação especial com rochas. Seus valores e a naturalidade das poses do braço ainda precisam de avaliação humana em combate.
 - HUD e Energy Saber receberam apenas o feedback necessário para a habilidade; sua arte base, Mineral Pulse, First Discovery e parte do terreno ainda são provisórios.
 - Controles voltados a desktop com teclado e mouse; sem suporte dedicado a toque.
@@ -68,6 +71,6 @@ npm run preview
 
 ## Próximos passos
 
-Avaliar manualmente a leitura da onda em movimento, seu alcance e a integração com o sabre. O desempenho em outra GPU ou resolução pode ser diferente do Chrome headless medido nos testes.
+Avaliar manualmente se os três Echoes são fáceis de notar durante uma partida normal e se a recompensa de exploração parece proporcional ao combate. O desempenho em outra GPU pode ser diferente do Chrome headless medido nos testes.
 
 As decisões técnicas desta sprint estão em [docs/technical-decisions.md](docs/technical-decisions.md).

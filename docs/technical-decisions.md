@@ -126,3 +126,9 @@
 
 - O gesto carregado continua parado e com o sabre nas duas mãos. Após 80 ms do release, uma onda ciano/branca de 120 unidades de largura parte 55 unidades à frente do Player e percorre 133 unidades em 320 ms, acompanhando a mira capturada ao soltar Q. A distância percorrida deriva da velocidade e duração atuais do Void Dash; o movimento do Player e o Dash não mudam.
 - `KineticCharge` guarda a origem do lançamento e verifica uma faixa varrida entre a posição anterior e a atual da onda. Isso evita perder alvos entre frames e limita cada Hollow a um acerto por ativação. O fluxo existente de dano, knockback, impacto e morte permanece em `GameScene`. Um único `Graphics` reutilizado desenha a onda só enquanto ela existe; o efeito é limpo ao terminar ou quando o Player morre.
+
+## Sprint 03.0 — Echoes e progresso de sessão
+
+- `NorthernDiscovery` mantém a arte e a reação existentes e passa a cumprir a pequena interface `EchoSite`. `ForestEcho` desenha somente dois locais adicionais: o sinal na formação mineral a leste e um fragmento antigo no desvio oeste. A cena usa a mesma tecla E, alcance e mensagem curta para os três; o `MineralPulse` permanece independente.
+- `Progression` é um campo da instância de `GameScene`, preservado por `scene.restart()` e descartado ao recarregar a página. Guarda os IDs dos Echoes e dos oito spawns de Hollow já recompensados; não há XP duplicado depois de morrer. XP: 40 por Echo, 15 por Hollow; limiares de nível: 0, 60 e 140; HP máximo: 100, 110 e 120. A única consequência de nível é restaurar HP e elevar seu máximo.
+- O HUD recebe um painel compacto para nível, XP e contador 0/3 e mensagens temporárias de descoberta/level up. As faixas estáticas da `Arena`, movimento, câmera, colisões, IA, dano e habilidades mantêm seus valores e fluxo anteriores.
