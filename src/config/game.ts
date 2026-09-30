@@ -25,8 +25,11 @@ export const KINETIC_CHARGE = {
   cooldown: 3200,
   minDamage: 50,
   maxDamage: 76,
-  hitRange: 135,
-  hitHalfAngle: 0.75,
+  waveStart: 55,
+  waveTravel: PLAYER.dashSpeed * PLAYER.dashDuration / 1000,
+  waveDuration: 320,
+  waveHalfWidth: 60,
+  waveThickness: 20,
   knockback: 500,
 } as const;
 

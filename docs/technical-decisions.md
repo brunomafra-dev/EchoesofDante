@@ -121,3 +121,8 @@
 ## Ajuste visual — empunhadura com duas mãos
 
 - A mão de apoio acompanha um segundo ponto local do cabo em `EnergySaber.view`; o braço de apoio possui dois segmentos com cotovelo calculado no `bodyRig`. Ambos os pontos giram com o mesmo sabre durante mira, caminhada, LMB, Q e Dash. As peças são criadas uma vez por Player; hitboxes, dano, velocidade e cooldowns não mudaram.
+
+## Ajuste de Kinetic Charge — onda de corte
+
+- O gesto carregado continua parado e com o sabre nas duas mãos. Após 80 ms do release, uma onda ciano/branca de 120 unidades de largura parte 55 unidades à frente do Player e percorre 133 unidades em 320 ms, acompanhando a mira capturada ao soltar Q. A distância percorrida deriva da velocidade e duração atuais do Void Dash; o movimento do Player e o Dash não mudam.
+- `KineticCharge` guarda a origem do lançamento e verifica uma faixa varrida entre a posição anterior e a atual da onda. Isso evita perder alvos entre frames e limita cada Hollow a um acerto por ativação. O fluxo existente de dano, knockback, impacto e morte permanece em `GameScene`. Um único `Graphics` reutilizado desenha a onda só enquanto ela existe; o efeito é limpo ao terminar ou quando o Player morre.

@@ -24,6 +24,8 @@ export class GameScene extends Phaser.Scene {
   private sounds = new SoundEffects();
   private hud!: Hud;
   private discovery!: NorthernDiscovery;
+  private kineticWave!: Phaser.GameObjects.Graphics;
+  private waveDrawn = false;
   private lastDashTrail = 0;
 
   constructor() { super('Game'); }
@@ -52,11 +54,13 @@ export class GameScene extends Phaser.Scene {
   create(): void {
     this.attack = new SaberAttack();
     this.charge = new KineticCharge();
+    this.waveDrawn = false;
     this.enemies = [];
     this.arena = new Arena(this);
     new MineralPulse(this);
     this.discovery = new NorthernDiscovery(this);
     this.player = new Player(this, FOREST_ENTRY.x, FOREST_ENTRY.y);
+    this.kineticWave = this.add.graphics().setDepth(14999);
     this.controls = new Controls(this);
     FOREST_SPAWNS.forEach((point, index) => this.enemies.push(new HollowCrawler(this, point.x, point.y, FOREST_PATROLS[index])));
     this.hud = new Hud(this, () => this.restart());
@@ -88,7 +92,7 @@ export class GameScene extends Phaser.Scene {
     if (this.controls.chargePressed && !this.player.isDashing && this.attack.pose(time, aim).phase === 'READY' && this.charge.start(time)) {
       this.sounds.charge();
     }
-    if ((this.controls.chargeReleased || (this.charge.phase === 'CHARGING' && !this.controls.chargeHeld)) && this.charge.release(time, aim)) {
+    if ((this.controls.chargeReleased || (this.charge.phase === 'CHARGING' && !this.controls.chargeHeld)) && this.charge.release(time, aim, this.player.position)) {
       this.sounds.swing();
       this.chargeBurst();
     }
@@ -108,10 +112,11 @@ export class GameScene extends Phaser.Scene {
       this.lastDashTrail = time;
       this.dashTrail();
     }
-    if (heavy.phase === 'RELEASE') {
-      const hits = this.charge.takeHits(time, this.player.position, this.enemies);
-      this.resolvePlayerHits(time, hits, this.charge.damage, facing, 0x5fe6d8, this.player.position, true);
+    if (this.charge.wavePending) {
+      const waveHits = this.charge.takeHits(time, this.enemies);
+      this.resolvePlayerHits(time, waveHits, this.charge.damage, this.charge.angle, 0x5fe6d8, this.charge.origin, true);
     }
+    this.renderKineticWave(time);
     const sweep = this.attack.advance(time, this.player.position, facing, this.enemies);
     this.resolveSaberHits(time, sweep.hits, sweep.pose.worldAngle);
     for (const enemy of this.enemies) {
@@ -166,6 +171,8 @@ export class GameScene extends Phaser.Scene {
     this.player.setHurtGrace(this.time.now + PLAYER.hurtCooldown);
     if (result.died) {
       this.charge.stop();
+      this.kineticWave.clear();
+      this.waveDrawn = false;
       this.player.die();
       this.sounds.death();
       this.time.delayedCall(550, () => this.hud.showDeath());
@@ -206,6 +213,30 @@ export class GameScene extends Phaser.Scene {
     const y = this.player.position.y;
     const burst = this.add.ellipse(x, y, 54, 18, 0x5fe6d8, 0.28).setRotation(this.charge.angle).setDepth(y - 1);
     this.tweens.add({ targets: burst, scaleX: 2.1, scaleY: 0.65, alpha: 0, duration: 190, onComplete: () => burst.destroy() });
+  }
+
+  private renderKineticWave(now: number): void {
+    if (!this.charge.waveVisible(now)) {
+      if (this.waveDrawn) this.kineticWave.clear();
+      this.waveDrawn = false;
+      return;
+    }
+    this.kineticWave.clear();
+    this.waveDrawn = true;
+    const progress = this.charge.waveProgress(now);
+    const angle = this.charge.angle;
+    const radius = 80;
+    const spread = Math.asin(KINETIC_CHARGE.waveHalfWidth / radius);
+    const travel = KINETIC_CHARGE.waveStart + KINETIC_CHARGE.waveTravel * progress - radius + 8;
+    const x = this.charge.origin.x + Math.cos(angle) * travel;
+    const y = this.charge.origin.y + Math.sin(angle) * travel;
+    const fade = Math.min(1, (1 - progress) / 0.22);
+    this.kineticWave.lineStyle(18, 0x5fe6d8, 0.22 * fade);
+    this.kineticWave.beginPath().arc(x, y, radius, angle - spread, angle + spread).strokePath();
+    this.kineticWave.lineStyle(7, 0x70e9e2, 0.68 * fade);
+    this.kineticWave.beginPath().arc(x, y, radius, angle - spread, angle + spread).strokePath();
+    this.kineticWave.lineStyle(2, 0xe2fffa, 0.9 * fade);
+    this.kineticWave.beginPath().arc(x, y, radius, angle - spread, angle + spread).strokePath();
   }
 
   private dashBurst(input: Vec2): void {

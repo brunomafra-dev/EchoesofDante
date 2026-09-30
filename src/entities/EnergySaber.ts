@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { KINETIC_CHARGE, PLAYER } from '../config/game';
+import { PLAYER } from '../config/game';
 import type { SaberPose } from '../combat/Attack';
 import type { KineticPose } from '../combat/KineticCharge';
 import type { Vec2 } from '../utils/math';
@@ -50,8 +50,6 @@ export class EnergySaber {
       this.trail.lineStyle(8, 0x5fe6d8, 0.12 + heavy.level * 0.24);
       this.trail.lineBetween(grip.x + Math.cos(angle) * 18, grip.y + Math.sin(angle) * 18, grip.x + Math.cos(angle) * 82, grip.y + Math.sin(angle) * 82);
     } else if (heavy.phase === 'RELEASE') {
-      this.indicator.lineStyle(3, 0x5fe6d8, 0.35);
-      this.indicator.beginPath().arc(position.x, position.y, KINETIC_CHARGE.hitRange, facing - KINETIC_CHARGE.hitHalfAngle, facing + KINETIC_CHARGE.hitHalfAngle).strokePath();
       const angle = facing + localAngle;
       this.trail.lineStyle(17, 0x5fe6d8, 0.23);
       this.trail.beginPath().arc(grip.x, grip.y, 83, angle - 0.42, angle).strokePath();
