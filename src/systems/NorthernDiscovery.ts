@@ -48,7 +48,16 @@ export class NorthernDiscovery implements EchoSite {
     this.activated = true;
     this.inscriptions.setAlpha(1);
     this.scene.tweens.add({targets:this.inscriptions,alpha:0.65,duration:1400,ease:'Sine.easeOut'});
-    this.pulse.setAlpha(0.8);
+    this.pulseWithColor(0xadddd0);
+  }
+
+  respond(): void {
+    this.pulseWithColor(0xa98cff);
+  }
+
+  private pulseWithColor(color: number): void {
+    this.pulse.setStrokeStyle(2, color, 0.8);
+    this.pulse.setScale(1).setAlpha(0.8);
     this.scene.tweens.add({targets:this.pulse,scaleX:3.2,scaleY:3.2,alpha:0,duration:900,ease:'Cubic.easeOut'});
   }
 }

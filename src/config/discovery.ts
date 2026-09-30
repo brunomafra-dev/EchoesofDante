@@ -11,3 +11,12 @@ export const FOREST_ECHOES = {
 } as const;
 
 export const ECHO_COUNT = 3;
+
+export const SIGNAL_THRESHOLD = {
+  x: 1870,
+  y: 245,
+  radius: 128,
+  obstacleRadius: 62,
+  synchronizedMessage: 'SIGNAL SYNCHRONIZED\nORIGIN: NORTHERN RIDGE',
+  thresholdMessage: 'SIGNAL SOURCE: BELOW\nPASSAGE: SEALED',
+} as const;

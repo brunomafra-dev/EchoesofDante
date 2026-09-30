@@ -7,6 +7,7 @@ export interface EchoSite {
   readonly message: string;
   canInvestigate(position: Vec2, dead: boolean): boolean;
   activate(): void;
+  respond(): void;
 }
 
 type ForestSite = typeof FOREST_ECHOES[keyof typeof FOREST_ECHOES];
@@ -52,7 +53,16 @@ export class ForestEcho implements EchoSite {
   activate(): void {
     if (this.activated) return;
     this.activated = true;
-    this.pulse.setAlpha(0.8);
+    this.pulseWithColor(this.id === FOREST_ECHOES.mineral.id ? 0xffbd54 : 0xa98cff);
+  }
+
+  respond(): void {
+    this.pulseWithColor(0xa98cff);
+  }
+
+  private pulseWithColor(color: number): void {
+    this.pulse.setStrokeStyle(2, color, 0.8);
+    this.pulse.setScale(1).setAlpha(0.8);
     this.scene.tweens.add({ targets: this.pulse, scaleX: 3, scaleY: 3, alpha: 0, duration: 850, ease: 'Cubic.easeOut' });
   }
 }

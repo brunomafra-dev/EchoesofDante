@@ -1,14 +1,23 @@
 import { PROGRESSION } from '../config/progression';
+import { ECHO_COUNT } from '../config/discovery';
 
 // Run-local state. GameScene survives scene.restart(), so death retains awards.
 export class Progression {
   xp = 0;
   level = 1;
   readonly echoes = new Set<string>();
+  sourceLocated = false;
   private rewardedHollows = new Set<number>();
 
   get maxHp(): number { return PROGRESSION.baseMaxHp + (this.level - 1) * PROGRESSION.maxHpPerLevel; }
   get nextLevelXp(): number | null { return PROGRESSION.levelThresholds[this.level] ?? null; }
+  get signalSynchronized(): boolean { return this.echoes.size === ECHO_COUNT; }
+
+  locateSource(): boolean {
+    if (!this.signalSynchronized || this.sourceLocated) return false;
+    this.sourceLocated = true;
+    return true;
+  }
 
   discover(id: string): boolean {
     if (this.echoes.has(id)) return false;

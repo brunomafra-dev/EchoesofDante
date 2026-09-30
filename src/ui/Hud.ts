@@ -14,6 +14,8 @@ export class Hud {
   private discoveryMessage: Phaser.GameObjects.Text;
   private progressText: Phaser.GameObjects.Text;
   private levelMessage: Phaser.GameObjects.Text;
+  private signalPanel: Phaser.GameObjects.Graphics;
+  private signalObjective: Phaser.GameObjects.Text;
   private discoveryTimer?: Phaser.Time.TimerEvent;
   private levelTimer?: Phaser.Time.TimerEvent;
 
@@ -39,6 +41,11 @@ export class Hud {
     text(45, 24, 'ECHOES OF DANTE', 26, '#ecf5ee', true);
     text(47, 61, 'DANTE FOREST   /   COMBAT PROTOTYPE', 12, '#83a8a8');
     this.progressText = text(44, 112, 'LV 1   XP 0 / 60   ECHOES 0 / 3', 17, '#d8e9dc', true);
+    this.signalPanel = scene.add.graphics().setScrollFactor(0).setDepth(19990).setVisible(false);
+    this.signalPanel.fillStyle(0x071b24, 0.88).fillRoundedRect(24, 156, 340, 43, 8);
+    this.signalPanel.lineStyle(1, 0xa98cff, 0.55).strokeRoundedRect(24, 156, 340, 43, 8);
+    this.signalPanel.fillStyle(0xa98cff, 0.7).fillRect(36, 156, 34, 2);
+    this.signalObjective = text(44, 165, 'FOLLOW THE SIGNAL  /  NORTH', 17, '#b9adff', true).setVisible(false);
     text(401, 25, 'GALACTIC WARRIOR', 19, '#eaf3ec', true);
     text(402, 58, 'VITALS', 12, '#8eb8b5', true);
     scene.add.rectangle(474, 57, 264, 13, 0x17343c).setOrigin(0).setScrollFactor(0).setDepth(20000);
@@ -100,6 +107,12 @@ export class Hud {
 
   setProgress(level: number, xp: number, nextLevelXp: number | null, echoes: number): void {
     this.progressText.setText(`LV ${level}   XP ${nextLevelXp === null ? `${xp} / MAX` : `${xp} / ${nextLevelXp}`}   ECHOES ${echoes} / ${ECHO_COUNT}`);
+  }
+
+  setSignalObjective(synchronized: boolean, sourceLocated: boolean): void {
+    this.signalPanel.setVisible(synchronized);
+    this.signalObjective.setVisible(synchronized);
+    if (synchronized) this.signalObjective.setText(sourceLocated ? 'SIGNAL SOURCE LOCATED' : 'FOLLOW THE SIGNAL  /  NORTH');
   }
 
   showDiscovery(message: string): void {

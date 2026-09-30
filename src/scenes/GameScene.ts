@@ -4,7 +4,7 @@ import { applyDamage } from '../combat/Damage';
 import { KineticCharge } from '../combat/KineticCharge';
 import { PLAYER, CRAWLER, KINETIC_CHARGE, WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
 import { FOREST_ENTRY, FOREST_PATROLS, FOREST_SPAWNS } from '../config/forest';
-import { FOREST_ECHOES } from '../config/discovery';
+import { FOREST_ECHOES, SIGNAL_THRESHOLD } from '../config/discovery';
 import { HollowCrawler } from '../entities/HollowCrawler';
 import { Player } from '../entities/Player';
 import { Controls } from '../input/Controls';
@@ -14,6 +14,7 @@ import { SoundEffects } from '../systems/Sound';
 import { NorthernDiscovery } from '../systems/NorthernDiscovery';
 import { ForestEcho, type EchoSite } from '../systems/EchoSite';
 import { Progression } from '../systems/Progression';
+import { SignalThreshold } from '../systems/SignalThreshold';
 import { Hud } from '../ui/Hud';
 import { distance, normalized, type Vec2 } from '../utils/math';
 
@@ -29,6 +30,7 @@ export class GameScene extends Phaser.Scene {
   private sounds = new SoundEffects();
   private hud!: Hud;
   private echoSites: EchoSite[] = [];
+  private threshold!: SignalThreshold;
   private kineticWave!: Phaser.GameObjects.Graphics;
   private waveDrawn = false;
   private lastDashTrail = 0;
@@ -63,12 +65,14 @@ export class GameScene extends Phaser.Scene {
     this.enemies = [];
     this.hollowSpawnIds.clear();
     this.arena = new Arena(this);
+    this.arena.obstacles.push({ x: SIGNAL_THRESHOLD.x, y: SIGNAL_THRESHOLD.y, radius: SIGNAL_THRESHOLD.obstacleRadius });
     new MineralPulse(this);
     this.echoSites = [
       new NorthernDiscovery(this, this.progression.echoes.has('northern-ruin')),
       new ForestEcho(this, FOREST_ECHOES.mineral, this.progression.echoes.has(FOREST_ECHOES.mineral.id)),
       new ForestEcho(this, FOREST_ECHOES.trace, this.progression.echoes.has(FOREST_ECHOES.trace.id)),
     ];
+    this.threshold = new SignalThreshold(this, this.progression.signalSynchronized, this.progression.sourceLocated);
     this.player = new Player(this, FOREST_ENTRY.x, FOREST_ENTRY.y, this.progression.maxHp);
     this.kineticWave = this.add.graphics().setDepth(14999);
     this.controls = new Controls(this);
@@ -79,6 +83,7 @@ export class GameScene extends Phaser.Scene {
     });
     this.hud = new Hud(this, () => this.restart());
     this.updateProgressHud();
+    this.hud.setSignalObjective(this.progression.signalSynchronized, this.progression.sourceLocated);
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       if (pointer.leftButtonDown() && !this.player.isDead) this.beginStrike(this.time.now);
     });
@@ -92,14 +97,21 @@ export class GameScene extends Phaser.Scene {
     const nearbyEcho = this.echoSites.find(site => site.canInvestigate(this.player.position, this.player.isDead));
     const nearDiscovery = nearbyEcho !== undefined;
     if (nearDiscovery && interact) {
+      const wasSynchronized = this.progression.signalSynchronized;
       nearbyEcho.activate();
       const leveledUp = this.progression.discover(nearbyEcho.id);
       this.hud.showDiscovery(nearbyEcho.message);
       this.updateProgressHud();
       if (leveledUp) this.levelUp();
       this.sounds.discovery();
+      if (!wasSynchronized && this.progression.signalSynchronized) this.synchronizeSignal();
+    } else if (interact && this.threshold.canInvestigate(this.player.position, this.player.isDead) && this.progression.locateSource()) {
+      this.threshold.locateSource();
+      this.hud.showDiscovery(SIGNAL_THRESHOLD.thresholdMessage);
+      this.hud.setSignalObjective(true, true);
+      this.sounds.discovery();
     }
-    this.hud.setDiscoveryPrompt(nearDiscovery);
+    this.hud.setDiscoveryPrompt(nearDiscovery || this.threshold.canInvestigate(this.player.position, this.player.isDead));
     if (this.player.isDead) {
       if (this.controls.restartPressed) this.restart();
       return;
@@ -278,6 +290,18 @@ export class GameScene extends Phaser.Scene {
 
   private updateProgressHud(): void {
     this.hud.setProgress(this.progression.level, this.progression.xp, this.progression.nextLevelXp, this.progression.echoes.size);
+  }
+
+  private synchronizeSignal(): void {
+    this.threshold.activate();
+    // Give the third site's own discovery a moment before the shared response.
+    this.time.delayedCall(1150, () => {
+      if (this.player.isDead || this.progression.sourceLocated) return;
+      this.echoSites.forEach(site => site.respond());
+      this.hud.showDiscovery(SIGNAL_THRESHOLD.synchronizedMessage);
+      this.hud.setSignalObjective(true, false);
+      this.sounds.discovery();
+    });
   }
 
   private levelUp(): void {
