@@ -1,4 +1,4 @@
-# Echoes of Dante — Sprint 05.2
+# Echoes of Dante — Sprint 06.0
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
@@ -7,7 +7,8 @@ Protótipo de action RPG sci-fi para navegador. O jogador explora Dante Forest, 
 ## Stack
 
 - TypeScript, Phaser 3 e Vite
-- SVGs autorais em `public/assets/visual/` para personagens e árvores; terreno, efeitos e sons curtos continuam gerados em código
+- SVGs autorais em `public/assets/visual/` para personagens e árvores; terreno e efeitos visuais continuam gerados em código
+- Loops musicais autorais de protótipo em `public/assets/audio/`; efeitos curtos são sintetizados com Web Audio
 - Barlow Condensed e DM Sans carregadas via Google Fonts, com fallback local
 - Sem backend, persistência ou multiplayer
 
@@ -29,18 +30,25 @@ npm run preview
 
 ## Controles
 
-| Ação | Controle |
-| --- | --- |
-| Mover | W A S D |
-| Mirar | Mouse |
-| Saber Strike | Clique esquerdo; segure para repetir após o cooldown |
-| Void Dash | Espaço; segue a direção de movimento ou da mira se parado |
-| Kinetic Charge | Segure Q para carregar; solte para lançar a onda na direção da mira |
-| Respawn após morrer | R ou botão na tela |
-| Investigar Echo, fissura ou mecanismo | E quando o prompt aparecer perto do local |
+| Ação | Teclado e mouse | Gamepad padrão | Touch em landscape |
+| --- | --- | --- | --- |
+| Mover | W A S D | Analógico esquerdo | Controle esquerdo |
+| Mirar | Mouse | Analógico direito | Controle direito |
+| Saber Strike | Clique esquerdo; segure para repetir | RT/R2 | STRIKE |
+| Void Dash | Espaço | RB/R1 | DASH |
+| Kinetic Charge | Segure Q; solte para disparar | Segure LT/L2; solte | Segure CHARGE; solte |
+| Investigar quando próximo | E | A/Cross | INVESTIGATE contextual |
+| Respawn | R ou botão na tela | Start ou botão na tela | RESPAWN |
+
+A entrada ativa muda conforme o dispositivo usado, sem recarregar a página. Gamepad usa o mapeamento `standard` da Gamepad API e deadzone nos analógicos; a mira conserva a última direção quando o analógico direito volta ao centro. O modo touch usa dois controles independentes para mover e mirar ao mesmo tempo. Em portrait, uma indicação pede rotação para landscape. A mesma build web é usada em todos os casos; não há aplicativo nativo nem suporte oficial a Xbox ou mobile físico nesta etapa.
+
+## Áudio
+
+A música de exploração usa dois loops instrumentais curtos e originais, Forest e Cavern, com o mesmo motivo de sinal em atmosferas diferentes. São protótipos, reproduzidos de arquivos WAV locais e reproduzíveis pelo script `python scripts/generate-prototype-audio.py`; não usam samples externos. O `AudioManager` mantém uma única música ativa, separa MUSIC de SFX e possui níveis internos MASTER/MUSIC/SFX em `src/config/audio.ts`. Os efeitos existentes continuam com Web Audio; sinal e mecanismo receberam variações discretas. O jogo funciona sem áudio e só tenta iniciar a reprodução após um gesto do jogador, respeitando o bloqueio de autoplay do navegador.
 
 ## Escopo implementado
 
+- Fundação web multiplataforma: `Controls` traduz teclado/mouse, gamepad padrão e interface touch em movimento, mira, ataque, Dash, Kinetic Charge e investigação. A cena continua a usar as mesmas regras de Player, combate, colisão e progressão.
 - The Signal: após o terceiro Echo, os três locais pulsam em violeta e uma fissura antiga no fim da trilha norte começa a emitir sinal. Investigar a fissura revela `SIGNAL SOURCE: BELOW / PASSAGE: SEALED` e torna o mecanismo próximo responsivo.
 - The Sealed Passage: investigar o mecanismo depois de 3/3 Echoes faz um sinal violeta percorrer a pedra até a fissura; em seguida as placas se abrem e a colisão é removida. Caminhar pela abertura leva à Cavern. HP atual, XP, nível e Echoes acompanham a travessia; o respawn ocorre na Cavern e conserva o estado da sessão.
 - Cavern Depths: a área de aproximadamente 1200×740 unidades possui descida de entrada, bacia mineral lateral, caminho principal, face antiga e um corredor curto até um desabamento visível. Dois Hollow Crawlers habitam zonas diferentes; é possível avançar sem derrotá-los. Aproximar-se da segunda abertura indica que o sinal continua abaixo, sem iniciar outra região ou conceder recompensa.
@@ -64,7 +72,8 @@ npm run preview
 - O nível está limitado a 3 e o progresso existe somente na aba atual: recarregar a página reinicia XP, Echoes e recompensas. Não há salvamento.
 - A onda usa uma faixa frontal móvel e não tem interação especial com rochas. Seus valores e a naturalidade das poses do braço ainda precisam de avaliação humana em combate.
 - HUD e Energy Saber receberam apenas o feedback necessário para a habilidade; sua arte base, Mineral Pulse, First Discovery e parte do terreno ainda são provisórios.
-- Controles voltados a desktop com teclado e mouse; sem suporte dedicado a toque.
+- Touch e gamepad foram validados em emulação de navegador; conforto e compatibilidade em dispositivos físicos ainda exigem playtest. Não há suporte oficial a navegadores de console, builds nativas, remapeamento de botões ou menu de volume.
+- Os dois temas musicais são protótipos instrumentais. Vocal atmosférico, mixagem final e camadas adaptativas de combate/descoberta permanecem para avaliação futura.
 - Os inimigos derrotados só retornam ao reiniciar a arena.
 - A vegetação comum é decorativa; rochas, tronco da árvore maior e base da ruína bloqueiam movimento.
 - A IA mantém perseguição direta, sem navegação por caminhos; Hollows podem ficar presos em rochas ao perseguir fora das trilhas.
@@ -76,6 +85,6 @@ npm run preview
 
 ## Próximos passos
 
-Avaliar em uma partida normal se a travessia do desabamento e a presença da tecnologia antiga despertam curiosidade. A continuação além da área profunda fica para uma etapa futura. O desempenho em outra GPU pode ser diferente do Chrome headless medido nos testes.
+Fazer playtest físico com gamepad e aparelhos touch em landscape para ajustar ergonomia, legibilidade e mixagem antes de declarar suporte oficial. O desempenho em outra GPU pode ser diferente do Chrome headless medido nos testes.
 
 As decisões técnicas desta sprint estão em [docs/technical-decisions.md](docs/technical-decisions.md).

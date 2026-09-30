@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { KINETIC_CHARGE, VIEW_HEIGHT, VIEW_WIDTH } from '../config/game';
 import { ECHO_COUNT, NORTHERN_DISCOVERY } from '../config/discovery';
 import type { KineticPhase } from '../combat/KineticCharge';
+import type { InputMethod } from '../input/Controls';
 
 export class Hud {
   private hpFill: Phaser.GameObjects.Rectangle;
@@ -9,6 +10,11 @@ export class Hud {
   private dashFill: Phaser.GameObjects.Rectangle;
   private dashText: Phaser.GameObjects.Text;
   private chargeText: Phaser.GameObjects.Text;
+  private controlsPanel: Phaser.GameObjects.Graphics;
+  private controlHints: Phaser.GameObjects.Text[] = [];
+  private inputMethod: InputMethod = 'keyboard';
+  private deathButtonText: Phaser.GameObjects.Text;
+  private promptVisible = false;
   private deathGroup: Array<{ setVisible(value: boolean): unknown }> = [];
   private discoveryPrompt: Phaser.GameObjects.Text;
   private discoveryMessage: Phaser.GameObjects.Text;
@@ -35,9 +41,10 @@ export class Hud {
     box(24, 103, 340, 45);
     box(380, 16, 500, 79);
     box(896, 16, 360, 79);
-    panel.fillStyle(0x071b24, 0.86).fillRoundedRect(24, VIEW_HEIGHT - 68, 1232, 48, 8);
-    panel.lineStyle(1, 0x668e91, 0.32).strokeRoundedRect(24, VIEW_HEIGHT - 68, 1232, 48, 8);
-    panel.fillStyle(0x82c9cb, 0.65).fillRect(39, VIEW_HEIGHT - 68, 46, 2);
+    this.controlsPanel = scene.add.graphics().setScrollFactor(0).setDepth(19990);
+    this.controlsPanel.fillStyle(0x071b24, 0.86).fillRoundedRect(24, VIEW_HEIGHT - 68, 1232, 48, 8);
+    this.controlsPanel.lineStyle(1, 0x668e91, 0.32).strokeRoundedRect(24, VIEW_HEIGHT - 68, 1232, 48, 8);
+    this.controlsPanel.fillStyle(0x82c9cb, 0.65).fillRect(39, VIEW_HEIGHT - 68, 46, 2);
 
     text(45, 24, 'ECHOES OF DANTE', 26, '#ecf5ee', true);
     this.areaSubtitle = text(47, 61, 'DANTE FOREST   /   COMBAT PROTOTYPE', 12, '#83a8a8');
@@ -60,16 +67,16 @@ export class Hud {
     this.chargeText = text(918, 77, '[Q]  KINETIC READY', 12, '#a4e5e6');
 
     const key = (x: number, w: number, name: string, action: string) => {
-      panel.fillStyle(0x24434c, 0.8).fillRoundedRect(x, VIEW_HEIGHT - 58, w, 28, 5);
-      panel.lineStyle(1, 0x7bafb1, 0.45).strokeRoundedRect(x, VIEW_HEIGHT - 58, w, 28, 5);
-      text(x + 10, VIEW_HEIGHT - 57, name, 18, '#d6f0e8', true);
-      text(x + w + 11, VIEW_HEIGHT - 53, action, 13, '#9bb5b1');
+      this.controlsPanel.fillStyle(0x24434c, 0.8).fillRoundedRect(x, VIEW_HEIGHT - 58, w, 28, 5);
+      this.controlsPanel.lineStyle(1, 0x7bafb1, 0.45).strokeRoundedRect(x, VIEW_HEIGHT - 58, w, 28, 5);
+      this.controlHints.push(text(x + 10, VIEW_HEIGHT - 57, name, 18, '#d6f0e8', true));
+      this.controlHints.push(text(x + w + 11, VIEW_HEIGHT - 53, action, 13, '#9bb5b1'));
     };
     key(43, 88, 'W A S D', 'MOVE');
     key(254, 82, 'MOUSE', 'AIM');
     key(449, 63, 'LMB', 'SABER STRIKE');
     key(748, 82, 'SPACE', 'VOID DASH');
-    text(1107, VIEW_HEIGHT - 51, 'DANTE  /  01', 15, '#7fa7a5', true);
+    this.controlHints.push(text(1107, VIEW_HEIGHT - 51, 'DANTE  /  01', 15, '#7fa7a5', true));
     this.discoveryPrompt = text(VIEW_WIDTH / 2, VIEW_HEIGHT - 115, '[ E ]  INVESTIGATE', 20, '#c4e5d9', true)
       .setOrigin(0.5).setBackgroundColor('#0b2730').setPadding(16, 9).setVisible(false);
     this.discoveryMessage = text(VIEW_WIDTH / 2, VIEW_HEIGHT - 164, 'SIGNAL DETECTED\nSOURCE: UNKNOWN', 22, '#c4e5d9', true)
@@ -86,11 +93,11 @@ export class Hud {
     const title = text(640, 289, 'WARRIOR DOWN', 58, '#eff3e9', true).setOrigin(0.5).setDepth(30002).setVisible(false);
     const subtitle = text(640, 373, 'The forest is still listening.', 17, '#aac5bf').setOrigin(0.5).setDepth(30002).setVisible(false);
     const button = scene.add.rectangle(640, 467, 248, 55, 0x9edacf).setScrollFactor(0).setDepth(30002).setInteractive({ useHandCursor: true }).setVisible(false);
-    const buttonText = text(640, 467, 'RESPAWN   [ R ]', 26, '#12303a', true).setOrigin(0.5).setDepth(30003).setVisible(false);
+    this.deathButtonText = text(640, 467, 'RESPAWN   [ R ]', 26, '#12303a', true).setOrigin(0.5).setDepth(30003).setVisible(false);
     button.on('pointerover', () => button.setFillStyle(0xc1eee1));
     button.on('pointerout', () => button.setFillStyle(0x9edacf));
     button.on('pointerdown', onRestart);
-    this.deathGroup = [veil, frame, overline, title, subtitle, button, buttonText];
+    this.deathGroup = [veil, frame, overline, title, subtitle, button, this.deathButtonText];
   }
 
   update(hp: number, maxHp: number, dashProgress: number, chargeProgress: number, chargePhase: KineticPhase, chargeLevel: number): void {
@@ -100,11 +107,28 @@ export class Hud {
     this.dashFill.width = 131 * dashProgress;
     this.dashText.setText(dashProgress >= 1 ? 'READY' : `${Math.ceil((1 - dashProgress) * 1.7 * 10) / 10}s`);
     this.dashText.setColor(dashProgress >= 1 ? '#a4e5e6' : '#7b9c9c');
-    this.chargeText.setText(chargePhase === 'CHARGING' ? `[Q]  CHARGING ${Math.round(chargeLevel * 100)}%` : chargePhase === 'RELEASE' ? '[Q]  KINETIC STRIKE' : chargeProgress >= 1 ? '[Q]  HOLD FOR KINETIC STRIKE' : `[Q]  KINETIC ${((1 - chargeProgress) * KINETIC_CHARGE.cooldown / 1000).toFixed(1)}s`);
+    const chargeKey = this.inputMethod === 'gamepad' ? '[LT]' : this.inputMethod === 'touch' ? '' : '[Q]';
+    this.chargeText.setText(chargePhase === 'CHARGING' ? `${chargeKey}  CHARGING ${Math.round(chargeLevel * 100)}%` : chargePhase === 'RELEASE' ? `${chargeKey}  KINETIC STRIKE` : chargeProgress >= 1 ? `${chargeKey}  HOLD FOR KINETIC STRIKE` : `${chargeKey}  KINETIC ${((1 - chargeProgress) * KINETIC_CHARGE.cooldown / 1000).toFixed(1)}s`);
     this.chargeText.setColor(chargePhase !== 'READY' || chargeProgress >= 1 ? '#a4e5e6' : '#7b9c9c');
   }
 
-  setDiscoveryPrompt(visible: boolean): void { this.discoveryPrompt.setVisible(visible); }
+  setInputMethod(method: InputMethod): void {
+    if (this.inputMethod === method) return;
+    this.inputMethod = method;
+    this.controlsPanel.setVisible(method !== 'touch');
+    this.controlHints.forEach(hint => hint.setVisible(method !== 'touch'));
+    if (method !== 'touch') {
+      const keys = method === 'gamepad' ? ['LS', 'RS', 'RT', 'RB'] : ['W A S D', 'MOUSE', 'LMB', 'SPACE'];
+      [0, 2, 4, 6].forEach((index, i) => this.controlHints[index].setText(keys[i]));
+    }
+    this.discoveryPrompt.setText(method === 'gamepad' ? '[ A ]  INVESTIGATE' : '[ E ]  INVESTIGATE');
+    this.discoveryPrompt.setVisible(this.promptVisible && method !== 'touch');
+    this.deathButtonText.setText(method === 'gamepad' ? 'RESPAWN   [ START ]' : method === 'touch' ? 'RESPAWN' : 'RESPAWN   [ R ]');
+  }
+  setDiscoveryPrompt(visible: boolean): void {
+    this.promptVisible = visible;
+    this.discoveryPrompt.setVisible(visible && this.inputMethod !== 'touch');
+  }
 
   setProgress(level: number, xp: number, nextLevelXp: number | null, echoes: number): void {
     this.progressText.setText(`LV ${level}   XP ${nextLevelXp === null ? `${xp} / MAX` : `${xp} / ${nextLevelXp}`}   ECHOES ${echoes} / ${ECHO_COUNT}`);

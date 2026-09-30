@@ -12,7 +12,7 @@ import { Controls } from '../input/Controls';
 import { Arena } from '../systems/Arena';
 import { CavernArea } from '../systems/CavernArea';
 import { MineralPulse } from '../systems/MineralPulse';
-import { SoundEffects } from '../systems/Sound';
+import { AudioManager } from '../systems/Sound';
 import { NorthernDiscovery } from '../systems/NorthernDiscovery';
 import { ForestEcho, type EchoSite } from '../systems/EchoSite';
 import { Progression } from '../systems/Progression';
@@ -41,7 +41,7 @@ export class GameScene extends Phaser.Scene {
   private readonly progression = new Progression();
   private attack = new SaberAttack();
   private charge = new KineticCharge();
-  private sounds = new SoundEffects();
+  private sounds = new AudioManager();
   private hud!: Hud;
   private echoSites: EchoSite[] = [];
   private threshold?: SignalThreshold;
@@ -111,7 +111,10 @@ export class GameScene extends Phaser.Scene {
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
     this.transferHp = undefined;
     this.kineticWave = this.add.graphics().setDepth(14999);
-    this.controls = new Controls(this);
+    this.controls = new Controls(this, () => this.sounds.unlock(), () => {
+      if (!this.player.isDead) this.beginStrike(this.time.now);
+    });
+    this.sounds.setArea(this.area);
     const spawns = this.area === 'forest' ? FOREST_SPAWNS : CAVERN_HOLLOWS;
     spawns.forEach((point, index) => {
       const enemy = new HollowCrawler(this, point.x, point.y, this.area === 'forest' ? FOREST_PATROLS[index] : undefined);
@@ -121,9 +124,6 @@ export class GameScene extends Phaser.Scene {
     this.hud = new Hud(this, () => this.restart());
     this.updateProgressHud();
     this.hud.setSignalObjective(this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen, this.area === 'cavern', this.cavernDepthSeen, this.deepAreaSeen);
-    this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-      if (pointer.leftButtonDown() && !this.player.isDead) this.beginStrike(this.time.now);
-    });
     this.cameras.main.setBounds(0, 0, this.area === 'cavern' ? DEEP_AREA.cameraWidth : WORLD_WIDTH, WORLD_HEIGHT)
       .startFollow(this.player.view, false, 0.1, 0.1);
     this.cameras.main.setBackgroundColor(this.area === 'forest' ? '#102d2c' : '#07151c');
@@ -136,6 +136,8 @@ export class GameScene extends Phaser.Scene {
 
   update(time: number, delta: number): void {
     if (this.transitioning) return;
+    this.controls.update(this.player.position);
+    this.hud.setInputMethod(this.controls.inputMethod);
     const interact = this.controls.interactPressed;
     const nearbyEcho = this.echoSites.find(site => site.canInvestigate(this.player.position, this.player.isDead));
     const nearDiscovery = nearbyEcho !== undefined;
@@ -155,7 +157,7 @@ export class GameScene extends Phaser.Scene {
       this.mechanism?.arm();
       this.hud.showDiscovery(SIGNAL_THRESHOLD.thresholdMessage);
       this.hud.setSignalObjective(true, true);
-      this.sounds.discovery();
+      this.sounds.signal();
     } else if (interact && nearMechanism && this.progression.openPassage()) {
       this.mechanism?.activate(() => {
         this.threshold?.open(() => {
@@ -169,9 +171,11 @@ export class GameScene extends Phaser.Scene {
       });
       this.hud.showDiscovery(SIGNAL_THRESHOLD.openingMessage);
       this.hud.setSignalObjective(true, true, true);
-      this.sounds.discovery();
+      this.sounds.ancient();
     }
     this.hud.setDiscoveryPrompt(nearDiscovery || nearThreshold || nearMechanism);
+    this.controls.setInteractAvailable(nearDiscovery || nearThreshold || nearMechanism);
+    this.controls.setDead(this.player.isDead);
     if (this.player.isDead) {
       if (this.controls.restartPressed) this.restart();
       return;
@@ -220,6 +224,7 @@ export class GameScene extends Phaser.Scene {
       this.cavernDepthSeen = true;
       this.deepOpening = true;
       this.hud.showDiscovery('SIGNAL CONTINUES\nSTONE RESPONDING');
+      this.sounds.ancient();
       this.hud.setSignalObjective(true, true, true, true, true, false);
       this.cavern?.revealDeep(() => {
         this.deepOpening = false;
@@ -231,6 +236,7 @@ export class GameScene extends Phaser.Scene {
       Math.hypot(this.player.position.x - DEEP_AREA.signalX, this.player.position.y - DEEP_AREA.signalY) <= DEEP_AREA.signalRadius) {
       this.deepAreaSeen = true;
       this.hud.showDiscovery('ANCIENT PATTERN\nSOURCE: STILL BELOW');
+      this.sounds.signal();
       this.hud.setSignalObjective(true, true, true, true, true, true);
     }
   }
@@ -388,7 +394,7 @@ export class GameScene extends Phaser.Scene {
       this.echoSites.forEach(site => site.respond());
       this.hud.showDiscovery(SIGNAL_THRESHOLD.synchronizedMessage);
       this.hud.setSignalObjective(true, false);
-      this.sounds.discovery();
+      this.sounds.signal();
     });
   }
 

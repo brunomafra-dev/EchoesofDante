@@ -5,3 +5,32 @@
 html, body, #game { width: 100%; height: 100%; margin: 0; overflow: hidden; }
 #game { display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at center, #153633, #061316 80%); }
 canvas { display: block; box-shadow: 0 24px 90px #0008; }
+
+.touch-controls { position: fixed; inset: 0; z-index: 20; display: none; pointer-events: none; user-select: none; -webkit-user-select: none; touch-action: none; }
+.touch-controls.is-visible { display: block; }
+.touch-pad { position: absolute; bottom: calc(16px + env(safe-area-inset-bottom)); width: 126px; height: 126px; border: 2px solid #96c6bb88; border-radius: 50%; background: #0a2730a8; color: #d5eee4; display: grid; place-items: center; font: 700 15px 'Barlow Condensed', sans-serif; letter-spacing: 2px; pointer-events: auto; touch-action: none; }
+.touch-pad i { position: absolute; width: 42px; height: 42px; border: 2px solid #a5d9c2bb; border-radius: 50%; background: #6bb46455; pointer-events: none; }
+.touch-pad span { transform: translateY(-44px); pointer-events: none; }
+.touch-move { left: calc(22px + env(safe-area-inset-left)); }
+.touch-aim { right: calc(210px + env(safe-area-inset-right)); }
+.touch-actions { position: absolute; right: calc(16px + env(safe-area-inset-right)); bottom: calc(18px + env(safe-area-inset-bottom)); width: 177px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; pointer-events: none; }
+.touch-actions button { min-height: 52px; padding: 4px; border: 1px solid #b9d6c299; border-radius: 10px; color: #ebf6e8; background: #102c36dc; font: 700 15px 'Barlow Condensed', sans-serif; letter-spacing: 1px; touch-action: none; pointer-events: auto; }
+.touch-actions button:active { background: #345d62ee; }
+.touch-actions [data-action="attack"] { border-color: #5fe6d8bb; background: #25565bdc; }
+.touch-actions .touch-interact, .touch-actions .touch-restart { display: none; grid-column: 1 / -1; min-height: 42px; border-color: #a98cffbb; }
+.touch-actions .touch-interact.is-available { display: block; }
+.touch-controls.is-dead .touch-pad, .touch-controls.is-dead .touch-actions button:not(.touch-restart) { display: none; }
+.touch-controls.is-dead .touch-actions .touch-restart { display: block; }
+.touch-rotate { display: none; }
+@media (orientation: portrait) and (pointer: coarse) {
+  .touch-controls.is-visible { background: #061316ed; }
+  .touch-controls.is-visible .touch-pad, .touch-controls.is-visible .touch-actions { display: none; }
+  .touch-controls.is-visible .touch-rotate { display: grid; place-content: center; position: absolute; inset: 0; text-align: center; color: #d6eee4; font: 700 25px 'Barlow Condensed', sans-serif; letter-spacing: 2px; }
+  .touch-rotate small { font-size: 15px; letter-spacing: 1px; }
+}
+@media (max-height: 440px) and (orientation: landscape) {
+  .touch-pad { width: 108px; height: 108px; }
+  .touch-aim { right: calc(198px + env(safe-area-inset-right)); }
+  .touch-actions { width: 170px; }
+  .touch-actions button { min-height: 47px; font-size: 14px; }
+}
