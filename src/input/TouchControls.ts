@@ -1,124 +1,189 @@
+import { TOUCH } from '../config/touch';
 import { normalized, type Vec2 } from '../utils/math';
+import { protectGameplayGestures } from './GameplayGestures';
 
 type Action = 'attack' | 'dash' | 'charge' | 'interact' | 'restart';
+type QueuedAction = Exclude<Action, 'attack'> | 'release' | 'cancel';
+type CombatGesture = { id: number; action: 'attack' | 'charge'; button: HTMLButtonElement; x: number; y: number; dragged: boolean };
 
 export class TouchControls {
   readonly coarsePointer = matchMedia('(pointer: coarse)').matches;
   private root: HTMLDivElement;
   private moveZone: HTMLElement;
-  private aimZone: HTMLElement;
+  private moveKnob: HTMLElement;
   private interactButton: HTMLElement;
   private moveId?: number;
-  private aimId?: number;
   private moveOrigin = { x: 0, y: 0 };
-  private aimOrigin = { x: 0, y: 0 };
   private moveVector: Vec2 = { x: 0, y: 0 };
-  private aimDirection = 0;
-  private hasAim = false;
+  private combat?: CombatGesture;
+  private lastCombatDirection?: Vec2;
   private visible = false;
   private interactAvailable = false;
   private dead = false;
-  private held = { attack: false, charge: false };
-  private queued: Record<Exclude<Action, 'attack'> | 'release', boolean> = { dash: false, charge: false, release: false, interact: false, restart: false };
+  private portrait = matchMedia('(orientation: portrait)');
+  private queued: Record<QueuedAction, boolean> = { dash: false, charge: false, release: false, cancel: false, interact: false, restart: false };
+  private unprotect: () => void;
+  private pointerCancels: (() => void)[] = [];
 
-  constructor(private onGesture: () => void, private onAttack: () => void) {
+  constructor(private onGesture: () => void, private onAttack: () => void, private fallbackAim: () => number) {
     this.root = document.createElement('div');
     this.root.className = 'touch-controls';
     this.root.innerHTML = `
       <div class="touch-move touch-pad" aria-label="Move"><span>MOVE</span><i></i></div>
-      <div class="touch-aim touch-pad" aria-label="Aim"><span>AIM</span><i></i></div>
       <div class="touch-actions">
-        <button data-action="attack" aria-label="Saber Strike">STRIKE</button>
-        <button data-action="dash" aria-label="Void Dash">DASH</button>
-        <button data-action="charge" aria-label="Hold Kinetic Charge">CHARGE</button>
-        <button data-action="interact" class="touch-interact" aria-label="Investigate">INVESTIGATE</button>
-        <button data-action="restart" class="touch-restart" aria-label="Respawn">RESPAWN</button>
+        <button data-action="attack" aria-label="Saber Strike: tap or drag and release"><span class="touch-face"><b>STRIKE</b><small>TAP / DRAG</small><i class="touch-direction"></i></span></button>
+        <button data-action="dash" aria-label="Void Dash"><span class="touch-face"><b>DASH</b><small>MOVE</small></span></button>
+        <button data-action="charge" aria-label="Kinetic Charge: hold, aim and release"><span class="touch-face"><b>CHARGE</b><small>HOLD / RELEASE</small><i class="touch-direction"></i></span></button>
+      </div>
+      <div class="touch-context">
+        <button data-action="interact" class="touch-interact" aria-label="Investigate"><span class="touch-face"><b>INVESTIGATE</b></span></button>
+        <button data-action="restart" class="touch-restart" aria-label="Respawn"><span class="touch-face"><b>RESPAWN</b></span></button>
       </div>
       <div class="touch-rotate">ROTATE DEVICE<br><small>Landscape mode</small></div>`;
     document.body.append(this.root);
+    this.unprotect = protectGameplayGestures(this.root);
     this.moveZone = this.root.querySelector('.touch-move')!;
-    this.aimZone = this.root.querySelector('.touch-aim')!;
+    this.moveKnob = this.moveZone.querySelector('i')!;
     this.interactButton = this.root.querySelector('.touch-interact')!;
-    this.bindStick(this.moveZone, 'move');
-    this.bindStick(this.aimZone, 'aim');
+    this.bindMovement();
     for (const button of Array.from(this.root.querySelectorAll<HTMLButtonElement>('[data-action]'))) {
-      const action = button.dataset.action as Action;
-      button.addEventListener('pointerdown', event => {
-        event.preventDefault();
-        button.setPointerCapture(event.pointerId);
-        this.onGesture();
-        if (action === 'attack') {
-          this.held.attack = true;
-          this.onAttack();
-        }
-        if (action === 'charge') this.held.charge = true;
-        if (action !== 'attack') this.queued[action] = true;
-      });
-      const release = (event: PointerEvent) => {
-        event.preventDefault();
-        if (action === 'attack') this.held.attack = false;
-        if (action === 'charge' && this.held.charge) {
-          this.held.charge = false;
-          this.queued.release = true;
-        }
-      };
-      button.addEventListener('pointerup', release);
-      button.addEventListener('pointercancel', release);
+      this.bindButton(button, button.dataset.action as Action);
     }
+    window.addEventListener('blur', this.cancelAll);
+    document.addEventListener('visibilitychange', this.visibilityChanged);
+    this.portrait.addEventListener('change', this.cancelAll);
   }
 
-  private bindStick(zone: HTMLElement, kind: 'move' | 'aim'): void {
+  private bindButton(button: HTMLButtonElement, action: Action): void {
+    let pointerId: number | undefined;
+    this.pointerCancels.push(() => {
+      const id = pointerId;
+      pointerId = undefined;
+      button.classList.remove('is-pressed', 'is-aiming');
+      if (id !== undefined && button.hasPointerCapture(id)) button.releasePointerCapture(id);
+    });
+    button.addEventListener('pointerdown', event => {
+      event.preventDefault();
+      if (pointerId !== undefined || (this.dead && action !== 'restart') || this.portrait.matches) return;
+      if ((action === 'attack' || action === 'charge') && this.combat) return;
+      pointerId = event.pointerId;
+      button.setPointerCapture(event.pointerId);
+      button.classList.remove('is-released');
+      button.classList.add('is-pressed');
+      this.onGesture();
+      if (action === 'attack' || action === 'charge') {
+        this.combat = { id: event.pointerId, action, button, x: event.clientX, y: event.clientY, dragged: false };
+        if (action === 'charge') this.queued.charge = true;
+        this.updateHint(this.combat);
+      } else this.queued[action] = true;
+    });
+    button.addEventListener('pointermove', event => {
+      if (this.combat?.id === event.pointerId && this.combat.button === button) this.selectDirection(event);
+    });
+    const finish = (event: PointerEvent) => {
+      if (pointerId !== event.pointerId) return;
+      event.preventDefault();
+      pointerId = undefined;
+      const released = event.type === 'pointerup';
+      if (this.combat?.id === event.pointerId && this.combat.button === button) {
+        if (released) this.selectDirection(event);
+        const action = this.combat.action;
+        this.clearCombat();
+        if (released) {
+          if (action === 'attack') this.onAttack();
+          else this.queued.release = true;
+        } else if (action === 'charge') this.cancelCharge();
+      }
+      button.classList.remove('is-pressed');
+      if (released) button.classList.add('is-released');
+      if (button.hasPointerCapture(event.pointerId)) button.releasePointerCapture(event.pointerId);
+    };
+    button.addEventListener('pointerup', finish);
+    button.addEventListener('pointercancel', finish);
+    button.addEventListener('lostpointercapture', finish);
+    button.addEventListener('animationend', () => button.classList.remove('is-released'));
+  }
+
+  private selectDirection(event: PointerEvent): void {
+    const gesture = this.combat!;
+    const dx = event.clientX - gesture.x;
+    const dy = event.clientY - gesture.y;
+    if (Math.hypot(dx, dy) < TOUCH.dragThreshold) return;
+    this.lastCombatDirection = normalized(dx, dy);
+    gesture.dragged = true;
+    gesture.button.classList.add('is-aiming');
+    this.updateHint(gesture);
+  }
+
+  private updateHint(gesture: CombatGesture): void {
+    gesture.button.querySelector<HTMLElement>('small')!.textContent = gesture.action === 'charge' || gesture.dragged ? 'RELEASE' : 'DRAG TO AIM';
+    gesture.button.querySelector<HTMLElement>('.touch-direction')!.style.transform = `rotate(${this.aimAngle}rad)`;
+  }
+
+  private clearCombat(): void {
+    if (!this.combat) return;
+    const { button, action } = this.combat;
+    this.combat = undefined;
+    button.classList.remove('is-pressed', 'is-aiming');
+    button.querySelector<HTMLElement>('small')!.textContent = action === 'charge' ? 'HOLD / RELEASE' : 'TAP / DRAG';
+  }
+
+  private cancelCharge(): void {
+    this.queued.charge = false;
+    this.queued.release = false;
+    this.queued.cancel = true;
+  }
+
+  private bindMovement(): void {
+    const zone = this.moveZone;
     zone.addEventListener('pointerdown', event => {
       event.preventDefault();
+      if (this.moveId !== undefined || this.dead || this.portrait.matches) return;
       zone.setPointerCapture(event.pointerId);
       this.onGesture();
-      if (kind === 'move') {
-        this.moveId = event.pointerId;
-        this.moveOrigin = { x: event.clientX, y: event.clientY };
-        this.moveVector = { x: 0, y: 0 };
-      } else {
-        this.aimId = event.pointerId;
-        this.aimOrigin = { x: event.clientX, y: event.clientY };
-      }
+      this.moveId = event.pointerId;
+      this.moveOrigin = { x: event.clientX, y: event.clientY };
+      this.moveVector = { x: 0, y: 0 };
     });
     zone.addEventListener('pointermove', event => {
-      if (kind === 'move' && event.pointerId === this.moveId) {
-        const dx = event.clientX - this.moveOrigin.x;
-        const dy = event.clientY - this.moveOrigin.y;
-        this.moveVector = Math.hypot(dx, dy) > 9 ? normalized(dx, dy) : { x: 0, y: 0 };
-        this.positionKnob(zone, dx, dy);
-      } else if (kind === 'aim' && event.pointerId === this.aimId) {
-        const dx = event.clientX - this.aimOrigin.x;
-        const dy = event.clientY - this.aimOrigin.y;
-        if (Math.hypot(dx, dy) > 9) {
-          this.aimDirection = Math.atan2(dy, dx);
-          this.hasAim = true;
-          this.positionKnob(zone, dx, dy);
-        }
-      }
+      if (event.pointerId !== this.moveId) return;
+      const dx = event.clientX - this.moveOrigin.x;
+      const dy = event.clientY - this.moveOrigin.y;
+      this.moveVector = Math.hypot(dx, dy) > TOUCH.moveDeadzone ? normalized(dx, dy) : { x: 0, y: 0 };
+      this.positionKnob(dx, dy);
     });
-    const release = (event: PointerEvent) => {
-      if (kind === 'move' && event.pointerId === this.moveId) {
-        this.moveId = undefined;
-        this.moveVector = { x: 0, y: 0 };
-        this.positionKnob(zone, 0, 0);
-      } else if (kind === 'aim' && event.pointerId === this.aimId) {
-        this.aimId = undefined;
-        this.positionKnob(zone, 0, 0);
-      }
+    const finish = (event: PointerEvent) => {
+      if (event.pointerId !== this.moveId) return;
+      this.moveId = undefined;
+      this.moveVector = { x: 0, y: 0 };
+      this.positionKnob(0, 0);
+      if (zone.hasPointerCapture(event.pointerId)) zone.releasePointerCapture(event.pointerId);
     };
-    zone.addEventListener('pointerup', release);
-    zone.addEventListener('pointercancel', release);
+    zone.addEventListener('pointerup', finish);
+    zone.addEventListener('pointercancel', finish);
+    zone.addEventListener('lostpointercapture', finish);
   }
 
-  private positionKnob(zone: HTMLElement, dx: number, dy: number): void {
+  private positionKnob(dx: number, dy: number): void {
     const distance = Math.hypot(dx, dy);
-    const scale = distance > 32 ? 32 / distance : 1;
-    const knob = zone.querySelector<HTMLElement>('i');
-    if (knob) knob.style.transform = `translate(${Math.round(dx * scale)}px, ${Math.round(dy * scale)}px)`;
+    const scale = distance > TOUCH.knobRadius ? TOUCH.knobRadius / distance : 1;
+    this.moveKnob.style.transform = `translate(${Math.round(dx * scale)}px, ${Math.round(dy * scale)}px)`;
   }
 
-  private take(action: Exclude<Action, 'attack'> | 'release'): boolean {
+  private visibilityChanged = (): void => { if (document.hidden) this.cancelAll(); };
+  cancelAll = (): void => {
+    const combat = this.combat;
+    if (combat?.action === 'charge' || this.queued.charge || this.queued.release) this.cancelCharge();
+    this.clearCombat();
+    for (const cancel of this.pointerCancels) cancel();
+    if (this.moveId !== undefined && this.moveZone.hasPointerCapture(this.moveId)) this.moveZone.releasePointerCapture(this.moveId);
+    this.moveId = undefined;
+    this.moveVector = { x: 0, y: 0 };
+    this.positionKnob(0, 0);
+    this.queued.dash = this.queued.interact = this.queued.restart = false;
+  };
+
+  private take(action: QueuedAction): boolean {
     const value = this.queued[action];
     this.queued[action] = false;
     return value;
@@ -126,16 +191,17 @@ export class TouchControls {
   takeDash(): boolean { return this.take('dash'); }
   takeChargeStart(): boolean { return this.take('charge'); }
   takeChargeRelease(): boolean { return this.take('release'); }
+  takeChargeCancel(): boolean { return this.take('cancel'); }
   takeInteract(): boolean { return this.take('interact'); }
   takeRestart(): boolean { return this.take('restart'); }
   get movement(): Vec2 { return this.moveVector; }
-  get aimAngle(): number { return this.aimDirection; }
-  get aimValid(): boolean { return this.hasAim; }
-  get attackHeld(): boolean { return this.held.attack; }
-  get chargeHeld(): boolean { return this.held.charge; }
+  get aimAngle(): number { return this.lastCombatDirection ? Math.atan2(this.lastCombatDirection.y, this.lastCombatDirection.x) : this.fallbackAim(); }
+  get chargeHeld(): boolean { return this.combat?.action === 'charge'; }
+  get preview(): 'attack' | 'charge' | undefined { return this.dead ? undefined : this.combat?.action === 'charge' ? 'charge' : this.combat?.dragged ? 'attack' : undefined; }
   setVisible(visible: boolean): void {
     if (this.visible === visible) return;
     this.visible = visible;
+    if (!visible) this.cancelAll();
     this.root.classList.toggle('is-visible', visible);
   }
   setInteractAvailable(available: boolean): void {
@@ -146,7 +212,15 @@ export class TouchControls {
   setDead(dead: boolean): void {
     if (this.dead === dead) return;
     this.dead = dead;
+    if (dead) this.cancelAll();
     this.root.classList.toggle('is-dead', dead);
   }
-  destroy(): void { this.root.remove(); }
+  destroy(): void {
+    this.cancelAll();
+    window.removeEventListener('blur', this.cancelAll);
+    document.removeEventListener('visibilitychange', this.visibilityChanged);
+    this.portrait.removeEventListener('change', this.cancelAll);
+    this.unprotect();
+    this.root.remove();
+  }
 }

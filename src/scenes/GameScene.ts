@@ -184,6 +184,7 @@ export class GameScene extends Phaser.Scene {
     const input = this.controls.movement();
     const aim = this.controls.aimFrom(this.player.position);
     this.charge.tick(time);
+    if (this.controls.chargeCancelled) this.charge.stop();
     if (this.controls.chargePressed && !this.player.isDashing && this.attack.pose(time, aim).phase === 'READY' && this.charge.start(time)) {
       this.sounds.charge();
     }

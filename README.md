@@ -1,4 +1,4 @@
-# Echoes of Dante — Sprint 06.0
+# Echoes of Dante — Sprint 06.1
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
@@ -33,14 +33,22 @@ npm run preview
 | Ação | Teclado e mouse | Gamepad padrão | Touch em landscape |
 | --- | --- | --- | --- |
 | Mover | W A S D | Analógico esquerdo | Controle esquerdo |
-| Mirar | Mouse | Analógico direito | Controle direito |
-| Saber Strike | Clique esquerdo; segure para repetir | RT/R2 | STRIKE |
+| Mirar | Mouse | Analógico direito | Arraste a partir de STRIKE ou CHARGE |
+| Saber Strike | Clique esquerdo; segure para repetir | RT/R2 | Toque STRIKE ou arraste e solte |
 | Void Dash | Espaço | RB/R1 | DASH |
-| Kinetic Charge | Segure Q; solte para disparar | Segure LT/L2; solte | Segure CHARGE; solte |
+| Kinetic Charge | Segure Q; solte para disparar | Segure LT/L2; solte | Segure CHARGE, arraste para mirar e solte |
 | Investigar quando próximo | E | A/Cross | INVESTIGATE contextual |
 | Respawn | R ou botão na tela | Start ou botão na tela | RESPAWN |
 
-A entrada ativa muda conforme o dispositivo usado, sem recarregar a página. Gamepad usa o mapeamento `standard` da Gamepad API e deadzone nos analógicos; a mira conserva a última direção quando o analógico direito volta ao centro. O modo touch usa dois controles independentes para mover e mirar ao mesmo tempo. Em portrait, uma indicação pede rotação para landscape. A mesma build web é usada em todos os casos; não há aplicativo nativo nem suporte oficial a Xbox ou mobile físico nesta etapa.
+A entrada ativa muda conforme o dispositivo usado, sem recarregar a página. Gamepad usa o mapeamento `standard` da Gamepad API e deadzone nos analógicos; a mira conserva a última direção quando o analógico direito volta ao centro. A mesma build web é usada em todos os casos; não há aplicativo nativo nem suporte oficial a Xbox ou mobile físico nesta etapa.
+
+No touch, o joystick esquerdo move e os botões da direita controlam o combate, sem joystick permanente de mira. STRIKE dispara uma vez ao soltar: um toque usa a última direção de combate; um arrasto de pelo menos 12 pixels CSS escolhe outra direção e mostra a área aproximada do golpe. CHARGE inicia a preparação ao pressionar, permite mirar por arrasto e dispara ao soltar. Sem uma direção touch escolhida, usa a mira já disponível. DASH conserva a regra existente: direção de movimento ou mira quando parado. INVESTIGATE e RESPAWN aparecem apenas no contexto apropriado.
+
+Os gestos capturam o ponteiro até o release, inclusive fora do botão. Cancelamento do ponteiro, perda de foco, mudança de orientação ou método de entrada interrompem a preparação sem disparar a onda. Em portrait, uma indicação pede rotação para landscape; botões respeitam safe areas. O canvas e os controles consomem gestos de zoom/scroll/seleção, incluindo double-tap e pinch; a prevenção não é aplicada ao documento inteiro nem usa `user-scalable=no`.
+
+### Playtest pendente no iPhone
+
+A emulação de touch no Chrome não comprova o comportamento do Safari em hardware real. Na mesma URL, em landscape, verificar: taps rápidos e repetidos; movimento junto com STRIKE arrastado; CHARGE segurado, arrastado e solto; DASH; investigação e respawn; pinch e arrastos verticais sem mudar o zoom ou rolar a página. Girar para portrait durante um gesto deve cancelá-lo e mostrar a orientação de rotação. Conferir também notch e área segura inferior.
 
 ## Áudio
 
