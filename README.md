@@ -8,7 +8,7 @@ A [World Shape Language](docs/WORLD_SHAPE_LANGUAGE.md) complementa a Art Bible c
 
 O [Visual Prototype 02](docs/visual-prototype-02/) testa uma formação orgânica de cerca de 180×170 unidades na primeira Cavern, em (885, 595). Inclui comparação antes/depois; a expansão depende de playtest humano. Gameplay e colisões permanecem iguais.
 
-O [Visual Rendering Prototype 01](docs/visual-rendering-prototype-01/) compara Graphics, raster, ilustração e composição híbrida em uma única rocha. Abra `/rendering-lab.html` na mesma build web para ver o laboratório isolado. Nenhuma opção foi aplicada ao mapa; a escolha visual depende de playtest humano.
+O [Visual Rendering Prototype 01](docs/visual-rendering-prototype-01/) compara Graphics, raster, ilustração e composição híbrida em uma única rocha. Abra `/rendering-lab.html` na mesma build web para ver o laboratório isolado. O usuário aprovou **D — Hybrid** como referência: assets ilustrados, materialidade, sombra de contato e integração ambiental. A aplicação ao mundo será incremental, preservando Organic Sci-Fi R3 e gameplay.
 
 ## Stack
 

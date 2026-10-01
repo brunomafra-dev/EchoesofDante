@@ -1,6 +1,26 @@
 # Visual Rendering Prototype 01 — Rock Rendering Lab
 
-**Isolated experiment, version 0.1.31. No visual winner selected.**
+**Isolated experiment, version 0.1.31. D approved by the user as the visual reference.**
+
+## Human visual decision
+
+After viewing the comparison, the user selected **D — Hybrid**: "D é de longe o
+melhor! todo o estilo do jogo deveria ter a pegada desse estilo do D".
+
+The target representation is an **illustrated raster asset with material,
+volume, contact shadow and selective environmental overlap**. This validates
+the rendering language, not a requirement to repeat the same rock everywhere.
+Organic Sci-Fi R3 and World Shape Language remain authoritative.
+
+Apply that treatment with distinct materials: nature grows irregularly;
+ancient technology is weathered and integrated; human equipment retains its
+functional, industrial construction. Shared paint/shading should unify those
+families while preserving their different silhouettes and semantic colors.
+
+The lab, captures and measurements below describe the original comparison.
+No map or character substitution has been made by this decision record.
+Expansion scope is being defined separately; gameplay, physics, controls,
+camera, HUD behavior and audio must remain intact.
 
 ## Problem and hypothesis
 
@@ -100,8 +120,8 @@ HUD, audio, progression and physics code are unchanged.
 Technically, **C's single reusable Image is the simplest candidate for a future
 integration test**, while D costs one extra Image and demonstrates overlap.
 Either can be stamped into the existing static bake with its independent simple
-collider. This is a technical assessment, **not visual selection or authorization
-to replace rocks**. No map substitution was made.
+collider. This is the technical assessment from the comparison. The subsequent
+human selection is **D**, as recorded above. No map substitution was made in the lab.
 
 ## Technical verification
 
@@ -165,7 +185,7 @@ identical to the Graphics/height-field surface; light direction, scale and
 context are held comparable. The next test after human selection should be one
 small contextual Cavern placement, preserving physics and readability.
 
-**Automation passed. Human playtest required.** Compare A/B/C/D at normal scale.
-Ask which reads as mineral stone, which belongs to Dante, whether detail survives
-movement/zoom, and whether D's root looks integrated. Choose or reject the
-representations before any expansion.
+**Automation passed. The user selected D after visual comparison.** A future
+contextual implementation still needs gameplay-scale playtest for movement,
+occlusion, contrast, environmental integration and collider readability. The
+comparison approval does not replace validation of those future placements.

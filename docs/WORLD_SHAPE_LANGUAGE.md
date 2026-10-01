@@ -294,6 +294,24 @@ Ampliar a aplicação apenas após avaliação visual real do trecho. Uma reprov
 
 ## 25. Relationship to Art Bible — autoridade e limites
 
+### Representação validada após os protótipos
+
+O teste humano do Visual Prototype 02 rejeitou a leitura de formas geométricas
+agrupadas. Na comparação do [Visual Rendering Prototype 01](visual-rendering-prototype-01/),
+o usuário aprovou **D — Hybrid** como referência de representação para o jogo:
+asset raster ilustrado com volume e material, sombra de contato e sobreposição
+seletiva de raízes/minerais ou outros elementos apropriados ao objeto.
+
+As massas e silhuetas desta gramática continuam válidas; a pintura/textura passa
+a ser a referência para representá-las. Não repetir uma única textura em todo
+o mundo. Manter famílias de material, variação controlada, paleta semântica e
+contraste entre natureza, tecnologia humana e ancestral. Cenário estático
+continua baked/cacheado; sobreposições estáticas também podem entrar no bake.
+
+A aprovação da linguagem no laboratório não valida automaticamente sua futura
+aplicação a personagens, interfaces ou mapas inteiros. Cada expansão deve
+preservar gameplay e confirmar leitura na escala real de jogo.
+
 A [Art Bible](art-bible/) define a identidade visual do jogo. **World Shape Language define como essa identidade é traduzida em formas ambientais.** Em caso de conflito visual, preservar a direção Organic Sci-Fi R3 e revisar esta extensão.
 
 As referências verificadas no site são as seções R3 de Dante Forest, Ancient Technology, Color System, Lighting System e Gameplay Readability. A paleta e a hierarquia apresentadas aqui mantêm essas definições. O site e seus arquivos não são alterados por este documento.
