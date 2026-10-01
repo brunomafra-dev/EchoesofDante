@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { environmentImage } from '../visual/EnvironmentArt';
 import { SIGNAL_THRESHOLD as SITE } from '../config/discovery';
 import type { Vec2 } from '../utils/math';
 
@@ -10,8 +11,8 @@ export class SignalThreshold {
   private glyphs: Phaser.GameObjects.Graphics;
   private ambient: Phaser.GameObjects.Ellipse;
   private flash: Phaser.GameObjects.Graphics;
-  private leftSeal: Phaser.GameObjects.Graphics;
-  private rightSeal: Phaser.GameObjects.Graphics;
+  private leftSeal: Phaser.GameObjects.Image;
+  private rightSeal: Phaser.GameObjects.Image;
 
   constructor(private scene: Phaser.Scene, synchronized: boolean, sourceLocated: boolean, opened = false) {
     this.activated = synchronized;
@@ -19,32 +20,10 @@ export class SignalThreshold {
     this.opened = opened;
     const x = SITE.x;
     const y = SITE.y;
-    const stone = scene.add.graphics().setPosition(x, y).setDepth(y - 8);
-    stone.fillStyle(0x06191d, 0.65).fillEllipse(5, 29, 178, 60);
-    stone.fillStyle(0x344c4e).fillPoints([
-      { x: -88, y: 19 }, { x: -70, y: -31 }, { x: -39, y: -51 }, { x: -10, y: -43 },
-      { x: 23, y: -61 }, { x: 67, y: -37 }, { x: 91, y: 12 }, { x: 59, y: 32 }, { x: -57, y: 33 },
-    ], true);
-    stone.fillStyle(0x061419).fillPoints([
-      { x: -55, y: 15 }, { x: -34, y: -22 }, { x: -7, y: -30 }, { x: 11, y: -20 },
-      { x: 36, y: -30 }, { x: 62, y: 13 }, { x: 30, y: 24 }, { x: -34, y: 25 },
-    ], true);
-    stone.fillStyle(0x6a8178).fillPoints([{ x: -70, y: -31 }, { x: -39, y: -51 }, { x: -25, y: -31 }, { x: -53, y: -12 }], true);
-    stone.fillStyle(0x536768).fillPoints([{ x: 23, y: -61 }, { x: 67, y: -37 }, { x: 78, y: -7 }, { x: 37, y: -27 }], true);
-    stone.fillStyle(0x304d42).fillEllipse(-67, 29, 53, 17).fillEllipse(67, 27, 56, 18);
-    stone.lineStyle(3, 0x52745c, 0.8).lineBetween(-75, 22, -64, -3).lineBetween(73, 21, 81, -5);
-
-    // Two heavy plates visibly cover the fissure until the buried resonator answers.
-    this.leftSeal = scene.add.graphics().setPosition(x, y).setDepth(y - 5);
-    this.leftSeal.fillStyle(0x566365).fillPoints([
-      { x: -42, y: -29 }, { x: -5, y: -23 }, { x: 0, y: 23 }, { x: -49, y: 23 },
-    ], true);
-    this.leftSeal.lineStyle(3, 0x7d8580, 0.65).lineBetween(-5, -21, 0, 21);
-    this.rightSeal = scene.add.graphics().setPosition(x, y).setDepth(y - 5);
-    this.rightSeal.fillStyle(0x46575a).fillPoints([
-      { x: 5, y: -23 }, { x: 40, y: -31 }, { x: 49, y: 23 }, { x: 0, y: 23 },
-    ], true);
-    this.rightSeal.lineStyle(3, 0xffbd54, 0.38).lineBetween(5, -21, 0, 21);
+    environmentImage(scene, 'ancient-frame', x, y - 13, 200, 170, y - 8);
+    // Painted seal pieces keep the existing pivots, destinations and opening timing.
+    this.leftSeal = environmentImage(scene, 'rock-shelf', x, y, 58, 105, y - 5).setOrigin(1, 0.5);
+    this.rightSeal = environmentImage(scene, 'rock-shelf', x, y, 58, 105, y - 5).setOrigin(0, 0.5).setTint(0xc8d3ce);
     if (opened) {
       this.leftSeal.x -= 40;
       this.rightSeal.x += 40;

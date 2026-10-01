@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { environmentImage } from '../visual/EnvironmentArt';
 import { SIGNAL_THRESHOLD as SITE } from '../config/discovery';
 import type { Vec2 } from '../utils/math';
 
@@ -15,16 +16,7 @@ export class PassageMechanism {
     this.armed = sourceLocated;
     this.opened = passageOpen;
     const { mechanismX: x, mechanismY: y } = SITE;
-    const stone = scene.add.graphics().setPosition(x, y).setDepth(y - 5);
-    stone.fillStyle(0x07151b, 0.65).fillEllipse(0, 21, 100, 30);
-    stone.fillStyle(0x38474b).fillPoints([
-      { x: -42, y: 17 }, { x: -33, y: -22 }, { x: -18, y: -34 }, { x: 10, y: -30 },
-      { x: 31, y: -43 }, { x: 45, y: -13 }, { x: 35, y: 19 }, { x: 2, y: 24 },
-    ], true);
-    stone.fillStyle(0x61716b, 0.75).fillPoints([
-      { x: -33, y: -22 }, { x: -18, y: -34 }, { x: -7, y: -21 }, { x: -24, y: -11 },
-    ], true);
-    stone.fillStyle(0x315044).fillEllipse(-35, 19, 26, 9).fillEllipse(39, 16, 29, 10);
+    environmentImage(scene, 'ancient-remnant', x, y - 8, 100, 80, y - 5);
     this.inscriptions = scene.add.graphics().setPosition(x, y).setDepth(y - 4).setAlpha(sourceLocated ? 0.85 : 0.22);
     this.inscriptions.lineStyle(3, 0xa98cff, 0.9)
       .lineBetween(-18, -23, -4, -14).lineBetween(-4, -14, 8, -23)

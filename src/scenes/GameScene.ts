@@ -10,6 +10,7 @@ import { HollowCrawler } from '../entities/HollowCrawler';
 import { Player } from '../entities/Player';
 import { Controls } from '../input/Controls';
 import { Arena } from '../systems/Arena';
+import { preloadEnvironment } from '../visual/EnvironmentArt';
 import { CavernArea } from '../systems/CavernArea';
 import { MineralPulse } from '../systems/MineralPulse';
 import { AudioManager } from '../systems/Sound';
@@ -64,13 +65,11 @@ export class GameScene extends Phaser.Scene {
       'hollow-body',
       'hollow-rear-limbs',
       'hollow-forelimbs',
-      'dante-tree-trunk',
-      'dante-canopy-green',
-      'dante-canopy-blue',
     ] as const;
     for (const key of art) {
       if (!this.textures.exists(key)) this.load.svg(key, `${assetBase}${key}.svg`);
     }
+    preloadEnvironment(this);
   }
 
   create(): void {

@@ -1,4 +1,4 @@
-# Echoes of Dante — Sprint 06.3
+# Echoes of Dante
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
@@ -6,14 +6,14 @@ Protótipo de action RPG sci-fi para navegador. O jogador explora Dante Forest, 
 
 A [World Shape Language](docs/WORLD_SHAPE_LANGUAGE.md) complementa a Art Bible com regras de massas, silhuetas e composição ambiental. É uma base documental para um futuro microprotótipo visual da Cavern; não altera o jogo atual.
 
-O [Visual Prototype 02](docs/visual-prototype-02/) testa uma formação orgânica de cerca de 180×170 unidades na primeira Cavern, em (885, 595). Inclui comparação antes/depois; a expansão depende de playtest humano. Gameplay e colisões permanecem iguais.
+O [Visual Prototype 02](docs/visual-prototype-02/) registrou o experimento que testa uma formação orgânica de cerca de 180×170 unidades na primeira Cavern, em (885, 595). A representação geométrica foi rejeitada no playtest; o experimento permanece como controle no laboratório.
 
 O [Visual Rendering Prototype 01](docs/visual-rendering-prototype-01/) compara Graphics, raster, ilustração e composição híbrida em uma única rocha. Abra `/rendering-lab.html` na mesma build web para ver o laboratório isolado. O usuário aprovou **D — Hybrid** como referência: assets ilustrados, materialidade, sombra de contato e integração ambiental. A aplicação ao mundo será incremental, preservando Organic Sci-Fi R3 e gameplay.
 
 ## Stack
 
 - TypeScript, Phaser 3 e Vite
-- SVGs autorais em `public/assets/visual/` para personagens e árvores; terreno e efeitos visuais continuam gerados em código
+- SVGs autorais para personagens e PNGs pintados em `public/assets/visual/environment/` para cenários; composição estática baked/cacheada
 - Loops musicais autorais de protótipo em `public/assets/audio/`; efeitos curtos são sintetizados com Web Audio
 - Barlow Condensed e DM Sans carregadas via Google Fonts, com fallback local
 - Sem backend, persistência ou multiplayer
@@ -33,6 +33,8 @@ Abra a URL local indicada pelo Vite. Para validar o pacote de produção:
 npm run build
 npm run preview
 ```
+
+A [integração da linguagem D nos ambientes](docs/environment-art-pass/) aplica texturas pintadas a Forest, Cavern e área profunda: pedra, raízes, minerais, vegetação e bases antigas, com comparativos antes/depois. Cenário estático continua baked, e os mesmos colisores, rotas, interações e sistemas de gameplay permanecem. A nova aplicação ainda precisa de playtest visual humano.
 
 ## Controles
 
@@ -75,7 +77,7 @@ A música de exploração usa dois loops instrumentais curtos e originais, Fores
 - A formação mineral a leste continua emitindo um pulso breve e discreto; o Echo no local adiciona investigação sem interromper o fenômeno.
 - First Discovery: estrutura parcialmente soterrada nas ruínas do norte, inscrições, fragmentos e vegetação. Investigar produz um pulso, som opcional e a mensagem temporária “SIGNAL DETECTED / SOURCE: UNKNOWN”. As inscrições permanecem acesas após o respawn na mesma sessão.
 - Dante Forest de 2200×1500 unidades: entrada ao sudoeste, trilha principal rumo às ruínas ao norte e desvios para uma árvore maior a oeste e uma formação mineral a leste. Clareiras conectadas, vegetação em camadas e bancos de rochas delimitam o espaço; câmera suave e zoom preservados.
-- O solo e os desenhos estáticos da floresta são renderizados uma vez em camadas. Copas e troncos usam três SVGs compartilhados; rochas têm facetas irregulares. Profundidade e animações existentes foram preservadas.
+- O solo e os desenhos estáticos da floresta são renderizados uma vez em camadas. Copas e troncos usam PNGs compartilhados; rochas, sombra de contato e raízes pintadas são capturadas nas camadas estáticas. Profundidade e animações existentes foram preservadas.
 - Galactic Warrior com capacete destacado, torso, braços e duas pernas visíveis. O corpo permanece ereto em vistas frontal, lateral e traseira; o sabre continua seguindo a mira e as pernas mantêm o ciclo de passos. Sombra, HP, movimento, dash e invulnerabilidade breve permanecem.
 - Oito Hollow Crawlers distribuídos em quatro pares ao longo da exploração, agora com carapaça e membros orgânicos em SVG e núcleo quente. Detecção, perseguição, preparação do ataque, reação ao dano e morte continuam iguais. A entrada fica fora do alcance inicial de detecção.
 - Golpe com preparação, varredura e recuperação; arco e trail ligados à posição da lâmina; dano aplicado durante a varredura. Contato curto orientado pelo sabre, contração e recuo visual do Hollow, números de dano, efeito de início/fim do dash, HUD de exploração, sons opcionais e tela de respawn.

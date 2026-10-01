@@ -6,6 +6,11 @@
 read as grouped geometric shapes. The original experiment is preserved as the
 control for [Visual Rendering Prototype 01](../visual-rendering-prototype-01/).
 
+
+**Current world integration:** the user approved beginning with Cavern and Forest.
+See the [0.1.32 environment art pass](../environment-art-pass/) for the live-game
+application and comparisons. This document retains the historical experiment.
+
 ## Find the experiment
 
 Inside the first Cavern chamber, walk north and slightly east from the entry

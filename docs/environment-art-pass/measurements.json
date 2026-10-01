@@ -1,0 +1,234 @@
+{
+  "version": "0.1.32",
+  "physicalTests": false,
+  "method": "Chrome headless; local DEV hooks for setup/assertions; real keyboard/mouse actions",
+  "errors": [],
+  "localStartupMs": 2530,
+  "forest": {
+    "fps": 54.94261474609375,
+    "objects": 371,
+    "tweens": 24,
+    "renderTextures": 16,
+    "graphics": 16,
+    "types": {
+      "RenderTexture": 16,
+      "Image": 236,
+      "Arc": 28,
+      "Ellipse": 17,
+      "Graphics": 16,
+      "Container": 9,
+      "Rectangle": 22,
+      "Text": 27
+    },
+    "textures": 48,
+    "experimentalTextures": [],
+    "bounds": null
+  },
+  "echoesAndEntry": true,
+  "cavern": {
+    "fps": 58.364488775925565,
+    "objects": 66,
+    "tweens": 3,
+    "renderTextures": 3,
+    "graphics": 10,
+    "types": {
+      "RenderTexture": 3,
+      "Ellipse": 8,
+      "Image": 2,
+      "Graphics": 10,
+      "Arc": 3,
+      "Container": 3,
+      "Rectangle": 10,
+      "Text": 27
+    },
+    "textures": 48,
+    "experimentalTextures": [],
+    "bounds": {
+      "left": 480,
+      "right": 1680,
+      "top": 380,
+      "bottom": 1120
+    }
+  },
+  "collisionAndDash": true,
+  "strikeChargeHollowXp": true,
+  "deathAndRespawn": true,
+  "deepSignal": true,
+  "gamepadMockMovementAimHoldRelease": true,
+  "touchEmulatedMoveStrikeChargeDash": true,
+  "matchedViews": {
+    "forest": {
+      "fps": 56.0283251953125,
+      "objects": 371,
+      "tweens": 24,
+      "renderTextures": 16,
+      "graphics": 16,
+      "types": {
+        "RenderTexture": 16,
+        "Image": 236,
+        "Arc": 28,
+        "Ellipse": 17,
+        "Graphics": 16,
+        "Container": 9,
+        "Rectangle": 22,
+        "Text": 27
+      },
+      "textures": 48,
+      "experimentalTextures": [],
+      "bounds": null
+    },
+    "forestNorth": {
+      "fps": 56.06182861328125,
+      "objects": 371,
+      "tweens": 24,
+      "renderTextures": 16,
+      "graphics": 16,
+      "types": {
+        "RenderTexture": 16,
+        "Image": 236,
+        "Arc": 28,
+        "Ellipse": 17,
+        "Graphics": 16,
+        "Container": 9,
+        "Rectangle": 22,
+        "Text": 27
+      },
+      "textures": 48,
+      "experimentalTextures": [],
+      "bounds": null
+    },
+    "cavern": {
+      "fps": 55.7563037109375,
+      "objects": 66,
+      "tweens": 3,
+      "renderTextures": 3,
+      "graphics": 10,
+      "types": {
+        "RenderTexture": 3,
+        "Ellipse": 8,
+        "Image": 2,
+        "Graphics": 10,
+        "Arc": 3,
+        "Container": 3,
+        "Rectangle": 10,
+        "Text": 27
+      },
+      "textures": 48,
+      "experimentalTextures": [],
+      "bounds": {
+        "left": 480,
+        "right": 1680,
+        "top": 380,
+        "bottom": 1120
+      }
+    },
+    "cavernFace": {
+      "fps": 55.8339013671875,
+      "objects": 66,
+      "tweens": 3,
+      "renderTextures": 3,
+      "graphics": 10,
+      "types": {
+        "RenderTexture": 3,
+        "Ellipse": 8,
+        "Image": 2,
+        "Graphics": 10,
+        "Arc": 3,
+        "Container": 3,
+        "Rectangle": 10,
+        "Text": 27
+      },
+      "textures": 48,
+      "experimentalTextures": [],
+      "bounds": {
+        "left": 480,
+        "right": 1680,
+        "top": 380,
+        "bottom": 1120
+      }
+    },
+    "deep": {
+      "fps": 56.28712890625,
+      "objects": 66,
+      "tweens": 3,
+      "renderTextures": 3,
+      "graphics": 10,
+      "types": {
+        "RenderTexture": 3,
+        "Ellipse": 8,
+        "Image": 2,
+        "Graphics": 10,
+        "Arc": 3,
+        "Container": 3,
+        "Rectangle": 10,
+        "Text": 27
+      },
+      "textures": 48,
+      "experimentalTextures": [],
+      "bounds": {
+        "left": 480,
+        "right": 2470,
+        "top": 380,
+        "bottom": 1120
+      }
+    }
+  },
+  "physicsUnchanged": true,
+  "idleAndThreeRestartsStable": true,
+  "resolutions": [
+    "1280x720",
+    "1366x768",
+    "1920x1080",
+    "844x390"
+  ],
+  "originalLabIntact": true,
+  "noExperimentalAssetsInGame": true,
+  "before": {
+    "forest": {
+      "fps": 53.603173828125,
+      "objects": 370,
+      "tweens": 24,
+      "renderTextures": 16
+    },
+    "forestNorth": {
+      "fps": 56.76272307634353,
+      "objects": 370,
+      "tweens": 24,
+      "renderTextures": 16
+    },
+    "cavern": {
+      "fps": 57.95927257100702,
+      "objects": 66,
+      "tweens": 3,
+      "renderTextures": 3
+    },
+    "cavernFace": {
+      "fps": 59.27107336973212,
+      "objects": 66,
+      "tweens": 3,
+      "renderTextures": 3
+    },
+    "deep": {
+      "fps": 59.623867954317845,
+      "objects": 66,
+      "tweens": 3,
+      "renderTextures": 3
+    }
+  },
+  "productionSmoke": {
+    "passed": true,
+    "errors": [],
+    "assetResponses": 12,
+    "lab": true
+  },
+  "additionalSteadyStateObservation": {
+    "warmupSeconds": 10,
+    "sampleSeconds": 5,
+    "fps": {
+      "forest": 58.999349189400675,
+      "cavern": 59.91395075947046,
+      "deep": 59.96126883663237
+    },
+    "note": "Separate 0.1.32 idle observation, before the final bake-only seam-mask adjustment; not a physical device benchmark."
+  }
+}

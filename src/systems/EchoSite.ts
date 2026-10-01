@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { environmentImage } from '../visual/EnvironmentArt';
 import { FOREST_ECHOES } from '../config/discovery';
 import type { Vec2 } from '../utils/math';
 
@@ -34,9 +35,7 @@ export class ForestEcho implements EchoSite {
       this.mark.fillStyle(0xffbd54, discovered ? 0.85 : 0.52).fillCircle(12, 1, 3);
     } else {
       // Uneven old fragment partly swallowed by soil; Arena registers its physical base.
-      this.mark.fillStyle(0x19352f, 0.86).fillEllipse(0, 16, 102, 31);
-      this.mark.fillStyle(0x42585a).fillPoints([{ x: -38, y: 11 }, { x: -26, y: -20 }, { x: 1, y: -35 }, { x: 34, y: -13 }, { x: 40, y: 13 }], true);
-      this.mark.fillStyle(0x76807d).fillPoints([{ x: -26, y: -20 }, { x: 1, y: -35 }, { x: 18, y: -16 }, { x: -8, y: -6 }], true);
+      environmentImage(scene, 'ancient-remnant', site.x, site.y - 8, 95, 70, site.y - 6);
       this.mark.lineStyle(3, 0xa98cff, discovered ? 0.95 : 0.78)
         .lineBetween(-11, -10, 3, 1).lineBetween(3, 1, 24, -8);
       this.mark.fillStyle(0xffbd54, 0.85).fillCircle(3, 1, 4);

@@ -3,47 +3,19 @@ import { WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
 import { FOREST_CLEARINGS, FOREST_PATHS, FOREST_ROCKS } from '../config/forest';
 import { FOREST_STRUCTURE_FOOTPRINTS, treeFootprint, totemFootprint } from '../config/environmentCollision';
 import type { Obstacle } from './Movement';
+import { groundContour, EnvironmentPainter, type EnvironmentStamp } from '../visual/EnvironmentArt';
 
 export class Arena {
   readonly obstacles: Obstacle[] = [];
   private readonly structuralFootprints: Obstacle[] = [];
   private seed = 92341;
+  private readonly paintings: EnvironmentStamp[] = [];
 
   constructor(private scene: Phaser.Scene) {
-    this.createTreeTextures();
     this.draw();
     this.bakeStaticScenery();
     // Register after composition: tree placement must keep its original rock-only test.
     this.obstacles.push(...this.structuralFootprints, ...FOREST_STRUCTURE_FOOTPRINTS);
-  }
-
-  private createTreeTextures(): void {
-    const size = 100;
-    if (!this.scene.textures.exists('dante-tree-trunk')) {
-      const g = this.scene.add.graphics().setVisible(false);
-      g.fillStyle(0x041a20, 0.5).fillEllipse(118, 110, size * 1.9, size * 0.62);
-      g.fillStyle(0x345a54).fillRoundedRect(98, 10, size * 0.25, size * 1.05, 5);
-      g.lineStyle(3, 0x608677, 0.7).lineBetween(110, 28, 114, 100);
-      g.generateTexture('dante-tree-trunk', 220, 155);
-      g.destroy();
-    }
-    for (const blue of [true, false]) {
-      const key = blue ? 'dante-canopy-blue' : 'dante-canopy-green';
-      if (this.scene.textures.exists(key)) continue;
-      const g = this.scene.add.graphics().setVisible(false);
-      const ox = 100;
-      const oy = 90;
-      g.fillStyle(0x071e27, 0.45).fillEllipse(ox + 5, oy + 9, size * 1.55, size * 0.75);
-      g.fillStyle(blue ? 0x244655 : 0x245348);
-      g.fillEllipse(ox - size * 0.34, oy - size * 0.09, size * 0.98, size * 0.82);
-      g.fillEllipse(ox + size * 0.36, oy - size * 0.18, size * 0.95, size * 0.87);
-      g.fillStyle(blue ? 0x406a76 : 0x39765e).fillEllipse(ox, oy - size * 0.38, size * 1.08, size * 0.77);
-      g.lineStyle(2, 0x8bbaa2, 0.5).strokeEllipse(ox, oy - size * 0.38, size * 1.08, size * 0.77);
-      g.fillStyle(blue ? 0x9bb3c3 : 0xa9d4a8, 0.7).fillCircle(ox + size * 0.23, oy - size * 0.48, 2.6);
-      g.fillCircle(ox - size * 0.38, oy - size * 0.06, 2);
-      g.generateTexture(key, 200, 150);
-      g.destroy();
-    }
   }
 
   private bakeStaticScenery(): void {
@@ -53,11 +25,14 @@ export class Arena {
       object instanceof Phaser.GameObjects.Graphics);
     const floor = graphics.find(object => object.depth === -10000);
     if (floor) {
-      this.scene.add.renderTexture(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
+      const layer = this.scene.add.renderTexture(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
         .setOrigin(0).setDepth(floor.depth).draw(floor);
+      const painter = new EnvironmentPainter(this.scene, layer);
+      painter.ground('forest-ground', 0.32);
+      painter.destroy();
     }
     const bandHeight = 100;
-    const bands = new Map<number, Phaser.GameObjects.Graphics[]>();
+    const bands = new Map<number, (Phaser.GameObjects.Graphics | EnvironmentStamp)[]>();
     for (const object of graphics) {
       if (object === floor) continue;
       const band = Math.floor(Phaser.Math.Clamp(object.depth, 0, WORLD_HEIGHT - 1) / bandHeight);
@@ -65,18 +40,26 @@ export class Arena {
       group.push(object);
       bands.set(band, group);
     }
+    for (const stamp of this.paintings) {
+      const band = Math.floor(Phaser.Math.Clamp(stamp.depth ?? 0, 0, WORLD_HEIGHT - 1) / bandHeight);
+      const group = bands.get(band) ?? [];
+      group.push(stamp);
+      bands.set(band, group);
+    }
     for (const [band, group] of bands) {
       const top = Math.max(0, band * bandHeight - 170);
       const bottom = Math.min(WORLD_HEIGHT, (band + 1) * bandHeight + 150);
       const layer = this.scene.add.renderTexture(0, top, WORLD_WIDTH, bottom - top)
         .setOrigin(0).setDepth(band * bandHeight + bandHeight / 2);
-      layer.beginDraw();
-      for (const object of group.sort((a, b) => a.depth - b.depth)) {
-        layer.batchDraw(object, object.x, object.y - top);
+      const painter = new EnvironmentPainter(this.scene, layer);
+      for (const object of group.sort((a, b) => (a.depth ?? 0) - (b.depth ?? 0))) {
+        if (object instanceof Phaser.GameObjects.Graphics) layer.draw(object, object.x, object.y - top);
+        else painter.stamp(object);
       }
-      layer.endDraw();
+      painter.destroy();
     }
     graphics.forEach(object => object.destroy());
+    this.paintings.length = 0;
   }
 
   private random(): number {
@@ -183,15 +166,13 @@ export class Arena {
   }
 
   private patch(g: Phaser.GameObjects.Graphics, x: number, y: number, rx: number, ry: number, color: number, alpha: number): void {
-    g.fillStyle(color, alpha).beginPath();
+    const points = [];
     for (let i = 0; i <= 15; i++) {
       const angle = i / 15 * Math.PI * 2;
       const wobble = i === 15 ? 1 : 0.84 + this.random() * 0.31;
-      const px = x + Math.cos(angle) * rx * wobble;
-      const py = y + Math.sin(angle) * ry * wobble;
-      if (i === 0) g.moveTo(px, py); else g.lineTo(px, py);
+      points.push({ x: x + Math.cos(angle) * rx * wobble, y: y + Math.sin(angle) * ry * wobble });
     }
-    g.closePath().fillPath();
+    g.fillStyle(color, alpha).fillPoints(groundContour(points), true);
   }
 
   private plant(x: number, y: number, size: number, sway = false, addFootprint = true): void {
@@ -201,46 +182,26 @@ export class Arena {
     if (addFootprint) this.structuralFootprints.push(treeFootprint(x, y, size));
     const canopy = this.scene.add.image(x, y - size * 0.9, shade < 0.3 ? 'dante-canopy-blue' : 'dante-canopy-green')
       .setOrigin(0.5, 0.6).setScale(size / 100).setDepth(y + 12);
+    if (shade < 0.3) canopy.setTint(0xa3c5d0);
     if (sway) {
       this.scene.tweens.add({ targets: canopy, angle: 2.5, duration: 2200 + this.random() * 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     }
   }
 
   private fern(x: number, y: number, size: number): void {
-    const g = this.scene.add.graphics().setDepth(y + 1).setPosition(x, y);
-    g.lineStyle(2, 0x709a7e, 0.6).lineBetween(0, 0, 0, -size);
-    for (let i = 0; i < 3; i++) {
-      const h = size * (0.2 + i * 0.23);
-      g.fillStyle(i === 1 ? 0x57887c : 0x3d7669, 0.9).fillEllipse(-size * 0.32, -h, size * 0.55, size * 0.32);
-      g.fillEllipse(size * 0.32, -h - 2, size * 0.55, size * 0.32);
-    }
-    g.fillStyle(0xa4cdaa, 0.65).fillCircle(0, -size, 2);
+    this.paintings.push({ key: 'dante-canopy-green', x, y: y - size * 0.35,
+      width: size * 2.4, height: size * 1.8, depth: y + 1, tint: 0x9cbd9d });
   }
 
   private rock(x: number, y: number, radius: number): void {
     this.obstacles.push({ x, y, radius: radius * 0.72 });
-    const g = this.scene.add.graphics().setDepth(y - 6).setPosition(x, y);
-    const r = radius;
-    const skew = Math.sin(x * 0.019 + y * 0.023) * r * 0.11;
-    g.fillStyle(0x061b23, 0.56).fillEllipse(8, r * 0.55, r * 2.25, r * 0.69);
-    g.fillStyle(0x223c43).beginPath()
-      .moveTo(-r * 0.98, -r * 0.12).lineTo(-r * 0.76, -r * 0.62)
-      .lineTo(-r * 0.3 + skew, -r * 0.77).lineTo(r * 0.34, -r * 0.67)
-      .lineTo(r * 0.88, -r * 0.26).lineTo(r * 0.94, r * 0.25)
-      .lineTo(r * 0.53, r * 0.67).lineTo(-r * 0.18, r * 0.73)
-      .lineTo(-r * 0.78, r * 0.47).closePath().fillPath();
-    g.fillStyle(0x607d7c).beginPath()
-      .moveTo(-r * 0.76, -r * 0.62).lineTo(-r * 0.3 + skew, -r * 0.77)
-      .lineTo(r * 0.34, -r * 0.67).lineTo(r * 0.88, -r * 0.26)
-      .lineTo(r * 0.21, r * 0.04).lineTo(-r * 0.52, r * 0.1)
-      .lineTo(-r * 0.98, -r * 0.12).closePath().fillPath();
-    g.fillStyle(0x36575b).beginPath()
-      .moveTo(r * 0.21, r * 0.04).lineTo(r * 0.88, -r * 0.26)
-      .lineTo(r * 0.94, r * 0.25).lineTo(r * 0.53, r * 0.67)
-      .lineTo(-r * 0.18, r * 0.73).lineTo(-r * 0.52, r * 0.1)
-      .closePath().fillPath();
-    g.lineStyle(2, 0xa6b6a2, 0.58).lineBetween(-r * 0.65, -r * 0.41, -r * 0.17, -r * 0.52);
-    g.lineStyle(2, 0x8fa698, 0.46).lineBetween(r * 0.21, r * 0.04, r * 0.47, r * 0.38);
+    const size = radius * 512 / 112;
+    const variation = Math.sin(x * 0.013 + y * 0.019);
+    for (const key of ['world-shadow', 'world-rock'] as const) {
+      this.paintings.push({ key, x, y, width: size, height: size, depth: y - 6,
+        angle: key === 'world-rock' ? variation * 5 : 0, flipX: variation < 0 });
+    }
+    this.paintings.push({ key: 'root-growth', x: x-radius*0.18, y: y+radius*0.52, width: radius*1.25, height: radius*0.48, depth: y-6 });
   }
 
   private beacon(x: number, y: number): void {
