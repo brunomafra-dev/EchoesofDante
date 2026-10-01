@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:," />
+    <title>Echoes of Dante — Rock Rendering Lab</title>
+    <style>
+      body { margin: 0; min-height: 100vh; background: #07151c; color: #afc1b9; font: 14px system-ui, sans-serif; }
+      nav { padding: 12px 20px; } a { color: #afc1b9; }
+      #rendering-lab { height: calc(100vh - 48px); }
+      canvas { display: block; }
+    </style>
+  </head>
+  <body>
+    <nav><a href="./">Voltar ao jogo</a> · Laboratório isolado · A escolha visual depende de playtest humano.</nav>
+    <div id="rendering-lab"></div>
+    <script type="module" src="/src/experiments/rock-rendering/main.ts"></script>
+  </body>
+</html>

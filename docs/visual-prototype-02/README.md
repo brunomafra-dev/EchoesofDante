@@ -2,6 +2,10 @@
 
 **Implementation complete; visual approval awaits human playtest.** Version 0.1.30.
 
+**Subsequent human result:** the user did not approve the representation: it still
+read as grouped geometric shapes. The original experiment is preserved as the
+control for [Visual Rendering Prototype 01](../visual-rendering-prototype-01/).
+
 ## Find the experiment
 
 Inside the first Cavern chamber, walk north and slightly east from the entry

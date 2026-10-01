@@ -1,0 +1,104 @@
+{
+  "version": "0.1.31",
+  "productionSmoke": {
+    "game": true,
+    "lab": true,
+    "experimentalPNGRequestsInLab": 4,
+    "errors": []
+  },
+  "physicalTests": false,
+  "method": "Chrome headless; local DEV hooks for setup/assertions; real keyboard/mouse actions",
+  "errors": [],
+  "forest": {
+    "fps": 57.5028125,
+    "objects": 370,
+    "tweens": 24,
+    "renderTextures": 16,
+    "graphics": 21,
+    "types": {
+      "RenderTexture": 16,
+      "Image": 230,
+      "Arc": 28,
+      "Ellipse": 17,
+      "Graphics": 21,
+      "Container": 9,
+      "Rectangle": 22,
+      "Text": 27
+    },
+    "textures": 39,
+    "experimentalTextures": [],
+    "bounds": null
+  },
+  "echoesAndEntry": true,
+  "cavern": {
+    "fps": 59.43618296900182,
+    "objects": 66,
+    "tweens": 3,
+    "renderTextures": 3,
+    "graphics": 12,
+    "types": {
+      "RenderTexture": 3,
+      "Ellipse": 8,
+      "Graphics": 12,
+      "Arc": 3,
+      "Container": 3,
+      "Rectangle": 10,
+      "Text": 27
+    },
+    "textures": 39,
+    "experimentalTextures": [],
+    "bounds": {
+      "left": 480,
+      "right": 1680,
+      "top": 380,
+      "bottom": 1120
+    }
+  },
+  "collisionAndDash": true,
+  "strikeChargeHollowXp": true,
+  "deathAndRespawn": true,
+  "deepSignal": true,
+  "lab": {
+    "fps": 59.3003515625,
+    "objects": 25,
+    "tweens": 0,
+    "renderTextures": 2,
+    "graphics": 1,
+    "types": {
+      "RenderTexture": 2,
+      "Image": 8,
+      "Text": 14,
+      "Graphics": 1
+    },
+    "textures": 18,
+    "experimentalTextures": [
+      "lab-rock-raster",
+      "lab-rock-illustrated",
+      "lab-contact-shadow",
+      "lab-root-mineral-overlay"
+    ]
+  },
+  "labStableAndRestart": true,
+  "resolutions": [
+    "1280x720",
+    "1366x768",
+    "1920x1080",
+    "844x390"
+  ],
+  "noExperimentalAssetsInGame": true,
+  "before": {
+    "version": "0.1.30",
+    "forest": {
+      "fps": 57.281796875,
+      "objects": 370,
+      "tweens": 24,
+      "renderTextures": 16
+    },
+    "cavern": {
+      "fps": 59.70928977966309,
+      "objects": 66,
+      "tweens": 3,
+      "renderTextures": 3
+    }
+  }
+}
