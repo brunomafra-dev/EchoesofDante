@@ -54,7 +54,7 @@ export class GameScene extends Phaser.Scene {
   constructor() { super('Game'); }
 
   preload(): void {
-    const assetBase = `${import.meta.env.BASE_URL}assets/visual/`;
+    const assetBase = `${import.meta.env.BASE_URL}assets/visual/characters/`;
     const art = [
       'warrior-body',
       'warrior-body-back',
@@ -67,7 +67,9 @@ export class GameScene extends Phaser.Scene {
       'hollow-forelimbs',
     ] as const;
     for (const key of art) {
-      if (!this.textures.exists(key)) this.load.svg(key, `${assetBase}${key}.svg`);
+      // Both hands share a painted sleeve; transparent padding preserves the existing rig.
+      const file = key === 'warrior-support-arm' ? 'warrior-saber-arm' : key;
+      if (!this.textures.exists(key)) this.load.image(key, `${assetBase}${file}.png`);
     }
     preloadEnvironment(this);
   }

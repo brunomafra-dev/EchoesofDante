@@ -1,0 +1,122 @@
+[
+  {
+    "file": "public/assets/visual/characters/warrior-body.png",
+    "size": [
+      360,
+      400
+    ],
+    "occupiedRect": [
+      59,
+      6,
+      301,
+      292
+    ],
+    "bytes": 115673,
+    "sha256": "474cdf24745de5762ed7f4859f5b454e5170e229545516a5aceff32719e6f9f1"
+  },
+  {
+    "file": "public/assets/visual/characters/hollow-body.png",
+    "size": [
+      320,
+      256
+    ],
+    "occupiedRect": [
+      0,
+      37,
+      312,
+      218
+    ],
+    "bytes": 102555,
+    "sha256": "f155d9066199e41342c83cd8f99d13ab4af642d566e8efe7a795d58db5acdaa6"
+  },
+  {
+    "file": "public/assets/visual/characters/warrior-saber-arm.png",
+    "size": [
+      160,
+      72
+    ],
+    "occupiedRect": [
+      0,
+      4,
+      160,
+      68
+    ],
+    "bytes": 19390,
+    "sha256": "e628267d954e33baa2e339de65339d08e9d79a9fd2f27c3b027b1017908cf4f4"
+  },
+  {
+    "file": "public/assets/visual/characters/warrior-boot.png",
+    "size": [
+      160,
+      400
+    ],
+    "occupiedRect": [
+      40,
+      244,
+      121,
+      396
+    ],
+    "bytes": 29608,
+    "sha256": "931fd27fc5cdff08a5ba29c48c14e3d56722eafd72ce7b8fe0147b92c3ae2f8c"
+  },
+  {
+    "file": "public/assets/visual/characters/warrior-body-back.png",
+    "size": [
+      360,
+      400
+    ],
+    "occupiedRect": [
+      59,
+      6,
+      301,
+      292
+    ],
+    "bytes": 111961,
+    "sha256": "4dd2388fc0fb709e1d94df79bf85df1d72e6837d020b10d63876670580818959"
+  },
+  {
+    "file": "public/assets/visual/characters/warrior-body-side.png",
+    "size": [
+      360,
+      400
+    ],
+    "occupiedRect": [
+      64,
+      6,
+      278,
+      292
+    ],
+    "bytes": 112602,
+    "sha256": "e96bb6c4ee9485e524cd4a9a6da573f74354aa5d9aa55ebb8e09a636ee56a034"
+  },
+  {
+    "file": "public/assets/visual/characters/hollow-forelimbs.png",
+    "size": [
+      320,
+      256
+    ],
+    "occupiedRect": [
+      180,
+      0,
+      320,
+      256
+    ],
+    "bytes": 36908,
+    "sha256": "375a583bae5260f4d0309989ba548f3aec2b6a7539923d0de6e1e2af3409ff90"
+  },
+  {
+    "file": "public/assets/visual/characters/hollow-rear-limbs.png",
+    "size": [
+      320,
+      256
+    ],
+    "occupiedRect": [
+      2,
+      4,
+      138,
+      256
+    ],
+    "bytes": 35230,
+    "sha256": "7619f9d2b70e0be6cc33912be38f2188b8f4786dc0b34115dd968a7118ec2cfa"
+  }
+]

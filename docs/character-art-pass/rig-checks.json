@@ -1,0 +1,170 @@
+{
+  "method": "Chrome headless, not physical playtest",
+  "errors": [],
+  "baselineCountsAndPhysicsUnchanged": true,
+  "aimDirections": [
+    {
+      "name": "right",
+      "primaryGripError": 0,
+      "supportGripError": 0.00004139515759619442,
+      "legsAngle": 0,
+      "bodyAngle": 0,
+      "hierarchy": true,
+      "finite": true,
+      "state": "IDLE",
+      "torsoTexture": "warrior-body-side"
+    },
+    {
+      "name": "down",
+      "primaryGripError": 0,
+      "supportGripError": 0.000043952676833604525,
+      "legsAngle": 0,
+      "bodyAngle": 0,
+      "hierarchy": true,
+      "finite": true,
+      "state": "IDLE",
+      "torsoTexture": "warrior-body"
+    },
+    {
+      "name": "left",
+      "primaryGripError": 0,
+      "supportGripError": 0.00004139515759619442,
+      "legsAngle": 2.4492935982947064e-16,
+      "bodyAngle": 2.4492935982947064e-16,
+      "hierarchy": true,
+      "finite": true,
+      "state": "IDLE",
+      "torsoTexture": "warrior-body-side"
+    },
+    {
+      "name": "up",
+      "primaryGripError": 0,
+      "supportGripError": 0.000043952676833604525,
+      "legsAngle": 0,
+      "bodyAngle": 0,
+      "hierarchy": true,
+      "finite": true,
+      "state": "IDLE",
+      "torsoTexture": "warrior-body-back"
+    },
+    {
+      "name": "up-left",
+      "primaryGripError": 0,
+      "supportGripError": 0.000041818170207976916,
+      "legsAngle": -8.881784197001252e-16,
+      "bodyAngle": -8.881784197001252e-16,
+      "hierarchy": true,
+      "finite": true,
+      "state": "IDLE",
+      "torsoTexture": "warrior-body-back"
+    },
+    {
+      "name": "up-right",
+      "primaryGripError": 0,
+      "supportGripError": 0.000041818170207976916,
+      "legsAngle": 0,
+      "bodyAngle": 0,
+      "hierarchy": true,
+      "finite": true,
+      "state": "IDLE",
+      "torsoTexture": "warrior-body-side"
+    },
+    {
+      "name": "down-left",
+      "primaryGripError": 0,
+      "supportGripError": 0.000041818170207976916,
+      "legsAngle": -8.881784197001252e-16,
+      "bodyAngle": -8.881784197001252e-16,
+      "hierarchy": true,
+      "finite": true,
+      "state": "IDLE",
+      "torsoTexture": "warrior-body"
+    },
+    {
+      "name": "down-right",
+      "primaryGripError": 0,
+      "supportGripError": 0.000041818170207976916,
+      "legsAngle": 0,
+      "bodyAngle": 0,
+      "hierarchy": true,
+      "finite": true,
+      "state": "IDLE",
+      "torsoTexture": "warrior-body-side"
+    }
+  ],
+  "walkingDirections": [
+    {
+      "key": "w",
+      "primaryGripError": 0,
+      "supportGripError": 0.00003791698775855318,
+      "legsAngle": -1.7763568394002505e-15,
+      "bodyAngle": -0.013507533997856314,
+      "hierarchy": true,
+      "finite": true,
+      "state": "WALK",
+      "torsoTexture": "warrior-body"
+    },
+    {
+      "key": "a",
+      "primaryGripError": 0,
+      "supportGripError": 0.00004584910777481124,
+      "legsAngle": 0,
+      "bodyAngle": 0.004375727044884314,
+      "hierarchy": true,
+      "finite": true,
+      "state": "WALK",
+      "torsoTexture": "warrior-body"
+    },
+    {
+      "key": "s",
+      "primaryGripError": 0,
+      "supportGripError": 0.00004581189887588821,
+      "legsAngle": 0,
+      "bodyAngle": 0.010406119544768444,
+      "hierarchy": true,
+      "finite": true,
+      "state": "WALK",
+      "torsoTexture": "warrior-body-side"
+    },
+    {
+      "key": "d",
+      "primaryGripError": 0,
+      "supportGripError": 0.000016769679683071206,
+      "legsAngle": 0,
+      "bodyAngle": 0.01039995841417607,
+      "hierarchy": true,
+      "finite": true,
+      "state": "WALK",
+      "torsoTexture": "warrior-body"
+    }
+  ],
+  "hollowMoving": true,
+  "actionsCaptured": [
+    "walking",
+    "attack-swing",
+    "charge",
+    "charge-release",
+    "dash",
+    "hollow-chase"
+  ],
+  "hollowLimbAnimated": true,
+  "settledCavernFps": {
+    "mean": 59.79411426520674,
+    "min": 59.45229023694992,
+    "max": 59.932169957784936
+  },
+  "production": {
+    "url": "http://localhost:5175/",
+    "paintedAssetsLoaded": [
+      "hollow-body.png",
+      "hollow-forelimbs.png",
+      "hollow-rear-limbs.png",
+      "warrior-body-back.png",
+      "warrior-body-side.png",
+      "warrior-body.png",
+      "warrior-boot.png",
+      "warrior-saber-arm.png"
+    ],
+    "canvasVisible": true
+  }
+}

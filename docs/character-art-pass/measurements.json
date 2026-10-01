@@ -1,0 +1,186 @@
+{
+  "version": "0.1.33",
+  "physicalTests": false,
+  "method": "Chrome headless; local DEV hooks for setup/assertions; real keyboard/mouse actions",
+  "errors": [],
+  "localStartupMs": 3767,
+  "forest": {
+    "fps": 56.8189892578125,
+    "objects": 371,
+    "tweens": 24,
+    "renderTextures": 16,
+    "graphics": 16,
+    "types": {
+      "RenderTexture": 16,
+      "Image": 236,
+      "Arc": 28,
+      "Ellipse": 17,
+      "Graphics": 16,
+      "Container": 9,
+      "Rectangle": 22,
+      "Text": 27
+    },
+    "textures": 48,
+    "experimentalTextures": [],
+    "bounds": null
+  },
+  "echoesAndEntry": true,
+  "cavern": {
+    "fps": 56.575808244406474,
+    "objects": 66,
+    "tweens": 3,
+    "renderTextures": 3,
+    "graphics": 10,
+    "types": {
+      "RenderTexture": 3,
+      "Ellipse": 8,
+      "Image": 2,
+      "Graphics": 10,
+      "Arc": 3,
+      "Container": 3,
+      "Rectangle": 10,
+      "Text": 27
+    },
+    "textures": 48,
+    "experimentalTextures": [],
+    "bounds": {
+      "left": 480,
+      "right": 1680,
+      "top": 380,
+      "bottom": 1120
+    }
+  },
+  "collisionAndDash": true,
+  "strikeChargeHollowXp": true,
+  "deathAndRespawn": true,
+  "deepSignal": true,
+  "gamepadMockMovementAimHoldRelease": true,
+  "touchEmulatedMoveStrikeChargeDash": true,
+  "matchedViews": {
+    "forest": {
+      "fps": 55.2199365234375,
+      "objects": 371,
+      "tweens": 24,
+      "renderTextures": 16,
+      "graphics": 16,
+      "types": {
+        "RenderTexture": 16,
+        "Image": 236,
+        "Arc": 28,
+        "Ellipse": 17,
+        "Graphics": 16,
+        "Container": 9,
+        "Rectangle": 22,
+        "Text": 27
+      },
+      "textures": 48,
+      "experimentalTextures": [],
+      "bounds": null
+    },
+    "forestNorth": {
+      "fps": 56.715048828125,
+      "objects": 371,
+      "tweens": 24,
+      "renderTextures": 16,
+      "graphics": 16,
+      "types": {
+        "RenderTexture": 16,
+        "Image": 236,
+        "Arc": 28,
+        "Ellipse": 17,
+        "Graphics": 16,
+        "Container": 9,
+        "Rectangle": 22,
+        "Text": 27
+      },
+      "textures": 48,
+      "experimentalTextures": [],
+      "bounds": null
+    },
+    "cavern": {
+      "fps": 53.8905859375,
+      "objects": 66,
+      "tweens": 3,
+      "renderTextures": 3,
+      "graphics": 10,
+      "types": {
+        "RenderTexture": 3,
+        "Ellipse": 8,
+        "Image": 2,
+        "Graphics": 10,
+        "Arc": 3,
+        "Container": 3,
+        "Rectangle": 10,
+        "Text": 27
+      },
+      "textures": 48,
+      "experimentalTextures": [],
+      "bounds": {
+        "left": 480,
+        "right": 1680,
+        "top": 380,
+        "bottom": 1120
+      }
+    },
+    "cavernFace": {
+      "fps": 54.9855712890625,
+      "objects": 66,
+      "tweens": 3,
+      "renderTextures": 3,
+      "graphics": 10,
+      "types": {
+        "RenderTexture": 3,
+        "Ellipse": 8,
+        "Image": 2,
+        "Graphics": 10,
+        "Arc": 3,
+        "Container": 3,
+        "Rectangle": 10,
+        "Text": 27
+      },
+      "textures": 48,
+      "experimentalTextures": [],
+      "bounds": {
+        "left": 480,
+        "right": 1680,
+        "top": 380,
+        "bottom": 1120
+      }
+    },
+    "deep": {
+      "fps": 53.934140625,
+      "objects": 66,
+      "tweens": 3,
+      "renderTextures": 3,
+      "graphics": 10,
+      "types": {
+        "RenderTexture": 3,
+        "Ellipse": 8,
+        "Image": 2,
+        "Graphics": 10,
+        "Arc": 3,
+        "Container": 3,
+        "Rectangle": 10,
+        "Text": 27
+      },
+      "textures": 48,
+      "experimentalTextures": [],
+      "bounds": {
+        "left": 480,
+        "right": 2470,
+        "top": 380,
+        "bottom": 1120
+      }
+    }
+  },
+  "physicsUnchanged": false,
+  "idleAndThreeRestartsStable": true,
+  "resolutions": [
+    "1280x720",
+    "1366x768",
+    "1920x1080",
+    "844x390"
+  ],
+  "originalLabIntact": true,
+  "noExperimentalAssetsInGame": true
+}

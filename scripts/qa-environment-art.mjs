@@ -1,6 +1,6 @@
 // Optional local QA: requires Playwright and Chrome already available locally.
 // Run against the Vite dev server (DEV-only inspection hooks, not production).
-// node scripts/qa-environment-art.mjs [base URL] [optional pre-change JSON]
+// node scripts/qa-environment-art.mjs [base URL] [optional pre-change JSON or -] [optional output directory]
 // Optional baseline uses matchedViews or top-level forest/cavern objects with obstacles/bounds.
 import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -8,8 +8,8 @@ import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 
 const base = process.argv[2] ?? 'http://localhost:5173/';
-const before = process.argv[3] ? JSON.parse(await readFile(process.argv[3], 'utf8')) : undefined;
-const output = fileURLToPath(new URL('../docs/environment-art-pass/', import.meta.url));
+const before = process.argv[3] && process.argv[3] !== '-' ? JSON.parse(await readFile(process.argv[3], 'utf8')) : undefined;
+const output = process.argv[4] ?? fileURLToPath(new URL('../docs/environment-art-pass/', import.meta.url));
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });

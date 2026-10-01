@@ -13,7 +13,7 @@ O [Visual Rendering Prototype 01](docs/visual-rendering-prototype-01/) compara G
 ## Stack
 
 - TypeScript, Phaser 3 e Vite
-- SVGs autorais para personagens e PNGs pintados em `public/assets/visual/environment/` para cenários; composição estática baked/cacheada
+- PNGs pintados em `public/assets/visual/characters/` para personagens e em `public/assets/visual/environment/` para cenários; composição estática baked/cacheada
 - Loops musicais autorais de protótipo em `public/assets/audio/`; efeitos curtos são sintetizados com Web Audio
 - Barlow Condensed e DM Sans carregadas via Google Fonts, com fallback local
 - Sem backend, persistência ou multiplayer
@@ -35,6 +35,8 @@ npm run preview
 ```
 
 A [integração da linguagem D nos ambientes](docs/environment-art-pass/) aplica texturas pintadas a Forest, Cavern e área profunda: pedra, raízes, minerais, vegetação e bases antigas, com comparativos antes/depois. Cenário estático continua baked, e os mesmos colisores, rotas, interações e sistemas de gameplay permanecem. A nova aplicação ainda precisa de playtest visual humano.
+
+A [passagem de arte do Warrior e Hollow](docs/character-art-pass/) aplica o tratamento pintado aprovado no cenário aos personagens. Preserva o Warrior em pé, as duas mãos no sabre e os rigs existentes. Os comparativos incluem oito direções de mira, caminhada, ataque, carga e Dash; a aprovação visual desta passagem depende do playtest do usuário.
 
 ## Controles
 
@@ -79,7 +81,7 @@ A música de exploração usa dois loops instrumentais curtos e originais, Fores
 - Dante Forest de 2200×1500 unidades: entrada ao sudoeste, trilha principal rumo às ruínas ao norte e desvios para uma árvore maior a oeste e uma formação mineral a leste. Clareiras conectadas, vegetação em camadas e bancos de rochas delimitam o espaço; câmera suave e zoom preservados.
 - O solo e os desenhos estáticos da floresta são renderizados uma vez em camadas. Copas e troncos usam PNGs compartilhados; rochas, sombra de contato e raízes pintadas são capturadas nas camadas estáticas. Profundidade e animações existentes foram preservadas.
 - Galactic Warrior com capacete destacado, torso, braços e duas pernas visíveis. O corpo permanece ereto em vistas frontal, lateral e traseira; o sabre continua seguindo a mira e as pernas mantêm o ciclo de passos. Sombra, HP, movimento, dash e invulnerabilidade breve permanecem.
-- Oito Hollow Crawlers distribuídos em quatro pares ao longo da exploração, agora com carapaça e membros orgânicos em SVG e núcleo quente. Detecção, perseguição, preparação do ataque, reação ao dano e morte continuam iguais. A entrada fica fora do alcance inicial de detecção.
+- Oito Hollow Crawlers distribuídos em quatro pares ao longo da exploração, com carapaça e membros orgânicos pintados em PNG e núcleo quente. Detecção, perseguição, preparação do ataque, reação ao dano e morte continuam iguais. A entrada fica fora do alcance inicial de detecção.
 - Golpe com preparação, varredura e recuperação; arco e trail ligados à posição da lâmina; dano aplicado durante a varredura. Contato curto orientado pelo sabre, contração e recuo visual do Hollow, números de dano, efeito de início/fim do dash, HUD de exploração, sons opcionais e tela de respawn.
 
 ## Limitações conhecidas
