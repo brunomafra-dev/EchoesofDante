@@ -4,6 +4,8 @@ Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
 Protótipo de action RPG sci-fi para navegador. O jogador explora Dante Forest, combate Hollows e investiga três Echoes. Depois de sincronizar os sinais, pode ativar a passagem antiga, explorar a Cavern e seguir o sinal além do desabamento. A direção Organic Sci-Fi segue a [Art Bible](docs/art-bible/).
 
+A [World Shape Language](docs/WORLD_SHAPE_LANGUAGE.md) complementa a Art Bible com regras de massas, silhuetas e composição ambiental. É uma base documental para um futuro microprotótipo visual da Cavern; não altera o jogo atual.
+
 ## Stack
 
 - TypeScript, Phaser 3 e Vite
