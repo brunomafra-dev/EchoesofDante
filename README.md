@@ -1,4 +1,4 @@
-# Echoes of Dante — Sprint 06.1
+# Echoes of Dante — Sprint 06.3
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
@@ -85,7 +85,7 @@ A música de exploração usa dois loops instrumentais curtos e originais, Fores
 - Touch e gamepad foram validados em emulação de navegador; conforto e compatibilidade em dispositivos físicos ainda exigem playtest. Não há suporte oficial a navegadores de console, builds nativas, remapeamento de botões ou menu de volume.
 - Os dois temas musicais são protótipos instrumentais. Vocal atmosférico, mixagem final e camadas adaptativas de combate/descoberta permanecem para avaliação futura.
 - Os inimigos derrotados só retornam ao reiniciar a arena.
-- A vegetação comum é decorativa; rochas, tronco da árvore maior e base da ruína bloqueiam movimento.
+- Troncos, totens e bases estruturais possuem colisores circulares simples; copas, vegetação baixa, raízes e pequenos detalhes continuam atravessáveis. A classificação e a auditoria estão em [Environmental Collision Audit](docs/ENVIRONMENT_COLLISION_AUDIT.md).
 - A IA mantém perseguição direta, sem navegação por caminhos; Hollows podem ficar presos em rochas ao perseguir fora das trilhas.
 - A câmera e a arte usam visão superior 2D, sem profundidade isométrica real.
 - O ciclo de passos usa transformações de formas 2D; a articulação das botas ainda é simples e precisa de avaliação humana em movimento.

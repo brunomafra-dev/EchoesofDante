@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { CAVERN_BOUNDS, DEEP_AREA, DEEP_OBSTACLES } from '../config/cavern';
+import { CAVERN_STRUCTURE_FOOTPRINTS, cavernShelfFootprints } from '../config/environmentCollision';
 import { DeepSignal } from './DeepSignal';
 import type { MovementBounds, Obstacle } from './Movement';
 
@@ -185,6 +186,8 @@ export class CavernArea {
     const seam = scene.add.ellipse(1703, 486, 48, 14, 0xffbd54, 0.12).setDepth(480);
     scene.tweens.add({ targets: seam, alpha: { from: 0.1, to: 0.27 }, duration: 2300, yoyo: true, repeat: -1 });
     this.deepSignal = new DeepSignal(scene, deepPassageOpen);
+    // Physics-only additions must not enter the rock artwork loop above.
+    this.obstacles.push(...CAVERN_STRUCTURE_FOOTPRINTS, ...cavernShelfFootprints());
   }
 
   revealDeep(onOpened: () => void): void {

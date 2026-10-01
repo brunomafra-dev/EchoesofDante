@@ -1,16 +1,20 @@
 import Phaser from 'phaser';
 import { WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
 import { FOREST_CLEARINGS, FOREST_PATHS, FOREST_ROCKS } from '../config/forest';
+import { FOREST_STRUCTURE_FOOTPRINTS, treeFootprint, totemFootprint } from '../config/environmentCollision';
 import type { Obstacle } from './Movement';
 
 export class Arena {
   readonly obstacles: Obstacle[] = [];
+  private readonly structuralFootprints: Obstacle[] = [];
   private seed = 92341;
 
   constructor(private scene: Phaser.Scene) {
     this.createTreeTextures();
     this.draw();
     this.bakeStaticScenery();
+    // Register after composition: tree placement must keep its original rock-only test.
+    this.obstacles.push(...this.structuralFootprints, ...FOREST_STRUCTURE_FOOTPRINTS);
   }
 
   private createTreeTextures(): void {
@@ -155,7 +159,7 @@ export class Arena {
       if (this.nearRoute(x, y, 0)) continue;
       this.fern(x, y, 8 + this.random() * 12);
     }
-    this.plant(420, 390, 110, true);
+    this.plant(420, 390, 110, true, false);
     this.obstacles.push({ x: 420, y: 390, radius: 25 });
     [-70, 0, 70].forEach(offset => this.obstacles.push({ x: 1500 + offset, y: 285, radius: 35 }));
     this.rock(1930, 1020, 67);
@@ -190,9 +194,11 @@ export class Arena {
     g.closePath().fillPath();
   }
 
-  private plant(x: number, y: number, size: number, sway = false): void {
+  private plant(x: number, y: number, size: number, sway = false, addFootprint = true): void {
     const shade = this.random();
     this.scene.add.image(x, y, 'dante-tree-trunk').setOrigin(0.5, 100 / 155).setScale(size / 100).setDepth(y + 2);
+    // The landmark tree already has its original radius-25 footprint below.
+    if (addFootprint) this.structuralFootprints.push(treeFootprint(x, y, size));
     const canopy = this.scene.add.image(x, y - size * 0.9, shade < 0.3 ? 'dante-canopy-blue' : 'dante-canopy-green')
       .setOrigin(0.5, 0.6).setScale(size / 100).setDepth(y + 12);
     if (sway) {
@@ -238,6 +244,7 @@ export class Arena {
   }
 
   private beacon(x: number, y: number): void {
+    this.structuralFootprints.push(totemFootprint(x, y));
     const g = this.scene.add.graphics().setDepth(y - 5).setPosition(x, y);
     g.fillStyle(0x081d25, 0.62).fillEllipse(0, 16, 88, 29);
     g.fillStyle(0x526e70).fillEllipse(0, 8, 48, 25);
