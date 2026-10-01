@@ -3,6 +3,7 @@ import { CAVERN_BOUNDS, DEEP_AREA, DEEP_OBSTACLES } from '../config/cavern';
 import { CAVERN_STRUCTURE_FOOTPRINTS, cavernShelfFootprints } from '../config/environmentCollision';
 import { DeepSignal } from './DeepSignal';
 import type { MovementBounds, Obstacle } from './Movement';
+import { drawOrganicCavernForm } from '../visual/OrganicCavernForm';
 
 // One continuous authored Cavern; static art is captured once per section.
 export class CavernArea {
@@ -120,6 +121,7 @@ export class CavernArea {
     }
     // Mineral seams and roots break up the broad rock floor without creating new actors.
     for (const [x, y, size] of [[760, 1024, 23], [865, 626, 17], [1140, 449, 20], [1370, 1042, 26], [1600, 752, 18]] as const) {
+      if (x === 865) continue; // This one seam is composed with the prototype rock below.
       art.fillStyle(0x222b33, 0.8).fillEllipse(x, y + size, size * 4, size);
       art.fillStyle(0x6e6965).fillTriangle(x - size, y + size, x - size * 0.2, y - size, x + size * 0.4, y + size);
       art.fillStyle(0x856f65).fillTriangle(x + size * 0.1, y + size, x + size * 0.9, y - size * 0.6, x + size * 1.5, y + size);
@@ -134,6 +136,10 @@ export class CavernArea {
     }
     for (const rock of this.obstacles) {
       if (rock === this.collapseObstacle || rock.x > CAVERN_BOUNDS.right) continue; // Deep art owns those rocks.
+      if (rock.x === 885 && rock.y === 595) {
+        drawOrganicCavernForm(art);
+        continue;
+      }
       art.fillStyle(0x0a1c23, 0.5).fillEllipse(rock.x + 8, rock.y + 22, rock.radius * 2.7, rock.radius);
       art.fillStyle(0x50605b).fillPoints([
         { x: rock.x - rock.radius, y: rock.y + 12 }, { x: rock.x - rock.radius * 0.62, y: rock.y - rock.radius * 0.7 },

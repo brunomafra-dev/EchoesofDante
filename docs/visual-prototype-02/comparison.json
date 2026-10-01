@@ -1,0 +1,53 @@
+{
+  "region": {
+    "center": {
+      "x": 885,
+      "y": 595
+    },
+    "approximateWidth": 180,
+    "approximateHeight": 170
+  },
+  "test": "Chrome headless, 1280x720, five-second FPS samples, identical camera/player setup",
+  "before": {
+    "version": "0.1.29",
+    "fps": 57.33505178052326,
+    "objects": 66,
+    "tweens": 3,
+    "counts": {
+      "RenderTexture": 3,
+      "Ellipse": 8,
+      "Graphics": 12,
+      "Arc": 3,
+      "Container": 3,
+      "Rectangle": 10,
+      "Text": 27
+    },
+    "camera": {
+      "scrollX": 310,
+      "scrollY": 300,
+      "zoom": 1
+    }
+  },
+  "after": {
+    "version": "0.1.30",
+    "fps": 57.09202803805025,
+    "objects": 66,
+    "tweens": 3,
+    "counts": {
+      "RenderTexture": 3,
+      "Ellipse": 8,
+      "Graphics": 12,
+      "Arc": 3,
+      "Container": 3,
+      "Rectangle": 10,
+      "Text": 27
+    },
+    "camera": {
+      "scrollX": 310,
+      "scrollY": 300,
+      "zoom": 1
+    }
+  },
+  "collidersIdentical": true,
+  "visualApproval": "Awaiting user playtest"
+}

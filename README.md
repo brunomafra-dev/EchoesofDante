@@ -6,6 +6,8 @@ Protótipo de action RPG sci-fi para navegador. O jogador explora Dante Forest, 
 
 A [World Shape Language](docs/WORLD_SHAPE_LANGUAGE.md) complementa a Art Bible com regras de massas, silhuetas e composição ambiental. É uma base documental para um futuro microprotótipo visual da Cavern; não altera o jogo atual.
 
+O [Visual Prototype 02](docs/visual-prototype-02/) testa uma formação orgânica de cerca de 180×170 unidades na primeira Cavern, em (885, 595). Inclui comparação antes/depois; a expansão depende de playtest humano. Gameplay e colisões permanecem iguais.
+
 ## Stack
 
 - TypeScript, Phaser 3 e Vite
