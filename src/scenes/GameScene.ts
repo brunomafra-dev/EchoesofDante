@@ -5,7 +5,7 @@ import { KineticCharge } from '../combat/KineticCharge';
 import { PLAYER, CRAWLER, KINETIC_CHARGE, WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
 import { FOREST_ENTRY, FOREST_PATROLS, FOREST_SPAWNS } from '../config/forest';
 import { CAVERN_DEPTH_OPENING, CAVERN_ENTRY, CAVERN_HOLLOWS, DEEP_AREA, DEEP_HOLLOWS } from '../config/cavern';
-import { FOREST_ECHOES, SIGNAL_THRESHOLD } from '../config/discovery';
+import { FOREST_ECHOES, NORTHERN_DISCOVERY, SIGNAL_THRESHOLD } from '../config/discovery';
 import { HollowCrawler } from '../entities/HollowCrawler';
 import { DanteCreature } from '../entities/DanteCreature';
 import type { Enemy, EnemyImpact } from '../entities/Enemy';
@@ -24,6 +24,7 @@ import { SignalThreshold } from '../systems/SignalThreshold';
 import { PassageMechanism } from '../systems/PassageMechanism';
 import type { MovementBounds, Obstacle } from '../systems/Movement';
 import { Hud } from '../ui/Hud';
+import { ExplorationGuide, type ExplorationTarget } from '../ui/ExplorationGuide';
 import { distance, normalized, type Vec2 } from '../utils/math';
 
 export class GameScene extends Phaser.Scene {
@@ -56,6 +57,7 @@ export class GameScene extends Phaser.Scene {
   private charge = new KineticCharge();
   private sounds = new AudioManager();
   private hud!: Hud;
+  private explorationGuide!: ExplorationGuide;
   private echoSites: EchoSite[] = [];
   private threshold?: SignalThreshold;
   private mechanism?: PassageMechanism;
@@ -77,13 +79,14 @@ export class GameScene extends Phaser.Scene {
       'hollow-body',
       'hollow-rear-limbs',
       'hollow-forelimbs',
-      'dante-skitter',
-      'dante-spitter',
     ] as const;
     for (const key of art) {
       // Both hands share a painted sleeve; transparent padding preserves the existing rig.
       const file = key === 'warrior-support-arm' ? 'warrior-saber-arm' : key;
       if (!this.textures.exists(key)) this.load.image(key, `${assetBase}${file}.png`);
+    }
+    for (const key of ['dante-skitter-motion', 'dante-spitter-motion']) {
+      if (!this.textures.exists(key)) this.load.spritesheet(key, `${assetBase}${key}.png`, { frameWidth: 256, frameHeight: 256 });
     }
     preloadEnvironment(this);
   }
@@ -139,6 +142,7 @@ export class GameScene extends Phaser.Scene {
     });
     if (this.area === 'cavern' && this.deepPassageOpen) this.spawnDeepHollows();
     this.hud = new Hud(this, () => this.restart());
+    this.explorationGuide = new ExplorationGuide(this);
     this.updateProgressHud();
     this.hud.setSignalObjective(this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen, this.area === 'cavern', this.cavernDepthSeen, this.deepAreaSeen);
     this.inDeepCavern = this.area === 'cavern' && this.deepCavernEntered;
@@ -197,13 +201,19 @@ export class GameScene extends Phaser.Scene {
     } else if (interact && nearFragment) {
       this.fragmentSeen = true;
       this.cavern?.continuation.respond();
-      this.hud.showDiscovery('TRANSMISSION FRAGMENT\nPATTERN: REPLY');
+      this.hud.showDiscovery('FRAGMENTO DE TRANSMISS?O\nPADRÃO: RESPOSTA');
       this.hud.setContinuationArea(true, true);
       this.sounds.signal();
+    } else if (interact && this.area === 'forest' && !this.progression.sourceLocated &&
+      distance(this.player.position, { x: SIGNAL_THRESHOLD.mechanismX, y: SIGNAL_THRESHOLD.mechanismY }) <= SIGNAL_THRESHOLD.mechanismRadius) {
+      this.hud.showDiscovery(this.progression.signalSynchronized
+        ? 'MECANISMO INATIVO\nInvestigue a fissura ao lado primeiro.'
+        : 'MECANISMO INATIVO\nEncontre e investigue os 3 Ecos.');
     }
     this.hud.setDiscoveryPrompt(nearDiscovery || nearThreshold || nearMechanism || nearFragment);
     this.controls.setInteractAvailable(nearDiscovery || nearThreshold || nearMechanism || nearFragment);
     this.controls.setDead(this.player.isDead);
+    this.updateExplorationGuide();
     if (this.player.isDead) {
       if (this.controls.restartPressed) this.restart();
       return;
@@ -252,14 +262,14 @@ export class GameScene extends Phaser.Scene {
     if (this.area === 'cavern' && !this.deepPassageOpen && !this.deepOpening && distance(this.player.position, CAVERN_DEPTH_OPENING) <= CAVERN_DEPTH_OPENING.radius) {
       this.cavernDepthSeen = true;
       this.deepOpening = true;
-      this.hud.showDiscovery('SIGNAL CONTINUES\nSTONE RESPONDING');
+      this.hud.showDiscovery('O SINAL CONTINUA\nA PEDRA ESTÁ RESPONDENDO');
       this.sounds.ancient();
       this.hud.setSignalObjective(true, true, true, true, true, false);
       this.cavern?.revealDeep(() => {
         this.deepOpening = false;
         this.deepPassageOpen = true;
         this.spawnDeepHollows();
-        this.hud.showDiscovery('PASSAGE REVEALED\nSIGNAL: BELOW');
+        this.hud.showDiscovery('PASSAGEM REVELADA\nO SINAL VEM DE BAIXO');
       });
     }
     const inDeep = this.area === 'cavern' && this.deepPassageOpen && this.player.position.x >= DEEP_AREA.entryX;
@@ -268,21 +278,21 @@ export class GameScene extends Phaser.Scene {
       if (this.player.position.x < EXPANSION.deeperX) this.hud.setCavernDepth(inDeep);
       if (inDeep && !this.deepCavernEntered) {
         this.deepCavernEntered = true;
-        if (this.player.position.x < EXPANSION.deeperX) this.hud.showDiscovery('DEEP CAVERN\nSIGNAL: PRESENT');
+        if (this.player.position.x < EXPANSION.deeperX) this.hud.showDiscovery('CAVERNA PROFUNDA\nSINAL: PRESENTE');
       }
     }
     if (this.area === 'cavern' && this.deepPassageOpen && !this.deepAreaSeen &&
       Math.hypot(this.player.position.x - DEEP_AREA.signalX, this.player.position.y - DEEP_AREA.signalY) <= DEEP_AREA.signalRadius) {
       this.deepAreaSeen = true;
       this.cavern?.respondToDeepSignal();
-      this.hud.showDiscovery('ANCIENT PATTERN\nSOURCE: STILL BELOW');
+      this.hud.showDiscovery('PADRÃO ANCESTRAL\nA FONTE CONTINUA ABAIXO');
       this.sounds.signal();
       this.hud.setSignalObjective(true, true, true, true, true, true);
       this.hud.setCavernDepth(true);
     }
     if (inDeep && !this.deepEndSeen && distance(this.player.position, DEEP_AREA.end) <= DEEP_AREA.end.radius) {
       this.deepEndSeen = true;
-      this.hud.showDiscovery('SIGNAL: DEEPER\nPATH: UNCHARTED');
+      this.hud.showDiscovery('SINAL: MAIS PROFUNDO\nCAMINHO: DESCONHECIDO');
       this.sounds.signal();
     }
     if (this.area === 'cavern' && this.deepPassageOpen) this.updateContinuation();
@@ -307,7 +317,7 @@ export class GameScene extends Phaser.Scene {
     if (x >= EXPANSION.deeperX) this.deeperEntered = true;
     if (x >= EXPANSION.exteriorX && !this.exteriorEntered) {
       this.exteriorEntered = true;
-      this.hud.showDiscovery('CAVERN EXTERIOR\nSIGNAL: STILL PRESENT');
+      this.hud.showDiscovery('EXTERIOR DA CAVERNA\nO SINAL CONTINUA PRESENTE');
     }
     const region = x >= EXPANSION.exteriorX ? 'exterior' : x >= EXPANSION.deeperX ? 'deeper' : 'deep';
     if (region !== this.continuationRegion) {
@@ -318,9 +328,55 @@ export class GameScene extends Phaser.Scene {
     }
     if (!this.approachSeen && distance(this.player.position, EXPANSION.approach) <= EXPANSION.approach.radius) {
       this.approachSeen = true;
-      this.hud.showDiscovery('MONUMENTAL TRACE\nSOURCE: BEYOND');
+      this.hud.showDiscovery('VESTÍGIO MONUMENTAL\nFONTE: ALÉM');
       this.sounds.ancient();
     }
+  }
+
+  private updateExplorationGuide(): void {
+    let title: string, target: ExplorationTarget;
+    if (this.area === 'forest') {
+      const sites = [
+        { id: 'northern-ruin', ...NORTHERN_DISCOVERY, name: 'Ruína do norte', instruction: 'Procure as inscrições na pedra.' },
+        { ...FOREST_ECHOES.mineral, name: 'Sinal mineral', instruction: 'Procure o brilho âmbar.' },
+        { ...FOREST_ECHOES.trace, name: 'Vestígio desconhecido', instruction: 'Procure o brilho violeta.' },
+      ].filter(site => !this.progression.echoes.has(site.id));
+      if (sites.length) {
+        const nearest = sites.reduce((a, b) => distance(this.player.position, a) <= distance(this.player.position, b) ? a : b);
+        title = `INVESTIGUE OS ECOS  ${this.progression.echoes.size}/3`;
+        target = { ...nearest, action: 'investigate' };
+        if (distance(this.player.position, SIGNAL_THRESHOLD) <= SIGNAL_THRESHOLD.radius + 50) {
+          title = 'PASSAGEM SELADA';
+          target.instruction = 'Investigue os 3 Ecos antes de voltar.';
+        }
+      } else if (!this.progression.sourceLocated) {
+        title = 'SIGA O SINAL AO NORTE';
+        target = { ...SIGNAL_THRESHOLD, name: 'Fissura ancestral', instruction: 'Siga a trilha e investigue a fissura.', action: 'investigate' };
+      } else if (!this.progression.passageOpen) {
+        title = 'ATIVE O MECANISMO';
+        target = { x: SIGNAL_THRESHOLD.mechanismX, y: SIGNAL_THRESHOLD.mechanismY, radius: SIGNAL_THRESHOLD.mechanismRadius,
+          name: 'Mecanismo ancestral', instruction: 'As inscrições ao lado da fissura reagiram.', action: 'investigate' };
+      } else {
+        title = this.gateObstacle ? 'A PASSAGEM ESTÁ SE ABRINDO' : 'ENTRE NA CAVERNA';
+        target = { ...SIGNAL_THRESHOLD, name: this.gateObstacle ? 'Passagem reagindo' : 'Passagem aberta', instruction: 'Caminhe para dentro da fissura.', action: 'walk' };
+      }
+    } else if (!this.deepPassageOpen) {
+      title = 'EXPLORE A CAVERNA';
+      target = { ...CAVERN_DEPTH_OPENING, name: 'Sinal entre as pedras', instruction: 'Aproxime-se do brilho no desabamento.', action: 'walk' };
+    } else if (this.player.position.x < EXPANSION.deeperX) {
+      title = 'SIGA O SINAL MAIS FUNDO';
+      target = { ...DEEP_AREA.end, name: 'Túnel profundo', instruction: 'Siga pelo túnel além da estrutura.', action: 'walk' };
+    } else if (this.player.position.x < EXPANSION.exteriorX) {
+      title = 'ATRAVESSE AS PROFUNDEZAS';
+      target = { x: 4400, y: 740, radius: 130, name: 'Luz além da caverna', instruction: 'Explore os desvios e siga para leste.', action: 'walk' };
+    } else if (!this.fragmentSeen) {
+      title = 'INVESTIGUE O FRAGMENTO';
+      target = { ...EXPANSION.fragment, name: 'Fragmento ancestral', instruction: 'Procure a estrutura com luz violeta.', action: 'investigate' };
+    } else {
+      title = 'SIGA A RESPOSTA';
+      target = { ...EXPANSION.approach, name: 'Vestígio monumental', instruction: 'O sinal continua além da abertura.', action: 'walk' };
+    }
+    this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod, title, target, this.hud);
   }
 
   private spawnDeepHollows(): void {

@@ -1,0 +1,28 @@
+[
+  {
+    "file": "public/assets/visual/characters/dante-skitter-motion.png",
+    "size": [
+      1024,
+      512
+    ],
+    "frameSize": [
+      256,
+      256
+    ],
+    "frames": 8,
+    "bytes": 526585
+  },
+  {
+    "file": "public/assets/visual/characters/dante-spitter-motion.png",
+    "size": [
+      1024,
+      512
+    ],
+    "frameSize": [
+      256,
+      256
+    ],
+    "frames": 8,
+    "bytes": 547793
+  }
+]

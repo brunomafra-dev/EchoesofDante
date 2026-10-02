@@ -29,17 +29,17 @@ export class TouchControls {
     this.root = document.createElement('div');
     this.root.className = 'touch-controls';
     this.root.innerHTML = `
-      <div class="touch-move touch-pad" aria-label="Move"><span>MOVE</span><i></i></div>
+      <div class="touch-move touch-pad" aria-label="Mover"><span>MOVER</span><i></i></div>
       <div class="touch-actions">
-        <button data-action="attack" aria-label="Saber Strike: tap or drag and release"><span class="touch-face"><b>STRIKE</b><small>TAP / DRAG</small><i class="touch-direction"></i></span></button>
-        <button data-action="dash" aria-label="Void Dash"><span class="touch-face"><b>DASH</b><small>MOVE</small></span></button>
-        <button data-action="charge" aria-label="Kinetic Charge: hold, aim and release"><span class="touch-face"><b>CHARGE</b><small>HOLD / RELEASE</small><i class="touch-direction"></i></span></button>
+        <button data-action="attack" aria-label="Golpe de sabre: toque ou arraste e solte"><span class="touch-face"><b>GOLPE</b><small>TOQUE / ARRASTE</small><i class="touch-direction"></i></span></button>
+        <button data-action="dash" aria-label="Esquiva do vazio"><span class="touch-face"><b>ESQUIVA</b><small>MOVER</small></span></button>
+        <button data-action="charge" aria-label="Carga cinética: segure, mire e solte"><span class="touch-face"><b>CARGA</b><small>SEGURE / SOLTE</small><i class="touch-direction"></i></span></button>
       </div>
       <div class="touch-context">
-        <button data-action="interact" class="touch-interact" aria-label="Investigate"><span class="touch-face"><b>INVESTIGATE</b></span></button>
-        <button data-action="restart" class="touch-restart" aria-label="Respawn"><span class="touch-face"><b>RESPAWN</b></span></button>
+        <button data-action="interact" class="touch-interact" aria-label="Investigar"><span class="touch-face"><b>INVESTIGAR</b></span></button>
+        <button data-action="restart" class="touch-restart" aria-label="Renascer"><span class="touch-face"><b>RENASCER</b></span></button>
       </div>
-      <div class="touch-rotate">ROTATE DEVICE<br><small>Landscape mode</small></div>`;
+      <div class="touch-rotate">GIRE O DISPOSITIVO<br><small>Jogue na horizontal</small></div>`;
     document.body.append(this.root);
     this.unprotect = protectGameplayGestures(this.root);
     this.moveZone = this.root.querySelector('.touch-move')!;
@@ -116,7 +116,7 @@ export class TouchControls {
   }
 
   private updateHint(gesture: CombatGesture): void {
-    gesture.button.querySelector<HTMLElement>('small')!.textContent = gesture.action === 'charge' || gesture.dragged ? 'RELEASE' : 'DRAG TO AIM';
+    gesture.button.querySelector<HTMLElement>('small')!.textContent = gesture.action === 'charge' || gesture.dragged ? 'SOLTE PARA ATACAR' : 'ARRASTE PARA MIRAR';
     gesture.button.querySelector<HTMLElement>('.touch-direction')!.style.transform = `rotate(${this.aimAngle}rad)`;
   }
 
@@ -125,7 +125,7 @@ export class TouchControls {
     const { button, action } = this.combat;
     this.combat = undefined;
     button.classList.remove('is-pressed', 'is-aiming');
-    button.querySelector<HTMLElement>('small')!.textContent = action === 'charge' ? 'HOLD / RELEASE' : 'TAP / DRAG';
+    button.querySelector<HTMLElement>('small')!.textContent = action === 'charge' ? 'SEGURE / SOLTE' : 'TOQUE / ARRASTE';
   }
 
   private cancelCharge(): void {

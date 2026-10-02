@@ -42,21 +42,23 @@ A [expansão Deep Cavern](docs/expansion-deep-cavern/) transforma o antigo bolso
 
 A [Expansion Sprint 02](docs/expansion-sprint-02/) continua esse túnel por habitats de Skitters, Spitters e Crawlers, com um desvio mineral e uma subida para um exterior rochoso iluminado. Um fragmento investigável sugere uma resposta de transmissão; a aproximação monumental mantém o capítulo seguinte inacessível. Nenhuma passagem exige eliminar inimigos. First Echo e Warden ainda não foram implementados.
 
+A [correção de animação e orientação em português](docs/playtest-readability/) mantém os novos inimigos apoiados no chão, com quadros de passada, preparação, ataque e reação. A interface agora usa português e mostra o próximo passo desde 0/3 Ecos, com pistas de direção, identificação próxima dos locais e orientação da fissura ao mecanismo e à entrada. O fluxo continua sem chave, kill count ou recompensa adicional.
+
 ## Controles
 
 | Ação | Teclado e mouse | Gamepad padrão | Touch em landscape |
 | --- | --- | --- | --- |
 | Mover | W A S D | Analógico esquerdo | Controle esquerdo |
-| Mirar | Mouse | Analógico direito | Arraste a partir de STRIKE ou CHARGE |
-| Saber Strike | Clique esquerdo; segure para repetir | RT/R2 | Toque STRIKE ou arraste e solte |
-| Void Dash | Espaço | RB/R1 | DASH |
-| Kinetic Charge | Segure Q; solte para disparar | Segure LT/L2; solte | Segure CHARGE, arraste para mirar e solte |
-| Investigar quando próximo | E | A/Cross | INVESTIGATE contextual |
-| Respawn | R ou botão na tela | Start ou botão na tela | RESPAWN |
+| Mirar | Mouse | Analógico direito | Arraste a partir de GOLPE ou CARGA |
+| Golpe de sabre | Clique esquerdo; segure para repetir | RT/R2 | Toque GOLPE ou arraste e solte |
+| Esquiva do vazio | Espaço | RB/R1 | ESQUIVA |
+| Carga cinética | Segure Q; solte para disparar | Segure LT/L2; solte | Segure CARGA, arraste para mirar e solte |
+| Investigar quando próximo | E | A/Cross | INVESTIGAR contextual |
+| Renascer | R ou botão na tela | Start ou botão na tela | RENASCER |
 
 A entrada ativa muda conforme o dispositivo usado, sem recarregar a página. Gamepad usa o mapeamento `standard` da Gamepad API e deadzone nos analógicos; a mira conserva a última direção quando o analógico direito volta ao centro. A mesma build web é usada em todos os casos; não há aplicativo nativo nem suporte oficial a Xbox ou mobile físico nesta etapa.
 
-No touch, o joystick esquerdo move e os botões da direita controlam o combate, sem joystick permanente de mira. STRIKE dispara uma vez ao soltar: um toque usa a última direção de combate; um arrasto de pelo menos 12 pixels CSS escolhe outra direção e mostra a área aproximada do golpe. CHARGE inicia a preparação ao pressionar, permite mirar por arrasto e dispara ao soltar. Sem uma direção touch escolhida, usa a mira já disponível. DASH conserva a regra existente: direção de movimento ou mira quando parado. INVESTIGATE e RESPAWN aparecem apenas no contexto apropriado.
+No touch, o joystick esquerdo move e os botões da direita controlam o combate, sem joystick permanente de mira. GOLPE dispara uma vez ao soltar: um toque usa a última direção de combate; um arrasto de pelo menos 12 pixels CSS escolhe outra direção e mostra a área aproximada do golpe. CARGA inicia a preparação ao pressionar, permite mirar por arrasto e dispara ao soltar. Sem uma direção touch escolhida, usa a mira já disponível. ESQUIVA conserva a regra existente: direção de movimento ou mira quando parado. INVESTIGAR e RENASCER aparecem apenas no contexto apropriado.
 
 Os gestos capturam o ponteiro até o release, inclusive fora do botão. Cancelamento do ponteiro, perda de foco, mudança de orientação ou método de entrada interrompem a preparação sem disparar a onda. Em portrait, uma indicação pede rotação para landscape; botões respeitam safe areas. O canvas e os controles consomem gestos de zoom/scroll/seleção, incluindo double-tap e pinch; a prevenção não é aplicada ao documento inteiro nem usa `user-scalable=no`.
 

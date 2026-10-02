@@ -207,3 +207,10 @@
 - Pinturas offline de criaturas, afloramento, arco e atmosfera complementam o kit D. Três tiles de 1000×1000 são baked uma vez; os footprints ambientais continuam círculos simples. Um único tween anima as novas luzes e cada Spitter reutiliza um projétil com swept hit detection existente.
 - Retornos locais em (2580,980) e (4600,740) preservam estado de sessão. O fragmento exterior reage a INVESTIGATE, sem XP/Echo: PATTERN: REPLY sugere comunicação estruturada sem definir lore. O arco prepara continuidade, sem First Echo ou Warden.
 - Áudio usa Cavern no subterrâneo e Forest no exterior, pelo mesmo AudioManager. Controles, valores do combate, progressão e HUD estrutural continuam.
+
+## Postura das criaturas e orientação em português, 0.1.36
+
+- As criaturas de anatomia lateral não giram integralmente com a mira. Dois atlas pintados de oito poses mantêm postura e contato no chão; passada acompanha deslocamento real. Direção de ataque permanece independente da orientação visual. Valores e IA permanecem.
+- Interface e mensagens do jogador usam pt-BR, preservando nome próprio do jogo e identificadores internos. Rótulos touch mudam sem alterar gestos ou proteções do navegador.
+- ExplorationGuide fornece um próximo passo curto e uma etiqueta próxima ao ambiente, desde 0/3. A condição Ecos → fissura → mecanismo → entrada permanece; investigar fora de ordem explica o pré-requisito sem criar quest framework.
+- Um pulso reutilizado evidencia o mecanismo pronto; desaparece na ativação. Cenário permanece baked e atlas são preparados offline. [Assets, verificação e limitações](playtest-readability/).

@@ -34,6 +34,9 @@ export class DanteCreature implements Enemy {
   private lungeUntil = 0;
   private committed = false;
   private attackAngle = 0;
+  private travelPhase = 0;
+  private facingLeft = false;
+  private attackPoseUntil = 0;
   private shot?: { x: number; y: number; angle: number; travelled: number };
 
   constructor(private scene: Phaser.Scene, readonly kind: CreatureKind, x: number, y: number) {
@@ -45,7 +48,7 @@ export class DanteCreature implements Enemy {
     this.shadow = scene.add.ellipse(x, y + 12, size * 0.65, 22, 0x07191b, 0.55);
     this.telegraph = scene.add.ellipse(x, y, kind === 'skitter' ? 75 : 48, 28, 0xffbd54, 0.1)
       .setStrokeStyle(2, 0xffbd54, 0.9).setVisible(false);
-    this.body = scene.add.image(0, 0, `dante-${kind}`).setDisplaySize(size, size);
+    this.body = scene.add.image(0, 15, `dante-${kind}-motion`, 0).setOrigin(0.5, 244 / 256).setDisplaySize(size, size);
     this.flash = scene.add.ellipse(0, 0, size * 0.65, size * 0.5, 0xf4ffdc, 0);
     this.view = scene.add.container(x, y, [this.body, this.flash]);
     this.healthBack = scene.add.rectangle(x, y - 44, 44, 6, 0x10252b).setDepth(10000).setVisible(false);
@@ -80,6 +83,7 @@ export class DanteCreature implements Enemy {
           this.state = 'LUNGE'; this.lungeUntil = now + CREATURES.skitter.lungeMs;
         } else {
           if (!this.shot) this.shot = { ...this.position, angle: this.attackAngle, travelled: 0 };
+          this.attackPoseUntil = now + 180;
           this.state = 'CHASE';
         }
       }
@@ -97,13 +101,22 @@ export class DanteCreature implements Enemy {
       const forward = this.kind === 'spitter' && gap < CREATURES.spitter.retreatRange ? -1 : gap > (this.kind === 'spitter' ? 230 : 32) ? 1 : 0;
       this.velocity = { x: direction.x * stats.speed * forward, y: direction.y * stats.speed * forward };
     }
+    const beforeX = this.position.x, beforeY = this.position.y;
     moveWithCollisions(this.position, this.velocity, dt, this.radius, obstacles, bounds);
+    const travelled = Math.hypot(this.position.x - beforeX, this.position.y - beforeY);
     const winding = this.state === 'WINDUP', attacking = winding || this.state === 'LUNGE';
     this.aimGuide?.setPosition(this.position.x,this.position.y).setRotation(this.attackAngle).setScale(Math.min(stats.range,gap)/240,1).setDepth(this.position.y-1).setVisible(winding);
-    this.view.setPosition(this.position.x, this.position.y).setDepth(this.position.y)
-      .setRotation(attacking ? this.attackAngle : angle);
-    const moving = Math.hypot(this.velocity.x, this.velocity.y) > 1;
-    this.body.setScale((this.kind === 'skitter' ? 78 : 94) / this.body.width * (1 + (moving ? Math.sin(now * 0.024) * 0.035 : 0)));
+    const moving = travelled > 0.1 && this.state !== 'HURT' && this.state !== 'LUNGE';
+    if (moving) this.travelPhase += travelled / (this.kind === 'skitter' ? 48 : 64) * 4;
+    const facingX = attacking || now < this.attackPoseUntil ? Math.cos(this.attackAngle)
+      : !playerDead && gap <= stats.detection ? direction.x : this.position.x - beforeX;
+    if (Math.abs(facingX) > 0.08) this.facingLeft = facingX < 0;
+    const frame = this.state === 'HURT' ? 7 : winding ? 5 : this.state === 'LUNGE' || now < this.attackPoseUntil ? 6
+      : moving ? 1 + Math.floor(this.travelPhase) % 4 : 0;
+    // Painted profile art stays upright. Only feet/poses animate; aiming never rolls anatomy.
+    this.body.setFrame(frame).setFlipX(this.facingLeft);
+    this.view.setPosition(this.position.x, this.position.y).setDepth(this.position.y).setRotation(0);
+    this.shadow.setScale(winding ? 1.08 : 1, winding ? 0.92 : 1);
     this.shadow.setPosition(this.position.x, this.position.y + 12).setDepth(this.position.y - 2);
     const offset = this.kind === 'skitter' ? 35 : 0;
     this.telegraph.setPosition(this.position.x + Math.cos(this.attackAngle) * offset, this.position.y + Math.sin(this.attackAngle) * offset)

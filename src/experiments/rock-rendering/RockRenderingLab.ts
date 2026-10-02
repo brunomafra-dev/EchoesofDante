@@ -17,8 +17,8 @@ export class RockRenderingLab extends Phaser.Scene {
     this.cameras.main.setBackgroundColor('#07151c');
     const text = (x: number, y: number, value: string, size = 16, color = '#afc1b9') =>
       this.add.text(x, y, value, { fontFamily: 'monospace', fontSize: size, color, align: 'center' }).setOrigin(0.5);
-    text(640, 70, 'ECHOES OF DANTE / ROCK RENDERING LAB', 26);
-    text(640, 112, 'ORGANIC SCI-FI R3  /  SAME SCALE, GROUND & UPPER-LEFT LIGHT', 16, '#78948b');
+    text(640, 70, 'ECHOES OF DANTE / LABORATÓRIO DE ROCHAS', 26);
+    text(640, 112, 'SCI-FI ORGÂNICO R3 / MESMA ESCALA, SOLO E LUZ SUPERIOR ESQUERDA', 16, '#78948b');
 
     // Same quiet floor/context in every column; drawn once and then discarded.
     const floor = this.add.graphics().setVisible(false);
@@ -45,8 +45,8 @@ export class RockRenderingLab extends Phaser.Scene {
     this.add.image(COLUMNS[3], Y, 'lab-rock-illustrated').setDisplaySize(256, 256);
     this.add.image(COLUMNS[3], Y, 'lab-root-mineral-overlay').setDisplaySize(256, 256);
 
-    const labels = ['A — GRAPHICS', 'B — RASTER', 'C — ILLUSTRATED', 'D — HYBRID'];
-    const descriptions = ['Current baked Graphics', 'Offline height + material', 'Original painted PNG', 'Same C + root/mineral PNG'];
+    const labels = ['A — GEOMETRIA', 'B — RASTER', 'C — ILUSTRAÇÃO', 'D — HÍBRIDO'];
+    const descriptions = ['Geometria atual em cache', 'Altura e material offline', 'PNG pintado original', 'C + raízes e minerais'];
     COLUMNS.forEach((x, i) => {
       text(x, 219, labels[i], 18);
       text(x, 459, descriptions[i], 13, '#78948b');
@@ -56,13 +56,13 @@ export class RockRenderingLab extends Phaser.Scene {
     const footprints = this.add.graphics().setDepth(2).setVisible(false);
     footprints.lineStyle(1, 0xafc1b9, 0.55);
     COLUMNS.forEach(x => footprints.strokeCircle(x, Y, 56));
-    const toggle = text(640, 544, 'FOOTPRINT REFERENCE: OFF — CLICK TO SHOW RADIUS 56', 14);
+    const toggle = text(640, 544, 'BASE FÍSICA: OCULTA — CLIQUE PARA MOSTRAR O RAIO 56', 14);
     toggle.setInteractive({ useHandCursor: true }).on('pointerdown', () => {
       footprints.setVisible(!footprints.visible);
-      toggle.setText(`FOOTPRINT REFERENCE: ${footprints.visible ? 'ON' : 'OFF'} — CLICK TO TOGGLE`);
+      toggle.setText(`BASE FÍSICA: ${footprints.visible ? 'VISÍVEL' : 'OCULTA'} — CLIQUE PARA ALTERNAR`);
     });
-    text(640, 590, 'B / C / D: 512px RGBA PNG → 256 world units; stone silhouette ≈112 units', 14, '#78948b');
-    text(640, 632, 'TECHNICAL COMPARISON ONLY — HUMAN VISUAL SELECTION PENDING', 15);
-    text(640, 662, 'No map replacement / no movement, combat, collision or progression changes', 13, '#78948b');
+    text(640, 590, 'B / C / D: PNG RGBA de 512px → 256 unidades; silhueta ≈112 unidades', 14, '#78948b');
+    text(640, 632, 'COMPARAÇÃO TÉCNICA — D É A REFERÊNCIA VISUAL APROVADA', 15);
+    text(640, 662, 'Laboratório isolado / sem alterações no movimento, combate ou progressão', 13, '#78948b');
   }
 }

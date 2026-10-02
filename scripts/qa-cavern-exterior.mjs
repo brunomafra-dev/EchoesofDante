@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 const base = process.argv[2] ?? 'http://localhost:5176/';
-const out = 'docs/expansion-sprint-02';
+const out = process.argv[3] ?? 'docs/expansion-sprint-02';
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const errors = [], report = { method: 'Chrome headless; DEV setup + real inputs; no physical device', errors };
@@ -50,9 +50,9 @@ try {
   report.oldFlow = true;
   // Continue through the approved region using real movement, then the new route.
   const route = [[1690,510],[1775,500],[1850,560],[1930,650],[1940,805],[1950,900],[2030,930],[2110,890],[2190,850],[2300,825],[2350,760],[2425,735],
-    [2580,760],[2660,650],[2850,650],[2930,730],[3020,835],[3170,860],[3320,940],[3500,990],[3550,875],[3650,805],[3780,915],[3900,900],[4060,870],[4210,760],[4400,740],[4560,740],[4750,750],[4900,740],[5030,740],[5130,710]];
+    [2580,760],[2660,650],[2850,650],[2930,730],[3020,835],[3170,860],[3320,940],[3500,990],[3550,875],[3650,805],[3780,915],[3900,900],[4060,870],[4210,760],[4400,740],[4560,740],[4750,750],[4900,740],[5030,740],[5150,710]];
   for (const [x,y] of route) await walk(x,y);
-  const end = await state(); assert.equal(end.enemies, 19); assert.ok(end.deeper && end.exterior && end.approach);
+  const end = await state(); assert.equal(end.enemies, 19); assert.ok(end.deeper && end.exterior && end.approach, JSON.stringify(end));
   report.traversalWithoutClearing = end;
   await page.screenshot({ path: `${out}/approach.png` });
   await walk(5030,740); await walk(4910,745);

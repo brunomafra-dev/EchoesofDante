@@ -1,0 +1,187 @@
+{
+  "method": "Chrome headless; inputs reais e preparação DEV; sem dispositivo físico",
+  "errors": [],
+  "guidedSteps": [
+    {
+      "title": "INVESTIGUE OS ECOS  0/3",
+      "hint": "Vestígio desconhecido • norte",
+      "action": "Procure o brilho violeta.",
+      "label": "",
+      "labelVisible": false,
+      "message": "SINAL DETECTADO\nFONTE: DESCONHECIDA",
+      "echoes": 0,
+      "source": false,
+      "open": false
+    },
+    {
+      "title": "INVESTIGUE OS ECOS  1/3",
+      "hint": "Ruína do norte • leste",
+      "action": "Procure as inscrições na pedra.",
+      "label": "Vestígio desconhecido\n[E] INVESTIGAR",
+      "labelVisible": false,
+      "message": "VESTÍGIO DETECTADO\nIDADE: DESCONHECIDA",
+      "echoes": 1,
+      "source": false,
+      "open": false
+    },
+    {
+      "title": "INVESTIGUE OS ECOS  2/3",
+      "hint": "Ruína do norte • noroeste",
+      "action": "Procure as inscrições na pedra.",
+      "label": "Sinal mineral\n[E] INVESTIGAR",
+      "labelVisible": false,
+      "message": "SINAL MINERAL\nPADRÃO: NÃO NATURAL",
+      "echoes": 2,
+      "source": false,
+      "open": false
+    },
+    {
+      "title": "SIGA O SINAL AO NORTE",
+      "hint": "Fissura ancestral • leste",
+      "action": "Siga a trilha e investigue a fissura.",
+      "label": "Ruína do norte\n[E] INVESTIGAR",
+      "labelVisible": false,
+      "message": "SINAL DETECTADO\nFONTE: DESCONHECIDA",
+      "echoes": 3,
+      "source": false,
+      "open": false
+    },
+    {
+      "title": "ATIVE O MECANISMO",
+      "hint": "Mecanismo ancestral • noroeste",
+      "action": "As inscrições ao lado da fissura reagiram.",
+      "label": "Mecanismo ancestral\nAproxime-se",
+      "labelVisible": true,
+      "message": "FONTE DO SINAL: ABAIXO\nPASSAGEM SELADA",
+      "echoes": 3,
+      "source": true,
+      "open": false
+    },
+    {
+      "title": "ENTRE NA CAVERNA",
+      "hint": "Passagem aberta • leste",
+      "action": "Caminhe para dentro da fissura.",
+      "label": "Passagem aberta\nSiga por aqui",
+      "labelVisible": true,
+      "message": "PASSAGEM ABERTA\nCAMINHE PARA DENTRO DA FISSURA",
+      "echoes": 3,
+      "source": true,
+      "open": true
+    }
+  ],
+  "motion": [
+    {
+      "kind": "skitter",
+      "uprightAllDirections": true,
+      "facing": [
+        {
+          "direction": 0,
+          "flipX": false
+        },
+        {
+          "direction": 1,
+          "flipX": false
+        },
+        {
+          "direction": 2,
+          "flipX": false
+        },
+        {
+          "direction": 3,
+          "flipX": true
+        },
+        {
+          "direction": 4,
+          "flipX": true
+        },
+        {
+          "direction": 5,
+          "flipX": true
+        },
+        {
+          "direction": 6,
+          "flipX": true
+        },
+        {
+          "direction": 7,
+          "flipX": false
+        }
+      ],
+      "walkFrames": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "blocked": {
+        "frame": 0,
+        "phaseUnchanged": true
+      },
+      "anticipation": 5,
+      "release": 6,
+      "hurt": 7,
+      "groundOrigin": 0.953125
+    },
+    {
+      "kind": "spitter",
+      "uprightAllDirections": true,
+      "facing": [
+        {
+          "direction": 0,
+          "flipX": false
+        },
+        {
+          "direction": 1,
+          "flipX": false
+        },
+        {
+          "direction": 2,
+          "flipX": false
+        },
+        {
+          "direction": 3,
+          "flipX": true
+        },
+        {
+          "direction": 4,
+          "flipX": true
+        },
+        {
+          "direction": 5,
+          "flipX": true
+        },
+        {
+          "direction": 6,
+          "flipX": true
+        },
+        {
+          "direction": 7,
+          "flipX": false
+        }
+      ],
+      "walkFrames": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "blocked": {
+        "frame": 0,
+        "phaseUnchanged": true
+      },
+      "anticipation": 5,
+      "release": 6,
+      "hurt": 7,
+      "groundOrigin": 0.953125
+    }
+  ],
+  "resolutions": [
+    "1280x720",
+    "1366x768",
+    "1920x1080",
+    "844x390"
+  ],
+  "portugueseUi": true,
+  "touchInvestigate": true,
+  "portraitMessage": true
+}

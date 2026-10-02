@@ -11,6 +11,7 @@ export class PassageMechanism {
   private signal: Phaser.GameObjects.Ellipse;
   private armed: boolean;
   private opened: boolean;
+  private readyPulse?: Phaser.Tweens.Tween;
 
   constructor(private scene: Phaser.Scene, sourceLocated: boolean, passageOpen: boolean) {
     this.armed = sourceLocated;
@@ -30,6 +31,7 @@ export class PassageMechanism {
       .lineBetween(x, y, 1778, 285).lineBetween(1778, 285, SITE.x, SITE.y);
     this.signal = scene.add.ellipse(x, y, 13, 8, 0xffbd54, 0.85).setDepth(y + 2).setAlpha(0);
     if (passageOpen) this.inscriptions.setAlpha(1);
+    else if (sourceLocated) this.showReady();
   }
 
   canInvestigate(position: Vec2, dead: boolean): boolean {
@@ -41,11 +43,18 @@ export class PassageMechanism {
     if (this.armed) return;
     this.armed = true;
     this.scene.tweens.add({ targets: this.inscriptions, alpha: 0.85, duration: 380 });
+    this.showReady();
+  }
+
+  private showReady(): void {
+    this.readyPulse = this.scene.tweens.add({ targets: this.pulse, alpha: { from: 0.15, to: 0.48 },
+      duration: 950, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
   }
 
   activate(onSignalReached: () => void): void {
     if (this.opened) return;
     this.opened = true;
+    this.readyPulse?.stop();
     this.inscriptions.setAlpha(1);
     this.pulse.setAlpha(0.6).setScale(0.5);
     this.scene.tweens.add({ targets: this.pulse, scale: 2.1, alpha: 0, duration: 900, ease: 'Cubic.easeOut' });

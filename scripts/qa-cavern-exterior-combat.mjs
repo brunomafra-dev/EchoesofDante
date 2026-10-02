@@ -1,9 +1,10 @@
 // Supplemental mixed-combat assertion and live combat render stability sample.
 import assert from 'node:assert/strict';
-import { writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 const base=process.argv[2]??'http://localhost:5176/';
-const out='docs/expansion-sprint-02',errors=[];
+const out=process.argv[3]??'docs/expansion-sprint-02',errors=[];
+await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true});
 const report={method:'Chrome headless; controlled DEV combat setup + actual LMB/Q; no physical playtest',errors};
 try{

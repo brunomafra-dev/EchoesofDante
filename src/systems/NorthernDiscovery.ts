@@ -6,7 +6,7 @@ import type { EchoSite } from './EchoSite';
 
 export class NorthernDiscovery implements EchoSite {
   readonly id = 'northern-ruin';
-  readonly message = 'SIGNAL DETECTED\nSOURCE: UNKNOWN';
+  readonly message = 'SINAL DETECTADO\nFONTE: DESCONHECIDA';
   activated: boolean;
   private inscriptions: Phaser.GameObjects.Graphics;
   private pulse: Phaser.GameObjects.Ellipse;
