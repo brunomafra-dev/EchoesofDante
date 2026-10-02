@@ -7,6 +7,9 @@ import { FOREST_ENTRY, FOREST_PATROLS, FOREST_SPAWNS } from '../config/forest';
 import { CAVERN_DEPTH_OPENING, CAVERN_ENTRY, CAVERN_HOLLOWS, DEEP_AREA, DEEP_HOLLOWS } from '../config/cavern';
 import { FOREST_ECHOES, SIGNAL_THRESHOLD } from '../config/discovery';
 import { HollowCrawler } from '../entities/HollowCrawler';
+import { DanteCreature } from '../entities/DanteCreature';
+import type { Enemy, EnemyImpact } from '../entities/Enemy';
+import { EXPANSION, EXPANSION_ENCOUNTERS } from '../config/expansion';
 import { Player } from '../entities/Player';
 import { Controls } from '../input/Controls';
 import { Arena } from '../systems/Arena';
@@ -39,9 +42,15 @@ export class GameScene extends Phaser.Scene {
   private deepCavernEntered = false;
   private inDeepCavern = false;
   private deepEndSeen = false;
+  private deeperEntered = false;
+  private exteriorEntered = false;
+  private fragmentSeen = false;
+  private approachSeen = false;
+  private continuationRegion: 'deep' | 'deeper' | 'exterior' = 'deep';
+  private spawnedEncounters = new Set<number>();
   private gateObstacle?: Obstacle;
-  private enemies: HollowCrawler[] = [];
-  private hollowSpawnIds = new Map<HollowCrawler, number>();
+  private enemies: Enemy[] = [];
+  private hollowSpawnIds = new Map<Enemy, number>();
   private readonly progression = new Progression();
   private attack = new SaberAttack();
   private charge = new KineticCharge();
@@ -68,6 +77,8 @@ export class GameScene extends Phaser.Scene {
       'hollow-body',
       'hollow-rear-limbs',
       'hollow-forelimbs',
+      'dante-skitter',
+      'dante-spitter',
     ] as const;
     for (const key of art) {
       // Both hands share a painted sleeve; transparent padding preserves the existing rig.
@@ -82,6 +93,7 @@ export class GameScene extends Phaser.Scene {
     this.charge = new KineticCharge();
     this.waveDrawn = false;
     this.enemies = [];
+    this.spawnedEncounters.clear();
     this.hollowSpawnIds.clear();
     this.transitioning = false;
     this.deepOpening = false;
@@ -106,11 +118,11 @@ export class GameScene extends Phaser.Scene {
       this.threshold = new SignalThreshold(this, this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen);
       this.mechanism = new PassageMechanism(this, this.progression.sourceLocated, this.progression.passageOpen);
     } else {
-      this.cavern = new CavernArea(this, this.deepPassageOpen);
+      this.cavern = new CavernArea(this, this.deepPassageOpen, this.fragmentSeen);
       this.arena = this.cavern;
       this.movementBounds = this.arena.bounds;
     }
-    const entry = this.area === 'forest' ? FOREST_ENTRY : this.deepCavernEntered ? DEEP_AREA.entry : CAVERN_ENTRY;
+    const entry = this.area === 'forest' ? FOREST_ENTRY : this.exteriorEntered ? EXPANSION.exteriorRespawn : this.deeperEntered ? EXPANSION.deeperRespawn : this.deepCavernEntered ? DEEP_AREA.entry : CAVERN_ENTRY;
     this.player = new Player(this, entry.x, entry.y, this.progression.maxHp);
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
     this.transferHp = undefined;
@@ -118,7 +130,7 @@ export class GameScene extends Phaser.Scene {
     this.controls = new Controls(this, () => this.sounds.unlock(), () => {
       if (!this.player.isDead) this.beginStrike(this.time.now);
     });
-    this.sounds.setArea(this.area);
+    this.sounds.setArea(this.exteriorEntered ? 'forest' : this.area);
     const spawns = this.area === 'forest' ? FOREST_SPAWNS : CAVERN_HOLLOWS;
     spawns.forEach((point, index) => {
       const enemy = new HollowCrawler(this, point.x, point.y, this.area === 'forest' ? FOREST_PATROLS[index] : undefined);
@@ -131,7 +143,9 @@ export class GameScene extends Phaser.Scene {
     this.hud.setSignalObjective(this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen, this.area === 'cavern', this.cavernDepthSeen, this.deepAreaSeen);
     this.inDeepCavern = this.area === 'cavern' && this.deepCavernEntered;
     if (this.area === 'cavern') this.hud.setCavernDepth(this.inDeepCavern);
-    this.cameras.main.setBounds(0, 0, this.area === 'cavern' ? DEEP_AREA.cameraWidth : WORLD_WIDTH, WORLD_HEIGHT)
+    this.continuationRegion = this.exteriorEntered ? 'exterior' : this.deeperEntered ? 'deeper' : 'deep';
+    if (this.area === 'cavern' && this.continuationRegion !== 'deep') this.hud.setContinuationArea(this.continuationRegion === 'exterior', this.fragmentSeen);
+    this.cameras.main.setBounds(0, 0, this.area === 'cavern' ? EXPANSION.cameraWidth : WORLD_WIDTH, WORLD_HEIGHT)
       .startFollow(this.player.view, false, 0.1, 0.1);
     this.cameras.main.setBackgroundColor(this.area === 'forest' ? '#102d2c' : '#07151c');
     if (this.area === 'cavern') {
@@ -150,6 +164,7 @@ export class GameScene extends Phaser.Scene {
     const nearDiscovery = nearbyEcho !== undefined;
     const nearThreshold = this.threshold?.canInvestigate(this.player.position, this.player.isDead) ?? false;
     const nearMechanism = this.mechanism?.canInvestigate(this.player.position, this.player.isDead) ?? false;
+    const nearFragment = this.cavern?.continuation.canInvestigate(this.player.position, this.player.isDead, this.fragmentSeen) ?? false;
     if (nearDiscovery && interact) {
       const wasSynchronized = this.progression.signalSynchronized;
       nearbyEcho.activate();
@@ -179,9 +194,15 @@ export class GameScene extends Phaser.Scene {
       this.hud.showDiscovery(SIGNAL_THRESHOLD.openingMessage);
       this.hud.setSignalObjective(true, true, true);
       this.sounds.ancient();
+    } else if (interact && nearFragment) {
+      this.fragmentSeen = true;
+      this.cavern?.continuation.respond();
+      this.hud.showDiscovery('TRANSMISSION FRAGMENT\nPATTERN: REPLY');
+      this.hud.setContinuationArea(true, true);
+      this.sounds.signal();
     }
-    this.hud.setDiscoveryPrompt(nearDiscovery || nearThreshold || nearMechanism);
-    this.controls.setInteractAvailable(nearDiscovery || nearThreshold || nearMechanism);
+    this.hud.setDiscoveryPrompt(nearDiscovery || nearThreshold || nearMechanism || nearFragment);
+    this.controls.setInteractAvailable(nearDiscovery || nearThreshold || nearMechanism || nearFragment);
     this.controls.setDead(this.player.isDead);
     if (this.player.isDead) {
       if (this.controls.restartPressed) this.restart();
@@ -223,7 +244,7 @@ export class GameScene extends Phaser.Scene {
     const sweep = this.attack.advance(time, this.player.position, facing, this.enemies);
     this.resolveSaberHits(time, sweep.hits, sweep.pose.worldAngle);
     for (const enemy of this.enemies) {
-      enemy.update(time, dt, this.player.position, this.player.isDead, this.arena.obstacles, () => this.enemyStrike(enemy), this.movementBounds);
+      enemy.update(time, dt, this.player.position, this.player.isDead, this.arena.obstacles, impact => this.enemyStrike(enemy, impact), this.movementBounds);
     }
     this.enemies = this.enemies.filter(enemy => !enemy.isDead);
     this.hud.update(this.player.hp, this.player.maxHp, this.player.dashProgress, this.charge.getProgress(time), heavy.phase, heavy.level);
@@ -244,10 +265,10 @@ export class GameScene extends Phaser.Scene {
     const inDeep = this.area === 'cavern' && this.deepPassageOpen && this.player.position.x >= DEEP_AREA.entryX;
     if (inDeep !== this.inDeepCavern) {
       this.inDeepCavern = inDeep;
-      this.hud.setCavernDepth(inDeep);
+      if (this.player.position.x < EXPANSION.deeperX) this.hud.setCavernDepth(inDeep);
       if (inDeep && !this.deepCavernEntered) {
         this.deepCavernEntered = true;
-        this.hud.showDiscovery('DEEP CAVERN\nSIGNAL: PRESENT');
+        if (this.player.position.x < EXPANSION.deeperX) this.hud.showDiscovery('DEEP CAVERN\nSIGNAL: PRESENT');
       }
     }
     if (this.area === 'cavern' && this.deepPassageOpen && !this.deepAreaSeen &&
@@ -263,6 +284,42 @@ export class GameScene extends Phaser.Scene {
       this.deepEndSeen = true;
       this.hud.showDiscovery('SIGNAL: DEEPER\nPATH: UNCHARTED');
       this.sounds.signal();
+    }
+    if (this.area === 'cavern' && this.deepPassageOpen) this.updateContinuation();
+  }
+
+  private updateContinuation(): void {
+    const x = this.player.position.x;
+    // Spawn habitats shortly before arrival, never clamp distant residents into closed bounds.
+    let spawnId = FOREST_SPAWNS.length + CAVERN_HOLLOWS.length + DEEP_HOLLOWS.length;
+    EXPANSION_ENCOUNTERS.forEach((encounter, index) => {
+      if (x >= encounter.x - 500 && !this.spawnedEncounters.has(index)) {
+        this.spawnedEncounters.add(index);
+        encounter.residents.forEach((resident, offset) => {
+          const enemy: Enemy = resident.kind === 'crawler'
+            ? new HollowCrawler(this, resident.x, resident.y)
+            : new DanteCreature(this, resident.kind, resident.x, resident.y);
+          this.enemies.push(enemy); this.hollowSpawnIds.set(enemy, spawnId + offset);
+        });
+      }
+      spawnId += encounter.residents.length;
+    });
+    if (x >= EXPANSION.deeperX) this.deeperEntered = true;
+    if (x >= EXPANSION.exteriorX && !this.exteriorEntered) {
+      this.exteriorEntered = true;
+      this.hud.showDiscovery('CAVERN EXTERIOR\nSIGNAL: STILL PRESENT');
+    }
+    const region = x >= EXPANSION.exteriorX ? 'exterior' : x >= EXPANSION.deeperX ? 'deeper' : 'deep';
+    if (region !== this.continuationRegion) {
+      this.continuationRegion = region;
+      if (region === 'deep') this.hud.setCavernDepth(this.inDeepCavern);
+      else this.hud.setContinuationArea(region === 'exterior', this.fragmentSeen);
+      this.sounds.setArea(region === 'exterior' ? 'forest' : 'cavern');
+    }
+    if (!this.approachSeen && distance(this.player.position, EXPANSION.approach) <= EXPANSION.approach.radius) {
+      this.approachSeen = true;
+      this.hud.showDiscovery('MONUMENTAL TRACE\nSOURCE: BEYOND');
+      this.sounds.ancient();
     }
   }
 
@@ -293,11 +350,11 @@ export class GameScene extends Phaser.Scene {
     this.sounds.swing();
   }
 
-  private resolveSaberHits(now: number, hits: HollowCrawler[], saberAngle: number): void {
+  private resolveSaberHits(now: number, hits: Enemy[], saberAngle: number): void {
     this.resolvePlayerHits(now, hits, this.player.attackDamage, saberAngle, 0xaafce1, this.player.position, false);
   }
 
-  private resolvePlayerHits(now: number, hits: HollowCrawler[], damage: number, angle: number, color: number, from: Vec2, chargeHit: boolean): void {
+  private resolvePlayerHits(now: number, hits: Enemy[], damage: number, angle: number, color: number, from: Vec2, chargeHit: boolean): void {
     if (hits.length) this.cameras.main.shake(chargeHit ? 75 : 55, chargeHit ? 0.003 : 0.0024);
     for (const enemy of hits) {
       const result = applyDamage(enemy.health, damage);
@@ -322,9 +379,9 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
-  private enemyStrike(enemy: HollowCrawler): void {
-    if (this.player.isDead || this.player.invulnerable || distance(enemy.position, this.player.position) > CRAWLER.attackRange + PLAYER.radius) return;
-    const result = applyDamage(this.player.health, CRAWLER.attackDamage);
+  private enemyStrike(enemy: Enemy, impact?: EnemyImpact): void {
+    if (this.player.isDead || this.player.invulnerable || (!impact?.ranged && distance(enemy.position, this.player.position) > (enemy.attackRange ?? CRAWLER.attackRange) + PLAYER.radius)) return;
+    const result = applyDamage(this.player.health, impact?.damage ?? enemy.attackDamage ?? CRAWLER.attackDamage);
     if (!result.applied) return;
     this.sounds.hurt();
     this.player.flashHurt();

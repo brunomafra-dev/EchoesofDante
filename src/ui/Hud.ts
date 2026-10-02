@@ -152,6 +152,11 @@ export class Hud {
     this.areaSubtitle.setText(deep ? 'DEEP CAVERN   /   SIGNAL PRESENT' : 'CAVERN   /   FIRST DESCENT');
   }
 
+  setContinuationArea(exterior: boolean, fragmentSeen: boolean): void {
+    this.areaSubtitle.setText(exterior ? 'CAVERN EXTERIOR   /   OPEN AIR' : 'DEEPER CAVERN   /   ANCIENT TRACES');
+    this.signalObjective.setText(exterior ? fragmentSeen ? 'FOLLOW THE RESPONSE' : 'INVESTIGATE THE FRAGMENT' : 'FOLLOW THE SIGNAL');
+  }
+
   showLevelUp(level: number): void {
     this.levelTimer?.remove(false);
     this.levelMessage.setText(`LEVEL UP   /   LEVEL ${level}\nHP RESTORED`).setVisible(true);

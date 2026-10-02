@@ -1,0 +1,47 @@
+[
+  {
+    "file": "public/assets/visual/environment/exterior-atmosphere.png",
+    "size": [
+      512,
+      512
+    ],
+    "bytes": 477297,
+    "sha256": "a9e5227d629a50dfba72a82f46dcc7d63fc9659c141dc38d474e739b59afeb9c"
+  },
+  {
+    "file": "public/assets/visual/characters/dante-skitter.png",
+    "size": [
+      256,
+      256
+    ],
+    "bytes": 71777,
+    "sha256": "b9f84dc2ff730eed0f6c846261c4c716971dee74b39c01212750866a4865b027"
+  },
+  {
+    "file": "public/assets/visual/characters/dante-spitter.png",
+    "size": [
+      256,
+      256
+    ],
+    "bytes": 74810,
+    "sha256": "2c1bd33b3b8b2b71c22d0205a1c596ac6b3817fdc010388c9b6f50e3bbac010a"
+  },
+  {
+    "file": "public/assets/visual/environment/exterior-outcrop.png",
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 302640,
+    "sha256": "8767aa449e9cddfda71db52d8afc7f5d0ef6c8ca4e03ba228051e3a85573cd0d"
+  },
+  {
+    "file": "public/assets/visual/environment/ancient-approach.png",
+    "size": [
+      512,
+      512
+    ],
+    "bytes": 320672,
+    "sha256": "b93fb529a911575c3afd908780e31462adca9fdf7e17aab2e4e36951c28d02b0"
+  }
+]

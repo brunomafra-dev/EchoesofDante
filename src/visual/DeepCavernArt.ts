@@ -51,7 +51,7 @@ export function bakeDeepCavern(scene: Phaser.Scene): void {
   // The final formation frames darkness, with a visible buried stone lip.
   painter.stamp({key:'deep-stratum',x:2525,y:569,width:300,height:170,angle:-12,tint:0x8298a2});
   painter.stamp({key:'deep-stratum',x:2525,y:887,width:280,height:140,angle:8,tint:0x98adb0,flipX:true});
-  painter.stamp({key:'ancient-remnant',x:2510,y:680,width:165,height:210,tint:0x8fa3ad});
+  painter.stamp({key:'ancient-remnant',x:2510,y:542,width:165,height:210,tint:0x8fa3ad});
   painter.stamp({key:'deep-mineral',x:2590,y:724,width:96,height:77,tint:0xa999d6,alpha:0.68});
   painter.destroy();ground.destroy();
   // One small foreground bake supplies occlusion at the lower rim only.

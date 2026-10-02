@@ -1,0 +1,136 @@
+{
+  "method": "Chrome headless; DEV setup + real inputs; no physical device",
+  "errors": [],
+  "startupMs": 2799,
+  "oldFlow": true,
+  "traversalWithoutClearing": {
+    "position": {
+      "x": 5137.020755538857,
+      "y": 713.6413132534242
+    },
+    "hp": 110,
+    "maxHp": 110,
+    "xp": 120,
+    "level": 2,
+    "echoes": 3,
+    "area": "cavern",
+    "deep": true,
+    "deeper": true,
+    "exterior": true,
+    "fragment": false,
+    "approach": true,
+    "enemies": 19,
+    "objects": 180,
+    "textures": 56,
+    "renderTextures": 7,
+    "tweens": 6,
+    "listeners": [
+      1,
+      1
+    ],
+    "bounds": {
+      "left": 480,
+      "right": 5350,
+      "top": 380,
+      "bottom": 1120
+    }
+  },
+  "fragmentOnceNoXp": true,
+  "returnRoute": true,
+  "skitterLungeDamageOnce": true,
+  "spitterShotDamage": true,
+  "lockedShotCanBeDodged": true,
+  "shotBlockedByObstacle": true,
+  "newCreatureKills": [
+    {
+      "kind": "skitter",
+      "xp": 135
+    },
+    {
+      "kind": "spitter",
+      "xp": 150
+    }
+  ],
+  "rockAndDashSolid": true,
+  "deathSafeRespawn": {
+    "position": {
+      "x": 4600,
+      "y": 740
+    },
+    "hp": 120,
+    "maxHp": 120,
+    "xp": 150,
+    "level": 3,
+    "echoes": 3,
+    "area": "cavern",
+    "deep": true,
+    "deeper": true,
+    "exterior": true,
+    "fragment": true,
+    "approach": true,
+    "enemies": 19,
+    "objects": 178,
+    "textures": 56,
+    "renderTextures": 7,
+    "tweens": 4,
+    "listeners": [
+      1,
+      1
+    ],
+    "bounds": {
+      "left": 480,
+      "right": 5350,
+      "top": 380,
+      "bottom": 1120
+    }
+  },
+  "noDuplicateXp": true,
+  "gamepadMock": true,
+  "livePerformance": {
+    "mean": 60.08878602875095,
+    "min": 59.93822089239244,
+    "max": 60.37107770423354
+  },
+  "stableScene": {
+    "position": {
+      "x": 4600,
+      "y": 740
+    },
+    "hp": 120,
+    "maxHp": 120,
+    "xp": 150,
+    "level": 3,
+    "echoes": 3,
+    "area": "cavern",
+    "deep": true,
+    "deeper": true,
+    "exterior": true,
+    "fragment": true,
+    "approach": true,
+    "enemies": 19,
+    "objects": 178,
+    "textures": 56,
+    "renderTextures": 7,
+    "tweens": 4,
+    "listeners": [
+      1,
+      1
+    ],
+    "bounds": {
+      "left": 480,
+      "right": 5350,
+      "top": 380,
+      "bottom": 1120
+    }
+  },
+  "threeRestartsStable": true,
+  "deeperCheckpointSafe": true,
+  "checkpointReachable": true,
+  "resolutions": [
+    "1280x720",
+    "1366x768",
+    "1920x1080",
+    "844x390"
+  ],
+  "touchEmulated": true
+}

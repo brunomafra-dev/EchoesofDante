@@ -4,6 +4,7 @@ const PAINTINGS = [
   'world-rock', 'root-growth', 'world-shadow', 'rock-shelf',
   'mineral-growth', 'ancient-frame', 'ancient-remnant', 'forest-ground', 'cavern-ground',
   'deep-stratum', 'deep-mineral', 'deep-relay',
+  'exterior-outcrop', 'ancient-approach', 'exterior-atmosphere',
 ] as const;
 export type EnvironmentPainting = typeof PAINTINGS[number];
 

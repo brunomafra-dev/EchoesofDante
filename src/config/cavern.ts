@@ -28,7 +28,7 @@ export const DEEP_OBSTACLES = [
   { x: 2470, y: 379, radius: 82 },
   { x: 1995, y: 740, radius: 38 }, // Divides the routes, with room on both sides.
   { x: 2010, y: 1025, radius: 40 }, // Mineral basin's exposed base.
-  { x: 2500, y: 738, radius: 36 }, // Visible buried lip at the uncharted limit.
+  { x: 2500, y: 600, radius: 36 }, // Former lip moves to the tunnel's upper edge.
   { x: 2420, y: 1115, radius: 40 }, // Foreground formation's lower physical base.
 ] as const;
 

@@ -1,0 +1,61 @@
+{
+  "tool": "built-in imagegen",
+  "mode": "reference-guided original transparent illustrations",
+  "generatedDirectory": "C:/Users/1/.codex/generated_images/01a0df0e-3f54-78d2-bf2c-6f7125fee783",
+  "assets": [
+    {
+      "key": "exterior-atmosphere",
+      "folder": "environment",
+      "size": [
+        512,
+        512
+      ],
+      "transparent": true,
+      "preserveCanvas": true,
+      "prompt": "Use case: stylized-concept. Asset type: original painted 2D RPG environmental atmosphere backdrop for Echoes of Dante. An OPEN AIR alien rocky valley viewed from steep elevated three-quarter top-down camera, distant misty slate mountains and very restrained cloudy blue-sage sky along upper edge, broad soft muted pale sage and cool grey air and terrain masses, almost no foreground detail. Painterly material and soft daylight haze matching our approved illustration style reference, atmospheric depth with irregular distant silhouettes, no black void. This is a low contrast BACKGROUND layer behind a playable rocky plateau, so keep center and lower region quiet, diffuse, empty, with very subtle stone/nature texture. Nature #6bb464 muted accents, soft blue grey light, NO cyan energy, neon, buildings, people, creatures, text, recognizable landmarks, triangular faceted low-poly or polygon patterns. No sharply defined foreground rocks or ground objects. Light is brighter and more spacious than the cave, not white or washed out. Entire opaque square painting suitable for softly scaling as distant scenery.",
+      "sourceFile": "exec-da09670d-5ed7-4227-b1fc-5a266bdeae21.png",
+      "initialSource": "exec-205d5076-246b-4333-b3a0-bac2c9562abf.png",
+      "refinement": "Preserve the painted landscape; feather only the left edge from transparent to opaque over 15–35% of the canvas for the cave/daylight blend. Built-in imagegen edit."
+    },
+    {
+      "key": "dante-skitter",
+      "folder": "characters",
+      "size": [
+        256,
+        256
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: transparent painted 2D sci-fi action RPG creature sprite. Create ONE original alien predator for Echoes of Dante, named Skitter for production only, no text. Reference image 1 is ONLY material/painterly style from our approved Hollow creature, do not clone anatomy. Entire creature seen from steep top-down three-quarter gameplay camera, forward/head pointing RIGHT, all extremities visible with transparent margins. Distinct slender arthropod-like body, narrow pale sage chitin head with sharp jaws, 6 long jointed legs splayed asymmetrically, flexible dark organic abdomen, small orange heat membranes. It must read as a fast living animal, not rock, robot, drone or person. Strong organic silhouette, stylized illustrated game asset, textured carapace, restrained selective details, volume and highlights upper left. Palette mineral sage grey #6bb464 accents, warm orange #ffbd54 in tiny patches, deep organic shadows. No cyan, large glowing eye, triangulated low-poly facets, environment, floor or cast ground shadow. Genuinely transparent background. Whole body and legs fit within square.",
+      "sourceFile": "exec-edcef99b-51a9-4dbd-bff3-925c1e1dd903.png"
+    },
+    {
+      "key": "dante-spitter",
+      "folder": "characters",
+      "size": [
+        256,
+        256
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: transparent illustrated alien ranged creature sprite for Echoes of Dante. ONE living alien Spitter creature, production label only, no text. Reference image 1 is our painted Hollow style/material reference; create clearly DIFFERENT anatomy. Steep top-down three-quarter gameplay camera facing RIGHT, all limbs visible with transparent margins. Broad squat organic body, four muscular legs, dark moss leathery skin, large asymmetrical amber swollen dorsal spore sac, bony sage carapace rim and a short forward fleshy nozzle jaw. Its amber sac and fleshy anatomy identify ranged biology, not a stone with eyes, insect drone or robot. Strong rounded mass contrasting slender Skitter. Stylistic painterly 2D game asset with tangible material, upper left highlights, own shadow, small violet minerals embedded along spine. Palette muted nature sage #6bb464, mineral amber #ffbd54, danger ember accents #ff6a4a, dark teal shadows. No cyan, giant circular energy core, geometry mosaic, triangular faceting, environment, floor or ground cast shadow. Actual transparent background. Original design, not from any existing game.",
+      "sourceFile": "exec-379afe06-8193-44d8-a100-52f90b1f0a85.png"
+    },
+    {
+      "key": "exterior-outcrop",
+      "folder": "environment",
+      "size": [
+        512,
+        384
+      ],
+      "prompt": "Use case: stylized-concept. ONE isolated environment cutout for Echoes of Dante Organic Sci-Fi RPG, transparent background. Reference image 1 is our approved ancient weathered painting style. Paint a broad asymmetric cliff/outcrop of cool grey sage alien stone with rounded eroded mineral surfaces and dark contact crevices, a sparse tuft of alien feathery sage foliage and bent roots growing from its upper rim, a small buried ancient manufactured basalt slab on one side. Steep top-down three-quarter gameplay camera; volume, materiality, irregular organic silhouette, daylight upper left highlights, selective texture. This asset belongs to a windswept rocky exterior after leaving a cave. Nature feels familiar and alien, original design. No triangles, polygon mosaic, low-poly, scenery background, text, humanoid statues, magical runes, neon, cyan. Small localized amber mineral veins and restrained violet marks, largely stone material. Include all roots and stone edges in frame with transparent margin. Actual transparency.",
+      "sourceFile": "exec-e151717a-ccf5-45ba-bf8b-5139c0765f05.png"
+    },
+    {
+      "key": "ancient-approach",
+      "folder": "environment",
+      "size": [
+        512,
+        512
+      ],
+      "prompt": "Use case: stylized-concept. ONE transparent monumental ruined approach cutout for Echoes of Dante, Organic Sci-Fi R3. Reference image 1 is our approved ancestral carved basalt material/style. A tall asymmetrical broken architectural frame, two unequal sloping stone masses connected by a deeply fractured manufactured upper crosspiece, intentional angular ancient channels softened by erosion. Empty dark opening through the middle with REAL transparent hole, NOT filled black, no closed door. It must suggest an immense ancient structure further away without explaining its civilization. Partially buried irregular base, few sage roots, amber mineral deposit on right foot, tiny localized #a98cff channel marks. Steep top-down three-quarter RPG perspective, painterly illustrated game asset, material, volume, strong silhouette, own shading, upper left soft daylight highlights. Original sci-fi archaeology, not medieval altar, fantasy portal or human station. NO person, boss, statue, text, letters, runes, rings, cyan neon, triangulated low-poly or polygon mosaic. Entire structure within frame on truly transparent background. Keep spacious central opening for future passage; no environment backdrop.",
+      "sourceFile": "exec-010f97ff-5032-4845-ba23-d61b5d6b4dfc.png"
+    }
+  ]
+}

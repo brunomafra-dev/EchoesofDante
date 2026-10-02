@@ -198,3 +198,12 @@
 - Três PNGs pintados offline complementam o kit D aprovado. A composição profunda usa o bake existente e um pequeno foreground adicional. Ground Graphics apenas definem massas de solo/máscara; rochas e estruturas usam pinturas. Bases físicas circulares ficam nos dados de ambiente.
 - Hollows profundos são criados depois da abertura, evitando o clamp para a primeira sala. IDs próprios preservam o XP por spawn, inclusive após respawn. A IA e valores não mudam.
 - Entrar na região registra um retorno local seguro em (1870,580), sem framework de checkpoints ou save. Passagens, XP, nível e Echoes continuam dados da sessão. O POI responde por proximidade, sem nova recompensa; o áudio reutiliza Cavern e Signal existentes.
+
+## Expansion Sprint 02 — Cavern Exterior, 0.1.35
+
+- A continuação mantém a mesma cena, estende o limite horizontal após a abertura existente e conecta habitats subterrâneos a um exterior de cerca de 980 unidades. Modelo/zoom/follow da câmera e a região aprovada permanecem; apenas a antiga base do limite é deslocada à borda do túnel. [Ritmo e validação](expansion-sprint-02/).
+- Dois arquétipos explícitos em DanteCreature: Skitter leve com investida telegráfica de direção fixa, Spitter que mantém distância e dispara projétil esquivável. Enemy expressa o contrato de Health/posição/update/reação/morte que o combate já usa. Não há framework de IA ou alteração do Crawler/Player.
+- Cinco habitats totalizam 15 novos moradores; são instanciados uma vez por ciclo de cena na aproximação. IDs 12–26 usam o XP existente por spawn, sem farm após respawn. Nada abre por kill count.
+- Pinturas offline de criaturas, afloramento, arco e atmosfera complementam o kit D. Três tiles de 1000×1000 são baked uma vez; os footprints ambientais continuam círculos simples. Um único tween anima as novas luzes e cada Spitter reutiliza um projétil com swept hit detection existente.
+- Retornos locais em (2580,980) e (4600,740) preservam estado de sessão. O fragmento exterior reage a INVESTIGATE, sem XP/Echo: PATTERN: REPLY sugere comunicação estruturada sem definir lore. O arco prepara continuidade, sem First Echo ou Warden.
+- Áudio usa Cavern no subterrâneo e Forest no exterior, pelo mesmo AudioManager. Controles, valores do combate, progressão e HUD estrutural continuam.

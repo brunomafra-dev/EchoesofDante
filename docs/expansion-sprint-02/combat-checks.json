@@ -1,0 +1,34 @@
+{
+  "method": "Chrome headless; controlled DEV combat setup + actual LMB/Q; no physical playtest",
+  "errors": [],
+  "mixedStrikeAndWave": {
+    "types": [
+      "spitter",
+      "crawler",
+      "skitter"
+    ],
+    "basicDamagePerTarget": 34,
+    "hpAfterWave": [
+      0,
+      0,
+      8
+    ],
+    "allThreeKilledWithMeleeFollowup": true,
+    "totalXp": 45
+  },
+  "activeCombat": {
+    "meanFps": 58.78716645483473,
+    "minFps": 57.88729298021644,
+    "maxFps": 59.43699504452161,
+    "enemies": 19,
+    "attacking": 1,
+    "projectiles": 0,
+    "objects": 178,
+    "tweens": 4
+  },
+  "liveCombatStable": {
+    "objects": 178,
+    "tweens": 4,
+    "textures": 56
+  }
+}
