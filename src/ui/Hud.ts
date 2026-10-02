@@ -164,8 +164,8 @@ export class Hud {
     this.areaSubtitle.setText(deep ? 'CAVERNA PROFUNDA   /   SINAL PRESENTE' : 'CAVERNA   /   PRIMEIRA DESCIDA');
   }
 
-  setContinuationArea(exterior: boolean, fragmentSeen: boolean): void {
-    this.areaSubtitle.setText(exterior ? 'EXTERIOR DA CAVERNA   /   AR LIVRE' : 'PROFUNDEZAS   /   VESTÍGIOS ANTIGOS');
+  setContinuationArea(exterior: boolean, fragmentSeen: boolean, firstEchoSeen = false): void {
+    this.areaSubtitle.setText(exterior ? firstEchoSeen ? 'EXTERIOR   /   PRIMEIRO ECO REGISTRADO' : 'EXTERIOR DA CAVERNA   /   AR LIVRE' : 'PROFUNDEZAS   /   VESTÍGIOS ANTIGOS');
     this.signalObjective.setText(exterior ? fragmentSeen ? 'SIGA A RESPOSTA' : 'INVESTIGUE O FRAGMENTO' : 'SIGA O SINAL');
   }
 

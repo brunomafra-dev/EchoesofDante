@@ -38,9 +38,11 @@ A [integração da linguagem D nos ambientes](docs/environment-art-pass/) aplica
 
 A [passagem de arte do Warrior e Hollow](docs/character-art-pass/) aplica o tratamento pintado aprovado no cenário aos personagens. Preserva o Warrior em pé, as duas mãos no sabre e os rigs existentes. Os comparativos incluem oito direções de mira, caminhada, ataque, carga e Dash; a aprovação visual desta passagem depende do playtest do usuário.
 
-A [expansão Deep Cavern](docs/expansion-deep-cavern/) transforma o antigo bolso profundo em uma região curta com descida, bifurcação, bacia mineral, dois Hollows adicionais, estrutura ancestral e indicação de continuação. Usa a pintura D aprovada, permanece conectada à mesma Cavern e não exige limpar inimigos. Depois de entrar, o respawn usa um ponto seguro no início da região. The First Echo permanece para uma sprint futura.
+A [expansão Deep Cavern](docs/expansion-deep-cavern/) transforma o antigo bolso profundo em uma região curta com descida, bifurcação, bacia mineral, dois Hollows adicionais, estrutura ancestral e indicação de continuação. Usa a pintura D aprovada, permanece conectada à mesma Cavern e não exige limpar inimigos. Depois de entrar, o respawn usa um ponto seguro no início da região.
 
-A [Expansion Sprint 02](docs/expansion-sprint-02/) continua esse túnel por habitats de Skitters, Spitters e Crawlers, com um desvio mineral e uma subida para um exterior rochoso iluminado. Um fragmento investigável sugere uma resposta de transmissão; a aproximação monumental mantém o capítulo seguinte inacessível. Nenhuma passagem exige eliminar inimigos. First Echo e Warden ainda não foram implementados.
+A [Expansion Sprint 02](docs/expansion-sprint-02/) continua esse túnel por habitats de Skitters, Spitters e Crawlers, com um desvio mineral e uma subida para um exterior rochoso iluminado. Um fragmento investigável sugere uma resposta de transmissão. Nenhuma passagem exige eliminar inimigos.
+
+A [preparação para o Warden](docs/warden-preparation/) acrescenta o **Primeiro Eco** logo além do arco exterior. Um arquivo ancestral contém uma assinatura humana já registrada, sem data ou origem legíveis. Sua resposta acende inscrições até um limiar monumental fechado. A sequência mantém o controle, não concede XP e permanece registrada após respawn. **O Warden ainda não foi implementado.**
 
 A [correção de animação e orientação em português](docs/playtest-readability/) mantém os novos inimigos apoiados no chão, com quadros de passada, preparação, ataque e reação. A interface agora usa português e mostra o próximo passo desde 0/3 Ecos, com pistas de direção, identificação próxima dos locais e orientação da fissura ao mecanismo e à entrada. O fluxo continua sem chave, kill count ou recompensa adicional.
 

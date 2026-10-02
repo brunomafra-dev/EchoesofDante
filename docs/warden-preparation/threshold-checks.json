@@ -1,0 +1,13 @@
+{
+  "method": "Chrome headless DEV setup + actual walking; final collision/contact label",
+  "contact": {
+    "position": {
+      "x": 6132,
+      "y": 740
+    },
+    "label": "Limiar do guardião\nPassagem interditada",
+    "reached": true
+  },
+  "errors": [],
+  "passed": true
+}

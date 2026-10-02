@@ -8,7 +8,7 @@ export type ExplorationTarget = Vec2 & {
   name: string;
   radius: number;
   instruction: string;
-  action?: 'investigate' | 'walk';
+  action?: 'investigate' | 'walk' | 'blocked' | 'observe';
 };
 
 // A nearby environmental label and a short next step, not a quest/map framework.
@@ -40,7 +40,7 @@ export class ExplorationGuide {
     this.label.setVisible(visible);
     this.base.setVisible(visible && target.action === 'investigate');
     if (visible) {
-      const text = `${target.name}\n${nearby && target.action === 'investigate' ? command : target.action === 'walk' ? 'Siga por aqui' : 'Aproxime-se'}`;
+      const text = `${target.name}\n${nearby && target.action === 'investigate' ? command : target.action === 'blocked' ? 'Passagem interditada' : target.action === 'observe' ? 'A resposta está em curso' : target.action === 'walk' ? 'Siga por aqui' : 'Aproxime-se'}`;
       if (this.label.text !== text) this.label.setText(text);
       this.label.setPosition(target.x, target.y + 35);
       this.base.setPosition(target.x, target.y + 8).setDepth(target.y + 1);

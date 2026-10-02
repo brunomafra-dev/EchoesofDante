@@ -10,6 +10,7 @@ import { HollowCrawler } from '../entities/HollowCrawler';
 import { DanteCreature } from '../entities/DanteCreature';
 import type { Enemy, EnemyImpact } from '../entities/Enemy';
 import { EXPANSION, EXPANSION_ENCOUNTERS } from '../config/expansion';
+import { WARDEN_PREPARATION as W } from '../config/wardenPreparation';
 import { Player } from '../entities/Player';
 import { Controls } from '../input/Controls';
 import { Arena } from '../systems/Arena';
@@ -47,6 +48,8 @@ export class GameScene extends Phaser.Scene {
   private exteriorEntered = false;
   private fragmentSeen = false;
   private approachSeen = false;
+  private firstEchoSeen = false;
+  private wardenReached = false;
   private continuationRegion: 'deep' | 'deeper' | 'exterior' = 'deep';
   private spawnedEncounters = new Set<number>();
   private gateObstacle?: Obstacle;
@@ -121,11 +124,11 @@ export class GameScene extends Phaser.Scene {
       this.threshold = new SignalThreshold(this, this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen);
       this.mechanism = new PassageMechanism(this, this.progression.sourceLocated, this.progression.passageOpen);
     } else {
-      this.cavern = new CavernArea(this, this.deepPassageOpen, this.fragmentSeen);
+      this.cavern = new CavernArea(this, this.deepPassageOpen, this.fragmentSeen, this.firstEchoSeen);
       this.arena = this.cavern;
       this.movementBounds = this.arena.bounds;
     }
-    const entry = this.area === 'forest' ? FOREST_ENTRY : this.exteriorEntered ? EXPANSION.exteriorRespawn : this.deeperEntered ? EXPANSION.deeperRespawn : this.deepCavernEntered ? DEEP_AREA.entry : CAVERN_ENTRY;
+    const entry = this.area === 'forest' ? FOREST_ENTRY : this.firstEchoSeen ? W.respawn : this.exteriorEntered ? EXPANSION.exteriorRespawn : this.deeperEntered ? EXPANSION.deeperRespawn : this.deepCavernEntered ? DEEP_AREA.entry : CAVERN_ENTRY;
     this.player = new Player(this, entry.x, entry.y, this.progression.maxHp);
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
     this.transferHp = undefined;
@@ -134,6 +137,7 @@ export class GameScene extends Phaser.Scene {
       if (!this.player.isDead) this.beginStrike(this.time.now);
     });
     this.sounds.setArea(this.exteriorEntered ? 'forest' : this.area);
+    this.sounds.setMusicFocus(1);
     const spawns = this.area === 'forest' ? FOREST_SPAWNS : CAVERN_HOLLOWS;
     spawns.forEach((point, index) => {
       const enemy = new HollowCrawler(this, point.x, point.y, this.area === 'forest' ? FOREST_PATROLS[index] : undefined);
@@ -148,8 +152,8 @@ export class GameScene extends Phaser.Scene {
     this.inDeepCavern = this.area === 'cavern' && this.deepCavernEntered;
     if (this.area === 'cavern') this.hud.setCavernDepth(this.inDeepCavern);
     this.continuationRegion = this.exteriorEntered ? 'exterior' : this.deeperEntered ? 'deeper' : 'deep';
-    if (this.area === 'cavern' && this.continuationRegion !== 'deep') this.hud.setContinuationArea(this.continuationRegion === 'exterior', this.fragmentSeen);
-    this.cameras.main.setBounds(0, 0, this.area === 'cavern' ? EXPANSION.cameraWidth : WORLD_WIDTH, WORLD_HEIGHT)
+    if (this.area === 'cavern' && this.continuationRegion !== 'deep') this.hud.setContinuationArea(this.continuationRegion === 'exterior', this.fragmentSeen, this.firstEchoSeen);
+    this.cameras.main.setBounds(0, 0, this.area === 'cavern' ? W.cameraWidth : WORLD_WIDTH, WORLD_HEIGHT)
       .startFollow(this.player.view, false, 0.1, 0.1);
     this.cameras.main.setBackgroundColor(this.area === 'forest' ? '#102d2c' : '#07151c');
     if (this.area === 'cavern') {
@@ -169,6 +173,7 @@ export class GameScene extends Phaser.Scene {
     const nearThreshold = this.threshold?.canInvestigate(this.player.position, this.player.isDead) ?? false;
     const nearMechanism = this.mechanism?.canInvestigate(this.player.position, this.player.isDead) ?? false;
     const nearFragment = this.cavern?.continuation.canInvestigate(this.player.position, this.player.isDead, this.fragmentSeen) ?? false;
+    const nearFirstEcho = this.fragmentSeen && (this.cavern?.wardenApproach.canInvestigate(this.player.position, this.player.isDead) ?? false);
     if (nearDiscovery && interact) {
       const wasSynchronized = this.progression.signalSynchronized;
       nearbyEcho.activate();
@@ -201,20 +206,31 @@ export class GameScene extends Phaser.Scene {
     } else if (interact && nearFragment) {
       this.fragmentSeen = true;
       this.cavern?.continuation.respond();
-      this.hud.showDiscovery('FRAGMENTO DE TRANSMISS?O\nPADRÃO: RESPOSTA');
+      this.hud.showDiscovery('FRAGMENTO DE TRANSMISSÃO\nPADRÃO: RESPOSTA');
       this.hud.setContinuationArea(true, true);
       this.sounds.signal();
+    } else if (interact && nearFirstEcho) {
+      // Register immediately so a death during the response cannot replay it.
+      this.firstEchoSeen = true;
+      this.hud.setContinuationArea(true, true, true);
+      this.sounds.ancient();
+      this.cavern?.wardenApproach.activate(stage => {
+        if (this.player.isDead) return;
+        this.hud.showDiscovery(stage === 'revelation' ? W.revelation : stage === 'confirmation' ? W.confirmation : W.continuation);
+        this.sounds.signal();
+      });
     } else if (interact && this.area === 'forest' && !this.progression.sourceLocated &&
       distance(this.player.position, { x: SIGNAL_THRESHOLD.mechanismX, y: SIGNAL_THRESHOLD.mechanismY }) <= SIGNAL_THRESHOLD.mechanismRadius) {
       this.hud.showDiscovery(this.progression.signalSynchronized
         ? 'MECANISMO INATIVO\nInvestigue a fissura ao lado primeiro.'
         : 'MECANISMO INATIVO\nEncontre e investigue os 3 Ecos.');
     }
-    this.hud.setDiscoveryPrompt(nearDiscovery || nearThreshold || nearMechanism || nearFragment);
-    this.controls.setInteractAvailable(nearDiscovery || nearThreshold || nearMechanism || nearFragment);
+    this.hud.setDiscoveryPrompt(nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho);
+    this.controls.setInteractAvailable(nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho);
     this.controls.setDead(this.player.isDead);
     this.updateExplorationGuide();
     if (this.player.isDead) {
+      this.sounds.setMusicFocus(1);
       if (this.controls.restartPressed) this.restart();
       return;
     }
@@ -323,12 +339,23 @@ export class GameScene extends Phaser.Scene {
     if (region !== this.continuationRegion) {
       this.continuationRegion = region;
       if (region === 'deep') this.hud.setCavernDepth(this.inDeepCavern);
-      else this.hud.setContinuationArea(region === 'exterior', this.fragmentSeen);
+      else this.hud.setContinuationArea(region === 'exterior', this.fragmentSeen, this.firstEchoSeen);
       this.sounds.setArea(region === 'exterior' ? 'forest' : 'cavern');
     }
     if (!this.approachSeen && distance(this.player.position, EXPANSION.approach) <= EXPANSION.approach.radius) {
       this.approachSeen = true;
       this.hud.showDiscovery('VESTÍGIO MONUMENTAL\nFONTE: ALÉM');
+      this.sounds.ancient();
+    }
+    const approach = this.cavern?.wardenApproach;
+    approach?.showRecord(this.player.position);
+    const nearArchive = distance(this.player.position, W.echo) <= W.echo.approachRadius;
+    this.sounds.setMusicFocus(approach?.responding ? 0.2 : nearArchive ? 0.55 : this.player.position.x > 5830 ? 0.45 : 1);
+    if (this.fragmentSeen && approach?.approach(this.player.position)) this.sounds.signal();
+    if (this.firstEchoSeen && !approach?.responding && !this.wardenReached && distance(this.player.position, W.threshold) <= W.threshold.radius) {
+      this.wardenReached = true;
+      approach?.presence();
+      this.hud.showDiscovery(W.presence);
       this.sounds.ancient();
     }
   }
@@ -372,9 +399,15 @@ export class GameScene extends Phaser.Scene {
     } else if (!this.fragmentSeen) {
       title = 'INVESTIGUE O FRAGMENTO';
       target = { ...EXPANSION.fragment, name: 'Fragmento ancestral', instruction: 'Procure a estrutura com luz violeta.', action: 'investigate' };
+    } else if (!this.firstEchoSeen) {
+      title = 'INVESTIGUE A RESPOSTA';
+      target = { ...W.echo, name: 'Arquivo ancestral', instruction: 'Atravesse o arco; siga pelo lado norte.', action: 'investigate' };
+    } else if (this.cavern?.wardenApproach.responding) {
+      title = 'PRIMEIRO ECO';
+      target = { ...W.echo, name: 'Registro humano encontrado', instruction: 'A data e a origem estão ilegíveis.', action: 'observe' };
     } else {
-      title = 'SIGA A RESPOSTA';
-      target = { ...EXPANSION.approach, name: 'Vestígio monumental', instruction: 'O sinal continua além da abertura.', action: 'walk' };
+      title = this.wardenReached ? 'LIMIAR DO GUARDIÃO' : 'SIGA AS INSCRIÇÕES';
+      target = { ...W.threshold, name: 'Limiar do guardião', instruction: this.wardenReached ? 'Há algo além. A passagem permanece fechada.' : 'O caminho acendeu; siga para leste.', action: this.wardenReached ? 'blocked' : 'walk' };
     }
     this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod, title, target, this.hud);
   }

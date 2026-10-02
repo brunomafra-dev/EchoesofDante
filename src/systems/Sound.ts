@@ -11,12 +11,20 @@ export class AudioManager {
   private master: number = AUDIO.master;
   private musicVolume: number = AUDIO.music;
   private sfxVolume: number = AUDIO.sfx;
+  private musicFocus = 1;
+
+  setMusicFocus(focus: number): void {
+    const value = Math.max(0, Math.min(1, focus));
+    if (this.musicFocus === value) return;
+    this.musicFocus = value;
+    if (this.music) this.music.volume = this.master * this.musicVolume * value;
+  }
 
   setVolumes(master: number, music: number, sfx: number): void {
     this.master = Math.max(0, Math.min(1, master));
     this.musicVolume = Math.max(0, Math.min(1, music));
     this.sfxVolume = Math.max(0, Math.min(1, sfx));
-    if (this.music) this.music.volume = this.master * this.musicVolume;
+    if (this.music) this.music.volume = this.master * this.musicVolume * this.musicFocus;
   }
 
   setArea(area: Area): void {
@@ -27,7 +35,7 @@ export class AudioManager {
       this.music = new Audio();
       this.music.loop = true;
       this.music.preload = 'none';
-      this.music.volume = this.master * this.musicVolume;
+      this.music.volume = this.master * this.musicVolume * this.musicFocus;
       this.music.src = `${import.meta.env.BASE_URL}assets/audio/${AUDIO.tracks[area]}`;
       if (this.unlocked) this.playMusic();
     } catch { this.music = undefined; }

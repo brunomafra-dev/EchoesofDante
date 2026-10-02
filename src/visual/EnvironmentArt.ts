@@ -5,6 +5,7 @@ const PAINTINGS = [
   'mineral-growth', 'ancient-frame', 'ancient-remnant', 'forest-ground', 'cavern-ground',
   'deep-stratum', 'deep-mineral', 'deep-relay',
   'exterior-outcrop', 'ancient-approach', 'exterior-atmosphere',
+  'first-echo-archive', 'sealed-threshold',
 ] as const;
 export type EnvironmentPainting = typeof PAINTINGS[number];
 

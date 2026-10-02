@@ -2,8 +2,9 @@ import Phaser from 'phaser';
 import { CAVERN_BOUNDS, DEEP_AREA, DEEP_OBSTACLES, DEEP_RIDGES } from '../config/cavern';
 import { CAVERN_STRUCTURE_FOOTPRINTS, cavernShelfFootprints } from '../config/environmentCollision';
 import { DeepSignal } from './DeepSignal';
-import { EXPANSION } from '../config/expansion';
 import { CavernContinuation } from './CavernContinuation';
+import { WardenApproach } from './WardenApproach';
+import { WARDEN_PREPARATION } from '../config/wardenPreparation';
 import type { MovementBounds, Obstacle } from './Movement';
 import { groundContour, EnvironmentPainter } from '../visual/EnvironmentArt';
 
@@ -20,9 +21,10 @@ export class CavernArea {
   private readonly collapseObstacle: Obstacle = { x: DEEP_AREA.collapseX, y: DEEP_AREA.collapseY, radius: 64 };
   private readonly deepSignal: DeepSignal;
   readonly continuation: CavernContinuation;
+  readonly wardenApproach: WardenApproach;
 
-  constructor(scene: Phaser.Scene, deepPassageOpen = false, fragmentSeen = false) {
-    this.bounds = { ...CAVERN_BOUNDS, right: deepPassageOpen ? EXPANSION.right : CAVERN_BOUNDS.right };
+  constructor(scene: Phaser.Scene, deepPassageOpen = false, fragmentSeen = false, firstEchoSeen = false) {
+    this.bounds = { ...CAVERN_BOUNDS, right: deepPassageOpen ? WARDEN_PREPARATION.right : CAVERN_BOUNDS.right };
     if (!deepPassageOpen) this.obstacles.push(this.collapseObstacle);
     const art = scene.add.graphics().setVisible(false);
     art.fillStyle(0x07151c).fillRect(350, 250, 1500, 1000);
@@ -156,6 +158,8 @@ export class CavernArea {
     this.deepSignal = new DeepSignal(scene, deepPassageOpen);
     this.continuation = new CavernContinuation(scene, fragmentSeen);
     this.obstacles.push(...this.continuation.obstacles);
+    this.wardenApproach = new WardenApproach(scene, firstEchoSeen);
+    this.obstacles.push(...this.wardenApproach.obstacles);
     // Physics-only additions must not enter the rock artwork loop above.
     this.obstacles.push(...CAVERN_STRUCTURE_FOOTPRINTS, ...cavernShelfFootprints());
   }
@@ -164,7 +168,7 @@ export class CavernArea {
     this.deepSignal.reveal(() => {
       const index = this.obstacles.indexOf(this.collapseObstacle);
       if (index >= 0) this.obstacles.splice(index, 1);
-      this.bounds.right = EXPANSION.right;
+      this.bounds.right = WARDEN_PREPARATION.right;
       onOpened();
     });
   }

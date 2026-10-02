@@ -1,0 +1,22 @@
+{
+  "method": "Chrome headless production smoke; full gameplay assertions recorded by DEV QA",
+  "canvasVisible": true,
+  "loadedAssets": [
+    "dante-skitter-motion.png",
+    "dante-spitter-motion.png",
+    "exterior-outcrop.png",
+    "ancient-approach.png",
+    "exterior-atmosphere.png",
+    "first-echo-archive.png",
+    "sealed-threshold.png"
+  ],
+  "devHookAbsent": true,
+  "inputSent": [
+    "D",
+    "LMB",
+    "Space",
+    "Q hold/release",
+    "E"
+  ],
+  "errors": []
+}

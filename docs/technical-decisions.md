@@ -214,3 +214,10 @@
 - Interface e mensagens do jogador usam pt-BR, preservando nome próprio do jogo e identificadores internos. Rótulos touch mudam sem alterar gestos ou proteções do navegador.
 - ExplorationGuide fornece um próximo passo curto e uma etiqueta próxima ao ambiente, desde 0/3. A condição Ecos → fissura → mecanismo → entrada permanece; investigar fora de ordem explica o pré-requisito sem criar quest framework.
 - Um pulso reutilizado evidencia o mecanismo pronto; desaparece na ativação. Cenário permanece baked e atlas são preparados offline. [Assets, verificação e limitações](playtest-readability/).
+
+## Primeiro Eco e aproximação ao guardião, 0.1.37
+
+- Um estado narrativo local registra o Primeiro Eco no exterior, além do arco existente. O arquivo contém uma assinatura humana já registrada; data e origem ilegíveis impedem estabelecer cronologia ou autoria. Não altera os 3 Ecos da Forest, XP, nível ou recompensas. [Sequência e validação](warden-preparation/).
+- WardenApproach compõe o arquivo, inscrições e limiar fechado na mesma cena. A resposta finita de 5,2 segundos mantém o controle. Não há entidade, hitbox ou IA de Warden. Flags persistem nos mesmos ciclos de respawn; reload inicia sessão nova.
+- Duas pinturas PNG 512×512 geradas offline usam a linguagem D. Uma cache 1400×1000 adicional captura solo e integrações; inscrições são desenhadas uma vez. Não há novos tweens infinitos ou listeners. MUSIC recebe um fator de foco local, reutilizando os sons ancestral/sinal existentes.
+- Skitter e Crawler exteriores ocupam o desvio sul para reduzir perseguição na descoberta; IA e balanceamento permanecem. O checkpoint local após descoberta é (5430,740); oito footprints simples e o limite navegável mantém o portão fechado. Somente o limite horizontal da câmera acompanha a nova composição, sem mudar zoom/follow.

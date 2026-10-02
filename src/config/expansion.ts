@@ -35,7 +35,8 @@ export const EXPANSION_ENCOUNTERS = [
     { kind: 'crawler', x: 4220, y: 820 }, { kind: 'skitter', x: 4210, y: 640 },
   ] },
   { name: 'exterior-edge', x: 4900, residents: [
-    { kind: 'skitter', x: 4950, y: 570 }, { kind: 'crawler', x: 4900, y: 980 },
+    // Southern habitats leave the direct discovery route quiet; both remain avoidable.
+    { kind: 'skitter', x: 4750, y: 1090 }, { kind: 'crawler', x: 4900, y: 1095 },
   ] },
 ] as const;
 
