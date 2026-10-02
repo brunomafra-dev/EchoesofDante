@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { CAVERN_BOUNDS, DEEP_AREA, DEEP_OBSTACLES } from '../config/cavern';
+import { CAVERN_BOUNDS, DEEP_AREA, DEEP_OBSTACLES, DEEP_RIDGES } from '../config/cavern';
 import { CAVERN_STRUCTURE_FOOTPRINTS, cavernShelfFootprints } from '../config/environmentCollision';
 import { DeepSignal } from './DeepSignal';
 import type { MovementBounds, Obstacle } from './Movement';
@@ -13,6 +13,7 @@ export class CavernArea {
     { x: 1190, y: 1000, radius: 63 },
     { x: 1490, y: 850, radius: 67 },
     ...DEEP_OBSTACLES,
+    ...DEEP_RIDGES.flatMap(ridge => ridge.bases),
   ];
   private readonly collapseObstacle: Obstacle = { x: DEEP_AREA.collapseX, y: DEEP_AREA.collapseY, radius: 64 };
   private readonly deepSignal: DeepSignal;
@@ -162,4 +163,6 @@ export class CavernArea {
       onOpened();
     });
   }
+
+  respondToDeepSignal(): void { this.deepSignal.respond(); }
 }

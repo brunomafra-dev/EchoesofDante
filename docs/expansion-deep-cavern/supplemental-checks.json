@@ -1,0 +1,28 @@
+{
+  "method": "Chrome headless; no physical-device validation",
+  "errors": [],
+  "liveAi": {
+    "meanFps": 59.62720013409853,
+    "minFps": 59.15278244018555,
+    "maxFps": 60.12256006896496,
+    "livingHollows": 4,
+    "objects": 79,
+    "tweens": 3
+  },
+  "production": {
+    "canvasVisible": true,
+    "deepTexturesLoaded": [
+      "deep-stratum.png",
+      "deep-mineral.png",
+      "deep-relay.png"
+    ],
+    "devHookAbsent": true,
+    "inputSmokeSent": [
+      "D",
+      "LMB",
+      "Space",
+      "Q hold/release"
+    ],
+    "gameplayAssertions": "Full flow asserted in development QA; production smoke checks load/input errors only."
+  }
+}

@@ -4,7 +4,7 @@ import { applyDamage } from '../combat/Damage';
 import { KineticCharge } from '../combat/KineticCharge';
 import { PLAYER, CRAWLER, KINETIC_CHARGE, WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
 import { FOREST_ENTRY, FOREST_PATROLS, FOREST_SPAWNS } from '../config/forest';
-import { CAVERN_DEPTH_OPENING, CAVERN_ENTRY, CAVERN_HOLLOWS, DEEP_AREA } from '../config/cavern';
+import { CAVERN_DEPTH_OPENING, CAVERN_ENTRY, CAVERN_HOLLOWS, DEEP_AREA, DEEP_HOLLOWS } from '../config/cavern';
 import { FOREST_ECHOES, SIGNAL_THRESHOLD } from '../config/discovery';
 import { HollowCrawler } from '../entities/HollowCrawler';
 import { Player } from '../entities/Player';
@@ -36,6 +36,9 @@ export class GameScene extends Phaser.Scene {
   private deepOpening = false;
   private deepPassageOpen = false;
   private deepAreaSeen = false;
+  private deepCavernEntered = false;
+  private inDeepCavern = false;
+  private deepEndSeen = false;
   private gateObstacle?: Obstacle;
   private enemies: HollowCrawler[] = [];
   private hollowSpawnIds = new Map<HollowCrawler, number>();
@@ -107,7 +110,7 @@ export class GameScene extends Phaser.Scene {
       this.arena = this.cavern;
       this.movementBounds = this.arena.bounds;
     }
-    const entry = this.area === 'forest' ? FOREST_ENTRY : CAVERN_ENTRY;
+    const entry = this.area === 'forest' ? FOREST_ENTRY : this.deepCavernEntered ? DEEP_AREA.entry : CAVERN_ENTRY;
     this.player = new Player(this, entry.x, entry.y, this.progression.maxHp);
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
     this.transferHp = undefined;
@@ -122,9 +125,12 @@ export class GameScene extends Phaser.Scene {
       this.enemies.push(enemy);
       this.hollowSpawnIds.set(enemy, this.area === 'forest' ? index : FOREST_SPAWNS.length + index);
     });
+    if (this.area === 'cavern' && this.deepPassageOpen) this.spawnDeepHollows();
     this.hud = new Hud(this, () => this.restart());
     this.updateProgressHud();
     this.hud.setSignalObjective(this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen, this.area === 'cavern', this.cavernDepthSeen, this.deepAreaSeen);
+    this.inDeepCavern = this.area === 'cavern' && this.deepCavernEntered;
+    if (this.area === 'cavern') this.hud.setCavernDepth(this.inDeepCavern);
     this.cameras.main.setBounds(0, 0, this.area === 'cavern' ? DEEP_AREA.cameraWidth : WORLD_WIDTH, WORLD_HEIGHT)
       .startFollow(this.player.view, false, 0.1, 0.1);
     this.cameras.main.setBackgroundColor(this.area === 'forest' ? '#102d2c' : '#07151c');
@@ -231,16 +237,41 @@ export class GameScene extends Phaser.Scene {
       this.cavern?.revealDeep(() => {
         this.deepOpening = false;
         this.deepPassageOpen = true;
+        this.spawnDeepHollows();
         this.hud.showDiscovery('PASSAGE REVEALED\nSIGNAL: BELOW');
       });
+    }
+    const inDeep = this.area === 'cavern' && this.deepPassageOpen && this.player.position.x >= DEEP_AREA.entryX;
+    if (inDeep !== this.inDeepCavern) {
+      this.inDeepCavern = inDeep;
+      this.hud.setCavernDepth(inDeep);
+      if (inDeep && !this.deepCavernEntered) {
+        this.deepCavernEntered = true;
+        this.hud.showDiscovery('DEEP CAVERN\nSIGNAL: PRESENT');
+      }
     }
     if (this.area === 'cavern' && this.deepPassageOpen && !this.deepAreaSeen &&
       Math.hypot(this.player.position.x - DEEP_AREA.signalX, this.player.position.y - DEEP_AREA.signalY) <= DEEP_AREA.signalRadius) {
       this.deepAreaSeen = true;
+      this.cavern?.respondToDeepSignal();
       this.hud.showDiscovery('ANCIENT PATTERN\nSOURCE: STILL BELOW');
       this.sounds.signal();
       this.hud.setSignalObjective(true, true, true, true, true, true);
+      this.hud.setCavernDepth(true);
     }
+    if (inDeep && !this.deepEndSeen && distance(this.player.position, DEEP_AREA.end) <= DEEP_AREA.end.radius) {
+      this.deepEndSeen = true;
+      this.hud.showDiscovery('SIGNAL: DEEPER\nPATH: UNCHARTED');
+      this.sounds.signal();
+    }
+  }
+
+  private spawnDeepHollows(): void {
+    DEEP_HOLLOWS.forEach((patrol,index) => {
+      const enemy = new HollowCrawler(this,patrol[0].x,patrol[0].y,patrol);
+      this.enemies.push(enemy);
+      this.hollowSpawnIds.set(enemy,FOREST_SPAWNS.length+CAVERN_HOLLOWS.length+index);
+    });
   }
 
   private enterCavern(): void {

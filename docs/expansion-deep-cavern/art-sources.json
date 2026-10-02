@@ -1,0 +1,32 @@
+{
+  "tool": "Built-in imagegen",
+  "assets": [
+    {
+      "key": "deep-stratum",
+      "prompt": "Use case: stylized-concept. Original raster 2D environment game asset for Echoes of Dante, Organic Sci-Fi R3. Input references provide approved D/Hybrid painted material, shading and elevated top-down camera angle, not layout to copy. Painted illustration, readable broad sculpted volumes, irregular strong silhouette, localized material variation, contact occlusion, selective details; no low-poly triangular facets, no vector look. True transparent RGBA background, no checkerboard drawn, no text, no UI, no characters, no standalone cast shadow or floor outside the formation. Soft upper-left light. Deep underground: basalt slate/sage stone, modest organic green #6bb464, buried ancient violet #a98cff seams and warm amber #ffbd54 mineral accents. Player cyan is forbidden. No medieval fantasy, magic circles, portal, humanoid statues, human machinery, symmetrical temple, lore explanation. Subject: ONE elongated asymmetric geological ridge of layered eroded basalt, wide horizontal silhouette, 3 overlapping submasses blended as a single weathered formation, broken strata with rounded irregular edges and small recessed mineral seams. Very sparse roots weave across a joint; low moss only. Dark side plane and lighter top plane give physical volume. Keep overall 2:1 width:height; leave transparent margin. Not a row of separate stones.",
+      "refs": [
+        "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\public\\assets\\visual\\environment\\world-rock.png"
+      ],
+      "sourceFile": "exec-66f0b26c-31b8-4ac4-8be6-3bec81c6ff3d.png"
+    },
+    {
+      "key": "deep-mineral",
+      "prompt": "Use case: stylized-concept. Original raster 2D environment game asset for Echoes of Dante, Organic Sci-Fi R3. Input references provide approved D/Hybrid painted material, shading and elevated top-down camera angle, not layout to copy. Painted illustration, readable broad sculpted volumes, irregular strong silhouette, localized material variation, contact occlusion, selective details; no low-poly triangular facets, no vector look. True transparent RGBA background, no checkerboard drawn, no text, no UI, no characters, no standalone cast shadow or floor outside the formation. Soft upper-left light. Deep underground: basalt slate/sage stone, modest organic green #6bb464, buried ancient violet #a98cff seams and warm amber #ffbd54 mineral accents. Player cyan is forbidden. No medieval fantasy, magic circles, portal, humanoid statues, human machinery, symmetrical temple, lore explanation. Subject: ONE crescent-like mineral growth fused into old dark bedrock. Several unequal blunt amber crystals, small pale violet veins, sediment and fractures, asymmetrically tilted. Not regular gemstone spikes or a crystal icon. Dense on left, worn rock lip on right, roots thread into the mineral seam. About 1.4:1 horizontal:vertical. Low focal warm amber glow intrinsic to mineral, no neon aura.",
+      "refs": [
+        "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\public\\assets\\visual\\environment\\mineral-growth.png",
+        "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\public\\assets\\visual\\environment\\world-rock.png"
+      ],
+      "sourceFile": "exec-5b1ced59-724d-4e8a-9ce7-aed143a2d414.png"
+    },
+    {
+      "key": "deep-relay",
+      "prompt": "Use case: stylized-concept. Original raster 2D environment game asset for Echoes of Dante, Organic Sci-Fi R3. Input references provide approved D/Hybrid painted material, shading and elevated top-down camera angle, not layout to copy. Painted illustration, readable broad sculpted volumes, irregular strong silhouette, localized material variation, contact occlusion, selective details; no low-poly triangular facets, no vector look. True transparent RGBA background, no checkerboard drawn, no text, no UI, no characters, no standalone cast shadow or floor outside the formation. Soft upper-left light. Deep underground: basalt slate/sage stone, modest organic green #6bb464, buried ancient violet #a98cff seams and warm amber #ffbd54 mineral accents. Player cyan is forbidden. No medieval fantasy, magic circles, portal, humanoid statues, human machinery, symmetrical temple, lore explanation. Subject: ONE visually memorable ancient buried structure: three unequal leaning carved basalt ribs joined to a fractured embedded stone base, one taller eroded offset slab, narrow disconnected manufactured seams partially swallowed by rock and amber growth. Clear ancient intentional construction without recognizable device controls or symbols. NOT a door or arch, NOT a statue, NOT a clean purple object. A dark recessed vertical seam leaks restrained violet light, a tiny warm amber deposit near base, roots bind the lower stone. Silhouette wider at base and tapering irregularly upward; ~0.85:1 width:height. Looks partially excavated by geology over enormous time; foreground of the base overlaps stone naturally.",
+      "refs": [
+        "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\public\\assets\\visual\\environment\\ancient-remnant.png",
+        "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\public\\assets\\visual\\environment\\world-rock.png"
+      ],
+      "sourceFile": "exec-667122b2-e4ff-4ba8-84c0-20fb1cdef191.png",
+      "refinementPrompt": "Use case: precise-object-edit. Edit the reference game asset for Echoes of Dante Organic Sci-Fi R3. Preserve the entire painted style, camera angle, alpha transparency, silhouette width/height, rock base, existing roots, erosion and selective amber/violet accents. Make ONE targeted change: the formation must clearly contain ANCIENT INTENTIONAL CONSTRUCTION rather than three ordinary rocks. In the central tall slab expose a broad partly buried planar stone-metal panel with deep asymmetric inset stepped channels, one offset broken transverse support embedded between ribs, and 2 restrained violet seams recessed into material. Show smooth manufactured dark basalt surfaces interrupted by erosion, fractures and organic encrustation. Carved geometry must be distinct from random rock cracks. No recognizable human controls, no symbols/text, no medieval runes, no circle/portal, no statue, no symmetry, no clean neon object. Still a ruined unknown structure absorbed by geology for immense time. Actual transparent background, no added environment or characters."
+    }
+  ]
+}

@@ -148,6 +148,10 @@ export class Hud {
     this.discoveryTimer = this.scene.time.delayedCall(NORTHERN_DISCOVERY.messageDuration, () => this.discoveryMessage.setVisible(false));
   }
 
+  setCavernDepth(deep: boolean): void {
+    this.areaSubtitle.setText(deep ? 'DEEP CAVERN   /   SIGNAL PRESENT' : 'CAVERN   /   FIRST DESCENT');
+  }
+
   showLevelUp(level: number): void {
     this.levelTimer?.remove(false);
     this.levelMessage.setText(`LEVEL UP   /   LEVEL ${level}\nHP RESTORED`).setVisible(true);

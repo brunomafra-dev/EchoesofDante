@@ -1,0 +1,29 @@
+[
+  {
+    "file": "public/assets/visual/environment/deep-stratum.png",
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 171980,
+    "sha256": "29c889c6d44253ecd213a81b93a072bea0ac8fa22556367ad9b4eda311f2ef6c"
+  },
+  {
+    "file": "public/assets/visual/environment/deep-mineral.png",
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 295328,
+    "sha256": "e01462f5f565fa31119211d16b1ebb2b10c793646bb7de1e28e58e2fa04556c3"
+  },
+  {
+    "file": "public/assets/visual/environment/deep-relay.png",
+    "size": [
+      448,
+      512
+    ],
+    "bytes": 274234,
+    "sha256": "e9ce85763837b6b2b8b1db82945d172173a7f33f33d5541322235ba07dc8fa57"
+  }
+]

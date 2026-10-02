@@ -191,3 +191,10 @@
 - A aprovação humana de D e a autorização para iniciar por Forest e Cavern orientam a [integração ambiental](environment-art-pass/). PNGs pintados substituem superfícies geométricas de pedra, minerais, vegetação e bases antigas. Organic Sci-Fi R3, paleta e World Shape Language continuam oficiais; o laboratório anterior permanece como controle.
 - As pinturas são produzidas e normalizadas offline. GameScene carrega o kit uma vez; EnvironmentPainter reutiliza Images temporárias para compor as RenderTextures existentes e as destrói depois do bake. Copas, troncos e placas animadas mantêm os objetos necessários ao desenho em profundidade. Não há redraw ambiental por frame ou novos tweens contínuos.
 - Colisores, limites, caminhos, spawns, interações, sinais, combate, controles, câmera, progressão e áudio permanecem. Variações visuais não consomem a sequência aleatória de posicionamento; a verificação compara os arrays físicos antes/depois. O kit adiciona cerca de 2,16 MiB em PNGs, e a aprovação visual da aplicação no mundo depende de playtest humano.
+
+## Expansion Sprint 01 — Deep Cavern, 0.1.34
+
+- O bolso profundo passa a ser uma região com descida, bifurcação mineral, dois moradores, estrutura ancestral e limite sugerindo continuidade. Conserva a mesma cena, bounds e câmera; não revela The First Echo ou lore definitiva. [Composição e validação](expansion-deep-cavern/).
+- Três PNGs pintados offline complementam o kit D aprovado. A composição profunda usa o bake existente e um pequeno foreground adicional. Ground Graphics apenas definem massas de solo/máscara; rochas e estruturas usam pinturas. Bases físicas circulares ficam nos dados de ambiente.
+- Hollows profundos são criados depois da abertura, evitando o clamp para a primeira sala. IDs próprios preservam o XP por spawn, inclusive após respawn. A IA e valores não mudam.
+- Entrar na região registra um retorno local seguro em (1870,580), sem framework de checkpoints ou save. Passagens, XP, nível e Echoes continuam dados da sessão. O POI responde por proximidade, sem nova recompensa; o áudio reutiliza Cavern e Signal existentes.

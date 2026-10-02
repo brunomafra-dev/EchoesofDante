@@ -38,6 +38,8 @@ A [integração da linguagem D nos ambientes](docs/environment-art-pass/) aplica
 
 A [passagem de arte do Warrior e Hollow](docs/character-art-pass/) aplica o tratamento pintado aprovado no cenário aos personagens. Preserva o Warrior em pé, as duas mãos no sabre e os rigs existentes. Os comparativos incluem oito direções de mira, caminhada, ataque, carga e Dash; a aprovação visual desta passagem depende do playtest do usuário.
 
+A [expansão Deep Cavern](docs/expansion-deep-cavern/) transforma o antigo bolso profundo em uma região curta com descida, bifurcação, bacia mineral, dois Hollows adicionais, estrutura ancestral e indicação de continuação. Usa a pintura D aprovada, permanece conectada à mesma Cavern e não exige limpar inimigos. Depois de entrar, o respawn usa um ponto seguro no início da região. The First Echo permanece para uma sprint futura.
+
 ## Controles
 
 | Ação | Teclado e mouse | Gamepad padrão | Touch em landscape |
@@ -86,7 +88,7 @@ A música de exploração usa dois loops instrumentais curtos e originais, Fores
 
 ## Limitações conhecidas
 
-- A Cavern contém a primeira área e um pequeno bolso profundo. A face antiga e a estrutura profunda são pontos visuais; o limite após a estrutura não tem outra região jogável nesta versão.
+- A Cavern contém a primeira área e a região Deep Cavern. A face antiga e a estrutura profunda são pontos visuais; o túnel no limite profundo ainda não leva a outra região jogável. The First Echo não foi implementado.
 - O nível está limitado a 3 e o progresso existe somente na aba atual: recarregar a página reinicia XP, Echoes e recompensas. Não há salvamento.
 - A onda usa uma faixa frontal móvel e não tem interação especial com rochas. Seus valores e a naturalidade das poses do braço ainda precisam de avaliação humana em combate.
 - HUD e Energy Saber receberam apenas o feedback necessário para a habilidade; sua arte base, Mineral Pulse, First Discovery e parte do terreno ainda são provisórios.
