@@ -34,34 +34,82 @@ export interface EnvironmentStamp {
   tint?: number;
   alpha?: number;
   flipX?: boolean;
+  frame?: string;
 }
 
-// Used only while composing static scenery. A small image pool is disposed after
-// the bake; painted details never become individual world objects or frame work.
+// The existing shadow PNG has a large transparent canvas and an off-center
+// painted footprint. This frame crops padding only; no texture is generated.
+export function contactStamp(x: number, y: number, width: number, height: number, alpha = 0.8): EnvironmentStamp {
+  return { key: 'world-shadow', frame: 'ground-contact', x, y, width, height, alpha, depth: -10000 };
+}
+
+export function rockStamps(x: number, y: number, radius: number, tint = 0xcbd3c6): EnvironmentStamp[] {
+  const size = radius * 512 / 112;
+  const variation = Math.sin(x * 0.013 + y * 0.019);
+  const foot = y + radius * 0.65;
+  return [
+    contactStamp(x, foot - radius * 0.12, radius * 2.25, radius * 0.64, 0.88),
+    { key: 'world-rock', x, y: y - radius * 0.05, width: size, height: size * 0.92,
+      depth: foot, tint, angle: variation * 5, flipX: variation < 0 },
+    { key: 'root-growth', x: x - radius * 0.24, y: foot + radius * 0.06,
+      width: radius * 1.4, height: radius * 0.38, tint, alpha: 0.65, depth: -10000 },
+    { key: 'world-rock', x: x + radius * 0.87, y: foot - radius * 0.06,
+      width: radius * 0.56, height: radius * 0.45, tint, alpha: 0.8, flipX: true, depth: -10000 },
+  ];
+}
+
+// Used only while composing static scenery. The stamp pool is disposed after
+// bake. A few explicit raised bodies remain static Images for foot sorting.
 export class EnvironmentPainter {
   private images = new Map<string, Phaser.GameObjects.Image>();
   constructor(private scene: Phaser.Scene, private target: Phaser.GameObjects.RenderTexture) {}
 
   stamp(s: EnvironmentStamp): void {
-    let image = this.images.get(s.key);
+    if (s.frame === 'ground-contact' && !this.scene.textures.get(s.key).has(s.frame)) {
+      this.scene.textures.get(s.key).add(s.frame, 0, 121, 274, 293, 131);
+    }
+    const poolKey = `${s.key}/${s.frame ?? ''}`;
+    let image = this.images.get(poolKey);
     if (!image) {
-      image = this.scene.make.image({ key: s.key, add: false });
-      this.images.set(s.key, image);
+      image = this.scene.make.image({ key: s.key, frame: s.frame, add: false });
+      this.images.set(poolKey, image);
     }
     image.setOrigin(0.5).setDisplaySize(s.width, s.height).setAngle(s.angle ?? 0).setFlipX(s.flipX ?? false)
       .setTint(s.tint ?? 0xffffff).setAlpha(s.alpha ?? 1);
     this.target.draw(image, s.x - this.target.x, s.y - this.target.y);
   }
 
-  rock(x: number, y: number, radius: number, tint = 0xffffff): void {
-    const size = radius * 512 / 112;
-    const variation = Math.sin(x * 0.013 + y * 0.019);
-    for (const key of ['world-shadow', 'world-rock'] as const) {
-      this.stamp({ key, x, y, width: size, height: size, tint,
-        angle: key === 'world-rock' ? variation * 5 : 0, flipX: variation < 0 });
+  rock(x: number, y: number, radius: number, tint = 0xcbd3c6, raised = false): void {
+    for (const stamp of rockStamps(x, y, radius, tint)) {
+      if (raised && stamp.depth !== -10000) this.raised(stamp);
+      else this.stamp(stamp);
     }
-    this.stamp({ key: 'root-growth', x: x - radius * 0.18, y: y + radius * 0.52,
-      width: radius * 1.25, height: radius * 0.48, tint });
+  }
+
+  // Only a few obstacles within walkable space need independent foot sorting.
+  // Perimeter masses stay baked. These static Images have no update or tween.
+  raised(s: EnvironmentStamp): void {
+    this.scene.add.image(s.x, s.y, s.key).setDisplaySize(s.width, s.height)
+      .setDepth(s.depth ?? s.y).setAngle(s.angle ?? 0).setFlipX(s.flipX ?? false)
+      .setTint(s.tint ?? 0xffffff).setAlpha(s.alpha ?? 1);
+  }
+
+  contact(x: number, y: number, width: number, height: number, alpha = 0.8): void {
+    this.stamp(contactStamp(x, y, width, height, alpha));
+  }
+
+  apron(x: number, y: number, width: number, tint = 0xa5b69f): void {
+    // Shallow sediment, a root and tiny rubble join the prop to the terrain.
+    // Decorative marks are well below a body-sized obstacle and remain flat.
+    this.contact(x, y, width * 1.22, width * 0.32, 0.3);
+    this.contact(x, y - width * 0.035, width * 0.87, width * 0.18, 0.8);
+    const flip = Math.sin(x * 0.017 + y * 0.023) < 0;
+    this.stamp({ key: 'root-growth', x: x - width * 0.18, y: y + width * 0.015,
+      width: width * 0.65, height: width * 0.18, angle: flip ? -12 : 8, flipX: flip, tint, alpha: 0.55 });
+    for (const [dx, dy, scale] of [[0.4, 0.03, 0.19], [-0.42, -0.01, 0.13]]) {
+      this.stamp({ key: 'world-rock', x: x + width * dx, y: y + width * dy,
+        width: width * scale, height: width * scale * 0.8, tint, alpha: 0.65, flipX: flip });
+    }
   }
 
   ground(key: 'forest-ground' | 'cavern-ground', alpha: number, maskSource?: Phaser.GameObjects.Graphics): void {

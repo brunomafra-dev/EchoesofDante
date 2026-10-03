@@ -3,7 +3,7 @@ import { WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
 import { FOREST_CLEARINGS, FOREST_PATHS, FOREST_ROCKS } from '../config/forest';
 import { FOREST_STRUCTURE_FOOTPRINTS, treeFootprint, totemFootprint } from '../config/environmentCollision';
 import type { Obstacle } from './Movement';
-import { groundContour, EnvironmentPainter, type EnvironmentStamp } from '../visual/EnvironmentArt';
+import { groundContour, EnvironmentPainter, contactStamp, rockStamps, type EnvironmentStamp } from '../visual/EnvironmentArt';
 
 export class Arena {
   readonly obstacles: Obstacle[] = [];
@@ -28,7 +28,11 @@ export class Arena {
       const layer = this.scene.add.renderTexture(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
         .setOrigin(0).setDepth(floor.depth).draw(floor);
       const painter = new EnvironmentPainter(this.scene, layer);
-      painter.ground('forest-ground', 0.32);
+      painter.ground('forest-ground', 0.19);
+      for (const [x, y, w, h] of [[360,450,330,135],[1030,640,410,160],[1510,1010,340,135],[1900,420,310,145]]) {
+        painter.contact(x, y, w, h, 0.16);
+      }
+      this.paintings.filter(stamp => stamp.depth === -10000).forEach(stamp => painter.stamp(stamp));
       painter.destroy();
     }
     const bandHeight = 100;
@@ -41,6 +45,7 @@ export class Arena {
       bands.set(band, group);
     }
     for (const stamp of this.paintings) {
+      if (stamp.depth === -10000) continue;
       const band = Math.floor(Phaser.Math.Clamp(stamp.depth ?? 0, 0, WORLD_HEIGHT - 1) / bandHeight);
       const group = bands.get(band) ?? [];
       group.push(stamp);
@@ -177,6 +182,7 @@ export class Arena {
 
   private plant(x: number, y: number, size: number, sway = false, addFootprint = true): void {
     const shade = this.random();
+    this.paintings.push(contactStamp(x + size * 0.02, y + size * 0.1, size * 0.65, size * 0.23, 0.8));
     this.scene.add.image(x, y, 'dante-tree-trunk').setOrigin(0.5, 100 / 155).setScale(size / 100).setDepth(y + 2);
     // The landmark tree already has its original radius-25 footprint below.
     if (addFootprint) this.structuralFootprints.push(treeFootprint(x, y, size));
@@ -195,13 +201,7 @@ export class Arena {
 
   private rock(x: number, y: number, radius: number): void {
     this.obstacles.push({ x, y, radius: radius * 0.72 });
-    const size = radius * 512 / 112;
-    const variation = Math.sin(x * 0.013 + y * 0.019);
-    for (const key of ['world-shadow', 'world-rock'] as const) {
-      this.paintings.push({ key, x, y, width: size, height: size, depth: y - 6,
-        angle: key === 'world-rock' ? variation * 5 : 0, flipX: variation < 0 });
-    }
-    this.paintings.push({ key: 'root-growth', x: x-radius*0.18, y: y+radius*0.52, width: radius*1.25, height: radius*0.48, depth: y-6 });
+    this.paintings.push(...rockStamps(x, y, radius, 0xc6d1bc));
   }
 
   private beacon(x: number, y: number): void {

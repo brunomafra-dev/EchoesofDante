@@ -1,0 +1,185 @@
+{
+  "method": "Chrome headless, keyboard/mouse, Gamepad API mock, CDP touch; controlled DEV setup for encounter states",
+  "errors": [],
+  "safeEntryIntro": true,
+  "threeDeaths": [
+    {
+      "area": "warden",
+      "p": {
+        "x": 650,
+        "y": 760
+      },
+      "hp": 110,
+      "maxHp": 110,
+      "dead": false,
+      "boss": {
+        "hp": 900,
+        "phase": 1,
+        "state": "DORMANT",
+        "attack": null,
+        "dead": false,
+        "canHit": false,
+        "position": {
+          "x": 1170,
+          "y": 735
+        },
+        "shots": 0,
+        "marks": 0
+      },
+      "xp": 120,
+      "level": 2,
+      "echoes": 3,
+      "first": true,
+      "gate": true,
+      "won": false,
+      "ending": false,
+      "objects": 71,
+      "rt": 1,
+      "graphics": 14,
+      "textures": 65,
+      "tweens": 0,
+      "obstacles": 19,
+      "listeners": [
+        1,
+        1
+      ],
+      "enemies": 1,
+      "message": "SINAL DETECTADO\nFONTE: DESCONHECIDA",
+      "musicStopped": false,
+      "aim": -0.08314123188844123
+    },
+    {
+      "area": "warden",
+      "p": {
+        "x": 650,
+        "y": 760
+      },
+      "hp": 110,
+      "maxHp": 110,
+      "dead": false,
+      "boss": {
+        "hp": 900,
+        "phase": 1,
+        "state": "DORMANT",
+        "attack": null,
+        "dead": false,
+        "canHit": false,
+        "position": {
+          "x": 1170,
+          "y": 735
+        },
+        "shots": 0,
+        "marks": 0
+      },
+      "xp": 120,
+      "level": 2,
+      "echoes": 3,
+      "first": true,
+      "gate": true,
+      "won": false,
+      "ending": false,
+      "objects": 71,
+      "rt": 1,
+      "graphics": 14,
+      "textures": 65,
+      "tweens": 0,
+      "obstacles": 19,
+      "listeners": [
+        1,
+        1
+      ],
+      "enemies": 1,
+      "message": "SINAL DETECTADO\nFONTE: DESCONHECIDA",
+      "musicStopped": false,
+      "aim": -0.08314123188844123
+    },
+    {
+      "area": "warden",
+      "p": {
+        "x": 650,
+        "y": 760
+      },
+      "hp": 110,
+      "maxHp": 110,
+      "dead": false,
+      "boss": {
+        "hp": 900,
+        "phase": 1,
+        "state": "DORMANT",
+        "attack": null,
+        "dead": false,
+        "canHit": false,
+        "position": {
+          "x": 1170,
+          "y": 735
+        },
+        "shots": 0,
+        "marks": 0
+      },
+      "xp": 120,
+      "level": 2,
+      "echoes": 3,
+      "first": true,
+      "gate": true,
+      "won": false,
+      "ending": false,
+      "objects": 71,
+      "rt": 1,
+      "graphics": 14,
+      "textures": 65,
+      "tweens": 0,
+      "obstacles": 19,
+      "listeners": [
+        1,
+        1
+      ],
+      "enemies": 1,
+      "message": "SINAL DETECTADO\nFONTE: DESCONHECIDA",
+      "musicStopped": false,
+      "aim": -0.08314123188844123
+    }
+  ],
+  "finalSequenceUniqueAndReturn": true,
+  "victoryStable": {
+    "area": "warden",
+    "p": {
+      "x": 650,
+      "y": 760
+    },
+    "hp": 110,
+    "maxHp": 110,
+    "dead": false,
+    "boss": null,
+    "xp": 120,
+    "level": 2,
+    "echoes": 3,
+    "first": true,
+    "gate": true,
+    "won": true,
+    "ending": true,
+    "objects": 62,
+    "rt": 1,
+    "graphics": 10,
+    "textures": 65,
+    "tweens": 0,
+    "obstacles": 19,
+    "listeners": [
+      1,
+      1
+    ],
+    "enemies": 0,
+    "message": "TRANSMISSÃO LIBERADA\nFRAGMENTO: RETORNO CONFIRMADO\nDESTINO: ILEGÍVEL",
+    "musicStopped": true,
+    "aim": -0.018516402068009044
+  },
+  "gamepadMock": true,
+  "resolutions": [
+    "1280x720",
+    "1366x768",
+    "1920x1080",
+    "844x390"
+  ],
+  "touchEmulated": true,
+  "reloadNewSession": true,
+  "passed": true
+}

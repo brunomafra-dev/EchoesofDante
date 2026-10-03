@@ -105,21 +105,27 @@ export class WardenApproach {
     const mass = (color: number, alpha: number, points: number[][]) => floor.fillStyle(color, alpha)
       .fillPoints(groundContour(points.map(([x, y]) => ({ x, y }))), true);
     mass(0x526e65, 1, [[5320,570],[5520,440],[5760,450],[5930,460],[6240,590],[6530,720],[6390,1100],[6090,1160],[5810,1120],[5500,1080],[5380,1010]]);
-    mass(0x748575, 0.9, [[5340,655],[5490,550],[5610,570],[5750,630],[5950,595],[6140,630],[6290,780],[6170,1000],[5960,980],[5740,1000],[5530,930],[5410,820]]);
-    mass(0xa1aa91, 0.28, [[5400,710],[5500,715],[5580,770],[5710,810],[5860,780],[6060,720],[6130,815],[5890,875],[5680,910],[5490,855]]);
+    mass(0x748575, 0.6, [[5340,655],[5490,550],[5610,570],[5750,630],[5950,595],[6140,630],[6290,780],[6170,1000],[5960,980],[5740,1000],[5530,930],[5410,820]]);
+    mass(0xa1aa91, 0.14, [[5400,710],[5500,715],[5580,770],[5710,810],[5860,780],[6060,720],[6130,815],[5890,875],[5680,910],[5490,855]]);
     mass(0x182d34, 0.3, [[6050,530],[6320,470],[6620,510],[6670,1020],[6400,1150],[6130,1040]]);
     const layer = this.scene.add.renderTexture(5350, 200, 1400, 1000).setOrigin(0).setDepth(-9998).draw(floor, -5350, -200);
     const painter = new EnvironmentPainter(this.scene, layer);
-    painter.ground('cavern-ground', 0.3, floor);
+    painter.ground('cavern-ground', 0.2, floor);
+    for (const [x,y,w,h] of [[5560,542,300,105],[5750,946,320,120],[6020,553,380,135]]) painter.contact(x,y,w,h,0.22);
     // Retain the visible footprint where the new cache overlaps the old edge.
     painter.rock(5360, 740, 42, 0x91a69c);
     for (const rock of WARDEN_FOOTPRINTS) {
       if (rock.x === 5530 || rock.x === 6400) continue;
-      painter.stamp({ key: 'world-shadow', x: rock.x, y: rock.y + 15, width: rock.radius * 5, height: rock.radius * 3, alpha: 0.65 });
-      painter.stamp({ key: 'exterior-outcrop', x: rock.x, y: rock.y - rock.radius * 0.6, width: rock.radius * 4.4, height: rock.radius * 3.2,
-        tint: rock.x < 5700 ? 0xcbd4b9 : 0xa7bbad, flipX: rock.y > 800 });
+      const foot = rock.y + rock.radius * 0.65;
+      painter.apron(rock.x, foot, rock.radius * 3.1, 0x95aa8d);
+      painter.raised({ key: 'exterior-outcrop', x: rock.x, y: rock.y - rock.radius * 0.3,
+        width: rock.radius * 3.5, height: rock.radius * 2.25, depth: foot,
+        tint: rock.x < 5700 ? 0xb8c4a9 : 0x9baf9e, flipX: rock.y > 800 });
     }
-    painter.stamp({ key: 'world-shadow', x: 5530, y: 697, width: 180, height: 60, alpha: 0.6 });
+    painter.apron(5530, 704, 180, 0x9dad94);
+    // Keep the monumental threshold and passage geometry; bind only its feet.
+    painter.apron(6120, 1020, 180, 0x92a68e);
+    painter.apron(6540, 1020, 180, 0x92a68e);
     for (const [x, y, width, angle] of [[5530,709,135,8],[5650,968,180,-17],[5810,560,130,32],[5890,955,190,-10]] as const) {
       painter.stamp({ key: 'root-growth', x, y, width, height: width * 0.3, angle, tint: 0xa6bd95 });
     }

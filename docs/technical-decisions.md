@@ -229,3 +229,10 @@
 - A arena usa pinturas do kit D baked em uma RenderTexture de 1500×1060. Dezenove footprints delimitam formações; o selo de combate acrescenta apenas um. Projéteis e marcas de chão são poucos objetos reutilizados. A criatura usa oito poses raster preparadas offline, preservando postura em vez de girar uma ilustração lateral integralmente.
 - Morrer reinicia o encontro na entrada segura em (650,760). Flags de acesso, Primeiro Eco e progressão permanecem; HP/fase/ataques/VFX do boss são reconstruídos limpos. A vitória persiste na sessão e não concede XP ou loot. O fragmento “RETORNO CONFIRMADO / DESTINO: ILEGÍVEL” avança o Signal sem definir autoria, idade do registro humano ou origem de Dante.
 - Uma trilha original de 24 segundos é escrita e renderizada offline, sem samples externos. AudioManager seleciona Warden, usa cues finitos de Web Audio e preserva a pausa explícita após novos gestos de unlock. A saída do encontro continua usando a infraestrutura de áreas existente.
+
+## Coesão e contato ambiental, 0.1.39
+
+- A linguagem D permanece. Formações secundárias do exterior recebem escala menor; marcos monumentais, footprints, rotas e gameplay permanecem. Nenhum PNG foi alterado ou acrescentado. [Comparativos e validação](environment-cohesion/).
+- Um frame na textura `world-shadow` existente recorta apenas seu padding transparente, permitindo sombras de contato centradas nas bases. Raízes, detritos rasos e sombra de transição são capturados nas RenderTextures, com menor contraste uniforme no solo.
+- Vinte corpos estáticos da Cavern completa usam Images ordenadas pelos pés, sem update/tween próprio; massas de borda e detalhes continuam baked. Forest reutiliza suas bandas de depth. Não há nova textura GPU, iluminação global ou novo sistema de física.
+- QA compara arrays de obstáculos, limites e zoom exatamente com a base anterior e reutiliza testes de percurso, Primeiro Eco, boss, respawn e entradas emuladas. A avaliação perceptual depende de playtest humano; contagens estáveis e compilação não demonstram autenticidade visual.

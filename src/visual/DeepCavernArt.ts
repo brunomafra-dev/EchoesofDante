@@ -24,19 +24,21 @@ export function bakeDeepCavern(scene: Phaser.Scene): void {
   mass(0x2c3b45,0.85,[[2360,746],[2460,674],[2550,680],[2520,780],[2430,838],[2340,822]]);
   const layer=scene.add.renderTexture(1650,290,1000,850).setOrigin(0).setDepth(-9999).draw(ground,-1650,-290);
   const painter=new EnvironmentPainter(scene,layer);
-  painter.ground('cavern-ground',0.3,ground);
+  painter.ground('cavern-ground',0.17,ground);
+  for(const [x,y,w,h] of [[1820,645,300,120],[2100,490,390,150],[2350,980,280,95]]) painter.contact(x,y,w,h,0.26);
   // Unequal strata connect boundaries to existing large formations.
   for(const ridge of DEEP_RIDGES){
-    painter.stamp({key:'world-shadow',x:ridge.x,y:ridge.y+30,width:ridge.width,height:ridge.height*1.4,alpha:0.7});
-    painter.stamp({key:'deep-stratum',...ridge,tint:0xb2c5c5,flipX:ridge.x>2200});
+    painter.apron(ridge.x,ridge.y+ridge.height*0.32,ridge.width*0.94,0x8ea49a);
+    painter.stamp({key:'deep-stratum',...ridge,tint:0x8fa9a5,flipX:ridge.x>2200});
   }
   for(const rock of DEEP_OBSTACLES){
     if([2220,2010,2500,2420].includes(rock.x))continue;
-    painter.rock(rock.x,rock.y,rock.radius,rock.x===1995?0xa4b9b9:0xb4c8c7);
+    painter.rock(rock.x,rock.y,rock.radius,rock.x===1995?0xb4c0ab:0x9bb2ab,rock.x===1995);
   }
   // Selective mineral and root growth bind masses; low growth stays traversable.
-  painter.stamp({key:'deep-mineral',x:2010,y:966,width:225,height:172,tint:0xd8cfbb});
-  painter.stamp({key:'world-shadow',x:2210,y:715,width:330,height:140,alpha:0.8});
+  painter.apron(2010,1024,190,0xb4b495);
+  painter.stamp({key:'deep-mineral',x:2010,y:978,width:205,height:148,tint:0xc7c0a6});
+  painter.apron(2210,710,275,0xa1b295);
   painter.stamp({key:'deep-relay',x:2210,y:592,width:300,height:345,tint:0xd0d6d3});
   for(const [x,y,w,h,angle] of [[1810,605,150,50,65],[1910,886,170,54,-25],[2080,965,185,57,5],[2110,735,125,40,50],[2280,757,180,46,-20],[2360,510,180,45,30]] as const){
     painter.stamp({key:'root-growth',x,y,width:w,height:h,angle,tint:0x889f91});

@@ -1,0 +1,95 @@
+{
+  "method": "Chrome headless; explicit DEV attack setup, live damage and keyboard/mouse actions",
+  "errors": [],
+  "attacks": [
+    {
+      "attack": "sweep",
+      "warningMs": 1000,
+      "damage": 16,
+      "singleHit": true,
+      "outsideSafe": true
+    },
+    {
+      "attack": "rush",
+      "warningMs": 1150,
+      "damage": 20,
+      "singleHit": true,
+      "outsideSafe": true
+    },
+    {
+      "attack": "slam",
+      "warningMs": 1250,
+      "damage": 22,
+      "singleHit": true,
+      "outsideSafe": true
+    },
+    {
+      "attack": "signal",
+      "warningMs": 1050,
+      "damage": 14,
+      "singleHit": true,
+      "outsideSafe": true
+    },
+    {
+      "attack": "echoes",
+      "warningMs": 1250,
+      "damage": 24,
+      "singleHit": true,
+      "outsideSafe": true
+    }
+  ],
+  "dashProtected": true,
+  "threeDistinctPhases": true,
+  "saberSingleHit34": true,
+  "chargeSingleHit76": true,
+  "poolStable": {
+    "before": {
+      "hp": 100,
+      "bossHp": 900,
+      "phase": 1,
+      "state": "TELEGRAPH",
+      "attack": "sweep",
+      "canHit": true,
+      "objects": 71,
+      "tweens": 0,
+      "graphics": 14,
+      "shots": 0,
+      "marks": 0,
+      "p": {
+        "x": 1000,
+        "y": 890
+      },
+      "boss": {
+        "x": 1133.5463032398084,
+        "y": 768.2371941048814
+      }
+    },
+    "after": {
+      "hp": 100,
+      "bossHp": 900,
+      "phase": 1,
+      "state": "RECOVER",
+      "attack": "slam",
+      "canHit": true,
+      "objects": 71,
+      "tweens": 0,
+      "graphics": 14,
+      "shots": 0,
+      "marks": 0,
+      "p": {
+        "x": 784.3540248166958,
+        "y": 1101.5092679808429
+      },
+      "boss": {
+        "x": 829.6245532428085,
+        "y": 1035.5503470070996
+      }
+    }
+  },
+  "performance": {
+    "mean": 60.02701840890244,
+    "min": 59.88426981705756,
+    "max": 60.2387018969912
+  },
+  "passed": true
+}

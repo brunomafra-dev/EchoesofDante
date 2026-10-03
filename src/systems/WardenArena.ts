@@ -107,7 +107,10 @@ export class WardenArena {
     const layer = this.scene.add.renderTexture(350, 240, 1500, 1060).setOrigin(0).setDepth(-10000)
       .draw(floor, -350, -240);
     const painter = new EnvironmentPainter(this.scene, layer);
-    painter.ground('cavern-ground', 0.32, floor);
+    painter.ground('cavern-ground', 0.17, floor);
+    // Quiet central footing keeps warnings legible; soft edge shade adds volume.
+    for (const [x,y,w,h] of [[745,518,330,110],[1450,543,320,125],[1480,980,290,100],[895,1050,370,115]]) painter.contact(x,y,w,h,0.24);
+    painter.apron(520, 886, 170, 0x92a78d);
 
     // The ancient construction is exposed only along the geological margins.
     // Painted plates, mineral strata and roots share contact shadows and material.
@@ -122,12 +125,12 @@ export class WardenArena {
 
     for (const rock of WARDEN_ARENA_FOOTPRINTS) {
       const lower = rock.y > 900;
-      painter.stamp({ key: 'world-shadow', x: rock.x, y: rock.y + 13,
-        width: rock.radius * 5, height: rock.radius * 2.8, alpha: 0.75 });
+      const stratum = rock.x % 3 !== 0;
+      painter.apron(rock.x, rock.y + rock.radius * 0.6, rock.radius * 3.8, 0x91a28a);
       // The shelf's painted ground contact remains close to its simple footprint.
-      painter.stamp({ key: rock.x % 3 ? 'deep-stratum' : 'rock-shelf', x: rock.x, y: rock.y - 25,
-        width: rock.radius * 4.25, height: rock.radius * 2.75,
-        angle: lower ? -5 : 5, flipX: lower, tint: lower ? 0xaab6a1 : 0xb9c6b6 });
+      painter.stamp({ key: stratum ? 'deep-stratum' : 'rock-shelf', x: rock.x, y: rock.y - (stratum ? rock.radius * 0.27 : 0),
+        width: rock.radius * 4.25, height: rock.radius * (stratum ? 2.2 : 3.1),
+        angle: lower ? -5 : 5, flipX: lower, tint: lower ? 0x94a78c : 0xa0b2a0 });
     }
     // Back wall mass connects the large formations without another solid prop
     // in the playable center. These shared silhouettes are baked raster assets.

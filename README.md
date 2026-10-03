@@ -12,6 +12,8 @@ O [Visual Rendering Prototype 01](docs/visual-rendering-prototype-01/) compara G
 
 ## Stack
 
+A [passagem de coesão e contato ambiental](docs/environment-cohesion/) revisa escala, sombras de contato, transições com o terreno e profundidade em Forest, Cavern, exterior e arena. Reutiliza o kit D, mantém os dados físicos e registra comparativos antes/depois para playtest visual.
+
 - TypeScript, Phaser 3 e Vite
 - PNGs pintados em `public/assets/visual/characters/` para personagens e em `public/assets/visual/environment/` para cenários; composição estática baked/cacheada
 - Loops musicais autorais de protótipo em `public/assets/audio/`; efeitos curtos são sintetizados com Web Audio

@@ -105,15 +105,18 @@ export class CavernArea {
     const layer = scene.add.renderTexture(350, 250, 1500, 1000).setOrigin(0).setDepth(-10000);
     layer.draw(art, -350, -250);
     const painter = new EnvironmentPainter(scene, layer);
-    painter.ground('cavern-ground', 0.25);
+    painter.ground('cavern-ground', 0.16);
+    for (const [x,y,w,h] of [[625,919,220,96],[1030,495,340,120],[1510,1018,270,100]]) painter.contact(x,y,w,h,0.24);
     for (let i = 0; i < 12; i++) {
       const x = 508 + i * 96;
       const top = 387 + Math.sin(i * 2.7) * 22;
       const bottom = 1103 + Math.cos(i * 1.9) * 16;
       painter.stamp({ key: 'rock-shelf', x, y: top - 5, width: 143, height: 128,
-        angle: i % 3 * 3 - 3, flipX: i % 3 === 0, tint: i % 3 ? 0xc4d5cf : 0xe1dec9 });
+        angle: i % 3 * 3 - 3, flipX: i % 3 === 0, tint: i % 3 ? 0x98aba4 : 0xb3b8a2 });
       painter.stamp({ key: 'rock-shelf', x, y: bottom + 1, width: 145, height: 132,
-        angle: i % 3 * -3, flipX: i % 3 !== 0, tint: 0xbdcfc6 });
+        angle: i % 3 * -3, flipX: i % 3 !== 0, tint: 0x8caaa0 });
+      painter.contact(x, top + 20, 136, 37, 0.55);
+      painter.contact(x, bottom + 21, 138, 38, 0.5);
     }
     for (let i = 0; i < 8; i++) {
       const x = 552 + i * 139;
@@ -126,16 +129,18 @@ export class CavernArea {
     }
     for (const rock of this.obstacles) {
       if (rock === this.collapseObstacle || rock.x > CAVERN_BOUNDS.right) continue;
-      painter.rock(rock.x, rock.y, rock.radius, 0xd9e0d4);
+      painter.rock(rock.x, rock.y, rock.radius, 0xbacbb9, true);
     }
     for (const [x, y, h] of [[946,1008,46],[1002,1030,66],[1055,988,39]] as const) {
+      painter.apron(x, y + h * 0.3, h * 1.1, 0xa4b39a);
       painter.stamp({ key: 'mineral-growth', x, y: y - h * 0.3,
         width: h * 1.3, height: h * 1.45, tint: 0xddd6ba });
     }
     for (const [x, y, size] of [[760,1024,23],[1140,449,20],[1370,1042,26],[1600,752,18]] as const) {
       painter.stamp({ key: 'mineral-growth', x, y, width: size * 3, height: size * 3.2 });
     }
-    painter.stamp({ key: 'ancient-frame', x: 1494, y: 570, width: 300, height: 310, tint: 0xd4d9d1 });
+    painter.apron(1494, 645, 258, 0xa5b39b);
+    painter.stamp({ key: 'ancient-frame', x: 1494, y: 570, width: 300, height: 310, tint: 0xbac8b6 });
     // Keep the existing inscriptions above the painting, captured in the same bake.
     const glyph = scene.make.graphics({ x: 0, y: 0 }, false);
     glyph.lineStyle(4, 0xa98cff, 0.75).lineBetween(1453,570,1480,553)
