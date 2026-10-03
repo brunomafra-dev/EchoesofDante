@@ -1,0 +1,244 @@
+{
+  "method": "Chrome headless; DEV encounter setup, real keyboard/mouse/CDP touch and Gamepad API mock; no physical device",
+  "errors": [],
+  "portalUnlockAfterVictory": true,
+  "entry": {
+    "area": "valley",
+    "p": {
+      "x": 530,
+      "y": 850
+    },
+    "hp": 110,
+    "maxHp": 110,
+    "xp": 120,
+    "level": 2,
+    "echoes": 3,
+    "won": true,
+    "portal": true,
+    "landmark": false,
+    "end": false,
+    "checkpoint": false,
+    "enemies": 6,
+    "objects": 105,
+    "rt": 2,
+    "tweens": 2,
+    "textures": 77,
+    "roots": 1,
+    "listeners": [
+      1,
+      1
+    ],
+    "message": "VALE DA RESSONÂNCIA\nOUTRA MARGEM DE DANTE",
+    "dead": false,
+    "method": "keyboard"
+  },
+  "explorationWithoutKills": true,
+  "meleeTelegraphDodge": true,
+  "rangedVolley": true,
+  "projectileObstacle": true,
+  "walkFrames": [
+    {
+      "frame": 3,
+      "rotation": 0,
+      "y": 13,
+      "origin": 0.953125
+    },
+    {
+      "frame": 4,
+      "rotation": 0,
+      "y": 13,
+      "origin": 0.953125
+    },
+    {
+      "frame": 4,
+      "rotation": 0,
+      "y": 13,
+      "origin": 0.953125
+    },
+    {
+      "frame": 1,
+      "rotation": 0,
+      "y": 13,
+      "origin": 0.953125
+    },
+    {
+      "frame": 1,
+      "rotation": 0,
+      "y": 13,
+      "origin": 0.953125
+    },
+    {
+      "frame": 2,
+      "rotation": 0,
+      "y": 13,
+      "origin": 0.953125
+    },
+    {
+      "frame": 3,
+      "rotation": 0,
+      "y": 13,
+      "origin": 0.953125
+    },
+    {
+      "frame": 3,
+      "rotation": 0,
+      "y": 13,
+      "origin": 0.953125
+    },
+    {
+      "frame": 4,
+      "rotation": 0,
+      "y": 13,
+      "origin": 0.953125
+    },
+    {
+      "frame": 4,
+      "rotation": 0,
+      "y": 13,
+      "origin": 0.953125
+    },
+    {
+      "frame": 1,
+      "rotation": 0,
+      "y": 13,
+      "origin": 0.953125
+    },
+    {
+      "frame": 1,
+      "rotation": 0,
+      "y": 13,
+      "origin": 0.953125
+    },
+    {
+      "frame": 2,
+      "rotation": 0,
+      "y": 13,
+      "origin": 0.953125
+    },
+    {
+      "frame": 2,
+      "rotation": 0,
+      "y": 13,
+      "origin": 0.953125
+    },
+    {
+      "frame": 3,
+      "rotation": 0,
+      "y": 13,
+      "origin": 0.953125
+    }
+  ],
+  "saberChargeXp": true,
+  "dash": true,
+  "deaths": [
+    {
+      "area": "valley",
+      "p": {
+        "x": 1860,
+        "y": 570
+      },
+      "hp": 120,
+      "maxHp": 120,
+      "xp": 150,
+      "level": 3,
+      "echoes": 3,
+      "won": true,
+      "portal": true,
+      "landmark": true,
+      "end": true,
+      "checkpoint": true,
+      "enemies": 6,
+      "objects": 105,
+      "rt": 2,
+      "tweens": 2,
+      "textures": 77,
+      "roots": 1,
+      "listeners": [
+        1,
+        1
+      ],
+      "message": "SINAL DETECTADO\nFONTE: DESCONHECIDA",
+      "dead": false,
+      "method": "keyboard"
+    },
+    {
+      "area": "valley",
+      "p": {
+        "x": 1860,
+        "y": 570
+      },
+      "hp": 120,
+      "maxHp": 120,
+      "xp": 150,
+      "level": 3,
+      "echoes": 3,
+      "won": true,
+      "portal": true,
+      "landmark": true,
+      "end": true,
+      "checkpoint": true,
+      "enemies": 6,
+      "objects": 105,
+      "rt": 2,
+      "tweens": 2,
+      "textures": 77,
+      "roots": 1,
+      "listeners": [
+        1,
+        1
+      ],
+      "message": "SINAL DETECTADO\nFONTE: DESCONHECIDA",
+      "dead": false,
+      "method": "keyboard"
+    },
+    {
+      "area": "valley",
+      "p": {
+        "x": 1860,
+        "y": 570
+      },
+      "hp": 120,
+      "maxHp": 120,
+      "xp": 150,
+      "level": 3,
+      "echoes": 3,
+      "won": true,
+      "portal": true,
+      "landmark": true,
+      "end": true,
+      "checkpoint": true,
+      "enemies": 6,
+      "objects": 105,
+      "rt": 2,
+      "tweens": 2,
+      "textures": 77,
+      "roots": 1,
+      "listeners": [
+        1,
+        1
+      ],
+      "message": "SINAL DETECTADO\nFONTE: DESCONHECIDA",
+      "dead": false,
+      "method": "keyboard"
+    }
+  ],
+  "rewardOnce": true,
+  "returnPortal": true,
+  "gamepadMock": true,
+  "resolutions": [
+    "1280x720",
+    "1366x768",
+    "1920x1080",
+    "844x390"
+  ],
+  "performance": {
+    "mean": 60.30760908157343,
+    "min": 59.92644881887777,
+    "max": 60.47282169659805,
+    "objects": 105,
+    "tweens": 2,
+    "rt": 2
+  },
+  "idleStable": true,
+  "reload": true
+}

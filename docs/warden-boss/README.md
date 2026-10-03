@@ -2,6 +2,10 @@
 
 Versão: **0.1.38**.
 
+Na expansão 0.1.42, a transmissão após a vitória também libera o portal para o
+[Vale da Ressonância](../resonance-valley/). O encontro, fases e valores descritos
+aqui permanecem; a antiga mensagem de encerramento passa a indicar a travessia.
+
 O encontro continua o Primeiro Eco e encerra o vertical slice com uma transmissão incompleta. O boss está em **uma nova área depois do limiar do guardião**. A preparação exterior continua sendo um espaço de descoberta e aproximação.
 
 ## Conceito e identidade

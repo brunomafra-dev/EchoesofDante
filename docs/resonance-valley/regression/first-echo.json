@@ -1,0 +1,167 @@
+{
+  "method": "Chrome headless, real keyboard/mouse, Gamepad API mock, CDP touch emulation; DEV setup",
+  "errors": [],
+  "firstEchoOnceNoRewardControlFree": true,
+  "thresholdClosedBeforeInteraction": true,
+  "returnThroughArch": true,
+  "threeDeathsSessionStateSafe": [
+    {
+      "p": {
+        "x": 5430,
+        "y": 740
+      },
+      "hp": 110,
+      "maxHp": 110,
+      "xp": 120,
+      "level": 2,
+      "echoes": 3,
+      "passage": true,
+      "deep": true,
+      "first": true,
+      "warden": true,
+      "response": false,
+      "area": "cavern",
+      "gateOpen": false,
+      "bossState": null,
+      "objects": 210,
+      "textures": 72,
+      "rt": 8,
+      "tweens": 4,
+      "timers": 0,
+      "listeners": [
+        1,
+        1
+      ],
+      "footprints": 122,
+      "enemies": 19,
+      "musicFocus": 0.55,
+      "message": "SINAL DETECTADO\nFONTE: DESCONHECIDA",
+      "objective": "INVESTIGUE O LIMIAR"
+    },
+    {
+      "p": {
+        "x": 5430,
+        "y": 740
+      },
+      "hp": 110,
+      "maxHp": 110,
+      "xp": 120,
+      "level": 2,
+      "echoes": 3,
+      "passage": true,
+      "deep": true,
+      "first": true,
+      "warden": true,
+      "response": false,
+      "area": "cavern",
+      "gateOpen": false,
+      "bossState": null,
+      "objects": 210,
+      "textures": 72,
+      "rt": 8,
+      "tweens": 4,
+      "timers": 0,
+      "listeners": [
+        1,
+        1
+      ],
+      "footprints": 122,
+      "enemies": 19,
+      "musicFocus": 0.55,
+      "message": "SINAL DETECTADO\nFONTE: DESCONHECIDA",
+      "objective": "INVESTIGUE O LIMIAR"
+    },
+    {
+      "p": {
+        "x": 5430,
+        "y": 740
+      },
+      "hp": 110,
+      "maxHp": 110,
+      "xp": 120,
+      "level": 2,
+      "echoes": 3,
+      "passage": true,
+      "deep": true,
+      "first": true,
+      "warden": true,
+      "response": false,
+      "area": "cavern",
+      "gateOpen": false,
+      "bossState": null,
+      "objects": 210,
+      "textures": 72,
+      "rt": 8,
+      "tweens": 4,
+      "timers": 0,
+      "listeners": [
+        1,
+        1
+      ],
+      "footprints": 122,
+      "enemies": 19,
+      "musicFocus": 0.55,
+      "message": "SINAL DETECTADO\nFONTE: DESCONHECIDA",
+      "objective": "INVESTIGUE O LIMIAR"
+    }
+  ],
+  "collisionNavigation": true,
+  "gamepadMovementChargeMock": true,
+  "deathDuringResponsePreserved": true,
+  "stableIdle": {
+    "p": {
+      "x": 5990,
+      "y": 740
+    },
+    "hp": 110,
+    "maxHp": 110,
+    "xp": 120,
+    "level": 2,
+    "echoes": 3,
+    "passage": true,
+    "deep": true,
+    "first": true,
+    "warden": true,
+    "response": false,
+    "area": "cavern",
+    "gateOpen": false,
+    "bossState": null,
+    "objects": 210,
+    "textures": 72,
+    "rt": 8,
+    "tweens": 4,
+    "timers": 0,
+    "listeners": [
+      1,
+      1
+    ],
+    "footprints": 122,
+    "enemies": 19,
+    "musicFocus": 0.45,
+    "message": "LIMIAR DO GUARDIÃO\nALGO SE MOVE DO OUTRO LADO\nINVESTIGUE A PASSAGEM",
+    "objective": "INVESTIGUE O LIMIAR"
+  },
+  "performance": {
+    "mean": 59.93449290288862,
+    "min": 59.4203799658972,
+    "max": 60.39472959858466
+  },
+  "resolutions": [
+    "1280x720",
+    "1366x768",
+    "1920x1080",
+    "844x390"
+  ],
+  "touchInteractionCombatEmulated": true,
+  "reloadNewSession": true,
+  "thresholdInteractionOpensSeparateArea": {
+    "closedFootprints": 122,
+    "openFootprints": 121,
+    "arrival": {
+      "x": 650,
+      "y": 760
+    },
+    "bossState": "DORMANT"
+  },
+  "passed": true
+}

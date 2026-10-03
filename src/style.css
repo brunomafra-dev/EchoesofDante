@@ -13,7 +13,9 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
 .touch-pad { position: absolute; bottom: calc(16px + env(safe-area-inset-bottom)); width: clamp(108px, 28vh, 140px); aspect-ratio: 1; border: 2px solid #96c6bb88; border-radius: 50%; background: #0a2730a8; color: #d5eee4; display: grid; place-items: center; font: 700 15px 'Barlow Condensed', sans-serif; letter-spacing: 2px; pointer-events: auto; touch-action: none; }
 .touch-pad i { position: absolute; width: 42px; height: 42px; border: 2px solid #a5d9c2bb; border-radius: 50%; background: #6bb46455; pointer-events: none; }
 .touch-pad span { transform: translateY(-40px); pointer-events: none; }
-.touch-move { left: calc(22px + env(safe-area-inset-left)); }
+.touch-move-zone { position: absolute; left: env(safe-area-inset-left); bottom: env(safe-area-inset-bottom); width: min(44vw, 380px); height: min(52vh, 280px); pointer-events: auto; touch-action: none; }
+.touch-move { left: 36px; bottom: 24px; pointer-events: none; }
+.touch-move.is-moving { border-width: 3px; border-color: #b7dfcb; }
 .touch-actions { position: absolute; right: calc(12px + env(safe-area-inset-right)); bottom: calc(12px + env(safe-area-inset-bottom)); display: grid; grid-template-columns: repeat(2, var(--action-size)); gap: 0 8px; pointer-events: none; }
 .touch-actions button, .touch-context button { position: relative; padding: 7px; border: 0; background: transparent; color: #ebf6e8; font: 700 15px 'Barlow Condensed', sans-serif; letter-spacing: 1px; touch-action: none; pointer-events: auto; -webkit-tap-highlight-color: transparent; }
 .touch-actions button { width: var(--action-size); height: var(--action-size); }
@@ -35,13 +37,13 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
 .touch-context button { min-width: 130px; min-height: 62px; display: none; }
 .touch-context .touch-face { min-height: 46px; padding: 10px; border-color: #a98cffbb; }
 .touch-interact.is-available { display: block; }
-.touch-controls.is-dead .touch-pad, .touch-controls.is-dead .touch-actions, .touch-controls.is-dead .touch-interact { display: none; }
+.touch-controls.is-dead .touch-move-zone, .touch-controls.is-dead .touch-actions, .touch-controls.is-dead .touch-interact { display: none; }
 .touch-controls.is-dead .touch-restart { display: block; }
 .touch-rotate { display: none; }
 @keyframes touch-release { from { transform: scale(1.05); border-color: #5fe6d8; } to { transform: scale(1); } }
 @media (orientation: portrait) {
   .touch-controls.is-visible { background: #061316ed; pointer-events: auto; }
-  .touch-controls.is-visible .touch-pad, .touch-controls.is-visible .touch-actions, .touch-controls.is-visible .touch-context { display: none; }
+  .touch-controls.is-visible .touch-move-zone, .touch-controls.is-visible .touch-actions, .touch-controls.is-visible .touch-context { display: none; }
   .touch-controls.is-visible .touch-rotate { display: grid; place-content: center; position: absolute; inset: 0; text-align: center; color: #d6eee4; font: 700 25px 'Barlow Condensed', sans-serif; letter-spacing: 2px; }
   .touch-rotate small { font-size: 15px; letter-spacing: 1px; }
 }

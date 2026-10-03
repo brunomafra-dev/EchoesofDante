@@ -168,6 +168,10 @@ export class Hud {
     this.areaSubtitle.setText('DOMÍNIO DO GUARDIÃO   /   SINAL ATIVO');
   }
 
+  setValleyArea(): void {
+    this.areaSubtitle.setText('VALE DA RESSONÂNCIA   /   OUTRA MARGEM');
+  }
+
   setContinuationArea(exterior: boolean, fragmentSeen: boolean, firstEchoSeen = false): void {
     this.areaSubtitle.setText(exterior ? firstEchoSeen ? 'EXTERIOR   /   PRIMEIRO ECO REGISTRADO' : 'EXTERIOR DA CAVERNA   /   AR LIVRE' : 'PROFUNDEZAS   /   VESTÍGIOS ANTIGOS');
     this.signalObjective.setText(exterior ? fragmentSeen ? 'SIGA A RESPOSTA' : 'INVESTIGUE O FRAGMENTO' : 'SIGA O SINAL');

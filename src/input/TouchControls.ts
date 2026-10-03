@@ -10,6 +10,7 @@ export class TouchControls {
   readonly coarsePointer = matchMedia('(pointer: coarse)').matches;
   private root: HTMLDivElement;
   private moveZone: HTMLElement;
+  private movePad: HTMLElement;
   private moveKnob: HTMLElement;
   private interactButton: HTMLElement;
   private moveId?: number;
@@ -29,7 +30,7 @@ export class TouchControls {
     this.root = document.createElement('div');
     this.root.className = 'touch-controls';
     this.root.innerHTML = `
-      <div class="touch-move touch-pad" aria-label="Mover"><span>MOVER</span><i></i></div>
+      <div class="touch-move-zone" aria-label="Área de movimento"><div class="touch-move touch-pad" aria-label="Mover"><span>MOVER</span><i></i></div></div>
       <div class="touch-actions">
         <button data-action="attack" aria-label="Golpe de sabre: toque ou arraste e solte"><span class="touch-face"><b>GOLPE</b><small>TOQUE / ARRASTE</small><i class="touch-direction"></i></span></button>
         <button data-action="dash" aria-label="Esquiva do vazio"><span class="touch-face"><b>ESQUIVA</b><small>MOVER</small></span></button>
@@ -42,8 +43,9 @@ export class TouchControls {
       <div class="touch-rotate">GIRE O DISPOSITIVO<br><small>Jogue na horizontal</small></div>`;
     document.body.append(this.root);
     this.unprotect = protectGameplayGestures(this.root);
-    this.moveZone = this.root.querySelector('.touch-move')!;
-    this.moveKnob = this.moveZone.querySelector('i')!;
+    this.moveZone = this.root.querySelector('.touch-move-zone')!;
+    this.movePad = this.root.querySelector('.touch-move')!;
+    this.moveKnob = this.movePad.querySelector('i')!;
     this.interactButton = this.root.querySelector('.touch-interact')!;
     this.bindMovement();
     for (const button of Array.from(this.root.querySelectorAll<HTMLButtonElement>('[data-action]'))) {
@@ -142,26 +144,52 @@ export class TouchControls {
       zone.setPointerCapture(event.pointerId);
       this.onGesture();
       this.moveId = event.pointerId;
+      const bounds = zone.getBoundingClientRect();
+      const radius = this.movePad.getBoundingClientRect().width / 2;
+      // The hit surface is much larger than the visible circle. Keep the base
+      // inside safe areas even when the first touch is near the viewport edge.
+      const x = Math.max(radius + 8, Math.min(bounds.width - radius - 8, event.clientX - bounds.left));
+      const y = Math.max(radius + 8, Math.min(bounds.height - radius - 8, event.clientY - bounds.top));
+      this.movePad.style.left = `${x - radius}px`;
+      this.movePad.style.top = `${y - radius}px`;
+      this.movePad.style.bottom = 'auto';
+      this.movePad.classList.add('is-moving');
+      // An edge press is neutral too: only the illustration is clamped, never
+      // the gesture origin. Movement starts when the finger actually drags.
       this.moveOrigin = { x: event.clientX, y: event.clientY };
-      this.moveVector = { x: 0, y: 0 };
+      this.updateMovement(event.clientX, event.clientY);
     });
     zone.addEventListener('pointermove', event => {
       if (event.pointerId !== this.moveId) return;
-      const dx = event.clientX - this.moveOrigin.x;
-      const dy = event.clientY - this.moveOrigin.y;
-      this.moveVector = Math.hypot(dx, dy) > TOUCH.moveDeadzone ? normalized(dx, dy) : { x: 0, y: 0 };
-      this.positionKnob(dx, dy);
+      event.preventDefault();
+      this.updateMovement(event.clientX, event.clientY);
     });
     const finish = (event: PointerEvent) => {
       if (event.pointerId !== this.moveId) return;
       this.moveId = undefined;
       this.moveVector = { x: 0, y: 0 };
       this.positionKnob(0, 0);
+      this.resetMovePad();
       if (zone.hasPointerCapture(event.pointerId)) zone.releasePointerCapture(event.pointerId);
     };
     zone.addEventListener('pointerup', finish);
     zone.addEventListener('pointercancel', finish);
     zone.addEventListener('lostpointercapture', finish);
+  }
+
+  private updateMovement(x: number, y: number): void {
+    const dx = x - this.moveOrigin.x, dy = y - this.moveOrigin.y;
+    // Clamp only the visual knob. The captured gesture remains valid beyond
+    // either the circle or the activation surface until release/cancellation.
+    this.moveVector = Math.hypot(dx, dy) > TOUCH.moveDeadzone ? normalized(dx, dy) : { x: 0, y: 0 };
+    this.positionKnob(dx, dy);
+  }
+
+  private resetMovePad(): void {
+    this.movePad.style.removeProperty('left');
+    this.movePad.style.removeProperty('top');
+    this.movePad.style.removeProperty('bottom');
+    this.movePad.classList.remove('is-moving');
   }
 
   private positionKnob(dx: number, dy: number): void {
@@ -180,6 +208,7 @@ export class TouchControls {
     this.moveId = undefined;
     this.moveVector = { x: 0, y: 0 };
     this.positionKnob(0, 0);
+    this.resetMovePad();
     this.queued.dash = this.queued.interact = this.queued.restart = false;
   };
 

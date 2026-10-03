@@ -1,0 +1,29 @@
+[
+  {
+    "file": "public/assets/visual/characters/dante-carapace-motion.png",
+    "dimensions": [
+      1024,
+      512
+    ],
+    "bytes": 545692,
+    "sha256": "95c6d7bec5885c1684dc024aa568373553da820fa2af8b25ad35460782619a97"
+  },
+  {
+    "file": "public/assets/visual/characters/dante-thorn-motion.png",
+    "dimensions": [
+      1024,
+      512
+    ],
+    "bytes": 443625,
+    "sha256": "736e2cd703cdcaf81739d871267c64fa592656c0bb8d1f9e31e179c99e6dacf9"
+  },
+  {
+    "file": "public/assets/visual/environment/resonance-growth.png",
+    "dimensions": [
+      512,
+      384
+    ],
+    "bytes": 256499,
+    "sha256": "a7eba23b68270660363c026fbef68f1639714dd075b95b04aec05fd6052727f5"
+  }
+]

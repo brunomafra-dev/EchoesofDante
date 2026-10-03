@@ -6,7 +6,7 @@ const PAINTINGS = [
   'deep-stratum', 'deep-mineral', 'deep-relay',
   'exterior-outcrop', 'ancient-approach', 'exterior-atmosphere',
   'first-echo-archive', 'sealed-threshold', 'open-threshold', 'terrain-blend',
-  'guardian-lintel-closed', 'guardian-lintel-open',
+  'guardian-lintel-closed', 'guardian-lintel-open', 'resonance-growth',
 ] as const;
 export type EnvironmentPainting = typeof PAINTINGS[number];
 

@@ -75,10 +75,12 @@ try {
   assert.equal((await state()).enemies,0);assert.equal((await state()).boss.shots,0);assert.equal((await state()).boss.marks,0);
   const won=await state();assert.equal(won.xp,initial.xp);await page.waitForTimeout(2500);assert.ok((await state()).ending);
   await page.screenshot({path:`${out}/victory.png`});await page.waitForTimeout(3100);assert.match((await state()).message,/RETORNO CONFIRMADO/);await page.screenshot({path:`${out}/transmission.png`});
-  await page.waitForTimeout(4100);assert.match((await state()).message,/CONTINUA/);assert.equal((await state()).obstacles,19);
+  await page.waitForTimeout(4100);assert.match((await state()).message,/PORTAL DO SINAL ABERTO/);assert.equal((await state()).obstacles,19);
   await walk(1000,760);await walk(750,760);await walk(610,760);await key('e');
   await page.waitForFunction(()=>window.__danteGame.scene.getScene('Game').area==='cavern');await page.waitForTimeout(750);assert.ok((await state()).won);assert.deepEqual((await state()).p,{x:6060,y:740});
-  await walk(6240,740);await page.waitForFunction(()=>window.__danteGame.scene.getScene('Game').area==='warden');await page.waitForTimeout(800);
+  // Route tolerance can stop just short of x=6230. Cross the actual threshold
+  // with a real movement input instead of waiting for an untriggered transition.
+  await walk(6240,740);await key('d',140);await page.waitForFunction(()=>window.__danteGame.scene.getScene('Game').area==='warden');await page.waitForTimeout(800);
   assert.equal((await state()).boss,null);assert.equal((await state()).enemies,0);assert.ok((await state()).won);assert.equal((await state()).xp,initial.xp);report.finalSequenceUniqueAndReturn=true;
   const settled=await state();await page.waitForTimeout(7000);const idle=await state();for(const k of ['objects','rt','graphics','textures','obstacles','enemies'])assert.equal(idle[k],settled[k]);report.victoryStable=idle;
   // Restart a fresh undefeated attempt for mocked input and resolution inspection.
