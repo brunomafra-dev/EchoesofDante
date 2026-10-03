@@ -5,7 +5,9 @@ import { distance, type Vec2 } from '../utils/math';
 
 // Local scenery/response only: no quest framework, reward, boss or gameplay lock.
 export class WardenApproach {
-  readonly obstacles = WARDEN_FOOTPRINTS;
+  readonly obstacles: typeof WARDEN_FOOTPRINTS;
+  gateOpen: boolean;
+  opening = false;
   responding = false;
   private recorded: boolean;
   private approached = false;
@@ -15,14 +17,16 @@ export class WardenApproach {
   private readonly gate: Phaser.GameObjects.Image;
   private readonly record: Phaser.GameObjects.Text;
 
-  constructor(private scene: Phaser.Scene, recorded: boolean) {
+  constructor(private scene: Phaser.Scene, recorded: boolean, gateOpen = false) {
     this.recorded = recorded;
+    this.gateOpen = gateOpen;
+    this.obstacles = gateOpen ? WARDEN_FOOTPRINTS.filter(o => o.x !== 6400) : WARDEN_FOOTPRINTS;
     scene.add.image(5890, 700, 'exterior-atmosphere').setDisplaySize(1800, 1400).setDepth(-10001).setTint(0x91a99b);
     this.bake();
     this.archive = scene.add.image(5530, 705, 'first-echo-archive').setOrigin(0.5, 0.94)
       .setDisplaySize(250, 245).setDepth(720).setTint(recorded ? 0xffffff : 0xb9c2b0);
     this.archiveLight = scene.add.ellipse(5530, 681, 38, 13, 0xa98cff, recorded ? 0.4 : 0.08).setDepth(725);
-    this.gate = scene.add.image(6340, 1050, 'sealed-threshold').setOrigin(0.5, 1)
+    this.gate = scene.add.image(6340, 1050, gateOpen ? 'open-threshold' : 'sealed-threshold').setOrigin(0.5, 1)
       .setDisplaySize(640, 700).setDepth(1050).setTint(recorded ? 0xe1dece : 0xb8c1b1);
     this.record = scene.add.text(5530, 790, 'PRIMEIRO ECO\nASSINATURA HUMANA REGISTRADA\nDATA: ILEGÍVEL', {
       fontFamily: 'Barlow Condensed, sans-serif', fontSize: '16px', color: '#e4dcff',
@@ -74,6 +78,26 @@ export class WardenApproach {
   presence(): void {
     // A single brief stone movement suggests pressure beyond, without a boss model.
     this.scene.tweens.add({ targets: this.gate, x: 6341.5, duration: 140, yoyo: true, repeat: 2 });
+  }
+
+  canOpen(position: Vec2, dead: boolean): boolean {
+    return !dead && this.recorded && !this.responding && !this.gateOpen && !this.opening && distance(position, W.threshold) <= W.threshold.radius;
+  }
+
+  open(onOpen: () => void): void {
+    if (this.gateOpen || this.opening) return;
+    this.opening = true;
+    this.seams.forEach((seam, i) => this.scene.tweens.add({ targets: seam, alpha: 1, duration: 300, delay: i * 160, yoyo: true }));
+    this.scene.tweens.add({ targets: this.gate, x: 6342, duration: 110, yoyo: true, repeat: 3 });
+    this.scene.time.delayedCall(900, () => {
+      const opening = this.scene.add.image(6340, 1050, 'open-threshold').setOrigin(0.5, 1).setDisplaySize(640, 700).setDepth(1050).setAlpha(0);
+      this.scene.tweens.add({ targets: opening, alpha: 1, duration: 550 });
+      this.scene.tweens.add({ targets: this.gate, alpha: 0, duration: 550, onComplete: () => {
+        this.opening = false;
+        this.gateOpen = true;
+        onOpen();
+      } });
+    });
   }
 
   private bake(): void {

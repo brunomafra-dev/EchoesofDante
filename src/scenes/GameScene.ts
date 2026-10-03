@@ -12,6 +12,9 @@ import type { Enemy, EnemyImpact } from '../entities/Enemy';
 import { EXPANSION, EXPANSION_ENCOUNTERS } from '../config/expansion';
 import { WARDEN_PREPARATION as W } from '../config/wardenPreparation';
 import { Player } from '../entities/Player';
+import { Warden, type WardenCue, type WardenAttack } from '../entities/Warden';
+import { WardenArena } from '../systems/WardenArena';
+import { WardenHud } from '../ui/WardenHud';
 import { Controls } from '../input/Controls';
 import { Arena } from '../systems/Arena';
 import { preloadEnvironment } from '../visual/EnvironmentArt';
@@ -31,10 +34,20 @@ import { distance, normalized, type Vec2 } from '../utils/math';
 export class GameScene extends Phaser.Scene {
   private player!: Player;
   private controls!: Controls;
-  private arena!: Arena | CavernArea;
+  private arena!: Arena | CavernArea | WardenArena;
   private cavern?: CavernArea;
+  private wardenArena?: WardenArena;
+  private warden?: Warden;
+  private wardenHud?: WardenHud;
+  private wardenGateOpen = false;
+  private wardenDefeated = false;
+  private wardenEndingSeen = false;
+  private returnToThreshold = false;
+  private readonly bossTargets: Enemy[] = [];
+  private readonly playerObstacles: Obstacle[] = [];
+  private readonly bossFootprint: Obstacle = { x: 0, y: 0, radius: 65 };
   private movementBounds?: MovementBounds;
-  private area: 'forest' | 'cavern' = 'forest';
+  private area: 'forest' | 'cavern' | 'warden' = 'forest';
   private transferHp?: number;
   private transitioning = false;
   private cavernDepthSeen = false;
@@ -91,6 +104,7 @@ export class GameScene extends Phaser.Scene {
     for (const key of ['dante-skitter-motion', 'dante-spitter-motion']) {
       if (!this.textures.exists(key)) this.load.spritesheet(key, `${assetBase}${key}.png`, { frameWidth: 256, frameHeight: 256 });
     }
+    if (!this.textures.exists('warden-motion')) this.load.spritesheet('warden-motion', `${assetBase}warden-motion.png`, { frameWidth: 512, frameHeight: 512 });
     preloadEnvironment(this);
   }
 
@@ -104,6 +118,11 @@ export class GameScene extends Phaser.Scene {
     this.transitioning = false;
     this.deepOpening = false;
     this.cavern = undefined;
+    this.wardenArena = undefined;
+    this.warden = undefined;
+    this.wardenHud = undefined;
+    this.bossTargets.length = 0;
+    this.playerObstacles.length = 0;
     this.gateObstacle = undefined;
     this.threshold = undefined;
     this.mechanism = undefined;
@@ -123,12 +142,18 @@ export class GameScene extends Phaser.Scene {
       ];
       this.threshold = new SignalThreshold(this, this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen);
       this.mechanism = new PassageMechanism(this, this.progression.sourceLocated, this.progression.passageOpen);
+    } else if (this.area === 'warden') {
+      this.wardenArena = new WardenArena(this);
+      this.arena = this.wardenArena;
+      this.movementBounds = this.arena.bounds;
+      if (this.wardenDefeated) this.wardenArena.resolve();
     } else {
-      this.cavern = new CavernArea(this, this.deepPassageOpen, this.fragmentSeen, this.firstEchoSeen);
+      this.cavern = new CavernArea(this, this.deepPassageOpen, this.fragmentSeen, this.firstEchoSeen, this.wardenGateOpen);
       this.arena = this.cavern;
       this.movementBounds = this.arena.bounds;
     }
-    const entry = this.area === 'forest' ? FOREST_ENTRY : this.firstEchoSeen ? W.respawn : this.exteriorEntered ? EXPANSION.exteriorRespawn : this.deeperEntered ? EXPANSION.deeperRespawn : this.deepCavernEntered ? DEEP_AREA.entry : CAVERN_ENTRY;
+    const entry = this.area === 'forest' ? FOREST_ENTRY : this.area === 'warden' ? { x: 650, y: 760 } : this.returnToThreshold ? { x: 6060, y: 740 } : this.firstEchoSeen ? W.respawn : this.exteriorEntered ? EXPANSION.exteriorRespawn : this.deeperEntered ? EXPANSION.deeperRespawn : this.deepCavernEntered ? DEEP_AREA.entry : CAVERN_ENTRY;
+    this.returnToThreshold = false;
     this.player = new Player(this, entry.x, entry.y, this.progression.maxHp);
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
     this.transferHp = undefined;
@@ -136,10 +161,10 @@ export class GameScene extends Phaser.Scene {
     this.controls = new Controls(this, () => this.sounds.unlock(), () => {
       if (!this.player.isDead) this.beginStrike(this.time.now);
     });
-    this.sounds.setArea(this.exteriorEntered ? 'forest' : this.area);
+    this.sounds.setArea(this.area === 'warden' ? 'warden' : this.exteriorEntered ? 'forest' : this.area);
     this.sounds.setMusicFocus(1);
     const spawns = this.area === 'forest' ? FOREST_SPAWNS : CAVERN_HOLLOWS;
-    spawns.forEach((point, index) => {
+    if (this.area !== 'warden') spawns.forEach((point, index) => {
       const enemy = new HollowCrawler(this, point.x, point.y, this.area === 'forest' ? FOREST_PATROLS[index] : undefined);
       this.enemies.push(enemy);
       this.hollowSpawnIds.set(enemy, this.area === 'forest' ? index : FOREST_SPAWNS.length + index);
@@ -147,8 +172,19 @@ export class GameScene extends Phaser.Scene {
     if (this.area === 'cavern' && this.deepPassageOpen) this.spawnDeepHollows();
     this.hud = new Hud(this, () => this.restart());
     this.explorationGuide = new ExplorationGuide(this);
+    if (this.area === 'warden') {
+      this.wardenHud = new WardenHud(this);
+      if (!this.wardenDefeated) {
+        this.warden = new Warden(this, 1170, 735, this.wardenArena!.bounds, (cue, attack) => this.wardenCue(cue, attack), () => this.finishWarden());
+        this.enemies.push(this.warden);
+      } else {
+        this.sounds.stopMusic();
+        this.hud.showDiscovery('TRANSMISSÃO LIBERADA\nFRAGMENTO: RETORNO CONFIRMADO\nDESTINO: ILEGÍVEL');
+      }
+    }
     this.updateProgressHud();
     this.hud.setSignalObjective(this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen, this.area === 'cavern', this.cavernDepthSeen, this.deepAreaSeen);
+    if (this.area === 'warden') this.hud.setWardenArea();
     this.inDeepCavern = this.area === 'cavern' && this.deepCavernEntered;
     if (this.area === 'cavern') this.hud.setCavernDepth(this.inDeepCavern);
     this.continuationRegion = this.exteriorEntered ? 'exterior' : this.deeperEntered ? 'deeper' : 'deep';
@@ -156,7 +192,7 @@ export class GameScene extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, this.area === 'cavern' ? W.cameraWidth : WORLD_WIDTH, WORLD_HEIGHT)
       .startFollow(this.player.view, false, 0.1, 0.1);
     this.cameras.main.setBackgroundColor(this.area === 'forest' ? '#102d2c' : '#07151c');
-    if (this.area === 'cavern') {
+    if (this.area !== 'forest') {
       this.cameras.main.centerOn(entry.x, entry.y);
       this.cameras.main.fadeIn(260, 5, 15, 20);
     }
@@ -174,6 +210,8 @@ export class GameScene extends Phaser.Scene {
     const nearMechanism = this.mechanism?.canInvestigate(this.player.position, this.player.isDead) ?? false;
     const nearFragment = this.cavern?.continuation.canInvestigate(this.player.position, this.player.isDead, this.fragmentSeen) ?? false;
     const nearFirstEcho = this.fragmentSeen && (this.cavern?.wardenApproach.canInvestigate(this.player.position, this.player.isDead) ?? false);
+    const nearWardenGate = this.cavern?.wardenApproach.canOpen(this.player.position, this.player.isDead) ?? false;
+    const nearWardenExit = this.area === 'warden' && this.wardenDefeated && !this.player.isDead && distance(this.player.position, { x: 540, y: 760 }) < 115;
     if (nearDiscovery && interact) {
       const wasSynchronized = this.progression.signalSynchronized;
       nearbyEcho.activate();
@@ -219,14 +257,28 @@ export class GameScene extends Phaser.Scene {
         this.hud.showDiscovery(stage === 'revelation' ? W.revelation : stage === 'confirmation' ? W.confirmation : W.continuation);
         this.sounds.signal();
       });
+    } else if (interact && nearWardenGate) {
+      this.hud.showDiscovery('O REGISTRO FOI RECONHECIDO\nO LIMIAR ESTÁ RESPONDENDO');
+      this.sounds.ancient();
+      this.cavern?.wardenApproach.open(() => {
+        this.wardenGateOpen = true;
+        const index = this.arena.obstacles.findIndex(o => o.x === 6400 && o.y === 740);
+        if (index >= 0) this.arena.obstacles.splice(index, 1);
+        if (this.movementBounds) this.movementBounds.right = 6480;
+        this.hud.showDiscovery('LIMIAR ABERTO\nATRAVESSE A PASSAGEM');
+      });
+    } else if (interact && nearWardenExit) {
+      this.transitionArea('cavern');
+      return;
     } else if (interact && this.area === 'forest' && !this.progression.sourceLocated &&
       distance(this.player.position, { x: SIGNAL_THRESHOLD.mechanismX, y: SIGNAL_THRESHOLD.mechanismY }) <= SIGNAL_THRESHOLD.mechanismRadius) {
       this.hud.showDiscovery(this.progression.signalSynchronized
         ? 'MECANISMO INATIVO\nInvestigue a fissura ao lado primeiro.'
         : 'MECANISMO INATIVO\nEncontre e investigue os 3 Ecos.');
     }
-    this.hud.setDiscoveryPrompt(nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho);
-    this.controls.setInteractAvailable(nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho);
+    const canInteract = nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit;
+    this.hud.setDiscoveryPrompt(canInteract);
+    this.controls.setInteractAvailable(canInteract);
     this.controls.setDead(this.player.isDead);
     this.updateExplorationGuide();
     if (this.player.isDead) {
@@ -256,24 +308,44 @@ export class GameScene extends Phaser.Scene {
     if (this.controls.attacking && !heavyBusy) this.beginStrike(time);
     const pose = this.attack.pose(time, facing);
     const wasDashing = this.player.isDashing;
-    this.player.update(time, dt, input, facing, this.arena.obstacles, pose, heavy, this.movementBounds);
+    if (this.area === 'warden') {
+      this.playerObstacles.length = 0;
+      this.playerObstacles.push(...this.arena.obstacles);
+      if (this.warden && !this.warden.isDead) {
+        Object.assign(this.bossFootprint, this.warden.position, { radius: this.warden.radius });
+        this.playerObstacles.push(this.bossFootprint);
+      }
+    }
+    this.player.update(time, dt, input, facing, this.area === 'warden' ? this.playerObstacles : this.arena.obstacles, pose, heavy, this.movementBounds);
     if (wasDashing && !this.player.isDashing) this.dashEnd();
     if (this.player.isDashing && time - this.lastDashTrail > 30) {
       this.lastDashTrail = time;
       this.dashTrail();
     }
+    this.bossTargets.length = 0;
+    if (this.warden?.canBeHit) this.bossTargets.push(this.warden);
+    const targets = this.area === 'warden' ? this.bossTargets : this.enemies;
     if (this.charge.wavePending) {
-      const waveHits = this.charge.takeHits(time, this.enemies);
+      const waveHits = this.charge.takeHits(time, targets);
       this.resolvePlayerHits(time, waveHits, this.charge.damage, this.charge.angle, 0x5fe6d8, this.charge.origin, true);
     }
     this.renderKineticWave(time);
-    const sweep = this.attack.advance(time, this.player.position, facing, this.enemies);
+    const sweep = this.attack.advance(time, this.player.position, facing, targets);
     this.resolveSaberHits(time, sweep.hits, sweep.pose.worldAngle);
     for (const enemy of this.enemies) {
       enemy.update(time, dt, this.player.position, this.player.isDead, this.arena.obstacles, impact => this.enemyStrike(enemy, impact), this.movementBounds);
     }
     this.enemies = this.enemies.filter(enemy => !enemy.isDead);
     this.hud.update(this.player.hp, this.player.maxHp, this.player.dashProgress, this.charge.getProgress(time), heavy.phase, heavy.level);
+    if (this.area === 'warden') {
+      if (!this.wardenDefeated && this.warden?.state === 'DORMANT' && this.player.position.x >= 850) {
+        this.warden.beginIntro(time);
+        this.wardenArena?.setEncounterActive(true);
+      }
+      this.wardenHud?.update(this.warden);
+      return;
+    }
+    if (this.area === 'cavern' && this.wardenGateOpen && this.player.position.x >= 6230 && Math.abs(this.player.position.y - 740) < 140) this.transitionArea('warden');
     if (this.area === 'forest' && this.progression.passageOpen && !this.gateObstacle && this.threshold?.isInside(this.player.position)) this.enterCavern();
     if (this.area === 'cavern' && !this.deepPassageOpen && !this.deepOpening && distance(this.player.position, CAVERN_DEPTH_OPENING) <= CAVERN_DEPTH_OPENING.radius) {
       this.cavernDepthSeen = true;
@@ -362,6 +434,13 @@ export class GameScene extends Phaser.Scene {
 
   private updateExplorationGuide(): void {
     let title: string, target: ExplorationTarget;
+    if (this.area === 'warden') {
+      this.explorationGuide.hide();
+      this.hud.setExplorationGuide(this.wardenDefeated ? 'O SINAL FOI LIBERADO' : 'DOMÍNIO DO GUARDIÃO',
+        this.wardenDefeated ? 'Há outro destino sob Dante.' : this.warden?.state === 'DORMANT' ? 'A presença está adiante.' : 'Observe as marcas e as janelas de ataque.',
+        this.wardenDefeated ? 'Você pode voltar pela passagem a oeste.' : 'Use a esquiva para se reposicionar.');
+      return;
+    }
     if (this.area === 'forest') {
       const sites = [
         { id: 'northern-ruin', ...NORTHERN_DISCOVERY, name: 'Ruína do norte', instruction: 'Procure as inscrições na pedra.' },
@@ -406,8 +485,8 @@ export class GameScene extends Phaser.Scene {
       title = 'PRIMEIRO ECO';
       target = { ...W.echo, name: 'Registro humano encontrado', instruction: 'A data e a origem estão ilegíveis.', action: 'observe' };
     } else {
-      title = this.wardenReached ? 'LIMIAR DO GUARDIÃO' : 'SIGA AS INSCRIÇÕES';
-      target = { ...W.threshold, name: 'Limiar do guardião', instruction: this.wardenReached ? 'Há algo além. A passagem permanece fechada.' : 'O caminho acendeu; siga para leste.', action: this.wardenReached ? 'blocked' : 'walk' };
+      title = this.wardenGateOpen ? 'ATRAVESSE O LIMIAR' : this.cavern?.wardenApproach.opening ? 'O LIMIAR ESTÁ RESPONDENDO' : this.wardenReached ? 'INVESTIGUE O LIMIAR' : 'SIGA AS INSCRIÇÕES';
+      target = { ...W.threshold, name: 'Limiar do guardião', instruction: this.wardenGateOpen ? 'Caminhe pela abertura para leste.' : 'O registro acendeu o caminho; investigue a passagem.', action: this.wardenGateOpen ? 'walk' : 'investigate' };
     }
     this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod, title, target, this.hud);
   }
@@ -428,6 +507,42 @@ export class GameScene extends Phaser.Scene {
       this.area = 'cavern';
       this.scene.restart();
     });
+  }
+
+  private transitionArea(area: 'cavern' | 'warden'): void {
+    if (this.transitioning) return;
+    this.transitioning = true;
+    this.transferHp = this.player.hp;
+    this.returnToThreshold = area === 'cavern';
+    this.cameras.main.fadeOut(220, 5, 15, 20);
+    this.time.delayedCall(240, () => { this.area = area; this.scene.restart(); });
+  }
+
+  private wardenCue(cue: WardenCue, attack?: WardenAttack): void {
+    if (cue === 'execute' && attack) this.sounds.wardenCue(attack);
+    else if (cue === 'intro') { this.sounds.wardenCue('intro'); this.sounds.setMusicFocus(0.45); }
+    else if (cue === 'phase') { this.sounds.wardenCue('phase'); this.wardenArena?.setPhase(this.warden?.phase ?? 1); }
+    else if (cue === 'death') {
+      // Persist on the lethal hit; a restart cannot resurrect a defeated guardian.
+      this.wardenDefeated = true;
+      this.sounds.stopMusic();
+      this.sounds.wardenCue('death');
+      this.wardenArena?.setEncounterActive(false);
+    }
+    else if (cue === 'telegraph') this.sounds.setMusicFocus(1);
+  }
+
+  private finishWarden(): void {
+    this.wardenArena?.resolve();
+    if (this.wardenEndingSeen) return;
+    this.wardenEndingSeen = true;
+    this.sounds.wardenCue('victory');
+    this.hud.showDiscovery('GUARDIÃO SILENCIADO\nO SINAL NÃO SE APAGOU');
+    this.time.delayedCall(3000, () => {
+      this.sounds.signal();
+      this.hud.showDiscovery('TRANSMISSÃO LIBERADA\nFRAGMENTO: RETORNO CONFIRMADO\nDESTINO: ILEGÍVEL');
+    });
+    this.time.delayedCall(7000, () => this.hud.showDiscovery('ECHOES OF DANTE\nO SINAL APONTA PARA ALÉM\nCONTINUA...'));
   }
 
   private beginStrike(now: number): void {
@@ -455,7 +570,7 @@ export class GameScene extends Phaser.Scene {
         this.tweens.add({ targets: wave, scale: 2.4, alpha: 0, duration: 190, onComplete: () => wave.destroy() });
       }
       if (result.died) {
-        this.deathEffect(enemy.position);
+        if (enemy !== this.warden) this.deathEffect(enemy.position);
         enemy.die();
         const spawnIndex = this.hollowSpawnIds.get(enemy);
         if (spawnIndex !== undefined) {
@@ -481,6 +596,7 @@ export class GameScene extends Phaser.Scene {
     // Enemy swings are spaced by cooldown; this short grace period stops overlap bursts.
     this.player.setHurtGrace(this.time.now + PLAYER.hurtCooldown);
     if (result.died) {
+      this.warden?.suspend();
       this.charge.stop();
       this.kineticWave.clear();
       this.waveDrawn = false;

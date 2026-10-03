@@ -20,6 +20,7 @@ try {
     return { p: { ...s.player.position }, hp: s.player.hp, maxHp: s.player.maxHp, xp: s.progression.xp, level: s.progression.level,
       echoes: s.progression.echoes.size, passage: s.progression.passageOpen, deep: s.deepPassageOpen,
       first: s.firstEchoSeen, warden: s.wardenReached, response: s.cavern?.wardenApproach.responding,
+      area: s.area, gateOpen: s.wardenGateOpen, bossState: s.warden?.state ?? null,
       objects: s.children.list.length, textures: g.textures.getTextureKeys().length,
       rt: s.children.list.filter(o => o.type === 'RenderTexture').length, tweens: s.tweens.getTweens().length,
       timers: s.time._active.length + s.time._pendingInsertion.length, listeners: [s.input.listenerCount('pointerdown'), s.input.keyboard.listenerCount('keydown')],
@@ -70,8 +71,9 @@ try {
   await page.screenshot({path:`${out}/gate-contact.png`});
   await page.waitForTimeout(1500);await key(' ',200);await page.waitForTimeout(500);assert.ok((await state()).p.x<6140,'Sealed gate blocks dash');
   const targets=(await state()).enemies;await page.keyboard.down('q');await page.waitForTimeout(800);await page.keyboard.up('q');await page.waitForTimeout(900);
-  assert.equal((await state()).enemies,targets);assert.ok(await page.evaluate(()=>window.__danteGame.scene.getScene('Game').enemies.every(e=>!String(e.kind).includes('warden'))));
-  report.thresholdNoBossSolid=true;
+  assert.equal((await state()).enemies,targets);assert.equal((await state()).area,'cavern');assert.equal((await state()).gateOpen,false);
+  assert.equal((await state()).bossState,null,'The boss belongs to the separate area after the threshold');
+  report.thresholdClosedBeforeInteraction=true;
   for(const [x,y]of[[5950,740],[5820,790],[5645,810],[5530,760],[5440,740],[5350,630],[5270,670],[5150,710]])await walk(x,y);
   report.returnThroughArch=true;
   // Use the existing damage/death path; repeat three death->respawn cycles.
@@ -120,6 +122,25 @@ try {
   assert.equal(await touch.evaluate(()=>window.visualViewport.scale),1);assert.equal(await touch.evaluate(()=>window.__danteGame.scene.getScene('Game').cavern.wardenApproach.responding),false);report.touchInteractionCombatEmulated=true;
   await touch.evaluate(()=>Object.assign(window.__danteGame.scene.getScene('Game').player.position,{x:5990,y:740}));await touch.waitForTimeout(650);await touch.screenshot({path:`${out}/touch-threshold.png`});await mobile.close();
   await page.reload();await ready(page);assert.equal((await state()).first,false);assert.equal((await state()).echoes,0);report.reloadNewSession=true;
+  // New session: investigate the First Echo, deliberately open the threshold,
+  // then WALK through it into the separate boss area. Earlier tests stay outside.
+  await page.setViewportSize({width:1280,height:720});
+  await page.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');s.area='cavern';s.deepPassageOpen=true;s.exteriorEntered=true;s.fragmentSeen=true;s.scene.restart();});await page.waitForTimeout(750);
+  await position(6100,740);await key('e');assert.equal((await state()).gateOpen,false,'The threshold cannot respond before the First Echo');
+  await position(5530,760);await key('e');await page.waitForFunction(()=>{const s=window.__danteGame.scene.getScene('Game');return s.firstEchoSeen&&!s.cavern.wardenApproach.responding;});
+  await position(6100,740);const closed=await state();assert.equal(closed.area,'cavern');assert.equal(closed.bossState,null);
+  await key('e');assert.equal((await state()).gateOpen,false,'The opening has a visible response before access');
+  await page.waitForFunction(()=>window.__danteGame.scene.getScene('Game').wardenGateOpen);
+  const opened=await state();assert.equal(opened.footprints,closed.footprints-1,'The seal footprint is removed once');
+  await key('e');assert.equal((await state()).footprints,opened.footprints,'Repeated interaction does not duplicate opening');
+  await page.screenshot({path:`${out}/threshold-open.png`});
+  await page.keyboard.down('d');
+  await page.waitForFunction(()=>{const s=window.__danteGame.scene.getScene('Game');return s.area==='warden'&&s.warden?.state==='DORMANT';});
+  await page.keyboard.up('d');await page.waitForTimeout(300);
+  const entered=await state();assert.equal(entered.area,'warden');assert.equal(entered.bossState,'DORMANT');assert.equal(entered.enemies,1);
+  assert.ok(entered.first&&entered.gateOpen);assert.ok(entered.p.x>=650&&entered.p.x<850,'Arrival is safe before the introduction');
+  await page.screenshot({path:`${out}/beyond-threshold.png`});
+  report.thresholdInteractionOpensSeparateArea={closedFootprints:closed.footprints,openFootprints:opened.footprints,arrival:entered.p,bossState:entered.bossState};
   assert.deepEqual(errors,[]);report.passed=true;
 } finally {await writeFile(`${out}/qa-report.json`,JSON.stringify(report,null,2)+'\n');await browser.close();}
 console.log(JSON.stringify(report,null,2));

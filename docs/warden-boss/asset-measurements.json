@@ -1,0 +1,23 @@
+[
+  {
+    "file": "public/assets/visual/characters/warden-motion.png",
+    "dimensions": [
+      2048,
+      1024
+    ],
+    "frame": [
+      512,
+      512
+    ],
+    "frames": 8,
+    "bytes": 2177741
+  },
+  {
+    "file": "public/assets/visual/environment/open-threshold.png",
+    "dimensions": [
+      512,
+      512
+    ],
+    "bytes": 347181
+  }
+]

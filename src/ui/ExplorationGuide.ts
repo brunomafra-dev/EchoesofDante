@@ -24,6 +24,8 @@ export class ExplorationGuide {
     }).setOrigin(0.5, 0).setDepth(11000).setVisible(false);
   }
 
+  hide(): void { this.label.setVisible(false); this.base.setVisible(false); }
+
   update(player: Vec2, dead: boolean, method: InputMethod, title: string, target: ExplorationTarget, hud: Hud): void {
     const gap = distance(player, target);
     const nearby = gap <= target.radius;

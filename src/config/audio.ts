@@ -5,5 +5,6 @@ export const AUDIO = {
   tracks: {
     forest: 'forest-theme.wav',
     cavern: 'cavern-theme.wav',
+    warden: 'warden-theme.wav',
   },
 } as const;

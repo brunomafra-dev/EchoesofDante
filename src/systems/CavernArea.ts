@@ -23,8 +23,8 @@ export class CavernArea {
   readonly continuation: CavernContinuation;
   readonly wardenApproach: WardenApproach;
 
-  constructor(scene: Phaser.Scene, deepPassageOpen = false, fragmentSeen = false, firstEchoSeen = false) {
-    this.bounds = { ...CAVERN_BOUNDS, right: deepPassageOpen ? WARDEN_PREPARATION.right : CAVERN_BOUNDS.right };
+  constructor(scene: Phaser.Scene, deepPassageOpen = false, fragmentSeen = false, firstEchoSeen = false, wardenGateOpen = false) {
+    this.bounds = { ...CAVERN_BOUNDS, right: deepPassageOpen ? wardenGateOpen ? 6480 : WARDEN_PREPARATION.right : CAVERN_BOUNDS.right };
     if (!deepPassageOpen) this.obstacles.push(this.collapseObstacle);
     const art = scene.add.graphics().setVisible(false);
     art.fillStyle(0x07151c).fillRect(350, 250, 1500, 1000);
@@ -158,7 +158,7 @@ export class CavernArea {
     this.deepSignal = new DeepSignal(scene, deepPassageOpen);
     this.continuation = new CavernContinuation(scene, fragmentSeen);
     this.obstacles.push(...this.continuation.obstacles);
-    this.wardenApproach = new WardenApproach(scene, firstEchoSeen);
+    this.wardenApproach = new WardenApproach(scene, firstEchoSeen, wardenGateOpen);
     this.obstacles.push(...this.wardenApproach.obstacles);
     // Physics-only additions must not enter the rock artwork loop above.
     this.obstacles.push(...CAVERN_STRUCTURE_FOOTPRINTS, ...cavernShelfFootprints());

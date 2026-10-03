@@ -42,7 +42,9 @@ A [expansão Deep Cavern](docs/expansion-deep-cavern/) transforma o antigo bolso
 
 A [Expansion Sprint 02](docs/expansion-sprint-02/) continua esse túnel por habitats de Skitters, Spitters e Crawlers, com um desvio mineral e uma subida para um exterior rochoso iluminado. Um fragmento investigável sugere uma resposta de transmissão. Nenhuma passagem exige eliminar inimigos.
 
-A [preparação para o Warden](docs/warden-preparation/) acrescenta o **Primeiro Eco** logo além do arco exterior. Um arquivo ancestral contém uma assinatura humana já registrada, sem data ou origem legíveis. Sua resposta acende inscrições até um limiar monumental fechado. A sequência mantém o controle, não concede XP e permanece registrada após respawn. **O Warden ainda não foi implementado.**
+A [preparação para o Warden](docs/warden-preparation/) acrescenta o **Primeiro Eco** logo além do arco exterior. Um arquivo ancestral contém uma assinatura humana já registrada, sem data ou origem legíveis. Sua resposta acende inscrições até um limiar monumental. A sequência mantém o controle, não concede XP e permanece registrada após respawn.
+
+O [Warden](docs/warden-boss/) ocupa uma nova área **depois do limiar do guardião**. Investigar e atravessar a passagem leva à sua bacia mineral. O primeiro boss possui três fases, cinco padrões com avisos e janelas de recuperação, retorno seguro após morrer e uma transmissão fragmentada após a vitória. Usa as armas, controles e progressão existentes; a recompensa é narrativa.
 
 A [correção de animação e orientação em português](docs/playtest-readability/) mantém os novos inimigos apoiados no chão, com quadros de passada, preparação, ataque e reação. A interface agora usa português e mostra o próximo passo desde 0/3 Ecos, com pistas de direção, identificação próxima dos locais e orientação da fissura ao mecanismo e à entrada. O fluxo continua sem chave, kill count ou recompensa adicional.
 
@@ -70,7 +72,7 @@ A emulação de touch no Chrome não comprova o comportamento do Safari em hardw
 
 ## Áudio
 
-A música de exploração usa dois loops instrumentais curtos e originais, Forest e Cavern, com o mesmo motivo de sinal em atmosferas diferentes. São protótipos, reproduzidos de arquivos WAV locais e reproduzíveis pelo script `python scripts/generate-prototype-audio.py`; não usam samples externos. O `AudioManager` mantém uma única música ativa, separa MUSIC de SFX e possui níveis internos MASTER/MUSIC/SFX em `src/config/audio.ts`. Os efeitos existentes continuam com Web Audio; sinal e mecanismo receberam variações discretas. O jogo funciona sem áudio e só tenta iniciar a reprodução após um gesto do jogador, respeitando o bloqueio de autoplay do navegador.
+A música de exploração usa dois loops instrumentais curtos e originais, Forest e Cavern, com o mesmo motivo de sinal em atmosferas diferentes. São protótipos, reproduzidos de arquivos WAV locais e reproduzíveis pelo script `python scripts/generate-prototype-audio.py`; não usam samples externos. O encontro do Warden acrescenta um loop original de 24 segundos, reproduzível com `python scripts/generate-warden-audio.py`. O `AudioManager` mantém uma única música ativa, separa MUSIC de SFX e possui níveis internos MASTER/MUSIC/SFX em `src/config/audio.ts`. Os efeitos existentes continuam com Web Audio; sinal e mecanismo receberam variações discretas. O jogo funciona sem áudio e só tenta iniciar a reprodução após um gesto do jogador, respeitando o bloqueio de autoplay do navegador.
 
 ## Escopo implementado
 
@@ -94,12 +96,12 @@ A música de exploração usa dois loops instrumentais curtos e originais, Fores
 
 ## Limitações conhecidas
 
-- A Cavern contém a primeira área, Deep Cavern, continuação mais profunda e um pequeno exterior. O arco no limite exterior ainda não leva a outro capítulo. The First Echo e Warden não foram implementados.
+- O vertical slice segue da Forest ao exterior da Cavern, Primeiro Eco e Warden. A vitória encerra o conteúdo atual com uma transmissão incompleta; o destino seguinte ainda não é explorável.
 - O nível está limitado a 3 e o progresso existe somente na aba atual: recarregar a página reinicia XP, Echoes e recompensas. Não há salvamento.
 - A onda usa uma faixa frontal móvel e não tem interação especial com rochas. Seus valores e a naturalidade das poses do braço ainda precisam de avaliação humana em combate.
 - HUD e Energy Saber receberam apenas o feedback necessário para a habilidade; sua arte base, Mineral Pulse, First Discovery e parte do terreno ainda são provisórios.
 - Touch e gamepad foram validados em emulação de navegador; conforto e compatibilidade em dispositivos físicos ainda exigem playtest. Não há suporte oficial a navegadores de console, builds nativas, remapeamento de botões ou menu de volume.
-- Os dois temas musicais são protótipos instrumentais. Vocal atmosférico, mixagem final e camadas adaptativas de combate/descoberta permanecem para avaliação futura.
+- Os temas musicais são protótipos instrumentais. Vocal atmosférico, mixagem final e camadas adaptativas de combate/descoberta permanecem para avaliação futura.
 - Os inimigos derrotados só retornam ao reiniciar a arena.
 - Troncos, totens e bases estruturais possuem colisores circulares simples; copas, vegetação baixa, raízes e pequenos detalhes continuam atravessáveis. A classificação e a auditoria estão em [Environmental Collision Audit](docs/ENVIRONMENT_COLLISION_AUDIT.md).
 - A IA mantém perseguição direta, sem navegação por caminhos; Hollows podem ficar presos em rochas ao perseguir fora das trilhas.

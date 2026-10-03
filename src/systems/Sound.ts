@@ -1,6 +1,7 @@
 import { AUDIO } from '../config/audio';
 
 type Area = keyof typeof AUDIO.tracks;
+type WardenCue = 'intro' | 'sweep' | 'rush' | 'slam' | 'signal' | 'echoes' | 'phase' | 'death' | 'victory';
 
 // A single music voice and a separate Web Audio SFX bus. Audio remains optional.
 export class AudioManager {
@@ -12,6 +13,7 @@ export class AudioManager {
   private musicVolume: number = AUDIO.music;
   private sfxVolume: number = AUDIO.sfx;
   private musicFocus = 1;
+  private musicStopped = false;
 
   setMusicFocus(focus: number): void {
     const value = Math.max(0, Math.min(1, focus));
@@ -28,7 +30,11 @@ export class AudioManager {
   }
 
   setArea(area: Area): void {
-    if (this.area === area) return;
+    this.musicStopped = false;
+    if (this.area === area) {
+      if (this.unlocked) this.playMusic();
+      return;
+    }
     this.music?.pause();
     this.area = area;
     try {
@@ -50,10 +56,13 @@ export class AudioManager {
     } catch { /* Browser audio is optional. */ }
   }
 
-  stopMusic(): void { this.music?.pause(); }
+  stopMusic(): void {
+    this.musicStopped = true;
+    this.music?.pause();
+  }
 
   private playMusic(): void {
-    if (this.music?.paused) void this.music.play().catch(() => { /* Autoplay can remain blocked. */ });
+    if (!this.musicStopped && this.music?.paused) void this.music.play().catch(() => { /* Autoplay can remain blocked. */ });
   }
 
   private tone(frequency: number, endFrequency: number, duration: number, volume: number, type: OscillatorType = 'sine'): void {
@@ -87,5 +96,49 @@ export class AudioManager {
   signal(): void {
     this.tone(270, 540, 0.55, 0.035, 'sine');
     this.tone(405, 810, 0.7, 0.015, 'sine');
+  }
+
+  // Event cues share the existing finite SFX voices. No music scheduler or timers.
+  wardenCue(cue: WardenCue): void {
+    switch (cue) {
+      case 'intro':
+        this.tone(72, 43, 1.5, 0.075, 'triangle');
+        this.tone(147, 110, 1.9, 0.025);
+        break;
+      case 'sweep':
+        this.tone(190, 76, 0.44, 0.065, 'triangle');
+        this.tone(420, 150, 0.34, 0.012, 'sawtooth');
+        break;
+      case 'rush':
+        this.tone(80, 180, 0.6, 0.052, 'triangle');
+        this.tone(210, 390, 0.55, 0.018);
+        break;
+      case 'slam':
+        this.tone(105, 34, 0.76, 0.095, 'triangle');
+        this.tone(275, 61, 0.19, 0.021, 'sawtooth');
+        break;
+      case 'signal':
+        this.tone(220, 440, 0.62, 0.045);
+        this.tone(293.66, 587.32, 0.8, 0.016);
+        break;
+      case 'echoes':
+        this.tone(146.83, 164.81, 0.85, 0.04, 'triangle');
+        this.tone(440, 329.63, 1.1, 0.019);
+        break;
+      case 'phase':
+        this.tone(55, 110, 1.05, 0.073, 'triangle');
+        this.tone(293.66, 440, 1.2, 0.028);
+        this.tone(587.32, 659.26, 0.8, 0.011);
+        break;
+      case 'death':
+        this.tone(147, 32, 1.8, 0.07, 'triangle');
+        this.tone(440, 73.42, 2.1, 0.027);
+        break;
+      case 'victory':
+        this.tone(293.66, 293.66, 1.6, 0.032);
+        this.tone(440, 440, 1.9, 0.017);
+        this.tone(659.26, 659.26, 2.2, 0.009);
+        break;
+    }
   }
 }
