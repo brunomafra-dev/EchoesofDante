@@ -17,7 +17,7 @@ import { WardenArena } from '../systems/WardenArena';
 import { WardenHud } from '../ui/WardenHud';
 import { Controls } from '../input/Controls';
 import { Arena } from '../systems/Arena';
-import { preloadEnvironment } from '../visual/EnvironmentArt';
+import { preloadEnvironment, resetEnvironmentOcclusion, updateEnvironmentOcclusion } from '../visual/EnvironmentArt';
 import { CavernArea } from '../systems/CavernArea';
 import { MineralPulse } from '../systems/MineralPulse';
 import { AudioManager } from '../systems/Sound';
@@ -109,6 +109,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   create(): void {
+    resetEnvironmentOcclusion(this);
     this.attack = new SaberAttack();
     this.charge = new KineticCharge();
     this.waveDrawn = false;
@@ -317,6 +318,7 @@ export class GameScene extends Phaser.Scene {
       }
     }
     this.player.update(time, dt, input, facing, this.area === 'warden' ? this.playerObstacles : this.arena.obstacles, pose, heavy, this.movementBounds);
+    updateEnvironmentOcclusion(this, this.player.position, dt);
     if (wasDashing && !this.player.isDashing) this.dashEnd();
     if (this.player.isDashing && time - this.lastDashTrail > 30) {
       this.lastDashTrail = time;

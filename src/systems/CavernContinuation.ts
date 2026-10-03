@@ -3,7 +3,7 @@ import { EXPANSION, EXPANSION_ROCKS, EXPANSION_WALLS } from '../config/expansion
 import type { Obstacle } from './Movement';
 import type { Vec2 } from '../utils/math';
 import { distance } from '../utils/math';
-import { EnvironmentPainter, groundContour } from '../visual/EnvironmentArt';
+import { EnvironmentPainter, groundContour, trackEnvironmentOcclusion } from '../visual/EnvironmentArt';
 
 // Small authored continuation, captured once in three bounded cache tiles.
 export class CavernContinuation {
@@ -12,11 +12,13 @@ export class CavernContinuation {
   private readonly approachLight: Phaser.GameObjects.Ellipse;
 
   constructor(private scene: Phaser.Scene, fragmentSeen: boolean) {
-    // Distant open-air matte, behind physical ground. No lighting/camera rewrite.
-    scene.add.image(5000,700,'exterior-atmosphere').setDisplaySize(1400,1400).setDepth(-10001).setTint(0xc7d5ce);
+    // Exterior daylight comes from the existing soil masses. A perspective sky
+    // illustration cannot serve as top-down ground beneath the player.
     for (const x of [2450, 3450, 4450]) this.bake(x);
-    // A tall monument needs foreground occlusion at its feet, like existing roots/trees.
-    scene.add.image(5310,680,'ancient-approach').setDisplaySize(450,550).setDepth(925).setTint(0xbcc8b5);
+    // Keep the broad stone base; its crown no longer towers over the gameplay.
+    const arch = scene.add.image(5310, 930, 'ancient-approach').setOrigin(0.5, 0.95)
+      .setDisplaySize(450, 300).setDepth(925).setTint(0xbcc8b5);
+    trackEnvironmentOcclusion(scene, arch);
     const glows = [[2875, 510, 0xffbd54], [3455, 992, 0xffbd54], [3780, 535, 0xa98cff], [4160, 530, 0xa98cff]];
     const lights = glows.map(([x,y,color]) => scene.add.ellipse(x,y,65,20,color,0.13).setDepth(y));
     this.fragmentLight = scene.add.ellipse(EXPANSION.fragment.x, 580, 62, 30, 0xa98cff, fragmentSeen ? 0.3 : 0.1).setDepth(600);
@@ -47,10 +49,9 @@ export class CavernContinuation {
     mass(0x526e65,1,[[4380,595],[4560,400],[4830,365],[5100,405],[5330,530],[5500,765],[5410,1060],[5160,1140],[4840,1125],[4600,1030],[4400,925]]);
     mass(0x809487,0.52,[[4460,695],[4640,510],[4830,485],[5070,520],[5260,630],[5350,810],[5210,980],[4950,1035],[4750,980],[4520,880]]);
     mass(0x9ca994,0.14,[[4580,660],[4770,580],[4990,625],[5060,830],[4870,940],[4670,845]]);
-    const layer = this.scene.add.renderTexture(tileX,200,1000,1000).setOrigin(0).setDepth(-9999).draw(floor,-tileX,-200);
+    const layer = this.scene.add.renderTexture(tileX,200,1000,1000).setOrigin(0).setDepth(-9999).draw(floor.setAlpha(0.18),-tileX,-200);
     const painter = new EnvironmentPainter(this.scene,layer);
-    // Continuous stone material across tile boundaries; daylight comes from the masses/matte.
-    painter.ground('cavern-ground',0.2,floor);
+    // Only quiet sediment patches here. The continuous substrate is underneath all tiles.
     const visible = (x: number, width: number) => x+width/2 >= tileX && x-width/2 <= tileX+1000;
     for(const [x,y,w,h] of [[2730,620,310,110],[3370,945,360,110],[3970,575,340,120],
       [4590,875,340,135],[4810,520,390,145],[5120,945,360,120]]) {

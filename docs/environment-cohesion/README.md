@@ -1,5 +1,9 @@
 # Environmental Cohesion & Grounding — 0.1.39
 
+**Resultado perceptual rejeitado pelo usuário.** A [correção 0.1.40](correction/)
+trata chão contínuo, paisagem usada como piso, altura dos monumentos e oclusão do
+Guerreiro. Esta página mantém o registro da primeira tentativa.
+
 Passagem visual sobre a linguagem **D / Organic Sci-Fi R3** já aprovada.
 Forest, Cavern, Deep Cavern, exterior, Primeiro Eco/limiar e arena do Warden
 mantêm o mesmo fluxo. Nenhum asset novo foi necessário.

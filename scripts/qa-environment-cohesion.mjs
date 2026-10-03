@@ -46,19 +46,29 @@ try {
       const g = window.__danteGame, s = g.scene.getScene('Game'), samples = [];
       for (let i = 0; i < 12; i++) { await new Promise(r => setTimeout(r, 200)); samples.push(g.loop.actualFps); }
       const types = {}; s.children.list.forEach(o => types[o.type] = (types[o.type] ?? 0) + 1);
+      const ground = s.children.getByName('continuous-cavern-ground');
       return { fps: samples.reduce((a, b) => a + b) / samples.length, objects: s.children.list.length,
         types, tweens: s.tweens.getTweens().length, textures: g.textures.getTextureKeys().length,
         obstacles: JSON.parse(JSON.stringify(s.arena.obstacles)), bounds: { ...s.movementBounds },
-        player: { ...s.player.position }, zoom: s.cameras.main.zoom };
+        player: { ...s.player.position }, zoom: s.cameras.main.zoom,
+        ground: ground ? { texture: ground.displayTexture.key, canvas: [ground.canvas.width, ground.canvas.height],
+          extent: [ground.displayWidth, ground.displayHeight], origin: [ground.x, ground.y], alpha: ground.alpha } : null };
     });
   }
-  if (stage === 'after') {
+  if (stage === 'after' || stage === 'correction') {
     const before = JSON.parse(await readFile('docs/environment-cohesion/before/report.json', 'utf8'));
     for (const [name, current] of Object.entries(report.regions)) {
       assert.deepEqual(current.obstacles, before.regions[name].obstacles, `${name}: exact collision data`);
       assert.deepEqual(current.bounds, before.regions[name].bounds, `${name}: movement bounds`);
       assert.equal(current.zoom, before.regions[name].zoom, `${name}: zoom`);
-      assert.equal(current.textures, before.regions[name].textures, `${name}: no extra textures`);
+      const extraTextures = stage === 'correction' ? name === 'forest' ? 1 : 2 : 0;
+      assert.equal(current.textures, before.regions[name].textures + extraTextures, `${name}: soil asset and one TileSprite backing texture`);
+      if (stage === 'correction' && name !== 'forest') {
+        assert.equal(current.ground.texture, 'cavern-soil');
+        assert.deepEqual(current.ground.canvas, [512, 512], 'No world-sized canvas allocation');
+        assert.deepEqual(current.ground.extent, [name === 'warden' ? 2200 : 6800, 1500]);
+        assert.equal(current.ground.alpha, 1, 'Opaque substrate covers cache edges');
+      }
     }
     report.exactPhysicalInvariance = true;
   }

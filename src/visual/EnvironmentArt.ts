@@ -2,12 +2,55 @@ import Phaser from 'phaser';
 
 const PAINTINGS = [
   'world-rock', 'root-growth', 'world-shadow', 'rock-shelf',
-  'mineral-growth', 'ancient-frame', 'ancient-remnant', 'forest-ground', 'cavern-ground',
+  'mineral-growth', 'ancient-frame', 'ancient-remnant', 'forest-ground', 'cavern-ground', 'cavern-soil',
   'deep-stratum', 'deep-mineral', 'deep-relay',
   'exterior-outcrop', 'ancient-approach', 'exterior-atmosphere',
   'first-echo-archive', 'sealed-threshold', 'open-threshold',
 ] as const;
 export type EnvironmentPainting = typeof PAINTINGS[number];
+
+type Occluder = { image: Phaser.GameObjects.Image; alpha: number; width: number; height: number };
+const occluders = new WeakMap<Phaser.Scene, Occluder[]>();
+
+export function resetEnvironmentOcclusion(scene: Phaser.Scene): void {
+  occluders.set(scene, []);
+}
+
+// Only raised environmental bodies participate. No gameplay state, listeners,
+// masks or tweens: this bounded list is rebuilt on the existing scene restart.
+export function trackEnvironmentOcclusion(scene: Phaser.Scene, image: Phaser.GameObjects.Image): void {
+  const list = occluders.get(scene) ?? [];
+  if (list.some(entry => entry.image === image)) return;
+  list.push({ image, alpha: image.alpha, width: image.texture.key === 'world-rock' ? 0.46 : 0.86,
+    height: image.texture.key === 'world-rock' ? 0.4 : 0.86 });
+  occluders.set(scene, list);
+}
+
+export function updateEnvironmentOcclusion(scene: Phaser.Scene, feet: { x: number; y: number }, dt: number): void {
+  for (const entry of occluders.get(scene) ?? []) {
+    const image = entry.image;
+    // Opening/fading a gate owns its alpha until that finite transition ends.
+    if (!image.active || !image.visible || image.getData('environmentFadeDisabled')) continue;
+    const centerX = image.x + (0.5 - image.originX) * image.displayWidth;
+    const centerY = image.y + (0.5 - image.originY) * image.displayHeight;
+    const halfWidth = image.displayWidth * entry.width * 0.5;
+    const halfHeight = image.displayHeight * entry.height * 0.5;
+    const covering = image.depth > feet.y && feet.x + 18 > centerX - halfWidth && feet.x - 18 < centerX + halfWidth
+      && feet.y + 6 > centerY - halfHeight && feet.y - 90 < centerY + halfHeight;
+    const target = entry.alpha * (covering ? 0.28 : 1);
+    image.setAlpha(Phaser.Math.Linear(image.alpha, target, Math.min(1, dt * 12)));
+  }
+}
+
+// One stationary textured quad under every cache, including cache margins.
+// The material is authored offline; no runtime procedural floor or giant PNG.
+export function createCavernGround(scene: Phaser.Scene, width: number): void {
+  // Keep the TileSprite backing canvas at 512 square, rather than allocating a
+  // world-sized canvas. Inverse tile scale preserves 512 world units per repeat.
+  scene.add.tileSprite(0, 0, 512, 512, 'cavern-soil').setOrigin(0)
+    .setDisplaySize(width, 1500).setTileScale(512 / width, 512 / 1500)
+    .setDepth(-10001.5).setTint(0xb7c4b5).setName('continuous-cavern-ground');
+}
 
 export function preloadEnvironment(scene: Phaser.Scene): void {
   const base = `${import.meta.env.BASE_URL}assets/visual/environment/`;
@@ -43,13 +86,13 @@ export function contactStamp(x: number, y: number, width: number, height: number
   return { key: 'world-shadow', frame: 'ground-contact', x, y, width, height, alpha, depth: -10000 };
 }
 
-export function rockStamps(x: number, y: number, radius: number, tint = 0xcbd3c6): EnvironmentStamp[] {
+export function rockStamps(x: number, y: number, radius: number, tint = 0xcbd3c6, heightRatio = 0.92): EnvironmentStamp[] {
   const size = radius * 512 / 112;
   const variation = Math.sin(x * 0.013 + y * 0.019);
   const foot = y + radius * 0.65;
   return [
     contactStamp(x, foot - radius * 0.12, radius * 2.25, radius * 0.64, 0.88),
-    { key: 'world-rock', x, y: y - radius * 0.05, width: size, height: size * 0.92,
+    { key: 'world-rock', x, y: heightRatio === 0.92 ? y - radius * 0.05 : foot - size * heightRatio * (343 / 512 - 0.5), width: size, height: size * heightRatio,
       depth: foot, tint, angle: variation * 5, flipX: variation < 0 },
     { key: 'root-growth', x: x - radius * 0.24, y: foot + radius * 0.06,
       width: radius * 1.4, height: radius * 0.38, tint, alpha: 0.65, depth: -10000 },
@@ -80,7 +123,7 @@ export class EnvironmentPainter {
   }
 
   rock(x: number, y: number, radius: number, tint = 0xcbd3c6, raised = false): void {
-    for (const stamp of rockStamps(x, y, radius, tint)) {
+    for (const stamp of rockStamps(x, y, radius, tint, 0.75)) {
       if (raised && stamp.depth !== -10000) this.raised(stamp);
       else this.stamp(stamp);
     }
@@ -89,9 +132,10 @@ export class EnvironmentPainter {
   // Only a few obstacles within walkable space need independent foot sorting.
   // Perimeter masses stay baked. These static Images have no update or tween.
   raised(s: EnvironmentStamp): void {
-    this.scene.add.image(s.x, s.y, s.key).setDisplaySize(s.width, s.height)
+    const image = this.scene.add.image(s.x, s.y, s.key).setDisplaySize(s.width, s.height)
       .setDepth(s.depth ?? s.y).setAngle(s.angle ?? 0).setFlipX(s.flipX ?? false)
       .setTint(s.tint ?? 0xffffff).setAlpha(s.alpha ?? 1);
+    trackEnvironmentOcclusion(this.scene, image);
   }
 
   contact(x: number, y: number, width: number, height: number, alpha = 0.8): void {

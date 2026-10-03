@@ -236,3 +236,9 @@
 - Um frame na textura `world-shadow` existente recorta apenas seu padding transparente, permitindo sombras de contato centradas nas bases. Raízes, detritos rasos e sombra de transição são capturados nas RenderTextures, com menor contraste uniforme no solo.
 - Vinte corpos estáticos da Cavern completa usam Images ordenadas pelos pés, sem update/tween próprio; massas de borda e detalhes continuam baked. Forest reutiliza suas bandas de depth. Não há nova textura GPU, iluminação global ou novo sistema de física.
 - QA compara arrays de obstáculos, limites e zoom exatamente com a base anterior e reutiliza testes de percurso, Primeiro Eco, boss, respawn e entradas emuladas. A avaliação perceptual depende de playtest humano; contagens estáveis e compilação não demonstram autenticidade visual.
+
+## Correção de chão e oclusão, 0.1.40
+
+- A revisão 0.1.39 foi rejeitada perceptualmente. Cavern/arena passam a ter um substrato opaco contínuo, com material original de sedimento 512×512 produzido offline. Um TileSprite estacionário usa backing canvas 512×512 e repetição inversamente escalada; as caches capturam somente composição e contato. A paisagem com céu deixa de funcionar como piso no exterior. [Diagnóstico e comparativos](environment-cohesion/correction/).
+- Altura de rochas e marcos diminui, preservando largura de base, footprints, interações e limites. Imagens elevadas que encobrem o Guerreiro atenuam seu alpha por interseção simples, restaurando-o ao sair. Lista visual local é reconstruída em cada criação da cena; sem listeners, timers ou tweens adicionais. Durante a abertura o portão mantém controle exclusivo do alpha.
+- Forest mantém suas dimensões e seu terreno. Controle, combate, IA, Signal e estado narrativo permanecem. O QA compara física/câmera exatamente; aprovação visual depende de playtest humano.

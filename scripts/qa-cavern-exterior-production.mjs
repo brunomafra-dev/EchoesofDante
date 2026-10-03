@@ -11,7 +11,7 @@ try{
   const page=await browser.newPage({viewport:{width:1366,height:768}});
   page.on('pageerror',e=>errors.push(e.message));
   page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
-  const assets=['dante-skitter-motion.png','dante-spitter-motion.png','exterior-outcrop.png','ancient-approach.png','exterior-atmosphere.png','first-echo-archive.png','sealed-threshold.png','open-threshold.png','warden-motion.png'];
+  const assets=['dante-skitter-motion.png','dante-spitter-motion.png','exterior-outcrop.png','ancient-approach.png','exterior-atmosphere.png','first-echo-archive.png','sealed-threshold.png','open-threshold.png','warden-motion.png','cavern-soil.png'];
   page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`);if(assets.includes(r.url().split('/').at(-1))&&r.ok())loaded.add(r.url().split('/').at(-1));});
   await page.goto(base);await page.locator('canvas').waitFor({state:'visible'});await page.waitForTimeout(3000);
   await page.keyboard.down('d');await page.waitForTimeout(200);await page.keyboard.up('d');

@@ -1,0 +1,106 @@
+{
+  "method": "Chrome headless; DEV positions, no physical device",
+  "errors": [],
+  "views": [
+    {
+      "width": 1280,
+      "height": 720,
+      "arch": {
+        "alpha": 0.28000432968598726,
+        "height": 300,
+        "width": 450,
+        "depth": 925
+      },
+      "gate": {
+        "alpha": 0.2800128522896757,
+        "height": 340,
+        "width": 600,
+        "depth": 910
+      }
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "arch": {
+        "alpha": 0.2800065813590738,
+        "height": 300,
+        "width": 450,
+        "depth": 925
+      },
+      "gate": {
+        "alpha": 0.28001281377107123,
+        "height": 340,
+        "width": 600,
+        "depth": 910
+      }
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "arch": {
+        "alpha": 0.28001603004904757,
+        "height": 300,
+        "width": 450,
+        "depth": 925
+      },
+      "gate": {
+        "alpha": 0.2800128600002772,
+        "height": 340,
+        "width": 600,
+        "depth": 910
+      }
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "arch": {
+        "alpha": 0.2800128407231946,
+        "height": 300,
+        "width": 450,
+        "depth": 925
+      },
+      "gate": {
+        "alpha": 0.2800128176286617,
+        "height": 340,
+        "width": 600,
+        "depth": 910
+      }
+    }
+  ],
+  "restarts": [
+    {
+      "objects": 210,
+      "textures": 66,
+      "floors": 1,
+      "raised": 25,
+      "caches": 8,
+      "listeners": [
+        1,
+        1
+      ]
+    },
+    {
+      "objects": 210,
+      "textures": 66,
+      "floors": 1,
+      "raised": 25,
+      "caches": 8,
+      "listeners": [
+        1,
+        1
+      ]
+    },
+    {
+      "objects": 210,
+      "textures": 66,
+      "floors": 1,
+      "raised": 25,
+      "caches": 8,
+      "listeners": [
+        1,
+        1
+      ]
+    }
+  ],
+  "pass": true
+}

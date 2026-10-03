@@ -6,7 +6,7 @@ import { CavernContinuation } from './CavernContinuation';
 import { WardenApproach } from './WardenApproach';
 import { WARDEN_PREPARATION } from '../config/wardenPreparation';
 import type { MovementBounds, Obstacle } from './Movement';
-import { groundContour, EnvironmentPainter } from '../visual/EnvironmentArt';
+import { groundContour, EnvironmentPainter, createCavernGround } from '../visual/EnvironmentArt';
 
 // One continuous authored Cavern; static art is captured once per section.
 export class CavernArea {
@@ -24,10 +24,10 @@ export class CavernArea {
   readonly wardenApproach: WardenApproach;
 
   constructor(scene: Phaser.Scene, deepPassageOpen = false, fragmentSeen = false, firstEchoSeen = false, wardenGateOpen = false) {
+    createCavernGround(scene, WARDEN_PREPARATION.cameraWidth);
     this.bounds = { ...CAVERN_BOUNDS, right: deepPassageOpen ? wardenGateOpen ? 6480 : WARDEN_PREPARATION.right : CAVERN_BOUNDS.right };
     if (!deepPassageOpen) this.obstacles.push(this.collapseObstacle);
     const art = scene.add.graphics().setVisible(false);
-    art.fillStyle(0x07151c).fillRect(350, 250, 1500, 1000);
     art.fillStyle(0x1d3035).fillPoints(groundContour([
       { x: 416, y: 497 }, { x: 484, y: 361 }, { x: 620, y: 316 }, { x: 770, y: 340 },
       { x: 951, y: 303 }, { x: 1126, y: 326 }, { x: 1348, y: 312 }, { x: 1541, y: 359 },
@@ -103,9 +103,8 @@ export class CavernArea {
         .fillEllipse(x, y, radius * 2, radius);
     }
     const layer = scene.add.renderTexture(350, 250, 1500, 1000).setOrigin(0).setDepth(-10000);
-    layer.draw(art, -350, -250);
+    layer.draw(art.setAlpha(0.18), -350, -250);
     const painter = new EnvironmentPainter(scene, layer);
-    painter.ground('cavern-ground', 0.16);
     for (const [x,y,w,h] of [[625,919,220,96],[1030,495,340,120],[1510,1018,270,100]]) painter.contact(x,y,w,h,0.24);
     for (let i = 0; i < 12; i++) {
       const x = 508 + i * 96;

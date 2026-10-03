@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { WARDEN_ARENA, WARDEN_ARENA_FOOTPRINTS, WARDEN_ARENA_MINERAL_BASES } from '../config/wardenArena';
-import { EnvironmentPainter, groundContour } from '../visual/EnvironmentArt';
+import { EnvironmentPainter, groundContour, createCavernGround, trackEnvironmentOcclusion } from '../visual/EnvironmentArt';
 import type { MovementBounds, Obstacle } from './Movement';
 
 // Painted custodial basin behind the guardian threshold. Static material is
@@ -18,8 +18,11 @@ export class WardenArena {
 
   constructor(private readonly scene: Phaser.Scene, resolved = false) {
     scene.add.rectangle(1100, 750, 2200, 1500, 0x102329).setDepth(-10002);
+    createCavernGround(scene, 2200);
     this.bake();
-    scene.add.image(520, 739, 'ancient-approach').setDisplaySize(260, 325).setDepth(890).setTint(0xabb9a8);
+    const entrance = scene.add.image(520, 890, 'ancient-approach').setOrigin(0.5, 0.95)
+      .setDisplaySize(260, 205).setDepth(890).setTint(0xabb9a8);
+    trackEnvironmentOcclusion(scene, entrance);
     this.seal = scene.add.image(530, 760, 'sealed-threshold').setDisplaySize(225, 250)
       .setDepth(895).setTint(0x9da9a1).setAlpha(0);
 
@@ -105,9 +108,8 @@ export class WardenArena {
       [1260,1200],[925,1180],[623,1158]]);
 
     const layer = this.scene.add.renderTexture(350, 240, 1500, 1060).setOrigin(0).setDepth(-10000)
-      .draw(floor, -350, -240);
+      .draw(floor.setAlpha(0.18), -350, -240);
     const painter = new EnvironmentPainter(this.scene, layer);
-    painter.ground('cavern-ground', 0.17, floor);
     // Quiet central footing keeps warnings legible; soft edge shade adds volume.
     for (const [x,y,w,h] of [[745,518,330,110],[1450,543,320,125],[1480,980,290,100],[895,1050,370,115]]) painter.contact(x,y,w,h,0.24);
     painter.apron(520, 886, 170, 0x92a78d);
