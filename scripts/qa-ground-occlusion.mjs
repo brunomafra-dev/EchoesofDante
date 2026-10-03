@@ -24,7 +24,7 @@ try {
   const position = async (x, y, cx, cy) => {
     await page.evaluate(({ x, y, cx, cy }) => {
       const s = window.__danteGame.scene.getScene('Game');
-      Object.assign(s.player.position, { x, y }); s.player.invulnerableUntil = Infinity;
+      Object.assign(s.player.position, { x, y }); s.player.invulnerableUntil = 0;
       s.enemies.forEach(enemy => enemy.update = () => {});
       s.cameras.main.stopFollow().centerOn(cx, cy);
     }, { x, y, cx, cy });
@@ -37,18 +37,22 @@ try {
   }, { key, x });
   for (const [width, height] of [[1280,720],[1366,768],[1920,1080],[844,390]]) {
     await page.setViewportSize({ width, height });
-    await position(5270, 820, 5310, 790);
-    const arch = await prop('ancient-approach', 5310);
-    assert.equal(arch.height, 300); assert.ok(arch.alpha < 0.32, 'Crown reveals the actor behind it');
+    await position(5220, 880, 5310, 790);
+    const arch = await prop('guardian-lintel-open', 5310);
+    assert.equal(arch.height, 175); assert.ok(arch.alpha < 0.32, 'Crown reveals the actor behind it');
     await page.screenshot({ path: `${out}/arch-${width}.png` });
+    await position(5310, 860, 5310, 790);
+    assert.ok((await prop('guardian-lintel-open', 5310)).alpha > 0.98, 'Empty throat does not ghost the monument');
+    if(width===1280)await page.screenshot({path:`${out}/arch-throat-1280.png`});
     await position(5270, 965, 5310, 790);
-    assert.ok((await prop('ancient-approach', 5310)).alpha > 0.98, 'Arch restores opacity in front');
+    assert.ok((await prop('guardian-lintel-open', 5310)).alpha > 0.98, 'Arch restores opacity in front');
     await position(6150, 800, 6240, 770);
-    const gate = await prop('open-threshold', 6340);
-    assert.equal(gate.height, 340); assert.ok(gate.alpha < 0.32, 'Threshold reveals the actor');
+    const gate = await prop('guardian-lintel-open', 6340);
+    assert.equal(gate.height, 190); assert.ok(gate.alpha < 0.32, 'Threshold reveals the actor');
     await page.screenshot({ path: `${out}/threshold-${width}.png` });
     await position(5980, 855, 6240, 770);
-    assert.ok((await prop('open-threshold', 6340)).alpha > 0.98, 'Threshold restores opacity outside overlap');
+    assert.ok((await prop('guardian-lintel-open', 6340)).alpha > 0.98, 'Threshold restores opacity outside overlap');
+    if(width===1280)await page.screenshot({path:`${out}/threshold-front-1280.png`});
     report.views.push({ width, height, arch, gate });
   }
   await position(5530, 610, 5530, 710);
@@ -66,12 +70,28 @@ try {
     await page.evaluate(() => window.__danteGame.scene.getScene('Game').scene.restart());
     await page.waitForTimeout(750);
     report.restarts.push(await snapshot());
-    await position(5270, 820, 5310, 790);
-    assert.ok((await prop('ancient-approach', 5310)).alpha < 0.32, 'Occlusion registry rebuilt after restart');
+    await position(5220, 880, 5310, 790);
+    assert.ok((await prop('guardian-lintel-open', 5310)).alpha < 0.32, 'Occlusion registry rebuilt after restart');
   }
   assert.deepEqual(report.restarts[1], report.restarts[0]);
   assert.deepEqual(report.restarts[2], report.restarts[0]);
   assert.equal(report.restarts[0].floors, 1);
+  await page.evaluate(() => {
+    const s = window.__danteGame.scene.getScene('Game');
+    s.area = 'warden'; s.scene.restart();
+  });
+  await page.waitForTimeout(750);
+  const originalFootprints = await page.evaluate(() => window.__danteGame.scene.getScene('Game').arena.obstacles.length);
+  await page.evaluate(() => window.__danteGame.scene.getScene('Game').wardenArena.setEncounterActive(true));
+  await page.waitForTimeout(800);
+  const seal = await prop('guardian-lintel-closed', 530);
+  assert.equal(seal.height, 110, 'Combat seal retains a low silhouette');
+  assert.ok(seal.alpha > 0.98);
+  assert.equal(await page.evaluate(() => window.__danteGame.scene.getScene('Game').arena.obstacles.length), originalFootprints + 1);
+  await page.evaluate(() => window.__danteGame.scene.getScene('Game').wardenArena.setEncounterActive(false));
+  assert.equal(await page.evaluate(() => window.__danteGame.scene.getScene('Game').arena.obstacles.length), originalFootprints);
+  assert.equal((await prop('guardian-lintel-closed', 530)).alpha, 0);
+  report.combatSealLowAndPhysicalStatePreserved = true;
   assert.deepEqual(errors, []); report.pass = true;
 } finally {
   await writeFile(`${out}/report.json`, JSON.stringify(report, null, 2));

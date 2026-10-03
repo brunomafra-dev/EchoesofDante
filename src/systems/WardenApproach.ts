@@ -26,8 +26,8 @@ export class WardenApproach {
       .setDisplaySize(250, 190).setDepth(720).setTint(recorded ? 0xffffff : 0xb9c2b0);
     trackEnvironmentOcclusion(scene, this.archive);
     this.archiveLight = scene.add.ellipse(5530, 681, 38, 13, 0xa98cff, recorded ? 0.4 : 0.08).setDepth(725);
-    this.gate = scene.add.image(6340, 910, gateOpen ? 'open-threshold' : 'sealed-threshold').setOrigin(0.5, 1)
-      .setDisplaySize(600, 340).setDepth(910).setTint(recorded ? 0xe1dece : 0xb8c1b1);
+    this.gate = scene.add.image(6340, 815, gateOpen ? 'guardian-lintel-open' : 'guardian-lintel-closed').setOrigin(0.5, 0.5)
+      .setDisplaySize(600, 190).setDepth(910).setTint(recorded ? 0xcbd1bf : 0xa9b6a4);
     trackEnvironmentOcclusion(scene, this.gate);
     this.record = scene.add.text(5530, 790, 'PRIMEIRO ECO\nASSINATURA HUMANA REGISTRADA\nDATA: ILEGÍVEL', {
       fontFamily: 'Barlow Condensed, sans-serif', fontSize: '16px', color: '#e4dcff',
@@ -92,7 +92,7 @@ export class WardenApproach {
     this.seams.forEach((seam, i) => this.scene.tweens.add({ targets: seam, alpha: 1, duration: 300, delay: i * 160, yoyo: true }));
     this.scene.tweens.add({ targets: this.gate, x: 6342, duration: 110, yoyo: true, repeat: 3 });
     this.scene.time.delayedCall(900, () => {
-      const opening = this.scene.add.image(6340, 910, 'open-threshold').setOrigin(0.5, 1).setDisplaySize(600, 340).setDepth(910).setAlpha(0);
+      const opening = this.scene.add.image(6340, 815, 'guardian-lintel-open').setOrigin(0.5, 0.5).setDisplaySize(600, 190).setDepth(910).setAlpha(0);
       this.scene.tweens.add({ targets: opening, alpha: 1, duration: 550 });
       this.scene.tweens.add({ targets: this.gate, alpha: 0, duration: 550, onComplete: () => {
         this.opening = false;
@@ -108,6 +108,11 @@ export class WardenApproach {
     // and soft contact only, avoiding another rectangular patch of ground.
     const layer = this.scene.add.renderTexture(5350, 200, 1400, 1000).setOrigin(0).setDepth(-9998);
     const painter = new EnvironmentPainter(this.scene, layer);
+    for (const [x,y,w,h] of [[5540,775,475,315],[5810,780,485,320],[6140,782,535,345]]) {
+      painter.sediment(x,y,w,h,0x969175,0.32);
+    }
+    painter.sediment(5830,465,1100,250,0x2c4437,0.5);
+    painter.sediment(5790,1070,1060,220,0x203b31,0.55);
     for (const [x,y,w,h] of [[5560,542,300,105],[5750,946,320,120],[6020,553,380,135]]) painter.contact(x,y,w,h,0.22);
     // Retain the visible footprint where the new cache overlaps the old edge.
     painter.rock(5360, 740, 42, 0x91a69c);

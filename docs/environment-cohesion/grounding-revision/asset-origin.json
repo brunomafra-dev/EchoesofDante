@@ -1,0 +1,11 @@
+{
+  "tool": "imagegen integrado",
+  "source": "exec-a3cbe9c9-537e-4186-aeff-52021b974a1d.png",
+  "prompt": "Create an original 2D painted game asset sheet for Echoes of Dante Organic Sci-Fi R3. TWO horizontally arranged variants of the SAME ancient stone threshold, CLOSED on left and OPEN on right, separate with transparent gutter. TRUE TRANSPARENT BACKGROUND. Each variant has the exact same footprint, scale, lighting and low architectural silhouette. Camera: top-down overhead with only a slight oblique view, matching an action RPG, looking DOWN at weathered stone, NOT a tall frontal door. Low broad asymmetrical half-buried alien stone lintel, approximately twice as wide as deep, bulky worn grey green stone supports growing out of shallow sediment, roots embedded, moss sparingly, small mineral amber deposits, a restrained broken violet energy seam. This is a LOW GROUND OBSTACLE, height comparable to a human waist, not a building or giant portal. LEFT closed variant has a flat buried slab blocking the throat. RIGHT open variant has moved slabs to both sides leaving a CLEAR EMPTY TRANSPARENT central walkable opening, with only the side supports; no roof arch spanning and hiding a player in the center. Ancient abstract alien engineering with eroded broken seams, NOT medieval temple, not metal space door, not magical ring. Organic illustrated raster surfaces, materiality, subdued painted volume, close soft contact shadow at feet, irregular strong silhouette, discreet small detail. Top left soft light. Silhouette width 440 and depth about 170 per variant. No scenery, no large ground rectangle, no perspective horizon, no text, no labels, no figures, no particles, no cyan, no triangle facets, no low-poly. Both same object states, correctly separated for offline extraction. 2:1 wide sheet if possible.",
+  "preparation": "scripts/prepare-grounded-threshold.py",
+  "outputs": [
+    "public/assets/visual/environment/guardian-lintel-closed.png",
+    "public/assets/visual/environment/guardian-lintel-open.png"
+  ],
+  "note": "Original generated sheet retained under CODEX_HOME/generated_images. Cropping and packing offline, no runtime generation."
+}

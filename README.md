@@ -14,6 +14,8 @@ O [Visual Rendering Prototype 01](docs/visual-rendering-prototype-01/) compara G
 
 A [correção de chão, escala e oclusão](docs/environment-cohesion/correction/) mantém a linguagem D e os dados físicos, com solo contínuo na Cavern, monumentos mais baixos e transparência de formações que escondem o Guerreiro. Os comparativos registram a tentativa anterior rejeitada e esta revisão para playtest visual.
 
+A [revisão de integração ambiental 0.1.41](docs/environment-cohesion/grounding-revision/) acrescenta transições suaves de sedimento nas caches existentes e troca os limiares frontais por apoios baixos, com abertura transparente. A oclusão considera a pintura visível, preservando a opacidade quando o Guerreiro está no vão. Física, controles e gameplay permanecem; a aprovação perceptual depende do playtest.
+
 - TypeScript, Phaser 3 e Vite
 - PNGs pintados em `public/assets/visual/characters/` para personagens e em `public/assets/visual/environment/` para cenários; composição estática baked/cacheada
 - Loops musicais autorais de protótipo em `public/assets/audio/`; efeitos curtos são sintetizados com Web Audio

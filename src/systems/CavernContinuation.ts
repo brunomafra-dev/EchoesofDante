@@ -16,8 +16,8 @@ export class CavernContinuation {
     // illustration cannot serve as top-down ground beneath the player.
     for (const x of [2450, 3450, 4450]) this.bake(x);
     // Keep the broad stone base; its crown no longer towers over the gameplay.
-    const arch = scene.add.image(5310, 930, 'ancient-approach').setOrigin(0.5, 0.95)
-      .setDisplaySize(450, 300).setDepth(925).setTint(0xbcc8b5);
+    const arch = scene.add.image(5310, 930, 'guardian-lintel-open').setOrigin(0.5, 0.95)
+      .setDisplaySize(390, 175).setDepth(925).setTint(0xa6b69e);
     trackEnvironmentOcclusion(scene, arch);
     const glows = [[2875, 510, 0xffbd54], [3455, 992, 0xffbd54], [3780, 535, 0xa98cff], [4160, 530, 0xa98cff]];
     const lights = glows.map(([x,y,color]) => scene.add.ellipse(x,y,65,20,color,0.13).setDepth(y));
@@ -49,10 +49,18 @@ export class CavernContinuation {
     mass(0x526e65,1,[[4380,595],[4560,400],[4830,365],[5100,405],[5330,530],[5500,765],[5410,1060],[5160,1140],[4840,1125],[4600,1030],[4400,925]]);
     mass(0x809487,0.52,[[4460,695],[4640,510],[4830,485],[5070,520],[5260,630],[5350,810],[5210,980],[4950,1035],[4750,980],[4520,880]]);
     mass(0x9ca994,0.14,[[4580,660],[4770,580],[4990,625],[5060,830],[4870,940],[4670,845]]);
-    const layer = this.scene.add.renderTexture(tileX,200,1000,1000).setOrigin(0).setDepth(-9999).draw(floor.setAlpha(0.18),-tileX,-200);
+    const layer = this.scene.add.renderTexture(tileX,200,1000,1000).setOrigin(0).setDepth(-9999).draw(floor.setAlpha(0.06),-tileX,-200);
     const painter = new EnvironmentPainter(this.scene,layer);
     // Only quiet sediment patches here. The continuous substrate is underneath all tiles.
     const visible = (x: number, width: number) => x+width/2 >= tileX && x-width/2 <= tileX+1000;
+    for(const [x,y,w,h] of [[2730,760,550,350],[3230,806,580,330],[3730,765,520,320],[4250,785,570,350],
+      [4630,745,560,405],[4960,740,600,465],[5290,760,425,360]]) {
+      if(visible(x,w))painter.sediment(x,y,w,h,x>4300?0x8b9172:0x88816c,x>4300?0.4:0.27);
+    }
+    for(const [x,y,w,h] of [[2850,480,890,240],[3650,472,1030,255],[3050,1080,900,200],[3930,1070,1020,235],
+      [4790,470,720,240],[4960,1050,880,200]]) {
+      if(visible(x,w))painter.sediment(x,y,w,h,x>4300?0x334b36:0x122829,0.5);
+    }
     for(const [x,y,w,h] of [[2730,620,310,110],[3370,945,360,110],[3970,575,340,120],
       [4590,875,340,135],[4810,520,390,145],[5120,945,360,120]]) {
       if(visible(x,w))painter.contact(x,y,w,h,x>4300?0.2:0.27);
@@ -78,7 +86,7 @@ export class CavernContinuation {
       {key:'exterior-outcrop' as const,x:5020,y:423,width:308,height:179,tint:0xb1c0a8},
       {key:'exterior-outcrop' as const,x:5100,y:944,width:310,height:184,tint:0xa5b69d,flipX:true},
       {key:'ancient-remnant' as const,x:4870,y:555,width:170,height:200},
-      {key:'ancient-approach' as const,x:5310,y:680,width:450,height:550},
+      {key:'ancient-approach' as const,x:5310,y:830,width:390,height:175},
     ];
     for(const painting of paintings) if(visible(painting.x,painting.width)) {
       const foot=painting.y+painting.height*(painting.key==='ancient-remnant'?0.4:0.43);

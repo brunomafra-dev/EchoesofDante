@@ -103,8 +103,15 @@ export class CavernArea {
         .fillEllipse(x, y, radius * 2, radius);
     }
     const layer = scene.add.renderTexture(350, 250, 1500, 1000).setOrigin(0).setDepth(-10000);
-    layer.draw(art.setAlpha(0.18), -350, -250);
+    layer.draw(art.setAlpha(0.06), -350, -250);
     const painter = new EnvironmentPainter(scene, layer);
+    // Worn footing and damp margins blend without polygon/cache boundaries.
+    for (const [x,y,w,h] of [[650,934,460,310],[973,812,560,340],[1260,707,500,300],[1560,553,355,235]]) {
+      painter.sediment(x,y,w,h,0x89846d,0.28);
+    }
+    for (const [x,y,w,h] of [[980,427,950,235],[1040,1115,1130,225],[430,745,250,680]]) {
+      painter.sediment(x,y,w,h,0x132827,0.6);
+    }
     for (const [x,y,w,h] of [[625,919,220,96],[1030,495,340,120],[1510,1018,270,100]]) painter.contact(x,y,w,h,0.24);
     for (let i = 0; i < 12; i++) {
       const x = 508 + i * 96;
@@ -138,8 +145,8 @@ export class CavernArea {
     for (const [x, y, size] of [[760,1024,23],[1140,449,20],[1370,1042,26],[1600,752,18]] as const) {
       painter.stamp({ key: 'mineral-growth', x, y, width: size * 3, height: size * 3.2 });
     }
-    painter.apron(1494, 645, 258, 0xa5b39b);
-    painter.stamp({ key: 'ancient-frame', x: 1494, y: 570, width: 300, height: 310, tint: 0xbac8b6 });
+    painter.apron(1494, 635, 238, 0xa5b39b);
+    painter.stamp({ key: 'ancient-frame', x: 1494, y: 589, width: 300, height: 220, tint: 0xa5b5a6 });
     // Keep the existing inscriptions above the painting, captured in the same bake.
     const glyph = scene.make.graphics({ x: 0, y: 0 }, false);
     glyph.lineStyle(4, 0xa98cff, 0.75).lineBetween(1453,570,1480,553)
@@ -149,10 +156,12 @@ export class CavernArea {
     glyph.destroy();
     painter.destroy();
     art.destroy();
-    const foreground = scene.add.renderTexture(1040,340,230,295).setOrigin(0).setDepth(625);
+    // Low roots belong to the soil, not an opaque curtain over actors. Include
+    // their full rotated extent instead of clipping them at the cache edge.
+    const foreground = scene.add.renderTexture(1020,320,330,325).setOrigin(0).setDepth(-9998);
     const rootPainter = new EnvironmentPainter(scene, foreground);
-    rootPainter.stamp({ key: 'root-growth', x: 1113, y: 478, width: 278, height: 79, angle: 83, tint: 0x95b49d });
-    rootPainter.stamp({ key: 'root-growth', x: 1183, y: 466, width: 240, height: 64, angle: 97, tint: 0xafbe9b });
+    rootPainter.stamp({ key: 'root-growth', x: 1113, y: 478, width: 278, height: 79, angle: 83, tint: 0x95b49d, alpha: 0.62 });
+    rootPainter.stamp({ key: 'root-growth', x: 1183, y: 466, width: 240, height: 64, angle: 97, tint: 0xafbe9b, alpha: 0.58 });
     rootPainter.destroy();
     // One reused light source makes the old inscriptions readable; no per-frame redraw.
     const glow = scene.add.ellipse(1492, 581, 86, 44, 0xa98cff, 0.17).setDepth(580);

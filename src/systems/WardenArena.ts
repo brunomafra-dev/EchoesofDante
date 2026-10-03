@@ -20,10 +20,10 @@ export class WardenArena {
     scene.add.rectangle(1100, 750, 2200, 1500, 0x102329).setDepth(-10002);
     createCavernGround(scene, 2200);
     this.bake();
-    const entrance = scene.add.image(520, 890, 'ancient-approach').setOrigin(0.5, 0.95)
-      .setDisplaySize(260, 205).setDepth(890).setTint(0xabb9a8);
+    const entrance = scene.add.image(520, 890, 'guardian-lintel-open').setOrigin(0.5, 0.95)
+      .setDisplaySize(260, 145).setDepth(890).setTint(0xabb9a8);
     trackEnvironmentOcclusion(scene, entrance);
-    this.seal = scene.add.image(530, 760, 'sealed-threshold').setDisplaySize(225, 250)
+    this.seal = scene.add.image(530, 795, 'guardian-lintel-closed').setDisplaySize(225, 110)
       .setDepth(895).setTint(0x9da9a1).setAlpha(0);
 
     // These are broken seams embedded around the perimeter, never a magic circle.
@@ -55,7 +55,7 @@ export class WardenArena {
     if (active) {
       this.obstacles.push(this.entranceObstacle);
       this.scene.tweens.killTweensOf(this.seal);
-      this.seal.setAlpha(0).setScale(225 / this.seal.width, 250 / this.seal.height);
+      this.seal.setAlpha(0).setScale(225 / this.seal.width, 110 / this.seal.height);
       this.scene.tweens.add({ targets: this.seal, alpha: 1, duration: 650 });
       this.inscription.setAlpha(0.5);
     } else {
@@ -108,8 +108,12 @@ export class WardenArena {
       [1260,1200],[925,1180],[623,1158]]);
 
     const layer = this.scene.add.renderTexture(350, 240, 1500, 1060).setOrigin(0).setDepth(-10000)
-      .draw(floor.setAlpha(0.18), -350, -240);
+      .draw(floor.setAlpha(0.06), -350, -240);
     const painter = new EnvironmentPainter(this.scene, layer);
+    painter.sediment(1040,775,1040,600,0x86816b,0.3);
+    painter.sediment(790,743,620,270,0x929074,0.22);
+    painter.sediment(1170,397,1140,230,0x122729,0.58);
+    painter.sediment(1130,1165,1180,230,0x14282a,0.55);
     // Quiet central footing keeps warnings legible; soft edge shade adds volume.
     for (const [x,y,w,h] of [[745,518,330,110],[1450,543,320,125],[1480,980,290,100],[895,1050,370,115]]) painter.contact(x,y,w,h,0.24);
     painter.apron(520, 886, 170, 0x92a78d);

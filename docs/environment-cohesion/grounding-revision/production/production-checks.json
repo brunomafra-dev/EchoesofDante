@@ -1,0 +1,28 @@
+{
+  "method": "Chrome headless production smoke; full gameplay assertions recorded by DEV QA",
+  "canvasVisible": true,
+  "loadedAssets": [
+    "dante-skitter-motion.png",
+    "dante-spitter-motion.png",
+    "warden-motion.png",
+    "cavern-soil.png",
+    "exterior-outcrop.png",
+    "ancient-approach.png",
+    "exterior-atmosphere.png",
+    "first-echo-archive.png",
+    "sealed-threshold.png",
+    "open-threshold.png",
+    "terrain-blend.png",
+    "guardian-lintel-closed.png",
+    "guardian-lintel-open.png"
+  ],
+  "devHookAbsent": true,
+  "inputSent": [
+    "D",
+    "LMB",
+    "Space",
+    "Q hold/release",
+    "E"
+  ],
+  "errors": []
+}

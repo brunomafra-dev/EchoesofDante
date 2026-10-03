@@ -242,3 +242,10 @@
 - A revisão 0.1.39 foi rejeitada perceptualmente. Cavern/arena passam a ter um substrato opaco contínuo, com material original de sedimento 512×512 produzido offline. Um TileSprite estacionário usa backing canvas 512×512 e repetição inversamente escalada; as caches capturam somente composição e contato. A paisagem com céu deixa de funcionar como piso no exterior. [Diagnóstico e comparativos](environment-cohesion/correction/).
 - Altura de rochas e marcos diminui, preservando largura de base, footprints, interações e limites. Imagens elevadas que encobrem o Guerreiro atenuam seu alpha por interseção simples, restaurando-o ao sair. Lista visual local é reconstruída em cada criação da cena; sem listeners, timers ou tweens adicionais. Durante a abertura o portão mantém controle exclusivo do alpha.
 - Forest mantém suas dimensões e seu terreno. Controle, combate, IA, Signal e estado narrativo permanecem. O QA compara física/câmera exatamente; aprovação visual depende de playtest humano.
+
+## Integração de terreno e limiares, 0.1.41
+
+- A revisão anterior ainda foi questionada perceptualmente. Sedimento com bordas suaves passa a conectar piso e bases nas caches existentes, com caminho quieto e margens mais escuras. A face/relay recebem altura menor sem mudar footprints. [Comparação, origem dos assets e QA](environment-cohesion/grounding-revision/).
+- Dois PNGs originais de 512×256 substituem a pintura frontal alta dos limiares: apoios baixos e vão realmente transparente. A mesma família atende arco exterior, limiar e entrada da arena, com escalas locais. Imagens antigas permanecem disponíveis.
+- O alpha da pintura elevada é amostrado em uma grade CPU de 32×32 preparada uma vez por textura. Aberturas transparentes não acionam o fade retangular antigo. Não há leitura de pixels, geração de arte, novo tween ou novo objeto por frame; física continua independente.
+- Dados de colisão, limites, zoom, controles, combate, IA, progressão, áudio e narrativa permanecem. Aprovação visual exige playtest humano; os QA verificam percurso, oclusão, respawn e estabilidade, sem declarar hardware mobile/gamepad validado.

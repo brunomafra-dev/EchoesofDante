@@ -5,12 +5,32 @@ const PAINTINGS = [
   'mineral-growth', 'ancient-frame', 'ancient-remnant', 'forest-ground', 'cavern-ground', 'cavern-soil',
   'deep-stratum', 'deep-mineral', 'deep-relay',
   'exterior-outcrop', 'ancient-approach', 'exterior-atmosphere',
-  'first-echo-archive', 'sealed-threshold', 'open-threshold',
+  'first-echo-archive', 'sealed-threshold', 'open-threshold', 'terrain-blend',
+  'guardian-lintel-closed', 'guardian-lintel-open',
 ] as const;
 export type EnvironmentPainting = typeof PAINTINGS[number];
 
-type Occluder = { image: Phaser.GameObjects.Image; alpha: number; width: number; height: number };
+type Occluder = { image: Phaser.GameObjects.Image; alpha: number; width: number; height: number; coverage: Uint8ClampedArray };
 const occluders = new WeakMap<Phaser.Scene, Occluder[]>();
+const coverageCache = new WeakMap<Phaser.Textures.Texture, Uint8ClampedArray>();
+const actorSamples = [[-12,-72],[0,-72],[12,-72],[-12,-42],[0,-42],[12,-42],[-12,-12],[0,-12],[12,-12]];
+
+function textureCoverage(image: Phaser.GameObjects.Image): Uint8ClampedArray {
+  const cached = coverageCache.get(image.texture);
+  if (cached) return cached;
+  // Read a 32-square visual occupancy grid once per shared texture. This is not
+  // physics, a GPU texture or per-frame pixel reading. Empty gate throats stay
+  // fully visible instead of fading the entire monument through its rectangle.
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = 32;
+  const context = canvas.getContext('2d', { willReadFrequently: true })!;
+  context.drawImage(image.texture.getSourceImage() as HTMLImageElement, 0, 0, 32, 32);
+  const pixels = context.getImageData(0, 0, 32, 32).data;
+  const coverage = new Uint8ClampedArray(1024);
+  for (let i = 0; i < coverage.length; i++) coverage[i] = pixels[i * 4 + 3];
+  coverageCache.set(image.texture, coverage);
+  return coverage;
+}
 
 export function resetEnvironmentOcclusion(scene: Phaser.Scene): void {
   occluders.set(scene, []);
@@ -22,7 +42,7 @@ export function trackEnvironmentOcclusion(scene: Phaser.Scene, image: Phaser.Gam
   const list = occluders.get(scene) ?? [];
   if (list.some(entry => entry.image === image)) return;
   list.push({ image, alpha: image.alpha, width: image.texture.key === 'world-rock' ? 0.46 : 0.86,
-    height: image.texture.key === 'world-rock' ? 0.4 : 0.86 });
+    height: image.texture.key === 'world-rock' ? 0.4 : 0.86, coverage: textureCoverage(image) });
   occluders.set(scene, list);
 }
 
@@ -35,8 +55,23 @@ export function updateEnvironmentOcclusion(scene: Phaser.Scene, feet: { x: numbe
     const centerY = image.y + (0.5 - image.originY) * image.displayHeight;
     const halfWidth = image.displayWidth * entry.width * 0.5;
     const halfHeight = image.displayHeight * entry.height * 0.5;
-    const covering = image.depth > feet.y && feet.x + 18 > centerX - halfWidth && feet.x - 18 < centerX + halfWidth
+    const overlap = image.depth > feet.y && feet.x + 18 > centerX - halfWidth && feet.x - 18 < centerX + halfWidth
       && feet.y + 6 > centerY - halfHeight && feet.y - 90 < centerY + halfHeight;
+    let covering = false;
+    if (overlap) {
+      const cos = Math.cos(image.rotation), sin = Math.sin(image.rotation);
+      for (const [ox, oy] of actorSamples) {
+        const dx = feet.x + ox - image.x, dy = feet.y + oy - image.y;
+        let u = (cos * dx + sin * dy) / image.displayWidth + image.originX;
+        let v = (-sin * dx + cos * dy) / image.displayHeight + image.originY;
+        if (image.flipX) u = 1 - u;
+        if (image.flipY) v = 1 - v;
+        if (u >= 0 && u < 1 && v >= 0 && v < 1 && entry.coverage[Math.floor(v * 32) * 32 + Math.floor(u * 32)] > 96) {
+          covering = true;
+          break;
+        }
+      }
+    }
     const target = entry.alpha * (covering ? 0.28 : 1);
     image.setAlpha(Phaser.Math.Linear(image.alpha, target, Math.min(1, dt * 12)));
   }
@@ -123,6 +158,7 @@ export class EnvironmentPainter {
   }
 
   rock(x: number, y: number, radius: number, tint = 0xcbd3c6, raised = false): void {
+    this.sediment(x, y + radius * 0.53, radius * 3.6, radius * 1.65, 0x676b55, 0.26);
     for (const stamp of rockStamps(x, y, radius, tint, 0.75)) {
       if (raised && stamp.depth !== -10000) this.raised(stamp);
       else this.stamp(stamp);
@@ -142,9 +178,17 @@ export class EnvironmentPainter {
     this.stamp(contactStamp(x, y, width, height, alpha));
   }
 
+  // Broad material transitions, captured into the existing cache. The offline
+  // feather mask has a fully transparent edge; it cannot draw a floor rectangle.
+  sediment(x: number, y: number, width: number, height: number, tint = 0x727a63, alpha = 0.24): void {
+    this.stamp({ key: 'terrain-blend', x, y, width, height, tint, alpha,
+      angle: Math.sin(x * 0.008 + y * 0.006) * 12 });
+  }
+
   apron(x: number, y: number, width: number, tint = 0xa5b69f): void {
     // Shallow sediment, a root and tiny rubble join the prop to the terrain.
     // Decorative marks are well below a body-sized obstacle and remain flat.
+    this.sediment(x, y, width * 1.6, width * 0.8, 0x686d52, 0.32);
     this.contact(x, y, width * 1.22, width * 0.32, 0.3);
     this.contact(x, y - width * 0.035, width * 0.87, width * 0.18, 0.8);
     const flip = Math.sin(x * 0.017 + y * 0.023) < 0;

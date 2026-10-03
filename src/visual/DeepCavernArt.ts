@@ -22,8 +22,14 @@ export function bakeDeepCavern(scene: Phaser.Scene): void {
   // A recess is visible past the playable lip; no new room or lore is revealed.
   mass(0x10212c,1,[[2370,658],[2490,570],[2630,612],[2640,814],[2490,863],[2390,816]]);
   mass(0x2c3b45,0.85,[[2360,746],[2460,674],[2550,680],[2520,780],[2430,838],[2340,822]]);
-  const layer=scene.add.renderTexture(1650,200,1000,1100).setOrigin(0).setDepth(-9999).draw(ground.setAlpha(0.18),-1650,-200);
+  const layer=scene.add.renderTexture(1650,200,1000,1100).setOrigin(0).setDepth(-9999).draw(ground.setAlpha(0.06),-1650,-200);
   const painter=new EnvironmentPainter(scene,layer);
+  for(const [x,y,w,h] of [[1850,588,380,265],[2070,836,520,330],[2370,763,390,270]]) {
+    painter.sediment(x,y,w,h,0x88816b,0.25);
+  }
+  for(const [x,y,w,h] of [[2180,410,880,235],[2150,1050,860,230],[2220,645,430,190]]) {
+    painter.sediment(x,y,w,h,0x152a2c,0.52);
+  }
   for(const [x,y,w,h] of [[1820,645,300,120],[2100,490,390,150],[2350,980,280,95]]) painter.contact(x,y,w,h,0.26);
   // Unequal strata connect boundaries to existing large formations.
   for(const ridge of DEEP_RIDGES){
@@ -38,7 +44,7 @@ export function bakeDeepCavern(scene: Phaser.Scene): void {
   painter.apron(2010,1024,190,0xb4b495);
   painter.stamp({key:'deep-mineral',x:2010,y:978,width:205,height:148,tint:0xc7c0a6});
   painter.apron(2210,710,275,0xa1b295);
-  painter.stamp({key:'deep-relay',x:2210,y:616,width:300,height:260,tint:0xd0d6d3});
+  painter.stamp({key:'deep-relay',x:2210,y:642,width:300,height:205,tint:0xb2c0b5});
   for(const [x,y,w,h,angle] of [[1810,605,150,50,65],[1910,886,170,54,-25],[2080,965,185,57,5],[2110,735,125,40,50],[2280,757,180,46,-20],[2360,510,180,45,30]] as const){
     painter.stamp({key:'root-growth',x,y,width:w,height:h,angle,tint:0x889f91});
   }

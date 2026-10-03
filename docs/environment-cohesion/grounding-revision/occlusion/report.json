@@ -1,0 +1,107 @@
+{
+  "method": "Chrome headless; DEV positions, no physical device",
+  "errors": [],
+  "views": [
+    {
+      "width": 1280,
+      "height": 720,
+      "arch": {
+        "alpha": 0.2800131190776281,
+        "height": 175,
+        "width": 390,
+        "depth": 925
+      },
+      "gate": {
+        "alpha": 0.28001282917636217,
+        "height": 190,
+        "width": 600,
+        "depth": 910
+      }
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "arch": {
+        "alpha": 0.28001283302790636,
+        "height": 175,
+        "width": 390,
+        "depth": 925
+      },
+      "gate": {
+        "alpha": 0.2800128503562435,
+        "height": 190,
+        "width": 600,
+        "depth": 910
+      }
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "arch": {
+        "alpha": 0.28001284843379637,
+        "height": 175,
+        "width": 390,
+        "depth": 925
+      },
+      "gate": {
+        "alpha": 0.280012817634144,
+        "height": 190,
+        "width": 600,
+        "depth": 910
+      }
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "arch": {
+        "alpha": 0.2800128465073019,
+        "height": 175,
+        "width": 390,
+        "depth": 925
+      },
+      "gate": {
+        "alpha": 0.280012842653735,
+        "height": 190,
+        "width": 600,
+        "depth": 910
+      }
+    }
+  ],
+  "restarts": [
+    {
+      "objects": 210,
+      "textures": 69,
+      "floors": 1,
+      "raised": 25,
+      "caches": 8,
+      "listeners": [
+        1,
+        1
+      ]
+    },
+    {
+      "objects": 210,
+      "textures": 69,
+      "floors": 1,
+      "raised": 25,
+      "caches": 8,
+      "listeners": [
+        1,
+        1
+      ]
+    },
+    {
+      "objects": 210,
+      "textures": 69,
+      "floors": 1,
+      "raised": 25,
+      "caches": 8,
+      "listeners": [
+        1,
+        1
+      ]
+    }
+  ],
+  "combatSealLowAndPhysicalStatePreserved": true,
+  "pass": true
+}

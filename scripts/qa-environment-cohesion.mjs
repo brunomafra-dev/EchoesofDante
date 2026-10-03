@@ -34,7 +34,7 @@ try {
     }
     await page.evaluate(({ px, py, cx, cy }) => {
       const s = window.__danteGame.scene.getScene('Game');
-      Object.assign(s.player.position, { x: px, y: py }); s.player.invulnerableUntil = Infinity;
+      Object.assign(s.player.position, { x: px, y: py }); s.player.invulnerableUntil = 0;
       if (s.warden) { s.warden.update = () => {}; s.warden.beginIntro = () => {}; }
       s.enemies.forEach(e => e.update = () => {});
       s.cameras.main.stopFollow().centerOn(cx, cy);
@@ -54,6 +54,24 @@ try {
         ground: ground ? { texture: ground.displayTexture.key, canvas: [ground.canvas.width, ground.canvas.height],
           extent: [ground.displayWidth, ground.displayHeight], origin: [ground.x, ground.y], alpha: ground.alpha } : null };
     });
+  }
+  if (stage === 'grounding-revision') {
+    const before = JSON.parse(await readFile('docs/environment-cohesion/correction/report.json', 'utf8'));
+    for (const [name, current] of Object.entries(report.regions)) {
+      assert.deepEqual(current.obstacles, before.regions[name].obstacles, `${name}: exact collision data`);
+      assert.deepEqual(current.bounds, before.regions[name].bounds, `${name}: movement bounds`);
+      assert.equal(current.zoom, before.regions[name].zoom, `${name}: unchanged camera`);
+      assert.equal(current.objects, before.regions[name].objects, `${name}: no extra runtime objects`);
+      assert.equal(current.tweens, before.regions[name].tweens, `${name}: no extra tweens`);
+      assert.equal(current.textures, before.regions[name].textures + 3, `${name}: three small shared assets`);
+      if (name !== 'forest') {
+        assert.deepEqual(current.ground.canvas, [512, 512]);
+        assert.equal(current.ground.alpha, 1);
+        assert.deepEqual(current.ground.extent, [name === 'warden' ? 2200 : 6800, 1500]);
+      }
+    }
+    report.exactPhysicalInvariance = true;
+    report.noRuntimeObjectOrTweenIncrease = true;
   }
   if (stage === 'after' || stage === 'correction') {
     const before = JSON.parse(await readFile('docs/environment-cohesion/before/report.json', 'utf8'));
