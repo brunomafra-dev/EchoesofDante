@@ -1,5 +1,10 @@
 # Warrior pintado — 0.1.48
 
+> Atualização 0.1.49: o teste humano apontou a incoerência dos braços de costas.
+> A [correção de braços, luvas e sabre](../warrior-arm-pass/) usa materiais novos,
+> ombros por vista, dois cotovelos e sobreposição coerente. Este documento
+> conserva o registro da implementação original de corpo/pernas em 0.1.48.
+
 ## O que mudou
 
 O piso da câmara de referência foi aprovado, mas o Guerreiro ainda usava a

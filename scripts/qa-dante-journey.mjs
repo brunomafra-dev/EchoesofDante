@@ -173,7 +173,13 @@ try {
   for(const offset of [25,55,90,120]) { await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:sx,y:sy-offset,id:1}]});await touch.waitForTimeout(35); }
   await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await touch.waitForTimeout(200);
   assert.ok(await touch.locator('.records-content').evaluate(el=>el.scrollTop>45));report.nativeTouchJournalScroll=true;
-  await touch.screenshot({path:`${out}/touch-records.png`}); await touch.locator('[data-close]').tap(); assert.equal((await state(touch)).paused,false);
+  await touch.screenshot({path:`${out}/touch-records.png`}); await touch.locator('[data-close]').tap();
+  // Native dialog close dispatches its event asynchronously; wait for scene resume.
+  await touch.waitForFunction(() => {
+    const scene = window.__danteGame.scene.getScene('Game');
+    return !scene.records.isOpen && !scene.scene.isPaused();
+  });
+  assert.equal((await state(touch)).paused,false);
   async function gesture(selector,dx=0,dy=0,ms=220) {
     const b=await touch.locator(selector).boundingBox();assert.ok(b);const x=b.x+b.width/2,y=b.y+b.height/2;
     await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x,y,id:1}]});

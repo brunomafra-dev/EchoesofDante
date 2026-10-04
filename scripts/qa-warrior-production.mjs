@@ -12,11 +12,11 @@ try {
     page.on('pageerror',e=>errors.push(e.message));
     page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
     page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`);});
-    page.on('request',r=>{if(r.url().includes('warrior-poses-'))requested.push(r.url());});
+    page.on('request',r=>{if(/warrior-(poses-|arm-kit|saber-painted)/.test(r.url()))requested.push(r.url());});
     await page.goto(`${base}${route}`); await page.waitForSelector('canvas'); await page.waitForTimeout(2500);
     const devHook = await page.evaluate(()=>Boolean(window.__danteGame)); assert.equal(devHook,false);
     const newArt = route === '' || route === 'quality-reference.html';
-    assert.equal(requested.length,newArt?3:0); assert.deepEqual(errors,[]);
+    assert.equal(requested.length,newArt?5:0); assert.deepEqual(errors,[]);
     report.push({route,devHook,newArtLoaded:newArt,assetRequests:requested.length,errors});
     await page.close();
   }

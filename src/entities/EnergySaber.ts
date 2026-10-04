@@ -11,25 +11,31 @@ export class EnergySaber {
   private indicator: Phaser.GameObjects.Graphics;
   private trail: Phaser.GameObjects.Graphics;
 
-  constructor(scene: Phaser.Scene) {
-    const art = scene.add.graphics();
-    // The grip, crossguard, emitter and broad tapered blade are distinct at game scale.
-    art.fillStyle(0x0b2533).fillRoundedRect(-18, -5, 28, 10, 3);
-    art.fillStyle(0x517a87).fillRoundedRect(-14, -3, 20, 6, 2);
-    art.lineStyle(2, 0x9bbac1).lineBetween(-8, -5, -8, 5);
-    art.lineBetween(-1, -5, -1, 5);
-    art.fillStyle(0x173c4d).fillRoundedRect(7, -12, 8, 24, 2);
-    art.fillStyle(0xdbece9).fillRoundedRect(10, -10, 4, 20, 1);
-    art.fillStyle(0x3c91a7, 0.5).fillTriangle(15, -10, 68, -6, 78, 0);
-    art.fillTriangle(15, 10, 68, 6, 78, 0);
-    art.fillStyle(0x72e0ef, 0.88).fillTriangle(17, -7, 69, -3, 76, 0);
-    art.fillTriangle(17, 7, 69, 3, 76, 0);
-    art.fillStyle(0xe8fffb, 0.95).fillTriangle(20, -2, 70, -1, 76, 0);
-    art.fillTriangle(20, 2, 70, 1, 76, 0);
-    art.fillStyle(0xffffff).fillCircle(17, 0, 2.4);
-    // Shift the art, not the pivot: local (0, 0) stays exactly at the glove as the blade rotates.
-    art.setPosition(6, 0);
-    this.view = scene.add.container(0, 0, [art]);
+  constructor(scene: Phaser.Scene, paintedPresentation = false) {
+    if (paintedPresentation) {
+      // Pixel-registered grip: the two glove pivots remain (0,0) and (-10,0).
+      const art = scene.add.image(0, 0, 'warrior-saber-painted').setOrigin(78 / 256, 34 / 64).setDisplaySize(128, 32);
+      this.view = scene.add.container(0, 0, [art]);
+    } else {
+      const art = scene.add.graphics();
+      // The grip, crossguard, emitter and broad tapered blade are distinct at game scale.
+      art.fillStyle(0x0b2533).fillRoundedRect(-18, -5, 28, 10, 3);
+      art.fillStyle(0x517a87).fillRoundedRect(-14, -3, 20, 6, 2);
+      art.lineStyle(2, 0x9bbac1).lineBetween(-8, -5, -8, 5);
+      art.lineBetween(-1, -5, -1, 5);
+      art.fillStyle(0x173c4d).fillRoundedRect(7, -12, 8, 24, 2);
+      art.fillStyle(0xdbece9).fillRoundedRect(10, -10, 4, 20, 1);
+      art.fillStyle(0x3c91a7, 0.5).fillTriangle(15, -10, 68, -6, 78, 0);
+      art.fillTriangle(15, 10, 68, 6, 78, 0);
+      art.fillStyle(0x72e0ef, 0.88).fillTriangle(17, -7, 69, -3, 76, 0);
+      art.fillTriangle(17, 7, 69, 3, 76, 0);
+      art.fillStyle(0xe8fffb, 0.95).fillTriangle(20, -2, 70, -1, 76, 0);
+      art.fillTriangle(20, 2, 70, 1, 76, 0);
+      art.fillStyle(0xffffff).fillCircle(17, 0, 2.4);
+      // Shift the art, not the pivot: local (0, 0) stays exactly at the glove as the blade rotates.
+      art.setPosition(6, 0);
+      this.view = scene.add.container(0, 0, [art]);
+    }
     this.indicator = scene.add.graphics();
     this.trail = scene.add.graphics();
   }

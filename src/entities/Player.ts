@@ -8,6 +8,7 @@ import { clamp, normalized, type Vec2 } from '../utils/math';
 import { EnergySaber } from './EnergySaber';
 import { poseWarrior } from '../experiments/quality-reference/ActorPresentation';
 import { WarriorArt } from '../visual/WarriorArt';
+import { WarriorArms } from '../visual/WarriorArms';
 
 export type PlayerAnimationState = 'IDLE' | 'WALK' | 'ATTACK_WINDUP' | 'ATTACK_SWING' | 'ATTACK_RECOVERY' | 'DASH' | 'CHARGE' | 'CHARGE_RELEASE' | 'HURT' | 'DEAD';
 
@@ -30,10 +31,11 @@ export class Player {
   private bodyRig: Phaser.GameObjects.Container;
   private torso: Phaser.GameObjects.Image;
   private paintedArt?: WarriorArt;
+  private paintedArms?: WarriorArms;
   private supportArm: Phaser.GameObjects.Image;
   private supportUpperArm: Phaser.GameObjects.Image;
   private saberArm: Phaser.GameObjects.Image;
-  private supportGlove: Phaser.GameObjects.Arc;
+  private supportGlove: Phaser.GameObjects.Arc | Phaser.GameObjects.Image;
   private handAnchor: Phaser.GameObjects.Container;
   private gripWorld: Vec2 = { x: 0, y: 0 };
   private bodyLean = 0;
@@ -72,14 +74,18 @@ export class Player {
     this.hurtOverlay = scene.add.graphics();
     this.hurtOverlay.fillStyle(0xff9a7f, 0.8).fillEllipse(0, -8, 61, 80);
     this.hurtOverlay.setAlpha(0);
-    this.weapon = new EnergySaber(scene);
+    this.weapon = new EnergySaber(scene, paintedPresentation);
     const glove = scene.add.circle(0, 0, 5, 0x203d47).setStrokeStyle(1.5, 0x9bb8b3);
-    this.supportGlove = scene.add.circle(0, 0, 4.5, 0x203d47).setStrokeStyle(1.5, 0xd4dbce);
+    this.supportGlove = paintedPresentation ? scene.add.image(0, 0, 'warrior-arm-kit', 2) :
+      scene.add.circle(0, 0, 4.5, 0x203d47).setStrokeStyle(1.5, 0xd4dbce);
     this.handAnchor = scene.add.container(0, 0, [this.weapon.view, glove]);
     this.bodyRig = scene.add.container(0, 0, [this.torso, this.supportUpperArm, this.supportArm, this.saberArm, this.handAnchor, this.supportGlove, this.hurtOverlay]);
     this.view = scene.add.container(x, y, [this.legsRig, this.bodyRig]).setDepth(y);
     if (paintedPresentation) {
       this.paintedArt = new WarriorArt(this.torso);
+      glove.setVisible(false);
+      this.paintedArms = new WarriorArms(scene, this.bodyRig, this.torso, this.saberArm,
+        this.supportUpperArm, this.supportArm, this.handAnchor, this.supportGlove as Phaser.GameObjects.Image, this.hurtOverlay);
       this.leftLeg.setVisible(false); this.rightLeg.setVisible(false);
     }
     this.ring = scene.add.circle(x, y + 39, 33).setStrokeStyle(1, 0x89d9d2, 0.28).setFillStyle(0, 0).setDepth(y - 1);
@@ -110,13 +116,16 @@ export class Player {
     const handX = 30 * x + 32 * (1 - Math.abs(x)) + x * handReach - y * sweep;
     const handY = -8 + y * (12 + handReach) + x * sweep;
     this.handAnchor.setPosition(handX, handY);
+    this.paintedArms?.prepare(aim, shoulderY, handReach, sweep);
     const bodyX = this.position.x + this.bodyRig.x * x - this.bodyRig.y * y;
     const bodyY = this.position.y + this.bodyRig.x * y + this.bodyRig.y * x;
-    this.gripWorld.x = bodyX + handX * Math.cos(bodyLean) - handY * Math.sin(bodyLean);
-    this.gripWorld.y = bodyY + handX * Math.sin(bodyLean) + handY * Math.cos(bodyLean);
-    const armX = handX - shoulderX;
-    const armY = handY - shoulderY;
-    this.saberArm.setPosition(shoulderX, shoulderY).setRotation(Math.atan2(armY, armX)).setDisplaySize(Math.max(16, Math.hypot(armX, armY)), this.paintedArt ? 12 : 16);
+    this.gripWorld.x = bodyX + this.handAnchor.x * Math.cos(bodyLean) - this.handAnchor.y * Math.sin(bodyLean);
+    this.gripWorld.y = bodyY + this.handAnchor.x * Math.sin(bodyLean) + this.handAnchor.y * Math.cos(bodyLean);
+    if (!this.paintedArms) {
+      const armX = handX - shoulderX;
+      const armY = handY - shoulderY;
+      this.saberArm.setPosition(shoulderX, shoulderY).setRotation(Math.atan2(armY, armX)).setDisplaySize(Math.max(16, Math.hypot(armX, armY)), this.paintedArt ? 12 : 16);
+    }
   }
 
   get hp(): number { return this.health.current; }
@@ -215,6 +224,10 @@ export class Player {
     const offset = this.weapon.supportGripX * this.weapon.view.scaleX;
     const gripX = this.handAnchor.x + Math.cos(this.weapon.view.rotation) * offset;
     const gripY = this.handAnchor.y + Math.sin(this.weapon.view.rotation) * offset;
+    if (this.paintedArms) {
+      this.paintedArms.update(gripX, gripY, this.weapon.view.rotation);
+      return;
+    }
     const shoulderY = this.paintedArt?.shoulderY ?? -8;
     const sleeveWidth = this.paintedArt ? 12 : 16;
     const armX = gripX + 18;

@@ -13,6 +13,10 @@ export function preloadWarriorArt(scene: Phaser.Scene): void {
       `${import.meta.env.BASE_URL}assets/visual/characters/${key}.png`,
       { frameWidth: 256, frameHeight: 256 });
   }
+  if (!scene.textures.exists('warrior-arm-kit')) scene.load.spritesheet('warrior-arm-kit',
+    `${import.meta.env.BASE_URL}assets/visual/characters/warrior-arm-kit.png`, { frameWidth: 128, frameHeight: 128 });
+  if (!scene.textures.exists('warrior-saber-painted')) scene.load.image('warrior-saber-painted',
+    `${import.meta.env.BASE_URL}assets/visual/characters/warrior-saber-painted.png`);
 }
 
 // Presentation only: painted body/legs replace the old torso and two boots.

@@ -1,0 +1,87 @@
+[
+  {
+    "file": "public/assets/visual/characters/warrior-arm-kit.png",
+    "size": [
+      384,
+      256
+    ],
+    "bytes": 95917,
+    "frameSize": [
+      128,
+      128
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "occupiedRect": [
+          2,
+          34,
+          126,
+          94
+        ]
+      },
+      {
+        "frame": 1,
+        "occupiedRect": [
+          2,
+          34,
+          126,
+          94
+        ]
+      },
+      {
+        "frame": 2,
+        "occupiedRect": [
+          4,
+          20,
+          124,
+          107
+        ]
+      },
+      {
+        "frame": 3,
+        "occupiedRect": [
+          2,
+          34,
+          126,
+          94
+        ]
+      },
+      {
+        "frame": 4,
+        "occupiedRect": [
+          2,
+          34,
+          126,
+          94
+        ]
+      },
+      {
+        "frame": 5,
+        "occupiedRect": [
+          4,
+          26,
+          124,
+          101
+        ]
+      }
+    ],
+    "sha256": "dc32cf685a41b29014b3fd2efafd4cf069c2e832b6b0c50dd95a22c90541b25f",
+    "sourceSha256": "0c17164d1b055f54654af408261bed81fdbc0c43294747abfbe466fa94cff0a8"
+  },
+  {
+    "file": "public/assets/visual/characters/warrior-saber-painted.png",
+    "size": [
+      256,
+      64
+    ],
+    "bytes": 14657,
+    "dominantGripPixel": [
+      78,
+      34
+    ],
+    "supportGripWorldOffset": -10,
+    "sha256": "d2c6c56a9bd38743fa058eb4142cc2e74a8ddf85f6e75fa8359fb23ccbf24a2f",
+    "sourceSha256": "03df384cae9ae34e5ebad3c36b12c27161b6744c1bc0bd9f4ffcd48c4edcf794"
+  }
+]

@@ -38,7 +38,7 @@ try {
   await page.goto(`${base}quality-reference.html`); await ready(page); await stage(page); await page.waitForTimeout(10100);
   assert.deepEqual(await page.evaluate(() => { const s = window.__danteGame.scene.getScene('Game'); return { bounds: s.arena.bounds, obstacles: s.arena.obstacles }; }), geometry);
   const after = await counts(page); assert.equal(after.rootObjects, before.rootObjects);
-  assert.equal(after.textures, before.textures + 3); assert.equal(after.graphics, before.graphics);
+  assert.equal(after.textures, before.textures + 5); assert.equal(after.graphics, before.graphics);
   await page.screenshot({ path: `${out}/warrior-after.png` });
   for (const [width, height] of [[1280,720], [1366,768], [1920,1080], [844,390]]) {
     await page.setViewportSize({width,height}); await page.waitForTimeout(200);
@@ -56,6 +56,17 @@ try {
       return p.torso.texture.key === v.keyName && p.torso.flipX === v.flipped && !p.leftLeg.visible && !p.rightLeg.visible
         && Math.abs(foot.y - p.position.y - 39) < .001 && Math.abs(p.bodyRig.rotation + p.view.rotation) < .001;
     }, {keyName,flipped}));
+    // Orientation is a visual invariant in addition to attached grips: rear
+    // sleeves/knuckles and sword must be behind the back-facing painted body.
+    assert.ok(await page.evaluate(name => { const p = window.__danteGame.scene.getScene('Game').player,
+      a = p.paintedArms, body = p.bodyRig.getIndex(p.torso), hand = p.bodyRig.getIndex(p.handAnchor);
+      if (!a || p.supportGlove.type !== 'Image' || p.weapon.view.list[0].texture.key !== 'warrior-saber-painted') return false;
+      if (name === 'back') return a.layer === 'back' && hand < body && p.bodyRig.getIndex(p.saberArm) < body
+        && a.mainX > 0 && a.supportX < 0 && p.saberArm.frame.name === 4 && p.supportGlove.frame.name === 5 && p.handAnchor.x > 0;
+      if (name === 'front') return a.layer === 'front' && hand > body && a.mainX < 0 && a.supportX > 0
+        && p.saberArm.frame.name === 1 && p.supportGlove.frame.name === 2 && p.handAnchor.x < 0;
+      return a.layer === 'side' && p.bodyRig.getIndex(p.supportUpperArm) < body && p.bodyRig.getIndex(p.saberArm) > body;
+    },name));
     await page.screenshot({path:`${out}/pose-${name}.png`});
   }
   // Observe actual gameplay states/frames and grip attachment while moving
@@ -66,7 +77,9 @@ try {
       (window.qaPoses[state] ??= new Set()).add(Number(p.torso.frame.name));
       const a = p.weapon.view.getWorldTransformMatrix().transformPoint(p.weapon.supportGripX,0);
       const b = p.supportGlove.getWorldTransformMatrix().transformPoint(0,0);
-      window.qaGripError = Math.max(window.qaGripError,Math.hypot(a.x-b.x,a.y-b.y));
+      const primary = p.weapon.view.getWorldTransformMatrix().transformPoint(0,0);
+      const main = p.paintedArms.mainGlove.getWorldTransformMatrix().transformPoint(0,0);
+      window.qaGripError = Math.max(window.qaGripError,Math.hypot(a.x-b.x,a.y-b.y),Math.hypot(primary.x-main.x,primary.y-main.y));
     }; s.events.on('postupdate',window.qaObserve);
   });
   await page.mouse.move(940,420);
@@ -75,6 +88,18 @@ try {
   await page.keyboard.down('q'); await page.waitForTimeout(350); await page.mouse.move(640,180); await page.waitForTimeout(180);
   await page.screenshot({path:`${out}/pose-charge.png`}); await page.keyboard.up('q'); await page.waitForTimeout(420);
   await key(page,'Space',80); await page.waitForTimeout(550);
+  // Diagonal views and the two-hand rig must remain valid through real swings,
+  // including the moment when front/back/lateral body sectors change.
+  for (let i=0;i<8;i++) {
+    const angle = i * Math.PI / 4;
+    const screen = await page.evaluate(() => {const s=window.__danteGame.scene.getScene('Game');return {x:s.player.position.x-s.cameras.main.scrollX,y:s.player.position.y-s.cameras.main.scrollY};});
+    await page.mouse.move(screen.x + Math.cos(angle)*160,screen.y + Math.sin(angle)*160);
+    await page.mouse.down();await page.waitForTimeout(90);await page.mouse.up();await page.waitForTimeout(320);
+    assert.ok(await page.evaluate(()=>{const p=window.__danteGame.scene.getScene('Game').player;
+      return [p.saberArm,p.supportArm,p.supportUpperArm,p.paintedArms.mainUpper].every(i=>Number.isFinite(i.x)&&Number.isFinite(i.y)&&Number.isFinite(i.rotation)&&i.displayWidth<65);
+    }));
+  }
+  report.eightDirectionSwingsAndRearOcclusion = true;
   report.poses = await page.evaluate(() => Object.fromEntries(Object.entries(window.qaPoses).map(([state,frames])=>[state,[...frames]])));
   assert.ok([0,1,2,3].every(frame => report.poses.WALK.includes(frame)));
   assert.ok(report.poses.ATTACK_SWING.includes(5)); assert.ok(report.poses.CHARGE.includes(6));
@@ -99,7 +124,11 @@ try {
   const clip = await videoContext.newPage(); watch(clip); await clip.goto(`${base}quality-reference.html`); await ready(clip); await stage(clip);
   await clip.mouse.move(940,420); await key(clip,'d',700); await key(clip,'a',700);
   await clip.mouse.move(650,600); await key(clip,'s',550); await key(clip,'w',550);
-  await clip.mouse.down(); await clip.waitForTimeout(100); await clip.mouse.up(); await clip.waitForTimeout(400);
+  for (const [x,y] of [[650,180],[940,420],[380,420],[650,600]]) {
+    await clip.mouse.move(x,y);await clip.waitForTimeout(200);
+    await clip.mouse.down(); await clip.waitForTimeout(100); await clip.mouse.up(); await clip.waitForTimeout(400);
+  }
+  await clip.mouse.move(650,180);
   await clip.keyboard.down('q'); await clip.waitForTimeout(600); await clip.keyboard.up('q'); await clip.waitForTimeout(500);
   await key(clip,'Space',80); await clip.waitForTimeout(550);
   const video = clip.video(); await videoContext.close(); await video.saveAs(`${out}/warrior-motion.webm`);
