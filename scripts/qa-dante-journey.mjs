@@ -63,8 +63,18 @@ try {
       s.player.lastDashAt = s.time.now; s.records.open();
     });
     const before = await page.evaluate(() => { const s = window.__danteGame.scene.getScene('Game'); return s.warden.stateUntil - s.time.now; });
-    await page.waitForTimeout(2100); await page.locator('[data-close]').click(); await page.waitForTimeout(100);
-    const after = await page.evaluate(() => { const s = window.__danteGame.scene.getScene('Game'); return { state: s.warden.state, remaining: s.warden.stateUntil - s.time.now, dash: s.player.dashProgress }; });
+    await page.evaluate(() => {
+      document.querySelector('.records-dialog').addEventListener('close', () => {
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          const s = window.__danteGame.scene.getScene('Game');
+          window.qaPauseReturn = { state: s.warden.state, remaining: s.warden.stateUntil - s.time.now, dash: s.player.dashProgress };
+        }));
+      }, { once: true });
+      window.qaPauseReturn = null;
+    });
+    await page.waitForTimeout(2100); await page.locator('[data-close]').click();
+    await page.waitForFunction(() => window.qaPauseReturn);
+    const after = await page.evaluate(() => window.qaPauseReturn);
     assert.equal(after.state, 'TELEGRAPH'); assert.ok(before - after.remaining < 350); assert.ok(after.dash < 0.2); pauses.push(after);
   }
   report.combatClockPausesWithJournal = pauses;
@@ -74,7 +84,7 @@ try {
   });
   await page.waitForFunction(() => window.__danteGame.scene.getScene('Game').signalPortal?.active);
   await pos(1450,830); await key('e'); await page.waitForFunction(() => window.__danteGame.scene.getScene('Game').area === 'valley'); await page.waitForTimeout(650);
-  assert.equal((await state(page)).enemies, 6); report.fullJourneyToValley = true;
+  assert.equal((await state(page)).enemies, 8); report.fullJourneyToValley = true;
   // Main/north/south regions preserve all existing obstacles and remain optional.
   for (const p of [[1050,760],[1270,555],[1510,1040],[2190,745]]) await pos(...p);
   await key('e'); assert.ok((await state(page)).landmark); assert.equal((await state(page)).routes.length, 3);
@@ -89,7 +99,7 @@ try {
   // Reload retains kills, cooldowns, bestiary, HP and region access.
   await page.evaluate(() => { const s = window.__danteGame.scene.getScene('Game'); s.player.health.current = 73; s.saveProgress(); });
   await reload(); after = await state(page);
-  assert.equal(after.area, 'valley'); assert.equal(after.hp, 73); assert.equal(after.xp, oldXp + 15); assert.equal(after.level, 2);
+  assert.equal(after.area, 'valley'); assert.equal(after.hp, 73); assert.equal(after.xp, oldXp + 15); assert.equal(after.level, 3);
   assert.ok(after.won && after.first && after.landmark); assert.equal(after.routes.length, 3); assert.equal(after.bestiary.carapace.defeats, 1); assert.ok(!after.residents.includes(900));
   // DEV expires the timer, but actual proximity safety still prevents a spawn in front of the player.
   await pos(900,855); await page.evaluate(() => window.__danteGame.scene.getScene('Game').valleyHabitatCooldowns.set(900, Date.now() - 1));

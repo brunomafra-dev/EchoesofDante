@@ -50,17 +50,19 @@ A [preparação para o Warden](docs/warden-preparation/) acrescenta o **Primeiro
 
 O [Warden](docs/warden-boss/) ocupa uma nova área **depois do limiar do guardião**. Investigar e atravessar a passagem leva à sua bacia mineral. O primeiro boss possui três fases, cinco padrões com avisos e janelas de recuperação, retorno seguro após morrer e uma transmissão fragmentada após a vitória. Usa as armas, controles e progressão existentes; a recompensa é narrativa.
 
-Após a vitória, o portal do sinal leva ao [Vale da Ressonância](docs/resonance-valley/): uma região exterior própria com desvio mineral, seis criaturas de dois arquétipos novos, uma resposta ancestral e indicação de continuidade. A travessia preserva HP e progresso; o portal também permite voltar. Não exige limpar a área. No touch, o movimento começa numa área ampla à esquerda, reposiciona a base e mantém o arrasto capturado mesmo além do círculo.
+Após a vitória, o portal do sinal leva ao [Vale da Ressonância](docs/resonance-valley/): uma região exterior própria com desvio mineral, oito moradores de dois arquétipos, uma resposta ancestral e indicação de continuidade. A travessia preserva HP e progresso; o portal também permite voltar. Não exige limpar a área. No touch, o movimento começa numa área ampla à esquerda, reposiciona a base e mantém o arrasto capturado mesmo além do círculo.
 
 Os nomes acima das criaturas usam o estilo aprovado no vale: Rastejante Hollow, Saltador e Cuspidor também são identificados ao preparar um ataque ou receber dano. O Warden possui nome sobre o corpo durante o encontro, além de sua barra existente. Textos acompanham a posição sem girar com a criatura e desaparecem na morte.
 
-## Jornada persistente e expedições — 0.1.44
+## Jornada persistente e expedições — 0.1.45
 
 O progresso é salvo automaticamente **neste navegador**: XP, nível, Ecos, passagens, Primeiro Eco, vitória sobre o Warden, exploração do Vale e bestiário. Reabrir a mesma URL retoma a região em seu ponto seguro, com a vida registrada. Morrer continua restaurando a vida no respawn. A posição exata, vida dos inimigos e ataques em andamento não são salvos; um Warden ainda não derrotado reinicia seu encontro.
 
-Abra **REGISTROS** pelo botão na tela, **B** no teclado ou **Voltar/Select** do gamepad padrão. A consulta pausa o jogo, registra as seis criaturas encontradas e conta suas derrotas. **NOVO PERCURSO** permite recomeçar após confirmação. Limpar os dados do site remove o save; ele não sincroniza entre dispositivos.
+Abra **REGISTROS** pelo botão na tela, **B** no teclado ou **Voltar/Select** do gamepad padrão. A consulta pausa o jogo, registra as seis espécies encontradas e conta suas derrotas. A primeira derrota libera uma observação tática adicional. **NOVO PERCURSO** permite recomeçar após confirmação. Limpar os dados do site remove o save; ele não sincroniza entre dispositivos.
 
-No Vale, a passagem entre cristas, o desvio mineral e a bacia enraizada passam a registrar visitas. Os seis habitats renovam seus moradores **90 segundos após a derrota**, quando você está a pelo menos **480 unidades** da posição de origem. Reload, morte e travessia do portal mantêm esse intervalo. Cada novo morador derrotado concede os mesmos 15 XP; o limite continua sendo nível 3. Nenhum trecho exige matar criaturas. [Implementação, QA e limites](docs/dante-journey/).
+No Vale, a passagem entre cristas, o desvio mineral e a bacia enraizada concedem **20 XP por primeira descoberta**, com bônus único salvo. Saves anteriores conservam visitas e podem receber o bônus ao revisitar. Os oito habitats renovam seus moradores **90 segundos após a derrota**, quando você está a pelo menos **480 unidades** da posição de origem. Reload, morte e travessia do portal mantêm esse intervalo. Cada novo morador derrotado concede os mesmos 15 XP; nenhum trecho exige matar criaturas.
+
+Os níveis 4 e 5 exigem **360 e 660 XP acumulados**, com **130 e 140 PV máximos**. O HUD mostra quanto falta, o ganho de vida e XP recebido. A passagem tem uma criatura isolada, os desvios têm duplas e a margem leste tem um trio, com espaço para contornar e retornar. Depois de conhecer o Vale, o guia indica **EXPEDIÇÃO LIVRE**. [Progressão, encontros, compatibilidade e QA](docs/dante-expeditions/) · [Fundação original do save](docs/dante-journey/).
 
 A [correção de animação e orientação em português](docs/playtest-readability/) mantém os novos inimigos apoiados no chão, com quadros de passada, preparação, ataque e reação. A interface agora usa português e mostra o próximo passo desde 0/3 Ecos, com pistas de direção, identificação próxima dos locais e orientação da fissura ao mecanismo e à entrada. O fluxo continua sem chave, kill count ou recompensa adicional.
 
@@ -114,12 +116,12 @@ A música de exploração usa dois loops instrumentais curtos e originais, Fores
 ## Limitações conhecidas
 
 - O percurso segue da Forest ao Warden e ao Vale da Ressonância; o caminho além do vale ainda não é explorável.
-- O nível está limitado a 3. O save pertence ao navegador/dispositivo, sem conta, nuvem ou recuperação após limpar os dados do site. Quando o armazenamento está indisponível, o jogo continua e os Registros informam a falha.
+- O nível está limitado a 5. O save pertence ao navegador/dispositivo, sem conta, nuvem ou recuperação após limpar os dados do site. Quando o armazenamento está indisponível, o jogo continua e os Registros informam a falha.
 - A onda usa uma faixa frontal móvel e não tem interação especial com rochas. Seus valores e a naturalidade das poses do braço ainda precisam de avaliação humana em combate.
 - HUD e Energy Saber receberam apenas o feedback necessário para a habilidade; sua arte base, Mineral Pulse, First Discovery e parte do terreno ainda são provisórios.
 - Touch e gamepad foram validados em emulação de navegador; conforto e compatibilidade em dispositivos físicos ainda exigem playtest. Não há suporte oficial a navegadores de console, builds nativas, remapeamento de botões ou menu de volume.
 - Os temas musicais são protótipos instrumentais. Vocal atmosférico, mixagem final e camadas adaptativas de combate/descoberta permanecem para avaliação futura.
-- Forest e Cavern mantêm moradores reconstruídos ao reiniciar a cena, com XP único por habitat salvo. Apenas os seis habitats do Vale têm renovação por intervalo e XP por novo morador.
+- Forest e Cavern mantêm moradores reconstruídos ao reiniciar a cena, com XP único por habitat salvo. Apenas os oito habitats do Vale têm renovação por intervalo e XP por novo morador.
 - Troncos, totens e bases estruturais possuem colisores circulares simples; copas, vegetação baixa, raízes e pequenos detalhes continuam atravessáveis. A classificação e a auditoria estão em [Environmental Collision Audit](docs/ENVIRONMENT_COLLISION_AUDIT.md).
 - A IA mantém perseguição direta, sem navegação por caminhos; Hollows podem ficar presos em rochas ao perseguir fora das trilhas.
 - A câmera e a arte usam visão superior 2D, sem profundidade isométrica real.

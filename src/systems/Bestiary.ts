@@ -12,9 +12,11 @@ export class Bestiary {
     return true;
   }
 
-  defeat(id: SpeciesId): void {
+  defeat(id: SpeciesId): boolean {
+    const first = !this.entries[id]?.defeats;
     this.see(id);
     this.entries[id]!.defeats++;
+    return first;
   }
 
   get discovered(): number { return Object.keys(this.entries).length; }

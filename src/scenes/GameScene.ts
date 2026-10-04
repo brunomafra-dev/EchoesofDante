@@ -3,6 +3,8 @@ import { SaberAttack } from '../combat/Attack';
 import { applyDamage } from '../combat/Damage';
 import { KineticCharge } from '../combat/KineticCharge';
 import { PLAYER, CRAWLER, KINETIC_CHARGE, WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
+import { PROGRESSION } from '../config/progression';
+import { SPECIES } from '../config/bestiary';
 import { FOREST_ENTRY, FOREST_PATROLS, FOREST_SPAWNS } from '../config/forest';
 import { CAVERN_DEPTH_OPENING, CAVERN_ENTRY, CAVERN_HOLLOWS, DEEP_AREA, DEEP_HOLLOWS } from '../config/cavern';
 import { FOREST_ECHOES, NORTHERN_DISCOVERY, SIGNAL_THRESHOLD } from '../config/discovery';
@@ -254,8 +256,10 @@ export class GameScene extends Phaser.Scene {
     this.input.setDefaultCursor('crosshair');
     this.records = new RecordsPanel(this, () => ({
       level: this.progression.level, xp: this.progression.xp, echoes: this.progression.echoes.size,
+      nextLevelXp: this.progression.nextLevelXp, maxHp: this.progression.maxHp,
       area: this.area === 'valley' ? 'Vale da Ressonância' : this.area === 'warden' ? 'Domínio do Guardião' : this.area === 'cavern' ? 'Cavernas de Dante' : 'Floresta de Dante',
       bestiary: this.bestiary.snapshot(), routes: this.valleyRoutes, valleyVisited: this.valleyVisited, saveStatus: this.journey.status,
+      rewardedRoutes: this.progression.rewardedRoutes,
     }), () => {
       this.controls.cancelForRecords();
       this.charge.stop();
@@ -310,6 +314,7 @@ export class GameScene extends Phaser.Scene {
       const leveledUp = this.progression.discover(nearbyEcho.id);
       this.hud.showDiscovery(nearbyEcho.message);
       this.updateProgressHud();
+      this.hud.showExperience(PROGRESSION.echoXp, 'ECO');
       if (leveledUp) this.levelUp();
       this.sounds.discovery();
       if (!wasSynchronized && this.progression.signalSynchronized) this.synchronizeSignal();
@@ -457,9 +462,13 @@ export class GameScene extends Phaser.Scene {
     if (this.area === 'valley') {
       this.renewValleyHabitats();
       if (this.player.position.x >= 1800 && !this.valleyCheckpointReached) { this.valleyCheckpointReached = true; this.saveProgress(); }
-      for (const route of VALLEY_ROUTES) if (!this.valleyRoutes.has(route.id) && distance(this.player.position, route) < route.radius) {
+      for (const route of VALLEY_ROUTES) if ((!this.valleyRoutes.has(route.id) || !this.progression.rewardedRoutes.has(route.id)) && distance(this.player.position, route) < route.radius) {
         this.valleyRoutes.add(route.id);
-        this.hud.showDiscovery(`${route.name.toLocaleUpperCase('pt-BR')}\nTRECHO REGISTRADO NO ARQUIVO`);
+        const reward = this.progression.discoverValleyRoute(route.id);
+        this.updateProgressHud();
+        if (reward.awarded) this.hud.showExperience(PROGRESSION.valleyRouteXp, 'EXPLORAÇÃO');
+        this.hud.showDiscovery(`${route.name.toLocaleUpperCase('pt-BR')}\n${route.residents}`);
+        if (reward.leveledUp) this.levelUp();
         this.records.markDiscovery();
         this.saveProgress();
       }
@@ -587,12 +596,19 @@ export class GameScene extends Phaser.Scene {
             instruction: 'Retorne ao domínio do guardião.', action: 'investigate' }, this.hud);
         return;
       }
-      const unexplored = VALLEY_ROUTES.filter(route => !this.valleyRoutes.has(route.id));
+      const unexplored = VALLEY_ROUTES.filter(route => !this.valleyRoutes.has(route.id) || !this.progression.rewardedRoutes.has(route.id));
       if (this.valleyLandmarkSeen && unexplored.length) {
         const next = unexplored.reduce((a, b) => distance(this.player.position, a) <= distance(this.player.position, b) ? a : b);
         this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
-          `EXPLORE OS DESVIOS  ${this.valleyRoutes.size}/3`,
+          `EXPLORE OS DESVIOS  ${this.progression.rewardedRoutes.size}/3`,
           { ...next, instruction: next.hint, action: 'walk' }, this.hud);
+        return;
+      }
+      if (this.valleyLandmarkSeen && this.valleyEndSeen && !unexplored.length) {
+        this.explorationGuide.hide();
+        this.hud.setExplorationGuide('EXPEDIÇÃO LIVRE',
+          this.progression.nextLevelXp === null ? 'Conheça os hábitos das criaturas.' : `Nível ${this.progression.level + 1}: faltam ${this.progression.nextLevelXp - this.progression.xp} XP.`,
+          'Registros mostra os habitats e suas ameaças.');
         return;
       }
       this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
@@ -737,7 +753,7 @@ export class GameScene extends Phaser.Scene {
       }
       if (result.died) {
         const species = this.enemySpecies.get(enemy);
-        if (species) this.bestiary.defeat(species);
+        if (species && this.bestiary.defeat(species)) this.records.markDiscovery();
         if (enemy !== this.warden) this.deathEffect(enemy.position);
         enemy.die();
         const spawnIndex = this.hollowSpawnIds.get(enemy);
@@ -750,7 +766,10 @@ export class GameScene extends Phaser.Scene {
             this.valleyResidents.delete(spawnIndex);
             this.valleyHabitatCooldowns.set(spawnIndex, Date.now() + VALLEY_RENEWAL.delayMs);
           }
-          if (reward.awarded) this.updateProgressHud();
+          if (reward.awarded) {
+            this.updateProgressHud();
+            this.hud.showExperience(PROGRESSION.hollowXp, species ? SPECIES[species].name.toLocaleUpperCase('pt-BR') : 'COMBATE');
+          }
           if (reward.leveledUp) this.levelUp();
           this.hollowSpawnIds.delete(enemy);
         }
@@ -871,8 +890,9 @@ export class GameScene extends Phaser.Scene {
   }
 
   private levelUp(): void {
+    const gainedHp = this.progression.maxHp - this.player.maxHp;
     this.player.health.setMaxAndRestore(this.progression.maxHp);
-    this.hud.showLevelUp(this.progression.level);
+    this.hud.showLevelUp(this.progression.level, this.progression.maxHp, gainedHp);
     const ring = this.add.circle(this.player.position.x, this.player.position.y, 25)
       .setStrokeStyle(3, 0xffbd54, 0.8).setDepth(15000);
     this.tweens.add({ targets: ring, scale: 2.6, alpha: 0, duration: 450, onComplete: () => ring.destroy() });

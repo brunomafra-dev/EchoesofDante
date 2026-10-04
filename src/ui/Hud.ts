@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { KINETIC_CHARGE, VIEW_HEIGHT, VIEW_WIDTH } from '../config/game';
 import { ECHO_COUNT, NORTHERN_DISCOVERY } from '../config/discovery';
+import { PROGRESSION } from '../config/progression';
 import type { KineticPhase } from '../combat/KineticCharge';
 import type { InputMethod } from '../input/Controls';
 
@@ -19,6 +20,11 @@ export class Hud {
   private discoveryPrompt: Phaser.GameObjects.Text;
   private discoveryMessage: Phaser.GameObjects.Text;
   private progressText: Phaser.GameObjects.Text;
+  private progressHint: Phaser.GameObjects.Text;
+  private experienceText: Phaser.GameObjects.Text;
+  private experienceTimer?: Phaser.Time.TimerEvent;
+  private experienceAmount = 0;
+  private experienceSource = '';
   private levelMessage: Phaser.GameObjects.Text;
   private signalPanel: Phaser.GameObjects.Graphics;
   private signalObjective: Phaser.GameObjects.Text;
@@ -51,6 +57,7 @@ export class Hud {
     text(45, 24, 'ECHOES OF DANTE', 26, '#ecf5ee', true);
     this.areaSubtitle = text(47, 61, 'FLORESTA DE DANTE   /   EXPLORAÇÃO', 12, '#83a8a8');
     this.progressText = text(44, 112, 'NV 1   XP 0 / 60   ECOS 0 / 3', 17, '#d8e9dc', true);
+    this.progressHint = text(44, 133, '', 11, '#a6c5af');
     this.signalPanel = scene.add.graphics().setScrollFactor(0).setDepth(19990);
     this.signalPanel.fillStyle(0x071b24, 0.88).fillRoundedRect(24, 156, 340, 90, 8);
     this.signalPanel.lineStyle(1, 0xa98cff, 0.55).strokeRoundedRect(24, 156, 340, 90, 8);
@@ -87,6 +94,8 @@ export class Hud {
       .setOrigin(0.5, 0).setAlign('center').setBackgroundColor('#0b2730').setPadding(22, 12).setVisible(false);
     this.levelMessage = text(VIEW_WIDTH / 2, 115, 'NOVO NÍVEL', 25, '#e4f6dc', true)
       .setOrigin(0.5, 0).setAlign('center').setBackgroundColor('#0b2730').setPadding(20, 8).setVisible(false);
+    this.experienceText = text(VIEW_WIDTH / 2, 210, '', 18, '#d8e9dc', true)
+      .setOrigin(0.5, 0).setBackgroundColor('#0b2730').setPadding(12, 6).setVisible(false);
 
     const veil = scene.add.rectangle(0, 0, VIEW_WIDTH, VIEW_HEIGHT, 0x05141b, 0.79).setOrigin(0).setScrollFactor(0).setDepth(30000).setVisible(false);
     const frame = scene.add.graphics().setScrollFactor(0).setDepth(30001).setVisible(false);
@@ -137,6 +146,18 @@ export class Hud {
 
   setProgress(level: number, xp: number, nextLevelXp: number | null, echoes: number): void {
     this.progressText.setText(`NV ${level}   XP ${nextLevelXp === null ? `${xp} / MÁX` : `${xp} / ${nextLevelXp}`}   ECOS ${echoes} / ${ECHO_COUNT}`);
+    this.progressHint.setText(nextLevelXp === null ? 'Nível máximo desta etapa · Continue explorando'
+      : `Faltam ${Math.max(0, nextLevelXp - xp)} XP · Próximo nível: +${PROGRESSION.maxHpPerLevel} PV`);
+  }
+
+  showExperience(amount: number, source: string): void {
+    if (this.experienceText.visible) {
+      this.experienceAmount += amount;
+      if (this.experienceSource !== source) this.experienceSource = 'EXPEDIÇÃO';
+    } else { this.experienceAmount = amount; this.experienceSource = source; }
+    this.experienceTimer?.remove(false);
+    this.experienceText.setText(`+${this.experienceAmount} XP · ${this.experienceSource}`).setVisible(true);
+    this.experienceTimer = this.scene.time.delayedCall(1800, () => this.experienceText.setVisible(false));
   }
 
   setSignalObjective(synchronized: boolean, sourceLocated: boolean, passageOpen = false, inCavern = false, depthSeen = false, deepAreaSeen = false): void {
@@ -177,9 +198,9 @@ export class Hud {
     this.signalObjective.setText(exterior ? fragmentSeen ? 'SIGA A RESPOSTA' : 'INVESTIGUE O FRAGMENTO' : 'SIGA O SINAL');
   }
 
-  showLevelUp(level: number): void {
+  showLevelUp(level: number, maxHp: number, gainedHp: number): void {
     this.levelTimer?.remove(false);
-    this.levelMessage.setText(`NOVO NÍVEL   /   NÍVEL ${level}\nVIDA RESTAURADA`).setVisible(true);
+    this.levelMessage.setText(`NOVO NÍVEL ${level} · +${gainedHp} PV MÁX.\n${maxHp} PV · VIDA RESTAURADA`).setVisible(true);
     this.levelTimer = this.scene.time.delayedCall(2000, () => this.levelMessage.setVisible(false));
   }
 
@@ -187,6 +208,7 @@ export class Hud {
     this.discoveryPrompt.setVisible(false);
     this.discoveryMessage.setVisible(false);
     this.levelMessage.setVisible(false);
+    this.experienceText.setVisible(false);
     this.deathGroup.forEach(item => item.setVisible(true));
   }
 }

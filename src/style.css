@@ -67,6 +67,10 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
 .records-dialog button:focus-visible, .records-button:focus-visible { outline: 3px solid #ffbd54; outline-offset: 2px; }
 .records-content { max-height: calc(100dvh - 150px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); padding: 10px 22px 22px; overflow-y: auto; overscroll-behavior: contain; touch-action: pan-y; }
 .records-status { color: #b8d99e; }
+.records-progression { padding: 10px 12px; border-left: 2px solid #ffbd54; background: #263b2d; }
+.records-study { padding-top: 8px; border-top: 1px solid #718e7455; color: #c4c0df; }
+.records-routes { list-style: none; padding: 0; }
+.records-routes li { padding: 12px 0; border-bottom: 1px solid #526b5966; }
 .records-species { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
 .records-species article { background: #193432; border-left: 2px solid #6bb46488; border-radius: 4px; padding: 14px; }
 .records-species .undiscovered { opacity: .6; border-color: #69776f; }

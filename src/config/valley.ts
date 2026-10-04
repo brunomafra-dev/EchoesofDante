@@ -24,19 +24,32 @@ export const VALLEY_ENCOUNTERS = [
   { id: 900, kind: 'carapace', x: 900, y: 855 },
   { id: 901, kind: 'thorn', x: 1270, y: 605 },
   { id: 902, kind: 'carapace', x: 1470, y: 990 },
-  { id: 903, kind: 'thorn', x: 1590, y: 840 },
-  { id: 904, kind: 'carapace', x: 2080, y: 1040 },
-  { id: 905, kind: 'thorn', x: 2330, y: 1010 },
+  { id: 903, kind: 'thorn', x: 1590, y: 1010 },
+  { id: 904, kind: 'carapace', x: 2080, y: 1080 },
+  { id: 905, kind: 'thorn', x: 2360, y: 1080 },
+  { id: 906, kind: 'carapace', x: 1380, y: 575 },
+  { id: 907, kind: 'thorn', x: 2440, y: 1070 },
+] as const;
+
+// Authored groups share existing creature AI; no waves or mandatory clearing.
+export const VALLEY_ENCOUNTER_GROUPS = [
+  { name: 'Passagem entre cristas', residents: [900] },
+  { name: 'Desvio mineral', residents: [901, 906] },
+  { name: 'Bacia enraizada', residents: [902, 903] },
+  { name: 'Margem além do crescimento', residents: [904, 905, 907] },
 ] as const;
 
 export const VALLEY_RENEWAL = { delayMs: 90_000, safeDistance: 480 } as const;
 export const VALLEY_ROUTES = [
   { id: 'ridge', name: 'Passagem entre cristas', x: 1050, y: 760, radius: 145,
-    hint: 'O caminho central passa entre as formações.' },
+    hint: 'O caminho central passa entre as formações.',
+    residents: 'Um Casco Errante ocupa a passagem.', tactic: 'Há espaço para contornar sua aproximação.' },
   { id: 'mineral', name: 'Desvio mineral', x: 1270, y: 555, radius: 125,
-    hint: 'Explore a margem norte e suas formações âmbar.' },
+    hint: 'Explore a margem norte e suas formações âmbar.',
+    residents: 'Casco Errante e Espinhante dividem a margem.', tactic: 'Use as rochas para separar o leque de espinhos da varredura.' },
   { id: 'roots', name: 'Bacia enraizada', x: 1510, y: 1040, radius: 130,
-    hint: 'A rota sul contorna a crista por entre raízes.' },
+    hint: 'A rota sul contorna a crista por entre raízes.',
+    residents: 'Uma dupla ocupa a bacia de raízes.', tactic: 'A crista divide o espaço; escolha por qual lado se aproximar.' },
 ] as const;
 
 export const VALLEY_ROCKS: readonly Obstacle[] = [

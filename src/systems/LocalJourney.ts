@@ -57,7 +57,9 @@ export class LocalJourney {
       this.status = 'Progresso recuperado deste navegador.';
       return { schema: 1, updatedAt: integer(raw.updatedAt, 8_640_000_000_000_000) ? raw.updatedAt : 0, area, hp: raw.hp,
         progression: { xp: p.xp, echoes, sourceLocated: echoes.length === ECHO_COUNT && p.sourceLocated === true,
-          passageOpen, rewardedHollows: p.rewardedHollows.filter((id): id is number => integer(id, 899)).slice(0, 900) },
+          passageOpen, rewardedHollows: p.rewardedHollows.filter((id): id is number => integer(id, 899)).slice(0, 900),
+          rewardedRoutes: Array.isArray(p.rewardedRoutes) ? p.rewardedRoutes.filter((id): id is string =>
+            typeof id === 'string' && VALLEY_ROUTES.some(route => route.id === id)) : [] },
         flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats };
     } catch {
       this.status = 'Não foi possível ler o progresso local. O jogo continua disponível.';

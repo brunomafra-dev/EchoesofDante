@@ -1,5 +1,8 @@
 # Jornada persistente e expedições — 0.1.44
 
+> Registro da fundação original. A [evolução 0.1.45](../dante-expeditions/)
+> amplia para nível 5, oito habitats e bônus únicos de exploração, preservando o save.
+
 Primeira base para revisitar Dante: save local, habitats renováveis no Vale e
 um bestiário de observação. A geografia, arte, colisões, câmera, dano, velocidade,
 habilidades e IA existentes permanecem. Não acrescenta regiões ou criaturas.

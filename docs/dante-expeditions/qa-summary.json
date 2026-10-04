@@ -1,0 +1,258 @@
+{
+  "version": "0.1.45",
+  "date": "2026-10-04",
+  "typecheck": "passed",
+  "build": "passed",
+  "knownBuildWarning": "Phaser bundle >500 kB; existing warning",
+  "hardwareTests": false,
+  "humanPlaytest": "required: encounter fairness, learning from bestiary and 15–20 minute session duration",
+  "resolutions": [
+    "1280x720",
+    "1366x768",
+    "1920x1080",
+    "844x390"
+  ],
+  "journey": {
+    "method": "Chrome headless; keyboard/mouse, CDP touch and Gamepad API mock; DEV positions and cooldown expiry; no physical devices",
+    "journalPausesAndReturnsFocus": true,
+    "fullJourneyToValley": true,
+    "chargeCancelledByJournal": true,
+    "gamepadMenuActionConsumed": true,
+    "gamepadJournalMock": true,
+    "confirmedReset": true,
+    "invalidSaveRecovery": true,
+    "storageUnavailablePlayable": true,
+    "nativeTouchJournalScroll": true,
+    "touchChargeCancelledBySecondFinger": true,
+    "touchEmulated": true,
+    "passed": true,
+    "errors": [],
+    "performance": {
+      "meanFps": 53.338778370696424,
+      "writesDuringIdle": 0,
+      "objects": 116,
+      "tweens": 2,
+      "saveBytes": 943
+    }
+  },
+  "valley": {
+    "method": "Chrome headless; DEV encounter setup, real keyboard/mouse/CDP touch and Gamepad API mock; no physical device",
+    "portalUnlockAfterVictory": true,
+    "explorationWithoutKills": true,
+    "meleeTelegraphDodge": true,
+    "rangedVolley": true,
+    "projectileObstacle": true,
+    "saberChargeXp": true,
+    "dash": true,
+    "rewardPerResident": true,
+    "returnPortal": true,
+    "gamepadMock": true,
+    "idleStable": true,
+    "reloadRetainsJourney": true,
+    "passed": true,
+    "errors": [],
+    "performance": {
+      "mean": 52.50330050204143,
+      "min": 50.669588168412936,
+      "max": 55.742219183294196,
+      "objects": 101,
+      "tweens": 2,
+      "rt": 2
+    }
+  },
+  "expeditions": {
+    "method": "Chrome headless; legacy v1 save fixture, DEV positions, isolated real mouse/Q combat; shortened kills and expiry for renewal loops; no physical devices",
+    "legacySaveRestoresWithoutReset": true,
+    "explorationAwardsOnceAcrossReload": true,
+    "safeEntryCheckpointPoi": true,
+    "charge76ThenSaber": true,
+    "tacticalStudyUnlocksWithoutBonusXp": true,
+    "deathReloadPreservesLevelRewardsAndStudy": true,
+    "returnPreservesWardenVictory": true,
+    "passed": true,
+    "errors": [],
+    "saberHits": [
+      102,
+      68,
+      34,
+      0
+    ],
+    "charge": {
+      "phase": "READY",
+      "angle": 2.5567790847465707e-10,
+      "origin": {
+        "x": 610,
+        "y": 950
+      },
+      "damage": 76,
+      "hp": 2
+    },
+    "level5": [
+      {
+        "xp": 555,
+        "level": 4,
+        "maxHp": 130
+      },
+      {
+        "xp": 660,
+        "level": 5,
+        "maxHp": 140
+      }
+    ],
+    "habitats": [
+      {
+        "id": 900,
+        "kind": "carapace",
+        "x": 900,
+        "y": 855,
+        "clear": true
+      },
+      {
+        "id": 901,
+        "kind": "thorn",
+        "x": 1270,
+        "y": 605,
+        "clear": true
+      },
+      {
+        "id": 902,
+        "kind": "carapace",
+        "x": 1470,
+        "y": 990,
+        "clear": true
+      },
+      {
+        "id": 903,
+        "kind": "thorn",
+        "x": 1590,
+        "y": 1010,
+        "clear": true
+      },
+      {
+        "id": 904,
+        "kind": "carapace",
+        "x": 2080,
+        "y": 1080,
+        "clear": true
+      },
+      {
+        "id": 905,
+        "kind": "thorn",
+        "x": 2360,
+        "y": 1080,
+        "clear": true
+      },
+      {
+        "id": 906,
+        "kind": "carapace",
+        "x": 1380,
+        "y": 575,
+        "clear": true
+      },
+      {
+        "id": 907,
+        "kind": "thorn",
+        "x": 2440,
+        "y": 1070,
+        "clear": true
+      }
+    ],
+    "stability": {
+      "objects": 122,
+      "tweens": 2,
+      "renderTextures": 2,
+      "enemies": 8,
+      "updateListeners": 5
+    },
+    "performance": {
+      "mean": 59.49403348088264,
+      "min": 59.042877197265625,
+      "max": 59.772870272397995
+    }
+  },
+  "production": {
+    "method": "Production build in Chrome headless; keyboard inputs, legacy v1 fixture and touch emulation; no DEV global or physical hardware",
+    "errors": [],
+    "newSessionAndKeyboardSmoke": true,
+    "legacySaveLevel4HpPreserved": true,
+    "resolutions": [
+      "1280x720",
+      "1366x768",
+      "1920x1080",
+      "844x390"
+    ],
+    "productionTouchUiSmoke": true,
+    "passed": true
+  },
+  "performanceComparison": {
+    "method": "Sequential Chrome headless, same machine, viewport 1280x720, legacy fixture, live residents, DEV position/invulnerability, 4s warmup + 8s sample at each point; not physical hardware playtest",
+    "results": [
+      {
+        "version": "0.1.44",
+        "position": "west",
+        "mean": 57.24157128315419,
+        "min": 54.006103515625,
+        "max": 58.988973900675774,
+        "objects": 105,
+        "enemies": 6,
+        "tweens": 2,
+        "renderTextures": 2
+      },
+      {
+        "version": "0.1.44",
+        "position": "checkpoint",
+        "mean": 58.589736692942495,
+        "min": 52.09469145292412,
+        "max": 59.859934353062954,
+        "objects": 105,
+        "enemies": 6,
+        "tweens": 2,
+        "renderTextures": 2
+      },
+      {
+        "version": "0.1.44",
+        "position": "main-route",
+        "mean": 50.77992343774527,
+        "min": 47.81622727390496,
+        "max": 54.203720881178654,
+        "objects": 105,
+        "enemies": 6,
+        "tweens": 2,
+        "renderTextures": 2
+      },
+      {
+        "version": "0.1.45",
+        "position": "west",
+        "mean": 50.076147368623786,
+        "min": 45.068294525146484,
+        "max": 52.622506520710886,
+        "objects": 122,
+        "enemies": 8,
+        "tweens": 2,
+        "renderTextures": 2
+      },
+      {
+        "version": "0.1.45",
+        "position": "checkpoint",
+        "mean": 56.91199980140923,
+        "min": 54.383678918297804,
+        "max": 58.68209585475165,
+        "objects": 122,
+        "enemies": 8,
+        "tweens": 2,
+        "renderTextures": 2
+      },
+      {
+        "version": "0.1.45",
+        "position": "main-route",
+        "mean": 54.01170664250867,
+        "min": 51.86320847935525,
+        "max": 55.97429097175274,
+        "objects": 122,
+        "enemies": 8,
+        "tweens": 2,
+        "renderTextures": 2
+      }
+    ]
+  }
+}

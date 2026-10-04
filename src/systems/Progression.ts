@@ -1,7 +1,8 @@
 import { PROGRESSION } from '../config/progression';
 import { ECHO_COUNT } from '../config/discovery';
+import { VALLEY_ROUTES } from '../config/valley';
 
-export type ProgressionSnapshot = { xp: number; echoes: string[]; sourceLocated: boolean; passageOpen: boolean; rewardedHollows: number[] };
+export type ProgressionSnapshot = { xp: number; echoes: string[]; sourceLocated: boolean; passageOpen: boolean; rewardedHollows: number[]; rewardedRoutes: string[] };
 
 // GameScene retains this state across respawns; LocalJourney stores its snapshot.
 export class Progression {
@@ -11,6 +12,7 @@ export class Progression {
   sourceLocated = false;
   passageOpen = false;
   private rewardedHollows = new Set<number>();
+  readonly rewardedRoutes = new Set<string>();
 
   get maxHp(): number { return PROGRESSION.baseMaxHp + (this.level - 1) * PROGRESSION.maxHpPerLevel; }
   get nextLevelXp(): number | null { return PROGRESSION.levelThresholds[this.level] ?? null; }
@@ -42,9 +44,15 @@ export class Progression {
 
   defeatValleyResident(): boolean { return this.award(PROGRESSION.hollowXp); }
 
+  discoverValleyRoute(id: string): { awarded: boolean; leveledUp: boolean } {
+    if (this.rewardedRoutes.has(id) || !VALLEY_ROUTES.some(route => route.id === id)) return { awarded: false, leveledUp: false };
+    this.rewardedRoutes.add(id);
+    return { awarded: true, leveledUp: this.award(PROGRESSION.valleyRouteXp) };
+  }
+
   snapshot(): ProgressionSnapshot {
     return { xp: this.xp, echoes: [...this.echoes], sourceLocated: this.sourceLocated,
-      passageOpen: this.passageOpen, rewardedHollows: [...this.rewardedHollows] };
+      passageOpen: this.passageOpen, rewardedHollows: [...this.rewardedHollows], rewardedRoutes: [...this.rewardedRoutes] };
   }
 
   restore(value: ProgressionSnapshot): void {
@@ -56,6 +64,7 @@ export class Progression {
     this.sourceLocated = this.signalSynchronized && value.sourceLocated;
     this.passageOpen = this.sourceLocated && value.passageOpen;
     this.rewardedHollows = new Set(value.rewardedHollows);
+    this.rewardedRoutes.clear(); value.rewardedRoutes.forEach(id => this.rewardedRoutes.add(id));
   }
 
   private award(amount: number): boolean {

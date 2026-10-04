@@ -2,9 +2,10 @@ import Phaser from 'phaser';
 import { SPECIES, type SpeciesId } from '../config/bestiary';
 import { VALLEY_ROUTES } from '../config/valley';
 import type { BestiarySnapshot } from '../systems/Bestiary';
+import { PROGRESSION } from '../config/progression';
 
-type Records = { level: number; xp: number; echoes: number; area: string; bestiary: BestiarySnapshot;
-  routes: ReadonlySet<string>; valleyVisited: boolean; saveStatus: string };
+type Records = { level: number; xp: number; nextLevelXp: number | null; maxHp: number; echoes: number; area: string; bestiary: BestiarySnapshot;
+  routes: ReadonlySet<string>; rewardedRoutes: ReadonlySet<string>; valleyVisited: boolean; saveStatus: string };
 
 // DOM exists once per scene; content is refreshed only when this journal opens.
 export class RecordsPanel {
@@ -37,9 +38,9 @@ export class RecordsPanel {
     this.dialog.className = 'records-dialog';
     this.dialog.setAttribute('aria-labelledby', 'records-title');
     this.dialog.innerHTML = `<header><div><small>ARQUIVO DE EXPEDIÇÃO</small><h1 id="records-title">Registros de Dante</h1></div><button data-close aria-label="Fechar registros">VOLTAR</button></header>
-      <div class="records-content"><p class="records-summary"></p><p class="records-status" role="status"></p>
-      <h2>Bestiário</h2><p>Encontre criaturas para registrar seus hábitos. Derrotas ficam no seu histórico.</p><div class="records-species"></div>
-      <h2>Expedições no Vale</h2><p class="records-routes"></p><p>Os moradores retornam após 90 segundos, quando você está longe do habitat. Cada derrota concede 15 XP; o limite atual continua sendo nível 3.</p>
+      <div class="records-content"><p class="records-summary"></p><p class="records-status" role="status"></p><p class="records-progression"></p>
+      <h2>Bestiário</h2><p class="records-research"></p><p>A primeira derrota libera uma observação tática. Os registros ajudam a escolher como enfrentar cada espécie, sem bônus de dano.</p><div class="records-species"></div>
+      <h2>Expedições no Vale</h2><ul class="records-routes"></ul><p>A passagem começa com um Casco Errante; os desvios abrigam duplas. A margem leste reúne um Casco e dois Espinhantes. Todos podem ser contornados. Os moradores retornam após 90 segundos, quando você está longe do habitat. Cada derrota concede ${PROGRESSION.hollowXp} XP.</p>
       <footer><p>Salvo apenas neste navegador e dispositivo. Limpar os dados do site apaga o progresso.</p><button data-reset>NOVO PERCURSO</button>
       <section class="records-confirmation" hidden><p>Apagar todo o progresso local e recomeçar na floresta?</p><button data-confirm>APAGAR E RECOMEÇAR</button><button data-cancel>CONTINUAR EXPEDIÇÃO</button></section></footer>
       <small class="records-help">B / Esc: voltar · Gamepad: Voltar ou B fecha; analógico esquerdo rola; direcional escolhe; A confirma.</small></div>`;
@@ -93,17 +94,32 @@ export class RecordsPanel {
     const data = this.getRecords();
     this.summary.textContent = `${data.area} · Nível ${data.level} · ${data.xp} XP · Ecos ${data.echoes}/3`;
     this.status.textContent = data.saveStatus;
+    this.dialog.querySelector('.records-progression')!.textContent = data.nextLevelXp === null
+      ? `Nível ${PROGRESSION.levelThresholds.length}: limite desta etapa. ${data.maxHp} PV máximos. A exploração e os registros continuam.`
+      : `${data.maxHp} PV máximos. Faltam ${Math.max(0, data.nextLevelXp - data.xp)} XP para o nível ${data.level + 1}: +${PROGRESSION.maxHpPerLevel} PV e vida restaurada. Explore novos desvios ou revisite os habitats.`;
+    const entries = Object.values(data.bestiary);
+    this.dialog.querySelector('.records-research')!.textContent = `${entries.filter(e => e?.seen).length}/${Object.keys(SPECIES).length} espécies observadas · ${entries.filter(e => e && e.defeats > 0).length}/${Object.keys(SPECIES).length} estudadas`;
     for (const [id, card] of this.cards) {
       const entry = data.bestiary[id], species = SPECIES[id];
       card.replaceChildren();
       const name = document.createElement('h3'); name.textContent = entry?.seen ? species.name : 'Criatura não registrada';
       const habitat = document.createElement('small'); habitat.textContent = entry?.seen ? `${species.habitat} · Derrotas: ${entry.defeats}` : 'Explore Dante para descobrir.';
       const note = document.createElement('p'); note.textContent = entry?.seen ? species.note : 'Registro ainda incompleto.';
-      card.append(name, habitat, note); card.classList.toggle('undiscovered', !entry?.seen);
+      const study = document.createElement('p'); study.className = 'records-study';
+      study.textContent = entry && entry.defeats > 0 ? `ESTUDADO · ${species.study}`
+        : entry?.seen ? 'OBSERVADO · A primeira derrota completa a observação tática.' : 'OBSERVAÇÃO PENDENTE';
+      card.append(name, habitat, note, study); card.classList.toggle('undiscovered', !entry?.seen);
     }
-    this.dialog.querySelector('.records-routes')!.textContent = data.valleyVisited
-      ? VALLEY_ROUTES.map(route => `${data.routes.has(route.id) ? 'Visitado' : 'A explorar'}: ${route.name}`).join(' · ')
-      : 'O Vale fica além do portal do Guardião. Continue seguindo o sinal.';
+    const routes = this.dialog.querySelector('.records-routes')!; routes.replaceChildren();
+    if (!data.valleyVisited) {
+      const item = document.createElement('li'); item.textContent = 'O Vale fica além do portal do Guardião. Continue seguindo o sinal.'; routes.append(item);
+    } else for (const route of VALLEY_ROUTES) {
+      const visited = data.routes.has(route.id), item = document.createElement('li');
+      const title = document.createElement('h3'); title.textContent = `${visited ? 'Registrado' : 'A explorar'}: ${route.name}`;
+      const note = document.createElement('p'); note.textContent = visited ? `${route.residents} ${route.tactic} · ${data.rewardedRoutes.has(route.id) ? 'Recompensa de exploração já recebida.' : `Revisite para registrar a recompensa: +${PROGRESSION.valleyRouteXp} XP.`}`
+        : `Primeira descoberta: +${PROGRESSION.valleyRouteXp} XP. ${route.hint}`;
+      item.append(title, note); routes.append(item);
+    }
     this.confirmation.hidden = true;
     this.content.scrollTop = 0;
     this.button.textContent = 'REGISTROS';
