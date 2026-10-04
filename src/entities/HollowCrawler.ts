@@ -3,6 +3,7 @@ import { Health } from '../combat/Health';
 import { CRAWLER } from '../config/game';
 import { moveWithCollisions, type MovementBounds, type Obstacle } from '../systems/Movement';
 import { distance, normalized, type Vec2 } from '../utils/math';
+import { createEnemyName } from '../ui/EnemyName';
 
 export type CrawlerState = 'IDLE' | 'DETECT' | 'CHASE' | 'ATTACK' | 'HURT' | 'DEAD';
 
@@ -18,6 +19,7 @@ export class HollowCrawler {
   readonly telegraph: Phaser.GameObjects.Arc;
   readonly healthBack: Phaser.GameObjects.Rectangle;
   readonly healthFill: Phaser.GameObjects.Rectangle;
+  private readonly name: Phaser.GameObjects.Text;
   private forelimbs: Phaser.GameObjects.Image;
   private rearLimbs: Phaser.GameObjects.Image;
   private core: Phaser.GameObjects.Arc;
@@ -50,6 +52,7 @@ export class HollowCrawler {
     this.view = scene.add.container(x, y, [this.rearLimbs, art, this.core, this.forelimbs, this.hitFlash]).setDepth(y);
     this.healthBack = scene.add.rectangle(x, y - 34, 42, 6, 0x0c252d).setDepth(10000).setVisible(false);
     this.healthFill = scene.add.rectangle(x - 19, y - 34, 38, 4, 0x9bd6b4).setOrigin(0, 0.5).setDepth(10001).setVisible(false);
+    this.name = createEnemyName(scene, x, y - 50, 'RASTEJANTE HOLLOW');
   }
 
   update(now: number, dt: number, player: Vec2, playerDead: boolean, obstacles: ReadonlyArray<Obstacle>, onAttack: () => void, bounds?: MovementBounds): void {
@@ -132,6 +135,8 @@ export class HollowCrawler {
     this.telegraph.setAlpha(0.65 + Math.sin(now * 0.035) * 0.25);
     this.healthBack.setPosition(this.position.x, this.position.y - 34);
     this.healthFill.setPosition(this.position.x - 19, this.position.y - 34);
+    this.name.setPosition(this.position.x, this.position.y - 50)
+      .setVisible(this.state === 'ATTACK' || this.health.current < this.health.max);
   }
 
   hurt(now: number, from: Vec2, force = 300): void {
@@ -154,6 +159,7 @@ export class HollowCrawler {
     this.core.setFillStyle(0xcdf8e6);
     this.healthBack.destroy();
     this.healthFill.destroy();
+    this.name.destroy();
     this.telegraph.destroy();
     this.scene.tweens.add({ targets: this.view, alpha: 0, scaleX: 0.55, scaleY: 0.2, angle: 32, duration: 300, onComplete: () => {
       this.view.destroy();

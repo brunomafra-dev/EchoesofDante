@@ -6,6 +6,7 @@ import { WARDEN, WARDEN_PATTERNS, type WardenAttack, type WardenPhase } from '..
 import { moveWithCollisions, type MovementBounds, type Obstacle } from '../systems/Movement';
 import { clamp, distance, type Vec2 } from '../utils/math';
 import type { Enemy, EnemyImpact } from './Enemy';
+import { createEnemyName } from '../ui/EnemyName';
 
 export type { WardenAttack } from '../config/warden';
 
@@ -43,6 +44,7 @@ export class Warden implements Enemy {
   readonly body: Phaser.GameObjects.Image;
   isDead = false;
   private readonly core: Phaser.GameObjects.Ellipse;
+  private readonly name: Phaser.GameObjects.Text;
   private readonly shots: SignalShot[];
   private readonly marks: GroundMark[];
   private readonly velocity: Vec2 = { x: 0, y: 0 };
@@ -78,6 +80,7 @@ export class Warden implements Enemy {
       .setOrigin(0.5, 0.83).setDisplaySize(WARDEN.artSize, WARDEN.artSize).setFlipX(true);
     this.core = scene.add.ellipse(0, -40, 27, 17, 0xa98cff, 0.13).setBlendMode(Phaser.BlendModes.ADD);
     this.view = scene.add.container(x, y, [this.body, this.core]).setDepth(y);
+    this.name = createEnemyName(scene, x, y - 182, 'O WARDEN');
     this.telegraph = scene.add.graphics().setVisible(false);
     this.shots = Array.from({ length: 3 }, () => ({
       active: false, x, y, angle: 0, travelled: 0, previous: { x, y },
@@ -356,6 +359,7 @@ export class Warden implements Enemy {
     const introProgress = this._state === 'INTRO' ? clamp((now - this.stateAt) / WARDEN.introMs, 0, 1) : 1;
     this.body.setPosition(0, 30 - Math.abs(gait) * 2 + warningProgress * 3);
     this.view.setPosition(this.position.x, this.position.y).setDepth(this.position.y).setRotation(0);
+    this.name.setPosition(this.position.x, this.position.y - 182).setVisible(this._state !== 'DORMANT');
     // Grounded steps use actual travel; a blocked creature never cycles through a glide.
     this.shadow.setPosition(this.position.x, this.position.y + 15).setDepth(this.position.y - 2)
       .setScale(1 + warningProgress * 0.04, 1 - warningProgress * 0.08);
@@ -385,6 +389,7 @@ export class Warden implements Enemy {
     this._attackName = null;
     this.velocity.x = this.velocity.y = this.push.x = this.push.y = 0;
     this.body.setFrame(0).clearTint();
+    this.name.setVisible(false);
     this.core.setAlpha(0.15);
   }
 
@@ -404,6 +409,7 @@ export class Warden implements Enemy {
     if (this.isDead) return;
     this.health.current = 0;
     this.isDead = true;
+    this.name.destroy();
     this._state = 'DEATH';
     this._attackName = null;
     this.clearHazards();

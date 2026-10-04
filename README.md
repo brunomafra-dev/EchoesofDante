@@ -52,6 +52,8 @@ O [Warden](docs/warden-boss/) ocupa uma nova área **depois do limiar do guardi�
 
 Após a vitória, o portal do sinal leva ao [Vale da Ressonância](docs/resonance-valley/): uma região exterior própria com desvio mineral, seis criaturas de dois arquétipos novos, uma resposta ancestral e indicação de continuidade. A travessia preserva HP e progresso; o portal também permite voltar. Não exige limpar a área. No touch, o movimento começa numa área ampla à esquerda, reposiciona a base e mantém o arrasto capturado mesmo além do círculo.
 
+Os nomes acima das criaturas usam o estilo aprovado no vale: Rastejante Hollow, Saltador e Cuspidor também são identificados ao preparar um ataque ou receber dano. O Warden possui nome sobre o corpo durante o encontro, além de sua barra existente. Textos acompanham a posição sem girar com a criatura e desaparecem na morte.
+
 A [correção de animação e orientação em português](docs/playtest-readability/) mantém os novos inimigos apoiados no chão, com quadros de passada, preparação, ataque e reação. A interface agora usa português e mostra o próximo passo desde 0/3 Ecos, com pistas de direção, identificação próxima dos locais e orientação da fissura ao mecanismo e à entrada. O fluxo continua sem chave, kill count ou recompensa adicional.
 
 ## Controles

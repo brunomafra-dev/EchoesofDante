@@ -6,6 +6,7 @@ import { PLAYER } from '../config/game';
 import { moveWithCollisions, type MovementBounds, type Obstacle } from '../systems/Movement';
 import { distance, normalized, type Vec2 } from '../utils/math';
 import type { Enemy, EnemyImpact } from './Enemy';
+import { createEnemyName } from '../ui/EnemyName';
 
 // Two explicit creature behaviors, using the same movement, health and hit contracts.
 export class DanteCreature implements Enemy {
@@ -25,6 +26,7 @@ export class DanteCreature implements Enemy {
   state: 'IDLE' | 'CHASE' | 'WINDUP' | 'LUNGE' | 'HURT' | 'DEAD' = 'IDLE';
   private readonly home: Vec2;
   private readonly body: Phaser.GameObjects.Image;
+  private readonly name: Phaser.GameObjects.Text;
   private readonly flash: Phaser.GameObjects.Ellipse;
   private velocity: Vec2 = { x: 0, y: 0 };
   private push: Vec2 = { x: 0, y: 0 };
@@ -53,6 +55,7 @@ export class DanteCreature implements Enemy {
     this.view = scene.add.container(x, y, [this.body, this.flash]);
     this.healthBack = scene.add.rectangle(x, y - 44, 44, 6, 0x10252b).setDepth(10000).setVisible(false);
     this.healthFill = scene.add.rectangle(x - 20, y - 44, 40, 4, kind === 'skitter' ? 0x9bd6b4 : 0xffbd54).setOrigin(0, 0.5).setDepth(10001).setVisible(false);
+    this.name = createEnemyName(scene, x, y - 65, kind === 'skitter' ? 'SALTADOR' : 'CUSPIDOR');
     // One reusable projectile per creature. No projectile/listener/timer allocation loop.
     this.projectile = scene.add.ellipse(x, y, 21, 13, 0xffbd54, 0.94).setStrokeStyle(2, 0xc85639, 0.8).setVisible(false);
     if (kind === 'spitter') this.aimGuide = scene.add.line(0,0,0,0,240,0,0xffbd54,0.42).setOrigin(0,0).setLineWidth(2).setVisible(false);
@@ -124,6 +127,7 @@ export class DanteCreature implements Enemy {
       .setAlpha(winding ? 0.5 + 0.5 * Math.min(1, (now - this.attackAt) / stats.windup) : 0);
     this.healthBack.setPosition(this.position.x, this.position.y - 44);
     this.healthFill.setPosition(this.position.x - 20, this.position.y - 44);
+    this.name.setPosition(this.position.x, this.position.y - 65).setVisible(winding || this.health.current < this.health.max);
   }
 
   private updateShot(dt: number, player: Vec2, playerDead: boolean, obstacles: readonly Obstacle[], bounds: MovementBounds | undefined, onAttack: (impact?: EnemyImpact) => void): void {
@@ -153,6 +157,7 @@ export class DanteCreature implements Enemy {
   die(): void {
     this.isDead = true; this.state = 'DEAD'; this.shot = undefined;
     this.projectile.destroy(); this.aimGuide?.destroy(); this.telegraph.destroy(); this.healthBack.destroy(); this.healthFill.destroy();
+    this.name.destroy();
     this.scene.tweens.add({ targets: [this.view, this.shadow], alpha: 0, scale: 0.4, duration: 300, onComplete: () => { this.view.destroy(); this.shadow.destroy(); } });
   }
 }

@@ -6,6 +6,7 @@ import { VALLEY_CREATURES, type ValleyKind } from '../config/valley';
 import { moveWithCollisions, type MovementBounds, type Obstacle } from '../systems/Movement';
 import { distance, normalized, type Vec2 } from '../utils/math';
 import type { Enemy, EnemyImpact } from './Enemy';
+import { createEnemyName } from '../ui/EnemyName';
 
 // Two local state machines on the existing Enemy contract. Old AI is untouched.
 export class ValleyCreature implements Enemy {
@@ -57,8 +58,7 @@ export class ValleyCreature implements Enemy {
     }
     this.healthBack = scene.add.rectangle(x,y-64,48,6,0x152c2a).setDepth(10000).setVisible(false);
     this.healthFill = scene.add.rectangle(x-22,y-64,44,4,0xc1bd79).setOrigin(0,0.5).setDepth(10001).setVisible(false);
-    this.name = scene.add.text(x,y-80,s.name,{fontFamily:'Barlow Condensed, sans-serif',fontSize:'12px',color:'#e2e1c4',stroke:'#172926',strokeThickness:3})
-      .setOrigin(0.5).setDepth(10001).setVisible(false);
+    this.name = createEnemyName(scene, x, y - 80, s.name);
   }
 
   update(now: number, dt: number, player: Vec2, dead: boolean, obstacles: readonly Obstacle[], onAttack: (impact?: EnemyImpact) => void, bounds?: MovementBounds): void {
