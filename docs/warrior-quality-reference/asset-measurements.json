@@ -1,0 +1,266 @@
+[
+  {
+    "file": "public/assets/visual/characters/warrior-poses-front.png",
+    "size": [
+      1024,
+      512
+    ],
+    "frameSize": [
+      256,
+      256
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "occupiedRect": [
+          85,
+          40,
+          170,
+          236
+        ]
+      },
+      {
+        "frame": 1,
+        "occupiedRect": [
+          90,
+          32,
+          166,
+          236
+        ]
+      },
+      {
+        "frame": 2,
+        "occupiedRect": [
+          91,
+          32,
+          164,
+          236
+        ]
+      },
+      {
+        "frame": 3,
+        "occupiedRect": [
+          90,
+          33,
+          165,
+          236
+        ]
+      },
+      {
+        "frame": 4,
+        "occupiedRect": [
+          70,
+          52,
+          186,
+          236
+        ]
+      },
+      {
+        "frame": 5,
+        "occupiedRect": [
+          68,
+          35,
+          188,
+          236
+        ]
+      },
+      {
+        "frame": 6,
+        "occupiedRect": [
+          51,
+          66,
+          204,
+          236
+        ]
+      },
+      {
+        "frame": 7,
+        "occupiedRect": [
+          68,
+          63,
+          188,
+          236
+        ]
+      }
+    ],
+    "bytes": 240971,
+    "sha256": "2efcc87627237a33f7ca6f0a657a91681d5898a7918402e061bec7949fbbe2de",
+    "sourceSha256": "d3853aedc752e4bcf1241ce087d3be0497d501359ffb0bf8214d36d9411287c6"
+  },
+  {
+    "file": "public/assets/visual/characters/warrior-poses-side.png",
+    "size": [
+      1024,
+      512
+    ],
+    "frameSize": [
+      256,
+      256
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "occupiedRect": [
+          86,
+          40,
+          170,
+          236
+        ]
+      },
+      {
+        "frame": 1,
+        "occupiedRect": [
+          77,
+          42,
+          179,
+          236
+        ]
+      },
+      {
+        "frame": 2,
+        "occupiedRect": [
+          82,
+          40,
+          173,
+          236
+        ]
+      },
+      {
+        "frame": 3,
+        "occupiedRect": [
+          81,
+          39,
+          174,
+          236
+        ]
+      },
+      {
+        "frame": 4,
+        "occupiedRect": [
+          61,
+          49,
+          194,
+          236
+        ]
+      },
+      {
+        "frame": 5,
+        "occupiedRect": [
+          58,
+          52,
+          197,
+          236
+        ]
+      },
+      {
+        "frame": 6,
+        "occupiedRect": [
+          52,
+          61,
+          204,
+          236
+        ]
+      },
+      {
+        "frame": 7,
+        "occupiedRect": [
+          54,
+          71,
+          201,
+          236
+        ]
+      }
+    ],
+    "bytes": 264491,
+    "sha256": "93538689f744d429641ce6507ce49f91ab347ffd9c27320e514861fe21c2be0e",
+    "sourceSha256": "4ac54a9cbc45e98bb8f266c3376faf6d2098806d42e8f415d1902bd68bfbd4d5"
+  },
+  {
+    "file": "public/assets/visual/characters/warrior-poses-back.png",
+    "size": [
+      1024,
+      512
+    ],
+    "frameSize": [
+      256,
+      256
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "occupiedRect": [
+          84,
+          40,
+          172,
+          236
+        ]
+      },
+      {
+        "frame": 1,
+        "occupiedRect": [
+          90,
+          39,
+          165,
+          236
+        ]
+      },
+      {
+        "frame": 2,
+        "occupiedRect": [
+          93,
+          38,
+          163,
+          236
+        ]
+      },
+      {
+        "frame": 3,
+        "occupiedRect": [
+          91,
+          39,
+          164,
+          236
+        ]
+      },
+      {
+        "frame": 4,
+        "occupiedRect": [
+          58,
+          46,
+          198,
+          236
+        ]
+      },
+      {
+        "frame": 5,
+        "occupiedRect": [
+          59,
+          44,
+          197,
+          236
+        ]
+      },
+      {
+        "frame": 6,
+        "occupiedRect": [
+          52,
+          49,
+          204,
+          236
+        ]
+      },
+      {
+        "frame": 7,
+        "occupiedRect": [
+          56,
+          59,
+          199,
+          236
+        ]
+      }
+    ],
+    "bytes": 251046,
+    "sha256": "166f3ca4e95142232f61b502efc8b5ef478b9c8668b9c0233597c8f8d53fe0ae",
+    "sourceSha256": "18307534c89f1fc90588c0a344b7484b210f7d6914f86395d2865bd9f7d602b7"
+  }
+]

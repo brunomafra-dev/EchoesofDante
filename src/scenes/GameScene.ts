@@ -42,6 +42,7 @@ import { ExplorationGuide, type ExplorationTarget } from '../ui/ExplorationGuide
 import { distance, normalized, type Vec2 } from '../utils/math';
 import { ReferenceArea } from '../experiments/quality-reference/ReferenceArea';
 import { ReferenceImpacts } from '../experiments/quality-reference/ReferenceImpacts';
+import { preloadWarriorArt } from '../visual/WarriorArt';
 
 export class GameScene extends Phaser.Scene {
   private player!: Player;
@@ -112,7 +113,8 @@ export class GameScene extends Phaser.Scene {
   private waveDrawn = false;
   private lastDashTrail = 0;
 
-  constructor(private readonly qualityReference: false | 'baseline' | 'reference' = false) { super('Game'); }
+  constructor(private readonly qualityReference: false | 'baseline' | 'reference' = false,
+    private readonly originalWarrior = false) { super('Game'); }
 
   preload(): void {
     const assetBase = `${import.meta.env.BASE_URL}assets/visual/characters/`;
@@ -137,6 +139,7 @@ export class GameScene extends Phaser.Scene {
     }
     if (!this.textures.exists('warden-motion')) this.load.spritesheet('warden-motion', `${assetBase}warden-motion.png`, { frameWidth: 512, frameHeight: 512 });
     preloadEnvironment(this);
+    if (this.qualityReference !== 'baseline' && !this.originalWarrior) preloadWarriorArt(this);
     if (this.qualityReference === 'reference' && !this.textures.exists('reference-basin-floor')) {
       this.load.image('reference-basin-floor', `${import.meta.env.BASE_URL}assets/experiments/quality-reference/basin-floor.webp`);
     }
@@ -209,7 +212,8 @@ export class GameScene extends Phaser.Scene {
     const entry = this.area === 'forest' ? FOREST_ENTRY : this.area === 'valley' ? this.valleyCheckpointReached ? VALLEY.checkpoint : VALLEY.entry : this.area === 'warden' ? this.returnFromValley ? { x: 1420, y: 830 } : { x: 650, y: 760 } : this.returnToThreshold ? { x: 6060, y: 740 } : this.firstEchoSeen ? W.respawn : this.exteriorEntered ? EXPANSION.exteriorRespawn : this.deeperEntered ? EXPANSION.deeperRespawn : this.deepCavernEntered ? DEEP_AREA.entry : CAVERN_ENTRY;
     this.returnToThreshold = false;
     this.returnFromValley = false;
-    this.player = new Player(this, entry.x, entry.y, this.progression.maxHp, this.qualityReference === 'reference');
+    this.player = new Player(this, entry.x, entry.y, this.progression.maxHp, this.qualityReference === 'reference',
+      this.qualityReference !== 'baseline' && !this.originalWarrior);
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
     this.transferHp = undefined;
     this.kineticWave = this.add.graphics().setDepth(14999);

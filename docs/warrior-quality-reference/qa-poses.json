@@ -1,0 +1,60 @@
+{
+  "method": "Chrome headless, browser keyboard/mouse; no physical playtest",
+  "errors": [],
+  "poses": {
+    "IDLE": [
+      0
+    ],
+    "WALK": [
+      1,
+      2,
+      3,
+      0
+    ],
+    "ATTACK_WINDUP": [
+      4
+    ],
+    "ATTACK_SWING": [
+      5
+    ],
+    "ATTACK_RECOVERY": [
+      4
+    ],
+    "CHARGE": [
+      6
+    ],
+    "CHARGE_RELEASE": [
+      5
+    ],
+    "DASH": [
+      7
+    ]
+  },
+  "maxGripError": 0.00011428604288117971,
+  "performance": {
+    "before": {
+      "rootObjects": 83,
+      "textures": 67,
+      "graphics": 7,
+      "tweens": 0,
+      "renderTextures": 1
+    },
+    "after": {
+      "rootObjects": 83,
+      "textures": 70,
+      "graphics": 7,
+      "tweens": 0,
+      "renderTextures": 1
+    },
+    "settled": {
+      "rootObjects": 83,
+      "textures": 70,
+      "graphics": 7,
+      "tweens": 0,
+      "renderTextures": 1
+    },
+    "averagePhaserFps": 60.12296470062805
+  },
+  "normalGameUsesNewArt": true,
+  "passed": true
+}

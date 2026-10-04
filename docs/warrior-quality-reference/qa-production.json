@@ -1,0 +1,41 @@
+{
+  "method": "Chrome headless production smoke; no physical playtest",
+  "passed": true,
+  "routes": [
+    {
+      "route": "",
+      "devHook": false,
+      "newArtLoaded": true,
+      "assetRequests": 3,
+      "errors": []
+    },
+    {
+      "route": "quality-reference.html",
+      "devHook": false,
+      "newArtLoaded": true,
+      "assetRequests": 3,
+      "errors": []
+    },
+    {
+      "route": "quality-reference.html?warrior=original",
+      "devHook": false,
+      "newArtLoaded": false,
+      "assetRequests": 0,
+      "errors": []
+    },
+    {
+      "route": "quality-reference.html?baseline=1",
+      "devHook": false,
+      "newArtLoaded": false,
+      "assetRequests": 0,
+      "errors": []
+    },
+    {
+      "route": "rendering-lab.html",
+      "devHook": false,
+      "newArtLoaded": false,
+      "assetRequests": 0,
+      "errors": []
+    }
+  ]
+}

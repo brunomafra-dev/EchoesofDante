@@ -1,5 +1,11 @@
 # Referência jogável de qualidade — 0.1.47
 
+> Atualização 0.1.48: o ambiente deste experimento foi aprovado pelo usuário.
+> O [Warrior ganhou arte e poses novas](../warrior-quality-reference/), também
+> aplicadas ao jogo principal com autorização. **Warrior novo / Warrior anterior**
+> comparam no mesmo piso; **Câmara original** preserva `?baseline=1`.
+> O restante deste documento registra o experimento original de 0.1.47.
+
 ## Abrir e comparar
 
 Na mesma URL em que o jogo roda, abra **`/quality-reference.html`**.
