@@ -1,0 +1,79 @@
+{
+  "method": "Chrome headless; real browser keyboard/mouse, CDP touch, Gamepad API mock; DEV positions; no hardware playtest",
+  "errors": [],
+  "comparisons": [
+    {
+      "mode": "baseline",
+      "fps": 58.99313956162687,
+      "objects": 104,
+      "textures": 64,
+      "tweens": 4,
+      "graphics": 11,
+      "renderTextures": 8,
+      "pointers": 1,
+      "keyboard": 1,
+      "touchRoots": 1,
+      "journals": 1
+    },
+    {
+      "mode": "reference",
+      "fps": 60.061056543787494,
+      "objects": 83,
+      "textures": 67,
+      "tweens": 0,
+      "graphics": 7,
+      "renderTextures": 1,
+      "pointers": 1,
+      "keyboard": 1,
+      "touchRoots": 1,
+      "journals": 1
+    }
+  ],
+  "restarts": [
+    {
+      "objects": 83,
+      "textures": 67,
+      "tweens": 0,
+      "graphics": 7,
+      "renderTextures": 1,
+      "pointers": 1,
+      "keyboard": 1,
+      "touchRoots": 1,
+      "journals": 1
+    },
+    {
+      "objects": 83,
+      "textures": 67,
+      "tweens": 0,
+      "graphics": 7,
+      "renderTextures": 1,
+      "pointers": 1,
+      "keyboard": 1,
+      "touchRoots": 1,
+      "journals": 1
+    },
+    {
+      "objects": 83,
+      "textures": 67,
+      "tweens": 0,
+      "graphics": 7,
+      "renderTextures": 1,
+      "pointers": 1,
+      "keyboard": 1,
+      "touchRoots": 1,
+      "journals": 1
+    }
+  ],
+  "physicalFootprintsUnchanged": true,
+  "noFloorEdgeInCamera": true,
+  "movementAndWeaponGrips": true,
+  "rockCollisionAndDetour": true,
+  "saberDamageAndImpact": true,
+  "chargeHoldReleaseAndXp": true,
+  "dash": true,
+  "saveIsolationAndRespawn": true,
+  "gamepadMock": true,
+  "labJournalResetDoesNotDeleteJourney": true,
+  "touchEmulated": true,
+  "passed": true
+}

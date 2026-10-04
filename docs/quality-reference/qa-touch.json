@@ -1,0 +1,110 @@
+{
+  "method": "Chrome headless CDP multi-touch; no physical iPhone validation",
+  "errors": [],
+  "layouts": [
+    {
+      "width": 844,
+      "height": 390,
+      "zone": {
+        "x": 0,
+        "y": 187.203125,
+        "width": 371.359375,
+        "height": 202.796875
+      },
+      "circle": {
+        "x": 36,
+        "y": 258,
+        "width": 108,
+        "height": 108
+      },
+      "startsOutside": true,
+      "continuesBeyondZone": true,
+      "reverseDiagonal": true,
+      "releaseStops": true
+    },
+    {
+      "width": 960,
+      "height": 540,
+      "zone": {
+        "x": 0,
+        "y": 260,
+        "width": 380,
+        "height": 280
+      },
+      "circle": {
+        "x": 36,
+        "y": 376,
+        "width": 140,
+        "height": 140
+      },
+      "startsOutside": true,
+      "continuesBeyondZone": true,
+      "reverseDiagonal": true,
+      "releaseStops": true
+    },
+    {
+      "width": 1180,
+      "height": 820,
+      "zone": {
+        "x": 0,
+        "y": 540,
+        "width": 380,
+        "height": 280
+      },
+      "circle": {
+        "x": 36,
+        "y": 656,
+        "width": 140,
+        "height": 140
+      },
+      "startsOutside": true,
+      "continuesBeyondZone": true,
+      "reverseDiagonal": true,
+      "releaseStops": true
+    }
+  ],
+  "edgePressNeutral": true,
+  "strikeEvents": [
+    {
+      "type": "pointerdown",
+      "target": "touch-move-zone",
+      "id": 8
+    },
+    {
+      "type": "pointerdown",
+      "target": "attack",
+      "id": 9
+    },
+    {
+      "type": "pointerup",
+      "target": "attack",
+      "id": 9
+    },
+    {
+      "type": "lostpointercapture",
+      "target": "attack",
+      "id": 9
+    }
+  ],
+  "movementStrike": true,
+  "movementDash": true,
+  "moveChargeStationaryRelease": true,
+  "cancelCharge": true,
+  "cancellationAndOrientation": true,
+  "gesturesNoZoomOrScroll": true,
+  "touchInteraction": true,
+  "restarts": [
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      1
+    ]
+  ]
+}

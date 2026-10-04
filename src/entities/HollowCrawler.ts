@@ -4,6 +4,7 @@ import { CRAWLER } from '../config/game';
 import { moveWithCollisions, type MovementBounds, type Obstacle } from '../systems/Movement';
 import { distance, normalized, type Vec2 } from '../utils/math';
 import { createEnemyName } from '../ui/EnemyName';
+import { CrawlerPresentation } from '../experiments/quality-reference/ActorPresentation';
 
 export type CrawlerState = 'IDLE' | 'DETECT' | 'CHASE' | 'ATTACK' | 'HURT' | 'DEAD';
 
@@ -37,8 +38,9 @@ export class HollowCrawler {
   private returningFromCombat = false;
   private travelPhase = 0;
   private hurtTilt = 0;
+  private presentation?: CrawlerPresentation;
 
-  constructor(private scene: Phaser.Scene, x: number, y: number, private patrol?: readonly Vec2[]) {
+  constructor(private scene: Phaser.Scene, x: number, y: number, private patrol?: readonly Vec2[], referencePresentation = false) {
     this.position = { x, y };
     this.spawn = { x, y };
     this.shadow = scene.add.ellipse(x, y + 15, 51, 19, 0x030f17, 0.55).setDepth(y - 2);
@@ -50,6 +52,7 @@ export class HollowCrawler {
     this.forelimbs = scene.add.image(0, 0, 'hollow-forelimbs').setDisplaySize(80, 64);
     this.hitFlash = scene.add.circle(-2, 0, 21, 0xeafeee, 0).setScale(1.2, 0.9);
     this.view = scene.add.container(x, y, [this.rearLimbs, art, this.core, this.forelimbs, this.hitFlash]).setDepth(y);
+    if (referencePresentation) this.presentation = new CrawlerPresentation(scene, this.view, this.forelimbs, this.rearLimbs, art);
     this.healthBack = scene.add.rectangle(x, y - 34, 42, 6, 0x0c252d).setDepth(10000).setVisible(false);
     this.healthFill = scene.add.rectangle(x - 19, y - 34, 38, 4, 0x9bd6b4).setOrigin(0, 0.5).setDepth(10001).setVisible(false);
     this.name = createEnemyName(scene, x, y - 50, 'RASTEJANTE HOLLOW');
@@ -128,6 +131,10 @@ export class HollowCrawler {
     this.view.setPosition(this.position.x, this.position.y + lift).setRotation(Math.atan2(direction.y, direction.x) + this.hurtTilt).setDepth(this.position.y);
     const baseScale = this.state === 'ATTACK' ? 1.12 : 1 + Math.sin(now * 0.006) * 0.018;
     this.view.setScale(baseScale * (1 - recoil * 0.15), baseScale * (1 + recoil * 0.07));
+    if (this.presentation) {
+      this.presentation.update(now, this.travelPhase, moving, this.state, recoil, this.windupUntil - now);
+      this.view.y = this.position.y - (moving ? Math.abs(gait) * 0.4 : 0);
+    }
     this.core.setFillStyle(this.state === 'ATTACK' ? 0xffbd54 : recoil > 0 ? 0xffd8aa : 0xff6a4a);
     this.core.setScale(this.state === 'ATTACK' ? 1.3 : 0.9 + Math.sin(now * 0.008) * 0.12 + recoil * 0.2);
     this.shadow.setPosition(this.position.x, this.position.y + 15).setDepth(this.position.y - 2);

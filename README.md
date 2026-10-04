@@ -12,6 +12,8 @@ O [Visual Rendering Prototype 01](docs/visual-rendering-prototype-01/) compara G
 
 ## Stack
 
+A [referência jogável de qualidade 0.1.47](docs/quality-reference/) isola a primeira câmara da Cavern em `/quality-reference.html`: ambiente pintado contínuo, apresentação articulada do Guerreiro/Hollow e impactos curtos. Os botões **Referência / Original** permitem comparar em movimento. O teste não altera o progresso local; a expansão depende do playtest humano.
+
 A [correção de chão, escala e oclusão](docs/environment-cohesion/correction/) mantém a linguagem D e os dados físicos, com solo contínuo na Cavern, monumentos mais baixos e transparência de formações que escondem o Guerreiro. Os comparativos registram a tentativa anterior rejeitada e esta revisão para playtest visual.
 
 A [revisão de integração ambiental 0.1.41](docs/environment-cohesion/grounding-revision/) acrescenta transições suaves de sedimento nas caches existentes e troca os limiares frontais por apoios baixos, com abertura transparente. A oclusão considera a pintura visível, preservando a opacidade quando o Guerreiro está no vão. Física, controles e gameplay permanecem; a aprovação perceptual depende do playtest.

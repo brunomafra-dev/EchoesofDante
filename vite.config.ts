@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   build: {
     rollupOptions: {
-      input: { game: 'index.html', renderingLab: 'rendering-lab.html' },
+      input: { game: 'index.html', renderingLab: 'rendering-lab.html', qualityReference: 'quality-reference.html' },
     },
   },
 });

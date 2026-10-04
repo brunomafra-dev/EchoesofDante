@@ -1,0 +1,5 @@
+.quality-navigation { position: fixed; z-index: 22; top: calc(36px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); display: flex; gap: 4px; white-space: nowrap; font: 12px 'DM Sans', sans-serif; }
+.quality-navigation a, .quality-navigation button { padding: 10px 8px; border: 0; background: #0a131288; border-radius: 3px; color: #afbeb0; text-decoration: none; font: inherit; cursor: pointer; touch-action: manipulation; }
+.quality-navigation [aria-current] { color: #ecd5a7; background: #263026bb; }
+.quality-navigation a:focus-visible, .quality-navigation button:focus-visible { outline: 2px solid #ffbd54; }
+@media (max-height: 500px) { .quality-navigation { top: calc(27px + env(safe-area-inset-top)); font-size: 10px; } .quality-navigation a, .quality-navigation button { min-height: 44px; padding: 10px 6px; } }

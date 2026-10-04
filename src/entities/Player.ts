@@ -6,6 +6,7 @@ import { PLAYER } from '../config/game';
 import { moveWithCollisions, type MovementBounds, type Obstacle } from '../systems/Movement';
 import { clamp, normalized, type Vec2 } from '../utils/math';
 import { EnergySaber } from './EnergySaber';
+import { poseWarrior } from '../experiments/quality-reference/ActorPresentation';
 
 export type PlayerAnimationState = 'IDLE' | 'WALK' | 'ATTACK_WINDUP' | 'ATTACK_SWING' | 'ATTACK_RECOVERY' | 'DASH' | 'CHARGE' | 'CHARGE_RELEASE' | 'HURT' | 'DEAD';
 
@@ -52,7 +53,7 @@ export class Player {
   private dashVector: Vec2 = { x: 1, y: 0 };
   private invulnerableUntil = 0;
 
-  constructor(private scene: Phaser.Scene, x: number, y: number, maxHp: number = PLAYER.maxHp) {
+  constructor(private scene: Phaser.Scene, x: number, y: number, maxHp: number = PLAYER.maxHp, private referencePresentation = false) {
     this.health = new Health(maxHp);
     this.position = { x, y };
     this.shadow = scene.add.ellipse(x, y + 39, 57, 16, 0x020e14, 0.39).setDepth(y - 3);
@@ -180,7 +181,9 @@ export class Player {
     this.bodyRig.setPosition((this.isDashing ? 5 : 0) + bob * sinAim, bob * cosAim + (this.isDashing ? -1 : 0));
     const heavyLean = heavy.phase === 'CHARGING' ? -0.03 - heavy.level * 0.04 : heavy.phase === 'RELEASE' ? (1 - heavy.swingProgress) * 0.08 : 0;
     const handReach = heavy.phase === 'CHARGING' ? -4 - heavy.level * 4 : heavy.phase === 'RELEASE' ? Math.sin(heavy.swingProgress * Math.PI) * 8 : 0;
-    this.setAim(aim, (walking ? stride * 0.015 : 0) + attackTwist + heavyLean, handReach, pose.phase === 'READY' ? 0 : pose.relativeAngle * 3);
+    const presentationLean = this.referencePresentation ? poseWarrior(this.leftLeg, this.rightLeg, this.bodyRig,
+      stride, this.stepPhase, walking, this.travelDirection, aim, pose, heavy, this.isDashing, now < this.hitFlashUntil) : 0;
+    this.setAim(aim, (walking ? stride * 0.015 : 0) + attackTwist + heavyLean + presentationLean, handReach, pose.phase === 'READY' ? 0 : pose.relativeAngle * 3);
     this.hurtOverlay.setAlpha(now < this.hitFlashUntil ? 0.72 : 0);
 
     this.view.setPosition(this.position.x, this.position.y).setDepth(this.position.y);

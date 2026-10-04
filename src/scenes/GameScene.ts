@@ -40,11 +40,14 @@ import type { MovementBounds, Obstacle } from '../systems/Movement';
 import { Hud } from '../ui/Hud';
 import { ExplorationGuide, type ExplorationTarget } from '../ui/ExplorationGuide';
 import { distance, normalized, type Vec2 } from '../utils/math';
+import { ReferenceArea } from '../experiments/quality-reference/ReferenceArea';
+import { ReferenceImpacts } from '../experiments/quality-reference/ReferenceImpacts';
 
 export class GameScene extends Phaser.Scene {
   private player!: Player;
   private controls!: Controls;
-  private arena!: Arena | CavernArea | WardenArena | ResonanceValley;
+  private arena!: Arena | CavernArea | WardenArena | ResonanceValley | ReferenceArea;
+  private referenceImpacts?: ReferenceImpacts;
   private valley?: ResonanceValley;
   private signalPortal?: SignalPortal;
   private valleyVisited = false;
@@ -109,7 +112,7 @@ export class GameScene extends Phaser.Scene {
   private waveDrawn = false;
   private lastDashTrail = 0;
 
-  constructor() { super('Game'); }
+  constructor(private readonly qualityReference: false | 'baseline' | 'reference' = false) { super('Game'); }
 
   preload(): void {
     const assetBase = `${import.meta.env.BASE_URL}assets/visual/characters/`;
@@ -134,6 +137,9 @@ export class GameScene extends Phaser.Scene {
     }
     if (!this.textures.exists('warden-motion')) this.load.spritesheet('warden-motion', `${assetBase}warden-motion.png`, { frameWidth: 512, frameHeight: 512 });
     preloadEnvironment(this);
+    if (this.qualityReference === 'reference' && !this.textures.exists('reference-basin-floor')) {
+      this.load.image('reference-basin-floor', `${import.meta.env.BASE_URL}assets/experiments/quality-reference/basin-floor.webp`);
+    }
   }
 
   create(): void {
@@ -166,6 +172,7 @@ export class GameScene extends Phaser.Scene {
     this.gateObstacle = undefined;
     this.threshold = undefined;
     this.mechanism = undefined;
+    this.referenceImpacts = undefined;
     this.echoSites = [];
     if (this.area === 'forest') {
       this.arena = new Arena(this);
@@ -191,6 +198,9 @@ export class GameScene extends Phaser.Scene {
       this.valley = new ResonanceValley(this, this.valleyLandmarkSeen);
       this.arena = this.valley;
       this.movementBounds = this.valley.bounds;
+    } else if (this.qualityReference === 'reference') {
+      this.arena = new ReferenceArea(this);
+      this.movementBounds = this.arena.bounds;
     } else {
       this.cavern = new CavernArea(this, this.deepPassageOpen, this.fragmentSeen, this.firstEchoSeen, this.wardenGateOpen);
       this.arena = this.cavern;
@@ -199,7 +209,7 @@ export class GameScene extends Phaser.Scene {
     const entry = this.area === 'forest' ? FOREST_ENTRY : this.area === 'valley' ? this.valleyCheckpointReached ? VALLEY.checkpoint : VALLEY.entry : this.area === 'warden' ? this.returnFromValley ? { x: 1420, y: 830 } : { x: 650, y: 760 } : this.returnToThreshold ? { x: 6060, y: 740 } : this.firstEchoSeen ? W.respawn : this.exteriorEntered ? EXPANSION.exteriorRespawn : this.deeperEntered ? EXPANSION.deeperRespawn : this.deepCavernEntered ? DEEP_AREA.entry : CAVERN_ENTRY;
     this.returnToThreshold = false;
     this.returnFromValley = false;
-    this.player = new Player(this, entry.x, entry.y, this.progression.maxHp);
+    this.player = new Player(this, entry.x, entry.y, this.progression.maxHp, this.qualityReference === 'reference');
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
     this.transferHp = undefined;
     this.kineticWave = this.add.graphics().setDepth(14999);
@@ -210,7 +220,7 @@ export class GameScene extends Phaser.Scene {
     this.sounds.setMusicFocus(1);
     const spawns = this.area === 'forest' ? FOREST_SPAWNS : CAVERN_HOLLOWS;
     if (this.area === 'forest' || this.area === 'cavern') spawns.forEach((point, index) => {
-      const enemy = new HollowCrawler(this, point.x, point.y, this.area === 'forest' ? FOREST_PATROLS[index] : undefined);
+      const enemy = new HollowCrawler(this, point.x, point.y, this.area === 'forest' ? FOREST_PATROLS[index] : undefined, this.qualityReference === 'reference');
       this.enemies.push(enemy);
       this.enemySpecies.set(enemy, 'crawler');
       this.hollowSpawnIds.set(enemy, this.area === 'forest' ? index : FOREST_SPAWNS.length + index);
@@ -220,6 +230,7 @@ export class GameScene extends Phaser.Scene {
       this.spawnValleyResident(habitat);
     }
     this.hud = new Hud(this, () => this.restart());
+    if (this.qualityReference === 'reference') this.referenceImpacts = new ReferenceImpacts(this);
     this.explorationGuide = new ExplorationGuide(this);
     if (this.area === 'warden') {
       this.signalPortal = new SignalPortal(this, { x: 1500, y: 830 }, this.wardenDefeated);
@@ -258,7 +269,8 @@ export class GameScene extends Phaser.Scene {
       level: this.progression.level, xp: this.progression.xp, echoes: this.progression.echoes.size,
       nextLevelXp: this.progression.nextLevelXp, maxHp: this.progression.maxHp,
       area: this.area === 'valley' ? 'Vale da Ressonância' : this.area === 'warden' ? 'Domínio do Guardião' : this.area === 'cavern' ? 'Cavernas de Dante' : 'Floresta de Dante',
-      bestiary: this.bestiary.snapshot(), routes: this.valleyRoutes, valleyVisited: this.valleyVisited, saveStatus: this.journey.status,
+      bestiary: this.bestiary.snapshot(), routes: this.valleyRoutes, valleyVisited: this.valleyVisited,
+      saveStatus: this.qualityReference ? 'Referência isolada. O progresso do jogo permanece intacto.' : this.journey.status,
       rewardedRoutes: this.progression.rewardedRoutes,
     }), () => {
       this.controls.cancelForRecords();
@@ -277,6 +289,7 @@ export class GameScene extends Phaser.Scene {
       if (this.input.keyboard) this.input.keyboard.enabled = true;
       this.scene.resume();
     }, () => {
+      if (this.qualityReference) { location.reload(); return; }
       if (this.journey.clear()) { this.resettingJourney = true; location.reload(); }
       else this.records.setSaveAvailable(false);
     });
@@ -295,6 +308,7 @@ export class GameScene extends Phaser.Scene {
     time -= this.recordsTimeOffset;
     if (this.transitioning) return;
     this.controls.update(this.player.position);
+    this.referenceImpacts?.update(time);
     if (this.controls.recordsPressed) { this.records.open(); return; }
     this.hud.setInputMethod(this.controls.inputMethod);
     const interact = this.controls.interactPressed;
@@ -451,6 +465,7 @@ export class GameScene extends Phaser.Scene {
     }
     this.enemies = this.enemies.filter(enemy => !enemy.isDead);
     this.hud.update(this.player.hp, this.player.maxHp, this.player.dashProgress, this.charge.getProgress(time), heavy.phase, heavy.level);
+    if (this.qualityReference) return;
     if (this.area === 'warden') {
       if (!this.wardenDefeated && this.warden?.state === 'DORMANT' && this.player.position.x >= 850) {
         this.warden.beginIntro(time);
@@ -575,6 +590,11 @@ export class GameScene extends Phaser.Scene {
   }
 
   private updateExplorationGuide(): void {
+    if (this.qualityReference) {
+      this.explorationGuide.hide();
+      this.hud.setExplorationGuide('CÂMARA DE REFERÊNCIA', 'Compare o movimento e os impactos.', '');
+      return;
+    }
     let title: string, target: ExplorationTarget;
     if (this.area === 'warden') {
       if (this.signalPortal?.active) {
@@ -803,6 +823,10 @@ export class GameScene extends Phaser.Scene {
   }
 
   private impact(position: Vec2, color: number, damage: number, saberAngle?: number): void {
+    if (this.referenceImpacts) {
+      this.referenceImpacts.hit(this.time.now, position, color, damage, saberAngle);
+      return;
+    }
     const saberHit = saberAngle !== undefined;
     const burst = this.add.ellipse(position.x, position.y, saberHit ? 34 : 20, saberHit ? 9 : 20, color, 0.85).setDepth(15001);
     if (saberHit) burst.setRotation(saberAngle + Math.PI / 2);
@@ -921,6 +945,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private restoreJourney(): void {
+    if (this.qualityReference) { this.area = 'cavern'; return; }
     const saved = this.journey.load();
     if (!saved) return;
     this.progression.restore(saved.progression);
@@ -933,7 +958,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private saveProgress(): void {
-    if (!this.player || this.resettingJourney) return;
+    if (this.qualityReference || !this.player || this.resettingJourney) return;
     const flags = Object.fromEntries(JOURNEY_FLAGS.map(key => [key, this[key]])) as JourneyFlags;
     const available = this.journey.save({ schema: 1, updatedAt: Date.now(), area: this.area,
       hp: this.player.isDead ? this.progression.maxHp : this.player.hp, progression: this.progression.snapshot(),

@@ -276,3 +276,10 @@
 
 - [HUD compacto](hud-clarity/) substitui molduras azuis por dois pequenos apoios neutros, recursos nos cantos e um título/linha de orientação. Ganhos de XP mostram só número, sem origem ou caixa; mensagens narrativas mantêm conteúdo/duração. Ajuda temporária continua disponível nos Registros. Warden conserva avisos/vida/fase no alto.
 - UI touch conserva alvos/gestos/captura e reduz decoração; fontes essenciais se ajustam à altura real do canvas FIT. Tipografia muda somente ao trocar a categoria de viewport. Não há assets, novos controles, alterações de combate, save, IA, mundo ou colisões.
+
+## Referência jogável de qualidade, 0.1.47
+
+- `/quality-reference.html` compara uma primeira câmara isolada com `?baseline=1`. Opção explícita de GameScene ativa somente a apresentação experimental; a URL normal mantém mundo, rigs e regras atuais. O laboratório não lê, escreve ou apaga o registro local do jogo.
+- Um piso pintado original WebP 1536×1024 cobre todo o footprint possível da câmera, evitando emendas na borda da cache. Props, contato e sedimento são baked uma vez; rochas e face elevadas reutilizam ordenação/oclusão existentes. Os mesmos 37 footprints e limites da primeira câmara foram verificados.
+- Articulação opcional do Guerreiro/Hollow e pool fixo de impactos usam os assets existentes. Posição lógica, arco de dano, timings, IA, câmera, controles e áudio permanecem. Nenhum novo sistema de combate ou iluminação global.
+- [Comparações e QA](quality-reference/) registram resultados técnicos e limitações. O experimento continua Organic Sci-Fi R3/D, em 2D; não estabelece equivalência com um jogo 3D nem autoriza expansão sem playtest humano.

@@ -1,0 +1,26 @@
+[
+  {
+    "route": "",
+    "errors": [],
+    "devHook": false,
+    "floor": false,
+    "canvases": 1,
+    "nav": false
+  },
+  {
+    "route": "quality-reference.html",
+    "errors": [],
+    "devHook": false,
+    "floor": true,
+    "canvases": 1,
+    "nav": true
+  },
+  {
+    "route": "quality-reference.html?baseline=1",
+    "errors": [],
+    "devHook": false,
+    "floor": false,
+    "canvases": 1,
+    "nav": true
+  }
+]
