@@ -20,7 +20,7 @@ A [revisão de integração ambiental 0.1.41](docs/environment-cohesion/groundin
 - PNGs pintados em `public/assets/visual/characters/` para personagens e em `public/assets/visual/environment/` para cenários; composição estática baked/cacheada
 - Loops musicais autorais de protótipo em `public/assets/audio/`; efeitos curtos são sintetizados com Web Audio
 - Barlow Condensed e DM Sans carregadas via Google Fonts, com fallback local
-- Sem backend, persistência ou multiplayer
+- Progresso local no navegador; sem backend ou multiplayer
 
 ## Instalar e executar
 
@@ -54,6 +54,14 @@ Após a vitória, o portal do sinal leva ao [Vale da Ressonância](docs/resonanc
 
 Os nomes acima das criaturas usam o estilo aprovado no vale: Rastejante Hollow, Saltador e Cuspidor também são identificados ao preparar um ataque ou receber dano. O Warden possui nome sobre o corpo durante o encontro, além de sua barra existente. Textos acompanham a posição sem girar com a criatura e desaparecem na morte.
 
+## Jornada persistente e expedições — 0.1.44
+
+O progresso é salvo automaticamente **neste navegador**: XP, nível, Ecos, passagens, Primeiro Eco, vitória sobre o Warden, exploração do Vale e bestiário. Reabrir a mesma URL retoma a região em seu ponto seguro, com a vida registrada. Morrer continua restaurando a vida no respawn. A posição exata, vida dos inimigos e ataques em andamento não são salvos; um Warden ainda não derrotado reinicia seu encontro.
+
+Abra **REGISTROS** pelo botão na tela, **B** no teclado ou **Voltar/Select** do gamepad padrão. A consulta pausa o jogo, registra as seis criaturas encontradas e conta suas derrotas. **NOVO PERCURSO** permite recomeçar após confirmação. Limpar os dados do site remove o save; ele não sincroniza entre dispositivos.
+
+No Vale, a passagem entre cristas, o desvio mineral e a bacia enraizada passam a registrar visitas. Os seis habitats renovam seus moradores **90 segundos após a derrota**, quando você está a pelo menos **480 unidades** da posição de origem. Reload, morte e travessia do portal mantêm esse intervalo. Cada novo morador derrotado concede os mesmos 15 XP; o limite continua sendo nível 3. Nenhum trecho exige matar criaturas. [Implementação, QA e limites](docs/dante-journey/).
+
 A [correção de animação e orientação em português](docs/playtest-readability/) mantém os novos inimigos apoiados no chão, com quadros de passada, preparação, ataque e reação. A interface agora usa português e mostra o próximo passo desde 0/3 Ecos, com pistas de direção, identificação próxima dos locais e orientação da fissura ao mecanismo e à entrada. O fluxo continua sem chave, kill count ou recompensa adicional.
 
 ## Controles
@@ -67,6 +75,7 @@ A [correção de animação e orientação em português](docs/playtest-readabil
 | Carga cinética | Segure Q; solte para disparar | Segure LT/L2; solte | Segure CARGA, arraste para mirar e solte |
 | Investigar quando próximo | E | A/Cross | INVESTIGAR contextual |
 | Renascer | R ou botão na tela | Start ou botão na tela | RENASCER |
+| Registros / bestiário | B ou botão na tela | Voltar/Select (botão 8 padrão) | REGISTROS |
 
 A entrada ativa muda conforme o dispositivo usado, sem recarregar a página. Gamepad usa o mapeamento `standard` da Gamepad API e deadzone nos analógicos; a mira conserva a última direção quando o analógico direito volta ao centro. A mesma build web é usada em todos os casos; não há aplicativo nativo nem suporte oficial a Xbox ou mobile físico nesta etapa.
 
@@ -104,13 +113,13 @@ A música de exploração usa dois loops instrumentais curtos e originais, Fores
 
 ## Limitações conhecidas
 
-- O vertical slice segue da Forest ao exterior da Cavern, Primeiro Eco e Warden. A vitória encerra o conteúdo atual com uma transmissão incompleta; o destino seguinte ainda não é explorável.
-- O nível está limitado a 3 e o progresso existe somente na aba atual: recarregar a página reinicia XP, Echoes e recompensas. Não há salvamento.
+- O percurso segue da Forest ao Warden e ao Vale da Ressonância; o caminho além do vale ainda não é explorável.
+- O nível está limitado a 3. O save pertence ao navegador/dispositivo, sem conta, nuvem ou recuperação após limpar os dados do site. Quando o armazenamento está indisponível, o jogo continua e os Registros informam a falha.
 - A onda usa uma faixa frontal móvel e não tem interação especial com rochas. Seus valores e a naturalidade das poses do braço ainda precisam de avaliação humana em combate.
 - HUD e Energy Saber receberam apenas o feedback necessário para a habilidade; sua arte base, Mineral Pulse, First Discovery e parte do terreno ainda são provisórios.
 - Touch e gamepad foram validados em emulação de navegador; conforto e compatibilidade em dispositivos físicos ainda exigem playtest. Não há suporte oficial a navegadores de console, builds nativas, remapeamento de botões ou menu de volume.
 - Os temas musicais são protótipos instrumentais. Vocal atmosférico, mixagem final e camadas adaptativas de combate/descoberta permanecem para avaliação futura.
-- Os inimigos derrotados só retornam ao reiniciar a arena.
+- Forest e Cavern mantêm moradores reconstruídos ao reiniciar a cena, com XP único por habitat salvo. Apenas os seis habitats do Vale têm renovação por intervalo e XP por novo morador.
 - Troncos, totens e bases estruturais possuem colisores circulares simples; copas, vegetação baixa, raízes e pequenos detalhes continuam atravessáveis. A classificação e a auditoria estão em [Environmental Collision Audit](docs/ENVIRONMENT_COLLISION_AUDIT.md).
 - A IA mantém perseguição direta, sem navegação por caminhos; Hollows podem ficar presos em rochas ao perseguir fora das trilhas.
 - A câmera e a arte usam visão superior 2D, sem profundidade isométrica real.

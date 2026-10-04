@@ -1,0 +1,138 @@
+{
+  "version": "0.1.44",
+  "date": "2026-10-04",
+  "method": "Chrome headless; keyboard/mouse, CDP touch and Gamepad API mock; DEV positions and cooldown expiry; no physical devices",
+  "typecheck": "passed",
+  "build": "passed; pre-existing large Phaser chunk warning",
+  "journey": {
+    "passed": true,
+    "errors": [],
+    "renewal": {
+      "delayMs": 90000,
+      "safeDistance": 480,
+      "expiry": "DEV timestamp override",
+      "repeatedKillXp": 15,
+      "reloadCannotResetCooldown": true
+    },
+    "combatPause": [
+      {
+        "state": "TELEGRAPH",
+        "remaining": 1099.8999999999996,
+        "dash": 0.08829411764705904
+      },
+      {
+        "state": "TELEGRAPH",
+        "remaining": 1100,
+        "dash": 0.08823529411764706
+      }
+    ],
+    "performance": {
+      "meanFps": 59.582073168307545,
+      "writesDuringIdle": 0,
+      "objects": 99,
+      "tweens": 2,
+      "saveBytes": 898
+    },
+    "reset": true,
+    "corruptSave": true,
+    "unavailableStorage": true,
+    "multiTouchChargeCancellation": true,
+    "nativeTouchScroll": true,
+    "gamepadMenuActionConsumed": true,
+    "cycles": [
+      {
+        "objects": 99,
+        "tweens": 2,
+        "roots": 1,
+        "records": 1,
+        "residents": 5
+      },
+      {
+        "objects": 99,
+        "tweens": 2,
+        "roots": 1,
+        "records": 1,
+        "residents": 5
+      },
+      {
+        "objects": 99,
+        "tweens": 2,
+        "roots": 1,
+        "records": 1,
+        "residents": 5
+      }
+    ]
+  },
+  "preparation": {
+    "passed": true,
+    "errors": [],
+    "performance": {
+      "mean": 60.18929129882822,
+      "min": 59.77928817642719,
+      "max": 60.42625914957266
+    }
+  },
+  "boss": {
+    "passed": true,
+    "errors": [],
+    "reloadRetainsJourney": true
+  },
+  "valley": {
+    "scriptExitCode": 0,
+    "errors": [],
+    "performance": {
+      "mean": 58.13974110887155,
+      "min": 56.263669630001175,
+      "max": 59.20528725100099,
+      "objects": 84,
+      "tweens": 2,
+      "rt": 2
+    },
+    "reloadRetainsJourney": true,
+    "idleStable": true
+  },
+  "production": {
+    "production": true,
+    "restoreHpXpEchoBestiary": true,
+    "noDevHook": true,
+    "errors": [],
+    "listenerCycles": [
+      {
+        "update": 5,
+        "input": 1,
+        "keyboard": 1,
+        "records": 1,
+        "touch": 1
+      },
+      {
+        "update": 5,
+        "input": 1,
+        "keyboard": 1,
+        "records": 1,
+        "touch": 1
+      },
+      {
+        "update": 5,
+        "input": 1,
+        "keyboard": 1,
+        "records": 1,
+        "touch": 1
+      },
+      {
+        "update": 5,
+        "input": 1,
+        "keyboard": 1,
+        "records": 1,
+        "touch": 1
+      }
+    ],
+    "passed": true
+  },
+  "resolutions": [
+    "1280x720",
+    "1366x768",
+    "1920x1080",
+    "844x390"
+  ],
+  "physicalDevicesTested": false
+}

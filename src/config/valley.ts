@@ -18,7 +18,7 @@ export const VALLEY_CREATURES = {
     range: 320, damage: 11, windup: 950, recovery: 700, cooldown: 2800 },
 } as const;
 
-// Stable session reward IDs, separate from the existing Forest/Cavern habitats.
+// Stable habitat IDs; renewal state is stored independently of actor instances.
 // None of these encounters is a door/portal unlock condition.
 export const VALLEY_ENCOUNTERS = [
   { id: 900, kind: 'carapace', x: 900, y: 855 },
@@ -27,6 +27,16 @@ export const VALLEY_ENCOUNTERS = [
   { id: 903, kind: 'thorn', x: 1590, y: 840 },
   { id: 904, kind: 'carapace', x: 2080, y: 1040 },
   { id: 905, kind: 'thorn', x: 2330, y: 1010 },
+] as const;
+
+export const VALLEY_RENEWAL = { delayMs: 90_000, safeDistance: 480 } as const;
+export const VALLEY_ROUTES = [
+  { id: 'ridge', name: 'Passagem entre cristas', x: 1050, y: 760, radius: 145,
+    hint: 'O caminho central passa entre as formações.' },
+  { id: 'mineral', name: 'Desvio mineral', x: 1270, y: 555, radius: 125,
+    hint: 'Explore a margem norte e suas formações âmbar.' },
+  { id: 'roots', name: 'Bacia enraizada', x: 1510, y: 1040, radius: 130,
+    hint: 'A rota sul contorna a crista por entre raízes.' },
 ] as const;
 
 export const VALLEY_ROCKS: readonly Obstacle[] = [

@@ -51,3 +51,28 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
   .touch-actions button { font-size: 14px; }
   .touch-pad { width: 108px; }
 }
+
+.records-button { position: fixed; z-index: 21; right: calc(14px + env(safe-area-inset-right)); top: calc(clamp(60px, 16vh, 110px) + env(safe-area-inset-top)); min-height: 44px; padding: 10px 15px; border: 1px solid #9fafa277; border-radius: 7px; background: #102c2ee8; color: #d5e5c8; font: 600 14px 'Barlow Condensed', sans-serif; letter-spacing: 1px; touch-action: none; }
+.records-button.save-unavailable { border-color: #ffbd54; }
+.records-open .touch-controls { display: none; }
+.records-dialog { width: min(740px, calc(100vw - 32px - env(safe-area-inset-left) - env(safe-area-inset-right))); max-height: calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); padding: 0; border: 1px solid #859d88; border-radius: 12px; background: #102728; color: #dce6d3; box-shadow: 0 20px 80px #0008; touch-action: pan-y; }
+.records-dialog::backdrop { background: #041213bb; }
+.records-dialog header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 22px; border-bottom: 1px solid #526b59; }
+.records-dialog h1 { font: 600 30px 'Barlow Condensed', sans-serif; margin: 3px 0 0; }
+.records-dialog h2 { font: 600 23px 'Barlow Condensed', sans-serif; margin: 24px 0 6px; color: #c1b1f3; }
+.records-dialog h3 { margin: 0 0 5px; font: 600 20px 'Barlow Condensed', sans-serif; }
+.records-dialog p { font-size: 14px; line-height: 1.5; margin: 8px 0; }
+.records-dialog small { color: #a9bda6; font-size: 12px; }
+.records-dialog button { min-height: 44px; padding: 9px 14px; background: #24443c; border: 1px solid #8aa387; color: #e0e9d6; border-radius: 5px; font: 600 15px 'Barlow Condensed', sans-serif; touch-action: none; }
+.records-dialog button:focus-visible, .records-button:focus-visible { outline: 3px solid #ffbd54; outline-offset: 2px; }
+.records-content { max-height: calc(100dvh - 150px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); padding: 10px 22px 22px; overflow-y: auto; overscroll-behavior: contain; touch-action: pan-y; }
+.records-status { color: #b8d99e; }
+.records-species { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+.records-species article { background: #193432; border-left: 2px solid #6bb46488; border-radius: 4px; padding: 14px; }
+.records-species .undiscovered { opacity: .6; border-color: #69776f; }
+.records-dialog footer { border-top: 1px solid #526b59; margin-top: 24px; padding-top: 10px; }
+.records-confirmation { padding: 12px; margin-top: 12px; border: 1px solid #ffbd54aa; border-radius: 5px; }
+.records-confirmation button { margin: 5px 5px 0 0; }
+.records-help { display: block; margin-top: 16px; }
+@media (max-width: 580px) { .records-species { grid-template-columns: 1fr; } }
+@media (orientation: portrait) and (pointer: coarse) { .records-button { display: none; } }

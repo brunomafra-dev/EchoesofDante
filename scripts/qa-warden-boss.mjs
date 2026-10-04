@@ -107,7 +107,7 @@ try {
   const box=await touch.locator('[data-action="charge"]').boundingBox(),x=box.x+box.width/2,y=box.y+box.height/2;
   await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x,y,id:2}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:x+40,y:y-25,id:2}]});await touch.waitForTimeout(400);assert.equal(await touch.evaluate(()=>window.__danteGame.scene.getScene('Game').charge.phase),'CHARGING');await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await touch.waitForTimeout(150);assert.notEqual(await touch.evaluate(()=>window.__danteGame.scene.getScene('Game').charge.phase),'CHARGING');
   await touch.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');Object.assign(s.player.position,{x:1000,y:890});s.player.invulnerableUntil=Infinity;});await touch.waitForTimeout(3200);await touch.screenshot({path:`${out}/touch-boss.png`});assert.equal(await touch.evaluate(()=>window.visualViewport.scale),1);report.touchEmulated=true;await mobile.close();
-  await page.reload();await ready(page);assert.equal((await state()).area,'forest');assert.equal((await state()).echoes,0);assert.equal((await state()).won,false);report.reloadNewSession=true;
+  const savedJourney=await state();await page.reload();await ready(page);for(const k of ['area','echoes','won','xp','first','gate'])assert.equal((await state())[k],savedJourney[k]);report.reloadRetainsJourney=true;
   assert.deepEqual(errors,[]);report.passed=true;
 } finally {await writeFile(`${out}/qa-report.json`,JSON.stringify(report,null,2)+'\n');await browser.close();}
 console.log(JSON.stringify(report,null,2));

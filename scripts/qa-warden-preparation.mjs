@@ -14,7 +14,7 @@ const watch = p => {
 };
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } }); watch(page);
-  const ready = p => p.waitForFunction(() => window.__danteGame?.scene.getScene('Game').player?.view?.active);
+  const ready = p => p.waitForFunction(() => window.__danteGame?.scene.getScene('Game')?.player?.view?.active);
   const state = () => page.evaluate(() => {
     const g = window.__danteGame, s = g.scene.getScene('Game');
     return { p: { ...s.player.position }, hp: s.player.hp, maxHp: s.player.maxHp, xp: s.progression.xp, level: s.progression.level,
@@ -54,14 +54,21 @@ try {
   for(const [x,y] of [[5030,740],[5150,710],[5270,670],[5350,630],[5440,740],[5530,760]])await walk(x,y);
   await page.screenshot({path:`${out}/first-echo-before.png`});
   const before=await state();assert.equal(before.musicFocus,0.55);
+  // Record actual HUD deliveries; screenshot latency must not skip a short message window.
+  await page.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');s.qaEchoMessages=[];const show=s.hud.showDiscovery.bind(s.hud);s.hud.showDiscovery=message=>{s.qaEchoMessages.push({message,at:s.time.now});show(message);};});
   await key('e');const response=await state();assert.ok(response.first&&response.response);assert.match(response.message,/ASSINATURA HUMANA/);
   assert.equal(response.xp,before.xp);assert.equal(response.echoes,3);assert.equal(response.musicFocus,0.2);
   await page.screenshot({path:`${out}/first-echo-response.png`});
   const start=response.p;await key('d',220);assert.ok((await state()).p.x>start.x+25,'Movement stays available during response');
   await page.mouse.move(1100,360);await page.mouse.down();await page.waitForTimeout(80);await page.mouse.up();
   assert.notEqual(await page.evaluate(()=>window.__danteGame.scene.getScene('Game').attack.pose(window.__danteGame.scene.getScene('Game').time.now,0).phase),'READY');
-  await page.waitForTimeout(2900);assert.match((await state()).message,/COMPATIBILIDADE/);await page.screenshot({path:`${out}/first-echo-confirmation.png`});
-  await page.waitForTimeout(2300);assert.equal((await state()).response,false);assert.match((await state()).message,/INSCRIÇÕES/);
+  await page.waitForFunction(()=>window.__danteGame.scene.getScene('Game').qaEchoMessages.some(m=>m.message.includes('COMPATIBILIDADE')));
+  if((await state()).message.includes('COMPATIBILIDADE'))await page.screenshot({path:`${out}/first-echo-confirmation.png`});
+  await page.waitForFunction(()=>!window.__danteGame.scene.getScene('Game').cavern.wardenApproach.responding);
+  const stages=await page.evaluate(()=>window.__danteGame.scene.getScene('Game').qaEchoMessages);
+  assert.match(stages[0].message,/ASSINATURA HUMANA/);assert.match(stages[1].message,/COMPATIBILIDADE/);assert.match(stages[2].message,/INSCRIÇÕES/);
+  assert.ok(stages[1].at-stages[0].at>=2950&&stages[2].at-stages[0].at>=5150);report.firstEchoStages=stages;
+  assert.equal((await state()).response,false);assert.match((await state()).message,/INSCRIÇÕES/);
   await position(5530,760);await key('e');assert.equal((await state()).response,false);assert.equal((await state()).xp,120);
   report.firstEchoOnceNoRewardControlFree=true;
   for(const [x,y]of[[5645,810],[5820,790],[5950,740],[6000,740]])await walk(x,y);
@@ -121,7 +128,10 @@ try {
   await gesture('[data-action="attack"]',35,-20);await gesture('[data-action="charge"]',45,0,400);await gesture('[data-action="dash"]');await touch.waitForTimeout(4500);
   assert.equal(await touch.evaluate(()=>window.visualViewport.scale),1);assert.equal(await touch.evaluate(()=>window.__danteGame.scene.getScene('Game').cavern.wardenApproach.responding),false);report.touchInteractionCombatEmulated=true;
   await touch.evaluate(()=>Object.assign(window.__danteGame.scene.getScene('Game').player.position,{x:5990,y:740}));await touch.waitForTimeout(650);await touch.screenshot({path:`${out}/touch-threshold.png`});await mobile.close();
-  await page.reload();await ready(page);assert.equal((await state()).first,false);assert.equal((await state()).echoes,0);report.reloadNewSession=true;
+  await page.reload();await ready(page);assert.equal((await state()).first,true);assert.equal((await state()).echoes,3);report.reloadRetainsJourney=true;
+  // Deliberate reset, with confirmation, starts the independent gate prerequisite test.
+  await page.locator('.records-button').click();await page.locator('[data-reset]').click();await page.locator('[data-confirm]').click();await ready(page);
+  assert.equal((await state()).first,false);assert.equal((await state()).echoes,0);report.confirmedNewJourney=true;
   // New session: investigate the First Echo, deliberately open the threshold,
   // then WALK through it into the separate boss area. Earlier tests stay outside.
   await page.setViewportSize({width:1280,height:720});

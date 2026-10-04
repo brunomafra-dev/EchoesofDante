@@ -8,7 +8,7 @@ export type InputMethod = 'keyboard' | 'gamepad' | 'touch';
 
 // One action surface for the scene, regardless of which device supplies it.
 export class Controls {
-  private keys: Record<'W' | 'A' | 'S' | 'D' | 'Q' | 'SPACE' | 'R' | 'E', Phaser.Input.Keyboard.Key>;
+  private keys: Record<'W' | 'A' | 'S' | 'D' | 'Q' | 'SPACE' | 'R' | 'E' | 'B', Phaser.Input.Keyboard.Key>;
   private touch: TouchControls;
   private touchPreview: TouchAimPreview;
   private lastAim = 0;
@@ -20,9 +20,12 @@ export class Controls {
   private padEdges = { attack: false, dash: false, charge: false, release: false, interact: false, restart: false };
   private lastPointerX = -1;
   private lastPointerY = -1;
+  private padRecords = false;
+  private recordsEdge = false;
+  private padSuppressed = false;
 
   constructor(private scene: Phaser.Scene, private onGesture: () => void, private onAttack: () => void) {
-    this.keys = scene.input.keyboard!.addKeys('W,A,S,D,Q,SPACE,R,E') as typeof this.keys;
+    this.keys = scene.input.keyboard!.addKeys('W,A,S,D,Q,SPACE,R,E,B') as typeof this.keys;
     scene.input.mouse?.disableContextMenu();
     this.touch = new TouchControls(() => { this.method = 'touch'; this.onGesture(); }, () => {
       this.onAttack();
@@ -79,16 +82,21 @@ export class Controls {
   private axis(value: number): number { return Math.abs(value) < 0.22 ? 0 : value; }
   update(position: Vec2): void {
     const pad = navigator.getGamepads?.().find(gamepad => gamepad?.mapping === 'standard' && gamepad.connected);
+    // Menu buttons must be released before they can become gameplay actions again.
+    if (this.padSuppressed && ![0, 5, 6, 7, 8, 9].some(index => (pad?.buttons[index]?.value ?? 0) > 0.5)) this.padSuppressed = false;
+    const records = !this.padSuppressed && (pad?.buttons[8]?.value ?? 0) > 0.5;
+    this.recordsEdge = records && !this.padRecords;
+    this.padRecords = records;
     const moveX = this.axis(pad?.axes[0] ?? 0);
     const moveY = this.axis(pad?.axes[1] ?? 0);
     const aimX = this.axis(pad?.axes[2] ?? 0);
     const aimY = this.axis(pad?.axes[3] ?? 0);
     const buttons = {
-      attack: (pad?.buttons[7]?.value ?? 0) > 0.5,
-      dash: (pad?.buttons[5]?.value ?? 0) > 0.5,
-      charge: (pad?.buttons[6]?.value ?? 0) > 0.5,
-      interact: (pad?.buttons[0]?.value ?? 0) > 0.5,
-      restart: (pad?.buttons[9]?.value ?? 0) > 0.5,
+      attack: !this.padSuppressed && (pad?.buttons[7]?.value ?? 0) > 0.5,
+      dash: !this.padSuppressed && (pad?.buttons[5]?.value ?? 0) > 0.5,
+      charge: !this.padSuppressed && (pad?.buttons[6]?.value ?? 0) > 0.5,
+      interact: !this.padSuppressed && (pad?.buttons[0]?.value ?? 0) > 0.5,
+      restart: !this.padSuppressed && (pad?.buttons[9]?.value ?? 0) > 0.5,
     };
     this.padEdges = {
       attack: buttons.attack && !this.padButtons.attack,
@@ -116,6 +124,14 @@ export class Controls {
   }
 
   get inputMethod(): InputMethod { return this.method; }
+  get recordsPressed(): boolean { return this.recordsEdge || Phaser.Input.Keyboard.JustDown(this.keys.B); }
+  cancelForRecords(): void {
+    this.padSuppressed = true;
+    this.touch.cancelAll();
+    this.touchPreview.update(undefined, { x: 0, y: 0 }, this.lastAim);
+    this.scene.input.keyboard?.resetKeys();
+    this.scene.input.resetPointers();
+  }
   setInteractAvailable(available: boolean): void { this.touch.setInteractAvailable(available); }
   setDead(dead: boolean): void { this.touch.setDead(dead); }
   movement(): Vec2 {

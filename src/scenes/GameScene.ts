@@ -15,7 +15,11 @@ import { Player } from '../entities/Player';
 import { Warden, type WardenCue, type WardenAttack } from '../entities/Warden';
 import { WardenArena } from '../systems/WardenArena';
 import { WardenHud } from '../ui/WardenHud';
-import { VALLEY, VALLEY_ENCOUNTERS } from '../config/valley';
+import { VALLEY, VALLEY_ENCOUNTERS, VALLEY_RENEWAL, VALLEY_ROUTES } from '../config/valley';
+import type { SpeciesId } from '../config/bestiary';
+import { Bestiary } from '../systems/Bestiary';
+import { LocalJourney, JOURNEY_FLAGS, type JourneyFlags } from '../systems/LocalJourney';
+import { RecordsPanel } from '../ui/RecordsPanel';
 import { ValleyCreature } from '../entities/ValleyCreature';
 import { ResonanceValley } from '../systems/ResonanceValley';
 import { SignalPortal } from '../systems/SignalPortal';
@@ -79,6 +83,17 @@ export class GameScene extends Phaser.Scene {
   private gateObstacle?: Obstacle;
   private enemies: Enemy[] = [];
   private hollowSpawnIds = new Map<Enemy, number>();
+  private enemySpecies = new WeakMap<Enemy, SpeciesId>();
+  private readonly bestiary = new Bestiary();
+  private readonly journey = new LocalJourney();
+  private journeyLoaded = false;
+  private resettingJourney = false;
+  private readonly valleyRoutes = new Set<string>();
+  private readonly valleyHabitatCooldowns = new Map<number, number>();
+  private readonly valleyResidents = new Map<number, Enemy>();
+  private records!: RecordsPanel;
+  private recordsPausedAt = 0;
+  private recordsTimeOffset = 0;
   private readonly progression = new Progression();
   private attack = new SaberAttack();
   private charge = new KineticCharge();
@@ -120,11 +135,20 @@ export class GameScene extends Phaser.Scene {
   }
 
   create(): void {
+    this.recordsTimeOffset = 0;
+    // Phaser pauses timers/tweens, but its absolute clock jumps on resume.
+    // Keep Player getters and all existing combat timestamps on the same clock.
+    const syncCombatClock = (time: number) => { this.time.now = time - this.recordsTimeOffset; };
+    this.events.on(Phaser.Scenes.Events.UPDATE, syncCombatClock);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.events.off(Phaser.Scenes.Events.UPDATE, syncCombatClock));
+    if (!this.journeyLoaded) { this.journeyLoaded = true; this.restoreJourney(); }
     resetEnvironmentOcclusion(this);
     this.attack = new SaberAttack();
     this.charge = new KineticCharge();
     this.waveDrawn = false;
     this.enemies = [];
+    this.enemySpecies = new WeakMap();
+    this.valleyResidents.clear();
     this.spawnedEncounters.clear();
     this.hollowSpawnIds.clear();
     this.transitioning = false;
@@ -178,7 +202,7 @@ export class GameScene extends Phaser.Scene {
     this.transferHp = undefined;
     this.kineticWave = this.add.graphics().setDepth(14999);
     this.controls = new Controls(this, () => this.sounds.unlock(), () => {
-      if (!this.player.isDead) this.beginStrike(this.time.now);
+      if (!this.player.isDead && !this.records?.isOpen) this.beginStrike(this.time.now);
     });
     this.sounds.setArea(this.area === 'warden' ? 'warden' : this.area === 'valley' || this.exteriorEntered ? 'forest' : this.area);
     this.sounds.setMusicFocus(1);
@@ -186,13 +210,12 @@ export class GameScene extends Phaser.Scene {
     if (this.area === 'forest' || this.area === 'cavern') spawns.forEach((point, index) => {
       const enemy = new HollowCrawler(this, point.x, point.y, this.area === 'forest' ? FOREST_PATROLS[index] : undefined);
       this.enemies.push(enemy);
+      this.enemySpecies.set(enemy, 'crawler');
       this.hollowSpawnIds.set(enemy, this.area === 'forest' ? index : FOREST_SPAWNS.length + index);
     });
     if (this.area === 'cavern' && this.deepPassageOpen) this.spawnDeepHollows();
     if (this.area === 'valley') for (const habitat of VALLEY_ENCOUNTERS) {
-      const enemy = new ValleyCreature(this, habitat.kind, habitat.x, habitat.y);
-      this.enemies.push(enemy);
-      this.hollowSpawnIds.set(enemy, habitat.id);
+      this.spawnValleyResident(habitat);
     }
     this.hud = new Hud(this, () => this.restart());
     this.explorationGuide = new ExplorationGuide(this);
@@ -202,6 +225,7 @@ export class GameScene extends Phaser.Scene {
       if (!this.wardenDefeated) {
         this.warden = new Warden(this, 1170, 735, this.wardenArena!.bounds, (cue, attack) => this.wardenCue(cue, attack), () => this.finishWarden());
         this.enemies.push(this.warden);
+        this.enemySpecies.set(this.warden, 'warden');
       } else {
         this.sounds.stopMusic();
         this.hud.showDiscovery('TRANSMISSÃO LIBERADA\nFRAGMENTO: RETORNO CONFIRMADO\nDESTINO: ILEGÍVEL');
@@ -228,11 +252,46 @@ export class GameScene extends Phaser.Scene {
       this.cameras.main.fadeIn(260, 5, 15, 20);
     }
     this.input.setDefaultCursor('crosshair');
+    this.records = new RecordsPanel(this, () => ({
+      level: this.progression.level, xp: this.progression.xp, echoes: this.progression.echoes.size,
+      area: this.area === 'valley' ? 'Vale da Ressonância' : this.area === 'warden' ? 'Domínio do Guardião' : this.area === 'cavern' ? 'Cavernas de Dante' : 'Floresta de Dante',
+      bestiary: this.bestiary.snapshot(), routes: this.valleyRoutes, valleyVisited: this.valleyVisited, saveStatus: this.journey.status,
+    }), () => {
+      this.controls.cancelForRecords();
+      this.charge.stop();
+      this.kineticWave.clear(); this.waveDrawn = false;
+      this.saveProgress();
+      this.recordsPausedAt = this.game.loop.now;
+      this.input.enabled = false;
+      if (this.input.keyboard) this.input.keyboard.enabled = false;
+      this.scene.pause();
+    }, () => {
+      this.recordsTimeOffset += this.game.loop.now - this.recordsPausedAt;
+      this.time.now = this.game.loop.now - this.recordsTimeOffset;
+      this.controls.cancelForRecords();
+      this.input.enabled = true;
+      if (this.input.keyboard) this.input.keyboard.enabled = true;
+      this.scene.resume();
+    }, () => {
+      if (this.journey.clear()) { this.resettingJourney = true; location.reload(); }
+      else this.records.setSaveAvailable(false);
+    });
+    const flush = () => this.saveProgress();
+    const hidden = () => { if (document.hidden) flush(); };
+    window.addEventListener('pagehide', flush);
+    document.addEventListener('visibilitychange', hidden);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      flush();
+      window.removeEventListener('pagehide', flush);
+      document.removeEventListener('visibilitychange', hidden);
+    });
   }
 
   update(time: number, delta: number): void {
+    time -= this.recordsTimeOffset;
     if (this.transitioning) return;
     this.controls.update(this.player.position);
+    if (this.controls.recordsPressed) { this.records.open(); return; }
     this.hud.setInputMethod(this.controls.inputMethod);
     const interact = this.controls.interactPressed;
     const nearbyEcho = this.echoSites.find(site => site.canInvestigate(this.player.position, this.player.isDead));
@@ -299,6 +358,7 @@ export class GameScene extends Phaser.Scene {
         if (index >= 0) this.arena.obstacles.splice(index, 1);
         if (this.movementBounds) this.movementBounds.right = 6480;
         this.hud.showDiscovery('LIMIAR ABERTO\nATRAVESSE A PASSAGEM');
+        this.saveProgress();
       });
     } else if (interact && nearPortal) {
       this.transitionArea(this.area === 'valley' ? 'warden' : 'valley');
@@ -318,6 +378,7 @@ export class GameScene extends Phaser.Scene {
         : 'MECANISMO INATIVO\nEncontre e investigue os 3 Ecos.');
     }
     const canInteract = nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearValleyLandmark;
+    if (interact) this.saveProgress();
     this.hud.setDiscoveryPrompt(canInteract);
     this.controls.setInteractAvailable(canInteract);
     this.controls.setDead(this.player.isDead);
@@ -375,6 +436,12 @@ export class GameScene extends Phaser.Scene {
     const sweep = this.attack.advance(time, this.player.position, facing, targets);
     this.resolveSaberHits(time, sweep.hits, sweep.pose.worldAngle);
     for (const enemy of this.enemies) {
+      const species = this.enemySpecies.get(enemy);
+      if (species && !enemy.isDead && distance(this.player.position, enemy.position) <= 320 &&
+        (species !== 'warden' || this.warden?.state !== 'DORMANT') && this.bestiary.see(species)) {
+        this.records.markDiscovery();
+        this.saveProgress();
+      }
       enemy.update(time, dt, this.player.position, this.player.isDead, this.arena.obstacles, impact => this.enemyStrike(enemy, impact), this.movementBounds);
     }
     this.enemies = this.enemies.filter(enemy => !enemy.isDead);
@@ -388,11 +455,19 @@ export class GameScene extends Phaser.Scene {
       return;
     }
     if (this.area === 'valley') {
-      if (this.player.position.x >= 1800) this.valleyCheckpointReached = true;
+      this.renewValleyHabitats();
+      if (this.player.position.x >= 1800 && !this.valleyCheckpointReached) { this.valleyCheckpointReached = true; this.saveProgress(); }
+      for (const route of VALLEY_ROUTES) if (!this.valleyRoutes.has(route.id) && distance(this.player.position, route) < route.radius) {
+        this.valleyRoutes.add(route.id);
+        this.hud.showDiscovery(`${route.name.toLocaleUpperCase('pt-BR')}\nTRECHO REGISTRADO NO ARQUIVO`);
+        this.records.markDiscovery();
+        this.saveProgress();
+      }
       if (!this.valleyEndSeen && distance(this.player.position, VALLEY.end) < VALLEY.end.radius) {
         this.valleyEndSeen = true;
         this.sounds.signal();
         this.hud.showDiscovery('O SINAL SEGUE ADIANTE\nHÁ OUTRO CAMINHO ALÉM DAS ROCHAS');
+        this.saveProgress();
       }
       return;
     }
@@ -409,6 +484,7 @@ export class GameScene extends Phaser.Scene {
         this.deepPassageOpen = true;
         this.spawnDeepHollows();
         this.hud.showDiscovery('PASSAGEM REVELADA\nO SINAL VEM DE BAIXO');
+        this.saveProgress();
       });
     }
     const inDeep = this.area === 'cavern' && this.deepPassageOpen && this.player.position.x >= DEEP_AREA.entryX;
@@ -417,6 +493,7 @@ export class GameScene extends Phaser.Scene {
       if (this.player.position.x < EXPANSION.deeperX) this.hud.setCavernDepth(inDeep);
       if (inDeep && !this.deepCavernEntered) {
         this.deepCavernEntered = true;
+        this.saveProgress();
         if (this.player.position.x < EXPANSION.deeperX) this.hud.showDiscovery('CAVERNA PROFUNDA\nSINAL: PRESENTE');
       }
     }
@@ -428,11 +505,13 @@ export class GameScene extends Phaser.Scene {
       this.sounds.signal();
       this.hud.setSignalObjective(true, true, true, true, true, true);
       this.hud.setCavernDepth(true);
+      this.saveProgress();
     }
     if (inDeep && !this.deepEndSeen && distance(this.player.position, DEEP_AREA.end) <= DEEP_AREA.end.radius) {
       this.deepEndSeen = true;
       this.hud.showDiscovery('SINAL: MAIS PROFUNDO\nCAMINHO: DESCONHECIDO');
       this.sounds.signal();
+      this.saveProgress();
     }
     if (this.area === 'cavern' && this.deepPassageOpen) this.updateContinuation();
   }
@@ -449,14 +528,16 @@ export class GameScene extends Phaser.Scene {
             ? new HollowCrawler(this, resident.x, resident.y)
             : new DanteCreature(this, resident.kind, resident.x, resident.y);
           this.enemies.push(enemy); this.hollowSpawnIds.set(enemy, spawnId + offset);
+          this.enemySpecies.set(enemy, resident.kind);
         });
       }
       spawnId += encounter.residents.length;
     });
-    if (x >= EXPANSION.deeperX) this.deeperEntered = true;
+    if (x >= EXPANSION.deeperX && !this.deeperEntered) { this.deeperEntered = true; this.saveProgress(); }
     if (x >= EXPANSION.exteriorX && !this.exteriorEntered) {
       this.exteriorEntered = true;
       this.hud.showDiscovery('EXTERIOR DA CAVERNA\nO SINAL CONTINUA PRESENTE');
+      this.saveProgress();
     }
     const region = x >= EXPANSION.exteriorX ? 'exterior' : x >= EXPANSION.deeperX ? 'deeper' : 'deep';
     if (region !== this.continuationRegion) {
@@ -480,6 +561,7 @@ export class GameScene extends Phaser.Scene {
       approach?.presence();
       this.hud.showDiscovery(W.presence);
       this.sounds.ancient();
+      this.saveProgress();
     }
   }
 
@@ -503,6 +585,14 @@ export class GameScene extends Phaser.Scene {
         this.explorationGuide.update(this.player.position, false, this.controls.inputMethod,
           'VOLTAR PELO PORTAL', { ...VALLEY.portal, radius: 105, name: 'Portal de retorno',
             instruction: 'Retorne ao domínio do guardião.', action: 'investigate' }, this.hud);
+        return;
+      }
+      const unexplored = VALLEY_ROUTES.filter(route => !this.valleyRoutes.has(route.id));
+      if (this.valleyLandmarkSeen && unexplored.length) {
+        const next = unexplored.reduce((a, b) => distance(this.player.position, a) <= distance(this.player.position, b) ? a : b);
+        this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
+          `EXPLORE OS DESVIOS  ${this.valleyRoutes.size}/3`,
+          { ...next, instruction: next.hint, action: 'walk' }, this.hud);
         return;
       }
       this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
@@ -565,6 +655,7 @@ export class GameScene extends Phaser.Scene {
     DEEP_HOLLOWS.forEach((patrol,index) => {
       const enemy = new HollowCrawler(this,patrol[0].x,patrol[0].y,patrol);
       this.enemies.push(enemy);
+      this.enemySpecies.set(enemy, 'crawler');
       this.hollowSpawnIds.set(enemy,FOREST_SPAWNS.length+CAVERN_HOLLOWS.length+index);
     });
   }
@@ -575,6 +666,7 @@ export class GameScene extends Phaser.Scene {
     this.cameras.main.fadeOut(220, 5, 15, 20);
     this.time.delayedCall(240, () => {
       this.area = 'cavern';
+      this.saveProgress();
       this.scene.restart();
     });
   }
@@ -586,7 +678,7 @@ export class GameScene extends Phaser.Scene {
     this.returnToThreshold = area === 'cavern';
     this.returnFromValley = this.area === 'valley' && area === 'warden';
     this.cameras.main.fadeOut(220, 5, 15, 20);
-    this.time.delayedCall(240, () => { this.area = area; this.scene.restart(); });
+    this.time.delayedCall(240, () => { this.area = area; this.saveProgress(); this.scene.restart(); });
   }
 
   private wardenCue(cue: WardenCue, attack?: WardenAttack): void {
@@ -596,6 +688,7 @@ export class GameScene extends Phaser.Scene {
     else if (cue === 'death') {
       // Persist on the lethal hit; a restart cannot resurrect a defeated guardian.
       this.wardenDefeated = true;
+      this.saveProgress();
       this.sounds.stopMusic();
       this.sounds.wardenCue('death');
       this.wardenArena?.setEncounterActive(false);
@@ -607,6 +700,7 @@ export class GameScene extends Phaser.Scene {
     this.wardenArena?.resolve();
     if (this.wardenEndingSeen) return;
     this.wardenEndingSeen = true;
+    this.saveProgress();
     this.sounds.wardenCue('victory');
     this.hud.showDiscovery('GUARDIÃO SILENCIADO\nO SINAL NÃO SE APAGOU');
     this.time.delayedCall(3000, () => {
@@ -642,15 +736,25 @@ export class GameScene extends Phaser.Scene {
         this.tweens.add({ targets: wave, scale: 2.4, alpha: 0, duration: 190, onComplete: () => wave.destroy() });
       }
       if (result.died) {
+        const species = this.enemySpecies.get(enemy);
+        if (species) this.bestiary.defeat(species);
         if (enemy !== this.warden) this.deathEffect(enemy.position);
         enemy.die();
         const spawnIndex = this.hollowSpawnIds.get(enemy);
         if (spawnIndex !== undefined) {
-          const reward = this.progression.defeatHollow(spawnIndex);
+          const isValley = this.area === 'valley' && this.valleyResidents.get(spawnIndex) === enemy;
+          const reward = isValley
+            ? { awarded: true, leveledUp: this.progression.defeatValleyResident() }
+            : this.progression.defeatHollow(spawnIndex);
+          if (isValley) {
+            this.valleyResidents.delete(spawnIndex);
+            this.valleyHabitatCooldowns.set(spawnIndex, Date.now() + VALLEY_RENEWAL.delayMs);
+          }
           if (reward.awarded) this.updateProgressHud();
           if (reward.leveledUp) this.levelUp();
           this.hollowSpawnIds.delete(enemy);
         }
+        this.saveProgress();
       } else enemy.hurt(now, from, chargeHit ? KINETIC_CHARGE.knockback : 300);
     }
   }
@@ -676,6 +780,7 @@ export class GameScene extends Phaser.Scene {
       this.sounds.death();
       this.time.delayedCall(550, () => this.hud.showDeath());
     }
+    this.saveProgress();
   }
 
   private impact(position: Vec2, color: number, damage: number, saberAngle?: number): void {
@@ -774,4 +879,45 @@ export class GameScene extends Phaser.Scene {
   }
 
   private restart(): void { this.scene.restart(); }
+
+  private spawnValleyResident(habitat: typeof VALLEY_ENCOUNTERS[number]): boolean {
+    if (this.valleyResidents.has(habitat.id)) return false;
+    const readyAt = this.valleyHabitatCooldowns.get(habitat.id);
+    if (readyAt !== undefined && (Date.now() < readyAt || distance(this.player.position, habitat) < VALLEY_RENEWAL.safeDistance)) return false;
+    const enemy = new ValleyCreature(this, habitat.kind, habitat.x, habitat.y);
+    this.enemies.push(enemy);
+    this.enemySpecies.set(enemy, habitat.kind);
+    this.hollowSpawnIds.set(enemy, habitat.id);
+    this.valleyResidents.set(habitat.id, enemy);
+    this.valleyHabitatCooldowns.delete(habitat.id);
+    return true;
+  }
+
+  private renewValleyHabitats(): void {
+    if (this.player.isDead) return;
+    let renewed = false;
+    for (const habitat of VALLEY_ENCOUNTERS) if (this.spawnValleyResident(habitat)) renewed = true;
+    if (renewed) this.saveProgress();
+  }
+
+  private restoreJourney(): void {
+    const saved = this.journey.load();
+    if (!saved) return;
+    this.progression.restore(saved.progression);
+    this.bestiary.restore(saved.bestiary);
+    for (const key of JOURNEY_FLAGS) this[key] = saved.flags[key];
+    this.area = saved.area;
+    this.transferHp = saved.hp > 0 ? saved.hp : this.progression.maxHp;
+    saved.valleyRoutes.forEach(id => this.valleyRoutes.add(id));
+    saved.valleyHabitats.forEach(([id, readyAt]) => this.valleyHabitatCooldowns.set(id, readyAt));
+  }
+
+  private saveProgress(): void {
+    if (!this.player || this.resettingJourney) return;
+    const flags = Object.fromEntries(JOURNEY_FLAGS.map(key => [key, this[key]])) as JourneyFlags;
+    const available = this.journey.save({ schema: 1, updatedAt: Date.now(), area: this.area,
+      hp: this.player.isDead ? this.progression.maxHp : this.player.hp, progression: this.progression.snapshot(),
+      flags, bestiary: this.bestiary.snapshot(), valleyRoutes: [...this.valleyRoutes], valleyHabitats: [...this.valleyHabitatCooldowns] });
+    this.records?.setSaveAvailable(available);
+  }
 }

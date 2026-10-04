@@ -1,7 +1,9 @@
 import { PROGRESSION } from '../config/progression';
 import { ECHO_COUNT } from '../config/discovery';
 
-// Run-local state. GameScene survives scene.restart(), so death retains awards.
+export type ProgressionSnapshot = { xp: number; echoes: string[]; sourceLocated: boolean; passageOpen: boolean; rewardedHollows: number[] };
+
+// GameScene retains this state across respawns; LocalJourney stores its snapshot.
 export class Progression {
   xp = 0;
   level = 1;
@@ -36,6 +38,24 @@ export class Progression {
     if (this.rewardedHollows.has(spawnIndex)) return { awarded: false, leveledUp: false };
     this.rewardedHollows.add(spawnIndex);
     return { awarded: true, leveledUp: this.award(PROGRESSION.hollowXp) };
+  }
+
+  defeatValleyResident(): boolean { return this.award(PROGRESSION.hollowXp); }
+
+  snapshot(): ProgressionSnapshot {
+    return { xp: this.xp, echoes: [...this.echoes], sourceLocated: this.sourceLocated,
+      passageOpen: this.passageOpen, rewardedHollows: [...this.rewardedHollows] };
+  }
+
+  restore(value: ProgressionSnapshot): void {
+    this.xp = value.xp;
+    this.level = 1;
+    while (this.level < PROGRESSION.levelThresholds.length && this.xp >= PROGRESSION.levelThresholds[this.level]) this.level++;
+    this.echoes.clear();
+    value.echoes.forEach(id => this.echoes.add(id));
+    this.sourceLocated = this.signalSynchronized && value.sourceLocated;
+    this.passageOpen = this.sourceLocated && value.passageOpen;
+    this.rewardedHollows = new Set(value.rewardedHollows);
   }
 
   private award(amount: number): boolean {

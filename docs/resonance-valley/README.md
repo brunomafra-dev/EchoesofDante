@@ -1,5 +1,9 @@
 # Movimento touch e Vale da Ressonância — 0.1.42
 
+> Registro da expansão original. Desde 0.1.44, reload preserva a jornada e os
+> habitats do Vale renovam moradores por intervalo, sem resetar na morte.
+> Consulte [Jornada persistente e expedições](../dante-journey/) para o comportamento atual.
+
 Esta expansão incorpora a revisão de chão/limiares 0.1.41. D / Organic Sci-Fi R3
 permanece: material raster, silhueta, sombra curta, transição com sedimento e
 raízes. Forest, Cavern e o encontro do Warden mantêm seus valores e rotas.
