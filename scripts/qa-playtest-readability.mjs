@@ -117,9 +117,9 @@ try {
     await page.setViewportSize({width,height}); await page.waitForTimeout(160);
     assert.ok(await page.evaluate(() => {
       const h=window.__danteGame.scene.getScene('Game').hud;
-      return [h.signalObjective,h.explorationHint,h.actionHint].every(t=>t.x+t.width<=364) && h.hpText.x+h.hpText.width<=880
-        && h.controlHints[4].x+h.controlHints[4].width<h.controlHints[5].x
-        && h.controlHints[6].x+h.controlHints[6].width<h.controlHints[7].x;
+      return [h.signalObjective,h.explorationHint,h.actionHint].every(t=>t.getBounds().right<=280)
+        && h.hpText.getBounds().right<=236
+        && h.controlHints.every(t=>t.getBounds().left>=0&&t.getBounds().right<=1280);
     }));
     report.resolutions.push(`${width}x${height}`);
   }

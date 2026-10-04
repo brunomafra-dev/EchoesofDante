@@ -1,0 +1,75 @@
+{
+  "version": "0.1.46",
+  "date": "2026-10-04",
+  "typecheck": "passed",
+  "build": "passed",
+  "journey": {
+    "method": "Chrome headless; keyboard/mouse, CDP touch and Gamepad API mock; DEV positions and cooldown expiry; no physical devices",
+    "journalPausesAndReturnsFocus": true,
+    "fullJourneyToValley": true,
+    "chargeCancelledByJournal": true,
+    "gamepadMenuActionConsumed": true,
+    "gamepadJournalMock": true,
+    "confirmedReset": true,
+    "invalidSaveRecovery": true,
+    "storageUnavailablePlayable": true,
+    "nativeTouchJournalScroll": true,
+    "touchChargeCancelledBySecondFinger": true,
+    "touchEmulated": true,
+    "passed": true,
+    "errors": [],
+    "performance": {
+      "meanFps": 59.42874729573727,
+      "writesDuringIdle": 0,
+      "objects": 104,
+      "tweens": 2,
+      "saveBytes": 943
+    },
+    "cycles": [
+      {
+        "hp": 120,
+        "xp": 210,
+        "level": 3,
+        "objects": 104,
+        "tweens": 2,
+        "roots": 1,
+        "records": 1,
+        "enemies": 7
+      },
+      {
+        "hp": 120,
+        "xp": 210,
+        "level": 3,
+        "objects": 104,
+        "tweens": 2,
+        "roots": 1,
+        "records": 1,
+        "enemies": 7
+      },
+      {
+        "hp": 120,
+        "xp": 210,
+        "level": 3,
+        "objects": 104,
+        "tweens": 2,
+        "roots": 1,
+        "records": 1,
+        "enemies": 7
+      }
+    ]
+  },
+  "production": {
+    "method": "Production build in Chrome headless; keyboard inputs, legacy v1 fixture and touch emulation; no DEV global or physical hardware",
+    "errors": [],
+    "newSessionAndKeyboardSmoke": true,
+    "legacySaveLevel4HpPreserved": true,
+    "resolutions": [
+      "1280x720",
+      "1366x768",
+      "1920x1080",
+      "844x390"
+    ],
+    "productionTouchUiSmoke": true,
+    "passed": true
+  }
+}

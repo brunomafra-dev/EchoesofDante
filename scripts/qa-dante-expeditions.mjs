@@ -21,7 +21,7 @@ try {
   async function pos(x,y) {await page.evaluate(p=>{const s=window.__danteGame.scene.getScene('Game');Object.assign(s.player.position,p);s.player.invulnerableUntil=Infinity;},{x,y});await page.waitForTimeout(160);}
   async function reload(){await page.reload();await ready(page);await page.waitForTimeout(450);}
   let s=await state();assert.equal(s.area,'valley');assert.equal(s.xp,345);assert.equal(s.level,3);assert.equal(s.hp,71);assert.equal(s.enemies,8);assert.equal(s.rewards.length,0);
-  assert.match(s.hint,/15 XP/);report.legacySaveRestoresWithoutReset=true;
+  assert.match(s.hint,/XP 345 \/ 360/);report.legacySaveRestoresWithoutReset=true;
   await page.locator('.records-button').click();assert.match(await page.locator('.records-routes').innerText(),/Revisite/);
   const cards=page.locator('.records-species article');assert.match(await cards.nth(3).innerText(),/ESTUDADO/);assert.match(await cards.nth(4).innerText(),/OBSERVADO/);assert.doesNotMatch(await cards.nth(4).innerText(),/não acompanha/);await page.locator('[data-close]').click();
   await page.evaluate(()=>window.__danteGame.scene.getScene('Game').player.health.current=45);

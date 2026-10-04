@@ -1,0 +1,222 @@
+{
+  "method": "Chrome headless; DEV area/feedback staging; real keyboard/mouse, touch emulation, standard Gamepad API mock; no physical hardware",
+  "errors": [],
+  "controlsHintExpires": true,
+  "echoFeedback": {
+    "xp": 40,
+    "text": "+40 XP",
+    "background": null
+  },
+  "keyboardActionsAndHelp": true,
+  "layouts": [
+    {
+      "area": "forest",
+      "width": 1280,
+      "height": 720,
+      "fits": true,
+      "supportingLines": 1,
+      "xp": "+20 XP",
+      "xpBackground": null,
+      "feedbackGap": 19,
+      "progressGap": 2,
+      "barGap": 12
+    },
+    {
+      "area": "forest",
+      "width": 1366,
+      "height": 768,
+      "fits": true,
+      "supportingLines": 1,
+      "xp": "+40 XP",
+      "xpBackground": null,
+      "feedbackGap": 19,
+      "progressGap": 2,
+      "barGap": 12
+    },
+    {
+      "area": "forest",
+      "width": 1920,
+      "height": 1080,
+      "fits": true,
+      "supportingLines": 1,
+      "xp": "+60 XP",
+      "xpBackground": null,
+      "feedbackGap": 19,
+      "progressGap": 2,
+      "barGap": 12
+    },
+    {
+      "area": "forest",
+      "width": 844,
+      "height": 390,
+      "fits": true,
+      "supportingLines": 1,
+      "xp": "+20 XP",
+      "xpBackground": null,
+      "feedbackGap": 18,
+      "progressGap": 2,
+      "barGap": 7
+    },
+    {
+      "area": "cavern",
+      "width": 1280,
+      "height": 720,
+      "fits": true,
+      "supportingLines": 1,
+      "xp": "+20 XP",
+      "xpBackground": null,
+      "feedbackGap": 19,
+      "progressGap": 2,
+      "barGap": 12
+    },
+    {
+      "area": "cavern",
+      "width": 1366,
+      "height": 768,
+      "fits": true,
+      "supportingLines": 1,
+      "xp": "+40 XP",
+      "xpBackground": null,
+      "feedbackGap": 19,
+      "progressGap": 2,
+      "barGap": 12
+    },
+    {
+      "area": "cavern",
+      "width": 1920,
+      "height": 1080,
+      "fits": true,
+      "supportingLines": 1,
+      "xp": "+60 XP",
+      "xpBackground": null,
+      "feedbackGap": 19,
+      "progressGap": 2,
+      "barGap": 12
+    },
+    {
+      "area": "cavern",
+      "width": 844,
+      "height": 390,
+      "fits": true,
+      "supportingLines": 1,
+      "xp": "+20 XP",
+      "xpBackground": null,
+      "feedbackGap": 18,
+      "progressGap": 2,
+      "barGap": 7
+    },
+    {
+      "area": "valley",
+      "width": 1280,
+      "height": 720,
+      "fits": true,
+      "supportingLines": 1,
+      "xp": "+20 XP",
+      "xpBackground": null,
+      "feedbackGap": 19,
+      "progressGap": 2,
+      "barGap": 12
+    },
+    {
+      "area": "valley",
+      "width": 1366,
+      "height": 768,
+      "fits": true,
+      "supportingLines": 1,
+      "xp": "+40 XP",
+      "xpBackground": null,
+      "feedbackGap": 19,
+      "progressGap": 2,
+      "barGap": 12
+    },
+    {
+      "area": "valley",
+      "width": 1920,
+      "height": 1080,
+      "fits": true,
+      "supportingLines": 1,
+      "xp": "+60 XP",
+      "xpBackground": null,
+      "feedbackGap": 19,
+      "progressGap": 2,
+      "barGap": 12
+    },
+    {
+      "area": "valley",
+      "width": 844,
+      "height": 390,
+      "fits": true,
+      "supportingLines": 1,
+      "xp": "+20 XP",
+      "xpBackground": null,
+      "feedbackGap": 18,
+      "progressGap": 2,
+      "barGap": 7
+    },
+    {
+      "area": "warden",
+      "width": 1280,
+      "height": 720,
+      "fits": true,
+      "supportingLines": 1,
+      "xp": "+20 XP",
+      "xpBackground": null,
+      "feedbackGap": 19,
+      "progressGap": 2,
+      "barGap": 12
+    },
+    {
+      "area": "warden",
+      "width": 1366,
+      "height": 768,
+      "fits": true,
+      "supportingLines": 1,
+      "xp": "+40 XP",
+      "xpBackground": null,
+      "feedbackGap": 19,
+      "progressGap": 2,
+      "barGap": 12
+    },
+    {
+      "area": "warden",
+      "width": 1920,
+      "height": 1080,
+      "fits": true,
+      "supportingLines": 1,
+      "xp": "+60 XP",
+      "xpBackground": null,
+      "feedbackGap": 19,
+      "progressGap": 2,
+      "barGap": 12
+    },
+    {
+      "area": "warden",
+      "width": 844,
+      "height": 390,
+      "fits": true,
+      "supportingLines": 1,
+      "xp": "+20 XP",
+      "xpBackground": null,
+      "feedbackGap": 18,
+      "progressGap": 2,
+      "barGap": 7
+    }
+  ],
+  "gamepadMockLabels": true,
+  "touchTargets": [
+    {
+      "w": 72,
+      "h": 72
+    },
+    {
+      "w": 72,
+      "h": 72
+    },
+    {
+      "w": 72,
+      "h": 72
+    }
+  ],
+  "touchEmulated": true,
+  "passed": true
+}

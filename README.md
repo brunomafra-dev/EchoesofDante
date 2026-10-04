@@ -56,6 +56,8 @@ Os nomes acima das criaturas usam o estilo aprovado no vale: Rastejante Hollow, 
 
 ## Jornada persistente e expedições — 0.1.45
 
+A [revisão de HUD 0.1.46](docs/hud-clarity/) reduz painéis, bordas e textos permanentes. Vida/progresso ficam compactos no canto; ganho aparece apenas como `+20 XP`. A ajuda inicial desaparece após 10 segundos e permanece consultável em Registros → Controles. O objetivo preserva uma indicação local curta, com recargas e avisos do Warden legíveis.
+
 O progresso é salvo automaticamente **neste navegador**: XP, nível, Ecos, passagens, Primeiro Eco, vitória sobre o Warden, exploração do Vale e bestiário. Reabrir a mesma URL retoma a região em seu ponto seguro, com a vida registrada. Morrer continua restaurando a vida no respawn. A posição exata, vida dos inimigos e ataques em andamento não são salvos; um Warden ainda não derrotado reinicia seu encontro.
 
 Abra **REGISTROS** pelo botão na tela, **B** no teclado ou **Voltar/Select** do gamepad padrão. A consulta pausa o jogo, registra as seis espécies encontradas e conta suas derrotas. A primeira derrota libera uma observação tática adicional. **NOVO PERCURSO** permite recomeçar após confirmação. Limpar os dados do site remove o save; ele não sincroniza entre dispositivos.

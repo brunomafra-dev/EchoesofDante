@@ -19,8 +19,8 @@ export class ExplorationGuide {
   constructor(scene: Phaser.Scene) {
     this.base = scene.add.ellipse(0, 0, 62, 22, 0xa98cff, 0.07).setStrokeStyle(1, 0xa98cff, 0.6).setVisible(false);
     this.label = scene.add.text(0, 0, '', {
-      fontFamily: 'Barlow Condensed, sans-serif', fontSize: '18px', fontStyle: 'bold',
-      color: '#e4dcff', stroke: '#071b24', strokeThickness: 4, align: 'center',
+      fontFamily: 'Barlow Condensed, sans-serif', fontSize: '15px', fontStyle: 'bold',
+      color: '#d8cfe6', stroke: '#080e0c', strokeThickness: 2, align: 'center',
     }).setOrigin(0.5, 0).setDepth(11000).setVisible(false);
   }
 
@@ -37,12 +37,12 @@ export class ExplorationGuide {
       : horizontal === 'leste' ? 'sudeste' : 'sudoeste' : vertical || horizontal;
     const command = method === 'gamepad' ? '[A] INVESTIGAR' : method === 'touch' ? 'Toque em INVESTIGAR' : '[E] INVESTIGAR';
     const instruction = nearby && target.action === 'investigate' ? command : target.instruction;
-    hud.setExplorationGuide(title, nearby ? `${target.name} está aqui.` : `${target.name} • ${direction}`, instruction);
+    hud.setExplorationGuide(title, nearby ? `${target.name} está aqui.` : `${target.name} • ${direction}`, instruction, nearby);
     const visible = !dead && gap <= target.radius + 170;
     this.label.setVisible(visible);
     this.base.setVisible(visible && target.action === 'investigate');
     if (visible) {
-      const text = `${target.name}\n${nearby && target.action === 'investigate' ? command : target.action === 'blocked' ? 'Passagem interditada' : target.action === 'observe' ? 'A resposta está em curso' : target.action === 'walk' ? 'Siga por aqui' : 'Aproxime-se'}`;
+      const text = target.action === 'blocked' ? `${target.name}\nPassagem interditada` : target.name;
       if (this.label.text !== text) this.label.setText(text);
       this.label.setPosition(target.x, target.y + 35);
       this.base.setPosition(target.x, target.y + 8).setDepth(target.y + 1);

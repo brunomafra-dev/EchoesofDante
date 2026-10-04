@@ -10,24 +10,24 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
 
 .touch-controls { --action-size: clamp(72px, 18vh, 102px); position: fixed; inset: 0; z-index: 20; display: none; pointer-events: none; }
 .touch-controls.is-visible { display: block; }
-.touch-pad { position: absolute; bottom: calc(16px + env(safe-area-inset-bottom)); width: clamp(108px, 28vh, 140px); aspect-ratio: 1; border: 2px solid #96c6bb88; border-radius: 50%; background: #0a2730a8; color: #d5eee4; display: grid; place-items: center; font: 700 15px 'Barlow Condensed', sans-serif; letter-spacing: 2px; pointer-events: auto; touch-action: none; }
+.touch-pad { position: absolute; bottom: calc(16px + env(safe-area-inset-bottom)); width: clamp(108px, 28vh, 140px); aspect-ratio: 1; border: 1px solid #a1b89c66; border-radius: 50%; background: #101b1466; color: #d5eee4; display: grid; place-items: center; font: 700 15px 'Barlow Condensed', sans-serif; letter-spacing: 2px; pointer-events: auto; touch-action: none; }
 .touch-pad i { position: absolute; width: 42px; height: 42px; border: 2px solid #a5d9c2bb; border-radius: 50%; background: #6bb46455; pointer-events: none; }
-.touch-pad span { transform: translateY(-40px); pointer-events: none; }
+.touch-pad span { display: none; pointer-events: none; }
 .touch-move-zone { position: absolute; left: env(safe-area-inset-left); bottom: env(safe-area-inset-bottom); width: min(44vw, 380px); height: min(52vh, 280px); pointer-events: auto; touch-action: none; }
 .touch-move { left: 36px; bottom: 24px; pointer-events: none; }
 .touch-move.is-moving { border-width: 3px; border-color: #b7dfcb; }
 .touch-actions { position: absolute; right: calc(12px + env(safe-area-inset-right)); bottom: calc(12px + env(safe-area-inset-bottom)); display: grid; grid-template-columns: repeat(2, var(--action-size)); gap: 0 8px; pointer-events: none; }
 .touch-actions button, .touch-context button { position: relative; padding: 7px; border: 0; background: transparent; color: #ebf6e8; font: 700 15px 'Barlow Condensed', sans-serif; letter-spacing: 1px; touch-action: none; pointer-events: auto; -webkit-tap-highlight-color: transparent; }
 .touch-actions button { width: var(--action-size); height: var(--action-size); }
-.touch-face { position: relative; width: 100%; height: 100%; border: 1px solid #b9d6c299; border-radius: 20% 28% 20% 28%; background: #102c36d9; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 3px; pointer-events: none; transition: transform 90ms, background 90ms; }
+.touch-face { position: relative; width: 100%; height: 100%; border: 1px solid #a1b89c66; border-radius: 20% 28% 20% 28%; background: #101b1499; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 3px; pointer-events: none; transition: transform 90ms, background 90ms; }
 .touch-face b { font-weight: 700; }
-.touch-face small { font-size: 9px; letter-spacing: .4px; max-width: calc(100% - 6px); text-align: center; line-height: 1.1; }
+.touch-face small { display: none; }
 .touch-actions [data-action="attack"] { grid-column: 2; grid-row: 2; }
 .touch-actions [data-action="charge"] { grid-column: 2; grid-row: 1; }
 .touch-actions [data-action="dash"] { grid-column: 1; grid-row: 2; }
-.touch-actions [data-action="attack"] .touch-face { border-color: #5fe6d8aa; background: #234a4fd9; }
+.touch-actions [data-action="attack"] .touch-face { border-color: #5fe6d888; background: #182d2799; }
 .touch-actions [data-action="charge"] .touch-face { border-top: 3px double #5fe6d8aa; }
-.is-pressed > .touch-face { transform: scale(.92); background: #345d62ee; border-width: 2px; }
+.is-pressed > .touch-face { transform: scale(.92); background: #304a39dd; border-width: 2px; }
 .is-aiming > .touch-face { border-style: dashed; }
 .is-released > .touch-face { animation: touch-release 180ms ease-out; }
 .touch-direction { position: absolute; bottom: 5px; left: calc(50% - 9px); width: 18px; height: 2px; background: #5fe6d8; display: none; }
@@ -52,7 +52,8 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
   .touch-pad { width: 108px; }
 }
 
-.records-button { position: fixed; z-index: 21; right: calc(14px + env(safe-area-inset-right)); top: calc(clamp(60px, 16vh, 110px) + env(safe-area-inset-top)); min-height: 44px; padding: 10px 15px; border: 1px solid #9fafa277; border-radius: 7px; background: #102c2ee8; color: #d5e5c8; font: 600 14px 'Barlow Condensed', sans-serif; letter-spacing: 1px; touch-action: none; }
+.records-button { position: fixed; z-index: 21; right: calc(14px + env(safe-area-inset-right)); top: calc(clamp(54px, 13vh, 90px) + env(safe-area-inset-top)); min-height: 44px; padding: 8px 10px; border: 1px solid transparent; border-radius: 4px; background: #080e0c55; color: #bfcab3; font: 600 12px 'Barlow Condensed', sans-serif; letter-spacing: .5px; touch-action: none; }
+.records-button:hover { color: #eef2dd; background: #18291fcc; }
 .records-button.save-unavailable { border-color: #ffbd54; }
 .records-open .touch-controls { display: none; }
 .records-dialog { width: min(740px, calc(100vw - 32px - env(safe-area-inset-left) - env(safe-area-inset-right))); max-height: calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); padding: 0; border: 1px solid #859d88; border-radius: 12px; background: #102728; color: #dce6d3; box-shadow: 0 20px 80px #0008; touch-action: pan-y; }
@@ -69,6 +70,8 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
 .records-status { color: #b8d99e; }
 .records-progression { padding: 10px 12px; border-left: 2px solid #ffbd54; background: #263b2d; }
 .records-study { padding-top: 8px; border-top: 1px solid #718e7455; color: #c4c0df; }
+.records-controls { margin: 12px 0; color: #a9bda6; font-size: 13px; }
+.records-controls summary { cursor: pointer; min-height: 32px; padding: 6px 0; }
 .records-routes { list-style: none; padding: 0; }
 .records-routes li { padding: 12px 0; border-bottom: 1px solid #526b5966; }
 .records-species { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }

@@ -11,8 +11,8 @@ export class Hud {
   private dashFill: Phaser.GameObjects.Rectangle;
   private dashText: Phaser.GameObjects.Text;
   private chargeText: Phaser.GameObjects.Text;
-  private controlsPanel: Phaser.GameObjects.Graphics;
   private controlHints: Phaser.GameObjects.Text[] = [];
+  private controlsTimer?: Phaser.Time.TimerEvent;
   private inputMethod: InputMethod = 'keyboard';
   private deathButtonText: Phaser.GameObjects.Text;
   private promptVisible = false;
@@ -24,83 +24,58 @@ export class Hud {
   private experienceText: Phaser.GameObjects.Text;
   private experienceTimer?: Phaser.Time.TimerEvent;
   private experienceAmount = 0;
-  private experienceSource = '';
   private levelMessage: Phaser.GameObjects.Text;
-  private signalPanel: Phaser.GameObjects.Graphics;
   private signalObjective: Phaser.GameObjects.Text;
   private explorationHint: Phaser.GameObjects.Text;
   private actionHint: Phaser.GameObjects.Text;
   private areaSubtitle: Phaser.GameObjects.Text;
+  private xpFill: Phaser.GameObjects.Rectangle;
+  private compactViewport?: boolean;
   private discoveryTimer?: Phaser.Time.TimerEvent;
   private levelTimer?: Phaser.Time.TimerEvent;
 
   constructor(private scene: Phaser.Scene, onRestart: () => void) {
     const text = (x: number, y: number, value: string, size: number, color = '#e8f1ed', condensed = false) => scene.add.text(x, y, value, {
       fontFamily: condensed ? 'Barlow Condensed, sans-serif' : 'DM Sans, sans-serif',
-      fontSize: `${size}px`, color, fontStyle: condensed ? 'bold' : 'normal', letterSpacing: condensed ? 1.8 : 0.4,
+      fontSize: `${size}px`, color, fontStyle: condensed ? 'bold' : 'normal', letterSpacing: condensed ? 0.8 : 0.2,
+      shadow: { offsetX: 0, offsetY: 1, color: '#030807', blur: 3, fill: true },
     }).setScrollFactor(0).setDepth(20002);
     const panel = scene.add.graphics().setScrollFactor(0).setDepth(19990);
-    const box = (x: number, y: number, w: number, h: number) => {
-      panel.fillStyle(0x071b24, 0.88).fillRoundedRect(x, y, w, h, 8);
-      panel.lineStyle(1, 0x668e91, 0.4).strokeRoundedRect(x, y, w, h, 8);
-      panel.fillStyle(0x82c9cb, 0.65).fillRect(x + 12, y, 34, 2);
-    };
-    box(24, 16, 340, 79);
-    box(24, 103, 340, 45);
-    box(380, 16, 500, 79);
-    box(896, 16, 360, 79);
-    this.controlsPanel = scene.add.graphics().setScrollFactor(0).setDepth(19990);
-    this.controlsPanel.fillStyle(0x071b24, 0.86).fillRoundedRect(24, VIEW_HEIGHT - 68, 1232, 48, 8);
-    this.controlsPanel.lineStyle(1, 0x668e91, 0.32).strokeRoundedRect(24, VIEW_HEIGHT - 68, 1232, 48, 8);
-    this.controlsPanel.fillStyle(0x82c9cb, 0.65).fillRect(39, VIEW_HEIGHT - 68, 46, 2);
-
-    text(45, 24, 'ECHOES OF DANTE', 26, '#ecf5ee', true);
-    this.areaSubtitle = text(47, 61, 'FLORESTA DE DANTE   /   EXPLORAÇÃO', 12, '#83a8a8');
-    this.progressText = text(44, 112, 'NV 1   XP 0 / 60   ECOS 0 / 3', 17, '#d8e9dc', true);
-    this.progressHint = text(44, 133, '', 11, '#a6c5af');
-    this.signalPanel = scene.add.graphics().setScrollFactor(0).setDepth(19990);
-    this.signalPanel.fillStyle(0x071b24, 0.88).fillRoundedRect(24, 156, 340, 90, 8);
-    this.signalPanel.lineStyle(1, 0xa98cff, 0.55).strokeRoundedRect(24, 156, 340, 90, 8);
-    this.signalPanel.fillStyle(0xa98cff, 0.7).fillRect(36, 156, 34, 2);
-    this.signalObjective = text(44, 165, 'INVESTIGUE OS 3 ECOS', 17, '#b9adff', true);
-    this.explorationHint = text(44, 191, 'Procure vestígios que emitem luz.', 13, '#c4d6ce');
-    this.actionHint = text(44, 218, 'Aproxime-se para investigar.', 12, '#8eb8b5');
-    text(401, 25, 'GUERREIRO GALÁCTICO', 19, '#eaf3ec', true);
-    text(402, 58, 'VIDA', 12, '#8eb8b5', true);
-    scene.add.rectangle(474, 57, 264, 13, 0x17343c).setOrigin(0).setScrollFactor(0).setDepth(20000);
-    this.hpFill = scene.add.rectangle(476, 59, 260, 9, 0x9fd9c1).setOrigin(0).setScrollFactor(0).setDepth(20001);
-    this.hpText = text(752, 49, '100 / 100 PV', 18, '#e5f3e8', true);
-    text(917, 25, 'ESQUIVA DO VAZIO', 19, '#eaf3ec', true);
-    text(918, 58, 'RECARGA', 12, '#8eb8b5', true);
-    scene.add.rectangle(990, 57, 135, 13, 0x17343c).setOrigin(0).setScrollFactor(0).setDepth(20000);
-    this.dashFill = scene.add.rectangle(992, 59, 131, 9, 0x8fd9df).setOrigin(0).setScrollFactor(0).setDepth(20001);
-    this.dashText = text(1144, 48, 'PRONTO', 19, '#a4e5e6', true);
-    this.chargeText = text(918, 77, '[Q]  CARGA CINÉTICA PRONTA', 12, '#a4e5e6');
-
-    const key = (x: number, w: number, name: string, action: string) => {
-      this.controlsPanel.fillStyle(0x24434c, 0.8).fillRoundedRect(x, VIEW_HEIGHT - 58, w, 28, 5);
-      this.controlsPanel.lineStyle(1, 0x7bafb1, 0.45).strokeRoundedRect(x, VIEW_HEIGHT - 58, w, 28, 5);
-      this.controlHints.push(text(x + 10, VIEW_HEIGHT - 57, name, 16, '#d6f0e8', true));
-      this.controlHints.push(text(x + w + 11, VIEW_HEIGHT - 53, action, 13, '#9bb5b1'));
-    };
-    key(43, 88, 'W A S D', 'MOVER');
-    key(254, 82, 'MOUSE', 'MIRAR');
-    key(449, 88, 'CLIQUE', 'SABRE (BOT. ESQ.)');
-    key(748, 95, 'ESPAÇO', 'ESQUIVA DO VAZIO');
-    this.controlHints.push(text(1020, VIEW_HEIGHT - 57, 'Q: SEGURE E SOLTE\nE: INVESTIGAR', 12, '#9bb5b1'));
-    this.discoveryPrompt = text(VIEW_WIDTH / 2, VIEW_HEIGHT - 115, '[ E ]  INVESTIGAR', 20, '#c4e5d9', true)
-      .setOrigin(0.5).setBackgroundColor('#0b2730').setPadding(16, 9).setVisible(false);
-    this.discoveryMessage = text(VIEW_WIDTH / 2, VIEW_HEIGHT - 184, 'SINAL DETECTADO\nFONTE: DESCONHECIDA', 22, '#c4e5d9', true)
-      .setOrigin(0.5, 0).setAlign('center').setBackgroundColor('#0b2730').setPadding(22, 12).setVisible(false);
-    this.levelMessage = text(VIEW_WIDTH / 2, 115, 'NOVO NÍVEL', 25, '#e4f6dc', true)
-      .setOrigin(0.5, 0).setAlign('center').setBackgroundColor('#0b2730').setPadding(20, 8).setVisible(false);
-    this.experienceText = text(VIEW_WIDTH / 2, 210, '', 18, '#d8e9dc', true)
-      .setOrigin(0.5, 0).setBackgroundColor('#0b2730').setPadding(12, 6).setVisible(false);
+    // Two small neutral scrims; no frames or full-width instruction strip.
+    panel.fillStyle(0x080e0c, 0.38).fillRoundedRect(16, 14, 220, 90, 4);
+    panel.fillStyle(0x080e0c, 0.32).fillRoundedRect(1040, 14, 224, 72, 4);
+    text(28, 22, 'VIDA', 12, '#b8c1ae', true);
+    this.hpText = text(224, 20, '100 / 100', 16, '#e5eddb', true).setOrigin(1, 0);
+    scene.add.rectangle(28, 46, 196, 6, 0x26372b).setOrigin(0).setScrollFactor(0).setDepth(20000);
+    this.hpFill = scene.add.rectangle(28, 46, 196, 6, 0xa4c68b).setOrigin(0).setScrollFactor(0).setDepth(20001);
+    this.progressText = text(28, 58, '', 14, '#d8e2cc', true);
+    this.progressHint = text(28, 78, '', 11, '#aab6a0');
+    scene.add.rectangle(28, 103, 196, 2, 0x26372b).setOrigin(0).setScrollFactor(0).setDepth(20000);
+    this.xpFill = scene.add.rectangle(28, 103, 0, 2, 0xffbd54).setOrigin(0).setScrollFactor(0).setDepth(20001);
+    this.areaSubtitle = text(VIEW_WIDTH / 2, 19, 'Floresta de Dante', 14, '#b7c3ad').setOrigin(0.5, 0);
+    this.signalObjective = text(24, 118, 'INVESTIGUE OS 3 ECOS', 14, '#c3b4e1', true);
+    this.explorationHint = text(24, 140, 'Procure vestígios que emitem luz.', 12, '#bac5b1');
+    this.actionHint = text(24, 140, '', 12, '#d3dcbf').setVisible(false);
+    for (const hint of [this.signalObjective, this.explorationHint, this.actionHint]) hint.setWordWrapWidth(252);
+    this.dashText = text(1052, 22, '', 14, '#b6c6b2', true);
+    scene.add.rectangle(1052, 45, 196, 2, 0x26372b).setOrigin(0).setScrollFactor(0).setDepth(20000);
+    this.dashFill = scene.add.rectangle(1052, 45, 196, 2, 0x9caf99).setOrigin(0).setScrollFactor(0).setDepth(20001);
+    this.chargeText = text(1052, 57, '', 14, '#b6c6b2', true);
+    this.controlHints.push(text(VIEW_WIDTH / 2, VIEW_HEIGHT - 22, '', 12, '#c5cdb9').setOrigin(0.5, 1));
+    this.showControlHelp();
+    this.discoveryPrompt = text(VIEW_WIDTH / 2, VIEW_HEIGHT - 73, '[ E ]  INVESTIGAR', 17, '#ddd4f2', true)
+      .setOrigin(0.5).setVisible(false);
+    this.discoveryMessage = text(VIEW_WIDTH / 2, VIEW_HEIGHT - 154, '', 18, '#d3d9c5', true)
+      .setOrigin(0.5, 0).setAlign('center').setWordWrapWidth(560).setVisible(false);
+    this.levelMessage = text(VIEW_WIDTH / 2, 136, '', 19, '#e4ebc9', true)
+      .setOrigin(0.5, 0).setVisible(false);
+    this.experienceText = text(VIEW_WIDTH / 2, 178, '', 17, '#ffdb9b', true)
+      .setOrigin(0.5, 0).setVisible(false);
 
     const veil = scene.add.rectangle(0, 0, VIEW_WIDTH, VIEW_HEIGHT, 0x05141b, 0.79).setOrigin(0).setScrollFactor(0).setDepth(30000).setVisible(false);
     const frame = scene.add.graphics().setScrollFactor(0).setDepth(30001).setVisible(false);
-    frame.fillStyle(0x0b2730, 0.97).fillRoundedRect(347, 199, 586, 334, 11);
-    frame.lineStyle(2, 0x689b9c, 0.65).strokeRoundedRect(347, 199, 586, 334, 11);
+    frame.fillStyle(0x111c16, 0.97).fillRoundedRect(347, 199, 586, 334, 6);
+    frame.lineStyle(1, 0x7d8c72, 0.3).strokeRoundedRect(347, 199, 586, 334, 6);
     frame.fillStyle(0xda938b).fillRect(374, 199, 65, 3);
     const overline = text(640, 232, 'SINAL PERDIDO   /   DANTE 01', 17, '#d99a91', true).setOrigin(0.5).setDepth(30002).setVisible(false);
     const title = text(640, 289, 'GUERREIRO CAÍDO', 58, '#eff3e9', true).setOrigin(0.5).setDepth(30002).setVisible(false);
@@ -114,27 +89,50 @@ export class Hud {
   }
 
   update(hp: number, maxHp: number, dashProgress: number, chargeProgress: number, chargePhase: KineticPhase, chargeLevel: number): void {
-    this.hpFill.width = 260 * hp / maxHp;
-    this.hpFill.setFillStyle(hp < maxHp * 0.3 ? 0xdb8c81 : 0x9fd9c1);
-    this.hpText.setText(`${hp} / ${maxHp} PV`);
-    this.dashFill.width = 131 * dashProgress;
-    this.dashText.setText(dashProgress >= 1 ? 'PRONTO' : `${Math.ceil((1 - dashProgress) * 1.7 * 10) / 10}s`);
-    this.dashText.setColor(dashProgress >= 1 ? '#a4e5e6' : '#7b9c9c');
+    this.refreshTypography();
+    this.hpFill.width = 196 * hp / maxHp;
+    this.hpFill.setFillStyle(hp < maxHp * 0.3 ? 0xff6a4a : 0xa4c68b);
+    this.hpText.setText(`${hp} / ${maxHp}`);
+    this.dashFill.width = 196 * dashProgress;
+    const dashKey = this.inputMethod === 'gamepad' ? '[RB]' : this.inputMethod === 'touch' ? '' : '[ESPAÇO]';
+    this.dashText.setText(`${dashKey} ESQUIVA · ${dashProgress >= 1 ? 'PRONTA' : `${((1 - dashProgress) * 1.7).toFixed(1)}s`}`.trim());
+    this.dashText.setColor(dashProgress >= 1 ? '#b6c6b2' : '#8a9989');
     const chargeKey = this.inputMethod === 'gamepad' ? '[LT]' : this.inputMethod === 'touch' ? '' : '[Q]';
-    this.chargeText.setText(chargePhase === 'CHARGING' ? `${chargeKey}  CARREGANDO ${Math.round(chargeLevel * 100)}%` : chargePhase === 'RELEASE' ? `${chargeKey}  ONDA CINÉTICA` : chargeProgress >= 1 ? `${chargeKey}  SEGURE E SOLTE PARA A ONDA` : `${chargeKey}  CARGA ${((1 - chargeProgress) * KINETIC_CHARGE.cooldown / 1000).toFixed(1)}s`);
-    this.chargeText.setColor(chargePhase !== 'READY' || chargeProgress >= 1 ? '#a4e5e6' : '#7b9c9c');
+    const chargeStatus = chargePhase === 'CHARGING' ? `${Math.round(chargeLevel * 100)}%` : chargePhase === 'RELEASE' ? 'ONDA' : chargeProgress >= 1 ? 'PRONTA' : `${((1 - chargeProgress) * KINETIC_CHARGE.cooldown / 1000).toFixed(1)}s`;
+    this.chargeText.setText(`${chargeKey} CARGA · ${chargeStatus}`.trim());
+    this.chargeText.setColor(chargePhase === 'CHARGING' ? '#5fe6d8' : chargeProgress >= 1 ? '#b6c6b2' : '#8a9989');
+  }
+
+  private refreshTypography(): void {
+    // FIT scales the logical canvas down. Keep essential text readable on phones.
+    const compact = this.scene.scale.displaySize.height < 500;
+    if (this.compactViewport === compact) return;
+    this.compactViewport = compact;
+    const sizes: [Phaser.GameObjects.Text, number, number][] = [
+      [this.hpText, 16, 20], [this.progressText, 14, 18], [this.progressHint, 11, 16],
+      [this.signalObjective, 14, 18], [this.explorationHint, 12, 16], [this.actionHint, 12, 16],
+      [this.dashText, 14, 18], [this.chargeText, 14, 18], [this.areaSubtitle, 14, 18],
+      [this.levelMessage, 19, 22], [this.experienceText, 17, 20], [this.discoveryPrompt, 17, 20],
+    ];
+    sizes.forEach(([label, desktop, mobile]) => label.setFontSize(compact ? mobile : desktop));
+    this.progressText.setY(compact ? 54 : 58);
+    const hintY = this.signalObjective.y + this.signalObjective.height + 5;
+    this.explorationHint.setY(hintY); this.actionHint.setY(hintY);
+  }
+
+  private showControlHelp(): void {
+    this.controlsTimer?.remove(false);
+    const hint = this.controlHints[0];
+    hint.setText(this.inputMethod === 'gamepad' ? 'LS mover · RS mirar · RT sabre · RB esquiva · Segure LT: carga · A investigar · Voltar: registros'
+      : 'WASD mover · Mouse mirar · Clique sabre · Espaço esquiva · Segure Q: carga · E investigar · B registros');
+    hint.setVisible(this.inputMethod !== 'touch');
+    this.controlsTimer = this.scene.time.delayedCall(10000, () => hint.setVisible(false));
   }
 
   setInputMethod(method: InputMethod): void {
     if (this.inputMethod === method) return;
     this.inputMethod = method;
-    this.controlsPanel.setVisible(method !== 'touch');
-    this.controlHints.forEach(hint => hint.setVisible(method !== 'touch'));
-    if (method !== 'touch') {
-      const keys = method === 'gamepad' ? ['LS', 'RS', 'RT', 'RB'] : ['W A S D', 'MOUSE', 'CLIQUE', 'ESPAÇO'];
-      [0, 2, 4, 6].forEach((index, i) => this.controlHints[index].setText(keys[i]));
-      this.controlHints[8].setText(method === 'gamepad' ? 'LT: SEGURE E SOLTE\nA: INVESTIGAR' : 'Q: SEGURE E SOLTE\nE: INVESTIGAR');
-    }
+    this.showControlHelp();
     this.discoveryPrompt.setText(method === 'gamepad' ? '[ A ]  INVESTIGAR' : '[ E ]  INVESTIGAR');
     this.discoveryPrompt.setVisible(this.promptVisible && method !== 'touch');
     this.deathButtonText.setText(method === 'gamepad' ? 'RENASCER   [ START ]' : method === 'touch' ? 'RENASCER' : 'RENASCER   [ R ]');
@@ -145,33 +143,36 @@ export class Hud {
   }
 
   setProgress(level: number, xp: number, nextLevelXp: number | null, echoes: number): void {
-    this.progressText.setText(`NV ${level}   XP ${nextLevelXp === null ? `${xp} / MÁX` : `${xp} / ${nextLevelXp}`}   ECOS ${echoes} / ${ECHO_COUNT}`);
-    this.progressHint.setText(nextLevelXp === null ? 'Nível máximo desta etapa · Continue explorando'
-      : `Faltam ${Math.max(0, nextLevelXp - xp)} XP · Próximo nível: +${PROGRESSION.maxHpPerLevel} PV`);
+    this.progressText.setText(`NV ${level}   ·   ECOS ${echoes}/${ECHO_COUNT}`);
+    this.progressHint.setText(nextLevelXp === null ? `XP ${xp} · Nível máximo` : `XP ${xp} / ${nextLevelXp}`);
+    const previous = PROGRESSION.levelThresholds[level - 1] ?? 0;
+    this.xpFill.width = 196 * (nextLevelXp === null ? 1 : Phaser.Math.Clamp((xp - previous) / (nextLevelXp - previous), 0, 1));
   }
 
-  showExperience(amount: number, source: string): void {
-    if (this.experienceText.visible) {
-      this.experienceAmount += amount;
-      if (this.experienceSource !== source) this.experienceSource = 'EXPEDIÇÃO';
-    } else { this.experienceAmount = amount; this.experienceSource = source; }
+  showExperience(amount: number, _source?: string): void {
+    this.experienceAmount = this.experienceText.visible ? this.experienceAmount + amount : amount;
     this.experienceTimer?.remove(false);
-    this.experienceText.setText(`+${this.experienceAmount} XP · ${this.experienceSource}`).setVisible(true);
-    this.experienceTimer = this.scene.time.delayedCall(1800, () => this.experienceText.setVisible(false));
+    this.experienceText.setText(`+${this.experienceAmount} XP`).setVisible(true);
+    this.experienceTimer = this.scene.time.delayedCall(1200, () => this.experienceText.setVisible(false));
   }
 
   setSignalObjective(synchronized: boolean, sourceLocated: boolean, passageOpen = false, inCavern = false, depthSeen = false, deepAreaSeen = false): void {
-    this.signalPanel.setVisible(true);
     this.signalObjective.setVisible(true);
-    this.areaSubtitle.setText(inCavern ? 'CAVERNA   /   PRIMEIRA DESCIDA' : 'FLORESTA DE DANTE   /   EXPLORAÇÃO');
+    this.areaSubtitle.setText(inCavern ? 'Caverna de Dante' : 'Floresta de Dante');
     if (synchronized) this.signalObjective.setText(inCavern ? deepAreaSeen ? 'SIGA O SINAL  /  ABAIXO' : depthSeen ? 'O SINAL CONTINUA  /  ABAIXO' : 'EXPLORE A CAVERNA' : passageOpen ? 'ENTRE NA CAVERNA' : sourceLocated ? 'INVESTIGUE O MECANISMO' : 'SIGA O SINAL  /  NORTE');
   }
 
-  setExplorationGuide(title: string, direction: string, action: string): void {
+  setExplorationGuide(title: string, direction: string, action: string, nearby = false): void {
     // Text textures only change when the target, direction or input method changes.
     if (this.signalObjective.text !== title) this.signalObjective.setText(title);
     if (this.explorationHint.text !== direction) this.explorationHint.setText(direction);
     if (this.actionHint.text !== action) this.actionHint.setText(action);
+    const hintY = this.signalObjective.y + this.signalObjective.height + 5;
+    this.explorationHint.setY(hintY);
+    this.actionHint.setY(hintY);
+    // Keep one supporting line. Nearby instructions replace the distant heading.
+    this.explorationHint.setVisible(!nearby);
+    this.actionHint.setVisible(nearby);
   }
 
   showDiscovery(message: string): void {
@@ -182,25 +183,25 @@ export class Hud {
   }
 
   setCavernDepth(deep: boolean): void {
-    this.areaSubtitle.setText(deep ? 'CAVERNA PROFUNDA   /   SINAL PRESENTE' : 'CAVERNA   /   PRIMEIRA DESCIDA');
+    this.areaSubtitle.setText(deep ? 'Caverna profunda' : 'Caverna de Dante');
   }
 
   setWardenArea(): void {
-    this.areaSubtitle.setText('DOMÍNIO DO GUARDIÃO   /   SINAL ATIVO');
+    this.areaSubtitle.setText('Domínio do Guardião');
   }
 
   setValleyArea(): void {
-    this.areaSubtitle.setText('VALE DA RESSONÂNCIA   /   OUTRA MARGEM');
+    this.areaSubtitle.setText('Vale da Ressonância');
   }
 
   setContinuationArea(exterior: boolean, fragmentSeen: boolean, firstEchoSeen = false): void {
-    this.areaSubtitle.setText(exterior ? firstEchoSeen ? 'EXTERIOR   /   PRIMEIRO ECO REGISTRADO' : 'EXTERIOR DA CAVERNA   /   AR LIVRE' : 'PROFUNDEZAS   /   VESTÍGIOS ANTIGOS');
+    this.areaSubtitle.setText(exterior ? firstEchoSeen ? 'Exterior · Primeiro Eco' : 'Exterior da caverna' : 'Profundezas');
     this.signalObjective.setText(exterior ? fragmentSeen ? 'SIGA A RESPOSTA' : 'INVESTIGUE O FRAGMENTO' : 'SIGA O SINAL');
   }
 
-  showLevelUp(level: number, maxHp: number, gainedHp: number): void {
+  showLevelUp(level: number, _maxHp: number, gainedHp: number): void {
     this.levelTimer?.remove(false);
-    this.levelMessage.setText(`NOVO NÍVEL ${level} · +${gainedHp} PV MÁX.\n${maxHp} PV · VIDA RESTAURADA`).setVisible(true);
+    this.levelMessage.setText(`NÍVEL ${level} · +${gainedHp} PV`).setVisible(true);
     this.levelTimer = this.scene.time.delayedCall(2000, () => this.levelMessage.setVisible(false));
   }
 
@@ -209,6 +210,7 @@ export class Hud {
     this.discoveryMessage.setVisible(false);
     this.levelMessage.setVisible(false);
     this.experienceText.setVisible(false);
+    this.controlHints.forEach(hint => hint.setVisible(false));
     this.deathGroup.forEach(item => item.setVisible(true));
   }
 }

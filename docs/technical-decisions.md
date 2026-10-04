@@ -271,3 +271,8 @@
 - Vale passa a oito habitats fixos: entrada solo, duas duplas opcionais e um trio na margem final. IDs 906/907 reutilizam Casco/Espinhante; a dupla sul e o trio ficam afastados da aproximação inicial ao checkpoint/POI. Renovação continua em 90 s e distância de 480, sem ondas, pathfinding ou porta por abates.
 - Cada desvio concede 20 XP uma vez. `rewardedRoutes` é aditivo ao snapshot/schema v1 e ausente em saves antigos vira vazio; visitas anteriores permanecem e podem receber o bônus na primeira revisita. XP e bônus recebidos são salvos juntos, sem reset, nova chave de armazenamento ou migração destrutiva.
 - Bestiário observado/estudado é derivado de seen/defeats existentes. Primeira derrota revela informação tática, sem bônus de atributos/XP. Registros mostram próximos benefícios e habitats conhecidos; depois de explorar, o guia permite expedição livre. Feedback usa textos reutilizados e timers canceláveis. Cenário permanece baked; nenhum asset novo foi criado.
+
+## Densidade de HUD, 0.1.46
+
+- [HUD compacto](hud-clarity/) substitui molduras azuis por dois pequenos apoios neutros, recursos nos cantos e um título/linha de orientação. Ganhos de XP mostram só número, sem origem ou caixa; mensagens narrativas mantêm conteúdo/duração. Ajuda temporária continua disponível nos Registros. Warden conserva avisos/vida/fase no alto.
+- UI touch conserva alvos/gestos/captura e reduz decoração; fontes essenciais se ajustam à altura real do canvas FIT. Tipografia muda somente ao trocar a categoria de viewport. Não há assets, novos controles, alterações de combate, save, IA, mundo ou colisões.

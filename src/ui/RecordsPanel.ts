@@ -39,6 +39,7 @@ export class RecordsPanel {
     this.dialog.setAttribute('aria-labelledby', 'records-title');
     this.dialog.innerHTML = `<header><div><small>ARQUIVO DE EXPEDIÇÃO</small><h1 id="records-title">Registros de Dante</h1></div><button data-close aria-label="Fechar registros">VOLTAR</button></header>
       <div class="records-content"><p class="records-summary"></p><p class="records-status" role="status"></p><p class="records-progression"></p>
+      <details class="records-controls"><summary>Controles</summary><p>PC: WASD move, mouse mira, clique esquerdo ataca, Espaço esquiva, Q segura e solta a carga, E investiga e B abre os registros.</p><p>Gamepad: LS move, RS mira, RT ataca, RB esquiva, LT segura e solta a carga, A investiga e Voltar abre os registros.</p><p>Touch: arraste à esquerda para mover. Toque em GOLPE ou arraste e solte para direcionar. Segure CARGA, arraste e solte. ESQUIVA segue a direção de movimento; INVESTIGAR aparece perto de uma interação.</p></details>
       <h2>Bestiário</h2><p class="records-research"></p><p>A primeira derrota libera uma observação tática. Os registros ajudam a escolher como enfrentar cada espécie, sem bônus de dano.</p><div class="records-species"></div>
       <h2>Expedições no Vale</h2><ul class="records-routes"></ul><p>A passagem começa com um Casco Errante; os desvios abrigam duplas. A margem leste reúne um Casco e dois Espinhantes. Todos podem ser contornados. Os moradores retornam após 90 segundos, quando você está longe do habitat. Cada derrota concede ${PROGRESSION.hollowXp} XP.</p>
       <footer><p>Salvo apenas neste navegador e dispositivo. Limpar os dados do site apaga o progresso.</p><button data-reset>NOVO PERCURSO</button>
@@ -150,9 +151,9 @@ export class RecordsPanel {
     const pad = this.readPad(), buttons = pad?.buttons.map(b => b.pressed || b.value > 0.5) ?? [];
     const edge = (index: number) => buttons[index] && !this.padButtons[index];
     if (edge(8) || edge(1)) this.close();
-    else if (edge(0)) (this.dialog.contains(document.activeElement) ? document.activeElement as HTMLButtonElement : null)?.click();
+    else if (edge(0)) (this.dialog.contains(document.activeElement) ? document.activeElement as HTMLElement : null)?.click();
     else if (edge(12) || edge(13)) {
-      const focusable = Array.from(this.dialog.querySelectorAll<HTMLButtonElement>('button')).filter(b => !b.closest('[hidden]'));
+      const focusable = Array.from(this.dialog.querySelectorAll<HTMLElement>('button, summary')).filter(b => !b.closest('[hidden]'));
       const current = focusable.indexOf(document.activeElement as HTMLButtonElement);
       focusable[(current + (edge(12) ? -1 : 1) + focusable.length) % focusable.length]?.focus();
     }
