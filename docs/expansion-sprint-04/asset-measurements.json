@@ -1,0 +1,40 @@
+[
+  {
+    "file": "public/assets/visual/characters/dante-dune-pouncer-motion.png",
+    "dimensions": [
+      1024,
+      512
+    ],
+    "frameSize": [
+      256,
+      256
+    ],
+    "frames": 8,
+    "bytes": 523563,
+    "sha256": "0cc6e598206aa0cd32edb609a8b2ad972f58b11ebf71b0463d73d2525bf07f60"
+  },
+  {
+    "file": "public/assets/visual/characters/dante-glass-spitter-motion.png",
+    "dimensions": [
+      1024,
+      512
+    ],
+    "frameSize": [
+      256,
+      256
+    ],
+    "frames": 8,
+    "bytes": 528791,
+    "sha256": "1071db1da41c070ef31c0ff3c8a5b730d3543b14acbb08f59be07cad6aad2dc1"
+  },
+  {
+    "file": "public/assets/visual/environment/sirocco-ground.webp",
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "format": "WebP",
+    "bytes": 286340,
+    "sha256": "95a028aae3990bdb9abfd69a1d2831d96e3ea66fe48eafe3b5cbb70468a200a2"
+  }
+]

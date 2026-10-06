@@ -11,10 +11,12 @@ export const EXPANSION = {
   approach: { x: 5210, y: 740, radius: 95 },
 } as const;
 
-export type CreatureKind = 'skitter' | 'spitter';
+export type CreatureKind = 'skitter' | 'spitter' | 'dunePouncer' | 'glassSpitter';
 export const CREATURES = {
   skitter: { hp: 42, speed: 175, radius: 14, detection: 280, range: 60, damage: 9, cooldown: 1150, windup: 320, lungeSpeed: 310, lungeMs: 140 },
   spitter: { hp: 85, speed: 65, radius: 22, detection: 390, range: 300, damage: 10, cooldown: 2300, windup: 700, retreatRange: 150, shotSpeed: 240, shotRange: 520, shotRadius: 7 },
+  dunePouncer: { hp: 56, speed: 158, radius: 16, detection: 310, range: 58, damage: 10, cooldown: 1450, windup: 410, lungeSpeed: 290, lungeMs: 175 },
+  glassSpitter: { hp: 92, speed: 58, radius: 21, detection: 370, range: 285, damage: 11, cooldown: 2550, windup: 780, retreatRange: 150, shotSpeed: 225, shotRange: 500, shotRadius: 8 },
 } as const;
 
 // Fixed run IDs start after Forest (0–7), first Cavern (8–9), Deep Cavern (10–11).

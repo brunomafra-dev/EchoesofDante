@@ -233,7 +233,12 @@ export class TouchControls {
     if (!visible) this.cancelAll();
     this.root.classList.toggle('is-visible', visible);
   }
-  setInteractAvailable(available: boolean): void {
+  setInteractAvailable(available: boolean, label = 'INVESTIGAR'): void {
+    const text = this.interactButton.querySelector('b')!;
+    const next = label.toLocaleUpperCase('pt-BR');
+    if (text.textContent !== next) text.textContent = next;
+    const ariaLabel = next === 'ENTRAR' ? 'Entrar pelo portal' : 'Investigar';
+    if (this.interactButton.getAttribute('aria-label') !== ariaLabel) this.interactButton.setAttribute('aria-label', ariaLabel);
     if (this.interactAvailable === available) return;
     this.interactAvailable = available;
     this.interactButton.classList.toggle('is-available', available);

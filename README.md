@@ -10,6 +10,10 @@ O [Visual Prototype 02](docs/visual-prototype-02/) registrou o experimento que t
 
 O [Visual Rendering Prototype 01](docs/visual-rendering-prototype-01/) compara Graphics, raster, ilustração e composição híbrida em uma única rocha. Abra `/rendering-lab.html` na mesma build web para ver o laboratório isolado. O usuário aprovou **D — Hybrid** como referência: assets ilustrados, materialidade, sombra de contato e integração ambiental. A aplicação ao mundo será incremental, preservando Organic Sci-Fi R3 e gameplay.
 
+## Expansão 04 — Bacia do Siroco · 0.1.53
+
+Depois de concluir a Escarpa da Ressonância, o jogador recebe **MISSÃO CONCLUÍDA** e atravessa um portal para uma área árida independente. A Bacia do Siroco tem terreno, habitantes e relé ancestral próprios; dois novos arquétipos usam a IA, o combate, o bestiário e o XP existentes. A expedição pode ser interrompida e retomada pelo portal, com progresso salvo no navegador. [Visão geral, arte e QA](docs/expansion-sprint-04/).
+
 ## Stack
 
 A [referência jogável de qualidade](docs/quality-reference/) isola a primeira câmara da Cavern em `/quality-reference.html`: ambiente pintado contínuo, apresentação articulada do Hollow e impactos curtos. Os botões **Warrior novo / Warrior anterior** comparam o [Guerreiro pintado 0.1.48](docs/warrior-quality-reference/) no mesmo cenário; **Câmara original** conserva a comparação ambiental. O Guerreiro novo também está aplicado ao jogo principal, conforme autorização do usuário. O laboratório não altera o progresso local.

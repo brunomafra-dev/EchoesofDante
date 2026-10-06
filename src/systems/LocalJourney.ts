@@ -8,8 +8,8 @@ export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSee
   'deepEndSeen', 'deeperEntered', 'exteriorEntered', 'fragmentSeen', 'approachSeen', 'firstEchoSeen',
   'wardenReached', 'wardenGateOpen', 'wardenDefeated', 'wardenEndingSeen', 'valleyVisited',
   'valleyLandmarkSeen', 'valleyEndSeen', 'valleyCheckpointReached', 'valleyFrontierReached',
-  'valleyFrontierSignalSeen', 'valleyFrontierEndSeen'] as const;
-export type JourneyArea = 'forest' | 'cavern' | 'warden' | 'valley';
+  'valleyFrontierSignalSeen', 'valleyFrontierEndSeen', 'aridVisited', 'aridSignalSeen'] as const;
+export type JourneyArea = 'forest' | 'cavern' | 'warden' | 'valley' | 'arid';
 export type JourneyFlags = Record<typeof JOURNEY_FLAGS[number], boolean>;
 export type JourneySnapshot = {
   schema: 1; updatedAt: number; area: JourneyArea; hp: number;
@@ -47,8 +47,11 @@ export class LocalJourney {
       flags.wardenEndingSeen &&= flags.wardenDefeated;
       if (flags.firstEchoSeen) { flags.fragmentSeen = true; flags.exteriorEntered = true; }
       if (!flags.wardenDefeated) for (const key of ['valleyVisited', 'valleyLandmarkSeen', 'valleyEndSeen', 'valleyCheckpointReached',
-        'valleyFrontierReached', 'valleyFrontierSignalSeen', 'valleyFrontierEndSeen'] as const) flags[key] = false;
-      const area: JourneyArea = raw.area === 'valley' && flags.wardenDefeated ? 'valley'
+        'valleyFrontierReached', 'valleyFrontierSignalSeen', 'valleyFrontierEndSeen', 'aridVisited', 'aridSignalSeen'] as const) flags[key] = false;
+      flags.aridVisited &&= flags.valleyFrontierEndSeen;
+      flags.aridSignalSeen &&= flags.aridVisited;
+      const area: JourneyArea = raw.area === 'arid' && flags.wardenDefeated && flags.valleyFrontierEndSeen && flags.aridVisited ? 'arid'
+        : raw.area === 'valley' && flags.wardenDefeated ? 'valley'
         : raw.area === 'warden' && flags.wardenGateOpen ? 'warden'
         : raw.area !== 'forest' && passageOpen ? 'cavern' : 'forest';
       const routes = Array.isArray(raw.valleyRoutes) ? raw.valleyRoutes.filter((id): id is string => typeof id === 'string' && VALLEY_ROUTES.some(r => r.id === id)) : [];
@@ -59,7 +62,7 @@ export class LocalJourney {
       this.status = 'Progresso recuperado deste navegador.';
       return { schema: 1, updatedAt: integer(raw.updatedAt, 8_640_000_000_000_000) ? raw.updatedAt : 0, area, hp: raw.hp,
         progression: { xp: p.xp, echoes, sourceLocated: echoes.length === ECHO_COUNT && p.sourceLocated === true,
-          passageOpen, rewardedHollows: p.rewardedHollows.filter((id): id is number => integer(id, 899)).slice(0, 900),
+          passageOpen, rewardedHollows: p.rewardedHollows.filter((id): id is number => integer(id, 1999)).slice(0, 2000),
           rewardedRoutes: Array.isArray(p.rewardedRoutes) ? p.rewardedRoutes.filter((id): id is string =>
             typeof id === 'string' && VALLEY_ROUTES.some(route => route.id === id)) : [] },
         flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats };

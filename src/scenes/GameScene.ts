@@ -18,6 +18,7 @@ import { Warden, type WardenCue, type WardenAttack } from '../entities/Warden';
 import { WardenArena } from '../systems/WardenArena';
 import { WardenHud } from '../ui/WardenHud';
 import { VALLEY, VALLEY_ENCOUNTERS, VALLEY_RENEWAL, VALLEY_ROUTES } from '../config/valley';
+import { SIROCCO, SIROCCO_ENCOUNTERS } from '../config/sirocco';
 import type { SpeciesId } from '../config/bestiary';
 import { Bestiary } from '../systems/Bestiary';
 import { LocalJourney, JOURNEY_FLAGS, type JourneyFlags } from '../systems/LocalJourney';
@@ -25,6 +26,8 @@ import { RecordsPanel } from '../ui/RecordsPanel';
 import { ValleyCreature } from '../entities/ValleyCreature';
 import { ResonanceValley } from '../systems/ResonanceValley';
 import { SignalPortal } from '../systems/SignalPortal';
+import { ChapterPortal } from '../systems/ChapterPortal';
+import { SiroccoBasin } from '../systems/SiroccoBasin';
 import { Controls } from '../input/Controls';
 import { Arena } from '../systems/Arena';
 import { preloadEnvironment, resetEnvironmentOcclusion, updateEnvironmentOcclusion } from '../visual/EnvironmentArt';
@@ -47,10 +50,12 @@ import { preloadWarriorArt } from '../visual/WarriorArt';
 export class GameScene extends Phaser.Scene {
   private player!: Player;
   private controls!: Controls;
-  private arena!: Arena | CavernArea | WardenArena | ResonanceValley | ReferenceArea;
+  private arena!: Arena | CavernArea | WardenArena | ResonanceValley | SiroccoBasin | ReferenceArea;
   private referenceImpacts?: ReferenceImpacts;
   private valley?: ResonanceValley;
   private signalPortal?: SignalPortal;
+  private chapterPortal?: ChapterPortal;
+  private sirocco?: SiroccoBasin;
   private valleyVisited = false;
   private valleyLandmarkSeen = false;
   private valleyEndSeen = false;
@@ -58,8 +63,11 @@ export class GameScene extends Phaser.Scene {
   private valleyFrontierReached = false;
   private valleyFrontierSignalSeen = false;
   private valleyFrontierEndSeen = false;
+  private aridVisited = false;
+  private aridSignalSeen = false;
   private returnFromValley = false;
   private returnToValleyPortal = false;
+  private returnToFrontierPortal = false;
   private cavern?: CavernArea;
   private wardenArena?: WardenArena;
   private warden?: Warden;
@@ -72,7 +80,7 @@ export class GameScene extends Phaser.Scene {
   private readonly playerObstacles: Obstacle[] = [];
   private readonly bossFootprint: Obstacle = { x: 0, y: 0, radius: 65 };
   private movementBounds?: MovementBounds;
-  private area: 'forest' | 'cavern' | 'warden' | 'valley' = 'forest';
+  private area: 'forest' | 'cavern' | 'warden' | 'valley' | 'arid' = 'forest';
   private transferHp?: number;
   private transitioning = false;
   private cavernDepthSeen = false;
@@ -138,13 +146,16 @@ export class GameScene extends Phaser.Scene {
       const file = key === 'warrior-support-arm' ? 'warrior-saber-arm' : key;
       if (!this.textures.exists(key)) this.load.image(key, `${assetBase}${file}.png`);
     }
-    for (const key of ['dante-skitter-motion', 'dante-spitter-motion', 'dante-carapace-motion', 'dante-thorn-motion']) {
+    for (const key of ['dante-skitter-motion', 'dante-spitter-motion', 'dante-carapace-motion', 'dante-thorn-motion',
+      'dante-dune-pouncer-motion', 'dante-glass-spitter-motion']) {
       if (!this.textures.exists(key)) this.load.spritesheet(key, `${assetBase}${key}.png`, { frameWidth: 256, frameHeight: 256 });
     }
     if (!this.textures.exists('warden-motion')) this.load.spritesheet('warden-motion', `${assetBase}warden-motion.png`, { frameWidth: 512, frameHeight: 512 });
     preloadEnvironment(this);
     if (!this.textures.exists('cavern-entry-floor')) this.load.image('cavern-entry-floor',
       `${import.meta.env.BASE_URL}assets/visual/environment/cavern-entry-floor.webp`);
+    if (!this.textures.exists('sirocco-ground')) this.load.image('sirocco-ground',
+      `${import.meta.env.BASE_URL}assets/visual/environment/sirocco-ground.webp`);
     if (this.qualityReference !== 'baseline' && !this.originalWarrior) preloadWarriorArt(this);
     if (this.qualityReference === 'reference' && !this.textures.exists('reference-basin-floor')) {
       this.load.image('reference-basin-floor', `${import.meta.env.BASE_URL}assets/experiments/quality-reference/basin-floor.webp`);
@@ -172,7 +183,9 @@ export class GameScene extends Phaser.Scene {
     this.deepOpening = false;
     this.cavern = undefined;
     this.valley = undefined;
+    this.sirocco = undefined;
     this.signalPortal = undefined;
+    this.chapterPortal = undefined;
     this.wardenArena = undefined;
     this.warden = undefined;
     this.wardenHud = undefined;
@@ -207,6 +220,10 @@ export class GameScene extends Phaser.Scene {
       this.valley = new ResonanceValley(this, this.valleyLandmarkSeen);
       this.arena = this.valley;
       this.movementBounds = this.valley.bounds;
+    } else if (this.area === 'arid') {
+      this.sirocco = new SiroccoBasin(this, this.aridSignalSeen);
+      this.arena = this.sirocco;
+      this.movementBounds = this.sirocco.bounds;
     } else if (this.qualityReference === 'reference') {
       this.arena = new ReferenceArea(this);
       this.movementBounds = this.arena.bounds;
@@ -216,7 +233,8 @@ export class GameScene extends Phaser.Scene {
       this.movementBounds = this.arena.bounds;
     }
     const entry = this.area === 'forest' ? FOREST_ENTRY : this.area === 'valley'
-      ? this.returnToValleyPortal ? VALLEY.entry : this.valleyFrontierReached ? VALLEY.frontier.checkpoint : this.valleyCheckpointReached ? VALLEY.checkpoint : VALLEY.entry
+      ? this.returnToValleyPortal ? VALLEY.entry : this.returnToFrontierPortal ? VALLEY.frontier.checkpoint : this.valleyFrontierReached ? VALLEY.frontier.checkpoint : this.valleyCheckpointReached ? VALLEY.checkpoint : VALLEY.entry
+      : this.area === 'arid' ? SIROCCO.entry
       : this.area === 'warden' ? this.returnFromValley ? { x: 1420, y: 830 } : { x: 650, y: 760 }
       : this.returnToThreshold ? { x: 6060, y: 740 } : this.firstEchoSeen ? W.respawn
       : this.exteriorEntered ? EXPANSION.exteriorRespawn : this.deeperEntered ? EXPANSION.deeperRespawn
@@ -224,6 +242,7 @@ export class GameScene extends Phaser.Scene {
     this.returnToThreshold = false;
     this.returnFromValley = false;
     this.returnToValleyPortal = false;
+    this.returnToFrontierPortal = false;
     this.player = new Player(this, entry.x, entry.y, this.progression.maxHp, this.qualityReference === 'reference',
       this.qualityReference !== 'baseline' && !this.originalWarrior);
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
@@ -232,7 +251,7 @@ export class GameScene extends Phaser.Scene {
     this.controls = new Controls(this, () => this.sounds.unlock(), () => {
       if (!this.player.isDead && !this.records?.isOpen) this.beginStrike(this.time.now);
     });
-    this.sounds.setArea(this.area === 'warden' ? 'warden' : this.area === 'valley' || this.exteriorEntered ? 'forest' : this.area);
+    this.sounds.setArea(this.area === 'warden' ? 'warden' : this.area === 'valley' || this.area === 'arid' || this.exteriorEntered ? 'forest' : this.area);
     this.sounds.setMusicFocus(1);
     const spawns = this.area === 'forest' ? FOREST_SPAWNS : CAVERN_HOLLOWS;
     if (this.area === 'forest' || this.area === 'cavern') spawns.forEach((point, index) => {
@@ -245,6 +264,12 @@ export class GameScene extends Phaser.Scene {
     if (this.area === 'valley') for (const habitat of VALLEY_ENCOUNTERS) {
       this.spawnValleyResident(habitat);
     }
+    if (this.area === 'arid') SIROCCO_ENCOUNTERS.forEach(habitat => {
+      const enemy = new DanteCreature(this, habitat.kind, habitat.x, habitat.y);
+      this.enemies.push(enemy);
+      this.enemySpecies.set(enemy, habitat.kind);
+      this.hollowSpawnIds.set(enemy, habitat.id);
+    });
     this.hud = new Hud(this, () => this.restart());
     if (this.qualityReference === 'reference') this.referenceImpacts = new ReferenceImpacts(this);
     this.explorationGuide = new ExplorationGuide(this);
@@ -262,20 +287,27 @@ export class GameScene extends Phaser.Scene {
     }
     if (this.area === 'valley') {
       this.signalPortal = new SignalPortal(this, VALLEY.portal, true);
+      this.chapterPortal = new ChapterPortal(this, VALLEY.frontier.portal, this.valleyFrontierEndSeen);
       if (!this.valleyVisited) this.hud.showDiscovery('VALE DA RESSONÂNCIA\nOUTRA MARGEM DE DANTE');
       this.valleyVisited = true;
+    }
+    if (this.area === 'arid') {
+      this.chapterPortal = new ChapterPortal(this, SIROCCO.returnPortal, true);
+      if (!this.aridVisited) this.hud.showDiscovery('NOVA REGIÃO\nBACIA DO SIROCO');
+      this.aridVisited = true;
     }
     this.updateProgressHud();
     this.hud.setSignalObjective(this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen, this.area === 'cavern', this.cavernDepthSeen, this.deepAreaSeen);
     if (this.area === 'warden') this.hud.setWardenArea();
     if (this.area === 'valley') this.hud.setValleyArea(this.valleyFrontierReached);
+    if (this.area === 'arid') this.hud.setAridArea(this.aridSignalSeen);
     this.inDeepCavern = this.area === 'cavern' && this.deepCavernEntered;
     if (this.area === 'cavern') this.hud.setCavernDepth(this.inDeepCavern);
     this.continuationRegion = this.exteriorEntered ? 'exterior' : this.deeperEntered ? 'deeper' : 'deep';
     if (this.area === 'cavern' && this.continuationRegion !== 'deep') this.hud.setContinuationArea(this.continuationRegion === 'exterior', this.fragmentSeen, this.firstEchoSeen);
-    this.cameras.main.setBounds(0, 0, this.area === 'valley' ? VALLEY.cameraWidth : this.area === 'cavern' ? W.cameraWidth : WORLD_WIDTH, WORLD_HEIGHT)
+    this.cameras.main.setBounds(0, 0, this.area === 'valley' ? VALLEY.cameraWidth : this.area === 'arid' ? SIROCCO.cameraWidth : this.area === 'cavern' ? W.cameraWidth : WORLD_WIDTH, WORLD_HEIGHT)
       .startFollow(this.player.view, false, 0.1, 0.1);
-    this.cameras.main.setBackgroundColor(this.area === 'forest' || this.area === 'valley' ? '#102d2c' : '#07151c');
+    this.cameras.main.setBackgroundColor(this.area === 'arid' ? '#5c3327' : this.area === 'forest' || this.area === 'valley' ? '#102d2c' : '#07151c');
     if (this.area !== 'forest') {
       this.cameras.main.centerOn(entry.x, entry.y);
       this.cameras.main.fadeIn(260, 5, 15, 20);
@@ -284,7 +316,7 @@ export class GameScene extends Phaser.Scene {
     this.records = new RecordsPanel(this, () => ({
       level: this.progression.level, xp: this.progression.xp, echoes: this.progression.echoes.size,
       nextLevelXp: this.progression.nextLevelXp, maxHp: this.progression.maxHp,
-      area: this.area === 'valley' ? 'Vale da Ressonância' : this.area === 'warden' ? 'Domínio do Guardião' : this.area === 'cavern' ? 'Cavernas de Dante' : 'Floresta de Dante',
+      area: this.area === 'arid' ? 'Bacia do Siroco' : this.area === 'valley' ? 'Vale da Ressonância' : this.area === 'warden' ? 'Domínio do Guardião' : this.area === 'cavern' ? 'Cavernas de Dante' : 'Floresta de Dante',
       bestiary: this.bestiary.snapshot(), routes: this.valleyRoutes, valleyVisited: this.valleyVisited,
       saveStatus: this.qualityReference ? 'Referência isolada. O progresso do jogo permanece intacto.' : this.journey.status,
       rewardedRoutes: this.progression.rewardedRoutes,
@@ -318,6 +350,9 @@ export class GameScene extends Phaser.Scene {
       window.removeEventListener('pagehide', flush);
       document.removeEventListener('visibilitychange', hidden);
     });
+    // Persist chapter access immediately. A mobile browser may suspend or evict
+    // the page without sending a reliable later interaction or shutdown event.
+    if (this.area === 'arid') this.saveProgress();
   }
 
   update(time: number, delta: number): void {
@@ -337,8 +372,10 @@ export class GameScene extends Phaser.Scene {
     const nearWardenGate = this.cavern?.wardenApproach.canOpen(this.player.position, this.player.isDead) ?? false;
     const nearWardenExit = this.area === 'warden' && this.wardenDefeated && !this.player.isDead && distance(this.player.position, { x: 540, y: 760 }) < 115;
     const nearPortal = this.signalPortal?.canTraverse(this.player.position, this.player.isDead) ?? false;
+    const nearChapterPortal = this.chapterPortal?.canEnter(this.player.position, this.player.isDead) ?? false;
     const nearValleyLandmark = this.valley?.canInvestigate(this.player.position, this.player.isDead, this.valleyLandmarkSeen) ?? false;
     const nearValleyFrontierSignal = this.valley?.canInvestigateFrontier(this.player.position, this.player.isDead, this.valleyFrontierSignalSeen) ?? false;
+    const nearSiroccoSignal = this.sirocco?.canInvestigate(this.player.position, this.player.isDead, this.aridSignalSeen) ?? false;
     if (nearDiscovery && interact) {
       const wasSynchronized = this.progression.signalSynchronized;
       nearbyEcho.activate();
@@ -399,6 +436,22 @@ export class GameScene extends Phaser.Scene {
     } else if (interact && nearPortal) {
       this.transitionArea(this.area === 'valley' ? 'warden' : 'valley');
       return;
+    } else if (interact && nearChapterPortal) {
+      if (this.area === 'valley' && this.valleyFrontierEndSeen) {
+        this.transitionArea('arid');
+        return;
+      }
+      if (this.area === 'arid') {
+        this.transitionArea('valley');
+        return;
+      }
+    } else if (interact && nearSiroccoSignal) {
+      this.aridSignalSeen = true;
+      this.sirocco?.respond();
+      this.hud.setAridArea(true);
+      this.saveProgress();
+      this.hud.showDiscovery('EXPEDIÇÃO CONCLUÍDA\nBACIA DO SIROCO CARTOGRAFADA');
+      this.sounds.signal();
     } else if (interact && nearValleyLandmark) {
       this.valleyLandmarkSeen = true;
       this.valley?.respond();
@@ -407,6 +460,7 @@ export class GameScene extends Phaser.Scene {
     } else if (interact && nearValleyFrontierSignal) {
       this.valleyFrontierSignalSeen = true;
       this.valley?.respondFrontier();
+      this.saveProgress();
       this.hud.showDiscovery('ECO RECENTE\nORIGEM: ALÉM DA ESCARPA');
       this.sounds.signal();
     } else if (interact && nearWardenExit) {
@@ -418,10 +472,11 @@ export class GameScene extends Phaser.Scene {
         ? 'MECANISMO INATIVO\nInvestigue a fissura ao lado primeiro.'
         : 'MECANISMO INATIVO\nEncontre e investigue os 3 Ecos.');
     }
-    const canInteract = nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearValleyLandmark || nearValleyFrontierSignal;
+    const canInteract = nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearChapterPortal || nearSiroccoSignal || nearValleyLandmark || nearValleyFrontierSignal;
+    const interactionAction = nearPortal || nearChapterPortal ? 'ENTRAR' : 'INVESTIGAR';
     if (interact) this.saveProgress();
-    this.hud.setDiscoveryPrompt(canInteract);
-    this.controls.setInteractAvailable(canInteract);
+    this.hud.setDiscoveryPrompt(canInteract, interactionAction);
+    this.controls.setInteractAvailable(canInteract, interactionAction);
     this.controls.setDead(this.player.isDead);
     this.updateExplorationGuide();
     if (this.player.isDead) {
@@ -496,6 +551,9 @@ export class GameScene extends Phaser.Scene {
       this.wardenHud?.update(this.warden);
       return;
     }
+    if (this.area === 'arid') {
+      return;
+    }
     if (this.area === 'valley') {
       this.renewValleyHabitats();
       if (this.player.position.x >= 1800 && !this.valleyCheckpointReached) { this.valleyCheckpointReached = true; this.saveProgress(); }
@@ -525,8 +583,9 @@ export class GameScene extends Phaser.Scene {
       if (!this.valleyFrontierEndSeen && this.valleyFrontierSignalSeen &&
         distance(this.player.position, VALLEY.frontier.end) < VALLEY.frontier.end.radius) {
         this.valleyFrontierEndSeen = true;
+        this.chapterPortal?.activate();
         this.sounds.signal();
-        this.hud.showDiscovery('O SINAL SEGUE ALÉM\nORIGEM: DESCONHECIDA');
+        this.hud.showDiscovery('MISSÃO CONCLUÍDA\nPORTAL ABERTO: BACIA DO SIROCO');
         this.saveProgress();
       }
       return;
@@ -645,11 +704,35 @@ export class GameScene extends Phaser.Scene {
         this.wardenDefeated ? 'Você pode voltar pela passagem a oeste.' : 'Use a esquiva para se reposicionar.');
       return;
     }
+    if (this.area === 'arid') {
+      if (this.chapterPortal?.canEnter(this.player.position, this.player.isDead)) {
+        this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
+          'PORTAL PARA A ESCARPA', { ...SIROCCO.returnPortal, radius: 116, name: 'Portal de retorno',
+            instruction: 'Volte à região anterior.', action: 'enter' }, this.hud);
+        return;
+      }
+      if (this.aridSignalSeen) {
+        this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
+          'REGIÃO MAPEADA', { ...SIROCCO.returnPortal, radius: 116, name: 'Portal de retorno',
+            instruction: 'A expedição foi registrada. Retorne pelo portal quando quiser.', action: 'enter' }, this.hud);
+      } else {
+        this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
+          'EXPLORE A BACIA', { ...SIROCCO.signal, name: 'Relé no mar de areia',
+            instruction: 'Siga as formações âmbar e investigue o sinal.', action: 'investigate' }, this.hud);
+      }
+      return;
+    }
     if (this.area === 'valley') {
       if (this.signalPortal?.canTraverse(this.player.position, this.player.isDead)) {
         this.explorationGuide.update(this.player.position, false, this.controls.inputMethod,
           'VOLTAR PELO PORTAL', { ...VALLEY.portal, radius: 105, name: 'Portal de retorno',
             instruction: 'Retorne ao domínio do guardião.', action: 'investigate' }, this.hud);
+        return;
+      }
+      if (this.chapterPortal?.canEnter(this.player.position, this.player.isDead)) {
+        this.explorationGuide.update(this.player.position, false, this.controls.inputMethod,
+          'MISSÃO CONCLUÍDA', { ...VALLEY.frontier.portal, radius: 116, name: 'Portal para a Bacia do Siroco',
+            instruction: 'Atravesse para iniciar a próxima expedição.', action: 'enter' }, this.hud);
         return;
       }
       if (this.valleyFrontierReached) {
@@ -660,8 +743,9 @@ export class GameScene extends Phaser.Scene {
           this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
             'SIGA A RESSONÂNCIA', { ...VALLEY.frontier.end, name: 'Fenda na escarpa', instruction: 'O sinal aponta para além das rochas.', action: 'walk' }, this.hud);
         } else {
-          this.explorationGuide.hide();
-          this.hud.setExplorationGuide('O CAMINHO SEGUE ADIANTE', 'A escarpa ainda esconde o destino do sinal.', 'O portal a oeste permite retornar.');
+          this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
+            'MISSÃO CONCLUÍDA', { ...VALLEY.frontier.portal, radius: 116, name: 'Portal para a Bacia do Siroco',
+              instruction: 'Siga até o portal recém-aberto.', action: 'enter' }, this.hud);
         }
         return;
       }
@@ -762,13 +846,14 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
-  private transitionArea(area: 'cavern' | 'warden' | 'valley'): void {
+  private transitionArea(area: 'cavern' | 'warden' | 'valley' | 'arid'): void {
     if (this.transitioning) return;
     this.transitioning = true;
     this.transferHp = this.player.hp;
     this.returnToThreshold = area === 'cavern';
     this.returnFromValley = this.area === 'valley' && area === 'warden';
     this.returnToValleyPortal = this.area === 'warden' && area === 'valley';
+    this.returnToFrontierPortal = this.area === 'arid' && area === 'valley';
     this.cameras.main.fadeOut(220, 5, 15, 20);
     this.time.delayedCall(240, () => { this.area = area; this.saveProgress(); this.scene.restart(); });
   }

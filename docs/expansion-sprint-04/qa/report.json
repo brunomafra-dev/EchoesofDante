@@ -1,0 +1,172 @@
+{
+  "method": "Chrome headless; DEV progression/position setup, real keyboard input and Gamepad API mock; no physical device",
+  "errors": [],
+  "missionComplete": {
+    "shown": true,
+    "portalOpened": true
+  },
+  "siroccoEntry": {
+    "area": "arid",
+    "position": {
+      "x": 470,
+      "y": 805
+    },
+    "hp": 120,
+    "maxHp": 120,
+    "xp": 345,
+    "level": 3,
+    "echoes": 3,
+    "missionComplete": true,
+    "portal": true,
+    "aridVisited": true,
+    "signalSeen": false,
+    "enemies": 6,
+    "kinds": [
+      "dunePouncer",
+      "glassSpitter"
+    ],
+    "objects": 94,
+    "renderTextures": 3,
+    "tweens": 2,
+    "text": "NOVA REGIÃO\nBACIA DO SIROCO",
+    "dead": false,
+    "rewarded": []
+  },
+  "siroccoLayouts": [
+    "1280x720",
+    "1366x768",
+    "1920x1080",
+    "844x390"
+  ],
+  "pouncerWindup": {
+    "upright": true,
+    "named": true
+  },
+  "pouncerTellAndLunge": {
+    "upright": true,
+    "state": "LUNGE"
+  },
+  "glassSpitterTellAndShot": true,
+  "gamepadMock": true,
+  "enemyRewardsAndLevel": {
+    "xp": 375,
+    "level": 4,
+    "maxHp": 130
+  },
+  "siroccoPerformance": {
+    "meanFps": 60.34587515291351,
+    "minFps": 60.26617759693181,
+    "objects": 79,
+    "tweens": 2,
+    "renderTextures": 3
+  },
+  "saveBeforeReload": {
+    "schema": 1,
+    "updatedAt": 1791311163849,
+    "area": "arid",
+    "hp": 130,
+    "progression": {
+      "xp": 375,
+      "echoes": [
+        "northern-ruin",
+        "mineral-signal",
+        "unknown-trace"
+      ],
+      "sourceLocated": true,
+      "passageOpen": true,
+      "rewardedHollows": [
+        1000,
+        1002
+      ],
+      "rewardedRoutes": []
+    },
+    "flags": {
+      "cavernDepthSeen": false,
+      "deepPassageOpen": true,
+      "deepAreaSeen": false,
+      "deepCavernEntered": false,
+      "deepEndSeen": false,
+      "deeperEntered": false,
+      "exteriorEntered": false,
+      "fragmentSeen": false,
+      "approachSeen": false,
+      "firstEchoSeen": true,
+      "wardenReached": false,
+      "wardenGateOpen": true,
+      "wardenDefeated": true,
+      "wardenEndingSeen": false,
+      "valleyVisited": true,
+      "valleyLandmarkSeen": false,
+      "valleyEndSeen": false,
+      "valleyCheckpointReached": true,
+      "valleyFrontierReached": true,
+      "valleyFrontierSignalSeen": true,
+      "valleyFrontierEndSeen": true,
+      "aridVisited": true,
+      "aridSignalSeen": true
+    },
+    "bestiary": {
+      "carapace": {
+        "seen": true,
+        "defeats": 0
+      },
+      "dunePouncer": {
+        "seen": true,
+        "defeats": 1
+      },
+      "glassSpitter": {
+        "seen": true,
+        "defeats": 1
+      }
+    },
+    "valleyRoutes": [],
+    "valleyHabitats": []
+  },
+  "reloadPersistence": {
+    "area": "arid",
+    "signal": true,
+    "xp": 375,
+    "level": 4,
+    "rewardedIds": [
+      1000,
+      1002
+    ]
+  },
+  "safeRespawn": {
+    "area": "arid",
+    "position": {
+      "x": 470,
+      "y": 805
+    },
+    "xp": 375,
+    "level": 4
+  },
+  "returnPortal": {
+    "area": "valley",
+    "position": {
+      "x": 2865,
+      "y": 640
+    },
+    "xp": 375,
+    "level": 4,
+    "echoes": 3
+  },
+  "layouts": [
+    "1280x720",
+    "1366x768",
+    "1920x1080",
+    "844x390"
+  ],
+  "performance": {
+    "meanFps": 57.379499493539335,
+    "minFps": 56.04924774169922,
+    "objects": 153,
+    "tweens": 4,
+    "renderTextures": 4
+  },
+  "touchPortal": {
+    "landscapeControlsVisible": true,
+    "contextualLabel": "ENTRAR",
+    "transitioned": true
+  }
+}

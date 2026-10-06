@@ -13,6 +13,7 @@ export const VALLEY = {
     checkpoint: { x: 2865, y: 640 },
     signal: { x: 4230, y: 710, radius: 145 },
     end: { x: 4920, y: 795, radius: 165 },
+    portal: { x: 5050, y: 795 },
   },
 } as const;
 

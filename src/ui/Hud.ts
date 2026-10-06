@@ -16,6 +16,7 @@ export class Hud {
   private inputMethod: InputMethod = 'keyboard';
   private deathButtonText: Phaser.GameObjects.Text;
   private promptVisible = false;
+  private interactionAction = 'INVESTIGAR';
   private deathGroup: Array<{ setVisible(value: boolean): unknown }> = [];
   private discoveryPrompt: Phaser.GameObjects.Text;
   private discoveryMessage: Phaser.GameObjects.Text;
@@ -133,13 +134,24 @@ export class Hud {
     if (this.inputMethod === method) return;
     this.inputMethod = method;
     this.showControlHelp();
-    this.discoveryPrompt.setText(method === 'gamepad' ? '[ A ]  INVESTIGAR' : '[ E ]  INVESTIGAR');
+    this.refreshInteractionPrompt();
     this.discoveryPrompt.setVisible(this.promptVisible && method !== 'touch');
     this.deathButtonText.setText(method === 'gamepad' ? 'RENASCER   [ START ]' : method === 'touch' ? 'RENASCER' : 'RENASCER   [ R ]');
   }
-  setDiscoveryPrompt(visible: boolean): void {
+  setDiscoveryPrompt(visible: boolean, action = 'INVESTIGAR'): void {
     this.promptVisible = visible;
+    const nextAction = action.toLocaleUpperCase('pt-BR');
+    if (this.interactionAction !== nextAction) {
+      this.interactionAction = nextAction;
+      this.refreshInteractionPrompt();
+    }
     this.discoveryPrompt.setVisible(visible && this.inputMethod !== 'touch');
+  }
+
+  private refreshInteractionPrompt(): void {
+    const key = this.inputMethod === 'gamepad' ? '[ A ]' : '[ E ]';
+    const text = `${key}  ${this.interactionAction}`;
+    if (this.discoveryPrompt.text !== text) this.discoveryPrompt.setText(text);
   }
 
   setProgress(level: number, xp: number, nextLevelXp: number | null, echoes: number): void {
@@ -192,6 +204,11 @@ export class Hud {
 
   setValleyArea(frontier = false): void {
     this.areaSubtitle.setText(frontier ? 'Escarpa da Ressonância' : 'Vale da Ressonância');
+  }
+
+  setAridArea(signalRecorded = false): void {
+    this.areaSubtitle.setText('Bacia do Siroco');
+    this.signalObjective.setText(signalRecorded ? 'SINAL MAPEADO' : 'EXPLORE A BACIA');
   }
 
   setContinuationArea(exterior: boolean, fragmentSeen: boolean, firstEchoSeen = false): void {

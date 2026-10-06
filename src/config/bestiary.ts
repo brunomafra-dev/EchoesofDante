@@ -11,6 +11,10 @@ export const SPECIES = {
     study: 'O leque não acompanha você após a preparação. Desloque-se de lado; as rochas interrompem os espinhos. Evite recuar pela linha central.' },
   warden: { name: 'O Warden', habitat: 'Domínio do Guardião', note: 'Observe as marcas no solo. A recuperação após cada ataque permite aproximar-se ou carregar a onda.',
     study: 'O guardião muda de padrão ao perder energia. Cada novo aviso ainda oferece reação; preserve a esquiva para sair da geometria marcada.' },
+  dunePouncer: { name: 'Rasga-areia', habitat: 'Bacia do Siroco', note: 'Prepara o corpo baixo antes de saltar em linha reta. Desvie para o lado e ataque durante a recuperação.',
+    study: 'A investida segue a direção anunciada. Evite recuar em linha reta; o flanco fica exposto quando ele aterrissa.' },
+  glassSpitter: { name: 'Cuspidor vítreo', habitat: 'Bacia do Siroco', note: 'Carrega uma espora mineral e dispara à distância. Mude de direção após o aviso âmbar.',
+    study: 'A criatura fixa a direção durante o preparo. Desloque-se lateralmente e use formações rochosas como cobertura.' },
 } as const;
 
 export type SpeciesId = keyof typeof SPECIES;
