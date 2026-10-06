@@ -6,6 +6,11 @@
 > comparam no mesmo piso; **Câmara original** preserva `?baseline=1`.
 > O restante deste documento registra o experimento original de 0.1.47.
 
+> Atualização 0.1.50: o piso ilustrado e a composição ambiental aprovados
+> nesta câmara foram levados à primeira sala jogável da Cavern. O asset de
+> base recebeu uma transição alfa estreita para se misturar ao solo contínuo
+> na descida profunda. Veja [Cavern Entry Environment](../cavern-entry-environment/).
+
 ## Abrir e comparar
 
 Na mesma URL em que o jogo roda, abra **`/quality-reference.html`**.

@@ -139,6 +139,8 @@ export class GameScene extends Phaser.Scene {
     }
     if (!this.textures.exists('warden-motion')) this.load.spritesheet('warden-motion', `${assetBase}warden-motion.png`, { frameWidth: 512, frameHeight: 512 });
     preloadEnvironment(this);
+    if (!this.textures.exists('cavern-entry-floor')) this.load.image('cavern-entry-floor',
+      `${import.meta.env.BASE_URL}assets/visual/environment/cavern-entry-floor.webp`);
     if (this.qualityReference !== 'baseline' && !this.originalWarrior) preloadWarriorArt(this);
     if (this.qualityReference === 'reference' && !this.textures.exists('reference-basin-floor')) {
       this.load.image('reference-basin-floor', `${import.meta.env.BASE_URL}assets/experiments/quality-reference/basin-floor.webp`);

@@ -290,6 +290,12 @@
 - `WarriorArt` seleciona direção/pose na Image existente, com quadros de caminhada por distância real, apoio dos pés registrado e corpo ereto. Mangas e rig contínuo das duas mãos no sabre são reutilizados com encaixe visual de ombros. Não altera input, posição lógica, hitbox, timings, dano, velocidade, colisões, câmera, IA, áudio, progressão ou save.
 - Três texturas novas somam ~739 KiB comprimidos e ~6 MiB RGBA; recorte/registro/compressão são offline. Sem objetos, timers, tweens ou geração de textura adicionais por quadro. `?warrior=original` permite comparação no mesmo cenário aprovado; `?baseline=1` mantém o controle anterior. O ambiente experimental não foi espalhado pelo mundo. Playtest humano continua necessário para avaliar transições e proporções.
 
+## Cavern entry environment from quality reference — 0.1.50
+
+- A aprovação visual da Câmara de Referência foi aplicada à primeira sala jogável da Cavern: backplate ilustrado contínuo, bordas minerais, rochas com contato, raízes e a estrutura antiga, com o centro mais aberto para leitura de gameplay. A entrada e o túnel mantêm sua conexão para as áreas profundas.
+- O backplate usa uma derivação alfa offline do piso existente. Uma faixa estreita nas bordas mistura a pintura com `cavern-soil`; não há tiling do backplate nem chão de retângulo aparente. Props continuam em bake estático e os poucos corpos elevados seguem como Images para foot sorting.
+- Nenhum footprint, limite, spawn, POI, passagem ou regra de combate foi alterado. A aplicação é limitada à primeira sala; Deep Cavern, exterior, Vale e Forest conservam o ambiente que já tinham. A avaliação final de autenticidade requer playtest visual.
+
 ## Braços direcionais e sabre pintado, 0.1.49
 
 - O teste humano encontrou que os braços de 0.1.48 mantinham postura e sobreposição frontal quando o corpo virava de costas. `WarriorArms` projeta ombros/pegada por vista, articula ambos os cotovelos e ordena membros/arma atrás do tronco nas costas; na lateral, braço distante fica atrás e próximo fica à frente. As duas mãos seguem os pivots contínuos existentes do sabre. [Comparação e QA](warrior-arm-pass/).
