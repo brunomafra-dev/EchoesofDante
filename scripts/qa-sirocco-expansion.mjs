@@ -21,7 +21,10 @@ const state = page => page.evaluate(() => {
     xp: scene.progression.xp, level: scene.progression.level, echoes: scene.progression.echoes.size,
     upgradeRanks: { ...scene.progression.abilityUpgradeRanks }, upgradePoints: scene.progression.upgradePointsAvailable,
     missionComplete: scene.valleyFrontierEndSeen, portal: scene.chapterPortal?.active,
-    aridVisited: scene.aridVisited, signalSeen: scene.aridSignalSeen, enemies: scene.enemies.filter(e => !e.isDead).length,
+    aridVisited: scene.aridVisited, signalSeen: scene.aridSignalSeen,
+    frontierEntered: scene.aridFrontierEntered, frontierReached: scene.aridFrontierReached,
+    exitPortalActive: scene.sirocco?.exitPortal.active, routeRewarded: scene.progression.rewardedRoutes.has('sirocco-needle-shelf'),
+    enemies: scene.enemies.filter(e => !e.isDead).length,
     kinds: [...new Set(scene.enemies.filter(e => !e.isDead).map(e => e.kind))],
     objects: scene.children.list.length, renderTextures: scene.children.list.filter(o => o.type === 'RenderTexture').length,
     tweens: scene.tweens.getTweens().length, text: scene.hud.discoveryMessage.text, dead: scene.player.isDead,
@@ -91,7 +94,7 @@ try {
   await page.waitForTimeout(750);
   current = await state(page);
   assert.equal(current.aridVisited, true);
-  assert.equal(current.enemies, 6);
+  assert.equal(current.enemies, 10);
   assert.ok(current.kinds.includes('dunePouncer') && current.kinds.includes('glassSpitter'));
   assert.ok(current.renderTextures >= 3);
   report.siroccoEntry = current;
@@ -190,8 +193,27 @@ try {
   await key('e');
   current = await state(page);
   assert.equal(current.signalSeen, true);
-  assert.match(current.text, /EXPEDIÇÃO CONCLUÍDA/i);
+  assert.match(current.text, /RELE MAPEADO/i);
   await page.screenshot({ path: `${out}/sirocco-relay.png` });
+  assert.equal(current.exitPortalActive, false, 'the exit remains closed until the player reaches the eastern frontier');
+
+  // Walk the extension, take its optional mineral detour, and reach the exit
+  // while leaving other residents alive. Combat is not a progression gate.
+  for (const [x, y] of [[2700, 850], [3100, 980], [3420, 980], [3300, 980], [3300, 575], [3750, 690]]) await walkTo(x, y);
+  current = await state(page);
+  assert.equal(current.frontierEntered, true);
+  assert.equal(current.routeRewarded, true);
+  assert.equal(current.xp, 395);
+  assert.ok(current.visibleCombatXp >= 1, 'the route reward uses the same floating world XP style');
+  report.optionalDetour = { reached: true, routeRewarded: current.routeRewarded, xp: current.xp };
+  await page.screenshot({ path: `${out}/sirocco-needle-shelf.png` });
+  for (const [x, y] of [[3900, 500], [4200, 500], [4450, 500], [4440, 980], [4700, 900], [4880, 805]]) await walkTo(x, y);
+  current = await state(page);
+  assert.equal(current.frontierReached, true);
+  assert.equal(current.exitPortalActive, true);
+  assert.ok(current.enemies > 0, 'the portal opens without clearing the remaining residents');
+  report.easternFrontier = { portalActive: current.exitPortalActive, remainingResidents: current.enemies, position: current.position };
+  await page.screenshot({ path: `${out}/sirocco-expedition-complete.png` });
   report.siroccoPerformance = await page.evaluate(async () => {
     const game = window.__danteGame, scene = game.scene.getScene('Game'), fps = [];
     for (let i = 0; i < 15; i++) { await new Promise(resolve => setTimeout(resolve, 200)); fps.push(game.loop.actualFps); }
@@ -206,7 +228,11 @@ try {
   current = await state(page);
   assert.equal(current.area, 'arid');
   assert.equal(current.signalSeen, true);
-  assert.equal(current.xp, 375);
+  assert.equal(current.frontierEntered, true);
+  assert.equal(current.frontierReached, true);
+  assert.equal(current.exitPortalActive, true);
+  assert.equal(current.routeRewarded, true);
+  assert.equal(current.xp, 395);
   assert.equal(current.level, 4);
   assert.equal(current.upgradeRanks.chargeWidth, 1);
   assert.equal(current.upgradePoints, 0);
@@ -220,7 +246,7 @@ try {
     if (!enemy) throw new Error('Expected Sirocco habitat 1001 to be active after reload');
     enemy.health.current = 1; scene.resolveSaberHits(scene.time.now, [enemy], 0);
   });
-  assert.equal((await state(page)).xp, 390);
+  assert.equal((await state(page)).xp, 410);
   await page.evaluate(() => {
     const scene = window.__danteGame.scene.getScene('Game');
     scene.siroccoHabitatCooldowns.set(1001, Date.now() - 1);
@@ -229,8 +255,8 @@ try {
     if (!enemy) throw new Error('Expired Sirocco habitat did not renew');
     enemy.health.current = 1; scene.resolveSaberHits(scene.time.now, [enemy], 0);
   });
-  assert.equal((await state(page)).xp, 405);
-  report.siroccoResidentRenewal = { xpAfterFirstKill: 390, xpAfterRenewedKill: 405, cooldownMs: 90_000 };
+  assert.equal((await state(page)).xp, 425);
+  report.siroccoResidentRenewal = { xpAfterFirstKill: 410, xpAfterRenewedKill: 425, cooldownMs: 90_000 };
 
   // The return gate is optional; death restarts at the safe Sirocco entry and retains progress.
   await page.evaluate(() => {
@@ -243,9 +269,9 @@ try {
     const scene = window.__danteGame.scene.getScene('Game'); return !scene.player.isDead && scene.area === 'arid';
   });
   current = await state(page);
-  assert.equal(current.xp, 405); assert.equal(current.level, 4); assert.equal(current.signalSeen, true);
+  assert.equal(current.xp, 425); assert.equal(current.level, 4); assert.equal(current.signalSeen, true);
   assert.equal(current.upgradeRanks.chargeWidth, 1); assert.equal(current.upgradePoints, 0);
-  assert.deepEqual(current.position, { x: 470, y: 805 });
+  assert.deepEqual(current.position, { x: 3090, y: 805 });
   report.safeRespawn = { area: current.area, position: current.position, xp: current.xp, level: current.level };
 
   // The portal returns to the frontier checkpoint without resetting progression.
@@ -255,10 +281,24 @@ try {
     return scene.area === 'valley' && scene.player.position.x > 2800;
   });
   current = await state(page);
-  assert.equal(current.xp, 405); assert.equal(current.level, 4); assert.equal(current.echoes, 3);
+  assert.equal(current.xp, 425); assert.equal(current.level, 4); assert.equal(current.echoes, 3);
   assert.equal(current.upgradeRanks.chargeWidth, 1);
   assert.deepEqual(current.position, { x: 2865, y: 640 });
   report.returnPortal = { area: current.area, position: current.position, xp: current.xp, level: current.level, echoes: current.echoes };
+
+  // The eastern expedition portal returns to the Valley's Sirocco hub entrance.
+  await position(5050, 795); await key('e');
+  await page.waitForFunction(() => window.__danteGame.scene.getScene('Game').area === 'arid');
+  await page.waitForTimeout(450);
+  assert.deepEqual((await state(page)).position, { x: 3090, y: 805 });
+  await position(4990, 805); await key('e');
+  await page.waitForFunction(() => {
+    const scene = window.__danteGame.scene.getScene('Game');
+    return scene.area === 'valley' && Math.abs(scene.player.position.x - 5050) < 1;
+  });
+  current = await state(page);
+  assert.deepEqual(current.position, { x: 5050, y: 795 });
+  report.eastExit = { area: current.area, hubPosition: current.position, xp: current.xp };
 
   // The same map remains legible at common desktop and mobile landscape viewports.
   report.layouts = [];
@@ -291,7 +331,8 @@ try {
     scene.area = 'arid'; scene.deepPassageOpen = true; scene.firstEchoSeen = true;
     scene.wardenGateOpen = true; scene.wardenDefeated = true; scene.valleyFrontierReached = true;
     scene.valleyFrontierSignalSeen = true; scene.valleyFrontierEndSeen = true;
-    scene.aridVisited = true; scene.scene.restart();
+    scene.aridVisited = true; scene.aridSignalSeen = true; scene.aridFrontierEntered = true;
+    scene.aridFrontierReached = true; scene.scene.restart();
   });
   await mobilePage.waitForFunction(() => window.__danteGame.scene.getScene('Game').area === 'arid');
   await mobilePage.waitForTimeout(550);
@@ -309,6 +350,28 @@ try {
   });
   report.touchPortal = { landscapeControlsVisible: await mobilePage.locator('.touch-controls.is-visible').count() === 1,
     contextualLabel: 'ENTRAR', transitioned: true };
+  await mobilePage.evaluate(() => {
+    const scene = window.__danteGame.scene.getScene('Game');
+    Object.assign(scene.player.position, { x: 5050, y: 795 }); scene.player.view.setPosition(5050, 795).setDepth(795);
+  });
+  await mobilePage.waitForFunction(() => document.querySelector('.touch-interact')?.classList.contains('is-available'));
+  const hubButton = await mobilePage.locator('.touch-interact').boundingBox();
+  await mobilePage.touchscreen.tap(hubButton.x + hubButton.width / 2, hubButton.y + hubButton.height / 2);
+  await mobilePage.waitForFunction(() => window.__danteGame.scene.getScene('Game').area === 'arid');
+  await mobilePage.waitForTimeout(500);
+  await mobilePage.evaluate(() => {
+    const scene = window.__danteGame.scene.getScene('Game');
+    Object.assign(scene.player.position, { x: 4990, y: 805 }); scene.player.view.setPosition(4990, 805).setDepth(805);
+  });
+  await mobilePage.waitForFunction(() => document.querySelector('.touch-interact')?.classList.contains('is-available'));
+  assert.equal(await mobilePage.locator('.touch-interact b').textContent(), 'ENTRAR');
+  const eastButton = await mobilePage.locator('.touch-interact').boundingBox();
+  await mobilePage.touchscreen.tap(eastButton.x + eastButton.width / 2, eastButton.y + eastButton.height / 2);
+  await mobilePage.waitForFunction(() => {
+    const scene = window.__danteGame.scene.getScene('Game');
+    return scene.area === 'valley' && scene.player.position.x > 4900;
+  });
+  report.touchEastExit = { contextualLabel: 'ENTRAR', returnedToSiroccoHub: true };
   await mobile.close();
 
   assert.deepEqual(errors, []);

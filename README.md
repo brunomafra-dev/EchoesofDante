@@ -26,6 +26,10 @@ Todo ganho de XP — derrotas, Ecos e descobertas de rota — agora aparece como
 
 O limite agora é **nível 10**. Os níveis 4, 6, 8 e 10 concedem uma escolha entre aperfeiçoar Sabre, Dash ou Carga Cinética; cada opção tem dois graus e modifica uma propriedade do kit existente. Saves anteriores são mantidos e recebem pontos compatíveis com o XP atual. [Regras, compatibilidade e QA](docs/progression-specializations/).
 
+## Expansão 05 — Margem Leste da Bacia do Siroco · 0.1.58
+
+A Bacia agora continua até uma margem oriental com piso ilustrado próprio, um desvio opcional na Prateleira das Agulhas e um portal que retorna ao Vale. Mapear o relé aponta o sinal para leste; a expedição só se conclui ao alcançar a saída. A rota opcional concede 20 XP uma vez pelo mesmo feedback flutuante usado nos demais ganhos. Habitantes podem ser contornados, e o novo checkpoint preserva a progressão local. [Arte, fluxo e QA](docs/expansion-sprint-05/).
+
 ## Stack
 
 A [referência jogável de qualidade](docs/quality-reference/) isola a primeira câmara da Cavern em `/quality-reference.html`: ambiente pintado contínuo, apresentação articulada do Hollow e impactos curtos. Os botões **Warrior novo / Warrior anterior** comparam o [Guerreiro pintado 0.1.48](docs/warrior-quality-reference/) no mesmo cenário; **Câmara original** conserva a comparação ambiental. O Guerreiro novo também está aplicado ao jogo principal, conforme autorização do usuário. O laboratório não altera o progresso local.

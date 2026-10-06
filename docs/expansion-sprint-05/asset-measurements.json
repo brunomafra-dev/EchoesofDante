@@ -1,0 +1,15 @@
+{
+  "source": "docs/expansion-sprint-05/source-art/sirocco-east-ground-source.png",
+  "runtime": "public/assets/visual/environment/sirocco-east-ground.webp",
+  "dimensions": [
+    1536,
+    1024
+  ],
+  "runtimeDisplaySize": [
+    2250,
+    1500
+  ],
+  "format": "WebP",
+  "bytes": 294452,
+  "sha256": "d548279bd046a09670a886126fc4ebbce74935442ac6515695e700f8ce521ed6"
+}

@@ -322,3 +322,10 @@
 - Bônus são aplicados aos parâmetros que o combate já consulta: arco/alcance do Sabre, recarga/duração do Dash, largura/força da onda. Não foram alterados controles, IA, dano base, hitboxes base ou sistemas de combate. Painel curto pausa durante a escolha e aceita teclado, gamepad padrão e touch.
 - `abilityUpgrades` é um campo opcional no snapshot v1 local. Saves antigos permanecem válidos; pontos disponíveis são derivados do XP/nível e escolhas registradas são sanitizadas. A sessão continua persistindo por reload, morte e portal no armazenamento já existente.
 - [Detalhes e QA](progression-specializations/). Typecheck/build e QA browser cobrem migração, escolhas e persistência; hardware físico requer playtest separado.
+
+## Expansão oriental da Bacia do Siroco, 0.1.58
+
+- A região árida cresce 2.250 unidades para leste no mesmo mapa. O relé passa a indicar continuidade; um marco opcional de rota concede 20 XP uma única vez, e a expedição só termina ao alcançar o portal leste. Habitantes permanecem evitáveis.
+- O jogador recebe checkpoint seguro ao chegar à margem. O portal novo retorna ao portal do Vale; o portal oeste mantém o retorno anterior. Flags e recompensa usam o save local versionado existente.
+- O piso ilustrado original é uma imagem WebP de 1536×1024 preparada offline e exibida em 2250×1500. A extensão é estática e baked em três bandas de depth, elevando a Bacia de três para seis RenderTextures. Não há geração de terreno por frame nem novos sistemas de combate.
+- [Arte, fluxo e relatório de Chrome](expansion-sprint-05/). O QA inclui teclado, touch emulado, mock de gamepad, persistência, respawn e os dois portais; desempenho medido em Chrome headless não substitui playtest em aparelho físico.

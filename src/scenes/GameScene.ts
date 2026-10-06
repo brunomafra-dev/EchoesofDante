@@ -17,7 +17,7 @@ import { Warden, type WardenCue, type WardenAttack } from '../entities/Warden';
 import { WardenArena } from '../systems/WardenArena';
 import { WardenHud } from '../ui/WardenHud';
 import { VALLEY, VALLEY_ENCOUNTERS, VALLEY_RENEWAL, VALLEY_ROUTES } from '../config/valley';
-import { SIROCCO, SIROCCO_ENCOUNTERS, SIROCCO_RENEWAL } from '../config/sirocco';
+import { SIROCCO, SIROCCO_ENCOUNTERS, SIROCCO_RENEWAL, SIROCCO_ROUTES } from '../config/sirocco';
 import type { SpeciesId } from '../config/bestiary';
 import { Bestiary } from '../systems/Bestiary';
 import { LocalJourney, JOURNEY_FLAGS, type JourneyFlags } from '../systems/LocalJourney';
@@ -65,9 +65,12 @@ export class GameScene extends Phaser.Scene {
   private valleyFrontierEndSeen = false;
   private aridVisited = false;
   private aridSignalSeen = false;
+  private aridFrontierEntered = false;
+  private aridFrontierReached = false;
   private returnFromValley = false;
   private returnToValleyPortal = false;
   private returnToFrontierPortal = false;
+  private returnToSiroccoHub = false;
   private cavern?: CavernArea;
   private wardenArena?: WardenArena;
   private warden?: Warden;
@@ -159,6 +162,8 @@ export class GameScene extends Phaser.Scene {
       `${import.meta.env.BASE_URL}assets/visual/environment/cavern-entry-floor.webp`);
     if (!this.textures.exists('sirocco-ground')) this.load.image('sirocco-ground',
       `${import.meta.env.BASE_URL}assets/visual/environment/sirocco-ground.webp`);
+    if (!this.textures.exists('sirocco-east-ground')) this.load.image('sirocco-east-ground',
+      `${import.meta.env.BASE_URL}assets/visual/environment/sirocco-east-ground.webp`);
     if (this.qualityReference !== 'baseline' && !this.originalWarrior) preloadWarriorArt(this);
     if (this.qualityReference === 'reference' && !this.textures.exists('reference-basin-floor')) {
       this.load.image('reference-basin-floor', `${import.meta.env.BASE_URL}assets/experiments/quality-reference/basin-floor.webp`);
@@ -225,7 +230,8 @@ export class GameScene extends Phaser.Scene {
       this.arena = this.valley;
       this.movementBounds = this.valley.bounds;
     } else if (this.area === 'arid') {
-      this.sirocco = new SiroccoBasin(this, this.aridSignalSeen);
+      this.sirocco = new SiroccoBasin(this, this.aridSignalSeen, this.aridFrontierReached,
+        this.progression.rewardedRoutes.has(SIROCCO_ROUTES[0].id));
       this.arena = this.sirocco;
       this.movementBounds = this.sirocco.bounds;
     } else if (this.qualityReference === 'reference') {
@@ -237,8 +243,8 @@ export class GameScene extends Phaser.Scene {
       this.movementBounds = this.arena.bounds;
     }
     const entry = this.area === 'forest' ? FOREST_ENTRY : this.area === 'valley'
-      ? this.returnToValleyPortal ? VALLEY.entry : this.returnToFrontierPortal ? VALLEY.frontier.checkpoint : this.valleyFrontierReached ? VALLEY.frontier.checkpoint : this.valleyCheckpointReached ? VALLEY.checkpoint : VALLEY.entry
-      : this.area === 'arid' ? SIROCCO.entry
+      ? this.returnToValleyPortal ? VALLEY.entry : this.returnToSiroccoHub ? VALLEY.frontier.portal : this.returnToFrontierPortal ? VALLEY.frontier.checkpoint : this.valleyFrontierReached ? VALLEY.frontier.checkpoint : this.valleyCheckpointReached ? VALLEY.checkpoint : VALLEY.entry
+      : this.area === 'arid' ? this.aridSignalSeen ? SIROCCO.frontierCheckpoint : this.aridVisited ? SIROCCO.checkpoint : SIROCCO.entry
       : this.area === 'warden' ? this.returnFromValley ? { x: 1420, y: 830 } : { x: 650, y: 760 }
       : this.returnToThreshold ? { x: 6060, y: 740 } : this.firstEchoSeen ? W.respawn
       : this.exteriorEntered ? EXPANSION.exteriorRespawn : this.deeperEntered ? EXPANSION.deeperRespawn
@@ -247,6 +253,7 @@ export class GameScene extends Phaser.Scene {
     this.returnFromValley = false;
     this.returnToValleyPortal = false;
     this.returnToFrontierPortal = false;
+    this.returnToSiroccoHub = false;
     this.player = new Player(this, entry.x, entry.y, this.progression.maxHp, this.qualityReference === 'reference',
       this.qualityReference !== 'baseline' && !this.originalWarrior, id => this.progression.upgradeRank(id));
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
@@ -299,7 +306,7 @@ export class GameScene extends Phaser.Scene {
     this.hud.setSignalObjective(this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen, this.area === 'cavern', this.cavernDepthSeen, this.deepAreaSeen);
     if (this.area === 'warden') this.hud.setWardenArea();
     if (this.area === 'valley') this.hud.setValleyArea(this.valleyFrontierReached);
-    if (this.area === 'arid') this.hud.setAridArea(this.aridSignalSeen);
+    if (this.area === 'arid') this.hud.setAridArea(this.aridSignalSeen, this.aridFrontierReached);
     this.inDeepCavern = this.area === 'cavern' && this.deepCavernEntered;
     if (this.area === 'cavern') this.hud.setCavernDepth(this.inDeepCavern);
     this.continuationRegion = this.exteriorEntered ? 'exterior' : this.deeperEntered ? 'deeper' : 'deep';
@@ -369,6 +376,7 @@ export class GameScene extends Phaser.Scene {
     const nearWardenExit = this.area === 'warden' && this.wardenDefeated && !this.player.isDead && distance(this.player.position, { x: 540, y: 760 }) < 115;
     const nearPortal = this.signalPortal?.canTraverse(this.player.position, this.player.isDead) ?? false;
     const nearChapterPortal = this.chapterPortal?.canEnter(this.player.position, this.player.isDead) ?? false;
+    const nearSiroccoExit = this.sirocco?.exitPortal.canEnter(this.player.position, this.player.isDead) ?? false;
     const nearValleyLandmark = this.valley?.canInvestigate(this.player.position, this.player.isDead, this.valleyLandmarkSeen) ?? false;
     const nearValleyFrontierSignal = this.valley?.canInvestigateFrontier(this.player.position, this.player.isDead, this.valleyFrontierSignalSeen) ?? false;
     const nearSiroccoSignal = this.sirocco?.canInvestigate(this.player.position, this.player.isDead, this.aridSignalSeen) ?? false;
@@ -432,6 +440,10 @@ export class GameScene extends Phaser.Scene {
     } else if (interact && nearPortal) {
       this.transitionArea(this.area === 'valley' ? 'warden' : 'valley');
       return;
+    } else if (interact && nearSiroccoExit) {
+      this.returnToSiroccoHub = true;
+      this.transitionArea('valley');
+      return;
     } else if (interact && nearChapterPortal) {
       if (this.area === 'valley' && this.valleyFrontierEndSeen) {
         this.transitionArea('arid');
@@ -444,9 +456,9 @@ export class GameScene extends Phaser.Scene {
     } else if (interact && nearSiroccoSignal) {
       this.aridSignalSeen = true;
       this.sirocco?.respond();
-      this.hud.setAridArea(true);
+      this.hud.setAridArea(true, this.aridFrontierReached);
       this.saveProgress();
-      this.hud.showDiscovery('EXPEDIÇÃO CONCLUÍDA\nBACIA DO SIROCO CARTOGRAFADA');
+      this.hud.showDiscovery('RELE MAPEADO\nO SINAL SEGUE A LESTE');
       this.sounds.signal();
     } else if (interact && nearValleyLandmark) {
       this.valleyLandmarkSeen = true;
@@ -468,8 +480,8 @@ export class GameScene extends Phaser.Scene {
         ? 'MECANISMO INATIVO\nInvestigue a fissura ao lado primeiro.'
         : 'MECANISMO INATIVO\nEncontre e investigue os 3 Ecos.');
     }
-    const canInteract = nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearChapterPortal || nearSiroccoSignal || nearValleyLandmark || nearValleyFrontierSignal;
-    const interactionAction = nearPortal || nearChapterPortal ? 'ENTRAR' : 'INVESTIGAR';
+    const canInteract = nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearChapterPortal || nearSiroccoExit || nearSiroccoSignal || nearValleyLandmark || nearValleyFrontierSignal;
+    const interactionAction = nearPortal || nearChapterPortal || nearSiroccoExit ? 'ENTRAR' : 'INVESTIGAR';
     if (interact) this.saveProgress();
     this.hud.setDiscoveryPrompt(canInteract, interactionAction);
     this.controls.setInteractAvailable(canInteract, interactionAction);
@@ -550,6 +562,32 @@ export class GameScene extends Phaser.Scene {
     }
     if (this.area === 'arid') {
       this.renewSiroccoHabitats();
+      for (const route of SIROCCO_ROUTES) if (!this.progression.rewardedRoutes.has(route.id) && distance(this.player.position, route) < route.radius) {
+        const reward = this.progression.discoverSiroccoRoute(route.id);
+        if (reward.awarded) {
+          this.updateProgressHud();
+          this.hud.showExperienceAt(route.x, route.y, PROGRESSION.valleyRouteXp);
+          this.hud.showDiscovery(`${route.name.toLocaleUpperCase('pt-BR')}\nVESTÍGIO MAPEADO`);
+          if (reward.leveledUp) this.levelUp();
+          this.records.markDiscovery();
+          this.saveProgress();
+        }
+      }
+      if (this.aridSignalSeen && !this.aridFrontierEntered && this.player.position.x >= SIROCCO.frontierEntryX) {
+        this.aridFrontierEntered = true;
+        this.hud.setAridArea(true, this.aridFrontierReached);
+        this.hud.showDiscovery('MARGEM LESTE\nO SINAL ATRAVESSA AS CRISTAS');
+        this.sounds.signal();
+        this.saveProgress();
+      }
+      if (this.aridSignalSeen && !this.aridFrontierReached && distance(this.player.position, SIROCCO.end) <= SIROCCO.end.radius) {
+        this.aridFrontierReached = true;
+        this.sirocco?.revealExit();
+        this.hud.setAridArea(true, true);
+        this.hud.showDiscovery('EXPEDIÇÃO CONCLUÍDA\nPORTAL DE RETORNO ATIVADO');
+        this.sounds.signal();
+        this.saveProgress();
+      }
       return;
     }
     if (this.area === 'valley') {
@@ -709,13 +747,29 @@ export class GameScene extends Phaser.Scene {
             instruction: 'Volte à região anterior.', action: 'enter' }, this.hud);
         return;
       }
-      if (this.aridSignalSeen) {
+      if (this.sirocco?.exitPortal.canEnter(this.player.position, this.player.isDead)) {
         this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
-          'REGIÃO MAPEADA', { ...SIROCCO.returnPortal, radius: 116, name: 'Portal de retorno',
-            instruction: 'A expedição foi registrada. Retorne pelo portal quando quiser.', action: 'enter' }, this.hud);
+          'EXPEDIÇÃO CONCLUÍDA', { ...SIROCCO.exitPortal, radius: 116, name: 'Portal para a Escarpa',
+            instruction: 'Atravesse para voltar à rota principal.', action: 'enter' }, this.hud);
+        return;
+      }
+      const optionalRoute = SIROCCO_ROUTES.find(route => !this.progression.rewardedRoutes.has(route.id));
+      if (this.aridSignalSeen && optionalRoute && distance(this.player.position, optionalRoute) < 520) {
+        this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
+          'DESVIO MINERAL', { ...optionalRoute, name: optionalRoute.name, instruction: optionalRoute.hint, action: 'walk' }, this.hud);
+        return;
+      }
+      if (this.aridFrontierReached) {
+        this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
+          'EXPEDIÇÃO CONCLUÍDA', { ...SIROCCO.exitPortal, radius: 116, name: 'Portal de retorno',
+            instruction: 'Atravesse o portal para voltar à Escarpa.', action: 'enter' }, this.hud);
+      } else if (this.aridSignalSeen) {
+        this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
+          'SIGA A MARGEM LESTE', { ...SIROCCO.end, name: 'Passagem entre as cristas',
+            instruction: 'O relé abriu a continuação da bacia. Atravesse as formações.', action: 'walk' }, this.hud);
       } else {
         this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
-          'EXPLORE A BACIA', { ...SIROCCO.signal, name: 'Relé no mar de areia',
+          'SIGA O SINAL', { ...SIROCCO.signal, name: 'Relé no mar de areia',
             instruction: 'Siga as formações âmbar e investigue o sinal.', action: 'investigate' }, this.hud);
       }
       return;

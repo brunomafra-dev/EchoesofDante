@@ -202,9 +202,9 @@ export class Hud {
     this.areaSubtitle.setText(frontier ? 'Escarpa da Ressonância' : 'Vale da Ressonância');
   }
 
-  setAridArea(signalRecorded = false): void {
-    this.areaSubtitle.setText('Bacia do Siroco');
-    this.signalObjective.setText(signalRecorded ? 'SINAL MAPEADO' : 'EXPLORE A BACIA');
+  setAridArea(signalRecorded = false, expeditionComplete = false): void {
+    this.areaSubtitle.setText(signalRecorded ? 'Bacia do Siroco · Margem Leste' : 'Bacia do Siroco');
+    this.signalObjective.setText(expeditionComplete ? 'EXPEDIÇÃO CONCLUÍDA' : signalRecorded ? 'EXPLORE A MARGEM LESTE' : 'EXPLORE A BACIA');
   }
 
   setContinuationArea(exterior: boolean, fragmentSeen: boolean, firstEchoSeen = false): void {

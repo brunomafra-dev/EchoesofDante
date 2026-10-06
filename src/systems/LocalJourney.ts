@@ -1,6 +1,6 @@
 import { ECHO_COUNT, FOREST_ECHOES } from '../config/discovery';
 import { VALLEY_ENCOUNTERS, VALLEY_ROUTES } from '../config/valley';
-import { SIROCCO_ENCOUNTERS } from '../config/sirocco';
+import { SIROCCO_ENCOUNTERS, SIROCCO_ROUTES } from '../config/sirocco';
 import type { BestiarySnapshot } from './Bestiary';
 import type { ProgressionSnapshot } from './Progression';
 import type { AbilityUpgradeRanks } from '../config/abilityUpgrades';
@@ -10,7 +10,8 @@ export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSee
   'deepEndSeen', 'deeperEntered', 'exteriorEntered', 'fragmentSeen', 'approachSeen', 'firstEchoSeen',
   'wardenReached', 'wardenGateOpen', 'wardenDefeated', 'wardenEndingSeen', 'valleyVisited',
   'valleyLandmarkSeen', 'valleyEndSeen', 'valleyCheckpointReached', 'valleyFrontierReached',
-  'valleyFrontierSignalSeen', 'valleyFrontierEndSeen', 'aridVisited', 'aridSignalSeen'] as const;
+  'valleyFrontierSignalSeen', 'valleyFrontierEndSeen', 'aridVisited', 'aridSignalSeen',
+  'aridFrontierEntered', 'aridFrontierReached'] as const;
 export type JourneyArea = 'forest' | 'cavern' | 'warden' | 'valley' | 'arid';
 export type JourneyFlags = Record<typeof JOURNEY_FLAGS[number], boolean>;
 export type JourneySnapshot = {
@@ -49,9 +50,12 @@ export class LocalJourney {
       flags.wardenEndingSeen &&= flags.wardenDefeated;
       if (flags.firstEchoSeen) { flags.fragmentSeen = true; flags.exteriorEntered = true; }
       if (!flags.wardenDefeated) for (const key of ['valleyVisited', 'valleyLandmarkSeen', 'valleyEndSeen', 'valleyCheckpointReached',
-        'valleyFrontierReached', 'valleyFrontierSignalSeen', 'valleyFrontierEndSeen', 'aridVisited', 'aridSignalSeen'] as const) flags[key] = false;
+        'valleyFrontierReached', 'valleyFrontierSignalSeen', 'valleyFrontierEndSeen', 'aridVisited', 'aridSignalSeen',
+        'aridFrontierEntered', 'aridFrontierReached'] as const) flags[key] = false;
       flags.aridVisited &&= flags.valleyFrontierEndSeen;
       flags.aridSignalSeen &&= flags.aridVisited;
+      flags.aridFrontierEntered &&= flags.aridSignalSeen;
+      flags.aridFrontierReached &&= flags.aridFrontierEntered;
       const area: JourneyArea = raw.area === 'arid' && flags.wardenDefeated && flags.valleyFrontierEndSeen && flags.aridVisited ? 'arid'
         : raw.area === 'valley' && flags.wardenDefeated ? 'valley'
         : raw.area === 'warden' && flags.wardenGateOpen ? 'warden'
@@ -70,7 +74,7 @@ export class LocalJourney {
         progression: { xp: p.xp, echoes, sourceLocated: echoes.length === ECHO_COUNT && p.sourceLocated === true,
           passageOpen, rewardedHollows: p.rewardedHollows.filter((id): id is number => integer(id, 1999)).slice(0, 2000),
           rewardedRoutes: Array.isArray(p.rewardedRoutes) ? p.rewardedRoutes.filter((id): id is string =>
-            typeof id === 'string' && VALLEY_ROUTES.some(route => route.id === id)) : [],
+            typeof id === 'string' && (VALLEY_ROUTES.some(route => route.id === id) || SIROCCO_ROUTES.some(route => route.id === id))) : [],
           abilityUpgrades: object(p.abilityUpgrades) as Partial<AbilityUpgradeRanks> | undefined },
         flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats };
     } catch {

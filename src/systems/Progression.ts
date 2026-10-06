@@ -1,6 +1,7 @@
 import { PROGRESSION } from '../config/progression';
 import { ECHO_COUNT } from '../config/discovery';
 import { VALLEY_ROUTES } from '../config/valley';
+import { SIROCCO_ROUTES } from '../config/sirocco';
 import { ABILITY_UPGRADE_MILESTONES, ABILITY_UPGRADES, type AbilityUpgradeId, type AbilityUpgradeRanks } from '../config/abilityUpgrades';
 
 export type ProgressionSnapshot = { xp: number; echoes: string[]; sourceLocated: boolean; passageOpen: boolean;
@@ -70,6 +71,12 @@ export class Progression {
 
   discoverValleyRoute(id: string): { awarded: boolean; leveledUp: boolean } {
     if (this.rewardedRoutes.has(id) || !VALLEY_ROUTES.some(route => route.id === id)) return { awarded: false, leveledUp: false };
+    this.rewardedRoutes.add(id);
+    return { awarded: true, leveledUp: this.award(PROGRESSION.valleyRouteXp) };
+  }
+
+  discoverSiroccoRoute(id: string): { awarded: boolean; leveledUp: boolean } {
+    if (this.rewardedRoutes.has(id) || !SIROCCO_ROUTES.some(route => route.id === id)) return { awarded: false, leveledUp: false };
     this.rewardedRoutes.add(id);
     return { awarded: true, leveledUp: this.award(PROGRESSION.valleyRouteXp) };
   }
