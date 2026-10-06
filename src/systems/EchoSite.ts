@@ -6,6 +6,7 @@ import type { Vec2 } from '../utils/math';
 export interface EchoSite {
   readonly id: string;
   readonly message: string;
+  readonly position: Vec2;
   canInvestigate(position: Vec2, dead: boolean): boolean;
   activate(): void;
   respond(): void;
@@ -17,6 +18,7 @@ type ForestSite = typeof FOREST_ECHOES[keyof typeof FOREST_ECHOES];
 export class ForestEcho implements EchoSite {
   readonly id: string;
   readonly message: string;
+  readonly position: Vec2;
   private activated: boolean;
   private mark: Phaser.GameObjects.Graphics;
   private pulse: Phaser.GameObjects.Ellipse;
@@ -24,6 +26,7 @@ export class ForestEcho implements EchoSite {
   constructor(private scene: Phaser.Scene, private site: ForestSite, discovered: boolean) {
     this.id = site.id;
     this.message = site.message;
+    this.position = { x: site.x, y: site.y };
     this.activated = discovered;
     const mineral = site.id === FOREST_ECHOES.mineral.id;
     this.mark = scene.add.graphics().setPosition(site.x, site.y).setDepth(site.y - 5);

@@ -23,7 +23,7 @@ A Bacia do Siroco é uma área separada de 3000 × 1500 unidades, conectada por 
 - **Rasga-areia:** criatura de aproximação rápida, que baixa o corpo e salta em uma linha anunciada.
 - **Cuspidor vítreo:** criatura mineralizada que recua, fixa a direção durante o preparo e dispara um projétil âmbar.
 
-Os dois usam o contrato atual de inimigos, HP, dano, reação, bestiário e XP. Cada derrota concede **15 XP**, indicado por um `+15 XP` curto junto ao corpo da criatura. Os seis habitats retornam seus moradores após **90 segundos**, quando o jogador está a pelo menos **480 unidades** do habitat; o intervalo fica salvo no navegador e resiste a recarga, morte e travessia do portal. As criaturas não bloqueiam a saída nem o relé.
+Os dois usam o contrato atual de inimigos, HP, dano, reação, bestiário e XP. Cada derrota concede **15 XP**, indicado por um `+15 XP` curto junto ao corpo da criatura. O mesmo padrão contextual apresenta XP dos Ecos e descobertas de rota. Os seis habitats retornam seus moradores após **90 segundos**, quando o jogador está a pelo menos **480 unidades** do habitat; o intervalo fica salvo no navegador e resiste a recarga, morte e travessia do portal. As criaturas não bloqueiam a saída nem o relé.
 
 ## Progressão
 

@@ -22,9 +22,6 @@ export class Hud {
   private discoveryMessage: Phaser.GameObjects.Text;
   private progressText: Phaser.GameObjects.Text;
   private progressHint: Phaser.GameObjects.Text;
-  private experienceText: Phaser.GameObjects.Text;
-  private experienceTimer?: Phaser.Time.TimerEvent;
-  private experienceAmount = 0;
   private levelMessage: Phaser.GameObjects.Text;
   private signalObjective: Phaser.GameObjects.Text;
   private explorationHint: Phaser.GameObjects.Text;
@@ -70,9 +67,6 @@ export class Hud {
       .setOrigin(0.5, 0).setAlign('center').setWordWrapWidth(560).setVisible(false);
     this.levelMessage = text(VIEW_WIDTH / 2, 136, '', 19, '#e4ebc9', true)
       .setOrigin(0.5, 0).setVisible(false);
-    this.experienceText = text(VIEW_WIDTH / 2, 178, '', 17, '#ffdb9b', true)
-      .setOrigin(0.5, 0).setVisible(false);
-
     const veil = scene.add.rectangle(0, 0, VIEW_WIDTH, VIEW_HEIGHT, 0x05141b, 0.79).setOrigin(0).setScrollFactor(0).setDepth(30000).setVisible(false);
     const frame = scene.add.graphics().setScrollFactor(0).setDepth(30001).setVisible(false);
     frame.fillStyle(0x111c16, 0.97).fillRoundedRect(347, 199, 586, 334, 6);
@@ -114,7 +108,7 @@ export class Hud {
       [this.hpText, 16, 20], [this.progressText, 14, 18], [this.progressHint, 11, 16],
       [this.signalObjective, 14, 18], [this.explorationHint, 12, 16], [this.actionHint, 12, 16],
       [this.dashText, 14, 18], [this.chargeText, 14, 18], [this.areaSubtitle, 14, 18],
-      [this.levelMessage, 19, 22], [this.experienceText, 17, 20], [this.discoveryPrompt, 17, 20],
+      [this.levelMessage, 19, 22], [this.discoveryPrompt, 17, 20],
     ];
     sizes.forEach(([label, desktop, mobile]) => label.setFontSize(compact ? mobile : desktop));
     this.progressText.setY(compact ? 54 : 58);
@@ -162,14 +156,7 @@ export class Hud {
     this.xpFill.width = 196 * (nextLevelXp === null ? 1 : Phaser.Math.Clamp((xp - previous) / (nextLevelXp - previous), 0, 1));
   }
 
-  showExperience(amount: number, _source?: string): void {
-    this.experienceAmount = this.experienceText.visible ? this.experienceAmount + amount : amount;
-    this.experienceTimer?.remove(false);
-    this.experienceText.setText(`+${this.experienceAmount} XP`).setVisible(true);
-    this.experienceTimer = this.scene.time.delayedCall(1200, () => this.experienceText.setVisible(false));
-  }
-
-  showCombatExperience(x: number, y: number, amount: number): void {
+  showExperienceAt(x: number, y: number, amount: number): void {
     const reward = this.scene.add.text(x, y - 40, `+${amount} XP`, {
       fontFamily: 'Barlow Condensed, sans-serif', fontSize: '16px', fontStyle: 'bold', color: '#ffdb9b',
       stroke: '#1a1710', strokeThickness: 3, shadow: { offsetX: 0, offsetY: 2, color: '#030807', blur: 4, fill: true },
@@ -235,7 +222,6 @@ export class Hud {
     this.discoveryPrompt.setVisible(false);
     this.discoveryMessage.setVisible(false);
     this.levelMessage.setVisible(false);
-    this.experienceText.setVisible(false);
     this.controlHints.forEach(hint => hint.setVisible(false));
     this.deathGroup.forEach(item => item.setVisible(true));
   }

@@ -378,7 +378,7 @@ export class GameScene extends Phaser.Scene {
       const leveledUp = this.progression.discover(nearbyEcho.id);
       this.hud.showDiscovery(nearbyEcho.message);
       this.updateProgressHud();
-      this.hud.showExperience(PROGRESSION.echoXp, 'ECO');
+      this.hud.showExperienceAt(nearbyEcho.position.x, nearbyEcho.position.y, PROGRESSION.echoXp);
       if (leveledUp) this.levelUp();
       this.sounds.discovery();
       if (!wasSynchronized && this.progression.signalSynchronized) this.synchronizeSignal();
@@ -566,7 +566,7 @@ export class GameScene extends Phaser.Scene {
         this.valleyRoutes.add(route.id);
         const reward = this.progression.discoverValleyRoute(route.id);
         this.updateProgressHud();
-        if (reward.awarded) this.hud.showExperience(PROGRESSION.valleyRouteXp, 'EXPLORAÇÃO');
+        if (reward.awarded) this.hud.showExperienceAt(route.x, route.y, PROGRESSION.valleyRouteXp);
         this.hud.showDiscovery(`${route.name.toLocaleUpperCase('pt-BR')}\n${route.residents}`);
         if (reward.leveledUp) this.levelUp();
         this.records.markDiscovery();
@@ -931,7 +931,7 @@ export class GameScene extends Phaser.Scene {
           }
           if (reward.awarded) {
             this.updateProgressHud();
-            this.hud.showCombatExperience(enemy.position.x, enemy.position.y, PROGRESSION.hollowXp);
+            this.hud.showExperienceAt(enemy.position.x, enemy.position.y, PROGRESSION.hollowXp);
           }
           if (reward.leveledUp) this.levelUp();
           this.hollowSpawnIds.delete(enemy);

@@ -16,7 +16,11 @@ Depois de concluir a Escarpa da Ressonância, o jogador recebe **MISSÃO CONCLU�
 
 ## XP dos habitantes do Siroco · 0.1.55
 
-Cada criatura derrotada concede **15 XP**, exibidos brevemente sobre ela. Os habitantes retornam após **90 segundos**, quando o Guerreiro estiver a pelo menos **480 unidades** do habitat; o intervalo persiste após recarga, morte e travessia do portal. Assim, criaturas reaparecidas continuam recompensando a luta sem surgir ao lado do jogador.
+Cada criatura derrotada concede **15 XP**, indicado por um texto curto sobre ela. Os habitantes retornam após **90 segundos**, quando o Guerreiro estiver a pelo menos **480 unidades** do habitat; o intervalo persiste após recarga, morte e travessia do portal. Assim, criaturas reaparecidas continuam recompensando a luta sem surgir ao lado do jogador.
+
+## Feedback contextual de XP · 0.1.57
+
+Todo ganho de XP — derrotas, Ecos e descobertas de rota — agora aparece como `+XP` flutuante junto ao inimigo, Eco ou ponto que concedeu a recompensa. A notificação fixa no centro foi removida; o total e a barra continuam no HUD compacto.
 
 ## Progressão e especializações · 0.1.54
 

@@ -24,9 +24,9 @@ try {
   await page.waitForTimeout(250);
   assert.ok(await page.evaluate(() => {const h=window.__danteGame.scene.getScene('Game').hud;return h.actionHint.visible&&!h.explorationHint.visible&&h.discoveryPrompt.visible;}));
   await page.keyboard.press('e'); await page.waitForTimeout(150);
-  report.echoFeedback=await page.evaluate(() => { const s=window.__danteGame.scene.getScene('Game');return {xp:s.progression.xp,text:s.hud.experienceText.text,background:s.hud.experienceText.style.backgroundColor}; });
-  assert.equal(report.echoFeedback.xp,40); assert.equal(report.echoFeedback.text,'+40 XP'); assert.ok(!report.echoFeedback.background);
-  await page.waitForTimeout(1300); assert.ok(await page.evaluate(() => !window.__danteGame.scene.getScene('Game').hud.experienceText.visible));
+  report.echoFeedback=await page.evaluate(() => { const s=window.__danteGame.scene.getScene('Game');const reward=s.children.list.find(o=>o.type==='Text'&&o.visible&&o.text==='+40 XP');return {xp:s.progression.xp,text:reward?.text,worldAnchored:reward?.scrollFactorX===1}; });
+  assert.equal(report.echoFeedback.xp,40); assert.equal(report.echoFeedback.text,'+40 XP'); assert.ok(report.echoFeedback.worldAnchored);
+  await page.waitForTimeout(1500); assert.ok(await page.evaluate(() => !window.__danteGame.scene.getScene('Game').children.list.some(o=>o.type==='Text'&&o.visible&&o.text==='+40 XP')));
   await page.keyboard.down('b'); await page.waitForTimeout(100); await page.keyboard.up('b'); await page.locator('.records-dialog[open]').waitFor(); await page.locator('.records-controls summary').click(); assert.match(await page.locator('.records-controls').innerText(),/WASD.*Gamepad.*Touch/s); await page.locator('[data-close]').click();
   const before = await page.evaluate(() => ({...window.__danteGame.scene.getScene('Game').player.position}));
   await page.keyboard.down('d'); await page.waitForTimeout(220); await page.keyboard.up('d');
@@ -43,9 +43,9 @@ try {
     if(area==='warden') await page.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');s.warden.introduced=true;s.warden.setState('RECOVER',s.time.now,60000);});
     for(const [width,height]of[[1280,720],[1366,768],[1920,1080],[844,390]]){
       await page.setViewportSize({width,height});await page.waitForTimeout(220);
-      await page.evaluate(()=>{const h=window.__danteGame.scene.getScene('Game').hud;h.showLevelUp(4,130,10);h.showExperience(20,'EXPLORAÇÃO');});
-      const layout=await page.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game'),h=s.hud;const texts=[h.hpText,h.progressText,h.progressHint,h.signalObjective,h.explorationHint,h.actionHint,h.dashText,h.chargeText,h.areaSubtitle,h.levelMessage,h.experienceText].filter(t=>t.visible);return {fits:texts.every(t=>{const b=t.getBounds();return b.left>=0&&b.right<=1280&&b.top>=0&&b.bottom<=720;}),supportingLines:Number(h.explorationHint.visible)+Number(h.actionHint.visible),xp:h.experienceText.text,xpBackground:h.experienceText.style.backgroundColor,feedbackGap:h.experienceText.getBounds().top-h.levelMessage.getBounds().bottom,progressGap:h.progressHint.getBounds().top-h.progressText.getBounds().bottom,barGap:h.xpFill.y-h.progressHint.getBounds().bottom};});
-      assert.ok(layout.fits);assert.equal(layout.supportingLines,1);assert.match(layout.xp,/^\+\d+ XP$/);assert.ok(!layout.xpBackground);assert.ok(layout.feedbackGap>0);assert.ok(layout.progressGap>=0&&layout.barGap>=0);
+      await page.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');s.hud.showLevelUp(4,130,10);s.hud.showExperienceAt(s.player.position.x,s.player.position.y,20);});
+      const layout=await page.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game'),h=s.hud,reward=s.children.list.find(o=>o.type==='Text'&&o.visible&&o.text==='+20 XP');const texts=[h.hpText,h.progressText,h.progressHint,h.signalObjective,h.explorationHint,h.actionHint,h.dashText,h.chargeText,h.areaSubtitle,h.levelMessage].filter(t=>t.visible);return {fits:texts.every(t=>{const b=t.getBounds();return b.left>=0&&b.right<=1280&&b.top>=0&&b.bottom<=720;}),supportingLines:Number(h.explorationHint.visible)+Number(h.actionHint.visible),xp:reward?.text,worldAnchored:reward?.scrollFactorX===1,progressGap:h.progressHint.getBounds().top-h.progressText.getBounds().bottom,barGap:h.xpFill.y-h.progressHint.getBounds().bottom};});
+      assert.ok(layout.fits);assert.equal(layout.supportingLines,1);assert.equal(layout.xp,'+20 XP');assert.ok(layout.worldAnchored);assert.ok(layout.progressGap>=0&&layout.barGap>=0);
       report.layouts.push({area,width,height,...layout});await page.screenshot({path:`${out}/${area}-${width}x${height}.png`});
     }
   }
