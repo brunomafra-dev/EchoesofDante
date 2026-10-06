@@ -11,6 +11,10 @@
 > base recebeu uma transição alfa estreita para se misturar ao solo contínuo
 > na descida profunda. Veja [Cavern Entry Environment](../cavern-entry-environment/).
 
+> Atualização 0.1.51: a linguagem de terreno foi estendida por todas as regiões
+> jogáveis: Forest, Cavern completa, Exterior, Vale e arena do Warden. Cada
+> bioma conserva seu material próprio. Veja [Environmental Cohesion](../environmental-cohesion/).
+
 ## Abrir e comparar
 
 Na mesma URL em que o jogo roda, abra **`/quality-reference.html`**.

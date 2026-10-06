@@ -108,6 +108,10 @@ export class WardenApproach {
     // and soft contact only, avoiding another rectangular patch of ground.
     const layer = this.scene.add.renderTexture(5350, 200, 1400, 1000).setOrigin(0).setDepth(-9998);
     const painter = new EnvironmentPainter(this.scene, layer);
+    const exteriorSoil = this.scene.make.graphics({ x: 0, y: 0 }, false);
+    exteriorSoil.fillStyle(0xffffff).fillRect(5450, 200, 1300, 1000);
+    painter.ground('forest-ground', 0.34, exteriorSoil);
+    exteriorSoil.destroy();
     for (const [x,y,w,h] of [[5540,775,475,315],[5810,780,485,320],[6140,782,535,345]]) {
       painter.sediment(x,y,w,h,0x969175,0.32);
     }

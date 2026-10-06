@@ -51,6 +51,18 @@ export class CavernContinuation {
     mass(0x9ca994,0.14,[[4580,660],[4770,580],[4990,625],[5060,830],[4870,940],[4670,845]]);
     const layer = this.scene.add.renderTexture(tileX,200,1000,1000).setOrigin(0).setDepth(-9999).draw(floor.setAlpha(0.06),-tileX,-200);
     const painter = new EnvironmentPainter(this.scene,layer);
+    if (tileX === 4450) {
+      // The landscape opens here. Blend a muted living-soil material into the
+      // plateau silhouette; the cave floor remains visible through the throat.
+      const plateau = this.scene.make.graphics({ x: 0, y: 0 }, false);
+      plateau.fillStyle(0xffffff).fillPoints(groundContour([
+        {x:4380,y:595},{x:4560,y:400},{x:4830,y:365},{x:5100,y:405},
+        {x:5330,y:530},{x:5500,y:765},{x:5410,y:1060},{x:5160,y:1140},
+        {x:4840,y:1125},{x:4600,y:1030},{x:4400,y:925},
+      ]), true);
+      painter.ground('forest-ground', 0.34, plateau);
+      plateau.destroy();
+    }
     // Only quiet sediment patches here. The continuous substrate is underneath all tiles.
     const visible = (x: number, width: number) => x+width/2 >= tileX && x-width/2 <= tileX+1000;
     for(const [x,y,w,h] of [[2730,760,550,350],[3230,806,580,330],[3730,765,520,320],[4250,785,570,350],

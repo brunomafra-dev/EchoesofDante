@@ -26,9 +26,11 @@ export class Arena {
     const floor = graphics.find(object => object.depth === -10000);
     if (floor) {
       const layer = this.scene.add.renderTexture(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
-        .setOrigin(0).setDepth(floor.depth).draw(floor);
+        .setOrigin(0).setDepth(floor.depth).draw(floor.setAlpha(0.72));
       const painter = new EnvironmentPainter(this.scene, layer);
-      painter.ground('forest-ground', 0.19);
+      // Let the painted soil read as a material plane under the existing
+      // clearings and paths, instead of a barely visible noise overlay.
+      painter.ground('forest-ground', 0.42);
       for (const [x, y, w, h] of [[360,450,330,135],[1030,640,410,160],[1510,1010,340,135],[1900,420,310,145]]) {
         painter.contact(x, y, w, h, 0.16);
       }

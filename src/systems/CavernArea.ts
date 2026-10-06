@@ -6,7 +6,7 @@ import { CavernContinuation } from './CavernContinuation';
 import { WardenApproach } from './WardenApproach';
 import { WARDEN_PREPARATION } from '../config/wardenPreparation';
 import type { MovementBounds, Obstacle } from './Movement';
-import { createCavernGround } from '../visual/EnvironmentArt';
+import { createEnvironmentGround } from '../visual/EnvironmentArt';
 import { CavernEntryEnvironment } from '../visual/CavernEntryEnvironment';
 
 // One continuous authored Cavern; static art is captured once per section.
@@ -25,7 +25,9 @@ export class CavernArea {
   readonly wardenApproach: WardenApproach;
 
   constructor(scene: Phaser.Scene, deepPassageOpen = false, fragmentSeen = false, firstEchoSeen = false, wardenGateOpen = false) {
-    createCavernGround(scene, WARDEN_PREPARATION.cameraWidth);
+    // One illustrated stone substrate continues below the entry basin, every
+    // deeper pocket, the exterior approach and its baked scenery layers.
+    createEnvironmentGround(scene, WARDEN_PREPARATION.cameraWidth, 'cavern-ground', 0xb7c4b5);
     this.bounds = { ...CAVERN_BOUNDS, right: deepPassageOpen ? wardenGateOpen ? 6480 : WARDEN_PREPARATION.right : CAVERN_BOUNDS.right };
     if (!deepPassageOpen) this.obstacles.push(this.collapseObstacle);
     new CavernEntryEnvironment(scene, this.obstacles, this.collapseObstacle);

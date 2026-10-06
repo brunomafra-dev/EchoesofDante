@@ -296,6 +296,12 @@
 - O backplate usa uma derivação alfa offline do piso existente. Uma faixa estreita nas bordas mistura a pintura com `cavern-soil`; não há tiling do backplate nem chão de retângulo aparente. Props continuam em bake estático e os poucos corpos elevados seguem como Images para foot sorting.
 - Nenhum footprint, limite, spawn, POI, passagem ou regra de combate foi alterado. A aplicação é limitada à primeira sala; Deep Cavern, exterior, Vale e Forest conservam o ambiente que já tinham. A avaliação final de autenticidade requer playtest visual.
 
+## Ground language across regions — 0.1.51
+
+- A linguagem aprovada de piso ilustrado, massas de material, composição baked e caminho legível foi estendida sem repetir o mesmo material em todos os biomas. A entrada da Cavern mantém o backplate; todas as suas áreas usam o substrato pintado de pedra existente; os trechos exteriores e o Vale recebem solo vegetal; Forest usa seu próprio chão ilustrado com presença maior; a arena do Warden recebe pedra subterrânea pintada.
+- A transição para o Exterior usa o mesmo asset de solo aplicado por máscara na composição estática já existente. Não há novo cenário por frame nem asset de imagem gerado nesta etapa. O backplate e os materiais são imagens; props seguem no bake/cache atual.
+- A mudança só altera camadas visuais/de terreno. Não muda dimensões, posições físicas, colisões, spawns, gameplay ou identidade narrativa. A revisão por capturas em Chrome cobriu cada região e não registrou erros; repetição de textura em percurso longo e a mistura Cavern/Exterior ainda pedem playtest humano.
+
 ## Braços direcionais e sabre pintado, 0.1.49
 
 - O teste humano encontrou que os braços de 0.1.48 mantinham postura e sobreposição frontal quando o corpo virava de costas. `WarriorArms` projeta ombros/pegada por vista, articula ambos os cotovelos e ordena membros/arma atrás do tronco nas costas; na lateral, braço distante fica atrás e próximo fica à frente. As duas mãos seguem os pivots contínuos existentes do sabre. [Comparação e QA](warrior-arm-pass/).

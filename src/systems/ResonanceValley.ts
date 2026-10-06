@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { VALLEY, VALLEY_BORDERS, VALLEY_ROCKS } from '../config/valley';
-import { EnvironmentPainter, createCavernGround } from '../visual/EnvironmentArt';
+import { EnvironmentPainter, createEnvironmentGround } from '../visual/EnvironmentArt';
 import type { MovementBounds, Obstacle } from './Movement';
 import { distance, type Vec2 } from '../utils/math';
 
@@ -10,8 +10,7 @@ export class ResonanceValley {
   readonly obstacles: Obstacle[] = [...VALLEY_ROCKS, ...VALLEY_BORDERS].map(o => ({ ...o }));
   private readonly pulse: Phaser.GameObjects.Ellipse;
   constructor(scene: Phaser.Scene, recorded: boolean) {
-    createCavernGround(scene, VALLEY.cameraWidth);
-    (scene.children.getByName('continuous-cavern-ground') as Phaser.GameObjects.TileSprite).setTint(0xd4d7b9);
+    createEnvironmentGround(scene, VALLEY.cameraWidth, 'forest-ground', 0xb7c2a7);
     for (const tileX of [0, 1500]) {
       const layer = scene.add.renderTexture(tileX, 200, 1500, 1200).setOrigin(0).setDepth(-10000);
       const painter = new EnvironmentPainter(scene, layer);

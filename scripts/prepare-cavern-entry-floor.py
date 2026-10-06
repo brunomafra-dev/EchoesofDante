@@ -14,7 +14,7 @@ OUTPUT = ROOT / 'public/assets/visual/environment/cavern-entry-floor.webp'
 def edge_alpha(x: int, y: int, width: int, height: int) -> int:
     # Feather each edge in a narrow band. The right fade joins the deeper floor
     # substrate before the next cavern section; top/bottom disappear under rims.
-    horizontal = min(1.0, x / 90, (width - 1 - x) / 90)
+    horizontal = min(1.0, x / 90, (width - 1 - x) / 280)
     vertical = min(1.0, y / 64, (height - 1 - y) / 64)
     return round(255 * max(0.0, min(horizontal, vertical)))
 

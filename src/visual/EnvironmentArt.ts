@@ -79,12 +79,17 @@ export function updateEnvironmentOcclusion(scene: Phaser.Scene, feet: { x: numbe
 
 // One stationary textured quad under every cache, including cache margins.
 // The material is authored offline; no runtime procedural floor or giant PNG.
-export function createCavernGround(scene: Phaser.Scene, width: number): void {
+export function createEnvironmentGround(
+  scene: Phaser.Scene,
+  width: number,
+  material: 'cavern-soil' | 'cavern-ground' | 'forest-ground' = 'cavern-soil',
+  tint = 0xb7c4b5,
+): void {
   // Keep the TileSprite backing canvas at 512 square, rather than allocating a
   // world-sized canvas. Inverse tile scale preserves 512 world units per repeat.
-  scene.add.tileSprite(0, 0, 512, 512, 'cavern-soil').setOrigin(0)
+  scene.add.tileSprite(0, 0, 512, 512, material).setOrigin(0)
     .setDisplaySize(width, 1500).setTileScale(512 / width, 512 / 1500)
-    .setDepth(-10001.5).setTint(0xb7c4b5).setName('continuous-cavern-ground');
+    .setDepth(-10001.5).setTint(tint).setName(`continuous-${material}`);
 }
 
 export function preloadEnvironment(scene: Phaser.Scene): void {

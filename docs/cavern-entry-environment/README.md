@@ -38,9 +38,10 @@ python scripts/prepare-cavern-entry-floor.py
 O script lê `public/assets/experiments/quality-reference/basin-floor.webp` e
 grava `public/assets/visual/environment/cavern-entry-floor.webp`.
 
-## Escopo e revisão visual
+## Histórico e revisão visual
 
-Esta aplicação corresponde à primeira sala descrita no README da Referência de
-Qualidade. Deep Cavern, exterior e Vale conservam suas composições atuais. O
-próximo critério é visual: percorrer a descida, olhar a ligação entre o salão e
-o túnel, e confirmar que os footprints existentes continuam fáceis de entender.
+Em 0.1.50, a aplicação se limitava à primeira sala descrita no README da
+Referência de Qualidade. Em 0.1.51, a mesma gramática de materiais foi ampliada
+para toda a Cavern e as bases ambientais de Forest, Exterior, Vale e arena do
+Warden; esta mudança mantém as imagens e colisões próprias da sala inicial.
+Veja o escopo completo em [Environmental Cohesion](../environmental-cohesion/).
