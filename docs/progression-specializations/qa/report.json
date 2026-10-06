@@ -1,0 +1,102 @@
+{
+  "method": "Chrome headless; old local-save fixture, actual level-up triggers, keyboard/gamepad/touch choice; no physical devices",
+  "errors": [],
+  "oldSaveMigration": {
+    "xp": 345,
+    "level": 3,
+    "maxHp": 120,
+    "noUpgradeData": true
+  },
+  "level4KeyboardChoice": {
+    "xp": 365,
+    "level": 4,
+    "hp": 130,
+    "maxHp": 130,
+    "next": 660,
+    "ranks": {
+      "saberArc": 0,
+      "saberReach": 1,
+      "dashCooldown": 0,
+      "dashDuration": 0,
+      "chargeWidth": 0,
+      "chargePower": 0
+    },
+    "points": 0,
+    "saberRange": 116,
+    "dashCooldown": 1700,
+    "dashDuration": 175,
+    "chargeWidth": 60,
+    "chargeMax": 76
+  },
+  "reloadKeepsBuild": true,
+  "oldLevelFiveSaveMigration": {
+    "level": 5,
+    "availableChoice": true,
+    "reloadPreservesChoice": true
+  },
+  "level6GamepadChoice": {
+    "xp": 960,
+    "level": 6,
+    "hp": 145,
+    "maxHp": 145,
+    "next": 1300,
+    "ranks": {
+      "saberArc": 1,
+      "saberReach": 0,
+      "dashCooldown": 1,
+      "dashDuration": 0,
+      "chargeWidth": 0,
+      "chargePower": 0
+    },
+    "points": 0,
+    "saberRange": 106,
+    "dashCooldown": 1580,
+    "dashDuration": 175,
+    "chargeWidth": 60,
+    "chargeMax": 76
+  },
+  "level8TouchChoice": {
+    "xp": 1680,
+    "level": 8,
+    "hp": 155,
+    "maxHp": 155,
+    "next": 2100,
+    "ranks": {
+      "saberArc": 1,
+      "saberReach": 0,
+      "dashCooldown": 1,
+      "dashDuration": 0,
+      "chargeWidth": 1,
+      "chargePower": 0
+    },
+    "points": 0,
+    "saberRange": 106,
+    "dashCooldown": 1580,
+    "dashDuration": 175,
+    "chargeWidth": 72,
+    "chargeMax": 76
+  },
+  "level10CapAndFinalChoice": {
+    "xp": 2560,
+    "level": 10,
+    "hp": 165,
+    "maxHp": 165,
+    "next": null,
+    "ranks": {
+      "saberArc": 1,
+      "saberReach": 0,
+      "dashCooldown": 1,
+      "dashDuration": 0,
+      "chargeWidth": 1,
+      "chargePower": 1
+    },
+    "points": 0,
+    "saberRange": 106,
+    "dashCooldown": 1580,
+    "dashDuration": 175,
+    "chargeWidth": 72,
+    "chargeMax": 82
+  },
+  "level10Reload": true,
+  "passed": true
+}

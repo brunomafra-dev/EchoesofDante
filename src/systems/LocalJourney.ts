@@ -2,6 +2,7 @@ import { ECHO_COUNT, FOREST_ECHOES } from '../config/discovery';
 import { VALLEY_ENCOUNTERS, VALLEY_ROUTES } from '../config/valley';
 import type { BestiarySnapshot } from './Bestiary';
 import type { ProgressionSnapshot } from './Progression';
+import type { AbilityUpgradeRanks } from '../config/abilityUpgrades';
 
 export const JOURNEY_KEY = 'echoes-of-dante.journey.v1';
 export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSeen', 'deepCavernEntered',
@@ -64,7 +65,8 @@ export class LocalJourney {
         progression: { xp: p.xp, echoes, sourceLocated: echoes.length === ECHO_COUNT && p.sourceLocated === true,
           passageOpen, rewardedHollows: p.rewardedHollows.filter((id): id is number => integer(id, 1999)).slice(0, 2000),
           rewardedRoutes: Array.isArray(p.rewardedRoutes) ? p.rewardedRoutes.filter((id): id is string =>
-            typeof id === 'string' && VALLEY_ROUTES.some(route => route.id === id)) : [] },
+            typeof id === 'string' && VALLEY_ROUTES.some(route => route.id === id)) : [],
+          abilityUpgrades: object(p.abilityUpgrades) as Partial<AbilityUpgradeRanks> | undefined },
         flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats };
     } catch {
       this.status = 'Não foi possível ler o progresso local. O jogo continua disponível.';

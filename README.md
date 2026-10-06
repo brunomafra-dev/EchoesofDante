@@ -14,6 +14,10 @@ O [Visual Rendering Prototype 01](docs/visual-rendering-prototype-01/) compara G
 
 Depois de concluir a Escarpa da Ressonância, o jogador recebe **MISSÃO CONCLUÍDA** e atravessa um portal para uma área árida independente. A Bacia do Siroco tem terreno, habitantes e relé ancestral próprios; dois novos arquétipos usam a IA, o combate, o bestiário e o XP existentes. A expedição pode ser interrompida e retomada pelo portal, com progresso salvo no navegador. [Visão geral, arte e QA](docs/expansion-sprint-04/).
 
+## Progressão e especializações · 0.1.54
+
+O limite agora é **nível 10**. Os níveis 4, 6, 8 e 10 concedem uma escolha entre aperfeiçoar Sabre, Dash ou Carga Cinética; cada opção tem dois graus e modifica uma propriedade do kit existente. Saves anteriores são mantidos e recebem pontos compatíveis com o XP atual. [Regras, compatibilidade e QA](docs/progression-specializations/).
+
 ## Stack
 
 A [referência jogável de qualidade](docs/quality-reference/) isola a primeira câmara da Cavern em `/quality-reference.html`: ambiente pintado contínuo, apresentação articulada do Hollow e impactos curtos. Os botões **Warrior novo / Warrior anterior** comparam o [Guerreiro pintado 0.1.48](docs/warrior-quality-reference/) no mesmo cenário; **Câmara original** conserva a comparação ambiental. O Guerreiro novo também está aplicado ao jogo principal, conforme autorização do usuário. O laboratório não altera o progresso local.
@@ -64,13 +68,13 @@ Os nomes acima das criaturas usam o estilo aprovado no vale: Rastejante Hollow, 
 
 A [revisão de HUD 0.1.46](docs/hud-clarity/) reduz painéis, bordas e textos permanentes. Vida/progresso ficam compactos no canto; ganho aparece apenas como `+20 XP`. A ajuda inicial desaparece após 10 segundos e permanece consultável em Registros → Controles. O objetivo preserva uma indicação local curta, com recargas e avisos do Warden legíveis.
 
-O progresso é salvo automaticamente **neste navegador**: XP, nível, Ecos, passagens, Primeiro Eco, vitória sobre o Warden, exploração do Vale e bestiário. Reabrir a mesma URL retoma a região em seu ponto seguro, com a vida registrada. Morrer continua restaurando a vida no respawn. A posição exata, vida dos inimigos e ataques em andamento não são salvos; um Warden ainda não derrotado reinicia seu encontro.
+O progresso é salvo automaticamente **neste navegador**: XP, nível, especializações escolhidas, Ecos, passagens, Primeiro Eco, vitória sobre o Warden, exploração do Vale e bestiário. Reabrir a mesma URL retoma a região em seu ponto seguro, com a vida registrada. Morrer continua restaurando a vida no respawn. A posição exata, vida dos inimigos e ataques em andamento não são salvos; um Warden ainda não derrotado reinicia seu encontro.
 
 Abra **REGISTROS** pelo botão na tela, **B** no teclado ou **Voltar/Select** do gamepad padrão. A consulta pausa o jogo, registra as seis espécies encontradas e conta suas derrotas. A primeira derrota libera uma observação tática adicional. **NOVO PERCURSO** permite recomeçar após confirmação. Limpar os dados do site remove o save; ele não sincroniza entre dispositivos.
 
-No Vale, a passagem entre cristas, o desvio mineral e a bacia enraizada concedem **20 XP por primeira descoberta**, com bônus único salvo. Saves anteriores conservam visitas e podem receber o bônus ao revisitar. Os oito habitats renovam seus moradores **90 segundos após a derrota**, quando você está a pelo menos **480 unidades** da posição de origem. Reload, morte e travessia do portal mantêm esse intervalo. Cada novo morador derrotado concede os mesmos 15 XP; nenhum trecho exige matar criaturas.
+No Vale, a passagem entre cristas, o desvio mineral e a bacia enraizada concedem **20 XP por primeira descoberta**, com bônus único salvo. Saves anteriores conservam visitas e podem receber o bônus ao revisitar. Os doze habitats renovam seus moradores **90 segundos após a derrota**, quando você está a pelo menos **480 unidades** da posição de origem. Reload, morte e travessia do portal mantêm esse intervalo. Cada novo morador derrotado concede os mesmos 15 XP; nenhum trecho exige matar criaturas.
 
-Os níveis 4 e 5 exigem **360 e 660 XP acumulados**, com **130 e 140 PV máximos**. O HUD mostra quanto falta, o ganho de vida e XP recebido. A passagem tem uma criatura isolada, os desvios têm duplas e a margem leste tem um trio, com espaço para contornar e retornar. Depois de conhecer o Vale, o guia indica **EXPEDIÇÃO LIVRE**. [Progressão, encontros, compatibilidade e QA](docs/dante-expeditions/) · [Fundação original do save](docs/dante-journey/).
+Os níveis 4 e 5 continuam exigindo **360 e 660 XP acumulados**, com **130 e 140 PV máximos**; a progressão atual segue até o nível 10. O HUD mostra quanto falta, ganho de vida e XP recebido. A passagem tem uma criatura isolada, os desvios têm duplas e a margem leste tem um trio, com espaço para contornar e retornar. Depois de conhecer o Vale, o guia indica **EXPEDIÇÃO LIVRE**. [Histórico de progressão e encontros](docs/dante-expeditions/) · [Fundação original do save](docs/dante-journey/) · [Especializações atuais](docs/progression-specializations/).
 
 A [correção de animação e orientação em português](docs/playtest-readability/) mantém os novos inimigos apoiados no chão, com quadros de passada, preparação, ataque e reação. A interface agora usa português e mostra o próximo passo desde 0/3 Ecos, com pistas de direção, identificação próxima dos locais e orientação da fissura ao mecanismo e à entrada. O fluxo continua sem chave, kill count ou recompensa adicional.
 

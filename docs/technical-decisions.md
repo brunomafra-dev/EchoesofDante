@@ -315,3 +315,10 @@
 - Uma estrutura de escuta reage ao INTERACT com um eco recente cuja origem permanece além da escarpa. O limiar oriental mostra uma continuação desconhecida e permanece como fronteira da expansão; não revela a origem do sinal.
 - `valleyFrontierReached`, `valleyFrontierSignalSeen` e `valleyFrontierEndSeen` são flags opcionais no snapshot local já versionado; saves anteriores continuam válidos. Ao alcançar a Escarpa, a morte/reload usa um checkpoint seguro na entrada. O portal de retorno ao Warden continua voltando para a entrada oeste do Vale.
 - Os elementos são compostos offline nos quatro bakes estáticos existentes com imagens ambientais já carregadas. Sem geração de textura em runtime, nova IA, sistema de quest ou mudanças de combate. Capturas e relatório em [Expansion Sprint 03](expansion-sprint-03/).
+
+## Progressão e especializações — 0.1.54
+
+- O limite passa de 5 para 10, preservando XP e os limiares anteriores. Níveis 6–10 exigem 960/1300/1680/2100/2560 XP; PV cresce +5 por nível após o nível 5, chegando a 165. Níveis 4/6/8/10 concedem quatro pontos para escolher especializações do Sabre, Dash ou Carga Cinética, duas opções por habilidade e dois graus por opção.
+- Bônus são aplicados aos parâmetros que o combate já consulta: arco/alcance do Sabre, recarga/duração do Dash, largura/força da onda. Não foram alterados controles, IA, dano base, hitboxes base ou sistemas de combate. Painel curto pausa durante a escolha e aceita teclado, gamepad padrão e touch.
+- `abilityUpgrades` é um campo opcional no snapshot v1 local. Saves antigos permanecem válidos; pontos disponíveis são derivados do XP/nível e escolhas registradas são sanitizadas. A sessão continua persistindo por reload, morte e portal no armazenamento já existente.
+- [Detalhes e QA](progression-specializations/). Typecheck/build e QA browser cobrem migração, escolhas e persistência; hardware físico requer playtest separado.

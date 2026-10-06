@@ -18,7 +18,9 @@ Os primeiros três limiares e o ganho de 10 PV por nível permanecem. Subir de
 nível restaura vida, como antes. Sabre, Dash, carga, dano, velocidades e ataques
 inimigos não recebem escalonamento. O HUD mostra XP faltante, benefício seguinte,
 XP recebido e ganho real de vida; ganhos próximos são somados em um único aviso.
-XP continua acumulando no nível 5, sem criar um sexto nível.
+Na versão 0.1.45, XP continuava acumulando no nível 5, que era o limite então.
+Desde 0.1.54, a progressão foi ampliada até o nível 10; veja
+[Progressão e especializações](../progression-specializations/).
 
 Cada um dos três desvios concede **20 XP uma única vez**. Visitar não exige
 combate. Derrotar cada novo morador continua concedendo **15 XP**; os moradores

@@ -23,6 +23,7 @@ import type { SpeciesId } from '../config/bestiary';
 import { Bestiary } from '../systems/Bestiary';
 import { LocalJourney, JOURNEY_FLAGS, type JourneyFlags } from '../systems/LocalJourney';
 import { RecordsPanel } from '../ui/RecordsPanel';
+import { AbilityUpgradeDialog } from '../ui/AbilityUpgradeDialog';
 import { ValleyCreature } from '../entities/ValleyCreature';
 import { ResonanceValley } from '../systems/ResonanceValley';
 import { SignalPortal } from '../systems/SignalPortal';
@@ -110,6 +111,7 @@ export class GameScene extends Phaser.Scene {
   private readonly valleyHabitatCooldowns = new Map<number, number>();
   private readonly valleyResidents = new Map<number, Enemy>();
   private records!: RecordsPanel;
+  private abilityUpgradeDialog?: AbilityUpgradeDialog;
   private recordsPausedAt = 0;
   private recordsTimeOffset = 0;
   private readonly progression = new Progression();
@@ -171,8 +173,8 @@ export class GameScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.events.off(Phaser.Scenes.Events.UPDATE, syncCombatClock));
     if (!this.journeyLoaded) { this.journeyLoaded = true; this.restoreJourney(); }
     resetEnvironmentOcclusion(this);
-    this.attack = new SaberAttack();
-    this.charge = new KineticCharge();
+    this.attack = new SaberAttack(id => this.progression.upgradeRank(id));
+    this.charge = new KineticCharge(id => this.progression.upgradeRank(id));
     this.waveDrawn = false;
     this.enemies = [];
     this.enemySpecies = new WeakMap();
@@ -244,7 +246,7 @@ export class GameScene extends Phaser.Scene {
     this.returnToValleyPortal = false;
     this.returnToFrontierPortal = false;
     this.player = new Player(this, entry.x, entry.y, this.progression.maxHp, this.qualityReference === 'reference',
-      this.qualityReference !== 'baseline' && !this.originalWarrior);
+      this.qualityReference !== 'baseline' && !this.originalWarrior, id => this.progression.upgradeRank(id));
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
     this.transferHp = undefined;
     this.kineticWave = this.add.graphics().setDepth(14999);
@@ -316,30 +318,24 @@ export class GameScene extends Phaser.Scene {
     this.records = new RecordsPanel(this, () => ({
       level: this.progression.level, xp: this.progression.xp, echoes: this.progression.echoes.size,
       nextLevelXp: this.progression.nextLevelXp, maxHp: this.progression.maxHp,
+      nextLevelHpGain: this.progression.nextLevelHpGain, upgradePointsAvailable: this.progression.upgradePointsAvailable,
+      abilityUpgradeRanks: this.progression.abilityUpgradeRanks,
       area: this.area === 'arid' ? 'Bacia do Siroco' : this.area === 'valley' ? 'Vale da Ressonância' : this.area === 'warden' ? 'Domínio do Guardião' : this.area === 'cavern' ? 'Cavernas de Dante' : 'Floresta de Dante',
       bestiary: this.bestiary.snapshot(), routes: this.valleyRoutes, valleyVisited: this.valleyVisited,
       saveStatus: this.qualityReference ? 'Referência isolada. O progresso do jogo permanece intacto.' : this.journey.status,
       rewardedRoutes: this.progression.rewardedRoutes,
-    }), () => {
-      this.controls.cancelForRecords();
-      this.charge.stop();
-      this.kineticWave.clear(); this.waveDrawn = false;
-      this.saveProgress();
-      this.recordsPausedAt = this.game.loop.now;
-      this.input.enabled = false;
-      if (this.input.keyboard) this.input.keyboard.enabled = false;
-      this.scene.pause();
-    }, () => {
-      this.recordsTimeOffset += this.game.loop.now - this.recordsPausedAt;
-      this.time.now = this.game.loop.now - this.recordsTimeOffset;
-      this.controls.cancelForRecords();
-      this.input.enabled = true;
-      if (this.input.keyboard) this.input.keyboard.enabled = true;
-      this.scene.resume();
-    }, () => {
+    }), () => { this.pauseForModal(); this.saveProgress(); }, () => this.resumeFromModal(), () => {
       if (this.qualityReference) { location.reload(); return; }
       if (this.journey.clear()) { this.resettingJourney = true; location.reload(); }
       else this.records.setSaveAvailable(false);
+    });
+    this.abilityUpgradeDialog = new AbilityUpgradeDialog(this, id => {
+      const invested = this.progression.investUpgrade(id);
+      if (invested) { this.updateProgressHud(); this.saveProgress(); this.sounds.ancient(); }
+      return invested;
+    }, () => {
+      this.resumeFromModal();
+      if (this.progression.upgradePointsAvailable > 0) this.time.delayedCall(100, () => this.showAvailableUpgrade());
     });
     const flush = () => this.saveProgress();
     const hidden = () => { if (document.hidden) flush(); };
@@ -353,6 +349,9 @@ export class GameScene extends Phaser.Scene {
     // Persist chapter access immediately. A mobile browser may suspend or evict
     // the page without sending a reliable later interaction or shutdown event.
     if (this.area === 'arid') this.saveProgress();
+    if (!this.qualityReference && this.progression.upgradePointsAvailable > 0) {
+      this.time.delayedCall(350, () => this.showAvailableUpgrade());
+    }
   }
 
   update(time: number, delta: number): void {
@@ -541,7 +540,8 @@ export class GameScene extends Phaser.Scene {
       enemy.update(time, dt, this.player.position, this.player.isDead, this.arena.obstacles, impact => this.enemyStrike(enemy, impact), this.movementBounds);
     }
     this.enemies = this.enemies.filter(enemy => !enemy.isDead);
-    this.hud.update(this.player.hp, this.player.maxHp, this.player.dashProgress, this.charge.getProgress(time), heavy.phase, heavy.level);
+    this.hud.update(this.player.hp, this.player.maxHp, this.player.dashProgress, this.charge.getProgress(time), heavy.phase, heavy.level,
+      this.player.dashCooldown, this.charge.cooldown);
     if (this.qualityReference) return;
     if (this.area === 'warden') {
       if (!this.wardenDefeated && this.warden?.state === 'DORMANT' && this.player.position.x >= 850) {
@@ -1014,7 +1014,7 @@ export class GameScene extends Phaser.Scene {
     const progress = this.charge.waveProgress(now);
     const angle = this.charge.angle;
     const radius = 80;
-    const spread = Math.asin(KINETIC_CHARGE.waveHalfWidth / radius);
+    const spread = Math.asin(Math.min(0.95, this.charge.waveHalfWidth / radius));
     const travel = KINETIC_CHARGE.waveStart + KINETIC_CHARGE.waveTravel * progress - radius + 8;
     const x = this.charge.origin.x + Math.cos(angle) * travel;
     const y = this.charge.origin.y + Math.sin(angle) * travel;
@@ -1057,10 +1057,38 @@ export class GameScene extends Phaser.Scene {
   private levelUp(): void {
     const gainedHp = this.progression.maxHp - this.player.maxHp;
     this.player.health.setMaxAndRestore(this.progression.maxHp);
-    this.hud.showLevelUp(this.progression.level, this.progression.maxHp, gainedHp);
+    this.hud.showLevelUp(this.progression.level, this.progression.maxHp, gainedHp, this.progression.upgradePointsAvailable > 0);
+    this.updateProgressHud();
+    this.saveProgress();
     const ring = this.add.circle(this.player.position.x, this.player.position.y, 25)
       .setStrokeStyle(3, 0xffbd54, 0.8).setDepth(15000);
     this.tweens.add({ targets: ring, scale: 2.6, alpha: 0, duration: 450, onComplete: () => ring.destroy() });
+    if (this.progression.upgradePointsAvailable > 0) this.time.delayedCall(380, () => this.showAvailableUpgrade());
+  }
+
+  private showAvailableUpgrade(): void {
+    if (this.player.isDead || !this.abilityUpgradeDialog || this.abilityUpgradeDialog.isOpen || this.records?.isOpen || this.progression.upgradePointsAvailable <= 0) return;
+    this.pauseForModal();
+    this.abilityUpgradeDialog.open(this.progression.level, this.progression.abilityUpgradeRanks, this.progression.upgradePointsAvailable);
+  }
+
+  private pauseForModal(): void {
+    this.controls.cancelForRecords();
+    this.charge.stop();
+    this.kineticWave.clear(); this.waveDrawn = false;
+    this.recordsPausedAt = this.game.loop.now;
+    this.input.enabled = false;
+    if (this.input.keyboard) this.input.keyboard.enabled = false;
+    this.scene.pause();
+  }
+
+  private resumeFromModal(): void {
+    this.recordsTimeOffset += this.game.loop.now - this.recordsPausedAt;
+    this.time.now = this.game.loop.now - this.recordsTimeOffset;
+    this.controls.cancelForRecords();
+    this.input.enabled = true;
+    if (this.input.keyboard) this.input.keyboard.enabled = true;
+    this.scene.resume();
   }
 
   private restart(): void { this.scene.restart(); }

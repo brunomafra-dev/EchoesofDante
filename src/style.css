@@ -81,5 +81,26 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
 .records-confirmation { padding: 12px; margin-top: 12px; border: 1px solid #ffbd54aa; border-radius: 5px; }
 .records-confirmation button { margin: 5px 5px 0 0; }
 .records-help { display: block; margin-top: 16px; }
+.ability-upgrade-dialog { width: min(850px, calc(100vw - 32px - env(safe-area-inset-left) - env(safe-area-inset-right))); }
+.ability-upgrade-dialog header strong { color: #ffcf75; font: 600 13px 'Barlow Condensed', sans-serif; white-space: nowrap; }
+.ability-upgrade-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin-top: 14px; }
+.records-dialog .ability-upgrade-option { min-height: 104px; display: grid; grid-template-columns: 1fr auto; gap: 3px 10px; text-align: left; background: #193432; border-color: #596f5c; }
+.ability-upgrade-option small, .ability-upgrade-option strong, .ability-upgrade-option span { grid-column: 1; }
+.ability-upgrade-option small { color: #ffcf75; font-size: 10px; letter-spacing: .08em; }
+.ability-upgrade-option strong { font: 600 17px 'Barlow Condensed', sans-serif; }
+.ability-upgrade-option span { color: #bac9bb; font-size: 12px; line-height: 1.35; }
+.ability-upgrade-option b { grid-column: 2; grid-row: 1 / span 3; align-self: center; color: #b9d3ab; font: 600 12px 'Barlow Condensed', sans-serif; white-space: nowrap; }
+.records-dialog .ability-upgrade-option:disabled { opacity: .48; cursor: default; }
+.records-dialog .ability-upgrade-option:focus-visible { outline: 2px solid #ffbd54; outline-offset: 1px; }
 @media (max-width: 580px) { .records-species { grid-template-columns: 1fr; } }
+@media (max-width: 580px) { .ability-upgrade-options { grid-template-columns: 1fr; } .ability-upgrade-dialog header { padding: 13px 16px; } .ability-upgrade-dialog h1 { font-size: 24px; } .records-dialog .ability-upgrade-option { min-height: 86px; } }
+@media (max-height: 500px) and (orientation: landscape) {
+  .ability-upgrade-dialog { max-height: calc(100dvh - 12px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); }
+  .ability-upgrade-dialog header { padding: 8px 14px; }
+  .ability-upgrade-dialog h1 { font-size: 24px; }
+  .ability-upgrade-dialog .records-content { max-height: calc(100dvh - 72px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); padding: 6px 16px 10px; }
+  .ability-upgrade-dialog .records-content > p { margin: 2px 0; font-size: 12px; }
+  .ability-upgrade-options { gap: 6px; margin-top: 8px; }
+  .records-dialog .ability-upgrade-option { min-height: 70px; padding: 6px 10px; }
+}
 @media (orientation: portrait) and (pointer: coarse) { .records-button { display: none; } }

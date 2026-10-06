@@ -19,6 +19,7 @@ const state = page => page.evaluate(() => {
   const game = window.__danteGame, scene = game.scene.getScene('Game');
   return { area: scene.area, position: { ...scene.player.position }, hp: scene.player.hp, maxHp: scene.player.maxHp,
     xp: scene.progression.xp, level: scene.progression.level, echoes: scene.progression.echoes.size,
+    upgradeRanks: { ...scene.progression.abilityUpgradeRanks }, upgradePoints: scene.progression.upgradePointsAvailable,
     missionComplete: scene.valleyFrontierEndSeen, portal: scene.chapterPortal?.active,
     aridVisited: scene.aridVisited, signalSeen: scene.aridSignalSeen, enemies: scene.enemies.filter(e => !e.isDead).length,
     kinds: [...new Set(scene.enemies.filter(e => !e.isDead).map(e => e.kind))],
@@ -26,6 +27,11 @@ const state = page => page.evaluate(() => {
     tweens: scene.tweens.getTweens().length, text: scene.hud.discoveryMessage.text, dead: scene.player.isDead,
     rewarded: scene.progression.snapshot().rewardedHollows };
 });
+const chooseUpgrade = async (page, id) => {
+  await page.locator('.ability-upgrade-dialog[open]').waitFor();
+  await page.locator(`[data-upgrade="${id}"]:not(:disabled)`).click();
+  await page.waitForFunction(() => !document.querySelector('.ability-upgrade-dialog[open]'));
+};
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   watch(page);
@@ -166,6 +172,11 @@ try {
   current = await state(page);
   assert.equal(current.xp, 375);
   assert.equal(current.level, 4);
+  await chooseUpgrade(page, 'chargeWidth');
+  current = await state(page);
+  assert.equal(current.upgradeRanks.chargeWidth, 1);
+  assert.equal(current.upgradePoints, 0);
+  report.masteryChoice = { level: current.level, chargeWidth: current.upgradeRanks.chargeWidth };
   report.enemyRewardsAndLevel = { xp: current.xp, level: current.level, maxHp: current.maxHp };
 
   await walkTo(2240, 850);
@@ -194,6 +205,8 @@ try {
   assert.equal(current.signalSeen, true);
   assert.equal(current.xp, 375);
   assert.equal(current.level, 4);
+  assert.equal(current.upgradeRanks.chargeWidth, 1);
+  assert.equal(current.upgradePoints, 0);
   assert.ok(current.rewarded.includes(1000) && current.rewarded.includes(1002));
   report.reloadPersistence = { area: current.area, signal: current.signalSeen, xp: current.xp,
     level: current.level, rewardedIds: [1000, 1002] };
@@ -216,6 +229,7 @@ try {
   });
   current = await state(page);
   assert.equal(current.xp, 375); assert.equal(current.level, 4); assert.equal(current.signalSeen, true);
+  assert.equal(current.upgradeRanks.chargeWidth, 1); assert.equal(current.upgradePoints, 0);
   assert.deepEqual(current.position, { x: 470, y: 805 });
   report.safeRespawn = { area: current.area, position: current.position, xp: current.xp, level: current.level };
 
@@ -227,6 +241,7 @@ try {
   });
   current = await state(page);
   assert.equal(current.xp, 375); assert.equal(current.level, 4); assert.equal(current.echoes, 3);
+  assert.equal(current.upgradeRanks.chargeWidth, 1);
   assert.deepEqual(current.position, { x: 2865, y: 640 });
   report.returnPortal = { area: current.area, position: current.position, xp: current.xp, level: current.level, echoes: current.echoes };
 

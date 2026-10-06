@@ -3,8 +3,10 @@ import { SPECIES, type SpeciesId } from '../config/bestiary';
 import { VALLEY_ROUTES } from '../config/valley';
 import type { BestiarySnapshot } from '../systems/Bestiary';
 import { PROGRESSION } from '../config/progression';
+import { ABILITY_UPGRADE_MILESTONES, type AbilityUpgradeRanks } from '../config/abilityUpgrades';
 
 type Records = { level: number; xp: number; nextLevelXp: number | null; maxHp: number; echoes: number; area: string; bestiary: BestiarySnapshot;
+  nextLevelHpGain: number; upgradePointsAvailable: number; abilityUpgradeRanks: Readonly<AbilityUpgradeRanks>;
   routes: ReadonlySet<string>; rewardedRoutes: ReadonlySet<string>; valleyVisited: boolean; saveStatus: string };
 
 // DOM exists once per scene; content is refreshed only when this journal opens.
@@ -95,9 +97,15 @@ export class RecordsPanel {
     const data = this.getRecords();
     this.summary.textContent = `${data.area} · Nível ${data.level} · ${data.xp} XP · Ecos ${data.echoes}/3`;
     this.status.textContent = data.saveStatus;
+    const nextMastery = ABILITY_UPGRADE_MILESTONES.find(level => level > data.level);
+    const earnedRanks = Object.values(data.abilityUpgradeRanks).reduce((total, rank) => total + rank, 0);
+    const masteryNote = data.upgradePointsAvailable > 0
+      ? `${data.upgradePointsAvailable} ponto${data.upgradePointsAvailable === 1 ? '' : 's'} de domínio disponível${data.upgradePointsAvailable === 1 ? '' : 'is'} para aperfeiçoar uma habilidade.`
+      : nextMastery ? `Próximo ponto de domínio no nível ${nextMastery} · ${earnedRanks} grau${earnedRanks === 1 ? '' : 's'} escolhido${earnedRanks === 1 ? '' : 's'}.`
+        : `Domínio completo · ${earnedRanks} graus escolhidos.`;
     this.dialog.querySelector('.records-progression')!.textContent = data.nextLevelXp === null
-      ? `Nível ${PROGRESSION.levelThresholds.length}: limite desta etapa. ${data.maxHp} PV máximos. A exploração e os registros continuam.`
-      : `${data.maxHp} PV máximos. Faltam ${Math.max(0, data.nextLevelXp - data.xp)} XP para o nível ${data.level + 1}: +${PROGRESSION.maxHpPerLevel} PV e vida restaurada. Explore novos desvios ou revisite os habitats.`;
+      ? `Nível ${PROGRESSION.levelThresholds.length}: limite atual. ${data.maxHp} PV máximos. ${masteryNote}`
+      : `${data.maxHp} PV máximos. Faltam ${Math.max(0, data.nextLevelXp - data.xp)} XP para o nível ${data.level + 1}: +${data.nextLevelHpGain} PV e vida restaurada. ${masteryNote}`;
     const entries = Object.values(data.bestiary);
     this.dialog.querySelector('.records-research')!.textContent = `${entries.filter(e => e?.seen).length}/${Object.keys(SPECIES).length} espécies observadas · ${entries.filter(e => e && e.defeats > 0).length}/${Object.keys(SPECIES).length} estudadas`;
     for (const [id, card] of this.cards) {

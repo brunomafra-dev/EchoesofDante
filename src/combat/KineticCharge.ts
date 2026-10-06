@@ -1,4 +1,5 @@
 import { KINETIC_CHARGE } from '../config/game';
+import type { AbilityUpgradeId } from '../config/abilityUpgrades';
 import type { Vec2 } from '../utils/math';
 import { inShockwaveSweep } from './HitDetection';
 
@@ -19,12 +20,19 @@ export class KineticCharge {
   private lastWaveDistance = 0;
   private readonly hitTargets = new Set<ChargeTarget>();
 
+  constructor(private readonly upgradeRank: (id: AbilityUpgradeId) => number = () => 0) {}
+
+  get cooldown(): number { return KINETIC_CHARGE.cooldown; }
+  get waveHalfWidth(): number { return KINETIC_CHARGE.waveHalfWidth + this.upgradeRank('chargeWidth') * 12; }
+  get minDamage(): number { return KINETIC_CHARGE.minDamage + this.upgradeRank('chargePower') * 4; }
+  get maxDamage(): number { return KINETIC_CHARGE.maxDamage + this.upgradeRank('chargePower') * 6; }
+
   tick(now: number): void {
     if (this.phase === 'RELEASE' && now - this.releasedAt >= KINETIC_CHARGE.releaseDuration) this.phase = 'READY';
   }
 
   start(now: number): boolean {
-    if (this.phase !== 'READY' || now - this.lastReleasedAt < KINETIC_CHARGE.cooldown) return false;
+    if (this.phase !== 'READY' || now - this.lastReleasedAt < this.cooldown) return false;
     this.phase = 'CHARGING';
     this.startedAt = now;
     return true;
@@ -33,7 +41,7 @@ export class KineticCharge {
   release(now: number, aim: number, origin: Vec2): boolean {
     if (this.phase !== 'CHARGING') return false;
     this.releaseLevel = this.level(now);
-    this.damage = Math.round(KINETIC_CHARGE.minDamage + (KINETIC_CHARGE.maxDamage - KINETIC_CHARGE.minDamage) * this.releaseLevel);
+    this.damage = Math.round(this.minDamage + (this.maxDamage - this.minDamage) * this.releaseLevel);
     this.angle = aim;
     this.origin.x = origin.x;
     this.origin.y = origin.y;
@@ -62,7 +70,7 @@ export class KineticCharge {
     };
   }
 
-  getProgress(now: number): number { return Math.min(1, (now - this.lastReleasedAt) / KINETIC_CHARGE.cooldown); }
+  getProgress(now: number): number { return Math.min(1, (now - this.lastReleasedAt) / this.cooldown); }
 
   waveProgress(now: number): number {
     if (!Number.isFinite(this.releasedAt)) return 0;
@@ -84,7 +92,7 @@ export class KineticCharge {
       if (target.isDead || this.hitTargets.has(target)) continue;
       if (inShockwaveSweep(this.origin, this.angle, target.position,
         KINETIC_CHARGE.waveStart + this.lastWaveDistance, KINETIC_CHARGE.waveStart + to,
-        KINETIC_CHARGE.waveHalfWidth, KINETIC_CHARGE.waveThickness, target.radius)) {
+        this.waveHalfWidth, KINETIC_CHARGE.waveThickness, target.radius)) {
         this.hitTargets.add(target);
         hits.push(target);
       }

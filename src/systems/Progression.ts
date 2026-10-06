@@ -1,8 +1,12 @@
 import { PROGRESSION } from '../config/progression';
 import { ECHO_COUNT } from '../config/discovery';
 import { VALLEY_ROUTES } from '../config/valley';
+import { ABILITY_UPGRADE_MILESTONES, ABILITY_UPGRADES, type AbilityUpgradeId, type AbilityUpgradeRanks } from '../config/abilityUpgrades';
 
-export type ProgressionSnapshot = { xp: number; echoes: string[]; sourceLocated: boolean; passageOpen: boolean; rewardedHollows: number[]; rewardedRoutes: string[] };
+export type ProgressionSnapshot = { xp: number; echoes: string[]; sourceLocated: boolean; passageOpen: boolean;
+  rewardedHollows: number[]; rewardedRoutes: string[]; abilityUpgrades?: Partial<AbilityUpgradeRanks> };
+
+const UPGRADE_IDS = Object.keys(ABILITY_UPGRADES) as AbilityUpgradeId[];
 
 // GameScene retains this state across respawns; LocalJourney stores its snapshot.
 export class Progression {
@@ -13,10 +17,30 @@ export class Progression {
   passageOpen = false;
   private rewardedHollows = new Set<number>();
   readonly rewardedRoutes = new Set<string>();
+  private readonly ranks: AbilityUpgradeRanks = {
+    saberArc: 0, saberReach: 0, dashCooldown: 0, dashDuration: 0, chargeWidth: 0, chargePower: 0,
+  };
 
-  get maxHp(): number { return PROGRESSION.baseMaxHp + (this.level - 1) * PROGRESSION.maxHpPerLevel; }
+  get maxHp(): number {
+    const legacyLevels = Math.min(this.level - 1, PROGRESSION.legacyHpThroughLevel - 1);
+    const laterLevels = Math.max(0, this.level - PROGRESSION.legacyHpThroughLevel);
+    return PROGRESSION.baseMaxHp + legacyLevels * PROGRESSION.maxHpPerLevel + laterLevels * PROGRESSION.laterMaxHpPerLevel;
+  }
   get nextLevelXp(): number | null { return PROGRESSION.levelThresholds[this.level] ?? null; }
+  get nextLevelHpGain(): number { return this.level < PROGRESSION.legacyHpThroughLevel ? PROGRESSION.maxHpPerLevel : PROGRESSION.laterMaxHpPerLevel; }
+  get upgradePointsEarned(): number { return ABILITY_UPGRADE_MILESTONES.filter(milestone => this.level >= milestone).length; }
+  get upgradePointsSpent(): number { return UPGRADE_IDS.reduce((total, id) => total + this.ranks[id], 0); }
+  get upgradePointsAvailable(): number { return Math.max(0, this.upgradePointsEarned - this.upgradePointsSpent); }
+  get abilityUpgradeRanks(): Readonly<AbilityUpgradeRanks> { return this.ranks; }
   get signalSynchronized(): boolean { return this.echoes.size === ECHO_COUNT; }
+
+  upgradeRank(id: AbilityUpgradeId): number { return this.ranks[id]; }
+
+  investUpgrade(id: AbilityUpgradeId): boolean {
+    if (this.upgradePointsAvailable <= 0 || this.ranks[id] >= ABILITY_UPGRADES[id].maxRank) return false;
+    this.ranks[id]++;
+    return true;
+  }
 
   locateSource(): boolean {
     if (!this.signalSynchronized || this.sourceLocated) return false;
@@ -52,7 +76,8 @@ export class Progression {
 
   snapshot(): ProgressionSnapshot {
     return { xp: this.xp, echoes: [...this.echoes], sourceLocated: this.sourceLocated,
-      passageOpen: this.passageOpen, rewardedHollows: [...this.rewardedHollows], rewardedRoutes: [...this.rewardedRoutes] };
+      passageOpen: this.passageOpen, rewardedHollows: [...this.rewardedHollows], rewardedRoutes: [...this.rewardedRoutes],
+      abilityUpgrades: { ...this.ranks } };
   }
 
   restore(value: ProgressionSnapshot): void {
@@ -65,6 +90,15 @@ export class Progression {
     this.passageOpen = this.sourceLocated && value.passageOpen;
     this.rewardedHollows = new Set(value.rewardedHollows);
     this.rewardedRoutes.clear(); value.rewardedRoutes.forEach(id => this.rewardedRoutes.add(id));
+    for (const id of UPGRADE_IDS) {
+      const rank = value.abilityUpgrades?.[id];
+      this.ranks[id] = Number.isSafeInteger(rank) ? Math.max(0, Math.min(ABILITY_UPGRADES[id].maxRank, rank!)) : 0;
+    }
+    // Ignore malformed or pre-milestone ranks rather than granting upgrades for free.
+    let excess = Math.max(0, this.upgradePointsSpent - this.upgradePointsEarned);
+    for (const id of [...UPGRADE_IDS].reverse()) {
+      while (excess > 0 && this.ranks[id] > 0) { this.ranks[id]--; excess--; }
+    }
   }
 
   private award(amount: number): boolean {

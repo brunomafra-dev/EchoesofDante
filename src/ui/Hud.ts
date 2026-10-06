@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { KINETIC_CHARGE, VIEW_HEIGHT, VIEW_WIDTH } from '../config/game';
+import { KINETIC_CHARGE, PLAYER, VIEW_HEIGHT, VIEW_WIDTH } from '../config/game';
 import { ECHO_COUNT, NORTHERN_DISCOVERY } from '../config/discovery';
 import { PROGRESSION } from '../config/progression';
 import type { KineticPhase } from '../combat/KineticCharge';
@@ -89,17 +89,18 @@ export class Hud {
     this.deathGroup = [veil, frame, overline, title, subtitle, button, this.deathButtonText];
   }
 
-  update(hp: number, maxHp: number, dashProgress: number, chargeProgress: number, chargePhase: KineticPhase, chargeLevel: number): void {
+  update(hp: number, maxHp: number, dashProgress: number, chargeProgress: number, chargePhase: KineticPhase, chargeLevel: number,
+    dashCooldown: number = PLAYER.dashCooldown, chargeCooldown: number = KINETIC_CHARGE.cooldown): void {
     this.refreshTypography();
     this.hpFill.width = 196 * hp / maxHp;
     this.hpFill.setFillStyle(hp < maxHp * 0.3 ? 0xff6a4a : 0xa4c68b);
     this.hpText.setText(`${hp} / ${maxHp}`);
     this.dashFill.width = 196 * dashProgress;
     const dashKey = this.inputMethod === 'gamepad' ? '[RB]' : this.inputMethod === 'touch' ? '' : '[ESPAÇO]';
-    this.dashText.setText(`${dashKey} ESQUIVA · ${dashProgress >= 1 ? 'PRONTA' : `${((1 - dashProgress) * 1.7).toFixed(1)}s`}`.trim());
+    this.dashText.setText(`${dashKey} ESQUIVA · ${dashProgress >= 1 ? 'PRONTA' : `${((1 - dashProgress) * dashCooldown / 1000).toFixed(1)}s`}`.trim());
     this.dashText.setColor(dashProgress >= 1 ? '#b6c6b2' : '#8a9989');
     const chargeKey = this.inputMethod === 'gamepad' ? '[LT]' : this.inputMethod === 'touch' ? '' : '[Q]';
-    const chargeStatus = chargePhase === 'CHARGING' ? `${Math.round(chargeLevel * 100)}%` : chargePhase === 'RELEASE' ? 'ONDA' : chargeProgress >= 1 ? 'PRONTA' : `${((1 - chargeProgress) * KINETIC_CHARGE.cooldown / 1000).toFixed(1)}s`;
+    const chargeStatus = chargePhase === 'CHARGING' ? `${Math.round(chargeLevel * 100)}%` : chargePhase === 'RELEASE' ? 'ONDA' : chargeProgress >= 1 ? 'PRONTA' : `${((1 - chargeProgress) * chargeCooldown / 1000).toFixed(1)}s`;
     this.chargeText.setText(`${chargeKey} CARGA · ${chargeStatus}`.trim());
     this.chargeText.setColor(chargePhase === 'CHARGING' ? '#5fe6d8' : chargeProgress >= 1 ? '#b6c6b2' : '#8a9989');
   }
@@ -216,9 +217,9 @@ export class Hud {
     this.signalObjective.setText(exterior ? fragmentSeen ? 'SIGA A RESPOSTA' : 'INVESTIGUE O FRAGMENTO' : 'SIGA O SINAL');
   }
 
-  showLevelUp(level: number, _maxHp: number, gainedHp: number): void {
+  showLevelUp(level: number, _maxHp: number, gainedHp: number, upgradeAvailable = false): void {
     this.levelTimer?.remove(false);
-    this.levelMessage.setText(`NÍVEL ${level} · +${gainedHp} PV`).setVisible(true);
+    this.levelMessage.setText(`NÍVEL ${level} · +${gainedHp} PV${upgradeAvailable ? ' · APRIMORAMENTO' : ''}`).setVisible(true);
     this.levelTimer = this.scene.time.delayedCall(2000, () => this.levelMessage.setVisible(false));
   }
 

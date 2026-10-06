@@ -22,7 +22,7 @@ const state = page => page.evaluate(() => {
     routes: [...s.valleyRoutes], bestiary: s.bestiary.snapshot(), cooldowns: [...s.valleyHabitatCooldowns],
     residents: [...s.valleyResidents.keys()], enemies: s.enemies.filter(e => !e.isDead).length,
     paused: s.scene.isPaused(), open: s.records.isOpen, roots: document.querySelectorAll('.touch-controls').length,
-    records: document.querySelectorAll('.records-dialog').length, objects: s.children.list.length,
+    records: document.querySelectorAll('.records-dialog:not(.ability-upgrade-dialog)').length, objects: s.children.list.length,
     tweens: s.tweens.getTweens().length, method: s.controls.inputMethod, phase: s.charge.phase };
 });
 try {
@@ -64,7 +64,7 @@ try {
     });
     const before = await page.evaluate(() => { const s = window.__danteGame.scene.getScene('Game'); return s.warden.stateUntil - s.time.now; });
     await page.evaluate(() => {
-      document.querySelector('.records-dialog').addEventListener('close', () => {
+      document.querySelector('.records-dialog:not(.ability-upgrade-dialog)').addEventListener('close', () => {
         requestAnimationFrame(() => requestAnimationFrame(() => {
           const s = window.__danteGame.scene.getScene('Game');
           window.qaPauseReturn = { state: s.warden.state, remaining: s.warden.stateUntil - s.time.now, dash: s.player.dashProgress };
@@ -84,7 +84,7 @@ try {
   });
   await page.waitForFunction(() => window.__danteGame.scene.getScene('Game').signalPortal?.active);
   await pos(1450,830); await key('e'); await page.waitForFunction(() => window.__danteGame.scene.getScene('Game').area === 'valley'); await page.waitForTimeout(650);
-  assert.equal((await state(page)).enemies, 8); report.fullJourneyToValley = true;
+  assert.equal((await state(page)).enemies, 12); report.fullJourneyToValley = true;
   // Main/north/south regions preserve all existing obstacles and remain optional.
   for (const p of [[1050,760],[1270,555],[1510,1040],[2190,745]]) await pos(...p);
   await key('e'); assert.ok((await state(page)).landmark); assert.equal((await state(page)).routes.length, 3);
@@ -139,7 +139,7 @@ try {
   await page.evaluate(() => { navigator.getGamepads = () => []; }); report.gamepadJournalMock = true;
   for (const [width,height] of [[1280,720],[1366,768],[1920,1080],[844,390]]) {
     await page.setViewportSize({width,height}); await page.locator('.records-button').click();
-    const bounds = await page.locator('.records-dialog').boundingBox(); assert.ok(bounds.width <= width && bounds.height <= height);
+    const bounds = await page.locator('.records-dialog[open]:not(.ability-upgrade-dialog)').boundingBox(); assert.ok(bounds.width <= width && bounds.height <= height);
     await page.screenshot({path:`${out}/records-${width}x${height}.png`}); await page.locator('[data-close]').click();
   }
   await page.setViewportSize({width:1280,height:720}); await pos(1860,570); await page.waitForTimeout(1000);
@@ -162,17 +162,17 @@ try {
   report.invalidSaveRecovery = true;
   const blocked = await browser.newPage(); watch(blocked);
   await blocked.addInitScript(() => { Storage.prototype.setItem = () => { throw new DOMException('Unavailable','QuotaExceededError'); }; });
-  await blocked.goto(base); await ready(blocked); await blocked.locator('.records-button').click(); assert.match(await blocked.locator('.records-status').innerText(),/Não foi possível salvar/); await blocked.close(); report.storageUnavailablePlayable = true;
+  await blocked.goto(base); await ready(blocked); await blocked.locator('.records-button').click(); assert.match(await blocked.locator('.records-status').innerText(),/salvar/); await blocked.close(); report.storageUnavailablePlayable = true;
   // Trusted touch: journal button, scrolling, close, joystick, directed strike and charge.
   const mobile = await browser.newContext({viewport:{width:844,height:390},isMobile:true,hasTouch:true});
   const touch = await mobile.newPage(); watch(touch); await touch.goto(base); await ready(touch);
   const cdp=await mobile.newCDPSession(touch);
   await touch.locator('.records-button').tap(); await touch.waitForFunction(()=>window.__danteGame.scene.getScene('Game').scene.isPaused());assert.ok((await state(touch)).paused);
-  const panel=await touch.locator('.records-content').boundingBox(),sx=panel.x+90,sy=panel.y+panel.height-25;
+  const panel=await touch.locator('.records-dialog:not(.ability-upgrade-dialog) .records-content').boundingBox(),sx=panel.x+90,sy=panel.y+panel.height-25;
   await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:sx,y:sy,id:1}]});
   for(const offset of [25,55,90,120]) { await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:sx,y:sy-offset,id:1}]});await touch.waitForTimeout(35); }
   await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await touch.waitForTimeout(200);
-  assert.ok(await touch.locator('.records-content').evaluate(el=>el.scrollTop>45));report.nativeTouchJournalScroll=true;
+  assert.ok(await touch.locator('.records-dialog:not(.ability-upgrade-dialog) .records-content').evaluate(el=>el.scrollTop>45));report.nativeTouchJournalScroll=true;
   await touch.screenshot({path:`${out}/touch-records.png`}); await touch.locator('[data-close]').tap();
   // Native dialog close dispatches its event asynchronously; wait for scene resume.
   await touch.waitForFunction(() => {

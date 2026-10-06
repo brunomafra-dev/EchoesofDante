@@ -3,6 +3,7 @@ import type { SaberPose } from '../combat/Attack';
 import type { KineticPose } from '../combat/KineticCharge';
 import { Health } from '../combat/Health';
 import { PLAYER } from '../config/game';
+import type { AbilityUpgradeId } from '../config/abilityUpgrades';
 import { moveWithCollisions, type MovementBounds, type Obstacle } from '../systems/Movement';
 import { clamp, normalized, type Vec2 } from '../utils/math';
 import { EnergySaber } from './EnergySaber';
@@ -19,7 +20,6 @@ export class Player {
   readonly movementSpeed = PLAYER.speed;
   readonly attackDamage = PLAYER.attackDamage;
   readonly attackCooldown = PLAYER.attackCooldown;
-  readonly dashCooldown = PLAYER.dashCooldown;
   readonly radius = PLAYER.radius;
   readonly view: Phaser.GameObjects.Container;
   readonly weapon: EnergySaber;
@@ -57,7 +57,8 @@ export class Player {
   private dashVector: Vec2 = { x: 1, y: 0 };
   private invulnerableUntil = 0;
 
-  constructor(private scene: Phaser.Scene, x: number, y: number, maxHp: number = PLAYER.maxHp, private referencePresentation = false, paintedPresentation = false) {
+  constructor(private scene: Phaser.Scene, x: number, y: number, maxHp: number = PLAYER.maxHp, private referencePresentation = false,
+    paintedPresentation = false, private readonly upgradeRank: (id: AbilityUpgradeId) => number = () => 0) {
     this.health = new Health(maxHp);
     this.position = { x, y };
     this.shadow = scene.add.ellipse(x, y + 39, 57, 16, 0x020e14, 0.39).setDepth(y - 3);
@@ -130,14 +131,16 @@ export class Player {
 
   get hp(): number { return this.health.current; }
   get maxHp(): number { return this.health.max; }
-  get dashReady(): boolean { return !this.isDead && this.scene.time.now - this.lastDashAt >= PLAYER.dashCooldown; }
-  get dashProgress(): number { return clamp((this.scene.time.now - this.lastDashAt) / PLAYER.dashCooldown, 0, 1); }
+  get dashCooldown(): number { return PLAYER.dashCooldown - this.upgradeRank('dashCooldown') * 120; }
+  get dashDuration(): number { return PLAYER.dashDuration + this.upgradeRank('dashDuration') * 20; }
+  get dashReady(): boolean { return !this.isDead && this.scene.time.now - this.lastDashAt >= this.dashCooldown; }
+  get dashProgress(): number { return clamp((this.scene.time.now - this.lastDashAt) / this.dashCooldown, 0, 1); }
   get invulnerable(): boolean { return this.isDashing || this.scene.time.now < this.invulnerableUntil; }
 
   startDash(now: number, input: Vec2): boolean {
-    if (this.isDead || now - this.lastDashAt < PLAYER.dashCooldown) return false;
+    if (this.isDead || now - this.lastDashAt < this.dashCooldown) return false;
     this.lastDashAt = now;
-    this.dashUntil = now + PLAYER.dashDuration;
+    this.dashUntil = now + this.dashDuration;
     this.isDashing = true;
     this.dashVector = input.x || input.y ? { ...input } : { x: Math.cos(this.rotation), y: Math.sin(this.rotation) };
     this.invulnerableUntil = this.dashUntil + 80;

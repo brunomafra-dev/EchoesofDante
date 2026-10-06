@@ -38,7 +38,7 @@ try {
   // Compare authored states at every supported viewport; all text must fit the canvas.
   report.layouts=[];
   for(const area of ['forest','cavern','valley','warden']){
-    await page.evaluate(area=>{const s=window.__danteGame.scene.getScene('Game');s.area=area;s.wardenDefeated=area==='valley';s.valleyVisited=true;s.valleyCheckpointReached=true;s.progression.xp=400;s.progression.level=4;s.scene.restart();},area);
+    await page.evaluate(area=>{const s=window.__danteGame.scene.getScene('Game');s.area=area;s.wardenDefeated=area==='valley';s.valleyVisited=true;s.valleyCheckpointReached=true;s.progression.xp=400;s.progression.level=4;s.progression.investUpgrade('saberArc');s.scene.restart();},area);
     await page.waitForTimeout(850);
     if(area==='warden') await page.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');s.warden.introduced=true;s.warden.setState('RECOVER',s.time.now,60000);});
     for(const [width,height]of[[1280,720],[1366,768],[1920,1080],[844,390]]){
