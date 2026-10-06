@@ -7,7 +7,8 @@ export const JOURNEY_KEY = 'echoes-of-dante.journey.v1';
 export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSeen', 'deepCavernEntered',
   'deepEndSeen', 'deeperEntered', 'exteriorEntered', 'fragmentSeen', 'approachSeen', 'firstEchoSeen',
   'wardenReached', 'wardenGateOpen', 'wardenDefeated', 'wardenEndingSeen', 'valleyVisited',
-  'valleyLandmarkSeen', 'valleyEndSeen', 'valleyCheckpointReached'] as const;
+  'valleyLandmarkSeen', 'valleyEndSeen', 'valleyCheckpointReached', 'valleyFrontierReached',
+  'valleyFrontierSignalSeen', 'valleyFrontierEndSeen'] as const;
 export type JourneyArea = 'forest' | 'cavern' | 'warden' | 'valley';
 export type JourneyFlags = Record<typeof JOURNEY_FLAGS[number], boolean>;
 export type JourneySnapshot = {
@@ -45,7 +46,8 @@ export class LocalJourney {
       flags.wardenDefeated &&= flags.wardenGateOpen;
       flags.wardenEndingSeen &&= flags.wardenDefeated;
       if (flags.firstEchoSeen) { flags.fragmentSeen = true; flags.exteriorEntered = true; }
-      if (!flags.wardenDefeated) for (const key of ['valleyVisited', 'valleyLandmarkSeen', 'valleyEndSeen', 'valleyCheckpointReached'] as const) flags[key] = false;
+      if (!flags.wardenDefeated) for (const key of ['valleyVisited', 'valleyLandmarkSeen', 'valleyEndSeen', 'valleyCheckpointReached',
+        'valleyFrontierReached', 'valleyFrontierSignalSeen', 'valleyFrontierEndSeen'] as const) flags[key] = false;
       const area: JourneyArea = raw.area === 'valley' && flags.wardenDefeated ? 'valley'
         : raw.area === 'warden' && flags.wardenGateOpen ? 'warden'
         : raw.area !== 'forest' && passageOpen ? 'cavern' : 'forest';

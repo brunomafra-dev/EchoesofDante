@@ -190,8 +190,8 @@ export class Hud {
     this.areaSubtitle.setText('Domínio do Guardião');
   }
 
-  setValleyArea(): void {
-    this.areaSubtitle.setText('Vale da Ressonância');
+  setValleyArea(frontier = false): void {
+    this.areaSubtitle.setText(frontier ? 'Escarpa da Ressonância' : 'Vale da Ressonância');
   }
 
   setContinuationArea(exterior: boolean, fragmentSeen: boolean, firstEchoSeen = false): void {

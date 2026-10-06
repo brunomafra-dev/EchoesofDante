@@ -55,7 +55,11 @@ export class GameScene extends Phaser.Scene {
   private valleyLandmarkSeen = false;
   private valleyEndSeen = false;
   private valleyCheckpointReached = false;
+  private valleyFrontierReached = false;
+  private valleyFrontierSignalSeen = false;
+  private valleyFrontierEndSeen = false;
   private returnFromValley = false;
+  private returnToValleyPortal = false;
   private cavern?: CavernArea;
   private wardenArena?: WardenArena;
   private warden?: Warden;
@@ -211,9 +215,15 @@ export class GameScene extends Phaser.Scene {
       this.arena = this.cavern;
       this.movementBounds = this.arena.bounds;
     }
-    const entry = this.area === 'forest' ? FOREST_ENTRY : this.area === 'valley' ? this.valleyCheckpointReached ? VALLEY.checkpoint : VALLEY.entry : this.area === 'warden' ? this.returnFromValley ? { x: 1420, y: 830 } : { x: 650, y: 760 } : this.returnToThreshold ? { x: 6060, y: 740 } : this.firstEchoSeen ? W.respawn : this.exteriorEntered ? EXPANSION.exteriorRespawn : this.deeperEntered ? EXPANSION.deeperRespawn : this.deepCavernEntered ? DEEP_AREA.entry : CAVERN_ENTRY;
+    const entry = this.area === 'forest' ? FOREST_ENTRY : this.area === 'valley'
+      ? this.returnToValleyPortal ? VALLEY.entry : this.valleyFrontierReached ? VALLEY.frontier.checkpoint : this.valleyCheckpointReached ? VALLEY.checkpoint : VALLEY.entry
+      : this.area === 'warden' ? this.returnFromValley ? { x: 1420, y: 830 } : { x: 650, y: 760 }
+      : this.returnToThreshold ? { x: 6060, y: 740 } : this.firstEchoSeen ? W.respawn
+      : this.exteriorEntered ? EXPANSION.exteriorRespawn : this.deeperEntered ? EXPANSION.deeperRespawn
+      : this.deepCavernEntered ? DEEP_AREA.entry : CAVERN_ENTRY;
     this.returnToThreshold = false;
     this.returnFromValley = false;
+    this.returnToValleyPortal = false;
     this.player = new Player(this, entry.x, entry.y, this.progression.maxHp, this.qualityReference === 'reference',
       this.qualityReference !== 'baseline' && !this.originalWarrior);
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
@@ -258,7 +268,7 @@ export class GameScene extends Phaser.Scene {
     this.updateProgressHud();
     this.hud.setSignalObjective(this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen, this.area === 'cavern', this.cavernDepthSeen, this.deepAreaSeen);
     if (this.area === 'warden') this.hud.setWardenArea();
-    if (this.area === 'valley') this.hud.setValleyArea();
+    if (this.area === 'valley') this.hud.setValleyArea(this.valleyFrontierReached);
     this.inDeepCavern = this.area === 'cavern' && this.deepCavernEntered;
     if (this.area === 'cavern') this.hud.setCavernDepth(this.inDeepCavern);
     this.continuationRegion = this.exteriorEntered ? 'exterior' : this.deeperEntered ? 'deeper' : 'deep';
@@ -328,6 +338,7 @@ export class GameScene extends Phaser.Scene {
     const nearWardenExit = this.area === 'warden' && this.wardenDefeated && !this.player.isDead && distance(this.player.position, { x: 540, y: 760 }) < 115;
     const nearPortal = this.signalPortal?.canTraverse(this.player.position, this.player.isDead) ?? false;
     const nearValleyLandmark = this.valley?.canInvestigate(this.player.position, this.player.isDead, this.valleyLandmarkSeen) ?? false;
+    const nearValleyFrontierSignal = this.valley?.canInvestigateFrontier(this.player.position, this.player.isDead, this.valleyFrontierSignalSeen) ?? false;
     if (nearDiscovery && interact) {
       const wasSynchronized = this.progression.signalSynchronized;
       nearbyEcho.activate();
@@ -393,6 +404,11 @@ export class GameScene extends Phaser.Scene {
       this.valley?.respond();
       this.hud.showDiscovery('RESPOSTA DO OUTRO LADO\nO SINAL ATRAVESSOU COM VOCÊ');
       this.sounds.signal();
+    } else if (interact && nearValleyFrontierSignal) {
+      this.valleyFrontierSignalSeen = true;
+      this.valley?.respondFrontier();
+      this.hud.showDiscovery('ECO RECENTE\nORIGEM: ALÉM DA ESCARPA');
+      this.sounds.signal();
     } else if (interact && nearWardenExit) {
       this.transitionArea('cavern');
       return;
@@ -402,7 +418,7 @@ export class GameScene extends Phaser.Scene {
         ? 'MECANISMO INATIVO\nInvestigue a fissura ao lado primeiro.'
         : 'MECANISMO INATIVO\nEncontre e investigue os 3 Ecos.');
     }
-    const canInteract = nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearValleyLandmark;
+    const canInteract = nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearValleyLandmark || nearValleyFrontierSignal;
     if (interact) this.saveProgress();
     this.hud.setDiscoveryPrompt(canInteract);
     this.controls.setInteractAvailable(canInteract);
@@ -483,6 +499,13 @@ export class GameScene extends Phaser.Scene {
     if (this.area === 'valley') {
       this.renewValleyHabitats();
       if (this.player.position.x >= 1800 && !this.valleyCheckpointReached) { this.valleyCheckpointReached = true; this.saveProgress(); }
+      if (this.player.position.x >= VALLEY.frontier.threshold.x && !this.valleyFrontierReached) {
+        this.valleyFrontierReached = true;
+        this.hud.setValleyArea(true);
+        this.hud.showDiscovery('ESCARPA DA RESSONÂNCIA\nO SINAL SE ESTENDE A LESTE');
+        this.sounds.signal();
+        this.saveProgress();
+      }
       for (const route of VALLEY_ROUTES) if ((!this.valleyRoutes.has(route.id) || !this.progression.rewardedRoutes.has(route.id)) && distance(this.player.position, route) < route.radius) {
         this.valleyRoutes.add(route.id);
         const reward = this.progression.discoverValleyRoute(route.id);
@@ -497,6 +520,13 @@ export class GameScene extends Phaser.Scene {
         this.valleyEndSeen = true;
         this.sounds.signal();
         this.hud.showDiscovery('O SINAL SEGUE ADIANTE\nHÁ OUTRO CAMINHO ALÉM DAS ROCHAS');
+        this.saveProgress();
+      }
+      if (!this.valleyFrontierEndSeen && this.valleyFrontierSignalSeen &&
+        distance(this.player.position, VALLEY.frontier.end) < VALLEY.frontier.end.radius) {
+        this.valleyFrontierEndSeen = true;
+        this.sounds.signal();
+        this.hud.showDiscovery('O SINAL SEGUE ALÉM\nORIGEM: DESCONHECIDA');
         this.saveProgress();
       }
       return;
@@ -622,6 +652,25 @@ export class GameScene extends Phaser.Scene {
             instruction: 'Retorne ao domínio do guardião.', action: 'investigate' }, this.hud);
         return;
       }
+      if (this.valleyFrontierReached) {
+        if (!this.valleyFrontierSignalSeen) {
+          this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
+            'SIGA O ECO', { ...VALLEY.frontier.signal, name: 'Estrutura de escuta', instruction: 'Aproxime-se da resposta violeta.', action: 'investigate' }, this.hud);
+        } else if (!this.valleyFrontierEndSeen) {
+          this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
+            'SIGA A RESSONÂNCIA', { ...VALLEY.frontier.end, name: 'Fenda na escarpa', instruction: 'O sinal aponta para além das rochas.', action: 'walk' }, this.hud);
+        } else {
+          this.explorationGuide.hide();
+          this.hud.setExplorationGuide('O CAMINHO SEGUE ADIANTE', 'A escarpa ainda esconde o destino do sinal.', 'O portal a oeste permite retornar.');
+        }
+        return;
+      }
+      if (this.valleyEndSeen) {
+        this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
+          'EXPLORE ALÉM DAS ROCHAS', { ...VALLEY.frontier.threshold, radius: 115, name: 'Passagem na crista',
+            instruction: 'Siga pelo vão entre as formações.', action: 'walk' }, this.hud);
+        return;
+      }
       const unexplored = VALLEY_ROUTES.filter(route => !this.valleyRoutes.has(route.id) || !this.progression.rewardedRoutes.has(route.id));
       if (this.valleyLandmarkSeen && unexplored.length) {
         const next = unexplored.reduce((a, b) => distance(this.player.position, a) <= distance(this.player.position, b) ? a : b);
@@ -719,6 +768,7 @@ export class GameScene extends Phaser.Scene {
     this.transferHp = this.player.hp;
     this.returnToThreshold = area === 'cavern';
     this.returnFromValley = this.area === 'valley' && area === 'warden';
+    this.returnToValleyPortal = this.area === 'warden' && area === 'valley';
     this.cameras.main.fadeOut(220, 5, 15, 20);
     this.time.delayedCall(240, () => { this.area = area; this.saveProgress(); this.scene.restart(); });
   }

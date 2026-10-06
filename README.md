@@ -52,7 +52,7 @@ A [preparação para o Warden](docs/warden-preparation/) acrescenta o **Primeiro
 
 O [Warden](docs/warden-boss/) ocupa uma nova área **depois do limiar do guardião**. Investigar e atravessar a passagem leva à sua bacia mineral. O primeiro boss possui três fases, cinco padrões com avisos e janelas de recuperação, retorno seguro após morrer e uma transmissão fragmentada após a vitória. Usa as armas, controles e progressão existentes; a recompensa é narrativa.
 
-Após a vitória, o portal do sinal leva ao [Vale da Ressonância](docs/resonance-valley/): uma região exterior própria com desvio mineral, oito moradores de dois arquétipos, uma resposta ancestral e indicação de continuidade. A travessia preserva HP e progresso; o portal também permite voltar. Não exige limpar a área. No touch, o movimento começa numa área ampla à esquerda, reposiciona a base e mantém o arrasto capturado mesmo além do círculo.
+Após a vitória, o portal do sinal leva ao [Vale da Ressonância](docs/resonance-valley/). A [Expansão 03](docs/expansion-sprint-03/) prolonga essa mesma travessia até a Escarpa da Ressonância: um desvio em duas rotas, novos encontros com os habitantes do Vale e uma resposta que aponta para além de Dante. Não exige limpar inimigos; o progresso e o checkpoint local persistem. O caminho oriental marca o limite atual, não o fim do mundo.
 
 Os nomes acima das criaturas usam o estilo aprovado no vale: Rastejante Hollow, Saltador e Cuspidor também são identificados ao preparar um ataque ou receber dano. O Warden possui nome sobre o corpo durante o encontro, além de sua barra existente. Textos acompanham a posição sem girar com a criatura e desaparecem na morte.
 
@@ -119,13 +119,13 @@ A música de exploração usa dois loops instrumentais curtos e originais, Fores
 
 ## Limitações conhecidas
 
-- O percurso segue da Forest ao Warden e ao Vale da Ressonância; o caminho além do vale ainda não é explorável.
+- O percurso agora continua do Vale até a Escarpa da Ressonância. O sinal aponta além do limite oriental, que permanece fechado para expansão futura.
 - O nível está limitado a 5. O save pertence ao navegador/dispositivo, sem conta, nuvem ou recuperação após limpar os dados do site. Quando o armazenamento está indisponível, o jogo continua e os Registros informam a falha.
 - A onda usa uma faixa frontal móvel e não tem interação especial com rochas. Seus valores e a naturalidade das poses do braço ainda precisam de avaliação humana em combate.
 - HUD e Energy Saber receberam apenas o feedback necessário para a habilidade; sua arte base, Mineral Pulse, First Discovery e parte do terreno ainda são provisórios.
 - Touch e gamepad foram validados em emulação de navegador; conforto e compatibilidade em dispositivos físicos ainda exigem playtest. Não há suporte oficial a navegadores de console, builds nativas, remapeamento de botões ou menu de volume.
 - Os temas musicais são protótipos instrumentais. Vocal atmosférico, mixagem final e camadas adaptativas de combate/descoberta permanecem para avaliação futura.
-- Forest e Cavern mantêm moradores reconstruídos ao reiniciar a cena, com XP único por habitat salvo. Apenas os oito habitats do Vale têm renovação por intervalo e XP por novo morador.
+- Forest e Cavern mantêm moradores reconstruídos ao reiniciar a cena, com XP único por habitat salvo. Os doze habitats do Vale e da Escarpa têm renovação por intervalo e XP por novo morador.
 - Troncos, totens e bases estruturais possuem colisores circulares simples; copas, vegetação baixa, raízes e pequenos detalhes continuam atravessáveis. A classificação e a auditoria estão em [Environmental Collision Audit](docs/ENVIRONMENT_COLLISION_AUDIT.md).
 - A IA mantém perseguição direta, sem navegação por caminhos; Hollows podem ficar presos em rochas ao perseguir fora das trilhas.
 - A câmera e a arte usam visão superior 2D, sem profundidade isométrica real.
