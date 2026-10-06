@@ -23,6 +23,8 @@ export const SIROCCO_ENCOUNTERS = [
   { id: 1005, kind: 'dunePouncer', x: 2490, y: 665 },
 ] as const;
 
+export const SIROCCO_RENEWAL = { delayMs: 90_000, safeDistance: 480 } as const;
+
 export const SIROCCO_ROCKS: readonly Obstacle[] = [
   { x: 690, y: 480, radius: 48 }, { x: 1010, y: 970, radius: 55 },
   { x: 1190, y: 735, radius: 47 }, { x: 1510, y: 510, radius: 62 },

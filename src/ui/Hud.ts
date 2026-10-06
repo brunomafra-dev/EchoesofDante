@@ -169,6 +169,14 @@ export class Hud {
     this.experienceTimer = this.scene.time.delayedCall(1200, () => this.experienceText.setVisible(false));
   }
 
+  showCombatExperience(x: number, y: number, amount: number): void {
+    const reward = this.scene.add.text(x, y - 40, `+${amount} XP`, {
+      fontFamily: 'Barlow Condensed, sans-serif', fontSize: '16px', fontStyle: 'bold', color: '#ffdb9b',
+      stroke: '#1a1710', strokeThickness: 3, shadow: { offsetX: 0, offsetY: 2, color: '#030807', blur: 4, fill: true },
+    }).setOrigin(0.5).setDepth(15002);
+    this.scene.tweens.add({ targets: reward, y: y - 72, alpha: 0, duration: 1450, ease: 'Sine.Out', onComplete: () => reward.destroy() });
+  }
+
   setSignalObjective(synchronized: boolean, sourceLocated: boolean, passageOpen = false, inCavern = false, depthSeen = false, deepAreaSeen = false): void {
     this.signalObjective.setVisible(true);
     this.areaSubtitle.setText(inCavern ? 'Caverna de Dante' : 'Floresta de Dante');

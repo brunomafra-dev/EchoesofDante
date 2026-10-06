@@ -1,5 +1,6 @@
 import { ECHO_COUNT, FOREST_ECHOES } from '../config/discovery';
 import { VALLEY_ENCOUNTERS, VALLEY_ROUTES } from '../config/valley';
+import { SIROCCO_ENCOUNTERS } from '../config/sirocco';
 import type { BestiarySnapshot } from './Bestiary';
 import type { ProgressionSnapshot } from './Progression';
 import type { AbilityUpgradeRanks } from '../config/abilityUpgrades';
@@ -15,7 +16,7 @@ export type JourneyFlags = Record<typeof JOURNEY_FLAGS[number], boolean>;
 export type JourneySnapshot = {
   schema: 1; updatedAt: number; area: JourneyArea; hp: number;
   progression: ProgressionSnapshot; flags: JourneyFlags;
-  bestiary: BestiarySnapshot; valleyRoutes: string[]; valleyHabitats: [number, number][];
+  bestiary: BestiarySnapshot; valleyRoutes: string[]; valleyHabitats: [number, number][]; aridHabitats: [number, number][];
 };
 
 const object = (value: unknown): Record<string, unknown> | undefined =>
@@ -60,6 +61,10 @@ export class LocalJourney {
       if (Array.isArray(raw.valleyHabitats)) for (const entry of raw.valleyHabitats.slice(0, VALLEY_ENCOUNTERS.length)) {
         if (Array.isArray(entry) && VALLEY_ENCOUNTERS.some(h => h.id === entry[0]) && integer(entry[1], 8_640_000_000_000_000)) habitats.push([entry[0], entry[1]]);
       }
+      const aridHabitats: [number, number][] = [];
+      if (Array.isArray(raw.aridHabitats)) for (const entry of raw.aridHabitats.slice(0, SIROCCO_ENCOUNTERS.length)) {
+        if (Array.isArray(entry) && SIROCCO_ENCOUNTERS.some(h => h.id === entry[0]) && integer(entry[1], 8_640_000_000_000_000)) aridHabitats.push([entry[0], entry[1]]);
+      }
       this.status = 'Progresso recuperado deste navegador.';
       return { schema: 1, updatedAt: integer(raw.updatedAt, 8_640_000_000_000_000) ? raw.updatedAt : 0, area, hp: raw.hp,
         progression: { xp: p.xp, echoes, sourceLocated: echoes.length === ECHO_COUNT && p.sourceLocated === true,
@@ -67,7 +72,7 @@ export class LocalJourney {
           rewardedRoutes: Array.isArray(p.rewardedRoutes) ? p.rewardedRoutes.filter((id): id is string =>
             typeof id === 'string' && VALLEY_ROUTES.some(route => route.id === id)) : [],
           abilityUpgrades: object(p.abilityUpgrades) as Partial<AbilityUpgradeRanks> | undefined },
-        flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats };
+        flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats };
     } catch {
       this.status = 'Não foi possível ler o progresso local. O jogo continua disponível.';
       return undefined;

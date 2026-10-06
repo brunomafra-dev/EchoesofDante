@@ -23,7 +23,7 @@ A Bacia do Siroco é uma área separada de 3000 × 1500 unidades, conectada por 
 - **Rasga-areia:** criatura de aproximação rápida, que baixa o corpo e salta em uma linha anunciada.
 - **Cuspidor vítreo:** criatura mineralizada que recua, fixa a direção durante o preparo e dispara um projétil âmbar.
 
-Os dois usam o contrato atual de inimigos, HP, dano, reação, bestiário e XP. Os seis habitantes têm IDs estáveis; uma derrota não concede XP repetido depois de recarregar a região. As criaturas não bloqueiam a saída nem o relé.
+Os dois usam o contrato atual de inimigos, HP, dano, reação, bestiário e XP. Cada derrota concede **15 XP**, indicado por um `+15 XP` curto junto ao corpo da criatura. Os seis habitats retornam seus moradores após **90 segundos**, quando o jogador está a pelo menos **480 unidades** do habitat; o intervalo fica salvo no navegador e resiste a recarga, morte e travessia do portal. As criaturas não bloqueiam a saída nem o relé.
 
 ## Progressão
 
@@ -39,7 +39,7 @@ O portal usa o asset ancestral já existente, em escala reduzida e em uma camada
 
 [`qa-sirocco-expansion.mjs`](../../scripts/qa-sirocco-expansion.mjs) exercita conclusão da missão, abertura e travessia do portal, inimigos, ganho de XP e nível, relé, recarga, persistência, respawn, retorno e Gamepad API mock. Capturas automatizadas e medições ficam em [`qa/`](qa/).
 
-Validação headless: zero erros de JavaScript/rede; fluxo de missão, portal, região, relé, XP/nível, reload e respawn passaram. Na medição mais recente, a Bacia ficou em média a **60,3 FPS** (mínimo 60,2), com três RenderTextures estáticas, dois tweens reutilizados e 79 objetos após os dois alvos de QA serem derrotados. O teste de regressão do Vale marcou média de **57,4 FPS** (mínimo 56,0), com 153 objetos e quatro RenderTextures. Foram verificadas as viewports 1280×720, 1366×768, 1920×1080 e 844×390; entrada por teclado, mock de Gamepad API e botão contextual touch **ENTRAR** passaram. A regressão touch existente também passou. Nenhum telefone ou gamepad físico foi usado nesta expansão.
+Validação headless: zero erros de JavaScript/rede; fluxo de missão, portal, região, relé, XP/nível, renovação após recarga e respawn passaram. Na medição mais recente, a Bacia ficou em média a **60,0 FPS** (mínimo 59,8), com três RenderTextures estáticas, dois tweens e 79 objetos após os dois alvos de QA serem derrotados. O teste de regressão do Vale marcou média de **57,4 FPS** (mínimo 55,2), com 153 objetos e quatro RenderTextures. Foram verificadas as viewports 1280×720, 1366×768, 1920×1080 e 844×390; entrada por teclado, mock de Gamepad API e botão contextual touch **ENTRAR** passaram. A regressão touch existente também passou. Nenhum telefone ou gamepad físico foi usado nesta expansão.
 
 O teste usa posicionamento de desenvolvimento para encurtar a jornada anterior; isso não substitui a avaliação humana do caminho até a Escarpa, da escala do novo bioma e da leitura dos dois habitantes em combate. Nenhum teste físico de telefone ou gamepad foi feito nesta expansão.
 

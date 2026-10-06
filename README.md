@@ -14,6 +14,10 @@ O [Visual Rendering Prototype 01](docs/visual-rendering-prototype-01/) compara G
 
 Depois de concluir a Escarpa da Ressonância, o jogador recebe **MISSÃO CONCLUÍDA** e atravessa um portal para uma área árida independente. A Bacia do Siroco tem terreno, habitantes e relé ancestral próprios; dois novos arquétipos usam a IA, o combate, o bestiário e o XP existentes. A expedição pode ser interrompida e retomada pelo portal, com progresso salvo no navegador. [Visão geral, arte e QA](docs/expansion-sprint-04/).
 
+## XP dos habitantes do Siroco · 0.1.55
+
+Cada criatura derrotada concede **15 XP**, exibidos brevemente sobre ela. Os habitantes retornam após **90 segundos**, quando o Guerreiro estiver a pelo menos **480 unidades** do habitat; o intervalo persiste após recarga, morte e travessia do portal. Assim, criaturas reaparecidas continuam recompensando a luta sem surgir ao lado do jogador.
+
 ## Progressão e especializações · 0.1.54
 
 O limite agora é **nível 10**. Os níveis 4, 6, 8 e 10 concedem uma escolha entre aperfeiçoar Sabre, Dash ou Carga Cinética; cada opção tem dois graus e modifica uma propriedade do kit existente. Saves anteriores são mantidos e recebem pontos compatíveis com o XP atual. [Regras, compatibilidade e QA](docs/progression-specializations/).

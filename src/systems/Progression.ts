@@ -66,7 +66,7 @@ export class Progression {
     return { awarded: true, leveledUp: this.award(PROGRESSION.hollowXp) };
   }
 
-  defeatValleyResident(): boolean { return this.award(PROGRESSION.hollowXp); }
+  defeatRenewableResident(): boolean { return this.award(PROGRESSION.hollowXp); }
 
   discoverValleyRoute(id: string): { awarded: boolean; leveledUp: boolean } {
     if (this.rewardedRoutes.has(id) || !VALLEY_ROUTES.some(route => route.id === id)) return { awarded: false, leveledUp: false };

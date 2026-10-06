@@ -4,7 +4,6 @@ import { applyDamage } from '../combat/Damage';
 import { KineticCharge } from '../combat/KineticCharge';
 import { PLAYER, CRAWLER, KINETIC_CHARGE, WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
 import { PROGRESSION } from '../config/progression';
-import { SPECIES } from '../config/bestiary';
 import { FOREST_ENTRY, FOREST_PATROLS, FOREST_SPAWNS } from '../config/forest';
 import { CAVERN_DEPTH_OPENING, CAVERN_ENTRY, CAVERN_HOLLOWS, DEEP_AREA, DEEP_HOLLOWS } from '../config/cavern';
 import { FOREST_ECHOES, NORTHERN_DISCOVERY, SIGNAL_THRESHOLD } from '../config/discovery';
@@ -18,7 +17,7 @@ import { Warden, type WardenCue, type WardenAttack } from '../entities/Warden';
 import { WardenArena } from '../systems/WardenArena';
 import { WardenHud } from '../ui/WardenHud';
 import { VALLEY, VALLEY_ENCOUNTERS, VALLEY_RENEWAL, VALLEY_ROUTES } from '../config/valley';
-import { SIROCCO, SIROCCO_ENCOUNTERS } from '../config/sirocco';
+import { SIROCCO, SIROCCO_ENCOUNTERS, SIROCCO_RENEWAL } from '../config/sirocco';
 import type { SpeciesId } from '../config/bestiary';
 import { Bestiary } from '../systems/Bestiary';
 import { LocalJourney, JOURNEY_FLAGS, type JourneyFlags } from '../systems/LocalJourney';
@@ -110,6 +109,8 @@ export class GameScene extends Phaser.Scene {
   private readonly valleyRoutes = new Set<string>();
   private readonly valleyHabitatCooldowns = new Map<number, number>();
   private readonly valleyResidents = new Map<number, Enemy>();
+  private readonly siroccoHabitatCooldowns = new Map<number, number>();
+  private readonly siroccoResidents = new Map<number, Enemy>();
   private records!: RecordsPanel;
   private abilityUpgradeDialog?: AbilityUpgradeDialog;
   private recordsPausedAt = 0;
@@ -179,6 +180,7 @@ export class GameScene extends Phaser.Scene {
     this.enemies = [];
     this.enemySpecies = new WeakMap();
     this.valleyResidents.clear();
+    this.siroccoResidents.clear();
     this.spawnedEncounters.clear();
     this.hollowSpawnIds.clear();
     this.transitioning = false;
@@ -266,12 +268,7 @@ export class GameScene extends Phaser.Scene {
     if (this.area === 'valley') for (const habitat of VALLEY_ENCOUNTERS) {
       this.spawnValleyResident(habitat);
     }
-    if (this.area === 'arid') SIROCCO_ENCOUNTERS.forEach(habitat => {
-      const enemy = new DanteCreature(this, habitat.kind, habitat.x, habitat.y);
-      this.enemies.push(enemy);
-      this.enemySpecies.set(enemy, habitat.kind);
-      this.hollowSpawnIds.set(enemy, habitat.id);
-    });
+    if (this.area === 'arid') for (const habitat of SIROCCO_ENCOUNTERS) this.spawnSiroccoResident(habitat);
     this.hud = new Hud(this, () => this.restart());
     if (this.qualityReference === 'reference') this.referenceImpacts = new ReferenceImpacts(this);
     this.explorationGuide = new ExplorationGuide(this);
@@ -552,6 +549,7 @@ export class GameScene extends Phaser.Scene {
       return;
     }
     if (this.area === 'arid') {
+      this.renewSiroccoHabitats();
       return;
     }
     if (this.area === 'valley') {
@@ -920,16 +918,20 @@ export class GameScene extends Phaser.Scene {
         const spawnIndex = this.hollowSpawnIds.get(enemy);
         if (spawnIndex !== undefined) {
           const isValley = this.area === 'valley' && this.valleyResidents.get(spawnIndex) === enemy;
-          const reward = isValley
-            ? { awarded: true, leveledUp: this.progression.defeatValleyResident() }
+          const isSirocco = this.area === 'arid' && this.siroccoResidents.get(spawnIndex) === enemy;
+          const reward = isValley || isSirocco
+            ? { awarded: true, leveledUp: this.progression.defeatRenewableResident() }
             : this.progression.defeatHollow(spawnIndex);
           if (isValley) {
             this.valleyResidents.delete(spawnIndex);
             this.valleyHabitatCooldowns.set(spawnIndex, Date.now() + VALLEY_RENEWAL.delayMs);
+          } else if (isSirocco) {
+            this.siroccoResidents.delete(spawnIndex);
+            this.siroccoHabitatCooldowns.set(spawnIndex, Date.now() + SIROCCO_RENEWAL.delayMs);
           }
           if (reward.awarded) {
             this.updateProgressHud();
-            this.hud.showExperience(PROGRESSION.hollowXp, species ? SPECIES[species].name.toLocaleUpperCase('pt-BR') : 'COMBATE');
+            this.hud.showCombatExperience(enemy.position.x, enemy.position.y, PROGRESSION.hollowXp);
           }
           if (reward.leveledUp) this.levelUp();
           this.hollowSpawnIds.delete(enemy);
@@ -1106,10 +1108,30 @@ export class GameScene extends Phaser.Scene {
     return true;
   }
 
+  private spawnSiroccoResident(habitat: typeof SIROCCO_ENCOUNTERS[number]): boolean {
+    if (this.siroccoResidents.has(habitat.id)) return false;
+    const readyAt = this.siroccoHabitatCooldowns.get(habitat.id);
+    if (readyAt !== undefined && (Date.now() < readyAt || distance(this.player.position, habitat) < SIROCCO_RENEWAL.safeDistance)) return false;
+    const enemy = new DanteCreature(this, habitat.kind, habitat.x, habitat.y);
+    this.enemies.push(enemy);
+    this.enemySpecies.set(enemy, habitat.kind);
+    this.hollowSpawnIds.set(enemy, habitat.id);
+    this.siroccoResidents.set(habitat.id, enemy);
+    this.siroccoHabitatCooldowns.delete(habitat.id);
+    return true;
+  }
+
   private renewValleyHabitats(): void {
     if (this.player.isDead) return;
     let renewed = false;
     for (const habitat of VALLEY_ENCOUNTERS) if (this.spawnValleyResident(habitat)) renewed = true;
+    if (renewed) this.saveProgress();
+  }
+
+  private renewSiroccoHabitats(): void {
+    if (this.player.isDead) return;
+    let renewed = false;
+    for (const habitat of SIROCCO_ENCOUNTERS) if (this.spawnSiroccoResident(habitat)) renewed = true;
     if (renewed) this.saveProgress();
   }
 
@@ -1124,6 +1146,7 @@ export class GameScene extends Phaser.Scene {
     this.transferHp = saved.hp > 0 ? saved.hp : this.progression.maxHp;
     saved.valleyRoutes.forEach(id => this.valleyRoutes.add(id));
     saved.valleyHabitats.forEach(([id, readyAt]) => this.valleyHabitatCooldowns.set(id, readyAt));
+    saved.aridHabitats.forEach(([id, readyAt]) => this.siroccoHabitatCooldowns.set(id, readyAt));
   }
 
   private saveProgress(): void {
@@ -1131,7 +1154,8 @@ export class GameScene extends Phaser.Scene {
     const flags = Object.fromEntries(JOURNEY_FLAGS.map(key => [key, this[key]])) as JourneyFlags;
     const available = this.journey.save({ schema: 1, updatedAt: Date.now(), area: this.area,
       hp: this.player.isDead ? this.progression.maxHp : this.player.hp, progression: this.progression.snapshot(),
-      flags, bestiary: this.bestiary.snapshot(), valleyRoutes: [...this.valleyRoutes], valleyHabitats: [...this.valleyHabitatCooldowns] });
+      flags, bestiary: this.bestiary.snapshot(), valleyRoutes: [...this.valleyRoutes], valleyHabitats: [...this.valleyHabitatCooldowns],
+      aridHabitats: [...this.siroccoHabitatCooldowns] });
     this.records?.setSaveAvailable(available);
   }
 }

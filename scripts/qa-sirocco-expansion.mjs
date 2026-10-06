@@ -25,7 +25,8 @@ const state = page => page.evaluate(() => {
     kinds: [...new Set(scene.enemies.filter(e => !e.isDead).map(e => e.kind))],
     objects: scene.children.list.length, renderTextures: scene.children.list.filter(o => o.type === 'RenderTexture').length,
     tweens: scene.tweens.getTweens().length, text: scene.hud.discoveryMessage.text, dead: scene.player.isDead,
-    rewarded: scene.progression.snapshot().rewardedHollows };
+    rewarded: scene.progression.snapshot().rewardedHollows,
+    visibleCombatXp: scene.children.list.filter(o => o.type === 'Text' && o.visible && /^\+\d+ XP$/.test(o.text)).length };
 });
 const chooseUpgrade = async (page, id) => {
   await page.locator('.ability-upgrade-dialog[open]').waitFor();
@@ -172,6 +173,8 @@ try {
   current = await state(page);
   assert.equal(current.xp, 375);
   assert.equal(current.level, 4);
+  assert.ok(current.visibleCombatXp >= 2, 'each Sirocco kill should show a contextual +XP reward');
+  await page.screenshot({ path: `${out}/sirocco-xp-reward.png` });
   await chooseUpgrade(page, 'chargeWidth');
   current = await state(page);
   assert.equal(current.upgradeRanks.chargeWidth, 1);
@@ -197,7 +200,7 @@ try {
       renderTextures: scene.children.list.filter(item => item.type === 'RenderTexture').length };
   });
 
-  // Reload must resume in the new map with story flags, level and stable reward IDs.
+  // Reload must resume in the new map with story flags, level and habitat renewal cooldowns.
   report.saveBeforeReload = await page.evaluate(() => JSON.parse(localStorage.getItem('echoes-of-dante.journey.v1')));
   await page.reload(); await ready(page); await page.waitForTimeout(550);
   current = await state(page);
@@ -207,15 +210,27 @@ try {
   assert.equal(current.level, 4);
   assert.equal(current.upgradeRanks.chargeWidth, 1);
   assert.equal(current.upgradePoints, 0);
-  assert.ok(current.rewarded.includes(1000) && current.rewarded.includes(1002));
+  const savedCooldowns = report.saveBeforeReload.aridHabitats.map(([id]) => id);
+  assert.ok(savedCooldowns.includes(1000) && savedCooldowns.includes(1002));
   report.reloadPersistence = { area: current.area, signal: current.signalSeen, xp: current.xp,
-    level: current.level, rewardedIds: [1000, 1002] };
-  // Reloaded residents do not grant XP a second time under the same stable IDs.
+    level: current.level, renewedHabitatCooldowns: [1000, 1002] };
+  // A living resident earns XP; after its safe-distance cooldown, the same habitat can renew and reward again.
   await page.evaluate(() => {
-    const scene = window.__danteGame.scene.getScene('Game'), enemy = scene.enemies.find(item => item.kind === 'dunePouncer');
+    const scene = window.__danteGame.scene.getScene('Game'), enemy = scene.siroccoResidents.get(1001);
+    if (!enemy) throw new Error('Expected Sirocco habitat 1001 to be active after reload');
     enemy.health.current = 1; scene.resolveSaberHits(scene.time.now, [enemy], 0);
   });
-  assert.equal((await state(page)).xp, 375);
+  assert.equal((await state(page)).xp, 390);
+  await page.evaluate(() => {
+    const scene = window.__danteGame.scene.getScene('Game');
+    scene.siroccoHabitatCooldowns.set(1001, Date.now() - 1);
+    scene.renewSiroccoHabitats();
+    const enemy = scene.siroccoResidents.get(1001);
+    if (!enemy) throw new Error('Expired Sirocco habitat did not renew');
+    enemy.health.current = 1; scene.resolveSaberHits(scene.time.now, [enemy], 0);
+  });
+  assert.equal((await state(page)).xp, 405);
+  report.siroccoResidentRenewal = { xpAfterFirstKill: 390, xpAfterRenewedKill: 405, cooldownMs: 90_000 };
 
   // The return gate is optional; death restarts at the safe Sirocco entry and retains progress.
   await page.evaluate(() => {
@@ -228,7 +243,7 @@ try {
     const scene = window.__danteGame.scene.getScene('Game'); return !scene.player.isDead && scene.area === 'arid';
   });
   current = await state(page);
-  assert.equal(current.xp, 375); assert.equal(current.level, 4); assert.equal(current.signalSeen, true);
+  assert.equal(current.xp, 405); assert.equal(current.level, 4); assert.equal(current.signalSeen, true);
   assert.equal(current.upgradeRanks.chargeWidth, 1); assert.equal(current.upgradePoints, 0);
   assert.deepEqual(current.position, { x: 470, y: 805 });
   report.safeRespawn = { area: current.area, position: current.position, xp: current.xp, level: current.level };
@@ -240,7 +255,7 @@ try {
     return scene.area === 'valley' && scene.player.position.x > 2800;
   });
   current = await state(page);
-  assert.equal(current.xp, 375); assert.equal(current.level, 4); assert.equal(current.echoes, 3);
+  assert.equal(current.xp, 405); assert.equal(current.level, 4); assert.equal(current.echoes, 3);
   assert.equal(current.upgradeRanks.chargeWidth, 1);
   assert.deepEqual(current.position, { x: 2865, y: 640 });
   report.returnPortal = { area: current.area, position: current.position, xp: current.xp, level: current.level, echoes: current.echoes };
