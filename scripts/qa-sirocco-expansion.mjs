@@ -286,7 +286,7 @@ try {
   assert.deepEqual(current.position, { x: 2865, y: 640 });
   report.returnPortal = { area: current.area, position: current.position, xp: current.xp, level: current.level, echoes: current.echoes };
 
-  // The eastern expedition portal returns to the Valley's Sirocco hub entrance.
+  // The eastern portal advances into the Dunes; its entry portal allows return.
   await position(5050, 795); await key('e');
   await page.waitForFunction(() => window.__danteGame.scene.getScene('Game').area === 'arid');
   await page.waitForTimeout(450);
@@ -294,11 +294,14 @@ try {
   await position(4990, 805); await key('e');
   await page.waitForFunction(() => {
     const scene = window.__danteGame.scene.getScene('Game');
-    return scene.area === 'valley' && Math.abs(scene.player.position.x - 5050) < 1;
+    return scene.area === 'dunes' && scene.player.position.x === 520;
   });
   current = await state(page);
-  assert.deepEqual(current.position, { x: 5050, y: 795 });
-  report.eastExit = { area: current.area, hubPosition: current.position, xp: current.xp };
+  assert.deepEqual(current.position, { x: 520, y: 1090 });
+  report.eastExit = { area: current.area, entryPosition: current.position, xp: current.xp };
+  await position(320, 1090); await key('e');
+  await page.waitForFunction(() => { const s = window.__danteGame.scene.getScene('Game'); return s.area === 'arid' && s.player.position.x === 4770; });
+  assert.deepEqual((await state(page)).position, { x: 4770, y: 805 });
 
   // The same map remains legible at common desktop and mobile landscape viewports.
   report.layouts = [];
@@ -369,9 +372,9 @@ try {
   await mobilePage.touchscreen.tap(eastButton.x + eastButton.width / 2, eastButton.y + eastButton.height / 2);
   await mobilePage.waitForFunction(() => {
     const scene = window.__danteGame.scene.getScene('Game');
-    return scene.area === 'valley' && scene.player.position.x > 4900;
+    return scene.area === 'dunes' && scene.player.position.x === 520;
   });
-  report.touchEastExit = { contextualLabel: 'ENTRAR', returnedToSiroccoHub: true };
+  report.touchEastExit = { contextualLabel: 'ENTRAR', advancedIntoDunes: true };
   await mobile.close();
 
   assert.deepEqual(errors, []);

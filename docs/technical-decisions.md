@@ -1,5 +1,14 @@
 # Decisões técnicas — Sprint 01
 
+## Dunas Interiores e música regional, 0.1.59
+
+- O portal oriental da Bacia do Siroco avança para Dunas Interiores; seu retorno fica na entrada da nova área. A região reutiliza GameScene, o kit ilustrado D, habitats áridos e save local. Caminhos norte/sul contornam uma crista; ruínas registram checkpoint e uma depressão de areia prepara um encontro futuro sem implementar boss.
+- Piso WebP original, quatro faixas estáticas de RenderTexture e dez bases circulares mantêm composição e física separadas. Sete habitantes usam IA e valores existentes; duas descobertas opcionais concedem 20 XP uma vez. Novas flags são opcionais no schema local atual, preservando saves anteriores.
+- Nove músicas originais de 120–173 segundos substituem os loops curtos em todas as regiões. Composição e síntese são offline (`compose-region-scores.py`); runtime usa MP3 estéreo sob demanda e crossfade finito de 1,6 s, com no máximo duas vozes. Não há amostras externas ou síntese musical durante gameplay. A geografia da Cavern seleciona suas quatro atmosferas; o encerramento do Warden conserva o silêncio após a vitória.
+- Autoplay continua condicionado a gesto; áudio indisponível não bloqueia gameplay. MASTER/MUSIC/SFX permanecem separados, e vozes anteriores são liberadas. [Arte, autoria, medições e QA](sirocco-interior-and-sound/).
+
+## Base da Sprint 01
+
 - **Phaser 3 + TypeScript + Vite:** o repositório estava vazio. A cena única e o loop do Phaser bastam para o protótipo 2D de navegador.
 - **Responsabilidades pequenas:** `Controls` lê input; `Movement` resolve limites e rochas; `SaberAttack` usa `HitDetection`; `Damage` aplica dano em `Health`; entidades cuidam de estado e apresentação; `GameScene` coordena a ordem do loop e efeitos.
 - **Acerto do sabre:** teste geométrico de distância e ângulo com raio do alvo. O clique dispara no evento `pointerdown`, evitando perder cliques curtos entre frames. Segurar o botão repete apenas após o cooldown.

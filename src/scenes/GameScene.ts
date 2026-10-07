@@ -17,10 +17,12 @@ import { Warden, type WardenCue, type WardenAttack } from '../entities/Warden';
 import { WardenArena } from '../systems/WardenArena';
 import { WardenHud } from '../ui/WardenHud';
 import { VALLEY, VALLEY_ENCOUNTERS, VALLEY_RENEWAL, VALLEY_ROUTES } from '../config/valley';
-import { SIROCCO, SIROCCO_ENCOUNTERS, SIROCCO_RENEWAL, SIROCCO_ROUTES } from '../config/sirocco';
+import { SIROCCO, SIROCCO_ENCOUNTERS, SIROCCO_RENEWAL, SIROCCO_ROUTES, type SiroccoKind } from '../config/sirocco';
+import { DUNES, DUNES_ENCOUNTERS, DUNES_ROUTES } from '../config/dunes';
+import { DunesInterior } from '../systems/DunesInterior';
 import type { SpeciesId } from '../config/bestiary';
 import { Bestiary } from '../systems/Bestiary';
-import { LocalJourney, JOURNEY_FLAGS, type JourneyFlags } from '../systems/LocalJourney';
+import { LocalJourney, JOURNEY_FLAGS, type JourneyFlags, type JourneyArea } from '../systems/LocalJourney';
 import { RecordsPanel } from '../ui/RecordsPanel';
 import { AbilityUpgradeDialog } from '../ui/AbilityUpgradeDialog';
 import { ValleyCreature } from '../entities/ValleyCreature';
@@ -33,7 +35,7 @@ import { Arena } from '../systems/Arena';
 import { preloadEnvironment, resetEnvironmentOcclusion, updateEnvironmentOcclusion } from '../visual/EnvironmentArt';
 import { CavernArea } from '../systems/CavernArea';
 import { MineralPulse } from '../systems/MineralPulse';
-import { AudioManager } from '../systems/Sound';
+import { AudioManager, type MusicRegion } from '../systems/Sound';
 import { NorthernDiscovery } from '../systems/NorthernDiscovery';
 import { ForestEcho, type EchoSite } from '../systems/EchoSite';
 import { Progression } from '../systems/Progression';
@@ -67,10 +69,14 @@ export class GameScene extends Phaser.Scene {
   private aridSignalSeen = false;
   private aridFrontierEntered = false;
   private aridFrontierReached = false;
+  private dunes?: DunesInterior;
+  private dunesVisited = false;
+  private dunesRuinsSeen = false;
+  private dunesDepthSeen = false;
+  private returnFromDunes = false;
   private returnFromValley = false;
   private returnToValleyPortal = false;
   private returnToFrontierPortal = false;
-  private returnToSiroccoHub = false;
   private cavern?: CavernArea;
   private wardenArena?: WardenArena;
   private warden?: Warden;
@@ -83,7 +89,7 @@ export class GameScene extends Phaser.Scene {
   private readonly playerObstacles: Obstacle[] = [];
   private readonly bossFootprint: Obstacle = { x: 0, y: 0, radius: 65 };
   private movementBounds?: MovementBounds;
-  private area: 'forest' | 'cavern' | 'warden' | 'valley' | 'arid' = 'forest';
+  private area: JourneyArea = 'forest';
   private transferHp?: number;
   private transitioning = false;
   private cavernDepthSeen = false;
@@ -122,6 +128,8 @@ export class GameScene extends Phaser.Scene {
   private attack = new SaberAttack();
   private charge = new KineticCharge();
   private sounds = new AudioManager();
+  private musicRegion?: MusicRegion;
+  private audioCleanupBound = false;
   private hud!: Hud;
   private explorationGuide!: ExplorationGuide;
   private echoSites: EchoSite[] = [];
@@ -164,6 +172,8 @@ export class GameScene extends Phaser.Scene {
       `${import.meta.env.BASE_URL}assets/visual/environment/sirocco-ground.webp`);
     if (!this.textures.exists('sirocco-east-ground')) this.load.image('sirocco-east-ground',
       `${import.meta.env.BASE_URL}assets/visual/environment/sirocco-east-ground.webp`);
+    if (!this.textures.exists('dunes-ground')) this.load.image('dunes-ground',
+      `${import.meta.env.BASE_URL}assets/visual/environment/dunes-ground.webp`);
     if (this.qualityReference !== 'baseline' && !this.originalWarrior) preloadWarriorArt(this);
     if (this.qualityReference === 'reference' && !this.textures.exists('reference-basin-floor')) {
       this.load.image('reference-basin-floor', `${import.meta.env.BASE_URL}assets/experiments/quality-reference/basin-floor.webp`);
@@ -171,6 +181,10 @@ export class GameScene extends Phaser.Scene {
   }
 
   create(): void {
+    if (!this.audioCleanupBound) {
+      this.audioCleanupBound = true;
+      this.game.events.once(Phaser.Core.Events.DESTROY, () => this.sounds.destroy());
+    }
     this.recordsTimeOffset = 0;
     // Phaser pauses timers/tweens, but its absolute clock jumps on resume.
     // Keep Player getters and all existing combat timestamps on the same clock.
@@ -193,6 +207,7 @@ export class GameScene extends Phaser.Scene {
     this.cavern = undefined;
     this.valley = undefined;
     this.sirocco = undefined;
+    this.dunes = undefined;
     this.signalPortal = undefined;
     this.chapterPortal = undefined;
     this.wardenArena = undefined;
@@ -234,6 +249,10 @@ export class GameScene extends Phaser.Scene {
         this.progression.rewardedRoutes.has(SIROCCO_ROUTES[0].id));
       this.arena = this.sirocco;
       this.movementBounds = this.sirocco.bounds;
+    } else if (this.area === 'dunes') {
+      this.dunes = new DunesInterior(this, this.dunesRuinsSeen);
+      this.arena = this.dunes;
+      this.movementBounds = this.dunes.bounds;
     } else if (this.qualityReference === 'reference') {
       this.arena = new ReferenceArea(this);
       this.movementBounds = this.arena.bounds;
@@ -243,8 +262,9 @@ export class GameScene extends Phaser.Scene {
       this.movementBounds = this.arena.bounds;
     }
     const entry = this.area === 'forest' ? FOREST_ENTRY : this.area === 'valley'
-      ? this.returnToValleyPortal ? VALLEY.entry : this.returnToSiroccoHub ? VALLEY.frontier.portal : this.returnToFrontierPortal ? VALLEY.frontier.checkpoint : this.valleyFrontierReached ? VALLEY.frontier.checkpoint : this.valleyCheckpointReached ? VALLEY.checkpoint : VALLEY.entry
-      : this.area === 'arid' ? this.aridSignalSeen ? SIROCCO.frontierCheckpoint : this.aridVisited ? SIROCCO.checkpoint : SIROCCO.entry
+      ? this.returnToValleyPortal ? VALLEY.entry : this.returnToFrontierPortal ? VALLEY.frontier.checkpoint : this.valleyFrontierReached ? VALLEY.frontier.checkpoint : this.valleyCheckpointReached ? VALLEY.checkpoint : VALLEY.entry
+      : this.area === 'arid' ? this.returnFromDunes ? { x: 4770, y: 805 } : this.aridSignalSeen ? SIROCCO.frontierCheckpoint : this.aridVisited ? SIROCCO.checkpoint : SIROCCO.entry
+      : this.area === 'dunes' ? this.dunesRuinsSeen ? DUNES.checkpoint : DUNES.entry
       : this.area === 'warden' ? this.returnFromValley ? { x: 1420, y: 830 } : { x: 650, y: 760 }
       : this.returnToThreshold ? { x: 6060, y: 740 } : this.firstEchoSeen ? W.respawn
       : this.exteriorEntered ? EXPANSION.exteriorRespawn : this.deeperEntered ? EXPANSION.deeperRespawn
@@ -253,7 +273,7 @@ export class GameScene extends Phaser.Scene {
     this.returnFromValley = false;
     this.returnToValleyPortal = false;
     this.returnToFrontierPortal = false;
-    this.returnToSiroccoHub = false;
+    this.returnFromDunes = false;
     this.player = new Player(this, entry.x, entry.y, this.progression.maxHp, this.qualityReference === 'reference',
       this.qualityReference !== 'baseline' && !this.originalWarrior, id => this.progression.upgradeRank(id));
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
@@ -262,7 +282,7 @@ export class GameScene extends Phaser.Scene {
     this.controls = new Controls(this, () => this.sounds.unlock(), () => {
       if (!this.player.isDead && !this.records?.isOpen) this.beginStrike(this.time.now);
     });
-    this.sounds.setArea(this.area === 'warden' ? 'warden' : this.area === 'valley' || this.area === 'arid' || this.exteriorEntered ? 'forest' : this.area);
+    this.updateMusicRegion(true);
     this.sounds.setMusicFocus(1);
     const spawns = this.area === 'forest' ? FOREST_SPAWNS : CAVERN_HOLLOWS;
     if (this.area === 'forest' || this.area === 'cavern') spawns.forEach((point, index) => {
@@ -276,6 +296,7 @@ export class GameScene extends Phaser.Scene {
       this.spawnValleyResident(habitat);
     }
     if (this.area === 'arid') for (const habitat of SIROCCO_ENCOUNTERS) this.spawnSiroccoResident(habitat);
+    if (this.area === 'dunes') for (const habitat of DUNES_ENCOUNTERS) this.spawnSiroccoResident(habitat);
     this.hud = new Hud(this, () => this.restart());
     if (this.qualityReference === 'reference') this.referenceImpacts = new ReferenceImpacts(this);
     this.explorationGuide = new ExplorationGuide(this);
@@ -302,18 +323,24 @@ export class GameScene extends Phaser.Scene {
       if (!this.aridVisited) this.hud.showDiscovery('NOVA REGIÃO\nBACIA DO SIROCO');
       this.aridVisited = true;
     }
+    if (this.area === 'dunes') {
+      this.chapterPortal = this.dunes!.returnPortal;
+      if (!this.dunesVisited) this.hud.showDiscovery('DUNAS INTERIORES\nO SINAL SEGUE SOB A AREIA');
+      this.dunesVisited = true;
+    }
     this.updateProgressHud();
     this.hud.setSignalObjective(this.progression.signalSynchronized, this.progression.sourceLocated, this.progression.passageOpen, this.area === 'cavern', this.cavernDepthSeen, this.deepAreaSeen);
     if (this.area === 'warden') this.hud.setWardenArea();
     if (this.area === 'valley') this.hud.setValleyArea(this.valleyFrontierReached);
     if (this.area === 'arid') this.hud.setAridArea(this.aridSignalSeen, this.aridFrontierReached);
+    if (this.area === 'dunes') this.hud.setDunesArea(this.dunesRuinsSeen, this.dunesDepthSeen);
     this.inDeepCavern = this.area === 'cavern' && this.deepCavernEntered;
     if (this.area === 'cavern') this.hud.setCavernDepth(this.inDeepCavern);
     this.continuationRegion = this.exteriorEntered ? 'exterior' : this.deeperEntered ? 'deeper' : 'deep';
     if (this.area === 'cavern' && this.continuationRegion !== 'deep') this.hud.setContinuationArea(this.continuationRegion === 'exterior', this.fragmentSeen, this.firstEchoSeen);
-    this.cameras.main.setBounds(0, 0, this.area === 'valley' ? VALLEY.cameraWidth : this.area === 'arid' ? SIROCCO.cameraWidth : this.area === 'cavern' ? W.cameraWidth : WORLD_WIDTH, WORLD_HEIGHT)
+    this.cameras.main.setBounds(0, 0, this.area === 'valley' ? VALLEY.cameraWidth : this.area === 'arid' ? SIROCCO.cameraWidth : this.area === 'dunes' ? DUNES.width : this.area === 'cavern' ? W.cameraWidth : WORLD_WIDTH, this.area === 'dunes' ? DUNES.height : WORLD_HEIGHT)
       .startFollow(this.player.view, false, 0.1, 0.1);
-    this.cameras.main.setBackgroundColor(this.area === 'arid' ? '#5c3327' : this.area === 'forest' || this.area === 'valley' ? '#102d2c' : '#07151c');
+    this.cameras.main.setBackgroundColor(this.area === 'arid' || this.area === 'dunes' ? '#5c3327' : this.area === 'forest' || this.area === 'valley' ? '#102d2c' : '#07151c');
     if (this.area !== 'forest') {
       this.cameras.main.centerOn(entry.x, entry.y);
       this.cameras.main.fadeIn(260, 5, 15, 20);
@@ -324,7 +351,7 @@ export class GameScene extends Phaser.Scene {
       nextLevelXp: this.progression.nextLevelXp, maxHp: this.progression.maxHp,
       nextLevelHpGain: this.progression.nextLevelHpGain, upgradePointsAvailable: this.progression.upgradePointsAvailable,
       abilityUpgradeRanks: this.progression.abilityUpgradeRanks,
-      area: this.area === 'arid' ? 'Bacia do Siroco' : this.area === 'valley' ? 'Vale da Ressonância' : this.area === 'warden' ? 'Domínio do Guardião' : this.area === 'cavern' ? 'Cavernas de Dante' : 'Floresta de Dante',
+      area: this.area === 'dunes' ? 'Dunas Interiores' : this.area === 'arid' ? 'Bacia do Siroco' : this.area === 'valley' ? 'Vale da Ressonância' : this.area === 'warden' ? 'Domínio do Guardião' : this.area === 'cavern' ? 'Cavernas de Dante' : 'Floresta de Dante',
       bestiary: this.bestiary.snapshot(), routes: this.valleyRoutes, valleyVisited: this.valleyVisited,
       saveStatus: this.qualityReference ? 'Referência isolada. O progresso do jogo permanece intacto.' : this.journey.status,
       rewardedRoutes: this.progression.rewardedRoutes,
@@ -352,7 +379,7 @@ export class GameScene extends Phaser.Scene {
     });
     // Persist chapter access immediately. A mobile browser may suspend or evict
     // the page without sending a reliable later interaction or shutdown event.
-    if (this.area === 'arid') this.saveProgress();
+    if (this.area === 'arid' || this.area === 'dunes') this.saveProgress();
     if (!this.qualityReference && this.progression.upgradePointsAvailable > 0) {
       this.time.delayedCall(350, () => this.showAvailableUpgrade());
     }
@@ -380,6 +407,7 @@ export class GameScene extends Phaser.Scene {
     const nearValleyLandmark = this.valley?.canInvestigate(this.player.position, this.player.isDead, this.valleyLandmarkSeen) ?? false;
     const nearValleyFrontierSignal = this.valley?.canInvestigateFrontier(this.player.position, this.player.isDead, this.valleyFrontierSignalSeen) ?? false;
     const nearSiroccoSignal = this.sirocco?.canInvestigate(this.player.position, this.player.isDead, this.aridSignalSeen) ?? false;
+    const nearDunesRuin = this.dunes?.canInvestigate(this.player.position, this.player.isDead, this.dunesRuinsSeen) ?? false;
     if (nearDiscovery && interact) {
       const wasSynchronized = this.progression.signalSynchronized;
       nearbyEcho.activate();
@@ -441,8 +469,7 @@ export class GameScene extends Phaser.Scene {
       this.transitionArea(this.area === 'valley' ? 'warden' : 'valley');
       return;
     } else if (interact && nearSiroccoExit) {
-      this.returnToSiroccoHub = true;
-      this.transitionArea('valley');
+      this.transitionArea('dunes');
       return;
     } else if (interact && nearChapterPortal) {
       if (this.area === 'valley' && this.valleyFrontierEndSeen) {
@@ -453,6 +480,18 @@ export class GameScene extends Phaser.Scene {
         this.transitionArea('valley');
         return;
       }
+      if (this.area === 'dunes') {
+        this.returnFromDunes = true;
+        this.transitionArea('arid');
+        return;
+      }
+    } else if (interact && nearDunesRuin) {
+      this.dunesRuinsSeen = true;
+      this.dunes?.respond();
+      this.hud.setDunesArea(true, this.dunesDepthSeen);
+      this.hud.showDiscovery('RUÍNAS SOTERRADAS\nO SINAL ATRAVESSA A CAMADA DE AREIA');
+      this.sounds.ancient();
+      this.saveProgress();
     } else if (interact && nearSiroccoSignal) {
       this.aridSignalSeen = true;
       this.sirocco?.respond();
@@ -480,7 +519,7 @@ export class GameScene extends Phaser.Scene {
         ? 'MECANISMO INATIVO\nInvestigue a fissura ao lado primeiro.'
         : 'MECANISMO INATIVO\nEncontre e investigue os 3 Ecos.');
     }
-    const canInteract = nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearChapterPortal || nearSiroccoExit || nearSiroccoSignal || nearValleyLandmark || nearValleyFrontierSignal;
+    const canInteract = nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearChapterPortal || nearSiroccoExit || nearSiroccoSignal || nearDunesRuin || nearValleyLandmark || nearValleyFrontierSignal;
     const interactionAction = nearPortal || nearChapterPortal || nearSiroccoExit ? 'ENTRAR' : 'INVESTIGAR';
     if (interact) this.saveProgress();
     this.hud.setDiscoveryPrompt(canInteract, interactionAction);
@@ -523,6 +562,7 @@ export class GameScene extends Phaser.Scene {
       }
     }
     this.player.update(time, dt, input, facing, this.area === 'warden' ? this.playerObstacles : this.arena.obstacles, pose, heavy, this.movementBounds);
+    this.updateMusicRegion();
     updateEnvironmentOcclusion(this, this.player.position, dt);
     if (wasDashing && !this.player.isDashing) this.dashEnd();
     if (this.player.isDashing && time - this.lastDashTrail > 30) {
@@ -560,6 +600,29 @@ export class GameScene extends Phaser.Scene {
       this.wardenHud?.update(this.warden);
       return;
     }
+    if (this.area === 'dunes') {
+      this.renewSiroccoHabitats();
+      for (const route of DUNES_ROUTES) if (distance(this.player.position, route) < route.radius) {
+        const reward = this.progression.discoverSiroccoRoute(route.id);
+        if (reward.awarded) {
+          this.updateProgressHud();
+          this.hud.showExperienceAt(route.x, route.y, PROGRESSION.valleyRouteXp);
+          this.hud.showDiscovery(`${route.name.toLocaleUpperCase('pt-BR')}\nNOVO TRECHO EXPLORADO`);
+          if (reward.leveledUp) this.levelUp();
+          this.records.markDiscovery();
+          this.saveProgress();
+        }
+      }
+      if (this.dunesRuinsSeen && !this.dunesDepthSeen && distance(this.player.position, DUNES.hollow) < DUNES.hollow.radius) {
+        this.dunesDepthSeen = true;
+        this.hud.setDunesArea(true, true);
+        this.hud.showDiscovery('DEPRESSÃO DE AREIA\nALGO SE MOVE SOB A SUPERFÍCIE');
+        this.sounds.wardenCue('intro');
+        this.saveProgress();
+      }
+      this.sounds.setMusicFocus(distance(this.player.position, DUNES.hollow) < 420 ? .6 : 1);
+      return;
+    }
     if (this.area === 'arid') {
       this.renewSiroccoHabitats();
       for (const route of SIROCCO_ROUTES) if (!this.progression.rewardedRoutes.has(route.id) && distance(this.player.position, route) < route.radius) {
@@ -584,7 +647,7 @@ export class GameScene extends Phaser.Scene {
         this.aridFrontierReached = true;
         this.sirocco?.revealExit();
         this.hud.setAridArea(true, true);
-        this.hud.showDiscovery('EXPEDIÇÃO CONCLUÍDA\nPORTAL DE RETORNO ATIVADO');
+        this.hud.showDiscovery('PASSAGEM PARA O INTERIOR\nO SINAL ATRAVESSA AS DUNAS');
         this.sounds.signal();
         this.saveProgress();
       }
@@ -699,7 +762,6 @@ export class GameScene extends Phaser.Scene {
       this.continuationRegion = region;
       if (region === 'deep') this.hud.setCavernDepth(this.inDeepCavern);
       else this.hud.setContinuationArea(region === 'exterior', this.fragmentSeen, this.firstEchoSeen);
-      this.sounds.setArea(region === 'exterior' ? 'forest' : 'cavern');
     }
     if (!this.approachSeen && distance(this.player.position, EXPANSION.approach) <= EXPANSION.approach.radius) {
       this.approachSeen = true;
@@ -740,6 +802,17 @@ export class GameScene extends Phaser.Scene {
         this.wardenDefeated ? 'Você pode voltar pela passagem a oeste.' : 'Use a esquiva para se reposicionar.');
       return;
     }
+    if (this.area === 'dunes') {
+      const nearbyRoute = DUNES_ROUTES.find(route => !this.progression.rewardedRoutes.has(route.id) && distance(this.player.position, route) < 330);
+      const target = this.chapterPortal?.canEnter(this.player.position, this.player.isDead)
+        ? { ...DUNES.returnPortal, radius: 116, name: 'Portal para a Bacia', instruction: 'Retorne à entrada do Siroco.', action: 'enter' as const }
+        : nearbyRoute ? { ...nearbyRoute, instruction: 'Contorne a crista e explore este trecho.', action: 'walk' as const }
+        : !this.dunesRuinsSeen ? { ...DUNES.ruin, name: 'Ruínas soterradas', instruction: 'As inscrições respondem ao sinal.', action: 'investigate' as const }
+        : { ...DUNES.hollow, name: 'Depressão de areia', instruction: this.dunesDepthSeen ? 'Há movimento abaixo. Explore as bordas e os desvios.' : 'Siga a descida entre as dunas.', action: 'observe' as const };
+      this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
+        this.dunesDepthSeen ? 'SINAL SOB A AREIA' : this.dunesRuinsSeen ? 'SIGA A DESCIDA' : 'EXPLORE AS DUNAS', target, this.hud);
+      return;
+    }
     if (this.area === 'arid') {
       if (this.chapterPortal?.canEnter(this.player.position, this.player.isDead)) {
         this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
@@ -749,8 +822,8 @@ export class GameScene extends Phaser.Scene {
       }
       if (this.sirocco?.exitPortal.canEnter(this.player.position, this.player.isDead)) {
         this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
-          'EXPEDIÇÃO CONCLUÍDA', { ...SIROCCO.exitPortal, radius: 116, name: 'Portal para a Escarpa',
-            instruction: 'Atravesse para voltar à rota principal.', action: 'enter' }, this.hud);
+          'DUNAS INTERIORES', { ...SIROCCO.exitPortal, radius: 116, name: 'Portal para as Dunas',
+            instruction: 'Atravesse para seguir pelo interior do Siroco.', action: 'enter' }, this.hud);
         return;
       }
       const optionalRoute = SIROCCO_ROUTES.find(route => !this.progression.rewardedRoutes.has(route.id));
@@ -761,8 +834,8 @@ export class GameScene extends Phaser.Scene {
       }
       if (this.aridFrontierReached) {
         this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
-          'EXPEDIÇÃO CONCLUÍDA', { ...SIROCCO.exitPortal, radius: 116, name: 'Portal de retorno',
-            instruction: 'Atravesse o portal para voltar à Escarpa.', action: 'enter' }, this.hud);
+          'SIGA PARA AS DUNAS', { ...SIROCCO.exitPortal, radius: 116, name: 'Portal para as Dunas',
+            instruction: 'O sinal continua no interior do Siroco.', action: 'enter' }, this.hud);
       } else if (this.aridSignalSeen) {
         this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
           'SIGA A MARGEM LESTE', { ...SIROCCO.end, name: 'Passagem entre as cristas',
@@ -898,7 +971,18 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
-  private transitionArea(area: 'cavern' | 'warden' | 'valley' | 'arid'): void {
+  private updateMusicRegion(force = false): void {
+    const x = this.player.position.x;
+    const region = this.area === 'arid' ? 'sirocco' : this.area !== 'cavern' ? this.area
+      : x >= EXPANSION.exteriorX ? 'exterior' : x >= EXPANSION.deeperX ? 'deeper'
+      : this.deepPassageOpen && x >= DEEP_AREA.entryX ? 'deep' : 'cavern';
+    if (force || region !== this.musicRegion) {
+      this.musicRegion = region;
+      this.sounds.setArea(region);
+    }
+  }
+
+  private transitionArea(area: Exclude<JourneyArea, 'forest'>): void {
     if (this.transitioning) return;
     this.transitioning = true;
     this.transferHp = this.player.hp;
@@ -972,7 +1056,7 @@ export class GameScene extends Phaser.Scene {
         const spawnIndex = this.hollowSpawnIds.get(enemy);
         if (spawnIndex !== undefined) {
           const isValley = this.area === 'valley' && this.valleyResidents.get(spawnIndex) === enemy;
-          const isSirocco = this.area === 'arid' && this.siroccoResidents.get(spawnIndex) === enemy;
+          const isSirocco = (this.area === 'arid' || this.area === 'dunes') && this.siroccoResidents.get(spawnIndex) === enemy;
           const reward = isValley || isSirocco
             ? { awarded: true, leveledUp: this.progression.defeatRenewableResident() }
             : this.progression.defeatHollow(spawnIndex);
@@ -1162,7 +1246,7 @@ export class GameScene extends Phaser.Scene {
     return true;
   }
 
-  private spawnSiroccoResident(habitat: typeof SIROCCO_ENCOUNTERS[number]): boolean {
+  private spawnSiroccoResident(habitat: { id: number; kind: SiroccoKind; x: number; y: number }): boolean {
     if (this.siroccoResidents.has(habitat.id)) return false;
     const readyAt = this.siroccoHabitatCooldowns.get(habitat.id);
     if (readyAt !== undefined && (Date.now() < readyAt || distance(this.player.position, habitat) < SIROCCO_RENEWAL.safeDistance)) return false;
@@ -1185,7 +1269,7 @@ export class GameScene extends Phaser.Scene {
   private renewSiroccoHabitats(): void {
     if (this.player.isDead) return;
     let renewed = false;
-    for (const habitat of SIROCCO_ENCOUNTERS) if (this.spawnSiroccoResident(habitat)) renewed = true;
+    for (const habitat of this.area === 'dunes' ? DUNES_ENCOUNTERS : SIROCCO_ENCOUNTERS) if (this.spawnSiroccoResident(habitat)) renewed = true;
     if (renewed) this.saveProgress();
   }
 

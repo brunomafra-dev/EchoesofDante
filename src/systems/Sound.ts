@@ -1,13 +1,17 @@
 import { AUDIO } from '../config/audio';
 
-type Area = keyof typeof AUDIO.tracks;
+export type MusicRegion = keyof typeof AUDIO.tracks;
 type WardenCue = 'intro' | 'sweep' | 'rush' | 'slam' | 'signal' | 'echoes' | 'phase' | 'death' | 'victory';
 
-// A single music voice and a separate Web Audio SFX bus. Audio remains optional.
+// One music voice, at most one outgoing voice during a finite fade, and a separate SFX bus.
 export class AudioManager {
   private context?: AudioContext;
   private music?: HTMLAudioElement;
-  private area?: Area;
+  private area?: MusicRegion;
+  private outgoing?: HTMLAudioElement;
+  private currentGain = 1;
+  private outgoingGain = 0;
+  private fadeFrame = 0;
   private unlocked = false;
   private master: number = AUDIO.master;
   private musicVolume: number = AUDIO.music;
@@ -19,31 +23,36 @@ export class AudioManager {
     const value = Math.max(0, Math.min(1, focus));
     if (this.musicFocus === value) return;
     this.musicFocus = value;
-    if (this.music) this.music.volume = this.master * this.musicVolume * value;
+    this.applyVolumes();
   }
 
   setVolumes(master: number, music: number, sfx: number): void {
     this.master = Math.max(0, Math.min(1, master));
     this.musicVolume = Math.max(0, Math.min(1, music));
     this.sfxVolume = Math.max(0, Math.min(1, sfx));
-    if (this.music) this.music.volume = this.master * this.musicVolume * this.musicFocus;
+    this.applyVolumes();
   }
 
-  setArea(area: Area): void {
+  setArea(area: MusicRegion): void {
     this.musicStopped = false;
     if (this.area === area) {
       if (this.unlocked) this.playMusic();
       return;
     }
-    this.music?.pause();
+    this.cancelFade();
+    this.disposeOutgoing();
+    this.outgoing = this.music;
+    this.outgoingGain = this.currentGain;
+    this.currentGain = this.unlocked ? 0 : 1;
     this.area = area;
     try {
       this.music = new Audio();
       this.music.loop = true;
       this.music.preload = 'none';
-      this.music.volume = this.master * this.musicVolume * this.musicFocus;
+      this.music.volume = 0;
       this.music.src = `${import.meta.env.BASE_URL}assets/audio/${AUDIO.tracks[area]}`;
       if (this.unlocked) this.playMusic();
+      else this.disposeOutgoing();
     } catch { this.music = undefined; }
   }
 
@@ -58,11 +67,65 @@ export class AudioManager {
 
   stopMusic(): void {
     this.musicStopped = true;
+    this.cancelFade();
     this.music?.pause();
+    this.disposeOutgoing();
+    this.currentGain = 1;
   }
 
   private playMusic(): void {
-    if (!this.musicStopped && this.music?.paused) void this.music.play().catch(() => { /* Autoplay can remain blocked. */ });
+    const music = this.music;
+    if (!this.musicStopped && music?.paused) {
+      this.applyVolumes();
+      void music.play().then(() => {
+        if (music !== this.music || this.musicStopped) { music.pause(); return; }
+        if (this.currentGain < 1 || this.outgoing) this.fadeIn();
+      }).catch(() => { if (music === this.music) this.disposeOutgoing(); });
+    }
+  }
+
+  private applyVolumes(): void {
+    const volume = this.master * this.musicVolume * this.musicFocus;
+    if (this.music) this.music.volume = volume * this.currentGain;
+    if (this.outgoing) this.outgoing.volume = volume * this.outgoingGain;
+  }
+
+  private fadeIn(): void {
+    this.cancelFade();
+    const started = performance.now(), initial = this.currentGain, old = this.outgoingGain;
+    const step = (now: number) => {
+      // RAF timestamps describe the frame start, which can precede this fade's start.
+      const progress = Math.max(0, Math.min(1, (now - started) / 1600));
+      this.currentGain = initial + (1 - initial) * progress;
+      this.outgoingGain = old * (1 - progress);
+      this.applyVolumes();
+      if (progress < 1) this.fadeFrame = requestAnimationFrame(step);
+      else { this.fadeFrame = 0; this.disposeOutgoing(); }
+    };
+    this.fadeFrame = requestAnimationFrame(step);
+  }
+
+  private cancelFade(): void {
+    if (this.fadeFrame) cancelAnimationFrame(this.fadeFrame);
+    this.fadeFrame = 0;
+  }
+
+  private disposeOutgoing(): void {
+    if (this.outgoing) {
+      this.outgoing.pause();
+      this.outgoing.removeAttribute('src');
+      this.outgoing.load();
+      this.outgoing = undefined;
+    }
+    this.outgoingGain = 0;
+  }
+
+  destroy(): void {
+    this.stopMusic();
+    this.music?.removeAttribute('src');
+    this.music?.load();
+    this.music = undefined;
+    void this.context?.close().catch(() => {});
   }
 
   private tone(frequency: number, endFrequency: number, duration: number, volume: number, type: OscillatorType = 'sine'): void {

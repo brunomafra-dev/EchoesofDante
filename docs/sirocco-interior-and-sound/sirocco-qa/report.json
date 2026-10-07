@@ -1,0 +1,242 @@
+{
+  "method": "Chrome headless; DEV progression/position setup, real keyboard input and Gamepad API mock; no physical device",
+  "errors": [],
+  "missionComplete": {
+    "shown": true,
+    "portalOpened": true
+  },
+  "siroccoEntry": {
+    "area": "arid",
+    "position": {
+      "x": 470,
+      "y": 805
+    },
+    "hp": 120,
+    "maxHp": 120,
+    "xp": 345,
+    "level": 3,
+    "echoes": 3,
+    "upgradeRanks": {
+      "saberArc": 0,
+      "saberReach": 0,
+      "dashCooldown": 0,
+      "dashDuration": 0,
+      "chargeWidth": 0,
+      "chargePower": 0
+    },
+    "upgradePoints": 0,
+    "missionComplete": true,
+    "portal": true,
+    "aridVisited": true,
+    "signalSeen": false,
+    "frontierEntered": false,
+    "frontierReached": false,
+    "exitPortalActive": false,
+    "routeRewarded": false,
+    "enemies": 10,
+    "kinds": [
+      "dunePouncer",
+      "glassSpitter"
+    ],
+    "objects": 131,
+    "renderTextures": 6,
+    "tweens": 3,
+    "text": "NOVA REGIÃO\nBACIA DO SIROCO",
+    "dead": false,
+    "rewarded": [],
+    "visibleCombatXp": 0
+  },
+  "siroccoLayouts": [
+    "1280x720",
+    "1366x768",
+    "1920x1080",
+    "844x390"
+  ],
+  "pouncerWindup": {
+    "upright": true,
+    "named": true
+  },
+  "pouncerTellAndLunge": {
+    "upright": true,
+    "state": "LUNGE"
+  },
+  "glassSpitterTellAndShot": true,
+  "gamepadMock": true,
+  "masteryChoice": {
+    "level": 4,
+    "chargeWidth": 1
+  },
+  "enemyRewardsAndLevel": {
+    "xp": 375,
+    "level": 4,
+    "maxHp": 130
+  },
+  "optionalDetour": {
+    "reached": true,
+    "routeRewarded": true,
+    "xp": 395
+  },
+  "easternFrontier": {
+    "portalActive": true,
+    "remainingResidents": 8,
+    "position": {
+      "x": 4879.343330145282,
+      "y": 799.5463394894505
+    }
+  },
+  "siroccoPerformance": {
+    "meanFps": 60.22206485225775,
+    "minFps": 60.142982933488696,
+    "objects": 116,
+    "tweens": 4,
+    "renderTextures": 6
+  },
+  "saveBeforeReload": {
+    "schema": 1,
+    "updatedAt": 1791381136466,
+    "area": "arid",
+    "hp": 130,
+    "progression": {
+      "xp": 395,
+      "echoes": [
+        "northern-ruin",
+        "mineral-signal",
+        "unknown-trace"
+      ],
+      "sourceLocated": true,
+      "passageOpen": true,
+      "rewardedHollows": [],
+      "rewardedRoutes": [
+        "sirocco-needle-shelf"
+      ],
+      "abilityUpgrades": {
+        "saberArc": 0,
+        "saberReach": 0,
+        "dashCooldown": 0,
+        "dashDuration": 0,
+        "chargeWidth": 1,
+        "chargePower": 0
+      }
+    },
+    "flags": {
+      "cavernDepthSeen": false,
+      "deepPassageOpen": true,
+      "deepAreaSeen": false,
+      "deepCavernEntered": false,
+      "deepEndSeen": false,
+      "deeperEntered": false,
+      "exteriorEntered": false,
+      "fragmentSeen": false,
+      "approachSeen": false,
+      "firstEchoSeen": true,
+      "wardenReached": false,
+      "wardenGateOpen": true,
+      "wardenDefeated": true,
+      "wardenEndingSeen": false,
+      "valleyVisited": true,
+      "valleyLandmarkSeen": false,
+      "valleyEndSeen": false,
+      "valleyCheckpointReached": true,
+      "valleyFrontierReached": true,
+      "valleyFrontierSignalSeen": true,
+      "valleyFrontierEndSeen": true,
+      "aridVisited": true,
+      "aridSignalSeen": true,
+      "aridFrontierEntered": true,
+      "aridFrontierReached": true,
+      "dunesVisited": false,
+      "dunesRuinsSeen": false,
+      "dunesDepthSeen": false
+    },
+    "bestiary": {
+      "carapace": {
+        "seen": true,
+        "defeats": 0
+      },
+      "dunePouncer": {
+        "seen": true,
+        "defeats": 1
+      },
+      "glassSpitter": {
+        "seen": true,
+        "defeats": 1
+      }
+    },
+    "valleyRoutes": [],
+    "valleyHabitats": [],
+    "aridHabitats": [
+      [
+        1000,
+        1791381197463
+      ],
+      [
+        1002,
+        1791381197473
+      ]
+    ]
+  },
+  "reloadPersistence": {
+    "area": "arid",
+    "signal": true,
+    "xp": 395,
+    "level": 4,
+    "renewedHabitatCooldowns": [
+      1000,
+      1002
+    ]
+  },
+  "siroccoResidentRenewal": {
+    "xpAfterFirstKill": 410,
+    "xpAfterRenewedKill": 425,
+    "cooldownMs": 90000
+  },
+  "safeRespawn": {
+    "area": "arid",
+    "position": {
+      "x": 3090,
+      "y": 805
+    },
+    "xp": 425,
+    "level": 4
+  },
+  "returnPortal": {
+    "area": "valley",
+    "position": {
+      "x": 2865,
+      "y": 640
+    },
+    "xp": 425,
+    "level": 4,
+    "echoes": 3
+  },
+  "eastExit": {
+    "area": "dunes",
+    "entryPosition": {
+      "x": 520,
+      "y": 1090
+    },
+    "xp": 425
+  },
+  "layouts": [
+    "1280x720",
+    "1366x768",
+    "1920x1080",
+    "844x390"
+  ],
+  "performance": {
+    "meanFps": 57.32130525633693,
+    "minFps": 55.12188649177551,
+    "objects": 110,
+    "tweens": 3,
+    "renderTextures": 6
+  },
+  "touchPortal": {
+    "landscapeControlsVisible": true,
+    "contextualLabel": "ENTRAR",
+    "transitioned": true
+  },
+  "touchEastExit": {
+    "contextualLabel": "ENTRAR",
+    "advancedIntoDunes": true
+  }
+}

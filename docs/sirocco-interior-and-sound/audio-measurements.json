@@ -1,0 +1,110 @@
+[
+  {
+    "track": "forest",
+    "durationSeconds": 144.0,
+    "bpm": 60,
+    "bars": 36,
+    "bytes": 2017323,
+    "peak": 0.3,
+    "rms": 0.0598,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "b6a3715026826d0fc3d64578f3c3f6e6aa8df7210693265929ebda70743d8f10"
+  },
+  {
+    "track": "cavern",
+    "durationSeconds": 147.692,
+    "bpm": 52,
+    "bars": 32,
+    "bytes": 2068889,
+    "peak": 0.3,
+    "rms": 0.055,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "80371f8e8b95331b35a31657b6f9cd3060edcd4629a6a94ede994ed3451677ae"
+  },
+  {
+    "track": "deep",
+    "durationSeconds": 160.0,
+    "bpm": 48,
+    "bars": 32,
+    "bytes": 2241140,
+    "peak": 0.3,
+    "rms": 0.0484,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "e88bbddabfb98997bea2c76dedc76c24137930704b2e0be31b72b404785cb3c7"
+  },
+  {
+    "track": "deeper",
+    "durationSeconds": 137.143,
+    "bpm": 56,
+    "bars": 32,
+    "bytes": 1921140,
+    "peak": 0.3,
+    "rms": 0.0555,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "4a31e066effd15808f1260ef82fdf127fea456f5c6d299bfa866cc78e8d09250"
+  },
+  {
+    "track": "exterior",
+    "durationSeconds": 135.0,
+    "bpm": 64,
+    "bars": 36,
+    "bytes": 1891152,
+    "peak": 0.3,
+    "rms": 0.0608,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "0ad91ad01378bb7feba34a6b081c340ddcd833f56ea24d6766d0ad13c71fbdb2"
+  },
+  {
+    "track": "valley",
+    "durationSeconds": 141.176,
+    "bpm": 68,
+    "bars": 40,
+    "bytes": 1977826,
+    "peak": 0.3,
+    "rms": 0.0559,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "e35eef78b93f5e6790c76658c7611a4bd8156970d2e535a92fbb9117772fe7b2"
+  },
+  {
+    "track": "sirocco",
+    "durationSeconds": 148.966,
+    "bpm": 58,
+    "bars": 36,
+    "bytes": 2086809,
+    "peak": 0.3,
+    "rms": 0.0594,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "f03f3f4ec3daa04bf5c875d5f0ae2b77dc3339ab7033d73c198bae976f8f0b22"
+  },
+  {
+    "track": "dunes",
+    "durationSeconds": 172.8,
+    "bpm": 50,
+    "bars": 36,
+    "bytes": 2420340,
+    "peak": 0.3,
+    "rms": 0.0566,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "f994cca6a274f0ac835f614353985e82dce0dbafd8bae83482d5fc99b236f5a6"
+  },
+  {
+    "track": "warden",
+    "durationSeconds": 120.0,
+    "bpm": 80,
+    "bars": 40,
+    "bytes": 1681232,
+    "peak": 0.3,
+    "rms": 0.0547,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "0db477560e2d2776d22a8739f51f9c9756bad68a76196d5ce7687b995c13102a"
+  }
+]

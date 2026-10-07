@@ -204,7 +204,12 @@ export class Hud {
 
   setAridArea(signalRecorded = false, expeditionComplete = false): void {
     this.areaSubtitle.setText(signalRecorded ? 'Bacia do Siroco · Margem Leste' : 'Bacia do Siroco');
-    this.signalObjective.setText(expeditionComplete ? 'EXPEDIÇÃO CONCLUÍDA' : signalRecorded ? 'EXPLORE A MARGEM LESTE' : 'EXPLORE A BACIA');
+    this.signalObjective.setText(expeditionComplete ? 'SIGA PARA AS DUNAS' : signalRecorded ? 'EXPLORE A MARGEM LESTE' : 'EXPLORE A BACIA');
+  }
+
+  setDunesArea(ruinsSeen: boolean, depthSeen: boolean): void {
+    this.areaSubtitle.setText(depthSeen ? 'Dunas Interiores · Depressão de Areia' : 'Dunas Interiores');
+    this.signalObjective.setText(depthSeen ? 'SINAL SOB A AREIA' : ruinsSeen ? 'SIGA A DESCIDA' : 'EXPLORE AS DUNAS');
   }
 
   setContinuationArea(exterior: boolean, fragmentSeen: boolean, firstEchoSeen = false): void {

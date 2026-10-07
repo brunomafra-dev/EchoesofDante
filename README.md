@@ -28,7 +28,13 @@ O limite agora é **nível 10**. Os níveis 4, 6, 8 e 10 concedem uma escolha en
 
 ## Expansão 05 — Margem Leste da Bacia do Siroco · 0.1.58
 
-A Bacia agora continua até uma margem oriental com piso ilustrado próprio, um desvio opcional na Prateleira das Agulhas e um portal que retorna ao Vale. Mapear o relé aponta o sinal para leste; a expedição só se conclui ao alcançar a saída. A rota opcional concede 20 XP uma vez pelo mesmo feedback flutuante usado nos demais ganhos. Habitantes podem ser contornados, e o novo checkpoint preserva a progressão local. [Arte, fluxo e QA](docs/expansion-sprint-05/).
+A Bacia continua até uma margem oriental com piso ilustrado próprio e um desvio opcional na Prateleira das Agulhas. Mapear o relé aponta o sinal para leste. A rota opcional concede 20 XP uma vez pelo mesmo feedback flutuante usado nos demais ganhos. Habitantes podem ser contornados, e o checkpoint preserva a progressão local. O destino do portal foi ampliado na atualização seguinte. [Arte, fluxo e QA](docs/expansion-sprint-05/).
+
+## Dunas Interiores e trilhas regionais · 0.1.59
+
+O portal oriental do Siroco agora avança para **Dunas Interiores**: terreno aberto, dois desvios opcionais, sete habitantes, ruínas soterradas e uma depressão de areia que prepara um encontro futuro. Investigar as ruínas registra um checkpoint seguro; o retorno à Bacia fica no portal de entrada. Nenhum novo boss foi implementado.
+
+Todas as regiões possuem música própria: nove composições instrumentais originais de **120–173 segundos**, com frases espaçadas e transições suaves. [Composição, assets e validação](docs/sirocco-interior-and-sound/).
 
 ## Stack
 
@@ -115,7 +121,7 @@ A emulação de touch no Chrome não comprova o comportamento do Safari em hardw
 
 ## Áudio
 
-A música de exploração usa dois loops instrumentais curtos e originais, Forest e Cavern, com o mesmo motivo de sinal em atmosferas diferentes. São protótipos, reproduzidos de arquivos WAV locais e reproduzíveis pelo script `python scripts/generate-prototype-audio.py`; não usam samples externos. O encontro do Warden acrescenta um loop original de 24 segundos, reproduzível com `python scripts/generate-warden-audio.py`. O `AudioManager` mantém uma única música ativa, separa MUSIC de SFX e possui níveis internos MASTER/MUSIC/SFX em `src/config/audio.ts`. Os efeitos existentes continuam com Web Audio; sinal e mecanismo receberam variações discretas. O jogo funciona sem áudio e só tenta iniciar a reprodução após um gesto do jogador, respeitando o bloqueio de autoplay do navegador.
+A música usa nove composições instrumentais originais para Forest, Cavern, Deep Cavern, Deeper Cavern, Exterior, Vale, Siroco, Dunas Interiores e Warden. Os MP3s estéreo de 120–173 segundos são produzidos **offline** por `python scripts/compose-region-scores.py`, sem samples ou gravações de terceiros. O navegador carrega a faixa da região atual, após um gesto do jogador; não há síntese musical durante gameplay. O `AudioManager` mantém uma voz musical e, somente durante a transição de 1,6 segundo, uma voz de saída. MUSIC e SFX continuam separados, com MASTER/MUSIC/SFX em `src/config/audio.ts`. Os efeitos existentes continuam com Web Audio. Falha de áudio ou bloqueio de autoplay não impedem jogar; a vitória do Warden mantém seu encerramento e silêncio.
 
 ## Escopo implementado
 

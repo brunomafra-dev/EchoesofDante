@@ -1,6 +1,7 @@
 import { ECHO_COUNT, FOREST_ECHOES } from '../config/discovery';
 import { VALLEY_ENCOUNTERS, VALLEY_ROUTES } from '../config/valley';
 import { SIROCCO_ENCOUNTERS, SIROCCO_ROUTES } from '../config/sirocco';
+import { DUNES_ENCOUNTERS, DUNES_ROUTES } from '../config/dunes';
 import type { BestiarySnapshot } from './Bestiary';
 import type { ProgressionSnapshot } from './Progression';
 import type { AbilityUpgradeRanks } from '../config/abilityUpgrades';
@@ -11,8 +12,8 @@ export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSee
   'wardenReached', 'wardenGateOpen', 'wardenDefeated', 'wardenEndingSeen', 'valleyVisited',
   'valleyLandmarkSeen', 'valleyEndSeen', 'valleyCheckpointReached', 'valleyFrontierReached',
   'valleyFrontierSignalSeen', 'valleyFrontierEndSeen', 'aridVisited', 'aridSignalSeen',
-  'aridFrontierEntered', 'aridFrontierReached'] as const;
-export type JourneyArea = 'forest' | 'cavern' | 'warden' | 'valley' | 'arid';
+  'aridFrontierEntered', 'aridFrontierReached', 'dunesVisited', 'dunesRuinsSeen', 'dunesDepthSeen'] as const;
+export type JourneyArea = 'forest' | 'cavern' | 'warden' | 'valley' | 'arid' | 'dunes';
 export type JourneyFlags = Record<typeof JOURNEY_FLAGS[number], boolean>;
 export type JourneySnapshot = {
   schema: 1; updatedAt: number; area: JourneyArea; hp: number;
@@ -51,12 +52,16 @@ export class LocalJourney {
       if (flags.firstEchoSeen) { flags.fragmentSeen = true; flags.exteriorEntered = true; }
       if (!flags.wardenDefeated) for (const key of ['valleyVisited', 'valleyLandmarkSeen', 'valleyEndSeen', 'valleyCheckpointReached',
         'valleyFrontierReached', 'valleyFrontierSignalSeen', 'valleyFrontierEndSeen', 'aridVisited', 'aridSignalSeen',
-        'aridFrontierEntered', 'aridFrontierReached'] as const) flags[key] = false;
+        'aridFrontierEntered', 'aridFrontierReached', 'dunesVisited', 'dunesRuinsSeen', 'dunesDepthSeen'] as const) flags[key] = false;
       flags.aridVisited &&= flags.valleyFrontierEndSeen;
       flags.aridSignalSeen &&= flags.aridVisited;
       flags.aridFrontierEntered &&= flags.aridSignalSeen;
       flags.aridFrontierReached &&= flags.aridFrontierEntered;
-      const area: JourneyArea = raw.area === 'arid' && flags.wardenDefeated && flags.valleyFrontierEndSeen && flags.aridVisited ? 'arid'
+      flags.dunesVisited &&= flags.aridFrontierReached;
+      flags.dunesRuinsSeen &&= flags.dunesVisited;
+      flags.dunesDepthSeen &&= flags.dunesRuinsSeen;
+      const area: JourneyArea = raw.area === 'dunes' && flags.dunesVisited ? 'dunes'
+        : raw.area === 'arid' && flags.wardenDefeated && flags.valleyFrontierEndSeen && flags.aridVisited ? 'arid'
         : raw.area === 'valley' && flags.wardenDefeated ? 'valley'
         : raw.area === 'warden' && flags.wardenGateOpen ? 'warden'
         : raw.area !== 'forest' && passageOpen ? 'cavern' : 'forest';
@@ -66,15 +71,16 @@ export class LocalJourney {
         if (Array.isArray(entry) && VALLEY_ENCOUNTERS.some(h => h.id === entry[0]) && integer(entry[1], 8_640_000_000_000_000)) habitats.push([entry[0], entry[1]]);
       }
       const aridHabitats: [number, number][] = [];
-      if (Array.isArray(raw.aridHabitats)) for (const entry of raw.aridHabitats.slice(0, SIROCCO_ENCOUNTERS.length)) {
-        if (Array.isArray(entry) && SIROCCO_ENCOUNTERS.some(h => h.id === entry[0]) && integer(entry[1], 8_640_000_000_000_000)) aridHabitats.push([entry[0], entry[1]]);
+      const desertHabitats = [...SIROCCO_ENCOUNTERS, ...DUNES_ENCOUNTERS];
+      if (Array.isArray(raw.aridHabitats)) for (const entry of raw.aridHabitats.slice(0, desertHabitats.length)) {
+        if (Array.isArray(entry) && desertHabitats.some(h => h.id === entry[0]) && integer(entry[1], 8_640_000_000_000_000)) aridHabitats.push([entry[0], entry[1]]);
       }
       this.status = 'Progresso recuperado deste navegador.';
       return { schema: 1, updatedAt: integer(raw.updatedAt, 8_640_000_000_000_000) ? raw.updatedAt : 0, area, hp: raw.hp,
         progression: { xp: p.xp, echoes, sourceLocated: echoes.length === ECHO_COUNT && p.sourceLocated === true,
           passageOpen, rewardedHollows: p.rewardedHollows.filter((id): id is number => integer(id, 1999)).slice(0, 2000),
           rewardedRoutes: Array.isArray(p.rewardedRoutes) ? p.rewardedRoutes.filter((id): id is string =>
-            typeof id === 'string' && (VALLEY_ROUTES.some(route => route.id === id) || SIROCCO_ROUTES.some(route => route.id === id))) : [],
+            typeof id === 'string' && (VALLEY_ROUTES.some(route => route.id === id) || SIROCCO_ROUTES.some(route => route.id === id) || DUNES_ROUTES.some(route => route.id === id))) : [],
           abilityUpgrades: object(p.abilityUpgrades) as Partial<AbilityUpgradeRanks> | undefined },
         flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats };
     } catch {
