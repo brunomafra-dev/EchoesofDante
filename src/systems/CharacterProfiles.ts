@@ -1,4 +1,4 @@
-export type CharacterClass = 'warrior';
+export type CharacterClass = 'warrior' | 'hunter';
 export type CharacterProfile = { id: string; name: string; classId: CharacterClass; createdAt: number };
 const KEY = 'echoes-of-dante.characters.v1';
 const LEGACY = 'echoes-of-dante.journey.v1';
@@ -16,7 +16,7 @@ export class CharacterProfiles {
       if (raw?.schema === 1 && Array.isArray(raw.characters)) {
         this.characters = raw.characters.filter((p: CharacterProfile) => p && typeof p.id === 'string' &&
           /^[a-zA-Z0-9-]{1,64}$/.test(p.id) && typeof p.name === 'string' && p.name.length <= 24 &&
-          p.classId === 'warrior' && Number.isFinite(p.createdAt)).slice(0, 6);
+          (p.classId === 'warrior' || p.classId === 'hunter') && Number.isFinite(p.createdAt)).slice(0, 6);
         if (this.characters.some(p => p.id === raw.selected)) this.selected = raw.selected;
       }
     } catch { /* Local play remains available when storage is blocked. */ }
@@ -37,7 +37,7 @@ export class CharacterProfiles {
   }
   create(name: string, classId: CharacterClass): CharacterProfile | undefined {
     this.initialize(); const clean = name.trim().replace(/\s+/g, ' ').slice(0, 24);
-    if (!clean || this.characters.length >= 6 || classId !== 'warrior') return undefined;
+    if (!clean || this.characters.length >= 6 || (classId !== 'warrior' && classId !== 'hunter')) return undefined;
     const profile = { id: crypto.randomUUID?.() ?? `hero-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
       name: clean, classId, createdAt: Date.now() };
     this.characters.push(profile);

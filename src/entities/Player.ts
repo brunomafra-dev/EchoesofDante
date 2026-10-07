@@ -10,6 +10,7 @@ import { EnergySaber } from './EnergySaber';
 import { poseWarrior } from '../experiments/quality-reference/ActorPresentation';
 import { WarriorArt } from '../visual/WarriorArt';
 import { WarriorArms } from '../visual/WarriorArms';
+import { HUNTER, type PlayableClass } from '../config/classes';
 
 export type PlayerAnimationState = 'IDLE' | 'WALK' | 'ATTACK_WINDUP' | 'ATTACK_SWING' | 'ATTACK_RECOVERY' | 'DASH' | 'CHARGE' | 'CHARGE_RELEASE' | 'HURT' | 'DEAD';
 
@@ -17,7 +18,7 @@ export class Player {
   readonly position: Vec2;
   readonly velocity: Vec2 = { x: 0, y: 0 };
   readonly health: Health;
-  readonly movementSpeed = PLAYER.speed;
+  get movementSpeed(): number { return this.classId === 'hunter' ? HUNTER.speed : PLAYER.speed; }
   readonly attackDamage = PLAYER.attackDamage;
   readonly attackCooldown = PLAYER.attackCooldown;
   readonly radius = PLAYER.radius;
@@ -58,7 +59,8 @@ export class Player {
   private invulnerableUntil = 0;
 
   constructor(private scene: Phaser.Scene, x: number, y: number, maxHp: number = PLAYER.maxHp, private referencePresentation = false,
-    paintedPresentation = false, private readonly upgradeRank: (id: AbilityUpgradeId) => number = () => 0) {
+    paintedPresentation = false, private readonly upgradeRank: (id: AbilityUpgradeId) => number = () => 0,
+    readonly classId: PlayableClass = 'warrior') {
     this.health = new Health(maxHp);
     this.position = { x, y };
     this.shadow = scene.add.ellipse(x, y + 39, 57, 16, 0x020e14, 0.39).setDepth(y - 3);
@@ -131,7 +133,7 @@ export class Player {
 
   get hp(): number { return this.health.current; }
   get maxHp(): number { return this.health.max; }
-  get dashCooldown(): number { return PLAYER.dashCooldown - this.upgradeRank('dashCooldown') * 120; }
+  get dashCooldown(): number { return (this.classId === 'hunter' ? HUNTER.dashCooldown : PLAYER.dashCooldown) - this.upgradeRank('dashCooldown') * 120; }
   get dashDuration(): number { return PLAYER.dashDuration + this.upgradeRank('dashDuration') * 20; }
   get dashReady(): boolean { return !this.isDead && this.scene.time.now - this.lastDashAt >= this.dashCooldown; }
   get dashProgress(): number { return clamp((this.scene.time.now - this.lastDashAt) / this.dashCooldown, 0, 1); }
@@ -153,7 +155,7 @@ export class Player {
     if (this.isDashing && now >= this.dashUntil) this.isDashing = false;
     const heavyBusy = heavy.phase !== 'READY';
     const direction = this.isDashing ? this.dashVector : input;
-    const speed = this.isDashing ? PLAYER.dashSpeed : PLAYER.speed;
+    const speed = this.isDashing ? PLAYER.dashSpeed : this.movementSpeed;
     this.velocity.x = heavyBusy ? 0 : direction.x * speed;
     this.velocity.y = heavyBusy ? 0 : direction.y * speed;
     const previousX = this.position.x;
@@ -223,6 +225,7 @@ export class Player {
   }
 
   renderWeapon(aim: number, pose: SaberPose, heavy: KineticPose): void {
+    if (this.classId === 'hunter') { this.weapon.clearEffects(); return; }
     this.weapon.render(this.position, this.gripWorld, aim, this.bodyLean, pose, heavy, this.isDashing);
     const offset = this.weapon.supportGripX * this.weapon.view.scaleX;
     const gripX = this.handAnchor.x + Math.cos(this.weapon.view.rotation) * offset;

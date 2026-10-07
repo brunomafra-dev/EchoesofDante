@@ -7,6 +7,14 @@ type QueuedAction = Exclude<Action, 'attack'> | 'release' | 'cancel';
 type CombatGesture = { id: number; action: 'attack' | 'charge'; button: HTMLButtonElement; x: number; y: number; dragged: boolean };
 
 export class TouchControls {
+  setCombatPresentation(hunter: boolean): void {
+    const attack = this.root.querySelector<HTMLButtonElement>('[data-action="attack"]')!;
+    attack.querySelector('b')!.textContent = hunter ? 'DISPARO' : 'GOLPE';
+    attack.setAttribute('aria-label', hunter ? 'Rifle de pulso: toque ou arraste e solte' : 'Golpe de sabre: toque ou arraste e solte');
+    const charge = this.root.querySelector<HTMLButtonElement>('[data-action="charge"]')!;
+    charge.querySelector('b')!.textContent = hunter ? 'TIRO' : 'CARGA';
+    charge.setAttribute('aria-label', hunter ? 'Tiro concentrado: segure, mire e solte' : 'Carga cinética: segure, mire e solte');
+  }
   readonly coarsePointer = matchMedia('(pointer: coarse)').matches;
   private root: HTMLDivElement;
   private moveZone: HTMLElement;

@@ -185,3 +185,7 @@ As decisões técnicas desta sprint estão em [docs/technical-decisions.md](docs
 ## Fratura Boreal
 
 A passagem do Soterrado conduz à região gelada. [Arte e QA](docs/frozen-reach/README.md). [Classes oficiais](docs/classes/README.md).
+
+## Star Hunter
+
+Segunda classe disponível no menu de personagens: rifle, Momentum e tiro concentrado. [Kit, arte e QA](docs/star-hunter/README.md).

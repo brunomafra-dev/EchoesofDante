@@ -4,6 +4,13 @@ import type { Vec2 } from '../utils/math';
 
 // Draw once. Gestures only move/rotate these two reusable visual guides.
 export class TouchAimPreview {
+  setCombatPresentation(hunter: boolean): void {
+    if (!hunter) return;
+    this.strike.clear(); this.charge.clear();
+    this.arrow(this.strike, 24, 700);
+    this.arrow(this.charge, 24, 980);
+    this.charge.lineStyle(1, 0x5fe6d8, .3).lineBetween(24, -7, 980, -7).lineBetween(24, 7, 980, 7);
+  }
   private strike: Phaser.GameObjects.Graphics;
   private charge: Phaser.GameObjects.Graphics;
 

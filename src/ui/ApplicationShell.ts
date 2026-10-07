@@ -1,5 +1,7 @@
 import type { GameScene } from '../scenes/GameScene';
 import { characterProfiles } from '../systems/CharacterProfiles';
+import { CLASS_NAMES } from '../config/classes';
+import type { CharacterClass } from '../systems/CharacterProfiles';
 import { AUDIO } from '../config/audio';
 import { PROGRESSION } from '../config/progression';
 
@@ -84,7 +86,7 @@ export class ApplicationShell {
     this.content.replaceChildren();
     if (this.page === 'home' || this.page === 'pause') {
       const hero = characterProfiles.active;
-      this.heading(this.page === 'pause' ? 'Expedição pausada' : 'Sua próxima descoberta', `${hero.name} · Guerreiro Galáctico`);
+      this.heading(this.page === 'pause' ? 'Expedição pausada' : 'Sua próxima descoberta', `${hero.name} · ${CLASS_NAMES[hero.classId]}`);
       const play = this.action(this.page === 'pause' ? 'VOLTAR AO JOGO' : 'CONTINUAR EXPEDIÇÃO', 'continue', () => this.resume());
       play.disabled = !this.scene;
       this.action('PERSONAGENS', 'characters', () => this.show('characters'));
@@ -101,7 +103,7 @@ export class ApplicationShell {
           const names: Record<string, string> = { forest: 'Floresta', cavern: 'Cavernas', warden: 'Guardião', valley: 'Vale', arid: 'Siroco', dunes: 'Dunas', sandpit: 'Bacia Soterrada', frost: 'Fratura Boreal' };
           if (saved) region = names[saved.area] ?? 'Expedição';
         } catch { /* Missing/corrupt journey starts safely through LocalJourney. */ }
-        this.action(`${hero.name} · Guerreiro · NV ${level} · ${region}${hero.id === characterProfiles.active.id ? ' · ATUAL' : ''}`,
+        this.action(`${hero.name} · ${CLASS_NAMES[hero.classId]} · NV ${level} · ${region}${hero.id === characterProfiles.active.id ? ' · ATUAL' : ''}`,
           `character-${hero.id}`, () => {
             if (hero.id === characterProfiles.active.id) { this.resume(); return; }
             this.scene?.flushForShell();
@@ -115,10 +117,14 @@ export class ApplicationShell {
       this.heading('Uma nova expedição', 'Escolha sua identidade. A jornada do personagem atual permanece guardada.');
       const label = document.createElement('label'); label.textContent = 'Nome do personagem';
       const input = document.createElement('input'); input.name = 'character-name'; input.maxLength = 24; input.placeholder = 'Seu nome em Dante'; label.append(input); this.content.append(label);
+      const choice = document.createElement('select'); choice.name = 'character-class'; choice.setAttribute('aria-label', 'Classe');
+      for (const [value, name] of Object.entries(CLASS_NAMES)) { const option = document.createElement('option'); option.value = value; option.textContent = name; choice.append(option); }
+      this.content.append(choice);
       const card = document.createElement('article'); card.className = 'shell-class-card';
       card.innerHTML = '<strong>GUERREIRO GALÁCTICO</strong><p>Sabre de energia · Esquiva do vazio · Carga cinética</p><small>Combate próximo, mobilidade e ondas direcionais.</small>'; this.content.append(card);
+      choice.addEventListener('change', () => { card.innerHTML = choice.value === 'hunter' ? '<strong>STAR HUNTER</strong><p>Rifle de pulso · Passo de fase · Tiro concentrado</p><small>Precisão e distância. Movimente-se em combate para gerar Momentum, que fortalece os disparos. Menor resistência.</small>' : '<strong>GUERREIRO GALÁCTICO</strong><p>Sabre de energia · Esquiva do vazio · Carga cinética</p><small>Combate próximo, resistência e ondas direcionais.</small>'; });
       this.action('COMEÇAR EXPEDIÇÃO', 'create', () => {
-        this.scene?.flushForShell(); const hero = characterProfiles.create(input.value, 'warrior');
+        this.scene?.flushForShell(); const hero = characterProfiles.create(input.value, choice.value as CharacterClass);
         if (!hero) { this.status('Informe um nome. Se o armazenamento estiver bloqueado, continue com seu personagem atual.'); return; }
         if (characterProfiles.select(hero.id)) location.reload();
       });

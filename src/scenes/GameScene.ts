@@ -1,4 +1,8 @@
 import Phaser from 'phaser';
+import { characterProfiles } from '../systems/CharacterProfiles';
+import { HUNTER, type PlayableClass } from '../config/classes';
+import { HunterCombat } from '../combat/HunterCombat';
+import { HunterArt, preloadHunterArt } from '../visual/HunterArt';
 import { SaberAttack } from '../combat/Attack';
 import { applyDamage } from '../combat/Damage';
 import { KineticCharge } from '../combat/KineticCharge';
@@ -56,6 +60,10 @@ import { ReferenceImpacts } from '../experiments/quality-reference/ReferenceImpa
 import { preloadWarriorArt } from '../visual/WarriorArt';
 
 export class GameScene extends Phaser.Scene {
+  private classId: PlayableClass = 'warrior';
+  private hunter?: HunterCombat;
+  private hunterArt?: HunterArt;
+  private get characterMaxHp(): number { return this.classId === 'hunter' ? Math.round(this.progression.maxHp * HUNTER.hpRatio) : this.progression.maxHp; }
   private player!: Player;
   private controls!: Controls;
   private arena!: Arena | CavernArea | WardenArena | ResonanceValley | SiroccoBasin | ReferenceArea;
@@ -163,6 +171,7 @@ export class GameScene extends Phaser.Scene {
     private readonly originalWarrior = false, private readonly shellReady?: (scene: GameScene) => void) { super('Game'); }
 
   preload(): void {
+    preloadHunterArt(this);
     if (!this.textures.exists('frost-ground')) this.load.image('frost-ground', `${import.meta.env.BASE_URL}assets/visual/environment/frost-ground.webp`);
     for (const kind of ['pouncer', 'spitter']) if (!this.textures.exists(`dante-frost-${kind}-motion`)) this.load.spritesheet(`dante-frost-${kind}-motion`, `${import.meta.env.BASE_URL}assets/visual/characters/frost-${kind}-motion.png`, { frameWidth: 256, frameHeight: 256 });
     const assetBase = `${import.meta.env.BASE_URL}assets/visual/characters/`;
@@ -220,6 +229,8 @@ export class GameScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.events.off(Phaser.Scenes.Events.UPDATE, syncCombatClock));
     if (!this.journeyLoaded) { this.journeyLoaded = true; this.restoreJourney(); }
     resetEnvironmentOcclusion(this);
+    this.classId = this.qualityReference ? 'warrior' : characterProfiles.active.classId;
+    this.hunter = undefined; this.hunterArt = undefined;
     this.attack = new SaberAttack(id => this.progression.upgradeRank(id));
     this.charge = new KineticCharge(id => this.progression.upgradeRank(id));
     this.waveDrawn = false;
@@ -318,14 +329,19 @@ export class GameScene extends Phaser.Scene {
     this.returnFromDunes = false;
     this.returnFromSandpit = false;
     this.returnFromFrost = false;
-    this.player = new Player(this, entry.x, entry.y, this.progression.maxHp, this.qualityReference === 'reference',
-      this.qualityReference !== 'baseline' && !this.originalWarrior, id => this.progression.upgradeRank(id));
+    this.player = new Player(this, entry.x, entry.y, this.characterMaxHp, this.qualityReference === 'reference',
+      this.qualityReference !== 'baseline' && !this.originalWarrior, id => this.progression.upgradeRank(id), this.classId);
+    if (this.classId === 'hunter') {
+      this.hunter = new HunterCombat(this, id => this.progression.upgradeRank(id));
+      this.hunterArt = new HunterArt(this, this.player.view, entry.x, entry.y);
+    }
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
     this.transferHp = undefined;
     this.kineticWave = this.add.graphics().setDepth(14999);
     this.controls = new Controls(this, () => this.sounds.unlock(), () => {
       if (!this.player.isDead && !this.records?.isOpen) this.beginStrike(this.time.now);
     });
+    this.controls.setCombatPresentation(this.classId === 'hunter');
     this.updateMusicRegion(true);
     this.sounds.setMusicFocus(1);
     const spawns = this.area === 'forest' ? FOREST_SPAWNS : CAVERN_HOLLOWS;
@@ -352,7 +368,7 @@ export class GameScene extends Phaser.Scene {
         this.enemySpecies.set(this.soterrado, 'soterrado');
       } else this.sounds.stopMusic();
     }
-    this.hud = new Hud(this, () => this.restart());
+    this.hud = new Hud(this, () => this.restart(), this.classId === 'hunter');
     if (this.qualityReference === 'reference') this.referenceImpacts = new ReferenceImpacts(this);
     this.navigation = this.qualityReference ? undefined : new WorldNavigator(this, () => ({ bounds: this.movementBounds, obstacles: this.arena.obstacles }));
     this.explorationGuide = new ExplorationGuide(this, this.navigation);
@@ -414,7 +430,7 @@ export class GameScene extends Phaser.Scene {
     this.input.setDefaultCursor('crosshair');
     this.records = new RecordsPanel(this, () => ({
       level: this.progression.level, xp: this.progression.xp, echoes: this.progression.echoes.size,
-      nextLevelXp: this.progression.nextLevelXp, maxHp: this.progression.maxHp,
+      nextLevelXp: this.progression.nextLevelXp, maxHp: this.characterMaxHp,
       nextLevelHpGain: this.progression.nextLevelHpGain, upgradePointsAvailable: this.progression.upgradePointsAvailable,
       abilityUpgradeRanks: this.progression.abilityUpgradeRanks,
       area: this.area === 'frost' ? 'Fratura Boreal' : this.area === 'sandpit' ? 'Bacia Soterrada' : this.area === 'dunes' ? 'Dunas Interiores' : this.area === 'arid' ? 'Bacia do Siroco' : this.area === 'valley' ? 'Vale da Ressonância' : this.area === 'warden' ? 'Domínio do Guardião' : this.area === 'cavern' ? 'Cavernas de Dante' : 'Floresta de Dante',
@@ -433,7 +449,7 @@ export class GameScene extends Phaser.Scene {
     }, () => {
       this.resumeFromModal();
       if (this.progression.upgradePointsAvailable > 0) this.time.delayedCall(100, () => this.showAvailableUpgrade());
-    });
+    }, this.classId === 'hunter');
     const flush = () => this.saveProgress();
     const hidden = () => { if (document.hidden) flush(); };
     window.addEventListener('pagehide', flush);
@@ -622,6 +638,7 @@ export class GameScene extends Phaser.Scene {
     this.controls.setDead(this.player.isDead);
     this.updateExplorationGuide();
     if (this.player.isDead) {
+      this.hunter?.clear();
       this.sounds.setMusicFocus(1);
       if (this.controls.restartPressed) this.restart();
       return;
@@ -636,7 +653,8 @@ export class GameScene extends Phaser.Scene {
     }
     if ((this.controls.chargeReleased || (this.charge.phase === 'CHARGING' && !this.controls.chargeHeld)) && this.charge.release(time, aim, this.player.position)) {
       this.sounds.swing();
-      this.chargeBurst();
+      if (this.hunter) this.hunter.fire(time, this.player.position, aim, this.charge.damage);
+      else this.chargeBurst();
     }
     const heavy = this.charge.pose(time);
     const heavyBusy = heavy.phase !== 'READY';
@@ -662,6 +680,7 @@ export class GameScene extends Phaser.Scene {
     }
     this.player.update(time, dt, input, facing, this.area === 'warden' || this.area === 'sandpit' ? this.playerObstacles : this.arena.obstacles, pose, heavy, this.movementBounds);
     this.updateMusicRegion();
+    this.hunterArt?.update(this.player.position.x, this.player.position.y, facing, time < (this.hunter?.firedUntil ?? 0) || heavy.phase !== 'READY');
     updateEnvironmentOcclusion(this, this.player.position, dt);
     if (wasDashing && !this.player.isDashing) this.dashEnd();
     if (this.player.isDashing && time - this.lastDashTrail > 30) {
@@ -673,12 +692,18 @@ export class GameScene extends Phaser.Scene {
     if (this.soterrado?.canBeHit) this.bossTargets.push(this.soterrado);
     const targets = this.area === 'warden' || this.area === 'sandpit' ? this.bossTargets : this.enemies;
     if (this.charge.wavePending) {
-      const waveHits = this.charge.takeHits(time, targets);
+      const waveHits = this.charge.takeHits(time, this.hunter ? [] : targets);
       this.resolvePlayerHits(time, waveHits, this.charge.damage, this.charge.angle, 0x5fe6d8, this.charge.origin, true);
     }
-    this.renderKineticWave(time);
-    const sweep = this.attack.advance(time, this.player.position, facing, targets);
-    this.resolveSaberHits(time, sweep.hits, sweep.pose.worldAngle);
+    if (!this.hunter) this.renderKineticWave(time);
+    if (this.hunter) {
+      this.hunter.update(dt, this.player.position, !heavyBusy && Math.hypot(this.player.velocity.x, this.player.velocity.y) > 1, targets, this.arena.obstacles, this.movementBounds,
+        (enemy, damage, angle, precision) => this.resolvePlayerHits(time, [enemy], damage, angle, 0x5fe6d8, this.player.position, precision));
+      this.hud.setHunterMomentum(this.hunter.momentum);
+    } else {
+      const sweep = this.attack.advance(time, this.player.position, facing, targets);
+      this.resolveSaberHits(time, sweep.hits, sweep.pose.worldAngle);
+    }
     for (const enemy of this.enemies) {
       const species = this.enemySpecies.get(enemy);
       if (species && !enemy.isDead && distance(this.player.position, enemy.position) <= 320 &&
@@ -1200,6 +1225,10 @@ export class GameScene extends Phaser.Scene {
 
   private beginStrike(now: number): void {
     if (this.charge.phase !== 'READY') return;
+    if (this.hunter) {
+      if (this.hunter.fire(now, this.player.position, this.controls.aimFrom(this.player.position))) this.sounds.swing();
+      return;
+    }
     if (!this.attack.start(now)) return;
     const facing = this.controls.aimFrom(this.player.position);
     this.player.setAim(facing);
@@ -1370,9 +1399,9 @@ export class GameScene extends Phaser.Scene {
   }
 
   private levelUp(showUpgrade = true): void {
-    const gainedHp = this.progression.maxHp - this.player.maxHp;
-    this.player.health.setMaxAndRestore(this.progression.maxHp);
-    this.hud.showLevelUp(this.progression.level, this.progression.maxHp, gainedHp, this.progression.upgradePointsAvailable > 0);
+    const gainedHp = this.characterMaxHp - this.player.maxHp;
+    this.player.health.setMaxAndRestore(this.characterMaxHp);
+    this.hud.showLevelUp(this.progression.level, this.characterMaxHp, gainedHp, this.progression.upgradePointsAvailable > 0);
     this.updateProgressHud();
     this.saveProgress();
     const ring = this.add.circle(this.player.position.x, this.player.position.y, 25)
@@ -1390,6 +1419,7 @@ export class GameScene extends Phaser.Scene {
   private pauseForModal(): void {
     this.controls.cancelForRecords();
     this.charge.stop();
+    this.hunter?.clear();
     this.kineticWave.clear(); this.waveDrawn = false;
     this.recordsPausedAt = this.game.loop.now;
     this.input.enabled = false;
@@ -1475,7 +1505,7 @@ export class GameScene extends Phaser.Scene {
     if (this.qualityReference || !this.player || this.resettingJourney) return;
     const flags = Object.fromEntries(JOURNEY_FLAGS.map(key => [key, this[key]])) as JourneyFlags;
     const available = this.journey.save({ schema: 1, updatedAt: Date.now(), area: this.area,
-      hp: this.player.isDead ? this.progression.maxHp : this.player.hp, progression: this.progression.snapshot(),
+      hp: this.player.isDead ? this.characterMaxHp : this.player.hp, progression: this.progression.snapshot(),
       flags, bestiary: this.bestiary.snapshot(), valleyRoutes: [...this.valleyRoutes], valleyHabitats: [...this.valleyHabitatCooldowns],
       aridHabitats: [...this.siroccoHabitatCooldowns] });
     this.records?.setSaveAvailable(available);

@@ -6,6 +6,8 @@ import type { KineticPhase } from '../combat/KineticCharge';
 import type { InputMethod } from '../input/Controls';
 
 export class Hud {
+  private momentum = 0;
+  setHunterMomentum(value: number): void { this.momentum = Math.round(value); }
   private hpFill: Phaser.GameObjects.Rectangle;
   private hpText: Phaser.GameObjects.Text;
   private dashFill: Phaser.GameObjects.Rectangle;
@@ -32,7 +34,7 @@ export class Hud {
   private discoveryTimer?: Phaser.Time.TimerEvent;
   private levelTimer?: Phaser.Time.TimerEvent;
 
-  constructor(private scene: Phaser.Scene, onRestart: () => void) {
+  constructor(private scene: Phaser.Scene, onRestart: () => void, private readonly hunter = false) {
     const text = (x: number, y: number, value: string, size: number, color = '#e8f1ed', condensed = false) => scene.add.text(x, y, value, {
       fontFamily: condensed ? 'Barlow Condensed, sans-serif' : 'DM Sans, sans-serif',
       fontSize: `${size}px`, color, fontStyle: condensed ? 'bold' : 'normal', letterSpacing: condensed ? 0.8 : 0.2,
@@ -73,7 +75,7 @@ export class Hud {
     frame.lineStyle(1, 0x7d8c72, 0.3).strokeRoundedRect(347, 199, 586, 334, 6);
     frame.fillStyle(0xda938b).fillRect(374, 199, 65, 3);
     const overline = text(640, 232, 'SINAL PERDIDO   /   DANTE 01', 17, '#d99a91', true).setOrigin(0.5).setDepth(30002).setVisible(false);
-    const title = text(640, 289, 'GUERREIRO CAÍDO', 58, '#eff3e9', true).setOrigin(0.5).setDepth(30002).setVisible(false);
+    const title = text(640, 289, this.hunter ? 'CAÇADOR CAÍDO' : 'GUERREIRO CAÍDO', 58, '#eff3e9', true).setOrigin(0.5).setDepth(30002).setVisible(false);
     const subtitle = text(640, 373, 'Dante ainda está à escuta.', 17, '#aac5bf').setOrigin(0.5).setDepth(30002).setVisible(false);
     const button = scene.add.rectangle(640, 467, 248, 55, 0x9edacf).setScrollFactor(0).setDepth(30002).setInteractive({ useHandCursor: true }).setVisible(false);
     this.deathButtonText = text(640, 467, 'RENASCER   [ R ]', 26, '#12303a', true).setOrigin(0.5).setDepth(30003).setVisible(false);
@@ -95,7 +97,7 @@ export class Hud {
     this.dashText.setColor(dashProgress >= 1 ? '#b6c6b2' : '#8a9989');
     const chargeKey = this.inputMethod === 'gamepad' ? '[LT]' : this.inputMethod === 'touch' ? '' : '[Q]';
     const chargeStatus = chargePhase === 'CHARGING' ? `${Math.round(chargeLevel * 100)}%` : chargePhase === 'RELEASE' ? 'ONDA' : chargeProgress >= 1 ? 'PRONTA' : `${((1 - chargeProgress) * chargeCooldown / 1000).toFixed(1)}s`;
-    this.chargeText.setText(`${chargeKey} CARGA · ${chargeStatus}`.trim());
+    this.chargeText.setText(this.hunter ? `${chargeKey} TIRO · ${chargePhase === 'READY' ? 'MOM ' + this.momentum : chargePhase === 'RELEASE' ? 'DISPARO' : chargeStatus}`.trim() : `${chargeKey} CARGA · ${chargeStatus}`.trim());
     this.chargeText.setColor(chargePhase === 'CHARGING' ? '#5fe6d8' : chargeProgress >= 1 ? '#b6c6b2' : '#8a9989');
   }
 
@@ -121,6 +123,7 @@ export class Hud {
     const hint = this.controlHints[0];
     hint.setText(this.inputMethod === 'gamepad' ? 'LS mover · RS mirar · RT sabre · RB esquiva · Segure LT: carga · A investigar · Voltar: registros'
       : 'WASD mover · Mouse mirar · Clique sabre · Espaço esquiva · Segure Q: carga · E investigar · B registros');
+    if (this.hunter) hint.setText(hint.text.replace('sabre', 'disparo').replace('carga', 'tiro concentrado'));
     hint.setVisible(this.inputMethod !== 'touch');
     this.controlsTimer = this.scene.time.delayedCall(10000, () => hint.setVisible(false));
   }

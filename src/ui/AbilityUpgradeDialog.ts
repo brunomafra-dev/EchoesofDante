@@ -2,9 +2,21 @@ import Phaser from 'phaser';
 import { ABILITY_UPGRADES, type AbilityUpgradeId, type AbilityUpgradeRanks } from '../config/abilityUpgrades';
 
 const UPGRADE_LIST = Object.values(ABILITY_UPGRADES);
+const HUNTER_LIST = UPGRADE_LIST.map(upgrade => ({
+  ...upgrade,
+  ...({
+    saberArc: { ability: 'RIFLE', title: 'Pulso denso', description: 'Cada grau acrescenta 3 ao dano do disparo básico.' },
+    saberReach: { ability: 'RIFLE', title: 'Foco longo', description: 'Cada grau acrescenta 60 unidades ao alcance do rifle.' },
+    dashCooldown: { ability: 'PASSO DE FASE', title: 'Recarga de fase', description: 'Cada grau reduz a recarga da esquiva em 120 ms.' },
+    dashDuration: { ability: 'PASSO DE FASE', title: 'Passo prolongado', description: 'Cada grau prolonga a esquiva em 20 ms.' },
+    chargeWidth: { ability: 'TIRO', title: 'Núcleo expandido', description: 'Cada grau aumenta em 2 unidades o raio de contato do tiro concentrado.' },
+    chargePower: { ability: 'TIRO', title: 'Carga densa', description: 'Cada grau acrescenta 4 ao dano mínimo e 6 ao máximo do tiro concentrado.' },
+  }[upgrade.id]),
+}));
 
 // A compact, modal choice shown only at mastery levels. It owns no gameplay rules.
 export class AbilityUpgradeDialog {
+  private get upgrades() { return this.hunter ? HUNTER_LIST : UPGRADE_LIST; }
   private readonly dialog: HTMLDialogElement;
   private readonly heading: HTMLElement;
   private readonly points: HTMLElement;
@@ -13,7 +25,7 @@ export class AbilityUpgradeDialog {
   private padButtons: boolean[] = [];
 
   constructor(scene: Phaser.Scene, private readonly onChoose: (id: AbilityUpgradeId) => boolean,
-    private readonly onClose: () => void) {
+    private readonly onClose: () => void, private readonly hunter = false) {
     this.dialog = document.createElement('dialog');
     this.dialog.className = 'records-dialog ability-upgrade-dialog';
     this.dialog.setAttribute('aria-labelledby', 'ability-upgrade-title');
@@ -23,7 +35,8 @@ export class AbilityUpgradeDialog {
     this.heading = this.dialog.querySelector('#ability-upgrade-title')!;
     this.points = this.dialog.querySelector('.upgrade-points')!;
     const options = this.dialog.querySelector('.ability-upgrade-options')!;
-    for (const upgrade of UPGRADE_LIST) {
+    if (hunter) this.dialog.querySelector('header small')!.textContent = 'DOMÍNIO DO STAR HUNTER';
+    for (const upgrade of this.upgrades) {
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'ability-upgrade-option';
@@ -59,7 +72,7 @@ export class AbilityUpgradeDialog {
     if (this.dialog.open || available <= 0) return;
     this.heading.textContent = `Nível ${level} · escolha um aperfeiçoamento`;
     this.points.textContent = `${available} ${available === 1 ? 'ponto' : 'pontos'}`;
-    for (const upgrade of UPGRADE_LIST) {
+    for (const upgrade of this.upgrades) {
       const button = this.buttons.get(upgrade.id)!;
       const rank = ranks[upgrade.id];
       button.querySelector('b')!.textContent = `GRAU ${rank}/${upgrade.maxRank}`;
@@ -91,7 +104,7 @@ export class AbilityUpgradeDialog {
     else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') { event.preventDefault(); this.focusBy(-1); }
     else if (/^[1-6]$/.test(event.key)) {
       event.preventDefault();
-      const upgrade = UPGRADE_LIST[Number(event.key) - 1];
+      const upgrade = this.upgrades[Number(event.key) - 1];
       if (upgrade) this.choose(upgrade.id);
     }
   };
