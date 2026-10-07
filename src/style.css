@@ -59,6 +59,29 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
 .world-minimap svg { display: block; width: 100%; height: auto; background: #08110fed; pointer-events: none; }
 .world-minimap.is-collapsed { width: 58px; }
 .world-minimap.is-collapsed svg { display: none; }
+.main-menu-button { position: fixed; z-index: 21; right: calc(98px + env(safe-area-inset-right)); top: calc(clamp(54px, 13vh, 90px) + env(safe-area-inset-top)); min-height: 44px; padding: 8px 10px; border: 0; border-radius: 4px; background: #080e0c55; color: #bfcab3; font: 600 12px 'Barlow Condensed', sans-serif; cursor: pointer; touch-action: manipulation; }
+.shell-open .touch-controls, .shell-open .records-button, .shell-open .world-minimap, .shell-open .main-menu-button { visibility: hidden; }
+.application-shell { width: 100vw; height: 100dvh; max-width: none; max-height: none; padding: calc(32px + env(safe-area-inset-top)) calc(40px + env(safe-area-inset-right)) calc(24px + env(safe-area-inset-bottom)) calc(40px + env(safe-area-inset-left)); border: 0; background-color: #061512; background-position: center; background-size: cover; color: #e2e8d8; }
+.application-shell::backdrop { background: #030907; }
+.shell-layout { min-height: 100%; display: grid; grid-template-columns: 1fr minmax(260px,440px); align-items: center; gap: 8vw; max-width: 1120px; margin: auto; }
+.shell-brand small { color: #baa4e4; letter-spacing: .24em; font-size: 12px; }
+.shell-brand h1 { font: 700 clamp(44px,7vw,100px)/.95 'Barlow Condensed', sans-serif; letter-spacing: .02em; margin: 18px 0; }
+.shell-brand p { color: #a5b39d; font-size: 14px; }
+.shell-content h2 { margin: 0; font: 600 30px 'Barlow Condensed',sans-serif; }
+.shell-content p { color: #aebba6; line-height: 1.5; font-size: 13px; }
+.shell-content > button { display: block; width: 100%; margin-top: 10px; padding: 14px 18px; min-height: 48px; border: 1px solid #73866f66; border-radius: 5px; text-align: left; background: #172a21b3; color: #dce5cd; font: 600 17px 'Barlow Condensed',sans-serif; cursor: pointer; touch-action: manipulation; }
+.shell-content > button:hover { background: #304333; border-color: #9caf8c; }
+.shell-content > button:focus-visible, .shell-content input:focus-visible { outline: 2px solid #ffbd54; outline-offset: 3px; }
+.shell-content > button:disabled { opacity: .45; cursor: default; }
+.shell-content [data-shell="continue"], .shell-content [data-shell="create"] { border-left: 3px solid #a98cff; }
+.shell-content label { display: block; margin: 18px 0; color: #bcccb3; font-size: 14px; }
+.shell-content input { display: block; width: 100%; margin-top: 8px; padding: 12px; border: 1px solid #73866f88; border-radius: 4px; background: #071510; color: #e2e8d8; font: inherit; }
+.shell-content input[type="range"] { padding: 0; accent-color: #a98cff; }
+.shell-class-card { padding: 16px; border-left: 2px solid #e0863f; background: #172a21b3; }
+.shell-class-card small { color: #aebba6; }
+.shell-content .shell-status { font-size: 11px; margin-top: 22px; }
+@media (max-height:500px) { .application-shell { padding-top: calc(16px + env(safe-area-inset-top)); padding-bottom: 16px; } .shell-content > button { padding: 10px 14px; margin-top: 6px; min-height: 44px; } .shell-content .shell-status { margin-top: 12px; } .shell-content h2 { font-size: 25px; } .shell-brand h1 { font-size: 54px; } }
+@media (max-width:620px) { .shell-layout { grid-template-columns: 1fr; gap: 16px; } .shell-brand h1 { font-size: 42px; } .shell-brand p { display: none; } .application-shell { padding-left: 24px; padding-right: 24px; } }
 .records-open .world-minimap { visibility: hidden; }
 @media (max-height: 500px) { .world-minimap { width: 108px; top: calc(105px + env(safe-area-inset-top)); } }
 @media (orientation: portrait) and (pointer: coarse) { .world-minimap { display: none; } }

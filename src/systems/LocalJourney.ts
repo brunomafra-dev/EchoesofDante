@@ -5,6 +5,7 @@ import { DUNES_ENCOUNTERS, DUNES_ROUTES } from '../config/dunes';
 import type { BestiarySnapshot } from './Bestiary';
 import type { ProgressionSnapshot } from './Progression';
 import type { AbilityUpgradeRanks } from '../config/abilityUpgrades';
+import { characterProfiles } from './CharacterProfiles';
 
 export const JOURNEY_KEY = 'echoes-of-dante.journey.v1';
 export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSeen', 'deepCavernEntered',
@@ -29,10 +30,12 @@ const integer = (value: unknown, max: number): value is number => Number.isSafeI
 // One small, versioned local file. Unknown versions/corrupt files never crash gameplay.
 export class LocalJourney {
   status = 'O progresso será salvo neste navegador.';
+  private key?: string;
+  private storageKey(): string { return this.key ??= characterProfiles.journeyKey; }
 
   load(): JourneySnapshot | undefined {
     try {
-      const text = localStorage.getItem(JOURNEY_KEY);
+      const text = localStorage.getItem(this.storageKey());
       if (!text) return undefined;
       const raw = object(JSON.parse(text));
       const p = object(raw?.progression), rawFlags = object(raw?.flags);
@@ -97,7 +100,7 @@ export class LocalJourney {
 
   save(snapshot: JourneySnapshot): boolean {
     try {
-      localStorage.setItem(JOURNEY_KEY, JSON.stringify(snapshot));
+      localStorage.setItem(this.storageKey(), JSON.stringify(snapshot));
       this.status = 'Progresso salvo neste navegador.';
       return true;
     } catch {
@@ -107,7 +110,7 @@ export class LocalJourney {
   }
 
   clear(): boolean {
-    try { localStorage.removeItem(JOURNEY_KEY); return true; }
+    try { localStorage.removeItem(this.storageKey()); return true; }
     catch { this.status = 'Não foi possível apagar o registro local.'; return false; }
   }
 }

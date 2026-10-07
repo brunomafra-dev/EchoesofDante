@@ -5,8 +5,8 @@ Sequência autorizada pelo usuário: completar, validar e publicar cada etapa an
 | Etapa | Resultado esperado | Estado |
 | --- | --- | --- |
 | 1. Orientação | Minimapa local e indicação de aproximação aos objetivos | Implementada; QA em `navigation-foundation` |
-| 2. Entrada e personagens | Tela inicial sem login, menu Esc, áudio e personagens com saves independentes | Próxima |
-| 3. Região gelada | Continuação da pista do Soterrado, exploração e criaturas próprias | Planejada |
+| 2. Entrada e personagens | Tela inicial sem login, menu Esc, áudio e personagens com saves independentes | Implementada; QA em `menu-and-characters` |
+| 3. Região gelada | Continuação da pista do Soterrado, exploração e criaturas próprias | Em implementação |
 | 4. Segunda classe | Kit e identidade coerentes com o descritivo oficial | Aguardando localização/envio do descritivo solicitado ao usuário |
 | 5. Cooperativo | Sessão inicial para dois jogadores, com estado compartilhado | Planejada |
 

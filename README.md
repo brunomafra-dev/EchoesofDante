@@ -48,6 +48,10 @@ O Soterrado agora emerge de um buraco ilustrado na apresentação e no ataque de
 
 Minimapa local e seta discreta indicam a aproximação ao próximo ponto da jornada. O terreno é revelado conforme a exploração; M ou MAPA recolhe o painel. O guia considera as colisões existentes, preservando as condições de descoberta e o combate. [Funcionamento e QA](docs/navigation-foundation/) · [Sequência das próximas etapas](docs/next-adventure/).
 
+## Entrada e personagens · 0.1.63
+
+Tela inicial sem login, menu Esc/MENU/Start e volumes geral, música e efeitos. Escolha ou crie personagens com progressos locais independentes; o Guerreiro existente conserva seu save. A classe disponível nesta etapa é Guerreiro Galáctico. [Funcionamento, compatibilidade e QA](docs/menu-and-characters/).
+
 ## Stack
 
 A [referência jogável de qualidade](docs/quality-reference/) isola a primeira câmara da Cavern em `/quality-reference.html`: ambiente pintado contínuo, apresentação articulada do Hollow e impactos curtos. Os botões **Warrior novo / Warrior anterior** comparam o [Guerreiro pintado 0.1.48](docs/warrior-quality-reference/) no mesmo cenário; **Câmara original** conserva a comparação ambiental. O Guerreiro novo também está aplicado ao jogo principal, conforme autorização do usuário. O laboratório não altera o progresso local.

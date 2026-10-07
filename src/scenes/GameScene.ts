@@ -152,7 +152,7 @@ export class GameScene extends Phaser.Scene {
   private lastDashTrail = 0;
 
   constructor(private readonly qualityReference: false | 'baseline' | 'reference' = false,
-    private readonly originalWarrior = false) { super('Game'); }
+    private readonly originalWarrior = false, private readonly shellReady?: (scene: GameScene) => void) { super('Game'); }
 
   preload(): void {
     const assetBase = `${import.meta.env.BASE_URL}assets/visual/characters/`;
@@ -421,6 +421,7 @@ export class GameScene extends Phaser.Scene {
     if (!this.qualityReference && this.progression.upgradePointsAvailable > 0) {
       this.time.delayedCall(350, () => this.showAvailableUpgrade());
     }
+    this.shellReady?.(this);
   }
 
   update(time: number, delta: number): void {
@@ -1338,6 +1339,15 @@ export class GameScene extends Phaser.Scene {
   }
 
   private restart(): void { this.scene.restart(); }
+
+  pauseForShell(): boolean {
+    if (this.player.isDead || this.records?.isOpen || this.abilityUpgradeDialog?.isOpen || this.transitioning || this.scene.isPaused()) return false;
+    this.pauseForModal(); this.saveProgress(); this.sounds.setMusicFocus(0); return true;
+  }
+  resumeFromShell(): void { if (this.scene.isPaused()) this.resumeFromModal(); this.sounds.setMusicFocus(1); this.sounds.unlock(); }
+  setShellVolumes(master: number, music: number, sfx: number): void { this.sounds.setVolumes(master, music, sfx); }
+  flushForShell(): void { this.saveProgress(); }
+  shellPlayerDead(): boolean { return this.player?.isDead ?? false; }
 
   private spawnValleyResident(habitat: typeof VALLEY_ENCOUNTERS[number]): boolean {
     if (this.valleyResidents.has(habitat.id)) return false;
