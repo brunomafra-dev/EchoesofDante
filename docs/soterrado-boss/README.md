@@ -67,6 +67,10 @@ node scripts/qa-dante-journey.mjs http://localhost:5184/ docs/soterrado-boss/reg
 node scripts/qa-warden-boss.mjs http://localhost:5184/ docs/soterrado-boss/regression-warden
 ```
 
+## Escavação e emersão · 0.1.61
+
+A apresentação e o ataque agora mostram buracos ilustrados, borda frontal e poeira breve. O corpo atravessa visualmente o plano da areia sem achatamento; regras e tempos do encontro permanecem. [Vídeo, implementação e QA desta atualização](burrow-pass/).
+
 ## Como avaliar
 
 Continue seu progresso local nas Dunas, investigue as ruínas se necessário e siga até a depressão de areia no leste. Use **E / A / DESCER**. Antes de avançar, a subida permite voltar. Na luta, observe o aviso antes de atacar; o círculo de emersão fica onde foi anunciado. Após vencer, escolha seu aperfeiçoamento e investigue a abertura ao leste. A pista indica o norte; o destino gelado será construído depois.

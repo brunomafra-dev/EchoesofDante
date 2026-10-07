@@ -1,0 +1,103 @@
+{
+  "method": "Chrome headless; keyboard/mouse, Gamepad API mock, CDP touch; controlled chapter, attack and final HP setup; no physical devices",
+  "errors": [],
+  "freshForest": true,
+  "entryAndAscent": true,
+  "attacks": {
+    "sweep": {
+      "damage": 18,
+      "telegraph": true,
+      "recovery": true
+    },
+    "rush": {
+      "damage": 24,
+      "telegraph": true,
+      "recovery": true
+    },
+    "burrow": {
+      "lockedTarget": true,
+      "avoidable": true,
+      "hiddenInvulnerability": true,
+      "damageWhenRemainingOnMark": 26
+    },
+    "fissure": {
+      "damage": 20,
+      "telegraph": true,
+      "recovery": true
+    }
+  },
+  "dashAvoidsRush": true,
+  "realSaberDamage": 34,
+  "realChargeDamage": 76,
+  "threeDeathsAndStableRespawn": [
+    {
+      "objects": 71,
+      "graphics": 11,
+      "rt": 1,
+      "textures": 78,
+      "enemies": 1,
+      "obstacles": 5,
+      "listeners": [
+        1,
+        1
+      ]
+    },
+    {
+      "objects": 71,
+      "graphics": 11,
+      "rt": 1,
+      "textures": 78,
+      "enemies": 1,
+      "obstacles": 5,
+      "listeners": [
+        1,
+        1
+      ]
+    },
+    {
+      "objects": 71,
+      "graphics": 11,
+      "rt": 1,
+      "textures": 78,
+      "enemies": 1,
+      "obstacles": 5,
+      "listeners": [
+        1,
+        1
+      ]
+    }
+  ],
+  "uniqueReward": {
+    "xp": 180,
+    "bossPoint": 1,
+    "milestonePoint": 1,
+    "ranksPreserved": true,
+    "cluePersisted": true,
+    "noBossRespawnAfterVictory": true
+  },
+  "returnAfterVictory": true,
+  "gamepadMock": true,
+  "resolutions": [
+    "1280x720",
+    "1366x768",
+    "1920x1080",
+    "844x390"
+  ],
+  "performance": {
+    "meanFps": 59.6217178666758,
+    "minFps": 58.798982319371135,
+    "startObjects": 71,
+    "endObjects": 71,
+    "graphics": 11,
+    "renderTextures": 1,
+    "tweens": 0
+  },
+  "touchEmulated": {
+    "descent": true,
+    "movement": true,
+    "strikeDragRelease": true,
+    "dash": true,
+    "chargeHoldDragRelease": true
+  },
+  "passed": true
+}

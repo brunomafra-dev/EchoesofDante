@@ -176,6 +176,9 @@ export class GameScene extends Phaser.Scene {
     }
     if (!this.textures.exists('warden-motion')) this.load.spritesheet('warden-motion', `${assetBase}warden-motion.png`, { frameWidth: 512, frameHeight: 512 });
     if (!this.textures.exists('soterrado-motion')) this.load.spritesheet('soterrado-motion', `${assetBase}soterrado-motion.png`, { frameWidth: 384, frameHeight: 384 });
+    for (const name of ['soterrado-burrow', 'soterrado-burrow-lip', 'soterrado-dust']) {
+      if (!this.textures.exists(name)) this.load.image(name, `${import.meta.env.BASE_URL}assets/visual/environment/${name}.png`);
+    }
     if (!this.textures.exists('sandpit-ground')) this.load.image('sandpit-ground', `${import.meta.env.BASE_URL}assets/visual/environment/sandpit-ground.webp`);
     preloadEnvironment(this);
     if (!this.textures.exists('cavern-entry-floor')) this.load.image('cavern-entry-floor',

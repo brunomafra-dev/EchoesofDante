@@ -1,0 +1,29 @@
+[
+  {
+    "file": "public/assets/visual/environment/soterrado-burrow.png",
+    "dimensions": [
+      512,
+      288
+    ],
+    "bytes": 239373,
+    "sha256": "1946a2224e3199099bc4ea15625fd4bf2e82533007adbbd078ca9e9a645ac367"
+  },
+  {
+    "file": "public/assets/visual/environment/soterrado-burrow-lip.png",
+    "dimensions": [
+      512,
+      288
+    ],
+    "bytes": 95585,
+    "sha256": "d92847614366038e498f38a12128e83249082cd6db33c1318cb75f1145b32eef"
+  },
+  {
+    "file": "public/assets/visual/environment/soterrado-dust.png",
+    "dimensions": [
+      64,
+      64
+    ],
+    "bytes": 4000,
+    "sha256": "6837e4c67dc47d6c439cf1a299cf0d6b3ec25142b4b4b03ca113ca2c80cd5778"
+  }
+]

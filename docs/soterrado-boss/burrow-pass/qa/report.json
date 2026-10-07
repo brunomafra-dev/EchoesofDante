@@ -1,0 +1,25 @@
+{
+  "method": "Chrome headless, real intro/attack clock; DEV chapter/positions; no physical devices",
+  "errors": [],
+  "intro": {
+    "openingBeforeBody": true,
+    "foregroundLip": true,
+    "fullScaleAnatomy": true,
+    "cropCleared": true
+  },
+  "attack": {
+    "sourceHole": true,
+    "destinationHole": true,
+    "lockedPosition": true,
+    "anatomyNotSquashed": true,
+    "fullPoseInRecovery": true
+  },
+  "pool": {
+    "objects": 71,
+    "afterSixActivations": 71,
+    "holes": 2,
+    "dustQuads": 12
+  },
+  "deathClearsVisuals": true,
+  "passed": true
+}

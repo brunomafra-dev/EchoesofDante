@@ -6,6 +6,7 @@ import { SOTERRADO as B, type SoterradoAttack, type SoterradoState } from '../co
 import { moveWithCollisions, type MovementBounds, type Obstacle } from '../systems/Movement';
 import { clamp, distance, type Vec2 } from '../utils/math';
 import { createEnemyName } from '../ui/EnemyName';
+import { SoterradoBurrow } from '../visual/SoterradoBurrow';
 import type { Enemy, EnemyImpact } from './Enemy';
 
 export type SoterradoCue = 'intro' | 'warning' | 'strike' | 'phase' | 'death';
@@ -23,6 +24,7 @@ export class Soterrado implements Enemy {
   readonly telegraph: Phaser.GameObjects.Graphics;
   private readonly name: Phaser.GameObjects.Text;
   private readonly marks: Mark[];
+  private readonly burrowVisual: SoterradoBurrow;
   private readonly origin: Vec2 = { x:0,y:0 };
   private readonly velocity: Vec2 = { x:0,y:0 };
   state: SoterradoState = 'DORMANT';
@@ -44,10 +46,11 @@ export class Soterrado implements Enemy {
     private readonly onCue:(cue:SoterradoCue,attack?:SoterradoAttack)=>void,private readonly onDefeated:()=>void) {
     this.position={x,y};
     this.shadow=scene.add.ellipse(x,y+5,160,46,0x4d291d,.55).setDepth(y-2);
-    this.body=scene.add.image(x,y+14,'soterrado-motion',0).setOrigin(.5,.93).setDisplaySize(B.artSize,B.artSize).setDepth(y);
+    this.body=scene.add.image(x,y+14,'soterrado-motion',0).setOrigin(.5,.93).setDisplaySize(B.artSize,B.artSize).setDepth(y).setAlpha(0);
     this.name=createEnemyName(scene,x,y-145,'O SOTERRADO').setVisible(false);
     this.telegraph=scene.add.graphics().setVisible(false);
     this.marks=Array.from({length:3},()=>({x,y,spent:true,graphic:scene.add.graphics().setVisible(false)}));
+    this.burrowVisual=new SoterradoBurrow(scene);
   }
 
   get submerged():boolean { return this.attackName==='burrow'&&this.state==='TELEGRAPH'&&this.scene.time.now-this.stateAt>350; }
@@ -55,7 +58,7 @@ export class Soterrado implements Enemy {
   get solid():boolean { return !this.isDead&&!this.submerged&&this.state!=='INTRO'&&this.state!=='DORMANT'; }
   beginIntro(now:number):void {
     if(this.state!=='DORMANT'||this.stopped||this.isDead)return;
-    this.setState('INTRO',now,B.introMs);this.onCue('intro');
+    this.setState('INTRO',now,B.introMs);this.burrowVisual.intro(now,this.position);this.onCue('intro');
   }
   private setState(state:SoterradoState,now:number,duration:number):void {
     this.state=state;this.stateAt=now;this.stateUntil=now+duration;
@@ -66,6 +69,7 @@ export class Soterrado implements Enemy {
     if(playerDead){this.suspend();return;}
     dt=Math.min(dt,.04);
     this.velocity.x=this.velocity.y=0;
+    this.burrowVisual.update(now);
     const previous={...this.position};
     if(this.state==='DORMANT'){this.render(now,0);return;}
     if(this.state==='INTRO') {
@@ -160,6 +164,7 @@ export class Soterrado implements Enemy {
         for(let n=0;n<=i;n++)mark.graphic.lineBetween(-i*8+n*16,-35,-i*8+n*16,-22);
       }
     }
+    if(attack==='burrow')this.burrowVisual.dig(now,this.origin,this.marks[0]);
     this.onCue('warning',attack);
   }
 
@@ -169,22 +174,29 @@ export class Soterrado implements Enemy {
     const progress=clamp((now-this.stateAt)/Math.max(1,this.stateUntil-this.stateAt),0,1);
     const sinking=this.state==='TELEGRAPH'&&this.attackName==='burrow';
     const emerging=this.state==='INTRO'||(this.state==='EXECUTE'&&this.attackName==='burrow');
-    const frame=this.state==='PHASE'?6:this.state==='TELEGRAPH'?3:this.state==='EXECUTE'?this.attackName==='burrow'?5:4:walking?1+Math.floor(this.gait)%2:0;
-    this.body.setFrame(frame).setFlipX(this.facingLeft).setRotation(0).setPosition(this.position.x,this.position.y+14-(walking?Math.abs(Math.sin(this.gait*Math.PI))*2:0)).setDepth(this.position.y);
-    this.body.setScale(B.artSize/384,(B.artSize/384)*(sinking?Math.max(.03,1-progress*1.4):emerging?.15+.85*progress:1));
-    this.body.setAlpha(this.state==='DORMANT'?0:sinking?Math.max(0,1-progress*1.8):1);
+    const frame=this.state==='PHASE'?6:emerging?5:this.state==='TELEGRAPH'?3:this.state==='EXECUTE'?4:walking?1+Math.floor(this.gait)%2:0;
+    // Translate a full-size pose through the soil plane, cropping the buried
+    // portion. The painted foreground lip covers the cut instead of squashing
+    // the anatomy. Rendering never moves the physical body or attack origin.
+    const reveal=sinking?1-clamp((now-this.stateAt)/350,0,1):this.state==='INTRO'?clamp((progress-.28)/.62,0,1):emerging?clamp(progress*1.2,0,1):1;
+    const eased=reveal*reveal*(3-2*reveal),hidden=(1-eased)*B.artSize*.93;
+    this.body.setFrame(frame).setFlipX(this.facingLeft).setRotation(0).setScale(B.artSize/384)
+      .setPosition(this.position.x,this.position.y+14+hidden-(walking?Math.abs(Math.sin(this.gait*Math.PI))*2:0)).setDepth(this.position.y);
+    if(eased<1)this.body.setCrop(0,0,384,Math.max(1,384*.93*eased));else this.body.setCrop();
+    this.body.setAlpha(this.state==='DORMANT'||eased<=0?0:1);
     if(now<this.hurtUntil)this.body.setTintFill(0xffe5c1);else this.body.clearTint();
-    this.name.setPosition(this.position.x,this.position.y-145).setVisible(this.state!=='DORMANT'&&!this.submerged);
+    this.name.setPosition(this.position.x,this.position.y-145).setVisible(this.state!=='DORMANT'&&!this.submerged&&reveal>.6);
     this.shadow.setPosition(this.position.x,this.position.y+5).setDepth(this.position.y-2).setScale(sinking?1-progress*.5:1).setAlpha(this.state==='DORMANT'?.12:.5);
   }
 
   private clearWarnings():void {this.telegraph.setVisible(false);for(const mark of this.marks){mark.spent=true;mark.graphic.setVisible(false);}}
-  suspend():void {this.stopped=true;this.clearWarnings();this.state='DORMANT';this.attackName=null;this.name.setVisible(false);this.body.setAlpha(0);}
+  suspend():void {this.stopped=true;this.clearWarnings();this.burrowVisual.clear();this.state='DORMANT';this.attackName=null;this.name.setVisible(false);this.body.setCrop().setAlpha(0);}
   hurt(now:number,_from:Vec2):void {if(this.canBeHit)this.hurtUntil=now+120;}
   die():void {
     if(this.isDead)return;
     this.isDead=true;this.health.current=0;this.state='DEATH';this.attackName=null;this.clearWarnings();this.name.setVisible(false);
-    this.body.setFrame(7).clearTint().setScale(B.artSize/384).setAlpha(1);this.onCue('death');
+    this.burrowVisual.clear();
+    this.body.setFrame(7).setCrop().setPosition(this.position.x,this.position.y+14).clearTint().setScale(B.artSize/384).setAlpha(1);this.onCue('death');
     this.scene.tweens.add({targets:this.body,alpha:.55,duration:B.deathMs});
     this.scene.time.delayedCall(B.deathMs,()=>this.onDefeated());
   }
