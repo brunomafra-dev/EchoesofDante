@@ -47,6 +47,7 @@ import { PassageMechanism } from '../systems/PassageMechanism';
 import type { MovementBounds, Obstacle } from '../systems/Movement';
 import { Hud } from '../ui/Hud';
 import { ExplorationGuide, type ExplorationTarget } from '../ui/ExplorationGuide';
+import { WorldNavigator } from '../ui/WorldNavigator';
 import { distance, normalized, type Vec2 } from '../utils/math';
 import { ReferenceArea } from '../experiments/quality-reference/ReferenceArea';
 import { ReferenceImpacts } from '../experiments/quality-reference/ReferenceImpacts';
@@ -142,6 +143,7 @@ export class GameScene extends Phaser.Scene {
   private audioCleanupBound = false;
   private hud!: Hud;
   private explorationGuide!: ExplorationGuide;
+  private navigation?: WorldNavigator;
   private echoSites: EchoSite[] = [];
   private threshold?: SignalThreshold;
   private mechanism?: PassageMechanism;
@@ -333,7 +335,8 @@ export class GameScene extends Phaser.Scene {
     }
     this.hud = new Hud(this, () => this.restart());
     if (this.qualityReference === 'reference') this.referenceImpacts = new ReferenceImpacts(this);
-    this.explorationGuide = new ExplorationGuide(this);
+    this.navigation = this.qualityReference ? undefined : new WorldNavigator(this, () => ({ bounds: this.movementBounds, obstacles: this.arena.obstacles }));
+    this.explorationGuide = new ExplorationGuide(this, this.navigation);
     if (this.area === 'warden') {
       this.signalPortal = new SignalPortal(this, { x: 1500, y: 830 }, this.wardenDefeated);
       this.wardenHud = new WardenHud(this);
@@ -844,6 +847,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private updateExplorationGuide(): void {
+    this.navigation?.update(this.player.position, this.player.rotation, this.player.isDead, this.time.now);
     if (this.area === 'sandpit') {
       const resting = this.soterrado?.state === 'DORMANT';
       if (!resting && !this.soterradoDefeated) {

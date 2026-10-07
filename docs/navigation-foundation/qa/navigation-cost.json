@@ -1,0 +1,13 @@
+{
+  "method": "Sequential same-scene Chrome headless 1280x720, Forest entry; 5s warmup, 6s per sample; UI disabled only for comparison",
+  "enabled": {
+    "meanFps": 57.79612473597129,
+    "minFps": 55.21893310546875,
+    "objects": 372
+  },
+  "disabled": {
+    "meanFps": 60.229543146804886,
+    "minFps": 60.063525799661875,
+    "objects": 372
+  }
+}

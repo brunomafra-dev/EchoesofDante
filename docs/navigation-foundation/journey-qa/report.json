@@ -1,0 +1,269 @@
+{
+  "method": "Chrome headless; keyboard/mouse, CDP touch and Gamepad API mock; DEV positions and cooldown expiry; no physical devices",
+  "errors": [],
+  "journalPausesAndReturnsFocus": true,
+  "combatClockPausesWithJournal": [
+    {
+      "state": "TELEGRAPH",
+      "remaining": 1216.7000000000007,
+      "dash": 0.01958823529411722
+    },
+    {
+      "state": "TELEGRAPH",
+      "remaining": 1216.8999999999996,
+      "dash": 0.019470588235294333
+    }
+  ],
+  "fullJourneyToValley": true,
+  "renewal": {
+    "delayMs": 90000,
+    "safeDistance": 480,
+    "expiry": "DEV timestamp override",
+    "repeatedKillXp": 15,
+    "reloadCannotResetCooldown": true
+  },
+  "cycles": [
+    {
+      "area": "valley",
+      "xp": 210,
+      "level": 3,
+      "echoes": 3,
+      "hp": 120,
+      "maxHp": 120,
+      "p": {
+        "x": 1860,
+        "y": 570
+      },
+      "dead": false,
+      "source": true,
+      "passage": true,
+      "deep": true,
+      "first": true,
+      "gate": true,
+      "won": true,
+      "landmark": true,
+      "routes": [
+        "ridge",
+        "mineral",
+        "roots"
+      ],
+      "bestiary": {
+        "crawler": {
+          "seen": true,
+          "defeats": 0
+        },
+        "skitter": {
+          "seen": true,
+          "defeats": 0
+        },
+        "carapace": {
+          "seen": true,
+          "defeats": 2
+        },
+        "thorn": {
+          "seen": true,
+          "defeats": 0
+        },
+        "warden": {
+          "seen": true,
+          "defeats": 1
+        }
+      },
+      "cooldowns": [
+        [
+          900,
+          1791396819144
+        ]
+      ],
+      "residents": [
+        901,
+        902,
+        903,
+        904,
+        905,
+        906,
+        907,
+        908,
+        909,
+        910,
+        911
+      ],
+      "enemies": 11,
+      "paused": false,
+      "open": false,
+      "roots": 1,
+      "records": 1,
+      "objects": 147,
+      "tweens": 3,
+      "method": "keyboard",
+      "phase": "READY"
+    },
+    {
+      "area": "valley",
+      "xp": 210,
+      "level": 3,
+      "echoes": 3,
+      "hp": 120,
+      "maxHp": 120,
+      "p": {
+        "x": 1860,
+        "y": 570
+      },
+      "dead": false,
+      "source": true,
+      "passage": true,
+      "deep": true,
+      "first": true,
+      "gate": true,
+      "won": true,
+      "landmark": true,
+      "routes": [
+        "ridge",
+        "mineral",
+        "roots"
+      ],
+      "bestiary": {
+        "crawler": {
+          "seen": true,
+          "defeats": 0
+        },
+        "skitter": {
+          "seen": true,
+          "defeats": 0
+        },
+        "carapace": {
+          "seen": true,
+          "defeats": 2
+        },
+        "thorn": {
+          "seen": true,
+          "defeats": 0
+        },
+        "warden": {
+          "seen": true,
+          "defeats": 1
+        }
+      },
+      "cooldowns": [
+        [
+          900,
+          1791396819144
+        ]
+      ],
+      "residents": [
+        901,
+        902,
+        903,
+        904,
+        905,
+        906,
+        907,
+        908,
+        909,
+        910,
+        911
+      ],
+      "enemies": 11,
+      "paused": false,
+      "open": false,
+      "roots": 1,
+      "records": 1,
+      "objects": 147,
+      "tweens": 3,
+      "method": "keyboard",
+      "phase": "READY"
+    },
+    {
+      "area": "valley",
+      "xp": 210,
+      "level": 3,
+      "echoes": 3,
+      "hp": 120,
+      "maxHp": 120,
+      "p": {
+        "x": 1860,
+        "y": 570
+      },
+      "dead": false,
+      "source": true,
+      "passage": true,
+      "deep": true,
+      "first": true,
+      "gate": true,
+      "won": true,
+      "landmark": true,
+      "routes": [
+        "ridge",
+        "mineral",
+        "roots"
+      ],
+      "bestiary": {
+        "crawler": {
+          "seen": true,
+          "defeats": 0
+        },
+        "skitter": {
+          "seen": true,
+          "defeats": 0
+        },
+        "carapace": {
+          "seen": true,
+          "defeats": 2
+        },
+        "thorn": {
+          "seen": true,
+          "defeats": 0
+        },
+        "warden": {
+          "seen": true,
+          "defeats": 1
+        }
+      },
+      "cooldowns": [
+        [
+          900,
+          1791396819144
+        ]
+      ],
+      "residents": [
+        901,
+        902,
+        903,
+        904,
+        905,
+        906,
+        907,
+        908,
+        909,
+        910,
+        911
+      ],
+      "enemies": 11,
+      "paused": false,
+      "open": false,
+      "roots": 1,
+      "records": 1,
+      "objects": 147,
+      "tweens": 3,
+      "method": "keyboard",
+      "phase": "READY"
+    }
+  ],
+  "chargeCancelledByJournal": true,
+  "gamepadMenuActionConsumed": true,
+  "gamepadJournalMock": true,
+  "performance": {
+    "meanFps": 59.59071277230978,
+    "writesDuringIdle": 0,
+    "objects": 147,
+    "tweens": 3,
+    "saveBytes": 1428
+  },
+  "confirmedReset": true,
+  "invalidSaveRecovery": true,
+  "storageUnavailablePlayable": true,
+  "nativeTouchJournalScroll": true,
+  "touchChargeCancelledBySecondFinger": true,
+  "touchEmulated": true,
+  "passed": true
+}

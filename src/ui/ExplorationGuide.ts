@@ -3,6 +3,7 @@ import type { InputMethod } from '../input/Controls';
 import type { Vec2 } from '../utils/math';
 import { distance } from '../utils/math';
 import type { Hud } from './Hud';
+import type { WorldNavigator } from './WorldNavigator';
 
 export type ExplorationTarget = Vec2 & {
   name: string;
@@ -17,7 +18,7 @@ export class ExplorationGuide {
   private label: Phaser.GameObjects.Text;
   private base: Phaser.GameObjects.Ellipse;
 
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Phaser.Scene, private readonly navigator?: WorldNavigator) {
     this.base = scene.add.ellipse(0, 0, 62, 22, 0xa98cff, 0.07).setStrokeStyle(1, 0xa98cff, 0.6).setVisible(false);
     this.label = scene.add.text(0, 0, '', {
       fontFamily: 'Barlow Condensed, sans-serif', fontSize: '15px', fontStyle: 'bold',
@@ -25,11 +26,12 @@ export class ExplorationGuide {
     }).setOrigin(0.5, 0).setDepth(11000).setVisible(false);
   }
 
-  hide(): void { this.label.setVisible(false); this.base.setVisible(false); }
+  hide(): void { this.label.setVisible(false); this.base.setVisible(false); this.navigator?.setTarget(); }
 
   update(player: Vec2, dead: boolean, method: InputMethod, title: string, target: ExplorationTarget, hud: Hud): void {
     const gap = distance(player, target);
     const nearby = gap <= target.radius;
+    this.navigator?.setTarget(dead ? undefined : target);
     const dx = target.x - player.x, dy = target.y - player.y;
     const vertical = Math.abs(dy) > Math.abs(dx) * 0.45 ? dy < 0 ? 'norte' : 'sul' : '';
     const horizontal = Math.abs(dx) > Math.abs(dy) * 0.45 ? dx < 0 ? 'oeste' : 'leste' : '';

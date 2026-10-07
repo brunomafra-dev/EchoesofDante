@@ -54,6 +54,14 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
 
 .records-button { position: fixed; z-index: 21; right: calc(14px + env(safe-area-inset-right)); top: calc(clamp(54px, 13vh, 90px) + env(safe-area-inset-top)); min-height: 44px; padding: 8px 10px; border: 1px solid transparent; border-radius: 4px; background: #080e0c55; color: #bfcab3; font: 600 12px 'Barlow Condensed', sans-serif; letter-spacing: .5px; touch-action: none; }
 .records-button:hover { color: #eef2dd; background: #18291fcc; }
+.world-minimap { position: fixed; z-index: 19; right: calc(16px + env(safe-area-inset-right)); top: calc(clamp(104px, 20vh, 140px) + env(safe-area-inset-top)); width: 156px; background: #08110fb8; border-radius: 5px; overflow: hidden; }
+.world-minimap button { display: block; width: 100%; min-height: 30px; border: 0; background: transparent; color: #bac5b1; font: 600 12px 'Barlow Condensed', sans-serif; letter-spacing: 1px; cursor: pointer; touch-action: manipulation; }
+.world-minimap svg { display: block; width: 100%; height: auto; background: #08110fed; pointer-events: none; }
+.world-minimap.is-collapsed { width: 58px; }
+.world-minimap.is-collapsed svg { display: none; }
+.records-open .world-minimap { visibility: hidden; }
+@media (max-height: 500px) { .world-minimap { width: 108px; top: calc(105px + env(safe-area-inset-top)); } }
+@media (orientation: portrait) and (pointer: coarse) { .world-minimap { display: none; } }
 .records-button.save-unavailable { border-color: #ffbd54; }
 .records-open .touch-controls { display: none; }
 .records-dialog { width: min(740px, calc(100vw - 32px - env(safe-area-inset-left) - env(safe-area-inset-right))); max-height: calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); padding: 0; border: 1px solid #859d88; border-radius: 12px; background: #102728; color: #dce6d3; box-shadow: 0 20px 80px #0008; touch-action: pan-y; }
