@@ -1,0 +1,144 @@
+{
+  "method": "Chrome headless; real keyboard walking and active enemy AI; DEV chapter setup; gamepad mock and CDP touch; no physical devices",
+  "errors": [],
+  "autoplay": {
+    "silentUntilGesture": true,
+    "startedAfterKeyboard": true
+  },
+  "tracks": [
+    {
+      "region": "forest",
+      "duration": 144,
+      "looped": true
+    },
+    {
+      "region": "cavern",
+      "duration": 147.69229,
+      "looped": true
+    },
+    {
+      "region": "deep",
+      "duration": 160,
+      "looped": true
+    },
+    {
+      "region": "deeper",
+      "duration": 137.142857,
+      "looped": true
+    },
+    {
+      "region": "exterior",
+      "duration": 135,
+      "looped": true
+    },
+    {
+      "region": "valley",
+      "duration": 141.176463,
+      "looped": true
+    },
+    {
+      "region": "sirocco",
+      "duration": 148.965533,
+      "looped": true
+    },
+    {
+      "region": "dunes",
+      "duration": 172.8,
+      "looped": true
+    },
+    {
+      "region": "warden",
+      "duration": 120,
+      "looped": true
+    },
+    {
+      "region": "soterrado",
+      "duration": 126.315782,
+      "looped": true
+    }
+  ],
+  "crossfade": {
+    "settlesToOneVoice": true,
+    "stopPreservedAfterGesture": true
+  },
+  "forwardPortal": {
+    "destination": "dunes",
+    "entry": {
+      "x": 520,
+      "y": 1090
+    }
+  },
+  "exploration": {
+    "bothRoutes": true,
+    "ruinsInvestigated": true,
+    "hollowReached": true,
+    "remainingResidents": 7,
+    "bossImplemented": false,
+    "hp": 129
+  },
+  "combat": {
+    "saber": true,
+    "dash": true,
+    "chargeHoldStationaryRelease": true,
+    "enemyXp": 15
+  },
+  "gamepadMock": true,
+  "persistence": {
+    "reload": true,
+    "checkpoint": true,
+    "threeRespawns": [
+      {
+        "objects": 105,
+        "tweens": 1,
+        "listeners": [
+          1,
+          1
+        ]
+      },
+      {
+        "objects": 105,
+        "tweens": 1,
+        "listeners": [
+          1,
+          1
+        ]
+      },
+      {
+        "objects": 105,
+        "tweens": 1,
+        "listeners": [
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  "layouts": [
+    "1280x720",
+    "1366x768",
+    "1920x1080",
+    "844x390"
+  ],
+  "performance": {
+    "meanFps": 55.59373779296875,
+    "minFps": 52.935791015625,
+    "objects": 105,
+    "tweens": 1
+  },
+  "returnPortal": true,
+  "regionSelection": [
+    "forest",
+    "cavern",
+    "deep",
+    "deeper",
+    "exterior",
+    "valley",
+    "warden"
+  ],
+  "touch": {
+    "movement": true,
+    "strikeDrag": true,
+    "chargeHoldDragRelease": true,
+    "portraitNotice": true
+  }
+}

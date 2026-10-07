@@ -1,0 +1,20 @@
+[
+  {
+    "file": "public/assets/visual/characters/soterrado-motion.png",
+    "bytes": 1117319,
+    "dimensions": [
+      1536,
+      768
+    ],
+    "sha256": "1ff8ec96cf7a86fb585e3bc807250ddf2b3d4abcd8e259c029665fb810c41d9e"
+  },
+  {
+    "file": "public/assets/visual/environment/sandpit-ground.webp",
+    "bytes": 79268,
+    "dimensions": [
+      1024,
+      1024
+    ],
+    "sha256": "08d293a28b3479dc7d7e02b400955803fe9fc11dc31e5679f03b20788c1855ba"
+  }
+]

@@ -20,6 +20,9 @@ import { VALLEY, VALLEY_ENCOUNTERS, VALLEY_RENEWAL, VALLEY_ROUTES } from '../con
 import { SIROCCO, SIROCCO_ENCOUNTERS, SIROCCO_RENEWAL, SIROCCO_ROUTES, type SiroccoKind } from '../config/sirocco';
 import { DUNES, DUNES_ENCOUNTERS, DUNES_ROUTES } from '../config/dunes';
 import { DunesInterior } from '../systems/DunesInterior';
+import { SANDPIT, SOTERRADO, type SoterradoAttack } from '../config/soterrado';
+import { Soterrado, type SoterradoCue } from '../entities/Soterrado';
+import { SandpitArena } from '../systems/SandpitArena';
 import type { SpeciesId } from '../config/bestiary';
 import { Bestiary } from '../systems/Bestiary';
 import { LocalJourney, JOURNEY_FLAGS, type JourneyFlags, type JourneyArea } from '../systems/LocalJourney';
@@ -74,6 +77,13 @@ export class GameScene extends Phaser.Scene {
   private dunesRuinsSeen = false;
   private dunesDepthSeen = false;
   private returnFromDunes = false;
+  private returnFromSandpit = false;
+  private soterradoReached = false;
+  private soterradoDefeated = false;
+  private soterradoClueSeen = false;
+  private soterrado?: Soterrado;
+  private sandpit?: SandpitArena;
+  private soterradoHud?: WardenHud;
   private returnFromValley = false;
   private returnToValleyPortal = false;
   private returnToFrontierPortal = false;
@@ -165,6 +175,8 @@ export class GameScene extends Phaser.Scene {
       if (!this.textures.exists(key)) this.load.spritesheet(key, `${assetBase}${key}.png`, { frameWidth: 256, frameHeight: 256 });
     }
     if (!this.textures.exists('warden-motion')) this.load.spritesheet('warden-motion', `${assetBase}warden-motion.png`, { frameWidth: 512, frameHeight: 512 });
+    if (!this.textures.exists('soterrado-motion')) this.load.spritesheet('soterrado-motion', `${assetBase}soterrado-motion.png`, { frameWidth: 384, frameHeight: 384 });
+    if (!this.textures.exists('sandpit-ground')) this.load.image('sandpit-ground', `${import.meta.env.BASE_URL}assets/visual/environment/sandpit-ground.webp`);
     preloadEnvironment(this);
     if (!this.textures.exists('cavern-entry-floor')) this.load.image('cavern-entry-floor',
       `${import.meta.env.BASE_URL}assets/visual/environment/cavern-entry-floor.webp`);
@@ -208,6 +220,9 @@ export class GameScene extends Phaser.Scene {
     this.valley = undefined;
     this.sirocco = undefined;
     this.dunes = undefined;
+    this.soterrado = undefined;
+    this.sandpit = undefined;
+    this.soterradoHud = undefined;
     this.signalPortal = undefined;
     this.chapterPortal = undefined;
     this.wardenArena = undefined;
@@ -249,6 +264,10 @@ export class GameScene extends Phaser.Scene {
         this.progression.rewardedRoutes.has(SIROCCO_ROUTES[0].id));
       this.arena = this.sirocco;
       this.movementBounds = this.sirocco.bounds;
+    } else if (this.area === 'sandpit') {
+      this.sandpit = new SandpitArena(this, this.soterradoDefeated);
+      this.arena = this.sandpit;
+      this.movementBounds = this.sandpit.bounds;
     } else if (this.area === 'dunes') {
       this.dunes = new DunesInterior(this, this.dunesRuinsSeen);
       this.arena = this.dunes;
@@ -264,7 +283,8 @@ export class GameScene extends Phaser.Scene {
     const entry = this.area === 'forest' ? FOREST_ENTRY : this.area === 'valley'
       ? this.returnToValleyPortal ? VALLEY.entry : this.returnToFrontierPortal ? VALLEY.frontier.checkpoint : this.valleyFrontierReached ? VALLEY.frontier.checkpoint : this.valleyCheckpointReached ? VALLEY.checkpoint : VALLEY.entry
       : this.area === 'arid' ? this.returnFromDunes ? { x: 4770, y: 805 } : this.aridSignalSeen ? SIROCCO.frontierCheckpoint : this.aridVisited ? SIROCCO.checkpoint : SIROCCO.entry
-      : this.area === 'dunes' ? this.dunesRuinsSeen ? DUNES.checkpoint : DUNES.entry
+      : this.area === 'sandpit' ? SANDPIT.entry
+      : this.area === 'dunes' ? this.returnFromSandpit ? { x: 2390, y: 1160 } : this.dunesRuinsSeen ? DUNES.checkpoint : DUNES.entry
       : this.area === 'warden' ? this.returnFromValley ? { x: 1420, y: 830 } : { x: 650, y: 760 }
       : this.returnToThreshold ? { x: 6060, y: 740 } : this.firstEchoSeen ? W.respawn
       : this.exteriorEntered ? EXPANSION.exteriorRespawn : this.deeperEntered ? EXPANSION.deeperRespawn
@@ -274,6 +294,7 @@ export class GameScene extends Phaser.Scene {
     this.returnToValleyPortal = false;
     this.returnToFrontierPortal = false;
     this.returnFromDunes = false;
+    this.returnFromSandpit = false;
     this.player = new Player(this, entry.x, entry.y, this.progression.maxHp, this.qualityReference === 'reference',
       this.qualityReference !== 'baseline' && !this.originalWarrior, id => this.progression.upgradeRank(id));
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
@@ -297,6 +318,16 @@ export class GameScene extends Phaser.Scene {
     }
     if (this.area === 'arid') for (const habitat of SIROCCO_ENCOUNTERS) this.spawnSiroccoResident(habitat);
     if (this.area === 'dunes') for (const habitat of DUNES_ENCOUNTERS) this.spawnSiroccoResident(habitat);
+    if (this.area === 'sandpit') {
+      this.soterradoReached = true;
+      this.soterradoHud = new WardenHud(this, 'O SOTERRADO');
+      if (!this.soterradoDefeated) {
+        this.soterrado = new Soterrado(this, SANDPIT.spawn.x, SANDPIT.spawn.y, this.sandpit!.bounds,
+          (cue, attack) => this.soterradoCue(cue, attack), () => this.finishSoterrado());
+        this.enemies.push(this.soterrado);
+        this.enemySpecies.set(this.soterrado, 'soterrado');
+      } else this.sounds.stopMusic();
+    }
     this.hud = new Hud(this, () => this.restart());
     if (this.qualityReference === 'reference') this.referenceImpacts = new ReferenceImpacts(this);
     this.explorationGuide = new ExplorationGuide(this);
@@ -334,13 +365,14 @@ export class GameScene extends Phaser.Scene {
     if (this.area === 'valley') this.hud.setValleyArea(this.valleyFrontierReached);
     if (this.area === 'arid') this.hud.setAridArea(this.aridSignalSeen, this.aridFrontierReached);
     if (this.area === 'dunes') this.hud.setDunesArea(this.dunesRuinsSeen, this.dunesDepthSeen);
+    if (this.area === 'sandpit') this.hud.setSandpitArea(this.soterradoDefeated, this.soterradoClueSeen);
     this.inDeepCavern = this.area === 'cavern' && this.deepCavernEntered;
     if (this.area === 'cavern') this.hud.setCavernDepth(this.inDeepCavern);
     this.continuationRegion = this.exteriorEntered ? 'exterior' : this.deeperEntered ? 'deeper' : 'deep';
     if (this.area === 'cavern' && this.continuationRegion !== 'deep') this.hud.setContinuationArea(this.continuationRegion === 'exterior', this.fragmentSeen, this.firstEchoSeen);
-    this.cameras.main.setBounds(0, 0, this.area === 'valley' ? VALLEY.cameraWidth : this.area === 'arid' ? SIROCCO.cameraWidth : this.area === 'dunes' ? DUNES.width : this.area === 'cavern' ? W.cameraWidth : WORLD_WIDTH, this.area === 'dunes' ? DUNES.height : WORLD_HEIGHT)
+    this.cameras.main.setBounds(0, 0, this.area === 'sandpit' ? SANDPIT.width : this.area === 'valley' ? VALLEY.cameraWidth : this.area === 'arid' ? SIROCCO.cameraWidth : this.area === 'dunes' ? DUNES.width : this.area === 'cavern' ? W.cameraWidth : WORLD_WIDTH, this.area === 'dunes' ? DUNES.height : WORLD_HEIGHT)
       .startFollow(this.player.view, false, 0.1, 0.1);
-    this.cameras.main.setBackgroundColor(this.area === 'arid' || this.area === 'dunes' ? '#5c3327' : this.area === 'forest' || this.area === 'valley' ? '#102d2c' : '#07151c');
+    this.cameras.main.setBackgroundColor(this.area === 'sandpit' || this.area === 'arid' || this.area === 'dunes' ? '#5c3327' : this.area === 'forest' || this.area === 'valley' ? '#102d2c' : '#07151c');
     if (this.area !== 'forest') {
       this.cameras.main.centerOn(entry.x, entry.y);
       this.cameras.main.fadeIn(260, 5, 15, 20);
@@ -351,7 +383,7 @@ export class GameScene extends Phaser.Scene {
       nextLevelXp: this.progression.nextLevelXp, maxHp: this.progression.maxHp,
       nextLevelHpGain: this.progression.nextLevelHpGain, upgradePointsAvailable: this.progression.upgradePointsAvailable,
       abilityUpgradeRanks: this.progression.abilityUpgradeRanks,
-      area: this.area === 'dunes' ? 'Dunas Interiores' : this.area === 'arid' ? 'Bacia do Siroco' : this.area === 'valley' ? 'Vale da Ressonância' : this.area === 'warden' ? 'Domínio do Guardião' : this.area === 'cavern' ? 'Cavernas de Dante' : 'Floresta de Dante',
+      area: this.area === 'sandpit' ? 'Bacia Soterrada' : this.area === 'dunes' ? 'Dunas Interiores' : this.area === 'arid' ? 'Bacia do Siroco' : this.area === 'valley' ? 'Vale da Ressonância' : this.area === 'warden' ? 'Domínio do Guardião' : this.area === 'cavern' ? 'Cavernas de Dante' : 'Floresta de Dante',
       bestiary: this.bestiary.snapshot(), routes: this.valleyRoutes, valleyVisited: this.valleyVisited,
       saveStatus: this.qualityReference ? 'Referência isolada. O progresso do jogo permanece intacto.' : this.journey.status,
       rewardedRoutes: this.progression.rewardedRoutes,
@@ -379,7 +411,7 @@ export class GameScene extends Phaser.Scene {
     });
     // Persist chapter access immediately. A mobile browser may suspend or evict
     // the page without sending a reliable later interaction or shutdown event.
-    if (this.area === 'arid' || this.area === 'dunes') this.saveProgress();
+    if (this.area === 'arid' || this.area === 'dunes' || this.area === 'sandpit') this.saveProgress();
     if (!this.qualityReference && this.progression.upgradePointsAvailable > 0) {
       this.time.delayedCall(350, () => this.showAvailableUpgrade());
     }
@@ -408,7 +440,22 @@ export class GameScene extends Phaser.Scene {
     const nearValleyFrontierSignal = this.valley?.canInvestigateFrontier(this.player.position, this.player.isDead, this.valleyFrontierSignalSeen) ?? false;
     const nearSiroccoSignal = this.sirocco?.canInvestigate(this.player.position, this.player.isDead, this.aridSignalSeen) ?? false;
     const nearDunesRuin = this.dunes?.canInvestigate(this.player.position, this.player.isDead, this.dunesRuinsSeen) ?? false;
-    if (nearDiscovery && interact) {
+    const nearSandpitDescent = this.area === 'dunes' && this.dunesDepthSeen && !this.player.isDead && distance(this.player.position, DUNES.hollow) < 115;
+    const nearSandpitAscent = this.area === 'sandpit' && !this.player.isDead && distance(this.player.position, SANDPIT.ascent) < SANDPIT.ascent.radius
+      && (this.soterradoDefeated || this.soterrado?.state === 'DORMANT');
+    const nearColdClue = this.area === 'sandpit' && this.soterradoDefeated && !this.soterradoClueSeen && !this.player.isDead && distance(this.player.position, SANDPIT.clue) < SANDPIT.clue.radius;
+    if (nearSandpitDescent && interact) {
+      this.soterradoReached = true;
+      this.transitionArea('sandpit'); return;
+    } else if (nearSandpitAscent && interact) {
+      this.returnFromSandpit = true;
+      this.transitionArea('dunes'); return;
+    } else if (nearColdClue && interact) {
+      this.soterradoClueSeen = true;
+      this.hud.setSandpitArea(true, true);
+      this.hud.showDiscovery('PASSAGEM REVELADA\nLEITURA AO NORTE: ABAIXO DE ZERO\nO SINAL CONTINUA');
+      this.sounds.signal(); this.records.markDiscovery(); this.saveProgress();
+    } else if (nearDiscovery && interact) {
       const wasSynchronized = this.progression.signalSynchronized;
       nearbyEcho.activate();
       const leveledUp = this.progression.discover(nearbyEcho.id);
@@ -519,8 +566,8 @@ export class GameScene extends Phaser.Scene {
         ? 'MECANISMO INATIVO\nInvestigue a fissura ao lado primeiro.'
         : 'MECANISMO INATIVO\nEncontre e investigue os 3 Ecos.');
     }
-    const canInteract = nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearChapterPortal || nearSiroccoExit || nearSiroccoSignal || nearDunesRuin || nearValleyLandmark || nearValleyFrontierSignal;
-    const interactionAction = nearPortal || nearChapterPortal || nearSiroccoExit ? 'ENTRAR' : 'INVESTIGAR';
+    const canInteract = nearSandpitDescent || nearSandpitAscent || nearColdClue || nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearChapterPortal || nearSiroccoExit || nearSiroccoSignal || nearDunesRuin || nearValleyLandmark || nearValleyFrontierSignal;
+    const interactionAction = nearSandpitDescent ? 'DESCER' : nearSandpitAscent ? 'SUBIR' : nearPortal || nearChapterPortal || nearSiroccoExit ? 'ENTRAR' : 'INVESTIGAR';
     if (interact) this.saveProgress();
     this.hud.setDiscoveryPrompt(canInteract, interactionAction);
     this.controls.setInteractAvailable(canInteract, interactionAction);
@@ -553,15 +600,19 @@ export class GameScene extends Phaser.Scene {
     if (this.controls.attacking && !heavyBusy) this.beginStrike(time);
     const pose = this.attack.pose(time, facing);
     const wasDashing = this.player.isDashing;
-    if (this.area === 'warden') {
+    if (this.area === 'warden' || this.area === 'sandpit') {
       this.playerObstacles.length = 0;
       this.playerObstacles.push(...this.arena.obstacles);
       if (this.warden && !this.warden.isDead) {
         Object.assign(this.bossFootprint, this.warden.position, { radius: this.warden.radius });
         this.playerObstacles.push(this.bossFootprint);
       }
+      if (this.soterrado?.solid) {
+        Object.assign(this.bossFootprint, this.soterrado.position, { radius: this.soterrado.radius });
+        this.playerObstacles.push(this.bossFootprint);
+      }
     }
-    this.player.update(time, dt, input, facing, this.area === 'warden' ? this.playerObstacles : this.arena.obstacles, pose, heavy, this.movementBounds);
+    this.player.update(time, dt, input, facing, this.area === 'warden' || this.area === 'sandpit' ? this.playerObstacles : this.arena.obstacles, pose, heavy, this.movementBounds);
     this.updateMusicRegion();
     updateEnvironmentOcclusion(this, this.player.position, dt);
     if (wasDashing && !this.player.isDashing) this.dashEnd();
@@ -571,7 +622,8 @@ export class GameScene extends Phaser.Scene {
     }
     this.bossTargets.length = 0;
     if (this.warden?.canBeHit) this.bossTargets.push(this.warden);
-    const targets = this.area === 'warden' ? this.bossTargets : this.enemies;
+    if (this.soterrado?.canBeHit) this.bossTargets.push(this.soterrado);
+    const targets = this.area === 'warden' || this.area === 'sandpit' ? this.bossTargets : this.enemies;
     if (this.charge.wavePending) {
       const waveHits = this.charge.takeHits(time, targets);
       this.resolvePlayerHits(time, waveHits, this.charge.damage, this.charge.angle, 0x5fe6d8, this.charge.origin, true);
@@ -582,7 +634,7 @@ export class GameScene extends Phaser.Scene {
     for (const enemy of this.enemies) {
       const species = this.enemySpecies.get(enemy);
       if (species && !enemy.isDead && distance(this.player.position, enemy.position) <= 320 &&
-        (species !== 'warden' || this.warden?.state !== 'DORMANT') && this.bestiary.see(species)) {
+        (species !== 'warden' || this.warden?.state !== 'DORMANT') && (species !== 'soterrado' || this.soterrado?.state !== 'DORMANT') && this.bestiary.see(species)) {
         this.records.markDiscovery();
         this.saveProgress();
       }
@@ -592,6 +644,11 @@ export class GameScene extends Phaser.Scene {
     this.hud.update(this.player.hp, this.player.maxHp, this.player.dashProgress, this.charge.getProgress(time), heavy.phase, heavy.level,
       this.player.dashCooldown, this.charge.cooldown);
     if (this.qualityReference) return;
+    if (this.area === 'sandpit') {
+      if (this.soterrado?.state === 'DORMANT' && this.player.position.x >= SANDPIT.awakeningX) this.soterrado.beginIntro(time);
+      this.soterradoHud?.update(this.soterrado);
+      return;
+    }
     if (this.area === 'warden') {
       if (!this.wardenDefeated && this.warden?.state === 'DORMANT' && this.player.position.x >= 850) {
         this.warden.beginIntro(time);
@@ -616,7 +673,8 @@ export class GameScene extends Phaser.Scene {
       if (this.dunesRuinsSeen && !this.dunesDepthSeen && distance(this.player.position, DUNES.hollow) < DUNES.hollow.radius) {
         this.dunesDepthSeen = true;
         this.hud.setDunesArea(true, true);
-        this.hud.showDiscovery('DEPRESSÃO DE AREIA\nALGO SE MOVE SOB A SUPERFÍCIE');
+        this.hud.showDiscovery('DEPRESSÃO DE AREIA\nRASTROS ENORMES. HÁ UMA DESCIDA AQUI.');
+        this.dunes?.warnBelow();
         this.sounds.wardenCue('intro');
         this.saveProgress();
       }
@@ -783,6 +841,23 @@ export class GameScene extends Phaser.Scene {
   }
 
   private updateExplorationGuide(): void {
+    if (this.area === 'sandpit') {
+      const resting = this.soterrado?.state === 'DORMANT';
+      if (!resting && !this.soterradoDefeated) {
+        this.explorationGuide.hide();
+        this.hud.setExplorationGuide('O SOTERRADO', 'Saia das marcas. Ataque na recuperação.', '');
+        return;
+      }
+      const target = this.soterradoDefeated
+        ? { ...SANDPIT.clue, name: 'Passagem sob a areia', instruction: this.soterradoClueSeen ? 'Ar frio vem do norte. A rota continuará em outra expedição.' : 'O desabamento expôs uma leitura do sinal.', action: this.soterradoClueSeen ? 'observe' as const : 'investigate' as const }
+        : { ...SANDPIT.spawn, radius: 220, name: 'Algo sob a areia', instruction: resting ? 'Aproxime-se da bacia com cuidado.' : 'Saia das marcas. Ataque quando o corpo ficar exposto.', action: 'observe' as const };
+      if (distance(this.player.position,SANDPIT.ascent)<110 && (resting||this.soterradoDefeated)) {
+        this.explorationGuide.update(this.player.position,this.player.isDead,this.controls.inputMethod,'SUBIDA PARA AS DUNAS',
+          {...SANDPIT.ascent,name:'Subida para as Dunas',instruction:'Volte pelo caminho de entrada.',action:'enter',interactionLabel:'SUBIR'},this.hud);
+      } else this.explorationGuide.update(this.player.position,this.player.isDead,this.controls.inputMethod,
+        this.soterradoDefeated?'O SINAL SEGUE AO NORTE':'BACIA SOTERRADA',target,this.hud);
+      return;
+    }
     if (this.qualityReference) {
       this.explorationGuide.hide();
       this.hud.setExplorationGuide('CÂMARA DE REFERÊNCIA', 'Compare o movimento e os impactos.', '');
@@ -808,9 +883,9 @@ export class GameScene extends Phaser.Scene {
         ? { ...DUNES.returnPortal, radius: 116, name: 'Portal para a Bacia', instruction: 'Retorne à entrada do Siroco.', action: 'enter' as const }
         : nearbyRoute ? { ...nearbyRoute, instruction: 'Contorne a crista e explore este trecho.', action: 'walk' as const }
         : !this.dunesRuinsSeen ? { ...DUNES.ruin, name: 'Ruínas soterradas', instruction: 'As inscrições respondem ao sinal.', action: 'investigate' as const }
-        : { ...DUNES.hollow, name: 'Depressão de areia', instruction: this.dunesDepthSeen ? 'Há movimento abaixo. Explore as bordas e os desvios.' : 'Siga a descida entre as dunas.', action: 'observe' as const };
+        : { ...DUNES.hollow, radius: 115, name: 'Descida da depressão', instruction: 'Rastros enormes levam à bacia. Desça para investigar.', action: 'enter' as const, interactionLabel: 'DESCER' };
       this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod,
-        this.dunesDepthSeen ? 'SINAL SOB A AREIA' : this.dunesRuinsSeen ? 'SIGA A DESCIDA' : 'EXPLORE AS DUNAS', target, this.hud);
+        this.dunesDepthSeen ? 'DESÇA À BACIA' : this.dunesRuinsSeen ? 'SIGA A DESCIDA' : 'EXPLORE AS DUNAS', target, this.hud);
       return;
     }
     if (this.area === 'arid') {
@@ -973,7 +1048,7 @@ export class GameScene extends Phaser.Scene {
 
   private updateMusicRegion(force = false): void {
     const x = this.player.position.x;
-    const region = this.area === 'arid' ? 'sirocco' : this.area !== 'cavern' ? this.area
+    const region = this.area === 'sandpit' ? 'soterrado' : this.area === 'arid' ? 'sirocco' : this.area !== 'cavern' ? this.area
       : x >= EXPANSION.exteriorX ? 'exterior' : x >= EXPANSION.deeperX ? 'deeper'
       : this.deepPassageOpen && x >= DEEP_AREA.entryX ? 'deep' : 'cavern';
     if (force || region !== this.musicRegion) {
@@ -1007,6 +1082,29 @@ export class GameScene extends Phaser.Scene {
       this.wardenArena?.setEncounterActive(false);
     }
     else if (cue === 'telegraph') this.sounds.setMusicFocus(1);
+  }
+
+  private soterradoCue(cue: SoterradoCue, attack?: SoterradoAttack): void {
+    if (cue === 'intro') { this.sounds.wardenCue('intro'); this.sounds.setMusicFocus(.55); }
+    else if (cue === 'warning') { this.sounds.setMusicFocus(1); this.sounds.wardenCue(attack === 'burrow' ? 'echoes' : 'signal'); }
+    else if (cue === 'strike') this.sounds.wardenCue(attack === 'rush' ? 'rush' : attack === 'sweep' ? 'sweep' : 'slam');
+    else if (cue === 'phase') { this.sounds.wardenCue('phase'); this.hud.showDiscovery('A AREIA CEDE\nOBSERVE AS MARCAS EM SEQUÊNCIA'); }
+    else if (cue === 'death') {
+      this.soterradoDefeated = true;
+      const reward = this.progression.defeatSoterrado();
+      this.updateProgressHud();
+      if (reward.awarded) this.hud.showExperienceAt(this.soterrado!.position.x,this.soterrado!.position.y,SOTERRADO.xp);
+      if (reward.leveledUp) this.levelUp(false);
+      this.sounds.stopMusic(); this.sounds.wardenCue('death'); this.saveProgress();
+    }
+  }
+
+  private finishSoterrado(): void {
+    this.sandpit?.resolve();
+    this.hud.setSandpitArea(true,this.soterradoClueSeen);
+    this.hud.showDiscovery('O SOTERRADO CAIU\nAPERFEIÇOAMENTO CONQUISTADO\nUMA PASSAGEM FOI EXPOSTA');
+    this.sounds.ancient();
+    if (this.progression.upgradePointsAvailable>0) this.time.delayedCall(1400,()=>this.showAvailableUpgrade());
   }
 
   private finishWarden(): void {
@@ -1051,7 +1149,7 @@ export class GameScene extends Phaser.Scene {
       if (result.died) {
         const species = this.enemySpecies.get(enemy);
         if (species && this.bestiary.defeat(species)) this.records.markDiscovery();
-        if (enemy !== this.warden) this.deathEffect(enemy.position);
+        if (enemy !== this.warden && enemy !== this.soterrado) this.deathEffect(enemy.position);
         enemy.die();
         const spawnIndex = this.hollowSpawnIds.get(enemy);
         if (spawnIndex !== undefined) {
@@ -1093,6 +1191,7 @@ export class GameScene extends Phaser.Scene {
     this.player.setHurtGrace(this.time.now + PLAYER.hurtCooldown);
     if (result.died) {
       this.warden?.suspend();
+      this.soterrado?.suspend();
       this.charge.stop();
       this.kineticWave.clear();
       this.waveDrawn = false;
@@ -1194,7 +1293,7 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
-  private levelUp(): void {
+  private levelUp(showUpgrade = true): void {
     const gainedHp = this.progression.maxHp - this.player.maxHp;
     this.player.health.setMaxAndRestore(this.progression.maxHp);
     this.hud.showLevelUp(this.progression.level, this.progression.maxHp, gainedHp, this.progression.upgradePointsAvailable > 0);
@@ -1203,7 +1302,7 @@ export class GameScene extends Phaser.Scene {
     const ring = this.add.circle(this.player.position.x, this.player.position.y, 25)
       .setStrokeStyle(3, 0xffbd54, 0.8).setDepth(15000);
     this.tweens.add({ targets: ring, scale: 2.6, alpha: 0, duration: 450, onComplete: () => ring.destroy() });
-    if (this.progression.upgradePointsAvailable > 0) this.time.delayedCall(380, () => this.showAvailableUpgrade());
+    if (showUpgrade && this.progression.upgradePointsAvailable > 0) this.time.delayedCall(380, () => this.showAvailableUpgrade());
   }
 
   private showAvailableUpgrade(): void {

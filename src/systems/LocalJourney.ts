@@ -12,8 +12,9 @@ export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSee
   'wardenReached', 'wardenGateOpen', 'wardenDefeated', 'wardenEndingSeen', 'valleyVisited',
   'valleyLandmarkSeen', 'valleyEndSeen', 'valleyCheckpointReached', 'valleyFrontierReached',
   'valleyFrontierSignalSeen', 'valleyFrontierEndSeen', 'aridVisited', 'aridSignalSeen',
-  'aridFrontierEntered', 'aridFrontierReached', 'dunesVisited', 'dunesRuinsSeen', 'dunesDepthSeen'] as const;
-export type JourneyArea = 'forest' | 'cavern' | 'warden' | 'valley' | 'arid' | 'dunes';
+  'aridFrontierEntered', 'aridFrontierReached', 'dunesVisited', 'dunesRuinsSeen', 'dunesDepthSeen',
+  'soterradoReached', 'soterradoDefeated', 'soterradoClueSeen'] as const;
+export type JourneyArea = 'forest' | 'cavern' | 'warden' | 'valley' | 'arid' | 'dunes' | 'sandpit';
 export type JourneyFlags = Record<typeof JOURNEY_FLAGS[number], boolean>;
 export type JourneySnapshot = {
   schema: 1; updatedAt: number; area: JourneyArea; hp: number;
@@ -60,7 +61,11 @@ export class LocalJourney {
       flags.dunesVisited &&= flags.aridFrontierReached;
       flags.dunesRuinsSeen &&= flags.dunesVisited;
       flags.dunesDepthSeen &&= flags.dunesRuinsSeen;
-      const area: JourneyArea = raw.area === 'dunes' && flags.dunesVisited ? 'dunes'
+      flags.soterradoReached &&= flags.dunesDepthSeen;
+      flags.soterradoDefeated &&= flags.soterradoReached;
+      flags.soterradoClueSeen &&= flags.soterradoDefeated;
+      const area: JourneyArea = raw.area === 'sandpit' && flags.soterradoReached ? 'sandpit'
+        : raw.area === 'dunes' && flags.dunesVisited ? 'dunes'
         : raw.area === 'arid' && flags.wardenDefeated && flags.valleyFrontierEndSeen && flags.aridVisited ? 'arid'
         : raw.area === 'valley' && flags.wardenDefeated ? 'valley'
         : raw.area === 'warden' && flags.wardenGateOpen ? 'warden'
@@ -81,7 +86,8 @@ export class LocalJourney {
           passageOpen, rewardedHollows: p.rewardedHollows.filter((id): id is number => integer(id, 1999)).slice(0, 2000),
           rewardedRoutes: Array.isArray(p.rewardedRoutes) ? p.rewardedRoutes.filter((id): id is string =>
             typeof id === 'string' && (VALLEY_ROUTES.some(route => route.id === id) || SIROCCO_ROUTES.some(route => route.id === id) || DUNES_ROUTES.some(route => route.id === id))) : [],
-          abilityUpgrades: object(p.abilityUpgrades) as Partial<AbilityUpgradeRanks> | undefined },
+          abilityUpgrades: object(p.abilityUpgrades) as Partial<AbilityUpgradeRanks> | undefined,
+          bossRewards: flags.soterradoDefeated ? ['soterrado'] : [] },
         flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats };
     } catch {
       this.status = 'Não foi possível ler o progresso local. O jogo continua disponível.';

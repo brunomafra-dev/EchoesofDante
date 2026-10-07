@@ -3,10 +3,11 @@ import { ECHO_COUNT } from '../config/discovery';
 import { VALLEY_ROUTES } from '../config/valley';
 import { SIROCCO_ROUTES } from '../config/sirocco';
 import { DUNES_ROUTES } from '../config/dunes';
+import { SOTERRADO } from '../config/soterrado';
 import { ABILITY_UPGRADE_MILESTONES, ABILITY_UPGRADES, type AbilityUpgradeId, type AbilityUpgradeRanks } from '../config/abilityUpgrades';
 
 export type ProgressionSnapshot = { xp: number; echoes: string[]; sourceLocated: boolean; passageOpen: boolean;
-  rewardedHollows: number[]; rewardedRoutes: string[]; abilityUpgrades?: Partial<AbilityUpgradeRanks> };
+  rewardedHollows: number[]; rewardedRoutes: string[]; abilityUpgrades?: Partial<AbilityUpgradeRanks>; bossRewards?: string[] };
 
 const UPGRADE_IDS = Object.keys(ABILITY_UPGRADES) as AbilityUpgradeId[];
 
@@ -19,6 +20,7 @@ export class Progression {
   passageOpen = false;
   private rewardedHollows = new Set<number>();
   readonly rewardedRoutes = new Set<string>();
+  private readonly bossRewards = new Set<string>();
   private readonly ranks: AbilityUpgradeRanks = {
     saberArc: 0, saberReach: 0, dashCooldown: 0, dashDuration: 0, chargeWidth: 0, chargePower: 0,
   };
@@ -30,7 +32,7 @@ export class Progression {
   }
   get nextLevelXp(): number | null { return PROGRESSION.levelThresholds[this.level] ?? null; }
   get nextLevelHpGain(): number { return this.level < PROGRESSION.legacyHpThroughLevel ? PROGRESSION.maxHpPerLevel : PROGRESSION.laterMaxHpPerLevel; }
-  get upgradePointsEarned(): number { return ABILITY_UPGRADE_MILESTONES.filter(milestone => this.level >= milestone).length; }
+  get upgradePointsEarned(): number { return ABILITY_UPGRADE_MILESTONES.filter(milestone => this.level >= milestone).length + this.bossRewards.size; }
   get upgradePointsSpent(): number { return UPGRADE_IDS.reduce((total, id) => total + this.ranks[id], 0); }
   get upgradePointsAvailable(): number { return Math.max(0, this.upgradePointsEarned - this.upgradePointsSpent); }
   get abilityUpgradeRanks(): Readonly<AbilityUpgradeRanks> { return this.ranks; }
@@ -70,6 +72,12 @@ export class Progression {
 
   defeatRenewableResident(): boolean { return this.award(PROGRESSION.hollowXp); }
 
+  defeatSoterrado(): { awarded: boolean; leveledUp: boolean } {
+    if (this.bossRewards.has('soterrado')) return { awarded: false, leveledUp: false };
+    this.bossRewards.add('soterrado');
+    return { awarded: true, leveledUp: this.award(SOTERRADO.xp) };
+  }
+
   discoverValleyRoute(id: string): { awarded: boolean; leveledUp: boolean } {
     if (this.rewardedRoutes.has(id) || !VALLEY_ROUTES.some(route => route.id === id)) return { awarded: false, leveledUp: false };
     this.rewardedRoutes.add(id);
@@ -85,7 +93,7 @@ export class Progression {
   snapshot(): ProgressionSnapshot {
     return { xp: this.xp, echoes: [...this.echoes], sourceLocated: this.sourceLocated,
       passageOpen: this.passageOpen, rewardedHollows: [...this.rewardedHollows], rewardedRoutes: [...this.rewardedRoutes],
-      abilityUpgrades: { ...this.ranks } };
+      abilityUpgrades: { ...this.ranks }, bossRewards: [...this.bossRewards] };
   }
 
   restore(value: ProgressionSnapshot): void {
@@ -98,6 +106,8 @@ export class Progression {
     this.passageOpen = this.sourceLocated && value.passageOpen;
     this.rewardedHollows = new Set(value.rewardedHollows);
     this.rewardedRoutes.clear(); value.rewardedRoutes.forEach(id => this.rewardedRoutes.add(id));
+    this.bossRewards.clear();
+    if (value.bossRewards?.includes('soterrado')) this.bossRewards.add('soterrado');
     for (const id of UPGRADE_IDS) {
       const rank = value.abilityUpgrades?.[id];
       this.ranks[id] = Number.isSafeInteger(rank) ? Math.max(0, Math.min(ABILITY_UPGRADES[id].maxRank, rank!)) : 0;

@@ -1,4 +1,6 @@
 export const SPECIES = {
+  soterrado: { name: 'O Soterrado', habitat: 'Depressão do Siroco', note: 'Escava a bacia e emerge nas marcas do solo. Cada mergulho revela onde o corpo vai reaparecer.',
+    study: 'Saia da linha da investida e das marcas anunciadas. Após emergir, o corpo fica exposto por tempo suficiente para atacar ou preparar a carga.' },
   crawler: { name: 'Rastejante Hollow', habitat: 'Floresta e cavernas', note: 'Persegue de perto. O brilho antes do golpe dá tempo para se afastar.',
     study: 'Afaste-se durante a preparação e volte para um golpe curto. Prepare a carga antes de deixá-lo chegar ao corpo.' },
   skitter: { name: 'Saltador', habitat: 'Profundezas e exterior', note: 'Avança rapidamente em uma direção preparada. Saia da linha da investida.',

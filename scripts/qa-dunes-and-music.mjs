@@ -37,7 +37,7 @@ try {
       a.pause();a.removeAttribute('src');a.load();
     }return results;
   });
-  assert.equal(report.tracks.length,9);
+  assert.equal(report.tracks.length,10);
   for(const t of report.tracks){assert.ok(t.duration>=119&&t.duration<180,t.region);assert.ok(t.looped,t.region);}
   // Rapid region changes release the superseded voice. Unlock cannot override stop.
   await page.evaluate(()=>{const a=window.__danteGame.scene.getScene('Game').sounds;a.setArea('cavern');a.setArea('deep');a.setArea('sirocco');});

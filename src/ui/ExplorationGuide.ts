@@ -8,6 +8,7 @@ export type ExplorationTarget = Vec2 & {
   name: string;
   radius: number;
   instruction: string;
+  interactionLabel?: string;
   action?: 'investigate' | 'walk' | 'blocked' | 'observe' | 'enter';
 };
 
@@ -35,9 +36,8 @@ export class ExplorationGuide {
     const direction = vertical && horizontal ? vertical === 'norte'
       ? horizontal === 'leste' ? 'nordeste' : 'noroeste'
       : horizontal === 'leste' ? 'sudeste' : 'sudoeste' : vertical || horizontal;
-    const command = target.action === 'enter'
-      ? method === 'gamepad' ? '[A] ENTRAR' : method === 'touch' ? 'Toque em ENTRAR' : '[E] ENTRAR'
-      : method === 'gamepad' ? '[A] INVESTIGAR' : method === 'touch' ? 'Toque em INVESTIGAR' : '[E] INVESTIGAR';
+    const verb = target.interactionLabel ?? (target.action === 'enter' ? 'ENTRAR' : 'INVESTIGAR');
+    const command = method === 'gamepad' ? `[A] ${verb}` : method === 'touch' ? `Toque em ${verb}` : `[E] ${verb}`;
     const instruction = nearby && (target.action === 'investigate' || target.action === 'enter') ? command : target.instruction;
     hud.setExplorationGuide(title, nearby ? `${target.name} está aqui.` : `${target.name} • ${direction}`, instruction, nearby);
     const visible = !dead && gap <= target.radius + 170;

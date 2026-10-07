@@ -12,5 +12,6 @@ export const AUDIO = {
     sirocco: 'sirocco-journey.mp3',
     dunes: 'dunes-journey.mp3',
     warden: 'warden-journey.mp3',
+    soterrado: 'soterrado-journey.mp3',
   },
 } as const;

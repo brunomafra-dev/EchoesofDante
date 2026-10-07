@@ -36,6 +36,10 @@ O portal oriental do Siroco agora avança para **Dunas Interiores**: terreno abe
 
 Todas as regiões possuem música própria: nove composições instrumentais originais de **120–173 segundos**, com frases espaçadas e transições suaves. [Composição, assets e validação](docs/sirocco-interior-and-sound/).
 
+## O Soterrado · 0.1.60
+
+Na depressão das **Dunas Interiores**, use **DESCER** para entrar na Bacia Soterrada. O novo boss escavador tem duas fases, quatro ataques anunciados no solo e janelas para Sabre/Carga Cinética. Morrer reinicia somente a tentativa, na entrada segura da bacia. Vencer concede **180 XP + um ponto extra de aperfeiçoamento** do kit atual, uma vez; a passagem exposta revela uma leitura de frio ao norte. A região gelada ainda não é jogável. [Arte, música, regras e QA](docs/soterrado-boss/).
+
 ## Stack
 
 A [referência jogável de qualidade](docs/quality-reference/) isola a primeira câmara da Cavern em `/quality-reference.html`: ambiente pintado contínuo, apresentação articulada do Hollow e impactos curtos. Os botões **Warrior novo / Warrior anterior** comparam o [Guerreiro pintado 0.1.48](docs/warrior-quality-reference/) no mesmo cenário; **Câmara original** conserva a comparação ambiental. O Guerreiro novo também está aplicado ao jogo principal, conforme autorização do usuário. O laboratório não altera o progresso local.

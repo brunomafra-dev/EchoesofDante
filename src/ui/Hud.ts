@@ -212,6 +212,11 @@ export class Hud {
     this.signalObjective.setText(depthSeen ? 'SINAL SOB A AREIA' : ruinsSeen ? 'SIGA A DESCIDA' : 'EXPLORE AS DUNAS');
   }
 
+  setSandpitArea(defeated: boolean, clueSeen: boolean): void {
+    this.areaSubtitle.setText('Siroco · Bacia Soterrada');
+    this.signalObjective.setText(clueSeen ? 'O SINAL SEGUE AO NORTE' : defeated ? 'INVESTIGUE A PASSAGEM REVELADA' : 'DESCUBRA O QUE SE MOVE ABAIXO');
+  }
+
   setContinuationArea(exterior: boolean, fragmentSeen: boolean, firstEchoSeen = false): void {
     this.areaSubtitle.setText(exterior ? firstEchoSeen ? 'Exterior · Primeiro Eco' : 'Exterior da caverna' : 'Profundezas');
     this.signalObjective.setText(exterior ? fragmentSeen ? 'SIGA A RESPOSTA' : 'INVESTIGUE O FRAGMENTO' : 'SIGA O SINAL');

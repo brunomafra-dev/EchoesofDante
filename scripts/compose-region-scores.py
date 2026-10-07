@@ -11,6 +11,7 @@ import math
 import subprocess
 import tempfile
 import wave
+import sys
 import numpy as np
 import imageio_ffmpeg
 
@@ -28,6 +29,7 @@ SCORES = {
     'sirocco': (45, 58, 36, [0, 3, 5, -2, 0, 7, 3, 5], 'sand', 79),
     'dunes': (40, 50, 36, [0, -2, 1, 5, 0, 3, -2, 1], 'sand', 83),
     'warden': (38, 80, 40, [0, 3, -2, 1, 0, 5, 3, -2], 'battle', 97),
+    'soterrado': (43, 76, 40, [0, -2, 3, 5, 0, 1, -2, 3], 'battle', 109),
 }
 
 def frequency(midi):
@@ -145,7 +147,8 @@ def render(name, spec):
 
 if __name__=='__main__':
     DEST.mkdir(parents=True,exist_ok=True)
-    metrics = [render(name,spec) for name,spec in SCORES.items()]
-    folder=ROOT/'docs/sirocco-interior-and-sound'
+    selected = sys.argv[1:] or list(SCORES)
+    metrics = [render(name,SCORES[name]) for name in selected]
+    folder=ROOT/('docs/soterrado-boss' if selected == ['soterrado'] else 'docs/sirocco-interior-and-sound')
     folder.mkdir(parents=True,exist_ok=True)
     (folder/'audio-measurements.json').write_text(json.dumps(metrics,indent=2)+'\n',encoding='utf-8')

@@ -11,6 +11,7 @@ export class DunesInterior {
   readonly returnPortal: ChapterPortal;
   private readonly ruin: Phaser.GameObjects.Image;
   private readonly response: Phaser.GameObjects.Ellipse;
+  private readonly tremor: Phaser.GameObjects.Ellipse;
 
   constructor(private readonly scene: Phaser.Scene, recorded: boolean) {
     scene.add.image(0, 0, 'dunes-ground').setOrigin(0).setDisplaySize(DUNES.width, DUNES.height).setDepth(-10002);
@@ -21,6 +22,7 @@ export class DunesInterior {
     trackEnvironmentOcclusion(scene, this.ruin);
     this.response = scene.add.ellipse(DUNES.ruin.x, DUNES.ruin.y - 34, 75, 17, 0xa98cff, recorded ? .5 : .14)
       .setDepth(DUNES.ruin.y - 43);
+    this.tremor = scene.add.ellipse(DUNES.hollow.x,DUNES.hollow.y,155,48,0xc9a270,0).setDepth(-9899);
   }
 
   canInvestigate(position: Vec2, dead: boolean, recorded: boolean): boolean {
@@ -32,6 +34,12 @@ export class DunesInterior {
     this.response.setAlpha(.8).setScale(1.4);
     this.scene.tweens.add({ targets: this.response, alpha: .42, scale: 1, duration: 1000 });
     this.scene.tweens.add({ targets: this.ruin, alpha: .7, duration: 170, yoyo: true, repeat: 2 });
+  }
+
+  warnBelow(): void {
+    this.scene.tweens.killTweensOf(this.tremor);
+    this.tremor.setAlpha(.3).setScale(.7);
+    this.scene.tweens.add({targets:this.tremor,scale:1.8,alpha:0,duration:650,repeat:2});
   }
 
   private bake(): void {
@@ -59,6 +67,13 @@ export class DunesInterior {
       const layer = this.scene.add.renderTexture(0, Math.max(0, top - 130), DUNES.width,
         Math.min(810, DUNES.height - top + 130)).setOrigin(0).setDepth(top + 220);
       const painter = new EnvironmentPainter(this.scene, layer);
+      if (top === 1100) {
+        // Unequal drag marks lead to the descent. Composed once into the terrain cache.
+        for (const [x,y,angle] of [[2310,1260,-28],[2380,1220,-20],[2470,1180,-10]]) {
+          painter.contact(x,y,105,17,.27);
+          painter.stamp({key:'root-growth',x,y,width:92,height:25,angle,tint:0x9f8664,alpha:.45});
+        }
+      }
       const inBand = (item: Vec2) => Math.floor(item.y / 550) === top / 550;
       for (const stamp of stamps.filter(inBand)) {
         painter.sediment(stamp.x, stamp.y + stamp.height * .24, stamp.width * 1.25, stamp.height * .42, 0xab8a66, .2);
