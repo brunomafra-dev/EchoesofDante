@@ -1,0 +1,11 @@
+{
+  "errors": [],
+  "method": "Chrome headless; actual menu actions, DEV legacy XP setup; touch emulation and gamepad mock; no hardware",
+  "legacyPreserved": true,
+  "pauseClockAndCharge": true,
+  "independentProfiles": true,
+  "switchDoesNotOverwrite": true,
+  "gamepadMock": true,
+  "touchMenu": true,
+  "passed": true
+}

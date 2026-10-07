@@ -48,6 +48,10 @@ O Soterrado agora emerge de um buraco ilustrado na apresentação e no ataque de
 
 Minimapa local e seta discreta indicam a aproximação ao próximo ponto da jornada. O terreno é revelado conforme a exploração; M ou MAPA recolhe o painel. O guia considera as colisões existentes, preservando as condições de descoberta e o combate. [Funcionamento e QA](docs/navigation-foundation/) · [Sequência das próximas etapas](docs/next-adventure/).
 
+## Expedições em dupla · 0.1.66
+
+MENU → **COOPERATIVO · 2 PESSOAS** permite criar/entrar em uma sala por código. Execute `npm run coop:server` para fornecer o relay. Guerreiro e Star Hunter podem explorar, combater e investigar juntos nas regiões abertas, com estado simulado pelo anfitrião. O save solo do visitante fica preservado. Chefes e travessias de campanha permanecem solo nesta fundação. [Como jogar, publicar o serviço e limites reais](docs/regional-coop/).
+
 ## Entrada e personagens · 0.1.63
 
 Tela inicial sem login, menu Esc/MENU/Start e volumes geral, música e efeitos. Escolha ou crie personagens com progressos locais independentes; o Guerreiro existente conserva seu save. A classe disponível nesta etapa é Guerreiro Galáctico. [Funcionamento, compatibilidade e QA](docs/menu-and-characters/).

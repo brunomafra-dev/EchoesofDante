@@ -91,6 +91,10 @@ export class RecordsPanel {
     if (this.isOpen) this.status.textContent = this.getRecords().saveStatus;
   }
 
+  setResetAllowed(allowed: boolean): void {
+    (this.dialog.querySelector('[data-reset]') as HTMLButtonElement).disabled = !allowed;
+  }
+
   open(): void {
     if (this.isOpen) return;
     this.onOpen();

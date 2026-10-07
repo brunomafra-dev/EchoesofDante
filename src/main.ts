@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { GameScene } from './scenes/GameScene';
 import { VIEW_HEIGHT, VIEW_WIDTH } from './config/game';
 import './style.css';
+import { coopSession } from './network/CoopSession';
 import { ApplicationShell } from './ui/ApplicationShell';
 
 const shell = new ApplicationShell();
@@ -16,6 +17,6 @@ const game = new Phaser.Game({
   render: { antialias: true, pixelArt: false },
   scene: [new GameScene(false, false, scene => shell.bind(scene))],
 });
-game.events.once(Phaser.Core.Events.DESTROY, () => shell.destroy());
+game.events.once(Phaser.Core.Events.DESTROY, () => { shell.destroy(); coopSession.disconnect(false); });
 
-if (import.meta.env.DEV) Object.assign(window, { __danteGame: game });
+if (import.meta.env.DEV) Object.assign(window, { __danteGame: game, __danteCoop: coopSession });

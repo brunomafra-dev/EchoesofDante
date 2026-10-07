@@ -1,0 +1,14 @@
+{
+  "method": "Chrome emulation; DEV chapter/position setup, real action keys; no physical device",
+  "errors": [],
+  "sideRoutes": true,
+  "discoveryAndFrontier": true,
+  "dashAndCharge": true,
+  "newCreaturesXp": true,
+  "respawn": true,
+  "fps": 59.24955271510407,
+  "stableObjects": true,
+  "return": true,
+  "persistence": true,
+  "passed": true
+}

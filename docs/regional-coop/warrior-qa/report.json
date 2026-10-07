@@ -1,0 +1,11 @@
+{
+  "errors": [],
+  "method": "Two Chrome contexts, Hunter host and Warrior visitor; real keys/mouse, controlled enemy and positions; no physical hardware",
+  "reverseClasses": true,
+  "remoteSaberDamage": true,
+  "remoteWaveHoldReleaseFixedDirection": true,
+  "remoteDash": true,
+  "visitorJournalAndSaveProtection": true,
+  "hostMenuCancelsPartnerCharge": true,
+  "passed": true
+}

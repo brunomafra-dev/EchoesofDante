@@ -5,6 +5,7 @@ import type { KineticPose } from '../combat/KineticCharge';
 import type { Vec2 } from '../utils/math';
 
 export class EnergySaber {
+  destroy(): void { this.indicator.destroy(); this.trail.destroy(); this.view.destroy(true); }
   readonly view: Phaser.GameObjects.Container;
   // Local handle point behind the dominant hand; both grips rotate with this view.
   readonly supportGripX = -10;

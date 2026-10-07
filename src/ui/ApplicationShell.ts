@@ -1,11 +1,12 @@
 import type { GameScene } from '../scenes/GameScene';
 import { characterProfiles } from '../systems/CharacterProfiles';
+import { coopSession, COOP_AREAS } from '../network/CoopSession';
 import { CLASS_NAMES } from '../config/classes';
 import type { CharacterClass } from '../systems/CharacterProfiles';
 import { AUDIO } from '../config/audio';
 import { PROGRESSION } from '../config/progression';
 
-type Page = 'home' | 'pause' | 'characters' | 'create' | 'settings';
+type Page = 'home' | 'pause' | 'characters' | 'create' | 'settings' | 'coop';
 type Volumes = { master: number; music: number; sfx: number };
 const SETTINGS_KEY = 'echoes-of-dante.settings.v1';
 
@@ -39,6 +40,7 @@ export class ApplicationShell {
     this.dialog.addEventListener('cancel', e => { e.preventDefault(); if (this.playing) this.resume(); });
     document.body.append(this.menuButton, this.dialog);
     window.addEventListener('keydown', this.keyDown, true);
+    window.addEventListener('dante-coop', this.coopChanged);
     this.render();
     if (!this.qaAutoplay) { this.dialog.showModal(); document.body.classList.add('shell-open'); }
     this.pollPad();
@@ -89,7 +91,8 @@ export class ApplicationShell {
       this.heading(this.page === 'pause' ? 'Expedição pausada' : 'Sua próxima descoberta', `${hero.name} · ${CLASS_NAMES[hero.classId]}`);
       const play = this.action(this.page === 'pause' ? 'VOLTAR AO JOGO' : 'CONTINUAR EXPEDIÇÃO', 'continue', () => this.resume());
       play.disabled = !this.scene;
-      this.action('PERSONAGENS', 'characters', () => this.show('characters'));
+      this.action('PERSONAGENS', 'characters', () => this.show('characters')).disabled = coopSession.role !== 'offline';
+      this.action('COOPERATIVO · 2 PESSOAS', 'coop', () => this.show('coop'));
       this.action('CONFIGURAÇÕES', 'settings', () => this.show('settings'));
       if (this.page === 'pause') this.action('VOLTAR À TELA INICIAL', 'home', () => this.show('home'));
       this.status('Progresso salvo neste navegador. Jogue em landscape no celular.');
@@ -129,6 +132,24 @@ export class ApplicationShell {
         if (characterProfiles.select(hero.id)) location.reload();
       });
       this.action('VOLTAR', 'back', () => this.show('characters'));
+    } else if (this.page === 'coop') {
+      this.heading('Expedição em dupla', 'Explorem e enfrentem criaturas na mesma região. Chefes e viagens entre regiões continuam solo nesta primeira etapa.');
+      if (coopSession.role === 'offline') {
+        const label = document.createElement('label'); label.textContent = 'Servidor de salas'; const server = document.createElement('input'); server.name = 'coop-server'; server.value = import.meta.env.VITE_COOP_URL || (location.protocol === 'https:' ? 'wss://' + location.host + '/coop' : 'ws://' + location.hostname + ':5190'); label.append(server); this.content.append(label);
+        const code = document.createElement('input'); code.name = 'coop-code'; code.placeholder = 'Código da sala'; code.maxLength = 10; code.setAttribute('aria-label', 'Código da sala'); this.content.append(code);
+        const join = (mode: 'create' | 'join') => {
+          const hero = characterProfiles.active; this.scene?.flushForShell();
+          coopSession.connect(server.value, mode, {name:hero.name,classId:hero.classId}, this.scene!.coopArea(), code.value.trim())
+            .then(() => this.render()).catch(error => this.status(error.message));
+        };
+        const create = this.action('CRIAR SALA', 'coop-create', () => join('create')); create.disabled = !this.scene || !COOP_AREAS.includes(this.scene.coopArea());
+        this.action('ENTRAR NA SALA', 'coop-join', () => join('join'));
+      } else {
+        this.status('SALA ' + coopSession.code + ' · ' + coopSession.message);
+        this.action('VOLTAR À EXPEDIÇÃO', 'coop-play', () => this.resume());
+        this.action('ENCERRAR / SAIR DA SALA', 'coop-leave', () => {coopSession.disconnect(); this.render();});
+      }
+      this.action('VOLTAR', 'back', () => this.show(this.playing ? 'pause' : 'home'));
     } else {
       this.heading('Configurações', 'Ajuste o som da sua expedição.');
       for (const [key, title] of [['master','Volume geral'],['music','Música'],['sfx','Efeitos']] as const) {
@@ -141,6 +162,7 @@ export class ApplicationShell {
       this.action('VOLTAR', 'back', () => this.show(this.playing ? 'pause' : 'home'));
     }
   }
+  private coopChanged = (): void => { if (this.dialog.open && this.page === 'coop') this.status((coopSession.code ? 'SALA ' + coopSession.code + ' · ' : '') + coopSession.message); };
   private applyVolumes(): void { this.scene?.setShellVolumes(this.volumes.master, this.volumes.music, this.volumes.sfx); }
   private pollPad = (): void => {
     const pad = Array.from(navigator.getGamepads?.() ?? []).find(p => p?.connected && p.mapping === 'standard');
@@ -158,5 +180,5 @@ export class ApplicationShell {
     }
     this.padPrevious = down; this.padFrame = requestAnimationFrame(this.pollPad);
   };
-  destroy(): void { cancelAnimationFrame(this.padFrame); window.removeEventListener('keydown', this.keyDown, true); this.dialog.remove(); this.menuButton.remove(); }
+  destroy(): void { cancelAnimationFrame(this.padFrame); window.removeEventListener('keydown', this.keyDown, true); window.removeEventListener('dante-coop', this.coopChanged); this.dialog.remove(); this.menuButton.remove(); }
 }

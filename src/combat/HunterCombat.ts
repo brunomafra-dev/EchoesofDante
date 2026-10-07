@@ -57,4 +57,6 @@ export class HunterCombat {
     }
   }
   clear(): void { this.momentum=0; for(const shot of this.shots){shot.active=false;shot.view.setVisible(false);} }
+  destroy(): void { for (const shot of this.shots) shot.view.destroy(); }
+  projectilePoses(): {x:number;y:number;rotation:number}[] { return this.shots.filter(s=>s.active).map(s=>({x:s.x,y:s.y,rotation:s.angle})); }
 }

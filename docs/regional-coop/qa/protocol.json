@@ -1,0 +1,14 @@
+{
+  "errors": [],
+  "method": "Real Node WebSocket clients against the local relay",
+  "bossRegionsRejected": true,
+  "invalidClassRejected": true,
+  "fullRoomRejected": true,
+  "inputNormalized": true,
+  "authorityAndRegionEnforced": true,
+  "hostWorldRelayed": true,
+  "guestSlotReusable": true,
+  "hostEndBroadcast": true,
+  "badJsonHandled": true,
+  "passed": true
+}

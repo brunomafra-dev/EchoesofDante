@@ -256,6 +256,25 @@ export class Player {
     this.hurtOverlay.setAlpha(0.8);
   }
 
+  renderRemote(position: Vec2, aim: number, pose: SaberPose, heavy: KineticPose, dashing: boolean, dead: boolean): void {
+    const moved = Math.hypot(position.x - this.position.x, position.y - this.position.y);
+    const travel = normalized(position.x - this.position.x, position.y - this.position.y);
+    this.stepPhase += moved / 108 * Math.PI * 2;
+    Object.assign(this.position, { x: position.x, y: position.y });
+    this.isDead = dead; this.isDashing = dashing;
+    this.paintedArt?.update(aim, this.stepPhase, moved > .1, travel, pose, heavy, dashing);
+    this.setAim(aim); this.renderWeapon(aim, pose, heavy);
+    this.view.setPosition(position.x, position.y).setDepth(position.y).setAlpha(dead ? .25 : dashing ? .74 : 1);
+    this.shadow.setPosition(position.x, position.y + 39).setDepth(position.y - 3);
+    this.groundContact.setPosition(position.x, position.y + 39).setDepth(position.y - 2);
+    this.ring.setPosition(position.x, position.y + 39).setDepth(position.y - 1);
+  }
+
+  destroy(): void {
+    this.weapon.destroy(); this.view.destroy(true);
+    this.shadow.destroy(); this.groundContact.destroy(); this.ring.destroy();
+  }
+
   private footstep(stepIndex: number): void {
     const direction = this.travelDirection;
     const side = stepIndex % 2 ? 1 : -1;
