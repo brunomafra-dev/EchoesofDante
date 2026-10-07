@@ -3,6 +3,7 @@ import { ECHO_COUNT } from '../config/discovery';
 import { VALLEY_ROUTES } from '../config/valley';
 import { SIROCCO_ROUTES } from '../config/sirocco';
 import { DUNES_ROUTES } from '../config/dunes';
+import { FROST_ROUTES } from '../config/frost';
 import { SOTERRADO } from '../config/soterrado';
 import { ABILITY_UPGRADE_MILESTONES, ABILITY_UPGRADES, type AbilityUpgradeId, type AbilityUpgradeRanks } from '../config/abilityUpgrades';
 
@@ -85,7 +86,7 @@ export class Progression {
   }
 
   discoverSiroccoRoute(id: string): { awarded: boolean; leveledUp: boolean } {
-    if (this.rewardedRoutes.has(id) || !(SIROCCO_ROUTES.some(route => route.id === id) || DUNES_ROUTES.some(route => route.id === id))) return { awarded: false, leveledUp: false };
+    if (this.rewardedRoutes.has(id) || !(SIROCCO_ROUTES.some(route => route.id === id) || DUNES_ROUTES.some(route => route.id === id) || FROST_ROUTES.some(route => route.id === id))) return { awarded: false, leveledUp: false };
     this.rewardedRoutes.add(id);
     return { awarded: true, leveledUp: this.award(PROGRESSION.valleyRouteXp) };
   }

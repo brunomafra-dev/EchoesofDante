@@ -1,4 +1,6 @@
 export const SPECIES = {
+  frostPouncer: { name: 'Rasga-gelo', habitat: 'Fratura Boreal', note: 'O corpo baixo e as garras anunciam uma investida sobre a neve.', study: 'Saia lateralmente durante o preparo. A carapaça protege o avanço, mas o pouso oferece uma janela de ataque.' },
+  frostSpitter: { name: 'Cuspidor Boreal', habitat: 'Fratura Boreal', note: 'Um saco mineral carrega o disparo enquanto a criatura mantém distância.', study: 'A linha âmbar indica a direção comprometida. Desloque-se de lado e use as formações como cobertura.' },
   soterrado: { name: 'O Soterrado', habitat: 'Depressão do Siroco', note: 'Escava a bacia e emerge nas marcas do solo. Cada mergulho revela onde o corpo vai reaparecer.',
     study: 'Saia da linha da investida e das marcas anunciadas. Após emergir, o corpo fica exposto por tempo suficiente para atacar ou preparar a carga.' },
   crawler: { name: 'Rastejante Hollow', habitat: 'Floresta e cavernas', note: 'Persegue de perto. O brilho antes do golpe dá tempo para se afastar.',

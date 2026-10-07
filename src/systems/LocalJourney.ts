@@ -2,6 +2,7 @@ import { ECHO_COUNT, FOREST_ECHOES } from '../config/discovery';
 import { VALLEY_ENCOUNTERS, VALLEY_ROUTES } from '../config/valley';
 import { SIROCCO_ENCOUNTERS, SIROCCO_ROUTES } from '../config/sirocco';
 import { DUNES_ENCOUNTERS, DUNES_ROUTES } from '../config/dunes';
+import { FROST_ENCOUNTERS, FROST_ROUTES } from '../config/frost';
 import type { BestiarySnapshot } from './Bestiary';
 import type { ProgressionSnapshot } from './Progression';
 import type { AbilityUpgradeRanks } from '../config/abilityUpgrades';
@@ -14,8 +15,8 @@ export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSee
   'valleyLandmarkSeen', 'valleyEndSeen', 'valleyCheckpointReached', 'valleyFrontierReached',
   'valleyFrontierSignalSeen', 'valleyFrontierEndSeen', 'aridVisited', 'aridSignalSeen',
   'aridFrontierEntered', 'aridFrontierReached', 'dunesVisited', 'dunesRuinsSeen', 'dunesDepthSeen',
-  'soterradoReached', 'soterradoDefeated', 'soterradoClueSeen'] as const;
-export type JourneyArea = 'forest' | 'cavern' | 'warden' | 'valley' | 'arid' | 'dunes' | 'sandpit';
+  'soterradoReached', 'soterradoDefeated', 'soterradoClueSeen', 'frostVisited', 'frostSignalSeen', 'frostEndSeen'] as const;
+export type JourneyArea = 'forest' | 'cavern' | 'warden' | 'valley' | 'arid' | 'dunes' | 'sandpit' | 'frost';
 export type JourneyFlags = Record<typeof JOURNEY_FLAGS[number], boolean>;
 export type JourneySnapshot = {
   schema: 1; updatedAt: number; area: JourneyArea; hp: number;
@@ -67,7 +68,10 @@ export class LocalJourney {
       flags.soterradoReached &&= flags.dunesDepthSeen;
       flags.soterradoDefeated &&= flags.soterradoReached;
       flags.soterradoClueSeen &&= flags.soterradoDefeated;
-      const area: JourneyArea = raw.area === 'sandpit' && flags.soterradoReached ? 'sandpit'
+      flags.frostVisited &&= flags.soterradoClueSeen;
+      flags.frostSignalSeen &&= flags.frostVisited;
+      flags.frostEndSeen &&= flags.frostSignalSeen;
+      const area: JourneyArea = raw.area === 'frost' && flags.frostVisited ? 'frost' : raw.area === 'sandpit' && flags.soterradoReached ? 'sandpit'
         : raw.area === 'dunes' && flags.dunesVisited ? 'dunes'
         : raw.area === 'arid' && flags.wardenDefeated && flags.valleyFrontierEndSeen && flags.aridVisited ? 'arid'
         : raw.area === 'valley' && flags.wardenDefeated ? 'valley'
@@ -79,7 +83,7 @@ export class LocalJourney {
         if (Array.isArray(entry) && VALLEY_ENCOUNTERS.some(h => h.id === entry[0]) && integer(entry[1], 8_640_000_000_000_000)) habitats.push([entry[0], entry[1]]);
       }
       const aridHabitats: [number, number][] = [];
-      const desertHabitats = [...SIROCCO_ENCOUNTERS, ...DUNES_ENCOUNTERS];
+      const desertHabitats = [...SIROCCO_ENCOUNTERS, ...DUNES_ENCOUNTERS, ...FROST_ENCOUNTERS];
       if (Array.isArray(raw.aridHabitats)) for (const entry of raw.aridHabitats.slice(0, desertHabitats.length)) {
         if (Array.isArray(entry) && desertHabitats.some(h => h.id === entry[0]) && integer(entry[1], 8_640_000_000_000_000)) aridHabitats.push([entry[0], entry[1]]);
       }
@@ -88,7 +92,7 @@ export class LocalJourney {
         progression: { xp: p.xp, echoes, sourceLocated: echoes.length === ECHO_COUNT && p.sourceLocated === true,
           passageOpen, rewardedHollows: p.rewardedHollows.filter((id): id is number => integer(id, 1999)).slice(0, 2000),
           rewardedRoutes: Array.isArray(p.rewardedRoutes) ? p.rewardedRoutes.filter((id): id is string =>
-            typeof id === 'string' && (VALLEY_ROUTES.some(route => route.id === id) || SIROCCO_ROUTES.some(route => route.id === id) || DUNES_ROUTES.some(route => route.id === id))) : [],
+            typeof id === 'string' && (VALLEY_ROUTES.some(route => route.id === id) || SIROCCO_ROUTES.some(route => route.id === id) || DUNES_ROUTES.some(route => route.id === id) || FROST_ROUTES.some(route => route.id === id))) : [],
           abilityUpgrades: object(p.abilityUpgrades) as Partial<AbilityUpgradeRanks> | undefined,
           bossRewards: flags.soterradoDefeated ? ['soterrado'] : [] },
         flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats };

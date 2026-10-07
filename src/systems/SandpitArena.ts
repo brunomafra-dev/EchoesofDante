@@ -38,4 +38,6 @@ export class SandpitArena {
       onComplete:()=>this.clue.setData('environmentFadeDisabled',false)});
     this.light.setFillStyle(0xa98cff,.5);
   }
+
+  hideClueForPortal(): void { this.clue.setVisible(false); this.light.setVisible(false); }
 }

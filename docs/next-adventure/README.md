@@ -6,10 +6,10 @@ Sequência autorizada pelo usuário: completar, validar e publicar cada etapa an
 | --- | --- | --- |
 | 1. Orientação | Minimapa local e indicação de aproximação aos objetivos | Implementada; QA em `navigation-foundation` |
 | 2. Entrada e personagens | Tela inicial sem login, menu Esc, áudio e personagens com saves independentes | Implementada; QA em `menu-and-characters` |
-| 3. Região gelada | Continuação da pista do Soterrado, exploração e criaturas próprias | Em implementação |
-| 4. Segunda classe | Kit e identidade coerentes com o descritivo oficial | Aguardando localização/envio do descritivo solicitado ao usuário |
+| 3. Região gelada | Continuação da pista do Soterrado, exploração e criaturas próprias | Implementada; QA em frozen-reach |
+| 4. Segunda classe | Kit e identidade coerentes com o descritivo oficial | Descritivo recebido; Star Hunter em implementação |
 | 5. Cooperativo | Sessão inicial para dois jogadores, com estado compartilhado | Planejada |
 
-O descritivo das classes não foi encontrado no README, documentos técnicos ou Art Bible disponíveis no repositório. Não definir nomes/poderes como oficiais sem esse material. As etapas independentes continuam enquanto a informação é aguardada.
+O usuário forneceu o descritivo oficial das três classes, registrado em [classes](../classes/README.md). Esta sequência inclui a segunda classe, Star Hunter; Astral Manipulator permanece como próxima expansão de classes.
 
 Preservar o Guerreiro aprovado, jornada existente, controles PC/gamepad/touch e arte Organic Sci-Fi D. Multiplayer deve distinguir prova local de funcionamento de publicação com servidor acessível pela internet.

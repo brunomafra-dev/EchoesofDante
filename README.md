@@ -181,3 +181,7 @@ A música usa nove composições instrumentais originais para Forest, Cavern, De
 Fazer playtest físico com gamepad e aparelhos touch em landscape para ajustar ergonomia, legibilidade e mixagem antes de declarar suporte oficial. O desempenho em outra GPU pode ser diferente do Chrome headless medido nos testes.
 
 As decisões técnicas desta sprint estão em [docs/technical-decisions.md](docs/technical-decisions.md).
+
+## Fratura Boreal
+
+A passagem do Soterrado conduz à região gelada. [Arte e QA](docs/frozen-reach/README.md). [Classes oficiais](docs/classes/README.md).

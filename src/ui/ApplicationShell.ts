@@ -98,7 +98,7 @@ export class ApplicationShell {
         try {
           const saved = JSON.parse(localStorage.getItem(characterProfiles.keyFor(hero.id)) ?? 'null');
           if (typeof saved?.progression?.xp === 'number') level = PROGRESSION.levelThresholds.filter(x => x <= saved.progression.xp).length;
-          const names: Record<string, string> = { forest: 'Floresta', cavern: 'Cavernas', warden: 'Guardião', valley: 'Vale', arid: 'Siroco', dunes: 'Dunas', sandpit: 'Bacia Soterrada' };
+          const names: Record<string, string> = { forest: 'Floresta', cavern: 'Cavernas', warden: 'Guardião', valley: 'Vale', arid: 'Siroco', dunes: 'Dunas', sandpit: 'Bacia Soterrada', frost: 'Fratura Boreal' };
           if (saved) region = names[saved.area] ?? 'Expedição';
         } catch { /* Missing/corrupt journey starts safely through LocalJourney. */ }
         this.action(`${hero.name} · Guerreiro · NV ${level} · ${region}${hero.id === characterProfiles.active.id ? ' · ATUAL' : ''}`,

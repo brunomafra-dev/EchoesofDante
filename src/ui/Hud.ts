@@ -212,6 +212,11 @@ export class Hud {
     this.signalObjective.setText(depthSeen ? 'SINAL SOB A AREIA' : ruinsSeen ? 'SIGA A DESCIDA' : 'EXPLORE AS DUNAS');
   }
 
+  setFrostArea(recorded: boolean): void {
+    this.areaSubtitle.setText('Fratura Boreal');
+    this.signalObjective.setText(recorded ? 'SIGA A FRATURA' : 'EXPLORE A FRATURA BOREAL');
+  }
+
   setSandpitArea(defeated: boolean, clueSeen: boolean): void {
     this.areaSubtitle.setText('Siroco · Bacia Soterrada');
     this.signalObjective.setText(clueSeen ? 'O SINAL SEGUE AO NORTE' : defeated ? 'INVESTIGUE A PASSAGEM REVELADA' : 'DESCUBRA O QUE SE MOVE ABAIXO');

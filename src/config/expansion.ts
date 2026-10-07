@@ -11,8 +11,10 @@ export const EXPANSION = {
   approach: { x: 5210, y: 740, radius: 95 },
 } as const;
 
-export type CreatureKind = 'skitter' | 'spitter' | 'dunePouncer' | 'glassSpitter';
+export type CreatureKind = 'skitter' | 'spitter' | 'dunePouncer' | 'glassSpitter' | 'frostPouncer' | 'frostSpitter';
 export const CREATURES = {
+  frostPouncer: { hp: 96, speed: 146, radius: 18, detection: 340, range: 60, damage: 13, cooldown: 1550, windup: 470, lungeSpeed: 300, lungeMs: 175 },
+  frostSpitter: { hp: 120, speed: 57, radius: 23, detection: 410, range: 300, damage: 14, cooldown: 2700, windup: 900, retreatRange: 155, shotSpeed: 220, shotRange: 520, shotRadius: 8 },
   skitter: { hp: 42, speed: 175, radius: 14, detection: 280, range: 60, damage: 9, cooldown: 1150, windup: 320, lungeSpeed: 310, lungeMs: 140 },
   spitter: { hp: 85, speed: 65, radius: 22, detection: 390, range: 300, damage: 10, cooldown: 2300, windup: 700, retreatRange: 150, shotSpeed: 240, shotRange: 520, shotRadius: 7 },
   dunePouncer: { hp: 56, speed: 158, radius: 16, detection: 310, range: 58, damage: 10, cooldown: 1450, windup: 410, lungeSpeed: 290, lungeMs: 175 },

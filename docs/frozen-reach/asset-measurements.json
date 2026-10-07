@@ -1,0 +1,34 @@
+{
+  "pouncer": {
+    "source": [
+      1774,
+      887
+    ],
+    "atlas": [
+      1024,
+      512
+    ],
+    "frame": [
+      256,
+      256
+    ],
+    "feetBaseline": 244,
+    "bytes": 319101
+  },
+  "spitter": {
+    "source": [
+      1774,
+      887
+    ],
+    "atlas": [
+      1024,
+      512
+    ],
+    "frame": [
+      256,
+      256
+    ],
+    "feetBaseline": 244,
+    "bytes": 479742
+  }
+}

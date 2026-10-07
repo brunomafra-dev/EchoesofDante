@@ -19,6 +19,8 @@ import { WardenHud } from '../ui/WardenHud';
 import { VALLEY, VALLEY_ENCOUNTERS, VALLEY_RENEWAL, VALLEY_ROUTES } from '../config/valley';
 import { SIROCCO, SIROCCO_ENCOUNTERS, SIROCCO_RENEWAL, SIROCCO_ROUTES, type SiroccoKind } from '../config/sirocco';
 import { DUNES, DUNES_ENCOUNTERS, DUNES_ROUTES } from '../config/dunes';
+import { FROST, FROST_ENCOUNTERS, FROST_ROUTES, type FrostKind } from '../config/frost';
+import { FrozenReach } from '../systems/FrozenReach';
 import { DunesInterior } from '../systems/DunesInterior';
 import { SANDPIT, SOTERRADO, type SoterradoAttack } from '../config/soterrado';
 import { Soterrado, type SoterradoCue } from '../entities/Soterrado';
@@ -73,6 +75,12 @@ export class GameScene extends Phaser.Scene {
   private aridSignalSeen = false;
   private aridFrontierEntered = false;
   private aridFrontierReached = false;
+  private frost?: FrozenReach;
+  private coldPortal?: ChapterPortal;
+  private frostVisited = false;
+  private frostSignalSeen = false;
+  private frostEndSeen = false;
+  private returnFromFrost = false;
   private dunes?: DunesInterior;
   private dunesVisited = false;
   private dunesRuinsSeen = false;
@@ -155,6 +163,8 @@ export class GameScene extends Phaser.Scene {
     private readonly originalWarrior = false, private readonly shellReady?: (scene: GameScene) => void) { super('Game'); }
 
   preload(): void {
+    if (!this.textures.exists('frost-ground')) this.load.image('frost-ground', `${import.meta.env.BASE_URL}assets/visual/environment/frost-ground.webp`);
+    for (const kind of ['pouncer', 'spitter']) if (!this.textures.exists(`dante-frost-${kind}-motion`)) this.load.spritesheet(`dante-frost-${kind}-motion`, `${import.meta.env.BASE_URL}assets/visual/characters/frost-${kind}-motion.png`, { frameWidth: 256, frameHeight: 256 });
     const assetBase = `${import.meta.env.BASE_URL}assets/visual/characters/`;
     const art = [
       'warrior-body',
@@ -225,6 +235,8 @@ export class GameScene extends Phaser.Scene {
     this.valley = undefined;
     this.sirocco = undefined;
     this.dunes = undefined;
+    this.frost = undefined;
+    this.coldPortal = undefined;
     this.soterrado = undefined;
     this.sandpit = undefined;
     this.soterradoHud = undefined;
@@ -269,6 +281,10 @@ export class GameScene extends Phaser.Scene {
         this.progression.rewardedRoutes.has(SIROCCO_ROUTES[0].id));
       this.arena = this.sirocco;
       this.movementBounds = this.sirocco.bounds;
+    } else if (this.area === 'frost') {
+      this.frost = new FrozenReach(this, this.frostSignalSeen);
+      this.arena = this.frost;
+      this.movementBounds = this.frost.bounds;
     } else if (this.area === 'sandpit') {
       this.sandpit = new SandpitArena(this, this.soterradoDefeated);
       this.arena = this.sandpit;
@@ -288,7 +304,8 @@ export class GameScene extends Phaser.Scene {
     const entry = this.area === 'forest' ? FOREST_ENTRY : this.area === 'valley'
       ? this.returnToValleyPortal ? VALLEY.entry : this.returnToFrontierPortal ? VALLEY.frontier.checkpoint : this.valleyFrontierReached ? VALLEY.frontier.checkpoint : this.valleyCheckpointReached ? VALLEY.checkpoint : VALLEY.entry
       : this.area === 'arid' ? this.returnFromDunes ? { x: 4770, y: 805 } : this.aridSignalSeen ? SIROCCO.frontierCheckpoint : this.aridVisited ? SIROCCO.checkpoint : SIROCCO.entry
-      : this.area === 'sandpit' ? SANDPIT.entry
+      : this.area === 'frost' ? this.frostSignalSeen ? FROST.checkpoint : FROST.entry
+      : this.area === 'sandpit' ? this.returnFromFrost ? { x: 1320, y: 790 } : SANDPIT.entry
       : this.area === 'dunes' ? this.returnFromSandpit ? { x: 2390, y: 1160 } : this.dunesRuinsSeen ? DUNES.checkpoint : DUNES.entry
       : this.area === 'warden' ? this.returnFromValley ? { x: 1420, y: 830 } : { x: 650, y: 760 }
       : this.returnToThreshold ? { x: 6060, y: 740 } : this.firstEchoSeen ? W.respawn
@@ -300,6 +317,7 @@ export class GameScene extends Phaser.Scene {
     this.returnToFrontierPortal = false;
     this.returnFromDunes = false;
     this.returnFromSandpit = false;
+    this.returnFromFrost = false;
     this.player = new Player(this, entry.x, entry.y, this.progression.maxHp, this.qualityReference === 'reference',
       this.qualityReference !== 'baseline' && !this.originalWarrior, id => this.progression.upgradeRank(id));
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
@@ -323,6 +341,7 @@ export class GameScene extends Phaser.Scene {
     }
     if (this.area === 'arid') for (const habitat of SIROCCO_ENCOUNTERS) this.spawnSiroccoResident(habitat);
     if (this.area === 'dunes') for (const habitat of DUNES_ENCOUNTERS) this.spawnSiroccoResident(habitat);
+    if (this.area === 'frost') for (const habitat of FROST_ENCOUNTERS) this.spawnSiroccoResident(habitat);
     if (this.area === 'sandpit') {
       this.soterradoReached = true;
       this.soterradoHud = new WardenHud(this, 'O SOTERRADO');
@@ -371,12 +390,21 @@ export class GameScene extends Phaser.Scene {
     if (this.area === 'valley') this.hud.setValleyArea(this.valleyFrontierReached);
     if (this.area === 'arid') this.hud.setAridArea(this.aridSignalSeen, this.aridFrontierReached);
     if (this.area === 'dunes') this.hud.setDunesArea(this.dunesRuinsSeen, this.dunesDepthSeen);
+    if (this.area === 'frost') {
+      if (!this.frostVisited) this.hud.showDiscovery('FRATURA BOREAL\nO SINAL ATRAVESSA O GELO');
+      this.frostVisited = true;
+      this.hud.setFrostArea(this.frostSignalSeen);
+    }
+    if (this.area === 'sandpit' && this.soterradoClueSeen) {
+      this.coldPortal = new ChapterPortal(this, { x: SANDPIT.clue.x, y: SANDPIT.clue.y + 60 }, true);
+      this.sandpit?.hideClueForPortal();
+    }
     if (this.area === 'sandpit') this.hud.setSandpitArea(this.soterradoDefeated, this.soterradoClueSeen);
     this.inDeepCavern = this.area === 'cavern' && this.deepCavernEntered;
     if (this.area === 'cavern') this.hud.setCavernDepth(this.inDeepCavern);
     this.continuationRegion = this.exteriorEntered ? 'exterior' : this.deeperEntered ? 'deeper' : 'deep';
     if (this.area === 'cavern' && this.continuationRegion !== 'deep') this.hud.setContinuationArea(this.continuationRegion === 'exterior', this.fragmentSeen, this.firstEchoSeen);
-    this.cameras.main.setBounds(0, 0, this.area === 'sandpit' ? SANDPIT.width : this.area === 'valley' ? VALLEY.cameraWidth : this.area === 'arid' ? SIROCCO.cameraWidth : this.area === 'dunes' ? DUNES.width : this.area === 'cavern' ? W.cameraWidth : WORLD_WIDTH, this.area === 'dunes' ? DUNES.height : WORLD_HEIGHT)
+    this.cameras.main.setBounds(0, 0, this.area === 'frost' ? FROST.width : this.area === 'sandpit' ? SANDPIT.width : this.area === 'valley' ? VALLEY.cameraWidth : this.area === 'arid' ? SIROCCO.cameraWidth : this.area === 'dunes' ? DUNES.width : this.area === 'cavern' ? W.cameraWidth : WORLD_WIDTH, this.area === 'frost' ? FROST.height : this.area === 'dunes' ? DUNES.height : WORLD_HEIGHT)
       .startFollow(this.player.view, false, 0.1, 0.1);
     this.cameras.main.setBackgroundColor(this.area === 'sandpit' || this.area === 'arid' || this.area === 'dunes' ? '#5c3327' : this.area === 'forest' || this.area === 'valley' ? '#102d2c' : '#07151c');
     if (this.area !== 'forest') {
@@ -389,7 +417,7 @@ export class GameScene extends Phaser.Scene {
       nextLevelXp: this.progression.nextLevelXp, maxHp: this.progression.maxHp,
       nextLevelHpGain: this.progression.nextLevelHpGain, upgradePointsAvailable: this.progression.upgradePointsAvailable,
       abilityUpgradeRanks: this.progression.abilityUpgradeRanks,
-      area: this.area === 'sandpit' ? 'Bacia Soterrada' : this.area === 'dunes' ? 'Dunas Interiores' : this.area === 'arid' ? 'Bacia do Siroco' : this.area === 'valley' ? 'Vale da Ressonância' : this.area === 'warden' ? 'Domínio do Guardião' : this.area === 'cavern' ? 'Cavernas de Dante' : 'Floresta de Dante',
+      area: this.area === 'frost' ? 'Fratura Boreal' : this.area === 'sandpit' ? 'Bacia Soterrada' : this.area === 'dunes' ? 'Dunas Interiores' : this.area === 'arid' ? 'Bacia do Siroco' : this.area === 'valley' ? 'Vale da Ressonância' : this.area === 'warden' ? 'Domínio do Guardião' : this.area === 'cavern' ? 'Cavernas de Dante' : 'Floresta de Dante',
       bestiary: this.bestiary.snapshot(), routes: this.valleyRoutes, valleyVisited: this.valleyVisited,
       saveStatus: this.qualityReference ? 'Referência isolada. O progresso do jogo permanece intacto.' : this.journey.status,
       rewardedRoutes: this.progression.rewardedRoutes,
@@ -417,7 +445,7 @@ export class GameScene extends Phaser.Scene {
     });
     // Persist chapter access immediately. A mobile browser may suspend or evict
     // the page without sending a reliable later interaction or shutdown event.
-    if (this.area === 'arid' || this.area === 'dunes' || this.area === 'sandpit') this.saveProgress();
+    if (this.area === 'frost' || this.area === 'arid' || this.area === 'dunes' || this.area === 'sandpit') this.saveProgress();
     if (!this.qualityReference && this.progression.upgradePointsAvailable > 0) {
       this.time.delayedCall(350, () => this.showAvailableUpgrade());
     }
@@ -451,7 +479,18 @@ export class GameScene extends Phaser.Scene {
     const nearSandpitAscent = this.area === 'sandpit' && !this.player.isDead && distance(this.player.position, SANDPIT.ascent) < SANDPIT.ascent.radius
       && (this.soterradoDefeated || this.soterrado?.state === 'DORMANT');
     const nearColdClue = this.area === 'sandpit' && this.soterradoDefeated && !this.soterradoClueSeen && !this.player.isDead && distance(this.player.position, SANDPIT.clue) < SANDPIT.clue.radius;
-    if (nearSandpitDescent && interact) {
+    const nearColdPortal = this.soterradoClueSeen && (this.coldPortal?.canEnter(this.player.position, this.player.isDead) ?? false);
+    const nearFrostReturn = this.frost?.returnPortal.canEnter(this.player.position, this.player.isDead) ?? false;
+    const nearFrostRelay = this.frost?.canInvestigate(this.player.position, this.player.isDead, this.frostSignalSeen) ?? false;
+    if (nearColdPortal && interact) {
+      this.transitionArea('frost'); return;
+    } else if (nearFrostReturn && interact) {
+      this.returnFromFrost = true; this.transitionArea('sandpit'); return;
+    } else if (nearFrostRelay && interact) {
+      this.frostSignalSeen = true; this.frost?.respond(); this.hud.setFrostArea(true);
+      this.hud.showDiscovery('REGISTRO SOB O GELO\nA MESMA ASSINATURA. OUTRA FREQUÊNCIA.\nO SINAL SEGUE A FRATURA');
+      this.sounds.signal(); this.records.markDiscovery(); this.saveProgress();
+    } else if (nearSandpitDescent && interact) {
       this.soterradoReached = true;
       this.transitionArea('sandpit'); return;
     } else if (nearSandpitAscent && interact) {
@@ -459,6 +498,8 @@ export class GameScene extends Phaser.Scene {
       this.transitionArea('dunes'); return;
     } else if (nearColdClue && interact) {
       this.soterradoClueSeen = true;
+      this.coldPortal = new ChapterPortal(this, { x: SANDPIT.clue.x, y: SANDPIT.clue.y + 60 }, true);
+      this.sandpit?.hideClueForPortal();
       this.hud.setSandpitArea(true, true);
       this.hud.showDiscovery('PASSAGEM REVELADA\nLEITURA AO NORTE: ABAIXO DE ZERO\nO SINAL CONTINUA');
       this.sounds.signal(); this.records.markDiscovery(); this.saveProgress();
@@ -573,8 +614,8 @@ export class GameScene extends Phaser.Scene {
         ? 'MECANISMO INATIVO\nInvestigue a fissura ao lado primeiro.'
         : 'MECANISMO INATIVO\nEncontre e investigue os 3 Ecos.');
     }
-    const canInteract = nearSandpitDescent || nearSandpitAscent || nearColdClue || nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearChapterPortal || nearSiroccoExit || nearSiroccoSignal || nearDunesRuin || nearValleyLandmark || nearValleyFrontierSignal;
-    const interactionAction = nearSandpitDescent ? 'DESCER' : nearSandpitAscent ? 'SUBIR' : nearPortal || nearChapterPortal || nearSiroccoExit ? 'ENTRAR' : 'INVESTIGAR';
+    const canInteract = nearColdPortal || nearFrostReturn || nearFrostRelay || nearSandpitDescent || nearSandpitAscent || nearColdClue || nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearChapterPortal || nearSiroccoExit || nearSiroccoSignal || nearDunesRuin || nearValleyLandmark || nearValleyFrontierSignal;
+    const interactionAction = nearColdPortal || nearFrostReturn ? 'ENTRAR' : nearSandpitDescent ? 'DESCER' : nearSandpitAscent ? 'SUBIR' : nearPortal || nearChapterPortal || nearSiroccoExit ? 'ENTRAR' : 'INVESTIGAR';
     if (interact) this.saveProgress();
     this.hud.setDiscoveryPrompt(canInteract, interactionAction);
     this.controls.setInteractAvailable(canInteract, interactionAction);
@@ -662,6 +703,22 @@ export class GameScene extends Phaser.Scene {
         this.wardenArena?.setEncounterActive(true);
       }
       this.wardenHud?.update(this.warden);
+      return;
+    }
+    if (this.area === 'frost') {
+      this.renewSiroccoHabitats();
+      for (const route of FROST_ROUTES) if (distance(this.player.position, route) < route.radius) {
+        const reward = this.progression.discoverSiroccoRoute(route.id);
+        if (reward.awarded) {
+          this.updateProgressHud(); this.hud.showExperienceAt(route.x, route.y, PROGRESSION.valleyRouteXp);
+          this.hud.showDiscovery(route.name.toLocaleUpperCase('pt-BR'));
+          if (reward.leveledUp) this.levelUp(); this.saveProgress();
+        }
+      }
+      if (this.frostSignalSeen && !this.frostEndSeen && distance(this.player.position, FROST.frontier) < FROST.frontier.radius) {
+        this.frostEndSeen = true; this.hud.showDiscovery('FRATURA PROFUNDA\nALGO RESPONDE ALÉM DO GELO');
+        this.sounds.signal(); this.saveProgress();
+      }
       return;
     }
     if (this.area === 'dunes') {
@@ -849,6 +906,17 @@ export class GameScene extends Phaser.Scene {
 
   private updateExplorationGuide(): void {
     this.navigation?.update(this.player.position, this.player.rotation, this.player.isDead, this.time.now);
+    if (this.area === 'frost') {
+      const route = FROST_ROUTES.find(r => !this.progression.rewardedRoutes.has(r.id) && distance(this.player.position, r) < 260);
+      const target: ExplorationTarget | undefined = distance(this.player.position, FROST.returnPortal) < 170
+        ? { ...FROST.returnPortal, radius: 115, name: 'Retorno ao Siroco', instruction: 'Volte pela passagem.', action: 'enter' }
+        : route ? { ...route, instruction: 'Explore este desvio.', action: 'walk' }
+        : !this.frostSignalSeen ? { ...FROST.relay, name: 'Registro sob o gelo', instruction: 'As inscrições atravessam a formação.', action: 'investigate' }
+        : !this.frostEndSeen ? { ...FROST.frontier, name: 'Fratura profunda', instruction: 'Siga o sinal até a borda.', action: 'walk' } : undefined;
+      if (target) this.explorationGuide.update(this.player.position, this.player.isDead, this.controls.inputMethod, 'EXPLORE A FRATURA BOREAL', target, this.hud);
+      else { this.explorationGuide.hide(); this.hud.setExplorationGuide('ALÉM DO GELO', 'A fratura continuará em uma próxima expedição.', ''); }
+      return;
+    }
     if (this.area === 'sandpit') {
       const resting = this.soterrado?.state === 'DORMANT';
       if (!resting && !this.soterradoDefeated) {
@@ -857,7 +925,7 @@ export class GameScene extends Phaser.Scene {
         return;
       }
       const target = this.soterradoDefeated
-        ? { ...SANDPIT.clue, name: 'Passagem sob a areia', instruction: this.soterradoClueSeen ? 'Ar frio vem do norte. A rota continuará em outra expedição.' : 'O desabamento expôs uma leitura do sinal.', action: this.soterradoClueSeen ? 'observe' as const : 'investigate' as const }
+        ? { ...SANDPIT.clue, name: 'Passagem sob a areia', instruction: this.soterradoClueSeen ? 'Atravesse o portal para a Fratura Boreal.' : 'O desabamento expôs uma leitura do sinal.', action: this.soterradoClueSeen ? 'enter' as const : 'investigate' as const }
         : { ...SANDPIT.spawn, radius: 220, name: 'Algo sob a areia', instruction: resting ? 'Aproxime-se da bacia com cuidado.' : 'Saia das marcas. Ataque quando o corpo ficar exposto.', action: 'observe' as const };
       if (distance(this.player.position,SANDPIT.ascent)<110 && (resting||this.soterradoDefeated)) {
         this.explorationGuide.update(this.player.position,this.player.isDead,this.controls.inputMethod,'SUBIDA PARA AS DUNAS',
@@ -1162,7 +1230,7 @@ export class GameScene extends Phaser.Scene {
         const spawnIndex = this.hollowSpawnIds.get(enemy);
         if (spawnIndex !== undefined) {
           const isValley = this.area === 'valley' && this.valleyResidents.get(spawnIndex) === enemy;
-          const isSirocco = (this.area === 'arid' || this.area === 'dunes') && this.siroccoResidents.get(spawnIndex) === enemy;
+          const isSirocco = (this.area === 'arid' || this.area === 'dunes' || this.area === 'frost') && this.siroccoResidents.get(spawnIndex) === enemy;
           const reward = isValley || isSirocco
             ? { awarded: true, leveledUp: this.progression.defeatRenewableResident() }
             : this.progression.defeatHollow(spawnIndex);
@@ -1362,7 +1430,7 @@ export class GameScene extends Phaser.Scene {
     return true;
   }
 
-  private spawnSiroccoResident(habitat: { id: number; kind: SiroccoKind; x: number; y: number }): boolean {
+  private spawnSiroccoResident(habitat: { id: number; kind: SiroccoKind | FrostKind; x: number; y: number }): boolean {
     if (this.siroccoResidents.has(habitat.id)) return false;
     const readyAt = this.siroccoHabitatCooldowns.get(habitat.id);
     if (readyAt !== undefined && (Date.now() < readyAt || distance(this.player.position, habitat) < SIROCCO_RENEWAL.safeDistance)) return false;
@@ -1385,7 +1453,7 @@ export class GameScene extends Phaser.Scene {
   private renewSiroccoHabitats(): void {
     if (this.player.isDead) return;
     let renewed = false;
-    for (const habitat of this.area === 'dunes' ? DUNES_ENCOUNTERS : SIROCCO_ENCOUNTERS) if (this.spawnSiroccoResident(habitat)) renewed = true;
+    for (const habitat of this.area === 'frost' ? FROST_ENCOUNTERS : this.area === 'dunes' ? DUNES_ENCOUNTERS : SIROCCO_ENCOUNTERS) if (this.spawnSiroccoResident(habitat)) renewed = true;
     if (renewed) this.saveProgress();
   }
 

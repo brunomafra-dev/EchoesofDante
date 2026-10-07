@@ -1,0 +1,14 @@
+[
+  {
+    "track": "frost",
+    "durationSeconds": 160.0,
+    "bpm": 54,
+    "bars": 36,
+    "bytes": 2241140,
+    "peak": 0.3,
+    "rms": 0.0615,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "d6d6dd9111c096c3c9bef1efbe53fac64fa8c428d7fea8a2e1ab704a572cd4c4"
+  }
+]
