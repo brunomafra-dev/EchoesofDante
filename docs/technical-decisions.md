@@ -372,3 +372,11 @@
 - Exclusão pelo mostruário exige confirmação em diálogo nativo, com Cancelar em foco e d-pad/A/B/Start restritos ao diálogo. `CharacterProfiles.remove` remove apenas o perfil/jornada escolhidos e restaura o registro se a remoção do save falhar. Excluir o ativo recarrega a cena pausada; excluir outro não troca a expedição atual.
 - Registro schema 1 com lista explicitamente vazia representa exclusão do último personagem, sem reinstalar o Guerreiro legado. A cena pode inicializar com identidade temporária não registrada atrás do menu; criação permanece disponível e entrar no jogo exige um perfil real. `LocalJourney` conserva seu proprietário e verifica que ele ainda existe no registro persistido antes de gravar, prevenindo ressurreição do save em pagehide ou aba antiga.
 - Prévia do Hunter seleciona a primeira linha frontal do atlas existente, incluindo movimentos da demonstração, e ajusta ombros/arma. Nenhuma alteração de arte ou orientação no gameplay. [Comportamento, capturas e QA](character-showcase/).
+
+
+## Cooperativo regional com continuidade · 0.1.71
+
+- Mesma sala nos portais Vale ↔ Siroco ↔ Dunas; host confirma a viagem com o relay antes do restart. Gerações de região descartam comandos antigos. As passagens de campanha/chefes solo mostram aviso e preservam a sala até uma saída explícita.
+- Visitante recebe somente XP novo da visita, sem copiar flags, região ou kit da campanha anfitriã. Total cumulativo do relay e recibo gravado junto com XP evitam recompensa duplicada na reconexão; falhas de armazenamento deixam o crédito pendente. Kit anfitrião continua temporário, com indicação nos registros.
+- Reconexão dos dois papéis com credencial em memória, vaga reservada 20 s e tentativas por 15 s. Não há migração de host, recuperação após reload ou servidor público provisionado. Menu do host e queda de transporte têm estados distintos.
+- Segunda vaga aumenta apenas HP regional em 40%, conservando percentual de vida ao voltar ao solo. Dano, velocidade, AI, XP e quantidade permanecem iguais; calibração sujeita a playtest em dupla. Bake/cache, câmera e inputs preservados. [Protocolo, operação e QA](regional-coop/).

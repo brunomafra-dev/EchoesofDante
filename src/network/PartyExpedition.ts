@@ -41,6 +41,8 @@ export class PartyExpedition {
  private hiddenLocalEnemies=false;
  private readonly localPlayer:Player;
  private ranks:ProgressionSnapshot['abilityUpgrades'];
+ private resilience=new WeakMap<Enemy,number>();
+ private balanced=false;
  constructor(private scene:Phaser.Scene,private access:()=>PartyBridge){
   this.localPlayer=access().player;
   this.visitorWave=scene.add.ellipse(0,0,20,120,0x5fe6d8,.6).setDepth(14999).setVisible(false);
@@ -61,14 +63,25 @@ export class PartyExpedition {
   }return{...a.player.position};
  }
  updateHost(now:number,dt:number):void{
-  if(room.role!=='host'){if(this.partner){this.partner.destroy();this.partner=undefined;this.peerName='';}this.status.setVisible(false);return;}
-  const a=this.access();this.ranks=a.progression.abilityUpgrades;this.status.setVisible(true).setText(room.peer?`DUPLA · ${characterProfiles.active.name} + ${room.peer.name}`:`SALA ${room.code} · AGUARDANDO COMPANHEIRO`);
+  if(room.role!=='host'){
+   if(this.balanced){for(const e of this.access().enemies){const base=this.resilience.get(e);if(base!==undefined)this.resizeHealth(e,base);}this.balanced=false;this.resilience=new WeakMap();}
+   if(this.partner){this.partner.destroy();this.partner=undefined;this.peerName='';}this.status.setVisible(false);return;
+  }
+  const a=this.access();this.ranks=a.progression.abilityUpgrades;this.status.setVisible(true).setText(room.peer?
+   room.peerConnected?`DUPLA · ${characterProfiles.active.name} + ${room.peer.name}`:'DUPLA · COMPANHEIRO RECONECTANDO':`SALA ${room.code} · AGUARDANDO COMPANHEIRO`);
+  // Only health changes for two participants; damage, AI, speed and solo values stay intact.
+  for(const enemy of a.enemies){
+   const base=this.resilience.get(enemy)??enemy.health.max;this.resilience.set(enemy,base);
+   const max=room.peer?Math.round(base*1.4):base;
+   this.resizeHealth(enemy,max);
+  }
+  this.balanced=!!room.peer;
   if(!room.peer&&this.partner){this.partner.destroy();this.partner=undefined;this.peerName='';}
   if(room.peer&&(!this.partner||this.peerName!==room.peer.name)){
    this.partner?.destroy();const hp=Math.round(a.progression.xp>=60?a.player.maxHp/(a.player.classId==='hunter'?.8:1):100);
    this.partner=new PartyActor(this.scene,room.peer,this.safePosition(),Math.round(hp*(room.peer.classId==='hunter'?.8:1)),id=>this.ranks?.[id]??0);this.peerName=room.peer.name;
   }
-  const input=performance.now()-room.inputAt<500?room.input:{...NO_INPUT};
+  const input=room.peerConnected&&performance.now()-room.inputAt<500?room.input:{...NO_INPUT,cancel:true};
   if(this.partner){
    if(a.player.isDead){if(!this.partner.player.isDead)this.partner.player.die();if(input.restart)this.restartQueued=true;}
    else if(input.restart&&this.partner.player.isDead){this.partner.destroy();this.partner=new PartyActor(this.scene,room.peer!,this.safePosition(),Math.round(a.player.maxHp/(a.player.classId==='hunter'?.8:1)*(room.peer!.classId==='hunter'?.8:1)),id=>this.ranks?.[id]??0);}
@@ -103,13 +116,25 @@ export class PartyExpedition {
    message:(a.hud as unknown as {discoveryMessage:Phaser.GameObjects.Text}).discoveryMessage.visible?(a.hud as unknown as {discoveryMessage:Phaser.GameObjects.Text}).discoveryMessage.text:'',prompt:prompt.available,action:prompt.action,shots};
   room.send('world',world);
  }
+ private resizeHealth(enemy:Enemy,max:number):void {
+  if(enemy.health.max===max)return;
+  const fraction=enemy.health.current/enemy.health.max;enemy.health.max=max;
+  enemy.health.current=enemy.isDead?0:Math.max(1,Math.round(max*fraction));
+ }
+ showConnection():void{this.status.setVisible(true).setText('DUPLA · RECONECTANDO');}
  targetFor(enemy:Enemy):Player{
   const local=this.localPlayer,p=this.partner?.player;
-  if(p&&!p.isDead&&(local.isDead||Math.hypot(p.position.x-enemy.position.x,p.position.y-enemy.position.y)<Math.hypot(local.position.x-enemy.position.x,local.position.y-enemy.position.y)))return p;
+  if(room.peerConnected&&p&&!p.isDead&&(local.isDead||Math.hypot(p.position.x-enemy.position.x,p.position.y-enemy.position.y)<Math.hypot(local.position.x-enemy.position.x,local.position.y-enemy.position.y)))return p;
   return local;
  }
  updateGuest(now:number,dt:number):void{
   const a=this.access(),c=a.controls;
+  const world=room.world;
+  if(!room.connected||!room.peerConnected||room.hostPaused||!world||performance.now()-room.worldAt>1500){
+   this.attackQueued=false;for(const key of Object.keys(this.queued) as (keyof typeof this.queued)[])this.queued[key]=false;
+   this.status.setVisible(true).setText(!room.connected?'DUPLA · RECONECTANDO':!room.peerConnected?'DUPLA · ANFITRIÃO RECONECTANDO':room.hostPaused?'DUPLA · ANFITRIÃO NO MENU':'DUPLA · AGUARDANDO A REGIÃO');
+   if(now-this.sendAt>=100){room.send('input',{...NO_INPUT,cancel:true});this.sendAt=now;}return;
+  }
   const interact=c.interactPressed;
   const input={...c.movement(),aim:c.aimFrom(a.player.position),attack:c.attacking||this.attackQueued,dash:c.dashPressed,charge:c.chargePressed,held:c.chargeHeld,
    release:c.chargeReleased,cancel:c.chargeCancelled,interact,restart:c.restartPressed};
@@ -118,8 +143,7 @@ export class PartyExpedition {
   }
   if(now-this.sendAt>=40){room.send('input',input);this.sendAt=now;this.attackQueued=false;for (const key of Object.keys(this.queued) as (keyof typeof this.queued)[]) this.queued[key]=false;}
   else if(input.attack)this.attackQueued=true;
-  const world=room.world;
-  this.status.setVisible(true).setText(!world||performance.now()-room.worldAt>1500?'DUPLA · AGUARDANDO ANFITRIÃO':`DUPLA · ${room.peer?.name??'ANFITRIÃO'}`);
+  this.status.setVisible(true).setText(room.rewardSaved?`DUPLA · ${room.peer?.name??'ANFITRIÃO'} · XP PESSOAL +${room.personalXpGained}`:'DUPLA · XP AINDA NÃO SALVO NO NAVEGADOR');
   if(!world||!world.partner)return;
   if(world!==this.appliedWorld){if(a.sync(world))return;this.appliedWorld=world;}
   if(!this.hiddenLocalEnemies){

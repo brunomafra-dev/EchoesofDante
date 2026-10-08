@@ -1,69 +1,82 @@
-# Expedições em dupla · 0.1.66
+# Expedições em dupla · 0.1.71
 
-Etapa 5: fundação cooperativa regional para **duas pessoas**, usando a mesma build web e os personagens Guerreiro/Star Hunter. Sem login ou conta.
+Duas pessoas, mesma build web, Guerreiro ou Star Hunter, sem login. Esta etapa melhora a continuidade regional e a retenção de XP; não implementa campanha inteira ou chefes em dupla.
 
-## Jogar
+## Como jogar
 
-1. Execute `npm run coop:server` e mantenha o servidor de salas ligado.
-2. Abra o jogo. No MENU/Esc, escolha **COOPERATIVO · 2 PESSOAS** e **CRIAR SALA**.
-3. Compartilhe o código. A outra pessoa abre a mesma URL, escolhe seu personagem, informa o mesmo servidor e usa **ENTRAR NA SALA**.
-4. Ambos escolhem **VOLTAR À EXPEDIÇÃO**. O visitante entra próximo ao anfitrião.
+1. Execute `npm run coop:server` no computador que fornecerá as salas.
+2. Abra o jogo e use **MENU → COOPERATIVO · 2 PESSOAS → CRIAR SALA**.
+3. Use **COPIAR CÓDIGO**. Seu amigo escolhe seu personagem, abre o mesmo jogo, informa o mesmo servidor e cola o código em **ENTRAR NA SALA**.
+4. Ambos escolhem **VOLTAR À EXPEDIÇÃO**. O visitante aparece em um ponto livre próximo ao anfitrião.
 
-Disponível em Floresta, Vale da Ressonância, Bacia do Siroco, Dunas Interiores e Fratura Boreal. As cavernas de campanha e os chefes continuam solo nesta etapa. Uma travessia de região encerra a sala; o anfitrião segue a campanha e o visitante retorna à própria jornada. Para a próxima expedição regional, crie outra sala.
+Na rede local: jogo em `http://IP-DO-COMPUTADOR:5184`, salas em `ws://IP-DO-COMPUTADOR:5190`. No celular, `localhost` significa o próprio celular. O computador precisa aceitar conexões nessas portas.
 
-Na rede local, os dispositivos precisam alcançar o computador que executa o jogo/servidor: por exemplo, jogo em `http://IP-DO-COMPUTADOR:5184` e salas em `ws://IP-DO-COMPUTADOR:5190`. `localhost` no celular aponta para o próprio celular.
+Salas disponíveis em **Floresta, Vale da Ressonância, Bacia do Siroco, Dunas Interiores e Fratura Boreal**. A dupla viaja pelos portais **Vale ↔ Siroco ↔ Dunas**, na mesma sala. Qualquer participante pode iniciar a travessia; ambos chegam à nova região. Os requisitos de exploração/ativação dos portais continuam os mesmos.
 
-## Estado e combate
+**Cavernas de campanha, Warden e Soterrado permanecem solo.** Tentar uma dessas passagens mostra um aviso e mantém a dupla na região atual. Para continuar a campanha sozinho, saia da sala pelo menu. Floresta e Fratura Boreal aceitam expedições locais, mas suas ligações à campanha ainda são solo.
 
-- Anfitrião simula os dois personagens, inimigos, colisões, dano e recompensas. O servidor encaminha mensagens e concede os papéis; o visitante não executa uma segunda IA.
-- Ambos podem atacar, mover, usar esquiva/carga e investigar. Inimigos perseguem o participante vivo mais próximo, conservando sua IA atual.
-- A renovação de habitats considera a distância dos **dois** participantes; não reaparece uma criatura em cima do visitante. Rotas e aproximações regionais podem ser descobertas por qualquer membro da dupla.
-- XP e descobertas pertencem à jornada compartilhada do anfitrião. Cada derrota/discovery concede recompensa uma vez. Nível e aperfeiçoamentos dessa jornada são aplicados ao kit de cada classe durante a expedição; o anfitrião faz as escolhas de aperfeiçoamento.
-- **O save solo do visitante permanece intacto.** O XP temporário da dupla não é importado para esse save ao sair. Os registros indicam essa condição e impedem apagar a jornada durante a visita.
-- Visitante morto pode reaparecer perto do anfitrião vivo. Se o anfitrião morrer, a tentativa regional reinicia pelos controles existentes de qualquer participante. Ecos, XP e descobertas já registradas permanecem.
-- Menu do visitante cancela sua entrada; menu/aprimoramento do anfitrião pausa a simulação. A outra tela indica que aguarda o anfitrião.
-- Desconexão do visitante libera a vaga; desconexão do anfitrião encerra a sala e restaura o save solo do visitante. Sem migração de anfitrião.
+## XP e jornadas individuais
 
-## Rede e publicação
+- O anfitrião simula personagens, criaturas, colisões e recompensas. O visitante envia ações; não executa outra IA.
+- Cada ganho de XP da expedição é concedido ao anfitrião pelo sistema existente e ao visitante pelo total cumulativo conferido no relay. **Entrar em uma sala não copia o XP anterior do anfitrião.**
+- O XP do visitante é gravado em sua jornada própria durante a visita, mesmo se abrir o menu. Ao sair, seu nível é recalculado pela progressão existente e os pontos de aperfeiçoamento correspondentes ficam disponíveis.
+- Durante a visita, o kit usa temporariamente nível/resistência/aprimoramentos da campanha do anfitrião. O HUD compartilhado mostra esse kit; a linha da dupla e os registros identificam o **XP pessoal ganho**. Escolhas de aperfeiçoamento ainda são do anfitrião.
+- **Ecos, flags, portais, chefe derrotado, área, HP, habitats, bestiário e aprimoramentos solo do visitante não são copiados da campanha visitada.** Ao sair, ele volta à sua região solo.
+- Recibo e XP são persistidos juntos em uma única escrita. Repetir um snapshot ou reconectar não concede a mesma recompensa outra vez. Os últimos 32 recibos são preservados também pelos saves solo seguintes.
+- Se o armazenamento falhar, o XP fica pendente e a aplicação tenta novamente nos snapshots. Sair mostra um aviso e mantém a visita aberta até conseguir salvar. Recibos respeitam a proteção de personagem excluído. Não há save em nuvem.
+- A entrada pelo menu exige salvar a jornada solo primeiro. Se essa escrita falhar, a conexão não começa; após liberar o armazenamento, é possível tentar novamente.
 
-`server/coop.mjs` é um serviço Node separado dos arquivos estáticos. Usa `ws`; o cliente usa WebSocket nativo. O host envia snapshots a 10 Hz; visitante envia ações até 25 Hz. Gestos de ação ficam enfileirados entre frames. Poses recebidas são interpoladas; membros pintados dos Hollows conservam seus frames e apoio.
+## Encontros e respawn
 
-Relay: duas vagas/sala, até 64 salas/128 conexões, mensagem limitada a 64 KB, 60 mensagens/s por conexão, sem compressão, fila de envio limitada e heartbeat. Perfis e vetores de entrada são validados, papéis/região conferidos. Limites evitam crescimento sem controle; **não constituem uma infraestrutura de MMO ou anticheat**. A simulação ainda confia no anfitrião.
+- Com uma segunda vaga ocupada, criaturas regionais têm **40% mais HP** (arredondado). Dano, velocidade, ataques, IA, quantidade e XP permanecem iguais. O percentual de HP restante é mantido ao entrar/sair da dupla; não há cura grátis.
+- A resistência volta ao valor solo quando o visitante sai ou o anfitrião encerra a sala. A vaga reservada durante uma reconexão conserva o ajuste.
+- Criaturas escolhem o participante conectado e vivo mais próximo. Renovação de habitats respeita a distância dos dois participantes, conservando os espaços entre encontros.
+- Visitante morto reaparece perto do anfitrião vivo. Se o anfitrião morrer, qualquer participante pode pedir o reinício regional. A sala e a progressão da sessão permanecem.
+- Menu do anfitrião pausa a simulação; a outra tela informa **ANFITRIÃO NO MENU**. Menu do visitante cancela suas ações.
 
-Configuração:
+## Rede, reconexão e limites
+
+`server/coop.mjs` é um serviço Node separado da hospedagem estática, usando `ws`. O navegador usa WebSocket nativo. Snapshots a 10 Hz, ações até 25 Hz. Pools de apresentação e os sistemas de personagem existentes são reutilizados.
+
+- Mudanças de região são autorizadas pelo anfitrião e confirmadas pelo relay antes da troca local. Uma geração de região (`epoch`) descarta ações/snapshots anteriores à travessia. A lista de ligações permitidas é explícita nos dois lados.
+- Queda de transporte conserva a vaga por **20 s**. O cliente tenta recuperar a sessão por até **15 s**, com credencial secreta em memória. Tanto anfitrião quanto visitante podem recuperar a conexão. Não é necessário digitar o código novamente nessa janela.
+- Na queda do anfitrião, a simulação para de avançar; o visitante aguarda. Na queda do visitante, suas ações/carga são canceladas, o ator permanece e deixa de ser alvo preferencial. Ao retomar, não há ataque enfileirado do gesto anterior.
+- Saída pelo menu libera a vaga imediatamente; encerrar pelo anfitrião restaura a jornada solo do visitante. Ao expirar o prazo de reconexão do anfitrião, a sala encerra. **Reload/fechar a página não recupera credenciais**, e reiniciar o relay perde as salas. Não há migração de anfitrião.
+- Limites: 2 vagas, 64 salas, 128 conexões, mensagens de 64 KB, 60 mensagens/s por cliente e fila de envio limitada. Heartbeat a cada 5 s. Vetores, perfis, autoridade, sequência e região são conferidos. O anfitrião continua sendo confiável; isso não é anticheat/MMO.
 
 | Variável | Uso |
 | --- | --- |
-| `COOP_PORT` | Porta do serviço; padrão 5190 |
-| `COOP_ORIGINS` | Origens autorizadas, separadas por vírgula; configurar no serviço público |
-| `VITE_COOP_URL` | Endereço de salas padrão na build web |
+| `COOP_PORT` | Porta do relay; padrão 5190 |
+| `COOP_ORIGINS` | Origens autorizadas, separadas por vírgula |
+| `VITE_COOP_URL` | Endereço padrão de salas na build |
 
-Em produção HTTPS é necessário **WSS**: publicar o serviço e encaminhar o upgrade WebSocket por um proxy TLS, por exemplo em `/coop`. Hospedar apenas `dist/` não publica esse serviço. O campo de servidor permite informar outra URL sem reconstruir o jogo. **Nenhum servidor público foi provisionado nesta etapa.** A validação foi local.
+Produção HTTPS exige **WSS**, relay publicado e proxy TLS com upgrade WebSocket (por exemplo `/coop`). Hospedar somente `dist/` não publica o serviço. **Nenhum relay público foi provisionado; os testes são locais.**
 
-## Performance e QA
+Atualize o cliente e reinicie o relay juntos: o protocolo desta versão inclui confirmação de viagem, geração de região e credencial de reconexão.
 
-Sem novos assets, bakes ou sistema de combate. Segundo personagem e projéteis reutilizam os contratos atuais. Pools e espelhos visuais permanecem limitados aos habitantes regionais; saídas/respawns descartam os objetos associados à cena.
+## Verificações
 
 ```text
-node scripts/qa-regional-coop.mjs
-node scripts/qa-coop-protocol.mjs
-node scripts/qa-coop-warrior.mjs
 npm run typecheck
 npm run build
+node scripts/qa-coop-protocol.mjs
+node scripts/qa-coop-continuity.mjs
+node scripts/qa-regional-coop.mjs
+node scripts/qa-coop-warrior.mjs docs/regional-coop/continuity-qa/warrior
+node scripts/qa-hunter-beam-coop.mjs docs/regional-coop/continuity-qa/beam
+node scripts/qa-dante-journey.mjs http://localhost:5184/?qa=play docs/regional-coop/continuity-qa/solo
 ```
 
-Relatórios e capturas em [qa](qa/). O QA usa dois clientes Chrome independentes e um relay WebSocket real, com posições/alvos/capítulos controlados via DEV explicitamente. Cobre dano/XP únicos, investigação, colisão, morte/respawn, restauração do save, ciclos de conexão, cinco regiões, quatro resoluções, gamepad mock e touch emulado. O teste de protocolo verifica capacidade, papéis, normalização, região, JSON inválido e encerramento.
+Resultados e capturas desta versão: [continuity-qa](continuity-qa/). A pasta [qa](qa/) conserva os resultados históricos da fundação 0.1.66.
 
-Regressões solo do Guerreiro, Hunter e região gelada são executadas separadamente. Medições do cooperativo com dois clientes no mesmo computador devem ser comparadas com o baseline de dois clientes solo, não com a execução de um navegador só. Números finais constam dos relatórios; não representam teste em dois aparelhos físicos.
+QA usa Chrome headless em contextos independentes, relay real, teclado/mouse, touch emulado e Gamepad API mock. Posicionamento, campanha concluída e mortes controladas usam hooks DEV explicitamente. Não representa playtest em dois dispositivos físicos ou pela internet. Cenário estático continua baked/cacheado; nenhum asset, câmera, controle ou arquitetura de combate foi substituído.
 
-Regressão solo: jornada **58,5 FPS**, Hunter **59,5 FPS**, Fratura Boreal **59,2 FPS**; três respawns com contagem estável e nenhum erro JS/asset. Typecheck/build passaram; o aviso conhecido do chunk Phaser acima de 500 KB permanece. Auditoria npm sem vulnerabilidades.
+Typecheck/build e os seis scripts acima passaram; nenhum erro JS ou asset foi registrado. Continuidade cobre três viagens de ida/volta, interrupção durante a própria travessia, cancelamento de carga na queda, reconexão dos dois papéis, reserva/expiração de vaga, repetição de recibo e falha de armazenamento. A regressão solo percorre Floresta → Ecos → Cavern → First Echo → Warden → Vale, com três respawns e dados locais inválidos/indisponíveis.
 
-Na primeira amostra pareada da Floresta, dois clientes solo atingiram médias **58,0/52,3 FPS**; conectados, **56,1/48,8 FPS** para anfitrião/visitante. Portanto, o visitante ficou abaixo da meta de 55–60 FPS nessas condições. A fundação precisa de medição/playtest em máquinas separadas e revisão do custo da apresentação remota antes de expandir a quantidade de jogadores. O relatório atual de `qa/report.json` registra a repetição final do cenário.
+No Vale, dois clientes locais atingiram aproximadamente **56–57 FPS** cada; a jornada solo registrou **58,5 FPS**, 149 objetos e 3 tweens estáveis nos respawns. Na amostra pareada da Floresta, baseline solo **55,9/51,9 FPS** e cooperativo **55,7/48,4 FPS** (anfitrião/visitante), próximo à limitação já registrada em 0.1.66. O visitante nessa região continua abaixo da meta de 55–60 FPS no mesmo computador. Não há crescimento contínuo de objetos nos ciclos medidos; dispositivos separados precisam de medição própria. O aviso já conhecido do chunk Phaser acima de 500 KB permanece.
 
-Hunter como anfitrião/Guerreiro visitante também passou: dano do sabre, carga com direção fixada no release, esquiva, registros pelo teclado, bloqueio de reset do save visitante e cancelamento da carga pelo menu do anfitrião. Capturas e resultados solo finais ficam em `journey-qa`, `hunter-qa`, `frost-qa`, `menu-qa` e `warrior-qa`.
+## Playtest necessário
 
-## Limitações e playtest
+Em dois aparelhos reais, validar: convite por código, kit de cada classe, combate misto, carga/release, portal Vale → Siroco → Dunas e volta, menu do anfitrião, queda curta de conexão, morte/respawn e XP pessoal ao sair. A resistência de 40% é uma primeira calibragem e precisa de avaliação humana.
 
-Validar em dois computadores/celulares reais, com latência de rede, especialmente mira, release da carga, clareza do papel de anfitrião e retomada após menu. Não houve teste físico de iPhone/gamepad nem teste público pela internet.
-
-Sem chefes cooperativos, continuidade de sala entre mapas, persistência do visitante, lobby público, dificuldade selecionável ou terceira classe jogável. Astral Manipulator permanece documentado como próxima classe, com Astral Gauntlet e Astral Energy; não é um reskin implementado nesta etapa.
+Próxima etapa proposta: **Astral Manipulator**, depois da aprovação do ritmo cooperativo. Chefes/cavernas em dupla, progresso compartilhado de campanha, terceira vaga, matchmaking e save remoto ficam para etapas posteriores.

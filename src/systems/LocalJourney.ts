@@ -22,6 +22,7 @@ export type JourneySnapshot = {
   schema: 1; updatedAt: number; area: JourneyArea; hp: number;
   progression: ProgressionSnapshot; flags: JourneyFlags;
   bestiary: BestiarySnapshot; valleyRoutes: string[]; valleyHabitats: [number, number][]; aridHabitats: [number, number][];
+  coopReceipts?: { id: string; total: number }[];
 };
 
 const object = (value: unknown): Record<string, unknown> | undefined =>
@@ -103,7 +104,9 @@ export class LocalJourney {
             typeof id === 'string' && (VALLEY_ROUTES.some(route => route.id === id) || SIROCCO_ROUTES.some(route => route.id === id) || DUNES_ROUTES.some(route => route.id === id) || FROST_ROUTES.some(route => route.id === id))) : [],
           abilityUpgrades: object(p.abilityUpgrades) as Partial<AbilityUpgradeRanks> | undefined,
           bossRewards: flags.soterradoDefeated ? ['soterrado'] : [] },
-        flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats };
+        flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats,
+        coopReceipts: Array.isArray(raw.coopReceipts) ? raw.coopReceipts.filter((entry): entry is {id:string;total:number} =>
+          !!entry && typeof entry.id === 'string' && /^[a-f0-9]{32}$/.test(entry.id) && integer(entry.total, 1e9)).slice(-32) : [] };
     } catch {
       this.status = 'Não foi possível ler o progresso local. O jogo continua disponível.';
       return undefined;
@@ -114,6 +117,8 @@ export class LocalJourney {
     // pagehide/visibility flush must never recreate a deleted character's save.
     if (!this.hasOwner()) { this.status = 'Não foi possível salvar. Este personagem não está disponível no armazenamento local.'; return false; }
     try {
+      // Ordinary solo flushes keep the receipts written while visiting a room.
+      if (!snapshot.coopReceipts) snapshot.coopReceipts = this.load()?.coopReceipts ?? [];
       localStorage.setItem(this.storageKey(), JSON.stringify(snapshot));
       this.status = 'Progresso salvo neste navegador.';
       return true;
@@ -121,6 +126,20 @@ export class LocalJourney {
       this.status = 'Não foi possível salvar. O progresso desta sessão continua disponível.';
       return false;
     }
+  }
+
+  creditCoopXp(id: string, total: number): boolean {
+    if (!/^[a-f0-9]{32}$/.test(id) || !integer(total, 1e9)) return false;
+    const saved = this.load();
+    if (!saved) return false;
+    const receipts = saved.coopReceipts ?? [];
+    const previous = receipts.find(receipt => receipt.id === id)?.total ?? 0;
+    if (total <= previous) return true;
+    // XP and its receipt are a single storage write. Campaign flags/area/kit stay local.
+    saved.progression.xp = Math.min(1e9, saved.progression.xp + total - previous);
+    saved.coopReceipts = [...receipts.filter(receipt => receipt.id !== id), { id, total }].slice(-32);
+    saved.updatedAt = Date.now();
+    return this.save(saved);
   }
 
   clear(): boolean {

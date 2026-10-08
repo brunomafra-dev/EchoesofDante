@@ -70,6 +70,7 @@ export class GameScene extends Phaser.Scene {
   private coopWorldXp?: number;
   private coopLayout = '';
   private coopMessage = '';
+  private coopSoloNoticeAt = -Infinity;
   private visitingCoop = false;
   private player!: Player;
   private controls!: Controls;
@@ -442,7 +443,7 @@ export class GameScene extends Phaser.Scene {
       abilityUpgradeRanks: this.progression.abilityUpgradeRanks,
       area: this.area === 'frost' ? 'Fratura Boreal' : this.area === 'sandpit' ? 'Bacia Soterrada' : this.area === 'dunes' ? 'Dunas Interiores' : this.area === 'arid' ? 'Bacia do Siroco' : this.area === 'valley' ? 'Vale da Ressonância' : this.area === 'warden' ? 'Domínio do Guardião' : this.area === 'cavern' ? 'Cavernas de Dante' : 'Floresta de Dante',
       bestiary: this.bestiary.snapshot(), routes: this.valleyRoutes, valleyVisited: this.valleyVisited,
-      saveStatus: coopSession.role === 'guest' ? 'Jornada compartilhada temporária. Seu save solo está guardado; o anfitrião salva esta expedição.' : this.qualityReference ? 'Referência isolada. O progresso do jogo permanece intacto.' : this.journey.status,
+      saveStatus: coopSession.role === 'guest' ? `Kit temporário do anfitrião. XP pessoal +${coopSession.personalXpGained}: ${coopSession.rewardSaved ? 'salvo na sua jornada solo' : 'aguardando armazenamento'}. Descobertas da campanha continuam separadas.` : this.qualityReference ? 'Referência isolada. O progresso do jogo permanece intacto.' : this.journey.status,
       rewardedRoutes: this.progression.rewardedRoutes,
     }), () => { this.pauseForModal(); this.saveProgress(); }, () => this.resumeFromModal(), () => {
       if (coopSession.role === 'guest') return;
@@ -483,6 +484,8 @@ export class GameScene extends Phaser.Scene {
     time -= this.recordsTimeOffset;
     if (this.transitioning) return;
     this.controls.update(this.player.position);
+    // Do not simulate an authoritative world while its room is reconnecting.
+    if (coopSession.role === 'host' && !coopSession.connected) { this.party?.showConnection(); return; }
     if (coopSession.role === 'guest') {
       this.visitingCoop = true;
       if (this.controls.recordsPressed) { this.records.open(); return; }
@@ -530,6 +533,7 @@ export class GameScene extends Phaser.Scene {
       this.hud.showDiscovery('REGISTRO SOB O GELO\nA MESMA ASSINATURA. OUTRA FREQUÊNCIA.\nO SINAL SEGUE A FRATURA');
       this.sounds.signal(); this.records.markDiscovery(); this.saveProgress();
     } else if (nearSandpitDescent && interact) {
+      if (this.coopSoloPassage()) return;
       this.soterradoReached = true;
       this.transitionArea('sandpit'); return;
     } else if (nearSandpitAscent && interact) {
@@ -1161,7 +1165,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private enterCavern(): void {
-    if (coopSession.role !== 'offline') coopSession.disconnect();
+    if (this.coopSoloPassage()) return;
     this.transitioning = true;
     this.transferHp = this.player.hp;
     this.cameras.main.fadeOut(220, 5, 15, 20);
@@ -1184,6 +1188,15 @@ export class GameScene extends Phaser.Scene {
   }
 
   coopArea(): JourneyArea { return this.area; }
+
+  private coopSoloPassage(): boolean {
+    if (coopSession.role !== 'host') return false;
+    if (performance.now() - this.coopSoloNoticeAt > 3500) {
+      this.coopSoloNoticeAt = performance.now();
+      this.hud.showDiscovery('PASSAGEM SOLO\nA DUPLA CONTINUA AQUI\nPARA SEGUIR SOZINHO, SAIA DA SALA NO MENU');
+    }
+    return true;
+  }
 
   private partyBridge(): PartyBridge {
     return {
@@ -1250,6 +1263,9 @@ export class GameScene extends Phaser.Scene {
 
   private transitionArea(area: Exclude<JourneyArea, 'forest'>): void {
     if (this.transitioning) return;
+    if (coopSession.role === 'host' && !coopSession.travel(this.area, area)) {
+      this.coopSoloPassage(); return;
+    }
     this.transitioning = true;
     this.transferHp = this.player.hp;
     this.returnToThreshold = area === 'cavern';
@@ -1257,8 +1273,11 @@ export class GameScene extends Phaser.Scene {
     this.returnToValleyPortal = this.area === 'warden' && area === 'valley';
     this.returnToFrontierPortal = this.area === 'arid' && area === 'valley';
     this.cameras.main.fadeOut(220, 5, 15, 20);
-    if (coopSession.role !== 'offline') coopSession.disconnect();
-    this.time.delayedCall(240, () => { this.area = area; this.saveProgress(); this.scene.restart(); });
+    const arrive = () => {
+      if (coopSession.role === 'host' && coopSession.area !== area) { this.time.delayedCall(80, arrive); return; }
+      this.area = area; this.saveProgress(); this.scene.restart();
+    };
+    this.time.delayedCall(240, arrive);
   }
 
   private wardenCue(cue: WardenCue, attack?: WardenAttack): void {
@@ -1516,6 +1535,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private pauseForModal(): void {
+    coopSession.setMenu(true);
     this.controls.cancelForRecords();
     if (coopSession.role === 'host') this.party?.cancelPartnerCharge();
     if (coopSession.role === 'guest') coopSession.send('input', { x: 0, y: 0, aim: 0, attack: false, dash: false, charge: false, held: false, release: false, cancel: true, interact: false, restart: false });
@@ -1529,6 +1549,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private resumeFromModal(): void {
+    coopSession.setMenu(false);
     if (coopSession.role === 'host') { coopSession.consumeEdges(); coopSession.inputAt = 0; }
     this.recordsTimeOffset += this.game.loop.now - this.recordsPausedAt;
     this.time.now = this.game.loop.now - this.recordsTimeOffset;
@@ -1555,7 +1576,7 @@ export class GameScene extends Phaser.Scene {
   }
   resumeFromShell(): void { if (this.scene.isPaused()) this.resumeFromModal(); this.sounds.setMusicFocus(1); this.sounds.unlock(); }
   setShellVolumes(master: number, music: number, sfx: number): void { this.sounds.setVolumes(master, music, sfx); }
-  flushForShell(): void { this.saveProgress(); }
+  flushForShell(): boolean { return this.saveProgress(); }
   shellPlayerDead(): boolean { return this.player?.isDead ?? false; }
 
   private spawnValleyResident(habitat: typeof VALLEY_ENCOUNTERS[number]): boolean {
@@ -1612,13 +1633,14 @@ export class GameScene extends Phaser.Scene {
     saved.aridHabitats.forEach(([id, readyAt]) => this.siroccoHabitatCooldowns.set(id, readyAt));
   }
 
-  private saveProgress(): void {
-    if (this.visitingCoop || coopSession.role === 'guest' || this.qualityReference || !this.player || this.resettingJourney) return;
+  private saveProgress(): boolean {
+    if (this.visitingCoop || coopSession.role === 'guest' || this.qualityReference || !this.player || this.resettingJourney) return false;
     const flags = Object.fromEntries(JOURNEY_FLAGS.map(key => [key, this[key]])) as JourneyFlags;
     const available = this.journey.save({ schema: 1, updatedAt: Date.now(), area: this.area,
       hp: this.player.isDead ? this.characterMaxHp : this.player.hp, progression: this.progression.snapshot(),
       flags, bestiary: this.bestiary.snapshot(), valleyRoutes: [...this.valleyRoutes], valleyHabitats: [...this.valleyHabitatCooldowns],
       aridHabitats: [...this.siroccoHabitatCooldowns] });
     this.records?.setSaveAvailable(available);
+    return available;
   }
 }

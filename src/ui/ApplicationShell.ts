@@ -150,19 +150,27 @@ export class ApplicationShell {
         },
       });
     } else if (this.page === 'coop') {
-      this.heading('Expedição em dupla', 'Explorem e enfrentem criaturas na mesma região. Chefes e viagens entre regiões continuam solo nesta primeira etapa.');
+      this.heading('Expedição em dupla', 'Viajem juntos pelo Vale, Siroco e Dunas. O XP ganho fica com cada personagem; a campanha é do anfitrião. Cavernas de campanha e chefes continuam solo.');
       if (coopSession.role === 'offline') {
-        const label = document.createElement('label'); label.textContent = 'Servidor de salas'; const server = document.createElement('input'); server.name = 'coop-server'; server.value = import.meta.env.VITE_COOP_URL || (location.protocol === 'https:' ? 'wss://' + location.host + '/coop' : 'ws://' + location.hostname + ':5190'); label.append(server); this.content.append(label);
-        const code = document.createElement('input'); code.name = 'coop-code'; code.placeholder = 'Código da sala'; code.maxLength = 10; code.setAttribute('aria-label', 'Código da sala'); this.content.append(code);
+        const label = document.createElement('label'); label.textContent = 'Servidor de salas · use o mesmo do seu amigo'; const server = document.createElement('input'); server.name = 'coop-server'; server.value = import.meta.env.VITE_COOP_URL || (location.protocol === 'https:' ? 'wss://' + location.host + '/coop' : 'ws://' + location.hostname + ':5190'); label.append(server); this.content.append(label);
+        const code = document.createElement('input'); code.name = 'coop-code'; code.placeholder = 'Cole o código enviado pelo anfitrião'; code.maxLength = 14; code.autocomplete = 'off'; code.spellcheck = false; code.setAttribute('aria-label', 'Código da sala'); this.content.append(code);
         const join = (mode: 'create' | 'join') => {
-          const hero = characterProfiles.active; this.scene?.flushForShell();
+          const hero = characterProfiles.active; const saved = this.scene?.flushForShell();
+          if (mode === 'join' && !saved) { this.status('Não foi possível guardar sua jornada solo. Libere o armazenamento do navegador antes de entrar.'); return; }
+          this.status('Conectando…');
           coopSession.connect(server.value, mode, {name:hero.name,classId:hero.classId}, this.scene!.coopArea(), code.value.trim())
             .then(() => this.render()).catch(error => this.status(error.message));
         };
         const create = this.action('CRIAR SALA', 'coop-create', () => join('create')); create.disabled = !this.scene || !COOP_AREAS.includes(this.scene.coopArea());
-        this.action('ENTRAR NA SALA', 'coop-join', () => join('join'));
+        this.action('ENTRAR NA SALA', 'coop-join', () => join('join')).disabled = !this.scene;
+        if (create.disabled) this.status('Para criar uma sala, vá à Floresta, Vale, Siroco, Dunas ou Fratura Boreal.');
       } else {
         this.status('SALA ' + coopSession.code + ' · ' + coopSession.message);
+        this.action('COPIAR CÓDIGO', 'coop-copy', () => {
+          navigator.clipboard?.writeText(coopSession.code).then(() => this.status('Código copiado. Envie ao seu amigo.'))
+            .catch(() => this.status('Código: ' + coopSession.code));
+          if (!navigator.clipboard) this.status('Código: ' + coopSession.code);
+        });
         this.action('VOLTAR À EXPEDIÇÃO', 'coop-play', () => this.resume());
         this.action('ENCERRAR / SAIR DA SALA', 'coop-leave', () => {coopSession.disconnect(); this.render();});
       }

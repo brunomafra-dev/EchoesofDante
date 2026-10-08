@@ -2,6 +2,10 @@
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
+## Cooperativo com continuidade · 0.1.71
+
+A dupla pode viajar **Vale ↔ Siroco ↔ Dunas** sem encerrar a sala. O visitante mantém o XP ganho em sua jornada própria, sem copiar a campanha do anfitrião. Reconexão automática, código copiável, estado do menu e resistência moderada para encontros em dupla. Chefes/cavernas de campanha continuam solo com aviso antes de atravessar. [Como jogar, limites e testes](docs/regional-coop/).
+
 ## Mostruário de personagens · 0.1.70
 
 **PERSONAGENS → CRIAR NOVO** apresenta Guerreiro e Star Hunter em um mostruário iluminado, com demonstrações curtas do kit, escolha de nome e dois espaços futuros. Personagens salvos possuem prévia antes de confirmar a jornada. O Dash do Hunter agora alcança aproximadamente 37% mais distância, preservando a recarga. [Apresentação, capturas e testes](docs/character-showcase/).
@@ -56,7 +60,7 @@ Minimapa local e seta discreta indicam a aproximação ao próximo ponto da jorn
 
 ## Expedições em dupla · 0.1.66
 
-MENU → **COOPERATIVO · 2 PESSOAS** permite criar/entrar em uma sala por código. Execute `npm run coop:server` para fornecer o relay. Guerreiro e Star Hunter podem explorar, combater e investigar juntos nas regiões abertas, com estado simulado pelo anfitrião. O save solo do visitante fica preservado. Chefes e travessias de campanha permanecem solo nesta fundação. [Como jogar, publicar o serviço e limites reais](docs/regional-coop/).
+MENU → **COOPERATIVO · 2 PESSOAS** permite criar/entrar em uma sala por código. Execute `npm run coop:server` para fornecer o relay. Guerreiro e Star Hunter podem explorar, combater e investigar juntos nas regiões abertas, com estado simulado pelo anfitrião. A campanha solo do visitante fica preservada e recebe somente o XP ganho na visita. Vale, Siroco e Dunas mantêm a mesma sala nas travessias; chefes e cavernas de campanha permanecem solo. [Como jogar, publicar o serviço e limites reais](docs/regional-coop/).
 
 ## Hunter: mira, carga e corpo inteiro · 0.1.68
 

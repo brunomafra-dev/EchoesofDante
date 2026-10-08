@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import{mkdir,writeFile}from'node:fs/promises';import{chromium}from'playwright';
-const out='docs/regional-coop/qa';await mkdir(out,{recursive:true});
+const out=process.argv[2]??'docs/regional-coop/continuity-qa/regression';await mkdir(out,{recursive:true});
 const b=await chromium.launch({channel:'chrome',headless:true}),hc=await b.newContext({viewport:{width:1280,height:720}}),gc=await b.newContext({viewport:{width:1280,height:720},hasTouch:true});
 await gc.addInitScript(()=>{if(!localStorage.getItem('coop-setup')){localStorage.setItem('echoes-of-dante.characters.v1',JSON.stringify({schema:1,selected:'visitor',characters:[{id:'visitor',name:'Visitante',classId:'hunter',createdAt:1}]}));localStorage.setItem('echoes-of-dante.journey.v1.character.visitor',JSON.stringify({schema:1,area:'forest',hp:80,flags:{},updatedAt:1,bestiary:{},valleyRoutes:[],valleyHabitats:[],aridHabitats:[],progression:{xp:15,echoes:[],sourceLocated:false,passageOpen:false,rewardedHollows:[],rewardedRoutes:[]}}));localStorage.setItem('coop-setup','1');}});
 const h=await hc.newPage(),g=await gc.newPage(),report={errors:[],method:'Two independent Chrome clients through real local WebSocket relay; actual input/menu; DEV obstacle/target/HP setup; no physical/network-internet test'};
@@ -24,14 +24,14 @@ try{
  // A real environment circle blocks the host-simulated partner before a controlled combat lane.
  const rock=await h.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game'),o=s.arena.obstacles.find(o=>o.x>600&&o.x<1500&&o.y>450&&o.y<1100);Object.assign(s.party.partner.player.position,{x:o.x-o.radius-70,y:o.y});s.party.partner.player.invulnerableUntil=Infinity;return o;});
  await g.waitForTimeout(300);await key(g,'d',600);assert.ok((await state(h)).partner.p.x<=rock.x-rock.radius-17);report.sharedCollision=true;
- await h.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');s.arena.obstacles.length=0;Object.assign(s.player.position,{x:400,y:900});s.player.invulnerableUntil=Infinity;Object.assign(s.party.partner.player.position,{x:600,y:900});window.target=s.enemies[0];for(const e of s.enemies)if(e!==target)e.isDead=true;Object.assign(target.position,{x:910,y:900});target.update=()=>{};target.health.current=target.health.max=44;});await g.waitForTimeout(800);
+ await h.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');s.arena.obstacles.length=0;Object.assign(s.player.position,{x:400,y:900});s.player.invulnerableUntil=Infinity;Object.assign(s.party.partner.player.position,{x:600,y:900});window.target=s.enemies[0];for(const e of s.enemies)if(e!==target)e.isDead=true;Object.assign(target.position,{x:910,y:900});target.update=()=>{};target.health.current=target.health.max=44;s.party.resilience.set(target,44/1.4);});await g.waitForTimeout(800);
  const screen=await g.evaluate(()=>{const c=window.__danteGame.scene.getScene('Game').cameras.main;return{x:910-c.scrollX,y:900-c.scrollY};});await g.mouse.move(screen.x,screen.y);await g.mouse.down();await g.waitForTimeout(900);await g.mouse.up();await g.waitForTimeout(400);
  assert.equal((await state(h)).xp,15);assert.equal((await state(g)).xp,15);await g.waitForTimeout(500);assert.equal((await state(h)).xp,15);report.sharedDamageAndSingleXp=true;
  await h.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');Object.assign(s.party.partner.player.position,{x:560,y:700});});await g.waitForTimeout(450);await key(g,'e');await g.waitForTimeout(750);assert.equal((await state(h)).echoes,1);assert.equal((await state(g)).echoes,1);assert.equal((await state(h)).xp,55);report.guestEchoInteraction=true;
  await h.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game'),p=s.party.partner.player;p.health.current=1;p.invulnerableUntil=0;s.enemyStrike({position:p.position,attackRange:100,attackDamage:9},{damage:9,ranged:true},p);});await g.waitForFunction(()=>window.__danteGame.scene.getScene('Game').player.isDead);await key(g,'r');await g.waitForTimeout(900);assert.equal((await state(g)).dead,false);assert.equal((await state(h)).partner.hp,80);report.visitorRespawn=true;
  await g.screenshot({path:`${out}/visitor.png`});await h.screenshot({path:`${out}/host.png`});
  report.fps={host:(await state(h)).fps,guest:(await state(g)).fps};
- await g.evaluate(()=>window.__danteCoop.disconnect());await g.waitForTimeout(1200);await ready(g);assert.equal((await state(g)).xp,15);assert.equal((await state(g)).echoes,0);report.soloSavePreserved=true;
+ await g.evaluate(()=>window.__danteCoop.disconnect());await g.waitForTimeout(1200);await ready(g);assert.equal((await state(g)).xp,70);assert.equal((await state(g)).echoes,0);report.personalXpRetainedCampaignPreserved=true;
  await h.waitForTimeout(600);const baseline=(await state(h)).objects;
  for(let i=0;i<2;i++){await join();await g.evaluate(()=>window.__danteCoop.disconnect());await g.waitForTimeout(1100);await h.waitForTimeout(400);assert.ok((await state(h)).objects<=baseline+2);}
  report.disconnectCyclesStable=true;
@@ -62,4 +62,4 @@ try{
  }
  await h.evaluate(()=>window.__danteCoop.disconnect());await h.waitForTimeout(150);const health=await(await fetch('http://localhost:5190')).json();assert.equal(health.rooms,0);report.roomsReleased=true;
  assert.deepEqual(report.errors,[]);report.passed=true;
-}finally{await writeFile(`${out}/report.json`,JSON.stringify(report,null,2));await b.close();}console.log(report);
+}catch(error){report.failure=String(error);report.finalHost=await state(h).catch(()=>null);report.finalGuest=await state(g).catch(()=>null);throw error;}finally{await writeFile(`${out}/report.json`,JSON.stringify(report,null,2));await b.close();}console.log(report);

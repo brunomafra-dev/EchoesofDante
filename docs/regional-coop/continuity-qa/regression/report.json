@@ -1,0 +1,69 @@
+{
+  "errors": [],
+  "method": "Two independent Chrome clients through real local WebSocket relay; actual input/menu; DEV obstacle/target/HP setup; no physical/network-internet test",
+  "pairedSoloBaseline": {
+    "host": {
+      "mean": 55.86161786913872,
+      "min": 51.9290771484375,
+      "max": 58.22535717487335
+    },
+    "guest": {
+      "mean": 51.93104553222656,
+      "min": 43.171875,
+      "max": 56.00660705566406
+    }
+  },
+  "twoClassesOneWorld": true,
+  "pairedCoop": {
+    "host": {
+      "mean": 55.7359414888511,
+      "min": 52.820199103154664,
+      "max": 58.2961995918619
+    },
+    "guest": {
+      "mean": 48.36293106079101,
+      "min": 36.703125,
+      "max": 54.60630798339844
+    }
+  },
+  "guestMovementAuthoritative": true,
+  "sharedCollision": true,
+  "sharedDamageAndSingleXp": true,
+  "guestEchoInteraction": true,
+  "visitorRespawn": true,
+  "fps": {
+    "host": 56.39248129584779,
+    "guest": 55.93604842193963
+  },
+  "personalXpRetainedCampaignPreserved": true,
+  "disconnectCyclesStable": true,
+  "teamRespawn": true,
+  "regions": [
+    {
+      "area": "valley",
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "area": "arid",
+      "width": 1366,
+      "height": 768
+    },
+    {
+      "area": "dunes",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "area": "frost",
+      "width": 844,
+      "height": 390
+    }
+  ],
+  "visitorExplorationReward": true,
+  "visitorPreventsUnsafeRenewal": true,
+  "coopGamepadHoldRelease": true,
+  "coopTouchHoldDragRelease": true,
+  "roomsReleased": true,
+  "passed": true
+}

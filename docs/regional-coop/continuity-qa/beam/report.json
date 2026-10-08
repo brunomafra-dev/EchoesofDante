@@ -1,0 +1,36 @@
+{
+  "errors": [],
+  "method": "Two Chrome clients, two Hunters; real local WebSocket relay, actual keyboard charge/release; DEV target lane; no physical or Internet test",
+  "chargeState": {
+    "role": "host",
+    "paused": false,
+    "connected": true,
+    "peer": true,
+    "phase": "CHARGING",
+    "controls": {
+      "held": true,
+      "method": "keyboard"
+    },
+    "ring": true,
+    "hostInput": {
+      "x": 0,
+      "y": 0,
+      "aim": 0,
+      "attack": false,
+      "dash": false,
+      "charge": false,
+      "held": false,
+      "release": false,
+      "cancel": false,
+      "interact": false,
+      "restart": false
+    },
+    "party": "READY"
+  },
+  "guestBeamHitsAllOnHostAndRendersOnBoth": true,
+  "noGuestDoubleDamage": true,
+  "hostBeamRenderedOnGuest": true,
+  "coopPaintedWalk": true,
+  "coopChargeRingAndPercentage": true,
+  "passed": true
+}
