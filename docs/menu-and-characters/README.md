@@ -1,5 +1,7 @@
 # Entrada, menu e personagens · 0.1.63
 
+Este registro descreve a primeira implementação. A seleção/criação atual e a segunda classe jogável estão documentadas no [mostruário 0.1.69](../character-showcase/).
+
 Tela inicial sem conta/login: continuar a expedição, escolher/criar personagem e configurar áudio. Esc ou MENU pausa; Start abre o menu no controle quando o personagem está vivo. Voltar retoma a luta com o relógio de combate preservado. Registros/bestiário e escolhas de aperfeiçoamento continuam nos painéis existentes. Em morte, Start mantém a função de respawn.
 
 Cada personagem possui nome, classe e jornada independente. Até seis perfis locais; nesta etapa o Guerreiro é a classe disponível. A segunda classe será habilitada depois de receber o descritivo oficial solicitado ao usuário. Não apagar o Guerreiro atual para experimentar outro personagem.

@@ -1,0 +1,18 @@
+{
+  "errors": [],
+  "method": "Chrome headless; actual character menu, keyboard/mouse, controlled target and cover, gamepad mock/touch emulation; no physical device",
+  "menuCreatesHunter": true,
+  "rangedDamage": true,
+  "coverStopsShot": true,
+  "movementBuildsMomentum": true,
+  "holdReleasePrecision": true,
+  "xp": true,
+  "mobility": true,
+  "respawn": true,
+  "gamepadMock": true,
+  "gamepadBeamHoldRelease": true,
+  "fps": 60.04151468130294,
+  "warriorPreserved": true,
+  "touchHoldDragRelease": true,
+  "passed": true
+}

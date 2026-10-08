@@ -1,0 +1,31 @@
+{
+  "method": "Chrome headless; actual creation/selection; keyboard, touch emulation, standard gamepad mock; controlled DEV dash integration; no physical devices",
+  "errors": [],
+  "warriorDash": {
+    "duration": 175,
+    "cooldown": 1700,
+    "distance": 132.9999999999984,
+    "blockedDistance": 42,
+    "upgradedDuration": 195,
+    "upgradedDistance": 148.19999999999823
+  },
+  "finiteDemo": true,
+  "menuCyclesStable": true,
+  "creationLaunchesDirectly": true,
+  "doubleActivationSafe": true,
+  "hunterDash": {
+    "duration": 240,
+    "cooldown": 1450,
+    "distance": 182.39999999999782,
+    "blockedDistance": 42,
+    "upgradedDuration": 260,
+    "upgradedDistance": 197.59999999999764
+  },
+  "previewDoesNotSwitch": true,
+  "confirmedSelection": true,
+  "gamepadSelection": true,
+  "keyboardSelection": true,
+  "touchCreation": true,
+  "reducedMotion": true,
+  "passed": true
+}
