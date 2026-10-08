@@ -43,7 +43,7 @@ export class CoopSession {
  }
  private open(request:object,retry:boolean,resolve:()=>void=()=>{},reject:(reason:Error)=>void=()=>{}):void {
   const ws=new WebSocket(this.url);this.socket=ws;let joined=false;
-  this.timeout=setTimeout(()=>{if(this.socket===ws&&!joined){ws.close();if(!retry){this.fail('O servidor de salas não respondeu.');reject(new Error(this.message));}}},5000);
+  this.timeout=setTimeout(()=>{if(this.socket===ws&&!joined){ws.close();if(!retry){this.fail('O cooperativo demorou para responder. Tente novamente em alguns segundos.');reject(new Error(this.message));}}},5000);
   ws.onopen=()=>{if(this.socket===ws)ws.send(JSON.stringify(request));};
   ws.onmessage=event=>{
    if(this.socket!==ws)return;
@@ -82,7 +82,7 @@ export class CoopSession {
     this.world=m.world;this.worldAt=performance.now();this.credit(m.receipt,m.total);
    }else if(m.type==='ended'||m.type==='replaced')this.fail(String(m.message));
   };
-  ws.onerror=()=>{if(!retry&&!joined&&this.socket===ws){this.fail('Não foi possível acessar o servidor de salas. Confira o endereço e se ele está online.');reject(new Error(this.message));}};
+  ws.onerror=()=>{if(!retry&&!joined&&this.socket===ws){this.fail('O cooperativo está indisponível nesta conexão. Tente novamente em alguns segundos; sua jornada solo continua disponível.');reject(new Error(this.message));}};
   ws.onclose=()=>{
    if(this.socket!==ws)return;
    clearTimeout(this.timeout);this.socket=undefined;this.connected=false;this.input={...NO_INPUT};this.inputAt=0;

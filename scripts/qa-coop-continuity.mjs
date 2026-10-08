@@ -162,7 +162,7 @@ try {
   assert.ok(await h.evaluate(() => { const s = window.__danteGame.scene.getScene('Game'); return s.enemies.every(e => e.health.max === s.party.resilience.get(e)); }));
   report.soloResilienceRestored = true;
   await h.evaluate(() => window.__danteCoop.disconnect()); await h.waitForTimeout(300);
-  report.relay = await (await fetch('http://localhost:5190')).json();
+  report.relay = await (await fetch('http://localhost:5184/coop/health')).json();
   assert.equal(report.relay.rooms, 0); assert.deepEqual(report.errors, []); report.passed = true;
 } catch (error) {
   report.failure = String(error); report.finalHost=await state(h);report.finalGuest=await state(g);

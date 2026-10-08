@@ -2,7 +2,9 @@
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
-## Cooperativo com continuidade · 0.1.71
+## Cooperativo sem configuração de servidor · 0.1.72
+
+`npm run dev` inicia jogo e salas juntos. No menu: **CRIAR SALA → COPIAR CÓDIGO**; seu amigo abre a mesma URL e usa **ENTRAR NA SALA**. Não há endereço de servidor para preencher nem segundo comando. A build também pode ser servida junto com as salas por `npm start` após o build; hospedagem pública precisa aceitar WebSocket. [Instruções e testes](docs/regional-coop/).
 
 A dupla pode viajar **Vale ↔ Siroco ↔ Dunas** sem encerrar a sala. O visitante mantém o XP ganho em sua jornada própria, sem copiar a campanha do anfitrião. Reconexão automática, código copiável, estado do menu e resistência moderada para encontros em dupla. Chefes/cavernas de campanha continuam solo com aviso antes de atravessar. [Como jogar, limites e testes](docs/regional-coop/).
 
@@ -60,7 +62,7 @@ Minimapa local e seta discreta indicam a aproximação ao próximo ponto da jorn
 
 ## Expedições em dupla · 0.1.66
 
-MENU → **COOPERATIVO · 2 PESSOAS** permite criar/entrar em uma sala por código. Execute `npm run coop:server` para fornecer o relay. Guerreiro e Star Hunter podem explorar, combater e investigar juntos nas regiões abertas, com estado simulado pelo anfitrião. A campanha solo do visitante fica preservada e recebe somente o XP ganho na visita. Vale, Siroco e Dunas mantêm a mesma sala nas travessias; chefes e cavernas de campanha permanecem solo. [Como jogar, publicar o serviço e limites reais](docs/regional-coop/).
+MENU → **COOPERATIVO · 2 PESSOAS** permite criar/entrar em uma sala por código; as salas usam automaticamente o servidor do jogo. Guerreiro e Star Hunter podem explorar, combater e investigar juntos nas regiões abertas, com estado simulado pelo anfitrião. A campanha solo do visitante fica preservada e recebe somente o XP ganho na visita. Vale, Siroco e Dunas mantêm a mesma sala nas travessias; chefes e cavernas de campanha permanecem solo. [Como jogar, publicar o serviço e limites reais](docs/regional-coop/).
 
 ## Hunter: mira, carga e corpo inteiro · 0.1.68
 

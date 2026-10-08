@@ -1,0 +1,16 @@
+{
+  "mode": "production",
+  "method": "One web process, two independent Chrome contexts, real menu and WebSocket. No physical devices or public hosting.",
+  "errors": [],
+  "singleServiceStarted": true,
+  "codeOnlyJoinSameOrigin": true,
+  "finalRelay": {
+    "service": "Dante regional co-op",
+    "rooms": 0,
+    "players": 0
+  },
+  "threeRoomCyclesClean": true,
+  "retryAfterFailure": true,
+  "failureKeepsSoloAvailable": true,
+  "passed": true
+}

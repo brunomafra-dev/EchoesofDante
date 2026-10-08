@@ -374,6 +374,12 @@
 - Prévia do Hunter seleciona a primeira linha frontal do atlas existente, incluindo movimentos da demonstração, e ajusta ombros/arma. Nenhuma alteração de arte ou orientação no gameplay. [Comportamento, capturas e QA](character-showcase/).
 
 
+## Cooperativo integrado à URL do jogo · 0.1.72
+
+- Salas anexadas ao servidor HTTP existente, com upgrade WebSocket limitado a `/coop`. O mesmo relay é usado pelo Vite dev/preview e pelo servidor Node da build; não intercepta o HMR. Encerramento remove listener de upgrade, heartbeat, reservas e conexões. O relay separado é mantido para compatibilidade, sem ser necessário no fluxo normal.
+- Menu pede somente o código. URL e WS/WSS derivam do servidor/base do jogo; `VITE_COOP_URL` fica como configuração opcional de hospedagem. Botões aguardam a conexão e permitem nova tentativa após falha. Gameplay, autoridade, viagens, recibos de XP e reconexão permanecem existentes.
+- `npm run dev` fornece jogo e salas em um único processo/porta. `npm start` serve `dist/` e salas após build. Produção pública ainda requer hospedagem Node com HTTPS/upgrade WebSocket; não foi provisionado serviço público nesta alteração. Arquivos estáticos sozinhos não fornecem multiplayer.
+
 ## Cooperativo regional com continuidade · 0.1.71
 
 - Mesma sala nos portais Vale ↔ Siroco ↔ Dunas; host confirma a viagem com o relay antes do restart. Gerações de região descartam comandos antigos. As passagens de campanha/chefes solo mostram aviso e preservam a sala até uma saída explícita.

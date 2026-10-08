@@ -60,6 +60,6 @@ try{
   }
   await g.evaluate(()=>window.__danteCoop.disconnect());await g.waitForTimeout(900);await h.evaluate(()=>window.__danteCoop.disconnect());
  }
- await h.evaluate(()=>window.__danteCoop.disconnect());await h.waitForTimeout(150);const health=await(await fetch('http://localhost:5190')).json();assert.equal(health.rooms,0);report.roomsReleased=true;
+ await h.evaluate(()=>window.__danteCoop.disconnect());await h.waitForTimeout(150);const health=await(await fetch('http://localhost:5184/coop/health')).json();assert.equal(health.rooms,0);report.roomsReleased=true;
  assert.deepEqual(report.errors,[]);report.passed=true;
 }catch(error){report.failure=String(error);report.finalHost=await state(h).catch(()=>null);report.finalGuest=await state(g).catch(()=>null);throw error;}finally{await writeFile(`${out}/report.json`,JSON.stringify(report,null,2));await b.close();}console.log(report);

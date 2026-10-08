@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import WebSocket from 'ws';
 
-const url = process.argv[2] ?? 'ws://localhost:5190';
+const url = process.argv[2] ?? 'ws://localhost:5184/coop';
 const out = process.argv[3] ?? 'docs/regional-coop/continuity-qa';
 const clients = [];
 const report = { errors: [], method: 'Real Node WebSocket clients against the local relay' };

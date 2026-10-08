@@ -1,6 +1,6 @@
 {
   "name": "echoes-of-dante-prototype",
-  "version": "0.1.71",
+  "version": "0.1.72",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,6 +8,7 @@
     "build": "tsc --noEmit && vite build",
     "typecheck": "tsc --noEmit",
     "preview": "vite preview --host 0.0.0.0",
+    "start": "node server/web.mjs",
     "coop:server": "node server/coop.mjs"
   },
   "dependencies": {

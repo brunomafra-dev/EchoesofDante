@@ -1,15 +1,21 @@
-# Expedições em dupla · 0.1.71
+# Expedições em dupla · 0.1.72
 
 Duas pessoas, mesma build web, Guerreiro ou Star Hunter, sem login. Esta etapa melhora a continuidade regional e a retenção de XP; não implementa campanha inteira ou chefes em dupla.
 
 ## Como jogar
 
-1. Execute `npm run coop:server` no computador que fornecerá as salas.
+1. Inicie o jogo com **`npm run dev`**. Jogo e salas iniciam juntos; não execute outro servidor.
 2. Abra o jogo e use **MENU → COOPERATIVO · 2 PESSOAS → CRIAR SALA**.
-3. Use **COPIAR CÓDIGO**. Seu amigo escolhe seu personagem, abre o mesmo jogo, informa o mesmo servidor e cola o código em **ENTRAR NA SALA**.
+3. Use **COPIAR CÓDIGO**. Seu amigo escolhe seu personagem, abre a mesma URL e cola o código em **ENTRAR NA SALA**. Nenhum endereço técnico é solicitado.
 4. Ambos escolhem **VOLTAR À EXPEDIÇÃO**. O visitante aparece em um ponto livre próximo ao anfitrião.
 
-Na rede local: jogo em `http://IP-DO-COMPUTADOR:5184`, salas em `ws://IP-DO-COMPUTADOR:5190`. No celular, `localhost` significa o próprio celular. O computador precisa aceitar conexões nessas portas.
+Na rede local: use `http://IP-DO-COMPUTADOR:PORTA` nos dois aparelhos, com a porta exibida pelo Vite. Jogo e salas usam essa mesma porta. No celular, `localhost` significa o próprio celular; o computador precisa permitir a conexão pela rede local. Não é necessário configurar o endereço das salas.
+
+### Build e hospedagem
+
+`npm run preview` também inclui as salas. Para servir a build em um processo Node, execute `npm run build` e depois **`npm start`**: jogo e salas ficam em `http://localhost:8080` (ou na variável `PORT` da hospedagem). Ambos os jogadores usam a mesma URL.
+
+Para acesso pela internet, esse processo precisa estar publicado em uma hospedagem Node com HTTPS e upgrade WebSocket habilitado. Publicar somente os arquivos estáticos não disponibiliza as salas. **Nenhum servidor público foi provisionado nesta alteração.** Essa configuração é da hospedagem, não dos jogadores.
 
 Salas disponíveis em **Floresta, Vale da Ressonância, Bacia do Siroco, Dunas Interiores e Fratura Boreal**. A dupla viaja pelos portais **Vale ↔ Siroco ↔ Dunas**, na mesma sala. Qualquer participante pode iniciar a travessia; ambos chegam à nova região. Os requisitos de exploração/ativação dos portais continuam os mesmos.
 
@@ -36,7 +42,7 @@ Salas disponíveis em **Floresta, Vale da Ressonância, Bacia do Siroco, Dunas I
 
 ## Rede, reconexão e limites
 
-`server/coop.mjs` é um serviço Node separado da hospedagem estática, usando `ws`. O navegador usa WebSocket nativo. Snapshots a 10 Hz, ações até 25 Hz. Pools de apresentação e os sistemas de personagem existentes são reutilizados.
+`server/relay.mjs` conecta as salas ao servidor web existente em `/coop`, usando `ws`. Vite dev, preview e `server/web.mjs` compartilham a mesma implementação. `/coop/health` informa o estado para diagnóstico. O navegador usa WebSocket nativo e escolhe WS/WSS automaticamente a partir da URL do jogo. Snapshots a 10 Hz, ações até 25 Hz. Pools de apresentação e os sistemas de personagem existentes são reutilizados. O relay separado (`npm run coop:server`) permanece disponível somente para instalações anteriores/avançadas.
 
 - Mudanças de região são autorizadas pelo anfitrião e confirmadas pelo relay antes da troca local. Uma geração de região (`epoch`) descarta ações/snapshots anteriores à travessia. A lista de ligações permitidas é explícita nos dois lados.
 - Queda de transporte conserva a vaga por **20 s**. O cliente tenta recuperar a sessão por até **15 s**, com credencial secreta em memória. Tanto anfitrião quanto visitante podem recuperar a conexão. Não é necessário digitar o código novamente nessa janela.
@@ -46,15 +52,35 @@ Salas disponíveis em **Floresta, Vale da Ressonância, Bacia do Siroco, Dunas I
 
 | Variável | Uso |
 | --- | --- |
-| `COOP_PORT` | Porta do relay; padrão 5190 |
+| `PORT` | Porta do servidor integrado de produção; padrão 8080 |
+| `COOP_PORT` | Apenas relay separado opcional; padrão 5190 |
 | `COOP_ORIGINS` | Origens autorizadas, separadas por vírgula |
-| `VITE_COOP_URL` | Endereço padrão de salas na build |
+| `VITE_COOP_URL` | Override opcional na build para hospedagem com relay separado |
 
-Produção HTTPS exige **WSS**, relay publicado e proxy TLS com upgrade WebSocket (por exemplo `/coop`). Hospedar somente `dist/` não publica o serviço. **Nenhum relay público foi provisionado; os testes são locais.**
+Produção HTTPS usa **WSS** na mesma URL, com proxy TLS encaminhando `/coop` ao servidor integrado. Hospedar somente `dist/` não publica o serviço. Os testes desta alteração são locais, sem validação pela internet ou em aparelhos físicos.
 
-Atualize o cliente e reinicie o relay juntos: o protocolo desta versão inclui confirmação de viagem, geração de região e credencial de reconexão.
+Reiniciar o servidor do jogo encerra as salas em memória; crie uma nova sala depois da atualização.
 
 ## Verificações
+
+### Entrada simplificada · 0.1.72
+
+```text
+npm run typecheck
+npm run build
+node scripts/qa-coop-easy-entry.mjs dev
+node scripts/qa-coop-easy-entry.mjs preview
+node scripts/qa-coop-easy-entry.mjs production
+node scripts/qa-coop-protocol.mjs ws://localhost:5184/coop docs/regional-coop/easy-entry-qa/protocol
+node scripts/qa-coop-continuity.mjs docs/regional-coop/easy-entry-qa/continuity
+node scripts/qa-regional-coop.mjs docs/regional-coop/easy-entry-qa/regression
+```
+
+Cada QA de entrada inicia somente um processo web em uma porta alternativa, sem relay separado. Dois contextos Chrome criam/entram por código, verificam snapshots reais, encerram três salas, simulam uma conexão recusada e voltam a conectar pelo menu. O teste de desenvolvimento também verifica que o socket HMR permanece disponível. Capturas e resultados: [easy-entry-qa](easy-entry-qa/).
+
+Typecheck/build, entrada nos três modos, protocolo, continuidade e regressão regional passaram sem erros JS/assets. A continuidade conserva XP individual, respawn, menus e três viagens de ida/volta Vale ↔ Siroco ↔ Dunas; mediu aproximadamente **57,7/57,3 FPS** (anfitrião/visitante) nessa execução. Objetos/tweens permaneceram estáveis nos ciclos. A regressão também cobre movimento, colisão, combate, Ecos, cinco regiões, quatro resoluções, touch hold/drag/release e gamepad mock; na amostra da Floresta, a dupla mediu **54,7/50,9 FPS**, ainda abaixo da meta no visitante, conforme limitação já conhecida. Nenhuma mudança em combate, câmera, controles, arte ou simulação do jogo. Não houve teste físico ou de hospedagem pública.
+
+### Regressão de continuidade · 0.1.71
 
 ```text
 npm run typecheck
@@ -67,7 +93,7 @@ node scripts/qa-hunter-beam-coop.mjs docs/regional-coop/continuity-qa/beam
 node scripts/qa-dante-journey.mjs http://localhost:5184/?qa=play docs/regional-coop/continuity-qa/solo
 ```
 
-Resultados e capturas desta versão: [continuity-qa](continuity-qa/). A pasta [qa](qa/) conserva os resultados históricos da fundação 0.1.66.
+Resultados e capturas da versão 0.1.71: [continuity-qa](continuity-qa/). A pasta [qa](qa/) conserva os resultados históricos da fundação 0.1.66.
 
 QA usa Chrome headless em contextos independentes, relay real, teclado/mouse, touch emulado e Gamepad API mock. Posicionamento, campanha concluída e mortes controladas usam hooks DEV explicitamente. Não representa playtest em dois dispositivos físicos ou pela internet. Cenário estático continua baked/cacheado; nenhum asset, câmera, controle ou arquitetura de combate foi substituído.
 
