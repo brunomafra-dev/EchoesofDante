@@ -1,0 +1,25 @@
+{
+  "errors": [],
+  "method": "Chrome headless; real keyboard Q and movement, DEV aim angles and isolated lane; visual inspection of captures, no physical devices",
+  "eightAimDirectionsMatchRifleAndMuzzle": true,
+  "readyChargePercentageCooldownAndReady": true,
+  "beamParallelToRifleStartsAtMuzzle": true,
+  "wholeBodyGaitWhileFiring": [
+    9,
+    10,
+    11,
+    8
+  ],
+  "stability": {
+    "before": {
+      "objects": 386,
+      "tweens": 24
+    },
+    "after": {
+      "objects": 386,
+      "tweens": 24
+    },
+    "fps": 60.374591341013
+  },
+  "passed": true
+}

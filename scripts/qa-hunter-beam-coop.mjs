@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
-const out='docs/star-hunter/beam-qa/coop';await mkdir(out,{recursive:true});
+const out=process.argv[2]??'docs/star-hunter/beam-qa/coop';await mkdir(out,{recursive:true});
 const b=await chromium.launch({channel:'chrome',headless:true});
 const hc=await b.newContext(),gc=await b.newContext();
 for(const[c,id]of[[hc,'host'],[gc,'guest']])await c.addInitScript(id=>localStorage.setItem('echoes-of-dante.characters.v1',JSON.stringify({schema:1,selected:id,characters:[{id,name:id,classId:'hunter',createdAt:1}]})),id);
@@ -16,7 +16,10 @@ async function setup(remote){await h.evaluate(remote=>{
  source.charge.stop();source.charge.lastReleasedAt=-Infinity;source.hunter.clear();
  for(let i=0;i<s.enemies.length;i++){const e=s.enemies[i];e.isDead=i>2;e.update=()=>{};e.hurt=()=>{};e.health.current=e.health.max=1000;Object.assign(e.position,{x:900+i*240,y:800});}
 },remote);await g.waitForTimeout(500);}
-async function cast(p){await p.evaluate(()=>window.__danteGame.scene.getScene('Game').controls.aimFrom=()=>0);await p.keyboard.down('q');await p.waitForTimeout(1000);await p.keyboard.up('q');}
+async function cast(p){await p.evaluate(()=>window.__danteGame.scene.getScene('Game').controls.aimFrom=()=>0);await p.keyboard.down('q');await p.waitForTimeout(1000);
+ assert.ok(await p.evaluate(()=>window.__danteGame.scene.getScene('Game').hunterArt.weapon.charge.visible));
+ assert.match(await p.evaluate(()=>window.__danteGame.scene.getScene('Game').hud.chargeText.text),/100%/);
+ await p.keyboard.up('q');}
 try{
  await h.goto('http://localhost:5184/?qa=play');await ready(h);await h.evaluate(()=>window.__danteCoop.connect('ws://localhost:5190','create',{name:'host',classId:'hunter'},'forest'));
  const code=await h.evaluate(()=>window.__danteCoop.code);await g.goto('http://localhost:5184/?qa=play');await ready(g);
@@ -31,7 +34,7 @@ try{
  await g.waitForFunction(()=>window.__danteGame.scene.getScene('Game').party.mirrorHost.hunter.beamView.view.visible,{timeout:2000});
  assert.deepEqual(await h.evaluate(()=>window.__danteGame.scene.getScene('Game').enemies.slice(0,3).map(e=>e.health.current)),[863,863,863]);report.hostBeamRenderedOnGuest=true;
  await g.waitForTimeout(800);assert.equal(await g.evaluate(()=>window.__danteGame.scene.getScene('Game').party.mirrorHost.hunter.beamView.view.visible),false);
- await g.keyboard.down('d');await g.waitForTimeout(450);const phase=await h.evaluate(()=>window.__danteGame.scene.getScene('Game').party.partner.art.travel);await g.waitForTimeout(400);await g.keyboard.up('d');assert.ok(await h.evaluate(before=>window.__danteGame.scene.getScene('Game').party.partner.art.travel>before,phase));report.coopArticulatedWalk=true;
+ await g.keyboard.down('d');await g.waitForTimeout(450);const phase=await h.evaluate(()=>window.__danteGame.scene.getScene('Game').party.partner.art.travel);await g.waitForTimeout(400);await g.keyboard.up('d');assert.ok(await h.evaluate(before=>window.__danteGame.scene.getScene('Game').party.partner.art.travel>before,phase));report.coopPaintedWalk=true;report.coopChargeRingAndPercentage=true;
  assert.deepEqual(report.errors,[]);report.passed=true;
 }finally{await gc.close();await hc.close();await b.close();await writeFile(`${out}/report.json`,JSON.stringify(report,null,2));}
 console.log(report);

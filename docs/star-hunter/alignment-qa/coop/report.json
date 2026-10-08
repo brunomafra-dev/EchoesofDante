@@ -1,0 +1,10 @@
+{
+  "errors": [],
+  "method": "Two Chrome clients, two Hunters; real local WebSocket relay, actual keyboard charge/release; DEV target lane; no physical or Internet test",
+  "guestBeamHitsAllOnHostAndRendersOnBoth": true,
+  "noGuestDoubleDamage": true,
+  "hostBeamRenderedOnGuest": true,
+  "coopPaintedWalk": true,
+  "coopChargeRingAndPercentage": true,
+  "passed": true
+}

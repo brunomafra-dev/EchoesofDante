@@ -13,6 +13,8 @@ export class Hud {
   private dashFill: Phaser.GameObjects.Rectangle;
   private dashText: Phaser.GameObjects.Text;
   private chargeText: Phaser.GameObjects.Text;
+  private readonly chargeFill?: Phaser.GameObjects.Rectangle;
+  private readonly momentumText?: Phaser.GameObjects.Text;
   private controlHints: Phaser.GameObjects.Text[] = [];
   private controlsTimer?: Phaser.Time.TimerEvent;
   private inputMethod: InputMethod = 'keyboard';
@@ -61,6 +63,11 @@ export class Hud {
     scene.add.rectangle(1052, 45, 196, 2, 0x26372b).setOrigin(0).setScrollFactor(0).setDepth(20000);
     this.dashFill = scene.add.rectangle(1052, 45, 196, 2, 0x9caf99).setOrigin(0).setScrollFactor(0).setDepth(20001);
     this.chargeText = text(1052, 57, '', 14, '#b6c6b2', true);
+    if (this.hunter) {
+      this.momentumText = text(1052, 83, '', 11, '#aab6a0', true);
+      scene.add.rectangle(1052, 78, 196, 2, 0x26372b).setOrigin(0).setScrollFactor(0).setDepth(20000);
+      this.chargeFill = scene.add.rectangle(1052, 78, 196, 2, 0x5fe6d8).setOrigin(0).setScrollFactor(0).setDepth(20001);
+    }
     this.controlHints.push(text(VIEW_WIDTH / 2, VIEW_HEIGHT - 22, '', 12, '#c5cdb9').setOrigin(0.5, 1));
     this.showControlHelp();
     this.discoveryPrompt = text(VIEW_WIDTH / 2, VIEW_HEIGHT - 73, '[ E ]  INVESTIGAR', 17, '#ddd4f2', true)
@@ -97,8 +104,10 @@ export class Hud {
     this.dashText.setColor(dashProgress >= 1 ? '#b6c6b2' : '#8a9989');
     const chargeKey = this.inputMethod === 'gamepad' ? '[LT]' : this.inputMethod === 'touch' ? '' : '[Q]';
     const chargeStatus = chargePhase === 'CHARGING' ? `${Math.round(chargeLevel * 100)}%` : chargePhase === 'RELEASE' ? 'ONDA' : chargeProgress >= 1 ? 'PRONTA' : `${((1 - chargeProgress) * chargeCooldown / 1000).toFixed(1)}s`;
-    this.chargeText.setText(this.hunter ? `${chargeKey} FEIXE · ${chargePhase === 'READY' ? 'MOM ' + this.momentum : chargePhase === 'RELEASE' ? 'DISPARO' : chargeStatus}`.trim() : `${chargeKey} CARGA · ${chargeStatus}`.trim());
+    this.chargeText.setText(this.hunter ? `${chargeKey} FEIXE · ${chargePhase === 'RELEASE' ? 'DISPARO' : chargeStatus}`.trim() : `${chargeKey} CARGA · ${chargeStatus}`.trim());
     this.chargeText.setColor(chargePhase === 'CHARGING' ? '#5fe6d8' : chargeProgress >= 1 ? '#b6c6b2' : '#8a9989');
+    if (this.chargeFill) this.chargeFill.width = 196 * (chargePhase === 'CHARGING' ? chargeLevel : chargeProgress);
+    this.momentumText?.setText(`MOM ${this.momentum}`);
   }
 
   private refreshTypography(): void {

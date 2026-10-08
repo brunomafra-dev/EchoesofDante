@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
-const out='docs/star-hunter/beam-qa';await mkdir(out,{recursive:true});
+const out=process.argv[2]??'docs/star-hunter/beam-qa';await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true});
 const context=await browser.newContext({viewport:{width:1280,height:720},recordVideo:{dir:out,size:{width:1280,height:720}}});
 await context.addInitScript(()=>localStorage.setItem('echoes-of-dante.characters.v1',JSON.stringify({schema:1,selected:'beam',characters:[{id:'beam',name:'Hunter Feixe',classId:'hunter',createdAt:1}]})));
@@ -28,8 +28,8 @@ try{
  await setup();await p.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');Object.assign(s.player.position,{x:2000,y:800});s.hunter.fire(s.time.now,s.player.position,0,76);});await p.waitForTimeout(40);assert.ok(await p.evaluate(()=>window.__danteGame.scene.getScene('Game').hunter.beamPose().length<=200));report.worldBoundsClipBeam=true;
  await setup();await p.keyboard.down('q');await p.waitForTimeout(400);await p.keyboard.press('Escape');await p.keyboard.up('q');assert.equal(await p.evaluate(()=>window.__danteGame.scene.getScene('Game').charge.phase),'READY');await p.locator('[data-shell="continue"]').click();await p.waitForTimeout(400);assert.deepEqual(await hp(),[1000,1000,1000]);report.pauseCancelsNoBeam=true;
  await setup();await p.mouse.down();await p.keyboard.down('d');const angles=[];
- for(let i=0;i<6;i++){await p.waitForTimeout(70);angles.push(await p.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');return{s:s.hunterArt.legs[0].shin.rotation,t:s.hunterArt.travel,angle:s.player.view.rotation}}));await p.screenshot({path:`${out}/walk-${i}.png`});}
- await p.keyboard.up('d');await p.mouse.up();assert.ok(new Set(angles.map(a=>a.s.toFixed(2))).size>=3);assert.ok(angles.every(a=>a.angle===0));report.articulatedLegsContinueWhileFiring=true;
+ for(let i=0;i<6;i++){await p.waitForTimeout(70);angles.push(await p.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');return{s:Number(s.hunterArt.body.frame.name),t:s.hunterArt.travel,angle:s.player.view.rotation}}));await p.screenshot({path:`${out}/walk-${i}.png`});}
+ await p.keyboard.up('d');await p.mouse.up();assert.ok(new Set(angles.map(a=>a.s)).size>=3);assert.ok(angles.every(a=>a.angle===0));report.paintedWalkPosesContinueWhileFiring=true;
  const phase=await p.evaluate(()=>window.__danteGame.scene.getScene('Game').hunterArt.travel);await p.waitForTimeout(300);assert.equal(await p.evaluate(()=>window.__danteGame.scene.getScene('Game').hunterArt.travel),phase);report.idleDoesNotKeepWalking=true;
  for(const [name,keys,aim]of[['back',['w'], -Math.PI/2],['front',['s'],Math.PI/2],['strafe',['a'],0],['diagonal',['w','d'],Math.PI]]){
   await p.evaluate(aim=>{const s=window.__danteGame.scene.getScene('Game');Object.assign(s.player.position,{x:700,y:800});s.controls.aimFrom=()=>aim},aim);await p.waitForTimeout(800);

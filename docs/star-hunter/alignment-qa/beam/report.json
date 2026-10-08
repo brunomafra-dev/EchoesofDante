@@ -1,0 +1,70 @@
+{
+  "errors": [],
+  "method": "Chrome headless; real keyboard/mouse; controlled real enemies/cover and DEV cooldown expiry; no physical hardware",
+  "initialBeam": {
+    "beam": {
+      "x": 700,
+      "y": 800,
+      "angle": -0.0028490421210640112,
+      "length": 980,
+      "halfWidth": 18,
+      "alpha": 0.40829631684959056
+    },
+    "targets": [
+      {
+        "position": {
+          "x": 950,
+          "y": 800
+        },
+        "hp": 863,
+        "dead": false,
+        "radius": 18
+      },
+      {
+        "position": {
+          "x": 1200,
+          "y": 800
+        },
+        "hp": 863,
+        "dead": false,
+        "radius": 18
+      },
+      {
+        "position": {
+          "x": 1450,
+          "y": 800
+        },
+        "hp": 863,
+        "dead": false,
+        "radius": 18
+      }
+    ],
+    "obstacles": 0,
+    "p": {
+      "x": 700,
+      "y": 800
+    }
+  },
+  "allEnemiesPiercedOnce": true,
+  "fadeDoesNotRepeatDamage": true,
+  "cooldownPreserved": true,
+  "solidCoverClipsBeam": true,
+  "directionalNotAutoAim": true,
+  "worldBoundsClipBeam": true,
+  "pauseCancelsNoBeam": true,
+  "paintedWalkPosesContinueWhileFiring": true,
+  "idleDoesNotKeepWalking": true,
+  "aimMovementIndependent": true,
+  "stableObjects": {
+    "baseline": {
+      "objects": 386,
+      "tweens": 24
+    },
+    "final": {
+      "objects": 386,
+      "tweens": 24,
+      "fps": 60.27907258867851
+    }
+  },
+  "passed": true
+}

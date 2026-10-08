@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { hunterRiflePose, HUNTER_MUZZLE_DISTANCE } from './HunterRiflePose';
 
 export type HunterBeamPose = { x: number; y: number; angle: number; length: number; halfWidth: number; alpha: number };
 
@@ -20,18 +21,14 @@ export class HunterBeamView {
     this.view.setVisible(!!pose && pose.length > 0 && pose.alpha > 0);
     if (!pose) return;
     const width = pose.halfWidth * 2;
-    const cos = Math.cos(pose.angle), sin = Math.sin(pose.angle);
-    const vertical = Math.abs(sin) > Math.abs(cos);
-    // Match the painted rifle barrel, rather than emitting light from the waist.
-    // The trace endpoint stays at the actual solid surface/range limit.
-    const x = pose.x + (vertical ? sin > 0 ? 28 : -30 : cos > 0 ? 52 : -52);
-    const y = pose.y + (vertical ? sin > 0 ? -19 : -30 : -27);
-    if (pose.length <= Math.max(0, (x - pose.x) * cos + (y - pose.y) * sin)) {
+    const rifle = hunterRiflePose(pose.angle);
+    const x = pose.x + rifle.muzzleX, y = pose.y + rifle.muzzleY;
+    if (pose.length <= HUNTER_MUZZLE_DISTANCE) {
       this.view.setVisible(false); return;
     }
-    const dx = pose.x + cos * pose.length - x, dy = pose.y + sin * pose.length - y;
-    const length = Math.hypot(dx, dy);
-    this.view.setPosition(x, y).setRotation(Math.atan2(dy, dx)).setDepth(pose.y + 6).setAlpha(pose.alpha);
+    // Project the ground-plane ray to the gun's height without bending it.
+    const length = pose.length - HUNTER_MUZZLE_DISTANCE;
+    this.view.setPosition(x, y).setRotation(pose.angle).setDepth(pose.y + 6).setAlpha(pose.alpha);
     this.halo.setDisplaySize(length, width * 1.6);
     this.light.setDisplaySize(length, width);
     this.core.setDisplaySize(length, Math.max(3, width * .24));

@@ -1,0 +1,16 @@
+{
+  "star-hunter-body-v2.png": {
+    "size": [
+      1024,
+      768
+    ],
+    "bytes": 454598
+  },
+  "star-hunter-weapon-v2.png": {
+    "size": [
+      512,
+      768
+    ],
+    "bytes": 215650
+  }
+}

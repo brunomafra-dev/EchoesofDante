@@ -1,0 +1,34 @@
+[
+  {
+    "frame": 0,
+    "width": 224,
+    "height": 82,
+    "axisY": 0.38
+  },
+  {
+    "frame": 1,
+    "width": 224,
+    "height": 82,
+    "axisY": 0.38
+  },
+  {
+    "frame": 2,
+    "width": 224,
+    "height": 117
+  },
+  {
+    "frame": 3,
+    "width": 224,
+    "height": 93
+  },
+  {
+    "frame": 4,
+    "width": 224,
+    "height": 109
+  },
+  {
+    "frame": 5,
+    "width": 224,
+    "height": 99
+  }
+]
