@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-08T19:37:33.826Z",
+  "game": "https://echosofdante.vercel.app/",
+  "method": "Independent Chrome profiles from this PC against the published Vercel game and Render WSS service. No API mocks, no physical mobile device or second physical network.",
+  "errors": [],
+  "configuration": {
+    "ready": true,
+    "relay": "wss://echoes-of-dante-rooms.onrender.com/coop"
+  },
+  "createRoom": true,
+  "movement": {
+    "before": {
+      "x": 400,
+      "y": 1230
+    },
+    "after": {
+      "x": 512.470525889514,
+      "y": 1261.9618038093636
+    },
+    "dead": false
+  },
+  "invitationStartsBoth": true,
+  "realWorldAndMovement": true,
+  "worldMessages": 29,
+  "publicWss": true,
+  "guestRestoresSolo": true,
+  "hostEndsRoom": true,
+  "serviceAfter": {
+    "service": "Dante regional co-op",
+    "rooms": 0,
+    "players": 0
+  },
+  "passed": true,
+  "cleanupCheckedAt": "2026-10-08T19:39:12.923Z"
+}

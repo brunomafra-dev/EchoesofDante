@@ -11,7 +11,7 @@ Duas pessoas, mesma build web, Guerreiro ou Star Hunter, sem login. Esta etapa m
 
 Também é possível colar o link completo ou o código em **ENTRAR NA SALA**. Não há login, comando, porta ou endereço de servidor na interface dos jogadores. Seu personagem/progresso solo continuam locais.
 
-**Publicação:** o responsável criou `echoes-of-dante-rooms` no Render. Em 08/10/2026, o health check público respondeu 200 com zero salas/jogadores. A API da Vercel agora usa esse serviço por padrão, sem outra configuração manual. O teste do convite público será registrado em [public-qa](public-qa/) após a implantação dessa atualização na Vercel.
+**Publicação validada automaticamente:** o responsável criou `echoes-of-dante-rooms` no Render. Em 08/10/2026, a API publicada da Vercel respondeu 200 com `ready: true` e o endereço WSS real. Dois perfis Chrome acessaram a URL pública, criaram/abriram o convite, entraram automaticamente e trocaram snapshots/movimento via Render. Saída/restauração solo e encerramento passaram, sem erros JS/assets. [Resultado e capturas públicos](public-qa/). O teste usa esta máquina e a internet real, sem mock de API; não substitui dois aparelhos físicos em redes diferentes.
 
 Convites levam somente `?sala=CODIGO`, sem credencial de reconexão, nome ou save. O parâmetro é removido após entrar/cancelar; sair/recarregar não reentra automaticamente. Salas cheias, encerradas e convites inválidos permitem voltar ou tentar outro convite. Se clipboard não estiver disponível, o link é selecionado para cópia manual.
 
@@ -85,6 +85,17 @@ Produção integrada HTTPS usa **WSS** com proxy TLS encaminhando `/coop`; nesta
 Reiniciar o servidor do jogo encerra as salas em memória; crie uma nova sala depois da atualização.
 
 ## Verificações
+
+### Publicação · 0.1.74
+
+```text
+npm run typecheck
+npm run build
+node scripts/qa-coop-config.mjs
+node scripts/qa-coop-public.mjs
+```
+
+Configuração verifica serviço padrão sem variável manual, override e rejeição de valores inválidos. O QA público acessa Vercel/Render reais com desktop 1280×720 e viewport touch 844×390; não simula um relay local nem uma resposta de configuração. Não valida iPhone físico, redes móveis diferentes, desempenho de longa duração ou retomada do Free após inatividade.
 
 ### Convite direto · 0.1.73
 

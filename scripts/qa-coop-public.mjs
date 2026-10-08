@@ -56,10 +56,15 @@ try {
   assert.ok(roles.includes('host') && roles.includes('guest'));
   assert.equal(latestWorld.area, 'forest');
   assert.ok(latestWorld.partner);
-  const oldX = latestWorld.host.x;
-  await host.keyboard.down('KeyD'); await host.waitForTimeout(650); await host.keyboard.up('KeyD');
-  await guest.waitForTimeout(350);
-  assert.ok(latestWorld.host.x > oldX + 5, 'Host movement did not reach guest');
+  await host.bringToFront();
+  await host.waitForTimeout(600);
+  const before = { x: latestWorld.host.x, y: latestWorld.host.y };
+  await host.keyboard.down('KeyD');
+  try {
+    for (let i = 0; i < 20 && latestWorld.host.x <= before.x + 5; i++) await host.waitForTimeout(100);
+  } finally { await host.keyboard.up('KeyD'); }
+  report.movement = { before, after: { x: latestWorld.host.x, y: latestWorld.host.y }, dead: latestWorld.host.dead };
+  assert.ok(latestWorld.host.x > before.x + 5, 'Host movement did not reach guest');
   report.invitationStartsBoth = true; report.realWorldAndMovement = true;
   report.worldMessages = worldCount;
   assert.ok(sockets.includes(config.relay)); report.publicWss = true;
@@ -84,6 +89,15 @@ finally {
     } catch { /* Closing the transport also expires the test's reserved seat. */ }
   }
   await browser?.close();
+  if (report.passed) {
+    // The public proxy's WebSocket close handshake may finish after Chrome exits.
+    for (let i = 0; i < 6; i++) {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      report.serviceAfter = await (await fetch(healthURL, { cache: 'no-store', signal: AbortSignal.timeout(15000) })).json();
+      if (report.serviceAfter.players === 0) break;
+    }
+    report.cleanupCheckedAt = new Date().toISOString();
+  }
   await writeFile(`${out}/result.json`, JSON.stringify(report, null, 2));
 }
 console.log(report);
