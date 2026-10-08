@@ -108,6 +108,8 @@ QA de convites verifica dois personagens salvos, confirmação antes de conectar
 
 Typecheck, build e QA local dev/produção passaram. Ambos terminaram sem erros JS/assets e com zero salas/conexões. A primeira execução dev completou as verificações funcionais, mas falhou ao aguardar em uma aba que o próprio teste havia fechado; o helper foi corrigido e a execução completa repetida passou. O relay público não precisa de alteração/redeploy: os dois fluxos são mudanças do cliente.
 
+O QA público de 0.1.75 também passou na URL Vercel com Render real: confirmação de personagem antes de conectar, início da dupla, movimento recebido, saída voluntária, encerramento pelo dono, aviso e retomada solo. Sem erros JS/assets ou mocks. O health é um contador global: o registro conserva a amostra imediata após fechar os navegadores e uma consulta posterior. Não é playtest físico em dois aparelhos/redes diferentes.
+
 ### Publicação · 0.1.74
 
 ```text
