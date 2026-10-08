@@ -1,4 +1,25 @@
-# Mostruário de personagens · 0.1.69
+# Mostruário de personagens · 0.1.70
+
+## Exclusão e pose frontal · 0.1.70
+
+Na prévia de um personagem salvo, **EXCLUIR PERSONAGEM** abre uma confirmação com seu nome e informa que toda a jornada local será apagada. Cancelar é o foco inicial; Esc, B ou Start cancelam somente a confirmação. O controle fica visível junto de “Ver em ação”, inclusive em landscape.
+
+Confirmar remove o perfil e apenas sua chave de progresso. Excluir um personagem inativo mantém a expedição atual; excluir o ativo recarrega o menu com os personagens restantes. O último pode ser excluído: a lista permanece vazia após reload e **CRIAR NOVO** inicia uma jornada realmente nova. O Guerreiro legado não é recriado automaticamente após uma exclusão intencional.
+
+O registro vazio conserva seu schema. Uma identidade temporária permite inicializar a cena atrás do menu, mas não aparece na lista, não pode entrar na expedição e não possui save. `LocalJourney` fixa o proprietário ao carregar e verifica sua presença no registro antes de escrever: flush/pagehide não recriam a jornada apagada, inclusive em uma aba anterior. A exclusão restaura o registro se a remoção do save falhar; falhas de armazenamento recebem mensagem. Os demais personagens e volumes permanecem preservados.
+
+O Hunter usa agora as poses **frontais** já existentes no atlas, com ombros/braços e rifle ajustados para o mostruário. Também permanece frontal durante a demonstração. Isso vale para criação e seleção; a orientação de mira no gameplay permanece como antes. Nenhum asset novo foi necessário.
+
+[QA de exclusão](deletion-qa/report.json): cancelar/Esc/gamepad, falhas de gravação e remoção, preservação dos outros saves, liberação de um dos seis slots, exclusão do ativo e do último, reload sem ressurreição, recriação com XP zero, aba antiga e touch emulado. Também preserva a leitura do save legado se o registro de perfis não puder ser gravado por falta de espaço. [Regressão da jornada](deletion-qa/journey-regression/report.json) verifica novamente fluxo até o Warden/Vale, persistência e respawn: ~58,4 FPS, 149 objetos e 3 tweens estáveis nos três ciclos. [Regressão do menu](deletion-qa/menu-regression/report.json) confirma criação, troca, XP/Ecos independentes, pausa, volumes e inputs emulados. Typecheck/build passaram; não houve teste físico nesta etapa.
+
+Capturas: [Hunter frontal na criação](deletion-qa/hunter-front-creation.png), [seleção desktop](deletion-qa/hunter-front-1280.png), [seleção mobile](deletion-qa/hunter-front-844.png), [confirmação](deletion-qa/confirmation.png), [lista vazia](deletion-qa/empty-characters.png).
+
+```text
+node scripts/qa-character-deletion.mjs
+node scripts/qa-dante-journey.mjs "http://localhost:5184/?qa=play" docs/character-showcase/deletion-qa/journey-regression
+```
+
+## Fundação do mostruário · 0.1.69
 
 Abra a mesma URL do jogo e escolha **PERSONAGENS → CRIAR NOVO**. Guerreiro e Star Hunter aparecem em bases iluminadas; os dois espaços adicionais são **Manipulador Astral — Em breve** e **Espaço futuro — Em breve**. Não são classes jogáveis.
 

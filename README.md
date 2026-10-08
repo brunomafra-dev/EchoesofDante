@@ -2,9 +2,11 @@
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
-## Mostruário de personagens · 0.1.69
+## Mostruário de personagens · 0.1.70
 
 **PERSONAGENS → CRIAR NOVO** apresenta Guerreiro e Star Hunter em um mostruário iluminado, com demonstrações curtas do kit, escolha de nome e dois espaços futuros. Personagens salvos possuem prévia antes de confirmar a jornada. O Dash do Hunter agora alcança aproximadamente 37% mais distância, preservando a recarga. [Apresentação, capturas e testes](docs/character-showcase/).
+
+A prévia agora permite **excluir personagens com confirmação**, inclusive o último, preservando as demais jornadas. O Hunter aparece de frente para o jogador na criação e na seleção.
 
 Protótipo de action RPG sci-fi para navegador. O jogador explora Dante Forest, combate Hollows e investiga três Echoes. Depois de sincronizar os sinais, pode ativar a passagem antiga, explorar a Cavern e seguir o sinal além do desabamento. A direção Organic Sci-Fi segue a [Art Bible](docs/art-bible/).
 

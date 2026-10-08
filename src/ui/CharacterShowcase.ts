@@ -105,13 +105,15 @@ export class CharacterShowcase {
     this.ctx.drawImage(img, frame % columns * size, Math.floor(frame / columns) * size, size, size, x, y, w, h);
   }
   private hunter(t: number, firing: boolean, dash: boolean, charge: boolean, release: boolean): void {
-    const c = this.ctx, aim = -.09, pose = hunterRiflePose(aim), cos = Math.cos(aim), sin = Math.sin(aim);
-    this.sprite('star-hunter-body-v2.png', dash ? 9 + Math.min(2, Math.floor((t - 1.15) * 7)) : 8, 4, 256, -64, -83, 128, 128);
+    const c = this.ctx, aim = .22, pose = hunterRiflePose(aim), cos = Math.cos(aim), sin = Math.sin(aim);
+    const frame = dash ? 1 + Math.min(2, Math.floor((t - 1.15) * 7)) : 0;
+    this.canvas.dataset.facing = 'front';
+    this.sprite('star-hunter-body-v2.png', frame, 4, 256, -64, -83, 128, 128);
     if (!this.parts.length) return;
     const grip = (along: number, across: number) => ({ x: pose.x + along * cos - across * sin, y: pose.y + along * sin + across * cos });
     const main = grip(-4, 9), support = grip(16, 7);
-    this.arm('hunter', -10, -37, main.x, main.y, -1);
-    this.arm('hunter', 10, -36, support.x, support.y, 1);
+    this.arm('hunter', -15, -34, main.x, main.y, -1);
+    this.arm('hunter', 15, -34, support.x, support.y, 1);
     const rifle = this.parts[0];
     this.part(0, pose.x, pose.y, aim, 60, 60 * rifle.height / rifle.width, .3, rifle.axisY ?? .38);
     this.part(4, main.x, main.y, aim, 10, 10, .65, .5); this.part(5, support.x, support.y, aim, 10, 10, .65, .5);

@@ -50,6 +50,16 @@
 .saved-display { text-align: center; }
 .saved-display .character-stage { max-width: 440px; margin: auto; }
 .saved-display .selection-primary { display: block; margin: 8px auto 0; }
+.is-character-page .selection-delete { border: 0; background: transparent; color: #db927b; padding: 8px 16px; min-height: 44px; font-size: 12px; }
+.saved-display-actions { display: flex; justify-content: center; align-items: center; gap: 16px; }
+.empty-characters { padding: 60px 20px; text-align: center; border-top: 1px solid #817d6533; }
+.empty-characters h3 { font: 600 28px 'Barlow Condensed',sans-serif; }
+.character-delete-dialog { width: min(420px,calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 24px; border: 1px solid #a9906866; border-radius: 6px; background: #151b14; color: #e3e5d7; }
+.character-delete-dialog::backdrop { background: #040805ba; }
+.character-delete-dialog h3 { margin: 0; font: 600 26px 'Barlow Condensed',sans-serif; overflow-wrap: anywhere; }
+.delete-confirm-controls { display: flex; justify-content: end; gap: 12px; margin-top: 20px; }
+.delete-confirm-controls button { min-height: 44px; padding: 10px 18px; border: 1px solid #968e6866; background: #303629; border-radius: 3px; }
+.delete-confirm-controls .selection-delete { background: #633426; color: #ffe3d5; border: 1px solid #ce806366; font-size: 14px; }
 @media (max-width:900px) { .creation-footer { grid-template-columns: 1fr; gap: 14px; } .selection-controls { justify-content: end; } .selection-name { max-width: 420px; } }
 @media (max-height:500px) and (orientation:landscape) {
   .is-character-page.application-shell { padding: calc(10px + env(safe-area-inset-top)) calc(24px + env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) calc(24px + env(safe-area-inset-left)); }
@@ -60,6 +70,7 @@
   .is-character-page [data-shell="replay"] { font-size: 10px; min-height: 32px; padding: 5px 0; }
   .is-character-page .selection-primary { padding: 8px 12px; font-size: 13px; min-height: 44px; } .selection-name input { min-height: 44px; padding: 10px; margin-top: 4px; }
   .saved-selection { gap: 30px; grid-template-columns: 1fr 1fr; } .saved-characters { max-height: 63vh; } .saved-display .character-stage { height: clamp(95px,31vh,145px); }
+  .saved-display-actions { gap: 10px; } .saved-display-actions .selection-delete { padding: 4px 8px; font-size: 10px; }
 }
 @media (max-width:620px) and (orientation:portrait) {
   .selection-header { align-items: start; gap: 10px; } .selection-header-actions { flex-direction: column; gap: 0; align-items: end; } .selection-title p { font-size: 11px; } .selection-header .selection-primary { padding: 10px; font-size: 13px; }

@@ -1,0 +1,17 @@
+{
+  "method": "Chrome headless; isolated local saves, actual delete/cancel/creation, injected storage failures; touch emulation and gamepad mock; no physical devices",
+  "errors": [],
+  "cancelPreservesSave": true,
+  "escapeCancelsOnlyConfirmation": true,
+  "gamepadCancel": true,
+  "registryFailureSafe": true,
+  "saveRemovalFailureRollsBack": true,
+  "inactiveDeletionFreesSlot": true,
+  "activeDeletionDoesNotResurrect": true,
+  "lastDeletionAndReloadEmpty": true,
+  "recreateStartsFresh": true,
+  "staleTabCannotResaveDeletedJourney": true,
+  "touchDeletion": true,
+  "legacyReadableWithoutRegistryWrite": true,
+  "passed": true
+}

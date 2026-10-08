@@ -8,6 +8,7 @@ import { AUDIO } from '../config/audio';
 type Page = 'home' | 'pause' | 'characters' | 'create' | 'settings' | 'coop';
 type Volumes = { master: number; music: number; sfx: number };
 const LAUNCH_KEY = 'echoes-of-dante.launch-once';
+const CHARACTERS_ONCE_KEY = 'echoes-of-dante.characters-once';
 const SETTINGS_KEY = 'echoes-of-dante.settings.v1';
 
 export class ApplicationShell {
@@ -29,6 +30,8 @@ export class ApplicationShell {
     try {
       this.launchOnce = sessionStorage.getItem(LAUNCH_KEY) === characterProfiles.active.id;
       sessionStorage.removeItem(LAUNCH_KEY);
+      if (sessionStorage.getItem(CHARACTERS_ONCE_KEY)) { this.page = 'characters'; this.launchOnce = false; }
+      sessionStorage.removeItem(CHARACTERS_ONCE_KEY);
     } catch { /* Storage unavailable: the ordinary start menu stays accessible. */ }
     try {
       const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) ?? 'null');
@@ -48,8 +51,9 @@ export class ApplicationShell {
     document.body.append(this.menuButton, this.dialog);
     window.addEventListener('keydown', this.keyDown, true);
     window.addEventListener('dante-coop', this.coopChanged);
+    if (!characterProfiles.list.length) this.page = 'characters';
     this.render();
-    if (!this.qaAutoplay && !this.launchOnce) { this.dialog.showModal(); document.body.classList.add('shell-open'); }
+    if (this.page === 'characters' || (!this.qaAutoplay && !this.launchOnce)) { this.dialog.showModal(); document.body.classList.add('shell-open'); }
     this.pollPad();
   }
 
@@ -73,6 +77,7 @@ export class ApplicationShell {
     (this.content.querySelector('button') as HTMLButtonElement)?.focus();
   }
   private resume(): void {
+    if (!characterProfiles.list.length) { this.show('create'); return; }
     if (!this.scene) return;
     this.selection?.destroy(); this.selection = undefined;
     this.playing = true; this.dialog.close(); document.body.classList.remove('shell-open');
@@ -81,7 +86,7 @@ export class ApplicationShell {
   private show(page: Page): void {
     this.page = page; this.render();
     const selector = page === 'create' ? '[data-class="warrior"]' : page === 'characters' ? '.saved-character[aria-pressed="true"]' : 'button:not(:disabled)';
-    this.content.querySelector<HTMLButtonElement>(selector)?.focus({ preventScroll: true });
+    (this.content.querySelector<HTMLButtonElement>(selector) ?? this.content.querySelector<HTMLButtonElement>('[data-shell="new-character"]'))?.focus({ preventScroll: true });
   }
   private action(label: string, id: string, callback: () => void): HTMLButtonElement {
     const b = document.createElement('button'); b.type = 'button'; b.textContent = label; b.dataset.shell = id;
@@ -105,17 +110,28 @@ export class ApplicationShell {
     try { sessionStorage.setItem(LAUNCH_KEY, id); } catch { /* Start manually when session storage is blocked. */ }
     location.reload();
   }
+  private deleteCharacter(id: string): void {
+    if (this.launching || coopSession.role !== 'offline') return;
+    const active = characterProfiles.active.id === id;
+    this.scene?.flushForShell();
+    if (!characterProfiles.remove(id)) { this.status('Não foi possível excluir. O personagem e sua jornada foram mantidos.'); return; }
+    if (!active) { this.show('characters'); return; }
+    this.launching = true;
+    try { sessionStorage.removeItem(LAUNCH_KEY); sessionStorage.setItem(CHARACTERS_ONCE_KEY, '1'); } catch { /* The ordinary menu remains accessible after reload. */ }
+    location.reload();
+  }
   private render(): void {
     this.selection?.destroy(); this.selection = undefined;
     this.dialog.classList.toggle('is-character-page', this.page === 'characters' || this.page === 'create');
     this.content.replaceChildren();
     if (this.page === 'home' || this.page === 'pause') {
       const hero = characterProfiles.active;
-      this.heading(this.page === 'pause' ? 'Expedição pausada' : 'Sua próxima descoberta', `${hero.name} · ${CLASS_NAMES[hero.classId]}`);
-      const play = this.action(this.page === 'pause' ? 'VOLTAR AO JOGO' : 'CONTINUAR EXPEDIÇÃO', 'continue', () => this.resume());
+      const hasCharacters = characterProfiles.list.length > 0;
+      this.heading(this.page === 'pause' ? 'Expedição pausada' : 'Sua próxima descoberta', hasCharacters ? `${hero.name} · ${CLASS_NAMES[hero.classId]}` : 'Crie seu personagem para começar a explorar Dante.');
+      const play = this.action(!hasCharacters ? 'CRIAR NOVO PERSONAGEM' : this.page === 'pause' ? 'VOLTAR AO JOGO' : 'CONTINUAR EXPEDIÇÃO', 'continue', () => this.resume());
       play.disabled = !this.scene;
       this.action('PERSONAGENS', 'characters', () => this.show('characters')).disabled = coopSession.role !== 'offline';
-      this.action('COOPERATIVO · 2 PESSOAS', 'coop', () => this.show('coop'));
+      this.action('COOPERATIVO · 2 PESSOAS', 'coop', () => this.show('coop')).disabled = !hasCharacters;
       this.action('CONFIGURAÇÕES', 'settings', () => this.show('settings'));
       if (this.page === 'pause') this.action('VOLTAR À TELA INICIAL', 'home', () => this.show('home'));
       this.status('Progresso salvo neste navegador. Jogue em landscape no celular.');
@@ -124,6 +140,7 @@ export class ApplicationShell {
         back: () => this.show(this.page === 'create' ? 'characters' : this.playing ? 'pause' : 'home'),
         newCharacter: () => this.show('create'),
         play: id => this.launchCharacter(id),
+        remove: id => this.deleteCharacter(id),
         create: (name, classId) => {
           if (this.launching) return;
           this.scene?.flushForShell();
@@ -168,15 +185,20 @@ export class ApplicationShell {
     const pad = Array.from(navigator.getGamepads?.() ?? []).find(p => p?.connected && p.mapping === 'standard');
     const down = pad ? pad.buttons.map(b => b.pressed || b.value > .5) : [];
     if (down[9] && !this.padPrevious[9] && !this.scene?.shellPlayerDead()) {
-      if (this.dialog.open) { if (this.playing) this.resume(); } else this.openPause();
+      if (this.selection?.confirmingDeletion) this.selection.cancelDeletion();
+      else if (this.dialog.open) { if (this.playing) this.resume(); } else this.openPause();
     }
     if (this.dialog.open) {
-      const buttons = Array.from(this.content.querySelectorAll<HTMLButtonElement>('button:not(:disabled)'));
+      const activeMenu = this.content.querySelector('.character-delete-dialog[open]') ?? this.content;
+      const buttons = Array.from(activeMenu.querySelectorAll<HTMLButtonElement>('button:not(:disabled)'));
       const index = Math.max(0, buttons.indexOf(document.activeElement as HTMLButtonElement));
       if ((down[13] && !this.padPrevious[13]) || (down[15] && !this.padPrevious[15])) buttons[(index + 1) % buttons.length]?.focus();
       if ((down[12] && !this.padPrevious[12]) || (down[14] && !this.padPrevious[14])) buttons[(index + buttons.length - 1) % buttons.length]?.focus();
       if (down[0] && !this.padPrevious[0]) (document.activeElement as HTMLButtonElement)?.click?.();
-      if (down[1] && !this.padPrevious[1]) { if (this.page === 'home' || this.page === 'pause') { if (this.playing) this.resume(); } else this.show(this.playing ? 'pause' : 'home'); }
+      if (down[1] && !this.padPrevious[1]) {
+        if (this.selection?.confirmingDeletion) this.selection.cancelDeletion();
+        else if (this.page === 'home' || this.page === 'pause') { if (this.playing) this.resume(); } else this.show(this.playing ? 'pause' : 'home');
+      }
     }
     this.padPrevious = down; this.padFrame = requestAnimationFrame(this.pollPad);
   };

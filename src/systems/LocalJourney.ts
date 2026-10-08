@@ -32,9 +32,17 @@ const integer = (value: unknown, max: number): value is number => Number.isSafeI
 export class LocalJourney {
   status = 'O progresso será salvo neste navegador.';
   private key?: string;
-  private storageKey(): string { return this.key ??= characterProfiles.journeyKey; }
+  private owner?: string;
+  private storageKey(): string {
+    if (!this.key) { this.owner = characterProfiles.active.id; this.key = characterProfiles.keyFor(this.owner); }
+    return this.key;
+  }
+  private hasOwner(): boolean {
+    this.storageKey(); return characterProfiles.ownsJourney(this.owner!);
+  }
 
   load(): JourneySnapshot | undefined {
+    if (!this.hasOwner()) return undefined;
     try {
       const text = localStorage.getItem(this.storageKey());
       if (!text) return undefined;
@@ -103,6 +111,8 @@ export class LocalJourney {
   }
 
   save(snapshot: JourneySnapshot): boolean {
+    // pagehide/visibility flush must never recreate a deleted character's save.
+    if (!this.hasOwner()) { this.status = 'Não foi possível salvar. Este personagem não está disponível no armazenamento local.'; return false; }
     try {
       localStorage.setItem(this.storageKey(), JSON.stringify(snapshot));
       this.status = 'Progresso salvo neste navegador.';
