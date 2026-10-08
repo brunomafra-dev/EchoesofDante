@@ -2,6 +2,10 @@
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
+## Convide um amigo por link · 0.1.73
+
+**JOGAR COM AMIGO → CRIAR SALA E CONVIDAR → COPIAR LINK DE CONVITE**. Quem recebe abre o link e entra; a dupla começa automaticamente. Criação de personagem mantém o convite, código continua como alternativa e seu progresso solo é preservado. Integração da URL Vercel com serviço central preparada, com configuração somente na hospedagem; **ativação pública ainda pendente**. [Fluxo, publicação e testes](docs/regional-coop/).
+
 ## Cooperativo sem configuração de servidor · 0.1.72
 
 `npm run dev` inicia jogo e salas juntos. No menu: **CRIAR SALA → COPIAR CÓDIGO**; seu amigo abre a mesma URL e usa **ENTRAR NA SALA**. Não há endereço de servidor para preencher nem segundo comando. A build também pode ser servida junto com as salas por `npm start` após o build; hospedagem pública precisa aceitar WebSocket. [Instruções e testes](docs/regional-coop/).

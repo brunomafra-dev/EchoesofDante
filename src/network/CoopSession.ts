@@ -43,7 +43,7 @@ export class CoopSession {
  }
  private open(request:object,retry:boolean,resolve:()=>void=()=>{},reject:(reason:Error)=>void=()=>{}):void {
   const ws=new WebSocket(this.url);this.socket=ws;let joined=false;
-  this.timeout=setTimeout(()=>{if(this.socket===ws&&!joined){ws.close();if(!retry){this.fail('O cooperativo demorou para responder. Tente novamente em alguns segundos.');reject(new Error(this.message));}}},5000);
+  this.timeout=setTimeout(()=>{if(this.socket===ws&&!joined){ws.close();if(!retry){this.fail('O cooperativo demorou para responder. Tente novamente em alguns segundos.');reject(new Error(this.message));}}},retry?5000:60000);
   ws.onopen=()=>{if(this.socket===ws)ws.send(JSON.stringify(request));};
   ws.onmessage=event=>{
    if(this.socket!==ws)return;
@@ -55,7 +55,7 @@ export class CoopSession {
     if(this.role==='host'&&this.pendingTravel&&this.pendingTravel!==m.area){
      this.travelling=true;ws.send(JSON.stringify({type:'travel',area:this.pendingTravel,epoch:this.epoch}));
     }else this.pendingTravel=undefined;
-    this.message=retry?'Conexão recuperada.':m.role==='host'&&!m.peer?'Sala criada. Copie o código para convidar seu amigo.':'Dupla pronta. O XP ganho fica com seu personagem.';
+    this.message=retry?'Conexão recuperada.':m.role==='host'&&!m.peer?'Sala criada. Envie o link para convidar seu amigo.':'Dupla pronta. O XP ganho fica com seu personagem.';
     this.hostPaused=m.paused===true;
     if(this.role==='host')this.setMenu(this.localMenu);
     if(this.role==='guest')this.credit(m.receipt,m.total);

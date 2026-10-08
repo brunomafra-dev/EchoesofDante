@@ -1,0 +1,204 @@
+{
+  "errors": [],
+  "method": "Two independent Chrome contexts, real local relay/menu/keys; DEV positions, completed-campaign setup and lethal hit setup. No physical devices.",
+  "entryRequiresSoloBackup": true,
+  "hostMenuState": true,
+  "noHistoricalXpCopied": true,
+  "duoResilience": true,
+  "reconnectCancelsHeldSkill": true,
+  "reconnectAndDuplicateRewardSafe": true,
+  "hostReconnected": true,
+  "failedStorageRetried": true,
+  "interruptedTravelRecovered": true,
+  "travels": [
+    {
+      "host": {
+        "area": "valley",
+        "role": "host",
+        "connected": true,
+        "code": "5321DDFEA1",
+        "epoch": 6,
+        "xp": 1030,
+        "personal": 0,
+        "saved": true,
+        "receipt": "",
+        "dead": false,
+        "objects": 157,
+        "tweens": 4,
+        "fps": 37.92901031644169,
+        "p": {
+          "x": 2865,
+          "y": 640
+        },
+        "partner": {
+          "x": 2945,
+          "y": 640
+        },
+        "roomArea": "valley",
+        "message": "Travessia em dupla · aguardando a nova região.",
+        "transitioning": false
+      },
+      "guest": {
+        "area": "valley",
+        "role": "guest",
+        "connected": true,
+        "code": "5321DDFEA1",
+        "epoch": 6,
+        "xp": 1030,
+        "personal": 30,
+        "saved": true,
+        "receipt": "b8fb1f28ba92f3370588fbf7a1d9ecb0",
+        "dead": false,
+        "objects": 235,
+        "tweens": 4,
+        "fps": 41.488023565368735,
+        "p": {
+          "x": 2945,
+          "y": 640
+        },
+        "partner": null,
+        "roomArea": "valley",
+        "message": "Travessia em dupla · aguardando a nova região.",
+        "transitioning": false,
+        "prompt": false
+      }
+    },
+    {
+      "host": {
+        "area": "valley",
+        "role": "host",
+        "connected": true,
+        "code": "5321DDFEA1",
+        "epoch": 10,
+        "xp": 1030,
+        "personal": 0,
+        "saved": true,
+        "receipt": "",
+        "dead": false,
+        "objects": 157,
+        "tweens": 4,
+        "fps": 38.6578405256069,
+        "p": {
+          "x": 2865,
+          "y": 640
+        },
+        "partner": {
+          "x": 2945,
+          "y": 640
+        },
+        "roomArea": "valley",
+        "message": "Travessia em dupla · aguardando a nova região.",
+        "transitioning": false
+      },
+      "guest": {
+        "area": "valley",
+        "role": "guest",
+        "connected": true,
+        "code": "5321DDFEA1",
+        "epoch": 10,
+        "xp": 1030,
+        "personal": 30,
+        "saved": true,
+        "receipt": "b8fb1f28ba92f3370588fbf7a1d9ecb0",
+        "dead": false,
+        "objects": 235,
+        "tweens": 4,
+        "fps": 36.00523258380713,
+        "p": {
+          "x": 2945,
+          "y": 640
+        },
+        "partner": null,
+        "roomArea": "valley",
+        "message": "Travessia em dupla · aguardando a nova região.",
+        "transitioning": false,
+        "prompt": false
+      }
+    },
+    {
+      "host": {
+        "area": "valley",
+        "role": "host",
+        "connected": true,
+        "code": "5321DDFEA1",
+        "epoch": 14,
+        "xp": 1030,
+        "personal": 0,
+        "saved": true,
+        "receipt": "",
+        "dead": false,
+        "objects": 157,
+        "tweens": 4,
+        "fps": 39.64329206723036,
+        "p": {
+          "x": 2865,
+          "y": 640
+        },
+        "partner": {
+          "x": 2945,
+          "y": 640
+        },
+        "roomArea": "valley",
+        "message": "Travessia em dupla · aguardando a nova região.",
+        "transitioning": false
+      },
+      "guest": {
+        "area": "valley",
+        "role": "guest",
+        "connected": true,
+        "code": "5321DDFEA1",
+        "epoch": 14,
+        "xp": 1030,
+        "personal": 30,
+        "saved": true,
+        "receipt": "b8fb1f28ba92f3370588fbf7a1d9ecb0",
+        "dead": false,
+        "objects": 235,
+        "tweens": 4,
+        "fps": 34.31190995761656,
+        "p": {
+          "x": 2945,
+          "y": 640
+        },
+        "partner": null,
+        "roomArea": "valley",
+        "message": "Travessia em dupla · aguardando a nova região.",
+        "transitioning": false,
+        "prompt": false
+      }
+    }
+  ],
+  "threeRoundTripsStable": true,
+  "soloBossPassageKeepsRoom": true,
+  "sharedRespawnKeepsRoom": true,
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "width": 1366,
+      "height": 768
+    },
+    {
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "width": 844,
+      "height": 390
+    }
+  ],
+  "fps": {
+    "host": 57.82404134464915,
+    "guest": 57.30351758321205
+  },
+  "personalProgressAndSoloCampaignAfterLeave": true,
+  "soloResilienceRestored": true,
+  "relay": {
+    "service": "Dante regional co-op",
+    "rooms": 0,
+    "players": 0
+  },
+  "passed": true
+}

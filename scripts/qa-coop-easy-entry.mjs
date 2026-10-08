@@ -47,7 +47,7 @@ try {
   await h.locator('[data-shell="coop-play"]').click();
   await g.locator('[name="coop-code"]').fill(code);
   await g.locator('[data-shell="coop-join"]').click();
-  await g.locator('[data-shell="coop-play"]').click();
+  await g.waitForFunction(() => !document.querySelector('.application-shell[open]'));
   await g.waitForTimeout(1800);
   assert.ok(messages.some(m => m.type === 'joined' && m.role === 'guest'));
   assert.ok(messages.some(m => m.type === 'world'));

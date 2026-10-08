@@ -1,0 +1,16 @@
+# One room service for the existing Vercel game. No game assets or database.
+services:
+  - type: web
+    name: echoes-of-dante-rooms
+    runtime: node
+    plan: free
+    region: virginia
+    buildCommand: npm ci --omit=dev
+    startCommand: node server/coop.mjs
+    healthCheckPath: /coop/health
+    autoDeployTrigger: off
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: COOP_ORIGINS
+        value: https://echosofdante.vercel.app

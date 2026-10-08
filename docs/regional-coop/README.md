@@ -1,15 +1,37 @@
-# Expedições em dupla · 0.1.72
+# Expedições em dupla · 0.1.73
 
 Duas pessoas, mesma build web, Guerreiro ou Star Hunter, sem login. Esta etapa melhora a continuidade regional e a retenção de XP; não implementa campanha inteira ou chefes em dupla.
 
-## Como jogar
+## Como jogar — fluxo do jogador
 
-1. Inicie o jogo com **`npm run dev`**. Jogo e salas iniciam juntos; não execute outro servidor.
-2. Abra o jogo e use **MENU → COOPERATIVO · 2 PESSOAS → CRIAR SALA**.
-3. Use **COPIAR CÓDIGO**. Seu amigo escolhe seu personagem, abre a mesma URL e cola o código em **ENTRAR NA SALA**. Nenhum endereço técnico é solicitado.
-4. Ambos escolhem **VOLTAR À EXPEDIÇÃO**. O visitante aparece em um ponto livre próximo ao anfitrião.
+1. Abra [Echoes of Dante](https://echosofdante.vercel.app/).
+2. **JOGAR COM AMIGO → CRIAR SALA E CONVIDAR**.
+3. **COPIAR LINK DE CONVITE** e envie ao seu amigo; compartilhar nativo aparece quando o navegador oferece essa opção.
+4. Ele abre o link e entra com seu personagem ativo. A dupla começa automaticamente quando ele conecta. Se não houver personagem, a criação preserva o convite até entrar.
 
-Na rede local: use `http://IP-DO-COMPUTADOR:PORTA` nos dois aparelhos, com a porta exibida pelo Vite. Jogo e salas usam essa mesma porta. No celular, `localhost` significa o próprio celular; o computador precisa permitir a conexão pela rede local. Não é necessário configurar o endereço das salas.
+Também é possível colar o link completo ou o código em **ENTRAR NA SALA**. Não há login, comando, porta ou endereço de servidor na interface dos jogadores. Seu personagem/progresso solo continuam locais.
+
+**Estado da publicação:** interface/convites e integração preparados; o serviço central de salas ainda precisa ser criado e ligado à Vercel pelo responsável pelo jogo. Em 08/10/2026, `/coop/health` da URL pública retornou 404. Até a configuração, a API mostra cooperativo indisponível e preserva o solo. O fluxo pela internet ainda não foi validado.
+
+Convites levam somente `?sala=CODIGO`, sem credencial de reconexão, nome ou save. O parâmetro é removido após entrar/cancelar; sair/recarregar não reentra automaticamente. Salas cheias, encerradas e convites inválidos permitem voltar ou tentar outro convite. Se clipboard não estiver disponível, o link é selecionado para cópia manual.
+
+## Publicar uma vez — responsável pelo jogo
+
+O jogo continua na Vercel. `render.yaml` prepara **um relay Node** no plano Free, usando a implementação existente, sem banco de dados ou assets do jogo.
+
+1. Abra [publicar o serviço de salas](https://render.com/deploy?repo=https://github.com/brunomafra-dev/EchoesofDante) em sua conta Render, revise o blueprint e aguarde o serviço ficar online.
+2. Na Vercel, projeto `echosofdante`: **Settings → Environment Variables**, defina `COOP_RELAY_URL` como `wss://ENDERECO-REAL-DO-SERVICO.onrender.com/coop`, usando o endereço gerado pelo serviço.
+3. Faça **Redeploy** na Vercel. `/api/coop-config` deve retornar `ready: true`. Depois valide dois aparelhos em redes diferentes criando e abrindo um convite.
+
+Esses passos são da publicação; nenhum jogador repete essa configuração. O navegador busca a configuração em `/api/coop-config` antes de criar/entrar na sala. Uma configuração ausente/inválida não tenta conectar a um WebSocket inexistente nem pede endereço ao jogador. O campo é uma URL pública, não uma chave secreta.
+
+Escolhemos um processo central para preservar salas e credenciais em memória. [Vercel documenta que conexões novas podem alcançar instâncias diferentes e que salas em Functions precisam de armazenamento/coordenação externos](https://vercel.com/docs/functions/websockets). Não adaptamos o relay a esse modelo distribuído nesta etapa. [Render oferece conexões WebSocket públicas](https://render.com/docs/websocket); no [plano Free, a retomada após inatividade pode levar aproximadamente um minuto](https://render.com/docs/free). A primeira conexão espera até 60 s, pode ser cancelada e as reconexões existentes mantêm seus limites. O Free é uma opção de playtest, sem promessa de disponibilidade imediata.
+
+O relay usa uma única instância. `COOP_ORIGINS` inclui a URL pública informada; outras URLs de preview/customizadas precisam ser autorizadas na hospedagem. Reiniciar/publicar o relay encerra suas salas. Não há migração de instância ou persistência remota.
+
+## Desenvolvimento local
+
+`npm run dev` inicia jogo e salas juntos. Na rede local, abra `http://IP-DO-COMPUTADOR:PORTA` nos dois aparelhos, usando a porta mostrada pelo Vite. Um convite com `localhost` só abre no computador que o gerou; isso não substitui a hospedagem pública. O computador precisa permitir a conexão pela rede local.
 
 ### Build e hospedagem
 
@@ -53,6 +75,7 @@ Salas disponíveis em **Floresta, Vale da Ressonância, Bacia do Siroco, Dunas I
 | Variável | Uso |
 | --- | --- |
 | `PORT` | Porta do servidor integrado de produção; padrão 8080 |
+| `COOP_RELAY_URL` | URL WSS do serviço central, configurada na Vercel; dispensada no servidor integrado local |
 | `COOP_PORT` | Apenas relay separado opcional; padrão 5190 |
 | `COOP_ORIGINS` | Origens autorizadas, separadas por vírgula |
 | `VITE_COOP_URL` | Override opcional na build para hospedagem com relay separado |
@@ -62,6 +85,21 @@ Produção HTTPS usa **WSS** na mesma URL, com proxy TLS encaminhando `/coop` ao
 Reiniciar o servidor do jogo encerra as salas em memória; crie uma nova sala depois da atualização.
 
 ## Verificações
+
+### Convite direto · 0.1.73
+
+```text
+npm run typecheck
+npm run build
+node scripts/qa-coop-invitation.mjs dev
+node scripts/qa-coop-invitation.mjs production
+node scripts/qa-coop-config.mjs
+node scripts/qa-coop-continuity.mjs docs/regional-coop/invitation-qa/continuity
+```
+
+O QA de convites abre a URL real da sala em outro perfil Chrome e verifica entrada automática, início das duas telas, cópia/fallback, sala cheia/encerrada, convite inválido, link colado no menu, saída sem reentrada e criação de Hunter mantendo o convite através de reload. A build de produção também verifica cancelamento antes da resposta de configuração e clique duplicado sem criar salas extras. A configuração é testada com HTTP real, `PORT` da plataforma, política de origens e dois clientes do relay. Resultados: [invitation-qa](invitation-qa/). Não representam dispositivos físicos, serviço Render publicado ou partida pela internet.
+
+Typecheck, build, convites dev/produção, configuração e continuidade regional passaram. Na continuidade, três idas/voltas conservaram 157 objetos no anfitrião, 235 no visitante e quatro tweens em cada tela; XP, reconexão, morte/respawn e jornada solo foram preservados. A amostra final foi de 57,8/57,3 FPS; durante travessias houve amostras de 34–41 FPS, portanto não é uma garantia de 60 FPS contínuos. Uma execução final de convites excedeu o timeout de carregamento de página; a repetição completa passou sem erros JS/assets e terminou com zero salas/jogadores.
 
 ### Entrada simplificada · 0.1.72
 

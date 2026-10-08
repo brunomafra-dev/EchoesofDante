@@ -4,6 +4,7 @@ import { stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { resolve, relative, isAbsolute, extname } from 'node:path';
 import { attachCoop } from './relay.mjs';
+import { coopConfig } from './coop-config.mjs';
 
 // The built game and rooms share one port, including in a Node deployment.
 const root = fileURLToPath(new URL('../dist/', import.meta.url));
@@ -18,6 +19,7 @@ const server = createServer(async (req, res) => {
   let pathname;
   try { pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname); }
   catch { res.writeHead(400); res.end(); return; }
+  if (pathname === '/api/coop-config') { coopConfig(req, res, { integratedPath: '/coop' }); return; }
   if (pathname === '/coop/health') {
     res.setHeader('Content-Type', 'application/json');
     res.end(req.method === 'HEAD' ? undefined : JSON.stringify(relay.status())); return;

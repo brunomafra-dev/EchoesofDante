@@ -77,6 +77,7 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
 .shell-content label { display: block; margin: 18px 0; color: #bcccb3; font-size: 14px; }
 .shell-content input { display: block; width: 100%; margin-top: 8px; padding: 12px; border: 1px solid #73866f88; border-radius: 4px; background: #071510; color: #e2e8d8; font: inherit; }
 .shell-content input[type="range"] { padding: 0; accent-color: #a98cff; }
+.shell-content input[name="coop-invite"] { font-size: 12px; user-select: text; -webkit-user-select: text; }
 .shell-class-card { padding: 16px; border-left: 2px solid #e0863f; background: #172a21b3; }
 .shell-class-card small { color: #aebba6; }
 .shell-content .shell-status { font-size: 11px; margin-top: 22px; }

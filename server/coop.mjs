@@ -7,7 +7,7 @@ const server = createServer((_req, res) => {
   res.end(JSON.stringify(relay.status()));
 });
 const relay = attachCoop(server, { path: null });
-const port = Number(process.env.COOP_PORT ?? 5190);
+const port = Number(process.env.PORT ?? process.env.COOP_PORT ?? 5190);
 server.listen(port, '0.0.0.0', () => console.log(`Dante regional co-op relay on port ${port}`));
 const stop = () => { relay.close(); server.close(); };
 process.on('SIGINT', stop); process.on('SIGTERM', stop);

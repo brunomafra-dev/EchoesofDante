@@ -1,0 +1,9 @@
+{
+  "method": "Real HTTP Vercel handler in Node + standalone relay with platform PORT and production origin policy. Local only.",
+  "unconfiguredIsExplicit": true,
+  "configuredEndpointAndMethods": true,
+  "invalidConfigurationRejected": true,
+  "platformPortAndPublishedOriginAccepted": true,
+  "otherOriginRejected": true,
+  "passed": true
+}

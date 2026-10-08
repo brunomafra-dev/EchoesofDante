@@ -374,6 +374,13 @@
 - Prévia do Hunter seleciona a primeira linha frontal do atlas existente, incluindo movimentos da demonstração, e ajusta ombros/arma. Nenhuma alteração de arte ou orientação no gameplay. [Comportamento, capturas e QA](character-showcase/).
 
 
+## Convites de sala e ligação à Vercel · 0.1.73
+
+- `?sala=CODIGO` leva diretamente à entrada por personagem ativo; criar personagem mantém o convite através do reload. Convite contém somente o código público. Remover o parâmetro depois de entrar/cancelar evita reentrada ao sair. Colar o link no menu também funciona; salas cheias/encerradas não fazem retry automático infinito. Clipboard tem fallback selecionável e compartilhar nativo é opcional.
+- Visitante entra no gameplay após conexão; anfitrião aguardando seu primeiro convidado também retoma automaticamente. Abrir o menu numa dupla já existente continua pausando a simulação. Não alteramos autoridade, dano, progressão ou campanha disponível.
+- A URL pública informada é Vercel. `/api/coop-config` fornece a URL WSS de um relay central (`COOP_RELAY_URL` da hospedagem); dev/preview/Node integrado fornecem `/coop`. Não configurado retorna 503 explícito e solo permanece acessível. Cancelar invalida a tentativa assíncrona; duplo clique não abre duas salas.
+- Blueprint Render Free utiliza relay existente com `PORT`, origem Vercel e uma instância. Publicação/configuração de conta ainda pendente; nenhum servidor externo foi provisionado. Evitamos exportar o Map de salas diretamente como Function sem coordenação entre instâncias. Primeira conexão admite 60 s para startup do serviço; reconexão mantém 5 s por tentativa e os limites de sessão existentes. [Operação e QA](regional-coop/).
+
 ## Cooperativo integrado à URL do jogo · 0.1.72
 
 - Salas anexadas ao servidor HTTP existente, com upgrade WebSocket limitado a `/coop`. O mesmo relay é usado pelo Vite dev/preview e pelo servidor Node da build; não intercepta o HMR. Encerramento remove listener de upgrade, heartbeat, reservas e conexões. O relay separado é mantido para compatibilidade, sem ser necessário no fluxo normal.

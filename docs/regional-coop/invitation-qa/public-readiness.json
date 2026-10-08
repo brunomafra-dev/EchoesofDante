@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-08T19:12:26.579Z",
+  "url": "https://echosofdante.vercel.app",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/api/coop-config",
+      "status": 404,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "path": "/coop/health",
+      "status": 404,
+      "contentType": "text/plain; charset=utf-8"
+    }
+  ],
+  "onlineRoomsValidated": false,
+  "reason": "Public room service and hosting configuration not provisioned; no account access available."
+}

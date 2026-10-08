@@ -2,6 +2,7 @@ import type { GameScene } from '../scenes/GameScene';
 import { characterProfiles } from '../systems/CharacterProfiles';
 import { coopSession, COOP_AREAS } from '../network/CoopSession';
 import { coopEndpoint } from '../network/CoopEndpoint';
+import { roomCode, invitationLink, clearInvitation } from '../network/CoopInvitation';
 import { CLASS_NAMES } from '../config/classes';
 import { CharacterSelection } from './CharacterSelection';
 import { AUDIO } from '../config/audio';
@@ -22,6 +23,12 @@ export class ApplicationShell {
   private launching = false;
   private page: Page = 'home';
   private playing = false;
+  private readonly invitation = new URL(location.href).searchParams.get('sala');
+  private coopCode = roomCode(location.href) ?? '';
+  private inviteAttempted = false;
+  private waitingForFriend = false;
+  private coopBusy = false;
+  private connectionAttempt = 0;
   private padPrevious: boolean[] = [];
   private padFrame = 0;
   private readonly qaAutoplay = import.meta.env.DEV && new URLSearchParams(location.search).get('qa') === 'play';
@@ -52,9 +59,10 @@ export class ApplicationShell {
     document.body.append(this.menuButton, this.dialog);
     window.addEventListener('keydown', this.keyDown, true);
     window.addEventListener('dante-coop', this.coopChanged);
-    if (!characterProfiles.list.length) this.page = 'characters';
+    if (this.invitation !== null) { this.page = 'coop'; this.launchOnce = false; }
+    if (!characterProfiles.list.length) this.page = this.invitation !== null ? 'create' : 'characters';
     this.render();
-    if (this.page === 'characters' || (!this.qaAutoplay && !this.launchOnce)) { this.dialog.showModal(); document.body.classList.add('shell-open'); }
+    if (this.invitation !== null || this.page === 'characters' || (!this.qaAutoplay && !this.launchOnce)) { this.dialog.showModal(); document.body.classList.add('shell-open'); }
     this.pollPad();
   }
 
@@ -64,6 +72,11 @@ export class ApplicationShell {
     else if (this.qaAutoplay || this.launchOnce) this.playing = true;
     this.render();
     if (this.dialog.open) (this.content.querySelector('button:not(:disabled)') as HTMLButtonElement)?.focus();
+    if (this.page === 'coop' && this.invitation !== null && !this.inviteAttempted && characterProfiles.list.length) {
+      this.inviteAttempted = true;
+      if (this.coopCode) this.connectCoop('join');
+      else this.status('Este convite está incompleto. Peça um novo link ao seu amigo ou cole o código da sala.');
+    }
   }
   private keyDown = (event: KeyboardEvent): void => {
     if (event.code !== 'Escape' || event.repeat) return;
@@ -80,7 +93,12 @@ export class ApplicationShell {
   private resume(): void {
     if (!characterProfiles.list.length) { this.show('create'); return; }
     if (!this.scene) return;
+    if (this.coopBusy || coopSession.role === 'connecting') {
+      this.connectionAttempt++; this.coopBusy = false; this.inviteAttempted = true;
+      clearInvitation(); coopSession.disconnect(false);
+    }
     this.selection?.destroy(); this.selection = undefined;
+    this.waitingForFriend = false;
     this.playing = true; this.dialog.close(); document.body.classList.remove('shell-open');
     this.scene.resumeFromShell(); this.scene.game.canvas.focus({ preventScroll: true });
   }
@@ -121,6 +139,47 @@ export class ApplicationShell {
     try { sessionStorage.removeItem(LAUNCH_KEY); sessionStorage.setItem(CHARACTERS_ONCE_KEY, '1'); } catch { /* The ordinary menu remains accessible after reload. */ }
     location.reload();
   }
+  private async connectCoop(mode: 'create' | 'join'): Promise<void> {
+    if (!this.scene || this.coopBusy || coopSession.role !== 'offline') return;
+    const code = roomCode(this.coopCode);
+    if (mode === 'join' && !code) { this.status('Cole o link do convite ou o código de 10 letras/números enviado pelo seu amigo.'); return; }
+    const saved = this.scene.flushForShell();
+    if (mode === 'join' && !saved) { this.status('Não foi possível guardar sua jornada solo. Libere o armazenamento do navegador antes de entrar.'); return; }
+    const hero = characterProfiles.active;
+    this.coopBusy = true;
+    const attempt = ++this.connectionAttempt;
+    this.render();
+    this.status(mode === 'create' ? 'Criando sua sala…' : 'Entrando na sala do seu amigo…');
+    try {
+      const endpoint = await coopEndpoint();
+      if (attempt !== this.connectionAttempt) return;
+      await coopSession.connect(endpoint, mode, { name: hero.name, classId: hero.classId }, this.scene.coopArea(), code ?? '');
+      if (attempt !== this.connectionAttempt) return;
+      this.coopBusy = false;
+      clearInvitation();
+      if (this.page !== 'coop' || !this.dialog.open) return;
+      if (mode === 'join') this.resume();
+      else {
+        this.waitingForFriend = true; this.render();
+        if (coopSession.peerConnected) this.resume();
+      }
+    } catch (error) {
+      if (attempt !== this.connectionAttempt) return;
+      this.coopBusy = false;
+      this.waitingForFriend = false;
+      if (this.page === 'coop' && this.dialog.open) { this.render(); this.status(error instanceof Error ? error.message : 'Não foi possível entrar na sala. Tente novamente.'); }
+    }
+  }
+  private async copyInvite(input: HTMLInputElement): Promise<void> {
+    try {
+      if (!navigator.clipboard) throw Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(input.value);
+      this.status('Link copiado. Envie ao seu amigo; ele entra ao abrir o convite.');
+    } catch {
+      input.focus(); input.select(); input.setSelectionRange(0, input.value.length);
+      this.status('Convite selecionado. Copie o link e envie ao seu amigo.');
+    }
+  }
   private render(): void {
     this.selection?.destroy(); this.selection = undefined;
     this.dialog.classList.toggle('is-character-page', this.page === 'characters' || this.page === 'create');
@@ -132,7 +191,7 @@ export class ApplicationShell {
       const play = this.action(!hasCharacters ? 'CRIAR NOVO PERSONAGEM' : this.page === 'pause' ? 'VOLTAR AO JOGO' : 'CONTINUAR EXPEDIÇÃO', 'continue', () => this.resume());
       play.disabled = !this.scene;
       this.action('PERSONAGENS', 'characters', () => this.show('characters')).disabled = coopSession.role !== 'offline';
-      this.action('COOPERATIVO · 2 PESSOAS', 'coop', () => this.show('coop')).disabled = !hasCharacters;
+      this.action('JOGAR COM AMIGO', 'coop', () => this.show('coop')).disabled = !hasCharacters;
       this.action('CONFIGURAÇÕES', 'settings', () => this.show('settings'));
       if (this.page === 'pause') this.action('VOLTAR À TELA INICIAL', 'home', () => this.show('home'));
       this.status('Progresso salvo neste navegador. Jogue em landscape no celular.');
@@ -150,37 +209,38 @@ export class ApplicationShell {
           this.launchCharacter(hero.id);
         },
       });
+      if (this.invitation !== null && !this.inviteAttempted) this.status('Seu convite está aguardando. Escolha ou crie um personagem para entrar na sala.');
     } else if (this.page === 'coop') {
-      this.heading('Expedição em dupla', 'Viajem juntos pelo Vale, Siroco e Dunas. O XP ganho fica com cada personagem; a campanha é do anfitrião. Cavernas de campanha e chefes continuam solo.');
-      if (coopSession.role === 'offline') {
-        const code = document.createElement('input'); code.name = 'coop-code'; code.placeholder = 'Cole o código enviado pelo anfitrião'; code.maxLength = 14; code.autocomplete = 'off'; code.spellcheck = false; code.setAttribute('aria-label', 'Código da sala'); this.content.append(code);
-        const join = (mode: 'create' | 'join') => {
-          const hero = characterProfiles.active; const saved = this.scene?.flushForShell();
-          if (mode === 'join' && !saved) { this.status('Não foi possível guardar sua jornada solo. Libere o armazenamento do navegador antes de entrar.'); return; }
-          create.disabled = enter.disabled = true;
-          this.status(mode === 'create' ? 'Criando sua sala…' : 'Entrando na sala…');
-          coopSession.connect(coopEndpoint(), mode, {name:hero.name,classId:hero.classId}, this.scene!.coopArea(), code.value.trim())
-            .then(() => { if (this.page === 'coop' && this.dialog.open) this.render(); })
-            .catch(error => {
-              create.disabled = !this.scene || !COOP_AREAS.includes(this.scene.coopArea());
-              enter.disabled = !this.scene;
-              this.status(error.message);
-            });
-        };
-        const create = this.action('CRIAR SALA', 'coop-create', () => join('create')); create.disabled = !this.scene || !COOP_AREAS.includes(this.scene.coopArea());
-        const enter = this.action('ENTRAR NA SALA', 'coop-join', () => join('join')); enter.disabled = !this.scene;
-        if (create.disabled) this.status('Para criar uma sala, vá à Floresta, Vale, Siroco, Dunas ou Fratura Boreal.');
+      this.heading('Jogar com amigo', 'Crie uma sala e envie o link. Seu amigo entra ao abrir o convite.');
+      if (coopSession.role === 'offline' || coopSession.role === 'connecting') {
+        const busy = this.coopBusy || coopSession.role === 'connecting';
+        const create = this.action('CRIAR SALA E CONVIDAR', 'coop-create', () => this.connectCoop('create'));
+        create.disabled = busy || !this.scene || !COOP_AREAS.includes(this.scene.coopArea());
+        const label = document.createElement('label'); label.textContent = 'Recebeu um convite?';
+        const code = document.createElement('input'); code.name = 'coop-code'; code.placeholder = 'Cole o link ou o código da sala'; code.value = this.coopCode; code.maxLength = 2048; code.autocomplete = 'off'; code.spellcheck = false;
+        code.setAttribute('aria-label', 'Link ou código da sala'); code.disabled = busy;
+        code.addEventListener('input', () => { this.coopCode = code.value; }); label.append(code); this.content.append(label);
+        this.action(busy ? 'CONECTANDO…' : 'ENTRAR NA SALA', 'coop-join', () => this.connectCoop('join')).disabled = busy || !this.scene;
+        if (!busy && create.disabled && this.scene) this.status('Crie salas na Floresta, Vale, Siroco, Dunas ou Fratura Boreal. Cavernas e chefes continuam solo.');
       } else {
         this.status('SALA ' + coopSession.code + ' · ' + coopSession.message);
-        this.action('COPIAR CÓDIGO', 'coop-copy', () => {
-          navigator.clipboard?.writeText(coopSession.code).then(() => this.status('Código copiado. Envie ao seu amigo.'))
-            .catch(() => this.status('Código: ' + coopSession.code));
-          if (!navigator.clipboard) this.status('Código: ' + coopSession.code);
+        const invite = document.createElement('input'); invite.name = 'coop-invite'; invite.readOnly = true;
+        invite.value = invitationLink(coopSession.code); invite.setAttribute('aria-label', 'Link de convite da sala');
+        invite.addEventListener('click', () => invite.select()); this.content.append(invite);
+        this.action('COPIAR LINK DE CONVITE', 'coop-copy', () => { void this.copyInvite(invite); });
+        if (navigator.share) this.action('ENVIAR CONVITE', 'coop-share', () => {
+          void navigator.share({ title: 'Echoes of Dante · jogue comigo', url: invite.value })
+            .catch(error => { if (error.name !== 'AbortError') void this.copyInvite(invite); });
         });
-        this.action('VOLTAR À EXPEDIÇÃO', 'coop-play', () => this.resume());
-        this.action('ENCERRAR / SAIR DA SALA', 'coop-leave', () => {coopSession.disconnect(); this.render();});
+        this.action('JOGAR', 'coop-play', () => this.resume());
+        this.action('ENCERRAR / SAIR DA SALA', 'coop-leave', () => { this.waitingForFriend = false; coopSession.disconnect(); this.render(); });
       }
-      this.action('VOLTAR', 'back', () => this.show(this.playing ? 'pause' : 'home'));
+      this.action('VOLTAR', 'back', () => {
+        this.inviteAttempted = true; clearInvitation(); this.waitingForFriend = false;
+        this.connectionAttempt++; this.coopBusy = false;
+        if (coopSession.role === 'connecting') coopSession.disconnect(false);
+        this.show(this.playing ? 'pause' : 'home');
+      });
     } else {
       this.heading('Configurações', 'Ajuste o som da sua expedição.');
       for (const [key, title] of [['master','Volume geral'],['music','Música'],['sfx','Efeitos']] as const) {
@@ -193,7 +253,11 @@ export class ApplicationShell {
       this.action('VOLTAR', 'back', () => this.show(this.playing ? 'pause' : 'home'));
     }
   }
-  private coopChanged = (): void => { if (this.dialog.open && this.page === 'coop') this.status((coopSession.code ? 'SALA ' + coopSession.code + ' · ' : '') + coopSession.message); };
+  private coopChanged = (): void => {
+    if (!this.dialog.open || this.page !== 'coop') return;
+    if (this.waitingForFriend && coopSession.role === 'host' && coopSession.peerConnected) { this.resume(); return; }
+    this.status((coopSession.code ? 'SALA ' + coopSession.code + ' · ' : '') + coopSession.message);
+  };
   private applyVolumes(): void { this.scene?.setShellVolumes(this.volumes.master, this.volumes.music, this.volumes.sfx); }
   private pollPad = (): void => {
     const pad = Array.from(navigator.getGamepads?.() ?? []).find(p => p?.connected && p.mapping === 'standard');
