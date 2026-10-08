@@ -374,6 +374,11 @@
 - Prévia do Hunter seleciona a primeira linha frontal do atlas existente, incluindo movimentos da demonstração, e ajusta ombros/arma. Nenhuma alteração de arte ou orientação no gameplay. [Comportamento, capturas e QA](character-showcase/).
 
 
+## Serviço público de salas · 0.1.74
+
+- O responsável publicou o relay existente em `echoes-of-dante-rooms.onrender.com`. Health check respondeu 200. A Function de configuração da Vercel usa seu endereço WSS público como padrão, evitando uma segunda configuração manual; `COOP_RELAY_URL` conserva precedência para migração e valores inválidos continuam rejeitados.
+- Somente a Function pública recebe o padrão: Vite dev/preview e servidor Node integrado preservam seu `/coop` local. Não há mudança de protocolo, gameplay, progressão, autoridade ou UI. QA de configuração verifica padrão, override e rejeição; QA público usa a URL Vercel e dois perfis Chrome sem mock, com resultado separado dos testes locais.
+
 ## Convites de sala e ligação à Vercel · 0.1.73
 
 - `?sala=CODIGO` leva diretamente à entrada por personagem ativo; criar personagem mantém o convite através do reload. Convite contém somente o código público. Remover o parâmetro depois de entrar/cancelar evita reentrada ao sair. Colar o link no menu também funciona; salas cheias/encerradas não fazem retry automático infinito. Clipboard tem fallback selecionável e compartilhar nativo é opcional.

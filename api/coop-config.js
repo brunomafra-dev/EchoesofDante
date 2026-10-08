@@ -1,4 +1,6 @@
 import { coopConfig } from '../server/coop-config.mjs';
 
-// Runs on Vercel. Set COOP_RELAY_URL once in the project's environment.
-export default function handler(req, res) { coopConfig(req, res); }
+// Public service published by the project owner. Environment configuration can
+// override it; local Vite/Node servers keep their own integrated /coop endpoint.
+export const PUBLIC_RELAY = 'wss://echoes-of-dante-rooms.onrender.com/coop';
+export default function handler(req, res) { coopConfig(req, res, { defaultRelay: PUBLIC_RELAY }); }

@@ -2,6 +2,10 @@
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
+## Salas públicas · 0.1.74
+
+A API da Vercel utiliza o serviço `echoes-of-dante-rooms.onrender.com` publicado pelo responsável, sem exigir outra configuração manual. Convites mantêm o fluxo **criar → enviar link → abrir e jogar**. Desenvolvimento local continua com jogo/salas no mesmo processo. [Hospedagem, verificações e limitações](docs/regional-coop/).
+
 ## Convide um amigo por link · 0.1.73
 
 **JOGAR COM AMIGO → CRIAR SALA E CONVIDAR → COPIAR LINK DE CONVITE**. Quem recebe abre o link e entra; a dupla começa automaticamente. Criação de personagem mantém o convite, código continua como alternativa e seu progresso solo é preservado. Integração da URL Vercel com serviço central preparada, com configuração somente na hospedagem; **ativação pública ainda pendente**. [Fluxo, publicação e testes](docs/regional-coop/).

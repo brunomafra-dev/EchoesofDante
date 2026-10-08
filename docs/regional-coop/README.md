@@ -1,4 +1,4 @@
-# Expedições em dupla · 0.1.73
+# Expedições em dupla · 0.1.74
 
 Duas pessoas, mesma build web, Guerreiro ou Star Hunter, sem login. Esta etapa melhora a continuidade regional e a retenção de XP; não implementa campanha inteira ou chefes em dupla.
 
@@ -11,19 +11,19 @@ Duas pessoas, mesma build web, Guerreiro ou Star Hunter, sem login. Esta etapa m
 
 Também é possível colar o link completo ou o código em **ENTRAR NA SALA**. Não há login, comando, porta ou endereço de servidor na interface dos jogadores. Seu personagem/progresso solo continuam locais.
 
-**Estado da publicação:** interface/convites e integração preparados; o serviço central de salas ainda precisa ser criado e ligado à Vercel pelo responsável pelo jogo. Em 08/10/2026, `/coop/health` da URL pública retornou 404. Até a configuração, a API mostra cooperativo indisponível e preserva o solo. O fluxo pela internet ainda não foi validado.
+**Publicação:** o responsável criou `echoes-of-dante-rooms` no Render. Em 08/10/2026, o health check público respondeu 200 com zero salas/jogadores. A API da Vercel agora usa esse serviço por padrão, sem outra configuração manual. O teste do convite público será registrado em [public-qa](public-qa/) após a implantação dessa atualização na Vercel.
 
 Convites levam somente `?sala=CODIGO`, sem credencial de reconexão, nome ou save. O parâmetro é removido após entrar/cancelar; sair/recarregar não reentra automaticamente. Salas cheias, encerradas e convites inválidos permitem voltar ou tentar outro convite. Se clipboard não estiver disponível, o link é selecionado para cópia manual.
 
-## Publicar uma vez — responsável pelo jogo
+## Serviço público — responsável pelo jogo
 
-O jogo continua na Vercel. `render.yaml` prepara **um relay Node** no plano Free, usando a implementação existente, sem banco de dados ou assets do jogo.
+O jogo continua em `https://echosofdante.vercel.app/`. As salas estão em `wss://echoes-of-dante-rooms.onrender.com/coop`. O endereço público está em `api/coop-config.js`; não é credencial. `render.yaml` prepara **um relay Node** no plano Free, usando a implementação existente, sem banco de dados ou assets do jogo.
 
-1. Abra [publicar o serviço de salas](https://render.com/deploy?repo=https://github.com/brunomafra-dev/EchoesofDante) em sua conta Render, revise o blueprint e aguarde o serviço ficar online.
-2. Na Vercel, projeto `echosofdante`: **Settings → Environment Variables**, defina `COOP_RELAY_URL` como `wss://ENDERECO-REAL-DO-SERVICO.onrender.com/coop`, usando o endereço gerado pelo serviço.
-3. Faça **Redeploy** na Vercel. `/api/coop-config` deve retornar `ready: true`. Depois valide dois aparelhos em redes diferentes criando e abrindo um convite.
+O serviço já foi criado pelo responsável. A implantação da branch `main` na Vercel passa a retornar `ready: true` e o endereço real em `/api/coop-config`. Não é necessário adicionar variável de ambiente para esse serviço. Depois valide também dois aparelhos em redes diferentes criando e abrindo um convite.
 
-Esses passos são da publicação; nenhum jogador repete essa configuração. O navegador busca a configuração em `/api/coop-config` antes de criar/entrar na sala. Uma configuração ausente/inválida não tenta conectar a um WebSocket inexistente nem pede endereço ao jogador. O campo é uma URL pública, não uma chave secreta.
+Se a hospedagem mudar, `COOP_RELAY_URL` na Vercel permite substituir o endereço WSS sem editar o código, seguido de Redeploy. Configuração explícita inválida continua sendo rejeitada. O [blueprint de publicação](https://render.com/deploy?repo=https://github.com/brunomafra-dev/EchoesofDante) permanece disponível para outra instalação; seu endereço gerado precisará ser conectado à API.
+
+Esses passos são da publicação; nenhum jogador repete essa configuração. O navegador busca a configuração em `/api/coop-config` antes de criar/entrar na sala. A Vercel tem o endereço público padrão; dev/preview/Node integrado conservam seu `/coop` local. Uma configuração inválida não pede endereço ao jogador.
 
 Escolhemos um processo central para preservar salas e credenciais em memória. [Vercel documenta que conexões novas podem alcançar instâncias diferentes e que salas em Functions precisam de armazenamento/coordenação externos](https://vercel.com/docs/functions/websockets). Não adaptamos o relay a esse modelo distribuído nesta etapa. [Render oferece conexões WebSocket públicas](https://render.com/docs/websocket); no [plano Free, a retomada após inatividade pode levar aproximadamente um minuto](https://render.com/docs/free). A primeira conexão espera até 60 s, pode ser cancelada e as reconexões existentes mantêm seus limites. O Free é uma opção de playtest, sem promessa de disponibilidade imediata.
 
@@ -37,7 +37,7 @@ O relay usa uma única instância. `COOP_ORIGINS` inclui a URL pública informad
 
 `npm run preview` também inclui as salas. Para servir a build em um processo Node, execute `npm run build` e depois **`npm start`**: jogo e salas ficam em `http://localhost:8080` (ou na variável `PORT` da hospedagem). Ambos os jogadores usam a mesma URL.
 
-Para acesso pela internet, esse processo precisa estar publicado em uma hospedagem Node com HTTPS e upgrade WebSocket habilitado. Publicar somente os arquivos estáticos não disponibiliza as salas. **Nenhum servidor público foi provisionado nesta alteração.** Essa configuração é da hospedagem, não dos jogadores.
+Para acesso pela internet, esse processo precisa estar publicado em uma hospedagem Node com HTTPS e upgrade WebSocket habilitado. Publicar somente os arquivos estáticos não disponibiliza as salas. O serviço público desta instalação foi provisionado pelo responsável no Render. Essa configuração é da hospedagem, não dos jogadores.
 
 Salas disponíveis em **Floresta, Vale da Ressonância, Bacia do Siroco, Dunas Interiores e Fratura Boreal**. A dupla viaja pelos portais **Vale ↔ Siroco ↔ Dunas**, na mesma sala. Qualquer participante pode iniciar a travessia; ambos chegam à nova região. Os requisitos de exploração/ativação dos portais continuam os mesmos.
 
@@ -75,12 +75,12 @@ Salas disponíveis em **Floresta, Vale da Ressonância, Bacia do Siroco, Dunas I
 | Variável | Uso |
 | --- | --- |
 | `PORT` | Porta do servidor integrado de produção; padrão 8080 |
-| `COOP_RELAY_URL` | URL WSS do serviço central, configurada na Vercel; dispensada no servidor integrado local |
+| `COOP_RELAY_URL` | Override opcional da URL WSS; Vercel já tem o serviço publicado como padrão, e servidor integrado local usa `/coop` |
 | `COOP_PORT` | Apenas relay separado opcional; padrão 5190 |
 | `COOP_ORIGINS` | Origens autorizadas, separadas por vírgula |
 | `VITE_COOP_URL` | Override opcional na build para hospedagem com relay separado |
 
-Produção HTTPS usa **WSS** na mesma URL, com proxy TLS encaminhando `/coop` ao servidor integrado. Hospedar somente `dist/` não publica o serviço. Os testes desta alteração são locais, sem validação pela internet ou em aparelhos físicos.
+Produção integrada HTTPS usa **WSS** com proxy TLS encaminhando `/coop`; nesta instalação, Vercel consulta a API e conecta ao WSS do Render. Hospedar somente `dist/` não publica o serviço. As verificações locais históricas abaixo não representam aparelhos físicos; o QA público tem registro separado.
 
 Reiniciar o servidor do jogo encerra as salas em memória; crie uma nova sala depois da atualização.
 
