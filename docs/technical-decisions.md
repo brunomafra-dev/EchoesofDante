@@ -374,6 +374,11 @@
 - Prévia do Hunter seleciona a primeira linha frontal do atlas existente, incluindo movimentos da demonstração, e ajusta ombros/arma. Nenhuma alteração de arte ou orientação no gameplay. [Comportamento, capturas e QA](character-showcase/).
 
 
+## Personagem convidado e encerramento de visita · 0.1.75
+
+- O convite e o código colado abrem o mostruário existente para uma escolha explícita. Trocar/criar usa a jornada individual e conserva o convite; uma aprovação consumida uma única vez, vinculada ao código/personagem em sessionStorage, permite completar a entrada após reload sem perguntar novamente. Sem esse marcador, pede confirmação novamente. Cancelar não conecta.
+- Encerramento/reconexão expirada de visitante mantém a visita não autoritativa e fecha transporte/timers. ApplicationShell mostra o aviso e as opções solo/menu. Só após escolher, salvar eventual XP pendente e desconectar a visita recarrega a própria jornada. Falha de armazenamento deixa o aviso e o recibo pendente disponíveis para nova tentativa. Reutiliza pausa, saves e mostruário; sem migração de anfitrião ou alteração de gameplay.
+
 ## Serviço público de salas · 0.1.74
 
 - O responsável publicou o relay existente em `echoes-of-dante-rooms.onrender.com`. Health check respondeu 200. A Function de configuração da Vercel usa seu endereço WSS público como padrão, evitando uma segunda configuração manual; `COOP_RELAY_URL` conserva precedência para migração e valores inválidos continuam rejeitados.

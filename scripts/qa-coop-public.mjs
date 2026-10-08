@@ -4,7 +4,7 @@ import { chromium } from 'playwright';
 
 const base = 'https://echosofdante.vercel.app/';
 const healthURL = 'https://echoes-of-dante-rooms.onrender.com/coop/health';
-const out = 'docs/regional-coop/public-qa';
+const out = process.argv[2] ?? 'docs/regional-coop/public-qa';
 await mkdir(out, { recursive: true });
 const report = { at: new Date().toISOString(), game: base,
   method: 'Independent Chrome profiles from this PC against the published Vercel game and Render WSS service. No API mocks, no physical mobile device or second physical network.', errors: [] };
@@ -47,6 +47,12 @@ try {
   report.createRoom = true;
   await host.screenshot({ path: `${out}/public-invite.png` });
   await guest.goto(link, { waitUntil: 'domcontentloaded' });
+  await guest.locator('[data-shell="play-character"]').waitFor();
+  assert.ok(new URL(guest.url()).searchParams.has('sala'));
+  assert.ok(!roles.includes('guest'), 'Connected without character confirmation');
+  await guest.screenshot({ path: `${out}/public-character-choice.png` });
+  await guest.locator('[data-shell="play-character"]').click();
+  report.characterChosenBeforeJoining = true;
   await guest.waitForURL(url => !url.searchParams.has('sala'));
   const noMenu = page => page.waitForFunction(() => !document.querySelector('.application-shell[open]'));
   await noMenu(host); await noMenu(guest);
@@ -72,8 +78,15 @@ try {
   await guest.keyboard.press('Escape'); await guest.locator('[data-shell="coop"]').click();
   await guest.locator('[data-shell="coop-leave"]').click();
   await guest.locator('[data-shell="continue"]').waitFor(); report.guestRestoresSolo = true;
+  await guest.goto(link, { waitUntil: 'domcontentloaded' });
+  await guest.locator('[data-shell="play-character"]').click(); await noMenu(guest);
   await host.keyboard.press('Escape'); await host.locator('[data-shell="coop"]').click();
   await host.locator('[data-shell="coop-leave"]').click(); report.hostEndsRoom = true;
+  await guest.locator('[data-shell="coop-solo"]').waitFor();
+  assert.match(await guest.locator('.shell-content').innerText(), /dono da sala saiu do jogo/);
+  await guest.screenshot({ path: `${out}/public-host-left.png` });
+  await guest.locator('[data-shell="coop-solo"]').click(); await noMenu(guest);
+  report.hostDepartureMenuAndSolo = true;
   report.serviceAfter = await (await fetch(healthURL, { signal: AbortSignal.timeout(15000) })).json();
   assert.deepEqual(report.errors, []); report.passed = true;
 } catch (error) { report.failure = String(error); throw error; }

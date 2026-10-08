@@ -6,7 +6,7 @@ import { chromium } from 'playwright';
 const mode = process.argv[2] ?? 'production';
 assert.ok(['dev', 'production'].includes(mode));
 const port = 5188, base = `http://127.0.0.1:${port}`;
-const out = `docs/regional-coop/invitation-qa/${mode}`;
+const out = process.argv[3] ?? `docs/regional-coop/invitation-qa/${mode}`;
 await mkdir(out, { recursive: true });
 const args = mode === 'production' ? ['server/web.mjs'] : ['node_modules/vite/bin/vite.js', '--host', '127.0.0.1', '--port', String(port), '--strictPort'];
 const child = spawn(process.execPath, args, { windowsHide: true, env: { ...process.env, PORT: String(port) } });
@@ -24,6 +24,18 @@ try {
   browser = await chromium.launch({ channel: 'chrome', headless: true });
   const hc = await browser.newContext({ viewport: { width: 1280, height: 720 } });
   const gc = await browser.newContext({ viewport: { width: 844, height: 390 }, hasTouch: true });
+  await gc.addInitScript(() => {
+    if (localStorage.getItem('qa-picker')) return;
+    localStorage.setItem('qa-picker', '1');
+    localStorage.setItem('echoes-of-dante.characters.v1', JSON.stringify({ schema: 1, selected: 'visitor-warrior', characters: [
+      { id: 'visitor-warrior', name: 'Warrior salvo', classId: 'warrior', createdAt: 1 },
+      { id: 'visitor-hunter', name: 'Hunter escolhida', classId: 'hunter', createdAt: 2 },
+    ] }));
+    for (const [id, xp] of [['visitor-warrior', 10], ['visitor-hunter', 45]]) localStorage.setItem(`echoes-of-dante.journey.v1.character.${id}`, JSON.stringify({
+      schema: 1, updatedAt: 1, area: 'forest', hp: 80, flags: {}, bestiary: {}, valleyRoutes: [], valleyHabitats: [], aridHabitats: [],
+      progression: { xp, echoes: [], sourceLocated: false, passageOpen: false, rewardedHollows: [], rewardedRoutes: [] },
+    }));
+  });
   const tc = await browser.newContext({ viewport: { width: 1366, height: 768 } });
   const h = await hc.newPage(), g = await gc.newPage(), third = await tc.newPage();
   const worlds = [], joined = [];
@@ -49,15 +61,28 @@ try {
   await h.locator('.shell-status').filter({ hasText: 'Link copiado' }).waitFor();
   assert.equal(await h.evaluate(() => navigator.clipboard.readText()), link);
   report.createAndCopyInviteFromHome = true;
-  // Friend only opens the link. Both menus close without pressing JOIN/PLAY.
-  await g.goto(link); await g.waitForURL(url => !url.searchParams.has('sala')); await noMenu(g); await noMenu(h);
+  // No connection before choosing, even with an active character. Switching
+  // the preview does not select a save until the explicit confirmation.
+  await g.goto(link); await g.locator('[data-shell="play-character"]').waitFor();
+  assert.equal((await health()).players, 1);
+  await g.locator('[data-shell="character-visitor-hunter"]').click();
+  assert.equal(await g.evaluate(() => JSON.parse(localStorage.getItem('echoes-of-dante.characters.v1')).selected), 'visitor-warrior');
+  await g.screenshot({ path: `${out}/choose-character-844.png` });
+  await g.locator('[data-shell="play-character"]').click();
+  await g.waitForURL(url => !url.searchParams.has('sala')); await noMenu(g); await noMenu(h);
+  assert.equal(await g.evaluate(() => JSON.parse(localStorage.getItem('echoes-of-dante.characters.v1')).selected), 'visitor-hunter');
+  report.characterChoiceBeforeJoining = true;
   await g.waitForTimeout(900);
   assert.ok(joined.includes('guest')); assert.ok(worlds.length > 0);
   assert.equal(new URL(g.url()).searchParams.has('sala'), false);
-  report.openLinkJoinsAndStartsBoth = true;
+  report.confirmCharacterJoinsAndStartsBoth = true;
   await g.screenshot({ path: `${out}/friend-844.png` });
   // A third person receives an understandable rejection instead of retry loops.
-  await third.goto(link); await third.locator('[data-shell="coop-join"]:enabled').waitFor();
+  await third.goto(link); await third.locator('[data-shell="back"]').click();
+  assert.equal(new URL(third.url()).searchParams.has('sala'), false);
+  assert.equal((await health()).players, 2); report.cancelChoiceDoesNotJoin = true;
+  await third.goto(link); await third.locator('[data-shell="play-character"]').click();
+  await third.locator('[data-shell="coop-join"]:enabled').waitFor();
   assert.match(await third.locator('.shell-status').innerText(), /duas pessoas/);
   report.fullRoomHandled = true;
   await openRoomMenu(g); await g.locator('[data-shell="coop-leave"]').click();
@@ -68,10 +93,11 @@ try {
   report.leaveDoesNotRejoin = true;
   // Expired link stays on a useful menu; pasting a valid invitation retries.
   await third.goto(base + '/?sala=FFFFFFFFFF');
+  await third.locator('[data-shell="play-character"]').click();
   await third.locator('[data-shell="coop-join"]:enabled').waitFor();
   assert.match(await third.locator('.shell-status').innerText(), /Sala não encontrada/);
   await third.locator('[name="coop-code"]').fill(link);
-  await third.locator('[data-shell="coop-join"]').click(); await noMenu(third);
+  await third.locator('[data-shell="coop-join"]').click(); await third.locator('[data-shell="play-character"]').click(); await noMenu(third);
   report.expiredInviteAndPasteLinkRetry = true;
   await openRoomMenu(third); await third.locator('[data-shell="coop-leave"]').click();
   await third.locator('[data-shell="continue"]').waitFor();
@@ -102,6 +128,24 @@ try {
   report.newCharacterPreservesInvite = true;
   await openRoomMenu(newcomer); await newcomer.locator('[data-shell="coop-leave"]').click();
   await newcomer.locator('[data-shell="continue"]').waitFor(); await empty.close();
+  // Return with the now-active Hunter and exercise host departure. With DEV,
+  // block XP storage during a real kill so the solo action must safely retry.
+  await g.goto(link); await g.locator('[data-shell="play-character"]').click(); await noMenu(g);
+  if (mode === 'dev') {
+    await h.evaluate(() => window.__danteCoop.socket.close());
+    await h.waitForFunction(() => !window.__danteCoop.connected);
+    await h.waitForFunction(() => window.__danteCoop.connected);
+    await g.waitForFunction(() => window.__danteCoop.peerConnected);
+    assert.equal(await g.locator('[data-shell="coop-solo"]').count(), 0);
+    report.temporaryHostDisconnectRecoversWithoutEndMenu = true;
+    await g.evaluate(() => { window.qaWrite = Storage.prototype.setItem; Storage.prototype.setItem = () => { throw Error('QA quota'); }; });
+    await h.evaluate(() => {
+      const s = window.__danteGame.scene.getScene('Game'), e = s.enemies.find(e => !e.isDead);
+      if (!e) throw Error('No XP target');
+      s.resolvePlayerHits(s.time.now, [e], 9999, 0, 0x5fe6d8, s.player.position, false);
+    });
+    await g.waitForFunction(() => !window.__danteCoop.rewardSaved && window.__danteCoop.personalXpGained > 0);
+  }
   // Manual copy remains usable when clipboard permission is unavailable.
   await openRoomMenu(h);
   await h.evaluate(() => Object.defineProperty(navigator, 'clipboard', {
@@ -112,6 +156,26 @@ try {
   assert.equal(await h.locator('[name="coop-invite"]').evaluate(e => e.selectionEnd - e.selectionStart), link.length);
   report.clipboardFallbackSelectsLink = true;
   await h.locator('[data-shell="coop-leave"]').click();
+  await g.locator('[data-shell="coop-solo"]').waitFor();
+  assert.match(await g.locator('.shell-content').innerText(), /dono da sala saiu do jogo/);
+  await g.keyboard.press('Escape'); assert.equal(await g.locator('[data-shell="coop-solo"]').isVisible(), true);
+  await g.screenshot({ path: `${out}/host-left-844.png` });
+  if (mode === 'dev') {
+    await g.locator('[data-shell="coop-solo"]').click();
+    assert.equal(await g.locator('[data-shell="coop-solo"]').isVisible(), true);
+    assert.equal(await g.evaluate(() => window.__danteCoop.role), 'guest');
+    await g.evaluate(() => Storage.prototype.setItem = window.qaWrite);
+    report.pendingXpBlocksExitUntilSaved = true;
+  }
+  const personal = await g.evaluate(() => JSON.parse(localStorage.getItem('echoes-of-dante.journey.v1.character.visitor-hunter')));
+  const pendingXp = mode === 'dev' ? await g.evaluate(() => window.__danteCoop.rewardSaved ? 0 : window.__danteCoop.personalXpGained) : 0;
+  await g.locator('[data-shell="coop-solo"]').click(); await noMenu(g);
+  const solo = await g.evaluate(() => JSON.parse(localStorage.getItem('echoes-of-dante.journey.v1.character.visitor-hunter')));
+  assert.ok(solo.progression.xp >= personal.progression.xp);
+  if (mode === 'dev') assert.equal(solo.progression.xp, personal.progression.xp + pendingXp);
+  assert.equal(solo.area, 'forest'); assert.equal(solo.progression.echoes.length, 0);
+  assert.equal(await g.evaluate(() => JSON.parse(localStorage.getItem('echoes-of-dante.journey.v1.character.visitor-warrior')).progression.xp), 10);
+  report.hostDepartureMenuAndOwnSolo = true;
   // Cancel before configuration responds: the delayed result must not create a
   // room behind the menu. Consecutive clicks must still create just one room.
   let release;
@@ -126,7 +190,17 @@ try {
   await h.locator('[name="coop-invite"]').waitFor(); assert.equal((await health()).rooms, 1);
   await h.locator('[data-shell="coop-leave"]').click();
   report.cancelAndDoubleClickSafe = true;
-  await h.waitForTimeout(300); report.relay = await health();
+  // Closing the host tab uses the existing reconnection grace, then presents
+  // the same clear menu instead of leaving the guest frozen in the world.
+  await h.locator('[data-shell="coop-create"]').click(); await h.locator('[name="coop-invite"]').waitFor();
+  const closingLink = await h.locator('[name="coop-invite"]').inputValue();
+  await g.goto(closingLink); await g.locator('[data-shell="play-character"]').click(); await noMenu(g); await noMenu(h);
+  await h.close();
+  await g.waitForTimeout(800); assert.equal(await g.locator('[data-shell="coop-solo"]').count(), 0);
+  await g.locator('[data-shell="coop-home"]').waitFor({ timeout: 30000 });
+  await g.locator('[data-shell="coop-home"]').click(); await g.locator('[data-shell="continue"]').waitFor();
+  report.hostTabClosedAfterReconnectGrace = true;
+  await g.waitForTimeout(300); report.relay = await health();
   assert.equal(report.relay.rooms, 0); assert.equal(report.relay.players, 0);
   assert.deepEqual(report.errors, []); report.passed = true;
 } catch (error) { report.failure = String(error); report.serverLog = log; throw error; }

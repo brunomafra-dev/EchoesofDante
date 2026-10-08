@@ -2,6 +2,10 @@
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
+## Personagem do convite e saída da sala · 0.1.75
+
+Abrir um convite mostra seus personagens antes de conectar: escolha um existente ou crie outro e confirme **ENTRAR NA SALA**. Se o dono encerrar/sair, o visitante recebe um menu **Sala encerrada**, com **INICIAR JOGO SOLO** e **VOLTAR AO MENU**. O retorno restaura a própria jornada e conserva o XP da dupla. [Fluxo e verificações](docs/regional-coop/).
+
 ## Salas públicas · 0.1.74
 
 A API da Vercel utiliza o serviço `echoes-of-dante-rooms.onrender.com` publicado pelo responsável, sem exigir outra configuração manual. Convites mantêm o fluxo **criar → enviar link → abrir e jogar**. Dois perfis Chrome validaram convite, entrada automática, snapshots/movimento e saída pela URL pública com Render real. Desenvolvimento local continua com jogo/salas no mesmo processo. [Hospedagem, verificações e limitações](docs/regional-coop/).

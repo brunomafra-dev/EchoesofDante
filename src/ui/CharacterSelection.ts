@@ -21,12 +21,12 @@ function element<K extends keyof HTMLElementTagNameMap>(tag: K, className: strin
 export class CharacterSelection {
   private readonly previews: CharacterShowcase[] = [];
   private deleteDialog?: HTMLDialogElement;
-  constructor(private readonly root: HTMLElement, mode: 'characters' | 'create', actions: Actions) {
+  constructor(private readonly root: HTMLElement, mode: 'characters' | 'create', actions: Actions, private readonly joiningRoom = false) {
     const header = element('header', 'selection-header');
     const title = element('div', 'selection-title');
     title.append(element('small', '', 'ECHOES OF DANTE / EXPEDIÇÃO'));
-    const h = element('h2', '', mode === 'create' ? 'Escolha quem você será' : 'Suas expedições'); h.id = 'shell-title'; title.append(h);
-    title.append(element('p', '', mode === 'create' ? 'Selecione uma classe para ver seu estilo de combate.' : 'Escolha um personagem. Sua jornada começa de onde você parou.'));
+    const h = element('h2', '', joiningRoom ? mode === 'create' ? 'Crie seu personagem para a sala' : 'Com qual personagem você vai jogar?' : mode === 'create' ? 'Escolha quem você será' : 'Suas expedições'); h.id = 'shell-title'; title.append(h);
+    title.append(element('p', '', joiningRoom ? 'Escolha seu personagem para entrar com seu amigo. Sua jornada solo será preservada.' : mode === 'create' ? 'Selecione uma classe para ver seu estilo de combate.' : 'Escolha um personagem. Sua jornada começa de onde você parou.'));
     header.append(title);
     const headerActions = element('div', 'selection-header-actions');
     headerActions.append(button('← VOLTAR', 'back', actions.back)); header.append(headerActions);
@@ -53,7 +53,7 @@ export class CharacterSelection {
     const label = element('label', 'selection-name', 'Nome do personagem');
     const input = document.createElement('input'); input.name = 'character-name'; input.maxLength = 24; input.placeholder = 'Seu nome em Dante'; input.autocomplete = 'off'; input.disabled = true; label.append(input);
     let selected: CharacterClass | undefined;
-    const create = button('COMEÇAR EXPEDIÇÃO →', 'create', () => { if (selected) actions.create(input.value, selected); });
+    const create = button(this.joiningRoom ? 'CRIAR E ENTRAR NA SALA →' : 'COMEÇAR EXPEDIÇÃO →', 'create', () => { if (selected) actions.create(input.value, selected); });
     create.className = 'selection-primary'; create.disabled = true;
     input.addEventListener('input', () => create.disabled = !selected || !input.value.trim());
     input.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.isComposing && !create.disabled) { event.preventDefault(); create.click(); } });
@@ -87,7 +87,7 @@ export class CharacterSelection {
     const layout = element('div', 'saved-selection'), list = element('div', 'saved-characters'); list.setAttribute('role', 'group'); list.setAttribute('aria-label', 'Personagens salvos');
     const display = element('div', 'saved-display'), details = element('div', 'selection-info');
     let selected = characterProfiles.active.id, current: CharacterShowcase | undefined;
-    const play = button('CONTINUAR JORNADA →', 'play-character', () => actions.play(selected)); play.className = 'selection-primary';
+    const play = button(this.joiningRoom ? 'ENTRAR NA SALA →' : 'CONTINUAR JORNADA →', 'play-character', () => actions.play(selected)); play.className = 'selection-primary';
     const replay = button('↻ VER EM AÇÃO', 'replay', () => current?.play(true));
     const remove = button('EXCLUIR PERSONAGEM', 'delete-character', () => this.confirmDelete(selected, actions.remove, remove));
     remove.className = 'selection-delete';

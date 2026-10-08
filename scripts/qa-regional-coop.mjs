@@ -14,7 +14,7 @@ async function performanceSample(){
  return Object.fromEntries(Object.entries(samples).map(([k,v])=>[k,{mean:v.reduce((a,b)=>a+b)/v.length,min:Math.min(...v),max:Math.max(...v)}]));
 }
 async function join(){
- await g.goto('http://localhost:5184/?qa=play');await ready(g);await g.keyboard.press('Escape');await g.locator('[data-shell="coop"]').click();await g.locator('[name="coop-code"]').fill(await h.evaluate(()=>window.__danteCoop.code));await g.locator('[data-shell="coop-join"]').click();await g.waitForFunction(()=>window.__danteCoop.role==='guest');await g.waitForFunction(() => !document.querySelector('.application-shell[open]'));await g.waitForFunction(()=>window.__danteGame.scene.getScene('Game').visitingCoop&&window.__danteGame.scene.getScene('Game').party.mirrorHost);await g.waitForTimeout(400);
+ await g.goto('http://localhost:5184/?qa=play');await ready(g);await g.keyboard.press('Escape');await g.locator('[data-shell="coop"]').click();await g.locator('[name="coop-code"]').fill(await h.evaluate(()=>window.__danteCoop.code));await g.locator('[data-shell="coop-join"]').click();await g.locator('[data-shell="play-character"]').click();await g.waitForFunction(()=>window.__danteCoop.role==='guest');await g.waitForFunction(() => !document.querySelector('.application-shell[open]'));await g.waitForFunction(()=>window.__danteGame.scene.getScene('Game').visitingCoop&&window.__danteGame.scene.getScene('Game').party.mirrorHost);await g.waitForTimeout(400);
 }
 try{
  await h.goto('http://localhost:5184/?qa=play');await ready(h);await g.goto('http://localhost:5184/?qa=play');await ready(g);await h.waitForTimeout(1500);report.pairedSoloBaseline=await performanceSample();

@@ -16,7 +16,7 @@ export type PartyWorld={area:JourneyArea;time:number;progression:ProgressionSnap
 // One connection across scene restarts. The relay grants roles; only host worlds are accepted.
 export class CoopSession {
  role:'offline'|'connecting'|'host'|'guest'='offline';
- code='';message='Cooperativo para duas pessoas.';
+ code='';message='Cooperativo para duas pessoas.';endedMessage='';
  connected=false;peerConnected=false;travelling=false;epoch=0;personalXpGained=0;rewardSaved=true;
  area?:JourneyArea;private pendingTravel?:JourneyArea;
  hostPaused=false;private localMenu=false;
@@ -38,7 +38,7 @@ export class CoopSession {
   let target:URL;try{target=new URL(url);if(!['ws:','wss:'].includes(target.protocol)||target.username||target.password)throw Error();}catch{return Promise.reject(new Error('Informe um endereço ws:// ou wss:// válido.'));}
   if(location.protocol==='https:'&&target.protocol!=='wss:')return Promise.reject(new Error('Esta página segura precisa de um servidor wss://.'));
   if(mode==='join'&&!/^[A-F0-9]{10}$/.test(code.replace(/\s/g,'').toUpperCase()))return Promise.reject(new Error('O código da sala tem 10 letras/números. Confira com o anfitrião.'));
-  this.url=target.href;this.role='connecting';this.message='Conectando à expedição…';this.personalXpGained=0;this.sequence=0;this.epoch=0;this.rewards=new LocalJourney();this.changed();
+  this.url=target.href;this.role='connecting';this.endedMessage='';this.message='Conectando à expedição…';this.personalXpGained=0;this.sequence=0;this.epoch=0;this.rewards=new LocalJourney();this.changed();
   return new Promise((resolve,reject)=>this.open({type:mode,profile,area,code},false,resolve,reject));
  }
  private open(request:object,retry:boolean,resolve:()=>void=()=>{},reject:(reason:Error)=>void=()=>{}):void {
@@ -80,7 +80,7 @@ export class CoopSession {
     this.input=m.input;this.inputAt=performance.now();
    }else if(m.type==='world'&&this.role==='guest'&&m.epoch===this.epoch&&m.world&&COOP_AREAS.includes(m.world.area)&&Array.isArray(m.world.enemies)&&m.world.enemies.length<=32){
     this.world=m.world;this.worldAt=performance.now();this.credit(m.receipt,m.total);
-   }else if(m.type==='ended'||m.type==='replaced')this.fail(String(m.message));
+   }else if(m.type==='ended'||m.type==='replaced')this.fail(m.type==='ended'?'O dono da sala saiu do jogo.':String(m.message));
   };
   ws.onerror=()=>{if(!retry&&!joined&&this.socket===ws){this.fail('O cooperativo está indisponível nesta conexão. Tente novamente em alguns segundos; sua jornada solo continua disponível.');reject(new Error(this.message));}};
   ws.onclose=()=>{
@@ -112,17 +112,29 @@ export class CoopSession {
   if(this.role==='host'&&this.connected)this.socket?.send(JSON.stringify({type:'pause',paused}));
  }
  consumeEdges():void{for(const key of ['dash','charge','release','cancel','interact','restart'] as const)this.input[key]=false;}
- disconnect(restoreGuest=true):void{
+ disconnect(restoreGuest=true):boolean{
   const guest=this.role==='guest';
   if(guest&&this.rewardTotal>0)this.credit(this.receipt,this.rewardTotal);
   // If storage fails, keep the visit open so the player can retry instead of losing XP silently.
-  if(guest&&!this.rewardSaved){this.message='Não foi possível salvar o XP. Libere o armazenamento e tente sair novamente.';this.changed();return;}
+  if(guest&&!this.rewardSaved){this.message='Não foi possível salvar o XP. Libere o armazenamento e tente sair novamente.';this.changed();return false;}
   if(this.socket?.readyState===WebSocket.OPEN)this.socket.send(JSON.stringify({type:'leave'}));
-  this.role='offline';this.connected=false;this.peerConnected=false;this.peer=undefined;this.world=undefined;this.input={...NO_INPUT};this.token='';this.travelling=false;this.pendingTravel=undefined;this.area=undefined;
+  this.role='offline';this.endedMessage='';this.connected=false;this.peerConnected=false;this.peer=undefined;this.world=undefined;this.input={...NO_INPUT};this.token='';this.travelling=false;this.pendingTravel=undefined;this.area=undefined;
   clearTimeout(this.timeout);clearTimeout(this.retryTimer);
-  const socket=this.socket;this.socket=undefined;socket?.close();this.changed();if(guest&&restoreGuest)location.reload();
+  const socket=this.socket;this.socket=undefined;socket?.close();this.changed();if(guest&&restoreGuest)location.reload();return true;
  }
- private fail(message:string):void{this.message=message;this.disconnect();}
+ private fail(message:string):void{
+  this.message=message;
+  if(this.role!=='guest'){this.disconnect();return;}
+  // Keep the visit non-authoritative until the player chooses to restore their
+  // own journey. This also lets an unsaved XP receipt be retried safely.
+  this.endedMessage=message;this.connected=false;this.peerConnected=false;this.hostPaused=false;
+  this.input={...NO_INPUT};this.inputAt=0;this.travelling=false;this.pendingTravel=undefined;
+  clearTimeout(this.timeout);clearTimeout(this.retryTimer);
+  if(this.rewardTotal>0)this.credit(this.receipt,this.rewardTotal);
+  const socket=this.socket;this.socket=undefined;
+  if(socket?.readyState===WebSocket.OPEN)socket.send(JSON.stringify({type:'leave'}));
+  socket?.close();this.changed();
+ }
  private changed():void{window.dispatchEvent(new Event('dante-coop'));}
 }
 export const coopSession=new CoopSession();

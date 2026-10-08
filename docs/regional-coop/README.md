@@ -1,4 +1,4 @@
-# Expedições em dupla · 0.1.74
+# Expedições em dupla · 0.1.75
 
 Duas pessoas, mesma build web, Guerreiro ou Star Hunter, sem login. Esta etapa melhora a continuidade regional e a retenção de XP; não implementa campanha inteira ou chefes em dupla.
 
@@ -7,9 +7,17 @@ Duas pessoas, mesma build web, Guerreiro ou Star Hunter, sem login. Esta etapa m
 1. Abra [Echoes of Dante](https://echosofdante.vercel.app/).
 2. **JOGAR COM AMIGO → CRIAR SALA E CONVIDAR**.
 3. **COPIAR LINK DE CONVITE** e envie ao seu amigo; compartilhar nativo aparece quando o navegador oferece essa opção.
-4. Ele abre o link e entra com seu personagem ativo. A dupla começa automaticamente quando ele conecta. Se não houver personagem, a criação preserva o convite até entrar.
+4. Ele abre o link, escolhe o personagem no mostruário e confirma **ENTRAR NA SALA**. Pode criar um novo com **CRIAR E ENTRAR NA SALA**. A dupla começa automaticamente após a confirmação/conexão.
 
 Também é possível colar o link completo ou o código em **ENTRAR NA SALA**. Não há login, comando, porta ou endereço de servidor na interface dos jogadores. Seu personagem/progresso solo continuam locais.
+
+O personagem ativo também exige confirmação. A prévia não altera o save; escolher outro personagem conserva o convite durante a recarga e usa uma aprovação de uma única utilização, vinculada ao código/personagem. Cancelar remove o convite sem conectar. Criar personagem segue a mesma confirmação pela criação.
+
+## Quando o dono sai
+
+Se o anfitrião encerrar a sala, o visitante recebe **Sala encerrada — O dono da sala saiu do jogo.** Pode escolher **INICIAR JOGO SOLO**, restaurando sua própria jornada e retomando o jogo, ou **VOLTAR AO MENU**, restaurando a jornada no menu inicial. Escape/voltar não retomam uma visita sem anfitrião. A campanha do dono não é gravada como solo do visitante.
+
+Uma queda temporária mantém a janela de reconexão. Fechar a aba do dono conserva o prazo existente de 20 segundos; se ele não voltar, o mesmo menu aparece. Se houver XP pendente e falha de armazenamento, o menu continua visível e permite tentar novamente após liberar o armazenamento. Não descarta a recompensa nem inicia a simulação solo sobre a campanha visitada.
 
 **Publicação validada automaticamente:** o responsável criou `echoes-of-dante-rooms` no Render. Em 08/10/2026, a API publicada da Vercel respondeu 200 com `ready: true` e o endereço WSS real. Dois perfis Chrome acessaram a URL pública, criaram/abriram o convite, entraram automaticamente e trocaram snapshots/movimento via Render. Saída/restauração solo e encerramento passaram, sem erros JS/assets. [Resultado e capturas públicos](public-qa/). O teste usa esta máquina e a internet real, sem mock de API; não substitui dois aparelhos físicos em redes diferentes.
 
@@ -85,6 +93,20 @@ Produção integrada HTTPS usa **WSS** com proxy TLS encaminhando `/coop`; nesta
 Reiniciar o servidor do jogo encerra as salas em memória; crie uma nova sala depois da atualização.
 
 ## Verificações
+
+### Escolha e encerramento · 0.1.75
+
+```text
+npm run typecheck
+npm run build
+node scripts/qa-coop-invitation.mjs dev docs/regional-coop/choice-and-exit-qa/dev
+node scripts/qa-coop-invitation.mjs production docs/regional-coop/choice-and-exit-qa/production
+node scripts/qa-coop-public.mjs docs/regional-coop/choice-and-exit-qa/public
+```
+
+QA de convites verifica dois personagens salvos, confirmação antes de conectar, troca para Hunter sem alterar a prévia/save original, criação, cancelamento, convite inválido/cheio/encerrado, saída explícita do dono, fechamento da aba após o prazo e retorno solo/menu. Em DEV, usa a rotina real de dano/XP com posição/estado controlados e bloqueio simulado de Storage, verifica gravação sem duplicar XP e recuperação de uma queda temporária. Chrome tem viewport touch; não é teste físico em iPhone. Resultados em [choice-and-exit-qa](choice-and-exit-qa/).
+
+Typecheck, build e QA local dev/produção passaram. Ambos terminaram sem erros JS/assets e com zero salas/conexões. A primeira execução dev completou as verificações funcionais, mas falhou ao aguardar em uma aba que o próprio teste havia fechado; o helper foi corrigido e a execução completa repetida passou. O relay público não precisa de alteração/redeploy: os dois fluxos são mudanças do cliente.
 
 ### Publicação · 0.1.74
 

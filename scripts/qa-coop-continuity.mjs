@@ -93,7 +93,7 @@ try {
   await g.locator('[data-shell="coop-join"]').click();
   assert.equal((await state(g)).role, 'offline'); assert.match(await g.locator('.shell-status').innerText(), /guardar sua jornada/);
   await g.evaluate(() => Storage.prototype.setItem = window.initialWrite); report.entryRequiresSoloBackup = true;
-  await g.locator('[data-shell="coop-join"]').click(); await g.waitForFunction(() => window.__danteCoop.role === 'guest');
+  await g.locator('[data-shell="coop-join"]').click(); await g.locator('[data-shell="play-character"]').click(); await g.waitForFunction(() => window.__danteCoop.role === 'guest');
   await g.waitForFunction(() => !document.querySelector('.application-shell[open]')); await arrive('valley');
   await h.keyboard.press('Escape');
   await g.waitForFunction(() => window.__danteCoop.hostPaused);

@@ -26,3 +26,9 @@ export function clearInvitation(): void {
   url.searchParams.delete('sala');
   history.replaceState(history.state, '', url);
 }
+
+export function setInvitation(code: string): void {
+  const url = new URL(location.href);
+  url.searchParams.set('sala', code);
+  history.replaceState(history.state, '', url);
+}
