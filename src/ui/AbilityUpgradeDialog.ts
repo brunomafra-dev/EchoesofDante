@@ -9,8 +9,8 @@ const HUNTER_LIST = UPGRADE_LIST.map(upgrade => ({
     saberReach: { ability: 'RIFLE', title: 'Foco longo', description: 'Cada grau acrescenta 60 unidades ao alcance do rifle.' },
     dashCooldown: { ability: 'PASSO DE FASE', title: 'Recarga de fase', description: 'Cada grau reduz a recarga da esquiva em 120 ms.' },
     dashDuration: { ability: 'PASSO DE FASE', title: 'Passo prolongado', description: 'Cada grau prolonga a esquiva em 20 ms.' },
-    chargeWidth: { ability: 'TIRO', title: 'Núcleo expandido', description: 'Cada grau aumenta em 2 unidades o raio de contato do tiro concentrado.' },
-    chargePower: { ability: 'TIRO', title: 'Carga densa', description: 'Cada grau acrescenta 4 ao dano mínimo e 6 ao máximo do tiro concentrado.' },
+    chargeWidth: { ability: 'FEIXE', title: 'Núcleo expandido', description: 'Cada grau amplia em 8 unidades a largura do feixe perfurante.' },
+    chargePower: { ability: 'FEIXE', title: 'Carga densa', description: 'Cada grau aumenta o dano do feixe: cerca de 7 no mínimo e 11 no máximo, antes do Momentum.' },
   }[upgrade.id]),
 }));
 

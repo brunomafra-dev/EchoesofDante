@@ -43,7 +43,7 @@ export class PartyActor {
   const heavy=this.charge.pose(now),aim=heavy.phase==='RELEASE'?this.charge.angle:input.aim;
   this.pose=this.attack.pose(now,aim);
   this.player.update(now,dt,{x:input.x,y:input.y},aim,obstacles,this.pose,heavy,bounds);
-  this.art?.update(this.player.position.x,this.player.position.y,aim,now<(this.hunter?.firedUntil??0)||heavy.phase!=='READY');
+  this.art?.update(this.player.position.x,this.player.position.y,aim,now<(this.hunter?.firedUntil??0)||heavy.phase!=='READY',this.player.isDashing);
   if(this.hunter){
    this.charge.takeHits(now,[]);
    this.hunter.update(dt,this.player.position,Math.hypot(this.player.velocity.x,this.player.velocity.y)>1,targets,obstacles,bounds,
@@ -61,7 +61,7 @@ export class PartyActor {
   const p=this.player;
   return{x:p.position.x,y:p.position.y,aim:p.rotation,hp:p.hp,maxHp:p.maxHp,dead:p.isDead,dash:p.isDashing,
    phase:this.charge.phase,level:this.charge.pose(this.now).level,firing:this.pose.phase!=='READY'||(this.hunter?.firedUntil??0)>this.now,
-   dashReady:p.dashProgress,chargeReady:this.charge.getProgress(this.now),momentum:this.hunter?.momentum,
+   dashReady:p.dashProgress,chargeReady:this.charge.getProgress(this.now),momentum:this.hunter?.momentum,beam:this.hunter?.beamPose(),
    wave:this.wave.visible?{x:this.wave.x,y:this.wave.y,rotation:this.wave.rotation,width:this.wave.displayWidth,height:this.wave.displayHeight}:undefined};
  }
  cancelCharge():void{this.charge.stop();this.hunter?.clear();this.wave.setVisible(false);}
@@ -71,7 +71,8 @@ export class PartyActor {
   const position={x:Phaser.Math.Linear(this.player.position.x,pose.x,t),y:Phaser.Math.Linear(this.player.position.y,pose.y,t)};
   this.player.renderRemote(position,pose.aim,{phase:pose.firing?'SWING':'READY',relativeAngle:0,worldAngle:pose.aim,swingProgress:.5},
     {phase:pose.phase as 'READY'|'CHARGING'|'RELEASE',level:pose.level,swingProgress:0},pose.dash,pose.dead);
-  this.art?.update(position.x,position.y,pose.aim,pose.firing||pose.phase!=='READY');
+  this.art?.update(position.x,position.y,pose.aim,pose.firing||pose.phase!=='READY',pose.dash);
+  this.hunter?.beamView.render(pose.beam);
   this.label.setPosition(position.x,position.y-75);void now;
   this.wave.setVisible(!!pose.wave);if(pose.wave)this.wave.setPosition(pose.wave.x,pose.wave.y).setRotation(pose.wave.rotation).setDisplaySize(pose.wave.width,pose.wave.height);
  }

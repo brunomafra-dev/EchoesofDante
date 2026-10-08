@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { KINETIC_CHARGE, PLAYER } from '../config/game';
 import type { Vec2 } from '../utils/math';
+import { HUNTER } from '../config/classes';
 
 // Draw once. Gestures only move/rotate these two reusable visual guides.
 export class TouchAimPreview {
@@ -8,8 +9,10 @@ export class TouchAimPreview {
     if (!hunter) return;
     this.strike.clear(); this.charge.clear();
     this.arrow(this.strike, 24, 700);
-    this.arrow(this.charge, 24, 980);
-    this.charge.lineStyle(1, 0x5fe6d8, .3).lineBetween(24, -7, 980, -7).lineBetween(24, 7, 980, 7);
+    this.arrow(this.charge, 24, HUNTER.precisionRange);
+    this.charge.lineStyle(1, 0x5fe6d8, .3)
+      .lineBetween(24, -HUNTER.beamHalfWidth, HUNTER.precisionRange, -HUNTER.beamHalfWidth)
+      .lineBetween(24, HUNTER.beamHalfWidth, HUNTER.precisionRange, HUNTER.beamHalfWidth);
   }
   private strike: Phaser.GameObjects.Graphics;
   private charge: Phaser.GameObjects.Graphics;

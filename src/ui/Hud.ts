@@ -97,7 +97,7 @@ export class Hud {
     this.dashText.setColor(dashProgress >= 1 ? '#b6c6b2' : '#8a9989');
     const chargeKey = this.inputMethod === 'gamepad' ? '[LT]' : this.inputMethod === 'touch' ? '' : '[Q]';
     const chargeStatus = chargePhase === 'CHARGING' ? `${Math.round(chargeLevel * 100)}%` : chargePhase === 'RELEASE' ? 'ONDA' : chargeProgress >= 1 ? 'PRONTA' : `${((1 - chargeProgress) * chargeCooldown / 1000).toFixed(1)}s`;
-    this.chargeText.setText(this.hunter ? `${chargeKey} TIRO · ${chargePhase === 'READY' ? 'MOM ' + this.momentum : chargePhase === 'RELEASE' ? 'DISPARO' : chargeStatus}`.trim() : `${chargeKey} CARGA · ${chargeStatus}`.trim());
+    this.chargeText.setText(this.hunter ? `${chargeKey} FEIXE · ${chargePhase === 'READY' ? 'MOM ' + this.momentum : chargePhase === 'RELEASE' ? 'DISPARO' : chargeStatus}`.trim() : `${chargeKey} CARGA · ${chargeStatus}`.trim());
     this.chargeText.setColor(chargePhase === 'CHARGING' ? '#5fe6d8' : chargeProgress >= 1 ? '#b6c6b2' : '#8a9989');
   }
 
@@ -123,7 +123,7 @@ export class Hud {
     const hint = this.controlHints[0];
     hint.setText(this.inputMethod === 'gamepad' ? 'LS mover · RS mirar · RT sabre · RB esquiva · Segure LT: carga · A investigar · Voltar: registros'
       : 'WASD mover · Mouse mirar · Clique sabre · Espaço esquiva · Segure Q: carga · E investigar · B registros');
-    if (this.hunter) hint.setText(hint.text.replace('sabre', 'disparo').replace('carga', 'tiro concentrado'));
+    if (this.hunter) hint.setText(hint.text.replace('sabre', 'disparo').replace('carga', 'feixe de luz'));
     hint.setVisible(this.inputMethod !== 'touch');
     this.controlsTimer = this.scene.time.delayedCall(10000, () => hint.setVisible(false));
   }

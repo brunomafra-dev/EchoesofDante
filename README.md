@@ -52,6 +52,10 @@ Minimapa local e seta discreta indicam a aproximação ao próximo ponto da jorn
 
 MENU → **COOPERATIVO · 2 PESSOAS** permite criar/entrar em uma sala por código. Execute `npm run coop:server` para fornecer o relay. Guerreiro e Star Hunter podem explorar, combater e investigar juntos nas regiões abertas, com estado simulado pelo anfitrião. O save solo do visitante fica preservado. Chefes e travessias de campanha permanecem solo nesta fundação. [Como jogar, publicar o serviço e limites reais](docs/regional-coop/).
 
+## Hunter: feixe e caminhada · 0.1.67
+
+O Q/LT/FEIXE agora dispara luz instantânea através dos inimigos alinhados, com dano base de 90–137, respeitando obstáculos sólidos. Mantém segurar → mirar → soltar e a recarga existente. Pernas pintadas articulam quadris, joelhos e apoio alternado, sem congelar ao disparar o rifle. A apresentação também é sincronizada no cooperativo. [Kit, arte e QA](docs/star-hunter/).
+
 ## Entrada e personagens · 0.1.63
 
 Tela inicial sem login, menu Esc/MENU/Start e volumes geral, música e efeitos. Escolha ou crie personagens com progressos locais independentes; o Guerreiro existente conserva seu save. A classe disponível nesta etapa é Guerreiro Galáctico. [Funcionamento, compatibilidade e QA](docs/menu-and-characters/).
@@ -192,4 +196,4 @@ A passagem do Soterrado conduz à região gelada. [Arte e QA](docs/frozen-reach/
 
 ## Star Hunter
 
-Segunda classe disponível no menu de personagens: rifle, Momentum e tiro concentrado. [Kit, arte e QA](docs/star-hunter/README.md).
+Segunda classe disponível no menu de personagens: rifle, Momentum e feixe de luz perfurante. [Kit, arte e QA](docs/star-hunter/README.md).

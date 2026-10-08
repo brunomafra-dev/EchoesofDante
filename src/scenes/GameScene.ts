@@ -703,7 +703,7 @@ export class GameScene extends Phaser.Scene {
     }
     this.player.update(time, dt, input, facing, this.area === 'warden' || this.area === 'sandpit' ? this.playerObstacles : this.arena.obstacles, pose, heavy, this.movementBounds);
     this.updateMusicRegion();
-    this.hunterArt?.update(this.player.position.x, this.player.position.y, facing, time < (this.hunter?.firedUntil ?? 0) || heavy.phase !== 'READY');
+    this.hunterArt?.update(this.player.position.x, this.player.position.y, facing, time < (this.hunter?.firedUntil ?? 0) || heavy.phase !== 'READY', this.player.isDashing);
     updateEnvironmentOcclusion(this, this.player.position, dt);
     if (wasDashing && !this.player.isDashing) this.dashEnd();
     if (this.player.isDashing && time - this.lastDashTrail > 30) {
@@ -1216,7 +1216,8 @@ export class GameScene extends Phaser.Scene {
         this.player.health.max = pose.maxHp; this.player.health.current = pose.hp;
         this.player.renderRemote(pose, pose.aim, { phase: pose.firing ? 'SWING' : 'READY', relativeAngle: 0, worldAngle: pose.aim, swingProgress: .5 },
           { phase: pose.phase as 'READY' | 'CHARGING' | 'RELEASE', level: pose.level, swingProgress: 0 }, pose.dash, pose.dead);
-        this.hunterArt?.update(pose.x, pose.y, pose.aim, pose.firing || pose.phase !== 'READY');
+        this.hunterArt?.update(pose.x, pose.y, pose.aim, pose.firing || pose.phase !== 'READY', pose.dash);
+        this.hunter?.beamView.render(pose.beam);
         if (pose.dead && !previousDead) this.hud.showDeath();
       },
     };

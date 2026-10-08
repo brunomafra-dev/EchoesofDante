@@ -80,7 +80,7 @@ export class PartyExpedition {
   room.consumeEdges();
   if(now-this.sendAt<100)return;this.sendAt=now;
   const partner=this.partner?.snapshot(),prompt=partner?a.prompt(partner):{available:false,action:'INVESTIGAR'};
-  const host:PartyPose={...a.player.position,aim:a.player.rotation,hp:a.player.hp,maxHp:a.player.maxHp,dead:a.player.isDead,dash:a.player.isDashing,phase:a.phase,level:a.chargeLevel,firing:a.firing,wave:a.wave};
+  const host:PartyPose={...a.player.position,aim:a.player.rotation,hp:a.player.hp,maxHp:a.player.maxHp,dead:a.player.isDead,dash:a.player.isDashing,phase:a.phase,level:a.chargeLevel,firing:a.firing,wave:a.wave,beam:a.hunter?.beamPose()};
   const enemies:CreaturePose[]=a.enemies.filter(e=>!e.isDead).map((enemy,index)=>{
    const e=enemy as Presented;
    const body=e.body??e.view?.list.find(p=>p instanceof Phaser.GameObjects.Image&&p.texture.key==='hollow-body') as Phaser.GameObjects.Image|undefined

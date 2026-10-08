@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
-const out='docs/regional-coop/warrior-qa';await mkdir(out,{recursive:true});
+const out=process.argv[2]??'docs/regional-coop/warrior-qa';await mkdir(out,{recursive:true});
 const b=await chromium.launch({channel:'chrome',headless:true}),hc=await b.newContext(),gc=await b.newContext();
 await hc.addInitScript(()=>localStorage.setItem('echoes-of-dante.characters.v1',JSON.stringify({schema:1,selected:'h',characters:[{id:'h',name:'Hunter Host',classId:'hunter',createdAt:1}]})));
 const h=await hc.newPage(),g=await gc.newPage(),report={errors:[],method:'Two Chrome contexts, Hunter host and Warrior visitor; real keys/mouse, controlled enemy and positions; no physical hardware'};

@@ -12,8 +12,8 @@ export class TouchControls {
     attack.querySelector('b')!.textContent = hunter ? 'DISPARO' : 'GOLPE';
     attack.setAttribute('aria-label', hunter ? 'Rifle de pulso: toque ou arraste e solte' : 'Golpe de sabre: toque ou arraste e solte');
     const charge = this.root.querySelector<HTMLButtonElement>('[data-action="charge"]')!;
-    charge.querySelector('b')!.textContent = hunter ? 'TIRO' : 'CARGA';
-    charge.setAttribute('aria-label', hunter ? 'Tiro concentrado: segure, mire e solte' : 'Carga cinética: segure, mire e solte');
+    charge.querySelector('b')!.textContent = hunter ? 'FEIXE' : 'CARGA';
+    charge.setAttribute('aria-label', hunter ? 'Feixe de luz: segure, mire e solte para atravessar inimigos' : 'Carga cinética: segure, mire e solte');
   }
   readonly coarsePointer = matchMedia('(pointer: coarse)').matches;
   private root: HTMLDivElement;
