@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { mkdir,writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
-const out='docs/modular-characters/qa/campaign';await mkdir(out,{recursive:true});
+const out='docs/modular-characters/revision-03/qa/campaign';await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true});
 const hc=await browser.newContext({viewport:{width:1280,height:720}}),gc=await browser.newContext({viewport:{width:1280,height:720},hasTouch:true});
 await gc.addInitScript(()=>{

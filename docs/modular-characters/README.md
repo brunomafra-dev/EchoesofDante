@@ -1,6 +1,6 @@
 # Revisão atual
 
-O piloto abaixo foi rejeitado no playtest humano por sobreposição de armaduras. Use a [revisão 02](revision-02/README.md), com roupa simples e peças separadas.
+O piloto abaixo foi rejeitado no playtest humano por sobreposição de armaduras. A revisão 02 também foi rejeitada por deformações e encaixe. Use a [revisão 03](revision-03/README.md), com corpo vestido composto e três armas.
 
 # Etapa 1 — Personagens modulares
 

@@ -1,0 +1,166 @@
+{
+  "method": "Two independent Chrome contexts with real local WebSockets; DEV positioning, chapter setup and shortened boss health used for coverage. Keyboard/mouse, touch viewport and Gamepad API mock; no physical devices.",
+  "errors": [],
+  "areas": [
+    "forest",
+    "cavern",
+    "warden",
+    "valley",
+    "arid",
+    "dunes",
+    "sandpit",
+    "frost",
+    "icecave",
+    "icenest",
+    "icecave",
+    "icecave",
+    "icecave",
+    "icecave"
+  ],
+  "bosses": [
+    {
+      "area": "warden",
+      "guestPrimary": true,
+      "death": true,
+      "visuals": 10
+    },
+    {
+      "area": "sandpit",
+      "guestPrimary": true,
+      "death": true,
+      "visuals": 22
+    },
+    {
+      "area": "icenest",
+      "guestPrimary": true,
+      "death": true,
+      "visuals": 15
+    }
+  ],
+  "cycles": [
+    {
+      "area": "icecave",
+      "role": "host",
+      "xp": 1415,
+      "personal": 0,
+      "items": [],
+      "equipment": {
+        "owned": [
+          "forest-armor",
+          "forest-emitter",
+          "sirocco-focus",
+          "glacier-focus"
+        ],
+        "slots": {
+          "armor": "forest-armor"
+        }
+      },
+      "hp": 162,
+      "maxHp": 162,
+      "dead": false,
+      "objects": 136,
+      "tweens": 2,
+      "fps": 55.307648325060626,
+      "loot": [],
+      "p": {
+        "x": 1530,
+        "y": 450
+      }
+    },
+    {
+      "area": "icecave",
+      "role": "host",
+      "xp": 1415,
+      "personal": 0,
+      "items": [],
+      "equipment": {
+        "owned": [
+          "forest-armor",
+          "forest-emitter",
+          "sirocco-focus",
+          "glacier-focus"
+        ],
+        "slots": {
+          "armor": "forest-armor"
+        }
+      },
+      "hp": 162,
+      "maxHp": 162,
+      "dead": false,
+      "objects": 136,
+      "tweens": 2,
+      "fps": 53.610552182846604,
+      "loot": [],
+      "p": {
+        "x": 1530,
+        "y": 450
+      }
+    },
+    {
+      "area": "icecave",
+      "role": "host",
+      "xp": 1415,
+      "personal": 0,
+      "items": [],
+      "equipment": {
+        "owned": [
+          "forest-armor",
+          "forest-emitter",
+          "sirocco-focus",
+          "glacier-focus"
+        ],
+        "slots": {
+          "armor": "forest-armor"
+        }
+      },
+      "hp": 162,
+      "maxHp": 162,
+      "dead": false,
+      "objects": 136,
+      "tweens": 2,
+      "fps": 54.20791413713495,
+      "loot": [],
+      "p": {
+        "x": 1530,
+        "y": 450
+      }
+    }
+  ],
+  "guestEchoesAndCavernEntry": true,
+  "sharedGroundLoot": true,
+  "equipmentBothPlayers": true,
+  "appearanceTransmitted": true,
+  "bossCanHitBothPlayers": {
+    "before": [
+      157,
+      128
+    ],
+    "after": [
+      141,
+      112
+    ]
+  },
+  "guestKit": true,
+  "performance": {
+    "host": 56.993963776603806,
+    "guest": 57.058875025350645,
+    "pairedContextsOneComputer": true
+  },
+  "persistence": {
+    "xpBefore": 1415,
+    "xpAfter": 1415,
+    "itemsBefore": 4,
+    "itemsAfter": 4,
+    "invalid": {
+      "owned": [
+        "glacier-focus"
+      ],
+      "slots": {
+        "accessory": "glacier-focus"
+      }
+    },
+    "mismatch": false
+  },
+  "guestPersonalSaveAndReturn": true,
+  "passed": true
+}

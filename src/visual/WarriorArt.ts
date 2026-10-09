@@ -5,7 +5,7 @@ import type { Vec2 } from '../utils/math';
 
 import { warriorBody, type CharacterSex } from '../config/appearance';
 const KEYS = ['warrior-poses-front', 'warrior-poses-side', 'warrior-poses-back'] as const;
-const WALK_FRAMES = [1, 2, 3, 0] as const;
+const WALK_FRAMES = [1, 0, 2, 0] as const;
 const SHOULDERS = [-30, -31, -31, -31, -25, -27, -19, -16] as const;
 
 export function preloadWarriorArt(scene: Phaser.Scene): void {
@@ -31,18 +31,14 @@ export class WarriorArt {
   }
 
   update(aim: number, step: number, walking: boolean, travel: Vec2,
-    pose: SaberPose, heavy: KineticPose, dashing: boolean): void {
+    _pose: SaberPose, heavy: KineticPose, dashing: boolean): void {
     const x = Math.cos(aim), y = Math.sin(aim);
     const vertical = Math.abs(y) > Math.abs(x);
-    const key = vertical ? (y > 0 ? this.keys[0] : this.keys[2]) : this.keys[1];
+    const direction=vertical?(y>0?'front':'back'):'side';
+    const dressed=this.body.getData('wardrobeKeys') as Record<string,string>|undefined;
+    const key=dressed?.[direction]??(vertical ? (y > 0 ? this.keys[0] : this.keys[2]) : this.keys[1]);
     let frame = 0;
-    if (heavy.phase === 'CHARGING') frame = 6;
-    else if (heavy.phase === 'RELEASE') frame = 5;
-    else if (dashing) frame = 7;
-    else if (pose.phase === 'WINDUP') frame = 4;
-    else if (pose.phase === 'SWING') frame = 5;
-    else if (pose.phase === 'RECOVERY') frame = 4;
-    else if (walking) {
+    if (walking && heavy.phase === 'READY' && !dashing) {
       // Feet advance with distance actually travelled, including backing up.
       // Passing poses separate the two planted steps; no timer keeps walking
       // against a wall and no new animations/tweens are allocated per frame.
@@ -53,5 +49,7 @@ export class WarriorArt {
     if (this.body.texture.key !== key || Number(this.body.frame.name) !== frame) this.body.setTexture(key, frame);
     this.body.setFlipX(!vertical && x < 0);
     this.shoulderY = SHOULDERS[frame];
+    // Charging/striking animate the articulated arms and weapon; retain the
+    // same dressed stance instead of cutting to an incompatible body pose.
   }
 }

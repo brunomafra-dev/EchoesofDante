@@ -1,6 +1,6 @@
 ﻿import Phaser from 'phaser';
 import type { KineticPose } from '../combat/KineticCharge';
-import { hunterBody, type EquipmentLook, type CharacterSex } from '../config/appearance';
+import { hunterBody, weaponStyle, type WeaponStyle, type EquipmentLook, type CharacterSex } from '../config/appearance';
 import { ModularTorso } from './ModularTorso';
 import type { EquipmentSnapshot } from '../config/equipment';
 import { HunterWeapon } from './HunterWeapon';
@@ -31,7 +31,8 @@ export class HunterArt {
     this.previous = { x, y };
     this.update(x, y, 0, false);
   }
-  setEquipment(slots:EquipmentSnapshot['slots']):void { this.torso.setEquipped(!!slots.armor,!!slots.armor&&!slots.armor.startsWith('forest'));this.weapon.setProtection(this.torso.look);this.weapon.setEquipped(!!slots.weapon); }
+  setEquipment(slots:EquipmentSnapshot['slots']):void { this.torso.setEquipped(!!slots.armor,!!slots.armor&&!slots.armor.startsWith('forest'));this.weapon.setProtection(this.torso.look);this.weapon.setStyle(weaponStyle(slots.weapon)); }
+  setWeaponLook(style:WeaponStyle):void {this.weapon.setStyle(style);}
   setEquipmentLook(look:EquipmentLook):void {this.torso.setLook(look);this.weapon.setProtection(look);}
   update(x: number, y: number, aim: number, firing: boolean, dashing = false,
     heavy: Pick<KineticPose, 'phase' | 'level'> = { phase: 'READY', level: 0 }): void {
@@ -43,7 +44,7 @@ export class HunterArt {
     const row = vertical ? vy > 0 ? 0 : 1 : 2, flip = !vertical && vx < 0;
     const backwards = dx * vx + dy * vy < -.05;
     const phase = ((this.travel / 104 * (backwards ? -1 : 1)) % 1 + 1) % 1;
-    const frame = walking ? [1, 2, 3, 0][Math.floor(phase * 4)] : 0;
+    const frame = walking ? [1, 0, 2, 0][Math.floor(phase * 4)] : 0;
     this.view.setRotation(0);
     this.body.setFrame(row * 4 + frame).setFlipX(flip);
     this.torso.update(row===0?'front':row===1?'back':'side',flip,-37);

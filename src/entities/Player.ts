@@ -10,7 +10,7 @@ import { EnergySaber } from './EnergySaber';
 import { poseWarrior } from '../experiments/quality-reference/ActorPresentation';
 import { WarriorArt } from '../visual/WarriorArt';
 import { WarriorArms } from '../visual/WarriorArms';
-import { characterSex, type EquipmentLook, type CharacterSex } from '../config/appearance';
+import { characterSex, weaponStyle, type WeaponStyle, type EquipmentLook, type CharacterSex } from '../config/appearance';
 import type { EquipmentSnapshot } from '../config/equipment';
 import { ModularTorso } from '../visual/ModularTorso';
 import { HUNTER, type PlayableClass } from '../config/classes';
@@ -88,7 +88,7 @@ export class Player {
     this.handAnchor = scene.add.container(0, 0, [this.weapon.view, glove]);
     this.bodyRig = scene.add.container(0, 0, [this.torso, this.supportUpperArm, this.supportArm, this.saberArm, this.handAnchor, this.supportGlove, this.hurtOverlay]);
     this.view = scene.add.container(x, y, [this.legsRig, this.bodyRig]).setDepth(y);
-    if (paintedPresentation) {
+    if (paintedPresentation && classId==='warrior') {
       this.paintedArt = new WarriorArt(this.torso,sex);
       glove.setVisible(false);
       this.modularTorso=new ModularTorso(scene,this.bodyRig,'warrior',sex,this.torso);
@@ -103,9 +103,10 @@ export class Player {
   setEquipmentAppearance(slots:EquipmentSnapshot['slots']):void {
     this.modularTorso?.setEquipped(this.classId==='warrior'&&!!slots.armor,!!slots.armor&&!slots.armor.startsWith('forest'));
     if(this.modularTorso)this.paintedArms?.setProtection(this.modularTorso.look);
-    this.weapon.setEquipped(!!slots.weapon);
+    this.weapon.setStyle(weaponStyle(slots.weapon));
   }
 
+  setWeaponLook(style:WeaponStyle):void {this.weapon.setStyle(style);}
   setEquipmentLook(look:EquipmentLook):void {this.modularTorso?.setLook(look);this.paintedArms?.setProtection(look);}
 
   private makeLeg(x: number): Phaser.GameObjects.Image {

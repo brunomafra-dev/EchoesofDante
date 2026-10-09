@@ -1,0 +1,1874 @@
+[
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "none",
+    "row": 0,
+    "frame": 0,
+    "uniformScale": 0.9751243781094527,
+    "size": [
+      87,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "none",
+    "row": 0,
+    "frame": 1,
+    "uniformScale": 0.9514563106796117,
+    "size": [
+      71,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "none",
+    "row": 0,
+    "frame": 2,
+    "uniformScale": 0.9514563106796117,
+    "size": [
+      69,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "none",
+    "row": 0,
+    "frame": 3,
+    "uniformScale": 0.9607843137254902,
+    "size": [
+      72,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "none",
+    "row": 1,
+    "frame": 0,
+    "uniformScale": 0.9751243781094527,
+    "size": [
+      90,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "none",
+    "row": 1,
+    "frame": 1,
+    "uniformScale": 0.9751243781094527,
+    "size": [
+      68,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "none",
+    "row": 1,
+    "frame": 2,
+    "uniformScale": 0.9702970297029703,
+    "size": [
+      66,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "none",
+    "row": 1,
+    "frame": 3,
+    "uniformScale": 0.9702970297029703,
+    "size": [
+      68,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "none",
+    "row": 2,
+    "frame": 0,
+    "uniformScale": 0.9702970297029703,
+    "size": [
+      86,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "none",
+    "row": 2,
+    "frame": 1,
+    "uniformScale": 0.98989898989899,
+    "size": [
+      104,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "none",
+    "row": 2,
+    "frame": 2,
+    "uniformScale": 0.9849246231155779,
+    "size": [
+      92,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "none",
+    "row": 2,
+    "frame": 3,
+    "uniformScale": 0.9702970297029703,
+    "size": [
+      95,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "basic",
+    "row": 0,
+    "frame": 0,
+    "uniformScale": 1.0,
+    "size": [
+      85,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "basic",
+    "row": 0,
+    "frame": 1,
+    "uniformScale": 0.9607843137254902,
+    "size": [
+      73,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "basic",
+    "row": 0,
+    "frame": 2,
+    "uniformScale": 0.9607843137254902,
+    "size": [
+      70,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "basic",
+    "row": 0,
+    "frame": 3,
+    "uniformScale": 0.9655172413793104,
+    "size": [
+      72,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "basic",
+    "row": 1,
+    "frame": 0,
+    "uniformScale": 1.0,
+    "size": [
+      88,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "basic",
+    "row": 1,
+    "frame": 1,
+    "uniformScale": 0.9949238578680203,
+    "size": [
+      75,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "basic",
+    "row": 1,
+    "frame": 2,
+    "uniformScale": 0.98989898989899,
+    "size": [
+      69,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "basic",
+    "row": 1,
+    "frame": 3,
+    "uniformScale": 0.9949238578680203,
+    "size": [
+      73,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "basic",
+    "row": 2,
+    "frame": 0,
+    "uniformScale": 1.0,
+    "size": [
+      84,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "basic",
+    "row": 2,
+    "frame": 1,
+    "uniformScale": 1.0103092783505154,
+    "size": [
+      103,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "basic",
+    "row": 2,
+    "frame": 2,
+    "uniformScale": 1.0,
+    "size": [
+      91,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "basic",
+    "row": 2,
+    "frame": 3,
+    "uniformScale": 0.9949238578680203,
+    "size": [
+      93,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 0,
+    "frame": 0,
+    "uniformScale": 0.6533333333333333,
+    "size": [
+      84,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 0,
+    "frame": 1,
+    "uniformScale": 0.6302250803858521,
+    "size": [
+      79,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 0,
+    "frame": 2,
+    "uniformScale": 0.632258064516129,
+    "size": [
+      77,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 0,
+    "frame": 3,
+    "uniformScale": 0.632258064516129,
+    "size": [
+      78,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 1,
+    "frame": 0,
+    "uniformScale": 0.6447368421052632,
+    "size": [
+      92,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 1,
+    "frame": 1,
+    "uniformScale": 0.632258064516129,
+    "size": [
+      80,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 1,
+    "frame": 2,
+    "uniformScale": 0.6343042071197411,
+    "size": [
+      77,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 1,
+    "frame": 3,
+    "uniformScale": 0.6343042071197411,
+    "size": [
+      81,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 2,
+    "frame": 0,
+    "uniformScale": 0.6533333333333333,
+    "size": [
+      88,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 2,
+    "frame": 1,
+    "uniformScale": 0.6533333333333333,
+    "size": [
+      108,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 2,
+    "frame": 2,
+    "uniformScale": 0.6511627906976745,
+    "size": [
+      98,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 2,
+    "frame": 3,
+    "uniformScale": 0.6468646864686468,
+    "size": [
+      98,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "none",
+    "row": 0,
+    "frame": 0,
+    "uniformScale": 0.8868778280542986,
+    "size": [
+      87,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "none",
+    "row": 0,
+    "frame": 1,
+    "uniformScale": 0.8909090909090909,
+    "size": [
+      72,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "none",
+    "row": 0,
+    "frame": 2,
+    "uniformScale": 0.8828828828828829,
+    "size": [
+      75,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "none",
+    "row": 0,
+    "frame": 3,
+    "uniformScale": 0.8949771689497716,
+    "size": [
+      72,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "none",
+    "row": 1,
+    "frame": 0,
+    "uniformScale": 0.8672566371681416,
+    "size": [
+      92,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "none",
+    "row": 1,
+    "frame": 1,
+    "uniformScale": 0.8596491228070176,
+    "size": [
+      70,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "none",
+    "row": 1,
+    "frame": 2,
+    "uniformScale": 0.8634361233480177,
+    "size": [
+      76,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "none",
+    "row": 1,
+    "frame": 3,
+    "uniformScale": 0.8711111111111111,
+    "size": [
+      72,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "none",
+    "row": 2,
+    "frame": 0,
+    "uniformScale": 0.8909090909090909,
+    "size": [
+      88,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "none",
+    "row": 2,
+    "frame": 1,
+    "uniformScale": 0.9158878504672897,
+    "size": [
+      113,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "none",
+    "row": 2,
+    "frame": 2,
+    "uniformScale": 0.9074074074074074,
+    "size": [
+      132,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "none",
+    "row": 2,
+    "frame": 3,
+    "uniformScale": 0.9468599033816425,
+    "size": [
+      76,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "basic",
+    "row": 0,
+    "frame": 0,
+    "uniformScale": 1.0,
+    "size": [
+      87,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "basic",
+    "row": 0,
+    "frame": 1,
+    "uniformScale": 0.9655172413793104,
+    "size": [
+      72,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "basic",
+    "row": 0,
+    "frame": 2,
+    "uniformScale": 0.9655172413793104,
+    "size": [
+      72,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "basic",
+    "row": 0,
+    "frame": 3,
+    "uniformScale": 1.0,
+    "size": [
+      74,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "basic",
+    "row": 1,
+    "frame": 0,
+    "uniformScale": 1.0,
+    "size": [
+      84,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "basic",
+    "row": 1,
+    "frame": 1,
+    "uniformScale": 0.9607843137254902,
+    "size": [
+      68,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "basic",
+    "row": 1,
+    "frame": 2,
+    "uniformScale": 0.9751243781094527,
+    "size": [
+      69,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "basic",
+    "row": 1,
+    "frame": 3,
+    "uniformScale": 0.9751243781094527,
+    "size": [
+      70,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "basic",
+    "row": 2,
+    "frame": 0,
+    "uniformScale": 1.0208333333333333,
+    "size": [
+      65,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "basic",
+    "row": 2,
+    "frame": 1,
+    "uniformScale": 1.0315789473684212,
+    "size": [
+      100,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "basic",
+    "row": 2,
+    "frame": 2,
+    "uniformScale": 1.0425531914893618,
+    "size": [
+      117,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "basic",
+    "row": 2,
+    "frame": 3,
+    "uniformScale": 1.065217391304348,
+    "size": [
+      66,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 0,
+    "frame": 0,
+    "uniformScale": 0.6577181208053692,
+    "size": [
+      82,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 0,
+    "frame": 1,
+    "uniformScale": 0.6468646864686468,
+    "size": [
+      74,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 0,
+    "frame": 2,
+    "uniformScale": 0.6468646864686468,
+    "size": [
+      73,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 0,
+    "frame": 3,
+    "uniformScale": 0.6621621621621622,
+    "size": [
+      77,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 1,
+    "frame": 0,
+    "uniformScale": 0.6599326599326599,
+    "size": [
+      82,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 1,
+    "frame": 1,
+    "uniformScale": 0.6490066225165563,
+    "size": [
+      72,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 1,
+    "frame": 2,
+    "uniformScale": 0.6555183946488294,
+    "size": [
+      72,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 1,
+    "frame": 3,
+    "uniformScale": 0.6490066225165563,
+    "size": [
+      73,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 2,
+    "frame": 0,
+    "uniformScale": 0.6533333333333333,
+    "size": [
+      68,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 2,
+    "frame": 1,
+    "uniformScale": 0.6666666666666666,
+    "size": [
+      100,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 2,
+    "frame": 2,
+    "uniformScale": 0.6712328767123288,
+    "size": [
+      124,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "warrior",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 2,
+    "frame": 3,
+    "uniformScale": 0.6925795053003534,
+    "size": [
+      66,
+      196
+    ],
+    "foot": 236
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "none",
+    "row": 0,
+    "frame": 0,
+    "uniformScale": 0.676737160120846,
+    "size": [
+      108,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "none",
+    "row": 0,
+    "frame": 1,
+    "uniformScale": 0.6686567164179105,
+    "size": [
+      90,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "none",
+    "row": 0,
+    "frame": 2,
+    "uniformScale": 0.6686567164179105,
+    "size": [
+      88,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "none",
+    "row": 0,
+    "frame": 3,
+    "uniformScale": 0.6686567164179105,
+    "size": [
+      88,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "none",
+    "row": 1,
+    "frame": 0,
+    "uniformScale": 0.6746987951807228,
+    "size": [
+      103,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "none",
+    "row": 1,
+    "frame": 1,
+    "uniformScale": 0.6666666666666666,
+    "size": [
+      91,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "none",
+    "row": 1,
+    "frame": 2,
+    "uniformScale": 0.6666666666666666,
+    "size": [
+      91,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "none",
+    "row": 1,
+    "frame": 3,
+    "uniformScale": 0.6686567164179105,
+    "size": [
+      92,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "none",
+    "row": 2,
+    "frame": 0,
+    "uniformScale": 0.6934984520123839,
+    "size": [
+      105,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "none",
+    "row": 2,
+    "frame": 1,
+    "uniformScale": 0.6934984520123839,
+    "size": [
+      159,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "none",
+    "row": 2,
+    "frame": 2,
+    "uniformScale": 0.6934984520123839,
+    "size": [
+      155,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "none",
+    "row": 2,
+    "frame": 3,
+    "uniformScale": 0.7021943573667712,
+    "size": [
+      172,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "basic",
+    "row": 0,
+    "frame": 0,
+    "uniformScale": 1.0,
+    "size": [
+      98,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "basic",
+    "row": 0,
+    "frame": 1,
+    "uniformScale": 0.986784140969163,
+    "size": [
+      85,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "basic",
+    "row": 0,
+    "frame": 2,
+    "uniformScale": 0.9781659388646288,
+    "size": [
+      85,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "basic",
+    "row": 0,
+    "frame": 3,
+    "uniformScale": 0.9781659388646288,
+    "size": [
+      85,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "basic",
+    "row": 1,
+    "frame": 0,
+    "uniformScale": 1.0275229357798166,
+    "size": [
+      96,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "basic",
+    "row": 1,
+    "frame": 1,
+    "uniformScale": 1.0275229357798166,
+    "size": [
+      86,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "basic",
+    "row": 1,
+    "frame": 2,
+    "uniformScale": 1.0275229357798166,
+    "size": [
+      87,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "basic",
+    "row": 1,
+    "frame": 3,
+    "uniformScale": 1.0275229357798166,
+    "size": [
+      87,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "basic",
+    "row": 2,
+    "frame": 0,
+    "uniformScale": 1.0,
+    "size": [
+      83,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "basic",
+    "row": 2,
+    "frame": 1,
+    "uniformScale": 1.0135746606334841,
+    "size": [
+      145,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "basic",
+    "row": 2,
+    "frame": 2,
+    "uniformScale": 1.0135746606334841,
+    "size": [
+      149,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "basic",
+    "row": 2,
+    "frame": 3,
+    "uniformScale": 1.0228310502283104,
+    "size": [
+      165,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 0,
+    "frame": 0,
+    "uniformScale": 0.7088607594936709,
+    "size": [
+      98,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 0,
+    "frame": 1,
+    "uniformScale": 0.6978193146417445,
+    "size": [
+      85,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 0,
+    "frame": 2,
+    "uniformScale": 0.6956521739130435,
+    "size": [
+      86,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 0,
+    "frame": 3,
+    "uniformScale": 0.6956521739130435,
+    "size": [
+      86,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 1,
+    "frame": 0,
+    "uniformScale": 0.7344262295081967,
+    "size": [
+      98,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 1,
+    "frame": 1,
+    "uniformScale": 0.7320261437908496,
+    "size": [
+      89,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 1,
+    "frame": 2,
+    "uniformScale": 0.7320261437908496,
+    "size": [
+      89,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 1,
+    "frame": 3,
+    "uniformScale": 0.7344262295081967,
+    "size": [
+      90,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 2,
+    "frame": 0,
+    "uniformScale": 0.7111111111111111,
+    "size": [
+      84,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 2,
+    "frame": 1,
+    "uniformScale": 0.7202572347266881,
+    "size": [
+      148,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 2,
+    "frame": 2,
+    "uniformScale": 0.7156549520766773,
+    "size": [
+      150,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "male",
+    "style": "reinforced",
+    "row": 2,
+    "frame": 3,
+    "uniformScale": 0.7249190938511327,
+    "size": [
+      166,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "none",
+    "row": 0,
+    "frame": 0,
+    "uniformScale": 0.6871165644171779,
+    "size": [
+      87,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "none",
+    "row": 0,
+    "frame": 1,
+    "uniformScale": 0.6829268292682927,
+    "size": [
+      74,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "none",
+    "row": 0,
+    "frame": 2,
+    "uniformScale": 0.6808510638297872,
+    "size": [
+      75,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "none",
+    "row": 0,
+    "frame": 3,
+    "uniformScale": 0.6808510638297872,
+    "size": [
+      75,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "none",
+    "row": 1,
+    "frame": 0,
+    "uniformScale": 0.7,
+    "size": [
+      89,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "none",
+    "row": 1,
+    "frame": 1,
+    "uniformScale": 0.6956521739130435,
+    "size": [
+      77,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "none",
+    "row": 1,
+    "frame": 2,
+    "uniformScale": 0.6934984520123839,
+    "size": [
+      77,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "none",
+    "row": 1,
+    "frame": 3,
+    "uniformScale": 0.6956521739130435,
+    "size": [
+      88,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "none",
+    "row": 2,
+    "frame": 0,
+    "uniformScale": 0.7272727272727273,
+    "size": [
+      81,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "none",
+    "row": 2,
+    "frame": 1,
+    "uniformScale": 0.7417218543046358,
+    "size": [
+      141,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "none",
+    "row": 2,
+    "frame": 2,
+    "uniformScale": 0.7392739273927392,
+    "size": [
+      131,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "none",
+    "row": 2,
+    "frame": 3,
+    "uniformScale": 0.7466666666666667,
+    "size": [
+      162,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "basic",
+    "row": 0,
+    "frame": 0,
+    "uniformScale": 1.0,
+    "size": [
+      88,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "basic",
+    "row": 0,
+    "frame": 1,
+    "uniformScale": 0.9911504424778761,
+    "size": [
+      85,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "basic",
+    "row": 0,
+    "frame": 2,
+    "uniformScale": 0.986784140969163,
+    "size": [
+      84,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "basic",
+    "row": 0,
+    "frame": 3,
+    "uniformScale": 0.986784140969163,
+    "size": [
+      82,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "basic",
+    "row": 1,
+    "frame": 0,
+    "uniformScale": 1.0,
+    "size": [
+      96,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "basic",
+    "row": 1,
+    "frame": 1,
+    "uniformScale": 0.9955555555555555,
+    "size": [
+      89,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "basic",
+    "row": 1,
+    "frame": 2,
+    "uniformScale": 1.0,
+    "size": [
+      89,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "basic",
+    "row": 1,
+    "frame": 3,
+    "uniformScale": 1.009009009009009,
+    "size": [
+      89,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "basic",
+    "row": 2,
+    "frame": 0,
+    "uniformScale": 1.0,
+    "size": [
+      78,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "basic",
+    "row": 2,
+    "frame": 1,
+    "uniformScale": 1.0228310502283104,
+    "size": [
+      133,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "basic",
+    "row": 2,
+    "frame": 2,
+    "uniformScale": 1.018181818181818,
+    "size": [
+      125,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "basic",
+    "row": 2,
+    "frame": 3,
+    "uniformScale": 1.037037037037037,
+    "size": [
+      152,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 0,
+    "frame": 0,
+    "uniformScale": 0.6871165644171779,
+    "size": [
+      87,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 0,
+    "frame": 1,
+    "uniformScale": 0.676737160120846,
+    "size": [
+      79,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 0,
+    "frame": 2,
+    "uniformScale": 0.6726726726726727,
+    "size": [
+      79,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 0,
+    "frame": 3,
+    "uniformScale": 0.6787878787878788,
+    "size": [
+      80,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 1,
+    "frame": 0,
+    "uniformScale": 0.691358024691358,
+    "size": [
+      89,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 1,
+    "frame": 1,
+    "uniformScale": 0.6934984520123839,
+    "size": [
+      83,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 1,
+    "frame": 2,
+    "uniformScale": 0.6934984520123839,
+    "size": [
+      82,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 1,
+    "frame": 3,
+    "uniformScale": 0.6978193146417445,
+    "size": [
+      87,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 2,
+    "frame": 0,
+    "uniformScale": 0.7088607594936709,
+    "size": [
+      81,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 2,
+    "frame": 1,
+    "uniformScale": 0.7156549520766773,
+    "size": [
+      135,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 2,
+    "frame": 2,
+    "uniformScale": 0.7133757961783439,
+    "size": [
+      126,
+      224
+    ],
+    "foot": 244
+  },
+  {
+    "class": "hunter",
+    "sex": "female",
+    "style": "reinforced",
+    "row": 2,
+    "frame": 3,
+    "uniformScale": 0.7202572347266881,
+    "size": [
+      156,
+      224
+    ],
+    "foot": 244
+  }
+]

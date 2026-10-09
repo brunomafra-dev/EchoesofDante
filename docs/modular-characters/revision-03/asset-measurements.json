@@ -1,0 +1,156 @@
+{
+  "wardrobe-warrior-male-none.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 360126
+  },
+  "warrior-male-stance-front.png": {
+    "dimensions": [
+      1024,
+      256
+    ],
+    "bytes": 113879
+  },
+  "warrior-male-stance-back.png": {
+    "dimensions": [
+      1024,
+      256
+    ],
+    "bytes": 112664
+  },
+  "warrior-male-stance-side.png": {
+    "dimensions": [
+      1024,
+      256
+    ],
+    "bytes": 133772
+  },
+  "wardrobe-warrior-male-basic.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 355019
+  },
+  "wardrobe-warrior-male-reinforced.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 410018
+  },
+  "wardrobe-warrior-female-none.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 366281
+  },
+  "warrior-female-stance-front.png": {
+    "dimensions": [
+      1024,
+      256
+    ],
+    "bytes": 117543
+  },
+  "warrior-female-stance-back.png": {
+    "dimensions": [
+      1024,
+      256
+    ],
+    "bytes": 116803
+  },
+  "warrior-female-stance-side.png": {
+    "dimensions": [
+      1024,
+      256
+    ],
+    "bytes": 132171
+  },
+  "wardrobe-warrior-female-basic.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 362316
+  },
+  "wardrobe-warrior-female-reinforced.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 382977
+  },
+  "wardrobe-hunter-male-none.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 424331
+  },
+  "hunter-male-stance.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 424331
+  },
+  "wardrobe-hunter-male-basic.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 461240
+  },
+  "wardrobe-hunter-male-reinforced.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 486985
+  },
+  "wardrobe-hunter-female-none.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 409440
+  },
+  "hunter-female-stance.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 409440
+  },
+  "wardrobe-hunter-female-basic.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 457762
+  },
+  "wardrobe-hunter-female-reinforced.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 457815
+  },
+  "hunter-starter-weapon.png": {
+    "dimensions": [
+      256,
+      128
+    ],
+    "bytes": 20311
+  },
+  "warrior-starter-weapon.png": {
+    "dimensions": [
+      256,
+      64
+    ],
+    "bytes": 9878
+  }
+}

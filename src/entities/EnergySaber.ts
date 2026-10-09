@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import type { WeaponStyle } from '../config/appearance';
 import { PLAYER } from '../config/game';
 import type { SaberPose } from '../combat/Attack';
 import type { KineticPose } from '../combat/KineticCharge';
@@ -16,7 +17,7 @@ export class EnergySaber {
   constructor(scene: Phaser.Scene, paintedPresentation = false) {
     if (paintedPresentation) {
       // Pixel-registered grip: the two glove pivots remain (0,0) and (-10,0).
-      const art = scene.add.image(0, 0, 'warrior-saber-painted').setOrigin(78 / 256, 34 / 64).setDisplaySize(128, 32);
+      const art = scene.add.image(0, 0, 'warrior-starter-weapon').setOrigin(78 / 256, 34 / 64).setDisplaySize(128, 32);
       this.view = scene.add.container(0, 0, [art]);
       this.art=art;
     } else {
@@ -43,7 +44,8 @@ export class EnergySaber {
     this.trail = scene.add.graphics();
   }
 
-  setEquipped(equipped:boolean):void {const key=equipped?'warrior-pilot-weapon':'warrior-saber-painted';if(this.art&&this.art.texture.key!==key)this.art.setTexture(key).setDisplaySize(128,32);}
+  setEquipped(equipped:boolean):void {this.setStyle(equipped?'current':'starter');}
+  setStyle(style:WeaponStyle):void {const key=style==='starter'?'warrior-starter-weapon':style==='current'?'warrior-saber-painted':'warrior-pilot-weapon';if(this.art&&this.art.texture.key!==key)this.art.setTexture(key).setDisplaySize(128,32);}
 
   render(position: Vec2, grip: Vec2, facing: number, bodyLean: number, pose: SaberPose, heavy: KineticPose, dashing: boolean): void {
     const heavyAngle = heavy.phase === 'CHARGING' ? -0.9 : -0.9 + 1.8 * heavy.swingProgress;

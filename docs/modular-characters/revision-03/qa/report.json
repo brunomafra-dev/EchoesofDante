@@ -1,0 +1,119 @@
+{
+  "method": "Chrome headless; real keyboard/mouse, source-pixel checks during abilities, emulation only. Human visual approval pending.",
+  "errors": [],
+  "cases": [
+    {
+      "classId": "hunter",
+      "sex": "male",
+      "abilityFrames": 243,
+      "body": "dressed-hunter-male-1-all",
+      "frame": 0,
+      "look": {
+        "helmet": "reinforced",
+        "torso": "reinforced",
+        "legs": "reinforced",
+        "boots": "reinforced",
+        "gloves": "reinforced"
+      },
+      "width": 128,
+      "height": 128,
+      "bakes": 44,
+      "overlayChildren": 0,
+      "textureCount": 124,
+      "dressedTextures": 1,
+      "phase": "READY",
+      "objects": 384,
+      "tweens": 24,
+      "fps": 57.68007235508412,
+      "position": {
+        "x": 476.0880952488941,
+        "y": 1230.4459591476393
+      }
+    },
+    {
+      "classId": "hunter",
+      "sex": "female",
+      "abilityFrames": 250,
+      "body": "dressed-hunter-female-1-all",
+      "frame": 0,
+      "look": {
+        "helmet": "reinforced",
+        "torso": "reinforced",
+        "legs": "reinforced",
+        "boots": "reinforced",
+        "gloves": "reinforced"
+      },
+      "width": 128,
+      "height": 128,
+      "bakes": 44,
+      "overlayChildren": 0,
+      "textureCount": 124,
+      "dressedTextures": 1,
+      "phase": "READY",
+      "objects": 384,
+      "tweens": 24,
+      "fps": 57.534249275922775,
+      "position": {
+        "x": 476.088004920704,
+        "y": 1230.4447064735473
+      }
+    },
+    {
+      "classId": "warrior",
+      "sex": "male",
+      "abilityFrames": 245,
+      "body": "dressed-warrior-male-1-front",
+      "frame": 0,
+      "look": {
+        "helmet": "reinforced",
+        "torso": "reinforced",
+        "legs": "reinforced",
+        "boots": "reinforced",
+        "gloves": "reinforced"
+      },
+      "width": 128,
+      "height": 128,
+      "bakes": 44,
+      "overlayChildren": 0,
+      "textureCount": 125,
+      "dressedTextures": 3,
+      "phase": "READY",
+      "objects": 372,
+      "tweens": 24,
+      "fps": 58.843126937747,
+      "position": {
+        "x": 477.65624670392714,
+        "y": 1309.405059618956
+      }
+    },
+    {
+      "classId": "warrior",
+      "sex": "female",
+      "abilityFrames": 244,
+      "body": "dressed-warrior-female-1-front",
+      "frame": 0,
+      "look": {
+        "helmet": "reinforced",
+        "torso": "reinforced",
+        "legs": "reinforced",
+        "boots": "reinforced",
+        "gloves": "reinforced"
+      },
+      "width": 128,
+      "height": 128,
+      "bakes": 44,
+      "overlayChildren": 0,
+      "textureCount": 125,
+      "dressedTextures": 3,
+      "phase": "READY",
+      "objects": 372,
+      "tweens": 24,
+      "fps": 58.15757626667619,
+      "position": {
+        "x": 463.34212376597304,
+        "y": 1310.1492124540882
+      }
+    }
+  ],
+  "passed": true
+}

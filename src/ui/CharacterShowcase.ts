@@ -31,6 +31,7 @@ export class CharacterShowcase {
   private readonly ctx: CanvasRenderingContext2D;
   private readonly loaded = new Map<string, HTMLImageElement>();
   private parts: Part[] = [];
+  private armBounds:{x:number;y:number;width:number;height:number}[]=[];
   private raf = 0;
   private disposed = false;
   private started = 0;
@@ -47,12 +48,15 @@ export class CharacterShowcase {
     this.canvas.width = 320 * ratio; this.canvas.height = 360 * ratio;
     this.ctx = this.canvas.getContext('2d')!; this.ctx.scale(ratio, ratio);
     this.caption.className = 'showcase-caption'; this.caption.textContent = 'PREPARADO PARA DANTE';
-    const names = classId === 'hunter' ? [this.bodyName, 'star-hunter-weapon-v2.png','expedition-arm-kit.png'] :
-      [this.bodyName, 'expedition-arm-kit.png', 'warrior-saber-painted.png'];
+    const names = classId === 'hunter' ? [this.bodyName, 'star-hunter-weapon-v2.png','hunter-starter-weapon.png','expedition-arm-kit.png'] :
+      [this.bodyName, 'expedition-arm-kit.png', 'warrior-starter-weapon.png'];
     void Promise.all(names.map(async name => this.loaded.set(name, await image(name)))).then(async () => {
       if (this.disposed) return;
       if (classId === 'hunter') this.parts = await rifleParts();
       if (this.disposed) return;
+      const registration=await fetch(base+'character-arm-registration.json').then(r=>r.json());
+      this.armBounds=registration['expedition-arm-kit'];
+      if(this.disposed)return;
       this.ready = true; this.paint(-1);
       if (this.pendingDemo) this.play(this.pendingManual);
     }).catch(() => { if (!this.disposed) this.caption.textContent = 'PRÉVIA INDISPONÍVEL'; });
@@ -117,9 +121,9 @@ export class CharacterShowcase {
     const main = grip(-4, 9), support = grip(16, 7);
     this.arm('hunter', -15, -34, main.x, main.y, -1);
     this.arm('hunter', 15, -34, support.x, support.y, 1);
-    const rifle = this.parts[0];
-    this.part(0, pose.x, pose.y, aim, 60, 60 * rifle.height / rifle.width, .3, rifle.axisY ?? .38);
-    this.part(4, main.x, main.y, aim, 10, 10, .65, .5); this.part(5, support.x, support.y, aim, 10, 10, .65, .5);
+    const starter=this.loaded.get('hunter-starter-weapon.png');
+    c.save();c.translate(pose.x,pose.y);c.rotate(aim);if(starter)c.drawImage(starter,-18,-34/128*30,60,30);c.restore();
+    this.part(4, main.x, main.y, aim, 7.5, 9, .65, .5); this.part(5, support.x, support.y, aim, 7.5, 9, .65, .5);
     c.save(); c.translate(pose.muzzleX, pose.muzzleY); c.rotate(aim);
     if (charge) { c.fillStyle = '#baffef'; c.beginPath(); c.arc(0, 0, 2 + (t - 2) * 4, 0, Math.PI * 2); c.fill(); }
     if (firing) {
@@ -133,17 +137,17 @@ export class CharacterShowcase {
     c.restore();
   }
   private warrior(t: number, strike: boolean, dash: boolean, charge: boolean, release: boolean): void {
-    const c = this.ctx, frame = dash ? 7 : charge ? 6 : release ? 5 : strike ? t < .45 ? 4 : 5 : 0;
+    const c = this.ctx, frame = dash ? [1,0,2,0][Math.floor((t-1.15)*8)%4] : 0;
     this.sprite(this.bodyName, frame, 4, 256, -64, -79, 128, 128);
     const angle = strike ? -1.6 + Math.max(0, t - .45) * 4.5 : release ? -.2 : charge ? -1.6 : -1.1;
     const x = strike ? 20 : 15, y = charge ? -24 : -17;
     const sx = x - 10 * Math.cos(angle), sy = y - 10 * Math.sin(angle);
     this.arm('warrior', -15, -30, x - 4 * Math.cos(angle), y - 4 * Math.sin(angle), -1);
     this.arm('warrior', 15, -30, sx - 4 * Math.cos(angle), sy - 4 * Math.sin(angle), 1);
-    const saber = this.loaded.get('warrior-saber-painted.png');
+    const saber = this.loaded.get('warrior-starter-weapon.png');
     c.save(); c.translate(x, y); c.rotate(angle); if (saber) c.drawImage(saber, -39, -17, 128, 32); c.restore();
     for (const [hx, hy] of [[x, y], [sx, sy]]) {
-      c.save(); c.translate(hx, hy); c.rotate(angle); this.sprite('expedition-arm-kit.png', 2, 3, 128, -7, -7, 12, 14); c.restore();
+      c.save(); c.translate(hx, hy); c.rotate(angle); this.armPart(2,-5,-5,8,10); c.restore();
     }
     if (strike) {
       c.strokeStyle = '#5fe6d85c'; c.lineWidth = 4; c.beginPath(); c.arc(x, y, 60, angle - .4, angle + .3); c.stroke();
@@ -153,8 +157,9 @@ export class CharacterShowcase {
       c.strokeStyle = '#5fe6d8'; c.lineWidth = 3; c.beginPath(); c.ellipse(0, 0, 7, 35, 0, 0, Math.PI * 2); c.stroke(); c.restore();
     }
   }
+  private armPart(frame:number,x:number,y:number,w:number,h:number):void {const b=this.armBounds[frame],img=this.loaded.get('expedition-arm-kit.png');if(b&&img)this.ctx.drawImage(img,b.x,b.y,b.width,b.height,x,y,w,h);}
   private part(frame: number, x: number, y: number, angle: number, w: number, h: number, ox: number, oy: number): void {
-    if(frame>=2){const c=this.ctx;c.save();c.translate(x,y);c.rotate(angle);this.sprite('expedition-arm-kit.png',frame<4?frame-2:2,3,128,-w*ox,-h*oy,w,h);c.restore();return;}
+    if(frame>=2){const c=this.ctx;c.save();c.translate(x,y);c.rotate(angle);this.armPart(frame<4?frame-2:2,-w*ox,-h*oy,w,h);c.restore();return;}
     const p = this.parts[frame], img = this.loaded.get('star-hunter-weapon-v2.png'); if (!p || !img) return;
     const c = this.ctx; c.save(); c.translate(x, y); c.rotate(angle);
     c.drawImage(img, frame % 2 * 256 + Math.floor((256 - p.width) / 2), Math.floor(frame / 2) * 256 + 16,
@@ -166,9 +171,9 @@ export class CharacterShowcase {
     const ex = sx + dx / 2 - dy / distance * bend * side, ey = sy + dy / 2 + dx / distance * bend * side;
     for (const [fromX, fromY, toX, toY, segment] of [[sx, sy, ex, ey, 0], [ex, ey, wx, wy, 1]]) {
       const angle = Math.atan2(toY - fromY, toX - fromX), width = Math.hypot(toX - fromX, toY - fromY) + 2;
-      if (kind === 'hunter') this.part(2 + segment, fromX, fromY, angle, width, segment ? 12 : 14, 0, .5);
+      if (kind === 'hunter') this.part(2 + segment, fromX, fromY, angle, width, segment ? 10 : 11.5, 0, .5);
       else { const c = this.ctx; c.save(); c.translate(fromX, fromY); c.rotate(angle);
-        this.sprite('expedition-arm-kit.png', segment, 3, 128, 0, -9, width, segment ? 17 : 19); c.restore(); }
+        this.armPart(segment,0,-(segment?10.5:12.5)/2,width,segment?10.5:12.5); c.restore(); }
     }
   }
 }

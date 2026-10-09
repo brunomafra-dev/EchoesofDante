@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { registerPaintedArmFrames } from './PaintedArmFrames';
 import { equipmentLook,type EquipmentLook } from '../config/appearance';
 
 type Image = Phaser.GameObjects.Image;
@@ -21,10 +22,11 @@ export class WarriorArms {
     body: Image, private readonly mainFore: Image, private readonly supportUpper: Image,
     private readonly supportFore: Image, private readonly hand: Phaser.GameObjects.Container,
     private readonly supportGlove: Image, hurt: Phaser.GameObjects.Graphics, torso: Phaser.GameObjects.Container) {
+    registerPaintedArmFrames(scene);
     this.mainUpper = scene.add.image(0, 0, 'warrior-arm-kit', 0).setOrigin(0, 0.5);
     for (const image of [mainFore, supportUpper, supportFore]) image.setTexture('warrior-arm-kit');
-    this.mainGlove = scene.add.image(0, 0, 'warrior-arm-kit', 2).setOrigin(0.65, 0.5).setDisplaySize(12, 14);
-    supportGlove.setOrigin(0.65, 0.5).setDisplaySize(11, 13);
+    this.mainGlove = scene.add.image(0, 0, 'warrior-arm-kit', 2).setOrigin(0.65, 0.5).setDisplaySize(8, 10);
+    supportGlove.setOrigin(0.65, 0.5).setDisplaySize(7.5, 9);
     hand.add(this.mainGlove); rig.add(this.mainUpper);
     this.setProtection(equipmentLook());
     this.orders = {
@@ -35,10 +37,12 @@ export class WarriorArms {
   }
 
   setProtection(look:EquipmentLook):void {
-    const sleeve=look.torso==='none'?'expedition-arm-kit':'warrior-arm-kit';
+    const sleeve=look.torso==='none'?'expedition-arm-kit':look.torso==='reinforced'?'reinforced-arm-kit':'warrior-arm-kit';
     const glove=look.gloves==='none'?'expedition-arm-kit':look.gloves==='reinforced'?'reinforced-arm-kit':'warrior-arm-kit';
-    for(const p of [this.mainUpper,this.mainFore,this.supportUpper,this.supportFore])p.setTexture(sleeve,p.frame.name);
-    for(const p of [this.mainGlove,this.supportGlove])p.setTexture(glove,p.frame.name);
+    const outer=this.layer==='back'?3:0;
+    this.mainUpper.setTexture(sleeve,`anatomy-${outer}`);this.supportUpper.setTexture(sleeve,`anatomy-${outer}`);
+    this.mainFore.setTexture(sleeve,`anatomy-${outer+1}`);this.supportFore.setTexture(sleeve,`anatomy-${outer+1}`);
+    this.mainGlove.setTexture(glove,`anatomy-${outer+2}`).setDisplaySize(8,10);this.supportGlove.setTexture(glove,`anatomy-${outer+2}`).setDisplaySize(7.5,9);
     this.layer=undefined;
   }
   prepare(aim: number, shoulderY: number, reach: number, sweep: number): void {
@@ -57,9 +61,9 @@ export class WarriorArms {
     if (this.layer !== layer) {
       this.layer = layer;
       const outer = layer === 'back';
-      this.mainUpper.setFrame(outer ? 3 : 0); this.supportUpper.setFrame(outer ? 3 : 0);
-      this.mainFore.setFrame(outer ? 4 : 1); this.supportFore.setFrame(outer ? 4 : 1);
-      this.mainGlove.setFrame(outer ? 5 : 2); this.supportGlove.setFrame(outer ? 5 : 2);
+      this.mainUpper.setFrame(outer ? 'anatomy-3' : 'anatomy-0'); this.supportUpper.setFrame(outer ? 'anatomy-3' : 'anatomy-0');
+      this.mainFore.setFrame(outer ? 'anatomy-4' : 'anatomy-1'); this.supportFore.setFrame(outer ? 'anatomy-4' : 'anatomy-1');
+      this.mainGlove.setFrame(outer ? 'anatomy-5' : 'anatomy-2'); this.supportGlove.setFrame(outer ? 'anatomy-5' : 'anatomy-2');
       // Change draw order only on a view change, never allocate per-frame lists.
       for (const item of this.orders[layer]) this.rig.bringToTop(item);
     }
@@ -86,13 +90,13 @@ export class WarriorArms {
     const elbowSide = side * (Math.sin(this.facing) < -0.2 ? -1 : 1);
     const ex = sx + dx * 0.5 - dy / distance * bend * elbowSide;
     const ey = sy + dy * 0.5 + dx / distance * bend * elbowSide;
-    this.segment(upper, sx, sy, ex, ey, 19);
-    this.segment(fore, ex, ey, wx, wy, 17);
+    this.segment(upper, sx, sy, ex, ey, 12.5);
+    this.segment(fore, ex, ey, wx, wy, 10.5);
   }
 
   private segment(image: Image, x: number, y: number, endX: number, endY: number, thickness: number): void {
     const dx = endX - x, dy = endY - y;
-    // The sheet has 60px of sleeve height inside a 128px transparent cell.
+    // Cropped anatomical frames make thickness refer to painted pixels.
     image.setPosition(x, y).setRotation(Math.atan2(dy, dx))
       .setDisplaySize(Math.max(1, Math.hypot(dx, dy)) + 1, thickness);
   }

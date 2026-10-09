@@ -1,5 +1,7 @@
 # Revisão 02 — roupa de expedição e proteção separada
 
+**Rejeitada no playtest humano:** Hunter deformado, peças com aspecto de sobreposição e relance sem equipamento durante Q. Implementação substituída pela [revisão 03](../revision-03/README.md). Evidências abaixo são históricas.
+
 O piloto anterior foi rejeitado pelo usuário: sua armadura pintada no corpo permanecia sob o torso novo. Esta revisão mantém a identidade Organic Sci-Fi D e separa a base sem proteção dos equipamentos.
 
 ## Testar

@@ -1,0 +1,71 @@
+{
+  "errors": [],
+  "cases": [
+    {
+      "classId": "hunter",
+      "sex": "female",
+      "phase": "CHARGING",
+      "key": "dressed-hunter-female-1-all",
+      "frame": 8,
+      "look": {
+        "helmet": "none",
+        "torso": "reinforced",
+        "legs": "none",
+        "boots": "none",
+        "gloves": "none"
+      },
+      "children": 0,
+      "upper": "reinforced-arm-kit"
+    },
+    {
+      "classId": "hunter",
+      "sex": "male",
+      "phase": "CHARGING",
+      "key": "dressed-hunter-male-1-all",
+      "frame": 8,
+      "look": {
+        "helmet": "none",
+        "torso": "reinforced",
+        "legs": "none",
+        "boots": "none",
+        "gloves": "none"
+      },
+      "children": 0,
+      "upper": "reinforced-arm-kit"
+    },
+    {
+      "classId": "warrior",
+      "sex": "female",
+      "phase": "CHARGING",
+      "key": "dressed-warrior-female-1-side",
+      "frame": 0,
+      "look": {
+        "helmet": "none",
+        "torso": "reinforced",
+        "legs": "none",
+        "boots": "none",
+        "gloves": "none"
+      },
+      "children": 0,
+      "upper": "reinforced-arm-kit"
+    },
+    {
+      "classId": "warrior",
+      "sex": "male",
+      "phase": "CHARGING",
+      "key": "dressed-warrior-male-1-side",
+      "frame": 0,
+      "look": {
+        "helmet": "none",
+        "torso": "reinforced",
+        "legs": "none",
+        "boots": "none",
+        "gloves": "none"
+      },
+      "children": 0,
+      "upper": "reinforced-arm-kit"
+    }
+  ],
+  "method": "Chrome headless, five captured directions, mixed outfit, actual charge input. Captures without artificial invulnerability blinking.",
+  "passed": true
+}

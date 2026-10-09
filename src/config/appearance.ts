@@ -5,9 +5,9 @@ export function characterSex(classId: PlayableClass, value?: unknown): Character
   return value === 'male' || value === 'female' ? value : classId === 'hunter' ? 'female' : 'male';
 }
 export function warriorBody(sex: CharacterSex, direction: 'front'|'back'|'side'): string {
-  return `warrior-${sex}-clothes-${direction}`;
+  return `warrior-${sex}-stance-${direction}`;
 }
-export function hunterBody(sex: CharacterSex): string { return `hunter-${sex}-clothes`; }
+export function hunterBody(sex: CharacterSex): string { return `hunter-${sex}-stance`; }
 
 export type ProtectionStyle = 'none' | 'basic' | 'reinforced';
 export const PROTECTION_PARTS = ['helmet','torso','legs','boots','gloves'] as const;
@@ -16,3 +16,6 @@ export type EquipmentLook = Record<ProtectionPart,ProtectionStyle>;
 export function equipmentLook(style:ProtectionStyle='none'):EquipmentLook {
   return {helmet:style,torso:style,legs:style,boots:style,gloves:style};
 }
+
+export type WeaponStyle='starter'|'current'|'advanced';
+export function weaponStyle(id?:string):WeaponStyle {return !id?'starter':id.startsWith('forest')?'current':'advanced';}

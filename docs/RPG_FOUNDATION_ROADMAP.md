@@ -197,3 +197,12 @@ Versão 0.1.79: masculino/feminino, corpos raster e equipamento visual piloto pa
 O usuário rejeitou o encaixe do piloto anterior porque sobrepunha uma armadura a outra já pintada no corpo. A revisão 02 usa corpos em roupa simples e peças registradas por pose, com opções sem proteção/básica/reforçada no laboratório. Os nove itens antigos, atributos e posse permanecem intactos; o slot atual de armadura apresenta somente o torso. Luvas foram incluídas no plano de sete slots. **Aguardando novo playtest humano**; nenhuma etapa de inventário/drops foi iniciada.
 
 Teste: [roupa e equipamentos](https://echosofdante.vercel.app/character-playtest.html?class=warrior&sex=female&kit=clothes).
+
+
+### Revisão 03 — corpo vestido e proporções — 0.1.81
+
+Revisão 02 rejeitada pelo usuário: Hunter deformado, armadura com aparência colada e relance sem equipamento ao usar Q. Agora as peças substituem regiões de pinturas completas e compatíveis numa textura reutilizada por ator; não há corpo sem proteção sob overlays de armadura. Registro offline preserva a proporção X/Y. Braços usam recortes da área pintada, com espessura real e duas articulações; poses do corpo permanecem compatíveis durante habilidades. Armas: inicial simples, equipamento atual e versão tecnológica avançada, sem alterar atributos existentes.
+
+[Relatório e evidências](modular-characters/revision-03/README.md) · [Teste do Hunter](https://echosofdante.vercel.app/character-playtest.html?class=hunter&sex=female&kit=basic&weapon=current).
+
+**Aguardando aprovação humana.** A etapa 2 permanece bloqueada por esta validação; nenhum inventário ou novo sistema de drops foi iniciado.
