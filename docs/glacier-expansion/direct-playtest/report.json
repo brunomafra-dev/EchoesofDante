@@ -1,0 +1,46 @@
+{
+  "errors": [],
+  "scenarios": [
+    {
+      "area": "icecave",
+      "classId": "warrior",
+      "level": 6,
+      "hp": 145,
+      "maxHp": 145,
+      "paused": false,
+      "points": 0
+    },
+    {
+      "area": "icecave",
+      "classId": "hunter",
+      "level": 6,
+      "hp": 116,
+      "maxHp": 116,
+      "paused": false,
+      "points": 0
+    },
+    {
+      "area": "icenest",
+      "classId": "warrior",
+      "level": 6,
+      "hp": 145,
+      "maxHp": 145,
+      "bossHp": 1100,
+      "paused": false,
+      "points": 0
+    },
+    {
+      "area": "icenest",
+      "classId": "hunter",
+      "level": 6,
+      "hp": 116,
+      "maxHp": 116,
+      "bossHp": 1100,
+      "paused": false,
+      "points": 0
+    }
+  ],
+  "bossEntryAndRetry": true,
+  "personalJourneyPreserved": true,
+  "passed": true
+}

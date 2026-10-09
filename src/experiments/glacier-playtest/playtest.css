@@ -1,0 +1,8 @@
+.playtest-navigation { position: fixed; top: calc(30px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); z-index: 22; max-width: calc(100vw - 32px); font: 12px 'DM Sans', sans-serif; color: #dbe6ef; }
+.playtest-navigation summary { cursor: pointer; text-align: center; padding: 6px 12px; background: #08151bbb; border-radius: 4px; }
+.playtest-navigation nav { width: min(350px, calc(100vw - 32px)); display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 10px; background: #08151bf2; }
+.playtest-navigation p { grid-column: 1 / -1; margin: 0 0 8px; }
+.playtest-navigation a, .playtest-navigation button { padding: 12px 8px; min-height: 44px; color: inherit; font: inherit; text-decoration: none; text-align: center; background: #25323a; border: 0; border-radius: 3px; cursor: pointer; touch-action: manipulation; }
+.playtest-navigation [aria-current] { color: #ffbd54; }
+.playtest-navigation :focus-visible { outline: 2px solid #ffbd54; }
+@media (max-height: 500px) { .playtest-navigation { top: env(safe-area-inset-top); font-size: 10px; } }

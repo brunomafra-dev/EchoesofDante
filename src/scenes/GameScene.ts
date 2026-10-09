@@ -189,7 +189,8 @@ export class GameScene extends Phaser.Scene {
   private lastDashTrail = 0;
 
   constructor(private readonly qualityReference: false | 'baseline' | 'reference' = false,
-    private readonly originalWarrior = false, private readonly shellReady?: (scene: GameScene) => void) { super('Game'); }
+    private readonly originalWarrior = false, private readonly shellReady?: (scene: GameScene) => void,
+    private readonly glacierPlaytest?: { area: 'icecave' | 'icenest'; classId: 'warrior' | 'hunter' }) { super('Game'); }
 
   preload(): void {
     preloadHunterArt(this);
@@ -252,7 +253,7 @@ export class GameScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.events.off(Phaser.Scenes.Events.UPDATE, syncCombatClock));
     if (!this.journeyLoaded) { this.journeyLoaded = true; this.restoreJourney(); }
     resetEnvironmentOcclusion(this);
-    this.classId = this.qualityReference ? 'warrior' : characterProfiles.active.classId;
+    this.classId = this.glacierPlaytest?.classId ?? (this.qualityReference ? 'warrior' : characterProfiles.active.classId);
     this.hunter = undefined; this.hunterArt = undefined;
     this.attack = new SaberAttack(id => this.progression.upgradeRank(id));
     this.charge = new KineticCharge(id => this.progression.upgradeRank(id));
@@ -477,12 +478,12 @@ export class GameScene extends Phaser.Scene {
       abilityUpgradeRanks: this.progression.abilityUpgradeRanks,
       area: this.area === 'icecave' || this.area === 'icenest' ? GLACIER[this.area].name : this.area === 'frost' ? 'Fratura Boreal' : this.area === 'sandpit' ? 'Bacia Soterrada' : this.area === 'dunes' ? 'Dunas Interiores' : this.area === 'arid' ? 'Bacia do Siroco' : this.area === 'valley' ? 'Vale da Ressonância' : this.area === 'warden' ? 'Domínio do Guardião' : this.area === 'cavern' ? 'Cavernas de Dante' : 'Floresta de Dante',
       bestiary: this.bestiary.snapshot(), routes: this.valleyRoutes, valleyVisited: this.valleyVisited,
-      saveStatus: coopSession.role === 'guest' ? `Kit temporário do anfitrião. XP pessoal +${coopSession.personalXpGained}: ${coopSession.rewardSaved ? 'salvo na sua jornada solo' : 'aguardando armazenamento'}. Descobertas da campanha continuam separadas.` : this.qualityReference ? 'Referência isolada. O progresso do jogo permanece intacto.' : this.journey.status,
+      saveStatus: this.glacierPlaytest ? 'Playtest temporário. Sua jornada e personagens permanecem intactos.' : coopSession.role === 'guest' ? `Kit temporário do anfitrião. XP pessoal +${coopSession.personalXpGained}: ${coopSession.rewardSaved ? 'salvo na sua jornada solo' : 'aguardando armazenamento'}. Descobertas da campanha continuam separadas.` : this.qualityReference ? 'Referência isolada. O progresso do jogo permanece intacto.' : this.journey.status,
       rewardedRoutes: this.progression.rewardedRoutes,
     }), () => { this.pauseForModal(); this.saveProgress(); }, () => this.resumeFromModal(), () => {
       if (coopSession.role === 'guest') return;
       if (coopSession.role === 'host') coopSession.disconnect();
-      if (this.qualityReference) { location.reload(); return; }
+      if (this.qualityReference || this.glacierPlaytest) { location.reload(); return; }
       if (this.journey.clear()) { this.resettingJourney = true; location.reload(); }
       else this.records.setSaveAvailable(false);
     });
@@ -510,7 +511,7 @@ export class GameScene extends Phaser.Scene {
     if (!this.qualityReference && this.progression.upgradePointsAvailable > 0) {
       this.time.delayedCall(350, () => this.showAvailableUpgrade());
     }
-    this.party = this.qualityReference ? undefined : new PartyExpedition(this, () => this.partyBridge());
+    this.party = this.qualityReference || this.glacierPlaytest ? undefined : new PartyExpedition(this, () => this.partyBridge());
     this.shellReady?.(this);
   }
 
@@ -1711,6 +1712,20 @@ export class GameScene extends Phaser.Scene {
   }
 
   private restoreJourney(): void {
+    if (this.glacierPlaytest) {
+      // Session-only setup: never load, select, create or overwrite real heroes.
+      for (const key of JOURNEY_FLAGS) this[key] = !key.startsWith('vesper');
+      this.icecaveSignalSeen = this.glacierPlaytest.area === 'icenest';
+      this.icenestVisited = this.glacierPlaytest.area === 'icenest';
+      this.area = this.glacierPlaytest.area;
+      this.progression.restore({ xp: 1000, echoes: ['northern-ruin', 'mineral-signal', 'unknown-trace'],
+        sourceLocated: true, passageOpen: true, rewardedHollows: [], rewardedRoutes: [], bossRewards: ['soterrado'] });
+      const choices = this.glacierPlaytest.classId === 'hunter'
+        ? ['chargePower', 'dashDuration', 'chargeWidth'] as const
+        : ['saberReach', 'saberArc', 'chargePower'] as const;
+      for (const id of choices) this.progression.investUpgrade(id);
+      return;
+    }
     if (this.qualityReference) { this.area = 'cavern'; return; }
     const saved = this.journey.load();
     if (!saved) return;
@@ -1725,7 +1740,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private saveProgress(): boolean {
-    if (this.visitingCoop || coopSession.role === 'guest' || this.qualityReference || !this.player || this.resettingJourney) return false;
+    if (this.visitingCoop || coopSession.role === 'guest' || this.qualityReference || this.glacierPlaytest || !this.player || this.resettingJourney) return false;
     const flags = Object.fromEntries(JOURNEY_FLAGS.map(key => [key, this[key]])) as JourneyFlags;
     const available = this.journey.save({ schema: 1, updatedAt: Date.now(), area: this.area,
       hp: this.player.isDead ? this.characterMaxHp : this.player.hp, progression: this.progression.snapshot(),

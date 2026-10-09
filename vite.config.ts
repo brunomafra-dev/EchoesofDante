@@ -20,7 +20,7 @@ export default defineConfig({
   plugins: [{ name: 'dante-rooms', configureServer: rooms, configurePreviewServer: rooms }],
   build: {
     rollupOptions: {
-      input: { game: 'index.html', renderingLab: 'rendering-lab.html', qualityReference: 'quality-reference.html' },
+      input: { game: 'index.html', renderingLab: 'rendering-lab.html', qualityReference: 'quality-reference.html', glacierPlaytest: 'glacier-playtest.html' },
     },
   },
 });

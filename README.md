@@ -6,6 +6,8 @@ A **Fratura Boreal** agora continua pelas **Galerias do Degelo**, com desvios e 
 
 Também corrigida a captura de teclado que impedia letras como A e L no nome do personagem. [Arte, fluxo, testes e limitações](docs/glacier-expansion/).
 
+**Playtest direto · 0.1.77:** [galerias](https://echosofdante.vercel.app/glacier-playtest.html) ou [boss](https://echosofdante.vercel.app/glacier-playtest.html?area=icenest). Guerreiro/Hunter temporários no nível 6, com reinício pelo menu OPÇÕES; sua campanha permanece intacta.
+
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
 ## Personagem do convite e saída da sala · 0.1.75

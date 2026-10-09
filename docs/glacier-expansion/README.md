@@ -2,6 +2,10 @@
 
 ## Jogar
 
+**Acesso direto isolado:** [`/glacier-playtest.html`](https://echosofdante.vercel.app/glacier-playtest.html). Para ir direto ao boss: [`?area=icenest`](https://echosofdante.vercel.app/glacier-playtest.html?area=icenest). Menu OPÇÕES troca região e Guerreiro/Hunter ou reinicia. Personagem temporário nível 6 com HP completo e três aperfeiçoamentos, sem carregar/gravar seus personagens ou jornada. Progresso de teste dura somente até reload; morte usa o respawn real do encontro. Disponível também no servidor local no mesmo caminho.
+
+QA desse acesso: `node scripts/qa-glacier-playtest.mjs`. Verifica as quatro combinações região/classe, ausência de cadastro em navegador vazio, preservação literal do armazenamento durante o teste, entrada/morte/retry do boss, opções em 844×390 e retorno à campanha original. [Resultado e capturas](direct-playtest/).
+
 Na **Fratura Boreal**, investigue o registro e siga a indicação até o portal da extremidade da região. Ele agora leva às **Galerias do Degelo**. Saves anteriores continuam válidos; não é necessário criar outro personagem.
 
 Fluxo: Fratura Boreal → Galerias do Degelo → registro → Ninho da Geada → **Vésper, o Sopro Branco** → fragmento → retorno livre. Nenhuma passagem exige matar todos os inimigos.
