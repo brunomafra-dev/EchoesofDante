@@ -8,6 +8,7 @@ import type { BestiarySnapshot } from './Bestiary';
 import type { ProgressionSnapshot } from './Progression';
 import type { AbilityUpgradeRanks } from '../config/abilityUpgrades';
 import { characterProfiles } from './CharacterProfiles';
+import { validEquipment, type EquipmentId, type EquipmentSnapshot } from '../config/equipment';
 
 export const JOURNEY_KEY = 'echoes-of-dante.journey.v1';
 export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSeen', 'deepCavernEntered',
@@ -24,6 +25,7 @@ export type JourneySnapshot = {
   progression: ProgressionSnapshot; flags: JourneyFlags;
   bestiary: BestiarySnapshot; valleyRoutes: string[]; valleyHabitats: [number, number][]; aridHabitats: [number, number][];
   coopReceipts?: { id: string; total: number }[];
+  equipment?:EquipmentSnapshot;
 };
 
 const object = (value: unknown): Record<string, unknown> | undefined =>
@@ -111,7 +113,7 @@ export class LocalJourney {
             typeof id === 'string' && (VALLEY_ROUTES.some(route => route.id === id) || SIROCCO_ROUTES.some(route => route.id === id) || DUNES_ROUTES.some(route => route.id === id) || FROST_ROUTES.some(route => route.id === id) || GLACIER_ROUTES.some(route => route.id === id))) : [],
           abilityUpgrades: object(p.abilityUpgrades) as Partial<AbilityUpgradeRanks> | undefined,
           bossRewards: [...(flags.soterradoDefeated ? ['soterrado'] : []), ...(flags.vesperDefeated ? ['vesper'] : [])] },
-        flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats,
+        flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats, equipment:validEquipment(raw.equipment),
         coopReceipts: Array.isArray(raw.coopReceipts) ? raw.coopReceipts.filter((entry): entry is {id:string;total:number} =>
           !!entry && typeof entry.id === 'string' && /^[a-f0-9]{32}$/.test(entry.id) && integer(entry.total, 1e9)).slice(-32) : [] };
     } catch {
@@ -135,18 +137,26 @@ export class LocalJourney {
     }
   }
 
-  creditCoopXp(id: string, total: number): boolean {
+  creditCoopXp(id: string, total: number, items:readonly EquipmentId[]=[]): boolean {
     if (!/^[a-f0-9]{32}$/.test(id) || !integer(total, 1e9)) return false;
     const saved = this.load();
     if (!saved) return false;
     const receipts = saved.coopReceipts ?? [];
     const previous = receipts.find(receipt => receipt.id === id)?.total ?? 0;
-    if (total <= previous) return true;
+    const equipment=validEquipment(saved.equipment);
+    const merged=validEquipment({owned:[...equipment.owned,...items],slots:equipment.slots});
+    if (total <= previous && merged.owned.length===equipment.owned.length) return true;
     // XP and its receipt are a single storage write. Campaign flags/area/kit stay local.
-    saved.progression.xp = Math.min(1e9, saved.progression.xp + total - previous);
-    saved.coopReceipts = [...receipts.filter(receipt => receipt.id !== id), { id, total }].slice(-32);
+    saved.progression.xp = Math.min(1e9, saved.progression.xp + Math.max(0,total - previous));
+    saved.equipment=merged;
+    saved.coopReceipts = [...receipts.filter(receipt => receipt.id !== id), { id, total:Math.max(total,previous) }].slice(-32);
     saved.updatedAt = Date.now();
     return this.save(saved);
+  }
+
+  saveEquipment(equipment:EquipmentSnapshot):boolean {
+    const saved=this.load();if(!saved)return false;
+    saved.equipment=validEquipment(equipment);saved.updatedAt=Date.now();return this.save(saved);
   }
 
   clear(): boolean {

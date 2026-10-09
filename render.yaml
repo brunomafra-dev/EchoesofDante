@@ -8,7 +8,7 @@ services:
     buildCommand: npm ci --omit=dev
     startCommand: node server/coop.mjs
     healthCheckPath: /coop/health
-    autoDeployTrigger: off
+    autoDeployTrigger: commit
     envVars:
       - key: NODE_VERSION
         value: "22"

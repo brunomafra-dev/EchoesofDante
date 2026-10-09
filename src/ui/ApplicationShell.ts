@@ -230,6 +230,7 @@ export class ApplicationShell {
       const hasCharacters = characterProfiles.list.length > 0;
       this.heading(this.page === 'pause' ? 'Expedição pausada' : 'Sua próxima descoberta', hasCharacters ? `${hero.name} · ${CLASS_NAMES[hero.classId]}` : 'Crie seu personagem para começar a explorar Dante.');
       const play = this.action(!hasCharacters ? 'CRIAR NOVO PERSONAGEM' : this.page === 'pause' ? 'VOLTAR AO JOGO' : 'CONTINUAR EXPEDIÇÃO', 'continue', () => this.resume());
+      if(this.page==='pause')this.action('EQUIPAMENTO','equipment',()=>{this.resume();this.scene?.openEquipment();});
       play.disabled = !this.scene;
       this.action('PERSONAGENS', 'characters', () => this.show('characters')).disabled = coopSession.role !== 'offline';
       this.action('JOGAR COM AMIGO', 'coop', () => this.show('coop')).disabled = !hasCharacters;
@@ -265,7 +266,7 @@ export class ApplicationShell {
         code.setAttribute('aria-label', 'Link ou código da sala'); code.disabled = busy;
         code.addEventListener('input', () => { this.coopCode = code.value; }); label.append(code); this.content.append(label);
         this.action(busy ? 'CONECTANDO…' : 'ENTRAR NA SALA', 'coop-join', () => this.connectCoop('join')).disabled = busy || !this.scene;
-        if (!busy && create.disabled && this.scene) this.status('Crie salas na Floresta, Vale, Siroco, Dunas ou Fratura Boreal. Cavernas e chefes continuam solo.');
+        if (!busy && create.disabled && this.scene) this.status('Você pode criar uma sala em qualquer região da campanha.');
       } else {
         this.status('SALA ' + coopSession.code + ' · ' + coopSession.message);
         const invite = document.createElement('input'); invite.name = 'coop-invite'; invite.readOnly = true;

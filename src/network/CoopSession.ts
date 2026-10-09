@@ -3,16 +3,19 @@ import type { JourneyArea, JourneyFlags } from '../systems/LocalJourney';
 import type { ProgressionSnapshot } from '../systems/Progression';
 import type { HunterBeamPose } from '../visual/HunterBeam';
 import { LocalJourney } from '../systems/LocalJourney';
-export const COOP_AREAS: readonly JourneyArea[] = ['forest','valley','arid','dunes','frost'];
-const CONNECTIONS: Partial<Record<JourneyArea, readonly JourneyArea[]>> = { valley: ['arid'], arid: ['valley', 'dunes'], dunes: ['arid'] };
-export type PartyProfile = {name: string; classId: PlayableClass};
+import type { BossPose } from './BossPresentation';
+import { validEquipment, type EquipmentId, type EquipmentSnapshot } from '../config/equipment';
+import type { LootPose } from '../systems/EquipmentDrops';
+export const COOP_AREAS: readonly JourneyArea[] = ['forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest'];
+const CONNECTIONS: Partial<Record<JourneyArea, readonly JourneyArea[]>> = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave'] };
+export type PartyProfile = {name: string; classId: PlayableClass;equipment?:EquipmentSnapshot['slots']};
 export type PartyInput = {x:number;y:number;aim:number;attack:boolean;dash:boolean;charge:boolean;held:boolean;release:boolean;cancel:boolean;interact:boolean;restart:boolean};
 export const NO_INPUT: PartyInput={x:0,y:0,aim:0,attack:false,dash:false,charge:false,held:false,release:false,cancel:false,interact:false,restart:false};
 export type PartyPose={x:number;y:number;aim:number;hp:number;maxHp:number;dead:boolean;dash:boolean;phase:string;level:number;firing:boolean;dashReady?:number;chargeReady?:number;momentum?:number;beam?:HunterBeamPose;wave?:{x:number;y:number;rotation:number;width:number;height:number}};
 export type CreatureLayer={texture:string;frame:string;x:number;y:number;width:number;height:number;rotation:number;flip:boolean;depth:number;originX:number;originY:number};
 export type CreaturePose={id:number;species:string;x:number;y:number;hp:number;maxHp:number;radius:number;texture:string;frame:string;flip:boolean;size:number;rotation:number;
  warning:boolean;angle:number;warningX:number;warningY:number;warningWidth:number;warningHeight:number;layers?:CreatureLayer[];projectile?:{x:number;y:number;rotation:number}};
-export type PartyWorld={area:JourneyArea;time:number;progression:ProgressionSnapshot;flags:JourneyFlags;host:PartyPose;partner?:PartyPose;enemies:CreaturePose[];message:string;prompt:boolean;action:string;shots:{x:number;y:number;rotation:number;friendly?:boolean}[]};
+export type PartyWorld={area:JourneyArea;time:number;progression:ProgressionSnapshot;flags:JourneyFlags;host:PartyPose;partner?:PartyPose;enemies:CreaturePose[];boss?:BossPose;signalPortal?:boolean;loot?:LootPose[];lootAwarded?:EquipmentId[];message:string;prompt:boolean;action:string;shots:{x:number;y:number;rotation:number;friendly?:boolean}[]};
 // One connection across scene restarts. The relay grants roles; only host worlds are accepted.
 export class CoopSession {
  role:'offline'|'connecting'|'host'|'guest'='offline';
@@ -26,6 +29,8 @@ export class CoopSession {
  private retryTimer?:ReturnType<typeof setTimeout>;
  private timeout?:ReturnType<typeof setTimeout>;
  private rewards=new LocalJourney();private receipt='';private rewardTotal=0;
+ readonly lootAwarded=new Set<EquipmentId>();
+ personalItems:EquipmentId[]=[];
  canTravel(from:JourneyArea,to:JourneyArea):boolean{return this.connected && !!CONNECTIONS[from]?.includes(to);}
  travel(from:JourneyArea,to:JourneyArea):boolean {
   if(this.role!=='host'||!this.canTravel(from,to)||this.travelling)return false;
@@ -39,6 +44,8 @@ export class CoopSession {
   if(location.protocol==='https:'&&target.protocol!=='wss:')return Promise.reject(new Error('Esta página segura precisa de um servidor wss://.'));
   if(mode==='join'&&!/^[A-F0-9]{10}$/.test(code.replace(/\s/g,'').toUpperCase()))return Promise.reject(new Error('O código da sala tem 10 letras/números. Confira com o anfitrião.'));
   this.url=target.href;this.role='connecting';this.endedMessage='';this.message='Conectando à expedição…';this.personalXpGained=0;this.sequence=0;this.epoch=0;this.rewards=new LocalJourney();this.changed();
+  this.lootAwarded.clear();this.personalItems=[];this.receipt='';this.rewardTotal=0;this.rewardSaved=true;
+  profile={...profile,equipment:validEquipment(this.rewards.load()?.equipment).slots};
   return new Promise((resolve,reject)=>this.open({type:mode,profile,area,code},false,resolve,reject));
  }
  private open(request:object,retry:boolean,resolve:()=>void=()=>{},reject:(reason:Error)=>void=()=>{}):void {
@@ -49,6 +56,7 @@ export class CoopSession {
    if(this.socket!==ws)return;
    let m;try{m=JSON.parse(event.data);}catch{return;}
    if(m.type==='joined'&&(m.role==='host'||m.role==='guest')){
+    if(m.protocol!==2){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização da campanha. Sua jornada solo continua disponível.');reject(new Error(this.message));return;}
     joined=true;clearTimeout(this.timeout);this.role=m.role;this.connected=true;this.token=m.token;this.code=m.code;this.epoch=m.epoch;
     this.peer=m.peer;this.peerConnected=m.peerConnected===true;this.input={...NO_INPUT};this.inputAt=0;this.world=undefined;
     this.area=m.area;this.travelling=false;
@@ -58,7 +66,7 @@ export class CoopSession {
     this.message=retry?'Conexão recuperada.':m.role==='host'&&!m.peer?'Sala criada. Envie o link para convidar seu amigo.':'Dupla pronta. O XP ganho fica com seu personagem.';
     this.hostPaused=m.paused===true;
     if(this.role==='host')this.setMenu(this.localMenu);
-    if(this.role==='guest')this.credit(m.receipt,m.total);
+    if(this.role==='guest')this.credit(m.receipt,m.total,m.items);
     this.changed();resolve();
    }else if(m.type==='error'){
     this.message=String(m.message);
@@ -79,7 +87,7 @@ export class CoopSession {
     for(const key of ['dash','charge','release','cancel','interact','restart'] as const)m.input[key] ||= this.input[key];
     this.input=m.input;this.inputAt=performance.now();
    }else if(m.type==='world'&&this.role==='guest'&&m.epoch===this.epoch&&m.world&&COOP_AREAS.includes(m.world.area)&&Array.isArray(m.world.enemies)&&m.world.enemies.length<=32){
-    this.world=m.world;this.worldAt=performance.now();this.credit(m.receipt,m.total);
+    this.world=m.world;this.worldAt=performance.now();this.credit(m.receipt,m.total,m.items);
    }else if(m.type==='ended'||m.type==='replaced')this.fail(m.type==='ended'?'O dono da sala saiu do jogo.':String(m.message));
   };
   ws.onerror=()=>{if(!retry&&!joined&&this.socket===ws){this.fail('O cooperativo está indisponível nesta conexão. Tente novamente em alguns segundos; sua jornada solo continua disponível.');reject(new Error(this.message));}};
@@ -96,12 +104,17 @@ export class CoopSession {
   if(performance.now()>=this.retryAt){this.fail('A reconexão expirou. Entre novamente com o código da sala.');return;}
   this.retryTimer=setTimeout(()=>this.open({type:'resume',code:this.code,token:this.token},true),750);
  }
- private credit(receipt:string,total:number):void {
+ private credit(receipt:string,total:number,items:unknown=this.personalItems):void {
   if(typeof receipt!=='string'||!Number.isSafeInteger(total)||total<0)return;
-  if(this.rewardSaved&&this.receipt===receipt&&this.rewardTotal===total)return;
+  const valid=validEquipment({owned:items,slots:{}}).owned;
+  if(this.rewardSaved&&this.receipt===receipt&&this.rewardTotal===total&&JSON.stringify(valid)===JSON.stringify(this.personalItems))return;
   this.receipt=receipt;this.rewardTotal=total;
-  this.rewardSaved=total===0||this.rewards.creditCoopXp(receipt,total);
+  this.personalItems=valid;
+  this.rewardSaved=total===0&&valid.length===0||this.rewards.creditCoopXp(receipt,total,valid);
   this.personalXpGained=total;
+ }
+ updateEquipment(slots:EquipmentSnapshot['slots']):void {
+  if(this.connected)this.socket?.send(JSON.stringify({type:'equipment',equipment:slots}));
  }
  send(type:'input'|'world',payload:PartyInput|PartyWorld):void{
   if(!this.connected||this.travelling||this.socket?.readyState!==WebSocket.OPEN||this.socket.bufferedAmount>131072)return;

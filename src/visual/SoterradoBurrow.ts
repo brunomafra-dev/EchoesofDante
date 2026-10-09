@@ -21,6 +21,8 @@ export class SoterradoBurrow {
     }));
   }
 
+  get coopObjects(): Phaser.GameObjects.Image[] { return this.holes.flatMap(h=>[h.base,h.lip,...h.dust]); }
+
   intro(now:number,position:Vec2):void {
     this.clear();
     this.open(0,position,now,750,now+SOTERRADO.introMs*.42,now+SOTERRADO.introMs+600);

@@ -2,11 +2,13 @@
 
 ## Expedição glacial · 0.1.76
 
-A **Fratura Boreal** agora continua pelas **Galerias do Degelo**, com desvios e grupos glaciais, até o **Ninho da Geada** e o boss original **Vésper, o Sopro Branco**. Três fases, quatro padrões anunciados, checkpoint próximo e recompensa única de XP/aperfeiçoamento. Investigue o registro da Fratura e entre pelo portal da extremidade. As novas salas são campanha solo; cooperativo regional preservado.
+A **Fratura Boreal** agora continua pelas **Galerias do Degelo**, com desvios e grupos glaciais, até o **Ninho da Geada** e o boss original **Vésper, o Sopro Branco**. Três fases, quatro padrões anunciados, checkpoint próximo e recompensa única de XP/aperfeiçoamento. Investigue o registro da Fratura e entre pelo portal da extremidade. As novas salas integram a campanha cooperativa desde a versão 0.1.78.
 
 Também corrigida a captura de teclado que impedia letras como A e L no nome do personagem. [Arte, fluxo, testes e limitações](docs/glacier-expansion/).
 
-**Playtest direto · 0.1.77:** [galerias](https://echosofdante.vercel.app/glacier-playtest.html) ou [boss](https://echosofdante.vercel.app/glacier-playtest.html?area=icenest). Guerreiro/Hunter temporários no nível 6, com reinício pelo menu OPÇÕES; sua campanha permanece intacta.
+**Campanha cooperativa e equipamento · 0.1.78:** todas as regiões e os três bosses aceitam a dupla. Nove itens, coleta compartilhada e slots pessoais de arma/armadura/acessório em **MENU → EQUIPAMENTO**. [Detalhes, QA e atualização do relay](docs/campaign-equipment/README.md).
+
+**Playtest direto:** [galerias](https://echosofdante.vercel.app/glacier-playtest.html) ou [boss](https://echosofdante.vercel.app/glacier-playtest.html?area=icenest). Guerreiro/Hunter temporários no nível 6, com reinício pelo menu OPÇÕES; sua campanha permanece intacta.
 
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
@@ -26,7 +28,7 @@ A API da Vercel utiliza o serviço `echoes-of-dante-rooms.onrender.com` publicad
 
 `npm run dev` inicia jogo e salas juntos. No menu: **CRIAR SALA → COPIAR CÓDIGO**; seu amigo abre a mesma URL e usa **ENTRAR NA SALA**. Não há endereço de servidor para preencher nem segundo comando. A build também pode ser servida junto com as salas por `npm start` após o build; hospedagem pública precisa aceitar WebSocket. [Instruções e testes](docs/regional-coop/).
 
-A dupla pode viajar **Vale ↔ Siroco ↔ Dunas** sem encerrar a sala. O visitante mantém o XP ganho em sua jornada própria, sem copiar a campanha do anfitrião. Reconexão automática, código copiável, estado do menu e resistência moderada para encontros em dupla. Chefes/cavernas de campanha continuam solo com aviso antes de atravessar. [Como jogar, limites e testes](docs/regional-coop/).
+A dupla pode viajar sem encerrar a sala. O visitante mantém o XP ganho em sua jornada própria, sem copiar a campanha do anfitrião. Reconexão automática, código copiável, estado do menu e resistência moderada para encontros em dupla. A limitação anterior a **Vale ↔ Siroco ↔ Dunas** foi removida em 0.1.78: cavernas, gelo e bosses também integram a sala. [Como jogar, limites e testes](docs/regional-coop/).
 
 ## Mostruário de personagens · 0.1.70
 

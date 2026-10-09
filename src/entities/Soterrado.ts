@@ -22,6 +22,9 @@ export class Soterrado implements Enemy {
   readonly body: Phaser.GameObjects.Image;
   readonly shadow: Phaser.GameObjects.Ellipse;
   readonly telegraph: Phaser.GameObjects.Graphics;
+  get coopObjects(): Phaser.GameObjects.GameObject[] { return [this.shadow,this.name,this.body,this.telegraph,...this.marks.map(m=>m.graphic),...this.burrowVisual.coopObjects]; }
+  private victims = new Set<Vec2>();
+  private participants?: readonly Vec2[];
   private readonly name: Phaser.GameObjects.Text;
   private readonly marks: Mark[];
   private readonly burrowVisual: SoterradoBurrow;
@@ -64,7 +67,8 @@ export class Soterrado implements Enemy {
     this.state=state;this.stateAt=now;this.stateUntil=now+duration;
   }
 
-  update(now:number,dt:number,player:Vec2,playerDead:boolean,obstacles:readonly Obstacle[],onAttack:(impact?:EnemyImpact)=>void):void {
+  update(now:number,dt:number,player:Vec2,playerDead:boolean,obstacles:readonly Obstacle[],onAttack:(impact?:EnemyImpact)=>void,_bounds?: unknown,participants?:readonly Vec2[]):void {
+    this.participants=participants;
     if(this.isDead||this.stopped)return;
     if(playerDead){this.suspend();return;}
     dt=Math.min(dt,.04);
@@ -103,18 +107,18 @@ export class Soterrado implements Enemy {
         const before={...this.position};
         moveWithCollisions(this.position,{x:Math.cos(this.angle)*B.rush.speed,y:Math.sin(this.angle)*B.rush.speed},dt,this.radius,obstacles,this.bounds);
         const step=distance(before,this.position);this.travelled+=step;
-        if(inShockwaveSweep(before,this.angle,player,0,step,B.rush.halfWidth,this.radius*2,PLAYER.radius))this.hit(onAttack);
+        for(const victim of this.participants??[player]) if(inShockwaveSweep(before,this.angle,victim,0,step,B.rush.halfWidth,this.radius*2,PLAYER.radius))this.hit(onAttack,victim);
         if(this.travelled>=B.rush.distance||step<B.rush.speed*dt*.3)this.stateUntil=now;
       } else if(attack==='sweep'&&elapsed<180) {
-        if(inMeleeArc(this.origin,this.angle,player,B.sweep.range,B.sweep.halfAngle,PLAYER.radius))this.hit(onAttack);
+        for(const victim of this.participants??[player]) if(inMeleeArc(this.origin,this.angle,victim,B.sweep.range,B.sweep.halfAngle,PLAYER.radius))this.hit(onAttack,victim);
       } else if(attack==='burrow'&&elapsed<180) {
-        if(distance(this.position,player)<B.burrow.radius+PLAYER.radius)this.hit(onAttack);
+        for(const victim of this.participants??[player]) if(distance(this.position,victim)<B.burrow.radius+PLAYER.radius)this.hit(onAttack,victim);
       } else if(attack==='fissure') {
         for(let i=0;i<this.marks.length;i++) {
           const mark=this.marks[i];
           if(!mark.spent&&elapsed>=i*B.fissure.interval) {
             mark.spent=true;
-            if(distance(mark,player)<B.fissure.radius+PLAYER.radius)this.hit(onAttack);
+            for(const victim of this.participants??[player]) if(distance(mark,victim)<B.fissure.radius+PLAYER.radius)this.hit(onAttack,victim);
             mark.graphic.setAlpha(.8);
           }
           if(mark.spent)mark.graphic.setAlpha(Math.max(0,1-(elapsed-i*B.fissure.interval)/250));
@@ -126,9 +130,10 @@ export class Soterrado implements Enemy {
     this.render(now,distance(previous,this.position));
   }
 
-  private hit(onAttack:(impact?:EnemyImpact)=>void):void {
-    if(this.activationHit||!this.attackName)return;
-    this.activationHit=true;onAttack({damage:B[this.attackName].damage,ranged:true});
+  private hit(onAttack:(impact?:EnemyImpact)=>void,victim:Vec2):void {
+    if((!this.participants&&this.activationHit)||this.victims.has(victim)||!this.attackName)return;
+    this.victims.add(victim);
+    this.activationHit=true;onAttack({damage:B[this.attackName].damage,ranged:true,victim});
   }
 
   private safeMark(x:number,y:number,obstacles:readonly Obstacle[]):Vec2 {
@@ -139,7 +144,7 @@ export class Soterrado implements Enemy {
   }
 
   private beginAttack(now:number,attack:SoterradoAttack,player:Vec2,obstacles:readonly Obstacle[]):void {
-    this.clearWarnings();this.attackName=attack;this.activationHit=false;this.travelled=0;
+    this.clearWarnings();this.attackName=attack;this.activationHit=false;this.victims.clear();this.travelled=0;
     Object.assign(this.origin,this.position);this.angle=Math.atan2(player.y-this.position.y,player.x-this.position.x);
     if(Math.abs(Math.cos(this.angle))>.1)this.facingLeft=Math.cos(this.angle)<0;
     this.setState('TELEGRAPH',now,B[attack].tell);

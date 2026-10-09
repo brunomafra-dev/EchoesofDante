@@ -21,6 +21,9 @@ export class Vesper implements Enemy {
   phase: 1 | 2 | 3 = 1;
   attackName: IceAttack | null = null;
   isDead = false;
+  get coopObjects(): Phaser.GameObjects.GameObject[] { return [this.shadow,this.body,this.telegraph,...this.marks.map(m=>m.image),...this.ice]; }
+  private victims = new Set<Vec2>();
+  private participants?: readonly Vec2[];
   private at = 0;
   private until = 0;
   private index = 0;
@@ -50,7 +53,8 @@ export class Vesper implements Enemy {
     this.setState('INTRO', now, 2200); this.cue('intro');
   }
   private setState(state: typeof this.state, now: number, ms: number): void { this.state = state; this.at = now; this.until = now + ms; }
-  update(now: number, dt: number, player: Vec2, dead: boolean, obstacles: readonly Obstacle[], onAttack: (i?: EnemyImpact) => void): void {
+  update(now: number, dt: number, player: Vec2, dead: boolean, obstacles: readonly Obstacle[], onAttack: (i?: EnemyImpact) => void, _bounds?: unknown, participants?: readonly Vec2[]): void {
+    this.participants=participants;
     if (this.isDead || this.stopped) return;
     if (dead) { this.suspend(); return; }
     dt = Math.min(dt, .04);
@@ -59,7 +63,7 @@ export class Vesper implements Enemy {
     if (this.state === 'INTRO' || this.state === 'PHASE') {
       if (now >= this.until) this.setState('IDLE', now, 650);
     } else {
-      const next = this.health.current <= B.hp * .3 ? 3 : this.health.current <= B.hp * .65 ? 2 : 1;
+      const next = this.health.current <= this.health.max * .3 ? 3 : this.health.current <= this.health.max * .65 ? 2 : 1;
       if (next > this.phase && this.state !== 'TELEGRAPH' && this.state !== 'EXECUTE') {
         this.phase = next; this.attackName = null; this.clear(); this.setState('PHASE', now, 1400); this.cue('phase');
       } else if (this.state === 'IDLE') {
@@ -76,29 +80,32 @@ export class Vesper implements Enemy {
           const start = { ...this.position };
           moveWithCollisions(this.position, { x: Math.cos(this.angle) * B.rush.speed, y: Math.sin(this.angle) * B.rush.speed }, dt, this.radius, obstacles, B.bounds);
           const step = distance(start, this.position); this.travelled += step;
-          if (inShockwaveSweep(start, this.angle, player, 0, step, B.rush.halfWidth, this.radius * 2, PLAYER.radius)) this.hit(onAttack);
+          for(const victim of this.participants??[player]) if (inShockwaveSweep(start, this.angle, victim, 0, step, B.rush.halfWidth, this.radius * 2, PLAYER.radius)) this.hit(onAttack,victim);
           if (step < B.rush.speed * dt * .3 || this.travelled >= B.rush.distance) this.until = now;
         } else if (attack === 'eruption') {
           this.marks.forEach((m, i) => {
             if (!m.spent && elapsed >= i * B.eruption.interval) {
               m.spent = true;
-              if (distance(m, player) < B.eruption.radius + PLAYER.radius) this.hit(onAttack);
+              for(const victim of this.participants??[player]) if (distance(m, victim) < B.eruption.radius + PLAYER.radius) this.hit(onAttack,victim);
             }
             m.image.setAlpha(m.spent ? Math.max(0, 1 - (elapsed - i * B.eruption.interval) / 350) : 1);
           });
-        } else if ((attack === 'breath' || elapsed < 170) && inMeleeArc(this.origin, this.angle, player, B[attack].range, B[attack].halfAngle, PLAYER.radius)) this.hit(onAttack);
+        } else if (attack === 'breath' || elapsed < 170) {
+          for(const victim of this.participants??[player]) if (inMeleeArc(this.origin, this.angle, victim, B[attack].range, B[attack].halfAngle, PLAYER.radius)) this.hit(onAttack,victim);
+        }
         // Each activation hits at most once; dash invulnerability remains on the existing damage path.
         if (now >= this.until) { const rest = B[attack].recovery; this.clear(); this.setState('RECOVER', now, rest); }
       } else if (this.state === 'RECOVER' && now >= this.until) { this.attackName = null; this.setState('IDLE', now, this.phase === 3 ? 420 : 650); }
     }
     this.render(now, distance(before, this.position));
   }
-  private hit(callback: (i?: EnemyImpact) => void): void {
-    if (this.hitSpent || !this.attackName) return;
-    this.hitSpent = true; callback({ damage: B[this.attackName].damage, ranged: true });
+  private hit(callback: (i?: EnemyImpact) => void, victim:Vec2): void {
+    if ((!this.participants && this.hitSpent) || this.victims.has(victim) || !this.attackName) return;
+    this.victims.add(victim);
+    this.hitSpent = true; callback({ damage: B[this.attackName].damage, ranged: true, victim });
   }
   private beginAttack(now: number, attack: IceAttack, player: Vec2): void {
-    this.clear(); this.attackName = attack; this.hitSpent = false; this.travelled = 0;
+    this.clear(); this.attackName = attack; this.hitSpent = false; this.victims.clear(); this.travelled = 0;
     Object.assign(this.origin, this.position);
     this.angle = Math.atan2(player.y - this.position.y, player.x - this.position.x);
     this.left = Math.cos(this.angle) < 0;

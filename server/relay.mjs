@@ -1,8 +1,10 @@
 import { randomBytes } from 'node:crypto';
 import { WebSocketServer, WebSocket } from 'ws';
 
-const areas = new Set(['forest', 'valley', 'arid', 'dunes', 'frost']);
-const connections = { valley: ['arid'], arid: ['valley', 'dunes'], dunes: ['arid'] };
+const areas = new Set(['forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest']);
+const connections = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave'] };
+const equipmentIds=new Set(['forest','sirocco','glacier'].flatMap(region=>['emitter','armor','focus'].map(type=>`${region}-${type}`)));
+const cleanEquipment=raw=>Object.fromEntries(['weapon','armor','accessory'].filter(slot=>equipmentIds.has(raw?.[slot])&&raw[slot].endsWith(slot==='weapon'?'emitter':slot==='armor'?'armor':'focus')).map(slot=>[slot,raw[slot]]));
 // Attach rooms to an existing web server; no second port or process is required.
 export function attachCoop(server, { path = '/coop' } = {}) {
   const rooms = new Map(), clients = new Set();
@@ -19,8 +21,8 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   server.on('upgrade', upgrade);
   const send = (ws, message) => { if (ws?.readyState === WebSocket.OPEN && ws.bufferedAmount < 131072) ws.send(JSON.stringify(message)); };
   const profile = p => p && ['warrior', 'hunter'].includes(p.classId) && typeof p.name === 'string' && p.name.trim()
-    ? { name: p.name.trim().slice(0, 24), classId: p.classId } : null;
-  const seat = (ws, p) => ({ ws, profile: p, token: randomBytes(24).toString('hex'), receipt: randomBytes(16).toString('hex'), total: 0, timer: undefined });
+    ? { name: p.name.trim().slice(0, 24), classId: p.classId, equipment:cleanEquipment(p.equipment) } : null;
+  const seat = (ws, p) => ({ ws, profile: p, token: randomBytes(24).toString('hex'), receipt: randomBytes(16).toString('hex'), total: 0, items:new Set(), timer: undefined });
   function end(room) {
     clearTimeout(room.host.timer); clearTimeout(room.guest?.timer);
     rooms.delete(room.code);
@@ -48,8 +50,8 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   }
   function joined(room, role) {
     const member = room[role], peer = room[role === 'host' ? 'guest' : 'host'];
-    send(member.ws, { type: 'joined', role, code: room.code, token: member.token, epoch: room.epoch,
-      area: room.area, peer: peer?.profile, peerConnected: !!peer?.ws, paused: room.paused === true, receipt: member.receipt, total: member.total });
+    send(member.ws, { type: 'joined', protocol:2, role, code: room.code, token: member.token, epoch: room.epoch,
+      area: room.area, peer: peer?.profile, peerConnected: !!peer?.ws, paused: room.paused === true, receipt: member.receipt, total: member.total, items:[...member.items] });
     send(peer?.ws, { type: 'peer', profile: member.profile });
   }
   wss.on('connection', ws => {
@@ -80,10 +82,10 @@ export function attachCoop(server, { path = '/coop' } = {}) {
         if (ws.room) return send(ws, { type: 'error', message: 'Você já está em uma sala.' });
         const p = profile(m.profile); if (!p) return send(ws, { type: 'error', message: 'Personagem inválido.' });
         if (m.type === 'create') {
-          if (!areas.has(m.area)) return send(ws, { type: 'error', message: 'Chefes e cavernas de campanha permanecem solo nesta etapa.' });
+          if (!areas.has(m.area)) return send(ws, { type: 'error', message: 'Região de campanha desconhecida.' });
           if (rooms.size >= 64) return send(ws, { type: 'error', message: 'Servidor ocupado.' });
           const code = randomBytes(5).toString('hex').toUpperCase();
-          const room = { code, host: seat(ws, p), guest: undefined, area: m.area, epoch: 0, sequence: -1, xp: undefined };
+          const room = { code, host: seat(ws, p), guest: undefined, area: m.area, epoch: 0, sequence: -1, xp: undefined, loot:new Set() };
           rooms.set(code, room); ws.room = code; joined(room, 'host');
         } else {
           const room = rooms.get(String(m.code).replace(/\s/g, '').toUpperCase());
@@ -95,10 +97,15 @@ export function attachCoop(server, { path = '/coop' } = {}) {
         return;
       }
       const room = rooms.get(ws.room); if (!room) return;
-      if (m.type === 'pause' && ws === room.host.ws) {
+      if(m.type==='equipment') {
+        const role=ws===room.host.ws?'host':ws===room.guest?.ws?'guest':undefined;
+        if(!role)return;
+        room[role].profile.equipment=cleanEquipment(m.equipment);
+        send(room[role==='host'?'guest':'host']?.ws,{type:'peer',profile:room[role].profile});
+      } else if (m.type === 'pause' && ws === room.host.ws) {
         room.paused = m.paused === true; send(room.guest?.ws, { type: 'pause', paused: room.paused });
       } else if (m.type === 'travel' && ws === room.host.ws) {
-        if (m.epoch !== room.epoch || !connections[room.area]?.includes(m.area)) return send(ws, { type: 'error', message: 'Essa passagem é solo ou não está conectada à região atual.' });
+        if (m.epoch !== room.epoch || !connections[room.area]?.includes(m.area)) return send(ws, { type: 'error', message: 'Essa passagem não está conectada à região atual.' });
         room.area = m.area; room.epoch++;
         for (const member of [room.host, room.guest]) send(member?.ws, { type: 'travel', area: room.area, epoch: room.epoch });
       } else if (m.type === 'input' && ws === room.guest?.ws && m.epoch === room.epoch) {
@@ -114,10 +121,13 @@ export function attachCoop(server, { path = '/coop' } = {}) {
         room.sequence = m.sequence;
         const gain = room.xp === undefined ? 0 : Math.max(0, xp - room.xp);
         room.xp = Math.max(room.xp ?? 0, xp);
+        const fresh=(Array.isArray(world.lootAwarded)?world.lootAwarded:[]).slice(0,9).filter(id=>equipmentIds.has(id)&&!room.loot.has(id));
+        for(const id of fresh)room.loot.add(id);
         if (room.guest?.ws) {
           room.guest.total += gain;
+          for(const id of fresh)room.guest.items.add(id);
           send(room.guest.ws, { type: 'world', world, epoch: room.epoch,
-            receipt: room.guest.receipt, total: room.guest.total });
+            receipt: room.guest.receipt, total: room.guest.total,items:[...room.guest.items] });
         }
       } else if (m.type === 'leave') leave(ws, true);
     });
@@ -138,6 +148,6 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   server.once('close', close);
   return {
     close,
-    status: () => ({ service: 'Dante regional co-op', rooms: rooms.size, players: clients.size }),
+    status: () => ({ service: 'Dante regional co-op', protocol: 2, campaign: true, rooms: rooms.size, players: clients.size }),
   };
 }

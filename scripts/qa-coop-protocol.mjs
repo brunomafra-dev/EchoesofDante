@@ -28,8 +28,8 @@ async function client() {
 const profile = { name: 'QA protocolo', classId: 'warrior' };
 try {
   const host = await client(), visitor = await client(), third = await client();
-  host.send({ type: 'create', profile, area: 'warden' });
-  assert.match((await host.next('error')).message, /solo/); report.bossRegionsRejected = true;
+  host.send({ type: 'create', profile, area: 'unknown' });
+  assert.match((await host.next('error')).message, /desconhecida/); report.unknownRegionsRejected = true;
   host.send({ type: 'create', profile: { ...profile, classId: 'invalid' }, area: 'forest' });
   assert.match((await host.next('error')).message, /inválido/); report.invalidClassRejected = true;
   host.send({ type: 'create', profile, area: 'forest' }); const room = await host.next('joined');
@@ -60,7 +60,7 @@ try {
   h.send({type:'world',epoch:0,sequence:2,world:world(1015)});const reward=await g.next('world');assert.equal(reward.total,15);
   h.send({type:'world',epoch:0,sequence:2,world:world(1030)});await new Promise(r=>setTimeout(r,80));assert.ok(!g.inbox.some(m=>m.type==='world'));
   g.send({type:'travel',area:'arid',epoch:0});await new Promise(r=>setTimeout(r,80));assert.ok(!h.inbox.some(m=>m.type==='travel'));
-  h.send({type:'travel',area:'frost',epoch:0});assert.match((await h.next('error')).message,/solo/);
+  h.send({type:'travel',area:'frost',epoch:0});assert.match((await h.next('error')).message,/conectada/);
   h.send({type:'travel',area:'arid',epoch:0});assert.equal((await h.next('travel')).epoch,1);assert.equal((await g.next('travel')).area,'arid');
   h.send({type:'world',epoch:0,sequence:3,world:world(1030,'arid')});
   g.send({type:'input',epoch:0,input:{x:1,y:0,aim:0}});await new Promise(r=>setTimeout(r,80));assert.ok(!h.inbox.some(m=>m.type==='input'));
@@ -87,6 +87,20 @@ try {
   await new Promise(r=>setTimeout(r,20500));await eh.next('peer-left');
   bad.send({type:'join',profile,code:er.code});await bad.next('joined');await eh.next('peer');
   eh.send({type:'leave'});await bad.next('ended');report.reservationExpires=true;
+  const campaign=await client();
+  for(const area of ['forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest']){
+    campaign.send({type:'create',profile,area});const joined=await campaign.next('joined');assert.equal(joined.area,area);assert.equal(joined.protocol,2);campaign.send({type:'leave'});await new Promise(resolve=>setTimeout(resolve,30));
+  }
+  report.allCampaignRegionsAccepted=true;
+  const lh=await client(),lg=await client();lh.send({type:'create',profile,area:'icenest'});const lr=await lh.next('joined');
+  lg.send({type:'join',profile,code:lr.code});await lg.next('joined');await lh.next('peer');
+  const lootWorld={area:'icenest',enemies:[],progression:{xp:1000},lootAwarded:['glacier-focus','invalid']};
+  lh.send({type:'world',epoch:0,sequence:1,world:lootWorld});const item=await lg.next('world');assert.equal(item.total,0);assert.deepEqual(item.items,['glacier-focus']);
+  lh.send({type:'world',epoch:0,sequence:2,world:lootWorld});assert.deepEqual((await lg.next('world')).items,['glacier-focus']);
+  lg.send({type:'equipment',equipment:{weapon:'glacier-focus',armor:'forest-armor'}});assert.deepEqual((await lh.next('peer')).profile.equipment,{armor:'forest-armor'});
+  lg.send({type:'leave'});await lh.next('peer-left');campaign.send({type:'join',profile,code:lr.code});assert.deepEqual((await campaign.next('joined')).items,[]);await lh.next('peer');
+  lh.send({type:'world',epoch:0,sequence:3,world:lootWorld});assert.deepEqual((await campaign.next('world')).items,[]);
+  lh.send({type:'leave'});await campaign.next('ended');report.lootReceiptsAndLateJoin=true;report.equipmentSlotsValidated=true;
   report.travelEpochsAndAuthority=true;report.rewardReceiptsWithoutReplay=true;report.bothRolesReconnected=true;report.reservedSlot=true;
   report.passed = true;
 } finally {

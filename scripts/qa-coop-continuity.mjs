@@ -142,7 +142,8 @@ try {
   assert.ok(report.travels[2].host.objects <= report.travels[0].host.objects + 2);
   assert.ok(report.travels[2].guest.objects <= report.travels[0].guest.objects + 2); report.threeRoundTripsStable = true;
   await h.evaluate(() => Object.assign(window.__danteGame.scene.getScene('Game').player.position, { x: 370, y: 850 }));
-  await key(h, 'e'); assert.equal((await state(h)).area, 'valley'); assert.equal((await state(h)).code, code); report.soloBossPassageKeepsRoom = true;
+  await key(h, 'e'); await arrive('warden'); assert.equal((await state(h)).code, code);
+  await portal('guest', {x:1450,y:830}, 'valley'); report.bossPassageKeepsRoom = true;
   await h.evaluate(() => { const s = window.__danteGame.scene.getScene('Game'); s.player.die(); s.hud.showDeath(); });
   await g.waitForFunction(() => window.__danteGame.scene.getScene('Game').player.isDead); await key(g, 'r'); await arrive('valley');
   for (const p of [h, g]) await p.waitForFunction(() => !window.__danteGame.scene.getScene('Game').player.isDead);

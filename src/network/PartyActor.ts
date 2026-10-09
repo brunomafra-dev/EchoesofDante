@@ -29,7 +29,7 @@ export class PartyActor {
   this.wave=scene.add.ellipse(0,0,10,80,0x5fe6d8,.6).setVisible(false).setDepth(14999);
  }
  update(now:number,dt:number,input:PartyInput,targets:readonly Enemy[],obstacles:readonly Obstacle[],bounds:MovementBounds|undefined,
-  hit:(targets:Enemy[],damage:number,angle:number,origin:Vec2,heavy:boolean)=>void):void {
+  hit:(targets:Enemy[],damage:number,angle:number,origin:Vec2,heavy:boolean)=>void,solidObstacles:readonly Obstacle[]=obstacles):void {
   this.now = now;
   if(this.player.isDead){this.hunter?.clear();this.charge.stop();this.wave.setVisible(false);return;}
   this.charge.tick(now);if(input.cancel)this.charge.stop();
@@ -42,7 +42,7 @@ export class PartyActor {
   }
   const heavy=this.charge.pose(now),aim=heavy.phase==='RELEASE'?this.charge.angle:input.aim;
   this.pose=this.attack.pose(now,aim);
-  this.player.update(now,dt,{x:input.x,y:input.y},aim,obstacles,this.pose,heavy,bounds);
+  this.player.update(now,dt,{x:input.x,y:input.y},aim,solidObstacles,this.pose,heavy,bounds);
   this.art?.update(this.player.position.x,this.player.position.y,aim,now<(this.hunter?.firedUntil??0),this.player.isDashing,heavy);
   if(this.hunter){
    this.charge.takeHits(now,[]);

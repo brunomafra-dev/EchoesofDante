@@ -12,10 +12,16 @@ import type { MovementBounds, Obstacle } from '../systems/Movement';
 import type { Vec2 } from '../utils/math';
 import { characterProfiles } from '../systems/CharacterProfiles';
 import { SPECIES, type SpeciesId } from '../config/bestiary';
+import { BossMirror, captureBoss, type NetworkBoss } from './BossPresentation';
+import { equipmentStats } from '../config/equipment';
 
 export type PartyBridge={
  area:JourneyArea;player:Player;controls:Controls;enemies:readonly Enemy[];obstacles:readonly Obstacle[];bounds?:MovementBounds;hud:Hud;hunter?:HunterCombat;
  progression:ProgressionSnapshot;flags:JourneyFlags;phase:string;chargeLevel:number;firing:boolean;wave?:PartyPose['wave'];
+ boss?:NetworkBoss;bossRender:(boss:PartyWorld['boss'])=>void;
+ loot:PartyWorld['loot'];lootRender:(loot:PartyWorld['loot'])=>void;baseMaxHp:number;
+ solidObstacles:readonly Obstacle[];
+ signalPortal:boolean;
  id:(enemy:Enemy)=>number|undefined;species:(enemy:Enemy)=>SpeciesId|undefined;
  hit:(targets:Enemy[],damage:number,angle:number,from:Vec2,heavy:boolean)=>void;
  prompt:(position:Vec2)=>{available:boolean;action:string};
@@ -43,8 +49,10 @@ export class PartyExpedition {
  private ranks:ProgressionSnapshot['abilityUpgrades'];
  private resilience=new WeakMap<Enemy,number>();
  private balanced=false;
+ private bossMirror:BossMirror;
  constructor(private scene:Phaser.Scene,private access:()=>PartyBridge){
   this.localPlayer=access().player;
+  this.bossMirror=new BossMirror(scene);
   this.visitorWave=scene.add.ellipse(0,0,20,120,0x5fe6d8,.6).setDepth(14999).setVisible(false);
   this.status=scene.add.text(640,42,'',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d5e0c7',stroke:'#07120f',strokeThickness:2})
    .setOrigin(.5).setScrollFactor(0).setDepth(22000).setVisible(false);
@@ -78,16 +86,17 @@ export class PartyExpedition {
   this.balanced=!!room.peer;
   if(!room.peer&&this.partner){this.partner.destroy();this.partner=undefined;this.peerName='';}
   if(room.peer&&(!this.partner||this.peerName!==room.peer.name)){
-   this.partner?.destroy();const hp=Math.round(a.progression.xp>=60?a.player.maxHp/(a.player.classId==='hunter'?.8:1):100);
-   this.partner=new PartyActor(this.scene,room.peer,this.safePosition(),Math.round(hp*(room.peer.classId==='hunter'?.8:1)),id=>this.ranks?.[id]??0);this.peerName=room.peer.name;
+   this.partner?.destroy();const hp=a.baseMaxHp;
+   this.partner=new PartyActor(this.scene,room.peer,this.safePosition(),Math.round(hp*(room.peer.classId==='hunter'?.8:1))+equipmentStats(room.peer.equipment??{}).hp,id=>this.ranks?.[id]??0);this.peerName=room.peer.name;
   }
   const input=room.peerConnected&&performance.now()-room.inputAt<500?room.input:{...NO_INPUT,cancel:true};
   if(this.partner){
    if(a.player.isDead){if(!this.partner.player.isDead)this.partner.player.die();if(input.restart)this.restartQueued=true;}
-   else if(input.restart&&this.partner.player.isDead){this.partner.destroy();this.partner=new PartyActor(this.scene,room.peer!,this.safePosition(),Math.round(a.player.maxHp/(a.player.classId==='hunter'?.8:1)*(room.peer!.classId==='hunter'?.8:1)),id=>this.ranks?.[id]??0);}
-   const maxHp=Math.round(a.player.maxHp/(a.player.classId==='hunter'?.8:1)*(this.partner.profile.classId==='hunter'?.8:1));
-   if(maxHp!==this.partner.player.maxHp){const gain=maxHp-this.partner.player.maxHp;this.partner.player.health.max=maxHp;this.partner.player.health.current=Math.min(maxHp,this.partner.player.hp+gain);}
-   this.partner.update(now,dt,input,a.enemies,a.obstacles,a.bounds,a.hit);
+   else if(input.restart&&this.partner.player.isDead){this.partner.destroy();this.partner=new PartyActor(this.scene,room.peer!,this.safePosition(),Math.round(a.baseMaxHp*(room.peer!.classId==='hunter'?.8:1))+equipmentStats(room.peer!.equipment??{}).hp,id=>this.ranks?.[id]??0);}
+   this.partner.profile.equipment=room.peer?.equipment;
+   const maxHp=Math.round(a.baseMaxHp*(this.partner.profile.classId==='hunter'?.8:1))+equipmentStats(this.partner.profile.equipment??{}).hp;
+   if(maxHp!==this.partner.player.maxHp){this.partner.player.health.max=maxHp;this.partner.player.health.current=Math.min(maxHp,this.partner.player.hp);}
+   this.partner.update(now,dt,input,a.enemies,a.obstacles,a.bounds,a.hit,a.solidObstacles);
    if(input.interact&&!this.partner.player.isDead)this.interaction={...this.partner.player.position};
   }
   room.consumeEdges();
@@ -112,7 +121,7 @@ export class PartyExpedition {
   });
   const shots:PartyWorld['shots']=[...(a.hunter?.projectilePoses()??[]),...(this.partner?.hunter?.projectilePoses()??[])].map(shot=>({...shot,friendly:true}));
   for(const e of a.enemies as readonly Presented[])for(const shot of e.shots??[])if(shot.active)shots.push({x:shot.x,y:shot.y,rotation:shot.angle});
-  const world:PartyWorld={area:a.area,time:now,progression:a.progression,flags:a.flags,host,partner,enemies,
+  const world:PartyWorld={area:a.area,time:now,progression:a.progression,flags:a.flags,host,partner,enemies:enemies.filter(e=>!['warden','soterrado','vesper'].includes(e.species)),boss:captureBoss(a.boss),signalPortal:a.signalPortal,loot:a.loot,lootAwarded:[...room.lootAwarded],
    message:(a.hud as unknown as {discoveryMessage:Phaser.GameObjects.Text}).discoveryMessage.visible?(a.hud as unknown as {discoveryMessage:Phaser.GameObjects.Text}).discoveryMessage.text:'',prompt:prompt.available,action:prompt.action,shots};
   room.send('world',world);
  }
@@ -145,7 +154,8 @@ export class PartyExpedition {
   else if(input.attack)this.attackQueued=true;
   this.status.setVisible(true).setText(room.rewardSaved?`DUPLA · ${room.peer?.name??'ANFITRIÃO'} · XP PESSOAL +${room.personalXpGained}`:'DUPLA · XP AINDA NÃO SALVO NO NAVEGADOR');
   if(!world||!world.partner)return;
-  if(world!==this.appliedWorld){if(a.sync(world))return;this.appliedWorld=world;}
+  const freshWorld=world!==this.appliedWorld;
+  if(freshWorld){if(a.sync(world))return;this.appliedWorld=world;}
   if(!this.hiddenLocalEnemies){
    for(const enemy of a.enemies){
     const e=enemy as Presented;e.view?.setVisible(false);
@@ -153,6 +163,8 @@ export class PartyExpedition {
     for(const shot of (e as unknown as {shots?:{image:Phaser.GameObjects.Image}[]}).shots??[])shot.image?.setVisible(false);
    }this.hiddenLocalEnemies=true;
   }
+  if(a.boss) for(const object of a.boss.coopObjects) (object as Phaser.GameObjects.Image).setVisible(false);
+  if(freshWorld){this.bossMirror.render(world.boss);a.bossRender(world.boss);a.lootRender(world.loot);}
   const p=world.partner,delta=Math.hypot(p.x-a.player.position.x,p.y-a.player.position.y),t=delta>300?1:Math.min(1,dt*18);
   a.render({...p,x:Phaser.Math.Linear(a.player.position.x,p.x,t),y:Phaser.Math.Linear(a.player.position.y,p.y,t)});
   if(!this.mirrorHost&&room.peer)this.mirrorHost=new PartyActor(this.scene,room.peer,world.host,world.host.maxHp);
@@ -192,5 +204,5 @@ export class PartyExpedition {
   while(this.projectiles.length<shots.length)this.projectiles.push(this.scene.add.rectangle(0,0,23,5,0xffbd54,.9));
   this.projectiles.forEach((view,i)=>{const shot=shots[i];view.setVisible(!!shot);if(shot)view.setFillStyle('friendly' in shot&&shot.friendly?0x5fe6d8:0xffbd54,.9).setPosition(shot.x,shot.y).setRotation(shot.rotation).setDepth(shot.y+5);});
  }
- destroy():void{this.partner?.destroy();this.mirrorHost?.destroy();this.visitorWave.destroy();this.status.destroy();}
+ destroy():void{this.partner?.destroy();this.mirrorHost?.destroy();this.visitorWave.destroy();this.status.destroy();this.bossMirror.destroy();}
 }

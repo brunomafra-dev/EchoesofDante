@@ -1,6 +1,6 @@
-# Expedições em dupla · 0.1.75
+# Expedições em dupla · 0.1.78
 
-Duas pessoas, mesma build web, Guerreiro ou Star Hunter, sem login. Esta etapa melhora a continuidade regional e a retenção de XP; não implementa campanha inteira ou chefes em dupla.
+Duas pessoas, mesma build web, Guerreiro ou Star Hunter, sem login. A campanha inteira, incluindo cavernas, galerias glaciais e os três bosses, aceita a dupla. XP e equipamentos ganhos permanecem pessoais. [Implementação e QA da campanha](../campaign-equipment/README.md).
 
 ## Como jogar — fluxo do jogador
 
@@ -47,9 +47,9 @@ O relay usa uma única instância. `COOP_ORIGINS` inclui a URL pública informad
 
 Para acesso pela internet, esse processo precisa estar publicado em uma hospedagem Node com HTTPS e upgrade WebSocket habilitado. Publicar somente os arquivos estáticos não disponibiliza as salas. O serviço público desta instalação foi provisionado pelo responsável no Render. Essa configuração é da hospedagem, não dos jogadores.
 
-Salas disponíveis em **Floresta, Vale da Ressonância, Bacia do Siroco, Dunas Interiores e Fratura Boreal**. A dupla viaja pelos portais **Vale ↔ Siroco ↔ Dunas**, na mesma sala. Qualquer participante pode iniciar a travessia; ambos chegam à nova região. Os requisitos de exploração/ativação dos portais continuam os mesmos.
+Salas disponíveis em **todas as dez regiões da campanha**, incluindo Cavern/Deep/Exterior, Warden, Soterrado, Galerias do Degelo e Ninho da Geada/Vésper. Qualquer participante pode investigar e iniciar uma travessia; ambos chegam à nova região na mesma sala. Os requisitos de exploração/ativação dos portais continuam os mesmos.
 
-**Cavernas de campanha, Warden e Soterrado permanecem solo.** Tentar uma dessas passagens mostra um aviso e mantém a dupla na região atual. Para continuar a campanha sozinho, saia da sala pelo menu. Floresta e Fratura Boreal aceitam expedições locais, mas suas ligações à campanha ainda são solo.
+**A campanha inteira aceita a dupla.** Bosses são simulados pelo anfitrião; o visitante recebe sua apresentação, fases e marcas reais de ataque. [Equipamentos, publicação do protocolo 2 e QA da campanha completa](../campaign-equipment/README.md). Os resultados históricos abaixo descrevem as versões anteriores do cooperativo regional.
 
 ## XP e jornadas individuais
 

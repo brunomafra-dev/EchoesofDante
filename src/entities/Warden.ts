@@ -43,6 +43,9 @@ export class Warden implements Enemy {
   readonly telegraph: Phaser.GameObjects.Graphics;
   readonly body: Phaser.GameObjects.Image;
   isDead = false;
+  get coopObjects(): Phaser.GameObjects.GameObject[] { return [this.shadow,this.name,this.body,this.core,this.telegraph,...this.shots.map(s=>s.image),...this.marks.map(m=>m.visual)]; }
+  private victims = new Set<Vec2>();
+  private participants?: readonly Vec2[];
   private readonly core: Phaser.GameObjects.Ellipse;
   private readonly name: Phaser.GameObjects.Text;
   private readonly shots: SignalShot[];
@@ -106,7 +109,8 @@ export class Warden implements Enemy {
   }
 
   update(now: number, dt: number, player: Vec2, playerDead: boolean,
-    obstacles: readonly Obstacle[], onAttack: (impact?: EnemyImpact) => void, _bounds?: MovementBounds): void {
+    obstacles: readonly Obstacle[], onAttack: (impact?: EnemyImpact) => void, _bounds?: MovementBounds, participants?: readonly Vec2[]): void {
+    this.participants=participants;
     if (this.isDead || this.stopped) return;
     if (playerDead) { this.suspend(); return; }
     const elapsed = Math.min(dt, 0.04);
@@ -191,7 +195,7 @@ export class Warden implements Enemy {
   private beginAttack(now: number, attack: WardenAttack, player: Vec2): void {
     this.clearHazards();
     this._attackName = attack;
-    this.activationHit = false;
+    this.activationHit = false; this.victims.clear();
     this.rushTravelled = 0;
     this.attackOrigin.x = this.position.x;
     this.attackOrigin.y = this.position.y;
@@ -225,9 +229,9 @@ export class Warden implements Enemy {
     if (!attack) return;
     const activeFor = now - this.stateAt;
     if (attack === 'sweep' && activeFor <= 170) {
-      if (inMeleeArc(this.attackOrigin, this.attackAngle, player, WARDEN.sweep.range, WARDEN.sweep.halfAngle, PLAYER.radius)) this.hit(onAttack);
+      for(const victim of this.participants??[player]) if (inMeleeArc(this.attackOrigin, this.attackAngle, victim, WARDEN.sweep.range, WARDEN.sweep.halfAngle, PLAYER.radius)) this.hit(onAttack,victim);
     } else if (attack === 'slam' && activeFor <= 170) {
-      if (distance(this.attackOrigin, player) <= WARDEN.slam.radius + PLAYER.radius) this.hit(onAttack);
+      for(const victim of this.participants??[player]) if (distance(this.attackOrigin, victim) <= WARDEN.slam.radius + PLAYER.radius) this.hit(onAttack,victim);
     } else if (attack === 'rush') {
       const beforeX = this.position.x, beforeY = this.position.y;
       this.velocity.x = Math.cos(this.attackAngle) * WARDEN.rush.speed;
@@ -235,8 +239,8 @@ export class Warden implements Enemy {
       moveWithCollisions(this.position, this.velocity, dt, this.radius, obstacles, this.arenaBounds);
       const moved = Math.hypot(this.position.x - beforeX, this.position.y - beforeY);
       this.rushTravelled += moved;
-      if (inShockwaveSweep(this.previous, this.attackAngle, player, 0, moved,
-        WARDEN.rush.halfWidth, this.radius * 2, PLAYER.radius)) this.hit(onAttack);
+      for(const victim of this.participants??[player]) if (inShockwaveSweep(this.previous, this.attackAngle, victim, 0, moved,
+        WARDEN.rush.halfWidth, this.radius * 2, PLAYER.radius)) this.hit(onAttack,victim);
       if (moved < WARDEN.rush.speed * dt * 0.4) this.stateUntil = now;
     } else if (attack === 'signal') {
       for (const shot of this.shots) {
@@ -249,9 +253,9 @@ export class Warden implements Enemy {
         shot.travelled += step;
         const blocked = obstacles.some(obstacle => inShockwaveSweep(shot.previous, shot.angle, obstacle, 0, step,
           WARDEN.signal.radius, 0, obstacle.radius));
-        const hit = !blocked && inShockwaveSweep(shot.previous, shot.angle, player, 0, step,
-          WARDEN.signal.radius, 0, PLAYER.radius);
-        if (hit) this.hit(onAttack);
+        const contacts=(this.participants??[player]).filter(victim=>!blocked && inShockwaveSweep(shot.previous, shot.angle, victim, 0, step, WARDEN.signal.radius, 0, PLAYER.radius));
+        const hit=contacts.length>0;
+        for(const victim of contacts)this.hit(onAttack,victim);
         if (hit || blocked || shot.travelled >= WARDEN.signal.range
           || shot.x < this.arenaBounds.left || shot.x > this.arenaBounds.right
           || shot.y < this.arenaBounds.top || shot.y > this.arenaBounds.bottom) {
@@ -264,19 +268,20 @@ export class Warden implements Enemy {
         const mark = this.marks[index];
         if (!mark.spent && activeFor >= index * WARDEN.echoes.intervalMs) {
           mark.spent = true;
-          if (distance(mark, player) <= WARDEN.echoes.radius + PLAYER.radius) this.hit(onAttack);
+          for(const victim of this.participants??[player]) if (distance(mark, victim) <= WARDEN.echoes.radius + PLAYER.radius) this.hit(onAttack,victim);
         }
         if (mark.spent) mark.visual.setAlpha(Math.max(0, 1 - (activeFor - index * WARDEN.echoes.intervalMs) / 220));
       }
     }
   }
 
-  private hit(onAttack: (impact?: EnemyImpact) => void): void {
-    if (this.activationHit || !this._attackName) return;
+  private hit(onAttack: (impact?: EnemyImpact) => void, victim:Vec2): void {
+    if ((!this.participants && this.activationHit) || this.victims.has(victim) || !this._attackName) return;
+    this.victims.add(victim);
     // A dash or hurt-grace can reject this attempt in GameScene. It still consumes
     // the activation, preventing a lingering shape from hitting after invulnerability.
     this.activationHit = true;
-    onAttack({ damage: WARDEN[this._attackName].damage, ranged: true });
+    onAttack({ damage: WARDEN[this._attackName].damage, ranged: true, victim });
   }
 
   private drawTelegraph(attack: WardenAttack, player: Vec2): void {

@@ -1,0 +1,42 @@
+{
+  "method": "Chrome DEV, actual damage/save/equip paths with controlled target HP and stopped enemy AI; no physical device.",
+  "errors": [],
+  "stats": {
+    "basic": 20,
+    "weapon": 22,
+    "charge": 24,
+    "hp": 80,
+    "maxHp": 112,
+    "armorDamage": 19
+  },
+  "reload": {
+    "equipment": {
+      "owned": [
+        "forest-emitter",
+        "forest-focus",
+        "forest-armor"
+      ],
+      "slots": {
+        "weapon": "forest-emitter",
+        "armor": "forest-armor",
+        "accessory": "forest-focus"
+      }
+    },
+    "hp": 61,
+    "maxHp": 112
+  },
+  "legacy": {
+    "legacy": {
+      "owned": [],
+      "slots": {}
+    },
+    "xpBefore": 0,
+    "xpAfter": 0,
+    "items": [
+      "glacier-focus"
+    ],
+    "areaBefore": "forest",
+    "areaAfter": "forest"
+  },
+  "passed": true
+}

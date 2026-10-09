@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
-const out = 'docs/glacier-expansion/input-qa'; await mkdir(out, { recursive: true });
+const out = process.argv[2] ?? 'docs/glacier-expansion/input-qa'; await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const report = { method: 'Chrome CDP touch gestures and generic Gamepad API mock; DEV chapter setup. No physical device claims.', errors: [] };
 const watch = p => { p.on('pageerror', e => report.errors.push(e.message)); p.on('response', r => { if (r.status() >= 400) report.errors.push(r.url()); }); };

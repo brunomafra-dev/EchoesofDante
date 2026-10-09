@@ -1,8 +1,6 @@
 import Phaser from 'phaser';
 import { VIEW_WIDTH } from '../config/game';
-import type { Warden } from '../entities/Warden';
-import type { Soterrado } from '../entities/Soterrado';
-import type { Vesper } from '../entities/Vesper';
+export type BossDisplay = {state:string;isDead:boolean;phase:number;attackName:string|null;health:{current:number;max:number}};
 
 // A bounded encounter display; the existing exploration/player HUD remains in use.
 export class WardenHud {
@@ -22,7 +20,7 @@ export class WardenHud {
     this.group = scene.add.container(VIEW_WIDTH / 2, 74, [back, track, this.fill, this.title, this.cue]).setScrollFactor(0).setDepth(20000).setVisible(false);
   }
 
-  update(boss?: Warden | Soterrado | Vesper): void {
+  update(boss?: BossDisplay): void {
     this.group.setVisible(!!boss && boss.state !== 'DORMANT' && !boss.isDead);
     if (!boss) return;
     const compact = this.group.scene.scale.displaySize.height < 500;

@@ -8,7 +8,7 @@ await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const errors = [], report = { method: 'Chrome headless; keyboard/mouse, CDP touch and Gamepad API mock; DEV positions and cooldown expiry; no physical devices', errors };
 const watch = page => {
-  page.on('pageerror', e => errors.push(e.message));
+  page.on('pageerror', e => { errors.push(e.message); console.error(e.stack); });
   page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
   page.on('response', r => { if (r.status() >= 400) errors.push(`${r.status()} ${r.url()}`); });
 };
@@ -22,7 +22,7 @@ const state = page => page.evaluate(() => {
     routes: [...s.valleyRoutes], bestiary: s.bestiary.snapshot(), cooldowns: [...s.valleyHabitatCooldowns],
     residents: [...s.valleyResidents.keys()], enemies: s.enemies.filter(e => !e.isDead).length,
     paused: s.scene.isPaused(), open: s.records.isOpen, roots: document.querySelectorAll('.touch-controls').length,
-    records: document.querySelectorAll('.records-dialog:not(.ability-upgrade-dialog)').length, objects: s.children.list.length,
+    records: document.querySelectorAll('.records-dialog:not(.ability-upgrade-dialog):not(.equipment-dialog)').length, objects: s.children.list.length,
     tweens: s.tweens.getTweens().length, method: s.controls.inputMethod, phase: s.charge.phase };
 });
 try {
@@ -64,7 +64,7 @@ try {
     });
     const before = await page.evaluate(() => { const s = window.__danteGame.scene.getScene('Game'); return s.warden.stateUntil - s.time.now; });
     await page.evaluate(() => {
-      document.querySelector('.records-dialog:not(.ability-upgrade-dialog)').addEventListener('close', () => {
+      document.querySelector('.records-dialog:not(.ability-upgrade-dialog):not(.equipment-dialog)').addEventListener('close', () => {
         requestAnimationFrame(() => requestAnimationFrame(() => {
           const s = window.__danteGame.scene.getScene('Game');
           window.qaPauseReturn = { state: s.warden.state, remaining: s.warden.stateUntil - s.time.now, dash: s.player.dashProgress };
@@ -168,11 +168,11 @@ try {
   const touch = await mobile.newPage(); watch(touch); await touch.goto(base); await ready(touch);
   const cdp=await mobile.newCDPSession(touch);
   await touch.locator('.records-button').tap(); await touch.waitForFunction(()=>window.__danteGame.scene.getScene('Game').scene.isPaused());assert.ok((await state(touch)).paused);
-  const panel=await touch.locator('.records-dialog:not(.ability-upgrade-dialog) .records-content').boundingBox(),sx=panel.x+90,sy=panel.y+panel.height-25;
+  const panel=await touch.locator('.records-dialog:not(.ability-upgrade-dialog):not(.equipment-dialog) .records-content').boundingBox(),sx=panel.x+90,sy=panel.y+panel.height-25;
   await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:sx,y:sy,id:1}]});
   for(const offset of [25,55,90,120]) { await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:sx,y:sy-offset,id:1}]});await touch.waitForTimeout(35); }
   await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await touch.waitForTimeout(200);
-  assert.ok(await touch.locator('.records-dialog:not(.ability-upgrade-dialog) .records-content').evaluate(el=>el.scrollTop>45));report.nativeTouchJournalScroll=true;
+  assert.ok(await touch.locator('.records-dialog:not(.ability-upgrade-dialog):not(.equipment-dialog) .records-content').evaluate(el=>el.scrollTop>45));report.nativeTouchJournalScroll=true;
   await touch.screenshot({path:`${out}/touch-records.png`}); await touch.locator('[data-close]').tap();
   // Native dialog close dispatches its event asynchronously; wait for scene resume.
   await touch.waitForFunction(() => {

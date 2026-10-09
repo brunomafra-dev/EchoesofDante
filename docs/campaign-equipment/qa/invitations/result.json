@@ -1,0 +1,26 @@
+{
+  "mode": "production",
+  "method": "Independent Chrome profiles, real integrated server, actual invite URLs and menus; clipboard fallback simulated. Touch viewport only, no physical devices or public internet.",
+  "errors": [],
+  "createAndCopyInviteFromHome": true,
+  "characterChoiceBeforeJoining": true,
+  "confirmCharacterJoinsAndStartsBoth": true,
+  "cancelChoiceDoesNotJoin": true,
+  "fullRoomHandled": true,
+  "leaveDoesNotRejoin": true,
+  "expiredInviteAndPasteLinkRetry": true,
+  "invalidInviteDoesNotConnect": true,
+  "newCharacterPreservesInvite": true,
+  "clipboardFallbackSelectsLink": true,
+  "hostDepartureMenuAndOwnSolo": true,
+  "cancelAndDoubleClickSafe": true,
+  "hostTabClosedAfterReconnectGrace": true,
+  "relay": {
+    "service": "Dante regional co-op",
+    "protocol": 2,
+    "campaign": true,
+    "rooms": 0,
+    "players": 0
+  },
+  "passed": true
+}
