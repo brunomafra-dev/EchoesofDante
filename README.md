@@ -1,5 +1,9 @@
 # Echoes of Dante
 
+## Fundação do RPG — plano aprovado
+
+[Plano de implementação e checklist](docs/RPG_FOUNDATION_ROADMAP.md): personagens modulares, equipamentos visíveis, inventário, base de pouso, economia, Astral, Vinculador, cooperativo de quatro jogadores e prólogo. **Etapa 0 concluída; próxima entrega: personagens modulares.** As funcionalidades futuras estão identificadas como planejadas.
+
 ## Expedição glacial · 0.1.76
 
 A **Fratura Boreal** agora continua pelas **Galerias do Degelo**, com desvios e grupos glaciais, até o **Ninho da Geada** e o boss original **Vésper, o Sopro Branco**. Três fases, quatro padrões anunciados, checkpoint próximo e recompensa única de XP/aperfeiçoamento. Investigue o registro da Fratura e entre pelo portal da extremidade. As novas salas integram a campanha cooperativa desde a versão 0.1.78.
