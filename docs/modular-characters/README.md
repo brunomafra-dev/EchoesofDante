@@ -50,3 +50,7 @@ Nenhum hardware físico foi validado nesta entrega. QA automatizado não aprova 
 **Automação passou. Playtest humano necessário.**
 
 Nota de execução: uma amostragem temporal do estado RELEASE no QA glacial falhou enquanto a compilação também consumia CPU. A repetição isolada passou por todo o teste touch/gamepad; nenhuma alteração de input ou combate foi feita para contornar o resultado. O build mantém o aviso conhecido sobre o tamanho do bundle Phaser.
+
+## Verificação pública após push
+
+Biblioteca e laboratório na Vercel: HTTP 200, Chrome carregou o jogo sem erros JS/assets e sem saves criados. O relay público respondeu ao teste real de criar/entrar em sala, mas ainda omitiu o campo de sexo; precisa receber a versão atual do backend. Cooperativo local passou, porém a apresentação masculino/feminino dos parceiros online ainda não está validada. Registro: [qa/public.json](qa/public.json).
