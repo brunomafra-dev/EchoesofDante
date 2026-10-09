@@ -1,12 +1,12 @@
 ﻿import Phaser from 'phaser';
 import type { KineticPose } from '../combat/KineticCharge';
-import { hunterBody, type CharacterSex } from '../config/appearance';
+import { hunterBody, type EquipmentLook, type CharacterSex } from '../config/appearance';
 import { ModularTorso } from './ModularTorso';
 import type { EquipmentSnapshot } from '../config/equipment';
 import { HunterWeapon } from './HunterWeapon';
 
 export function preloadHunterArt(scene: Phaser.Scene): void {
-  for (const key of ['star-hunter-body-v2', 'star-hunter-male-body', 'star-hunter-weapon-v2']) {
+  for (const key of ['star-hunter-body-v2', 'star-hunter-male-body', hunterBody('male'),hunterBody('female'), 'star-hunter-weapon-v2']) {
     if (!scene.textures.exists(key)) scene.load.spritesheet(key,
       `${import.meta.env.BASE_URL}assets/visual/characters/${key}.png`, { frameWidth: 256, frameHeight: 256 });
   }
@@ -26,12 +26,13 @@ export class HunterArt {
     view.list.forEach(part => (part as unknown as Phaser.GameObjects.Components.Visible).setVisible(false));
     this.body = scene.add.image(0, -19, hunterBody(sex), 0).setDisplaySize(128, 128);
     view.add(this.body);
-    this.torso = new ModularTorso(scene,view,'hunter',sex);
+    this.torso = new ModularTorso(scene,view,'hunter',sex,this.body);
     this.weapon = new HunterWeapon(scene, view, this.body,this.torso.image);
     this.previous = { x, y };
     this.update(x, y, 0, false);
   }
-  setEquipment(slots:EquipmentSnapshot['slots']):void { this.torso.setEquipped(!!slots.armor);this.weapon.setEquipped(!!slots.weapon); }
+  setEquipment(slots:EquipmentSnapshot['slots']):void { this.torso.setEquipped(!!slots.armor,!!slots.armor&&!slots.armor.startsWith('forest'));this.weapon.setProtection(this.torso.look);this.weapon.setEquipped(!!slots.weapon); }
+  setEquipmentLook(look:EquipmentLook):void {this.torso.setLook(look);this.weapon.setProtection(look);}
   update(x: number, y: number, aim: number, firing: boolean, dashing = false,
     heavy: Pick<KineticPose, 'phase' | 'level'> = { phase: 'READY', level: 0 }): void {
     const dx = x - this.previous.x, dy = y - this.previous.y, moved = Math.hypot(dx, dy);

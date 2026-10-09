@@ -32,7 +32,7 @@ Referências de princípios: preparação e slots de [Tibia](https://www.tibia.c
 ### Inventário, drops e aparência
 
 - **24 espaços de mochila**; materiais e créditos em contadores separados.
-- Seis slots: **arma, capacete, torso, pernas, botas e acessório**.
+- Sete slots: **arma, capacete, torso, pernas, botas, luvas e acessório**.
 - Três raridades iniciais: **comum, aprimorado e raro**. Cada item possui atributos e aparência definidos, sem geração de afixos.
 - Equipamentos aparecem no chão com ícone próprio, nome discreto e coleta contextual. Materiais e créditos continuam com coleta por aproximação.
 - Mochila cheia impede coletar equipamento e informa o motivo. Drops não coletados desaparecem ao sair da região.
@@ -45,6 +45,7 @@ Referências de princípios: preparação e slots de [Tibia](https://www.tibia.c
 
 - Seleção **masculino/feminino** para todas as classes, com os mesmos atributos e habilidades.
 - Saves antigos conservam a apresentação atual: Guerreiro masculino e Hunter feminino.
+- Novos personagens começam em roupa simples de expedição, sem armadura embutida. A proteção original passa a ser equipamento básico; a carapaça reforçada substitui visualmente a peça básica. Capacete, torso, pernas, botas e luvas são separados, com arma e acessório independentes. Drops/fabricação e slots persistentes serão implementados na etapa 2, depois da aprovação visual.
 - Preparar corpos, armaduras, mãos e armas em camadas, com âncoras comuns para frente, lado e costas.
 - Preservar apoio dos pés, direção da arma, pegada e sobreposição dos braços.
 - Produzir sprites e atlas offline; carregar somente o conjunto necessário. Evitar um atlas gigante contendo todas as combinações.
@@ -190,3 +191,9 @@ Decisão do usuário em 09/10/2026: cada sprint deve terminar com um link espec�
 ### Entrega técnica — Etapa 1
 
 Versão 0.1.79: masculino/feminino, corpos raster e equipamento visual piloto para Guerreiro/Hunter, registro das futuras classes e biblioteca de testes. [Relatório e limites](modular-characters/README.md). Saves legados preservados; campos opcionais compatíveis no perfil cooperativo. Teste específico: [personagens modulares](https://echosofdante.vercel.app/character-playtest.html). A aprovação humana continua pendente e a Etapa 2 não foi iniciada.
+
+### Revisão visual da etapa 1 — roupa e peças separadas
+
+O usuário rejeitou o encaixe do piloto anterior porque sobrepunha uma armadura a outra já pintada no corpo. A revisão 02 usa corpos em roupa simples e peças registradas por pose, com opções sem proteção/básica/reforçada no laboratório. Os nove itens antigos, atributos e posse permanecem intactos; o slot atual de armadura apresenta somente o torso. Luvas foram incluídas no plano de sete slots. **Aguardando novo playtest humano**; nenhuma etapa de inventário/drops foi iniciada.
+
+Teste: [roupa e equipamentos](https://echosofdante.vercel.app/character-playtest.html?class=warrior&sex=female&kit=clothes).

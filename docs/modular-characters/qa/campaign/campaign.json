@@ -60,7 +60,7 @@
       "dead": false,
       "objects": 136,
       "tweens": 2,
-      "fps": 56.40960818064991,
+      "fps": 56.76200948808368,
       "loot": [],
       "p": {
         "x": 1530,
@@ -89,7 +89,7 @@
       "dead": false,
       "objects": 136,
       "tweens": 2,
-      "fps": 53.417904601615575,
+      "fps": 56.82150711606276,
       "loot": [],
       "p": {
         "x": 1530,
@@ -118,7 +118,7 @@
       "dead": false,
       "objects": 136,
       "tweens": 2,
-      "fps": 52.98507133840876,
+      "fps": 53.8995977527853,
       "loot": [],
       "p": {
         "x": 1530,
@@ -142,8 +142,8 @@
   },
   "guestKit": true,
   "performance": {
-    "host": 56.241602627854924,
-    "guest": 56.30749424197411,
+    "host": 57.5357678019563,
+    "guest": 56.44713815589959,
     "pairedContextsOneComputer": true
   },
   "persistence": {

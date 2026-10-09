@@ -1,0 +1,520 @@
+{
+  "hunter-female-clothes.png": {
+    "size": [
+      1024,
+      768
+    ],
+    "bytes": 408222
+  },
+  "hunter-male-clothes.png": {
+    "size": [
+      1024,
+      768
+    ],
+    "bytes": 387908
+  },
+  "warrior-female-clothes-back.png": {
+    "size": [
+      1024,
+      512
+    ],
+    "bytes": 227210
+  },
+  "warrior-female-clothes-front.png": {
+    "size": [
+      1024,
+      512
+    ],
+    "bytes": 267939
+  },
+  "warrior-female-clothes-side.png": {
+    "size": [
+      1024,
+      512
+    ],
+    "bytes": 223036
+  },
+  "warrior-male-clothes-back.png": {
+    "size": [
+      1024,
+      512
+    ],
+    "bytes": 265555
+  },
+  "warrior-male-clothes-front.png": {
+    "size": [
+      1024,
+      512
+    ],
+    "bytes": 257476
+  },
+  "warrior-male-clothes-side.png": {
+    "size": [
+      1024,
+      512
+    ],
+    "bytes": 279432
+  },
+  "hunter-female-basic-boots-all.png": {
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 15475
+  },
+  "hunter-female-basic-helmet-all.png": {
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 25452
+  },
+  "hunter-female-basic-legs-all.png": {
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 40296
+  },
+  "hunter-female-basic-torso-all.png": {
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 59134
+  },
+  "hunter-male-basic-boots-all.png": {
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 18413
+  },
+  "hunter-male-basic-helmet-all.png": {
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 21486
+  },
+  "hunter-male-basic-legs-all.png": {
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 46503
+  },
+  "hunter-male-basic-torso-all.png": {
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 55979
+  },
+  "warrior-female-basic-boots-back.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 7829
+  },
+  "warrior-female-basic-boots-front.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 8645
+  },
+  "warrior-female-basic-boots-side.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 8349
+  },
+  "warrior-female-basic-helmet-back.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 20023
+  },
+  "warrior-female-basic-helmet-front.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 20260
+  },
+  "warrior-female-basic-helmet-side.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 19131
+  },
+  "warrior-female-basic-legs-back.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 23127
+  },
+  "warrior-female-basic-legs-front.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 25140
+  },
+  "warrior-female-basic-legs-side.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 26052
+  },
+  "warrior-female-basic-torso-back.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 33705
+  },
+  "warrior-female-basic-torso-front.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 35699
+  },
+  "warrior-female-basic-torso-side.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 27277
+  },
+  "warrior-male-basic-boots-back.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 9462
+  },
+  "warrior-male-basic-boots-front.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 7429
+  },
+  "warrior-male-basic-boots-side.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 11096
+  },
+  "warrior-male-basic-helmet-back.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 18399
+  },
+  "warrior-male-basic-helmet-front.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 17428
+  },
+  "warrior-male-basic-helmet-side.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 20788
+  },
+  "warrior-male-basic-legs-back.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 26334
+  },
+  "warrior-male-basic-legs-front.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 24232
+  },
+  "warrior-male-basic-legs-side.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 28075
+  },
+  "warrior-male-basic-torso-back.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 34623
+  },
+  "warrior-male-basic-torso-front.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 35065
+  },
+  "warrior-male-basic-torso-side.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 34204
+  },
+  "hunter-female-reinforced-boots-all.png": {
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 16905
+  },
+  "hunter-female-reinforced-helmet-all.png": {
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 29056
+  },
+  "hunter-female-reinforced-legs-all.png": {
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 49324
+  },
+  "hunter-female-reinforced-torso-all.png": {
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 49440
+  },
+  "hunter-male-reinforced-boots-all.png": {
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 19827
+  },
+  "hunter-male-reinforced-helmet-all.png": {
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 24650
+  },
+  "hunter-male-reinforced-legs-all.png": {
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 53182
+  },
+  "hunter-male-reinforced-torso-all.png": {
+    "size": [
+      512,
+      384
+    ],
+    "bytes": 44692
+  },
+  "warrior-female-reinforced-boots-back.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 8156
+  },
+  "warrior-female-reinforced-boots-front.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 8788
+  },
+  "warrior-female-reinforced-boots-side.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 10264
+  },
+  "warrior-female-reinforced-helmet-back.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 19925
+  },
+  "warrior-female-reinforced-helmet-front.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 18904
+  },
+  "warrior-female-reinforced-helmet-side.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 19161
+  },
+  "warrior-female-reinforced-legs-back.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 28587
+  },
+  "warrior-female-reinforced-legs-front.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 29466
+  },
+  "warrior-female-reinforced-legs-side.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 29845
+  },
+  "warrior-female-reinforced-torso-back.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 29846
+  },
+  "warrior-female-reinforced-torso-front.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 34831
+  },
+  "warrior-female-reinforced-torso-side.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 27396
+  },
+  "warrior-male-reinforced-boots-back.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 10413
+  },
+  "warrior-male-reinforced-boots-front.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 9161
+  },
+  "warrior-male-reinforced-boots-side.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 11665
+  },
+  "warrior-male-reinforced-helmet-back.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 18128
+  },
+  "warrior-male-reinforced-helmet-front.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 17674
+  },
+  "warrior-male-reinforced-helmet-side.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 20566
+  },
+  "warrior-male-reinforced-legs-back.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 31432
+  },
+  "warrior-male-reinforced-legs-front.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 30521
+  },
+  "warrior-male-reinforced-legs-side.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 34443
+  },
+  "warrior-male-reinforced-torso-back.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 35625
+  },
+  "warrior-male-reinforced-torso-front.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 36796
+  },
+  "warrior-male-reinforced-torso-side.png": {
+    "size": [
+      512,
+      256
+    ],
+    "bytes": 33917
+  },
+  "expedition-arm-kit.png": {
+    "size": [
+      384,
+      256
+    ],
+    "bytes": 90237
+  },
+  "reinforced-arm-kit.png": {
+    "size": [
+      384,
+      256
+    ],
+    "bytes": 101827
+  }
+}

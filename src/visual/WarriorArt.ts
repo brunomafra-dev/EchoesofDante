@@ -9,7 +9,7 @@ const WALK_FRAMES = [1, 2, 3, 0] as const;
 const SHOULDERS = [-30, -31, -31, -31, -25, -27, -19, -16] as const;
 
 export function preloadWarriorArt(scene: Phaser.Scene): void {
-  for (const key of [...KEYS,...(['front','side','back'] as const).map(d=>warriorBody('female',d))]) {
+  for (const key of [...KEYS,...(['male','female'] as const).flatMap(sex=>(['front','side','back'] as const).map(d=>warriorBody(sex,d)))]) {
     if (!scene.textures.exists(key)) scene.load.spritesheet(key,
       `${import.meta.env.BASE_URL}assets/visual/characters/${key}.png`,
       { frameWidth: 256, frameHeight: 256 });

@@ -1,3 +1,7 @@
+# Revisão atual
+
+O piloto abaixo foi rejeitado no playtest humano por sobreposição de armaduras. Use a [revisão 02](revision-02/README.md), com roupa simples e peças separadas.
+
 # Etapa 1 — Personagens modulares
 
 **Estado: implementação técnica em avaliação; aprovação visual pendente.**

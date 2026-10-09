@@ -201,7 +201,7 @@ export class GameScene extends Phaser.Scene {
 
   constructor(private readonly qualityReference: false | 'baseline' | 'reference' = false,
     private readonly originalWarrior = false, private readonly shellReady?: (scene: GameScene) => void,
-    private readonly glacierPlaytest?: { area: 'forest' | 'icecave' | 'icenest'; classId: 'warrior' | 'hunter'; sex?:CharacterSex; pilot?:boolean }) { super('Game'); }
+    private readonly glacierPlaytest?: { area: 'forest' | 'icecave' | 'icenest'; classId: 'warrior' | 'hunter'; sex?:CharacterSex; pilot?:boolean; look?:import('../config/appearance').EquipmentLook }) { super('Game'); }
 
   preload(): void {
     preloadHunterArt(this);
@@ -1802,7 +1802,8 @@ export class GameScene extends Phaser.Scene {
     return available;
   }
 
-  private updateEquipmentAppearance():void {const slots=this.equipment.snapshot().slots;this.player.setEquipmentAppearance(slots);this.hunterArt?.setEquipment(slots);}
+  private updateEquipmentAppearance():void {const slots=this.equipment.snapshot().slots;this.player.setEquipmentAppearance(slots);this.hunterArt?.setEquipment(slots);if(this.glacierPlaytest?.look)this.setPlaytestAppearance(this.glacierPlaytest.look);}
+  setPlaytestAppearance(look:import('../config/appearance').EquipmentLook):void {if(!this.glacierPlaytest)return;this.player.setEquipmentLook(look);this.hunterArt?.setEquipmentLook(look);}
 
   openEquipment():void {
     if(this.player.isDead||this.equipmentDialog.isOpen)return;

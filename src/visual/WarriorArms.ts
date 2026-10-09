@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { equipmentLook,type EquipmentLook } from '../config/appearance';
 
 type Image = Phaser.GameObjects.Image;
 type Layer = 'front' | 'back' | 'side';
@@ -19,12 +20,13 @@ export class WarriorArms {
   constructor(scene: Phaser.Scene, private readonly rig: Phaser.GameObjects.Container,
     body: Image, private readonly mainFore: Image, private readonly supportUpper: Image,
     private readonly supportFore: Image, private readonly hand: Phaser.GameObjects.Container,
-    private readonly supportGlove: Image, hurt: Phaser.GameObjects.Graphics, torso: Image) {
+    private readonly supportGlove: Image, hurt: Phaser.GameObjects.Graphics, torso: Phaser.GameObjects.Container) {
     this.mainUpper = scene.add.image(0, 0, 'warrior-arm-kit', 0).setOrigin(0, 0.5);
     for (const image of [mainFore, supportUpper, supportFore]) image.setTexture('warrior-arm-kit');
     this.mainGlove = scene.add.image(0, 0, 'warrior-arm-kit', 2).setOrigin(0.65, 0.5).setDisplaySize(12, 14);
     supportGlove.setOrigin(0.65, 0.5).setDisplaySize(11, 13);
     hand.add(this.mainGlove); rig.add(this.mainUpper);
+    this.setProtection(equipmentLook());
     this.orders = {
       front: [body, torso, supportUpper, supportFore, this.mainUpper, mainFore, hand, supportGlove, hurt],
       back: [supportUpper, supportFore, this.mainUpper, mainFore, hand, supportGlove, body, torso, hurt],
@@ -32,6 +34,13 @@ export class WarriorArms {
     };
   }
 
+  setProtection(look:EquipmentLook):void {
+    const sleeve=look.torso==='none'?'expedition-arm-kit':'warrior-arm-kit';
+    const glove=look.gloves==='none'?'expedition-arm-kit':look.gloves==='reinforced'?'reinforced-arm-kit':'warrior-arm-kit';
+    for(const p of [this.mainUpper,this.mainFore,this.supportUpper,this.supportFore])p.setTexture(sleeve,p.frame.name);
+    for(const p of [this.mainGlove,this.supportGlove])p.setTexture(glove,p.frame.name);
+    this.layer=undefined;
+  }
   prepare(aim: number, shoulderY: number, reach: number, sweep: number): void {
     const x = Math.cos(aim), y = Math.sin(aim);
     const vertical = Math.abs(y) > Math.abs(x);

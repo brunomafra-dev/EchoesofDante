@@ -14,7 +14,7 @@ try{
  await p.reload();await ready();assert.equal(await p.evaluate(()=>window.__danteGame.scene.getScene('Game').player.sex),'female');
  await p.locator('[data-shell="characters"]').click();await p.locator('[data-shell="new-character"]').click();await p.locator('[data-class="hunter"]').click();
  assert.equal(await p.locator('[name="character-sex"]').inputValue(),'female');await p.locator('[data-shell="change-sex"]').click();assert.equal(await p.locator('[name="character-sex"]').inputValue(),'male');
- await p.locator('[name="character-name"]').fill('Hunter AL');await p.locator('[data-shell="create"]').click();await p.waitForTimeout(800);await ready();assert.equal(await p.evaluate(()=>window.__danteGame.scene.getScene('Game').hunterArt.body.texture.key),'star-hunter-male-body');
+ await p.locator('[name="character-name"]').fill('Hunter AL');await p.locator('[data-shell="create"]').click();await p.waitForTimeout(800);await ready();assert.equal(await p.evaluate(()=>window.__danteGame.scene.getScene('Game').hunterArt.body.texture.key),'hunter-male-clothes');
  report.creationAndReload=true;report.lettersAL=true;report.legacyDefaults=true;report.sexButtonPresent=true;assert.deepEqual(report.errors,[]);report.passed=true;
 }finally{await b.close();await writeFile('docs/modular-characters/qa/menu.json',JSON.stringify(report,null,2));}
 console.log(report);

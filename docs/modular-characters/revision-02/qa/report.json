@@ -1,0 +1,95 @@
+{
+  "errors": [],
+  "cases": [
+    {
+      "classId": "warrior",
+      "sex": "male",
+      "body": "warrior-male-clothes-front",
+      "look": {
+        "helmet": "none",
+        "torso": "none",
+        "legs": "none",
+        "boots": "none",
+        "gloves": "none"
+      },
+      "visible": [],
+      "objects": 372,
+      "tweens": 24,
+      "phase": "READY",
+      "dash": false,
+      "fps": 54.46017837524414,
+      "position": {
+        "x": 477.2395233237235,
+        "y": 1309.3933281238674
+      }
+    },
+    {
+      "classId": "warrior",
+      "sex": "female",
+      "body": "warrior-female-clothes-front",
+      "look": {
+        "helmet": "none",
+        "torso": "none",
+        "legs": "none",
+        "boots": "none",
+        "gloves": "none"
+      },
+      "visible": [],
+      "objects": 372,
+      "tweens": 24,
+      "phase": "READY",
+      "dash": false,
+      "fps": 55.4493522644043,
+      "position": {
+        "x": 477.8171607435937,
+        "y": 1309.4101246038092
+      }
+    },
+    {
+      "classId": "hunter",
+      "sex": "male",
+      "body": "hunter-male-clothes",
+      "look": {
+        "helmet": "none",
+        "torso": "none",
+        "legs": "none",
+        "boots": "none",
+        "gloves": "none"
+      },
+      "visible": [],
+      "objects": 384,
+      "tweens": 24,
+      "phase": "READY",
+      "dash": false,
+      "fps": 54.118995666503906,
+      "position": {
+        "x": 479.3106893694167,
+        "y": 1309.4713686935968
+      }
+    },
+    {
+      "classId": "hunter",
+      "sex": "female",
+      "body": "hunter-female-clothes",
+      "look": {
+        "helmet": "none",
+        "torso": "none",
+        "legs": "none",
+        "boots": "none",
+        "gloves": "none"
+      },
+      "visible": [],
+      "objects": 384,
+      "tweens": 24,
+      "phase": "READY",
+      "dash": false,
+      "fps": 55.0113525390625,
+      "position": {
+        "x": 480.19591519969913,
+        "y": 1309.5198133326392
+      }
+    }
+  ],
+  "method": "Chrome emulation; no physical device or human approval.",
+  "passed": true
+}

@@ -241,3 +241,5 @@ Segunda classe disponível no menu de personagens: rifle, Momentum e feixe de lu
 [Entrar na biblioteca](https://echosofdante.vercel.app/test-library.html). Cada sprint possui acesso direto à mudança, separado da campanha; a próxima etapa aguarda validação humana.
 
 Etapa atual: [personagens modulares](docs/modular-characters/README.md) — masculino/feminino e troca visual piloto de arma/torso.
+
+Revisão da etapa 1: [roupa simples e equipamentos separados](docs/modular-characters/revision-02/README.md). Aguardando aprovação visual antes de drops/inventário.

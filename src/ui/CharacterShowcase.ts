@@ -47,8 +47,8 @@ export class CharacterShowcase {
     this.canvas.width = 320 * ratio; this.canvas.height = 360 * ratio;
     this.ctx = this.canvas.getContext('2d')!; this.ctx.scale(ratio, ratio);
     this.caption.className = 'showcase-caption'; this.caption.textContent = 'PREPARADO PARA DANTE';
-    const names = classId === 'hunter' ? [this.bodyName, 'star-hunter-weapon-v2.png'] :
-      [this.bodyName, 'warrior-arm-kit.png', 'warrior-saber-painted.png'];
+    const names = classId === 'hunter' ? [this.bodyName, 'star-hunter-weapon-v2.png','expedition-arm-kit.png'] :
+      [this.bodyName, 'expedition-arm-kit.png', 'warrior-saber-painted.png'];
     void Promise.all(names.map(async name => this.loaded.set(name, await image(name)))).then(async () => {
       if (this.disposed) return;
       if (classId === 'hunter') this.parts = await rifleParts();
@@ -143,7 +143,7 @@ export class CharacterShowcase {
     const saber = this.loaded.get('warrior-saber-painted.png');
     c.save(); c.translate(x, y); c.rotate(angle); if (saber) c.drawImage(saber, -39, -17, 128, 32); c.restore();
     for (const [hx, hy] of [[x, y], [sx, sy]]) {
-      c.save(); c.translate(hx, hy); c.rotate(angle); this.sprite('warrior-arm-kit.png', 2, 3, 128, -7, -7, 12, 14); c.restore();
+      c.save(); c.translate(hx, hy); c.rotate(angle); this.sprite('expedition-arm-kit.png', 2, 3, 128, -7, -7, 12, 14); c.restore();
     }
     if (strike) {
       c.strokeStyle = '#5fe6d85c'; c.lineWidth = 4; c.beginPath(); c.arc(x, y, 60, angle - .4, angle + .3); c.stroke();
@@ -154,6 +154,7 @@ export class CharacterShowcase {
     }
   }
   private part(frame: number, x: number, y: number, angle: number, w: number, h: number, ox: number, oy: number): void {
+    if(frame>=2){const c=this.ctx;c.save();c.translate(x,y);c.rotate(angle);this.sprite('expedition-arm-kit.png',frame<4?frame-2:2,3,128,-w*ox,-h*oy,w,h);c.restore();return;}
     const p = this.parts[frame], img = this.loaded.get('star-hunter-weapon-v2.png'); if (!p || !img) return;
     const c = this.ctx; c.save(); c.translate(x, y); c.rotate(angle);
     c.drawImage(img, frame % 2 * 256 + Math.floor((256 - p.width) / 2), Math.floor(frame / 2) * 256 + 16,
@@ -167,7 +168,7 @@ export class CharacterShowcase {
       const angle = Math.atan2(toY - fromY, toX - fromX), width = Math.hypot(toX - fromX, toY - fromY) + 2;
       if (kind === 'hunter') this.part(2 + segment, fromX, fromY, angle, width, segment ? 12 : 14, 0, .5);
       else { const c = this.ctx; c.save(); c.translate(fromX, fromY); c.rotate(angle);
-        this.sprite('warrior-arm-kit.png', segment, 3, 128, 0, -9, width, segment ? 17 : 19); c.restore(); }
+        this.sprite('expedition-arm-kit.png', segment, 3, 128, 0, -9, width, segment ? 17 : 19); c.restore(); }
     }
   }
 }

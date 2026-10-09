@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { equipmentLook,type EquipmentLook } from '../config/appearance';
 import type { KineticPose } from '../combat/KineticCharge';
 import { hunterRiflePose, HUNTER_MUZZLE_DISTANCE } from './HunterRiflePose';
 
@@ -16,7 +17,7 @@ export class HunterWeapon {
   private layer = -1;
   private equipped=false;
   private readonly axisY: number[];
-  constructor(scene: Phaser.Scene, private rig: Phaser.GameObjects.Container, body: Image, torso:Image) {
+  constructor(scene: Phaser.Scene, private rig: Phaser.GameObjects.Container, body: Image, torso:Phaser.GameObjects.Container) {
     const texture = scene.textures.get('star-hunter-weapon-v2');
     const parts = scene.cache.json.get('star-hunter-weapon-v2-parts') as Part[];
     for (const part of parts) if (!texture.has(`part-${part.frame}`)) texture.add(`part-${part.frame}`, 0,
@@ -32,11 +33,16 @@ export class HunterWeapon {
     this.barrel = scene.add.ellipse(0, 0, 8, 8, 0x5fe6d8).setVisible(false);
     rig.add([...this.sleeves, this.rifle, ...this.gloves, this.barrel, this.charge]);
     const [upper, fore, otherUpper, otherFore] = this.sleeves;
+    this.setProtection(equipmentLook());
     this.orders = [
       [body, torso, otherUpper, otherFore, upper, fore, this.rifle, ...this.gloves, this.barrel, this.charge],
       [otherUpper, otherFore, upper, fore, this.rifle, ...this.gloves, body, torso, this.barrel, this.charge],
       [otherUpper, otherFore, body, torso, upper, fore, this.rifle, ...this.gloves, this.barrel, this.charge],
     ];
+  }
+  setProtection(look:EquipmentLook):void {
+    this.sleeves.forEach((p,i)=>p.setTexture(look.torso==='none'?'expedition-arm-kit':'warrior-arm-kit',i%2));
+    this.gloves.forEach(p=>p.setTexture(look.gloves==='none'?'expedition-arm-kit':look.gloves==='reinforced'?'reinforced-arm-kit':'warrior-arm-kit',2));
   }
   setEquipped(value:boolean):void {this.equipped=value;}
   update(aim: number, row: number, firing: boolean, heavy: Pick<KineticPose, 'phase' | 'level'>): void {
