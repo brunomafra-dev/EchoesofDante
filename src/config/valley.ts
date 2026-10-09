@@ -17,8 +17,9 @@ export const VALLEY = {
   },
 } as const;
 
-export type ValleyKind = 'carapace' | 'thorn';
+export type ValleyKind = 'carapace' | 'thorn' | 'iceCarapace';
 export const VALLEY_CREATURES = {
+  iceCarapace: { name: 'CASCO GLACIAL', hp: 170, radius: 27, size: 132, speed: 62, detection: 350, range: 118, damage: 17, windup: 1050, recovery: 1150, cooldown: 2600 },
   carapace: { name: 'CASCO ERRANTE', hp: 136, radius: 25, size: 126, speed: 74, detection: 340,
     range: 105, damage: 18, windup: 850, recovery: 850, cooldown: 2300 },
   thorn: { name: 'ESPINHANTE', hp: 78, radius: 17, size: 101, speed: 96, detection: 370,

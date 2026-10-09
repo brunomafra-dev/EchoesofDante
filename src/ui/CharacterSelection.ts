@@ -105,7 +105,7 @@ export class CharacterSelection {
       try {
         const saved = JSON.parse(localStorage.getItem(characterProfiles.keyFor(hero.id)) ?? 'null');
         if (typeof saved?.progression?.xp === 'number') level = Math.max(1, PROGRESSION.levelThresholds.filter(x => x <= saved.progression.xp).length);
-        const names: Record<string, string> = { forest: 'Floresta', cavern: 'Cavernas', warden: 'Guardião', valley: 'Vale', arid: 'Siroco', dunes: 'Dunas', sandpit: 'Bacia Soterrada', frost: 'Fratura Boreal' };
+        const names: Record<string, string> = { forest: 'Floresta', cavern: 'Cavernas', warden: 'Guardião', valley: 'Vale', arid: 'Siroco', dunes: 'Dunas', sandpit: 'Bacia Soterrada', frost: 'Fratura Boreal', icecave: 'Galerias do Degelo', icenest: 'Ninho da Geada' };
         if (saved) region = names[saved.area] ?? 'Expedição';
       } catch { /* A corrupt journey safely starts through LocalJourney. */ }
       const card = button('', `character-${hero.id}`, () => show(hero.id)); card.className = 'saved-character'; card.setAttribute('aria-pressed', 'false');

@@ -38,6 +38,7 @@ try {
   });
   const tc = await browser.newContext({ viewport: { width: 1366, height: 768 } });
   const h = await hc.newPage(), g = await gc.newPage(), third = await tc.newPage();
+  for (const p of [h, g, third]) p.setDefaultNavigationTimeout(90000);
   const worlds = [], joined = [];
   for (const p of [h, g, third]) {
     p.on('pageerror', e => report.errors.push(e.message));

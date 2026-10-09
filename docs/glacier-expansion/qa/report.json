@@ -1,0 +1,52 @@
+{
+  "method": "Chrome headless, real action keys and pointer events; DEV prior-chapter/position/damage setup explicitly used for state coverage. No physical devices.",
+  "errors": [],
+  "nameTyping": {
+    "realKeys": true,
+    "alphabet": true,
+    "preservedDuringLoading": true,
+    "selectAll": true,
+    "space": true,
+    "enterCreates": true
+  },
+  "entryFromExistingFrost": true,
+  "optionalRoutes": true,
+  "creaturesDamageDeathXp": true,
+  "introduction": true,
+  "patterns": [
+    {
+      "name": "breath",
+      "hits": 1,
+      "lockedAngle": true
+    },
+    {
+      "name": "tail",
+      "hits": 1,
+      "lockedAngle": true
+    },
+    {
+      "name": "rush",
+      "hits": 1,
+      "lockedAngle": true
+    },
+    {
+      "name": "eruption",
+      "hits": 1,
+      "lockedAngle": true
+    }
+  ],
+  "dashAndCharge": true,
+  "threePhases": true,
+  "encounterReset": true,
+  "rewardOnce": true,
+  "bossMasteryChoice": true,
+  "victoryPersistence": true,
+  "roundTrip": true,
+  "reloadCounts": [
+    121,
+    121,
+    121
+  ],
+  "fps": 50.875,
+  "passed": true
+}

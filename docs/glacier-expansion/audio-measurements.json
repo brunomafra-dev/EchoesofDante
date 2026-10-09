@@ -1,0 +1,26 @@
+[
+  {
+    "track": "icecave",
+    "durationSeconds": 166.154,
+    "bpm": 52,
+    "bars": 36,
+    "bytes": 2327449,
+    "peak": 0.3,
+    "rms": 0.0547,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "e0c2d1e55d80379ea6b7965e442305c54adfafa5a5ac62a990da23ab3c6b4d05"
+  },
+  {
+    "track": "vesper",
+    "durationSeconds": 114.286,
+    "bpm": 84,
+    "bars": 40,
+    "bytes": 1601140,
+    "peak": 0.3,
+    "rms": 0.0564,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "e6a0112486bd2fa3c509b8ac26be5ee29e3fc359d4d883fbfd5b7fff7d4bb87d"
+  }
+]

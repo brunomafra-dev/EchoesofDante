@@ -8,6 +8,7 @@ export class FrozenReach {
   readonly bounds = { ...FROST.bounds };
   readonly obstacles = FROST_ROCKS.map(rock => ({ ...rock }));
   readonly returnPortal: ChapterPortal;
+  readonly onward: ChapterPortal;
   private readonly response: Phaser.GameObjects.Ellipse;
   constructor(private scene: Phaser.Scene, recorded: boolean) {
     scene.add.image(0, 0, 'frost-ground').setOrigin(0).setDisplaySize(FROST.width, FROST.height).setDepth(-10002);
@@ -27,6 +28,7 @@ export class FrozenReach {
       }
       painter.destroy();
     }
+    this.onward = new ChapterPortal(scene, FROST.frontier, recorded);
     this.returnPortal = new ChapterPortal(scene, FROST.returnPortal, true);
     const relay = scene.add.image(FROST.relay.x, FROST.relay.y - 20, 'deep-relay')
       .setOrigin(.5, .94).setDisplaySize(230, 210).setTint(0xc0ced0).setDepth(FROST.relay.y - 45);
@@ -40,6 +42,7 @@ export class FrozenReach {
     return !dead && !recorded && distance(position, FROST.relay) < FROST.relay.radius;
   }
   respond(): void {
+    this.onward.activate();
     this.scene.tweens.killTweensOf(this.response);
     this.response.setAlpha(.9).setScale(1.8);
     this.scene.tweens.add({ targets: this.response, alpha: .5, scale: 1, duration: 1100 });

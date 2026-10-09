@@ -1,0 +1,126 @@
+{
+  "method": "One Chrome headless page, per-region samples. DEV chapter setup and combat invulnerability only for stable runtime observation.",
+  "errors": [],
+  "regions": {
+    "frost": {
+      "meanFps": 50.5332145690918,
+      "before": {
+        "fps": 45.859375,
+        "objects": 121,
+        "tweens": 2,
+        "graphics": 7,
+        "caches": 4,
+        "textures": 92
+      },
+      "after": {
+        "fps": 55.66644287109375,
+        "objects": 121,
+        "tweens": 2,
+        "graphics": 7,
+        "caches": 4,
+        "textures": 92
+      }
+    },
+    "icecave": {
+      "meanFps": 57.45072581805289,
+      "before": {
+        "fps": 55.749874114990234,
+        "objects": 119,
+        "tweens": 2,
+        "graphics": 9,
+        "caches": 4,
+        "textures": 92
+      },
+      "after": {
+        "fps": 59.04585860669613,
+        "objects": 119,
+        "tweens": 2,
+        "graphics": 9,
+        "caches": 4,
+        "textures": 92
+      }
+    },
+    "icenest": {
+      "meanFps": 58.658190647547144,
+      "before": {
+        "fps": 57.40079546626657,
+        "objects": 83,
+        "tweens": 1,
+        "graphics": 11,
+        "caches": 4,
+        "textures": 86
+      },
+      "after": {
+        "fps": 59.50572044049841,
+        "objects": 83,
+        "tweens": 1,
+        "graphics": 11,
+        "caches": 4,
+        "textures": 86
+      }
+    }
+  },
+  "gate": {
+    "closedSolid": true,
+    "openPassable": true,
+    "duplicateFree": true
+  },
+  "combat": {
+    "meanFps": 60.288967641910105,
+    "before": {
+      "fps": 59.978975810835266,
+      "objects": 83,
+      "tweens": 1,
+      "graphics": 11,
+      "caches": 4,
+      "textures": 86
+    },
+    "after": {
+      "fps": 60.53973761271525,
+      "objects": 83,
+      "tweens": 1,
+      "graphics": 11,
+      "caches": 4,
+      "textures": 86
+    }
+  },
+  "respawnCycles": [
+    {
+      "fps": 58.15480320953644,
+      "objects": 83,
+      "tweens": 1,
+      "graphics": 11,
+      "caches": 4,
+      "textures": 86
+    },
+    {
+      "fps": 56.366102407152326,
+      "objects": 83,
+      "tweens": 1,
+      "graphics": 11,
+      "caches": 4,
+      "textures": 86
+    },
+    {
+      "fps": 56.14343260402319,
+      "objects": 83,
+      "tweens": 1,
+      "graphics": 11,
+      "caches": 4,
+      "textures": 86
+    }
+  ],
+  "physics": [
+    {
+      "area": "icecave",
+      "solidBases": 7,
+      "checkpointSafe": true
+    },
+    {
+      "area": "icenest",
+      "solidBases": 14,
+      "checkpointSafe": true
+    }
+  ],
+  "passed": true
+}

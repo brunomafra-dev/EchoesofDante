@@ -1,0 +1,252 @@
+{
+  "method": "Chrome headless full-HP encounter via actual keyboard/mouse; DEV prior-chapter setup only; bot reads telegraphs, not a human balance test",
+  "errors": [],
+  "won": true,
+  "remainingHp": 125,
+  "durationSeconds": 34.811,
+  "patterns": [
+    "breath",
+    "tail",
+    "rush",
+    "eruption"
+  ],
+  "phases": [
+    1,
+    2,
+    3
+  ],
+  "timeline": [
+    {
+      "seconds": 0,
+      "state": "DORMANT",
+      "attack": null,
+      "bossHp": 1100,
+      "hp": 145
+    },
+    {
+      "seconds": 2,
+      "state": "INTRO",
+      "attack": null,
+      "bossHp": 1100,
+      "hp": 145
+    },
+    {
+      "seconds": 4.2,
+      "state": "IDLE",
+      "attack": null,
+      "bossHp": 1100,
+      "hp": 145
+    },
+    {
+      "seconds": 4.9,
+      "state": "TELEGRAPH",
+      "attack": "breath",
+      "bossHp": 1100,
+      "hp": 145
+    },
+    {
+      "seconds": 6.2,
+      "state": "EXECUTE",
+      "attack": "breath",
+      "bossHp": 1100,
+      "hp": 145
+    },
+    {
+      "seconds": 7.1,
+      "state": "RECOVER",
+      "attack": "breath",
+      "bossHp": 1100,
+      "hp": 145
+    },
+    {
+      "seconds": 8.7,
+      "state": "IDLE",
+      "attack": null,
+      "bossHp": 990,
+      "hp": 145
+    },
+    {
+      "seconds": 9.4,
+      "state": "TELEGRAPH",
+      "attack": "tail",
+      "bossHp": 922,
+      "hp": 145
+    },
+    {
+      "seconds": 10.2,
+      "state": "EXECUTE",
+      "attack": "tail",
+      "bossHp": 922,
+      "hp": 145
+    },
+    {
+      "seconds": 10.5,
+      "state": "RECOVER",
+      "attack": "tail",
+      "bossHp": 922,
+      "hp": 145
+    },
+    {
+      "seconds": 11.9,
+      "state": "IDLE",
+      "attack": null,
+      "bossHp": 820,
+      "hp": 145
+    },
+    {
+      "seconds": 12.6,
+      "state": "TELEGRAPH",
+      "attack": "rush",
+      "bossHp": 752,
+      "hp": 145
+    },
+    {
+      "seconds": 13.6,
+      "state": "EXECUTE",
+      "attack": "rush",
+      "bossHp": 718,
+      "hp": 145
+    },
+    {
+      "seconds": 14.4,
+      "state": "RECOVER",
+      "attack": "rush",
+      "bossHp": 718,
+      "hp": 145
+    },
+    {
+      "seconds": 15.8,
+      "state": "PHASE",
+      "attack": null,
+      "bossHp": 684,
+      "hp": 145
+    },
+    {
+      "seconds": 17.2,
+      "state": "IDLE",
+      "attack": null,
+      "bossHp": 684,
+      "hp": 145
+    },
+    {
+      "seconds": 17.9,
+      "state": "TELEGRAPH",
+      "attack": "tail",
+      "bossHp": 616,
+      "hp": 145
+    },
+    {
+      "seconds": 18.8,
+      "state": "EXECUTE",
+      "attack": "tail",
+      "bossHp": 582,
+      "hp": 145
+    },
+    {
+      "seconds": 19,
+      "state": "RECOVER",
+      "attack": "tail",
+      "bossHp": 582,
+      "hp": 145
+    },
+    {
+      "seconds": 20.4,
+      "state": "IDLE",
+      "attack": null,
+      "bossHp": 480,
+      "hp": 145
+    },
+    {
+      "seconds": 21,
+      "state": "TELEGRAPH",
+      "attack": "breath",
+      "bossHp": 412,
+      "hp": 145
+    },
+    {
+      "seconds": 22.3,
+      "state": "EXECUTE",
+      "attack": "breath",
+      "bossHp": 412,
+      "hp": 145
+    },
+    {
+      "seconds": 23.2,
+      "state": "RECOVER",
+      "attack": "breath",
+      "bossHp": 412,
+      "hp": 145
+    },
+    {
+      "seconds": 24.8,
+      "state": "PHASE",
+      "attack": null,
+      "bossHp": 302,
+      "hp": 145
+    },
+    {
+      "seconds": 26.3,
+      "state": "IDLE",
+      "attack": null,
+      "bossHp": 302,
+      "hp": 145
+    },
+    {
+      "seconds": 26.9,
+      "state": "TELEGRAPH",
+      "attack": "breath",
+      "bossHp": 234,
+      "hp": 145
+    },
+    {
+      "seconds": 28.3,
+      "state": "EXECUTE",
+      "attack": "breath",
+      "bossHp": 200,
+      "hp": 145
+    },
+    {
+      "seconds": 29.1,
+      "state": "RECOVER",
+      "attack": "breath",
+      "bossHp": 200,
+      "hp": 145
+    },
+    {
+      "seconds": 30.9,
+      "state": "IDLE",
+      "attack": null,
+      "bossHp": 64,
+      "hp": 145
+    },
+    {
+      "seconds": 31.2,
+      "state": "TELEGRAPH",
+      "attack": "eruption",
+      "bossHp": 30,
+      "hp": 145
+    },
+    {
+      "seconds": 32.5,
+      "state": "EXECUTE",
+      "attack": "eruption",
+      "bossHp": 30,
+      "hp": 145
+    },
+    {
+      "seconds": 33.7,
+      "state": "RECOVER",
+      "attack": "eruption",
+      "bossHp": 30,
+      "hp": 125
+    },
+    {
+      "seconds": 34.8,
+      "state": "DEATH",
+      "attack": "eruption",
+      "bossHp": 0,
+      "hp": 125
+    }
+  ],
+  "passed": true
+}

@@ -46,7 +46,7 @@ export class ValleyCreature implements Enemy {
     this.flash = scene.add.ellipse(0,-18,55,30,0xffead5,0);
     this.view = scene.add.container(x,y,[this.body,this.flash]);
     this.warning = scene.add.graphics().setVisible(false);
-    if (kind === 'carapace') {
+    if (kind === 'carapace' || kind === 'iceCarapace') {
       this.warning.fillStyle(0xffbd54,0.13).beginPath().moveTo(0,0).arc(0,0,112,-0.9,0.9).closePath().fillPath();
       this.warning.lineStyle(3,0xffbd54,0.9).beginPath().moveTo(0,0).lineTo(Math.cos(-0.9)*112,Math.sin(-0.9)*112)
         .arc(0,0,112,-0.9,0.9).closePath().strokePath();
@@ -73,7 +73,7 @@ export class ValleyCreature implements Enemy {
       this.push.x *= Math.max(0,1-dt*10); this.push.y *= Math.max(0,1-dt*10);
     } else if (this.state === 'WINDUP') {
       if (now >= this.windupUntil) {
-        if (this.kind === 'carapace') {
+        if (this.kind === 'carapace' || this.kind === 'iceCarapace') {
           const toPlayer = Math.atan2(toward.y,toward.x);
           if (gap < s.range + PLAYER.radius && Math.abs(Phaser.Math.Angle.Wrap(toPlayer-this.direction)) < 0.9) onAttack({damage:s.damage});
         } else {
@@ -103,7 +103,9 @@ export class ValleyCreature implements Enemy {
     const moving=travel>0.1 && this.state!=='HURT';
     const facing=this.state==='WINDUP'||this.state==='RECOVER' ? Math.cos(this.direction) : gap<=s.detection?toward.x:this.position.x-before.x;
     if(Math.abs(facing)>0.08)this.facingLeft=facing<0;
-    const frame=this.state==='HURT'?7:this.state==='WINDUP'?5:this.state==='RECOVER'?6:moving?1+Math.floor(this.stride)%4:0;
+    const frame = this.kind === 'iceCarapace'
+      ? this.state === 'HURT' ? 6 : this.state === 'WINDUP' ? 3 : this.state === 'RECOVER' ? 6 : moving ? 1 + Math.floor(this.stride) % 2 : 0
+      : this.state==='HURT'?7:this.state==='WINDUP'?5:this.state==='RECOVER'?6:moving?1+Math.floor(this.stride)%4:0;
     this.body.setFrame(frame).setFlipX(this.facingLeft);
     this.view.setPosition(this.position.x,this.position.y).setDepth(this.position.y).setRotation(0);
     this.shadow.setPosition(this.position.x,this.position.y+10).setDepth(this.position.y-2);

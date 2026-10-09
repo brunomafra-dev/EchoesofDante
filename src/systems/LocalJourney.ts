@@ -3,6 +3,7 @@ import { VALLEY_ENCOUNTERS, VALLEY_ROUTES } from '../config/valley';
 import { SIROCCO_ENCOUNTERS, SIROCCO_ROUTES } from '../config/sirocco';
 import { DUNES_ENCOUNTERS, DUNES_ROUTES } from '../config/dunes';
 import { FROST_ENCOUNTERS, FROST_ROUTES } from '../config/frost';
+import { GLACIER_ENCOUNTERS, GLACIER_ROUTES } from '../config/glacier';
 import type { BestiarySnapshot } from './Bestiary';
 import type { ProgressionSnapshot } from './Progression';
 import type { AbilityUpgradeRanks } from '../config/abilityUpgrades';
@@ -15,8 +16,8 @@ export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSee
   'valleyLandmarkSeen', 'valleyEndSeen', 'valleyCheckpointReached', 'valleyFrontierReached',
   'valleyFrontierSignalSeen', 'valleyFrontierEndSeen', 'aridVisited', 'aridSignalSeen',
   'aridFrontierEntered', 'aridFrontierReached', 'dunesVisited', 'dunesRuinsSeen', 'dunesDepthSeen',
-  'soterradoReached', 'soterradoDefeated', 'soterradoClueSeen', 'frostVisited', 'frostSignalSeen', 'frostEndSeen'] as const;
-export type JourneyArea = 'forest' | 'cavern' | 'warden' | 'valley' | 'arid' | 'dunes' | 'sandpit' | 'frost';
+  'soterradoReached', 'soterradoDefeated', 'soterradoClueSeen', 'frostVisited', 'frostSignalSeen', 'frostEndSeen', 'icecaveVisited', 'icecaveSignalSeen', 'icenestVisited', 'vesperReached', 'vesperDefeated', 'vesperClueSeen'] as const;
+export type JourneyArea = 'forest' | 'cavern' | 'warden' | 'valley' | 'arid' | 'dunes' | 'sandpit' | 'frost' | 'icecave' | 'icenest';
 export type JourneyFlags = Record<typeof JOURNEY_FLAGS[number], boolean>;
 export type JourneySnapshot = {
   schema: 1; updatedAt: number; area: JourneyArea; hp: number;
@@ -80,7 +81,13 @@ export class LocalJourney {
       flags.frostVisited &&= flags.soterradoClueSeen;
       flags.frostSignalSeen &&= flags.frostVisited;
       flags.frostEndSeen &&= flags.frostSignalSeen;
-      const area: JourneyArea = raw.area === 'frost' && flags.frostVisited ? 'frost' : raw.area === 'sandpit' && flags.soterradoReached ? 'sandpit'
+      flags.icecaveVisited &&= flags.frostSignalSeen;
+      flags.icecaveSignalSeen &&= flags.icecaveVisited;
+      flags.icenestVisited &&= flags.icecaveSignalSeen;
+      flags.vesperReached &&= flags.icenestVisited;
+      flags.vesperDefeated &&= flags.vesperReached;
+      flags.vesperClueSeen &&= flags.vesperDefeated;
+      const area: JourneyArea = raw.area === 'icenest' && flags.icenestVisited ? 'icenest' : raw.area === 'icecave' && flags.icecaveVisited ? 'icecave' : raw.area === 'frost' && flags.frostVisited ? 'frost' : raw.area === 'sandpit' && flags.soterradoReached ? 'sandpit'
         : raw.area === 'dunes' && flags.dunesVisited ? 'dunes'
         : raw.area === 'arid' && flags.wardenDefeated && flags.valleyFrontierEndSeen && flags.aridVisited ? 'arid'
         : raw.area === 'valley' && flags.wardenDefeated ? 'valley'
@@ -92,7 +99,7 @@ export class LocalJourney {
         if (Array.isArray(entry) && VALLEY_ENCOUNTERS.some(h => h.id === entry[0]) && integer(entry[1], 8_640_000_000_000_000)) habitats.push([entry[0], entry[1]]);
       }
       const aridHabitats: [number, number][] = [];
-      const desertHabitats = [...SIROCCO_ENCOUNTERS, ...DUNES_ENCOUNTERS, ...FROST_ENCOUNTERS];
+      const desertHabitats = [...SIROCCO_ENCOUNTERS, ...DUNES_ENCOUNTERS, ...FROST_ENCOUNTERS, ...GLACIER_ENCOUNTERS];
       if (Array.isArray(raw.aridHabitats)) for (const entry of raw.aridHabitats.slice(0, desertHabitats.length)) {
         if (Array.isArray(entry) && desertHabitats.some(h => h.id === entry[0]) && integer(entry[1], 8_640_000_000_000_000)) aridHabitats.push([entry[0], entry[1]]);
       }
@@ -101,9 +108,9 @@ export class LocalJourney {
         progression: { xp: p.xp, echoes, sourceLocated: echoes.length === ECHO_COUNT && p.sourceLocated === true,
           passageOpen, rewardedHollows: p.rewardedHollows.filter((id): id is number => integer(id, 1999)).slice(0, 2000),
           rewardedRoutes: Array.isArray(p.rewardedRoutes) ? p.rewardedRoutes.filter((id): id is string =>
-            typeof id === 'string' && (VALLEY_ROUTES.some(route => route.id === id) || SIROCCO_ROUTES.some(route => route.id === id) || DUNES_ROUTES.some(route => route.id === id) || FROST_ROUTES.some(route => route.id === id))) : [],
+            typeof id === 'string' && (VALLEY_ROUTES.some(route => route.id === id) || SIROCCO_ROUTES.some(route => route.id === id) || DUNES_ROUTES.some(route => route.id === id) || FROST_ROUTES.some(route => route.id === id) || GLACIER_ROUTES.some(route => route.id === id))) : [],
           abilityUpgrades: object(p.abilityUpgrades) as Partial<AbilityUpgradeRanks> | undefined,
-          bossRewards: flags.soterradoDefeated ? ['soterrado'] : [] },
+          bossRewards: [...(flags.soterradoDefeated ? ['soterrado'] : []), ...(flags.vesperDefeated ? ['vesper'] : [])] },
         flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats,
         coopReceipts: Array.isArray(raw.coopReceipts) ? raw.coopReceipts.filter((entry): entry is {id:string;total:number} =>
           !!entry && typeof entry.id === 'string' && /^[a-f0-9]{32}$/.test(entry.id) && integer(entry.total, 1e9)).slice(-32) : [] };

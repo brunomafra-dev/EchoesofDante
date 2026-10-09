@@ -66,6 +66,11 @@ export class ApplicationShell {
     this.dialog.addEventListener('cancel', e => { e.preventDefault(); if (this.playing && this.page !== 'coop-ended') this.resume(); });
     document.body.append(this.menuButton, this.dialog);
     window.addEventListener('keydown', this.keyDown, true);
+    // Phaser's keyboard captures are global even while the scene is paused.
+    // Run after the field's own handlers, before Phaser's window listeners;
+    // preserve text input, Enter submission, accents, paste and browser defaults.
+    window.addEventListener('keydown', this.editableKey);
+    window.addEventListener('keyup', this.editableKey);
     window.addEventListener('dante-coop', this.coopChanged);
     if (this.invitation !== null) { this.page = this.pendingJoin && !this.inviteApproved ? 'characters' : 'coop'; this.launchOnce = false; }
     if (!characterProfiles.list.length) this.page = this.invitation !== null ? 'create' : 'characters';
@@ -79,8 +84,12 @@ export class ApplicationShell {
     if (coopSession.endedMessage) { this.showEndedVisit(); return; }
     if (this.dialog.open) scene.pauseForShell();
     else if (this.qaAutoplay || this.launchOnce) this.playing = true;
-    this.render();
-    if (this.dialog.open) (this.content.querySelector('button:not(:disabled)') as HTMLButtonElement)?.focus();
+    // Asset loading may finish after the player has selected a preview or begun
+    // typing. These forms do not depend on scene readiness: keep their state.
+    if (!this.selection) {
+      this.render();
+      if (this.dialog.open) (this.content.querySelector('button:not(:disabled)') as HTMLButtonElement)?.focus();
+    }
     if (this.page === 'coop' && this.invitation !== null && !this.inviteAttempted && characterProfiles.list.length && (!this.coopCode || this.inviteApproved)) {
       this.inviteAttempted = true;
       if (this.coopCode) this.connectCoop('join');
@@ -294,6 +303,10 @@ export class ApplicationShell {
     if (this.waitingForFriend && coopSession.role === 'host' && coopSession.peerConnected) { this.resume(); return; }
     this.status((coopSession.code ? 'SALA ' + coopSession.code + ' · ' : '') + coopSession.message);
   };
+  private editableKey = (event: KeyboardEvent): void => {
+    const target = event.target;
+    if (target instanceof HTMLElement && target.closest('input, textarea, [contenteditable="true"]')) event.stopImmediatePropagation();
+  };
   private cancelInvitation(): void {
     this.pendingJoin = false; this.inviteApproved = false; this.inviteAttempted = true; clearInvitation();
     try { sessionStorage.removeItem(INVITE_CHARACTER_KEY); } catch { /* No pending approval is required. */ }
@@ -338,5 +351,5 @@ export class ApplicationShell {
     }
     this.padPrevious = down; this.padFrame = requestAnimationFrame(this.pollPad);
   };
-  destroy(): void { this.selection?.destroy(); cancelAnimationFrame(this.padFrame); window.removeEventListener('keydown', this.keyDown, true); window.removeEventListener('dante-coop', this.coopChanged); this.dialog.remove(); this.menuButton.remove(); }
+  destroy(): void { this.selection?.destroy(); cancelAnimationFrame(this.padFrame); window.removeEventListener('keydown', this.keyDown, true); window.removeEventListener('keydown', this.editableKey); window.removeEventListener('keyup', this.editableKey); window.removeEventListener('dante-coop', this.coopChanged); this.dialog.remove(); this.menuButton.remove(); }
 }

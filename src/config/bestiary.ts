@@ -1,4 +1,6 @@
 export const SPECIES = {
+  iceCarapace: { name: 'Casco Glacial', habitat: 'Galerias do Degelo', note: 'O casco pesado protege uma criatura de seis patas. As pinças anunciam uma varredura lenta.', study: 'Contorne o setor marcado. A recuperação longa permite usar a carga ou atacar pelo flanco.' },
+  vesper: { name: 'Vésper, o Sopro Branco', habitat: 'Ninho da Geada', note: 'Um organismo alado antigo ocupa o ninho. O sopro fixa uma direção antes de se espalhar.', study: 'Saia lateralmente do sopro, evite a linha da investida e as três marcas do gelo. Ataque durante a recuperação.' },
   frostPouncer: { name: 'Rasga-gelo', habitat: 'Fratura Boreal', note: 'O corpo baixo e as garras anunciam uma investida sobre a neve.', study: 'Saia lateralmente durante o preparo. A carapaça protege o avanço, mas o pouso oferece uma janela de ataque.' },
   frostSpitter: { name: 'Cuspidor Boreal', habitat: 'Fratura Boreal', note: 'Um saco mineral carrega o disparo enquanto a criatura mantém distância.', study: 'A linha âmbar indica a direção comprometida. Desloque-se de lado e use as formações como cobertura.' },
   soterrado: { name: 'O Soterrado', habitat: 'Depressão do Siroco', note: 'Escava a bacia e emerge nas marcas do solo. Cada mergulho revela onde o corpo vai reaparecer.',

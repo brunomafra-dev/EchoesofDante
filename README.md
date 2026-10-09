@@ -1,5 +1,11 @@
 # Echoes of Dante
 
+## Expedição glacial · 0.1.76
+
+A **Fratura Boreal** agora continua pelas **Galerias do Degelo**, com desvios e grupos glaciais, até o **Ninho da Geada** e o boss original **Vésper, o Sopro Branco**. Três fases, quatro padrões anunciados, checkpoint próximo e recompensa única de XP/aperfeiçoamento. Investigue o registro da Fratura e entre pelo portal da extremidade. As novas salas são campanha solo; cooperativo regional preservado.
+
+Também corrigida a captura de teclado que impedia letras como A e L no nome do personagem. [Arte, fluxo, testes e limitações](docs/glacier-expansion/).
+
 Repositório: https://github.com/brunomafra-dev/EchoesofDante
 
 ## Personagem do convite e saída da sala · 0.1.75

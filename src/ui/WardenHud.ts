@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { VIEW_WIDTH } from '../config/game';
 import type { Warden } from '../entities/Warden';
 import type { Soterrado } from '../entities/Soterrado';
+import type { Vesper } from '../entities/Vesper';
 
 // A bounded encounter display; the existing exploration/player HUD remains in use.
 export class WardenHud {
@@ -21,7 +22,7 @@ export class WardenHud {
     this.group = scene.add.container(VIEW_WIDTH / 2, 74, [back, track, this.fill, this.title, this.cue]).setScrollFactor(0).setDepth(20000).setVisible(false);
   }
 
-  update(boss?: Warden | Soterrado): void {
+  update(boss?: Warden | Soterrado | Vesper): void {
     this.group.setVisible(!!boss && boss.state !== 'DORMANT' && !boss.isDead);
     if (!boss) return;
     const compact = this.group.scene.scale.displaySize.height < 500;
@@ -33,7 +34,7 @@ export class WardenHud {
     this.fill.setScale(Math.max(0, boss.health.current / boss.health.max), 1);
     const title = `${this.bossName}   /   FASE ${boss.phase}`;
     if (this.title.text !== title) this.title.setText(title);
-    const names: Record<string, string> = { sweep: 'VARREDURA', rush: 'INVESTIDA', slam: 'IMPACTO', signal: 'DESCARGA', echoes: 'ECOS NO SOLO', burrow: 'EMERSÃO', fissure: 'FISSURAS EM SEQUÊNCIA' };
+    const names: Record<string, string> = { breath: 'SOPRO GLACIAL', tail: 'VARREDURA DA CAUDA', eruption: 'ERUPÇÕES DE GELO', sweep: 'VARREDURA', rush: 'INVESTIDA', slam: 'IMPACTO', signal: 'DESCARGA', echoes: 'ECOS NO SOLO', burrow: 'EMERSÃO', fissure: 'FISSURAS EM SEQUÊNCIA' };
     const cue = boss.state === 'INTRO' ? this.bossName === 'O SOTERRADO' ? 'ALGO EMERGE DA AREIA' : 'PRESENÇA ANCESTRAL' : boss.state === 'PHASE' ? 'O SINAL ESTÁ MUDANDO' : boss.state === 'TELEGRAPH' ? `${names[boss.attackName ?? ''] ?? 'ATAQUE'} — SAIA DA MARCA` : boss.state === 'RECOVER' ? 'JANELA PARA ATACAR' : 'LEIA O MOVIMENTO';
     if (this.cue.text !== cue) this.cue.setText(cue);
   }

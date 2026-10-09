@@ -224,6 +224,11 @@ export class Hud {
     this.signalObjective.setText(depthSeen ? 'SINAL SOB A AREIA' : ruinsSeen ? 'SIGA A DESCIDA' : 'EXPLORE AS DUNAS');
   }
 
+  setGlacierArea(nest: boolean, recorded: boolean, defeated: boolean): void {
+    this.areaSubtitle.setText(nest ? 'Ninho da Geada' : 'Galerias do Degelo');
+    this.signalObjective.setText(nest ? defeated ? 'INVESTIGUE O NINHO' : 'VÉSPER · LEIA AS MARCAS' : recorded ? 'SIGA PARA O NINHO' : 'EXPLORE AS GALERIAS');
+  }
+
   setFrostArea(recorded: boolean): void {
     this.areaSubtitle.setText('Fratura Boreal');
     this.signalObjective.setText(recorded ? 'SIGA A FRATURA' : 'EXPLORE A FRATURA BOREAL');
