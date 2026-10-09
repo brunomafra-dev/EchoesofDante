@@ -19,6 +19,7 @@ export function preloadModularArt(scene:Phaser.Scene):void {
   }
   for(const key of ['expedition-arm-kit','reinforced-arm-kit'])if(!scene.textures.exists(key))scene.load.spritesheet(key,`${import.meta.env.BASE_URL}assets/visual/characters/${key}.png`,{frameWidth:128,frameHeight:128});
   if(!scene.cache.json.exists('character-arm-registration'))scene.load.json('character-arm-registration',`${import.meta.env.BASE_URL}assets/visual/characters/character-arm-registration.json`);
+  if(!scene.cache.json.exists('character-shoulder-registration'))scene.load.json('character-shoulder-registration',`${import.meta.env.BASE_URL}assets/visual/characters/character-shoulder-registration.json`);
 }
 // Bake selected painted clothing into one complete body atlas per actor.
 // No transparent armor overlays, no per-frame painting, no cache growth on swaps.
@@ -42,6 +43,7 @@ export class ModularTorso {
     }
     if(classId==='hunter')this.keys.front=this.keys.back=this.keys.side=this.canvases[0].key;
     body.setData('wardrobeKeys',this.keys);
+    body.setData('clothShoulders',scene.cache.json.get('character-shoulder-registration')[`${classId}-${sex}`]);
     this.setLook(equipmentLook());
     body.setTexture(this.keys.front,0).setDisplaySize(128,128);
     // Remove only this actor's reusable atlases when its rig is destroyed.

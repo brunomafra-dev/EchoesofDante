@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { equipmentLook,type WeaponStyle,type EquipmentLook } from '../config/appearance';
 import { registerPaintedArmFrames } from './PaintedArmFrames';
+import {clothShoulder} from './ClothShoulders';
 import type { KineticPose } from '../combat/KineticCharge';
 import { hunterRiflePose, HUNTER_MUZZLE_DISTANCE } from './HunterRiflePose';
 
@@ -15,12 +16,16 @@ export class HunterWeapon {
   private readonly charge: Phaser.GameObjects.Graphics;
   private readonly barrel: Phaser.GameObjects.Ellipse;
   private readonly orders: Phaser.GameObjects.GameObject[][];
+  private readonly clothOrders:Phaser.GameObjects.GameObject[][];
+  private cloth=true;
+  private readonly mainShoulder={x:0,y:0};
+  private readonly otherShoulder={x:0,y:0};
   private layer = -1;
   private style:WeaponStyle='starter';
   private sleeveKey='expedition-arm-kit';
   private gloveKey='expedition-arm-kit';
   private readonly axisY: number[];
-  constructor(scene: Phaser.Scene, private rig: Phaser.GameObjects.Container, body: Image, torso:Phaser.GameObjects.Container) {
+  constructor(scene: Phaser.Scene, private rig: Phaser.GameObjects.Container, private body: Image, torso:Phaser.GameObjects.Container) {
     registerPaintedArmFrames(scene);
     const texture = scene.textures.get('star-hunter-weapon-v2');
     const parts = scene.cache.json.get('star-hunter-weapon-v2-parts') as Part[];
@@ -43,8 +48,14 @@ export class HunterWeapon {
       [otherUpper, otherFore, upper, fore, this.rifle, ...this.gloves, body, torso, this.barrel, this.charge],
       [otherUpper, otherFore, body, torso, upper, fore, this.rifle, ...this.gloves, this.barrel, this.charge],
     ];
+    this.clothOrders=[
+      [body,torso,otherUpper,upper,otherFore,fore,this.rifle,...this.gloves,this.barrel,this.charge],
+      this.orders[1],
+      [otherUpper,otherFore,body,torso,upper,fore,this.rifle,...this.gloves,this.barrel,this.charge],
+    ];
   }
   setProtection(look:EquipmentLook):void {
+    this.cloth=look.torso==='none';
     this.sleeveKey=look.torso==='none'?'expedition-arm-kit':look.torso==='reinforced'?'reinforced-arm-kit':'warrior-arm-kit';
     this.gloveKey=look.gloves==='none'?'expedition-arm-kit':look.gloves==='reinforced'?'reinforced-arm-kit':'warrior-arm-kit';
     this.sleeves.forEach((p,i)=>p.setTexture(this.sleeveKey,`anatomy-${i%2}`));
@@ -60,7 +71,7 @@ export class HunterWeapon {
       const offset=row===1?3:0;
       this.sleeves.forEach((p,i)=>p.setFrame(`anatomy-${offset+i%2}`));
       this.gloves.forEach(p=>p.setFrame(`anatomy-${offset+2}`).setDisplaySize(7.5,9));
-      for (const object of this.orders[row]) this.rig.bringToTop(object);
+      for (const object of (this.cloth?this.clothOrders:this.orders)[row]) this.rig.bringToTop(object);
     }
     const back = row === 1, left = cos < 0;
     const axisY = this.axisY[back ? 1 : 0];
@@ -73,8 +84,12 @@ export class HunterWeapon {
     const grip = (along: number, across: number) => ({ x: pose.x + along * cos - across * sin, y: pose.y + along * sin + across * cos });
     const main = grip(-4, left ? -9 : 9), support = grip(16, left ? -7 : 7);
     const sx = row === 2 ? (left ? 10 : -10) : back ? 13 : -13;
-    this.arm(this.sleeves[0], this.sleeves[1], sx, -37, main.x, main.y, back ? 1 : -1);
-    this.arm(this.sleeves[2], this.sleeves[3], -sx, -36, support.x, support.y, back ? -1 : 1);
+    if(this.cloth){
+      clothShoulder(this.body,back?'right':'left',this.mainShoulder);
+      clothShoulder(this.body,back?'left':'right',this.otherShoulder);
+    }else{this.mainShoulder.x=sx;this.mainShoulder.y=-37;this.otherShoulder.x=-sx;this.otherShoulder.y=-36;}
+    this.arm(this.sleeves[0], this.sleeves[1], this.mainShoulder.x,this.mainShoulder.y, main.x, main.y, back ? 1 : -1);
+    this.arm(this.sleeves[2], this.sleeves[3], this.otherShoulder.x,this.otherShoulder.y, support.x, support.y, back ? -1 : 1);
     this.gloves[0].setPosition(main.x, main.y).setRotation(aim).setFlipY(left);
     this.gloves[1].setPosition(support.x, support.y).setRotation(aim).setFlipY(left);
     const charging = heavy.phase === 'CHARGING', level = Phaser.Math.Clamp(heavy.level, 0, 1);
@@ -95,10 +110,11 @@ export class HunterWeapon {
     const dx = wx - sx, dy = wy - sy, distance = Math.max(.001, Math.hypot(dx, dy));
     const length = Math.max(17, distance / 2 + .5), bend = Math.min(10, Math.sqrt(Math.max(0, length * length - distance * distance / 4)));
     const ex = sx + dx * .5 - dy / distance * bend * side, ey = sy + dy * .5 + dx / distance * bend * side;
-    this.segment(upper, sx, sy, ex, ey, 11.5);
-    this.segment(fore, ex, ey, wx, wy, 10);
+    this.segment(upper, sx, sy, ex, ey, 11.5,this.cloth?5:0);
+    this.segment(fore, ex, ey, wx, wy, 10,this.cloth?2:0);
   }
-  private segment(image: Image, x: number, y: number, ex: number, ey: number, thickness: number): void {
-    image.setPosition(x, y).setRotation(Math.atan2(ey - y, ex - x)).setDisplaySize(Math.hypot(ex - x, ey - y) + 2, thickness);
+  private segment(image: Image, x: number, y: number, ex: number, ey: number, thickness: number,overlap:number): void {
+    const width=Math.hypot(ex-x,ey-y)+2+overlap;
+    image.setOrigin(overlap/width,.5).setPosition(x, y).setRotation(Math.atan2(ey - y, ex - x)).setDisplaySize(width, thickness);
   }
 }

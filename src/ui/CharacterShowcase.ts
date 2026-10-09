@@ -1,6 +1,7 @@
 import type { CharacterClass } from '../systems/CharacterProfiles';
 import { hunterRiflePose } from '../visual/HunterRiflePose';
 import { characterSex, hunterBody, warriorBody, type CharacterSex } from '../config/appearance';
+import type {ShoulderSockets} from '../visual/ClothShoulders';
 
 type Part = { frame: number; width: number; height: number; axisY?: number };
 const images = new Map<string, Promise<HTMLImageElement>>();
@@ -32,6 +33,7 @@ export class CharacterShowcase {
   private readonly loaded = new Map<string, HTMLImageElement>();
   private parts: Part[] = [];
   private armBounds:{x:number;y:number;width:number;height:number}[]=[];
+  private shoulderSockets:ShoulderSockets[]=[];
   private raf = 0;
   private disposed = false;
   private started = 0;
@@ -56,6 +58,8 @@ export class CharacterShowcase {
       if (this.disposed) return;
       const registration=await fetch(base+'character-arm-registration.json').then(r=>r.json());
       this.armBounds=registration['expedition-arm-kit'];
+      const shoulders=await fetch(base+'character-shoulder-registration.json').then(r=>r.json());
+      this.shoulderSockets=shoulders[`${classId}-${sex}`];
       if(this.disposed)return;
       this.ready = true; this.paint(-1);
       if (this.pendingDemo) this.play(this.pendingManual);
@@ -115,12 +119,17 @@ export class CharacterShowcase {
     const c = this.ctx, aim = .22, pose = hunterRiflePose(aim), cos = Math.cos(aim), sin = Math.sin(aim);
     const frame = dash ? 1 + Math.min(2, Math.floor((t - 1.15) * 7)) : 0;
     this.canvas.dataset.facing = 'front';
-    this.sprite(this.bodyName, frame, 4, 256, -64, -83, 128, 128);
     if (!this.parts.length) return;
     const grip = (along: number, across: number) => ({ x: pose.x + along * cos - across * sin, y: pose.y + along * sin + across * cos });
     const main = grip(-4, 9), support = grip(16, 7);
-    this.arm('hunter', -15, -34, main.x, main.y, -1);
-    this.arm('hunter', 15, -34, support.x, support.y, 1);
+    const sockets=this.shoulderSockets[frame];
+    const arms=()=>{
+      this.arm('hunter',sockets.left.x/2-64,sockets.left.y/2-83,main.x,main.y,-1);
+      this.arm('hunter',sockets.right.x/2-64,sockets.right.y/2-83,support.x,support.y,1);
+    };
+    this.sprite(this.bodyName, frame, 4, 256, -64, -83, 128, 128);
+    this.armPass=0;arms();
+    this.armPass=1;arms();
     const starter=this.loaded.get('hunter-starter-weapon.png');
     c.save();c.translate(pose.x,pose.y);c.rotate(aim);if(starter)c.drawImage(starter,-18,-34/128*30,60,30);c.restore();
     this.part(4, main.x, main.y, aim, 7.5, 9, .65, .5); this.part(5, support.x, support.y, aim, 7.5, 9, .65, .5);
@@ -138,12 +147,17 @@ export class CharacterShowcase {
   }
   private warrior(t: number, strike: boolean, dash: boolean, charge: boolean, release: boolean): void {
     const c = this.ctx, frame = dash ? [1,0,2,0][Math.floor((t-1.15)*8)%4] : 0;
-    this.sprite(this.bodyName, frame, 4, 256, -64, -79, 128, 128);
     const angle = strike ? -1.6 + Math.max(0, t - .45) * 4.5 : release ? -.2 : charge ? -1.6 : -1.1;
     const x = strike ? 20 : 15, y = charge ? -24 : -17;
     const sx = x - 10 * Math.cos(angle), sy = y - 10 * Math.sin(angle);
-    this.arm('warrior', -15, -30, x - 4 * Math.cos(angle), y - 4 * Math.sin(angle), -1);
-    this.arm('warrior', 15, -30, sx - 4 * Math.cos(angle), sy - 4 * Math.sin(angle), 1);
+    const sockets=this.shoulderSockets[frame];
+    const arms=()=>{
+      this.arm('warrior',sockets.left.x/2-64,sockets.left.y/2-79,x-4*Math.cos(angle),y-4*Math.sin(angle),-1);
+      this.arm('warrior',sockets.right.x/2-64,sockets.right.y/2-79,sx-4*Math.cos(angle),sy-4*Math.sin(angle),1);
+    };
+    this.sprite(this.bodyName, frame, 4, 256, -64, -79, 128, 128);
+    this.armPass=0;arms();
+    this.armPass=1;arms();
     const saber = this.loaded.get('warrior-starter-weapon.png');
     c.save(); c.translate(x, y); c.rotate(angle); if (saber) c.drawImage(saber, -39, -17, 128, 32); c.restore();
     for (const [hx, hy] of [[x, y], [sx, sy]]) {
@@ -158,6 +172,7 @@ export class CharacterShowcase {
     }
   }
   private armPart(frame:number,x:number,y:number,w:number,h:number):void {const b=this.armBounds[frame],img=this.loaded.get('expedition-arm-kit.png');if(b&&img)this.ctx.drawImage(img,b.x,b.y,b.width,b.height,x,y,w,h);}
+  private armPass=0;
   private part(frame: number, x: number, y: number, angle: number, w: number, h: number, ox: number, oy: number): void {
     if(frame>=2){const c=this.ctx;c.save();c.translate(x,y);c.rotate(angle);this.armPart(frame<4?frame-2:2,-w*ox,-h*oy,w,h);c.restore();return;}
     const p = this.parts[frame], img = this.loaded.get('star-hunter-weapon-v2.png'); if (!p || !img) return;
@@ -170,10 +185,12 @@ export class CharacterShowcase {
     const length = Math.max(17, distance / 2 + .5), bend = Math.min(10, Math.sqrt(Math.max(0, length * length - distance * distance / 4)));
     const ex = sx + dx / 2 - dy / distance * bend * side, ey = sy + dy / 2 + dx / distance * bend * side;
     for (const [fromX, fromY, toX, toY, segment] of [[sx, sy, ex, ey, 0], [ex, ey, wx, wy, 1]]) {
-      const angle = Math.atan2(toY - fromY, toX - fromX), width = Math.hypot(toX - fromX, toY - fromY) + 2;
-      if (kind === 'hunter') this.part(2 + segment, fromX, fromY, angle, width, segment ? 10 : 11.5, 0, .5);
+      if(segment!==this.armPass)continue;
+      const overlap=segment?2:5;
+      const angle = Math.atan2(toY - fromY, toX - fromX), width = Math.hypot(toX - fromX, toY - fromY) + 2+overlap;
+      if (kind === 'hunter') this.part(2 + segment, fromX, fromY, angle, width, segment ? 10 : 11.5, overlap/width, .5);
       else { const c = this.ctx; c.save(); c.translate(fromX, fromY); c.rotate(angle);
-        this.armPart(segment,0,-(segment?10.5:12.5)/2,width,segment?10.5:12.5); c.restore(); }
+        this.armPart(segment,-overlap,-(segment?10.5:12.5)/2,width,segment?10.5:12.5); c.restore(); }
     }
   }
 }

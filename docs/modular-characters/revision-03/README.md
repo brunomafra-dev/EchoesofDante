@@ -1,6 +1,6 @@
 # Revisão 03 — corpo vestido, anatomia e armas
 
-**Versão 0.1.81 · QA técnico passou · aprovação humana pendente.**
+**Versão 0.1.81 · QA técnico passou.** O usuário aprovou a melhoria, mas apontou a junção dos braços na roupa simples. A [correção de ombros](../shoulder-fix/README.md) é a entrega atual.
 
 As revisões anteriores foram rejeitadas pelo usuário. Esta entrega corrige a apresentação da etapa 1; não inicia o inventário, os novos drops ou a fabricação da etapa 2.
 

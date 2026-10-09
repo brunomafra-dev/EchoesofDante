@@ -206,3 +206,12 @@ Revisão 02 rejeitada pelo usuário: Hunter deformado, armadura com aparência c
 [Relatório e evidências](modular-characters/revision-03/README.md) · [Teste do Hunter](https://echosofdante.vercel.app/character-playtest.html?class=hunter&sex=female&kit=basic&weapon=current).
 
 **Aguardando aprovação humana.** A etapa 2 permanece bloqueada por esta validação; nenhum inventário ou novo sistema de drops foi iniciado.
+
+
+### Correção da junção dos braços — 0.1.82
+
+O usuário aprovou a melhoria da revisão 03, mas apontou braços desconectados na roupa simples, sobretudo no ataque do Guerreiro e na postura do Hunter. Correção localizada: encaixes registrados na pintura de cada pose, sobreposição curta da manga dentro do ombro e ordenação da manga próxima à frente do peito. Equipamento, mãos e armas mantêm os encaixes anteriores. Nenhum novo asset raster, estatística ou sistema de gameplay.
+
+[Relatório e capturas](modular-characters/shoulder-fix/README.md) · [Teste reservado](https://echosofdante.vercel.app/character-playtest.html?class=hunter&sex=female&kit=clothes&weapon=starter).
+
+**Aguardar validação desta correção antes da etapa 2.**

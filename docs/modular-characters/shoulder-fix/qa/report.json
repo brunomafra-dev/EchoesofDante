@@ -1,0 +1,839 @@
+{
+  "method": "Chrome headless, real keyboard/mouse; socket alpha, draw order, attack and charge sampling; no physical playtest.",
+  "errors": [],
+  "cases": [
+    {
+      "classId": "hunter",
+      "sex": "female",
+      "directions": [
+        {
+          "key": "dressed-hunter-female-1-all",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -16.5,
+              "y": -40.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 11.5,
+              "y": -40.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 5
+            }
+          ],
+          "objects": 384,
+          "textures": 124,
+          "fps": 39.375
+        },
+        {
+          "key": "dressed-hunter-female-1-all",
+          "frame": 4,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": 12.5,
+              "y": -43.5,
+              "alpha": 250,
+              "above": false,
+              "overlap": 4.999999999999999
+            },
+            {
+              "x": -17.5,
+              "y": -43.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 384,
+          "textures": 124,
+          "fps": 39.375
+        },
+        {
+          "key": "dressed-hunter-female-1-all",
+          "frame": 8,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -14,
+              "y": -37.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 7.5,
+              "y": -37.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 384,
+          "textures": 124,
+          "fps": 39.375
+        },
+        {
+          "key": "dressed-hunter-female-1-all",
+          "frame": 8,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": 14,
+              "y": -37.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": -7.5,
+              "y": -37.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 384,
+          "textures": 124,
+          "fps": 39.375
+        },
+        {
+          "key": "dressed-hunter-female-1-all",
+          "frame": 8,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -14,
+              "y": -37.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 7.5,
+              "y": -37.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 384,
+          "textures": 124,
+          "fps": 44.03125
+        },
+        {
+          "key": "dressed-hunter-female-1-all",
+          "frame": 4,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": 12.5,
+              "y": -43.5,
+              "alpha": 250,
+              "above": false,
+              "overlap": 5
+            },
+            {
+              "x": -17.5,
+              "y": -43.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 384,
+          "textures": 124,
+          "fps": 44.03125
+        },
+        {
+          "key": "dressed-hunter-female-1-all",
+          "frame": 8,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -14,
+              "y": -37.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 7.5,
+              "y": -37.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 384,
+          "textures": 124,
+          "fps": 44.03125
+        },
+        {
+          "key": "dressed-hunter-female-1-all",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -16.5,
+              "y": -40.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 11.5,
+              "y": -40.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 4.999999999999999
+            }
+          ],
+          "objects": 384,
+          "textures": 124,
+          "fps": 44.03125
+        }
+      ],
+      "abilitySamples": 12,
+      "fps": 53.3262939453125
+    },
+    {
+      "classId": "hunter",
+      "sex": "male",
+      "directions": [
+        {
+          "key": "dressed-hunter-male-1-all",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -18.5,
+              "y": -45.5,
+              "alpha": 251,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 17,
+              "y": -45.5,
+              "alpha": 251,
+              "above": true,
+              "overlap": 5
+            }
+          ],
+          "objects": 384,
+          "textures": 124,
+          "fps": 38.125
+        },
+        {
+          "key": "dressed-hunter-male-1-all",
+          "frame": 4,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": 17.5,
+              "y": -44.5,
+              "alpha": 251,
+              "above": false,
+              "overlap": 5
+            },
+            {
+              "x": -20,
+              "y": -44.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 384,
+          "textures": 124,
+          "fps": 38.125
+        },
+        {
+          "key": "dressed-hunter-male-1-all",
+          "frame": 8,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -18,
+              "y": -40.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 3.5,
+              "y": -40.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 384,
+          "textures": 124,
+          "fps": 38.125
+        },
+        {
+          "key": "dressed-hunter-male-1-all",
+          "frame": 8,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": 18,
+              "y": -40.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": -3.5,
+              "y": -40.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 384,
+          "textures": 124,
+          "fps": 38.125
+        },
+        {
+          "key": "dressed-hunter-male-1-all",
+          "frame": 8,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -18,
+              "y": -40.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 3.5,
+              "y": -40.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 384,
+          "textures": 124,
+          "fps": 43.34375
+        },
+        {
+          "key": "dressed-hunter-male-1-all",
+          "frame": 4,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": 17.5,
+              "y": -44.5,
+              "alpha": 251,
+              "above": false,
+              "overlap": 5
+            },
+            {
+              "x": -20,
+              "y": -44.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 384,
+          "textures": 124,
+          "fps": 43.34375
+        },
+        {
+          "key": "dressed-hunter-male-1-all",
+          "frame": 8,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -18,
+              "y": -40.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 3.5,
+              "y": -40.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 384,
+          "textures": 124,
+          "fps": 43.34375
+        },
+        {
+          "key": "dressed-hunter-male-1-all",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -18.5,
+              "y": -45.5,
+              "alpha": 251,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 17,
+              "y": -45.5,
+              "alpha": 251,
+              "above": true,
+              "overlap": 5
+            }
+          ],
+          "objects": 384,
+          "textures": 124,
+          "fps": 43.34375
+        }
+      ],
+      "abilitySamples": 12,
+      "fps": 51.56689453125
+    },
+    {
+      "classId": "warrior",
+      "sex": "female",
+      "directions": [
+        {
+          "key": "dressed-warrior-female-1-front",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -15.5,
+              "y": -30.5,
+              "alpha": 251,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 13,
+              "y": -30.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 5
+            }
+          ],
+          "objects": 372,
+          "textures": 125,
+          "fps": 41.25
+        },
+        {
+          "key": "dressed-warrior-female-1-back",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": 16,
+              "y": -32.5,
+              "alpha": 253,
+              "above": false,
+              "overlap": 5
+            },
+            {
+              "x": -13.5,
+              "y": -32.5,
+              "alpha": 251,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 372,
+          "textures": 125,
+          "fps": 46.1875
+        },
+        {
+          "key": "dressed-warrior-female-1-side",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -9,
+              "y": -27.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 10,
+              "y": -27.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 372,
+          "textures": 125,
+          "fps": 49.390625
+        },
+        {
+          "key": "dressed-warrior-female-1-side",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": 9,
+              "y": -27.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": -10,
+              "y": -27.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 4.999999999999999
+            }
+          ],
+          "objects": 372,
+          "textures": 125,
+          "fps": 52.29296875
+        },
+        {
+          "key": "dressed-warrior-female-1-side",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -9,
+              "y": -27.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 10,
+              "y": -27.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 372,
+          "textures": 125,
+          "fps": 53.7197265625
+        },
+        {
+          "key": "dressed-warrior-female-1-back",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": 16,
+              "y": -32.5,
+              "alpha": 253,
+              "above": false,
+              "overlap": 5
+            },
+            {
+              "x": -13.5,
+              "y": -32.5,
+              "alpha": 251,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 372,
+          "textures": 125,
+          "fps": 55.289794921875
+        },
+        {
+          "key": "dressed-warrior-female-1-side",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -9,
+              "y": -27.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 10,
+              "y": -27.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 372,
+          "textures": 125,
+          "fps": 55.289794921875
+        },
+        {
+          "key": "dressed-warrior-female-1-front",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -15.5,
+              "y": -30.5,
+              "alpha": 251,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 13,
+              "y": -30.5,
+              "alpha": 252,
+              "above": true,
+              "overlap": 5
+            }
+          ],
+          "objects": 372,
+          "textures": 125,
+          "fps": 56.46734619140625
+        }
+      ],
+      "abilitySamples": 20,
+      "fps": 58.83778667449951
+    },
+    {
+      "classId": "warrior",
+      "sex": "male",
+      "directions": [
+        {
+          "key": "dressed-warrior-male-1-front",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -15.5,
+              "y": -31.5,
+              "alpha": 251,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 13,
+              "y": -31.5,
+              "alpha": 251,
+              "above": true,
+              "overlap": 5
+            }
+          ],
+          "objects": 372,
+          "textures": 125,
+          "fps": 39
+        },
+        {
+          "key": "dressed-warrior-male-1-back",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": 14.5,
+              "y": -31,
+              "alpha": 251,
+              "above": false,
+              "overlap": 5
+            },
+            {
+              "x": -15,
+              "y": -31,
+              "alpha": 251,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 372,
+          "textures": 125,
+          "fps": 44
+        },
+        {
+          "key": "dressed-warrior-male-1-side",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -15,
+              "y": -31.5,
+              "alpha": 251,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 12.5,
+              "y": -31.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 372,
+          "textures": 125,
+          "fps": 44
+        },
+        {
+          "key": "dressed-warrior-male-1-side",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": 15,
+              "y": -31.5,
+              "alpha": 251,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": -12.5,
+              "y": -31.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 372,
+          "textures": 125,
+          "fps": 48.25
+        },
+        {
+          "key": "dressed-warrior-male-1-side",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -15,
+              "y": -31.5,
+              "alpha": 251,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 12.5,
+              "y": -31.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 372,
+          "textures": 125,
+          "fps": 51.1875
+        },
+        {
+          "key": "dressed-warrior-male-1-back",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": 14.5,
+              "y": -31,
+              "alpha": 251,
+              "above": false,
+              "overlap": 5
+            },
+            {
+              "x": -15,
+              "y": -31,
+              "alpha": 251,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 372,
+          "textures": 125,
+          "fps": 53.390625
+        },
+        {
+          "key": "dressed-warrior-male-1-side",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -15,
+              "y": -31.5,
+              "alpha": 251,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 12.5,
+              "y": -31.5,
+              "alpha": 252,
+              "above": false,
+              "overlap": 5
+            }
+          ],
+          "objects": 372,
+          "textures": 125,
+          "fps": 53.390625
+        },
+        {
+          "key": "dressed-warrior-male-1-front",
+          "frame": 0,
+          "phase": "READY",
+          "attack": "READY",
+          "roots": [
+            {
+              "x": -15.5,
+              "y": -31.5,
+              "alpha": 251,
+              "above": true,
+              "overlap": 5
+            },
+            {
+              "x": 13,
+              "y": -31.5,
+              "alpha": 251,
+              "above": true,
+              "overlap": 5
+            }
+          ],
+          "objects": 372,
+          "textures": 125,
+          "fps": 55.29296875
+        }
+      ],
+      "abilitySamples": 20,
+      "fps": 58.15484619140625
+    }
+  ],
+  "passed": true
+}

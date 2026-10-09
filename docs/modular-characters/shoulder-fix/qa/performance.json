@@ -1,0 +1,137 @@
+{
+  "method": "Chrome headless, 1280x720, idle after 2.2 seconds without rapid appearance swaps or screenshots; no physical device claim.",
+  "cases": [
+    {
+      "classId": "hunter",
+      "sex": "male",
+      "fps": 47.3671875,
+      "objects": 384,
+      "textures": 124
+    },
+    {
+      "classId": "hunter",
+      "sex": "female",
+      "fps": 48.12109375,
+      "objects": 384,
+      "textures": 124
+    },
+    {
+      "classId": "warrior",
+      "sex": "male",
+      "fps": 48.71875,
+      "objects": 372,
+      "textures": 125
+    },
+    {
+      "classId": "warrior",
+      "sex": "female",
+      "fps": 47.8125,
+      "objects": 372,
+      "textures": 125
+    }
+  ],
+  "warmedCases": [
+    {
+      "classId": "hunter",
+      "sex": "female",
+      "samples": [
+        {
+          "second": 1,
+          "fps": 44.515625,
+          "delta": 16.620000000000072
+        },
+        {
+          "second": 2,
+          "fps": 48.38671875,
+          "delta": 16.66999999999998
+        },
+        {
+          "second": 3,
+          "fps": 51.2900390625,
+          "delta": 16.66999999999998
+        },
+        {
+          "second": 4,
+          "fps": 53.467529296875,
+          "delta": 16.670000000000073
+        },
+        {
+          "second": 5,
+          "fps": 55.10064697265625,
+          "delta": 16.659999999999854
+        },
+        {
+          "second": 6,
+          "fps": 56.57548522949219,
+          "delta": 16.670000000000073
+        },
+        {
+          "second": 7,
+          "fps": 57.43161392211914,
+          "delta": 16.660000000000036
+        },
+        {
+          "second": 8,
+          "fps": 58.073710441589355,
+          "delta": 16.66999999999989
+        },
+        {
+          "second": 9,
+          "fps": 58.80528283119202,
+          "delta": 16.65
+        }
+      ]
+    },
+    {
+      "classId": "warrior",
+      "sex": "female",
+      "samples": [
+        {
+          "second": 1,
+          "fps": 43.359375,
+          "delta": 16.646666666666775
+        },
+        {
+          "second": 2,
+          "fps": 47.51953125,
+          "delta": 16.66999999999998
+        },
+        {
+          "second": 3,
+          "fps": 50.8896484375,
+          "delta": 16.66999999999998
+        },
+        {
+          "second": 4,
+          "fps": 53.167236328125,
+          "delta": 16.689999999999962
+        },
+        {
+          "second": 5,
+          "fps": 55.12542724609375,
+          "delta": 16.660000000000036
+        },
+        {
+          "second": 6,
+          "fps": 56.34407043457031,
+          "delta": 16.67999999999993
+        },
+        {
+          "second": 7,
+          "fps": 57.508052825927734,
+          "delta": 16.67999999999993
+        },
+        {
+          "second": 8,
+          "fps": 58.1310396194458,
+          "delta": 16.670000000000073
+        },
+        {
+          "second": 9,
+          "fps": 58.59827971458435,
+          "delta": 16.66999999999989
+        }
+      ]
+    }
+  ]
+}
