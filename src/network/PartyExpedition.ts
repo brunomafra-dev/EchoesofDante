@@ -168,6 +168,7 @@ export class PartyExpedition {
   const p=world.partner,delta=Math.hypot(p.x-a.player.position.x,p.y-a.player.position.y),t=delta>300?1:Math.min(1,dt*18);
   a.render({...p,x:Phaser.Math.Linear(a.player.position.x,p.x,t),y:Phaser.Math.Linear(a.player.position.y,p.y,t)});
   if(!this.mirrorHost&&room.peer)this.mirrorHost=new PartyActor(this.scene,room.peer,world.host,world.host.maxHp);
+  if(this.mirrorHost)this.mirrorHost.profile.equipment=room.peer?.equipment;
   this.mirrorHost?.render(world.host,now,dt);
   this.visitorWave.setVisible(!!p.wave);if(p.wave)this.visitorWave.setPosition(p.wave.x,p.wave.y).setRotation(p.wave.rotation).setDisplaySize(p.wave.width,p.wave.height);
   a.hud.setHunterMomentum(p.momentum??0);

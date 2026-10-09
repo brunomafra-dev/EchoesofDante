@@ -14,8 +14,9 @@ export class HunterWeapon {
   private readonly barrel: Phaser.GameObjects.Ellipse;
   private readonly orders: Phaser.GameObjects.GameObject[][];
   private layer = -1;
+  private equipped=false;
   private readonly axisY: number[];
-  constructor(scene: Phaser.Scene, private rig: Phaser.GameObjects.Container, body: Image) {
+  constructor(scene: Phaser.Scene, private rig: Phaser.GameObjects.Container, body: Image, torso:Image) {
     const texture = scene.textures.get('star-hunter-weapon-v2');
     const parts = scene.cache.json.get('star-hunter-weapon-v2-parts') as Part[];
     for (const part of parts) if (!texture.has(`part-${part.frame}`)) texture.add(`part-${part.frame}`, 0,
@@ -32,11 +33,12 @@ export class HunterWeapon {
     rig.add([...this.sleeves, this.rifle, ...this.gloves, this.barrel, this.charge]);
     const [upper, fore, otherUpper, otherFore] = this.sleeves;
     this.orders = [
-      [body, otherUpper, otherFore, upper, fore, this.rifle, ...this.gloves, this.barrel, this.charge],
-      [otherUpper, otherFore, upper, fore, this.rifle, ...this.gloves, body, this.barrel, this.charge],
-      [otherUpper, otherFore, body, upper, fore, this.rifle, ...this.gloves, this.barrel, this.charge],
+      [body, torso, otherUpper, otherFore, upper, fore, this.rifle, ...this.gloves, this.barrel, this.charge],
+      [otherUpper, otherFore, upper, fore, this.rifle, ...this.gloves, body, torso, this.barrel, this.charge],
+      [otherUpper, otherFore, body, torso, upper, fore, this.rifle, ...this.gloves, this.barrel, this.charge],
     ];
   }
+  setEquipped(value:boolean):void {this.equipped=value;}
   update(aim: number, row: number, firing: boolean, heavy: Pick<KineticPose, 'phase' | 'level'>): void {
     const cos = Math.cos(aim), sin = Math.sin(aim), pose = hunterRiflePose(aim);
     if (row !== this.layer) {
@@ -45,7 +47,7 @@ export class HunterWeapon {
     }
     const back = row === 1, left = cos < 0;
     const axisY = this.axisY[back ? 1 : 0];
-    this.rifle.setFrame(`part-${back ? 1 : 0}`).setOrigin(.3, left ? 1 - axisY : axisY)
+    this.rifle.setTexture(this.equipped?'hunter-pilot-weapon':'star-hunter-weapon-v2',this.equipped?undefined:`part-${back ? 1 : 0}`).setOrigin(.3, left ? 1 - axisY : axisY)
       .setDisplaySize(60, 60 * this.rifle.frame.realHeight / this.rifle.frame.realWidth)
       .setPosition(pose.x, pose.y).setRotation(aim).setFlipX(back).setFlipY(left);
     const grip = (along: number, across: number) => ({ x: pose.x + along * cos - across * sin, y: pose.y + along * sin + across * cos });

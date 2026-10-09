@@ -1,5 +1,9 @@
 # Instruções para atualizações
 
+## Biblioteca de testes
+
+Ao final de cada sprint, entregue um link direto para testar especificamente a mudança e registre-o em `test-library.html`. O teste deve preservar personagens e progresso reais. Aguarde a validação do usuário antes de iniciar a etapa seguinte. Informe separadamente QA técnico e aprovação humana.
+
 ## Fundação do RPG
 
 Para trabalhos da evolução RPG, leia `docs/RPG_FOUNDATION_ROADMAP.md` antes de implementar. Esse é o plano aprovado: siga a ordem das etapas, preserve suas decisões e atualize o checklist com evidências e limitações a cada entrega. Não declare uma etapa visual aprovada somente com QA automatizado. Correções de regressão e manutenção continuam permitidas fora dessa sequência.

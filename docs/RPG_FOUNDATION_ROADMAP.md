@@ -153,6 +153,10 @@ A abertura confirma a nova premissa fornecida: humanidade em fuga e expedição 
 
 ## 6. Controle de execução
 
+### Biblioteca de testes e aprovação
+
+Decisão do usuário em 09/10/2026: cada sprint deve terminar com um link específico, reunido na [Biblioteca de testes](../test-library.html). O laboratório deve isolar a alteração e preservar saves. A etapa seguinte começa somente após validação humana explícita.
+
 ### Regras para cada etapa
 
 1. Ler este plano e inspecionar os sistemas envolvidos antes de implementar.
@@ -166,7 +170,7 @@ A abertura confirma a nova premissa fornecida: humanidade em fuga e expedição 
 ### Checklist
 
 - [x] **Etapa 0 — Arquivar a direção:** plano preservado, referências no README e instruções do repositório. Entrega documental; gameplay e versão 0.1.78 preservados.
-- [ ] **Etapa 1 — Personagens modulares:** masculino/feminino, registro de classes e troca visual piloto de arma/torso. Próxima etapa de execução.
+- [ ] **Etapa 1 — Personagens modulares:** masculino/feminino, registro de classes e troca visual piloto de arma/torso. Implementação em [avaliação técnica e humana](modular-characters/README.md); próxima etapa aguarda aprovação visual.
 - [ ] **Etapa 2 — Inventário e loot:** 24 espaços, seis slots, drops, migração e persistência pessoal.
 - [ ] **Etapa 3 — Base e economia:** nave, NPCs, mapa, cofre, poções, compras e fabricação.
 - [ ] **Etapa 4 — Progressão e ameaça:** recompensas e encontros equilibrados para o novo equipamento e consumíveis.
@@ -182,3 +186,7 @@ A abertura confirma a nova premissa fornecida: humanidade em fuga e expedição 
 - Validação: conteúdo comparado à fonte, links locais e checklist conferidos, `git diff --check` e revisão do escopo documental.
 - Versão: 0.1.78, sem incremento por documentação.
 - Limitação: nenhuma funcionalidade das etapas 1–8 é anunciada como implementada.
+
+### Entrega técnica — Etapa 1
+
+Versão 0.1.79: masculino/feminino, corpos raster e equipamento visual piloto para Guerreiro/Hunter, registro das futuras classes e biblioteca de testes. [Relatório e limites](modular-characters/README.md). Saves legados preservados; campos opcionais compatíveis no perfil cooperativo. Teste específico: [personagens modulares](https://echosofdante.vercel.app/character-playtest.html). A aprovação humana continua pendente e a Etapa 2 não foi iniciada.

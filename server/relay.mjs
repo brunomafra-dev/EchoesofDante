@@ -21,7 +21,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   server.on('upgrade', upgrade);
   const send = (ws, message) => { if (ws?.readyState === WebSocket.OPEN && ws.bufferedAmount < 131072) ws.send(JSON.stringify(message)); };
   const profile = p => p && ['warrior', 'hunter'].includes(p.classId) && typeof p.name === 'string' && p.name.trim()
-    ? { name: p.name.trim().slice(0, 24), classId: p.classId, equipment:cleanEquipment(p.equipment) } : null;
+    ? { name: p.name.trim().slice(0, 24), classId: p.classId, sex: p.sex === 'male' || p.sex === 'female' ? p.sex : p.classId === 'hunter' ? 'female' : 'male', equipment:cleanEquipment(p.equipment) } : null;
   const seat = (ws, p) => ({ ws, profile: p, token: randomBytes(24).toString('hex'), receipt: randomBytes(16).toString('hex'), total: 0, items:new Set(), timer: undefined });
   function end(room) {
     clearTimeout(room.host.timer); clearTimeout(room.guest?.timer);

@@ -21,15 +21,17 @@ export class PartyActor {
  private readonly wave: Phaser.GameObjects.Ellipse;
   private pose: SaberPose = { phase:'READY',relativeAngle:-.42,worldAngle:0,swingProgress:0 };
   private now = 0;
+ private appearanceKey='';
  constructor(scene:Phaser.Scene, readonly profile:PartyProfile, position:Vec2, maxHp:number, rank:(id:AbilityUpgradeId)=>number=()=>0) {
   this.attack=new SaberAttack(rank);this.charge=new KineticCharge(rank);
-  this.player=new Player(scene,position.x,position.y,maxHp,false,true,rank,profile.classId);
-  if(profile.classId==='hunter'){this.hunter=new HunterCombat(scene,rank);this.art=new HunterArt(scene,this.player.view,position.x,position.y);}
+  this.player=new Player(scene,position.x,position.y,maxHp,false,true,rank,profile.classId,profile.sex);
+  if(profile.classId==='hunter'){this.hunter=new HunterCombat(scene,rank);this.art=new HunterArt(scene,this.player.view,position.x,position.y,profile.sex);}
   this.label=scene.add.text(position.x,position.y-75,profile.name,{fontSize:'13px',color:'#d9e6ca',stroke:'#080e0c',strokeThickness:2}).setOrigin(.5).setDepth(10003);
   this.wave=scene.add.ellipse(0,0,10,80,0x5fe6d8,.6).setVisible(false).setDepth(14999);
  }
  update(now:number,dt:number,input:PartyInput,targets:readonly Enemy[],obstacles:readonly Obstacle[],bounds:MovementBounds|undefined,
   hit:(targets:Enemy[],damage:number,angle:number,origin:Vec2,heavy:boolean)=>void,solidObstacles:readonly Obstacle[]=obstacles):void {
+  this.setAppearance();
   this.now = now;
   if(this.player.isDead){this.hunter?.clear();this.charge.stop();this.wave.setVisible(false);return;}
   this.charge.tick(now);if(input.cancel)this.charge.stop();
@@ -65,7 +67,9 @@ export class PartyActor {
    wave:this.wave.visible?{x:this.wave.x,y:this.wave.y,rotation:this.wave.rotation,width:this.wave.displayWidth,height:this.wave.displayHeight}:undefined};
  }
  cancelCharge():void{this.charge.stop();this.hunter?.clear();this.wave.setVisible(false);}
+ private setAppearance():void {const slots=this.profile.equipment??{},key=`${slots.weapon??''}/${slots.armor??''}`;if(key===this.appearanceKey)return;this.appearanceKey=key;this.player.setEquipmentAppearance(slots);this.art?.setEquipment(slots);}
  render(pose:PartyPose,now:number,dt:number):void {
+  this.setAppearance();
   this.player.health.current=pose.hp;
   const gap=Math.hypot(pose.x-this.player.position.x,pose.y-this.player.position.y),t=gap>300?1:Math.min(1,dt*18);
   const position={x:Phaser.Math.Linear(this.player.position.x,pose.x,t),y:Phaser.Math.Linear(this.player.position.y,pose.y,t)};

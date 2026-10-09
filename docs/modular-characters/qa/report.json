@@ -1,0 +1,74 @@
+{
+  "method": "Chrome headless, real keyboard/mouse; DEV aim/position/reset arrangement. No physical hardware or human visual approval.",
+  "errors": [],
+  "cases": [
+    {
+      "classId": "warrior",
+      "sex": "male",
+      "body": "warrior-poses-side",
+      "weapon": "warrior-pilot-weapon",
+      "torso": true,
+      "position": {
+        "x": 1128.5822666666681,
+        "y": 800
+      },
+      "phase": "READY",
+      "dash": false,
+      "objects": 372,
+      "tweens": 24,
+      "fps": 54.6031494140625
+    },
+    {
+      "classId": "warrior",
+      "sex": "female",
+      "body": "warrior-female-poses-side",
+      "weapon": "warrior-pilot-weapon",
+      "torso": true,
+      "position": {
+        "x": 1124.7947166666659,
+        "y": 800
+      },
+      "phase": "READY",
+      "dash": false,
+      "objects": 372,
+      "tweens": 24,
+      "fps": 55.3824462890625
+    },
+    {
+      "classId": "hunter",
+      "sex": "male",
+      "body": "star-hunter-male-body",
+      "weapon": "hunter-pilot-weapon",
+      "torso": true,
+      "position": {
+        "x": 1194.9902333333346,
+        "y": 800
+      },
+      "phase": "READY",
+      "dash": false,
+      "objects": 384,
+      "tweens": 24,
+      "fps": 54.917724609375
+    },
+    {
+      "classId": "hunter",
+      "sex": "female",
+      "body": "star-hunter-body-v2",
+      "weapon": "hunter-pilot-weapon",
+      "torso": true,
+      "position": {
+        "x": 1194.7419333333344,
+        "y": 800
+      },
+      "phase": "READY",
+      "dash": false,
+      "objects": 384,
+      "tweens": 24,
+      "fps": 54.98162841796875
+    }
+  ],
+  "saveIsolation": true,
+  "resolutions": true,
+  "libraryNavigation": true,
+  "passed": true
+}

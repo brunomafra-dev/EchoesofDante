@@ -235,3 +235,9 @@ A passagem do Soterrado conduz à região gelada. [Arte e QA](docs/frozen-reach/
 ## Star Hunter
 
 Segunda classe disponível no menu de personagens: rifle, Momentum e feixe de luz perfurante. [Kit, arte e QA](docs/star-hunter/README.md).
+
+## Biblioteca de testes
+
+[Entrar na biblioteca](https://echosofdante.vercel.app/test-library.html). Cada sprint possui acesso direto à mudança, separado da campanha; a próxima etapa aguarda validação humana.
+
+Etapa atual: [personagens modulares](docs/modular-characters/README.md) — masculino/feminino e troca visual piloto de arma/torso.

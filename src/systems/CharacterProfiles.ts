@@ -1,5 +1,6 @@
+import { characterSex, type CharacterSex } from '../config/appearance';
 export type CharacterClass = 'warrior' | 'hunter';
-export type CharacterProfile = { id: string; name: string; classId: CharacterClass; createdAt: number };
+export type CharacterProfile = { id: string; name: string; classId: CharacterClass; sex?: CharacterSex; createdAt: number };
 const KEY = 'echoes-of-dante.characters.v1';
 const LEGACY = 'echoes-of-dante.journey.v1';
 // Boot the scene behind an empty menu without creating a saved character.
@@ -20,7 +21,8 @@ export class CharacterProfiles {
         intentionallyEmpty = raw.characters.length === 0;
         this.characters = raw.characters.filter((p: CharacterProfile) => p && typeof p.id === 'string' &&
           /^[a-zA-Z0-9-]{1,64}$/.test(p.id) && typeof p.name === 'string' && p.name.length <= 24 &&
-          (p.classId === 'warrior' || p.classId === 'hunter') && Number.isFinite(p.createdAt)).slice(0, 6);
+          (p.classId === 'warrior' || p.classId === 'hunter') && Number.isFinite(p.createdAt)).slice(0, 6)
+          .map((p:CharacterProfile) => ({ ...p, sex: characterSex(p.classId, p.sex) }));
         if (this.characters.some(p => p.id === raw.selected)) this.selected = raw.selected;
       }
     } catch { /* Local play remains available when storage is blocked. */ }
@@ -49,11 +51,11 @@ export class CharacterProfiles {
     const before = this.selected; this.selected = id;
     if (this.persist()) return true; this.selected = before; return false;
   }
-  create(name: string, classId: CharacterClass): CharacterProfile | undefined {
+  create(name: string, classId: CharacterClass, sex?: CharacterSex): CharacterProfile | undefined {
     this.initialize(); const clean = name.trim().replace(/\s+/g, ' ').slice(0, 24);
     if (!clean || this.characters.length >= 6 || (classId !== 'warrior' && classId !== 'hunter')) return undefined;
     const profile = { id: crypto.randomUUID?.() ?? `hero-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-      name: clean, classId, createdAt: Date.now() };
+      name: clean, classId, sex: characterSex(classId, sex), createdAt: Date.now() };
     this.characters.push(profile);
     if (this.persist()) return profile; this.characters.pop(); return undefined;
   }

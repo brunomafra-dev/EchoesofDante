@@ -19,16 +19,16 @@ export class WarriorArms {
   constructor(scene: Phaser.Scene, private readonly rig: Phaser.GameObjects.Container,
     body: Image, private readonly mainFore: Image, private readonly supportUpper: Image,
     private readonly supportFore: Image, private readonly hand: Phaser.GameObjects.Container,
-    private readonly supportGlove: Image, hurt: Phaser.GameObjects.Graphics) {
+    private readonly supportGlove: Image, hurt: Phaser.GameObjects.Graphics, torso: Image) {
     this.mainUpper = scene.add.image(0, 0, 'warrior-arm-kit', 0).setOrigin(0, 0.5);
     for (const image of [mainFore, supportUpper, supportFore]) image.setTexture('warrior-arm-kit');
     this.mainGlove = scene.add.image(0, 0, 'warrior-arm-kit', 2).setOrigin(0.65, 0.5).setDisplaySize(12, 14);
     supportGlove.setOrigin(0.65, 0.5).setDisplaySize(11, 13);
     hand.add(this.mainGlove); rig.add(this.mainUpper);
     this.orders = {
-      front: [body, supportUpper, supportFore, this.mainUpper, mainFore, hand, supportGlove, hurt],
-      back: [supportUpper, supportFore, this.mainUpper, mainFore, hand, supportGlove, body, hurt],
-      side: [supportUpper, supportFore, body, this.mainUpper, mainFore, hand, supportGlove, hurt],
+      front: [body, torso, supportUpper, supportFore, this.mainUpper, mainFore, hand, supportGlove, hurt],
+      back: [supportUpper, supportFore, this.mainUpper, mainFore, hand, supportGlove, body, torso, hurt],
+      side: [supportUpper, supportFore, body, torso, this.mainUpper, mainFore, hand, supportGlove, hurt],
     };
   }
 

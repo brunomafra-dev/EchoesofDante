@@ -187,7 +187,7 @@ export class ApplicationShell {
     try {
       const endpoint = await coopEndpoint();
       if (attempt !== this.connectionAttempt) return;
-      await coopSession.connect(endpoint, mode, { name: hero.name, classId: hero.classId }, this.scene.coopArea(), code ?? '');
+      await coopSession.connect(endpoint, mode, { name: hero.name, classId: hero.classId, sex: hero.sex }, this.scene.coopArea(), code ?? '');
       if (attempt !== this.connectionAttempt) return;
       this.coopBusy = false;
       this.pendingJoin = false; this.inviteApproved = false;
@@ -246,10 +246,10 @@ export class ApplicationShell {
         newCharacter: () => this.show('create'),
         play: id => this.launchCharacter(id),
         remove: id => this.deleteCharacter(id),
-        create: (name, classId) => {
+        create: (name, classId, sex) => {
           if (this.launching) return;
           this.scene?.flushForShell();
-          const hero = characterProfiles.create(name, classId);
+          const hero = characterProfiles.create(name, classId, sex);
           if (!hero) { this.status('Informe um nome. Se o armazenamento estiver bloqueado, continue com seu personagem atual.'); return; }
           this.launchCharacter(hero.id);
         },

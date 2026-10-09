@@ -10,6 +10,9 @@ import { EnergySaber } from './EnergySaber';
 import { poseWarrior } from '../experiments/quality-reference/ActorPresentation';
 import { WarriorArt } from '../visual/WarriorArt';
 import { WarriorArms } from '../visual/WarriorArms';
+import { characterSex, type CharacterSex } from '../config/appearance';
+import type { EquipmentSnapshot } from '../config/equipment';
+import { ModularTorso } from '../visual/ModularTorso';
 import { HUNTER, type PlayableClass } from '../config/classes';
 
 export type PlayerAnimationState = 'IDLE' | 'WALK' | 'ATTACK_WINDUP' | 'ATTACK_SWING' | 'ATTACK_RECOVERY' | 'DASH' | 'CHARGE' | 'CHARGE_RELEASE' | 'HURT' | 'DEAD';
@@ -33,6 +36,7 @@ export class Player {
   private torso: Phaser.GameObjects.Image;
   private paintedArt?: WarriorArt;
   private paintedArms?: WarriorArms;
+  private modularTorso?: ModularTorso;
   private supportArm: Phaser.GameObjects.Image;
   private supportUpperArm: Phaser.GameObjects.Image;
   private saberArm: Phaser.GameObjects.Image;
@@ -60,7 +64,7 @@ export class Player {
 
   constructor(private scene: Phaser.Scene, x: number, y: number, maxHp: number = PLAYER.maxHp, private referencePresentation = false,
     paintedPresentation = false, private readonly upgradeRank: (id: AbilityUpgradeId) => number = () => 0,
-    readonly classId: PlayableClass = 'warrior') {
+    readonly classId: PlayableClass = 'warrior', readonly sex: CharacterSex = characterSex(classId)) {
     this.health = new Health(maxHp);
     this.position = { x, y };
     this.shadow = scene.add.ellipse(x, y + 39, 57, 16, 0x020e14, 0.39).setDepth(y - 3);
@@ -85,14 +89,20 @@ export class Player {
     this.bodyRig = scene.add.container(0, 0, [this.torso, this.supportUpperArm, this.supportArm, this.saberArm, this.handAnchor, this.supportGlove, this.hurtOverlay]);
     this.view = scene.add.container(x, y, [this.legsRig, this.bodyRig]).setDepth(y);
     if (paintedPresentation) {
-      this.paintedArt = new WarriorArt(this.torso);
+      this.paintedArt = new WarriorArt(this.torso,sex);
       glove.setVisible(false);
+      this.modularTorso=new ModularTorso(scene,this.bodyRig,'warrior',sex);
       this.paintedArms = new WarriorArms(scene, this.bodyRig, this.torso, this.saberArm,
-        this.supportUpperArm, this.supportArm, this.handAnchor, this.supportGlove as Phaser.GameObjects.Image, this.hurtOverlay);
+        this.supportUpperArm, this.supportArm, this.handAnchor, this.supportGlove as Phaser.GameObjects.Image, this.hurtOverlay,this.modularTorso.image);
       this.leftLeg.setVisible(false); this.rightLeg.setVisible(false);
     }
     this.ring = scene.add.circle(x, y + 39, 33).setStrokeStyle(1, 0x89d9d2, 0.28).setFillStyle(0, 0).setDepth(y - 1);
     this.setAim(0);
+  }
+
+  setEquipmentAppearance(slots:EquipmentSnapshot['slots']):void {
+    this.modularTorso?.setEquipped(this.classId==='warrior'&&!!slots.armor);
+    this.weapon.setEquipped(!!slots.weapon);
   }
 
   private makeLeg(x: number): Phaser.GameObjects.Image {
@@ -116,6 +126,7 @@ export class Player {
     }
     const shoulderX = 17;
     const shoulderY = this.paintedArt?.shoulderY ?? -8;
+    this.modularTorso?.update(vertical?(Math.sin(aim)>0?'front':'back'):'side',!vertical&&Math.cos(aim)<0,shoulderY);
     const handX = 30 * x + 32 * (1 - Math.abs(x)) + x * handReach - y * sweep;
     const handY = -8 + y * (12 + handReach) + x * sweep;
     this.handAnchor.setPosition(handX, handY);

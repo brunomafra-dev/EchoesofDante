@@ -3,12 +3,13 @@ import type { SaberPose } from '../combat/Attack';
 import type { KineticPose } from '../combat/KineticCharge';
 import type { Vec2 } from '../utils/math';
 
+import { warriorBody, type CharacterSex } from '../config/appearance';
 const KEYS = ['warrior-poses-front', 'warrior-poses-side', 'warrior-poses-back'] as const;
 const WALK_FRAMES = [1, 2, 3, 0] as const;
 const SHOULDERS = [-30, -31, -31, -31, -25, -27, -19, -16] as const;
 
 export function preloadWarriorArt(scene: Phaser.Scene): void {
-  for (const key of KEYS) {
+  for (const key of [...KEYS,...(['front','side','back'] as const).map(d=>warriorBody('female',d))]) {
     if (!scene.textures.exists(key)) scene.load.spritesheet(key,
       `${import.meta.env.BASE_URL}assets/visual/characters/${key}.png`,
       { frameWidth: 256, frameHeight: 256 });
@@ -23,15 +24,17 @@ export function preloadWarriorArt(scene: Phaser.Scene): void {
 // Arms and both saber grips keep their existing continuous aiming rig.
 export class WarriorArt {
   shoulderY = -30;
-  constructor(private readonly body: Phaser.GameObjects.Image) {
-    body.setTexture(KEYS[0], 0).setDisplaySize(128, 128).setPosition(0, -15);
+  private readonly keys: readonly string[];
+  constructor(private readonly body: Phaser.GameObjects.Image, sex: CharacterSex = 'male') {
+    this.keys=[warriorBody(sex,'front'),warriorBody(sex,'side'),warriorBody(sex,'back')];
+    body.setTexture(this.keys[0], 0).setDisplaySize(128, 128).setPosition(0, -15);
   }
 
   update(aim: number, step: number, walking: boolean, travel: Vec2,
     pose: SaberPose, heavy: KineticPose, dashing: boolean): void {
     const x = Math.cos(aim), y = Math.sin(aim);
     const vertical = Math.abs(y) > Math.abs(x);
-    const key = vertical ? (y > 0 ? KEYS[0] : KEYS[2]) : KEYS[1];
+    const key = vertical ? (y > 0 ? this.keys[0] : this.keys[2]) : this.keys[1];
     let frame = 0;
     if (heavy.phase === 'CHARGING') frame = 6;
     else if (heavy.phase === 'RELEASE') frame = 5;

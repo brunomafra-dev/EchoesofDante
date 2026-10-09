@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 import { coopSession, type PartyWorld } from '../network/CoopSession';
 import { PartyExpedition, type PartyBridge } from '../network/PartyExpedition';
+import { characterSex, type CharacterSex } from '../config/appearance';
+import { preloadModularArt } from '../visual/ModularTorso';
 import { characterProfiles } from '../systems/CharacterProfiles';
 import { HUNTER, type PlayableClass } from '../config/classes';
 import { HunterCombat } from '../combat/HunterCombat';
@@ -199,10 +201,11 @@ export class GameScene extends Phaser.Scene {
 
   constructor(private readonly qualityReference: false | 'baseline' | 'reference' = false,
     private readonly originalWarrior = false, private readonly shellReady?: (scene: GameScene) => void,
-    private readonly glacierPlaytest?: { area: 'icecave' | 'icenest'; classId: 'warrior' | 'hunter' }) { super('Game'); }
+    private readonly glacierPlaytest?: { area: 'forest' | 'icecave' | 'icenest'; classId: 'warrior' | 'hunter'; sex?:CharacterSex; pilot?:boolean }) { super('Game'); }
 
   preload(): void {
     preloadHunterArt(this);
+    preloadModularArt(this);
     if (!this.textures.exists('glacier-ground')) this.load.image('glacier-ground', `${import.meta.env.BASE_URL}assets/visual/environment/glacier-ground.webp`);
     for (const [key, file] of [['vesper-motion', 'vesper-motion'], ['dante-iceCarapace-motion', 'ice-carapace-motion']]) if (!this.textures.exists(key)) this.load.spritesheet(key, `${import.meta.env.BASE_URL}assets/visual/characters/${file}.png`, { frameWidth: 256, frameHeight: 256 });
     if (!this.textures.exists('frost-ground')) this.load.image('frost-ground', `${import.meta.env.BASE_URL}assets/visual/environment/frost-ground.webp`);
@@ -370,11 +373,12 @@ export class GameScene extends Phaser.Scene {
     this.returnFromFrost = false;
     this.glacierArrival = undefined;
     this.player = new Player(this, entry.x, entry.y, this.characterMaxHp, this.qualityReference === 'reference',
-      this.qualityReference !== 'baseline' && !this.originalWarrior, id => this.progression.upgradeRank(id), this.classId);
+      this.qualityReference !== 'baseline' && !this.originalWarrior, id => this.progression.upgradeRank(id), this.classId, characterSex(this.classId,this.glacierPlaytest?this.glacierPlaytest.sex:this.qualityReference?undefined:characterProfiles.active.sex));
     if (this.classId === 'hunter') {
       this.hunter = new HunterCombat(this, id => this.progression.upgradeRank(id));
-      this.hunterArt = new HunterArt(this, this.player.view, entry.x, entry.y);
+      this.hunterArt = new HunterArt(this, this.player.view, entry.x, entry.y,this.player.sex);
     }
+    this.updateEquipmentAppearance();
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
     this.transferHp = undefined;
     this.kineticWave = this.add.graphics().setDepth(14999);
@@ -1754,6 +1758,12 @@ export class GameScene extends Phaser.Scene {
 
   private restoreJourney(): void {
     if (this.glacierPlaytest) {
+      if(this.glacierPlaytest.area==='forest'){
+        this.area='forest';
+        for(const id of ['forest-armor','forest-emitter'] as const)this.equipment.grant(id);
+        if(this.glacierPlaytest.pilot){this.equipment.equip('armor','forest-armor');this.equipment.equip('weapon','forest-emitter');}
+        return;
+      }
       // Session-only setup: never load, select, create or overwrite real heroes.
       for (const key of JOURNEY_FLAGS) this[key] = !key.startsWith('vesper');
       this.icecaveSignalSeen = this.glacierPlaytest.area === 'icenest';
@@ -1792,6 +1802,8 @@ export class GameScene extends Phaser.Scene {
     return available;
   }
 
+  private updateEquipmentAppearance():void {const slots=this.equipment.snapshot().slots;this.player.setEquipmentAppearance(slots);this.hunterArt?.setEquipment(slots);}
+
   openEquipment():void {
     if(this.player.isDead||this.equipmentDialog.isOpen)return;
     this.pauseForModal();this.equipmentDialog.open();
@@ -1802,7 +1814,7 @@ export class GameScene extends Phaser.Scene {
     const saved=coopSession.role==='guest'?this.journey.saveEquipment(this.equipment.snapshot()):this.saveProgress();
     if(!saved&&!this.glacierPlaytest&&!this.qualityReference){this.equipment.restore(before);return false;}
     this.player.health.max=this.characterMaxHp;this.player.health.current=Math.min(this.player.hp,this.player.maxHp);
-    coopSession.updateEquipment(this.equipment.snapshot().slots);return true;
+    this.updateEquipmentAppearance();coopSession.updateEquipment(this.equipment.snapshot().slots);return true;
   }
 
   private dropEquipment(enemy:Enemy):void {

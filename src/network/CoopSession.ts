@@ -8,7 +8,7 @@ import { validEquipment, type EquipmentId, type EquipmentSnapshot } from '../con
 import type { LootPose } from '../systems/EquipmentDrops';
 export const COOP_AREAS: readonly JourneyArea[] = ['forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest'];
 const CONNECTIONS: Partial<Record<JourneyArea, readonly JourneyArea[]>> = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave'] };
-export type PartyProfile = {name: string; classId: PlayableClass;equipment?:EquipmentSnapshot['slots']};
+export type PartyProfile = {name: string; classId: PlayableClass;sex?:import('../config/appearance').CharacterSex;equipment?:EquipmentSnapshot['slots']};
 export type PartyInput = {x:number;y:number;aim:number;attack:boolean;dash:boolean;charge:boolean;held:boolean;release:boolean;cancel:boolean;interact:boolean;restart:boolean};
 export const NO_INPUT: PartyInput={x:0,y:0,aim:0,attack:false,dash:false,charge:false,held:false,release:false,cancel:false,interact:false,restart:false};
 export type PartyPose={x:number;y:number;aim:number;hp:number;maxHp:number;dead:boolean;dash:boolean;phase:string;level:number;firing:boolean;dashReady?:number;chargeReady?:number;momentum?:number;beam?:HunterBeamPose;wave?:{x:number;y:number;rotation:number;width:number;height:number}};

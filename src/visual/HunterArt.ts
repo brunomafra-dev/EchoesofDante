@@ -1,9 +1,12 @@
 ﻿import Phaser from 'phaser';
 import type { KineticPose } from '../combat/KineticCharge';
+import { hunterBody, type CharacterSex } from '../config/appearance';
+import { ModularTorso } from './ModularTorso';
+import type { EquipmentSnapshot } from '../config/equipment';
 import { HunterWeapon } from './HunterWeapon';
 
 export function preloadHunterArt(scene: Phaser.Scene): void {
-  for (const key of ['star-hunter-body-v2', 'star-hunter-weapon-v2']) {
+  for (const key of ['star-hunter-body-v2', 'star-hunter-male-body', 'star-hunter-weapon-v2']) {
     if (!scene.textures.exists(key)) scene.load.spritesheet(key,
       `${import.meta.env.BASE_URL}assets/visual/characters/${key}.png`, { frameWidth: 256, frameHeight: 256 });
   }
@@ -16,16 +19,19 @@ export function preloadHunterArt(scene: Phaser.Scene): void {
 export class HunterArt {
   private readonly body: Phaser.GameObjects.Image;
   private readonly weapon: HunterWeapon;
+  private readonly torso: ModularTorso;
   private travel = 0;
   private previous: { x: number; y: number };
-  constructor(scene: Phaser.Scene, private view: Phaser.GameObjects.Container, x: number, y: number) {
+  constructor(scene: Phaser.Scene, private view: Phaser.GameObjects.Container, x: number, y: number, sex: CharacterSex = 'female') {
     view.list.forEach(part => (part as unknown as Phaser.GameObjects.Components.Visible).setVisible(false));
-    this.body = scene.add.image(0, -19, 'star-hunter-body-v2', 0).setDisplaySize(128, 128);
+    this.body = scene.add.image(0, -19, hunterBody(sex), 0).setDisplaySize(128, 128);
     view.add(this.body);
-    this.weapon = new HunterWeapon(scene, view, this.body);
+    this.torso = new ModularTorso(scene,view,'hunter',sex);
+    this.weapon = new HunterWeapon(scene, view, this.body,this.torso.image);
     this.previous = { x, y };
     this.update(x, y, 0, false);
   }
+  setEquipment(slots:EquipmentSnapshot['slots']):void { this.torso.setEquipped(!!slots.armor);this.weapon.setEquipped(!!slots.weapon); }
   update(x: number, y: number, aim: number, firing: boolean, dashing = false,
     heavy: Pick<KineticPose, 'phase' | 'level'> = { phase: 'READY', level: 0 }): void {
     const dx = x - this.previous.x, dy = y - this.previous.y, moved = Math.hypot(dx, dy);
@@ -39,6 +45,7 @@ export class HunterArt {
     const frame = walking ? [1, 2, 3, 0][Math.floor(phase * 4)] : 0;
     this.view.setRotation(0);
     this.body.setFrame(row * 4 + frame).setFlipX(flip);
+    this.torso.update(row===0?'front':row===1?'back':'side',flip,-37);
     this.weapon.update(aim, row, firing, heavy);
   }
 }

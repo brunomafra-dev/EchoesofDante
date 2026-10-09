@@ -9,6 +9,7 @@ export class EnergySaber {
   readonly view: Phaser.GameObjects.Container;
   // Local handle point behind the dominant hand; both grips rotate with this view.
   readonly supportGripX = -10;
+  private art?: Phaser.GameObjects.Image;
   private indicator: Phaser.GameObjects.Graphics;
   private trail: Phaser.GameObjects.Graphics;
 
@@ -17,6 +18,7 @@ export class EnergySaber {
       // Pixel-registered grip: the two glove pivots remain (0,0) and (-10,0).
       const art = scene.add.image(0, 0, 'warrior-saber-painted').setOrigin(78 / 256, 34 / 64).setDisplaySize(128, 32);
       this.view = scene.add.container(0, 0, [art]);
+      this.art=art;
     } else {
       const art = scene.add.graphics();
       // The grip, crossguard, emitter and broad tapered blade are distinct at game scale.
@@ -40,6 +42,8 @@ export class EnergySaber {
     this.indicator = scene.add.graphics();
     this.trail = scene.add.graphics();
   }
+
+  setEquipped(equipped:boolean):void {const key=equipped?'warrior-pilot-weapon':'warrior-saber-painted';if(this.art&&this.art.texture.key!==key)this.art.setTexture(key).setDisplaySize(128,32);}
 
   render(position: Vec2, grip: Vec2, facing: number, bodyLean: number, pose: SaberPose, heavy: KineticPose, dashing: boolean): void {
     const heavyAngle = heavy.phase === 'CHARGING' ? -0.9 : -0.9 + 1.8 * heavy.swingProgress;

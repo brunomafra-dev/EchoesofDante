@@ -1,5 +1,6 @@
 import { characterProfiles, type CharacterClass } from '../systems/CharacterProfiles';
-import { CLASS_NAMES } from '../config/classes';
+import { CLASS_NAMES, CLASS_REGISTRY } from '../config/classes';
+import { characterSex, SEX_NAMES, type CharacterSex } from '../config/appearance';
 import { PROGRESSION } from '../config/progression';
 import { CharacterShowcase } from './CharacterShowcase';
 import './character-selection.css';
@@ -8,7 +9,7 @@ const identity = {
   warrior: { role: 'CORPO A CORPO · RESISTÊNCIA', fantasy: 'Entre na batalha. Domine o espaço próximo.', kit: 'Sabre de energia · Esquiva do vazio · Carga cinética' },
   hunter: { role: 'DISTÂNCIA · PRECISÃO', fantasy: 'Controle a distância. Encontre sua janela de disparo.', kit: 'Rifle de pulso · Passo de fase · Feixe perfurante' },
 };
-type Actions = { back: () => void; create: (name: string, classId: CharacterClass) => void; play: (id: string) => void; remove: (id: string) => void; newCharacter: () => void };
+type Actions = { back: () => void; create: (name: string, classId: CharacterClass, sex: CharacterSex) => void; play: (id: string) => void; remove: (id: string) => void; newCharacter: () => void };
 function button(text: string, id: string, action: () => void): HTMLButtonElement {
   const el = document.createElement('button'); el.type = 'button'; el.textContent = text; el.dataset.shell = id;
   el.addEventListener('click', action); return el;
@@ -38,8 +39,8 @@ export class CharacterSelection {
     root.append(header);
     if (mode === 'create') this.creation(actions); else this.characters(actions);
   }
-  private stage(classId: CharacterClass): { stage: HTMLElement; preview: CharacterShowcase } {
-    const stage = element('div', 'character-stage'), preview = new CharacterShowcase(classId);
+  private stage(classId: CharacterClass, sex = characterSex(classId)): { stage: HTMLElement; preview: CharacterShowcase } {
+    const stage = element('div', 'character-stage'), preview = new CharacterShowcase(classId, sex);
     stage.append(element('div', 'stage-light'), element('div', 'stage-plinth'), preview.canvas, preview.caption);
     this.previews.push(preview); return { stage, preview };
   }
@@ -53,28 +54,44 @@ export class CharacterSelection {
     const label = element('label', 'selection-name', 'Nome do personagem');
     const input = document.createElement('input'); input.name = 'character-name'; input.maxLength = 24; input.placeholder = 'Seu nome em Dante'; input.autocomplete = 'off'; input.disabled = true; label.append(input);
     let selected: CharacterClass | undefined;
-    const create = button(this.joiningRoom ? 'CRIAR E ENTRAR NA SALA →' : 'COMEÇAR EXPEDIÇÃO →', 'create', () => { if (selected) actions.create(input.value, selected); });
+    const sexLabel = element('label', 'selection-sex', 'Sexo');
+    const sexSelect = document.createElement('select'); sexSelect.name = 'character-sex'; sexSelect.disabled = true;
+    for(const sex of ['male','female'] as const){const option=document.createElement('option');option.value=sex;option.textContent=SEX_NAMES[sex];sexSelect.append(option);}
+    const cycleSex=button('ALTERAR SEXO','change-sex',()=>{sexSelect.value=sexSelect.value==='male'?'female':'male';sexSelect.dispatchEvent(new Event('change'));});cycleSex.disabled=true;
+    sexLabel.append(sexSelect,cycleSex);
+    let sexChosen = false;
+    const refreshPreview = () => {
+      if(!selected)return;
+      const card=gallery.querySelector<HTMLElement>(`[data-class="${selected}"]`)!;
+      const old=this.previews.find(p=>p.classId===selected); old?.destroy();
+      if(old)this.previews.splice(this.previews.indexOf(old),1);
+      const next=this.stage(selected,sexSelect.value as CharacterSex);card.querySelector('.character-stage')!.replaceWith(next.stage);next.preview.play();
+    };
+    sexSelect.addEventListener('change',()=>{sexChosen=true;refreshPreview();});
+    const create = button(this.joiningRoom ? 'CRIAR E ENTRAR NA SALA →' : 'COMEÇAR EXPEDIÇÃO →', 'create', () => { if (selected) actions.create(input.value, selected, sexSelect.value as CharacterSex); });
     create.className = 'selection-primary'; create.disabled = true;
     input.addEventListener('input', () => create.disabled = !selected || !input.value.trim());
     input.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.isComposing && !create.disabled) { event.preventDefault(); create.click(); } });
     for (const classId of ['warrior', 'hunter'] as const) {
       const card = button('', `choose-${classId}`, () => {
         selected = classId;
+        sexSelect.disabled=false;cycleSex.disabled=false;if(!sexChosen)sexSelect.value=characterSex(classId);
         for (const b of Array.from(gallery.querySelectorAll<HTMLButtonElement>('[data-class]'))) b.setAttribute('aria-pressed', String(b.dataset.class === classId));
         for (const p of this.previews) p.classId === classId ? p.play() : p.stop();
         selectedTitle.textContent = CLASS_NAMES[classId]; description.textContent = identity[classId].fantasy; kit.textContent = identity[classId].kit;
         input.disabled = false; replay.disabled = false; create.disabled = !input.value.trim();
+        refreshPreview();
       });
       card.className = 'class-display'; card.dataset.class = classId; card.setAttribute('aria-pressed', 'false');
       card.setAttribute('aria-label', `Selecionar ${CLASS_NAMES[classId]}`);
       card.append(this.stage(classId).stage, element('strong', 'class-name', CLASS_NAMES[classId]), element('small', 'class-role', identity[classId].role)); gallery.append(card);
     }
-    for (const [name, subtitle] of [['Manipulador Astral', 'CONTROLE ELEMENTAL'], ['Espaço futuro', 'UMA NOVA IDENTIDADE']]) {
+    for (const {name,role:subtitle} of [CLASS_REGISTRY.astral,CLASS_REGISTRY.xenobinder]) {
       const card = button('', 'future-class', () => {}); card.className = 'class-display class-future'; card.disabled = true;
       const stage = element('div', 'character-stage'); stage.append(element('div', 'stage-light'), element('div', 'stage-plinth'), element('span', 'stage-empty', '◇'), element('span', 'showcase-caption', 'EM BREVE'));
       card.append(stage, element('strong', 'class-name', name), element('small', 'class-role', subtitle)); gallery.append(card);
     }
-    const footer = element('div', 'creation-footer'), controls = element('div', 'selection-controls'); controls.append(label, create);
+    const footer = element('div', 'creation-footer'), controls = element('div', 'selection-controls'); controls.append(sexLabel,label, create);
     const detail = element('div', 'selection-detail'); detail.append(info, replay);
     footer.append(detail, controls); this.root.append(gallery, footer);
   }
@@ -95,7 +112,7 @@ export class CharacterSelection {
     const show = (id: string) => {
       const hero = characterProfiles.list.find(h => h.id === id); if (!hero) return;
       selected = id; current?.destroy(); this.previews.length = 0;
-      const entry = this.stage(hero.classId); current = entry.preview; display.replaceChildren(entry.stage, details, tools, play);
+      const entry = this.stage(hero.classId,characterSex(hero.classId,hero.sex)); current = entry.preview; display.replaceChildren(entry.stage, details, tools, play);
       details.replaceChildren(element('h3', '', hero.name), element('p', '', CLASS_NAMES[hero.classId]), element('small', 'selection-kit', identity[hero.classId].kit));
       for (const b of Array.from(list.querySelectorAll<HTMLButtonElement>('button'))) b.setAttribute('aria-pressed', String(b.dataset.shell === `character-${id}`));
       current.play();

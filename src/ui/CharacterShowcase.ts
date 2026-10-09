@@ -1,5 +1,6 @@
 import type { CharacterClass } from '../systems/CharacterProfiles';
 import { hunterRiflePose } from '../visual/HunterRiflePose';
+import { characterSex, hunterBody, warriorBody, type CharacterSex } from '../config/appearance';
 
 type Part = { frame: number; width: number; height: number; axisY?: number };
 const images = new Map<string, Promise<HTMLImageElement>>();
@@ -37,15 +38,17 @@ export class CharacterShowcase {
   private pendingDemo = false;
   private pendingManual = false;
   private ready = false;
-  constructor(readonly classId: CharacterClass) {
+  private readonly bodyName: string;
+  constructor(readonly classId: CharacterClass, readonly sex: CharacterSex = characterSex(classId)) {
+    this.bodyName = `${classId==='hunter'?hunterBody(sex):warriorBody(sex,'front')}.png`;
     this.canvas.className = 'showcase-canvas'; this.canvas.setAttribute('role', 'img');
     this.canvas.setAttribute('aria-label', classId === 'hunter' ? 'Star Hunter com rifle de pulso' : 'Guerreiro Galáctico com sabre de energia');
     const ratio = Math.min(2, window.devicePixelRatio || 1);
     this.canvas.width = 320 * ratio; this.canvas.height = 360 * ratio;
     this.ctx = this.canvas.getContext('2d')!; this.ctx.scale(ratio, ratio);
     this.caption.className = 'showcase-caption'; this.caption.textContent = 'PREPARADO PARA DANTE';
-    const names = classId === 'hunter' ? ['star-hunter-body-v2.png', 'star-hunter-weapon-v2.png'] :
-      ['warrior-poses-front.png', 'warrior-arm-kit.png', 'warrior-saber-painted.png'];
+    const names = classId === 'hunter' ? [this.bodyName, 'star-hunter-weapon-v2.png'] :
+      [this.bodyName, 'warrior-arm-kit.png', 'warrior-saber-painted.png'];
     void Promise.all(names.map(async name => this.loaded.set(name, await image(name)))).then(async () => {
       if (this.disposed) return;
       if (classId === 'hunter') this.parts = await rifleParts();
@@ -108,7 +111,7 @@ export class CharacterShowcase {
     const c = this.ctx, aim = .22, pose = hunterRiflePose(aim), cos = Math.cos(aim), sin = Math.sin(aim);
     const frame = dash ? 1 + Math.min(2, Math.floor((t - 1.15) * 7)) : 0;
     this.canvas.dataset.facing = 'front';
-    this.sprite('star-hunter-body-v2.png', frame, 4, 256, -64, -83, 128, 128);
+    this.sprite(this.bodyName, frame, 4, 256, -64, -83, 128, 128);
     if (!this.parts.length) return;
     const grip = (along: number, across: number) => ({ x: pose.x + along * cos - across * sin, y: pose.y + along * sin + across * cos });
     const main = grip(-4, 9), support = grip(16, 7);
@@ -131,7 +134,7 @@ export class CharacterShowcase {
   }
   private warrior(t: number, strike: boolean, dash: boolean, charge: boolean, release: boolean): void {
     const c = this.ctx, frame = dash ? 7 : charge ? 6 : release ? 5 : strike ? t < .45 ? 4 : 5 : 0;
-    this.sprite('warrior-poses-front.png', frame, 4, 256, -64, -79, 128, 128);
+    this.sprite(this.bodyName, frame, 4, 256, -64, -79, 128, 128);
     const angle = strike ? -1.6 + Math.max(0, t - .45) * 4.5 : release ? -.2 : charge ? -1.6 : -1.1;
     const x = strike ? 20 : 15, y = charge ? -24 : -17;
     const sx = x - 10 * Math.cos(angle), sy = y - 10 * Math.sin(angle);

@@ -1,0 +1,86 @@
+{
+  "warrior-female-poses-back.png": {
+    "dimensions": [
+      1024,
+      512
+    ],
+    "bytes": 248589
+  },
+  "warrior-female-poses-front.png": {
+    "dimensions": [
+      1024,
+      512
+    ],
+    "bytes": 263343
+  },
+  "warrior-female-poses-side.png": {
+    "dimensions": [
+      1024,
+      512
+    ],
+    "bytes": 238126
+  },
+  "hunter-pilot-torso-back.png": {
+    "dimensions": [
+      173,
+      224
+    ],
+    "bytes": 79805
+  },
+  "hunter-pilot-torso-front.png": {
+    "dimensions": [
+      177,
+      224
+    ],
+    "bytes": 78671
+  },
+  "hunter-pilot-torso-side.png": {
+    "dimensions": [
+      143,
+      224
+    ],
+    "bytes": 67357
+  },
+  "hunter-pilot-weapon.png": {
+    "dimensions": [
+      256,
+      83
+    ],
+    "bytes": 30717
+  },
+  "warrior-pilot-torso-back.png": {
+    "dimensions": [
+      203,
+      224
+    ],
+    "bytes": 99357
+  },
+  "warrior-pilot-torso-front.png": {
+    "dimensions": [
+      192,
+      224
+    ],
+    "bytes": 97818
+  },
+  "warrior-pilot-torso-side.png": {
+    "dimensions": [
+      145,
+      224
+    ],
+    "bytes": 67143
+  },
+  "warrior-pilot-weapon.png": {
+    "dimensions": [
+      256,
+      64
+    ],
+    "bytes": 12151
+  },
+  "star-hunter-male-body.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 450484
+  }
+}
