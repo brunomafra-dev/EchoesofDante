@@ -172,8 +172,8 @@ Decisão do usuário em 09/10/2026: cada sprint deve terminar com um link espec�
 
 - [x] **Etapa 0 — Arquivar a direção:** plano preservado, referências no README e instruções do repositório. Entrega documental; gameplay e versão 0.1.78 preservados.
 - [x] **Etapa 1 — Personagens modulares:** masculino/feminino, roupa, equipamento e junção dos braços aprovados pelo usuário após a versão 0.1.82 (“bem melhor”).
-- [ ] **Etapa 2 — Inventário e loot:** implementação técnica 0.1.83: 24 espaços, sete slots, drops pessoais, migração e persistência. [Relatório/teste](inventory-loot/README.md). Aguardando aprovação humana antes da etapa 3.
-- [ ] **Etapa 3 — Base e economia:** nave, NPCs, mapa, cofre, poções, compras e fabricação.
+- [x] **Etapa 2 — Inventário e loot:** 24 espaços, sete slots, drops pessoais, migração e persistência; miniaturas corrigidas em 0.1.84 e aprovadas pelo usuário (“Muito bom”). [Relatório/teste](inventory-loot/README.md).
+- [ ] **Etapa 3 — Base e economia:** entrega técnica 0.1.85: nave, NPCs, mapa, cofre, créditos/materiais, poções, venda/desmontagem e fabricação. [Relatório/teste](base-economy/README.md). Aguardando playtest humano antes da etapa 4.
 - [ ] **Etapa 4 — Progressão e ameaça:** recompensas e encontros equilibrados para o novo equipamento e consumíveis.
 - [ ] **Etapa 5 — Astral:** quatro elementos alternáveis, Energia Astral e campanha solo/cooperativa.
 - [ ] **Etapa 6 — Vinculador:** companheiro, Vínculo e simbiose, com autonomia no solo.
@@ -223,3 +223,9 @@ O usuário aprovou a junção dos braços (“bem melhor”) e autorizou a etapa
 [Relatório e evidências](inventory-loot/README.md) · [Laboratório reservado](https://echosofdante.vercel.app/inventory-playtest.html).
 
 **Aguardar validação humana da mochila/loot antes da etapa 3.** As pendências anteriores da etapa 1 são registros históricos, superados pela aprovação explícita.
+
+### Entrega técnica da etapa 3 — 0.1.85
+
+Etapa 2 aprovada pelo usuário, que autorizou a base/economia. Base caminhável conectada à Floresta, três serviços pessoais, receitas garantidas, moeda/materiais regionais, cofre 48, poções e destinos descobertos. Protocolo cooperativo 4 com recibos e cura autoritativa. Custos iniciais conservadores; dificuldade e penalidade de morte permanecem para a etapa 4.
+
+[Teste reservado](https://echosofdante.vercel.app/base-playtest.html?v=0.1.85) · [Relatório](base-economy/README.md). **Aguardar aprovação humana antes de iniciar a etapa 4.**

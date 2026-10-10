@@ -5,17 +5,18 @@ import type { HunterBeamPose } from '../visual/HunterBeam';
 import { LocalJourney } from '../systems/LocalJourney';
 import type { BossPose } from './BossPresentation';
 import { validEquipment, validItem, type InventoryItem, type EquipmentSnapshot } from '../config/equipment';
+import type {ResourceDrop} from '../systems/ResourceDrops';
 import type { LootPose } from '../systems/EquipmentDrops';
-export const COOP_AREAS: readonly JourneyArea[] = ['forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest'];
+export const COOP_AREAS: readonly JourneyArea[] = ['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest'];
 const CONNECTIONS: Partial<Record<JourneyArea, readonly JourneyArea[]>> = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave'] };
-export type PartyProfile = {name: string; classId: PlayableClass;sex?:import('../config/appearance').CharacterSex;bagFree?:number;equipment?:EquipmentSnapshot['slots']};
+export type PartyProfile = {name: string; classId: PlayableClass;sex?:import('../config/appearance').CharacterSex;bagFree?:number;potions?:number;equipment?:EquipmentSnapshot['slots']};
 export type PartyInput = {x:number;y:number;aim:number;attack:boolean;dash:boolean;charge:boolean;held:boolean;release:boolean;cancel:boolean;interact:boolean;restart:boolean};
 export const NO_INPUT: PartyInput={x:0,y:0,aim:0,attack:false,dash:false,charge:false,held:false,release:false,cancel:false,interact:false,restart:false};
 export type PartyPose={x:number;y:number;aim:number;hp:number;maxHp:number;dead:boolean;dash:boolean;phase:string;level:number;firing:boolean;dashReady?:number;chargeReady?:number;momentum?:number;beam?:HunterBeamPose;wave?:{x:number;y:number;rotation:number;width:number;height:number}};
 export type CreatureLayer={texture:string;frame:string;x:number;y:number;width:number;height:number;rotation:number;flip:boolean;depth:number;originX:number;originY:number};
 export type CreaturePose={id:number;species:string;x:number;y:number;hp:number;maxHp:number;radius:number;texture:string;frame:string;flip:boolean;size:number;rotation:number;
  warning:boolean;angle:number;warningX:number;warningY:number;warningWidth:number;warningHeight:number;layers?:CreatureLayer[];projectile?:{x:number;y:number;rotation:number}};
-export type PartyWorld={area:JourneyArea;time:number;progression:ProgressionSnapshot;flags:JourneyFlags;host:PartyPose;partner?:PartyPose;enemies:CreaturePose[];boss?:BossPose;signalPortal?:boolean;loot?:LootPose[];lootAwarded?:InventoryItem[];message:string;prompt:boolean;action:string;shots:{x:number;y:number;rotation:number;friendly?:boolean}[]};
+export type PartyWorld={area:JourneyArea;time:number;progression:ProgressionSnapshot;flags:JourneyFlags;host:PartyPose;partner?:PartyPose;enemies:CreaturePose[];boss?:BossPose;signalPortal?:boolean;loot?:LootPose[];lootAwarded?:InventoryItem[];resources?:ResourceDrop[];resourceAwarded?:ResourceDrop[];potionUsed?:number;returnStation?:{x:number;y:number};visited?:JourneyArea[];message:string;prompt:boolean;action:string;shots:{x:number;y:number;rotation:number;friendly?:boolean}[]};
 // One connection across scene restarts. The relay grants roles; only host worlds are accepted.
 export class CoopSession {
  role:'offline'|'connecting'|'host'|'guest'='offline';
@@ -28,10 +29,11 @@ export class CoopSession {
  private url='';private token='';private sequence=0;private retryAt=0;
  private retryTimer?:ReturnType<typeof setTimeout>;
  private timeout?:ReturnType<typeof setTimeout>;
- private rewards=new LocalJourney();private receipt='';private rewardTotal=0;
+ private rewards=new LocalJourney();private receipt='';private rewardTotal=0;private rewardResources={credits:0,materials:[0,0,0],used:0};
+ private potionRequest=false;private baseRequest=false;private healRequest=false;
  readonly lootAwarded=new Map<string,InventoryItem>();
  personalItems:InventoryItem[]=[];
- canTravel(from:JourneyArea,to:JourneyArea):boolean{return this.connected && !!CONNECTIONS[from]?.includes(to);}
+ canTravel(from:JourneyArea,to:JourneyArea):boolean{return this.connected && (to==='base'||from==='base'||!!CONNECTIONS[from]?.includes(to));}
  travel(from:JourneyArea,to:JourneyArea):boolean {
   if(this.role!=='host'||!this.canTravel(from,to)||this.travelling)return false;
   this.travelling=true;this.pendingTravel=to;this.input={...NO_INPUT};this.inputAt=0;
@@ -44,9 +46,9 @@ export class CoopSession {
   if(location.protocol==='https:'&&target.protocol!=='wss:')return Promise.reject(new Error('Esta página segura precisa de um servidor wss://.'));
   if(mode==='join'&&!/^[A-F0-9]{10}$/.test(code.replace(/\s/g,'').toUpperCase()))return Promise.reject(new Error('O código da sala tem 10 letras/números. Confira com o anfitrião.'));
   this.url=target.href;this.role='connecting';this.endedMessage='';this.message='Conectando à expedição…';this.personalXpGained=0;this.sequence=0;this.epoch=0;this.rewards=new LocalJourney();this.changed();
-  this.lootAwarded.clear();this.personalItems=[];this.receipt='';this.rewardTotal=0;this.rewardSaved=true;
+  this.lootAwarded.clear();this.personalItems=[];this.receipt='';this.rewardTotal=0;this.rewardSaved=true;this.rewardResources={credits:0,materials:[0,0,0],used:0};
   const inventory=validEquipment(this.rewards.load()?.equipment);
-  profile={...profile,equipment:inventory.slots,bagFree:24-(inventory.items!.length-Object.keys(inventory.equipped!).length)};
+  profile={...profile,potions:this.rewards.load()?.economy?.potions??0,equipment:inventory.slots,bagFree:24-(inventory.items!.length-Object.keys(inventory.equipped!).length)};
   return new Promise((resolve,reject)=>this.open({type:mode,profile,area,code},false,resolve,reject));
  }
  private open(request:object,retry:boolean,resolve:()=>void=()=>{},reject:(reason:Error)=>void=()=>{}):void {
@@ -57,7 +59,7 @@ export class CoopSession {
    if(this.socket!==ws)return;
    let m;try{m=JSON.parse(event.data);}catch{return;}
    if(m.type==='joined'&&(m.role==='host'||m.role==='guest')){
-    if(m.protocol!==3){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização da campanha. Sua jornada solo continua disponível.');reject(new Error(this.message));return;}
+    if(m.protocol!==4){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização da campanha. Sua jornada solo continua disponível.');reject(new Error(this.message));return;}
     joined=true;clearTimeout(this.timeout);this.role=m.role;this.connected=true;this.token=m.token;this.code=m.code;this.epoch=m.epoch;
     this.peer=m.peer;this.peerConnected=m.peerConnected===true;this.input={...NO_INPUT};this.inputAt=0;this.world=undefined;
     this.area=m.area;this.travelling=false;
@@ -67,7 +69,7 @@ export class CoopSession {
     this.message=retry?'Conexão recuperada.':m.role==='host'&&!m.peer?'Sala criada. Envie o link para convidar seu amigo.':'Dupla pronta. O XP ganho fica com seu personagem.';
     this.hostPaused=m.paused===true;
     if(this.role==='host')this.setMenu(this.localMenu);
-    if(this.role==='guest')this.credit(m.receipt,m.total,m.items);
+    if(this.role==='guest')this.credit(m.receipt,m.total,m.items,m.resources);
     this.changed();resolve();
    }else if(m.type==='error'){
     this.message=String(m.message);
@@ -84,11 +86,12 @@ export class CoopSession {
    }else if(m.type==='travel'&&m.epoch>this.epoch&&COOP_AREAS.includes(m.area)){
     this.epoch=m.epoch;this.area=m.area;this.pendingTravel=undefined;this.world=undefined;this.input={...NO_INPUT};this.inputAt=0;this.travelling=false;
     this.message='Travessia em dupla · aguardando a nova região.';this.changed();
+   }else if(m.type==='service-request'&&this.role==='host'){if(m.action==='potion')this.potionRequest=true;else if(m.action==='return')this.baseRequest=true;else if(m.action==='heal')this.healRequest=true;
    }else if(m.type==='input'&&this.role==='host'&&m.epoch===this.epoch){
     for(const key of ['dash','charge','release','cancel','interact','restart'] as const)m.input[key] ||= this.input[key];
     this.input=m.input;this.inputAt=performance.now();
    }else if(m.type==='world'&&this.role==='guest'&&m.epoch===this.epoch&&m.world&&COOP_AREAS.includes(m.world.area)&&Array.isArray(m.world.enemies)&&m.world.enemies.length<=32){
-    this.world=m.world;this.worldAt=performance.now();this.credit(m.receipt,m.total,m.items);
+    this.world=m.world;this.worldAt=performance.now();this.credit(m.receipt,m.total,m.items,m.resources);
    }else if(m.type==='ended'||m.type==='replaced')this.fail(m.type==='ended'?'O dono da sala saiu do jogo.':String(m.message));
   };
   ws.onerror=()=>{if(!retry&&!joined&&this.socket===ws){this.fail('O cooperativo está indisponível nesta conexão. Tente novamente em alguns segundos; sua jornada solo continua disponível.');reject(new Error(this.message));}};
@@ -105,18 +108,24 @@ export class CoopSession {
   if(performance.now()>=this.retryAt){this.fail('A reconexão expirou. Entre novamente com o código da sala.');return;}
   this.retryTimer=setTimeout(()=>this.open({type:'resume',code:this.code,token:this.token},true),750);
  }
- private credit(receipt:string,total:number,items:unknown=this.personalItems):void {
+ private credit(receipt:string,total:number,items:unknown=this.personalItems,resources=this.rewardResources):void {
   if(typeof receipt!=='string'||!Number.isSafeInteger(total)||total<0)return;
   const valid=Array.isArray(items)?items.filter(validItem).slice(0,512):[];
-  if(this.rewardSaved&&this.receipt===receipt&&this.rewardTotal===total&&JSON.stringify(valid)===JSON.stringify(this.personalItems))return;
+  if(this.rewardSaved&&this.receipt===receipt&&this.rewardTotal===total&&JSON.stringify(valid)===JSON.stringify(this.personalItems)&&JSON.stringify(resources)===JSON.stringify(this.rewardResources))return;
   this.receipt=receipt;this.rewardTotal=total;
-  this.personalItems=valid;
-  this.rewardSaved=total===0&&valid.length===0||this.rewards.creditCoopXp(receipt,total,valid);
+  this.personalItems=valid;this.rewardResources=resources??{credits:0,materials:[0,0,0],used:0};
+  this.rewardSaved=total===0&&valid.length===0&&this.rewardResources.credits===0&&this.rewardResources.used===0&&this.rewardResources.materials.every(v=>v===0)||this.rewards.creditCoopXp(receipt,total,valid,this.rewardResources);
   this.personalXpGained=total;
  }
- updateEquipment(slots:EquipmentSnapshot['slots'],bagFree=24):void {
-  if(this.connected)this.socket?.send(JSON.stringify({type:'equipment',equipment:slots,bagFree}));
+ updateEquipment(slots:EquipmentSnapshot['slots'],bagFree=24,potions?:number):void {
+  if(this.connected)this.socket?.send(JSON.stringify({type:'equipment',equipment:slots,bagFree,potions:potions??this.rewards.load()?.economy?.potions??0}));
  }
+ requestPotion():void{if(this.role==='guest'&&this.connected)this.socket?.send(JSON.stringify({type:'service-request',action:'potion'}));}
+ requestBase():void{if(this.role==='guest'&&this.connected)this.socket?.send(JSON.stringify({type:'service-request',action:'return'}));}
+ requestHeal():void{if(this.role==='guest'&&this.connected)this.socket?.send(JSON.stringify({type:'service-request',action:'heal'}));}
+ takePotionRequest():boolean{const v=this.potionRequest;this.potionRequest=false;return v;}
+ takeBaseRequest():boolean{const v=this.baseRequest;this.baseRequest=false;return v;}
+ takeHealRequest():boolean{const v=this.healRequest;this.healRequest=false;return v;}
  send(type:'input'|'world',payload:PartyInput|PartyWorld):void{
   if(!this.connected||this.travelling||this.socket?.readyState!==WebSocket.OPEN||this.socket.bufferedAmount>131072)return;
   this.socket.send(JSON.stringify(type==='input'?{type,input:payload,epoch:this.epoch}:{type,world:payload,epoch:this.epoch,sequence:++this.sequence}));

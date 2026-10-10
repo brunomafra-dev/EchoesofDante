@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "errors": [],
+  "checks": [
+    "Both players collect personal credits/materials; relay persists receipts",
+    "Guest potion host-authoritative, personal consumption, cooldown",
+    "Guest NPC menu and purchases do not pause host; free healing syncs",
+    "Crafted visitor item saved and worn appearance synced",
+    "Cumulative receipt replay does not duplicate currency or potion consumption",
+    "Guest disconnect/reload keeps personal purchases, materials, potions and gear"
+  ],
+  "method": "Two real Chrome contexts, local WS protocol 4; touch viewport, DEV positioning. No physical devices."
+}

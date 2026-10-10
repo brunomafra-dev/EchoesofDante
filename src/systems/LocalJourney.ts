@@ -9,6 +9,7 @@ import type { ProgressionSnapshot } from './Progression';
 import type { AbilityUpgradeRanks } from '../config/abilityUpgrades';
 import { characterProfiles } from './CharacterProfiles';
 import { validEquipment, validItem, type EquipmentId, type InventoryItem, type EquipmentSnapshot } from '../config/equipment';
+import {validEconomy,type EconomySnapshot} from '../config/economy';
 
 export const JOURNEY_KEY = 'echoes-of-dante.journey.v1';
 export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSeen', 'deepCavernEntered',
@@ -18,7 +19,7 @@ export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSee
   'valleyFrontierSignalSeen', 'valleyFrontierEndSeen', 'aridVisited', 'aridSignalSeen',
   'aridFrontierEntered', 'aridFrontierReached', 'dunesVisited', 'dunesRuinsSeen', 'dunesDepthSeen',
   'soterradoReached', 'soterradoDefeated', 'soterradoClueSeen', 'frostVisited', 'frostSignalSeen', 'frostEndSeen', 'icecaveVisited', 'icecaveSignalSeen', 'icenestVisited', 'vesperReached', 'vesperDefeated', 'vesperClueSeen'] as const;
-export type JourneyArea = 'forest' | 'cavern' | 'warden' | 'valley' | 'arid' | 'dunes' | 'sandpit' | 'frost' | 'icecave' | 'icenest';
+export type JourneyArea = 'base' | 'forest' | 'cavern' | 'warden' | 'valley' | 'arid' | 'dunes' | 'sandpit' | 'frost' | 'icecave' | 'icenest';
 export type JourneyFlags = Record<typeof JOURNEY_FLAGS[number], boolean>;
 export type JourneySnapshot = {
   schema: 1; updatedAt: number; area: JourneyArea; hp: number;
@@ -26,6 +27,7 @@ export type JourneySnapshot = {
   bestiary: BestiarySnapshot; valleyRoutes: string[]; valleyHabitats: [number, number][]; aridHabitats: [number, number][];
   coopReceipts?: { id: string; total: number }[];
   equipment?:EquipmentSnapshot;
+  economy?:EconomySnapshot;
 };
 
 const object = (value: unknown): Record<string, unknown> | undefined =>
@@ -89,7 +91,7 @@ export class LocalJourney {
       flags.vesperReached &&= flags.icenestVisited;
       flags.vesperDefeated &&= flags.vesperReached;
       flags.vesperClueSeen &&= flags.vesperDefeated;
-      const area: JourneyArea = raw.area === 'icenest' && flags.icenestVisited ? 'icenest' : raw.area === 'icecave' && flags.icecaveVisited ? 'icecave' : raw.area === 'frost' && flags.frostVisited ? 'frost' : raw.area === 'sandpit' && flags.soterradoReached ? 'sandpit'
+      const area: JourneyArea = raw.area === 'base' ? 'base' : raw.area === 'icenest' && flags.icenestVisited ? 'icenest' : raw.area === 'icecave' && flags.icecaveVisited ? 'icecave' : raw.area === 'frost' && flags.frostVisited ? 'frost' : raw.area === 'sandpit' && flags.soterradoReached ? 'sandpit'
         : raw.area === 'dunes' && flags.dunesVisited ? 'dunes'
         : raw.area === 'arid' && flags.wardenDefeated && flags.valleyFrontierEndSeen && flags.aridVisited ? 'arid'
         : raw.area === 'valley' && flags.wardenDefeated ? 'valley'
@@ -113,7 +115,7 @@ export class LocalJourney {
             typeof id === 'string' && (VALLEY_ROUTES.some(route => route.id === id) || SIROCCO_ROUTES.some(route => route.id === id) || DUNES_ROUTES.some(route => route.id === id) || FROST_ROUTES.some(route => route.id === id) || GLACIER_ROUTES.some(route => route.id === id))) : [],
           abilityUpgrades: object(p.abilityUpgrades) as Partial<AbilityUpgradeRanks> | undefined,
           bossRewards: [...(flags.soterradoDefeated ? ['soterrado'] : []), ...(flags.vesperDefeated ? ['vesper'] : [])] },
-        flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats, equipment:validEquipment(raw.equipment),
+        flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats, equipment:validEquipment(raw.equipment),economy:validEconomy(raw.economy),
         coopReceipts: Array.isArray(raw.coopReceipts) ? raw.coopReceipts.filter((entry): entry is {id:string;total:number} =>
           !!entry && typeof entry.id === 'string' && /^[a-f0-9]{32}$/.test(entry.id) && integer(entry.total, 1e9)).slice(-32) : [] };
     } catch {
@@ -137,20 +139,27 @@ export class LocalJourney {
     }
   }
 
-  creditCoopXp(id: string, total: number, items:readonly (EquipmentId|InventoryItem)[]=[]): boolean {
+  creditCoopXp(id: string, total: number, items:readonly (EquipmentId|InventoryItem)[]=[],resources?:{credits:number;materials:number[];used:number}): boolean {
     if (!/^[a-f0-9]{32}$/.test(id) || !integer(total, 1e9)) return false;
     const saved = this.load();
     if (!saved) return false;
     const receipts = saved.coopReceipts ?? [];
     const previous = receipts.find(receipt => receipt.id === id)?.total ?? 0;
+    const economy=validEconomy(saved.economy);
     const equipment=validEquipment(saved.equipment);
     const incoming=items.map(i=>typeof i==='string'?{uid:`legacy-${i}`,id:i}:i).filter(validItem);
-    const merged=validEquipment({...equipment,items:[...equipment.items!,...incoming.filter(i=>!equipment.items!.some(v=>v.uid===i.uid))]});
-    if(incoming.some(i=>!merged.items!.some(v=>v.uid===i.uid))){this.status='Mochila cheia: recompensa pendente até liberar espaço.';return false;}
-    if (total <= previous && merged.items!.length===equipment.items!.length) return true;
+    const merged=validEquipment({...equipment,items:[...equipment.items!,...incoming.filter(i=>!economy.claimed.includes(i.uid)&&!equipment.items!.some(v=>v.uid===i.uid))]});
+    if(incoming.some(i=>!economy.claimed.includes(i.uid)&&!merged.items!.some(v=>v.uid===i.uid))){this.status='Mochila cheia: recompensa pendente até liberar espaço.';return false;}
+    const prior=economy.receipts.find(r=>r.id===id)??{id,credits:0,materials:[0,0,0],used:0};
+    let resourceChanged=false;
+    if(resources){const next={id,credits:Math.max(prior.credits,integer(resources.credits,1e9)?resources.credits:0),materials:[0,1,2].map(i=>Math.max(prior.materials[i],integer(resources.materials?.[i],1e9)?resources.materials[i]:0)),used:Math.max(prior.used,integer(resources.used,1e9)?resources.used:0)};
+      resourceChanged=JSON.stringify(prior)!==JSON.stringify(next);economy.credits=Math.min(1e9,economy.credits+next.credits-prior.credits);economy.materials=economy.materials.map((v,i)=>Math.min(1e9,v+next.materials[i]-prior.materials[i]));economy.potions=Math.max(0,economy.potions-(next.used-prior.used));if(next.used>prior.used)economy.potionReadyAt=Date.now()+8000;
+      economy.receipts=[...economy.receipts.filter(r=>r.id!==id),next].slice(-32);}
+    if (total <= previous && merged.items!.length===equipment.items!.length&&!resourceChanged&&incoming.every(i=>economy.claimed.includes(i.uid))) return true;
     // XP and its receipt are a single storage write. Campaign flags/area/kit stay local.
     saved.progression.xp = Math.min(1e9, saved.progression.xp + Math.max(0,total - previous));
     saved.equipment=merged;
+    economy.claimed=[...new Set([...economy.claimed,...incoming.map(i=>i.uid)])].slice(-4096);saved.economy=economy;
     saved.coopReceipts = [...receipts.filter(receipt => receipt.id !== id), { id, total:Math.max(total,previous) }].slice(-32);
     saved.updatedAt = Date.now();
     return this.save(saved);
@@ -160,6 +169,8 @@ export class LocalJourney {
     const saved=this.load();if(!saved)return false;
     saved.equipment=validEquipment(equipment);saved.updatedAt=Date.now();return this.save(saved);
   }
+
+  savePersonal(equipment:EquipmentSnapshot,economy:EconomySnapshot):boolean {const saved=this.load();if(!saved)return false;saved.equipment=validEquipment(equipment);saved.economy=validEconomy(economy);saved.updatedAt=Date.now();return this.save(saved);}
 
   clear(): boolean {
     try { localStorage.removeItem(this.storageKey()); return true; }

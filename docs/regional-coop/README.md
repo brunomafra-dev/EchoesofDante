@@ -183,3 +183,7 @@ No Vale, dois clientes locais atingiram aproximadamente **56–57 FPS** cada; a 
 Em dois aparelhos reais, validar: convite por código, kit de cada classe, combate misto, carga/release, portal Vale → Siroco → Dunas e volta, menu do anfitrião, queda curta de conexão, morte/respawn e XP pessoal ao sair. A resistência de 40% é uma primeira calibragem e precisa de avaliação humana.
 
 Próxima etapa proposta: **Astral Manipulator**, depois da aprovação do ritmo cooperativo. Chefes/cavernas em dupla, progresso compartilhado de campanha, terceira vaga, matchmaking e save remoto ficam para etapas posteriores.
+
+### Base/economia — protocolo 4
+
+Frontend e relay incluem a base, retornos para destinos descobertos, serviços pessoais, recursos e recibos de consumo de poção. Atualizar ambos antes de testar online. A economia usa saves pessoais e não pausa a equipe durante serviços. [Detalhes](../base-economy/README.md).

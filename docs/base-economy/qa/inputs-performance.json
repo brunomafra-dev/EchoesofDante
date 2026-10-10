@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "errors": [],
+  "checks": [
+    "CDP touch: potion/cooldown, NPC healing, map destination, contextual return station",
+    "Gamepad API mock: Y potion, A NPC, D-pad service, A heal, B close",
+    "Full health consumes nothing; 35% healing caps at maximum",
+    "Gamepad Start pause-menu expedition map preserved",
+    "Six-second idle sample: stable object, texture and tween counts"
+  ],
+  "stability": {
+    "before": {
+      "objects": 53,
+      "textures": 178,
+      "tweens": 0
+    },
+    "after": {
+      "objects": 53,
+      "textures": 178,
+      "tweens": 0
+    },
+    "meanFps": 55.429370641708374
+  },
+  "method": "Chrome headless, CDP touch, Gamepad API mock; DEV positioning. No physical devices."
+}

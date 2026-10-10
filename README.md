@@ -247,3 +247,7 @@ Segunda classe disponível no menu de personagens: rifle, Momentum e feixe de lu
 Etapa atual: [personagens modulares](docs/modular-characters/README.md) — masculino/feminino e troca visual piloto de arma/torso.
 
 Revisão da etapa 1: [corpo vestido e correção da junção dos braços](docs/modular-characters/shoulder-fix/README.md). Aguardando aprovação visual antes de drops/inventário.
+
+## Base e economia — etapa 3
+
+Base de pouso, serviços pessoais, créditos/materiais, poções, fabricação, venda/desmontagem e cofre. [Relatório e limitações](docs/base-economy/README.md) · [laboratório isolado](https://echosofdante.vercel.app/base-playtest.html?v=0.1.85). Cooperativo requer relay protocolo 4; a próxima etapa aguarda playtest humano.

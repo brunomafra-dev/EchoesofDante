@@ -1,0 +1,29 @@
+import assert from 'node:assert/strict';
+import {writeFile} from 'node:fs/promises';
+import {chromium} from 'playwright';
+const browser=await chromium.launch({channel:'chrome',headless:true}),errors=[],checks=[];
+const ready=p=>p.waitForFunction(()=>window.__danteGame?.scene.getScene('Game')?.basePanel);
+const watch=p=>{p.on('pageerror',e=>errors.push(e.message));p.on('response',r=>{if(r.status()>=400)errors.push(r.url())})};
+try{
+ const context=await browser.newContext({viewport:{width:844,height:390},hasTouch:true,isMobile:true}),p=await context.newPage();watch(p);
+ await p.goto('http://localhost:5184/base-playtest.html');await ready(p);await p.locator('.playtest-navigation').evaluate(e=>e.open=false);
+ await p.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');s.player.health.current=30});
+ await p.locator('[data-potion]').tap();assert.equal(await p.evaluate(()=>window.__danteGame.scene.getScene('Game').player.hp),65);
+ await p.locator('[data-potion]').tap();assert.equal(await p.evaluate(()=>window.__danteGame.scene.getScene('Game').economy.potions),2);
+ await p.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');Object.assign(s.player.position,{x:320,y:750})});await p.waitForTimeout(250);
+ await p.locator('[data-action="interact"]').tap();await p.getByRole('button',{name:/RESTAURAR VIDA/}).tap();assert.equal(await p.evaluate(()=>window.__danteGame.scene.getScene('Game').player.hp),100);await p.locator('.base-dialog [data-close]').tap();
+ await p.locator('[data-map]').tap();await p.locator('[data-destination="forest"]').tap();await p.waitForFunction(()=>{const s=window.__danteGame.scene.getScene('Game');return s.area==='forest'&&!s.transitioning});
+ await p.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');Object.assign(s.player.position,{x:s.returnStation.x-90,y:s.returnStation.y})});await p.waitForTimeout(250);
+ await p.locator('[data-action="interact"]').tap();await p.waitForFunction(()=>{const s=window.__danteGame.scene.getScene('Game');return s.area==='base'&&!s.transitioning});checks.push('CDP touch: potion/cooldown, NPC healing, map destination, contextual return station');await context.close();
+ const q=await browser.newPage();watch(q);await q.addInitScript(()=>{window.qaPad={connected:true,mapping:'standard',axes:[0,0,0,0],buttons:Array.from({length:17},()=>({pressed:false,value:0}))};navigator.getGamepads=()=>[window.qaPad]});
+ await q.goto('http://localhost:5184/base-playtest.html');await ready(q);await q.locator('.playtest-navigation').evaluate(e=>e.open=false);
+ const press=async n=>{await q.evaluate(n=>window.qaPad.buttons[n]={pressed:true,value:1},n);await q.waitForTimeout(130);await q.evaluate(n=>window.qaPad.buttons[n]={pressed:false,value:0},n);await q.waitForTimeout(150)};
+ await q.evaluate(()=>window.__danteGame.scene.getScene('Game').player.health.current=30);await press(3);assert.equal(await q.evaluate(()=>window.__danteGame.scene.getScene('Game').player.hp),65);
+ await q.evaluate(()=>Object.assign(window.__danteGame.scene.getScene('Game').player.position,{x:320,y:750}));await press(0);assert.ok(await q.locator('.base-dialog[open]').isVisible());await press(13);await press(0);assert.equal(await q.evaluate(()=>window.__danteGame.scene.getScene('Game').player.hp),100);await press(1);checks.push('Gamepad API mock: Y potion, A NPC, D-pad service, A heal, B close');
+ // Remaining full-health presses consume nothing; near-full healing caps at max.
+ const caps=await q.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');s.economy.potionReadyAt=0;const before=s.economy.potions;const full=s.usePotion();s.player.health.current=95;const near=s.usePotion();return{full,near,hp:s.player.hp,max:s.player.maxHp,count:s.economy.potions,before}});assert.equal(caps.full,false);assert.equal(caps.near,true);assert.equal(caps.hp,caps.max);assert.equal(caps.count,caps.before-1);checks.push('Full health consumes nothing; 35% healing caps at maximum');
+ await q.goto('http://localhost:5184/?qa=play');await ready(q);await press(9);await q.locator('[data-shell="expedition"]').click();assert.ok(await q.locator('.base-dialog[open]').isVisible());await press(1);checks.push('Gamepad Start pause-menu expedition map preserved');
+ await q.goto('http://localhost:5184/base-playtest.html');await ready(q);await q.locator('.playtest-navigation').evaluate(e=>e.open=false);await q.waitForTimeout(2000);
+ const stability=await q.evaluate(async()=>{const s=window.__danteGame.scene.getScene('Game'),sample=()=>({objects:s.children.list.length,textures:Object.keys(s.textures.list).length,tweens:s.tweens.getTweens().length});const before=sample(),fps=[];for(let i=0;i<12;i++){await new Promise(r=>setTimeout(r,500));fps.push(s.game.loop.actualFps)}return{before,after:sample(),meanFps:fps.reduce((a,b)=>a+b,0)/fps.length}});assert.deepEqual(stability.before,stability.after);checks.push('Six-second idle sample: stable object, texture and tween counts');
+ assert.deepEqual(errors,[]);await writeFile('docs/base-economy/qa/inputs-performance.json',JSON.stringify({passed:true,errors,checks,stability,method:'Chrome headless, CDP touch, Gamepad API mock; DEV positioning. No physical devices.'},null,2));console.log({passed:true,checks,stability});
+}finally{await browser.close()}

@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "errors": [],
+  "checks": [
+    "NPC interaction, potion purchase, 35% healing, 8s cooldown, free medic",
+    "Recipe costs, wearable crafted item, worn pieces protected, dismantling",
+    "Selling consumes the selected bag copy once",
+    "Personal stash deposit and withdrawal",
+    "Base → Forest → resource collection → return through discovered station",
+    "Three scene restarts without accumulated objects/textures",
+    "48-slot stash capacity",
+    "Four resolutions, no JS/assets errors, lab does not alter real storage",
+    "Reload preserves economy; failed write rolls back purchase",
+    "Sold equipment cannot be recreated by replaying its cooperative receipt"
+  ],
+  "fps": 53.97171592712402,
+  "method": "Chrome headless; UI, DEV positions/fixtures, four viewports. No physical device."
+}

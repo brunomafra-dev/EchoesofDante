@@ -6,6 +6,7 @@ import type { KineticPhase } from '../combat/KineticCharge';
 import type { InputMethod } from '../input/Controls';
 
 export class Hud {
+  setAreaName(name:string):void{this.areaSubtitle.setText(name);}
   private momentum = 0;
   setHunterMomentum(value: number): void { this.momentum = Math.round(value); }
   private hpFill: Phaser.GameObjects.Rectangle;

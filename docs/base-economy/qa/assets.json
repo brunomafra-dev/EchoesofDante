@@ -1,0 +1,53 @@
+{
+  "assets": [
+    {
+      "name": "base-expedition.png",
+      "width": 79,
+      "height": 160,
+      "bytes": 26591
+    },
+    {
+      "name": "base-medic.png",
+      "width": 79,
+      "height": 160,
+      "bytes": 26591
+    },
+    {
+      "name": "base-smith.png",
+      "width": 79,
+      "height": 160,
+      "bytes": 25702
+    },
+    {
+      "name": "field-shelter.png",
+      "width": 256,
+      "height": 183,
+      "bytes": 66840
+    },
+    {
+      "name": "landing-shuttle.png",
+      "width": 640,
+      "height": 427,
+      "bytes": 343484
+    },
+    {
+      "name": "resource-1.png",
+      "width": 48,
+      "height": 48,
+      "bytes": 2392
+    },
+    {
+      "name": "resource-2.png",
+      "width": 48,
+      "height": 48,
+      "bytes": 2392
+    },
+    {
+      "name": "resource-3.png",
+      "width": 48,
+      "height": 48,
+      "bytes": 2392
+    }
+  ],
+  "totalBytes": 496384
+}

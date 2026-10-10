@@ -89,7 +89,7 @@ try {
   eh.send({type:'leave'});await bad.next('ended');report.reservationExpires=true;
   const campaign=await client();
   for(const area of ['forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest']){
-    campaign.send({type:'create',profile,area});const joined=await campaign.next('joined');assert.equal(joined.area,area);assert.equal(joined.protocol,3);campaign.send({type:'leave'});await new Promise(resolve=>setTimeout(resolve,30));
+    campaign.send({type:'create',profile,area});const joined=await campaign.next('joined');assert.equal(joined.area,area);assert.equal(joined.protocol,4);campaign.send({type:'leave'});await new Promise(resolve=>setTimeout(resolve,30));
   }
   report.allCampaignRegionsAccepted=true;
   const lh=await client(),lg=await client();lh.send({type:'create',profile,area:'icenest'});const lr=await lh.next('joined');

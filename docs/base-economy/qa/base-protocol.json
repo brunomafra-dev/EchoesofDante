@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "url": "ws://localhost:5184/coop",
+  "checks": [
+    "Protocol 4; base creation and discovered-only travel",
+    "Boss-active return rejected by relay; inactive return accepted",
+    "Repeated awards and potion counters do not duplicate personal receipts"
+  ]
+}

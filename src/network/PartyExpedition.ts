@@ -13,6 +13,7 @@ import type { Vec2 } from '../utils/math';
 import { characterProfiles } from '../systems/CharacterProfiles';
 import { SPECIES, type SpeciesId } from '../config/bestiary';
 import { BossMirror, captureBoss, type NetworkBoss } from './BossPresentation';
+import type {ResourceDrop} from '../systems/ResourceDrops';
 import { equipmentStats } from '../config/equipment';
 
 export type PartyBridge={
@@ -21,7 +22,7 @@ export type PartyBridge={
  boss?:NetworkBoss;bossRender:(boss:PartyWorld['boss'])=>void;
  inputBlocked:boolean;loot:PartyWorld['loot'];lootRender:(loot:PartyWorld['loot'])=>void;baseMaxHp:number;
  solidObstacles:readonly Obstacle[];
- signalPortal:boolean;
+ signalPortal:boolean;resources:ResourceDrop[];resourceAwarded:ResourceDrop[];potionUsed:number;visited:JourneyArea[];returnStation:Vec2;
  id:(enemy:Enemy)=>number|undefined;species:(enemy:Enemy)=>SpeciesId|undefined;
  hit:(targets:Enemy[],damage:number,angle:number,from:Vec2,heavy:boolean)=>void;
  prompt:(position:Vec2)=>{available:boolean;action:string};
@@ -121,7 +122,7 @@ export class PartyExpedition {
   });
   const shots:PartyWorld['shots']=[...(a.hunter?.projectilePoses()??[]),...(this.partner?.hunter?.projectilePoses()??[])].map(shot=>({...shot,friendly:true}));
   for(const e of a.enemies as readonly Presented[])for(const shot of e.shots??[])if(shot.active)shots.push({x:shot.x,y:shot.y,rotation:shot.angle});
-  const world:PartyWorld={area:a.area,time:now,progression:a.progression,flags:a.flags,host,partner,enemies:enemies.filter(e=>!['warden','soterrado','vesper'].includes(e.species)),boss:captureBoss(a.boss),signalPortal:a.signalPortal,loot:a.loot,lootAwarded:[...room.lootAwarded.values()].slice(-512),
+  const world:PartyWorld={area:a.area,time:now,progression:a.progression,flags:a.flags,host,partner,enemies:enemies.filter(e=>!['warden','soterrado','vesper'].includes(e.species)),boss:captureBoss(a.boss),signalPortal:a.signalPortal,resources:a.resources,resourceAwarded:a.resourceAwarded,potionUsed:a.potionUsed,visited:a.visited,returnStation:a.returnStation,loot:a.loot,lootAwarded:[...room.lootAwarded.values()].slice(-512),
    message:(a.hud as unknown as {discoveryMessage:Phaser.GameObjects.Text}).discoveryMessage.visible?(a.hud as unknown as {discoveryMessage:Phaser.GameObjects.Text}).discoveryMessage.text:'',prompt:prompt.available,action:prompt.action,shots};
   room.send('world',world);
  }
