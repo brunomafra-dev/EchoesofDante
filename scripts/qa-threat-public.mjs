@@ -21,7 +21,7 @@ try{
  await g.screenshot({path:out+'/guest.png'});report.frames=frames;report.pose={maxHp:world.partner.maxHp,dashCooldown:world.partner.dashCooldown,chargeCooldown:world.partner.chargeCooldown};
  assert.equal(await h.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('echoes-of-dante.')).length),0);assert.equal(await g.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('echoes-of-dante.')).length),0);
  report.checks.push('Published laboratory preserves real localStorage');assert.deepEqual(report.errors,[]);report.passed=true;
-}catch(e){report.failure=String(e);throw e}finally{
+}catch(e){report.passed=false;report.status=report.health?.protocol!==5?'blocked-relay-deployment':'failed';report.failure=String(e);throw e}finally{
  try{if(!await h.locator('.application-shell[open]').count())await h.keyboard.press('Escape');if(await h.locator('[data-shell="coop"]').count())await h.locator('[data-shell="coop"]').click({timeout:2000});if(await h.locator('[data-shell="coop-leave"]').count())await h.locator('[data-shell="coop-leave"]').click({timeout:2000})}catch{}
  await browser.close();await writeFile(out+'/public.json',JSON.stringify(report,null,2));
 }

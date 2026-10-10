@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-10T20:55:26.060Z",
+  "method": "Published Vercel laboratory; Chrome headless; no physical devices",
+  "regions": [
+    {
+      "region": "forest",
+      "width": 1280,
+      "height": 720,
+      "canvases": 1,
+      "saves": 0
+    },
+    {
+      "region": "cavern",
+      "width": 1366,
+      "height": 768,
+      "canvases": 1,
+      "saves": 0
+    },
+    {
+      "region": "warden",
+      "width": 1920,
+      "height": 1080,
+      "canvases": 1,
+      "saves": 0
+    },
+    {
+      "region": "arid",
+      "width": 844,
+      "height": 390,
+      "canvases": 1,
+      "saves": 0
+    },
+    {
+      "region": "icecave",
+      "width": 1280,
+      "height": 720,
+      "canvases": 1,
+      "saves": 0
+    },
+    {
+      "region": "icenest",
+      "width": 1280,
+      "height": 720,
+      "canvases": 1,
+      "saves": 0
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

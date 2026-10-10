@@ -56,6 +56,8 @@ Typecheck e build passaram; permanece o aviso anterior sobre o tamanho do bundle
 
 Desempenho local: cerca de **58–60 FPS** nos contextos pareados da campanha e **57–59 FPS** na Floresta do teste de economia. Três respawns do visitante conservaram 153 objetos, 185 texturas e três tweens no anfitrião. Cenário, bake/cache e assets preservados. Os números são amostras de Chrome headless nesta máquina, sem garantia em hardware móvel. Nenhum teste em aparelho físico foi realizado neste ambiente.
 
+Publicação: a Vercel publicou `36f6c9c`; [QA solo online](qa/public/solo.json) passou em seis regiões e quatro resoluções, sem erros nem escrita de saves reais. O [QA cooperativo online](qa/public/public.json) ficou bloqueado antes de criar sala: o Render ainda responde com **protocolo 4**, enquanto esta entrega requer **5**. Não declarar o coop público validado até atualizar o serviço `echoes-of-dante-rooms` para o último commit e repetir `node scripts/qa-threat-public.mjs`. A configuração do repositório prevê deploy automático, mas não foi possível confirmar a execução dele no painel do Render.
+
 ## Limitações e checklist humano
 
 Arquivos: `src/config/threat.ts`, economia/progressão/LocalJourney, integração no GameScene, Player/Hud e disponibilidade de respawn touch; CoopSession/PartyActor/PartyExpedition, convites e relay; entrada `threat-playtest.html`, Vite, biblioteca, QA, versão e documentação. Nenhum asset de jogo foi criado ou alterado.
