@@ -31,7 +31,7 @@ As pinturas antigas ficam arquivadas para rollback, mas não são carregadas pel
 
 Typecheck/build e QA de serviços, dupla e inputs passaram. Chrome headless: 1280×720, 1366×768, 1920×1080 e 844×390. Três NPCs com aspecto preservado, interações, onze regiões, restrições de viagem, dois refugiados e laboratório sem gravação no save real.
 
-Touch CDP e gamepad mock: poção, interação, menu, navegação e retorno. Base: aproximadamente **55–56 FPS**, 53 objetos, 180 texturas totais do jogo e zero tweens, sem crescimento na amostra. Não houve teste físico de dispositivo.
+Touch CDP e gamepad mock: poção, interação, menu, navegação e retorno. Arrastos verticais e horizontais validados também em 667×375, sem alterar o zoom da página. Base: aproximadamente **55–56 FPS**, 53 objetos, 180 texturas totais do jogo e zero tweens, sem crescimento na amostra. Não houve teste físico de dispositivo.
 
 [Relatório visual/técnico](qa/report.json) · [inputs e estabilidade](../qa/inputs-performance.json) · [dupla](../qa/coop.json).
 

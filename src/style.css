@@ -146,7 +146,7 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
 .expedition-launcher{position:fixed;left:50%;transform:translateX(-50%);top:76px;display:flex;gap:6px;z-index:25}
 .expedition-launcher button{padding:7px 10px;background:#162427dc;color:#deddd0;border:1px solid #64706a;border-radius:5px;font:12px system-ui;min-height:36px;touch-action:manipulation}
 .shell-open .expedition-launcher,.records-open .expedition-launcher{visibility:hidden}
-.base-dialog{width:min(1040px,94vw)}.base-wallet,.base-notice{padding:0 20px}.base-services{padding:8px 20px 20px;max-height:65dvh;overflow:auto;overscroll-behavior:contain;touch-action:pan-y;display:flex;flex-direction:column;gap:8px}
+.base-dialog{width:min(1040px,94vw)}.base-wallet,.base-notice{padding:0 20px}.base-services{padding:8px 20px 20px;max-height:65dvh;overflow:auto;overscroll-behavior:contain;touch-action:pan-x pan-y;display:flex;flex-direction:column;gap:8px}
 .base-services button{min-height:40px;padding:9px 12px;cursor:pointer;color:#e1dccb;background:#263632;border:1px solid #6b7766;border-radius:5px}.base-services button:disabled{opacity:.4;cursor:default}.base-item{display:flex;align-items:center;gap:8px}.base-item img{width:48px;height:48px;object-fit:contain}.base-item span{flex:1}.base-map{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 @media(max-height:500px){.expedition-launcher{top:65px}.expedition-launcher button{font-size:10px;padding:5px 8px}.base-services{max-height:54dvh}.base-item{flex-wrap:wrap}.base-dialog header h1{font-size:22px}.base-wallet{font-size:12px}.base-map{grid-template-columns:repeat(2,1fr)}}
 .application-shell:not([hidden]) ~ .inventory-launcher{display:none}

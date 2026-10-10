@@ -2,7 +2,7 @@
   "passed": true,
   "errors": [],
   "checks": [
-    "Native touch atlas pan preserves page scale and reaches offscreen regions",
+    "Native vertical and horizontal atlas pan at 844/667 pixels preserves page scale",
     "CDP touch: potion/cooldown, NPC healing, map destination, contextual return station",
     "Gamepad API mock: Y potion, A NPC, D-pad service, A heal, B close",
     "Full health consumes nothing; 35% healing caps at maximum",
@@ -20,7 +20,7 @@
       "textures": 180,
       "tweens": 0
     },
-    "meanFps": 55.36526012420654
+    "meanFps": 55.54244597752889
   },
   "method": "Chrome headless, CDP touch, Gamepad API mock; DEV positioning. No physical devices."
 }
