@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { mkdir,writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
-const out='docs/campaign-equipment/qa';await mkdir(out,{recursive:true});
+const out=process.argv[2]??'docs/campaign-equipment/qa';await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true});
 const hc=await browser.newContext({viewport:{width:1280,height:720}}),gc=await browser.newContext({viewport:{width:1280,height:720},hasTouch:true});
 await gc.addInitScript(()=>{
@@ -42,14 +42,14 @@ try{
  await g.waitForTimeout(900);
  // A real mob death creates a ground item. Either participant collects; both receive their own copy.
  await h.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game'),e=s.enemies[0];s.resolvePlayerHits(s.time.now,[e],9999,0,0x5fe6d8,s.player.position,false);});
- const drop=(await state(h)).loot[0];assert.ok(drop);await position(drop.x,drop.y,true);await g.waitForTimeout(700);
+ const drop=(await state(h)).loot.find(p=>p.owner==='guest');assert.ok(drop);await position(drop.x,drop.y,true);await key(g,'e');await position(drop.x,drop.y);await key(h,'e');await g.waitForTimeout(700);
  assert.ok((await state(h)).equipment.owned.includes(drop.id));assert.ok((await state(g)).equipment.owned.includes(drop.id));
  report.sharedGroundLoot=true;
  // Equip through the actual modal on both screens. Increasing HP does not heal.
- for(const p of[h,g]){await p.evaluate(()=>window.__danteGame.scene.getScene('Game').openEquipment());await p.locator(`[data-item="${drop.id}"]`).click();await p.locator('.equipment-dialog [data-close]').click();}
+ for(const p of[h,g]){await p.evaluate(()=>window.__danteGame.scene.getScene('Game').openEquipment());await p.locator(`[data-item="${drop.id}"]`).click();await p.locator('[data-equip]').click();await p.locator('.equipment-dialog [data-close]').click();}
  await g.waitForTimeout(400);
- assert.equal((await state(h)).equipment.slots.armor,drop.id);assert.equal((await state(g)).equipment.slots.armor,drop.id);
- assert.ok((await state(h)).maxHp>await h.evaluate(()=>window.__danteGame.scene.getScene('Game').progression.maxHp));
+ assert.equal((await state(h)).equipment.slots.weapon,drop.id);assert.equal((await state(g)).equipment.slots.weapon,drop.id);
+ assert.equal((await state(h)).maxHp,await h.evaluate(()=>window.__danteGame.scene.getScene('Game').progression.maxHp));
  report.equipmentBothPlayers=true;
  // Every connected area, and every boss's actual telegraph / phase / reward presentation.
  for(const[area,keyName,entry]of[['warden','warden',[910,760]],['sandpit','soterrado',[900,850]],['icenest','vesper',[920,990]]]){
@@ -79,6 +79,7 @@ try{
   const hp=await h.evaluate(k=>window.__danteGame.scene.getScene('Game')[k].health.current,keyName);assert.ok(hp<target.hp,`${keyName}: guest ranged primary must hit`);
   await h.evaluate(keyName=>{const s=window.__danteGame.scene.getScene('Game');s.resolvePlayerHits(s.time.now,[s[keyName]],9999,0,0x5fe6d8,s.player.position,false);},keyName);
   await g.waitForTimeout(2100);assert.equal((await state(g)).boss.isDead,true);
+  const loot=(await state(h)).loot.find(p=>p.owner==='guest');if(loot){await position(loot.x,loot.y,true);await key(g,'e');await g.waitForTimeout(400);}
   const upgrades=h.locator('.ability-upgrade-dialog[open] button:not(:disabled)');
   if(await upgrades.count())await upgrades.first().click();
   report.bosses.push({area,guestPrimary:true,death:true,visuals:(await state(g)).boss.visuals.length});
@@ -104,10 +105,10 @@ try{
    invalid:validEquipment({owned:['glacier-focus','bad',17],slots:{weapon:'glacier-focus',accessory:'glacier-focus'}}),mismatch:s.equipment.equip('weapon','glacier-focus')};
  });
  assert.equal(persistence.xpBefore,persistence.xpAfter);assert.equal(persistence.itemsBefore,persistence.itemsAfter);assert.equal(persistence.mismatch,false);
- assert.deepEqual(persistence.invalid,{owned:['glacier-focus'],slots:{accessory:'glacier-focus'}});report.persistence=persistence;
+ assert.deepEqual(persistence.invalid.owned,['glacier-focus']);assert.deepEqual(persistence.invalid.slots,{accessory:'glacier-focus'});report.persistence=persistence;
  for(const[width,height]of[[1366,768],[1920,1080],[844,390]]){await g.setViewportSize({width,height});await g.waitForTimeout(300);await g.evaluate(()=>window.__danteGame.scene.getScene('Game').openEquipment());assert.ok(await g.locator('.equipment-dialog').isVisible());await g.screenshot({path:`${out}/equipment-${width}.png`});await g.locator('.equipment-dialog [data-close]').click();}
  const gained=(await state(g)).personal;await g.evaluate(()=>window.__danteCoop.disconnect(false));await g.reload();await ready(g);
- assert.equal((await state(g)).area,'forest');assert.equal((await state(g)).xp,gained);assert.ok((await state(g)).equipment.owned.includes('glacier-focus'));assert.equal((await state(g)).equipment.slots.armor,drop.id);
+ assert.equal((await state(g)).area,'forest');assert.equal((await state(g)).xp,gained);assert.ok((await state(g)).equipment.owned.includes('glacier-focus'));assert.equal((await state(g)).equipment.slots.weapon,drop.id);
  report.guestPersonalSaveAndReturn=true;
  await h.evaluate(()=>window.__danteCoop.disconnect(false));assert.deepEqual(report.errors,[]);report.passed=true;
 }finally{await writeFile(`${out}/campaign.json`,JSON.stringify(report,null,2));await browser.close();}

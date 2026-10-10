@@ -1,0 +1,173 @@
+{
+  "forest-emitter": {
+    "slot": "weapon",
+    "tier": 1,
+    "name": "Emissor de ressonância",
+    "description": "+10% ao dano da arma e das habilidades.",
+    "damage": 0.1,
+    "rarity": "comum"
+  },
+  "forest-armor": {
+    "slot": "armor",
+    "tier": 1,
+    "name": "Colete de explorador",
+    "description": "+12 de vida máxima e 3% de redução de dano.",
+    "hp": 12,
+    "resistance": 0.03,
+    "rarity": "comum"
+  },
+  "forest-focus": {
+    "slot": "accessory",
+    "tier": 1,
+    "name": "Fragmento sintonizado",
+    "description": "+10% ao dano de Q carregado.",
+    "charge": 0.1,
+    "rarity": "comum"
+  },
+  "sirocco-emitter": {
+    "slot": "weapon",
+    "tier": 2,
+    "name": "Emissor âmbar",
+    "description": "+16% ao dano da arma e das habilidades.",
+    "damage": 0.16,
+    "rarity": "aprimorado"
+  },
+  "sirocco-armor": {
+    "slot": "armor",
+    "tier": 2,
+    "name": "Carapaça do Siroco",
+    "description": "+20 de vida máxima e 5% de redução de dano.",
+    "hp": 20,
+    "resistance": 0.05,
+    "rarity": "aprimorado"
+  },
+  "sirocco-focus": {
+    "slot": "accessory",
+    "tier": 2,
+    "name": "Prisma soterrado",
+    "description": "+16% ao dano de Q carregado.",
+    "charge": 0.16,
+    "rarity": "aprimorado"
+  },
+  "glacier-emitter": {
+    "slot": "weapon",
+    "tier": 3,
+    "name": "Emissor boreal",
+    "description": "+22% ao dano da arma e das habilidades.",
+    "damage": 0.22,
+    "rarity": "raro"
+  },
+  "glacier-armor": {
+    "slot": "armor",
+    "tier": 3,
+    "name": "Couraça de geada",
+    "description": "+28 de vida máxima e 7% de redução de dano.",
+    "hp": 28,
+    "resistance": 0.07,
+    "rarity": "raro"
+  },
+  "glacier-focus": {
+    "slot": "accessory",
+    "tier": 3,
+    "name": "Coração do degelo",
+    "description": "+22% ao dano de Q carregado.",
+    "charge": 0.22,
+    "rarity": "raro"
+  },
+  "forest-helmet": {
+    "slot": "helmet",
+    "tier": 1,
+    "name": "Capacete de expedição",
+    "description": "+3 de vida máxima.",
+    "hp": 3,
+    "rarity": "comum"
+  },
+  "forest-legs": {
+    "slot": "legs",
+    "tier": 1,
+    "name": "Calça de expedição",
+    "description": "+4 de vida máxima.",
+    "hp": 4,
+    "rarity": "comum"
+  },
+  "forest-boots": {
+    "slot": "boots",
+    "tier": 1,
+    "name": "Botas de expedição",
+    "description": "+2 de vida máxima.",
+    "hp": 2,
+    "rarity": "comum"
+  },
+  "forest-gloves": {
+    "slot": "gloves",
+    "tier": 1,
+    "name": "Luvas de expedição",
+    "description": "+2 de vida máxima.",
+    "hp": 2,
+    "rarity": "comum"
+  },
+  "sirocco-helmet": {
+    "slot": "helmet",
+    "tier": 2,
+    "name": "Capacete âmbar",
+    "description": "+6 de vida máxima.",
+    "hp": 6,
+    "rarity": "aprimorado"
+  },
+  "sirocco-legs": {
+    "slot": "legs",
+    "tier": 2,
+    "name": "Calça âmbar",
+    "description": "+8 de vida máxima.",
+    "hp": 8,
+    "rarity": "aprimorado"
+  },
+  "sirocco-boots": {
+    "slot": "boots",
+    "tier": 2,
+    "name": "Botas âmbar",
+    "description": "+4 de vida máxima.",
+    "hp": 4,
+    "rarity": "aprimorado"
+  },
+  "sirocco-gloves": {
+    "slot": "gloves",
+    "tier": 2,
+    "name": "Luvas âmbar",
+    "description": "+4 de vida máxima.",
+    "hp": 4,
+    "rarity": "aprimorado"
+  },
+  "glacier-helmet": {
+    "slot": "helmet",
+    "tier": 3,
+    "name": "Capacete boreal",
+    "description": "+9 de vida máxima.",
+    "hp": 9,
+    "rarity": "raro"
+  },
+  "glacier-legs": {
+    "slot": "legs",
+    "tier": 3,
+    "name": "Calça boreal",
+    "description": "+12 de vida máxima.",
+    "hp": 12,
+    "rarity": "raro"
+  },
+  "glacier-boots": {
+    "slot": "boots",
+    "tier": 3,
+    "name": "Botas boreal",
+    "description": "+6 de vida máxima.",
+    "hp": 6,
+    "rarity": "raro"
+  },
+  "glacier-gloves": {
+    "slot": "gloves",
+    "tier": 3,
+    "name": "Luvas boreal",
+    "description": "+6 de vida máxima.",
+    "hp": 6,
+    "rarity": "raro"
+  }
+}

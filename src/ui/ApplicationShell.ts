@@ -230,7 +230,7 @@ export class ApplicationShell {
       const hasCharacters = characterProfiles.list.length > 0;
       this.heading(this.page === 'pause' ? 'Expedição pausada' : 'Sua próxima descoberta', hasCharacters ? `${hero.name} · ${CLASS_NAMES[hero.classId]}` : 'Crie seu personagem para começar a explorar Dante.');
       const play = this.action(!hasCharacters ? 'CRIAR NOVO PERSONAGEM' : this.page === 'pause' ? 'VOLTAR AO JOGO' : 'CONTINUAR EXPEDIÇÃO', 'continue', () => this.resume());
-      if(this.page==='pause')this.action('EQUIPAMENTO','equipment',()=>{this.resume();this.scene?.openEquipment();});
+      if(this.page==='pause')this.action('MOCHILA E EQUIPAMENTOS','equipment',()=>{this.resume();this.scene?.openEquipment();});
       play.disabled = !this.scene;
       this.action('PERSONAGENS', 'characters', () => this.show('characters')).disabled = coopSession.role !== 'offline';
       this.action('JOGAR COM AMIGO', 'coop', () => this.show('coop')).disabled = !hasCharacters;
@@ -332,7 +332,7 @@ export class ApplicationShell {
   private pollPad = (): void => {
     const pad = Array.from(navigator.getGamepads?.() ?? []).find(p => p?.connected && p.mapping === 'standard');
     const down = pad ? pad.buttons.map(b => b.pressed || b.value > .5) : [];
-    if (down[9] && !this.padPrevious[9] && !this.scene?.shellPlayerDead()) {
+    if (down[9] && !this.padPrevious[9] && !this.scene?.shellPlayerDead() && !document.querySelector('dialog[open]:not(.application-shell)')) {
       if (this.selection?.confirmingDeletion) this.selection.cancelDeletion();
       else if (this.dialog.open) { if (this.playing && this.page !== 'coop-ended') this.resume(); } else this.openPause();
     }

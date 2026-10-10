@@ -1,3 +1,4 @@
+import { equipmentAppearance } from '../config/equipment';
 import Phaser from 'phaser';
 import type { SaberPose } from '../combat/Attack';
 import type { KineticPose } from '../combat/KineticCharge';
@@ -101,7 +102,8 @@ export class Player {
   }
 
   setEquipmentAppearance(slots:EquipmentSnapshot['slots']):void {
-    this.modularTorso?.setEquipped(this.classId==='warrior'&&!!slots.armor,!!slots.armor&&!slots.armor.startsWith('forest'));
+    if(this.classId==='warrior')this.modularTorso?.setLook(equipmentAppearance(slots));
+    this.modularTorso?.setAccessory(!!slots.accessory);
     if(this.modularTorso)this.paintedArms?.setProtection(this.modularTorso.look);
     this.weapon.setStyle(weaponStyle(slots.weapon));
   }

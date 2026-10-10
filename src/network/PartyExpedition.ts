@@ -19,7 +19,7 @@ export type PartyBridge={
  area:JourneyArea;player:Player;controls:Controls;enemies:readonly Enemy[];obstacles:readonly Obstacle[];bounds?:MovementBounds;hud:Hud;hunter?:HunterCombat;
  progression:ProgressionSnapshot;flags:JourneyFlags;phase:string;chargeLevel:number;firing:boolean;wave?:PartyPose['wave'];
  boss?:NetworkBoss;bossRender:(boss:PartyWorld['boss'])=>void;
- loot:PartyWorld['loot'];lootRender:(loot:PartyWorld['loot'])=>void;baseMaxHp:number;
+ inputBlocked:boolean;loot:PartyWorld['loot'];lootRender:(loot:PartyWorld['loot'])=>void;baseMaxHp:number;
  solidObstacles:readonly Obstacle[];
  signalPortal:boolean;
  id:(enemy:Enemy)=>number|undefined;species:(enemy:Enemy)=>SpeciesId|undefined;
@@ -121,7 +121,7 @@ export class PartyExpedition {
   });
   const shots:PartyWorld['shots']=[...(a.hunter?.projectilePoses()??[]),...(this.partner?.hunter?.projectilePoses()??[])].map(shot=>({...shot,friendly:true}));
   for(const e of a.enemies as readonly Presented[])for(const shot of e.shots??[])if(shot.active)shots.push({x:shot.x,y:shot.y,rotation:shot.angle});
-  const world:PartyWorld={area:a.area,time:now,progression:a.progression,flags:a.flags,host,partner,enemies:enemies.filter(e=>!['warden','soterrado','vesper'].includes(e.species)),boss:captureBoss(a.boss),signalPortal:a.signalPortal,loot:a.loot,lootAwarded:[...room.lootAwarded],
+  const world:PartyWorld={area:a.area,time:now,progression:a.progression,flags:a.flags,host,partner,enemies:enemies.filter(e=>!['warden','soterrado','vesper'].includes(e.species)),boss:captureBoss(a.boss),signalPortal:a.signalPortal,loot:a.loot,lootAwarded:[...room.lootAwarded.values()].slice(-512),
    message:(a.hud as unknown as {discoveryMessage:Phaser.GameObjects.Text}).discoveryMessage.visible?(a.hud as unknown as {discoveryMessage:Phaser.GameObjects.Text}).discoveryMessage.text:'',prompt:prompt.available,action:prompt.action,shots};
   room.send('world',world);
  }
@@ -144,8 +144,9 @@ export class PartyExpedition {
    this.status.setVisible(true).setText(!room.connected?'DUPLA · RECONECTANDO':!room.peerConnected?'DUPLA · ANFITRIÃO RECONECTANDO':room.hostPaused?'DUPLA · ANFITRIÃO NO MENU':'DUPLA · AGUARDANDO A REGIÃO');
    if(now-this.sendAt>=100){room.send('input',{...NO_INPUT,cancel:true});this.sendAt=now;}return;
   }
+  if(a.inputBlocked){this.attackQueued=false;for(const key of Object.keys(this.queued) as (keyof typeof this.queued)[])this.queued[key]=false;}
   const interact=c.interactPressed;
-  const input={...c.movement(),aim:c.aimFrom(a.player.position),attack:c.attacking||this.attackQueued,dash:c.dashPressed,charge:c.chargePressed,held:c.chargeHeld,
+  const input=a.inputBlocked?{...NO_INPUT,cancel:true}:{...c.movement(),aim:c.aimFrom(a.player.position),attack:c.attacking||this.attackQueued,dash:c.dashPressed,charge:c.chargePressed,held:c.chargeHeld,
    release:c.chargeReleased,cancel:c.chargeCancelled,interact,restart:c.restartPressed};
   for (const key of Object.keys(this.queued) as (keyof typeof this.queued)[]) {
     this.queued[key] ||= input[key]; input[key] = this.queued[key];

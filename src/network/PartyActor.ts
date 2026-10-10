@@ -67,7 +67,7 @@ export class PartyActor {
    wave:this.wave.visible?{x:this.wave.x,y:this.wave.y,rotation:this.wave.rotation,width:this.wave.displayWidth,height:this.wave.displayHeight}:undefined};
  }
  cancelCharge():void{this.charge.stop();this.hunter?.clear();this.wave.setVisible(false);}
- private setAppearance():void {const slots=this.profile.equipment??{},key=`${slots.weapon??''}/${slots.armor??''}`;if(key===this.appearanceKey)return;this.appearanceKey=key;this.player.setEquipmentAppearance(slots);this.art?.setEquipment(slots);}
+ private setAppearance():void {const slots=this.profile.equipment??{},key=JSON.stringify(slots);if(key===this.appearanceKey)return;this.appearanceKey=key;this.player.setEquipmentAppearance(slots);this.art?.setEquipment(slots);}
  render(pose:PartyPose,now:number,dt:number):void {
   this.setAppearance();
   this.player.health.current=pose.hp;

@@ -1,0 +1,8 @@
+{
+  "method": "Chrome CDP touch + generic Gamepad API mock, no physical devices",
+  "errors": [],
+  "touchPickupEquip": true,
+  "gamepadPickupNavigateEquip": true,
+  "startMenuPreserved": true,
+  "passed": true
+}

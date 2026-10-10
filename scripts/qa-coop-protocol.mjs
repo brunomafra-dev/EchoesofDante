@@ -89,14 +89,14 @@ try {
   eh.send({type:'leave'});await bad.next('ended');report.reservationExpires=true;
   const campaign=await client();
   for(const area of ['forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest']){
-    campaign.send({type:'create',profile,area});const joined=await campaign.next('joined');assert.equal(joined.area,area);assert.equal(joined.protocol,2);campaign.send({type:'leave'});await new Promise(resolve=>setTimeout(resolve,30));
+    campaign.send({type:'create',profile,area});const joined=await campaign.next('joined');assert.equal(joined.area,area);assert.equal(joined.protocol,3);campaign.send({type:'leave'});await new Promise(resolve=>setTimeout(resolve,30));
   }
   report.allCampaignRegionsAccepted=true;
   const lh=await client(),lg=await client();lh.send({type:'create',profile,area:'icenest'});const lr=await lh.next('joined');
   lg.send({type:'join',profile,code:lr.code});await lg.next('joined');await lh.next('peer');
-  const lootWorld={area:'icenest',enemies:[],progression:{xp:1000},lootAwarded:['glacier-focus','invalid']};
-  lh.send({type:'world',epoch:0,sequence:1,world:lootWorld});const item=await lg.next('world');assert.equal(item.total,0);assert.deepEqual(item.items,['glacier-focus']);
-  lh.send({type:'world',epoch:0,sequence:2,world:lootWorld});assert.deepEqual((await lg.next('world')).items,['glacier-focus']);
+  const lootWorld={area:'icenest',enemies:[],progression:{xp:1000},lootAwarded:[{uid:'qa-glacier-focus',id:'glacier-focus'},{uid:'qa-bad',id:'invalid'}]};
+  lh.send({type:'world',epoch:0,sequence:1,world:lootWorld});const item=await lg.next('world');assert.equal(item.total,0);assert.deepEqual(item.items,[{uid:'qa-glacier-focus',id:'glacier-focus'}]);
+  lh.send({type:'world',epoch:0,sequence:2,world:lootWorld});assert.deepEqual((await lg.next('world')).items,[{uid:'qa-glacier-focus',id:'glacier-focus'}]);
   lg.send({type:'equipment',equipment:{weapon:'glacier-focus',armor:'forest-armor'}});assert.deepEqual((await lh.next('peer')).profile.equipment,{armor:'forest-armor'});
   lg.send({type:'leave'});await lh.next('peer-left');campaign.send({type:'join',profile,code:lr.code});assert.deepEqual((await campaign.next('joined')).items,[]);await lh.next('peer');
   lh.send({type:'world',epoch:0,sequence:3,world:lootWorld});assert.deepEqual((await campaign.next('world')).items,[]);

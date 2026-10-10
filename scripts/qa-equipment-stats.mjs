@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { mkdir,writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
-const out='docs/campaign-equipment/qa';await mkdir(out,{recursive:true});
+const out=process.argv[2]??'docs/campaign-equipment/qa';await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true});const page=await browser.newPage();
 const report={method:'Chrome DEV, actual damage/save/equip paths with controlled target HP and stopped enemy AI; no physical device.',errors:[]};
 page.on('pageerror',e=>report.errors.push(e.message));
@@ -25,7 +25,7 @@ try{
   s.journey.creditCoopXp(receipt,0,['glacier-focus']);s.journey.creditCoopXp(receipt,0,['glacier-focus']);const after=s.journey.load();
   return{legacy:legacy.equipment,xpBefore:legacy.progression.xp,xpAfter:after.progression.xp,items:after.equipment.owned,areaBefore:legacy.area,areaAfter:after.area};
  });
- assert.deepEqual(report.legacy.legacy,{owned:[],slots:{}});assert.equal(report.legacy.xpBefore,report.legacy.xpAfter);assert.equal(report.legacy.areaBefore,report.legacy.areaAfter);assert.deepEqual(report.legacy.items,['glacier-focus']);
+ assert.deepEqual(report.legacy.legacy.owned,[]);assert.deepEqual(report.legacy.legacy.slots,{});assert.equal(report.legacy.xpBefore,report.legacy.xpAfter);assert.equal(report.legacy.areaBefore,report.legacy.areaAfter);assert.deepEqual(report.legacy.items,['glacier-focus']);
  assert.deepEqual(report.errors,[]);report.passed=true;
 }finally{await writeFile(`${out}/equipment-stats.json`,JSON.stringify(report,null,2));await browser.close();}
 console.log(report);

@@ -1,0 +1,275 @@
+{
+  "method": "Chrome headless, real UI/keys, independent saves and actual WebSocket pair. DEV positions and controlled kills for coverage. No physical devices.",
+  "errors": [],
+  "checks": [
+    "Contextual pickup of all seven equipment slots",
+    "Full outfit, no healing, existing kit",
+    "24 slots, duplicate copies, blocked pickup/remove, swap at capacity",
+    "Lab leaves real browser storage untouched",
+    "Nine-item save migration, reload, storage-failure rollback",
+    "Three respawns: stable objects/textures, equipped state preserved",
+    "Real WebSocket pair: personal pickup, gear sync, idempotent receipts, inventory does not pause party"
+  ],
+  "views": [
+    {
+      "width": 998,
+      "height": 720,
+      "scroll": 998
+    },
+    {
+      "width": 998,
+      "height": 768,
+      "scroll": 998
+    },
+    {
+      "width": 998,
+      "height": 1080,
+      "scroll": 998
+    },
+    {
+      "width": 804,
+      "height": 390,
+      "scroll": 804
+    }
+  ],
+  "performance": [
+    {
+      "data": {
+        "schema": 2,
+        "owned": [
+          "forest-emitter",
+          "forest-armor",
+          "forest-focus",
+          "sirocco-emitter",
+          "sirocco-armor",
+          "sirocco-focus",
+          "glacier-emitter",
+          "glacier-armor",
+          "glacier-focus",
+          "forest-boots"
+        ],
+        "slots": {
+          "weapon": "forest-emitter",
+          "armor": "sirocco-armor",
+          "boots": "forest-boots",
+          "accessory": "glacier-focus"
+        },
+        "items": [
+          {
+            "uid": "legacy-forest-emitter",
+            "id": "forest-emitter"
+          },
+          {
+            "uid": "legacy-forest-armor",
+            "id": "forest-armor"
+          },
+          {
+            "uid": "legacy-forest-focus",
+            "id": "forest-focus"
+          },
+          {
+            "uid": "legacy-sirocco-emitter",
+            "id": "sirocco-emitter"
+          },
+          {
+            "uid": "legacy-sirocco-armor",
+            "id": "sirocco-armor"
+          },
+          {
+            "uid": "legacy-sirocco-focus",
+            "id": "sirocco-focus"
+          },
+          {
+            "uid": "legacy-glacier-emitter",
+            "id": "glacier-emitter"
+          },
+          {
+            "uid": "legacy-glacier-armor",
+            "id": "glacier-armor"
+          },
+          {
+            "uid": "legacy-glacier-focus",
+            "id": "glacier-focus"
+          },
+          {
+            "uid": "62ababc2-1cbd-4307-a97c-6b24297c5b38",
+            "id": "forest-boots"
+          }
+        ],
+        "equipped": {
+          "weapon": "legacy-forest-emitter",
+          "armor": "legacy-sirocco-armor",
+          "boots": "62ababc2-1cbd-4307-a97c-6b24297c5b38",
+          "accessory": "legacy-glacier-focus"
+        }
+      },
+      "free": 18,
+      "loot": [],
+      "hp": 122,
+      "maxHp": 122,
+      "objects": 374,
+      "textures": 150,
+      "fps": 32.265625,
+      "area": "forest"
+    },
+    {
+      "data": {
+        "schema": 2,
+        "owned": [
+          "forest-emitter",
+          "forest-armor",
+          "forest-focus",
+          "sirocco-emitter",
+          "sirocco-armor",
+          "sirocco-focus",
+          "glacier-emitter",
+          "glacier-armor",
+          "glacier-focus",
+          "forest-boots"
+        ],
+        "slots": {
+          "weapon": "forest-emitter",
+          "armor": "sirocco-armor",
+          "boots": "forest-boots",
+          "accessory": "glacier-focus"
+        },
+        "items": [
+          {
+            "uid": "legacy-forest-emitter",
+            "id": "forest-emitter"
+          },
+          {
+            "uid": "legacy-forest-armor",
+            "id": "forest-armor"
+          },
+          {
+            "uid": "legacy-forest-focus",
+            "id": "forest-focus"
+          },
+          {
+            "uid": "legacy-sirocco-emitter",
+            "id": "sirocco-emitter"
+          },
+          {
+            "uid": "legacy-sirocco-armor",
+            "id": "sirocco-armor"
+          },
+          {
+            "uid": "legacy-sirocco-focus",
+            "id": "sirocco-focus"
+          },
+          {
+            "uid": "legacy-glacier-emitter",
+            "id": "glacier-emitter"
+          },
+          {
+            "uid": "legacy-glacier-armor",
+            "id": "glacier-armor"
+          },
+          {
+            "uid": "legacy-glacier-focus",
+            "id": "glacier-focus"
+          },
+          {
+            "uid": "62ababc2-1cbd-4307-a97c-6b24297c5b38",
+            "id": "forest-boots"
+          }
+        ],
+        "equipped": {
+          "weapon": "legacy-forest-emitter",
+          "armor": "legacy-sirocco-armor",
+          "boots": "62ababc2-1cbd-4307-a97c-6b24297c5b38",
+          "accessory": "legacy-glacier-focus"
+        }
+      },
+      "free": 18,
+      "loot": [],
+      "hp": 122,
+      "maxHp": 122,
+      "objects": 374,
+      "textures": 150,
+      "fps": 25.19921875,
+      "area": "forest"
+    },
+    {
+      "data": {
+        "schema": 2,
+        "owned": [
+          "forest-emitter",
+          "forest-armor",
+          "forest-focus",
+          "sirocco-emitter",
+          "sirocco-armor",
+          "sirocco-focus",
+          "glacier-emitter",
+          "glacier-armor",
+          "glacier-focus",
+          "forest-boots"
+        ],
+        "slots": {
+          "weapon": "forest-emitter",
+          "armor": "sirocco-armor",
+          "boots": "forest-boots",
+          "accessory": "glacier-focus"
+        },
+        "items": [
+          {
+            "uid": "legacy-forest-emitter",
+            "id": "forest-emitter"
+          },
+          {
+            "uid": "legacy-forest-armor",
+            "id": "forest-armor"
+          },
+          {
+            "uid": "legacy-forest-focus",
+            "id": "forest-focus"
+          },
+          {
+            "uid": "legacy-sirocco-emitter",
+            "id": "sirocco-emitter"
+          },
+          {
+            "uid": "legacy-sirocco-armor",
+            "id": "sirocco-armor"
+          },
+          {
+            "uid": "legacy-sirocco-focus",
+            "id": "sirocco-focus"
+          },
+          {
+            "uid": "legacy-glacier-emitter",
+            "id": "glacier-emitter"
+          },
+          {
+            "uid": "legacy-glacier-armor",
+            "id": "glacier-armor"
+          },
+          {
+            "uid": "legacy-glacier-focus",
+            "id": "glacier-focus"
+          },
+          {
+            "uid": "62ababc2-1cbd-4307-a97c-6b24297c5b38",
+            "id": "forest-boots"
+          }
+        ],
+        "equipped": {
+          "weapon": "legacy-forest-emitter",
+          "armor": "legacy-sirocco-armor",
+          "boots": "62ababc2-1cbd-4307-a97c-6b24297c5b38",
+          "accessory": "legacy-glacier-focus"
+        }
+      },
+      "free": 18,
+      "loot": [],
+      "hp": 122,
+      "maxHp": 122,
+      "objects": 374,
+      "textures": 150,
+      "fps": 20.6494140625,
+      "area": "forest"
+    }
+  ],
+  "passed": true
+}

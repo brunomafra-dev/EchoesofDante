@@ -1,0 +1,221 @@
+{
+  "items": [
+    {
+      "name": "accessory-1.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 3491,
+      "nonempty": true
+    },
+    {
+      "name": "accessory-2.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 3491,
+      "nonempty": true
+    },
+    {
+      "name": "accessory-3.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 3491,
+      "nonempty": true
+    },
+    {
+      "name": "armor-1.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 2211,
+      "nonempty": true
+    },
+    {
+      "name": "armor-2.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 2488,
+      "nonempty": true
+    },
+    {
+      "name": "armor-3.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 2488,
+      "nonempty": true
+    },
+    {
+      "name": "boots-1.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 947,
+      "nonempty": true
+    },
+    {
+      "name": "boots-2.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 1135,
+      "nonempty": true
+    },
+    {
+      "name": "boots-3.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 1135,
+      "nonempty": true
+    },
+    {
+      "name": "gloves-1.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 4661,
+      "nonempty": true
+    },
+    {
+      "name": "gloves-2.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 4976,
+      "nonempty": true
+    },
+    {
+      "name": "gloves-3.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 4976,
+      "nonempty": true
+    },
+    {
+      "name": "helmet-1.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 2194,
+      "nonempty": true
+    },
+    {
+      "name": "helmet-2.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 2473,
+      "nonempty": true
+    },
+    {
+      "name": "helmet-3.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 2473,
+      "nonempty": true
+    },
+    {
+      "name": "hunter-weapon-1.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 2276,
+      "nonempty": true
+    },
+    {
+      "name": "hunter-weapon-2.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 2247,
+      "nonempty": true
+    },
+    {
+      "name": "hunter-weapon-3.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 2247,
+      "nonempty": true
+    },
+    {
+      "name": "legs-1.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 2164,
+      "nonempty": true
+    },
+    {
+      "name": "legs-2.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 2602,
+      "nonempty": true
+    },
+    {
+      "name": "legs-3.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 2602,
+      "nonempty": true
+    },
+    {
+      "name": "warrior-weapon-1.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 1387,
+      "nonempty": true
+    },
+    {
+      "name": "warrior-weapon-2.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 877,
+      "nonempty": true
+    },
+    {
+      "name": "warrior-weapon-3.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 877,
+      "nonempty": true
+    }
+  ],
+  "totalBytes": 59909
+}

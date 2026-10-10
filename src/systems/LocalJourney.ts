@@ -8,7 +8,7 @@ import type { BestiarySnapshot } from './Bestiary';
 import type { ProgressionSnapshot } from './Progression';
 import type { AbilityUpgradeRanks } from '../config/abilityUpgrades';
 import { characterProfiles } from './CharacterProfiles';
-import { validEquipment, type EquipmentId, type EquipmentSnapshot } from '../config/equipment';
+import { validEquipment, validItem, type EquipmentId, type InventoryItem, type EquipmentSnapshot } from '../config/equipment';
 
 export const JOURNEY_KEY = 'echoes-of-dante.journey.v1';
 export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSeen', 'deepCavernEntered',
@@ -137,15 +137,17 @@ export class LocalJourney {
     }
   }
 
-  creditCoopXp(id: string, total: number, items:readonly EquipmentId[]=[]): boolean {
+  creditCoopXp(id: string, total: number, items:readonly (EquipmentId|InventoryItem)[]=[]): boolean {
     if (!/^[a-f0-9]{32}$/.test(id) || !integer(total, 1e9)) return false;
     const saved = this.load();
     if (!saved) return false;
     const receipts = saved.coopReceipts ?? [];
     const previous = receipts.find(receipt => receipt.id === id)?.total ?? 0;
     const equipment=validEquipment(saved.equipment);
-    const merged=validEquipment({owned:[...equipment.owned,...items],slots:equipment.slots});
-    if (total <= previous && merged.owned.length===equipment.owned.length) return true;
+    const incoming=items.map(i=>typeof i==='string'?{uid:`legacy-${i}`,id:i}:i).filter(validItem);
+    const merged=validEquipment({...equipment,items:[...equipment.items!,...incoming.filter(i=>!equipment.items!.some(v=>v.uid===i.uid))]});
+    if(incoming.some(i=>!merged.items!.some(v=>v.uid===i.uid))){this.status='Mochila cheia: recompensa pendente até liberar espaço.';return false;}
+    if (total <= previous && merged.items!.length===equipment.items!.length) return true;
     // XP and its receipt are a single storage write. Campaign flags/area/kit stay local.
     saved.progression.xp = Math.min(1e9, saved.progression.xp + Math.max(0,total - previous));
     saved.equipment=merged;

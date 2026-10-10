@@ -113,7 +113,7 @@ Os números dos novos kits serão registrados no documento de balanceamento ante
 |---|---|---|
 | **0 — Arquivar a direção** | Criar `docs/RPG_FOUNDATION_ROADMAP.md` com decisões, etapas, dependências e checklist | Documento versionado e ligado ao README |
 | **1 — Personagens modulares** | Masculino/feminino, registro de classes e equipamento visual piloto | Frente/costas, caminhada, mãos e arma aprovados |
-| **2 — Inventário e loot** | Mochila, seis slots, drops próprios, migração e persistência pessoal | Coletar/equipar/recarregar funciona no solo e na dupla |
+| **2 — Inventário e loot** | Mochila, sete slots, drops próprios, migração e persistência pessoal | Coletar/equipar/recarregar funciona no solo e na dupla |
 | **3 — Base e economia** | Nave, NPCs, mapa, cofre, poções, compras e fabricação | Completar uma expedição e retornar para melhorar o personagem |
 | **4 — Progressão e ameaça** | Revisar recompensas e encontros das regiões existentes | Equipamento e poções ajudam sem eliminar o desafio |
 | **5 — Astral** | Kit elemental, recurso, apresentação masculina/feminina | Campanha e bosses jogáveis no solo e em dupla |
@@ -171,8 +171,8 @@ Decisão do usuário em 09/10/2026: cada sprint deve terminar com um link espec�
 ### Checklist
 
 - [x] **Etapa 0 — Arquivar a direção:** plano preservado, referências no README e instruções do repositório. Entrega documental; gameplay e versão 0.1.78 preservados.
-- [ ] **Etapa 1 — Personagens modulares:** masculino/feminino, registro de classes e troca visual piloto de arma/torso. Implementação em [avaliação técnica e humana](modular-characters/README.md); próxima etapa aguarda aprovação visual.
-- [ ] **Etapa 2 — Inventário e loot:** 24 espaços, seis slots, drops, migração e persistência pessoal.
+- [x] **Etapa 1 — Personagens modulares:** masculino/feminino, roupa, equipamento e junção dos braços aprovados pelo usuário após a versão 0.1.82 (“bem melhor”).
+- [ ] **Etapa 2 — Inventário e loot:** implementação técnica 0.1.83: 24 espaços, sete slots, drops pessoais, migração e persistência. [Relatório/teste](inventory-loot/README.md). Aguardando aprovação humana antes da etapa 3.
 - [ ] **Etapa 3 — Base e economia:** nave, NPCs, mapa, cofre, poções, compras e fabricação.
 - [ ] **Etapa 4 — Progressão e ameaça:** recompensas e encontros equilibrados para o novo equipamento e consumíveis.
 - [ ] **Etapa 5 — Astral:** quatro elementos alternáveis, Energia Astral e campanha solo/cooperativa.
@@ -215,3 +215,11 @@ O usuário aprovou a melhoria da revisão 03, mas apontou braços desconectados 
 [Relatório e capturas](modular-characters/shoulder-fix/README.md) · [Teste reservado](https://echosofdante.vercel.app/character-playtest.html?class=hunter&sex=female&kit=clothes&weapon=starter).
 
 **Aguardar validação desta correção antes da etapa 2.**
+
+### Aprovação da etapa 1 e entrega técnica da etapa 2 — 0.1.83
+
+O usuário aprovou a junção dos braços (“bem melhor”) e autorizou a etapa seguinte. Mochila 24 espaços, sete slots, comparação, peças visíveis, coleta contextual pessoal e persistência com migração dos nove itens. Catálogo compartilhado com relay, protocolo 3; combate, controles, mapas e narrativa preservados.
+
+[Relatório e evidências](inventory-loot/README.md) · [Laboratório reservado](https://echosofdante.vercel.app/inventory-playtest.html).
+
+**Aguardar validação humana da mochila/loot antes da etapa 3.** As pendências anteriores da etapa 1 são registros históricos, superados pela aprovação explícita.

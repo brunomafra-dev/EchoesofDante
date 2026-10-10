@@ -1,5 +1,9 @@
 # Expedições em dupla · 0.1.78
 
+## Inventário pessoal — protocolo 3
+
+A etapa 2 usa sete slots e recibos por cópia de equipamento. Cada participante coleta seus próprios drops; abrir a mochila não pausa o companheiro. Frontend e relay precisam estar atualizados. [Migração e QA](../inventory-loot/README.md). Os relatos abaixo são históricos.
+
 Duas pessoas, mesma build web, Guerreiro ou Star Hunter, sem login. A campanha inteira, incluindo cavernas, galerias glaciais e os três bosses, aceita a dupla. XP e equipamentos ganhos permanecem pessoais. [Implementação e QA da campanha](../campaign-equipment/README.md).
 
 ## Como jogar — fluxo do jogador

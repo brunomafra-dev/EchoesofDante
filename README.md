@@ -1,5 +1,9 @@
 # Echoes of Dante
 
+## Mochila e drops — etapa 2
+
+Equipamentos pessoais em sete espaços, mochila de 24 itens, coleta contextual e comparação. Saves antigos preservados. [Relatório](docs/inventory-loot/README.md) · [Teste reservado](https://echosofdante.vercel.app/inventory-playtest.html). Aprovação humana pendente; base/economia será a próxima etapa.
+
 ## Fundação do RPG — plano aprovado
 
 [Plano de implementação e checklist](docs/RPG_FOUNDATION_ROADMAP.md): personagens modulares, equipamentos visíveis, inventário, base de pouso, economia, Astral, Vinculador, cooperativo de quatro jogadores e prólogo. **Etapa 0 concluída; próxima entrega: personagens modulares.** As funcionalidades futuras estão identificadas como planejadas.

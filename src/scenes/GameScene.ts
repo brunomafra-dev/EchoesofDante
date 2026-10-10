@@ -66,7 +66,7 @@ import { ReferenceArea } from '../experiments/quality-reference/ReferenceArea';
 import { ReferenceImpacts } from '../experiments/quality-reference/ReferenceImpacts';
 import { preloadWarriorArt } from '../visual/WarriorArt';
 import { Equipment } from '../systems/Equipment';
-import { EquipmentDrops } from '../systems/EquipmentDrops';
+import { preloadItemIcons,EquipmentDrops } from '../systems/EquipmentDrops';
 import { EquipmentDialog } from '../ui/EquipmentDialog';
 import { EQUIPMENT, EQUIPMENT_IDS, equipmentStats, type EquipmentId, type EquipmentSnapshot, type EquipmentSlot } from '../config/equipment';
 
@@ -78,6 +78,7 @@ export class GameScene extends Phaser.Scene {
   private loot!:EquipmentDrops;
   private equipmentDialog!:EquipmentDialog;
   private lootKills=0;
+  private inventoryUnpaused=false;
   private get characterMaxHp(): number { return (this.classId === 'hunter' ? Math.round(this.progression.maxHp * HUNTER.hpRatio) : this.progression.maxHp)+equipmentStats(this.equipment.snapshot().slots).hp; }
   private party?: PartyExpedition;
   private coopWorldXp?: number;
@@ -201,9 +202,10 @@ export class GameScene extends Phaser.Scene {
 
   constructor(private readonly qualityReference: false | 'baseline' | 'reference' = false,
     private readonly originalWarrior = false, private readonly shellReady?: (scene: GameScene) => void,
-    private readonly glacierPlaytest?: { area: 'forest' | 'icecave' | 'icenest'; classId: 'warrior' | 'hunter'; sex?:CharacterSex; pilot?:boolean; look?:import('../config/appearance').EquipmentLook; weaponLook?:import('../config/appearance').WeaponStyle }) { super('Game'); }
+    private readonly glacierPlaytest?: { area: 'forest' | 'icecave' | 'icenest'; classId: 'warrior' | 'hunter'; sex?:CharacterSex; pilot?:boolean; inventory?:boolean; look?:import('../config/appearance').EquipmentLook; weaponLook?:import('../config/appearance').WeaponStyle }) { super('Game'); }
 
   preload(): void {
+    preloadItemIcons(this);
     preloadHunterArt(this);
     preloadModularArt(this);
     if (!this.textures.exists('glacier-ground')) this.load.image('glacier-ground', `${import.meta.env.BASE_URL}assets/visual/environment/glacier-ground.webp`);
@@ -383,7 +385,7 @@ export class GameScene extends Phaser.Scene {
     this.transferHp = undefined;
     this.kineticWave = this.add.graphics().setDepth(14999);
     this.controls = new Controls(this, () => this.sounds.unlock(), () => {
-      if (!this.player.isDead && !this.records?.isOpen) this.beginStrike(this.time.now);
+      if (!this.player.isDead && !this.records?.isOpen && !this.equipmentDialog?.isOpen) this.beginStrike(this.time.now);
     });
     this.controls.setCombatPresentation(this.classId === 'hunter');
     this.updateMusicRegion(true);
@@ -526,20 +528,20 @@ export class GameScene extends Phaser.Scene {
       this.time.delayedCall(350, () => this.showAvailableUpgrade());
     }
     this.party = this.qualityReference || this.glacierPlaytest ? undefined : new PartyExpedition(this, () => this.partyBridge());
-    this.loot=new EquipmentDrops(this);this.lootKills=0;
-    this.equipmentDialog=new EquipmentDialog(this,()=>this.equipment.snapshot(),(slot,id)=>this.equipItem(slot,id),()=>this.resumeFromModal());
+    this.loot=new EquipmentDrops(this,coopSession.role==='guest'?'guest':'host');this.lootKills=0;
+    this.equipmentDialog=new EquipmentDialog(this,()=>this.equipment.snapshot(),(slot,id,uid)=>this.equipItem(slot,id,uid),()=>this.closeEquipment(),()=>this.openEquipment(),this.classId);
     this.shellReady?.(this);
   }
 
   update(time: number, delta: number): void {
     time -= this.recordsTimeOffset;
     if (this.transitioning) return;
-    this.controls.update(this.player.position);
+    if(!this.equipmentDialog?.isOpen)this.controls.update(this.player.position);
     // Do not simulate an authoritative world while its room is reconnecting.
     if (coopSession.role === 'host' && !coopSession.connected) { this.party?.showConnection(); return; }
     if (coopSession.role === 'guest') {
       this.visitingCoop = true;
-      if (this.controls.recordsPressed) { this.records.open(); return; }
+      if (!this.equipmentDialog.isOpen && this.controls.recordsPressed) { this.records.open(); return; }
       this.party?.updateGuest(time, Math.min(delta / 1000, .04));
       this.hud.setInputMethod(this.controls.inputMethod);
       updateEnvironmentOcclusion(this, this.player.position, Math.min(delta / 1000, .04));
@@ -547,16 +549,15 @@ export class GameScene extends Phaser.Scene {
       return;
     }
     this.party?.updateHost(time, Math.min(delta / 1000, .04));
-    this.loot.collect([this.player,...(this.party?.partner?[this.party.partner.player]:[])].filter(p=>!p.isDead).map(p=>p.position),id=>{
-      this.equipment.grant(id);if(coopSession.role==='host')coopSession.lootAwarded.add(id);
-      this.hud.showDiscovery(`ITEM RECUPERADO\n${EQUIPMENT[id].name}\nMENU → EQUIPAMENTO`);this.sounds.ancient();this.saveProgress();
-    });
     this.referenceImpacts?.update(time);
-    if (this.controls.recordsPressed) { this.records.open(); return; }
+    if (!this.equipmentDialog.isOpen && this.controls.recordsPressed) { this.records.open(); return; }
     this.hud.setInputMethod(this.controls.inputMethod);
     const remoteInteraction = this.party?.takeInteraction();
     const interactionPosition = remoteInteraction ?? this.player.position;
-    const interact = this.controls.interactPressed || !!remoteInteraction;
+    const pickup=this.loot.nearest(interactionPosition,remoteInteraction?'guest':'host');
+    const requestedInteract=(!this.equipmentDialog.isOpen&&this.controls.interactPressed)||!!remoteInteraction;
+    if(pickup&&requestedInteract&&!this.player.isDead)this.pickupEquipment(pickup,!!remoteInteraction);
+    const interact = requestedInteract&&!pickup;
     const nearbyEcho = this.echoSites.find(site => site.canInvestigate(interactionPosition, this.player.isDead));
     const nearDiscovery = nearbyEcho !== undefined;
     const nearThreshold = this.threshold?.canInvestigate(interactionPosition, this.player.isDead) ?? false;
@@ -732,8 +733,8 @@ export class GameScene extends Phaser.Scene {
     const canInteract = nearIceEntry || nearIceBack || nearIceExit || nearIceRelay || nearColdPortal || nearFrostReturn || nearFrostRelay || nearSandpitDescent || nearSandpitAscent || nearColdClue || nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearChapterPortal || nearSiroccoExit || nearSiroccoSignal || nearDunesRuin || nearValleyLandmark || nearValleyFrontierSignal;
     const interactionAction = nearIceEntry || nearIceBack || nearIceExit ? 'ENTRAR' : nearColdPortal || nearFrostReturn ? 'ENTRAR' : nearSandpitDescent ? 'DESCER' : nearSandpitAscent ? 'SUBIR' : nearPortal || nearChapterPortal || nearSiroccoExit ? 'ENTRAR' : 'INVESTIGAR';
     if (interact) this.saveProgress();
-    this.hud.setDiscoveryPrompt(canInteract, interactionAction);
-    this.controls.setInteractAvailable(canInteract, interactionAction);
+    this.hud.setDiscoveryPrompt(canInteract||!!pickup,pickup?'COLETAR':interactionAction);
+    this.controls.setInteractAvailable(canInteract||!!pickup,pickup?'COLETAR':interactionAction);
     this.controls.setDead(this.player.isDead);
     this.updateExplorationGuide();
     if (this.player.isDead) {
@@ -743,11 +744,11 @@ export class GameScene extends Phaser.Scene {
       return;
     }
     const dt = Math.min(delta / 1000, 0.04);
-    const input = this.controls.movement();
+    const input = this.equipmentDialog.isOpen?{x:0,y:0}:this.controls.movement();
     const aim = this.controls.aimFrom(this.player.position);
     this.charge.tick(time);
     if (this.controls.chargeCancelled) this.charge.stop();
-    if (this.controls.chargePressed && !this.player.isDashing && this.attack.pose(time, aim).phase === 'READY' && this.charge.start(time)) {
+    if (!this.equipmentDialog.isOpen && this.controls.chargePressed && !this.player.isDashing && this.attack.pose(time, aim).phase === 'READY' && this.charge.start(time)) {
       this.sounds.charge();
     }
     if ((this.controls.chargeReleased || (this.charge.phase === 'CHARGING' && !this.controls.chargeHeld)) && this.charge.release(time, aim, this.player.position)) {
@@ -758,11 +759,11 @@ export class GameScene extends Phaser.Scene {
     const heavy = this.charge.pose(time);
     const heavyBusy = heavy.phase !== 'READY';
     const facing = heavy.phase === 'RELEASE' ? this.charge.angle : aim;
-    if (this.controls.dashPressed && !heavyBusy && this.player.startDash(time, input)) {
+    if (!this.equipmentDialog.isOpen && this.controls.dashPressed && !heavyBusy && this.player.startDash(time, input)) {
       this.sounds.dash();
       this.dashBurst(input);
     }
-    if (this.controls.attacking && !heavyBusy) this.beginStrike(time);
+    if (!this.equipmentDialog.isOpen && this.controls.attacking && !heavyBusy) this.beginStrike(time);
     const pose = this.attack.pose(time, facing);
     const wasDashing = this.player.isDashing;
     if (this.area === 'warden' || this.area === 'sandpit' || this.area === 'icenest') {
@@ -1282,7 +1283,7 @@ export class GameScene extends Phaser.Scene {
       obstacles: this.arena.obstacles, solidObstacles: (this.warden && !this.warden.isDead || this.soterrado?.solid || this.vesper?.solid) ? [...this.arena.obstacles, { ...(this.warden ?? this.soterrado ?? this.vesper)!.position, radius: (this.warden ?? this.soterrado ?? this.vesper)!.radius }] : this.arena.obstacles, bounds: this.movementBounds, hud: this.hud, hunter: this.hunter,
       boss: this.warden ?? this.soterrado ?? this.vesper,
       signalPortal:this.signalPortal?.active??false,
-      baseMaxHp:this.progression.maxHp,loot:this.loot?.snapshot()??[],lootRender:poses=>this.loot.render(poses??[]),
+      inputBlocked:this.equipmentDialog?.isOpen??false,baseMaxHp:this.progression.maxHp,loot:this.loot?.snapshot()??[],lootRender:poses=>this.loot.render(poses??[]),
       bossRender: boss => {
         (this.wardenHud ?? this.soterradoHud ?? this.vesperHud)?.update(boss);
         this.wardenArena?.setEncounterActive(boss?.active ?? false);
@@ -1311,6 +1312,7 @@ export class GameScene extends Phaser.Scene {
       id: enemy => this.hollowSpawnIds.get(enemy), species: enemy => this.enemySpecies.get(enemy),
       hit: (targets, damage, angle, from, heavy) => this.resolvePlayerHits(this.time.now, targets, damage, angle, 0x5fe6d8, from, heavy,coopSession.peer?.equipment??{}),
       prompt: position => {
+        if(this.loot.nearest(position,'guest'))return{available:true,action:'COLETAR'};
         const dead = false;
         const portal = this.chapterPortal?.canEnter(position, dead) || this.sirocco?.exitPortal.canEnter(position, dead) || this.frost?.returnPortal.canEnter(position, dead)
           || this.signalPortal?.canTraverse(position,dead) || this.coldPortal?.canEnter(position,dead) || this.frost?.onward.canEnter(position,dead)
@@ -1345,7 +1347,9 @@ export class GameScene extends Phaser.Scene {
 
   private syncCoopWorld(world: PartyWorld): boolean {
     this.visitingCoop = true;
-    for(const id of coopSession.personalItems)this.equipment.grant(id);
+    const beforeItems=this.equipment.snapshot().items!.length;
+    for(const item of coopSession.personalItems)this.equipment.acquire(item);
+    if(this.equipment.snapshot().items!.length!==beforeItems)coopSession.updateEquipment(this.equipment.snapshot().slots,this.equipment.free);
     this.progression.restore(world.progression);
     for (const key of JOURNEY_FLAGS) this[key] = world.flags[key] === true;
     const bossArea=['warden','sandpit','icenest'].includes(world.area);
@@ -1666,7 +1670,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private showAvailableUpgrade(): void {
-    if (coopSession.role === 'guest' || this.player.isDead || !this.abilityUpgradeDialog || this.abilityUpgradeDialog.isOpen || this.records?.isOpen || this.progression.upgradePointsAvailable <= 0) return;
+    if (coopSession.role === 'guest' || this.player.isDead || !this.abilityUpgradeDialog || this.abilityUpgradeDialog.isOpen || this.equipmentDialog?.isOpen || this.records?.isOpen || this.progression.upgradePointsAvailable <= 0) return;
     this.pauseForModal();
     this.abilityUpgradeDialog.open(this.progression.level, this.progression.abilityUpgradeRanks, this.progression.upgradePointsAvailable);
   }
@@ -1760,7 +1764,7 @@ export class GameScene extends Phaser.Scene {
     if (this.glacierPlaytest) {
       if(this.glacierPlaytest.area==='forest'){
         this.area='forest';
-        for(const id of ['forest-armor','forest-emitter'] as const)this.equipment.grant(id);
+        if(!this.glacierPlaytest.inventory)for(const id of ['forest-armor','forest-emitter'] as const)this.equipment.grant(id);
         if(this.glacierPlaytest.pilot){this.equipment.equip('armor','forest-armor');this.equipment.equip('weapon','forest-emitter');}
         return;
       }
@@ -1809,30 +1813,49 @@ export class GameScene extends Phaser.Scene {
 
   openEquipment():void {
     if(this.player.isDead||this.equipmentDialog.isOpen)return;
-    this.pauseForModal();this.equipmentDialog.open();
+    this.inventoryUnpaused=coopSession.connected;
+    if(!this.inventoryUnpaused)this.pauseForModal();else{this.controls.cancelForRecords();this.charge.stop();this.hunter?.clear();}
+    this.equipmentDialog.open();
   }
 
-  private equipItem(slot:EquipmentSlot,id?:EquipmentId):boolean {
-    const before=this.equipment.snapshot();if(!this.equipment.equip(slot,id))return false;
+  private closeEquipment():void {if(!this.inventoryUnpaused)this.resumeFromModal();else this.controls.cancelForRecords();this.inventoryUnpaused=false;}
+
+  private equipItem(slot:EquipmentSlot,id?:EquipmentId,uid?:string):boolean {
+    const before=this.equipment.snapshot();if(!this.equipment.equip(slot,id,uid))return false;
     const saved=coopSession.role==='guest'?this.journey.saveEquipment(this.equipment.snapshot()):this.saveProgress();
     if(!saved&&!this.glacierPlaytest&&!this.qualityReference){this.equipment.restore(before);return false;}
     this.player.health.max=this.characterMaxHp;this.player.health.current=Math.min(this.player.hp,this.player.maxHp);
-    this.updateEquipmentAppearance();coopSession.updateEquipment(this.equipment.snapshot().slots);return true;
+    this.updateEquipmentAppearance();coopSession.updateEquipment(this.equipment.snapshot().slots,this.equipment.free);return true;
   }
 
+  seedInventoryPlaytest(full=false,id?:EquipmentId):void {
+    if(!this.glacierPlaytest?.inventory)return;
+    if(full){this.equipment.restore(undefined);for(let i=0;i<24;i++)this.equipment.acquire({uid:`lab-full-${i}`,id:'forest-helmet'});this.updateEquipmentAppearance();}
+    const candidates=id?[id]:full?['forest-armor' as const]:EQUIPMENT_IDS.filter(id=>EQUIPMENT[id].tier===1);
+    candidates.forEach((item,i)=>this.loot.add(item,{x:this.player.position.x+42+(i%4)*38,y:this.player.position.y+Math.floor(i/4)*38},'host',this.classId));
+  }
+  resetInventoryPlaytest():void {if(!this.glacierPlaytest?.inventory)return;this.equipment.restore(undefined);this.loot.render([]);this.updateEquipmentAppearance();}
+  private pickupEquipment(pose:import('../systems/EquipmentDrops').LootPose,guest:boolean):void {
+    if(guest){
+      if((coopSession.peer?.bagFree??0)<=0){this.hud.showDiscovery('Mochila do companheiro cheia.');return;}
+      coopSession.lootAwarded.set(pose.uid,{uid:pose.uid,id:pose.id});
+      if(coopSession.peer)coopSession.peer.bagFree=Math.max(0,(coopSession.peer.bagFree??0)-1);
+    }else{
+      const before=this.equipment.snapshot();if(!this.equipment.acquire(pose)){this.hud.showDiscovery('MOCHILA CHEIA · 24/24\nEquipe uma peça para liberar espaço.');return;}
+      if(!this.saveProgress()&&!this.glacierPlaytest&&!this.qualityReference){this.equipment.restore(before);this.hud.showDiscovery('Não foi possível salvar a coleta. O item continua no chão.');return;}
+      this.hud.showDiscovery(`Coletado: ${EQUIPMENT[pose.id].name}`);coopSession.updateEquipment(this.equipment.snapshot().slots,this.equipment.free);
+    }
+    this.loot.take(pose.uid);this.sounds.ancient();
+  }
   private dropEquipment(enemy:Enemy):void {
-    const boss=enemy===this.warden?'forest-emitter':enemy===this.soterrado?'sirocco-focus':enemy===this.vesper?'glacier-focus':undefined;
-    // Boss rewards belong to the character immediately, including a death or
-    // travel before reaching the corpse. Do not risk losing a one-time item.
-    if(boss){this.equipment.grant(boss);if(coopSession.role==='host')coopSession.lootAwarded.add(boss);return;}
-    // First resident in a region, then every fourth defeat. No per-frame RNG.
-    if(this.lootKills++%4!==0)return;
+    const boss=enemy===this.warden||enemy===this.soterrado||enemy===this.vesper;
+    // First creature, then one in four; bosses always leave equipment.
+    if(!boss&&this.lootKills++%4!==0)return;
     const tier=['frost','icecave','icenest'].includes(this.area)?3:['arid','dunes','sandpit'].includes(this.area)?2:1;
-    const pending=new Set(this.loot.snapshot().map(p=>p.id));
-    const candidates=EQUIPMENT_IDS.filter(id=>EQUIPMENT[id].tier===tier&&!this.equipment.has(id)&&!pending.has(id));
-    const tierItems=EQUIPMENT_IDS.filter(id=>EQUIPMENT[id].tier===tier&&!pending.has(id));
-    const id=candidates.find(id=>EQUIPMENT[id].slot==='armor')??candidates[0]
-      ?? (coopSession.peer && tierItems.length?tierItems[Math.floor(this.lootKills/4)%tierItems.length]:undefined);
-    if(id)this.loot.add(id,enemy.position);
+    const candidates=EQUIPMENT_IDS.filter(id=>EQUIPMENT[id].tier===tier);
+    const index=Math.floor(this.lootKills/4)%candidates.length;
+    const id=boss?candidates.find(id=>EQUIPMENT[id].slot==='accessory')!:candidates[index];
+    this.loot.add(id,enemy.position,'host',this.classId);
+    if(coopSession.peer)this.loot.add(id,enemy.position,'guest',coopSession.peer.classId as 'warrior'|'hunter');
   }
 }

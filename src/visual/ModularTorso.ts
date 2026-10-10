@@ -30,8 +30,10 @@ export class ModularTorso {
   private readonly canvases:Phaser.Textures.CanvasTexture[]=[];
   private signature='';
   bakeCount=0;
+  private readonly accessory:Phaser.GameObjects.Image;
   constructor(private scene:Phaser.Scene,rig:Phaser.GameObjects.Container,private classId:PlayableClass,private sex:CharacterSex,body:Phaser.GameObjects.Image){
     this.image=scene.add.container(0,0);rig.add(this.image);
+    this.accessory=scene.add.image(-12,6,'item-accessory-1').setDisplaySize(10,10).setVisible(false);this.image.add(this.accessory);
     const id=++serial,prefix=`dressed-${classId}-${sex}-${id}`;
     this.keys={front:prefix+'-front',back:prefix+'-back',side:prefix+'-side'};
     for(let i=0;i<(classId==='warrior'?3:1);i++){
@@ -51,6 +53,7 @@ export class ModularTorso {
       for(const texture of this.canvases)if(scene.textures.exists(texture.key))scene.textures.remove(texture.key);
     });
   }
+  setAccessory(value:boolean):void {this.accessory.setVisible(value);this.image.setVisible(value||Object.values(this.look).some(v=>v!=='none'));}
   setEquipped(value:boolean, reinforced=false):void {
     this.setLook({...equipmentLook(),torso:value?(reinforced?'reinforced':'basic'):'none'});
   }

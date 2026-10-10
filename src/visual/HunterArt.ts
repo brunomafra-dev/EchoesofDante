@@ -1,3 +1,4 @@
+import { equipmentAppearance } from '../config/equipment';
 ﻿import Phaser from 'phaser';
 import type { KineticPose } from '../combat/KineticCharge';
 import { hunterBody, weaponStyle, type WeaponStyle, type EquipmentLook, type CharacterSex } from '../config/appearance';
@@ -31,7 +32,7 @@ export class HunterArt {
     this.previous = { x, y };
     this.update(x, y, 0, false);
   }
-  setEquipment(slots:EquipmentSnapshot['slots']):void { this.torso.setEquipped(!!slots.armor,!!slots.armor&&!slots.armor.startsWith('forest'));this.weapon.setProtection(this.torso.look);this.weapon.setStyle(weaponStyle(slots.weapon)); }
+  setEquipment(slots:EquipmentSnapshot['slots']):void { this.torso.setLook(equipmentAppearance(slots));this.torso.setAccessory(!!slots.accessory);this.weapon.setProtection(this.torso.look);this.weapon.setStyle(weaponStyle(slots.weapon)); }
   setWeaponLook(style:WeaponStyle):void {this.weapon.setStyle(style);}
   setEquipmentLook(look:EquipmentLook):void {this.torso.setLook(look);this.weapon.setProtection(look);}
   update(x: number, y: number, aim: number, firing: boolean, dashing = false,
