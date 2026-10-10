@@ -4,7 +4,7 @@ Etapa entregue em **0.1.85**, revisada em **0.1.86**. [Teste reservado](https://
 
 ## Ciclo jogável
 
-Base → preparar → Floresta/região descoberta → combater → coletar → terminal de retorno → base → melhorar equipamento. Novos personagens começam na base com três poções; saves anteriores mantêm sua região e progressão. Nenhum combate, classe, dano, XP, câmera ou IA foi rebalanceado nesta etapa.
+Base → preparar → Floresta/região descoberta → combater → coletar → retorno pelo mapa → base → melhorar equipamento → retomar no ponto de saída. Novos personagens começam na base com três poções; saves anteriores mantêm sua região e progressão. Nenhum combate, classe, dano, XP, câmera ou IA foi rebalanceado nesta etapa.
 
 Base caminhável, nave DANTE-01, três abrigos e tripulantes:
 
@@ -26,7 +26,7 @@ Compras, fabricação, venda, desmontagem, cofre e consumo operam em um draft e 
 
 ## Mapa e viagens
 
-**M**, botão MAPA ou menu de pausa abrem o mapa de destinos e ligações. Mantém o minimapa. Na base, o anfitrião/solo escolhe um destino descoberto. Fora dela, retorno exige proximidade do terminal na entrada/checkpoint da região; E / COLETAR contextual / A no terminal também retorna. Boss ativo impede a retirada, tanto no jogo quanto no relay.
+**M**, botão MAPA ou menu de pausa abrem o mapa de destinos e ligações. Mantém o minimapa. Na base, o anfitrião/solo escolhe um destino descoberto. Fora dela, VOLTAR À BASE funciona de qualquer ponto de exploração; E / RETORNAR contextual / A no terminal também retorna. Na base, RETOMAR EXPEDIÇÃO recupera o ponto de saída. Boss ativo impede a retirada, tanto no jogo quanto no relay.
 
 Descobertas da campanha continuam pertencendo ao anfitrião. Ao voltar ao solo, destinos respeitam os marcos do próprio personagem, evitando pular suas portas por ter visitado outra campanha.
 
@@ -60,7 +60,7 @@ A **etapa 4** revisará dificuldade/recompensas e aplicará a penalidade de 10% 
 2. Visite Lia, compre uma poção; visite Ivo, fabrique uma peça e equipe pela mochila.
 3. Venda/desmonte outra peça; guarde e retire um item com Nara.
 4. Saia para a Floresta, lute e colete materiais/créditos.
-5. Use uma poção ferido; volte ao terminal da entrada e retorne à base.
+5. Use uma poção ferido; abra o mapa, volte à base e retome no ponto de saída.
 6. Avalie se preparar e voltar à base melhora a expedição.
 
 ### Resultado técnico desta entrega
@@ -82,3 +82,8 @@ Após o playtest, NPCs próprios substituem as cópias dos heróis e um atlas ca
 ### Revisão de recursos — 0.1.87
 
 Saldo pessoal visível, receitas com custo e estoque, falta de material explícita e equipamento menos frequente: [relatório e teste](reward-clarity/README.md). Materiais continuam regulares; drops comuns agora seguem 12 mortes na sessão, sem reiniciar por viagem/respawn. Bosses mantêm recompensa garantida. Esta revisão não é o rebalanceamento de dificuldade da etapa 4.
+
+
+### Retorno à expedição — 0.1.88
+
+Viagem à base de qualquer ponto pelo mapa, retomada na posição de saída, persistência pessoal e viagem do grupo pelo anfitrião. [Instruções, QA e limites](expedition-return/README.md) · [Teste direto](https://echosofdante.vercel.app/base-playtest.html?test=return&v=0.1.88).

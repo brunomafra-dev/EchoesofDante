@@ -58,7 +58,7 @@ Referências de princípios: preparação e slots de [Tibia](https://www.tibia.c
 - Três NPCs funcionais: **médico/fornecedor, ferreiro/técnico e responsável pelas expedições**.
 - Começar com a tripulação. Refugiados chegam visualmente após marcos da campanha, inicialmente após o Warden.
 - Mapa mundial mostra regiões, ligações, pontos descobertos e destino atual; mantém o minimapa existente.
-- Retorno à base por pontos descobertos. Não permitir retirada por portal durante boss ativo.
+- Retorno à base de qualquer ponto da exploração pelo mapa, com retomada na posição de saída. Terminais existentes também funcionam. Não permitir retirada durante boss ativo. Revisão autorizada pelo usuário em 10/10/2026; detalhes no registro da etapa 3.
 - Créditos compram suprimentos; três famílias regionais de materiais alimentam receitas.
 - Fabricação imediata, com custo e resultado explícitos. Sem filas, tempo de espera ou chance de falha.
 - Cofre pessoal de **48 espaços**, sem compartilhamento entre personagens.
@@ -240,3 +240,10 @@ O usuário aprovou o ciclo da base e pediu identidades civis próprias e mapa mu
 NPCs próprios e atlas aprovados pelo usuário (“perfeito”). Antes de avançar, solicitou saldo visível, materiais explícitos nas receitas e equipamentos mais difíceis de encontrar. Revisão localizada da etapa 3: créditos no topo, receitas com custo/estoque/faltantes, nome do material coletado e equipamento a cada 12 mortes comuns na sessão (bosses mantêm garantia). A fabricação já cobrava créditos + materiais; regra preservada.
 
 [Relatório](base-economy/reward-clarity/README.md) · [Teste reservado](https://echosofdante.vercel.app/base-playtest.html?v=0.1.87). **Aguardar validação desta revisão antes da etapa 4.** O ajuste de frequência foi antecipado por solicitação explícita; dificuldade e penalidade de morte ainda não foram implementadas.
+
+
+### Retorno e retomada da expedição — 0.1.88
+
+Recursos/receitas da revisão 0.1.87 aprovados pelo usuário (“achei digno”). Em seguida autorizou retorno à base de qualquer ponto e retomada no ponto de saída. Ajuste explícito da decisão anterior de retirada somente em terminais: reduz repetição do caminho para comprar, fabricar e guardar materiais. Guarda um destino pessoal; boss ativo permanece bloqueado. Na dupla, o anfitrião conduz a retomada e o visitante acompanha. Não muda checkpoints, combate, dificuldade ou a ordem das etapas.
+
+[Relatório e teste](base-economy/expedition-return/README.md). **Aguardar validação humana do retorno antes da etapa 4.**

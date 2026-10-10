@@ -4,6 +4,7 @@ import {LandingBase} from '../systems/LandingBase';
 import {BasePanel} from '../ui/BasePanel';
 import {transact,type ServiceAction} from '../systems/BaseEconomy';
 import {validEconomy,MATERIAL_NAMES,EQUIPMENT_DROP_INTERVAL,type EconomySnapshot} from '../config/economy';
+import {safeExpeditionPosition,validExpeditionReturn,type ExpeditionReturn} from '../systems/ExpeditionReturn';
 import {ResourceDrops,type ResourceDrop} from '../systems/ResourceDrops';
 import { coopSession, type PartyWorld } from '../network/CoopSession';
 import { PartyExpedition, type PartyBridge } from '../network/PartyExpedition';
@@ -90,6 +91,8 @@ export class GameScene extends Phaser.Scene {
   private peerPotionReady=0;
   private economyRoom='';
   private returnStation={x:0,y:0};
+  private expeditionReturn?:ExpeditionReturn;
+  private expeditionArrival?:Vec2;
   private serviceUnpaused=false;
   private loot!:EquipmentDrops;
   private equipmentDialog!:EquipmentDialog;
@@ -374,7 +377,7 @@ export class GameScene extends Phaser.Scene {
       this.arena = this.cavern;
       this.movementBounds = this.arena.bounds;
     }
-    const entry = coopSession.role === 'guest' && coopSession.world?.partner ? coopSession.world.partner : this.area === 'base'?BASE.entry:this.area === 'forest' ? FOREST_ENTRY : this.area === 'valley'
+    let entry = coopSession.role === 'guest' && coopSession.world?.partner ? coopSession.world.partner : this.area === 'base'?BASE.entry:this.area === 'forest' ? FOREST_ENTRY : this.area === 'valley'
       ? this.returnToValleyPortal ? VALLEY.entry : this.returnToFrontierPortal ? VALLEY.frontier.checkpoint : this.valleyFrontierReached ? VALLEY.frontier.checkpoint : this.valleyCheckpointReached ? VALLEY.checkpoint : VALLEY.entry
       : this.area === 'arid' ? this.returnFromDunes ? { x: 4770, y: 805 } : this.aridSignalSeen ? SIROCCO.frontierCheckpoint : this.aridVisited ? SIROCCO.checkpoint : SIROCCO.entry
       : this.area === 'icecave' || this.area === 'icenest' ? this.glacierArrival ?? (this.area === 'icenest' && this.vesperReached ? GLACIER.icenest.checkpoint : this.area === 'icecave' && this.icecaveSignalSeen ? GLACIER.icecave.checkpoint : GLACIER[this.area].entry)
@@ -386,6 +389,8 @@ export class GameScene extends Phaser.Scene {
       : this.exteriorEntered ? EXPANSION.exteriorRespawn : this.deeperEntered ? EXPANSION.deeperRespawn
       : this.deepCavernEntered ? DEEP_AREA.entry : CAVERN_ENTRY;
     this.returnStation=coopSession.role==='guest'&&coopSession.world?.returnStation?{...coopSession.world.returnStation}:{x:entry.x,y:entry.y};
+    if(this.expeditionArrival&&coopSession.role!=='guest')entry=safeExpeditionPosition(this.expeditionArrival,PLAYER.radius,this.arena.obstacles,this.movementBounds)??entry;
+    this.expeditionArrival=undefined;
     if(!this.economy.visited.includes(this.area))this.economy.visited.push(this.area);
     this.returnToThreshold = false;
     this.returnFromValley = false;
@@ -552,7 +557,7 @@ export class GameScene extends Phaser.Scene {
     this.loot=new EquipmentDrops(this,coopSession.role==='guest'?'guest':'host');
     this.equipmentDialog=new EquipmentDialog(this,()=>this.equipment.snapshot(),(slot,id,uid)=>this.equipItem(slot,id,uid),()=>this.closeEquipment(),()=>this.openEquipment(),this.classId);
     this.resources=new ResourceDrops(this,coopSession.role==='guest'?'guest':'host');
-    this.basePanel=new BasePanel(this,()=>({economy:this.economy,equipment:this.equipment.snapshot(),area:this.area,hp:this.player.hp,maxHp:this.player.maxHp,classId:this.classId,returnAvailable:this.canReturnBase(),canLead:coopSession.role!=='guest'}),a=>this.serviceAction(a),area=>this.baseTravel(area),()=>this.usePotion(),()=>{this.serviceUnpaused=coopSession.connected;if(!this.serviceUnpaused)this.pauseForModal();else {this.controls.cancelForRecords();this.charge.stop();this.hunter?.clear();}},()=>{if(!this.serviceUnpaused)this.resumeFromModal();else this.controls.cancelForRecords();this.serviceUnpaused=false});
+    this.basePanel=new BasePanel(this,()=>({economy:this.economy,equipment:this.equipment.snapshot(),area:this.area,hp:this.player.hp,maxHp:this.player.maxHp,classId:this.classId,returnAvailable:this.canReturnBase(),returnArea:this.expeditionReturn?.area,canLead:coopSession.role!=='guest'}),a=>this.serviceAction(a),(area,resume)=>this.baseTravel(area,resume),()=>this.usePotion(),()=>{this.serviceUnpaused=coopSession.connected;if(!this.serviceUnpaused)this.pauseForModal();else {this.controls.cancelForRecords();this.charge.stop();this.hunter?.clear();}},()=>{if(!this.serviceUnpaused)this.resumeFromModal();else this.controls.cancelForRecords();this.serviceUnpaused=false});
     if(this.area!=='base'){this.add.image(this.returnStation.x-90,this.returnStation.y,'item-accessory-2').setDisplaySize(30,40).setDepth(this.returnStation.y);this.add.text(this.returnStation.x-90,this.returnStation.y-52,'BASE · MAPA',{fontFamily:'Barlow Condensed',fontSize:'13px',color:'#e0c596',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(10003);}
     if(this.area==='base')this.saveProgress();
     this.shellReady?.(this);
@@ -580,7 +585,7 @@ export class GameScene extends Phaser.Scene {
     if (!this.inputModalOpen && this.controls.recordsPressed) { this.records.open(); return; }
     this.hud.setInputMethod(this.controls.inputMethod);
     if(coopSession.takePotionRequest())this.usePeerPotion();if(coopSession.takeHealRequest()&&this.area==='base'&&this.party?.partner)this.party.partner.player.health.current=this.party.partner.player.maxHp;
-    if(coopSession.takeBaseRequest()&&this.canReturnBase(this.party?.partner?.player.position)){this.transitionArea('base');return;}
+    if(coopSession.takeBaseRequest()&&this.party?.partner&&!this.party.partner.player.isDead&&this.canReturnBase()){this.baseTravel('base');return;}
     if(!this.player.isDead)this.resources.collect(this.player.position,'host',p=>this.collectResource(p));
     const peer=this.party?.partner?.player;if(peer&&!peer.isDead)this.resources.collect(peer.position,'guest',p=>{this.resourceAwarded.set(p.uid,p);if(this.resourceAwarded.size>512)this.resourceAwarded.delete(this.resourceAwarded.keys().next().value!);return true});
     const remoteInteraction = this.party?.takeInteraction();
@@ -589,7 +594,7 @@ export class GameScene extends Phaser.Scene {
     const pickup=this.loot.nearest(interactionPosition,remoteInteraction?'guest':'host');
     const requestedInteract=(!this.inputModalOpen&&this.controls.interactPressed)||!!remoteInteraction;
     const nearBaseStation=this.area!=='base'&&this.canReturnBase(interactionPosition)&&distance(interactionPosition,{x:this.returnStation.x-90,y:this.returnStation.y})<65;
-    if(nearBaseStation&&requestedInteract&&!pickup){this.transitionArea('base');return;}
+    if(nearBaseStation&&requestedInteract&&!pickup){this.baseTravel('base');return;}
     if(pickup&&requestedInteract&&!this.player.isDead)this.pickupEquipment(pickup,!!remoteInteraction);
     const interact = requestedInteract&&!pickup;
     const nearbyEcho = this.echoSites.find(site => site.canInvestigate(interactionPosition, this.player.isDead));
@@ -1317,7 +1322,7 @@ export class GameScene extends Phaser.Scene {
       area: this.area, player: this.player, controls: this.controls, enemies: this.enemies,
       obstacles: this.arena.obstacles, solidObstacles: (this.warden && !this.warden.isDead || this.soterrado?.solid || this.vesper?.solid) ? [...this.arena.obstacles, { ...(this.warden ?? this.soterrado ?? this.vesper)!.position, radius: (this.warden ?? this.soterrado ?? this.vesper)!.radius }] : this.arena.obstacles, bounds: this.movementBounds, hud: this.hud, hunter: this.hunter,
       boss: this.warden ?? this.soterrado ?? this.vesper,
-      signalPortal:this.signalPortal?.active??false,resources:this.resources?.snapshot()??[],resourceAwarded:[...this.resourceAwarded.values()],potionUsed:this.potionUsed,visited:this.economy.visited,returnStation:this.returnStation,
+      signalPortal:this.signalPortal?.active??false,resources:this.resources?.snapshot()??[],resourceAwarded:[...this.resourceAwarded.values()],potionUsed:this.potionUsed,visited:this.economy.visited,returnStation:this.returnStation,expeditionReturn:this.expeditionReturn,
       inputBlocked:this.inputModalOpen,baseMaxHp:this.progression.maxHp,loot:this.loot?.snapshot()??[],lootRender:poses=>this.loot.render(poses??[]),
       bossRender: boss => {
         (this.wardenHud ?? this.soterradoHud ?? this.vesperHud)?.update(boss);
@@ -1386,6 +1391,7 @@ export class GameScene extends Phaser.Scene {
     this.visitingCoop = true;
     const personal=this.journey.load();if(personal){this.economy=validEconomy(personal.economy);this.equipment.restore(personal.equipment);this.basePanel?.refreshBar();}
     if(world.visited)this.economy.visited=[...new Set([...this.economy.visited,...world.visited])];
+    this.expeditionReturn=validExpeditionReturn(world.expeditionReturn);
     this.resources?.render(world.resources);
     this.progression.restore(world.progression);
     for (const key of JOURNEY_FLAGS) this[key] = world.flags[key] === true;
@@ -1420,11 +1426,12 @@ export class GameScene extends Phaser.Scene {
     return distance(this.player.position, point) < radius || !!peer && !peer.isDead && distance(peer.position, point) < radius;
   }
 
-  private transitionArea(area: JourneyArea): void {
-    if (this.transitioning) return;
+  private transitionArea(area: JourneyArea, resume=false): boolean {
+    if (this.transitioning) return false;
     if (coopSession.role === 'host' && !coopSession.travel(this.area, area)) {
-      this.hud.showDiscovery('AGUARDE A CONEXÃO DA SALA PARA ATRAVESSAR'); return;
+      this.hud.showDiscovery('AGUARDE A CONEXÃO DA SALA PARA ATRAVESSAR'); return false;
     }
+    const departure={...this.player.position};
     this.transitioning = true;
     this.transferHp = this.player.hp;
     this.returnToThreshold = this.area === 'warden' && area === 'cavern';
@@ -1437,9 +1444,15 @@ export class GameScene extends Phaser.Scene {
         if(!coopSession.travelling){this.transitioning=false;this.cameras.main.fadeIn(220,5,15,20);this.hud.showDiscovery(coopSession.message);return;}
         this.time.delayedCall(80, arrive); return;
       }
+      if(area==='base'&&this.area!=='base')this.expeditionReturn={area:this.area,position:departure};
+      if(this.area==='base'&&area!=='base'){
+        if(resume&&this.expeditionReturn?.area===area)this.expeditionArrival={...this.expeditionReturn.position};
+        this.expeditionReturn=undefined;
+      }
       this.area = area; this.saveProgress(); this.scene.restart();
     };
     this.time.delayedCall(240, arrive);
+    return true;
   }
 
   private wardenCue(cue: WardenCue, attack?: WardenAttack): void {
@@ -1830,6 +1843,8 @@ export class GameScene extends Phaser.Scene {
     this.bestiary.restore(saved.bestiary);
     for (const key of JOURNEY_FLAGS) this[key] = saved.flags[key];
     this.area = saved.area;
+    this.expeditionReturn=validExpeditionReturn(saved.expeditionReturn);
+    if(this.expeditionReturn&&!this.economy.visited.includes(this.expeditionReturn.area))this.expeditionReturn=undefined;
     this.transferHp = saved.hp > 0 ? saved.hp : this.progression.maxHp;
     saved.valleyRoutes.forEach(id => this.valleyRoutes.add(id));
     saved.valleyHabitats.forEach(([id, readyAt]) => this.valleyHabitatCooldowns.set(id, readyAt));
@@ -1842,7 +1857,7 @@ export class GameScene extends Phaser.Scene {
     const available = this.journey.save({ schema: 1, updatedAt: Date.now(), area: this.area,
       hp: this.player.isDead ? this.characterMaxHp : this.player.hp, progression: this.progression.snapshot(),
       flags, bestiary: this.bestiary.snapshot(), valleyRoutes: [...this.valleyRoutes], valleyHabitats: [...this.valleyHabitatCooldowns],
-      aridHabitats: [...this.siroccoHabitatCooldowns],equipment:this.equipment.snapshot(),economy:this.economy });
+      aridHabitats: [...this.siroccoHabitatCooldowns],equipment:this.equipment.snapshot(),economy:this.economy,expeditionReturn:this.expeditionReturn });
     this.records?.setSaveAvailable(available);
     return available;
   }
@@ -1900,13 +1915,15 @@ export class GameScene extends Phaser.Scene {
     if(coopSession.peer)this.loot.add(id,enemy.position,'guest',coopSession.peer.classId as 'warrior'|'hunter');
   }
   private get inputModalOpen():boolean{return !!(this.equipmentDialog?.isOpen||this.basePanel?.isOpen)}
-  private bossActive():boolean{const b=this.warden??this.soterrado??this.vesper;return !!b&&!b.isDead&&b.state!=='DORMANT';}
-  private canReturnBase(position=this.player?.position):boolean{return !!position&&!this.player.isDead&&!this.bossActive()&&distance(position,this.returnStation)<130;}
-  private baseTravel(area:JourneyArea):boolean{
-    if(this.player.isDead||this.bossActive())return false;
+  private bossActive():boolean{if(coopSession.role==='guest')return coopSession.world?.boss?.active===true;const b=this.warden??this.soterrado??this.vesper;return !!b&&!b.isDead&&b.state!=='DORMANT';}
+  private canReturnBase(position=this.player?.position):boolean{return this.area!=='base'&&!!position&&!this.player.isDead&&!this.bossActive()&&!this.transitioning;}
+  private baseTravel(area:JourneyArea,resume=false):boolean{
+    if(this.player.isDead||this.bossActive()||this.transitioning)return false;
+    if(coopSession.role!=='offline'&&!coopSession.connected)return false;
     if(area==='base'){if(!this.canReturnBase())return false;if(coopSession.role==='guest'){coopSession.requestBase();return true;}}
     else if(this.area!=='base'||!this.economy.visited.includes(area)||coopSession.role==='guest')return false;
-    this.transitionArea(area);return true;
+    if(resume&&this.expeditionReturn?.area!==area)return false;
+    this.sounds.ancient();return this.transitionArea(area,resume);
   }
   private persistPersonal():boolean{return !!this.glacierPlaytest||!!this.qualityReference|| (coopSession.role==='guest'?this.journey.savePersonal(this.equipment.snapshot(),this.economy):this.saveProgress());}
   private serviceAction(action:ServiceAction):boolean{
@@ -1935,5 +1952,9 @@ export class GameScene extends Phaser.Scene {
     if(!this.persistPersonal()){this.economy=old;return false;}this.basePanel.refreshBar();this.hud.showDiscovery(`+${p.credits} créditos · +${p.amount} ${MATERIAL_NAMES[p.tier-1]}`);return true;
   }
   seedEconomyPlaytest(withMaterials=true):void{if(!this.glacierPlaytest?.economy)return;this.economy=validEconomy({credits:300,materials:withMaterials?[30,30,30]:[0,0,0],potions:3,visited:['base','forest']});this.basePanel.refreshBar();}
+  startReturnPlaytest():void{
+    if(!this.glacierPlaytest?.economy||this.area!=='base'||this.transitioning)return;
+    this.expeditionArrival={x:1100,y:760};this.transitionArea('forest');
+  }
 
 }

@@ -1,0 +1,33 @@
+{
+  "version": "0.1.88",
+  "typecheck": "passed",
+  "build": "passed",
+  "reports": {
+    "layout-performance.json": {
+      "passed": true,
+      "errors": []
+    },
+    "return.json": {
+      "passed": true,
+      "errors": []
+    },
+    "campaign\\campaign.json": {
+      "passed": true,
+      "errors": []
+    },
+    "regression\\coop.json": {
+      "passed": true,
+      "errors": []
+    },
+    "regression\\inputs-performance.json": {
+      "passed": true,
+      "errors": []
+    },
+    "regression\\report.json": {
+      "passed": true,
+      "errors": []
+    }
+  },
+  "screenshots": "WebP archival of unedited Chrome captures",
+  "humanApproval": "pending"
+}

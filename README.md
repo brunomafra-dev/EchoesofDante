@@ -256,3 +256,6 @@ NPCs civis originais e atlas ilustrado de Dante: [revisão 0.1.86](docs/base-eco
 
 
 Créditos visíveis, materiais nas receitas e equipamentos menos frequentes: [revisão 0.1.87](docs/base-economy/reward-clarity/README.md) · [laboratório reservado](https://echosofdante.vercel.app/base-playtest.html?v=0.1.87). Fabricar exige créditos **e** material; a oficina informa custo, estoque e o que falta.
+
+
+Retorno à base de qualquer ponto e retomada na posição de saída: [revisão 0.1.88](docs/base-economy/expedition-return/README.md) · [laboratório reservado](https://echosofdante.vercel.app/base-playtest.html?test=return&v=0.1.88). Bosses bloqueiam a retirada; na dupla, o anfitrião conduz a retomada.

@@ -5,10 +5,10 @@ import type {ServiceAction} from '../systems/BaseEconomy';
 import {itemIcon} from '../systems/EquipmentDrops';
 import {expeditionAtlas} from './ExpeditionAtlas';
 type Tab='medic'|'smith'|'expedition'|'map';
-type State={economy:EconomySnapshot;equipment:EquipmentSnapshot;area:keyof typeof REGION_NAMES;hp:number;maxHp:number;classId:string;returnAvailable:boolean;canLead:boolean};
+type State={economy:EconomySnapshot;equipment:EquipmentSnapshot;area:keyof typeof REGION_NAMES;hp:number;maxHp:number;classId:string;returnAvailable:boolean;returnArea?:keyof typeof REGION_NAMES;canLead:boolean};
 export class BasePanel{
  private dialog=document.createElement('dialog');private bar=document.createElement('div');private tab:Tab='map';private notice='';private frame=0;private previous:boolean[]=[];
- constructor(scene:Phaser.Scene,private read:()=>State,private act:(action:ServiceAction)=>boolean,private travel:(area:keyof typeof REGION_NAMES)=>boolean,private potion:()=>boolean,private opened:()=>void,private closed:()=>void){
+ constructor(scene:Phaser.Scene,private read:()=>State,private act:(action:ServiceAction)=>boolean,private travel:(area:keyof typeof REGION_NAMES,resume?:boolean)=>boolean,private potion:()=>boolean,private opened:()=>void,private closed:()=>void){
   this.dialog.className='records-dialog base-dialog';this.dialog.setAttribute('aria-label','Serviços da expedição');
   this.bar.className='expedition-launcher';this.bar.innerHTML='<span class="expedition-credits" aria-label="Saldo em créditos" title="Seus créditos"><small>CRÉDITOS</small><strong data-credits>0</strong></span><button data-map>MAPA · M</button><button data-potion>POÇÃO · H</button>';
   this.bar.querySelector('[data-map]')!.addEventListener('click',()=>this.open('map'));this.bar.querySelector('[data-potion]')!.addEventListener('click',()=>{this.potion();this.refreshBar()});
@@ -17,7 +17,7 @@ export class BasePanel{
  }
  get isOpen(){return this.dialog.open}
  refreshBar(){const e=this.read().economy,b=this.bar.querySelector('[data-potion]')!,text=`POÇÃO · ${e.potions} · H`;if(b.textContent!==text)b.textContent=text;const c=this.bar.querySelector('[data-credits]')!,saldo=e.credits.toLocaleString('pt-BR');if(c.textContent!==saldo)c.textContent=saldo;}
- open(tab:Tab){if(this.isOpen||document.querySelector('dialog[open]'))return;this.tab=tab;this.notice='';this.previous=navigator.getGamepads?.().find(p=>p?.connected&&p.mapping==='standard')?.buttons.map(b=>b.pressed||b.value>.5)??[];this.render();this.opened();this.dialog.showModal();this.dialog.querySelector<HTMLButtonElement>('[data-close]')?.focus();requestAnimationFrame(()=>{if(this.isOpen)this.dialog.querySelector('[aria-current]')?.scrollIntoView({block:'nearest',inline:'nearest'})})}
+ open(tab:Tab){if(this.isOpen||document.querySelector('dialog[open]'))return;this.tab=tab;this.notice='';this.previous=navigator.getGamepads?.().find(p=>p?.connected&&p.mapping==='standard')?.buttons.map(b=>b.pressed||b.value>.5)??[];this.render();this.opened();this.dialog.showModal();this.dialog.querySelector<HTMLButtonElement>('[data-close]')?.focus();requestAnimationFrame(()=>{if(!this.isOpen)return;const here=this.dialog.querySelector<HTMLElement>('[aria-current]'),viewport=this.dialog.querySelector<HTMLElement>('.atlas-viewport');if(here&&viewport){const content=this.dialog.querySelector<HTMLElement>('.base-services')!;viewport.style.maxHeight=`${Math.max(70,Math.min(viewport.clientHeight,content.getBoundingClientRect().bottom-viewport.getBoundingClientRect().top-18))}px`;viewport.scrollTop=here.offsetTop-viewport.clientHeight/2;viewport.scrollLeft=here.offsetLeft-viewport.clientWidth/2}})}
  private button(parent:Element,text:string,run:()=>void,disabled=false){const b=document.createElement('button');b.textContent=text;b.disabled=disabled;b.onclick=run;parent.append(b);return b;}
  private operation(a:ServiceAction){const index=Array.from(this.dialog.querySelectorAll('button')).indexOf(document.activeElement as HTMLButtonElement);this.notice=this.act(a)?'Operação concluída e salva.':'Não foi possível concluir. Confira recursos, espaço e armazenamento.';this.render();this.refreshBar();const buttons=Array.from(this.dialog.querySelectorAll<HTMLButtonElement>('button'));const target=buttons[Math.min(Math.max(index,0),buttons.length-1)];(target&&!target.disabled?target:buttons.find(b=>!b.disabled))?.focus()}
  private render(){
@@ -51,8 +51,16 @@ export class BasePanel{
    for(const item of bag){const row=document.createElement('div');row.className='base-item';const p=document.createElement('span');p.textContent=EQUIPMENT[item.id].name;row.append(p);this.button(row,`VENDER · ${salePrice(item.id)}`,()=>this.operation({kind:'sell',uid:item.uid}));this.button(row,'DESMONTAR · 2 MATERIAIS',()=>this.operation({kind:'dismantle',uid:item.uid}));content.append(row)}
   }
   if(this.tab==='map'||this.tab==='expedition'){
-   content.append(expeditionAtlas(s,area=>{if(this.travel(area))this.dialog.close();else{this.notice='Aproxime-se do ponto de retorno. Boss ativo bloqueia a retirada.';this.render()}}));
-   if(!base){const p2=document.createElement('p');p2.textContent=s.returnAvailable?'Ponto de retorno próximo: você pode retornar à base.':'Retorne ao terminal na entrada da região para viajar à base. Durante um boss, a retirada fica bloqueada.';content.append(p2);}
+   const depart=(area:keyof typeof REGION_NAMES,resume=false)=>{if(this.travel(area,resume))this.dialog.close();else{this.notice='Não foi possível viajar. Boss ativo, personagem caído ou sala desconectada bloqueiam o retorno.';this.render()}};
+   const actions=document.createElement('div');actions.className='expedition-travel';content.append(actions);
+   if(!base){
+    this.button(actions,'VOLTAR À BASE',()=>depart('base'),!s.returnAvailable).dataset.returnBase='';
+    const p=document.createElement('p');p.textContent=s.returnAvailable?'Seu ponto fica guardado. Na base, use Retomar expedição para voltar até aqui. Na dupla, o retorno leva o grupo.':'Retorno indisponível durante boss ativo ou enquanto o personagem estiver caído.';actions.append(p);
+   }else if(s.returnArea){
+    this.button(actions,'RETOMAR EXPEDIÇÃO',()=>depart(s.returnArea!,true),!s.canLead||s.hp<=0).dataset.resumeExpedition='';
+    const p=document.createElement('p');p.textContent=`Voltar ao ponto de onde você saiu em ${REGION_NAMES[s.returnArea]}. Escolher outra região no atlas inicia uma nova expedição e substitui esse retorno.`;actions.append(p);
+   }
+   content.append(expeditionAtlas(s,area=>depart(area)));
    if(base&&!s.canLead){const p2=document.createElement('p');p2.textContent='O anfitrião escolhe o destino da expedição. Seus serviços e cofre são pessoais.';content.append(p2)}
   }
   if(base&&this.tab==='expedition'){

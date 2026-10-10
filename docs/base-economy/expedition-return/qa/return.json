@@ -1,0 +1,44 @@
+{
+  "passed": true,
+  "errors": [],
+  "checks": [
+    "Lab starts far from terminal; map return/resume restores exact position and consumes one destination",
+    "Occupied rock position relocates locally without changing colliders",
+    "Choosing atlas destination starts at normal entry and discards previous destination",
+    "All nine additional campaign regions: return/resume; existing terrain and normal checkpoints retained",
+    "Dead actor cannot travel; normal respawn still restores playable scene",
+    "Session-only lab leaves real character/save keys unchanged",
+    "Actual Warden intro blocks explicit return button, atlas Base node and travel handler",
+    "Personal return point survives reload while in base; optional save field keeps schema 1 compatible",
+    "Resume action visible at all four requested resolutions",
+    "Three round trips: stable object/texture/tween/UI counts, no duplicate listeners UI",
+    "CDP touch: map, return, resume; page scale remains 1",
+    "Gamepad API mock: D-pad and A select return/resume through existing map controls",
+    "Real local cooperative room: visitor requests whole group return; shared destination; host resumes with companion nearby"
+  ],
+  "samples": [
+    {
+      "objects": 55,
+      "textures": 181,
+      "tweens": 0,
+      "dialogs": 1,
+      "bars": 1
+    },
+    {
+      "objects": 55,
+      "textures": 181,
+      "tweens": 0,
+      "dialogs": 1,
+      "bars": 1
+    },
+    {
+      "objects": 55,
+      "textures": 181,
+      "tweens": 0,
+      "dialogs": 1,
+      "bars": 1
+    }
+  ],
+  "meanFps": 53.68230818791911,
+  "method": "Chrome headless; real WebSocket duo, CDP touch and standard gamepad mock. DEV chapter/position/death fixtures. No physical devices."
+}

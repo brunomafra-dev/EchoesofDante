@@ -10,6 +10,7 @@ import type { AbilityUpgradeRanks } from '../config/abilityUpgrades';
 import { characterProfiles } from './CharacterProfiles';
 import { validEquipment, validItem, type EquipmentId, type InventoryItem, type EquipmentSnapshot } from '../config/equipment';
 import {validEconomy,type EconomySnapshot} from '../config/economy';
+import {validExpeditionReturn,type ExpeditionReturn} from './ExpeditionReturn';
 
 export const JOURNEY_KEY = 'echoes-of-dante.journey.v1';
 export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSeen', 'deepCavernEntered',
@@ -28,6 +29,7 @@ export type JourneySnapshot = {
   coopReceipts?: { id: string; total: number }[];
   equipment?:EquipmentSnapshot;
   economy?:EconomySnapshot;
+  expeditionReturn?:ExpeditionReturn;
 };
 
 const object = (value: unknown): Record<string, unknown> | undefined =>
@@ -115,7 +117,7 @@ export class LocalJourney {
             typeof id === 'string' && (VALLEY_ROUTES.some(route => route.id === id) || SIROCCO_ROUTES.some(route => route.id === id) || DUNES_ROUTES.some(route => route.id === id) || FROST_ROUTES.some(route => route.id === id) || GLACIER_ROUTES.some(route => route.id === id))) : [],
           abilityUpgrades: object(p.abilityUpgrades) as Partial<AbilityUpgradeRanks> | undefined,
           bossRewards: [...(flags.soterradoDefeated ? ['soterrado'] : []), ...(flags.vesperDefeated ? ['vesper'] : [])] },
-        flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats, equipment:validEquipment(raw.equipment),economy:validEconomy(raw.economy),
+        flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats, equipment:validEquipment(raw.equipment),economy:validEconomy(raw.economy),expeditionReturn:validExpeditionReturn(raw.expeditionReturn),
         coopReceipts: Array.isArray(raw.coopReceipts) ? raw.coopReceipts.filter((entry): entry is {id:string;total:number} =>
           !!entry && typeof entry.id === 'string' && /^[a-f0-9]{32}$/.test(entry.id) && integer(entry.total, 1e9)).slice(-32) : [] };
     } catch {

@@ -65,6 +65,7 @@ try{
   for(const ratio of[.9,.4,.2]){
    await h.evaluate(({keyName,ratio})=>{const s=window.__danteGame.scene.getScene('Game'),b=s[keyName];b.health.current=Math.round(b.health.max*ratio);b.state='IDLE';if('_state'in b)b._state='IDLE';b.until=b.stateUntil=s.time.now+700;},{keyName,ratio});
    await h.waitForTimeout(1600);await completeMastery();await g.waitForTimeout(350);
+   await g.waitForFunction(phase=>{const b=window.__danteCoop.world?.boss;return b&&b.health.current<b.health.max&&b.phase===phase},ratio>.5?1:ratio>.3||keyName==='soterrado'?2:3);
    const pose=(await state(g)).boss;assert.ok(pose&&pose.visuals.length>3&&pose.health.max>pose.health.current,JSON.stringify({keyName,ratio,health:pose?.health,state:pose?.state,visuals:pose?.visuals.length}));
    assert.ok(pose.visuals.some(v=>v.kind==='image'&&v.visible));
    await g.screenshot({path:`${out}/${keyName}-phase-${pose.phase}.png`});
@@ -78,8 +79,14 @@ try{
    assert.ok(after.every((hp,i)=>hp<before[i]),'One sweep must evaluate both players');report.bossCanHitBothPlayers={before,after};
   }
   // Visitor's real primary attack damages the authoritative boss.
-  const target=await h.evaluate(keyName=>{const s=window.__danteGame.scene.getScene('Game'),b=s[keyName];b.state='RECOVER';if('_state'in b)b._state='RECOVER';b.until=b.stateUntil=s.time.now+6000;Object.assign(s.party.partner.player.position,{x:b.position.x-220,y:b.position.y});return{x:b.position.x,y:b.position.y,hp:b.health.current};},keyName);
-  await g.waitForTimeout(500);const screen=await g.evaluate(t=>{const c=window.__danteGame.scene.getScene('Game').cameras.main;return{x:t.x-c.scrollX,y:t.y-c.scrollY};},target);
+  const target=await h.evaluate(keyName=>{const s=window.__danteGame.scene.getScene('Game'),b=s[keyName];b.state='RECOVER';if('_state'in b)b._state='RECOVER';b.until=b.stateUntil=s.time.now+6000;
+    const bounds=s.movementBounds,p=s.party.partner.player;
+    const origin=Array.from({length:16},(_,i)=>({x:b.position.x+Math.cos(i*Math.PI/8)*220,y:b.position.y+Math.sin(i*Math.PI/8)*220})).find(v=>{
+      if(bounds&&(v.x<bounds.left+22||v.x>bounds.right-22||v.y<bounds.top+22||v.y>bounds.bottom-22))return false;
+      const dx=b.position.x-v.x,dy=b.position.y-v.y;
+      return s.arena.obstacles.every(o=>{const t=Math.max(0,Math.min((220-b.radius)/220,((o.x-v.x)*dx+(o.y-v.y)*dy)/(220*220)));return Math.hypot(o.x-v.x-dx*t,o.y-v.y-dy*t)>o.radius+22});
+    });if(!origin)throw Error('No clear firing position for '+keyName);Object.assign(p.position,origin);return{x:b.position.x,y:b.position.y,hp:b.health.current,origin};},keyName);
+  await g.waitForFunction(origin=>{const p=window.__danteGame.scene.getScene('Game').player.position;return Math.hypot(p.x-origin.x,p.y-origin.y)<2},target.origin);await g.waitForTimeout(300);const screen=await g.evaluate(t=>{const c=window.__danteGame.scene.getScene('Game').cameras.main;return{x:t.x-c.scrollX,y:t.y-c.scrollY};},target);
   await g.mouse.move(screen.x,screen.y);await g.mouse.down();await g.waitForTimeout(1000);await g.mouse.up();
   const hp=await h.evaluate(k=>window.__danteGame.scene.getScene('Game')[k].health.current,keyName);assert.ok(hp<target.hp,`${keyName}: guest ranged primary must hit`);
   await h.evaluate(keyName=>{const s=window.__danteGame.scene.getScene('Game');s.resolvePlayerHits(s.time.now,[s[keyName]],9999,0,0x5fe6d8,s.player.position,false);},keyName);

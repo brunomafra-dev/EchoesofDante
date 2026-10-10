@@ -7,6 +7,7 @@ import type { BossPose } from './BossPresentation';
 import { validEquipment, validItem, type InventoryItem, type EquipmentSnapshot } from '../config/equipment';
 import type {ResourceDrop} from '../systems/ResourceDrops';
 import type { LootPose } from '../systems/EquipmentDrops';
+import type { ExpeditionReturn } from '../systems/ExpeditionReturn';
 export const COOP_AREAS: readonly JourneyArea[] = ['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest'];
 const CONNECTIONS: Partial<Record<JourneyArea, readonly JourneyArea[]>> = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave'] };
 export type PartyProfile = {name: string; classId: PlayableClass;sex?:import('../config/appearance').CharacterSex;bagFree?:number;potions?:number;equipment?:EquipmentSnapshot['slots']};
@@ -16,7 +17,7 @@ export type PartyPose={x:number;y:number;aim:number;hp:number;maxHp:number;dead:
 export type CreatureLayer={texture:string;frame:string;x:number;y:number;width:number;height:number;rotation:number;flip:boolean;depth:number;originX:number;originY:number};
 export type CreaturePose={id:number;species:string;x:number;y:number;hp:number;maxHp:number;radius:number;texture:string;frame:string;flip:boolean;size:number;rotation:number;
  warning:boolean;angle:number;warningX:number;warningY:number;warningWidth:number;warningHeight:number;layers?:CreatureLayer[];projectile?:{x:number;y:number;rotation:number}};
-export type PartyWorld={area:JourneyArea;time:number;progression:ProgressionSnapshot;flags:JourneyFlags;host:PartyPose;partner?:PartyPose;enemies:CreaturePose[];boss?:BossPose;signalPortal?:boolean;loot?:LootPose[];lootAwarded?:InventoryItem[];resources?:ResourceDrop[];resourceAwarded?:ResourceDrop[];potionUsed?:number;returnStation?:{x:number;y:number};visited?:JourneyArea[];message:string;prompt:boolean;action:string;shots:{x:number;y:number;rotation:number;friendly?:boolean}[]};
+export type PartyWorld={area:JourneyArea;time:number;progression:ProgressionSnapshot;flags:JourneyFlags;host:PartyPose;partner?:PartyPose;enemies:CreaturePose[];boss?:BossPose;signalPortal?:boolean;loot?:LootPose[];lootAwarded?:InventoryItem[];resources?:ResourceDrop[];resourceAwarded?:ResourceDrop[];potionUsed?:number;returnStation?:{x:number;y:number};expeditionReturn?:ExpeditionReturn;visited?:JourneyArea[];message:string;prompt:boolean;action:string;shots:{x:number;y:number;rotation:number;friendly?:boolean}[]};
 // One connection across scene restarts. The relay grants roles; only host worlds are accepted.
 export class CoopSession {
  role:'offline'|'connecting'|'host'|'guest'='offline';
