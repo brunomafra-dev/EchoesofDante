@@ -1,12 +1,12 @@
 # Echoes of Dante
 
-## Mochila e drops — etapa 2
+## Progressão e cooperativo — etapa 4 · 0.1.89
 
-Equipamentos pessoais em sete espaços, mochila de 24 itens, coleta contextual e comparação. Saves antigos preservados. [Relatório](docs/inventory-loot/README.md) · [Teste reservado](https://echosofdante.vercel.app/inventory-playtest.html). Aprovação humana pendente; base/economia será a próxima etapa.
+Curva de ameaça por região, XP regional, penalidade de morte de 10% dos créditos e correções de portais, habilidades, kit pessoal e morte da dupla. [Relatório](docs/progression-threat/README.md) · [Teste reservado](https://echosofdante.vercel.app/threat-playtest.html?region=forest&kit=basic&v=0.1.89). Base/retorno aprovados; esta etapa aguarda playtest humano antes do Astral. Frontend e relay cooperativo requerem protocolo 5.
 
 ## Fundação do RPG — plano aprovado
 
-[Plano de implementação e checklist](docs/RPG_FOUNDATION_ROADMAP.md): personagens modulares, equipamentos visíveis, inventário, base de pouso, economia, Astral, Vinculador, cooperativo de quatro jogadores e prólogo. **Etapa 0 concluída; próxima entrega: personagens modulares.** As funcionalidades futuras estão identificadas como planejadas.
+[Plano de implementação e checklist](docs/RPG_FOUNDATION_ROADMAP.md): personagens modulares, equipamentos visíveis, inventário, base de pouso, economia, Astral, Vinculador, cooperativo de quatro jogadores e prólogo. **Etapas 0–3 aprovadas; etapa 4 entregue para validação.** As funcionalidades futuras estão identificadas como planejadas.
 
 ## Expedição glacial · 0.1.76
 
@@ -250,7 +250,7 @@ Revisão da etapa 1: [corpo vestido e correção da junção dos braços](docs/m
 
 ## Base e economia — etapa 3
 
-Base de pouso, serviços pessoais, créditos/materiais, poções, fabricação, venda/desmontagem e cofre. [Relatório e limitações](docs/base-economy/README.md) · [laboratório isolado](https://echosofdante.vercel.app/base-playtest.html?v=0.1.85). Cooperativo requer relay protocolo 4; a próxima etapa aguarda playtest humano.
+Base de pouso, serviços pessoais, créditos/materiais, poções, fabricação, venda/desmontagem e cofre. [Relatório e limitações](docs/base-economy/README.md) · [laboratório isolado](https://echosofdante.vercel.app/base-playtest.html?v=0.1.85). Etapa aprovada após a revisão 0.1.88; cooperativo atual requer relay protocolo 5.
 
 NPCs civis originais e atlas ilustrado de Dante: [revisão 0.1.86](docs/base-economy/civilian-atlas/README.md) · [teste reservado](https://echosofdante.vercel.app/base-playtest.html?v=0.1.86).
 

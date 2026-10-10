@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
-import {mkdir,writeFile} from 'node:fs/promises';
+import {mkdir,writeFile,readFile} from 'node:fs/promises';
 import {chromium} from 'playwright';
-const out='docs/base-economy/reward-clarity/qa';await mkdir(out,{recursive:true});
+const out=process.argv[2]??'docs/base-economy/reward-clarity/qa';await mkdir(out,{recursive:true});
+const version=JSON.parse(await readFile('package.json','utf8')).version;
 const browser=await chromium.launch({channel:'chrome',headless:true}),p=await browser.newPage({viewport:{width:1280,height:720}}),errors=[],checks=[];
 p.on('pageerror',e=>errors.push(e.message));p.on('response',r=>{if(r.status()>=400)errors.push(r.url())});
 const ready=()=>p.waitForFunction(()=>window.__danteGame?.scene.getScene('Game')?.basePanel);
@@ -31,5 +32,5 @@ try{
  // Another respawn must not leave a guaranteed first-kill item or create duplicates.
  await p.evaluate(()=>window.__danteGame.scene.getScene('Game').restart());await p.waitForTimeout(500);await ready();assert.equal(await p.evaluate(()=>window.__danteGame.scene.getScene('Game').lootKills),12);assert.equal(await p.evaluate(()=>window.__danteGame.scene.getScene('Game').loot.snapshot().length),0);
  await p.waitForTimeout(8000);const stable=await p.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');return{objects:s.children.list.length,textures:Object.keys(s.textures.list).length,tweens:s.tweens.getTweens().length}});const fps=[];for(let i=0;i<6;i++){await p.waitForTimeout(500);fps.push(await p.evaluate(()=>window.__danteGame.loop.actualFps))}const after=await p.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');return{objects:s.children.list.length,textures:Object.keys(s.textures.list).length,tweens:s.tweens.getTweens().length}});assert.deepEqual(after,stable);assert.deepEqual(errors,[]);
- await writeFile(out+'/rewards.json',JSON.stringify({version:'0.1.87',passed:true,checks,errors,deaths,stability:{before:stable,after,fps,mean:fps.reduce((a,b)=>a+b,0)/fps.length},screenshots,method:'Chrome headless; real combat damage with DEV fixtures and respawn, four viewports. No physical hardware.'},null,2));console.log({passed:true,checks,errors,stability:after,fps});
+ await writeFile(out+'/rewards.json',JSON.stringify({version,passed:true,checks,errors,deaths,stability:{before:stable,after,fps,mean:fps.reduce((a,b)=>a+b,0)/fps.length},screenshots,method:'Chrome headless; real combat damage with DEV fixtures and respawn, four viewports. No physical hardware.'},null,2));console.log({passed:true,checks,errors,stability:after,fps});
 }finally{await browser.close()}

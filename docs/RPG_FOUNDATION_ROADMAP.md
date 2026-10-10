@@ -173,8 +173,8 @@ Decisão do usuário em 09/10/2026: cada sprint deve terminar com um link espec�
 - [x] **Etapa 0 — Arquivar a direção:** plano preservado, referências no README e instruções do repositório. Entrega documental; gameplay e versão 0.1.78 preservados.
 - [x] **Etapa 1 — Personagens modulares:** masculino/feminino, roupa, equipamento e junção dos braços aprovados pelo usuário após a versão 0.1.82 (“bem melhor”).
 - [x] **Etapa 2 — Inventário e loot:** 24 espaços, sete slots, drops pessoais, migração e persistência; miniaturas corrigidas em 0.1.84 e aprovadas pelo usuário (“Muito bom”). [Relatório/teste](inventory-loot/README.md).
-- [ ] **Etapa 3 — Base e economia:** entrega técnica 0.1.85: nave, NPCs, mapa, cofre, créditos/materiais, poções, venda/desmontagem e fabricação. [Relatório/teste](base-economy/README.md). Aguardando playtest humano antes da etapa 4.
-- [ ] **Etapa 4 — Progressão e ameaça:** recompensas e encontros equilibrados para o novo equipamento e consumíveis.
+- [x] **Etapa 3 — Base e economia:** base, NPCs próprios, atlas, receitas, cofre, poções e retorno/retomada. Revisão 0.1.88 explicitamente validada pelo usuário antes da etapa 4. [Relatório/teste](base-economy/README.md).
+- [ ] **Etapa 4 — Progressão e ameaça:** entrega técnica 0.1.89: curva regional fixa, revisão de recompensas/custos, morte perde 10% dos créditos, auditoria do visitante cooperativo. [Relatório/teste](progression-threat/README.md). Aguardar validação humana da curva e dupla antes da etapa 5.
 - [ ] **Etapa 5 — Astral:** quatro elementos alternáveis, Energia Astral e campanha solo/cooperativa.
 - [ ] **Etapa 6 — Vinculador:** companheiro, Vínculo e simbiose, com autonomia no solo.
 - [ ] **Etapa 7 — Equipe de quatro:** lobby, classes exclusivas, participantes individuais e bosses.
@@ -247,3 +247,9 @@ NPCs próprios e atlas aprovados pelo usuário (“perfeito”). Antes de avanç
 Recursos/receitas da revisão 0.1.87 aprovados pelo usuário (“achei digno”). Em seguida autorizou retorno à base de qualquer ponto e retomada no ponto de saída. Ajuste explícito da decisão anterior de retirada somente em terminais: reduz repetição do caminho para comprar, fabricar e guardar materiais. Guarda um destino pessoal; boss ativo permanece bloqueado. Na dupla, o anfitrião conduz a retomada e o visitante acompanha. Não muda checkpoints, combate, dificuldade ou a ordem das etapas.
 
 [Relatório e teste](base-economy/expedition-return/README.md). **Aguardar validação humana do retorno antes da etapa 4.**
+
+### Aprovação da etapa 3 e entrega técnica da etapa 4 — 0.1.89
+
+O usuário validou o último sprint e autorizou progressão/ameaça, acrescentando a auditoria do visitante cooperativo. Curva regional fixa de HP/dano/XP, economia anterior revisada e preservada, penalidade de 10% dos créditos por morte, aprimoramentos/kit pessoais, recargas e poses reais, portais acessíveis aos dois e derrota/vitória da dupla. Limite atual de nível 10 preservado. Relay protocolo 5; sem novos assets, mapas, classes ou sistemas de combate.
+
+[Relatório, QA e teste reservado](progression-threat/README.md). **Aguardar validação humana da curva e do cooperativo antes da etapa 5 — Astral.** As pendências históricas da etapa 3 acima foram superadas pela aprovação explícita.

@@ -136,7 +136,7 @@ export class Controls {
     this.scene.input.resetPointers();
   }
   setInteractAvailable(available: boolean, label = 'INVESTIGAR'): void { this.touch.setInteractAvailable(available, label); }
-  setDead(dead: boolean): void { this.touch.setDead(dead); }
+  setDead(dead: boolean, canRestart = true): void { this.touch.setDead(dead,canRestart); }
   movement(): Vec2 {
     if (this.method === 'gamepad') return this.padMove;
     if (this.method === 'touch') return this.touch.movement;

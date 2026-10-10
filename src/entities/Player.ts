@@ -279,17 +279,27 @@ export class Player {
     this.stepPhase += moved / 108 * Math.PI * 2;
     Object.assign(this.position, { x: position.x, y: position.y });
     this.isDead = dead; this.isDashing = dashing;
+    this.hurtOverlay.setAlpha(this.scene.time.now<this.hitFlashUntil?.72:0);
     this.paintedArt?.update(aim, this.stepPhase, moved > .1, travel, pose, heavy, dashing);
     this.setAim(aim); this.renderWeapon(aim, pose, heavy);
     this.view.setPosition(position.x, position.y).setDepth(position.y).setAlpha(dead ? .25 : dashing ? .74 : 1);
     this.shadow.setPosition(position.x, position.y + 39).setDepth(position.y - 3);
     this.groundContact.setPosition(position.x, position.y + 39).setDepth(position.y - 2);
     this.ring.setPosition(position.x, position.y + 39).setDepth(position.y - 1);
+    const busy=heavy.phase!=='READY';this.ring.setStrokeStyle(busy?2.5:1.5,busy?0x5fe6d8:dashing?0xd7fff7:0x89d9d2,busy?.5+heavy.level*.36:dashing?.78:.28);
   }
 
   destroy(): void {
     this.weapon.destroy(); this.view.destroy(true);
     this.shadow.destroy(); this.groundContact.destroy(); this.ring.destroy();
+  }
+
+  revive(position:Vec2):void {
+    this.scene.tweens.killTweensOf([this.view,this.shadow,this.groundContact,this.ring]);
+    this.isDead=false;this.isDashing=false;this.health.current=this.health.max;
+    this.velocity.x=this.velocity.y=0;this.invulnerableUntil=this.scene.time.now+1500;
+    Object.assign(this.position,position);this.view.setPosition(position.x,position.y).setAlpha(1);
+    this.shadow.setAlpha(.39);this.groundContact.setAlpha(.32);this.ring.setAlpha(1);
   }
 
   private footstep(stepIndex: number): void {

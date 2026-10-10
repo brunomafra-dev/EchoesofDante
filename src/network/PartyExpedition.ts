@@ -8,7 +8,7 @@ import type { HunterCombat } from '../combat/HunterCombat';
 import type { Hud } from '../ui/Hud';
 import type { JourneyArea, JourneyFlags } from '../systems/LocalJourney';
 import type { ProgressionSnapshot } from '../systems/Progression';
-import type { MovementBounds, Obstacle } from '../systems/Movement';
+import {moveWithCollisions,type MovementBounds,type Obstacle} from '../systems/Movement';
 import type { Vec2 } from '../utils/math';
 import { characterProfiles } from '../systems/CharacterProfiles';
 import { SPECIES, type SpeciesId } from '../config/bestiary';
@@ -19,9 +19,9 @@ import type { ExpeditionReturn } from '../systems/ExpeditionReturn';
 
 export type PartyBridge={
  area:JourneyArea;player:Player;controls:Controls;enemies:readonly Enemy[];obstacles:readonly Obstacle[];bounds?:MovementBounds;hud:Hud;hunter?:HunterCombat;
- progression:ProgressionSnapshot;flags:JourneyFlags;phase:string;chargeLevel:number;firing:boolean;wave?:PartyPose['wave'];
+ strike:import('../combat/Attack').SaberPose;releaseProgress:number;progression:ProgressionSnapshot;flags:JourneyFlags;phase:string;chargeLevel:number;firing:boolean;wave?:PartyPose['wave'];
  boss?:NetworkBoss;bossRender:(boss:PartyWorld['boss'])=>void;
- inputBlocked:boolean;loot:PartyWorld['loot'];lootRender:(loot:PartyWorld['loot'])=>void;baseMaxHp:number;
+ inputBlocked:boolean;bossActive:boolean;cue:(kind:'dash'|'charge'|'release'|'hurt')=>void;loot:PartyWorld['loot'];lootRender:(loot:PartyWorld['loot'])=>void;baseMaxHp:number;
  solidObstacles:readonly Obstacle[];
  signalPortal:boolean;resources:ResourceDrop[];resourceAwarded:ResourceDrop[];potionUsed:number;visited:JourneyArea[];returnStation:Vec2;expeditionReturn?:ExpeditionReturn;
  id:(enemy:Enemy)=>number|undefined;species:(enemy:Enemy)=>SpeciesId|undefined;
@@ -48,7 +48,7 @@ export class PartyExpedition {
  private status:Phaser.GameObjects.Text;
  private hiddenLocalEnemies=false;
  private readonly localPlayer:Player;
- private ranks:ProgressionSnapshot['abilityUpgrades'];
+
  private resilience=new WeakMap<Enemy,number>();
  private balanced=false;
  private bossMirror:BossMirror;
@@ -60,6 +60,7 @@ export class PartyExpedition {
    .setOrigin(.5).setScrollFactor(0).setDepth(22000).setVisible(false);
   scene.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.destroy());
  }
+ queueInteraction():void{this.queued.interact=true;}
  queueAttack():void{this.attackQueued=true;}
  queueRestart():void{this.queued.restart=true;}
  cancelPartnerCharge():void{this.partner?.cancelCharge();}
@@ -77,7 +78,7 @@ export class PartyExpedition {
    if(this.balanced){for(const e of this.access().enemies){const base=this.resilience.get(e);if(base!==undefined)this.resizeHealth(e,base);}this.balanced=false;this.resilience=new WeakMap();}
    if(this.partner){this.partner.destroy();this.partner=undefined;this.peerName='';}this.status.setVisible(false);return;
   }
-  const a=this.access();this.ranks=a.progression.abilityUpgrades;this.status.setVisible(true).setText(room.peer?
+  const a=this.access();this.status.setVisible(true).setText(room.peer?
    room.peerConnected?`DUPLA · ${characterProfiles.active.name} + ${room.peer.name}`:'DUPLA · COMPANHEIRO RECONECTANDO':`SALA ${room.code} · AGUARDANDO COMPANHEIRO`);
   // Only health changes for two participants; damage, AI, speed and solo values stay intact.
   for(const enemy of a.enemies){
@@ -89,22 +90,24 @@ export class PartyExpedition {
   if(!room.peer&&this.partner){this.partner.destroy();this.partner=undefined;this.peerName='';}
   if(room.peer&&(!this.partner||this.peerName!==room.peer.name)){
    this.partner?.destroy();const hp=a.baseMaxHp;
-   this.partner=new PartyActor(this.scene,room.peer,this.safePosition(),Math.round(hp*(room.peer.classId==='hunter'?.8:1))+equipmentStats(room.peer.equipment??{}).hp,id=>this.ranks?.[id]??0);this.peerName=room.peer.name;
+   this.partner=new PartyActor(this.scene,room.peer,this.safePosition(),Math.round(hp*(room.peer.classId==='hunter'?.8:1))+equipmentStats(room.peer.equipment??{}).hp);this.peerName=room.peer.name;
   }
   const input=room.peerConnected&&performance.now()-room.inputAt<500?room.input:{...NO_INPUT,cancel:true};
   if(this.partner){
-   if(a.player.isDead){if(!this.partner.player.isDead)this.partner.player.die();if(input.restart)this.restartQueued=true;}
-   else if(input.restart&&this.partner.player.isDead){this.partner.destroy();this.partner=new PartyActor(this.scene,room.peer!,this.safePosition(),Math.round(a.baseMaxHp*(room.peer!.classId==='hunter'?.8:1))+equipmentStats(room.peer!.equipment??{}).hp,id=>this.ranks?.[id]??0);}
-   this.partner.profile.equipment=room.peer?.equipment;
-   const maxHp=Math.round(a.baseMaxHp*(this.partner.profile.classId==='hunter'?.8:1))+equipmentStats(this.partner.profile.equipment??{}).hp;
-   if(maxHp!==this.partner.player.maxHp){this.partner.player.health.max=maxHp;this.partner.player.health.current=Math.min(maxHp,this.partner.player.hp);}
+   const waiting=a.bossActive&&(!a.player.isDead||room.peerConnected&&!this.partner.player.isDead);
+   if(input.restart&&!waiting){
+    if(a.player.isDead)this.restartQueued=true;
+    else if(this.partner.player.isDead){this.partner.player.revive(this.safePosition());this.partner.cancelCharge();}
+   }
+   this.partner.profile.equipment=room.peer?.equipment;this.partner.profile.build=room.peer?.build;
    this.partner.update(now,dt,input,a.enemies,a.obstacles,a.bounds,a.hit,a.solidObstacles);
    if(input.interact&&!this.partner.player.isDead)this.interaction={...this.partner.player.position};
   }
   room.consumeEdges();
   if(now-this.sendAt<100)return;this.sendAt=now;
-  const partner=this.partner?.snapshot(),prompt=partner?a.prompt(partner):{available:false,action:'INVESTIGAR'};
-  const host:PartyPose={...a.player.position,aim:a.player.rotation,hp:a.player.hp,maxHp:a.player.maxHp,dead:a.player.isDead,dash:a.player.isDashing,phase:a.phase,level:a.chargeLevel,firing:a.firing,wave:a.wave,beam:a.hunter?.beamPose()};
+  const partner=this.partner?.snapshot();if(partner)partner.deathId=room.peerDeathId||undefined;
+  const prompt=partner?a.prompt(partner):{available:false,action:'INVESTIGAR'};
+  const host:PartyPose={strike:a.strike,releaseProgress:a.releaseProgress,...a.player.position,aim:a.player.rotation,hp:a.player.hp,maxHp:a.player.maxHp,dead:a.player.isDead,dash:a.player.isDashing,phase:a.phase,level:a.chargeLevel,firing:a.firing,dashReady:a.player.dashProgress,dashCooldown:a.player.dashCooldown,wave:a.wave,beam:a.hunter?.beamPose()};
   const enemies:CreaturePose[]=a.enemies.filter(e=>!e.isDead).map((enemy,index)=>{
    const e=enemy as Presented;
    const body=e.body??e.view?.list.find(p=>p instanceof Phaser.GameObjects.Image&&p.texture.key==='hollow-body') as Phaser.GameObjects.Image|undefined
@@ -157,6 +160,7 @@ export class PartyExpedition {
   else if(input.attack)this.attackQueued=true;
   this.status.setVisible(true).setText(room.rewardSaved?`DUPLA · ${room.peer?.name??'ANFITRIÃO'} · XP PESSOAL +${room.personalXpGained}`:'DUPLA · XP AINDA NÃO SALVO NO NAVEGADOR');
   if(!world||!world.partner)return;
+  const previousPose=this.appliedWorld?.partner;
   const freshWorld=world!==this.appliedWorld;
   if(freshWorld){if(a.sync(world))return;this.appliedWorld=world;}
   if(!this.hiddenLocalEnemies){
@@ -169,14 +173,21 @@ export class PartyExpedition {
   if(a.boss) for(const object of a.boss.coopObjects) (object as Phaser.GameObjects.Image).setVisible(false);
   if(freshWorld){this.bossMirror.render(world.boss);a.bossRender(world.boss);a.lootRender(world.loot);}
   const p=world.partner,delta=Math.hypot(p.x-a.player.position.x,p.y-a.player.position.y),t=delta>300?1:Math.min(1,dt*18);
-  a.render({...p,x:Phaser.Math.Linear(a.player.position.x,p.x,t),y:Phaser.Math.Linear(a.player.position.y,p.y,t)});
+  const presented={x:p.x,y:p.y};
+  // Bounded presentation extrapolation only; host remains the sole combat simulator.
+  const age=Math.max(0,Math.min(.12,(performance.now()-room.worldAt)/1000));
+  if(!p.dead&&p.phase==='READY'&&p.velocity)moveWithCollisions(presented,p.velocity,age,a.player.radius,a.solidObstacles,a.bounds);
+  const readiness=Math.min(1,(p.dashReady??1)+age/(p.dashCooldown??a.player.dashCooldown)*1000);
+  a.render({...p,aim:p.phase==='RELEASE'?p.aim:input.aim,x:Phaser.Math.Linear(a.player.position.x,presented.x,t),y:Phaser.Math.Linear(a.player.position.y,presented.y,t)});
+  if(freshWorld){if(p.dash&&!previousPose?.dash)a.cue('dash');if(p.phase==='CHARGING'&&previousPose?.phase!=='CHARGING')a.cue('charge');if(p.phase==='RELEASE'&&previousPose?.phase!=='RELEASE')a.cue('release');if(previousPose&&p.hp<previousPose.hp)a.cue('hurt');}
   if(!this.mirrorHost&&room.peer)this.mirrorHost=new PartyActor(this.scene,room.peer,world.host,world.host.maxHp);
   if(this.mirrorHost)this.mirrorHost.profile.equipment=room.peer?.equipment;
   this.mirrorHost?.render(world.host,now,dt);
   this.visitorWave.setVisible(!!p.wave);if(p.wave)this.visitorWave.setPosition(p.wave.x,p.wave.y).setRotation(p.wave.rotation).setDisplaySize(p.wave.width,p.wave.height);
   a.hud.setHunterMomentum(p.momentum??0);
-  a.hud.update(p.hp,p.maxHp,p.dashReady??1,p.chargeReady??1,p.phase as 'READY'|'CHARGING'|'RELEASE',p.level,a.player.dashCooldown);
-  c.setDead(p.dead);c.setInteractAvailable(world.prompt,world.action);a.hud.setDiscoveryPrompt(world.prompt,world.action);
+  a.hud.update(p.hp,p.maxHp,readiness,p.chargeReady??1,p.phase as 'READY'|'CHARGING'|'RELEASE',p.level,p.dashCooldown??a.player.dashCooldown,p.chargeCooldown);
+  if(p.dead)a.hud.showDeath(!!world.boss?.active&&!world.host.dead);else a.hud.hideDeath();
+  c.setDead(p.dead,!(world.boss?.active&&!world.host.dead));c.setInteractAvailable(world.prompt,world.action);a.hud.setDiscoveryPrompt(world.prompt,world.action);
   const live=new Set<number>();
   for(const e of world.enemies){
    live.add(e.id);let m=this.mirrors.get(e.id);

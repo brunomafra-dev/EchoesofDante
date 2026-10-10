@@ -1,0 +1,22 @@
+{
+  "method": "Gamepad API automated driver; normal player and boss HP, no forced attacks or invulnerability; not a human balance assessment",
+  "errors": [],
+  "seconds": 32.573,
+  "hpRemaining": 191,
+  "phases": [
+    1,
+    2,
+    3
+  ],
+  "attacks": [
+    "sweep",
+    "slam",
+    "signal",
+    "echoes",
+    "rush"
+  ],
+  "hitsTaken": 0,
+  "dashes": 3,
+  "won": true,
+  "passed": true
+}

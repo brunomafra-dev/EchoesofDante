@@ -1,0 +1,258 @@
+{
+  "version": "0.1.89",
+  "passed": true,
+  "checks": [
+    "Credits alone cannot fabricate: all 21 recipes show ownership, material cost, shortage and disabled action",
+    "Successful craft spends both currencies; recipe stock and persistent balance update immediately",
+    "Four resolutions: wallet visible, forge does not overflow; lab preserves real saves",
+    "Twelve real normal-enemy deaths give 12 material rewards; no equipment on deaths 1–11, one on 12; respawn does not reset cadence"
+  ],
+  "errors": [],
+  "deaths": [
+    {
+      "dead": true,
+      "reward": {
+        "uid": "3699df0c-421a-4745-b4f1-90705c696883",
+        "x": 802.1819474970769,
+        "y": 899.4545131257307,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "gear": [],
+      "credits": 4,
+      "material": 1,
+      "counter": 1,
+      "balance": "4"
+    },
+    {
+      "dead": true,
+      "reward": {
+        "uid": "b559454c-5cd1-41f9-bd92-e67ef390a274",
+        "x": 872.6819399322134,
+        "y": 828.6590300338935,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "gear": [],
+      "credits": 4,
+      "material": 1,
+      "counter": 2,
+      "balance": "8"
+    },
+    {
+      "dead": true,
+      "reward": {
+        "uid": "59b4ac3a-f97d-4e3e-88a8-ab933465bc6a",
+        "x": 430,
+        "y": 540,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "gear": [],
+      "credits": 4,
+      "material": 1,
+      "counter": 3,
+      "balance": "12"
+    },
+    {
+      "dead": true,
+      "reward": {
+        "uid": "92c577e9-1986-4b36-b2dd-448fe2be83df",
+        "x": 540,
+        "y": 490,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "gear": [],
+      "credits": 4,
+      "material": 1,
+      "counter": 4,
+      "balance": "16"
+    },
+    {
+      "dead": true,
+      "reward": {
+        "uid": "d8cd7cf2-e785-45e6-ac57-ad11f081f020",
+        "x": 1440,
+        "y": 500,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "gear": [],
+      "credits": 4,
+      "material": 1,
+      "counter": 5,
+      "balance": "20"
+    },
+    {
+      "dead": true,
+      "reward": {
+        "uid": "e51afae0-9505-4248-bc92-01d611554052",
+        "x": 1580,
+        "y": 450,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "gear": [],
+      "credits": 4,
+      "material": 1,
+      "counter": 6,
+      "balance": "24"
+    },
+    {
+      "dead": true,
+      "reward": {
+        "uid": "acf3594b-75e4-4351-858b-c0cbbb1b2021",
+        "x": 1764.3278494226881,
+        "y": 976.3536174860138,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "gear": [],
+      "credits": 4,
+      "material": 1,
+      "counter": 7,
+      "balance": "28"
+    },
+    {
+      "dead": true,
+      "reward": {
+        "uid": "77a23e2d-707a-47a5-a9de-9882af69d165",
+        "x": 1825.2037064684941,
+        "y": 1055.7555522378073,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "gear": [],
+      "credits": 4,
+      "material": 1,
+      "counter": 8,
+      "balance": "32"
+    },
+    {
+      "dead": true,
+      "reward": {
+        "uid": "ac6de1aa-8bc0-40ed-b2c5-85bc6b06d30c",
+        "x": 802.9051887309352,
+        "y": 899.273702817266,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "gear": [],
+      "credits": 4,
+      "material": 1,
+      "counter": 9,
+      "balance": "36"
+    },
+    {
+      "dead": true,
+      "reward": {
+        "uid": "a194066f-95a8-4d17-a4e8-0f09250a7d74",
+        "x": 872.6784516661683,
+        "y": 828.6607741669159,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "gear": [],
+      "credits": 4,
+      "material": 1,
+      "counter": 10,
+      "balance": "40"
+    },
+    {
+      "dead": true,
+      "reward": {
+        "uid": "7fe28dc3-ad90-4da4-95d8-78454c7cd650",
+        "x": 430,
+        "y": 540,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "gear": [],
+      "credits": 4,
+      "material": 1,
+      "counter": 11,
+      "balance": "44"
+    },
+    {
+      "dead": true,
+      "reward": {
+        "uid": "a647913c-9936-467e-9c66-adda2000f16a",
+        "x": 540,
+        "y": 490,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "gear": [
+        {
+          "uid": "7bd0d761-4f68-4e01-a4ce-d6242f06ddcb",
+          "id": "forest-emitter",
+          "x": 540,
+          "y": 490,
+          "owner": "host",
+          "classId": "warrior"
+        }
+      ],
+      "credits": 4,
+      "material": 1,
+      "counter": 12,
+      "balance": "48"
+    }
+  ],
+  "stability": {
+    "before": {
+      "objects": 376,
+      "textures": 185,
+      "tweens": 24
+    },
+    "after": {
+      "objects": 376,
+      "textures": 185,
+      "tweens": 24
+    },
+    "fps": [
+      57.2408629655838,
+      57.2408629655838,
+      57.93064722418785,
+      57.93064722418785,
+      58.44798541814089,
+      59.085989063605666
+    ],
+    "mean": 57.97949914354831
+  },
+  "screenshots": [
+    "forge-1280.webp",
+    "balance-1280.webp",
+    "forge-1366.webp",
+    "balance-1366.webp",
+    "forge-1920.webp",
+    "balance-1920.webp",
+    "forge-844.webp",
+    "balance-844.webp"
+  ],
+  "method": "Chrome headless; real combat damage with DEV fixtures and respawn, four viewports. No physical hardware."
+}

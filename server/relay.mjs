@@ -7,6 +7,11 @@ const areas = new Set(['base','forest','cavern','warden','valley','arid','dunes'
 const connections = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave'] };
 const equipmentIds=new Set(Object.keys(catalogue));
 const cleanEquipment=raw=>Object.fromEntries(['weapon','helmet','armor','legs','boots','gloves','accessory'].filter(slot=>equipmentIds.has(raw?.[slot])&&catalogue[raw[slot]].slot===slot).map(slot=>[slot,raw[slot]]));
+const cleanBuild = raw => ({
+  xp:Number.isSafeInteger(raw?.xp)?Math.max(0,Math.min(1e9,raw.xp)):0,
+  abilityUpgrades:Object.fromEntries(['saberArc','saberReach','dashCooldown','dashDuration','chargeWidth','chargePower'].map(id=>[id,Number.isInteger(raw?.abilityUpgrades?.[id])?Math.max(0,Math.min(3,raw.abilityUpgrades[id])):0])),
+  bossRewards:Array.isArray(raw?.bossRewards)?raw.bossRewards.filter(v=>['warden','soterrado','vesper'].includes(v)).slice(0,3):[],
+});
 const bagFree=n=>Number.isInteger(n)?Math.max(0,Math.min(24,n)):0;
 // Attach rooms to an existing web server; no second port or process is required.
 export function attachCoop(server, { path = '/coop' } = {}) {
@@ -24,8 +29,8 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   server.on('upgrade', upgrade);
   const send = (ws, message) => { if (ws?.readyState === WebSocket.OPEN && ws.bufferedAmount < 131072) ws.send(JSON.stringify(message)); };
   const profile = p => p && ['warrior', 'hunter'].includes(p.classId) && typeof p.name === 'string' && p.name.trim()
-    ? { name: p.name.trim().slice(0, 24), classId: p.classId, sex: p.sex === 'male' || p.sex === 'female' ? p.sex : p.classId === 'hunter' ? 'female' : 'male', bagFree:bagFree(p.bagFree),potions:Number.isInteger(p.potions)?Math.max(0,Math.min(20,p.potions)):0,equipment:cleanEquipment(p.equipment) } : null;
-  const seat = (ws, p) => ({ ws, profile: p, token: randomBytes(24).toString('hex'), receipt: randomBytes(16).toString('hex'), total: 0, items:new Map(),resources:{credits:0,materials:[0,0,0],used:0},usedBaseline:0,timer: undefined });
+    ? { name: p.name.trim().slice(0, 24), classId: p.classId, sex: p.sex === 'male' || p.sex === 'female' ? p.sex : p.classId === 'hunter' ? 'female' : 'male', bagFree:bagFree(p.bagFree),potions:Number.isInteger(p.potions)?Math.max(0,Math.min(20,p.potions)):0,equipment:cleanEquipment(p.equipment),build:cleanBuild(p.build) } : null;
+  const seat = (ws, p) => ({ ws, profile: p, token: randomBytes(24).toString('hex'), receipt: randomBytes(16).toString('hex'), total: 0, bosses:new Set(), items:new Map(),resources:{credits:0,materials:[0,0,0],used:0},usedBaseline:0,timer: undefined });
   function end(room) {
     clearTimeout(room.host.timer); clearTimeout(room.guest?.timer);
     rooms.delete(room.code);
@@ -53,8 +58,8 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   }
   function joined(room, role) {
     const member = room[role], peer = room[role === 'host' ? 'guest' : 'host'];
-    send(member.ws, { type: 'joined', protocol:4, role, code: room.code, token: member.token, epoch: room.epoch,
-      area: room.area, peer: peer?.profile, peerConnected: !!peer?.ws, paused: room.paused === true, receipt: member.receipt, total: member.total, items:[...member.items.values()],resources:member.resources });
+    send(member.ws, { type: 'joined', protocol:5, role, code: room.code, token: member.token, epoch: room.epoch,
+      area: room.area, peer: peer?.profile, peerConnected: !!peer?.ws, paused: room.paused === true, receipt: member.receipt, total: member.total, bosses:[...member.bosses], items:[...member.items.values()],resources:member.resources });
     send(peer?.ws, { type: 'peer', profile: member.profile });
   }
   wss.on('connection', ws => {
@@ -88,7 +93,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
           if (!areas.has(m.area)) return send(ws, { type: 'error', message: 'Região de campanha desconhecida.' });
           if (rooms.size >= 64) return send(ws, { type: 'error', message: 'Servidor ocupado.' });
           const code = randomBytes(5).toString('hex').toUpperCase();
-          const room = { code, host: seat(ws, p), guest: undefined, area: m.area, epoch: 0, sequence: -1, xp: undefined, loot:new Set(),resourceIds:new Set(),used:0,visited:new Set(['base','forest',m.area]) };
+          const room = { code, host: seat(ws, p), guest: undefined, area: m.area, epoch: 0, sequence: -1, xp: undefined, bosses:new Set(p.build.bossRewards), loot:new Set(),resourceIds:new Set(),used:0,visited:new Set(['base','forest',m.area]) };
           rooms.set(code, room); ws.room = code; joined(room, 'host');
         } else {
           const room = rooms.get(String(m.code).replace(/\s/g, '').toUpperCase());
@@ -104,7 +109,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
       }else if(m.type==='equipment') {
         const role=ws===room.host.ws?'host':ws===room.guest?.ws?'guest':undefined;
         if(!role)return;
-        room[role].profile.equipment=cleanEquipment(m.equipment);room[role].profile.bagFree=bagFree(m.bagFree);room[role].profile.potions=Number.isInteger(m.potions)?Math.max(0,Math.min(20,m.potions)):0;
+        room[role].profile.build=cleanBuild(m.build);room[role].profile.equipment=cleanEquipment(m.equipment);room[role].profile.bagFree=bagFree(m.bagFree);room[role].profile.potions=Number.isInteger(m.potions)?Math.max(0,Math.min(20,m.potions)):0;
         send(room[role==='host'?'guest':'host']?.ws,{type:'peer',profile:room[role].profile});
       } else if (m.type === 'pause' && ws === room.host.ws) {
         room.paused = m.paused === true; send(room.guest?.ws, { type: 'pause', paused: room.paused });
@@ -129,6 +134,9 @@ export function attachCoop(server, { path = '/coop' } = {}) {
         if(room.guest)room.guest.resources.used=Math.max(room.guest.resources.used,room.used-room.guest.usedBaseline);
         const gain = room.xp === undefined ? 0 : Math.max(0, xp - room.xp);
         room.xp = Math.max(room.xp ?? 0, xp);
+        for(const boss of cleanBuild(world.progression).bossRewards)if(!room.bosses.has(boss)){
+          room.bosses.add(boss);if(room.guest?.ws)room.guest.bosses.add(boss);
+        }
         const fresh=(Array.isArray(world.lootAwarded)?world.lootAwarded:[]).slice(-512).filter(i=>i&&equipmentIds.has(i.id)&&typeof i.uid==='string'&&/^[a-zA-Z0-9_-]{1,96}$/.test(i.uid)&&!room.loot.has(i.uid));
         for(const i of fresh)room.loot.add(i.uid);
         if(room.guest)for(const i of fresh)room.guest.items.set(i.uid,{uid:i.uid,id:i.id});
@@ -136,7 +144,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
           room.guest.total += gain;
 
           send(room.guest.ws, { type: 'world', world, epoch: room.epoch,
-            receipt: room.guest.receipt, total: room.guest.total,items:[...room.guest.items.values()],resources:room.guest.resources });
+            receipt: room.guest.receipt, total: room.guest.total,bosses:[...room.guest.bosses],items:[...room.guest.items.values()],resources:room.guest.resources });
         }
       } else if (m.type === 'leave') leave(ws, true);
     });
@@ -157,6 +165,6 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   server.once('close', close);
   return {
     close,
-    status: () => ({ service: 'Dante regional co-op', protocol: 4, campaign: true, rooms: rooms.size, players: clients.size }),
+    status: () => ({ service: 'Dante regional co-op', protocol: 5, campaign: true, rooms: rooms.size, players: clients.size }),
   };
 }

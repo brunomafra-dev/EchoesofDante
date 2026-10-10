@@ -1,0 +1,453 @@
+{
+  "method": "Chrome, actual regional actors and damage/reward pipeline; DEV lethal hit for coverage. No physical devices or human balance approval.",
+  "errors": [],
+  "regions": [
+    {
+      "region": "forest",
+      "kit": "initial",
+      "level": 1,
+      "enemyHp": 68,
+      "playerHp": 100,
+      "attack": 34,
+      "resistance": 0,
+      "received": 20,
+      "expectedDamage": 20,
+      "xp": 15,
+      "expectedXp": 15,
+      "reward": {
+        "uid": "f28a5813-a138-4475-afaf-82379ea6369e",
+        "x": 802.9104275004361,
+        "y": 899.2723931248911,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "population": 8
+    },
+    {
+      "region": "forest",
+      "kit": "basic",
+      "level": 1,
+      "enemyHp": 68,
+      "playerHp": 123,
+      "attack": 37,
+      "resistance": 0.03,
+      "received": 19,
+      "expectedDamage": 19,
+      "xp": 15,
+      "expectedXp": 15,
+      "reward": {
+        "uid": "6dbdabb6-398e-4999-83be-e80003734e54",
+        "x": 802.1810743688267,
+        "y": 899.4547314077932,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "population": 8
+    },
+    {
+      "region": "forest",
+      "kit": "advanced",
+      "level": 1,
+      "enemyHp": 68,
+      "playerHp": 161,
+      "attack": 41,
+      "resistance": 0.07,
+      "received": 19,
+      "expectedDamage": 19,
+      "xp": 15,
+      "expectedXp": 15,
+      "reward": {
+        "uid": "59dfe945-a395-4e03-af16-92c6b55a4786",
+        "x": 802.9089722866858,
+        "y": 899.2727569283285,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "population": 8
+    },
+    {
+      "region": "cavern",
+      "kit": "initial",
+      "level": 3,
+      "enemyHp": 76,
+      "playerHp": 120,
+      "attack": 34,
+      "resistance": 0,
+      "received": 22,
+      "expectedDamage": 22,
+      "xp": 18,
+      "expectedXp": 18,
+      "reward": {
+        "uid": "d8f33712-bd4e-46fc-825e-925d6c740250",
+        "x": 1010,
+        "y": 990,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "population": 19
+    },
+    {
+      "region": "cavern",
+      "kit": "basic",
+      "level": 3,
+      "enemyHp": 76,
+      "playerHp": 143,
+      "attack": 37,
+      "resistance": 0.03,
+      "received": 21,
+      "expectedDamage": 21,
+      "xp": 18,
+      "expectedXp": 18,
+      "reward": {
+        "uid": "5d61dfc8-d1c7-4f76-9b44-a795931ac38a",
+        "x": 1010,
+        "y": 990,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "population": 19
+    },
+    {
+      "region": "cavern",
+      "kit": "advanced",
+      "level": 3,
+      "enemyHp": 76,
+      "playerHp": 181,
+      "attack": 41,
+      "resistance": 0.07,
+      "received": 20,
+      "expectedDamage": 20,
+      "xp": 18,
+      "expectedXp": 18,
+      "reward": {
+        "uid": "b5b7cea0-1bc5-43c2-8681-742a613ea551",
+        "x": 1010,
+        "y": 990,
+        "owner": "host",
+        "tier": 1,
+        "credits": 4,
+        "amount": 1
+      },
+      "population": 19
+    },
+    {
+      "region": "arid",
+      "kit": "initial",
+      "level": 6,
+      "enemyHp": 78,
+      "playerHp": 145,
+      "attack": 34,
+      "resistance": 0,
+      "received": 24,
+      "expectedDamage": 24,
+      "xp": 25,
+      "expectedXp": 25,
+      "reward": {
+        "uid": "a2e5c0d6-eea7-406c-a087-46a998d2ef04",
+        "x": 780,
+        "y": 690,
+        "owner": "host",
+        "tier": 2,
+        "credits": 8,
+        "amount": 1
+      },
+      "population": 10
+    },
+    {
+      "region": "arid",
+      "kit": "basic",
+      "level": 6,
+      "enemyHp": 78,
+      "playerHp": 168,
+      "attack": 37,
+      "resistance": 0.03,
+      "received": 23,
+      "expectedDamage": 23,
+      "xp": 25,
+      "expectedXp": 25,
+      "reward": {
+        "uid": "ac7d8c96-7700-410b-a68e-f96594a0884b",
+        "x": 780,
+        "y": 690,
+        "owner": "host",
+        "tier": 2,
+        "credits": 8,
+        "amount": 1
+      },
+      "population": 10
+    },
+    {
+      "region": "arid",
+      "kit": "advanced",
+      "level": 6,
+      "enemyHp": 78,
+      "playerHp": 206,
+      "attack": 41,
+      "resistance": 0.07,
+      "received": 22,
+      "expectedDamage": 22,
+      "xp": 25,
+      "expectedXp": 25,
+      "reward": {
+        "uid": "67b89124-6d2b-4e20-9f69-981a6c06da71",
+        "x": 780,
+        "y": 690,
+        "owner": "host",
+        "tier": 2,
+        "credits": 8,
+        "amount": 1
+      },
+      "population": 10
+    },
+    {
+      "region": "icecave",
+      "kit": "initial",
+      "level": 8,
+      "enemyHp": 168,
+      "playerHp": 155,
+      "attack": 34,
+      "resistance": 0,
+      "received": 27,
+      "expectedDamage": 27,
+      "xp": 34,
+      "expectedXp": 34,
+      "reward": {
+        "uid": "ed467b4d-c5b8-4ed0-8a3a-568b6cfcab12",
+        "x": 700,
+        "y": 1130,
+        "owner": "host",
+        "tier": 3,
+        "credits": 12,
+        "amount": 1
+      },
+      "population": 8
+    },
+    {
+      "region": "icecave",
+      "kit": "basic",
+      "level": 8,
+      "enemyHp": 168,
+      "playerHp": 178,
+      "attack": 37,
+      "resistance": 0.03,
+      "received": 26,
+      "expectedDamage": 26,
+      "xp": 34,
+      "expectedXp": 34,
+      "reward": {
+        "uid": "7b46ff40-cad6-4615-9be3-b19cb19a69c8",
+        "x": 700,
+        "y": 1130,
+        "owner": "host",
+        "tier": 3,
+        "credits": 12,
+        "amount": 1
+      },
+      "population": 8
+    },
+    {
+      "region": "icecave",
+      "kit": "advanced",
+      "level": 8,
+      "enemyHp": 168,
+      "playerHp": 216,
+      "attack": 41,
+      "resistance": 0.07,
+      "received": 25,
+      "expectedDamage": 25,
+      "xp": 34,
+      "expectedXp": 34,
+      "reward": {
+        "uid": "7052ecc7-bb0d-4464-a11c-58c00f8b1713",
+        "x": 700,
+        "y": 1130,
+        "owner": "host",
+        "tier": 3,
+        "credits": 12,
+        "amount": 1
+      },
+      "population": 8
+    }
+  ],
+  "checks": [
+    "Four regions x three equipment tiers: fixed enemy HP, increased player power, real regional damage and XP, material/credit drops",
+    "Death receipt: quota failure leaves save intact, successful retry deducts floor(10%) once, XP/materials/items untouched"
+  ],
+  "death": {
+    "unchanged": true,
+    "retry": 23,
+    "replay": 0,
+    "credits": 214,
+    "xpBefore": 1714,
+    "xpAfter": 1714,
+    "materialsBefore": [
+      12,
+      12,
+      12
+    ],
+    "materialsAfter": [
+      12,
+      12,
+      12
+    ],
+    "equipmentBefore": {
+      "schema": 2,
+      "owned": [
+        "glacier-emitter",
+        "glacier-armor",
+        "glacier-focus",
+        "glacier-helmet",
+        "glacier-legs",
+        "glacier-boots",
+        "glacier-gloves"
+      ],
+      "slots": {
+        "weapon": "glacier-emitter",
+        "helmet": "glacier-helmet",
+        "armor": "glacier-armor",
+        "legs": "glacier-legs",
+        "boots": "glacier-boots",
+        "gloves": "glacier-gloves",
+        "accessory": "glacier-focus"
+      },
+      "items": [
+        {
+          "uid": "legacy-glacier-emitter",
+          "id": "glacier-emitter"
+        },
+        {
+          "uid": "legacy-glacier-armor",
+          "id": "glacier-armor"
+        },
+        {
+          "uid": "legacy-glacier-focus",
+          "id": "glacier-focus"
+        },
+        {
+          "uid": "legacy-glacier-helmet",
+          "id": "glacier-helmet"
+        },
+        {
+          "uid": "legacy-glacier-legs",
+          "id": "glacier-legs"
+        },
+        {
+          "uid": "legacy-glacier-boots",
+          "id": "glacier-boots"
+        },
+        {
+          "uid": "legacy-glacier-gloves",
+          "id": "glacier-gloves"
+        }
+      ],
+      "equipped": {
+        "weapon": "legacy-glacier-emitter",
+        "helmet": "legacy-glacier-helmet",
+        "armor": "legacy-glacier-armor",
+        "legs": "legacy-glacier-legs",
+        "boots": "legacy-glacier-boots",
+        "gloves": "legacy-glacier-gloves",
+        "accessory": "legacy-glacier-focus"
+      }
+    },
+    "equipmentAfter": {
+      "schema": 2,
+      "owned": [
+        "glacier-emitter",
+        "glacier-armor",
+        "glacier-focus",
+        "glacier-helmet",
+        "glacier-legs",
+        "glacier-boots",
+        "glacier-gloves"
+      ],
+      "slots": {
+        "weapon": "glacier-emitter",
+        "helmet": "glacier-helmet",
+        "armor": "glacier-armor",
+        "legs": "glacier-legs",
+        "boots": "glacier-boots",
+        "gloves": "glacier-gloves",
+        "accessory": "glacier-focus"
+      },
+      "items": [
+        {
+          "uid": "legacy-glacier-emitter",
+          "id": "glacier-emitter"
+        },
+        {
+          "uid": "legacy-glacier-armor",
+          "id": "glacier-armor"
+        },
+        {
+          "uid": "legacy-glacier-focus",
+          "id": "glacier-focus"
+        },
+        {
+          "uid": "legacy-glacier-helmet",
+          "id": "glacier-helmet"
+        },
+        {
+          "uid": "legacy-glacier-legs",
+          "id": "glacier-legs"
+        },
+        {
+          "uid": "legacy-glacier-boots",
+          "id": "glacier-boots"
+        },
+        {
+          "uid": "legacy-glacier-gloves",
+          "id": "glacier-gloves"
+        }
+      ],
+      "equipped": {
+        "weapon": "legacy-glacier-emitter",
+        "helmet": "legacy-glacier-helmet",
+        "armor": "legacy-glacier-armor",
+        "legs": "legacy-glacier-legs",
+        "boots": "legacy-glacier-boots",
+        "gloves": "legacy-glacier-gloves",
+        "accessory": "legacy-glacier-focus"
+      }
+    }
+  },
+  "economy": {
+    "cadence": 12,
+    "potion": 12,
+    "recipes": [
+      {
+        "credits": 35,
+        "material": 0,
+        "amount": 6
+      },
+      {
+        "credits": 70,
+        "material": 1,
+        "amount": 8
+      },
+      {
+        "credits": 105,
+        "material": 2,
+        "amount": 10
+      }
+    ],
+    "losses": [
+      0,
+      0,
+      1,
+      23
+    ],
+    "cap": 10
+  },
+  "passed": true
+}

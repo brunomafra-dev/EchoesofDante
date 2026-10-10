@@ -29,6 +29,7 @@ export class TouchControls {
   private visible = false;
   private interactAvailable = false;
   private dead = false;
+  private canRestart = true;
   private portrait = matchMedia('(orientation: portrait)');
   private queued: Record<QueuedAction, boolean> = { dash: false, charge: false, release: false, cancel: false, interact: false, restart: false };
   private unprotect: () => void;
@@ -251,7 +252,8 @@ export class TouchControls {
     this.interactAvailable = available;
     this.interactButton.classList.toggle('is-available', available);
   }
-  setDead(dead: boolean): void {
+  setDead(dead: boolean, canRestart = true): void {
+    if(this.canRestart!==canRestart){this.canRestart=canRestart;this.root.querySelector<HTMLElement>('[data-action="restart"]')!.style.visibility=canRestart?'':'hidden';}
     if (this.dead === dead) return;
     this.dead = dead;
     if (dead) this.cancelAll();

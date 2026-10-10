@@ -66,13 +66,18 @@ export class Progression {
     return this.award(PROGRESSION.echoXp);
   }
 
-  defeatHollow(spawnIndex: number): { awarded: boolean; leveledUp: boolean } {
+  defeatHollow(spawnIndex: number, xp:number=PROGRESSION.hollowXp): { awarded: boolean; leveledUp: boolean } {
     if (this.rewardedHollows.has(spawnIndex)) return { awarded: false, leveledUp: false };
     this.rewardedHollows.add(spawnIndex);
-    return { awarded: true, leveledUp: this.award(PROGRESSION.hollowXp) };
+    return { awarded: true, leveledUp: this.award(xp) };
   }
 
-  defeatRenewableResident(): boolean { return this.award(PROGRESSION.hollowXp); }
+  defeatRenewableResident(xp:number=PROGRESSION.hollowXp): boolean { return this.award(xp); }
+
+  defeatWarden(): { awarded:boolean;leveledUp:boolean } {
+    if(this.bossRewards.has('warden'))return {awarded:false,leveledUp:false};
+    this.bossRewards.add('warden');return {awarded:true,leveledUp:this.award(120)};
+  }
 
   defeatVesper(): { awarded: boolean; leveledUp: boolean } {
     if (this.bossRewards.has('vesper')) return { awarded: false, leveledUp: false };
@@ -115,6 +120,7 @@ export class Progression {
     this.rewardedHollows = new Set(value.rewardedHollows);
     this.rewardedRoutes.clear(); value.rewardedRoutes.forEach(id => this.rewardedRoutes.add(id));
     this.bossRewards.clear();
+    if (value.bossRewards?.includes('warden')) this.bossRewards.add('warden');
     if (value.bossRewards?.includes('vesper')) this.bossRewards.add('vesper');
     if (value.bossRewards?.includes('soterrado')) this.bossRewards.add('soterrado');
     for (const id of UPGRADE_IDS) {

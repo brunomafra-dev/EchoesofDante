@@ -1,3 +1,4 @@
+import { deathCreditLoss } from '../config/threat';
 import { ECHO_COUNT, FOREST_ECHOES } from '../config/discovery';
 import { VALLEY_ENCOUNTERS, VALLEY_ROUTES } from '../config/valley';
 import { SIROCCO_ENCOUNTERS, SIROCCO_ROUTES } from '../config/sirocco';
@@ -116,7 +117,7 @@ export class LocalJourney {
           rewardedRoutes: Array.isArray(p.rewardedRoutes) ? p.rewardedRoutes.filter((id): id is string =>
             typeof id === 'string' && (VALLEY_ROUTES.some(route => route.id === id) || SIROCCO_ROUTES.some(route => route.id === id) || DUNES_ROUTES.some(route => route.id === id) || FROST_ROUTES.some(route => route.id === id) || GLACIER_ROUTES.some(route => route.id === id))) : [],
           abilityUpgrades: object(p.abilityUpgrades) as Partial<AbilityUpgradeRanks> | undefined,
-          bossRewards: [...(flags.soterradoDefeated ? ['soterrado'] : []), ...(flags.vesperDefeated ? ['vesper'] : [])] },
+          bossRewards: [...new Set([...(Array.isArray(p.bossRewards)?p.bossRewards.filter((id):id is string=>typeof id==='string'&&['warden','soterrado','vesper'].includes(id)):[]),...(flags.wardenDefeated?['warden']:[]), ...(flags.soterradoDefeated ? ['soterrado'] : []), ...(flags.vesperDefeated ? ['vesper'] : [])])] },
         flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats, equipment:validEquipment(raw.equipment),economy:validEconomy(raw.economy),expeditionReturn:validExpeditionReturn(raw.expeditionReturn),
         coopReceipts: Array.isArray(raw.coopReceipts) ? raw.coopReceipts.filter((entry): entry is {id:string;total:number} =>
           !!entry && typeof entry.id === 'string' && /^[a-f0-9]{32}$/.test(entry.id) && integer(entry.total, 1e9)).slice(-32) : [] };
@@ -141,7 +142,7 @@ export class LocalJourney {
     }
   }
 
-  creditCoopXp(id: string, total: number, items:readonly (EquipmentId|InventoryItem)[]=[],resources?:{credits:number;materials:number[];used:number}): boolean {
+  creditCoopXp(id: string, total: number, items:readonly (EquipmentId|InventoryItem)[]=[],resources?:{credits:number;materials:number[];used:number},bosses:readonly string[]=[]): boolean {
     if (!/^[a-f0-9]{32}$/.test(id) || !integer(total, 1e9)) return false;
     const saved = this.load();
     if (!saved) return false;
@@ -157,14 +158,34 @@ export class LocalJourney {
     if(resources){const next={id,credits:Math.max(prior.credits,integer(resources.credits,1e9)?resources.credits:0),materials:[0,1,2].map(i=>Math.max(prior.materials[i],integer(resources.materials?.[i],1e9)?resources.materials[i]:0)),used:Math.max(prior.used,integer(resources.used,1e9)?resources.used:0)};
       resourceChanged=JSON.stringify(prior)!==JSON.stringify(next);economy.credits=Math.min(1e9,economy.credits+next.credits-prior.credits);economy.materials=economy.materials.map((v,i)=>Math.min(1e9,v+next.materials[i]-prior.materials[i]));economy.potions=Math.max(0,economy.potions-(next.used-prior.used));if(next.used>prior.used)economy.potionReadyAt=Date.now()+8000;
       economy.receipts=[...economy.receipts.filter(r=>r.id!==id),next].slice(-32);}
-    if (total <= previous && merged.items!.length===equipment.items!.length&&!resourceChanged&&incoming.every(i=>economy.claimed.includes(i.uid))) return true;
+    const earnedBosses=[...new Set([...(saved.progression.bossRewards??[]),...bosses.filter(id=>['warden','soterrado','vesper'].includes(id))])];
+    const bossChanged=earnedBosses.length!==(saved.progression.bossRewards??[]).length;
+    if (total <= previous && merged.items!.length===equipment.items!.length&&!resourceChanged&&!bossChanged&&incoming.every(i=>economy.claimed.includes(i.uid))) return true;
     // XP and its receipt are a single storage write. Campaign flags/area/kit stay local.
     saved.progression.xp = Math.min(1e9, saved.progression.xp + Math.max(0,total - previous));
+    saved.progression.bossRewards=earnedBosses;
     saved.equipment=merged;
     economy.claimed=[...new Set([...economy.claimed,...incoming.map(i=>i.uid)])].slice(-4096);saved.economy=economy;
     saved.coopReceipts = [...receipts.filter(receipt => receipt.id !== id), { id, total:Math.max(total,previous) }].slice(-32);
     saved.updatedAt = Date.now();
     return this.save(saved);
+  }
+
+  penalizeDeath(id:string):number|undefined {
+    if(!/^[a-zA-Z0-9_-]{1,96}$/.test(id))return undefined;
+    const saved=this.load();if(!saved)return undefined;
+    const economy=validEconomy(saved.economy);
+    if(economy.deathReceipts!.includes(id))return 0;
+    const loss=deathCreditLoss(economy.credits);economy.credits-=loss;
+    economy.deathReceipts=[...economy.deathReceipts!,id].slice(-256);
+    saved.economy=economy;saved.updatedAt=Date.now();
+    return this.save(saved)?loss:undefined;
+  }
+
+  saveAbilityUpgrades(progression:ProgressionSnapshot):boolean {
+    const saved=this.load();if(!saved)return false;
+    saved.progression.abilityUpgrades={...progression.abilityUpgrades};
+    saved.updatedAt=Date.now();return this.save(saved);
   }
 
   saveEquipment(equipment:EquipmentSnapshot):boolean {

@@ -8,7 +8,8 @@ await mkdir(out,{recursive:true});const browser=await chromium.launch({channel:'
 const errors=[],report={method:'Gamepad API automated driver; normal player and boss HP, no forced attacks or invulnerability; not a human balance assessment',errors};
 try{
   const page=await browser.newPage({viewport:{width:1280,height:720}});page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
-  await page.goto(base);await page.waitForFunction(()=>window.__danteGame?.scene.getScene('Game').player);
+  page.on('response',r=>{if(r.status()>=400)errors.push(r.url())});
+  await page.goto(base);await page.waitForFunction(()=>window.__danteGame?.scene.getScene('Game')?.player?.view.active);
   await page.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');for(const id of ['northern-ruin','mineral-signal','unknown-trace'])s.progression.discover(id);s.area='warden';s.firstEchoSeen=true;s.wardenGateOpen=true;s.scene.restart();});await page.waitForTimeout(700);
   await page.evaluate(()=>{window.qaPad={mapping:'standard',connected:true,axes:[0,0,1,0],buttons:Array.from({length:17},()=>({value:0,pressed:false}))};navigator.getGamepads=()=>[window.qaPad];});
   const begun=Date.now(),phases=new Set(),attacks=new Set();let chargeAt=0,lastCharge=0,dashes=0,hitsTaken=0,lastHp=110,won=false;

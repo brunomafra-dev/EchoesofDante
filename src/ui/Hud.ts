@@ -19,6 +19,8 @@ export class Hud {
   private controlHints: Phaser.GameObjects.Text[] = [];
   private controlsTimer?: Phaser.Time.TimerEvent;
   private inputMethod: InputMethod = 'keyboard';
+  private deathButton!:Phaser.GameObjects.Rectangle;
+  private deathSubtitle!:Phaser.GameObjects.Text;
   private deathButtonText: Phaser.GameObjects.Text;
   private promptVisible = false;
   private interactionAction = 'INVESTIGAR';
@@ -85,7 +87,8 @@ export class Hud {
     const overline = text(640, 232, 'SINAL PERDIDO   /   DANTE 01', 17, '#d99a91', true).setOrigin(0.5).setDepth(30002).setVisible(false);
     const title = text(640, 289, this.hunter ? 'CAÇADOR CAÍDO' : 'GUERREIRO CAÍDO', 58, '#eff3e9', true).setOrigin(0.5).setDepth(30002).setVisible(false);
     const subtitle = text(640, 373, 'Dante ainda está à escuta.', 17, '#aac5bf').setOrigin(0.5).setDepth(30002).setVisible(false);
-    const button = scene.add.rectangle(640, 467, 248, 55, 0x9edacf).setScrollFactor(0).setDepth(30002).setInteractive({ useHandCursor: true }).setVisible(false);
+    this.deathSubtitle=subtitle;
+    const button = this.deathButton = scene.add.rectangle(640, 467, 248, 55, 0x9edacf).setScrollFactor(0).setDepth(30002).setInteractive({ useHandCursor: true }).setVisible(false);
     this.deathButtonText = text(640, 467, 'RENASCER   [ R ]', 26, '#12303a', true).setOrigin(0.5).setDepth(30003).setVisible(false);
     button.on('pointerover', () => button.setFillStyle(0xc1eee1));
     button.on('pointerout', () => button.setFillStyle(0x9edacf));
@@ -251,11 +254,16 @@ export class Hud {
     this.levelTimer = this.scene.time.delayedCall(2000, () => this.levelMessage.setVisible(false));
   }
 
-  showDeath(): void {
+  hideDeath():void {this.deathGroup.forEach(item=>item.setVisible(false));}
+  showDeath(waiting=false,loss?:number): void {
     this.discoveryPrompt.setVisible(false);
     this.discoveryMessage.setVisible(false);
     this.levelMessage.setVisible(false);
     this.controlHints.forEach(hint => hint.setVisible(false));
     this.deathGroup.forEach(item => item.setVisible(true));
+    this.deathButton.disableInteractive();
+    if(!waiting)this.deathButton.setInteractive({useHandCursor:true});
+    this.deathButton.setVisible(!waiting);this.deathButtonText.setVisible(!waiting);
+    this.deathSubtitle.setText(waiting?'Seu aliado continua lutando. Aguarde a equipe.':loss!==undefined?`Créditos perdidos: ${loss}. Equipamentos e XP preservados.`:'Dante ainda está à escuta.');
   }
 }

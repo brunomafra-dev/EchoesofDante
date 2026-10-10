@@ -15,8 +15,8 @@ const state=p=>p.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game')
 const key=async(p,k,ms=80)=>{await p.keyboard.down(k);await p.waitForTimeout(ms);await p.keyboard.up(k);await p.waitForTimeout(150);};
 // Mastery choices intentionally pause the host. Complete them through their UI
 // before asserting door animations or replicated boss health.
-async function completeMastery(){for(let i=0;i<18;i++){const choices=h.locator('.ability-upgrade-dialog[open] [data-upgrade]:not(:disabled)');if(!await choices.count())break;await choices.first().click();await h.waitForTimeout(150)}}
-async function arrive(area){for(const p of[h,g])await p.waitForFunction(area=>{const s=window.__danteGame.scene.getScene('Game'),r=window.__danteCoop;return s.area===area&&!s.transitioning&&s.party?.localPlayer===s.player&&s.player.view.active&&(r.role==='host'?!!s.party.partner:!!s.party.mirrorHost);},area);await g.waitForTimeout(450);await h.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');s.player.invulnerableUntil=s.party.partner.player.invulnerableUntil=Infinity;});report.areas.push(area);console.log('Arrived',area);}
+async function completeMastery(){for(const p of[h,g]){await p.waitForTimeout(400);for(let i=0;i<18;i++){const choices=p.locator('.ability-upgrade-dialog[open] [data-upgrade]:not(:disabled)');if(!await choices.count())break;await choices.first().click();await p.waitForTimeout(150)}}}
+async function arrive(area){await completeMastery();for(const p of[h,g])await p.waitForFunction(area=>{const s=window.__danteGame.scene.getScene('Game'),r=window.__danteCoop;return s.area===area&&!s.transitioning&&s.party?.localPlayer===s.player&&s.player.view.active&&(r.role==='host'?!!s.party.partner:!!s.party.mirrorHost);},area);await g.waitForTimeout(450);await completeMastery();await h.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');s.player.invulnerableUntil=s.party.partner.player.invulnerableUntil=Infinity;});report.areas.push(area);console.log('Arrived',area);}
 async function travel(area){
  await h.waitForTimeout(500);
  for(let i=0;i<8;i++){const options=h.locator('.ability-upgrade-dialog[open] button:not(:disabled)');if(!await options.count())break;await options.first().click();await h.waitForTimeout(200);}
@@ -25,7 +25,7 @@ async function travel(area){
  for(let i=0;i<8;i++){const options=h.locator('.ability-upgrade-dialog[open] button:not(:disabled)');if(!await options.count())break;await options.first().click();await h.waitForTimeout(200);}
  await arrive(area);
 }
-async function position(x,y,guest=false){await h.evaluate(({x,y,guest})=>{const s=window.__danteGame.scene.getScene('Game');Object.assign(guest?s.party.partner.player.position:s.player.position,{x,y});s.player.invulnerableUntil=s.party.partner.player.invulnerableUntil=Infinity;},{x,y,guest});await g.waitForTimeout(450);}
+async function position(x,y,guest=false){await completeMastery();await h.evaluate(({x,y,guest})=>{const s=window.__danteGame.scene.getScene('Game');Object.assign(guest?s.party.partner.player.position:s.player.position,{x,y});s.player.invulnerableUntil=s.party.partner.player.invulnerableUntil=Infinity;},{x,y,guest});await g.waitForTimeout(450);await completeMastery();if(guest){const accepted=await h.evaluate(()=>({...window.__danteGame.scene.getScene('Game').party.partner.player.position}));await g.waitForFunction(({x,y})=>{const s=window.__danteGame.scene.getScene('Game');return Math.hypot(s.player.position.x-x,s.player.position.y-y)<15},accepted);}}
 try{
  await h.goto('http://localhost:5184/?qa=play');await ready(h);await g.goto('http://localhost:5184/?qa=play');await ready(g);
  // Direct connection exercises the production protocol; menu/invite UX has its own regression QA.
@@ -43,12 +43,12 @@ try{
  // Keep all existing boss/portal dependencies valid, without replaying kilometers in every QA.
  await h.evaluate(async()=>{const s=window.__danteGame.scene.getScene('Game'),{JOURNEY_FLAGS}=await import('/src/systems/LocalJourney.ts');for(const flag of JOURNEY_FLAGS)s[flag]=true;s.wardenDefeated=s.wardenEndingSeen=s.soterradoDefeated=s.soterradoClueSeen=s.vesperDefeated=s.vesperClueSeen=false;
   s.progression.restore({xp:1000,echoes:['northern-ruin','mineral-signal','unknown-trace'],sourceLocated:true,passageOpen:true,rewardedHollows:[],rewardedRoutes:[]});for(const id of['saberArc','saberReach','dashCooldown','dashDuration','chargeWidth','chargePower'])while(s.progression.investUpgrade(id)){}s.saveProgress();});
- await g.waitForTimeout(900);
+ await g.waitForTimeout(900);await completeMastery();
  // Prime the cadence for this collection/sync fixture. qa-economy-rewards tests all 12 kills.
  // A real mob death creates a ground item. Each participant receives their own copy.
  await h.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game'),e=s.enemies[0];s.lootKills=11;s.resolvePlayerHits(s.time.now,[e],9999,0,0x5fe6d8,s.player.position,false);});
  const drop=(await state(h)).loot.find(p=>p.owner==='guest');assert.ok(drop);await position(drop.x,drop.y,true);await key(g,'e');await position(drop.x,drop.y);await key(h,'e');await g.waitForTimeout(700);
- assert.ok((await state(h)).equipment.owned.includes(drop.id));assert.ok((await state(g)).equipment.owned.includes(drop.id));
+ assert.ok((await state(h)).equipment.owned.includes(drop.id));assert.ok((await state(g)).equipment.owned.includes(drop.id),JSON.stringify(await g.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');return{paused:s.scene.isPaused(),modal:s.abilityUpgradeDialog.isOpen,points:s.progression.upgradePointsAvailable,position:s.player.position,loot:s.loot.snapshot(),input:window.__danteCoop.input,worldPrompt:window.__danteCoop.world?.prompt}})));
  report.sharedGroundLoot=true;
  // Equip through the actual modal on both screens. Increasing HP does not heal.
  for(const p of[h,g]){await p.evaluate(()=>window.__danteGame.scene.getScene('Game').openEquipment());await p.locator(`[data-item="${drop.id}"]`).click();await p.locator('[data-equip]').click();await p.locator('.equipment-dialog [data-close]').click();}
@@ -90,18 +90,21 @@ try{
   await g.mouse.move(screen.x,screen.y);await g.mouse.down();await g.waitForTimeout(1000);await g.mouse.up();
   const hp=await h.evaluate(k=>window.__danteGame.scene.getScene('Game')[k].health.current,keyName);assert.ok(hp<target.hp,`${keyName}: guest ranged primary must hit`);
   await h.evaluate(keyName=>{const s=window.__danteGame.scene.getScene('Game');s.resolvePlayerHits(s.time.now,[s[keyName]],9999,0,0x5fe6d8,s.player.position,false);},keyName);
-  await g.waitForTimeout(2100);assert.equal((await state(g)).boss.isDead,true);
+  await g.waitForTimeout(2100);assert.equal((await state(g)).boss.isDead,true);await completeMastery();
   const loot=(await state(h)).loot.find(p=>p.owner==='guest');if(loot){await position(loot.x,loot.y,true);await key(g,'e');await g.waitForTimeout(400);}
   const upgrades=h.locator('.ability-upgrade-dialog[open] button:not(:disabled)');
   if(await upgrades.count())await upgrades.first().click();
   report.bosses.push({area,guestPrimary:true,death:true,visuals:(await state(g)).boss.visuals.length});
  }
  assert.ok((await state(g)).equipment.owned.includes('glacier-focus'));
+ assert.deepEqual(await g.evaluate(()=>window.__danteGame.scene.getScene('Game').journey.load().progression.bossRewards.sort()),['soterrado','vesper','warden']);
+ await completeMastery();
  // Charge, movement and Dash use the existing guest action pipeline.
  await travel('icecave');await position(420,990,true);await key(g,'d',250);await key(g,'Space');await g.waitForTimeout(500);
  // A route reward can unlock a mastery choice; finish that real modal before
  // testing charge. Host menus deliberately cancel and pause visitor actions.
  for(let i=0;i<8;i++){const options=h.locator('.ability-upgrade-dialog[open] button:not(:disabled)');if(!await options.count())break;await options.first().click();await h.waitForTimeout(200);}
+ await completeMastery();
  await g.keyboard.down('q');await g.waitForTimeout(400);
  const chargeState=await h.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');return{phase:s.party.partner.charge.phase,paused:s.scene.isPaused(),input:window.__danteCoop.input,dash:s.party.partner.player.isDashing,now:s.time.now,offset:s.recordsTimeOffset,dialog:s.abilityUpgradeDialog.isOpen};});
  assert.equal(chargeState.phase,'CHARGING',JSON.stringify(chargeState));await g.keyboard.up('q');await g.waitForTimeout(500);report.guestKit=true;

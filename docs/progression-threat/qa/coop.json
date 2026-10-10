@@ -1,0 +1,53 @@
+{
+  "method": "Independent Chrome contexts, real local WebSocket relay. DEV positioning and controlled damage. No physical devices.",
+  "checks": [
+    "Visitor keeps own level, equipment, HP and ability ranks instead of host kit",
+    "Guest Dash moves, shows real cooldown and becomes ready again",
+    "Guest hold/aim/release beam and Q cooldown replicated",
+    "Host death does not kill the visitor; active boss continues and reset is blocked while one survives",
+    "All fallen reset the boss; 10% loss is charged once per real death and receipt replay does not charge again",
+    "Second real death charges correctly; boss victory revives fallen ally and preserves equipment/materials/XP",
+    "Visitor mouse-click on active nearby Warden portal travels both participants",
+    "Visitor E interaction opens chapter portal for both players",
+    "Equipping stronger gear does not scale enemy HP",
+    "Repeated guest respawns do not accumulate actor objects",
+    "Guest Gamepad API mock: movement, Dash and hold/release charge",
+    "Guest CDP touch: simultaneous movement and charge/drag/release, movement lock while charging, strike and Dash",
+    "Four viewports: one canvas, one touch controller, no duplicated UI",
+    "Laboratory save writes do not touch real localStorage",
+    "New participant does not inherit the previous visitor death or penalty"
+  ],
+  "errors": [],
+  "metrics": [
+    {
+      "hostFps": 60.36797949769803,
+      "objects": 153,
+      "tweens": 3
+    },
+    {
+      "guestFps": 59.94136511130937,
+      "objects": 217,
+      "tweens": 3
+    }
+  ],
+  "build": {
+    "hostLevel": 4,
+    "peerLevel": 1,
+    "peerHp": 141,
+    "peerDash": 1450,
+    "hostDash": 1580
+  },
+  "respawnCounts": {
+    "counts": {
+      "objects": 153,
+      "tweens": 3,
+      "textures": 185
+    },
+    "countsAfter": {
+      "objects": 153,
+      "tweens": 3,
+      "textures": 185
+    }
+  },
+  "passed": true
+}

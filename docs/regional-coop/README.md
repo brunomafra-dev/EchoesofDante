@@ -1,5 +1,9 @@
 # Expedições em dupla · 0.1.78
 
+## Revisão atual · 0.1.89 · protocolo 5
+
+Visitante com nível/HP/aprimoramentos pessoais, poses reais de combate, recargas autoritativas, mira local e interpolação visual limitada. Atualização de perfil não cancela a carga. Ambos acionam portais; clicar no portal ativo próximo também usa INTERACT. Morte de um aliado não encerra o boss; derrota da dupla reinicia, vitória recupera o caído. Penalidade pessoal de 10% dos créditos por morte, sem perder XP/material/itens. [Curva, laboratório e QA](../progression-threat/README.md). É necessário publicar frontend e relay juntos; blueprint mantém deploy por commit.
+
 ## Inventário pessoal — protocolo 3
 
 A etapa 2 usa sete slots e recibos por cópia de equipamento. Cada participante coleta seus próprios drops; abrir a mochila não pausa o companheiro. Frontend e relay precisam estar atualizados. [Migração e QA](../inventory-loot/README.md). Os relatos abaixo são históricos.
@@ -60,7 +64,7 @@ Salas disponíveis em **todas as dez regiões da campanha**, incluindo Cavern/De
 - O anfitrião simula personagens, criaturas, colisões e recompensas. O visitante envia ações; não executa outra IA.
 - Cada ganho de XP da expedição é concedido ao anfitrião pelo sistema existente e ao visitante pelo total cumulativo conferido no relay. **Entrar em uma sala não copia o XP anterior do anfitrião.**
 - O XP do visitante é gravado em sua jornada própria durante a visita, mesmo se abrir o menu. Ao sair, seu nível é recalculado pela progressão existente e os pontos de aperfeiçoamento correspondentes ficam disponíveis.
-- Durante a visita, o kit usa temporariamente nível/resistência/aprimoramentos da campanha do anfitrião. O HUD compartilhado mostra esse kit; a linha da dupla e os registros identificam o **XP pessoal ganho**. Escolhas de aperfeiçoamento ainda são do anfitrião.
+- Durante a visita, nível, HP, equipamento e aprimoramentos são do próprio personagem. O HUD mostra suas recargas reais; o visitante investe seus próprios pontos. Bosses derrotados enquanto participa concedem o marco pessoal, sem duplicação em snapshots/reconexão.
 - **Ecos, flags, portais, chefe derrotado, área, HP, habitats, bestiário e aprimoramentos solo do visitante não são copiados da campanha visitada.** Ao sair, ele volta à sua região solo.
 - Recibo e XP são persistidos juntos em uma única escrita. Repetir um snapshot ou reconectar não concede a mesma recompensa outra vez. Os últimos 32 recibos são preservados também pelos saves solo seguintes.
 - Se o armazenamento falhar, o XP fica pendente e a aplicação tenta novamente nos snapshots. Sair mostra um aviso e mantém a visita aberta até conseguir salvar. Recibos respeitam a proteção de personagem excluído. Não há save em nuvem.
@@ -71,7 +75,7 @@ Salas disponíveis em **todas as dez regiões da campanha**, incluindo Cavern/De
 - Com uma segunda vaga ocupada, criaturas regionais têm **40% mais HP** (arredondado). Dano, velocidade, ataques, IA, quantidade e XP permanecem iguais. O percentual de HP restante é mantido ao entrar/sair da dupla; não há cura grátis.
 - A resistência volta ao valor solo quando o visitante sai ou o anfitrião encerra a sala. A vaga reservada durante uma reconexão conserva o ajuste.
 - Criaturas escolhem o participante conectado e vivo mais próximo. Renovação de habitats respeita a distância dos dois participantes, conservando os espaços entre encontros.
-- Visitante morto reaparece perto do anfitrião vivo. Se o anfitrião morrer, qualquer participante pode pedir o reinício regional. A sala e a progressão da sessão permanecem.
+- Fora de boss, visitante morto pode renascer perto do anfitrião vivo; morte do anfitrião permite reinício regional. Num boss ativo, o caído aguarda o aliado. Ambos caídos permitem reiniciar; vitória recupera os caídos no ponto seguro. Sala, progressão e penalidade já registrada permanecem.
 - Menu do anfitrião pausa a simulação; a outra tela informa **ANFITRIÃO NO MENU**. Menu do visitante cancela suas ações.
 
 ## Rede, reconexão e limites
