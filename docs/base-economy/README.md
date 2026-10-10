@@ -1,6 +1,6 @@
 # Etapa 3 — Base de pouso e economia
 
-Versão **0.1.85**. [Teste reservado](https://echosofdante.vercel.app/base-playtest.html?v=0.1.85). O laboratório usa recursos temporários e não altera personagens ou saves reais. A aprovação humana ainda é necessária antes da etapa 4.
+Etapa entregue em **0.1.85**, revisada em **0.1.86**. [Teste reservado](https://echosofdante.vercel.app/base-playtest.html?v=0.1.86). O laboratório usa recursos temporários e não altera personagens ou saves reais. A aprovação humana ainda é necessária antes da etapa 4.
 
 ## Ciclo jogável
 
@@ -12,7 +12,7 @@ Base caminhável, nave DANTE-01, três abrigos e tripulantes:
 - **Ivo:** fabrica, compra e desmonta equipamentos da mochila. Peças equipadas ficam protegidas.
 - **Nara:** destinos descobertos e cofre pessoal de 48 espaços.
 
-Os abrigos e a nave têm footprints simples; NPCs são pinturas estáticas reaproveitadas dos personagens e braços existentes. Dois refugiados aparecem após o Warden como presença visual, sem novas missões ou diálogos.
+Os abrigos e a nave têm footprints simples; NPCs agora são cinco pinturas civis originais; a revisão 0.1.86 substitui o reaproveitamento inicial dos heróis. Dois refugiados aparecem após o Warden como presença visual, sem novas missões ou diálogos.
 
 ## Regras econômicas
 
@@ -40,7 +40,7 @@ Sem save em nuvem, economia MMO ou novo sistema de autenticação. Recibos usam 
 
 ## Assets e execução
 
-`scripts/prepare-base-assets.py` prepara assets offline. Nave e abrigo originais gerados com a ferramenta imagegen; prompts em [asset-prompts.md](asset-prompts.md). NPCs reutilizam roupa e braços aprovados; minerais existentes ilustram os materiais. Arquivos em `public/assets/base/`.
+`scripts/prepare-base-assets.py` prepara assets offline. Nave e abrigo originais gerados com a ferramenta imagegen; prompts em [asset-prompts.md](asset-prompts.md). NPCs originais e atlas são preparados por `scripts/prepare-expedition-visuals.py`; minerais existentes ilustram os materiais. Arquivos em `public/assets/base/`.
 
 Chão, marcas e rochas baked uma vez em uma RenderTexture de 1400×1050. Nave, três abrigos e NPCs são imagens estáticas. Nenhum novo tween contínuo ou desenho por frame. Recursos usam pool limitado a 32 drops ativos por participante/região. Valores de economia atualizam DOM somente ao abrir/operar; contador de poções muda apenas quando seu valor muda.
 
@@ -73,3 +73,7 @@ A **etapa 4** revisará dificuldade/recompensas e aplicará a penalidade de 10% 
 - Capturas e relatórios: [serviços](qa/report.json), [inputs e estabilidade](qa/inputs-performance.json), [dupla](qa/coop.json), [proteção do relay](qa/base-protocol.json), [campanha](qa/campaign/campaign.json), [jornada](qa/journey/report.json). Capturas de documentação compactadas em WebP.
 
 **Automação passou. Playtest humano necessário.** O teste reservado usa exclusivamente recursos temporários. Esta entrega encerra a implementação da etapa 3, mas a etapa 4 aguarda aprovação do usuário.
+
+### Revisão da tripulação e mapa — 0.1.86
+
+Após o playtest, NPCs próprios substituem as cópias dos heróis e um atlas cartográfico ilustrado substitui a grade de destinos. Serviços, viagens e economia permanecem. [Relatório, prompts e evidências](civilian-atlas/README.md). Aguardar validação humana antes da etapa 4.

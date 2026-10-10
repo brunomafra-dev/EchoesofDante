@@ -1,0 +1,41 @@
+{
+  "assets": [
+    {
+      "name": "base-expedition-civilian.png",
+      "width": 157,
+      "height": 240,
+      "bytes": 35029
+    },
+    {
+      "name": "base-medic-civilian.png",
+      "width": 162,
+      "height": 240,
+      "bytes": 39976
+    },
+    {
+      "name": "base-refugee-a.png",
+      "width": 180,
+      "height": 191,
+      "bytes": 29446
+    },
+    {
+      "name": "base-refugee-b.png",
+      "width": 158,
+      "height": 240,
+      "bytes": 37785
+    },
+    {
+      "name": "base-smith-civilian.png",
+      "width": 158,
+      "height": 240,
+      "bytes": 44958
+    },
+    {
+      "name": "dante-expedition-atlas.webp",
+      "width": 1120,
+      "height": 747,
+      "bytes": 308534
+    }
+  ],
+  "totalBytes": 495728
+}

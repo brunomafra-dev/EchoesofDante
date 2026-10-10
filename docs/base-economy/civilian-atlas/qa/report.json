@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "checks": [
+    "Three original civilians rendered with preserved aspect ratio",
+    "Original NPC service positions and E interaction unchanged",
+    "Eleven connected regions; current marker, fog, travel restrictions and four resolutions",
+    "Existing base → Forest → base travel preserved",
+    "Two distinct original refugees after the existing Warden milestone"
+  ],
+  "errors": [],
+  "npc": [
+    {
+      "key": "base-expedition-civilian",
+      "width": 62.800000000000004,
+      "height": 96,
+      "sourceRatio": 0.6541666666666667,
+      "displayRatio": 0.6541666666666667
+    },
+    {
+      "key": "base-smith-civilian",
+      "width": 63.2,
+      "height": 96,
+      "sourceRatio": 0.6583333333333333,
+      "displayRatio": 0.6583333333333333
+    },
+    {
+      "key": "base-medic-civilian",
+      "width": 64.8,
+      "height": 96,
+      "sourceRatio": 0.675,
+      "displayRatio": 0.6749999999999999
+    }
+  ],
+  "method": "Chrome headless, real modal UI, DEV positioning/discovery fixture. No physical-device tests or human art approval."
+}

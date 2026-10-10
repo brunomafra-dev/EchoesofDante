@@ -251,3 +251,5 @@ Revisão da etapa 1: [corpo vestido e correção da junção dos braços](docs/m
 ## Base e economia — etapa 3
 
 Base de pouso, serviços pessoais, créditos/materiais, poções, fabricação, venda/desmontagem e cofre. [Relatório e limitações](docs/base-economy/README.md) · [laboratório isolado](https://echosofdante.vercel.app/base-playtest.html?v=0.1.85). Cooperativo requer relay protocolo 4; a próxima etapa aguarda playtest humano.
+
+NPCs civis originais e atlas ilustrado de Dante: [revisão 0.1.86](docs/base-economy/civilian-atlas/README.md) · [teste reservado](https://echosofdante.vercel.app/base-playtest.html?v=0.1.86).

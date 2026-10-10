@@ -229,3 +229,7 @@ O usuário aprovou a junção dos braços (“bem melhor”) e autorizou a etapa
 Etapa 2 aprovada pelo usuário, que autorizou a base/economia. Base caminhável conectada à Floresta, três serviços pessoais, receitas garantidas, moeda/materiais regionais, cofre 48, poções e destinos descobertos. Protocolo cooperativo 4 com recibos e cura autoritativa. Custos iniciais conservadores; dificuldade e penalidade de morte permanecem para a etapa 4.
 
 [Teste reservado](https://echosofdante.vercel.app/base-playtest.html?v=0.1.85) · [Relatório](base-economy/README.md). **Aguardar aprovação humana antes de iniciar a etapa 4.**
+
+### Revisão visual da etapa 3 — 0.1.86
+
+O usuário aprovou o ciclo da base e pediu identidades civis próprias e mapa mundial visual. Cinco NPCs originais e atlas da região conhecida, com relevo, conexões, descobertas e localização. Nenhuma regra de economia/viagem foi alterada. [Revisão e teste](base-economy/civilian-atlas/README.md). A etapa 4 continua aguardando avaliação desta revisão.

@@ -13,10 +13,10 @@ export class LandingBase{
   for(const s of BASE.services){
    scene.add.image(s.x,s.y-98,'field-shelter').setDisplaySize(180,150).setDepth(s.y-50);
    const platform=scene.add.image(s.x,s.y+8,'world-shadow').setDisplaySize(110,45).setAlpha(.65);floor.draw(platform);platform.destroy();
-   scene.add.image(s.x,s.y,'base-'+s.id).setOrigin(.5,.88).setDisplaySize(72,110).setDepth(s.y);
+   const npc=scene.add.image(s.x,s.y,'base-'+s.id+'-civilian').setOrigin(.5,.96);npc.setScale(96/npc.height).setDepth(s.y);
    scene.add.text(s.x,s.y-185,s.name,{fontFamily:'Barlow Condensed',fontSize:'16px',color:'#e3dfc7',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(10003);
   }
-  if(refugees)for(const[x,y]of[[380,500],[820,490]])scene.add.image(x,y,'base-expedition').setDisplaySize(58,88).setDepth(y);
+  if(refugees)for(const[key,x,y]of [['a',380,500],['b',820,490]] as const){const npc=scene.add.image(x,y,'base-refugee-'+key).setOrigin(.5,.96);npc.setScale(86/npc.height).setDepth(y);}
   scene.add.text(550,160,'DANTE-01 · BASE DE POUSO',{fontFamily:'Barlow Condensed',fontSize:'22px',color:'#d0c6aa',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(10003);
   scene.add.text(BASE.exit.x,BASE.exit.y-70,'FLORESTA →',{fontFamily:'Barlow Condensed',fontSize:'18px',color:'#b8caaa'}).setOrigin(.5).setDepth(10003);
  }

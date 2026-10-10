@@ -146,7 +146,7 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
 .expedition-launcher{position:fixed;left:50%;transform:translateX(-50%);top:76px;display:flex;gap:6px;z-index:25}
 .expedition-launcher button{padding:7px 10px;background:#162427dc;color:#deddd0;border:1px solid #64706a;border-radius:5px;font:12px system-ui;min-height:36px;touch-action:manipulation}
 .shell-open .expedition-launcher,.records-open .expedition-launcher{visibility:hidden}
-.base-dialog{width:min(900px,94vw)}.base-wallet,.base-notice{padding:0 20px}.base-services{padding:8px 20px 20px;max-height:65dvh;overflow:auto;overscroll-behavior:contain;touch-action:pan-y;display:flex;flex-direction:column;gap:8px}
+.base-dialog{width:min(1040px,94vw)}.base-wallet,.base-notice{padding:0 20px}.base-services{padding:8px 20px 20px;max-height:65dvh;overflow:auto;overscroll-behavior:contain;touch-action:pan-y;display:flex;flex-direction:column;gap:8px}
 .base-services button{min-height:40px;padding:9px 12px;cursor:pointer;color:#e1dccb;background:#263632;border:1px solid #6b7766;border-radius:5px}.base-services button:disabled{opacity:.4;cursor:default}.base-item{display:flex;align-items:center;gap:8px}.base-item img{width:48px;height:48px;object-fit:contain}.base-item span{flex:1}.base-map{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 @media(max-height:500px){.expedition-launcher{top:65px}.expedition-launcher button{font-size:10px;padding:5px 8px}.base-services{max-height:54dvh}.base-item{flex-wrap:wrap}.base-dialog header h1{font-size:22px}.base-wallet{font-size:12px}.base-map{grid-template-columns:repeat(2,1fr)}}
 .application-shell:not([hidden]) ~ .inventory-launcher{display:none}
@@ -170,3 +170,16 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
 .equipment-dialog .inventory-notice{position:sticky;bottom:0;background:#102728;margin:0;padding:8px 20px}
 
 .equipment-dialog{width:min(1000px,calc(100vw - 32px - env(safe-area-inset-left) - env(safe-area-inset-right)));max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}
+
+/* Illustrated expedition atlas: static raster relief, lightweight route overlay. */
+.expedition-atlas{border:1px solid #7b806354;border-radius:6px;background:#152426;overflow:hidden;flex-shrink:0}
+.atlas-heading{display:flex;align-items:baseline;gap:12px;padding:10px 14px;color:#e2d4ab}.atlas-heading strong{font-size:23px;letter-spacing:4px}.atlas-heading span{font-size:10px;letter-spacing:2px;color:#b8bca6}
+.atlas-viewport{overflow:auto;overscroll-behavior:contain;touch-action:pan-x pan-y;max-height:58dvh;scrollbar-width:thin}
+.atlas-board{position:relative;width:min(100%,calc(58dvh * 1120 / 748));min-width:560px;margin:auto;aspect-ratio:1120/748;background:#243a3b;isolation:isolate}
+.atlas-board>img,.atlas-board>svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.atlas-board>img{object-fit:cover;filter:saturate(.78) brightness(.85)}
+.atlas-board svg path{fill:none;stroke-width:3;stroke-linecap:round}.atlas-route-known{stroke:#e9c579;filter:drop-shadow(0 2px 2px #101719)}.atlas-route-unknown{stroke:#babda855;stroke-dasharray:5 10}.atlas-location{fill:none;stroke:#ffe4a6;stroke-width:3}
+.base-services .atlas-node{position:absolute;transform:translate(-50%,-50%);width:116px;min-height:44px;padding:3px 6px;background:linear-gradient(#101f22d9,#101f22b0);border:1px solid #a9a3837a;border-radius:3px;color:#e9e3ca;font:500 12px 'Barlow Condensed',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap;box-shadow:0 2px 9px #06161980;touch-action:manipulation}
+.base-services .atlas-node:disabled{opacity:1}.base-services .atlas-node.is-unknown{color:#929f9b;background:#102027c7;border:1px dashed #71878370}.base-services .atlas-node.is-current{border-color:#e7c277;color:#ffe9b6;background:#283129ee}
+.atlas-symbol{font-size:17px;color:#e4c58d}.is-unknown .atlas-symbol{color:#9caaa3}.atlas-region{max-width:104px}.atlas-node small{display:block;width:100%;font-size:9px;letter-spacing:1px}.atlas-node:focus-visible{outline:2px solid #f0d093;outline-offset:3px}.base-services .atlas-node:not(:disabled):hover{background:#4b5541}
+.atlas-legend{margin:0;padding:9px 14px;font-size:11px;line-height:1.5;color:#b8bdac}
+@media(max-height:500px){.atlas-board{width:100%;min-width:700px}.atlas-viewport{max-height:39dvh}.atlas-heading{padding:6px 10px}.atlas-heading strong{font-size:18px}.atlas-legend{font-size:10px;padding:6px 10px}}
