@@ -14,3 +14,6 @@ export function validEconomy(raw:unknown,starter=false):EconomySnapshot{
 export function recipe(id:EquipmentId){const tier=EQUIPMENT[id].tier;return{credits:35*tier,material:tier-1,amount:4+2*tier};}
 export const salePrice=(id:EquipmentId)=>10*EQUIPMENT[id].tier;
 export const POTION_PRICE=12;
+// Materials drop on every kill. Equipment is an occasional find; bosses retain
+// their guaranteed reward. This cadence spans scene changes/respawns in a session.
+export const EQUIPMENT_DROP_INTERVAL=12;

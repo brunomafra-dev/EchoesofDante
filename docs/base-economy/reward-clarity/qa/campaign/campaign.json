@@ -1,0 +1,208 @@
+{
+  "method": "Two independent Chrome contexts with real local WebSockets; DEV positioning, chapter setup and shortened boss health used for coverage. Keyboard/mouse, touch viewport and Gamepad API mock; no physical devices.",
+  "errors": [],
+  "areas": [
+    "forest",
+    "cavern",
+    "warden",
+    "valley",
+    "arid",
+    "dunes",
+    "sandpit",
+    "frost",
+    "icecave",
+    "icenest",
+    "icecave",
+    "icecave",
+    "icecave",
+    "icecave"
+  ],
+  "bosses": [
+    {
+      "area": "warden",
+      "guestPrimary": true,
+      "death": true,
+      "visuals": 10
+    },
+    {
+      "area": "sandpit",
+      "guestPrimary": true,
+      "death": true,
+      "visuals": 22
+    },
+    {
+      "area": "icenest",
+      "guestPrimary": true,
+      "death": true,
+      "visuals": 15
+    }
+  ],
+  "cycles": [
+    {
+      "area": "icecave",
+      "role": "host",
+      "xp": 1415,
+      "personal": 0,
+      "items": [],
+      "equipment": {
+        "schema": 2,
+        "owned": [
+          "forest-emitter"
+        ],
+        "slots": {
+          "weapon": "forest-emitter"
+        },
+        "items": [
+          {
+            "uid": "c8b7ab7f-175f-4873-883a-60ce0f348c30",
+            "id": "forest-emitter",
+            "x": 1010,
+            "y": 990,
+            "owner": "host",
+            "classId": "warrior"
+          }
+        ],
+        "equipped": {
+          "weapon": "c8b7ab7f-175f-4873-883a-60ce0f348c30"
+        }
+      },
+      "hp": 150,
+      "maxHp": 150,
+      "dead": false,
+      "objects": 138,
+      "tweens": 2,
+      "fps": 54.790865340985434,
+      "loot": [],
+      "p": {
+        "x": 1530,
+        "y": 450
+      }
+    },
+    {
+      "area": "icecave",
+      "role": "host",
+      "xp": 1415,
+      "personal": 0,
+      "items": [],
+      "equipment": {
+        "schema": 2,
+        "owned": [
+          "forest-emitter"
+        ],
+        "slots": {
+          "weapon": "forest-emitter"
+        },
+        "items": [
+          {
+            "uid": "c8b7ab7f-175f-4873-883a-60ce0f348c30",
+            "id": "forest-emitter",
+            "x": 1010,
+            "y": 990,
+            "owner": "host",
+            "classId": "warrior"
+          }
+        ],
+        "equipped": {
+          "weapon": "c8b7ab7f-175f-4873-883a-60ce0f348c30"
+        }
+      },
+      "hp": 150,
+      "maxHp": 150,
+      "dead": false,
+      "objects": 138,
+      "tweens": 2,
+      "fps": 56.09314900573908,
+      "loot": [],
+      "p": {
+        "x": 1530,
+        "y": 450
+      }
+    },
+    {
+      "area": "icecave",
+      "role": "host",
+      "xp": 1415,
+      "personal": 0,
+      "items": [],
+      "equipment": {
+        "schema": 2,
+        "owned": [
+          "forest-emitter"
+        ],
+        "slots": {
+          "weapon": "forest-emitter"
+        },
+        "items": [
+          {
+            "uid": "c8b7ab7f-175f-4873-883a-60ce0f348c30",
+            "id": "forest-emitter",
+            "x": 1010,
+            "y": 990,
+            "owner": "host",
+            "classId": "warrior"
+          }
+        ],
+        "equipped": {
+          "weapon": "c8b7ab7f-175f-4873-883a-60ce0f348c30"
+        }
+      },
+      "hp": 150,
+      "maxHp": 150,
+      "dead": false,
+      "objects": 138,
+      "tweens": 2,
+      "fps": 52.67739631572823,
+      "loot": [],
+      "p": {
+        "x": 1530,
+        "y": 450
+      }
+    }
+  ],
+  "guestEchoesAndCavernEntry": true,
+  "sharedGroundLoot": true,
+  "equipmentBothPlayers": true,
+  "bossCanHitBothPlayers": {
+    "before": [
+      145,
+      116
+    ],
+    "after": [
+      129,
+      100
+    ]
+  },
+  "guestKit": true,
+  "performance": {
+    "host": 56.91077657069785,
+    "guest": 57.15542696251109,
+    "pairedContextsOneComputer": true
+  },
+  "persistence": {
+    "xpBefore": 1415,
+    "xpAfter": 1415,
+    "itemsBefore": 4,
+    "itemsAfter": 4,
+    "invalid": {
+      "schema": 2,
+      "owned": [
+        "glacier-focus"
+      ],
+      "slots": {
+        "accessory": "glacier-focus"
+      },
+      "items": [
+        {
+          "uid": "legacy-glacier-focus",
+          "id": "glacier-focus"
+        }
+      ],
+      "equipped": {
+        "accessory": "legacy-glacier-focus"
+      }
+    },
+    "mismatch": false
+  },
+  "guestPersonalSaveAndReturn": true,
+  "passed": true
+}

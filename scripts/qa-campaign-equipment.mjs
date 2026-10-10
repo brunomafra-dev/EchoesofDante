@@ -13,6 +13,9 @@ for(const p of [h,g]){p.setDefaultTimeout(45000);p.setDefaultNavigationTimeout(9
 const ready=p=>p.waitForFunction(()=>window.__danteGame?.scene.getScene('Game')?.player?.view.active);
 const state=p=>p.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game'),r=window.__danteCoop;return{area:s.area,role:r.role,xp:s.progression.xp,personal:r.personalXpGained,items:r.personalItems,equipment:s.equipment.snapshot(),hp:s.player.hp,maxHp:s.player.maxHp,dead:s.player.isDead,objects:s.children.list.length,tweens:s.tweens.getTweens().length,fps:window.__danteGame.loop.actualFps,boss:r.world?.boss,loot:s.loot.snapshot(),p:{...s.player.position}};});
 const key=async(p,k,ms=80)=>{await p.keyboard.down(k);await p.waitForTimeout(ms);await p.keyboard.up(k);await p.waitForTimeout(150);};
+// Mastery choices intentionally pause the host. Complete them through their UI
+// before asserting door animations or replicated boss health.
+async function completeMastery(){for(let i=0;i<18;i++){const choices=h.locator('.ability-upgrade-dialog[open] [data-upgrade]:not(:disabled)');if(!await choices.count())break;await choices.first().click();await h.waitForTimeout(150)}}
 async function arrive(area){for(const p of[h,g])await p.waitForFunction(area=>{const s=window.__danteGame.scene.getScene('Game'),r=window.__danteCoop;return s.area===area&&!s.transitioning&&s.party?.localPlayer===s.player&&s.player.view.active&&(r.role==='host'?!!s.party.partner:!!s.party.mirrorHost);},area);await g.waitForTimeout(450);await h.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');s.player.invulnerableUntil=s.party.partner.player.invulnerableUntil=Infinity;});report.areas.push(area);console.log('Arrived',area);}
 async function travel(area){
  await h.waitForTimeout(500);
@@ -30,9 +33,10 @@ try{
  const code=await h.evaluate(()=>window.__danteCoop.code);
  await g.evaluate(async code=>{window.__danteGame.scene.getScene('Game').saveProgress();await window.__danteCoop.connect('ws://localhost:5184/coop','join',{name:'Visitante',classId:'hunter'},'forest',code);},code);await arrive('forest');
  // Visitor investigates an Echo, then all existing early-campaign interaction gates.
- for(const[x,y]of[[560,700],[1870,900],[1500,360]]){await position(x,y,true);await key(g,'e');}
+ for(const[x,y]of[[560,700],[1870,900],[1500,360]]){await position(x,y,true);await key(g,'e');await h.waitForTimeout(500);await completeMastery();}
  assert.equal(await h.evaluate(()=>window.__danteGame.scene.getScene('Game').progression.echoes.size),3);
- await position(1870,340,true);await key(g,'e');await position(1670,290,true);await key(g,'e');await h.waitForTimeout(1900);
+ await h.waitForTimeout(500);await completeMastery();
+ await position(1870,340,true);await key(g,'e');await position(1670,290,true);await key(g,'e');await h.waitForTimeout(1900);await completeMastery();await h.waitForFunction(()=>{const s=window.__danteGame.scene.getScene('Game');return s.progression.passageOpen&&!s.gateObstacle});
  await position(1870,260,true);await arrive('cavern');
  await position(1620,490,true);await h.waitForFunction(()=>window.__danteGame.scene.getScene('Game').deepPassageOpen);
  report.guestEchoesAndCavernEntry=true;
@@ -40,8 +44,9 @@ try{
  await h.evaluate(async()=>{const s=window.__danteGame.scene.getScene('Game'),{JOURNEY_FLAGS}=await import('/src/systems/LocalJourney.ts');for(const flag of JOURNEY_FLAGS)s[flag]=true;s.wardenDefeated=s.wardenEndingSeen=s.soterradoDefeated=s.soterradoClueSeen=s.vesperDefeated=s.vesperClueSeen=false;
   s.progression.restore({xp:1000,echoes:['northern-ruin','mineral-signal','unknown-trace'],sourceLocated:true,passageOpen:true,rewardedHollows:[],rewardedRoutes:[]});for(const id of['saberArc','saberReach','dashCooldown','dashDuration','chargeWidth','chargePower'])while(s.progression.investUpgrade(id)){}s.saveProgress();});
  await g.waitForTimeout(900);
- // A real mob death creates a ground item. Either participant collects; both receive their own copy.
- await h.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game'),e=s.enemies[0];s.resolvePlayerHits(s.time.now,[e],9999,0,0x5fe6d8,s.player.position,false);});
+ // Prime the cadence for this collection/sync fixture. qa-economy-rewards tests all 12 kills.
+ // A real mob death creates a ground item. Each participant receives their own copy.
+ await h.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game'),e=s.enemies[0];s.lootKills=11;s.resolvePlayerHits(s.time.now,[e],9999,0,0x5fe6d8,s.player.position,false);});
  const drop=(await state(h)).loot.find(p=>p.owner==='guest');assert.ok(drop);await position(drop.x,drop.y,true);await key(g,'e');await position(drop.x,drop.y);await key(h,'e');await g.waitForTimeout(700);
  assert.ok((await state(h)).equipment.owned.includes(drop.id));assert.ok((await state(g)).equipment.owned.includes(drop.id));
  report.sharedGroundLoot=true;
@@ -56,11 +61,11 @@ try{
   if(area==='sandpit'){await travel('valley');await travel('arid');await travel('dunes');}
   if(area==='icenest'){await travel('frost');await travel('icecave');}
   await travel(area);await position(...entry,true);await h.waitForTimeout(3000);
-  await h.evaluate(keyName=>{const s=window.__danteGame.scene.getScene('Game'),b=s[keyName];if(b.state==='DORMANT')b.beginIntro(s.time.now);},keyName);await h.waitForTimeout(2500);
+  await h.evaluate(keyName=>{const s=window.__danteGame.scene.getScene('Game'),b=s[keyName];if(b.state==='DORMANT')b.beginIntro(s.time.now);},keyName);await h.waitForTimeout(2500);await completeMastery();
   for(const ratio of[.9,.4,.2]){
    await h.evaluate(({keyName,ratio})=>{const s=window.__danteGame.scene.getScene('Game'),b=s[keyName];b.health.current=Math.round(b.health.max*ratio);b.state='IDLE';if('_state'in b)b._state='IDLE';b.until=b.stateUntil=s.time.now+700;},{keyName,ratio});
-   await h.waitForTimeout(1600);
-   const pose=(await state(g)).boss;assert.ok(pose&&pose.visuals.length>3&&pose.health.max>pose.health.current);
+   await h.waitForTimeout(1600);await completeMastery();await g.waitForTimeout(350);
+   const pose=(await state(g)).boss;assert.ok(pose&&pose.visuals.length>3&&pose.health.max>pose.health.current,JSON.stringify({keyName,ratio,health:pose?.health,state:pose?.state,visuals:pose?.visuals.length}));
    assert.ok(pose.visuals.some(v=>v.kind==='image'&&v.visible));
    await g.screenshot({path:`${out}/${keyName}-phase-${pose.phase}.png`});
   }

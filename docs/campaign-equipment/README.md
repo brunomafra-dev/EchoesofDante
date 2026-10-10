@@ -8,6 +8,9 @@ O anfitrião conserva a simulação de combate e sua campanha. O visitante envia
 
 ## Loot e equipamento
 
+**Registro histórico desta sprint.** Regras atuais de mochila/coleta: [fundação RPG](../RPG_FOUNDATION_ROADMAP.md). Frequência atual e fabricação: [revisão 0.1.87](../base-economy/reward-clarity/README.md).
+
+
 - Nove itens fixos, distribuídos entre Floresta/Cavern, Siroco e gelo.
 - Três slots: **arma, armadura, acessório**, acessíveis em **MENU → EQUIPAMENTO**. Compatível com teclado, direcional/A/B e toque.
 - Primeiro inimigo derrotado na região e depois a cada quatro derrotas podem deixar um item ainda não adquirido. Na dupla, reaparecem opções também para o visitante; não há stacks de duplicatas.

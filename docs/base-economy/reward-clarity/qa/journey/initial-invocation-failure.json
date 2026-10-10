@@ -1,0 +1,5 @@
+{
+  "method": "Chrome headless; keyboard/mouse, CDP touch and Gamepad API mock; DEV positions and cooldown expiry; no physical devices",
+  "errors": [],
+  "failure": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert.ok((await state(page)).paused && (await state(page)).open)\n\n    at file:///C:/Users/1/Desktop/Bruno%20Mafra/Echoes%20of%20Dante/scripts/qa-dante-journey.mjs:35:26"
+}

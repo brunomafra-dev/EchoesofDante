@@ -10,13 +10,13 @@ export class BasePanel{
  private dialog=document.createElement('dialog');private bar=document.createElement('div');private tab:Tab='map';private notice='';private frame=0;private previous:boolean[]=[];
  constructor(scene:Phaser.Scene,private read:()=>State,private act:(action:ServiceAction)=>boolean,private travel:(area:keyof typeof REGION_NAMES)=>boolean,private potion:()=>boolean,private opened:()=>void,private closed:()=>void){
   this.dialog.className='records-dialog base-dialog';this.dialog.setAttribute('aria-label','Serviços da expedição');
-  this.bar.className='expedition-launcher';this.bar.innerHTML='<button data-map>MAPA · M</button><button data-potion>POÇÃO · H</button>';
+  this.bar.className='expedition-launcher';this.bar.innerHTML='<span class="expedition-credits" aria-label="Saldo em créditos" title="Seus créditos"><small>CRÉDITOS</small><strong data-credits>0</strong></span><button data-map>MAPA · M</button><button data-potion>POÇÃO · H</button>';
   this.bar.querySelector('[data-map]')!.addEventListener('click',()=>this.open('map'));this.bar.querySelector('[data-potion]')!.addEventListener('click',()=>{this.potion();this.refreshBar()});
   this.dialog.addEventListener('close',()=>this.closed());document.body.append(this.bar,this.dialog);window.addEventListener('keydown',this.key,true);this.frame=requestAnimationFrame(this.poll);
   scene.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{cancelAnimationFrame(this.frame);window.removeEventListener('keydown',this.key,true);this.bar.remove();this.dialog.remove()});this.refreshBar();
  }
  get isOpen(){return this.dialog.open}
- refreshBar(){const b=this.bar.querySelector('[data-potion]')!,text=`POÇÃO · ${this.read().economy.potions} · H`;if(b.textContent!==text)b.textContent=text;}
+ refreshBar(){const e=this.read().economy,b=this.bar.querySelector('[data-potion]')!,text=`POÇÃO · ${e.potions} · H`;if(b.textContent!==text)b.textContent=text;const c=this.bar.querySelector('[data-credits]')!,saldo=e.credits.toLocaleString('pt-BR');if(c.textContent!==saldo)c.textContent=saldo;}
  open(tab:Tab){if(this.isOpen||document.querySelector('dialog[open]'))return;this.tab=tab;this.notice='';this.previous=navigator.getGamepads?.().find(p=>p?.connected&&p.mapping==='standard')?.buttons.map(b=>b.pressed||b.value>.5)??[];this.render();this.opened();this.dialog.showModal();this.dialog.querySelector<HTMLButtonElement>('[data-close]')?.focus();requestAnimationFrame(()=>{if(this.isOpen)this.dialog.querySelector('[aria-current]')?.scrollIntoView({block:'nearest',inline:'nearest'})})}
  private button(parent:Element,text:string,run:()=>void,disabled=false){const b=document.createElement('button');b.textContent=text;b.disabled=disabled;b.onclick=run;parent.append(b);return b;}
  private operation(a:ServiceAction){const index=Array.from(this.dialog.querySelectorAll('button')).indexOf(document.activeElement as HTMLButtonElement);this.notice=this.act(a)?'Operação concluída e salva.':'Não foi possível concluir. Confira recursos, espaço e armazenamento.';this.render();this.refreshBar();const buttons=Array.from(this.dialog.querySelectorAll<HTMLButtonElement>('button'));const target=buttons[Math.min(Math.max(index,0),buttons.length-1)];(target&&!target.disabled?target:buttons.find(b=>!b.disabled))?.focus()}
@@ -35,7 +35,18 @@ export class BasePanel{
   }
   if(base&&this.tab==='smith'){
    const h=document.createElement('h2');h.textContent='Fabricar · resultado garantido';content.append(h);
-   for(const id of EQUIPMENT_IDS){const d=EQUIPMENT[id],r=recipe(id);const row=document.createElement('div');row.className='base-item';const img=document.createElement('img');img.src=`${import.meta.env.BASE_URL}assets/items/${itemIcon(id,s.classId)}.png`;img.alt='';row.append(img);const p=document.createElement('span');p.textContent=`${d.name} · ${d.description} · ${r.credits} créditos + ${r.amount} ${MATERIAL_NAMES[r.material]}`;row.append(p);this.button(row,'FABRICAR',()=>this.operation({kind:'craft',id}),e.credits<r.credits||e.materials[r.material]<r.amount||bag.length>=24);content.append(row)}
+   const hint=document.createElement('p');hint.className='forge-hint';hint.textContent='Cada peça exige créditos e material regional. Criaturas deixam materiais; equipamento é um achado menos frequente. Fabricar não equipa automaticamente.';content.append(hint);
+   for(const id of EQUIPMENT_IDS){
+    const d=EQUIPMENT[id],r=recipe(id),owned=e.materials[r.material],row=document.createElement('div');row.className='base-item base-recipe';row.dataset.recipe=id;
+    const img=document.createElement('img');img.src=`${import.meta.env.BASE_URL}assets/items/${itemIcon(id,s.classId)}.png`;img.alt='';row.append(img);
+    const info=document.createElement('div');info.className='recipe-info';const name=document.createElement('strong');name.textContent=d.name;const description=document.createElement('small');description.textContent=d.description;info.append(name,description);
+    const costs=document.createElement('div');costs.className='recipe-costs';
+    for(const [label,needed,have] of [['créditos',r.credits,e.credits],[MATERIAL_NAMES[r.material],r.amount,owned]] as const){const cost=document.createElement('span');cost.dataset.available=String(have>=needed);cost.textContent=`${have>=needed?'✓':'×'} ${needed} ${label} · você tem ${have.toLocaleString('pt-BR')}`;costs.append(cost)}
+    info.append(costs);const status=document.createElement('small');status.className='recipe-status';const missing=[];
+    if(e.credits<r.credits)missing.push(`${r.credits-e.credits} créditos`);if(owned<r.amount)missing.push(`${r.amount-owned} ${MATERIAL_NAMES[r.material]}`);
+    status.textContent=bag.length>=24?'Mochila cheia · libere um espaço':missing.length?`Faltam ${missing.join(' e ')}`:'Recursos suficientes';info.append(status);row.append(info);
+    this.button(row,'FABRICAR',()=>this.operation({kind:'craft',id}),missing.length>0||bag.length>=24);content.append(row);
+   }
    const h2=document.createElement('h2');h2.textContent='Peças da mochila · equipadas ficam protegidas';content.append(h2);
    for(const item of bag){const row=document.createElement('div');row.className='base-item';const p=document.createElement('span');p.textContent=EQUIPMENT[item.id].name;row.append(p);this.button(row,`VENDER · ${salePrice(item.id)}`,()=>this.operation({kind:'sell',uid:item.uid}));this.button(row,'DESMONTAR · 2 MATERIAIS',()=>this.operation({kind:'dismantle',uid:item.uid}));content.append(row)}
   }

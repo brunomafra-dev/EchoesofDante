@@ -77,3 +77,8 @@ A **etapa 4** revisará dificuldade/recompensas e aplicará a penalidade de 10% 
 ### Revisão da tripulação e mapa — 0.1.86
 
 Após o playtest, NPCs próprios substituem as cópias dos heróis e um atlas cartográfico ilustrado substitui a grade de destinos. Serviços, viagens e economia permanecem. [Relatório, prompts e evidências](civilian-atlas/README.md). Aguardar validação humana antes da etapa 4.
+
+
+### Revisão de recursos — 0.1.87
+
+Saldo pessoal visível, receitas com custo e estoque, falta de material explícita e equipamento menos frequente: [relatório e teste](reward-clarity/README.md). Materiais continuam regulares; drops comuns agora seguem 12 mortes na sessão, sem reiniciar por viagem/respawn. Bosses mantêm recompensa garantida. Esta revisão não é o rebalanceamento de dificuldade da etapa 4.

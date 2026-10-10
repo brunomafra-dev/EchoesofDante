@@ -1,0 +1,32 @@
+{
+  "version": "0.1.87",
+  "typecheck": "passed",
+  "build": "passed",
+  "physicalDevices": false,
+  "reports": {
+    "report.json": {
+      "passed": true,
+      "errors": []
+    },
+    "rewards.json": {
+      "passed": true,
+      "errors": []
+    },
+    "coop.json": {
+      "passed": true,
+      "errors": []
+    },
+    "inputs-performance.json": {
+      "passed": true,
+      "errors": []
+    },
+    "campaign/campaign.json": {
+      "passed": true,
+      "errors": []
+    },
+    "journey/report.json": {
+      "passed": true,
+      "errors": []
+    }
+  }
+}

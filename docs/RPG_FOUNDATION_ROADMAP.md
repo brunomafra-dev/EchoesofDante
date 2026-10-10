@@ -233,3 +233,10 @@ Etapa 2 aprovada pelo usuário, que autorizou a base/economia. Base caminhável 
 ### Revisão visual da etapa 3 — 0.1.86
 
 O usuário aprovou o ciclo da base e pediu identidades civis próprias e mapa mundial visual. Cinco NPCs originais e atlas da região conhecida, com relevo, conexões, descobertas e localização. Nenhuma regra de economia/viagem foi alterada. [Revisão e teste](base-economy/civilian-atlas/README.md). A etapa 4 continua aguardando avaliação desta revisão.
+
+
+### Clareza de recursos e frequência de equipamentos — 0.1.87
+
+NPCs próprios e atlas aprovados pelo usuário (“perfeito”). Antes de avançar, solicitou saldo visível, materiais explícitos nas receitas e equipamentos mais difíceis de encontrar. Revisão localizada da etapa 3: créditos no topo, receitas com custo/estoque/faltantes, nome do material coletado e equipamento a cada 12 mortes comuns na sessão (bosses mantêm garantia). A fabricação já cobrava créditos + materiais; regra preservada.
+
+[Relatório](base-economy/reward-clarity/README.md) · [Teste reservado](https://echosofdante.vercel.app/base-playtest.html?v=0.1.87). **Aguardar validação desta revisão antes da etapa 4.** O ajuste de frequência foi antecipado por solicitação explícita; dificuldade e penalidade de morte ainda não foram implementadas.

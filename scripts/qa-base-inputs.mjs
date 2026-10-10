@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
-import {writeFile} from 'node:fs/promises';
+import {mkdir,writeFile} from 'node:fs/promises';
+const out=process.env.QA_OUT??'docs/base-economy/qa';await mkdir(out,{recursive:true});
 import {chromium} from 'playwright';
 const browser=await chromium.launch({channel:'chrome',headless:true}),errors=[],checks=[];
 const ready=p=>p.waitForFunction(()=>window.__danteGame?.scene.getScene('Game')?.basePanel);
@@ -25,5 +26,5 @@ try{
  await q.goto('http://localhost:5184/?qa=play');await ready(q);await press(9);await q.locator('[data-shell="expedition"]').click();assert.ok(await q.locator('.base-dialog[open]').isVisible());await press(1);checks.push('Gamepad Start pause-menu expedition map preserved');
  await q.goto('http://localhost:5184/base-playtest.html');await ready(q);await q.locator('.playtest-navigation').evaluate(e=>e.open=false);await q.waitForTimeout(2000);
  const stability=await q.evaluate(async()=>{const s=window.__danteGame.scene.getScene('Game'),sample=()=>({objects:s.children.list.length,textures:Object.keys(s.textures.list).length,tweens:s.tweens.getTweens().length});const before=sample(),fps=[];for(let i=0;i<12;i++){await new Promise(r=>setTimeout(r,500));fps.push(s.game.loop.actualFps)}return{before,after:sample(),meanFps:fps.reduce((a,b)=>a+b,0)/fps.length}});assert.deepEqual(stability.before,stability.after);checks.push('Six-second idle sample: stable object, texture and tween counts');
- assert.deepEqual(errors,[]);await writeFile('docs/base-economy/qa/inputs-performance.json',JSON.stringify({passed:true,errors,checks,stability,method:'Chrome headless, CDP touch, Gamepad API mock; DEV positioning. No physical devices.'},null,2));console.log({passed:true,checks,stability});
+ assert.deepEqual(errors,[]);await writeFile(out+'/inputs-performance.json',JSON.stringify({passed:true,errors,checks,stability,method:'Chrome headless, CDP touch, Gamepad API mock; DEV positioning. No physical devices.'},null,2));console.log({passed:true,checks,stability});
 }finally{await browser.close()}

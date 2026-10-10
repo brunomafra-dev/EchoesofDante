@@ -3,7 +3,7 @@ import {BASE} from '../config/base';
 import {LandingBase} from '../systems/LandingBase';
 import {BasePanel} from '../ui/BasePanel';
 import {transact,type ServiceAction} from '../systems/BaseEconomy';
-import {validEconomy,type EconomySnapshot} from '../config/economy';
+import {validEconomy,MATERIAL_NAMES,EQUIPMENT_DROP_INTERVAL,type EconomySnapshot} from '../config/economy';
 import {ResourceDrops,type ResourceDrop} from '../systems/ResourceDrops';
 import { coopSession, type PartyWorld } from '../network/CoopSession';
 import { PartyExpedition, type PartyBridge } from '../network/PartyExpedition';
@@ -549,7 +549,7 @@ export class GameScene extends Phaser.Scene {
       this.time.delayedCall(350, () => this.showAvailableUpgrade());
     }
     this.party = this.qualityReference || this.glacierPlaytest ? undefined : new PartyExpedition(this, () => this.partyBridge());
-    this.loot=new EquipmentDrops(this,coopSession.role==='guest'?'guest':'host');this.lootKills=0;
+    this.loot=new EquipmentDrops(this,coopSession.role==='guest'?'guest':'host');
     this.equipmentDialog=new EquipmentDialog(this,()=>this.equipment.snapshot(),(slot,id,uid)=>this.equipItem(slot,id,uid),()=>this.closeEquipment(),()=>this.openEquipment(),this.classId);
     this.resources=new ResourceDrops(this,coopSession.role==='guest'?'guest':'host');
     this.basePanel=new BasePanel(this,()=>({economy:this.economy,equipment:this.equipment.snapshot(),area:this.area,hp:this.player.hp,maxHp:this.player.maxHp,classId:this.classId,returnAvailable:this.canReturnBase(),canLead:coopSession.role!=='guest'}),a=>this.serviceAction(a),area=>this.baseTravel(area),()=>this.usePotion(),()=>{this.serviceUnpaused=coopSession.connected;if(!this.serviceUnpaused)this.pauseForModal();else {this.controls.cancelForRecords();this.charge.stop();this.hunter?.clear();}},()=>{if(!this.serviceUnpaused)this.resumeFromModal();else this.controls.cancelForRecords();this.serviceUnpaused=false});
@@ -1891,11 +1891,10 @@ export class GameScene extends Phaser.Scene {
   }
   private dropEquipment(enemy:Enemy):void {
     const boss=enemy===this.warden||enemy===this.soterrado||enemy===this.vesper;
-    // First creature, then one in four; bosses always leave equipment.
-    if(!boss&&this.lootKills++%4!==0)return;
+    if(!boss&&++this.lootKills%EQUIPMENT_DROP_INTERVAL!==0)return;
     const tier=['frost','icecave','icenest'].includes(this.area)?3:['arid','dunes','sandpit'].includes(this.area)?2:1;
     const candidates=EQUIPMENT_IDS.filter(id=>EQUIPMENT[id].tier===tier);
-    const index=Math.floor(this.lootKills/4)%candidates.length;
+    const index=Math.max(0,Math.floor(this.lootKills/EQUIPMENT_DROP_INTERVAL)-1)%candidates.length;
     const id=boss?candidates.find(id=>EQUIPMENT[id].slot==='accessory')!:candidates[index];
     this.loot.add(id,enemy.position,'host',this.classId);
     if(coopSession.peer)this.loot.add(id,enemy.position,'guest',coopSession.peer.classId as 'warrior'|'hunter');
@@ -1933,8 +1932,8 @@ export class GameScene extends Phaser.Scene {
   }
   private collectResource(p:ResourceDrop):boolean{
     const old=structuredClone(this.economy);this.economy.credits=Math.min(1e9,this.economy.credits+p.credits);this.economy.materials[p.tier-1]=Math.min(1e9,this.economy.materials[p.tier-1]+p.amount);
-    if(!this.persistPersonal()){this.economy=old;return false;}this.hud.showDiscovery(`+${p.credits} créditos · +${p.amount} material`);return true;
+    if(!this.persistPersonal()){this.economy=old;return false;}this.basePanel.refreshBar();this.hud.showDiscovery(`+${p.credits} créditos · +${p.amount} ${MATERIAL_NAMES[p.tier-1]}`);return true;
   }
-  seedEconomyPlaytest():void{if(!this.glacierPlaytest?.economy)return;this.economy=validEconomy({credits:300,materials:[30,30,30],potions:3,visited:['base','forest']});this.basePanel.refreshBar();}
+  seedEconomyPlaytest(withMaterials=true):void{if(!this.glacierPlaytest?.economy)return;this.economy=validEconomy({credits:300,materials:withMaterials?[30,30,30]:[0,0,0],potions:3,visited:['base','forest']});this.basePanel.refreshBar();}
 
 }
