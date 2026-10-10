@@ -46,4 +46,10 @@ Sem redraw estático, novos tweens ou partículas. Texturas do corpo reutilizada
 
 ## Limitações
 
+### Correção visual dos drops — 0.1.84
+
+Drops mostram miniaturas das peças e armas correspondentes à classe, com escala de 44 unidades e sombra de contato baked. O acessório deixou de reutilizar um mineral ambiental: agora é um foco vestível com carcaça, suporte e núcleo mineral pequeno, também usado na mochila e no detalhe equipado. Os nomes e atributos continuam iguais.
+
+O script offline produz mais 24 texturas de chão, 64×64, aproximadamente 76 KiB no total. Cada drop continua com uma imagem e um texto reutilizados; nenhum objeto, tween ou desenho por frame foi adicionado. Typecheck, build e Chrome desktop/mobile passaram: sete miniaturas carregadas, coleta manual e mochila sem erros. Capturas em `qa/drop-world.webp`, `qa/drop-mobile.webp` e `qa/drop-miniatures.webp`. Avaliação visual humana pendente.
+
 Venda, desmontagem, materiais, moeda, cofre, poções e fabricação ficam para a base/economia. Sem descarte livre nesta etapa. Com sete slots e mochila ocupados, novas coletas ficam bloqueadas. Ícones e aparência mista precisam de avaliação humana, especialmente no celular. Persistência do laboratório é temporária; reload foi validado separadamente na campanha.
