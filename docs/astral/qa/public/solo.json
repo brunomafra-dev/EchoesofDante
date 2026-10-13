@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-13T13:01:59.930Z",
+  "url": "https://echosofdante.vercel.app/astral-playtest.html?region=forest&kit=basic&sex=female&v=0.1.90",
+  "live": true,
+  "method": "Published Vercel laboratory, real keyboard and four viewports; no physical devices.",
+  "errors": [],
+  "checks": [
+    "Published Astral presentation, F switch, Q hold/release and energy cost",
+    "Four resolutions, one canvas/panel, real saves untouched"
+  ],
+  "energy": 70,
+  "passed": true
+}

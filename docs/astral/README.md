@@ -44,7 +44,9 @@ Os três níveis de arma usam o catálogo/receitas já existentes, com nomes e m
 
 `AstralCombat` é compartilhado pela simulação solo e pelo ator autoritativo da sala. O visitante envia ações e renderiza snapshots, incluindo energia, elemento, disparos e campos; não aplica dano ou recompensa novamente. Duas pessoas, agora escolhidas entre três kits. A expansão para quatro e a restrição de uma classe de cada ficam para a etapa 7; o relay atual permite repetição, preservando o comportamento anterior.
 
-Frontend e relay precisam de **protocolo 6**. Na consulta de 13/10/2026 anterior ao push, o serviço público Render ainda respondeu com protocolo 4. O protocolo antigo impede a validação pública, mesmo com o frontend atualizado. O laboratório solo e o relay local são independentes desse deploy. O responsável precisa publicar a versão atual de `main` no serviço `echoes-of-dante-rooms`; este ambiente não possui credenciais do painel Render.
+Frontend e relay precisam de **protocolo 6**. Na consulta de 13/10/2026 **após o push**, o serviço público Render ainda respondeu com protocolo 4. O teste online ficou [bloqueado por esse deploy](qa/public/public.json), sem iniciar uma sala incompatível. O responsável precisa publicar a versão atual de `main` no serviço `echoes-of-dante-rooms`, em **Manual Deploy → Deploy latest commit**; este ambiente não possui credenciais do painel Render.
+
+O [laboratório solo publicado passou](qa/public/solo.json): apresentação Astral, F, segurar/soltar Q, consumo de energia, quatro resoluções e preservação do armazenamento real, sem erros de JavaScript/assets. Implementação principal: `063c311c686098461c7e644718e5d664be1c9c8a`, versão 0.1.90, push confirmado. Essa validação pública solo não substitui o teste online da dupla.
 
 Morte preserva progressão, itens e materiais, com a penalidade de créditos da etapa 4. Campos/disparos são limpos ao morrer ou cancelar menus. A energia é um recurso de combate, reiniciado ao recriar o ator/entrar em região; não há save permanente de energia.
 

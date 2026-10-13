@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-13T13:03:32.856Z",
+  "method": "Two Chrome contexts using published Vercel laboratory and real Render WSS, keyboard/mouse. No physical devices.",
+  "errors": [],
+  "checks": [],
+  "health": {
+    "service": "Dante regional co-op",
+    "protocol": 4,
+    "campaign": true,
+    "rooms": 0,
+    "players": 0
+  },
+  "passed": false,
+  "status": "blocked-relay-deployment",
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n4 !== 6\n"
+}
