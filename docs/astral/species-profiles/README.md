@@ -51,6 +51,8 @@ Nenhum asset novo, nenhum objeto extra por espécie ou redraw de cenário. O ren
 - [Regressão Astral](qa/regression/astral.json): teclado/mouse, apresentações/vestimentas, solo, ambos os papéis da dupla local, cancelamento de Q, gamepad mock e touch emulado passaram; quatro resoluções. Zero erros JS/assets.
 - Três mortes/respawns mantiveram **400 objetos / 210 texturas / 25 tweens**. FPS headless na regressão: **60,2 anfitrião / 59,7 visitante**; no teste direcionado, média **57,0 / 56,1** depois do aquecimento. Sem crescimento contínuo.
 
-Dados usam fixtures de posição/HP para verificar a aritmética, não uma aprovação humana de dificuldade ou uma partida física. Não houve teste físico de iPhone/gamepad. A dupla foi testada com relay local real, protocolo 6; isso não confirma atualização/disponibilidade do serviço Render público. Publicação e smoke da build Vercel serão registrados após o push.
+Publicação Vercel confirmada após o push de `16b3d51`. [Smoke público](qa/public/solo.json) passou: 13 fraquezas/13 resistências nos Registros, quatro elementos, básico e Q segurar/soltar, consumo de energia, 12 atlas carregados, quatro resoluções e saves reais intactos. Zero erros JS/assets. [Bestiário publicado](qa/public/bestiary.png).
+
+Dados locais usam fixtures de posição/HP para verificar a aritmética, não uma aprovação humana de dificuldade ou uma partida física. O smoke público verifica UI/build/controles, sem hooks DEV. Não houve teste físico de iPhone/gamepad. A dupla foi testada com relay local real, protocolo 6; isso não confirma atualização/disponibilidade do serviço Render público.
 
 **Aguardar playtest humano desta matriz antes da próxima etapa.** Os exemplos de material/anatomia justificam a escolha inicial; intensidade e perfis podem ser recalibrados conforme as partidas.
