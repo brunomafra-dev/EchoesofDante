@@ -20,9 +20,9 @@ export class KineticCharge {
   private lastWaveDistance = 0;
   private readonly hitTargets = new Set<ChargeTarget>();
 
-  constructor(private readonly upgradeRank: (id: AbilityUpgradeId) => number = () => 0) {}
+  constructor(private readonly upgradeRank: (id: AbilityUpgradeId) => number = () => 0,private readonly baseCooldown:number=KINETIC_CHARGE.cooldown) {}
 
-  get cooldown(): number { return KINETIC_CHARGE.cooldown; }
+  get cooldown(): number { return this.baseCooldown; }
   get waveHalfWidth(): number { return KINETIC_CHARGE.waveHalfWidth + this.upgradeRank('chargeWidth') * 12; }
   get minDamage(): number { return KINETIC_CHARGE.minDamage + this.upgradeRank('chargePower') * 4; }
   get maxDamage(): number { return KINETIC_CHARGE.maxDamage + this.upgradeRank('chargePower') * 6; }

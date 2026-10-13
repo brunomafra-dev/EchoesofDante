@@ -14,7 +14,7 @@ import { WarriorArms } from '../visual/WarriorArms';
 import { characterSex, weaponStyle, type WeaponStyle, type EquipmentLook, type CharacterSex } from '../config/appearance';
 import type { EquipmentSnapshot } from '../config/equipment';
 import { ModularTorso } from '../visual/ModularTorso';
-import { ASTRAL,HUNTER, type PlayableClass } from '../config/classes';
+import { ASTRAL,HUNTER,XENOBINDER, type PlayableClass } from '../config/classes';
 
 export type PlayerAnimationState = 'IDLE' | 'WALK' | 'ATTACK_WINDUP' | 'ATTACK_SWING' | 'ATTACK_RECOVERY' | 'DASH' | 'CHARGE' | 'CHARGE_RELEASE' | 'HURT' | 'DEAD';
 
@@ -22,7 +22,7 @@ export class Player {
   readonly position: Vec2;
   readonly velocity: Vec2 = { x: 0, y: 0 };
   readonly health: Health;
-  get movementSpeed(): number { return this.classId === 'hunter' ? HUNTER.speed : this.classId==='astral'?ASTRAL.speed:PLAYER.speed; }
+  get movementSpeed(): number { return this.classId === 'hunter' ? HUNTER.speed : this.classId==='xenobinder'?XENOBINDER.speed:this.classId==='astral'?ASTRAL.speed:PLAYER.speed; }
   readonly attackDamage = PLAYER.attackDamage;
   readonly attackCooldown = PLAYER.attackCooldown;
   readonly radius = PLAYER.radius;
@@ -150,8 +150,8 @@ export class Player {
 
   get hp(): number { return this.health.current; }
   get maxHp(): number { return this.health.max; }
-  get dashCooldown(): number { return (this.classId === 'hunter' ? HUNTER.dashCooldown : this.classId==='astral'?ASTRAL.dashCooldown:PLAYER.dashCooldown) - this.upgradeRank('dashCooldown') * 120; }
-  get dashDuration(): number { return (this.classId === 'hunter' ? HUNTER.dashDuration : this.classId==='astral'?ASTRAL.dashDuration:PLAYER.dashDuration) + this.upgradeRank('dashDuration') * 20; }
+  get dashCooldown(): number { return (this.classId === 'hunter' ? HUNTER.dashCooldown : this.classId==='xenobinder'?XENOBINDER.dashCooldown:this.classId==='astral'?ASTRAL.dashCooldown:PLAYER.dashCooldown) - this.upgradeRank('dashCooldown') * 120; }
+  get dashDuration(): number { return (this.classId === 'hunter' ? HUNTER.dashDuration : this.classId==='xenobinder'?XENOBINDER.dashDuration:this.classId==='astral'?ASTRAL.dashDuration:PLAYER.dashDuration) + this.upgradeRank('dashDuration') * 20; }
   get dashReady(): boolean { return !this.isDead && this.scene.time.now - this.lastDashAt >= this.dashCooldown; }
   get dashProgress(): number { return clamp((this.scene.time.now - this.lastDashAt) / this.dashCooldown, 0, 1); }
   get invulnerable(): boolean { return this.isDashing || this.scene.time.now < this.invulnerableUntil; }

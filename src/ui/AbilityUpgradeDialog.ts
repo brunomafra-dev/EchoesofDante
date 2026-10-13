@@ -23,8 +23,16 @@ const ASTRAL_LIST=UPGRADE_LIST.map(upgrade=>({...upgrade,...({
  chargePower:{ability:'CAMPO',title:'Projeção densa',description:'Cada grau acrescenta 4 a 6 ao impacto inicial, conforme a carga.'},
 }[upgrade.id])}));
 // A compact, modal choice shown only at mastery levels. It owns no gameplay rules.
+const XENOBINDER_LIST=UPGRADE_LIST.map(upgrade=>({...upgrade,...({
+ saberArc:{ability:'VÍNCULO',title:'Assistência concentrada',description:'Cada grau acrescenta 3 ao básico e à mordida do simbionte.'},
+ saberReach:{ability:'CONDUTOR',title:'Foco simbiótico',description:'Cada grau acrescenta 40 unidades ao alcance básico.'},
+ dashCooldown:{ability:'ESQUIVA',title:'Recarga evasiva',description:'Cada grau reduz a recarga da esquiva em 120 ms.'},
+ dashDuration:{ability:'ESQUIVA',title:'Passo prolongado',description:'Cada grau prolonga a esquiva em 20 ms.'},
+ chargeWidth:{ability:'COMANDO',title:'Investida ampla',description:'Cada grau amplia a faixa da investida em 6 unidades.'},
+ chargePower:{ability:'COMANDO',title:'Ressonância compartilhada',description:'Cada grau acrescenta 8 ao dano da investida. A recuperação permanece igual.'},
+}[upgrade.id])}));
 export class AbilityUpgradeDialog {
-  private get upgrades() { return this.astral ? ASTRAL_LIST : this.hunter ? HUNTER_LIST : UPGRADE_LIST; }
+  private get upgrades() { return this.xenobinder ? XENOBINDER_LIST : this.astral ? ASTRAL_LIST : this.hunter ? HUNTER_LIST : UPGRADE_LIST; }
   private readonly dialog: HTMLDialogElement;
   private readonly heading: HTMLElement;
   private readonly points: HTMLElement;
@@ -33,7 +41,7 @@ export class AbilityUpgradeDialog {
   private padButtons: boolean[] = [];
 
   constructor(scene: Phaser.Scene, private readonly onChoose: (id: AbilityUpgradeId) => boolean,
-    private readonly onClose: () => void, private readonly hunter = false,private readonly astral=false) {
+    private readonly onClose: () => void, private readonly hunter = false,private readonly astral=false,private readonly xenobinder=false) {
     this.dialog = document.createElement('dialog');
     this.dialog.className = 'records-dialog ability-upgrade-dialog';
     this.dialog.setAttribute('aria-labelledby', 'ability-upgrade-title');
@@ -45,6 +53,7 @@ export class AbilityUpgradeDialog {
     const options = this.dialog.querySelector('.ability-upgrade-options')!;
     if (hunter) this.dialog.querySelector('header small')!.textContent = 'DOMÍNIO DO STAR HUNTER';
     if(astral)this.dialog.querySelector('header small')!.textContent='DOMÍNIO DO MANIPULADOR ASTRAL';
+    if(xenobinder)this.dialog.querySelector('header small')!.textContent='DOMÍNIO DO VINCULADOR DE DANTE';
     for (const upgrade of this.upgrades) {
       const button = document.createElement('button');
       button.type = 'button';

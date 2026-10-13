@@ -67,6 +67,8 @@ Dupla integrada a todas as conexões novas, snapshots das pinturas e avisos, int
 
 **Playtest humano necessário:** avaliar diferença entre os três mapas, leitura de criaturas, caminhada/apoio, intensidade dos grupos, espaços de descanso e preparação para o boss. Não iniciar Vinculador antes dessa avaliação.
 
+Atualização de execução em 13/10/2026: o usuário autorizou explicitamente finalizar esta revisão e implementar a etapa 6 sem esperar uma validação intermediária. Revisão encerrada tecnicamente em `83cf3a6`. A regra de espera acima é o registro histórico anterior; avaliação perceptual continua humana e não foi presumida aprovada. [Vinculador](../../xenobinder/README.md).
+
 ## Publicação
 
 Implementação `95f9bfac880274f6b5e072e02abb41dc943f3090`, versão **0.1.95**. Deploy Vercel concluído; [QA público](qa/public/public.json) passou: três mapas, três classes, controles, quatro viewports e carregamento das músicas novas após input real. Onze arquivos de imagem/música verificados por HTTP; fontes e evidências ficam nesta pasta. Biblioteca de testes atualizada.

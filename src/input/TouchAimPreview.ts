@@ -1,16 +1,16 @@
 import Phaser from 'phaser';
 import { KINETIC_CHARGE, PLAYER } from '../config/game';
 import type { Vec2 } from '../utils/math';
-import { ASTRAL, HUNTER } from '../config/classes';
+import { ASTRAL, HUNTER, XENOBINDER } from '../config/classes';
 
 // Draw once. Gestures only move/rotate these two reusable visual guides.
 export class TouchAimPreview {
-  setCombatPresentation(hunter: boolean, astral = false): void {
+  setCombatPresentation(hunter: boolean, astral = false, xenobinder = false): void {
     if (!hunter) return;
     this.strike.clear(); this.charge.clear();
-    this.arrow(this.strike, 24, astral ? ASTRAL.shotRange : 700);
+    this.arrow(this.strike, 24, xenobinder ? XENOBINDER.shotRange : astral ? ASTRAL.shotRange : 700);
     // AstralArt supplies the live placement circle for hold/aim/release.
-    if (astral) return;
+    if (astral || xenobinder) return;
     this.arrow(this.charge, 24, HUNTER.precisionRange);
     this.charge.lineStyle(1, 0x5fe6d8, .3)
       .lineBetween(24, -HUNTER.beamHalfWidth, HUNTER.precisionRange, -HUNTER.beamHalfWidth)

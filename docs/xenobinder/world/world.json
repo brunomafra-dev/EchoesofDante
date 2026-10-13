@@ -1,0 +1,187 @@
+{
+  "method": "One isolated Chrome page; DEV regional/checkpoint fixtures and invulnerability for observation. Actual keyboard motion and companion collider checks. Not physical/human campaign playthrough.",
+  "errors": [],
+  "regions": [
+    {
+      "region": "base",
+      "meanFps": 49.6025390625,
+      "objects": 70,
+      "graphics": 7,
+      "tweens": [
+        0,
+        0
+      ],
+      "collisionClear": true
+    },
+    {
+      "region": "forest",
+      "meanFps": 47.272064208984375,
+      "objects": 391,
+      "graphics": 14,
+      "tweens": [
+        25,
+        25
+      ],
+      "collisionClear": true
+    },
+    {
+      "region": "cavern",
+      "meanFps": 47.991912841796875,
+      "objects": 238,
+      "graphics": 11,
+      "tweens": [
+        4,
+        4
+      ],
+      "collisionClear": true
+    },
+    {
+      "region": "warden",
+      "meanFps": 49.08599853515625,
+      "objects": 84,
+      "graphics": 13,
+      "tweens": [
+        0,
+        0
+      ],
+      "collisionClear": true
+    },
+    {
+      "region": "valley",
+      "meanFps": 47.868621826171875,
+      "objects": 172,
+      "graphics": 20,
+      "tweens": [
+        4,
+        4
+      ],
+      "collisionClear": true
+    },
+    {
+      "region": "arid",
+      "meanFps": 48.725555419921875,
+      "objects": 151,
+      "graphics": 7,
+      "tweens": [
+        3,
+        3
+      ],
+      "collisionClear": true
+    },
+    {
+      "region": "dunes",
+      "meanFps": 49.3795166015625,
+      "objects": 132,
+      "graphics": 7,
+      "tweens": [
+        1,
+        1
+      ],
+      "collisionClear": true
+    },
+    {
+      "region": "sandpit",
+      "meanFps": 50.278167724609375,
+      "objects": 91,
+      "graphics": 11,
+      "tweens": [
+        0,
+        0
+      ],
+      "collisionClear": true
+    },
+    {
+      "region": "frost",
+      "meanFps": 49.8382568359375,
+      "objects": 138,
+      "graphics": 7,
+      "tweens": [
+        2,
+        2
+      ],
+      "collisionClear": true
+    },
+    {
+      "region": "icecave",
+      "meanFps": 49.0892333984375,
+      "objects": 136,
+      "graphics": 9,
+      "tweens": [
+        2,
+        2
+      ],
+      "collisionClear": true
+    },
+    {
+      "region": "icenest",
+      "meanFps": 48.3336181640625,
+      "objects": 103,
+      "graphics": 11,
+      "tweens": [
+        1,
+        1
+      ],
+      "collisionClear": true
+    },
+    {
+      "region": "cinder",
+      "meanFps": 49.63330078125,
+      "objects": 134,
+      "graphics": 7,
+      "tweens": [
+        1,
+        1
+      ],
+      "collisionClear": true
+    },
+    {
+      "region": "obsidian",
+      "meanFps": 49.928955078125,
+      "objects": 143,
+      "graphics": 7,
+      "tweens": [
+        1,
+        1
+      ],
+      "collisionClear": true
+    },
+    {
+      "region": "caldera",
+      "meanFps": 49.5916748046875,
+      "objects": 167,
+      "graphics": 11,
+      "tweens": [
+        1,
+        1
+      ],
+      "collisionClear": true
+    }
+  ],
+  "respawns": [
+    {
+      "xp": 15,
+      "hp": 113,
+      "max": 113,
+      "pet": 1,
+      "objects": 391,
+      "textures": 234
+    },
+    {
+      "xp": 15,
+      "hp": 113,
+      "max": 113,
+      "pet": 1,
+      "objects": 391,
+      "textures": 234
+    },
+    {
+      "xp": 15,
+      "hp": 113,
+      "max": 113,
+      "pet": 1,
+      "objects": 391,
+      "textures": 234
+    }
+  ],
+  "passed": true
+}

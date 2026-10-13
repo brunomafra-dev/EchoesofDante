@@ -20,7 +20,7 @@ import type { ImpactPose } from './CoopSession';
 import type { AstralElement } from '../config/classes';
 
 export type PartyBridge={
- area:JourneyArea;player:Player;controls:Controls;enemies:readonly Enemy[];obstacles:readonly Obstacle[];bounds?:MovementBounds;hud:Hud;hunter?:HunterCombat;astral?:import('../combat/AstralCombat').AstralCombat;
+ area:JourneyArea;player:Player;controls:Controls;enemies:readonly Enemy[];obstacles:readonly Obstacle[];bounds?:MovementBounds;hud:Hud;hunter?:HunterCombat;astral?:import('../combat/AstralCombat').AstralCombat;xeno?:import('../combat/XenobinderCombat').XenobinderCombat;
  strike:import('../combat/Attack').SaberPose;releaseProgress:number;progression:ProgressionSnapshot;flags:JourneyFlags;phase:string;chargeLevel:number;firing:boolean;wave?:PartyPose['wave'];
  boss?:NetworkBoss;bossRender:(boss:PartyWorld['boss'])=>void;
  inputBlocked:boolean;bossActive:boolean;cue:(kind:'dash'|'charge'|'release'|'hurt')=>void;loot:PartyWorld['loot'];lootRender:(loot:PartyWorld['loot'])=>void;baseMaxHp:number;
@@ -92,9 +92,9 @@ export class PartyExpedition {
   }
   this.balanced=!!room.peer;
   if(!room.peer&&this.partner){this.partner.destroy();this.partner=undefined;this.peerName='';}
-  if(room.peer&&(!this.partner||this.peerName!==room.peer.name)){
+  if(room.peer&&(!this.partner||this.peerName!==`${room.peer.name}:${room.peer.classId}:${room.peer.sex}`)){
    this.partner?.destroy();const hp=a.baseMaxHp;
-   this.partner=new PartyActor(this.scene,room.peer,this.safePosition(),Math.round(hp*(room.peer.classId==='hunter'?.8:room.peer.classId==='astral'?.85:1))+equipmentStats(room.peer.equipment??{}).hp);this.peerName=room.peer.name;
+   this.partner=new PartyActor(this.scene,room.peer,this.safePosition(),Math.round(hp*(room.peer.classId==='hunter'?.8:room.peer.classId==='xenobinder'?.9:room.peer.classId==='astral'?.85:1))+equipmentStats(room.peer.equipment??{}).hp);this.peerName=`${room.peer.name}:${room.peer.classId}:${room.peer.sex}`;
   }
   const input=room.peerConnected&&performance.now()-room.inputAt<500?room.input:{...NO_INPUT,cancel:true};
   if(this.partner){
@@ -104,14 +104,14 @@ export class PartyExpedition {
     else if(this.partner.player.isDead){this.partner.player.revive(this.safePosition());this.partner.cancelCharge();}
    }
    this.partner.profile.equipment=room.peer?.equipment;this.partner.profile.build=room.peer?.build;
-   this.partner.update(now,dt,input,a.enemies,a.obstacles,a.bounds,a.hit,a.solidObstacles);
+   this.partner.update(now,dt,input,a.enemies,a.obstacles,a.bounds,a.hit,a.solidObstacles,[a.player,this.partner.player]);
    if(input.interact&&!this.partner.player.isDead)this.interaction={...this.partner.player.position};
   }
   room.consumeEdges();
   if(now-this.sendAt<100)return;this.sendAt=now;
   const partner=this.partner?.snapshot();if(partner)partner.deathId=room.peerDeathId||undefined;
   const prompt=partner?a.prompt(partner):{available:false,action:'INVESTIGAR'};
-  const host:PartyPose={strike:a.strike,releaseProgress:a.releaseProgress,...a.player.position,aim:a.player.rotation,hp:a.player.hp,maxHp:a.player.maxHp,dead:a.player.isDead,dash:a.player.isDashing,phase:a.phase,level:a.chargeLevel,firing:a.firing,dashReady:a.player.dashProgress,dashCooldown:a.player.dashCooldown,wave:a.wave,beam:a.hunter?.beamPose(),astral:a.astral?.snapshot()};
+  const host:PartyPose={strike:a.strike,releaseProgress:a.releaseProgress,...a.player.position,aim:a.player.rotation,hp:a.player.hp,maxHp:a.player.maxHp,dead:a.player.isDead,dash:a.player.isDashing,phase:a.phase,level:a.chargeLevel,firing:a.firing,dashReady:a.player.dashProgress,dashCooldown:a.player.dashCooldown,wave:a.wave,beam:a.hunter?.beamPose(),astral:a.astral?.snapshot(),xenobinder:a.xeno?.snapshot()};
   const enemies:CreaturePose[]=a.enemies.filter(e=>!e.isDead).map((enemy,index)=>{
    const e=enemy as Presented;
    const body=e.body??e.view?.list.find(p=>p instanceof Phaser.GameObjects.Image&&p.texture.key==='hollow-body') as Phaser.GameObjects.Image|undefined

@@ -28,7 +28,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   };
   server.on('upgrade', upgrade);
   const send = (ws, message) => { if (ws?.readyState === WebSocket.OPEN && ws.bufferedAmount < 131072) ws.send(JSON.stringify(message)); };
-  const profile = p => p && ['warrior', 'hunter','astral'].includes(p.classId) && typeof p.name === 'string' && p.name.trim()
+  const profile = p => p && ['warrior', 'hunter','astral','xenobinder'].includes(p.classId) && typeof p.name === 'string' && p.name.trim()
     ? { name: p.name.trim().slice(0, 24), classId: p.classId, sex: p.sex === 'male' || p.sex === 'female' ? p.sex : p.classId === 'hunter' ? 'female' : 'male', bagFree:bagFree(p.bagFree),potions:Number.isInteger(p.potions)?Math.max(0,Math.min(20,p.potions)):0,equipment:cleanEquipment(p.equipment),build:cleanBuild(p.build) } : null;
   const seat = (ws, p) => ({ ws, profile: p, token: randomBytes(24).toString('hex'), receipt: randomBytes(16).toString('hex'), total: 0, bosses:new Set(), items:new Map(),resources:{credits:0,materials:[0,0,0],used:0},usedBaseline:0,timer: undefined });
   function end(room) {
@@ -58,7 +58,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   }
   function joined(room, role) {
     const member = room[role], peer = room[role === 'host' ? 'guest' : 'host'];
-    send(member.ws, { type: 'joined', protocol:8, role, code: room.code, token: member.token, epoch: room.epoch,
+    send(member.ws, { type: 'joined', protocol:9, role, code: room.code, token: member.token, epoch: room.epoch,
       area: room.area, peer: peer?.profile, peerConnected: !!peer?.ws, paused: room.paused === true, receipt: member.receipt, total: member.total, bosses:[...member.bosses], items:[...member.items.values()],resources:member.resources });
     send(peer?.ws, { type: 'peer', profile: member.profile });
   }
@@ -165,6 +165,6 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   server.once('close', close);
   return {
     close,
-    status: () => ({ service: 'Dante regional co-op', protocol: 8, campaign: true, rooms: rooms.size, players: clients.size }),
+    status: () => ({ service: 'Dante regional co-op', protocol: 9, campaign: true, rooms: rooms.size, players: clients.size }),
   };
 }

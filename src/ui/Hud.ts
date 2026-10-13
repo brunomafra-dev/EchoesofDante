@@ -4,10 +4,13 @@ import { ECHO_COUNT, NORTHERN_DISCOVERY } from '../config/discovery';
 import { PROGRESSION } from '../config/progression';
 import type { KineticPhase } from '../combat/KineticCharge';
 import type { InputMethod } from '../input/Controls';
+import { XENOBINDER } from '../config/classes';
 
 export class Hud {
   setAreaName(name:string):void{this.areaSubtitle.setText(name);}
   private momentum = 0;
+  private bond:number=XENOBINDER.bondInitial;
+  setXenobinderBond(value:number):void{this.bond=value;}
   setHunterMomentum(value: number): void { this.momentum = Math.round(value); }
   private hpFill: Phaser.GameObjects.Rectangle;
   private hpText: Phaser.GameObjects.Text;
@@ -39,7 +42,7 @@ export class Hud {
   private discoveryTimer?: Phaser.Time.TimerEvent;
   private levelTimer?: Phaser.Time.TimerEvent;
 
-  constructor(private scene: Phaser.Scene, onRestart: () => void, private readonly hunter = false,private readonly astral=false) {
+  constructor(private scene: Phaser.Scene, onRestart: () => void, private readonly hunter = false,private readonly astral=false,private readonly xenobinder=false) {
     const text = (x: number, y: number, value: string, size: number, color = '#e8f1ed', condensed = false) => scene.add.text(x, y, value, {
       fontFamily: condensed ? 'Barlow Condensed, sans-serif' : 'DM Sans, sans-serif',
       fontSize: `${size}px`, color, fontStyle: condensed ? 'bold' : 'normal', letterSpacing: condensed ? 0.8 : 0.2,
@@ -66,7 +69,7 @@ export class Hud {
     scene.add.rectangle(1052, 45, 196, 2, 0x26372b).setOrigin(0).setScrollFactor(0).setDepth(20000);
     this.dashFill = scene.add.rectangle(1052, 45, 196, 2, 0x9caf99).setOrigin(0).setScrollFactor(0).setDepth(20001);
     this.chargeText = text(1052, 57, '', 14, '#b6c6b2', true);
-    if (this.hunter||this.astral) {
+    if (this.hunter||this.astral||this.xenobinder) {
       if(this.hunter)this.momentumText = text(1052, 83, '', 11, '#aab6a0', true);
       scene.add.rectangle(1052, 78, 196, 2, 0x26372b).setOrigin(0).setScrollFactor(0).setDepth(20000);
       this.chargeFill = scene.add.rectangle(1052, 78, 196, 2, 0x5fe6d8).setOrigin(0).setScrollFactor(0).setDepth(20001);
@@ -85,7 +88,7 @@ export class Hud {
     frame.lineStyle(1, 0x7d8c72, 0.3).strokeRoundedRect(347, 199, 586, 334, 6);
     frame.fillStyle(0xda938b).fillRect(374, 199, 65, 3);
     const overline = text(640, 232, 'SINAL PERDIDO   /   DANTE 01', 17, '#d99a91', true).setOrigin(0.5).setDepth(30002).setVisible(false);
-    const title = text(640, 289, this.astral ? 'ASTRAL CAÍDO' : this.hunter ? 'CAÇADOR CAÍDO' : 'GUERREIRO CAÍDO', 58, '#eff3e9', true).setOrigin(0.5).setDepth(30002).setVisible(false);
+    const title = text(640, 289, this.xenobinder?'VÍNCULO ROMPIDO':this.astral ? 'ASTRAL CAÍDO' : this.hunter ? 'CAÇADOR CAÍDO' : 'GUERREIRO CAÍDO', 58, '#eff3e9', true).setOrigin(0.5).setDepth(30002).setVisible(false);
     const subtitle = text(640, 373, 'Dante ainda está à escuta.', 17, '#aac5bf').setOrigin(0.5).setDepth(30002).setVisible(false);
     this.deathSubtitle=subtitle;
     const button = this.deathButton = scene.add.rectangle(640, 467, 248, 55, 0x9edacf).setScrollFactor(0).setDepth(30002).setInteractive({ useHandCursor: true }).setVisible(false);
@@ -108,7 +111,7 @@ export class Hud {
     this.dashText.setColor(dashProgress >= 1 ? '#b6c6b2' : '#8a9989');
     const chargeKey = this.inputMethod === 'gamepad' ? '[LT]' : this.inputMethod === 'touch' ? '' : '[Q]';
     const chargeStatus = chargePhase === 'CHARGING' ? `${Math.round(chargeLevel * 100)}%` : chargePhase === 'RELEASE' ? 'ONDA' : chargeProgress >= 1 ? 'PRONTA' : `${((1 - chargeProgress) * chargeCooldown / 1000).toFixed(1)}s`;
-    this.chargeText.setText(this.astral?`${chargeKey} CAMPO · ${chargePhase==='RELEASE'?'ATIVO':chargeStatus}`.trim():this.hunter ? `${chargeKey} FEIXE · ${chargePhase === 'RELEASE' ? 'DISPARO' : chargeStatus}`.trim() : `${chargeKey} CARGA · ${chargeStatus}`.trim());
+    this.chargeText.setText(this.xenobinder?`${chargeKey} COMANDO · ${chargePhase==='RELEASE'?'INVESTIDA':this.bond<XENOBINDER.commandCost&&chargePhase==='READY'?'SEM VÍNCULO':chargeStatus}`.trim():this.astral?`${chargeKey} CAMPO · ${chargePhase==='RELEASE'?'ATIVO':chargeStatus}`.trim():this.hunter ? `${chargeKey} FEIXE · ${chargePhase === 'RELEASE' ? 'DISPARO' : chargeStatus}`.trim() : `${chargeKey} CARGA · ${chargeStatus}`.trim());
     this.chargeText.setColor(chargePhase === 'CHARGING' ? '#5fe6d8' : chargeProgress >= 1 ? '#b6c6b2' : '#8a9989');
     if (this.chargeFill) this.chargeFill.width = 196 * (chargePhase === 'CHARGING' ? chargeLevel : chargeProgress);
     this.momentumText?.setText(`MOM ${this.momentum}`);
@@ -138,6 +141,7 @@ export class Hud {
       : 'WASD mover · Mouse mirar · Clique sabre · Espaço esquiva · Segure Q: carga · E investigar · B registros');
     if (this.hunter) hint.setText(hint.text.replace('sabre', 'disparo').replace('carga', 'feixe de luz'));
     if (this.astral) hint.setText(hint.text.replace('sabre', 'pulso').replace('carga', 'campo elemental') + (this.inputMethod === 'gamepad' ? ' · Y elemento' : ' · F elemento'));
+    if(this.xenobinder)hint.setText(hint.text.replace('sabre','marcar assistência').replace('carga','comando do simbionte'));
     hint.setVisible(this.inputMethod !== 'touch');
     this.controlsTimer = this.scene.time.delayedCall(10000, () => hint.setVisible(false));
   }

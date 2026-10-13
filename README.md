@@ -1,5 +1,11 @@
 # Echoes of Dante
 
+## Vinculador de Dante — etapa 6 · 0.1.96
+
+Quarta classe jogável: condutor simbiótico e companheiro permanente original. O básico marca assistência; acertos de ambos acumulam **Vínculo**. **Q / LT / COMANDO: segurar → mirar → soltar** comanda uma investida e um pulso curto de recuperação para aliados vivos próximos ao ponto de chegada. Custo 35, recarga 6 s; não revive. Apresentações masculina/feminina, vestimentas e armas próprias, equipamentos visíveis e mesma campanha/input.
+
+[Testar diretamente](https://echosofdante.vercel.app/xenobinder-playtest.html?kit=basic&v=0.1.96) · [Valores, arte, QA e limitações](docs/xenobinder/README.md). Laboratório temporário preserva personagens reais; escolha região/equipamento/apresentação no painel. Dupla local autoritativa, **relay protocolo 9**; quatro jogadores ficam para a etapa 7. Aguardar playtest humano desta classe antes de avançar.
+
 ## Expedição vulcânica — três mapas e criaturas próprias · 0.1.95
 
 O percurso agora é **Vésper → Costa das Cinzas → Garganta de Obsidiana → Forjas da Caldeira → Incandescente**. Três mapas exploráveis com registros, seis desvios e 24 habitantes em grupos separados. Rasga-brasa, Fole de Magma e Dorso de Basalto possuem pinturas, poses, anatomias e ataques próprios; nenhum habitante do Siroco ocupa esses mapas. Dois pisos e duas trilhas originais novos. Saves antigos, classes, equipamentos, câmera e boss preservados.

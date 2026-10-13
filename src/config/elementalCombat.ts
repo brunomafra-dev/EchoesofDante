@@ -36,7 +36,7 @@ export function weaknessHint(species: SpeciesId): string {
 }
 export function damageTextColor(color: number, neutral = '#e8efce'): string {
   if (color === 0xff8f82) return '#ff968a'; // Incoming damage keeps its own language.
-  return Object.values(ELEMENT_COLORS).some(value => value === color)
+  return color === 0x6bb464 || Object.values(ELEMENT_COLORS).some(value => value === color)
     ? `#${color.toString(16).padStart(6, '0')}` : neutral;
 }
 export const damageText = (damage: number, effective = false, resisted = false): string =>

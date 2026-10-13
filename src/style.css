@@ -191,5 +191,6 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
 /* The Astral's one contextual selector shares safe areas with existing controls. */
 .astral-panel{position:fixed;left:max(12px,env(safe-area-inset-left));top:26%;z-index:23000;display:grid;gap:3px;width:clamp(145px,19vw,230px);padding:7px 10px;background:#091b21cf;border:1px solid #5fe6d844;border-radius:7px;color:#d7e8e2;font:14px 'Barlow Condensed',sans-serif;text-align:left;touch-action:none;}
 .astral-panel small{font-size:11px;color:#a9c5bf;line-height:1.2}.astral-panel meter{width:100%;height:5px}.astral-panel:disabled{opacity:.65}.astral-panel[data-element="fire"]{border-color:#ff6a4a88}.astral-panel[data-element="earth"]{border-color:#ffbd5488}.astral-panel[data-element="water"]{border-color:#83ccd888}
+.xenobinder-panel{background:#122017ce;border-color:#6bb46455;color:#dce8cf;pointer-events:none}.xenobinder-panel meter{accent-color:#6bb464}
 body:has(.application-shell[open]) .astral-panel,body.records-open .astral-panel{visibility:hidden}
 @media(max-width:900px){.astral-panel{top:26%;padding:5px 7px;font-size:12px;max-width:170px}.astral-panel small{font-size:10px}}

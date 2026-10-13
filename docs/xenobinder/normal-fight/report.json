@@ -1,0 +1,26 @@
+{
+  "method": "Real Gamepad API driver reads telegraphs. Normal HP, no forced boss attacks, no HP edits/invulnerability/teleports during fights. Basic kit at regional level; not human balance approval.",
+  "errors": [],
+  "fights": [
+    {
+      "classId": "xenobinder",
+      "phases": [
+        1,
+        2,
+        3
+      ],
+      "attacks": [
+        "cleave",
+        "slam",
+        "boulders",
+        "fissure"
+      ],
+      "dashes": 3,
+      "hitsTaken": 1,
+      "charges": 5,
+      "seconds": 46.674,
+      "hp": 172,
+      "won": true
+    }
+  ]
+}

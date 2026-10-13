@@ -1,0 +1,135 @@
+{
+  "public\\assets\\visual\\characters\\wardrobe-xenobinder-male-none.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 137316
+  },
+  "public\\assets\\visual\\characters\\wardrobe-xenobinder-male-basic.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 149768
+  },
+  "public\\assets\\visual\\characters\\wardrobe-xenobinder-male-reinforced.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 170147
+  },
+  "public\\assets\\visual\\characters\\wardrobe-xenobinder-female-none.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 137511
+  },
+  "public\\assets\\visual\\characters\\wardrobe-xenobinder-female-basic.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 156335
+  },
+  "public\\assets\\visual\\characters\\wardrobe-xenobinder-female-reinforced.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 177414
+  },
+  "public\\assets\\visual\\characters\\dante-symbiont-motion.png": {
+    "dimensions": [
+      1024,
+      512
+    ],
+    "bytes": 593860
+  },
+  "public\\assets\\visual\\characters\\xenobinder-starter-weapon.png": {
+    "dimensions": [
+      128,
+      96
+    ],
+    "bytes": 16477
+  },
+  "public\\assets\\items\\xenobinder-weapon-1.png": {
+    "dimensions": [
+      96,
+      96
+    ],
+    "bytes": 10376
+  },
+  "public\\assets\\items\\ground\\xenobinder-weapon-1.png": {
+    "dimensions": [
+      96,
+      96
+    ],
+    "bytes": 10412
+  },
+  "public\\assets\\visual\\characters\\xenobinder-current-weapon.png": {
+    "dimensions": [
+      128,
+      96
+    ],
+    "bytes": 17685
+  },
+  "public\\assets\\items\\xenobinder-weapon-2.png": {
+    "dimensions": [
+      96,
+      96
+    ],
+    "bytes": 11092
+  },
+  "public\\assets\\items\\ground\\xenobinder-weapon-2.png": {
+    "dimensions": [
+      96,
+      96
+    ],
+    "bytes": 11114
+  },
+  "public\\assets\\visual\\characters\\xenobinder-advanced-weapon.png": {
+    "dimensions": [
+      128,
+      96
+    ],
+    "bytes": 16931
+  },
+  "public\\assets\\items\\xenobinder-weapon-3.png": {
+    "dimensions": [
+      96,
+      96
+    ],
+    "bytes": 10596
+  },
+  "public\\assets\\items\\ground\\xenobinder-weapon-3.png": {
+    "dimensions": [
+      96,
+      96
+    ],
+    "bytes": 10614
+  },
+  "public\\assets\\visual\\xenobinder\\xeno-bolt.png": {
+    "dimensions": [
+      64,
+      32
+    ],
+    "bytes": 269
+  },
+  "public\\assets\\visual\\xenobinder\\xeno-link.png": {
+    "dimensions": [
+      96,
+      16
+    ],
+    "bytes": 176
+  },
+  "public\\assets\\visual\\xenobinder\\xeno-pulse.png": {
+    "dimensions": [
+      256,
+      256
+    ],
+    "bytes": 13410
+  }
+}

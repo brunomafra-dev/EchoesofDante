@@ -1,0 +1,21 @@
+{
+  "method": "Actual character creation, replay, inventory, typing and reload in an isolated Chrome profile.",
+  "errors": [],
+  "profiles": [
+    {
+      "classId": "xenobinder",
+      "sex": "male",
+      "bond": 35,
+      "body": "dressed-xenobinder-male-1-all",
+      "pet": "dante-symbiont-motion"
+    },
+    {
+      "classId": "xenobinder",
+      "sex": "female",
+      "bond": 35,
+      "body": "dressed-xenobinder-female-1-all",
+      "pet": "dante-symbiont-motion"
+    }
+  ],
+  "passed": true
+}

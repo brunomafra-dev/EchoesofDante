@@ -1,0 +1,91 @@
+{
+  "method": "One Chrome page, paired same-build Warrior/Xenobinder region samples. Ten-second warm-up excludes asset-loading startup; Phaser smoothed FPS plus actual scene update count. Fixture invulnerability only for stable observation.",
+  "errors": [],
+  "samples": [
+    {
+      "region": "forest",
+      "classId": "warrior",
+      "meanFps": 59.323409981598765,
+      "measuredFps": 60.021647151461,
+      "before": {
+        "objects": 376,
+        "tweens": 25
+      },
+      "after": {
+        "objects": 376,
+        "tweens": 25
+      }
+    },
+    {
+      "region": "forest",
+      "classId": "xenobinder",
+      "meanFps": 59.25202867111269,
+      "measuredFps": 59.81405630324575,
+      "before": {
+        "objects": 391,
+        "tweens": 25
+      },
+      "after": {
+        "objects": 391,
+        "tweens": 25
+      }
+    },
+    {
+      "region": "cavern",
+      "classId": "warrior",
+      "meanFps": 59.097221995762084,
+      "measuredFps": 60.00454088421852,
+      "before": {
+        "objects": 223,
+        "tweens": 4
+      },
+      "after": {
+        "objects": 223,
+        "tweens": 4
+      }
+    },
+    {
+      "region": "cavern",
+      "classId": "xenobinder",
+      "meanFps": 59.30547309872539,
+      "measuredFps": 60.024009603812516,
+      "before": {
+        "objects": 238,
+        "tweens": 4
+      },
+      "after": {
+        "objects": 238,
+        "tweens": 4
+      }
+    },
+    {
+      "region": "caldera",
+      "classId": "warrior",
+      "meanFps": 59.364125254001316,
+      "measuredFps": 60.01548786785129,
+      "before": {
+        "objects": 152,
+        "tweens": 1
+      },
+      "after": {
+        "objects": 152,
+        "tweens": 1
+      }
+    },
+    {
+      "region": "caldera",
+      "classId": "xenobinder",
+      "meanFps": 59.39534288039431,
+      "measuredFps": 59.7882906429546,
+      "before": {
+        "objects": 167,
+        "tweens": 1
+      },
+      "after": {
+        "objects": 167,
+        "tweens": 1
+      }
+    }
+  ],
+  "passed": true
+}

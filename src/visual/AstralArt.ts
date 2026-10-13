@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { ASTRAL, ELEMENT_COLORS,type AstralElement } from '../config/classes';
+import { ASTRAL, XENOBINDER, ELEMENT_COLORS,type AstralElement } from '../config/classes';
 import { equipmentAppearance,type EquipmentSnapshot } from '../config/equipment';
 import { weaponStyle,type CharacterSex,type EquipmentLook,type WeaponStyle } from '../config/appearance';
 import type { KineticPose } from '../combat/KineticCharge';
@@ -24,15 +24,15 @@ export class AstralArt {
  private travel=0;
  private previous:{x:number;y:number};
  private style:WeaponStyle='starter';
- constructor(scene:Phaser.Scene,private view:Phaser.GameObjects.Container,x:number,y:number,sex:CharacterSex){
+ constructor(scene:Phaser.Scene,private view:Phaser.GameObjects.Container,x:number,y:number,sex:CharacterSex,private identity:'astral'|'xenobinder'='astral'){
   view.list.forEach(p=>(p as unknown as Phaser.GameObjects.Components.Visible).setVisible(false));
-  this.body=scene.add.image(0,-19,'wardrobe-astral-'+sex+'-none').setDisplaySize(128,128);view.add(this.body);
-  this.torso=new ModularTorso(scene,view,'astral',sex,this.body);
-  this.body.setData('clothShoulders',scene.cache.json.get('astral-shoulders')[sex]);
+  this.body=scene.add.image(0,-19,'wardrobe-'+identity+'-'+sex+'-none').setDisplaySize(128,128);view.add(this.body);
+  this.torso=new ModularTorso(scene,view,identity,sex,this.body);
+  this.body.setData('clothShoulders',scene.cache.json.get(identity+'-shoulders')[sex]);
   registerPaintedArmFrames(scene);
   this.limbs=Array.from({length:4},(_,i)=>scene.add.image(0,0,'expedition-arm-kit',`anatomy-${i%2}`).setOrigin(.15,.5));
-  this.gauntlet=scene.add.image(0,0,'astral-starter-weapon').setDisplaySize(23,18);
-  this.glow=scene.add.image(0,0,'astral-energy-bolt',0).setDisplaySize(16,16).setVisible(false);
+  this.gauntlet=scene.add.image(0,0,identity+'-starter-weapon').setDisplaySize(identity==='xenobinder'?30:23,18);
+  this.glow=scene.add.image(0,0,identity==='xenobinder'?'xeno-bolt':'astral-energy-bolt',0).setDisplaySize(16,16).setVisible(false);
   this.guide=scene.add.graphics();view.add([...this.limbs,this.gauntlet,this.glow,this.guide]);
   this.previous={x,y};this.update(x,y,0,false,false,{phase:'READY',level:0},'energy');
  }
@@ -48,7 +48,7 @@ export class AstralArt {
   return{x:(socket.x-128)*this.body.scaleX*(!vertical&&c<0?-1:1)+c*(42-ASTRAL.muzzleDistance),
    y:this.body.y+(socket.y-128)*this.body.scaleY+10+s*(32*.7+10-ASTRAL.muzzleDistance)};
  }
- private protection():void{const style=this.torso.look.torso;this.limbs.forEach((p,i)=>p.setTexture(style==='none'?'expedition-arm-kit':style==='reinforced'?'reinforced-arm-kit':'warrior-arm-kit',`anatomy-${i%2}`));}
+ private protection():void{this.limbs.forEach((p,i)=>{const style=this.identity==='xenobinder'&&i%2?this.torso.look.gloves:this.torso.look.torso;p.setTexture(style==='none'?'expedition-arm-kit':style==='reinforced'?'reinforced-arm-kit':'warrior-arm-kit',`anatomy-${i%2}`)});}
  update(x:number,y:number,aim:number,firing:boolean,dash:boolean,heavy:Pick<KineticPose,'phase'|'level'>,element:AstralElement):void{
   const dx=x-this.previous.x,dy=y-this.previous.y,moved=Math.hypot(dx,dy),walking=moved>.05&&moved<32&&!dash&&heavy.phase==='READY';
   if(walking)this.travel+=moved;this.previous={x,y};
@@ -60,14 +60,14 @@ export class AstralArt {
   const hand={x:a.x+c*reach,y:a.y+s*reach*.7+10};
   this.arm(0,a.x,a.y,hand.x,hand.y,-1);
   this.arm(2,b.x,b.y,b.x-c*8,b.y+21,1);
-  this.gauntlet.setTexture(`astral-${this.style}-weapon`).setPosition(hand.x,hand.y).setRotation(aim).setFlipY(c<0);
+  this.gauntlet.setTexture(`${this.identity}-${this.style}-weapon`).setPosition(hand.x,hand.y).setRotation(aim).setFlipY(c<0);
   // The far arm/instrument correctly disappear behind the torso when facing away.
   if(row===1){this.limbs.forEach(p=>this.view.sendToBack(p));this.view.sendToBack(this.gauntlet);}else{this.limbs.forEach(p=>this.view.bringToTop(p));this.view.bringToTop(this.gauntlet);}
   this.view.bringToTop(this.glow);this.view.bringToTop(this.guide);
-  const busy=heavy.phase==='CHARGING';this.glow.setTexture(`astral-${element}-bolt`,0).setDisplaySize(24,18).setPosition(hand.x+c*10,hand.y+s*10).setRotation(aim).setVisible(busy||firing).setAlpha(busy?.3+heavy.level*.6:.7);
+  const busy=heavy.phase==='CHARGING';this.glow.setTexture(this.identity==='xenobinder'?'xeno-bolt':`astral-${element}-bolt`,0).setDisplaySize(24,18).setPosition(hand.x+c*10,hand.y+s*10).setRotation(aim).setVisible(busy||firing).setAlpha(busy?.3+heavy.level*.6:.7);
   this.guide.clear().setVisible(busy);
-  if(busy){this.guide.lineStyle(2,ELEMENT_COLORS[element],.65).beginPath().arc(0,0,44,-Math.PI/2,-Math.PI/2+Math.PI*2*heavy.level,false).strokePath();
-   const distance=140+240*heavy.level;this.guide.lineStyle(1,ELEMENT_COLORS[element],.4).lineBetween(0,0,c*distance,s*distance).strokeCircle(c*distance,s*distance,52+24*heavy.level);}
+  if(busy){const color=this.identity==='xenobinder'?XENOBINDER.color:ELEMENT_COLORS[element];this.guide.lineStyle(2,color,.65).beginPath().arc(0,0,44,-Math.PI/2,-Math.PI/2+Math.PI*2*heavy.level,false).strokePath();
+   const distance=this.identity==='xenobinder'?XENOBINDER.commandRange+XENOBINDER.chargedRange*heavy.level:140+240*heavy.level;this.guide.lineStyle(1,color,.4).lineBetween(0,0,c*distance,s*distance).strokeCircle(c*distance,s*distance,this.identity==='xenobinder'?XENOBINDER.pulseRadius:52+24*heavy.level);}
  }
  private arm(i:number,x:number,y:number,wx:number,wy:number,side:number):void{
   const dx=wx-x,dy=wy-y,d=Math.max(1,Math.hypot(dx,dy)),bend=8*side;

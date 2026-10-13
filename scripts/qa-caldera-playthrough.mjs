@@ -12,7 +12,7 @@ try{for(const classId of classes){
  await p.evaluate(()=>{window.qaPad={mapping:'standard',connected:true,axes:[0,0,1,0],buttons:Array.from({length:17},()=>({value:0,pressed:false}))};navigator.getGamepads=()=>[window.qaPad];});
  const fight={classId,phases:[],attacks:[],dashes:0,hitsTaken:0,charges:0},phases=new Set(),attacks=new Set(),begun=Date.now();let chargeAt=0,lastCharge=0,lastHp=999,won=false;
  for(let tick=0;tick<2200;tick++){
-  const a=await p.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game'),b=s.titan;return{now:s.time.now,p:{...s.player.position},b:{...b.position},origin:{...b.origin},angle:b.angle,state:b.state,until:b.until,phase:b.phase,name:b.attackName,marks:b.marks.map(m=>({x:m.x,y:m.y})),hp:s.player.hp,max:s.player.maxHp,dead:s.player.isDead,won:s.titanDefeated,dash:s.player.dashProgress,chargeReady:s.charge.getProgress(s.time.now),energy:s.astral?.energy}});
+  const a=await p.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game'),b=s.titan;return{now:s.time.now,p:{...s.player.position},b:{...b.position},origin:{...b.origin},angle:b.angle,state:b.state,until:b.until,phase:b.phase,name:b.attackName,marks:b.marks.map(m=>({x:m.x,y:m.y})),hp:s.player.hp,max:s.player.maxHp,dead:s.player.isDead,won:s.titanDefeated,dash:s.player.dashProgress,chargeReady:s.charge.getProgress(s.time.now),energy:s.astral?.energy,bond:s.xeno?.bond}});
   if(a.won){won=true;fight.seconds=(Date.now()-begun)/1000;fight.hp=a.hp;break;}if(a.dead){fight.failure=a;break;}
   if(a.state!=='DORMANT')phases.add(a.phase);if(a.name)attacks.add(a.name);if(a.hp<lastHp)fight.hitsTaken++;lastHp=a.hp;
   const dx=a.b.x-a.p.x,dy=a.b.y-a.p.y,gap=Math.hypot(dx,dy)||1,range=classId==='warrior'?110:classId==='hunter'?340:285;
@@ -26,7 +26,7 @@ try{for(const classId of classes){
    dash=a.state==='TELEGRAPH'&&a.until-a.now<430&&a.until-a.now>120&&a.dash===1&&Math.hypot(tx-a.p.x,ty-a.p.y)>80;
   }else{
    attack=gap<(classId==='warrior'?155:classId==='hunter'?680:450);
-   if(a.state==='RECOVER'&&a.until-a.now>1050&&gap<390&&a.chargeReady===1&&a.now-lastCharge>3300&&!chargeAt&&(classId!=='astral'||a.energy>=30)){chargeAt=a.now;lastCharge=a.now;fight.charges++;}
+   if(a.state==='RECOVER'&&a.until-a.now>1050&&gap<390&&a.chargeReady===1&&a.now-lastCharge>3300&&!chargeAt&&(classId!=='astral'||a.energy>=30)&&(classId!=='xenobinder'||a.bond>=35)){chargeAt=a.now;lastCharge=a.now;fight.charges++;}
   }
   if(chargeAt){held=a.now-chargeAt<380;if(held){tx=a.p.x;ty=a.p.y;attack=false;dash=false;}else chargeAt=0;}
   if(dash)fight.dashes++;

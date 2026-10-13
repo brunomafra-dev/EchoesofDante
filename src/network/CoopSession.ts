@@ -14,7 +14,7 @@ const CONNECTIONS: Partial<Record<JourneyArea, readonly JourneyArea[]>> = { fore
 export type PartyProfile = {name: string; classId: PlayableClass;sex?:import('../config/appearance').CharacterSex;bagFree?:number;potions?:number;equipment?:EquipmentSnapshot['slots'];build?:Pick<ProgressionSnapshot,'xp'|'abilityUpgrades'|'bossRewards'>};
 export type PartyInput = {x:number;y:number;aim:number;attack:boolean;dash:boolean;charge:boolean;held:boolean;release:boolean;cancel:boolean;interact:boolean;restart:boolean;element?:boolean};
 export const NO_INPUT: PartyInput={x:0,y:0,aim:0,attack:false,dash:false,charge:false,held:false,release:false,cancel:false,interact:false,restart:false};
-export type PartyPose={x:number;y:number;aim:number;hp:number;maxHp:number;dead:boolean;dash:boolean;phase:string;level:number;firing:boolean;dashReady?:number;chargeReady?:number;momentum?:number;astral?:import('../combat/AstralCombat').AstralPose;beam?:HunterBeamPose;strike?:SaberPose;releaseProgress?:number;velocity?:{x:number;y:number};deathId?:string;dashCooldown?:number;chargeCooldown?:number;swingProgress?:number;wave?:{x:number;y:number;rotation:number;width:number;height:number}};
+export type PartyPose={x:number;y:number;aim:number;hp:number;maxHp:number;dead:boolean;dash:boolean;phase:string;level:number;firing:boolean;dashReady?:number;chargeReady?:number;momentum?:number;astral?:import('../combat/AstralCombat').AstralPose;xenobinder?:import('../combat/XenobinderCombat').XenobinderPose;beam?:HunterBeamPose;strike?:SaberPose;releaseProgress?:number;velocity?:{x:number;y:number};deathId?:string;dashCooldown?:number;chargeCooldown?:number;swingProgress?:number;wave?:{x:number;y:number;rotation:number;width:number;height:number}};
 export type CreatureLayer={texture:string;frame:string;x:number;y:number;width:number;height:number;rotation:number;flip:boolean;depth:number;originX:number;originY:number};
 export type ImpactPose={id:number;at:number;x:number;y:number;color:number;damage:number;angle?:number;effective?:boolean;resisted?:boolean};
 export type CreaturePose={id:number;species:string;x:number;y:number;hp:number;maxHp:number;radius:number;texture:string;frame:string;flip:boolean;size:number;rotation:number;
@@ -64,7 +64,7 @@ export class CoopSession {
    if(this.socket!==ws)return;
    let m;try{m=JSON.parse(event.data);}catch{return;}
    if(m.type==='joined'&&(m.role==='host'||m.role==='guest')){
-    if(m.protocol!==8){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização da campanha. Sua jornada solo continua disponível.');reject(new Error(this.message));return;}
+    if(m.protocol!==9){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização da campanha. Sua jornada solo continua disponível.');reject(new Error(this.message));return;}
     joined=true;clearTimeout(this.timeout);this.role=m.role;this.connected=true;this.token=m.token;this.code=m.code;this.epoch=m.epoch;
     this.peer=m.peer;this.peerConnected=m.peerConnected===true;this.input={...NO_INPUT};this.inputAt=0;this.world=undefined;
     this.area=m.area;this.travelling=false;

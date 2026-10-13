@@ -178,7 +178,7 @@ Decisão do usuário em 09/10/2026: cada sprint deve terminar com um link espec�
 - [ ] **Etapa 4 — Progressão e ameaça:** entrega técnica 0.1.89: curva regional fixa, revisão de recompensas/custos, morte perde 10% dos créditos, auditoria do visitante cooperativo. [Relatório/teste](progression-threat/README.md). Validação humana pendente; o usuário autorizou executar a etapa 5 durante sua viagem sem aguardar esse playtest.
 - [ ] **Etapa 5 — Astral:** entrega técnica 0.1.90: quatro elementos alternáveis, Energia Astral, manopla, apresentações masculina/feminina e integração solo/dupla. [Relatório/teste](astral/README.md). Aguardar avaliação humana das etapas 4/5 antes de iniciar o Vinculador.
 - [ ] **Interlúdio 5A — Caldeira:** entrega técnica 0.1.94, autorizada antes do Vinculador. Região vulcânica e boss gigante mineral de lava; campanha, dupla local e três kits validados automaticamente. [Entrega e QA](caldera/README.md). Aguardar aprovação humana de visual/ritmo/dificuldade.
-- [ ] **Etapa 6 — Vinculador:** companheiro, Vínculo e simbiose, com autonomia no solo.
+- [ ] **Etapa 6 — Vinculador:** entrega técnica 0.1.96; companheiro original, assistência marcada, Vínculo, investida/recuperação, apresentação e equipamento solo/dupla. [Relatório e teste](xenobinder/README.md). Autorizado explicitamente após a revisão vulcânica; aguardando playtest humano. Quatro participantes permanecem na etapa 7.
 - [ ] **Etapa 7 — Equipe de quatro:** lobby, classes exclusivas, participantes individuais e bosses.
 - [ ] **Etapa 8 — Prólogo:** cinco takes, chegada, integração da base e refugiados.
 
@@ -283,3 +283,9 @@ O usuário confirmou que os perfis elementais funcionam e, antes da etapa 6, sol
 ### Revisão de escopo — expedição vulcânica · 0.1.95
 
 O usuário considerou a 0.1.94 insuficiente por ter apenas um mapa com boss e moradores reutilizados. Solicitou **pelo menos três mapas até o boss e monstros autênticos do ambiente**. Costa das Cinzas e Garganta de Obsidiana antecedem as Forjas, com três espécies novas, 24 habitantes, seis desvios e registros que revelam passagem. Incandescente preservado no final. [Entrega, arte e QA](caldera/expansion/README.md). Não interpretar a revisão anterior como aprovação humana; aguardar playtest desta expedição antes do Vinculador.
+
+### Encerramento vulcânico e avanço autorizado — etapa 6 · 0.1.96
+
+Em 13/10/2026, o usuário solicitou explicitamente revisar/commitar a tarefa vulcânica e implementar imediatamente o Vinculador, com o kit descrito no plano. Essa autorização supera a espera operacional anterior; não equivale a aprovação visual da expedição por automação. Revisão vulcânica encerrada em `83cf3a6`, após `95f9bfa`, ambas em origin/main.
+
+Vinculador: humano de expedição com condutor vivo e uma criatura original permanente; FOLLOW/ASSIST/COMMAND/RETURN, assistência somente ao alvo acertado, Vínculo acumulado em combate, Q hold/aim/release com investida e recuperação próxima limitada. Corpo/armas/companheiro raster original offline, equipamento por partes e mesma infraestrutura de combate/campanha/dupla. Protocolo 9; não antecipar quatro jogadores ou prólogo. [Entrega e QA](xenobinder/README.md). **Aguardar validação humana da etapa 6 antes da etapa 7.**

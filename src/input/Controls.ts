@@ -8,8 +8,8 @@ export type InputMethod = 'keyboard' | 'gamepad' | 'touch';
 
 // One action surface for the scene, regardless of which device supplies it.
 export class Controls {
-  setCombatPresentation(hunter: boolean, astral = false): void {
-    this.touch.setCombatPresentation(hunter, astral); this.touchPreview.setCombatPresentation(hunter, astral);
+  setCombatPresentation(hunter: boolean, astral = false, xenobinder = false): void {
+    this.touch.setCombatPresentation(hunter, astral, xenobinder); this.touchPreview.setCombatPresentation(hunter, astral, xenobinder);
   }
   private keys: Record<'W' | 'A' | 'S' | 'D' | 'Q' | 'SPACE' | 'R' | 'E' | 'B' | 'F', Phaser.Input.Keyboard.Key>;
   private touch: TouchControls;

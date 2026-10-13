@@ -8,7 +8,7 @@ type ItemDefinition={slot:EquipmentSlot;tier:number;name:string;description:stri
 export type EquipmentId=keyof typeof catalogue;
 export const EQUIPMENT=catalogue as Record<EquipmentId,ItemDefinition>;
 export const EQUIPMENT_IDS=Object.keys(EQUIPMENT) as EquipmentId[];
-export function equipmentName(id:EquipmentId,classId='warrior'):string{const item=EQUIPMENT[id];return classId==='astral'&&item.slot==='weapon'?['','Manopla de campo','Manopla de condução','Manopla de ressonância'][item.tier]:item.name;}
+export function equipmentName(id:EquipmentId,classId='warrior'):string{const item=EQUIPMENT[id];return classId==='xenobinder'&&item.slot==='weapon'?['','Condutor de campo','Condutor simbiótico','Condutor de ressonância'][item.tier]:classId==='astral'&&item.slot==='weapon'?['','Manopla de campo','Manopla de condução','Manopla de ressonância'][item.tier]:item.name;}
 export const BAG_SIZE=24;
 export type InventoryItem={uid:string;id:EquipmentId};
 export type EquipmentSnapshot={owned:EquipmentId[];slots:Partial<Record<EquipmentSlot,EquipmentId>>;schema?:2;items?:InventoryItem[];equipped?:Partial<Record<EquipmentSlot,string>>};
