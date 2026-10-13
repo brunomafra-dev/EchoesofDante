@@ -20,11 +20,11 @@ export class ReferenceImpacts {
       this.bursts.push({ sprites, label, at: -Infinity, x: 0, y: 0, angle: 0 });
     }
   }
-  hit(now: number, p: Vec2, color: number, damage: number, angle = 0, effective = false): void {
+  hit(now: number, p: Vec2, color: number, damage: number, angle = 0, effective = false, resisted = false): void {
     const burst = this.bursts[this.cursor++ % this.bursts.length];
     Object.assign(burst, { at: now, x: p.x, y: p.y, angle });
     burst.sprites.forEach(sprite => sprite.setTint(color).setPosition(p.x, p.y).setVisible(true));
-    burst.label.setText(damageText(damage, effective)).setColor(damageTextColor(color)).setVisible(true);
+    burst.label.setText(damageText(damage, effective, resisted)).setColor(damageTextColor(color)).setVisible(true);
   }
   update(now: number): void {
     for (const burst of this.bursts) {

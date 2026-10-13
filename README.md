@@ -1,5 +1,9 @@
 # Echoes of Dante
 
+## Fraquezas e resistências de todas as espécies · 0.1.93
+
+Todas as 13 espécies, incluindo bosses, possuem uma fraqueza (+25%), uma resistência (−25%) e dois elementos neutros. Números mantêm a cor do ataque, com `↑` para vantagem e `↓` para resistência. Perfis completos nos Registros. [Tabela e QA](docs/astral/species-profiles/README.md) · [Comparar água/fogo no gelo](https://echosofdante.vercel.app/astral-playtest.html?region=frost&element=water&kit=basic&affinities=1&v=0.1.93). Balanceamento aguarda playtest humano.
+
 ## Astral — cor do dano e fraquezas · 0.1.92
 
 Números de dano acompanham energia/fogo/água/terra. Fogo causa +25% contra espécies glaciais; água, contra as criaturas do Siroco. Vantagem indicada por `↑`, com fraqueza nos Registros e mesmo cálculo na dupla. [Regras e QA](docs/astral/elemental-affinities/README.md) · [Testar fogo no gelo](https://echosofdante.vercel.app/astral-playtest.html?region=frost&element=fire&kit=basic&v=0.1.92). Manifestações de 0.1.91 aprovadas; esta revisão de balanceamento aguarda playtest.

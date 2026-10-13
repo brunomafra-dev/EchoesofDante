@@ -269,3 +269,7 @@ No primeiro playtest da etapa 5, o usuário gostou da classe e pediu que o bási
 ### Cor do dano e afinidades — 0.1.92
 
 Manifestações de 0.1.91 aprovadas pelo usuário (“Gostei bastante”). Solicitou números coloridos pelo elemento e vantagem conforme a criatura. Regra inicial: fogo +25% contra glaciais, água +25% contra criaturas do Siroco; demais combinações neutras. Básico/Q/DOT preservam o elemento capturado. Vantagem indicada por ↑ e bestiário; anfitrião calcula e replica feedback ao visitante. [Regras e evidências](astral/elemental-affinities/README.md). **Validar dificuldade desta revisão e pendências da etapa 4 antes da etapa 6.**
+
+### Perfis de todas as espécies — 0.1.93
+
+Revisão de 0.1.92 bem recebida; o usuário ampliou explicitamente a regra para todas as criaturas e pediu resistência à água nos glaciais. Configuração obrigatória para as 13 espécies, incluindo bosses: uma fraqueza (+25%), uma resistência (−25%) e dois elementos neutros. Mesma regra por alvo no solo e na dupla; setas ↑/↓ e perfis no bestiário. [Tabela, QA e teste reservado](astral/species-profiles/README.md). Não há combinações encadeadas, imunidades, novos ataques ou antecipação de outra etapa. **Validar esta matriz e as pendências da etapa 4 antes do Vinculador.**

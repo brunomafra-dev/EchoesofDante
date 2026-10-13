@@ -2,7 +2,7 @@
 
 Terceira classe jogável do plano RPG. A identidade é **controlar o campo de batalha**, usando uma manopla tecnológica e ataques de médio alcance. Guerreiro e Hunter conservam seus kits. Não há combinações elementais em cadeia nesta primeira versão.
 
-**Revisão atual 0.1.92:** manifestações elementais de 0.1.91 aprovadas pelo usuário. Agora os números seguem a cor do ataque e espécies glaciais/do Siroco possuem fraquezas moderadas. [Cor do dano, regras e teste](elemental-affinities/README.md) · [Arte elemental](elemental-v2/README.md). Evidências anteriores preservadas; aguardar playtest desta revisão antes da próxima classe.
+**Revisão atual 0.1.93:** após aprovar as cores, o usuário pediu fraquezas e resistências em todas as criaturas. Todas as 13 espécies possuem perfil explícito, com +25%/−25%, números ↑/↓ e informação no bestiário. [Perfis completos e teste](species-profiles/README.md) · [Cor do dano anterior](elemental-affinities/README.md) · [Arte elemental](elemental-v2/README.md). Evidências anteriores preservadas; aguardar playtest desta revisão antes da próxima classe.
 
 O usuário autorizou explicitamente a execução desta etapa durante sua viagem, sem esperar a validação humana da etapa 4. Isso autoriza avançar o trabalho; **não constitui aprovação visual ou de balanceamento** de nenhuma das duas etapas. Vinculador e cooperativo de quatro participantes continuam planejados.
 

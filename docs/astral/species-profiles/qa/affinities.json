@@ -1,0 +1,665 @@
+{
+  "method": "Chrome headless; actual GameScene damage and both renderers, deterministic target fixtures, real local WebSocket pair. Not physical/human validation.",
+  "errors": [],
+  "checks": [
+    "All 13 species x 4 elements: exactly one weakness, one resistance, two neutral; real mixed-target damage, colors, markers, boss gate; incoming and Warrior preserved",
+    "Projectile and fire DOT keep captured fire after selection changes to water; +25% applied once",
+    "Both renderers agree on weakness, resistance and neutral markers; pool stable over 100 impacts",
+    "Real frost resident and bestiary weakness text",
+    "Real relay: guest sees fire weakness 23 up and water resistance 14 down; host authority, dedup, bounded history"
+  ],
+  "matrix": {
+    "rows": [
+      {
+        "species": "iceCarapace",
+        "element": "energy",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#5fe6d8",
+        "text": "20"
+      },
+      {
+        "species": "iceCarapace",
+        "element": "fire",
+        "damage": 25,
+        "multiplier": 1.25,
+        "color": "#ff6a4a",
+        "text": "25 ↑"
+      },
+      {
+        "species": "iceCarapace",
+        "element": "water",
+        "damage": 15,
+        "multiplier": 0.75,
+        "color": "#83ccd8",
+        "text": "15 ↓"
+      },
+      {
+        "species": "iceCarapace",
+        "element": "earth",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#ffbd54",
+        "text": "20"
+      },
+      {
+        "species": "vesper",
+        "element": "energy",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#5fe6d8",
+        "text": "20"
+      },
+      {
+        "species": "vesper",
+        "element": "fire",
+        "damage": 25,
+        "multiplier": 1.25,
+        "color": "#ff6a4a",
+        "text": "25 ↑"
+      },
+      {
+        "species": "vesper",
+        "element": "water",
+        "damage": 15,
+        "multiplier": 0.75,
+        "color": "#83ccd8",
+        "text": "15 ↓"
+      },
+      {
+        "species": "vesper",
+        "element": "earth",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#ffbd54",
+        "text": "20"
+      },
+      {
+        "species": "frostPouncer",
+        "element": "energy",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#5fe6d8",
+        "text": "20"
+      },
+      {
+        "species": "frostPouncer",
+        "element": "fire",
+        "damage": 25,
+        "multiplier": 1.25,
+        "color": "#ff6a4a",
+        "text": "25 ↑"
+      },
+      {
+        "species": "frostPouncer",
+        "element": "water",
+        "damage": 15,
+        "multiplier": 0.75,
+        "color": "#83ccd8",
+        "text": "15 ↓"
+      },
+      {
+        "species": "frostPouncer",
+        "element": "earth",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#ffbd54",
+        "text": "20"
+      },
+      {
+        "species": "frostSpitter",
+        "element": "energy",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#5fe6d8",
+        "text": "20"
+      },
+      {
+        "species": "frostSpitter",
+        "element": "fire",
+        "damage": 25,
+        "multiplier": 1.25,
+        "color": "#ff6a4a",
+        "text": "25 ↑"
+      },
+      {
+        "species": "frostSpitter",
+        "element": "water",
+        "damage": 15,
+        "multiplier": 0.75,
+        "color": "#83ccd8",
+        "text": "15 ↓"
+      },
+      {
+        "species": "frostSpitter",
+        "element": "earth",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#ffbd54",
+        "text": "20"
+      },
+      {
+        "species": "soterrado",
+        "element": "energy",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#5fe6d8",
+        "text": "20"
+      },
+      {
+        "species": "soterrado",
+        "element": "fire",
+        "damage": 15,
+        "multiplier": 0.75,
+        "color": "#ff6a4a",
+        "text": "15 ↓"
+      },
+      {
+        "species": "soterrado",
+        "element": "water",
+        "damage": 25,
+        "multiplier": 1.25,
+        "color": "#83ccd8",
+        "text": "25 ↑"
+      },
+      {
+        "species": "soterrado",
+        "element": "earth",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#ffbd54",
+        "text": "20"
+      },
+      {
+        "species": "crawler",
+        "element": "energy",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#5fe6d8",
+        "text": "20"
+      },
+      {
+        "species": "crawler",
+        "element": "fire",
+        "damage": 25,
+        "multiplier": 1.25,
+        "color": "#ff6a4a",
+        "text": "25 ↑"
+      },
+      {
+        "species": "crawler",
+        "element": "water",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#83ccd8",
+        "text": "20"
+      },
+      {
+        "species": "crawler",
+        "element": "earth",
+        "damage": 15,
+        "multiplier": 0.75,
+        "color": "#ffbd54",
+        "text": "15 ↓"
+      },
+      {
+        "species": "skitter",
+        "element": "energy",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#5fe6d8",
+        "text": "20"
+      },
+      {
+        "species": "skitter",
+        "element": "fire",
+        "damage": 15,
+        "multiplier": 0.75,
+        "color": "#ff6a4a",
+        "text": "15 ↓"
+      },
+      {
+        "species": "skitter",
+        "element": "water",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#83ccd8",
+        "text": "20"
+      },
+      {
+        "species": "skitter",
+        "element": "earth",
+        "damage": 25,
+        "multiplier": 1.25,
+        "color": "#ffbd54",
+        "text": "25 ↑"
+      },
+      {
+        "species": "spitter",
+        "element": "energy",
+        "damage": 25,
+        "multiplier": 1.25,
+        "color": "#5fe6d8",
+        "text": "25 ↑"
+      },
+      {
+        "species": "spitter",
+        "element": "fire",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#ff6a4a",
+        "text": "20"
+      },
+      {
+        "species": "spitter",
+        "element": "water",
+        "damage": 15,
+        "multiplier": 0.75,
+        "color": "#83ccd8",
+        "text": "15 ↓"
+      },
+      {
+        "species": "spitter",
+        "element": "earth",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#ffbd54",
+        "text": "20"
+      },
+      {
+        "species": "carapace",
+        "element": "energy",
+        "damage": 25,
+        "multiplier": 1.25,
+        "color": "#5fe6d8",
+        "text": "25 ↑"
+      },
+      {
+        "species": "carapace",
+        "element": "fire",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#ff6a4a",
+        "text": "20"
+      },
+      {
+        "species": "carapace",
+        "element": "water",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#83ccd8",
+        "text": "20"
+      },
+      {
+        "species": "carapace",
+        "element": "earth",
+        "damage": 15,
+        "multiplier": 0.75,
+        "color": "#ffbd54",
+        "text": "15 ↓"
+      },
+      {
+        "species": "thorn",
+        "element": "energy",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#5fe6d8",
+        "text": "20"
+      },
+      {
+        "species": "thorn",
+        "element": "fire",
+        "damage": 25,
+        "multiplier": 1.25,
+        "color": "#ff6a4a",
+        "text": "25 ↑"
+      },
+      {
+        "species": "thorn",
+        "element": "water",
+        "damage": 15,
+        "multiplier": 0.75,
+        "color": "#83ccd8",
+        "text": "15 ↓"
+      },
+      {
+        "species": "thorn",
+        "element": "earth",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#ffbd54",
+        "text": "20"
+      },
+      {
+        "species": "warden",
+        "element": "energy",
+        "damage": 15,
+        "multiplier": 0.75,
+        "color": "#5fe6d8",
+        "text": "15 ↓"
+      },
+      {
+        "species": "warden",
+        "element": "fire",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#ff6a4a",
+        "text": "20"
+      },
+      {
+        "species": "warden",
+        "element": "water",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#83ccd8",
+        "text": "20"
+      },
+      {
+        "species": "warden",
+        "element": "earth",
+        "damage": 25,
+        "multiplier": 1.25,
+        "color": "#ffbd54",
+        "text": "25 ↑"
+      },
+      {
+        "species": "dunePouncer",
+        "element": "energy",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#5fe6d8",
+        "text": "20"
+      },
+      {
+        "species": "dunePouncer",
+        "element": "fire",
+        "damage": 15,
+        "multiplier": 0.75,
+        "color": "#ff6a4a",
+        "text": "15 ↓"
+      },
+      {
+        "species": "dunePouncer",
+        "element": "water",
+        "damage": 25,
+        "multiplier": 1.25,
+        "color": "#83ccd8",
+        "text": "25 ↑"
+      },
+      {
+        "species": "dunePouncer",
+        "element": "earth",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#ffbd54",
+        "text": "20"
+      },
+      {
+        "species": "glassSpitter",
+        "element": "energy",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#5fe6d8",
+        "text": "20"
+      },
+      {
+        "species": "glassSpitter",
+        "element": "fire",
+        "damage": 15,
+        "multiplier": 0.75,
+        "color": "#ff6a4a",
+        "text": "15 ↓"
+      },
+      {
+        "species": "glassSpitter",
+        "element": "water",
+        "damage": 25,
+        "multiplier": 1.25,
+        "color": "#83ccd8",
+        "text": "25 ↑"
+      },
+      {
+        "species": "glassSpitter",
+        "element": "earth",
+        "damage": 20,
+        "multiplier": 1,
+        "color": "#ffbd54",
+        "text": "20"
+      }
+    ],
+    "speciesCount": 13,
+    "profiles": {
+      "crawler": {
+        "weakness": "fire",
+        "resistance": "earth"
+      },
+      "skitter": {
+        "weakness": "earth",
+        "resistance": "fire"
+      },
+      "spitter": {
+        "weakness": "energy",
+        "resistance": "water"
+      },
+      "carapace": {
+        "weakness": "energy",
+        "resistance": "earth"
+      },
+      "thorn": {
+        "weakness": "fire",
+        "resistance": "water"
+      },
+      "warden": {
+        "weakness": "earth",
+        "resistance": "energy"
+      },
+      "frostPouncer": {
+        "weakness": "fire",
+        "resistance": "water"
+      },
+      "frostSpitter": {
+        "weakness": "fire",
+        "resistance": "water"
+      },
+      "iceCarapace": {
+        "weakness": "fire",
+        "resistance": "water"
+      },
+      "vesper": {
+        "weakness": "fire",
+        "resistance": "water"
+      },
+      "dunePouncer": {
+        "weakness": "water",
+        "resistance": "fire"
+      },
+      "glassSpitter": {
+        "weakness": "water",
+        "resistance": "fire"
+      },
+      "soterrado": {
+        "weakness": "water",
+        "resistance": "fire"
+      }
+    },
+    "incoming": "#ff968a",
+    "neutral": "#e8efce",
+    "warriorDamage": 20,
+    "mixDamage": [
+      25,
+      15,
+      20
+    ],
+    "gated": 500,
+    "vulnerable": 475
+  },
+  "retained": {
+    "shotDamage": 23,
+    "first": 43,
+    "tick": 15,
+    "colors": [
+      "#ff6a4a",
+      "#ff6a4a",
+      "#ff6a4a"
+    ]
+  },
+  "reference": {
+    "before": 778,
+    "after": 778,
+    "rows": [
+      {
+        "response": "weak",
+        "color": "#5fe6d8",
+        "text": "25 ↑"
+      },
+      {
+        "response": "resisted",
+        "color": "#5fe6d8",
+        "text": "15 ↓"
+      },
+      {
+        "response": "neutral",
+        "color": "#5fe6d8",
+        "text": "20"
+      },
+      {
+        "response": "weak",
+        "color": "#ff6a4a",
+        "text": "25 ↑"
+      },
+      {
+        "response": "resisted",
+        "color": "#ff6a4a",
+        "text": "15 ↓"
+      },
+      {
+        "response": "neutral",
+        "color": "#ff6a4a",
+        "text": "20"
+      },
+      {
+        "response": "weak",
+        "color": "#83ccd8",
+        "text": "25 ↑"
+      },
+      {
+        "response": "resisted",
+        "color": "#83ccd8",
+        "text": "15 ↓"
+      },
+      {
+        "response": "neutral",
+        "color": "#83ccd8",
+        "text": "20"
+      },
+      {
+        "response": "weak",
+        "color": "#ffbd54",
+        "text": "25 ↑"
+      },
+      {
+        "response": "resisted",
+        "color": "#ffbd54",
+        "text": "15 ↓"
+      },
+      {
+        "response": "neutral",
+        "color": "#ffbd54",
+        "text": "20"
+      }
+    ]
+  },
+  "coop": {
+    "impacts": [
+      {
+        "id": 1,
+        "at": 12438.3,
+        "x": 1100,
+        "y": 900,
+        "color": 16738890,
+        "damage": 23,
+        "angle": 0,
+        "effective": true,
+        "resisted": false
+      }
+    ],
+    "labels": [
+      {
+        "text": "23 ↑",
+        "color": "#ff6a4a"
+      }
+    ],
+    "last": 1
+  },
+  "coopResisted": {
+    "impacts": [
+      {
+        "id": 1,
+        "at": 12438.3,
+        "x": 1100,
+        "y": 900,
+        "color": 16738890,
+        "damage": 23,
+        "angle": 0,
+        "effective": true,
+        "resisted": false
+      },
+      {
+        "id": 2,
+        "at": 12871.6,
+        "x": 1100,
+        "y": 900,
+        "color": 8637656,
+        "damage": 14,
+        "angle": 0,
+        "effective": false,
+        "resisted": true
+      }
+    ],
+    "labels": [
+      {
+        "text": "23 ↑",
+        "color": "#ff6a4a"
+      },
+      {
+        "text": "14 ↓",
+        "color": "#83ccd8"
+      }
+    ]
+  },
+  "stability": {
+    "objects": 474,
+    "tweens": 25
+  },
+  "fps": {
+    "samples": [
+      {
+        "host": 55.54070335160941,
+        "guest": 54.16288757324219
+      },
+      {
+        "host": 56.65552751370706,
+        "guest": 55.62216567993164
+      },
+      {
+        "host": 56.65552751370706,
+        "guest": 55.62216567993164
+      },
+      {
+        "host": 57.49164563528029,
+        "guest": 56.71662425994873
+      },
+      {
+        "host": 57.49164563528029,
+        "guest": 56.71662425994873
+      },
+      {
+        "host": 58.11873422646022,
+        "guest": 57.53746819496155
+      }
+    ],
+    "host": 56.992297312674054,
+    "guest": 56.062989274660744
+  },
+  "passed": true
+}

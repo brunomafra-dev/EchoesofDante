@@ -1386,7 +1386,7 @@ export class GameScene extends Phaser.Scene {
       id: enemy => this.hollowSpawnIds.get(enemy), species: enemy => this.enemySpecies.get(enemy),
       hit: (targets, damage, angle, from, heavy,knockback,color,element) => this.resolvePlayerHits(this.time.now, targets, damage, angle, color??0x5fe6d8, from, heavy,coopSession.peer?.equipment??{},knockback,element),
       impacts: this.impactHistory.filter(hit => this.time.now-hit.at < 650),
-      impact: hit => this.impact(hit, hit.color, hit.damage, hit.angle, hit.effective, false),
+      impact: hit => this.impact(hit, hit.color, hit.damage, hit.angle, hit.effective, hit.resisted, false),
       prompt: position => {
         if(this.area!=='base'&&this.canReturnBase(position)&&distance(position,{x:this.returnStation.x-90,y:this.returnStation.y})<65)return{available:true,action:'RETORNAR'};
         if(this.area==='base')return{available:BASE.services.some(s=>distance(position,s)<100)||distance(position,BASE.exit)<105,action:'CONVERSAR'};
@@ -1599,7 +1599,7 @@ export class GameScene extends Phaser.Scene {
       const result = applyDamage(enemy.health, Math.round(damage * multiplier));
       if (!result.applied) continue;
       this.sounds.hit();
-      this.impact(enemy.position, color, result.amount, angle, multiplier > 1);
+      this.impact(enemy.position, color, result.amount, angle, multiplier > 1, multiplier < 1);
       if (chargeHit&&knockback===undefined) {
         const wave = this.add.circle(enemy.position.x, enemy.position.y, 14).setStrokeStyle(3, 0x5fe6d8, 0.82).setDepth(15001);
         this.tweens.add({ targets: wave, scale: 2.4, alpha: 0, duration: 190, onComplete: () => wave.destroy() });
@@ -1697,13 +1697,13 @@ export class GameScene extends Phaser.Scene {
     return true;
   }
 
-  private impact(position: Vec2, color: number, damage: number, saberAngle?: number, effective = false, broadcast = true): void {
+  private impact(position: Vec2, color: number, damage: number, saberAngle?: number, effective = false, resisted = false, broadcast = true): void {
     if (broadcast && coopSession.role === 'host') {
-      this.impactHistory.push({id: ++this.impactSequence, at: this.time.now, ...position, color, damage, angle: saberAngle, effective});
+      this.impactHistory.push({id: ++this.impactSequence, at: this.time.now, ...position, color, damage, angle: saberAngle, effective, resisted});
       if (this.impactHistory.length > 24) this.impactHistory.shift();
     }
     if (this.referenceImpacts) {
-      this.referenceImpacts.hit(this.time.now, position, color, damage, saberAngle, effective);
+      this.referenceImpacts.hit(this.time.now, position, color, damage, saberAngle, effective, resisted);
       return;
     }
     const saberHit = saberAngle !== undefined;
@@ -1715,7 +1715,7 @@ export class GameScene extends Phaser.Scene {
       const spark = this.add.ellipse(position.x, position.y, 11, 3, color, 0.9).setRotation(angle).setDepth(15002);
       this.tweens.add({ targets: spark, x: position.x + Math.cos(angle) * 28, y: position.y + Math.sin(angle) * 28, alpha: 0, scaleX: 0.35, duration: 180, onComplete: () => spark.destroy() });
     }
-    const label = this.add.text(position.x, position.y - 31, damageText(damage, effective), { fontFamily: 'Barlow Condensed, sans-serif', fontSize: '24px', fontStyle: 'bold', color: damageTextColor(color, '#d4ffe9'), stroke: '#14312d', strokeThickness: 4 }).setOrigin(0.5).setDepth(15002);
+    const label = this.add.text(position.x, position.y - 31, damageText(damage, effective, resisted), { fontFamily: 'Barlow Condensed, sans-serif', fontSize: '24px', fontStyle: 'bold', color: damageTextColor(color, '#d4ffe9'), stroke: '#14312d', strokeThickness: 4 }).setOrigin(0.5).setDepth(15002);
     this.tweens.add({ targets: label, y: label.y - 32, alpha: 0, duration: 520, onComplete: () => label.destroy() });
   }
 

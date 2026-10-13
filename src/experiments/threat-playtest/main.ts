@@ -4,6 +4,7 @@ import { REGION_NAMES,validEconomy } from '../../config/economy';
 import { EQUIPMENT,type EquipmentId,validEquipment } from '../../config/equipment';
 import { CLASS_NAMES, ELEMENT_NAMES,type PlayableClass } from '../../config/classes';
 import {characterSex} from '../../config/appearance';
+import { SPECIES } from '../../config/bestiary';
 import '../../style.css';
 
 // Only this laboratory redirects Dante's save keys. Real localStorage is untouched.
@@ -36,7 +37,7 @@ for(let round=0;round<2;round++)for(const key of ['dashCooldown','chargePower','
 localStorage.setItem('echoes-of-dante.characters.v1',JSON.stringify({schema:1,selected:id,characters:[{id,name:('Teste '+CLASS_NAMES[classId]).slice(0,24),classId,sex,createdAt:1}]}));
 localStorage.setItem('echoes-of-dante.journey.v1.character.'+id,JSON.stringify({schema:1,updatedAt:Date.now(),area:region,hp:10000,
  progression:{xp:PROGRESSION.levelThresholds[level-1],echoes:['northern-ruin','mineral-signal','unknown-trace'],sourceLocated:true,passageOpen:true,rewardedHollows:[],rewardedRoutes:[],abilityUpgrades:ranks},
- flags,bestiary:{},valleyRoutes:[],valleyHabitats:[],aridHabitats:[],equipment:validEquipment({owned,slots}),economy:validEconomy({credits:237,materials:[12,12,12],potions:6,visited:Object.keys(REGION_NAMES)})}));
+ flags,bestiary:params.get('affinities')==='1'?Object.fromEntries(Object.keys(SPECIES).map(id=>[id,{seen:true,defeats:0}])):{},valleyRoutes:[],valleyHabitats:[],aridHabitats:[],equipment:validEquipment({owned,slots}),economy:validEconomy({credits:237,materials:[12,12,12],potions:6,visited:Object.keys(REGION_NAMES)})}));
 sessionStorage.setItem('echoes-of-dante.launch-once',id);
 const panel=document.createElement('details');panel.className='threat-lab';panel.open=true;
 panel.innerHTML=`<summary>${astralLab?'ETAPA 5':'ETAPA 4'} · TESTE RESERVADO</summary><p>Mesmo nível por região. Troque o equipamento para comparar. Seus saves reais não são alterados.</p>
@@ -44,7 +45,7 @@ panel.innerHTML=`<summary>${astralLab?'ETAPA 5':'ETAPA 4'} · TESTE RESERVADO</s
 <label>Classe <select data-class><option value="warrior" ${classId==='warrior'?'selected':''}>Guerreiro</option><option value="hunter" ${classId==='hunter'?'selected':''}>Hunter</option><option value="astral" ${classId==='astral'?'selected':''}>Astral</option></select></label>
 <label>Equipamento <select data-kit><option value="initial" ${kit==='initial'?'selected':''}>Roupa inicial</option><option value="basic" ${kit==='basic'?'selected':''}>Básico</option><option value="advanced" ${kit==='advanced'?'selected':''}>Avançado</option></select></label>
 <label>Apresentação <select data-sex><option value="male" ${sex==='male'?'selected':''}>Masculino</option><option value="female" ${sex==='female'?'selected':''}>Feminino</option></select></label>
-${astralLab?`<label>Elemento <select data-element>${Object.entries(ELEMENT_NAMES).map(([id,name])=>`<option value="${id}" ${id===(params.get('element')??'energy')?'selected':''}>${name}</option>`).join('')}</select></label><p>LMB / DISPARO: raio, bola de fogo, rajada de água ou pedra; acertar recupera energia. F / Y / botão troca elemento. Q / CAMPO: segure, mire e solte; custo 30. Rede energizada, chão em chamas, onda de água ou rocha emergindo com empurrão. Bosses resistem ao controle.</p><p>Números seguem a cor do ataque. Fogo contra glaciais e água contra criaturas do Siroco: +25%, indicado por ↑. Outras combinações são neutras; a fraqueza pertence à espécie. Consulte o bestiário nos Registros.</p>`:''}
+${astralLab?`<label>Elemento <select data-element>${Object.entries(ELEMENT_NAMES).map(([id,name])=>`<option value="${id}" ${id===(params.get('element')??'energy')?'selected':''}>${name}</option>`).join('')}</select></label><p>LMB / DISPARO: raio, bola de fogo, rajada de água ou pedra; acertar recupera energia. F / Y / botão troca elemento. Q / CAMPO: segure, mire e solte; custo 30. Rede energizada, chão em chamas, onda de água ou rocha emergindo com empurrão. Bosses resistem ao controle.</p><p>Todas as espécies têm fraqueza (+25%, ↑) e resistência (−25%, ↓); outras combinações são neutras. Números mantêm a cor do ataque. No gelo: fogo causa mais dano, água causa menos. Consulte os perfis nos Registros.${params.get('affinities')==='1'?' Todos os perfis estão observados apenas neste laboratório.':''}</p>`:''}
 <p>H / CURAR: poção. M: base/retorno. Esc: criar sala. Convites deste laboratório também usam personagens temporários. Num boss, o caído aguarda o aliado; ambos caídos podem reiniciar.</p><a href="./test-library.html">Biblioteca de testes</a>`;
 document.body.append(panel);
 for(const name of ['region','class','kit','sex',...(astralLab?['element']:[])])panel.querySelector('[data-'+name+']')!.addEventListener('change',event=>{const url=new URL(location.href);url.searchParams.set(name,(event.target as HTMLSelectElement).value);location.href=url.href});
