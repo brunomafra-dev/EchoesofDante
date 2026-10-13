@@ -37,4 +37,6 @@ Typecheck e build passaram, sem novos erros de JavaScript/assets nos browsers. M
 
 FPS headless na regressão: **59,3 anfitrião / 58,4 visitante**. No teste direcionado de impactos, média após aquecimento **56,7 / 54,8**, com objetos/tweens estáveis. A rajada artificial de 80 impactos em um frame não representa gameplay e foi descartada da medição estável. Captura [fogo no gelo](qa/fire-frost.png); dados [afinidades](qa/affinities.json) e [regressão](qa/regression/astral.json).
 
+Publicação Vercel confirmada após o push de `7e0cc7f`. QA da build pública passou: quatro elementos, básico, hold/release Q, energia consumida, 12 atlas carregados, 1280×720 / 1366×768 / 1920×1080 / 844×390, saves reais intactos e zero erros JS/assets. [Evidência publicada](qa/public/solo.json). A matriz numérica foi validada no Chrome local com fixtures; o smoke público verifica a build/controles/carregamento, sem acesso aos hooks DEV.
+
 **A vantagem de 25% exige avaliação humana de dificuldade; não constitui balanceamento definitivo.** Sem teste físico de iPhone/gamepad neste ambiente. Cooperativo público depende do serviço de salas estar atualizado para protocolo 6; QA local não substitui esse deploy. A consulta pública de saúde nesta entrega expirou após 30 s; a verificação anterior de 0.1.91 ainda indicava protocolo 4. Não houve validação pública da dupla nesta revisão.
