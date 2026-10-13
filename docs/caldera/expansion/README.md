@@ -66,3 +66,9 @@ Sem acesso físico a iPhone/gamepad. Perseguição direta pode manter criaturas 
 Dupla integrada a todas as conexões novas, snapshots das pinturas e avisos, interações do visitante e recompensa. **Relay requer protocolo 8**; validação local não confirma deploy público do Render. A sala continua limitada a dois jogadores.
 
 **Playtest humano necessário:** avaliar diferença entre os três mapas, leitura de criaturas, caminhada/apoio, intensidade dos grupos, espaços de descanso e preparação para o boss. Não iniciar Vinculador antes dessa avaliação.
+
+## Publicação
+
+Implementação `95f9bfac880274f6b5e072e02abb41dc943f3090`, versão **0.1.95**. Deploy Vercel concluído; [QA público](qa/public/public.json) passou: três mapas, três classes, controles, quatro viewports e carregamento das músicas novas após input real. Onze arquivos de imagem/música verificados por HTTP; fontes e evidências ficam nesta pasta. Biblioteca de testes atualizada.
+
+**Salas online pendentes:** o Render respondeu protocolo **4** em 13/10/2026, enquanto esta campanha exige **8**. Precisa publicar o `origin/main` atual no serviço `echoes-of-dante-rooms`. Não houve acesso ao painel/autorização autenticada do Render para executar esse deploy. O resultado `passed` do smoke público refere-se ao solo; `coop: blocked-relay-deployment` registra a pendência separadamente.

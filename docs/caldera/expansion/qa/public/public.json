@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-13T19:48:38.536Z",
+  "method": "Published build in Chrome headless, real keyboard/mouse and four viewports; public WebSocket check only if matching relay is deployed. Not physical/human approval.",
+  "errors": [],
+  "checks": [
+    "Published warrior: canvas, movement, primary, Dash and hold/release Q without JS errors",
+    "Published hunter: canvas, movement, primary, Dash and hold/release Q without JS errors",
+    "Published astral: canvas, movement, primary, Dash and hold/release Q without JS errors",
+    "Published map cinder, audio unlocked after real input",
+    "Published map obsidian, audio unlocked after real input",
+    "Published map caldera, audio unlocked after real input",
+    "Four viewports; isolated laboratory leaves real saves untouched"
+  ],
+  "assets": [
+    "/assets/visual/environment/cinder-ground.webp",
+    "/assets/visual/characters/slagback-motion.png",
+    "/assets/visual/characters/ember-hound-motion.png",
+    "/assets/visual/environment/obsidian-ground.webp",
+    "/assets/visual/characters/titan-motion.png",
+    "/assets/visual/environment/caldera-ground.webp",
+    "/assets/visual/characters/fumarole-motion.png",
+    "/assets/audio/caldera-journey.mp3",
+    "/assets/audio/cinder-journey.mp3",
+    "/assets/audio/obsidian-journey.mp3"
+  ],
+  "health": {
+    "service": "Dante regional co-op",
+    "protocol": 4,
+    "campaign": true,
+    "rooms": 0,
+    "players": 0
+  },
+  "coop": "blocked-relay-deployment",
+  "passed": true
+}
