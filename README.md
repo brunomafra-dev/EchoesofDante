@@ -1,5 +1,11 @@
 # Echoes of Dante
 
+## Expedição vulcânica — três mapas e criaturas próprias · 0.1.95
+
+O percurso agora é **Vésper → Costa das Cinzas → Garganta de Obsidiana → Forjas da Caldeira → Incandescente**. Três mapas exploráveis com registros, seis desvios e 24 habitantes em grupos separados. Rasga-brasa, Fole de Magma e Dorso de Basalto possuem pinturas, poses, anatomias e ataques próprios; nenhum habitante do Siroco ocupa esses mapas. Dois pisos e duas trilhas originais novos. Saves antigos, classes, equipamentos, câmera e boss preservados.
+
+[Começar a expedição](https://echosofdante.vercel.app/caldera-playtest.html?kit=advanced&v=0.1.95) · [Arte, percurso e testes](docs/caldera/expansion/README.md). Laboratório começa na Costa e preserva seus personagens. Dupla integrada ao percurso; servidor público exige protocolo 8. Aguardar playtest humano antes do Vinculador.
+
 ## Caldeira de Dante + O Incandescente · 0.1.94
 
 Após Vésper e o registro do Ninho, um portal leva à Caldeira: basalto caminhável, dois desvios, habitantes térmicos e um registro ancestral que abre o limiar do **Incandescente**. Boss original de lava/mineral, três fases e quatro ataques anunciados; checkpoint próximo, 260 XP e um domínio único. Água é vantagem, fogo é resistência. Arte raster e duas trilhas originais produzidas offline; classes, câmera e controles preservados.

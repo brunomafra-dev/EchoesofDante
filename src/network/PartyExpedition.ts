@@ -219,7 +219,7 @@ export class PartyExpedition {
     .setOrigin(layer.originX,layer.originY).setPosition(x+layer.x,y+layer.y).setRotation(layer.rotation).setFlipX(layer.flip).setDepth(y+layer.depth*.001);});
    m.shadow.setPosition(x,y+12).setDepth(y-2).setVisible(true);
    m.warning.setPosition(e.warningX,e.warningY).setDisplaySize(e.warningWidth,e.warningHeight).setRotation(e.angle).setDepth(e.y-1).setVisible(e.warning);
-   const ranged=e.species.includes('Spitter')||e.species==='thorn';
+   const ranged=e.species.includes('Spitter')||e.species==='thorn'||e.species==='fumarole'||e.species==='emberHound';
    m.line.setPosition(e.x,e.y).setRotation(e.angle).setDepth(e.y-1).setVisible(e.warning&&ranged);
    m.hp.setPosition(e.x-20,e.y-62).setDisplaySize(40*e.hp/e.maxHp,4).setDepth(10002).setVisible(damaged);
    m.name.setText(SPECIES[e.species as SpeciesId]?.name??'Criatura').setPosition(e.x,e.y-79).setDepth(10003).setVisible(damaged||e.warning);

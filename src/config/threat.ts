@@ -10,6 +10,8 @@ export const REGIONAL_THREAT = {
   frost: { hp:1.6, damage:1.3, xp:30 }, icecave: { hp:1.75, damage:1.35, xp:34 },
   icenest: { hp:1.6, damage:1.4, xp:220 },
   caldera: { hp:1.8, damage:1.4, xp:36 },
+  cinder: { hp:1.55, damage:1.25, xp:32 },
+  obsidian: { hp:1.7, damage:1.35, xp:35 },
 } satisfies Record<JourneyArea,{hp:number;damage:number;xp:number}>;
 export function regionalThreat(area:JourneyArea,x=0) {
   if(area==='cavern'&&x>=2550)return {hp:1.35,damage:1.15,xp:22};

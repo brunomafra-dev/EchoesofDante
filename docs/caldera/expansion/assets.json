@@ -1,0 +1,72 @@
+[
+  {
+    "name": "cinder",
+    "size": [
+      1536,
+      1024
+    ],
+    "bytes": 411148
+  },
+  {
+    "name": "obsidian",
+    "size": [
+      1536,
+      1024
+    ],
+    "bytes": 450178
+  },
+  {
+    "name": "ember-hound",
+    "source": [
+      1536,
+      1024
+    ],
+    "atlas": [
+      768,
+      512
+    ],
+    "frames": 6,
+    "frame": [
+      256,
+      256
+    ],
+    "feet": 244,
+    "bytes": 350824
+  },
+  {
+    "name": "fumarole",
+    "source": [
+      1536,
+      1024
+    ],
+    "atlas": [
+      768,
+      512
+    ],
+    "frames": 6,
+    "frame": [
+      256,
+      256
+    ],
+    "feet": 244,
+    "bytes": 426698
+  },
+  {
+    "name": "slagback",
+    "source": [
+      1536,
+      1024
+    ],
+    "atlas": [
+      768,
+      512
+    ],
+    "frames": 6,
+    "frame": [
+      256,
+      256
+    ],
+    "feet": 244,
+    "bytes": 473387
+  }
+]

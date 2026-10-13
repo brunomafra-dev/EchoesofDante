@@ -9,9 +9,9 @@ async function upgrades(p){await p.waitForTimeout(400);for(let i=0;i<10;i++){con
 async function page(url){const p=await browser.newPage({viewport:{width:1280,height:720},hasTouch:true});p.setDefaultTimeout(45000);p.on('pageerror',e=>report.errors.push(e.message));p.on('response',r=>{if(r.status()>=400)report.errors.push(r.url())});await p.goto(url,{waitUntil:'domcontentloaded'});await p.waitForFunction(()=>window.__danteGame?.scene.getScene('Game')?.basePanel);await p.locator('.threat-lab').evaluate(e=>e.open=false);await upgrades(p);return p;}
 const key=async(p,k,ms=100)=>{await p.keyboard.down(k);await p.waitForTimeout(ms);await p.keyboard.up(k);await p.waitForTimeout(200)};
 try{
- let p=await page('http://localhost:5184/caldera-playtest.html?kit=advanced');assert.equal(await S(p,'return s.area'),'caldera');
- await S(p,'Object.assign(s.player.position,{x:220,y:950})');await key(p,'e');await p.waitForFunction(()=>window.__danteGame.scene.getScene('Game').area==='icenest');await upgrades(p);
- await S(p,'Object.assign(s.player.position,{x:2070,y:1000})');await key(p,'e');await p.waitForFunction(()=>window.__danteGame.scene.getScene('Game').area==='caldera');await upgrades(p);report.checks.push('Fresh arrival return portal is independent of the base station');
+ let p=await page('http://localhost:5184/caldera-playtest.html?region=caldera&kit=advanced');assert.equal(await S(p,'return s.area'),'caldera');
+ await S(p,'Object.assign(s.player.position,{x:220,y:950})');await key(p,'e');await p.waitForFunction(()=>window.__danteGame.scene.getScene('Game').area==='obsidian');await upgrades(p);
+ await S(p,'Object.assign(s.player.position,{x:2990,y:970})');await key(p,'e');await p.waitForFunction(()=>window.__danteGame.scene.getScene('Game').area==='caldera');await upgrades(p);report.checks.push('Fresh arrival return portal is independent of the base station');
  report.geometry=await p.evaluate(async()=>{
   const s=window.__danteGame.scene.getScene('Game'),{CALDERA:C,CALDERA_ROUTES}=await import('/src/config/caldera.ts');
   s.player.invulnerableUntil=Infinity;s.navigation.refreshGeometry();
@@ -55,11 +55,11 @@ try{
  await S(p,'s.saveProgress();return s.journey.load()').then(s=>{assert.equal(s.area,'caldera');assert.equal(s.flags.titanDefeated,true);assert.ok(s.progression.bossRewards.includes('titan'))});
  await S(p,'s.scene.restart()');await p.waitForTimeout(850);await upgrades(p);assert.equal(await S(p,'return !!s.titan'),false);
  report.checks.push('Exploration routes, controls, combat XP/material, relay/gate, base return/resume, phases/patterns, death/reset, single victory reward/save and no boss resurrection');
- await S(p,'Object.assign(s.player.position,{x:220,y:950})');await key(p,'e');await p.waitForFunction(()=>window.__danteGame.scene.getScene('Game').area==='icenest');await upgrades(p);assert.equal(await S(p,'return s.glacier.onward.active'),true);
- await S(p,'Object.assign(s.player.position,{x:2070,y:1000})');await key(p,'e');await p.waitForFunction(()=>window.__danteGame.scene.getScene('Game').area==='caldera');report.checks.push('Both directions of Vesper-Caldera portal');
+ await S(p,'Object.assign(s.player.position,{x:220,y:950})');await key(p,'e');await p.waitForFunction(()=>window.__danteGame.scene.getScene('Game').area==='obsidian');await upgrades(p);assert.equal(await S(p,'return s.volcanic.onward.active'),true);
+ await S(p,'Object.assign(s.player.position,{x:2990,y:970})');await key(p,'e');await p.waitForFunction(()=>window.__danteGame.scene.getScene('Game').area==='caldera');report.checks.push('Both directions of Obsidian-Forjas portal');
  await p.close();
  // A real two-browser pair; both can operate the relay and travel, plus boss defeat/reset.
- p=await page('http://localhost:5184/caldera-playtest.html?kit=advanced&class=warrior');const g=await page('http://localhost:5184/caldera-playtest.html?kit=advanced&class=astral');
+ p=await page('http://localhost:5184/caldera-playtest.html?region=caldera&kit=advanced&class=warrior');const g=await page('http://localhost:5184/caldera-playtest.html?region=caldera&kit=advanced&class=astral');
  await S(p,'s.saveProgress();return r.connect("ws://localhost:5184/coop","create",{name:"Host",classId:"warrior"},s.area)');const code=await S(p,'return r.code');await S(g,'s.saveProgress();return r.connect("ws://localhost:5184/coop","join",{name:"Astral",classId:"astral"},s.area,arg)',code);
  await p.waitForFunction(()=>window.__danteGame.scene.getScene('Game').party.partner);await g.waitForFunction(()=>window.__danteCoop.world?.partner);await upgrades(p);await upgrades(g);
  await S(p,'s.player.invulnerableUntil=s.party.partner.player.invulnerableUntil=Infinity;Object.assign(s.party.partner.player.position,{x:1620,y:730})');await g.waitForTimeout(350);await key(g,'e');await p.waitForFunction(()=>window.__danteGame.scene.getScene('Game').calderaRelaySeen);await g.waitForTimeout(700);await upgrades(g);

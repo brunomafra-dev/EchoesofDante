@@ -279,3 +279,7 @@ Revisão de 0.1.92 bem recebida; o usuário ampliou explicitamente a regra para 
 ### Mudança autorizada de prioridade — Caldeira · 0.1.94
 
 O usuário confirmou que os perfis elementais funcionam e, antes da etapa 6, solicitou uma região vulcânica caminhável. Aprovou a proposta de Caldeira após Vésper e acrescentou explicitamente um boss semelhante em escala a um gigante de lava. Interlúdio 5A: caminhos de basalto, dois desvios, registro ancestral, mecanismo, checkpoint, arena e O Incandescente, criatura original. Reutilizar kit/economia/colisões/rede; conservar os limites atuais de nível/classes/participantes. Próxima ordem autorizada: **Caldeira → playtest humano → Vinculador → equipe de quatro → prólogo**. Pendências de avaliação geral da etapa 4 continuam registradas. Não copiar conteúdo/arte/layout de jogos citados como referências.
+
+### Revisão de escopo — expedição vulcânica · 0.1.95
+
+O usuário considerou a 0.1.94 insuficiente por ter apenas um mapa com boss e moradores reutilizados. Solicitou **pelo menos três mapas até o boss e monstros autênticos do ambiente**. Costa das Cinzas e Garganta de Obsidiana antecedem as Forjas, com três espécies novas, 24 habitantes, seis desvios e registros que revelam passagem. Incandescente preservado no final. [Entrega, arte e QA](caldera/expansion/README.md). Não interpretar a revisão anterior como aprovação humana; aguardar playtest desta expedição antes do Vinculador.

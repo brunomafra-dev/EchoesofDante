@@ -1,0 +1,105 @@
+{
+  "method": "Chrome, Gamepad API route driver, keyboard/mouse and CDP touch; real local WebSocket pair. Invulnerability for route traversal; positioning/health fixtures for isolated attacks and death/save tests. Not human/physical playtest.",
+  "errors": [],
+  "maps": [
+    {
+      "area": "cinder",
+      "monsters": 7,
+      "kinds": [
+        "emberHound",
+        "fumarole"
+      ],
+      "objects": 119,
+      "checkpointClear": true
+    },
+    {
+      "area": "obsidian",
+      "monsters": 8,
+      "kinds": [
+        "slagback",
+        "emberHound",
+        "fumarole"
+      ],
+      "objects": 128,
+      "checkpointClear": true
+    },
+    {
+      "area": "caldera",
+      "monsters": 9,
+      "kinds": [
+        "emberHound",
+        "fumarole",
+        "slagback"
+      ],
+      "objects": 152,
+      "checkpointClear": true
+    }
+  ],
+  "creatures": [
+    {
+      "kind": "emberHound",
+      "hp": 211,
+      "max": 226,
+      "frame": 4,
+      "xp": 35,
+      "dead": true,
+      "resources": 1
+    },
+    {
+      "kind": "fumarole",
+      "hp": 207,
+      "max": 226,
+      "frame": 0,
+      "xp": 35,
+      "dead": true,
+      "resources": 1
+    },
+    {
+      "kind": "slagback",
+      "hp": 201,
+      "max": 226,
+      "frame": 4,
+      "xp": 35,
+      "dead": true,
+      "resources": 2
+    }
+  ],
+  "checks": [
+    "Real movement through two new maps and Forjas, four optional branches, relay/forward portals, no desert species and clear checkpoints",
+    "0.1.94 Caldera saves migrate without losing access",
+    "Each new creature telegraphs, deals damage, dies and grants regional XP/materials",
+    "Real local co-op: visitor opens both new passages and travels to Forjas; original raster poses mirror correctly",
+    "Real CDP touch charge hold/drag/release in the visitor, original page zoom"
+  ],
+  "cycles": [
+    {
+      "hp": 226,
+      "max": 226,
+      "objects": 104,
+      "textures": 212,
+      "tweens": 2,
+      "seen": true
+    },
+    {
+      "hp": 226,
+      "max": 226,
+      "objects": 104,
+      "textures": 212,
+      "tweens": 2,
+      "seen": true
+    },
+    {
+      "hp": 226,
+      "max": 226,
+      "objects": 104,
+      "textures": 212,
+      "tweens": 2,
+      "seen": true
+    }
+  ],
+  "fps": {
+    "host": 58.20732257685364,
+    "guest": 56.336155159631744
+  },
+  "passed": true
+}

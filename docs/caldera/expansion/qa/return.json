@@ -1,0 +1,31 @@
+{
+  "method": "Chrome keyboard interactions with DEV positioning fixtures; local route/return check, not a physical playtest.",
+  "errors": [],
+  "travel": [
+    {
+      "from": "caldera",
+      "to": "obsidian"
+    },
+    {
+      "from": "obsidian",
+      "to": "cinder"
+    },
+    {
+      "from": "cinder",
+      "to": "icenest"
+    },
+    {
+      "from": "icenest",
+      "to": "cinder"
+    },
+    {
+      "from": "cinder",
+      "to": "obsidian"
+    },
+    {
+      "from": "obsidian",
+      "to": "caldera"
+    }
+  ],
+  "passed": true
+}

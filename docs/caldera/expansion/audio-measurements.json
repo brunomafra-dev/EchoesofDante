@@ -1,0 +1,26 @@
+[
+  {
+    "track": "cinder",
+    "durationSeconds": 123.871,
+    "bpm": 62,
+    "bars": 32,
+    "bytes": 1735357,
+    "peak": 0.3,
+    "rms": 0.0467,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "6a373cd974a5fdf6fd4a5c880be442ebae0f84b31387b94d8c291b390feff683"
+  },
+  {
+    "track": "obsidian",
+    "durationSeconds": 137.143,
+    "bpm": 56,
+    "bars": 32,
+    "bytes": 1921140,
+    "peak": 0.3,
+    "rms": 0.048,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "f8c8e4504814f1021c0f2486399700ca337cbf54370f21ba5d3a1b8b7a87dad0"
+  }
+]

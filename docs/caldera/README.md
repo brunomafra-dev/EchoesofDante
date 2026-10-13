@@ -1,5 +1,7 @@
 # Caldeira de Dante + O Incandescente — 0.1.94
 
+Entrega histórica. A expansão vigente é a [expedição de três mapas com criaturas originais — 0.1.95](expansion/README.md); o laboratório sem parâmetros agora começa na Costa das Cinzas.
+
 Interlúdio 5A autorizado pelo usuário antes do Vinculador. Uma região vulcânica caminhável após Vésper, com exploração e um boss original. Mantém Organic Sci-Fi R3/referência D, classes, controles, câmera, economia e nível máximo 10.
 
 ## Teste reservado

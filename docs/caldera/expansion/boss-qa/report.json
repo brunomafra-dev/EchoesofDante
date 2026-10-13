@@ -1,0 +1,176 @@
+{
+  "method": "Chrome headless, real controls and local WebSocket pair; explicit DEV positioning/health fixtures for transitions and state gates. Not physical/human approval.",
+  "errors": [],
+  "checks": [
+    "Fresh arrival return portal is independent of the base station",
+    "Exploration routes, controls, combat XP/material, relay/gate, base return/resume, phases/patterns, death/reset, single victory reward/save and no boss resurrection",
+    "Both directions of Obsidian-Forjas portal",
+    "Real WebSocket: visitor relay, boss presentation/arena bounds, survivor keeps encounter running, collective loss resets one boss",
+    "Caldera visitor CDP touch movement, charge hold/drag/release, attack and Dash; page stays at original zoom",
+    "Coop victory grants visitor 260 XP and unique Titan mastery receipt through relay; no duplicate reward"
+  ],
+  "geometry": {
+    "routes": [
+      {
+        "to": {
+          "id": "caldera-obsidian-shelf",
+          "name": "Prateleira de Obsidiana",
+          "x": 1050,
+          "y": 520,
+          "radius": 105
+        },
+        "points": 25
+      },
+      {
+        "to": {
+          "id": "caldera-ash-terrace",
+          "name": "Terraço das Cinzas",
+          "x": 1500,
+          "y": 1270,
+          "radius": 100
+        },
+        "points": 31
+      },
+      {
+        "to": {
+          "x": 1620,
+          "y": 660,
+          "radius": 115
+        },
+        "points": 34
+      },
+      {
+        "to": {
+          "x": 1920,
+          "y": 870
+        },
+        "points": 36
+      }
+    ],
+    "spawnClear": true,
+    "objects": 152,
+    "textures": 218
+  },
+  "kill": {
+    "xp": 36,
+    "resources": [
+      {
+        "uid": "4389956b-bf7d-43f3-b496-5b038a961271",
+        "x": 750,
+        "y": 1030,
+        "owner": "host",
+        "tier": 2,
+        "credits": 8,
+        "amount": 1
+      }
+    ],
+    "loot": []
+  },
+  "pathsAfter": 26,
+  "boss": {
+    "phases": [
+      1,
+      2,
+      3
+    ],
+    "attacks": [
+      "cleave",
+      "slam",
+      "fissure",
+      "boulders"
+    ]
+  },
+  "cycles": [
+    {
+      "hp": 226,
+      "max": 226,
+      "objects": 144,
+      "textures": 217,
+      "tweens": 1,
+      "xp": 2596,
+      "relay": true,
+      "bosses": 1,
+      "bossHp": 1710,
+      "bossMax": 1710,
+      "state": "DORMANT"
+    },
+    {
+      "hp": 226,
+      "max": 226,
+      "objects": 144,
+      "textures": 217,
+      "tweens": 1,
+      "xp": 2596,
+      "relay": true,
+      "bosses": 1,
+      "bossHp": 1710,
+      "bossMax": 1710,
+      "state": "DORMANT"
+    },
+    {
+      "hp": 226,
+      "max": 226,
+      "objects": 144,
+      "textures": 217,
+      "tweens": 1,
+      "xp": 2596,
+      "relay": true,
+      "bosses": 1,
+      "bossHp": 1710,
+      "bossMax": 1710,
+      "state": "DORMANT"
+    }
+  ],
+  "victory": {
+    "xp": 260,
+    "again": {
+      "awarded": false,
+      "leveledUp": false
+    },
+    "boss": true,
+    "loot": [
+      {
+        "uid": "b3736b3c-d735-421c-8af0-64851fe939f0",
+        "id": "glacier-focus",
+        "x": 2677.30391469202,
+        "y": 911.6277032446128,
+        "owner": "host",
+        "classId": "warrior"
+      }
+    ],
+    "resources": [
+      {
+        "uid": "809ad027-3688-439f-a438-012dc2ecae39",
+        "x": 2677.30391469202,
+        "y": 911.6277032446128,
+        "owner": "host",
+        "tier": 2,
+        "credits": 50,
+        "amount": 6
+      }
+    ]
+  },
+  "views": [
+    {
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "width": 1366,
+      "height": 768
+    },
+    {
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "width": 844,
+      "height": 390
+    }
+  ],
+  "fps": {
+    "host": 60.20663580248318,
+    "guest": 60.16506224099443
+  },
+  "passed": true
+}
