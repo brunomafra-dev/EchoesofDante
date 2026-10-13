@@ -45,3 +45,9 @@ Elementos, frames, idade e direção dos campos seguem nos snapshots existentes.
 Aprovação perceptual permanece para o próximo playtest humano: conferir a leitura das formas em movimento, principalmente água/terra, e a clareza em tela de celular. Não houve teste físico de iPhone ou gamepad nesta revisão. Cenários, controles e os kits de Guerreiro/Hunter permanecem preservados; o QA completo da campanha da entrega anterior continua registrado em `docs/astral/qa/`.
 
 Capturas: [fogo](qa/fire-q.webp), [água](qa/water-q.webp), [terra](qa/earth-q.webp), [rede](qa/energy-q.webp).
+
+## Publicação
+
+Implementação `a6b907df9754dffb679f4274c8561d591d74c884`, versão 0.1.91, enviada a `origin/main`. O [teste da URL pública](qa/public/solo.json) passou nos quatro elementos, com Q consumindo 30 de energia, os doze atlas novos carregados, quatro resoluções, saves preservados e nenhum erro JS/asset. Script reproduzível: `node scripts/qa-astral-elements-public.mjs`.
+
+Cooperativo validado localmente nesta revisão. A consulta ao Render ainda respondeu com protocolo 4; sua atualização para protocolo 6 permanece necessária para testar a dupla pela internet. Esta revisão não altera o protocolo nem exige outra configuração de servidor.

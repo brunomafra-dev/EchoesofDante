@@ -1,0 +1,30 @@
+{
+  "at": "2026-10-13T14:45:35.179Z",
+  "version": "0.1.91",
+  "method": "Published Vercel build in Chrome headless; real basic/charge controls and four resolutions. No physical devices.",
+  "errors": [],
+  "elements": [
+    {
+      "element": "fire",
+      "energy": 70,
+      "label": "F / Y · Fogo ↻"
+    },
+    {
+      "element": "water",
+      "energy": 70,
+      "label": "F / Y · Água ↻"
+    },
+    {
+      "element": "earth",
+      "energy": 70,
+      "label": "F / Y · Terra ↻"
+    },
+    {
+      "element": "energy",
+      "energy": 70,
+      "label": "F / Y · Energia ↻"
+    }
+  ],
+  "loadedAtlases": 12,
+  "passed": true
+}
