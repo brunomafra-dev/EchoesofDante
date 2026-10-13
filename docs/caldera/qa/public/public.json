@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-13T18:44:14.128Z",
+  "method": "Published build in Chrome headless, real keyboard/mouse and four viewports; public WebSocket check only if matching relay is deployed. Not physical/human approval.",
+  "errors": [],
+  "checks": [
+    "Published warrior: canvas, movement, primary, Dash and hold/release Q without JS errors",
+    "Published hunter: canvas, movement, primary, Dash and hold/release Q without JS errors",
+    "Published astral: canvas, movement, primary, Dash and hold/release Q without JS errors",
+    "Four viewports; isolated laboratory leaves real saves untouched"
+  ],
+  "assets": [
+    "/assets/visual/environment/caldera-ground.webp",
+    "/assets/visual/characters/titan-motion.png",
+    "/assets/audio/caldera-journey.mp3",
+    "/assets/audio/titan-journey.mp3"
+  ],
+  "health": {
+    "service": "Dante regional co-op",
+    "protocol": 4,
+    "campaign": true,
+    "rooms": 0,
+    "players": 0
+  },
+  "coop": "blocked-relay-deployment",
+  "passed": true
+}

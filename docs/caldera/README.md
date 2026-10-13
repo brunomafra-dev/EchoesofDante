@@ -68,3 +68,18 @@ Resultados em [QA da região](qa/report.json), [combates completos](normal-fight
 Sem teste físico de iPhone/gamepad. Movimento de perseguição direta permanece: habitantes podem ficar junto de rochas, sem pathfinding novo. A câmera continua seguindo o jogador; kiting muito distante pode deixar parte do corpo do boss fora da tela, mantendo barra e avisos dirigidos ao jogador. Os habitantes permanecem nos limites do mapa durante a luta, sem serem puxados para a arena pela restrição do jogador.
 
 **Automação não aprova diversão, autenticidade visual ou dificuldade. Playtest humano necessário.** Após esta expansão validada, retornar à etapa 6 — Vinculador; não iniciar a próxima classe nesta entrega.
+
+## Publicação e arquivos
+
+Implementação: `a3104150ffabc40fc0a7e4d4206602ac6bb5e7fe`, versão 0.1.94. Deploy Vercel concluído. [Smoke público](qa/public/public.json): os três kits, hold/release Q, quatro viewports, quatro assets novos e isolamento dos saves passaram em Chrome. Sem erros JS/carregamento. **Cooperativo público não validado:** o Render ainda informou protocolo 4 em 13/10/2026; precisa publicar o código atual de `origin/main`, protocolo 7. A validação completa da dupla desta entrega utiliza o relay local real.
+
+Arquivos principais:
+
+- `src/config/caldera.ts`, `src/systems/CalderaRegion.ts`, `src/entities/CalderaTitan.ts`: região, composição e encontro.
+- `src/scenes/GameScene.ts`, `GlacierRegion.ts`: conexão à campanha, interações e respawn.
+- `LocalJourney.ts`, `Progression.ts`, configurações de ameaça/economia/bestiário/elementos: persistência, recompensas e regras existentes.
+- `CoopSession.ts`, `PartyExpedition.ts`, `server/relay.mjs`: área e boss na dupla; atlas e barra do boss reconhecem a expansão.
+- `caldera-playtest.html`, `src/experiments/threat-playtest/main.ts`, `vite.config.ts`, `test-library.html`: teste reservado.
+- `scripts/prepare-caldera-art.py`, compositor regional, QA da região/combates/publicação; dois raster assets e duas faixas em `public/assets/`.
+
+Validar humanamente: caminhos de basalto versus bordas de lava, escala/apoio do gigante, clareza dos quatro avisos, oportunidades de aproximação/Q, dificuldade com equipamento básico e retorno ao registro após vitória. Testes físicos de touch/gamepad continuam pendentes.
