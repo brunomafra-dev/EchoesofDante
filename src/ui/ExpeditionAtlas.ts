@@ -3,8 +3,8 @@ import {REGION_NAMES,type EconomySnapshot} from '../config/economy';
 type Region=keyof typeof REGION_NAMES;
 type AtlasState={area:Region;economy:EconomySnapshot;canLead:boolean;returnAvailable:boolean};
 // Cartographic positions describe the existing expedition, not world-space coordinates.
-const points:Record<Region,[number,number]>={base:[170,620],forest:[200,450],cavern:[370,355],warden:[445,265],valley:[550,455],arid:[660,575],dunes:[920,575],sandpit:[975,430],frost:[965,265],icecave:[825,170],icenest:[650,80]};
-const route:Region[]=['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest'];
+const points:Record<Region,[number,number]>={base:[170,620],forest:[200,450],cavern:[370,355],warden:[445,265],valley:[550,455],arid:[660,575],dunes:[920,575],sandpit:[975,430],frost:[965,265],icecave:[825,170],icenest:[650,80],caldera:[430,90]};
+const route:Region[]=['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest','caldera'];
 let instance=0;
 
 export function expeditionAtlas(state:AtlasState,travel:(area:Region)=>void):HTMLElement{

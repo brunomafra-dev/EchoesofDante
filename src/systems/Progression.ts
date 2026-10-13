@@ -5,6 +5,7 @@ import { SIROCCO_ROUTES } from '../config/sirocco';
 import { DUNES_ROUTES } from '../config/dunes';
 import { FROST_ROUTES } from '../config/frost';
 import { GLACIER_ROUTES, VESPER } from '../config/glacier';
+import { CALDERA_ROUTES } from '../config/caldera';
 import { SOTERRADO } from '../config/soterrado';
 import { ABILITY_UPGRADE_MILESTONES, ABILITY_UPGRADES, type AbilityUpgradeId, type AbilityUpgradeRanks } from '../config/abilityUpgrades';
 
@@ -85,6 +86,11 @@ export class Progression {
     return { awarded: true, leveledUp: this.award(VESPER.xp) };
   }
 
+  defeatTitan(): { awarded: boolean; leveledUp: boolean } {
+    if(this.bossRewards.has('titan'))return{awarded:false,leveledUp:false};
+    this.bossRewards.add('titan');return{awarded:true,leveledUp:this.award(260)};
+  }
+
   defeatSoterrado(): { awarded: boolean; leveledUp: boolean } {
     if (this.bossRewards.has('soterrado')) return { awarded: false, leveledUp: false };
     this.bossRewards.add('soterrado');
@@ -98,7 +104,7 @@ export class Progression {
   }
 
   discoverSiroccoRoute(id: string): { awarded: boolean; leveledUp: boolean } {
-    if (this.rewardedRoutes.has(id) || !(SIROCCO_ROUTES.some(route => route.id === id) || DUNES_ROUTES.some(route => route.id === id) || FROST_ROUTES.some(route => route.id === id) || GLACIER_ROUTES.some(route => route.id === id))) return { awarded: false, leveledUp: false };
+    if (this.rewardedRoutes.has(id) || !(SIROCCO_ROUTES.some(route => route.id === id) || DUNES_ROUTES.some(route => route.id === id) || FROST_ROUTES.some(route => route.id === id) || GLACIER_ROUTES.some(route => route.id === id) || CALDERA_ROUTES.some(route => route.id === id))) return { awarded: false, leveledUp: false };
     this.rewardedRoutes.add(id);
     return { awarded: true, leveledUp: this.award(PROGRESSION.valleyRouteXp) };
   }
@@ -122,6 +128,7 @@ export class Progression {
     this.bossRewards.clear();
     if (value.bossRewards?.includes('warden')) this.bossRewards.add('warden');
     if (value.bossRewards?.includes('vesper')) this.bossRewards.add('vesper');
+    if (value.bossRewards?.includes('titan')) this.bossRewards.add('titan');
     if (value.bossRewards?.includes('soterrado')) this.bossRewards.add('soterrado');
     for (const id of UPGRADE_IDS) {
       const rank = value.abilityUpgrades?.[id];

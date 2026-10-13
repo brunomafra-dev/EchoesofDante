@@ -9,8 +9,8 @@ import { validEquipment, validItem, type InventoryItem, type EquipmentSnapshot }
 import type {ResourceDrop} from '../systems/ResourceDrops';
 import type { LootPose } from '../systems/EquipmentDrops';
 import type { ExpeditionReturn } from '../systems/ExpeditionReturn';
-export const COOP_AREAS: readonly JourneyArea[] = ['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest'];
-const CONNECTIONS: Partial<Record<JourneyArea, readonly JourneyArea[]>> = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave'] };
+export const COOP_AREAS: readonly JourneyArea[] = ['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest','caldera'];
+const CONNECTIONS: Partial<Record<JourneyArea, readonly JourneyArea[]>> = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave','caldera'], caldera: ['icenest'] };
 export type PartyProfile = {name: string; classId: PlayableClass;sex?:import('../config/appearance').CharacterSex;bagFree?:number;potions?:number;equipment?:EquipmentSnapshot['slots'];build?:Pick<ProgressionSnapshot,'xp'|'abilityUpgrades'|'bossRewards'>};
 export type PartyInput = {x:number;y:number;aim:number;attack:boolean;dash:boolean;charge:boolean;held:boolean;release:boolean;cancel:boolean;interact:boolean;restart:boolean;element?:boolean};
 export const NO_INPUT: PartyInput={x:0,y:0,aim:0,attack:false,dash:false,charge:false,held:false,release:false,cancel:false,interact:false,restart:false};
@@ -64,7 +64,7 @@ export class CoopSession {
    if(this.socket!==ws)return;
    let m;try{m=JSON.parse(event.data);}catch{return;}
    if(m.type==='joined'&&(m.role==='host'||m.role==='guest')){
-    if(m.protocol!==6){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização da campanha. Sua jornada solo continua disponível.');reject(new Error(this.message));return;}
+    if(m.protocol!==7){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização da campanha. Sua jornada solo continua disponível.');reject(new Error(this.message));return;}
     joined=true;clearTimeout(this.timeout);this.role=m.role;this.connected=true;this.token=m.token;this.code=m.code;this.epoch=m.epoch;
     this.peer=m.peer;this.peerConnected=m.peerConnected===true;this.input={...NO_INPUT};this.inputAt=0;this.world=undefined;
     this.area=m.area;this.travelling=false;
@@ -118,7 +118,7 @@ export class CoopSession {
  private credit(receipt:string,total:number,items:unknown=this.personalItems,resources=this.rewardResources,bosses:unknown=this.earnedBosses):void {
   if(typeof receipt!=='string'||!Number.isSafeInteger(total)||total<0)return;
   const valid=Array.isArray(items)?items.filter(validItem).slice(0,512):[];
-  const earned=Array.isArray(bosses)?[...new Set(bosses.filter((id):id is string=>['warden','soterrado','vesper'].includes(id)))].slice(0,3):[];
+  const earned=Array.isArray(bosses)?[...new Set(bosses.filter((id):id is string=>['warden','soterrado','vesper','titan'].includes(id)))].slice(0,4):[];
   if(this.rewardSaved&&this.receipt===receipt&&this.rewardTotal===total&&JSON.stringify(valid)===JSON.stringify(this.personalItems)&&JSON.stringify(resources)===JSON.stringify(this.rewardResources)&&JSON.stringify(earned)===JSON.stringify(this.earnedBosses))return;
   this.receipt=receipt;this.rewardTotal=total;
   this.personalItems=valid;this.earnedBosses=earned;this.rewardResources=resources??{credits:0,materials:[0,0,0],used:0};

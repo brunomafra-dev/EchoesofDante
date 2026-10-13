@@ -1,0 +1,26 @@
+[
+  {
+    "track": "caldera",
+    "durationSeconds": 144.0,
+    "bpm": 60,
+    "bars": 36,
+    "bytes": 2017323,
+    "peak": 0.3,
+    "rms": 0.0605,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "374134ada5d2381dbdca9d970f9373e5a2d10a2983013f93c12c5ef3c613be7a"
+  },
+  {
+    "track": "titan",
+    "durationSeconds": 117.073,
+    "bpm": 82,
+    "bars": 40,
+    "bytes": 1640272,
+    "peak": 0.3,
+    "rms": 0.0588,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "83e08721ee21c4e02a8a4b0599c83b11c6e0752d9f1947372b8d39ad4347b541"
+  }
+]

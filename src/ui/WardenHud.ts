@@ -32,7 +32,7 @@ export class WardenHud {
     this.fill.setScale(Math.max(0, boss.health.current / boss.health.max), 1);
     const title = `${this.bossName}   /   FASE ${boss.phase}`;
     if (this.title.text !== title) this.title.setText(title);
-    const names: Record<string, string> = { breath: 'SOPRO GLACIAL', tail: 'VARREDURA DA CAUDA', eruption: 'ERUPÇÕES DE GELO', sweep: 'VARREDURA', rush: 'INVESTIDA', slam: 'IMPACTO', signal: 'DESCARGA', echoes: 'ECOS NO SOLO', burrow: 'EMERSÃO', fissure: 'FISSURAS EM SEQUÊNCIA' };
+    const names: Record<string, string> = { cleave:'VARREDURA DE BASALTO', boulders:'BLOCOS INCANDESCENTES', breath: 'SOPRO GLACIAL', tail: 'VARREDURA DA CAUDA', eruption: 'ERUPÇÕES DE GELO', sweep: 'VARREDURA', rush: 'INVESTIDA', slam: 'IMPACTO', signal: 'DESCARGA', echoes: 'ECOS NO SOLO', burrow: 'EMERSÃO', fissure: 'FISSURAS EM SEQUÊNCIA' };
     const cue = boss.state === 'INTRO' ? this.bossName === 'O SOTERRADO' ? 'ALGO EMERGE DA AREIA' : 'PRESENÇA ANCESTRAL' : boss.state === 'PHASE' ? 'O SINAL ESTÁ MUDANDO' : boss.state === 'TELEGRAPH' ? `${names[boss.attackName ?? ''] ?? 'ATAQUE'} — SAIA DA MARCA` : boss.state === 'RECOVER' ? 'JANELA PARA ATACAR' : 'LEIA O MOVIMENTO';
     if (this.cue.text !== cue) this.cue.setText(cue);
   }

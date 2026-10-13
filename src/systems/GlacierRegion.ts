@@ -13,7 +13,7 @@ export class GlacierRegion {
   private readonly signal: Phaser.GameObjects.Ellipse;
   private readonly gate?: Phaser.GameObjects.Image;
   private readonly gateObstacle: Obstacle = { x: 805, y: 990, radius: 90 };
-  constructor(private readonly scene: Phaser.Scene, readonly id: GlacierAreaId, recorded: boolean, defeated: boolean) {
+  constructor(private readonly scene: Phaser.Scene, readonly id: GlacierAreaId, recorded: boolean, defeated: boolean, clueSeen = false) {
     const c = GLACIER[id];
     this.bounds = { ...c.bounds };
     this.obstacles = c.rocks.map(r => ({ ...r }));
@@ -50,6 +50,7 @@ export class GlacierRegion {
     this.back = new ChapterPortal(scene, c.back, true);
     if (id === 'icecave') this.onward = new ChapterPortal(scene, c.exit, recorded);
     else {
+      this.onward = new ChapterPortal(scene, c.exit, clueSeen);
       this.gate = scene.add.image(805, 990, 'open-threshold').setOrigin(.5, .94).setDisplaySize(190, 170).setTint(0xa8bfcb).setDepth(955);
       trackEnvironmentOcclusion(scene, this.gate);
       if (defeated) this.resolve();
@@ -62,6 +63,7 @@ export class GlacierRegion {
     this.scene.tweens.add({ targets: this.signal, alpha: .6, scale: 1, duration: 900 });
   }
   resolve(): void { this.signal.setFillStyle(0xffbd54, .65); }
+  revealCaldera(): void { this.onward?.activate(); }
   setEncounterActive(active: boolean): void {
     this.gate?.setTexture(active ? 'sealed-threshold' : 'open-threshold');
     const index = this.obstacles.indexOf(this.gateObstacle);

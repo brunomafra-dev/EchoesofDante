@@ -117,6 +117,7 @@ Os números dos novos kits serão registrados no documento de balanceamento ante
 | **3 — Base e economia** | Nave, NPCs, mapa, cofre, poções, compras e fabricação | Completar uma expedição e retornar para melhorar o personagem |
 | **4 — Progressão e ameaça** | Revisar recompensas e encontros das regiões existentes | Equipamento e poções ajudam sem eliminar o desafio |
 | **5 — Astral** | Kit elemental, recurso, apresentação masculina/feminina | Campanha e bosses jogáveis no solo e em dupla |
+| **5A — Caldeira de Dante** | Expansão vulcânica após Vésper, exploração, descoberta, boss Incandescente e dupla | Playtest humano da nova região/boss antes do Vinculador |
 | **6 — Vinculador** | Companheiro, simbiose, recurso e apresentação | Criatura navega e não domina nem prejudica o combate |
 | **7 — Equipe de quatro** | Lobby sem classes repetidas, estados individuais e bosses para quatro | Campanha completa com as quatro classes |
 | **8 — Prólogo** | Introdução, integração narrativa da base e chegada de refugiados | Novo jogador entende a missão e começa a jogar rapidamente |
@@ -176,6 +177,7 @@ Decisão do usuário em 09/10/2026: cada sprint deve terminar com um link espec�
 - [x] **Etapa 3 — Base e economia:** base, NPCs próprios, atlas, receitas, cofre, poções e retorno/retomada. Revisão 0.1.88 explicitamente validada pelo usuário antes da etapa 4. [Relatório/teste](base-economy/README.md).
 - [ ] **Etapa 4 — Progressão e ameaça:** entrega técnica 0.1.89: curva regional fixa, revisão de recompensas/custos, morte perde 10% dos créditos, auditoria do visitante cooperativo. [Relatório/teste](progression-threat/README.md). Validação humana pendente; o usuário autorizou executar a etapa 5 durante sua viagem sem aguardar esse playtest.
 - [ ] **Etapa 5 — Astral:** entrega técnica 0.1.90: quatro elementos alternáveis, Energia Astral, manopla, apresentações masculina/feminina e integração solo/dupla. [Relatório/teste](astral/README.md). Aguardar avaliação humana das etapas 4/5 antes de iniciar o Vinculador.
+- [ ] **Interlúdio 5A — Caldeira:** entrega técnica 0.1.94, autorizada antes do Vinculador. Região vulcânica e boss gigante mineral de lava; campanha, dupla local e três kits validados automaticamente. [Entrega e QA](caldera/README.md). Aguardar aprovação humana de visual/ritmo/dificuldade.
 - [ ] **Etapa 6 — Vinculador:** companheiro, Vínculo e simbiose, com autonomia no solo.
 - [ ] **Etapa 7 — Equipe de quatro:** lobby, classes exclusivas, participantes individuais e bosses.
 - [ ] **Etapa 8 — Prólogo:** cinco takes, chegada, integração da base e refugiados.
@@ -273,3 +275,7 @@ Manifestações de 0.1.91 aprovadas pelo usuário (“Gostei bastante”). Solic
 ### Perfis de todas as espécies — 0.1.93
 
 Revisão de 0.1.92 bem recebida; o usuário ampliou explicitamente a regra para todas as criaturas e pediu resistência à água nos glaciais. Configuração obrigatória para as 13 espécies, incluindo bosses: uma fraqueza (+25%), uma resistência (−25%) e dois elementos neutros. Mesma regra por alvo no solo e na dupla; setas ↑/↓ e perfis no bestiário. [Tabela, QA e teste reservado](astral/species-profiles/README.md). Não há combinações encadeadas, imunidades, novos ataques ou antecipação de outra etapa. **Validar esta matriz e as pendências da etapa 4 antes do Vinculador.**
+
+### Mudança autorizada de prioridade — Caldeira · 0.1.94
+
+O usuário confirmou que os perfis elementais funcionam e, antes da etapa 6, solicitou uma região vulcânica caminhável. Aprovou a proposta de Caldeira após Vésper e acrescentou explicitamente um boss semelhante em escala a um gigante de lava. Interlúdio 5A: caminhos de basalto, dois desvios, registro ancestral, mecanismo, checkpoint, arena e O Incandescente, criatura original. Reutilizar kit/economia/colisões/rede; conservar os limites atuais de nível/classes/participantes. Próxima ordem autorizada: **Caldeira → playtest humano → Vinculador → equipe de quatro → prólogo**. Pendências de avaliação geral da etapa 4 continuam registradas. Não copiar conteúdo/arte/layout de jogos citados como referências.

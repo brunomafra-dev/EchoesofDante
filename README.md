@@ -1,5 +1,11 @@
 # Echoes of Dante
 
+## Caldeira de Dante + O Incandescente · 0.1.94
+
+Após Vésper e o registro do Ninho, um portal leva à Caldeira: basalto caminhável, dois desvios, habitantes térmicos e um registro ancestral que abre o limiar do **Incandescente**. Boss original de lava/mineral, três fases e quatro ataques anunciados; checkpoint próximo, 260 XP e um domínio único. Água é vantagem, fogo é resistência. Arte raster e duas trilhas originais produzidas offline; classes, câmera e controles preservados.
+
+[Explorar diretamente](https://echosofdante.vercel.app/caldera-playtest.html?kit=advanced&v=0.1.94) · [Testar o boss](https://echosofdante.vercel.app/caldera-playtest.html?boss=1&kit=basic&v=0.1.94) · [Arte, testes e limitações](docs/caldera/README.md). Personagens temporários preservam sua campanha. Coop validado com duas instâncias Chrome e WebSockets locais; publicação das salas exige relay protocolo 7. **Aguardar playtest humano antes do Vinculador.**
+
 ## Fraquezas e resistências de todas as espécies · 0.1.93
 
 Todas as 13 espécies, incluindo bosses, possuem uma fraqueza (+25%), uma resistência (−25%) e dois elementos neutros. Números mantêm a cor do ataque, com `↑` para vantagem e `↓` para resistência. Perfis completos nos Registros. [Tabela e QA](docs/astral/species-profiles/README.md) · [Comparar água/fogo no gelo](https://echosofdante.vercel.app/astral-playtest.html?region=frost&element=water&kit=basic&affinities=1&v=0.1.93). Balanceamento aguarda playtest humano.

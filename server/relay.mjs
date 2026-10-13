@@ -3,14 +3,14 @@ const catalogue=JSON.parse(readFileSync(new URL('../src/config/equipment-catalog
 import { randomBytes } from 'node:crypto';
 import { WebSocketServer, WebSocket } from 'ws';
 
-const areas = new Set(['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest']);
-const connections = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave'] };
+const areas = new Set(['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest','caldera']);
+const connections = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave','caldera'], caldera: ['icenest'] };
 const equipmentIds=new Set(Object.keys(catalogue));
 const cleanEquipment=raw=>Object.fromEntries(['weapon','helmet','armor','legs','boots','gloves','accessory'].filter(slot=>equipmentIds.has(raw?.[slot])&&catalogue[raw[slot]].slot===slot).map(slot=>[slot,raw[slot]]));
 const cleanBuild = raw => ({
   xp:Number.isSafeInteger(raw?.xp)?Math.max(0,Math.min(1e9,raw.xp)):0,
   abilityUpgrades:Object.fromEntries(['saberArc','saberReach','dashCooldown','dashDuration','chargeWidth','chargePower'].map(id=>[id,Number.isInteger(raw?.abilityUpgrades?.[id])?Math.max(0,Math.min(3,raw.abilityUpgrades[id])):0])),
-  bossRewards:Array.isArray(raw?.bossRewards)?raw.bossRewards.filter(v=>['warden','soterrado','vesper'].includes(v)).slice(0,3):[],
+  bossRewards:Array.isArray(raw?.bossRewards)?raw.bossRewards.filter(v=>['warden','soterrado','vesper','titan'].includes(v)).slice(0,4):[],
 });
 const bagFree=n=>Number.isInteger(n)?Math.max(0,Math.min(24,n)):0;
 // Attach rooms to an existing web server; no second port or process is required.
@@ -58,7 +58,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   }
   function joined(room, role) {
     const member = room[role], peer = room[role === 'host' ? 'guest' : 'host'];
-    send(member.ws, { type: 'joined', protocol:6, role, code: room.code, token: member.token, epoch: room.epoch,
+    send(member.ws, { type: 'joined', protocol:7, role, code: room.code, token: member.token, epoch: room.epoch,
       area: room.area, peer: peer?.profile, peerConnected: !!peer?.ws, paused: room.paused === true, receipt: member.receipt, total: member.total, bosses:[...member.bosses], items:[...member.items.values()],resources:member.resources });
     send(peer?.ws, { type: 'peer', profile: member.profile });
   }
@@ -165,6 +165,6 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   server.once('close', close);
   return {
     close,
-    status: () => ({ service: 'Dante regional co-op', protocol: 6, campaign: true, rooms: rooms.size, players: clients.size }),
+    status: () => ({ service: 'Dante regional co-op', protocol: 7, campaign: true, rooms: rooms.size, players: clients.size }),
   };
 }

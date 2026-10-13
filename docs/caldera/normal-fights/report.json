@@ -1,0 +1,66 @@
+{
+  "method": "Real Gamepad API driver reads telegraphs. Normal HP, no forced boss attacks, no HP edits/invulnerability/teleports during fights. Basic kit at regional level; not human balance approval.",
+  "errors": [],
+  "fights": [
+    {
+      "classId": "warrior",
+      "phases": [
+        1,
+        2,
+        3
+      ],
+      "attacks": [
+        "cleave",
+        "slam",
+        "boulders",
+        "fissure"
+      ],
+      "dashes": 5,
+      "hitsTaken": 1,
+      "charges": 12,
+      "seconds": 61.879,
+      "hp": 188,
+      "won": true
+    },
+    {
+      "classId": "hunter",
+      "phases": [
+        1,
+        2,
+        3
+      ],
+      "attacks": [
+        "boulders",
+        "slam",
+        "fissure",
+        "cleave"
+      ],
+      "dashes": 5,
+      "hitsTaken": 1,
+      "charges": 5,
+      "seconds": 37.252,
+      "hp": 155,
+      "won": true
+    },
+    {
+      "classId": "astral",
+      "phases": [
+        1,
+        2,
+        3
+      ],
+      "attacks": [
+        "cleave",
+        "slam",
+        "boulders",
+        "fissure"
+      ],
+      "dashes": 5,
+      "hitsTaken": 1,
+      "charges": 11,
+      "seconds": 54.02,
+      "hp": 163,
+      "won": true
+    }
+  ]
+}

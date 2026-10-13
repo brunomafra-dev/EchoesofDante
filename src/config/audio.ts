@@ -3,6 +3,8 @@ export const AUDIO = {
   music: 0.48,
   sfx: 0.9,
   tracks: {
+    caldera: 'caldera-journey.mp3',
+    titan: 'titan-journey.mp3',
     icecave: 'icecave-journey.mp3',
     icenest: 'vesper-journey.mp3',
     frost: 'frost-journey.mp3',

@@ -1,6 +1,6 @@
 import { EQUIPMENT, validItem, type InventoryItem, type EquipmentId } from './equipment';
 export const MATERIAL_NAMES=['Liga da floresta','Carapaça âmbar','Núcleo boreal'] as const;
-export const REGION_NAMES={base:'Base de pouso',forest:'Floresta de Dante',cavern:'Cavernas e Exterior',warden:'Domínio do Guardião',valley:'Vale da Ressonância',arid:'Bacia do Siroco',dunes:'Dunas Interiores',sandpit:'Bacia Soterrada',frost:'Fratura Boreal',icecave:'Galerias Glaciais',icenest:'Ninho de Vésper'} as const;
+export const REGION_NAMES={base:'Base de pouso',forest:'Floresta de Dante',cavern:'Cavernas e Exterior',warden:'Domínio do Guardião',valley:'Vale da Ressonância',arid:'Bacia do Siroco',dunes:'Dunas Interiores',sandpit:'Bacia Soterrada',frost:'Fratura Boreal',icecave:'Galerias Glaciais',icenest:'Ninho de Vésper',caldera:'Caldeira de Dante'} as const;
 export type EconomyReceipt={id:string;credits:number;materials:number[];used:number};
 export type EconomySnapshot={schema:1;credits:number;materials:number[];potions:number;potionReadyAt:number;stash:InventoryItem[];visited:(keyof typeof REGION_NAMES)[];receipts:EconomyReceipt[];claimed:string[];deathReceipts?:string[]};
 const count=(n:unknown,max=1e9)=>Number.isSafeInteger(n)&&Number(n)>=0?Math.min(max,Number(n)):0;

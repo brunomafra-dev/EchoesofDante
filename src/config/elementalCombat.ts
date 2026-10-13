@@ -4,6 +4,7 @@ import type { SpeciesId } from './bestiary';
 // Every species must have a profile. New species cannot silently remain unclassified.
 // Traits follow anatomy/material, never region/equipment scaling.
 export const ELEMENTAL_PROFILES = {
+  titan: { weakness: 'water', resistance: 'fire' },
   crawler: { weakness: 'fire', resistance: 'earth' }, // Organic, grounded carapace.
   skitter: { weakness: 'earth', resistance: 'fire' }, // Light body, heat-adapted shell.
   spitter: { weakness: 'energy', resistance: 'water' }, // Conductive fluid sacs.
