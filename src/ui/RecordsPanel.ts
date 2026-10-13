@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { SPECIES, type SpeciesId } from '../config/bestiary';
+import { weaknessHint } from '../config/elementalCombat';
 import { VALLEY_ROUTES } from '../config/valley';
 import type { BestiarySnapshot } from '../systems/Bestiary';
 import { PROGRESSION } from '../config/progression';
@@ -117,7 +118,7 @@ export class RecordsPanel {
       card.replaceChildren();
       const name = document.createElement('h3'); name.textContent = entry?.seen ? species.name : 'Criatura não registrada';
       const habitat = document.createElement('small'); habitat.textContent = entry?.seen ? `${species.habitat} · Derrotas: ${entry.defeats}` : 'Explore Dante para descobrir.';
-      const note = document.createElement('p'); note.textContent = entry?.seen ? species.note : 'Registro ainda incompleto.';
+      const note = document.createElement('p'); note.textContent = entry?.seen ? `${species.note} ${weaknessHint(id)}`.trim() : 'Registro ainda incompleto.';
       const study = document.createElement('p'); study.className = 'records-study';
       study.textContent = entry && entry.defeats > 0 ? `ESTUDADO · ${species.study}`
         : entry?.seen ? 'OBSERVADO · A primeira derrota completa a observação tática.' : 'OBSERVAÇÃO PENDENTE';

@@ -265,3 +265,7 @@ Manipulador Astral com pulso de médio alcance, quatro campos elementais, Energi
 ### Revisão elemental do Astral — 0.1.91
 
 No primeiro playtest da etapa 5, o usuário gostou da classe e pediu que o básico refletisse o elemento e que Q possuísse manifestações visuais próprias. Revisão dentro da etapa 5: projéteis elementais, chão em chamas, onda, rocha emergindo com empurrão e malha energizada. Arte original e texturas preparadas offline; mesma economia, controles e rede. [Relatório/teste](astral/elemental-v2/README.md). **Aguardar a avaliação desta revisão antes da próxima classe.**
+
+### Cor do dano e afinidades — 0.1.92
+
+Manifestações de 0.1.91 aprovadas pelo usuário (“Gostei bastante”). Solicitou números coloridos pelo elemento e vantagem conforme a criatura. Regra inicial: fogo +25% contra glaciais, água +25% contra criaturas do Siroco; demais combinações neutras. Básico/Q/DOT preservam o elemento capturado. Vantagem indicada por ↑ e bestiário; anfitrião calcula e replica feedback ao visitante. [Regras e evidências](astral/elemental-affinities/README.md). **Validar dificuldade desta revisão e pendências da etapa 4 antes da etapa 6.**

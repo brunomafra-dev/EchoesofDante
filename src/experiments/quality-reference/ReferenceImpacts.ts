@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import type { Vec2 } from '../../utils/math';
+import { damageText, damageTextColor } from '../../config/elementalCombat';
 
 type Burst = { sprites: Phaser.GameObjects.Image[]; label: Phaser.GameObjects.Text;
   at: number; x: number; y: number; angle: number };
@@ -19,11 +20,11 @@ export class ReferenceImpacts {
       this.bursts.push({ sprites, label, at: -Infinity, x: 0, y: 0, angle: 0 });
     }
   }
-  hit(now: number, p: Vec2, color: number, damage: number, angle = 0): void {
+  hit(now: number, p: Vec2, color: number, damage: number, angle = 0, effective = false): void {
     const burst = this.bursts[this.cursor++ % this.bursts.length];
     Object.assign(burst, { at: now, x: p.x, y: p.y, angle });
     burst.sprites.forEach(sprite => sprite.setTint(color).setPosition(p.x, p.y).setVisible(true));
-    burst.label.setText(String(damage)).setColor(color === 0xff8f82 ? '#ff968a' : '#e8efce').setVisible(true);
+    burst.label.setText(damageText(damage, effective)).setColor(damageTextColor(color)).setVisible(true);
   }
   update(now: number): void {
     for (const burst of this.bursts) {

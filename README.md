@@ -1,5 +1,9 @@
 # Echoes of Dante
 
+## Astral — cor do dano e fraquezas · 0.1.92
+
+Números de dano acompanham energia/fogo/água/terra. Fogo causa +25% contra espécies glaciais; água, contra as criaturas do Siroco. Vantagem indicada por `↑`, com fraqueza nos Registros e mesmo cálculo na dupla. [Regras e QA](docs/astral/elemental-affinities/README.md) · [Testar fogo no gelo](https://echosofdante.vercel.app/astral-playtest.html?region=frost&element=fire&kit=basic&v=0.1.92). Manifestações de 0.1.91 aprovadas; esta revisão de balanceamento aguarda playtest.
+
 ## Astral elemental — revisão · 0.1.91
 
 O ataque básico agora usa o elemento escolhido: raio, bola de fogo, rajada de água ou pedra. Q manifesta rede elétrica, chão em chamas, onda ou rocha emergindo com empurrão, com pinturas próprias e animação curta. Segurar/mirar/soltar e Energia Astral preservados. [Relatório e arte](docs/astral/elemental-v2/README.md) · [Teste reservado](https://echosofdante.vercel.app/astral-playtest.html?element=fire&kit=basic&v=0.1.91). Estrutura do Astral bem recebida pelo usuário; esta revisão aguarda novo playtest.

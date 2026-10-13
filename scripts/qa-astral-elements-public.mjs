@@ -1,13 +1,14 @@
 import {chromium} from 'playwright';
 import {mkdir,writeFile} from 'node:fs/promises';
-const out='docs/astral/elemental-v2/qa/public';await mkdir(out,{recursive:true});
-const report={at:new Date().toISOString(),version:'0.1.91',method:'Published Vercel build in Chrome headless; real basic/charge controls and four resolutions. No physical devices.',errors:[],elements:[]},assets=new Set();
+const out=process.argv[2]??'docs/astral/elemental-v2/qa/public',version=process.argv[3]??'0.1.91';await mkdir(out,{recursive:true});
+const report={at:new Date().toISOString(),version,method:'Published Vercel build in Chrome headless; real basic/charge controls and four resolutions. No physical devices.',errors:[],elements:[]},assets=new Set();
 const browser=await chromium.launch({channel:'chrome',headless:true});
 try{
  const p=await browser.newPage({viewport:{width:1280,height:720},hasTouch:true});p.setDefaultTimeout(45000);
  p.on('pageerror',e=>report.errors.push(e.message));p.on('response',r=>{if(r.status()>=400)report.errors.push(r.url());if(r.url().includes('/astral/')&&r.url().includes('-v2.png'))assets.add(r.url())});
  for(const element of ['fire','water','earth','energy']){
-  await p.goto(`https://echosofdante.vercel.app/astral-playtest.html?element=${element}&kit=basic&v=0.1.91`,{waitUntil:'domcontentloaded',timeout:90000});
+  await p.goto(`https://echosofdante.vercel.app/astral-playtest.html?element=${element}&kit=basic&v=${version}`,{waitUntil:'domcontentloaded',timeout:90000});
+  if(version==='0.1.92'&&!(await p.locator('.threat-lab').textContent()).includes('+25%'))throw Error('Affinity build not published yet');
   await p.locator(`.astral-panel[data-element="${element}"]`).waitFor();await p.locator('.threat-lab').evaluate(e=>e.open=false);await p.waitForTimeout(350);
   await p.mouse.move(900,350);await p.mouse.click(900,350);await p.keyboard.down('q');await p.waitForTimeout(400);
   if(!await p.locator('.astral-panel').isDisabled())throw Error('Hold failed');await p.keyboard.up('q');await p.waitForTimeout(220);

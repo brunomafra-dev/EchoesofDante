@@ -16,6 +16,8 @@ import { BossMirror, captureBoss, type NetworkBoss } from './BossPresentation';
 import type {ResourceDrop} from '../systems/ResourceDrops';
 import { equipmentStats } from '../config/equipment';
 import type { ExpeditionReturn } from '../systems/ExpeditionReturn';
+import type { ImpactPose } from './CoopSession';
+import type { AstralElement } from '../config/classes';
 
 export type PartyBridge={
  area:JourneyArea;player:Player;controls:Controls;enemies:readonly Enemy[];obstacles:readonly Obstacle[];bounds?:MovementBounds;hud:Hud;hunter?:HunterCombat;astral?:import('../combat/AstralCombat').AstralCombat;
@@ -25,7 +27,8 @@ export type PartyBridge={
  solidObstacles:readonly Obstacle[];
  signalPortal:boolean;resources:ResourceDrop[];resourceAwarded:ResourceDrop[];potionUsed:number;visited:JourneyArea[];returnStation:Vec2;expeditionReturn?:ExpeditionReturn;
  id:(enemy:Enemy)=>number|undefined;species:(enemy:Enemy)=>SpeciesId|undefined;
- hit:(targets:Enemy[],damage:number,angle:number,from:Vec2,heavy:boolean,knockback?:number,color?:number)=>void;
+ hit:(targets:Enemy[],damage:number,angle:number,from:Vec2,heavy:boolean,knockback?:number,color?:number,element?:AstralElement)=>void;
+ impacts:ImpactPose[];impact:(hit:ImpactPose)=>void;
  prompt:(position:Vec2)=>{available:boolean;action:string};
  sync:(world:PartyWorld)=>boolean;render:(pose:PartyPose)=>void;
 };
@@ -41,6 +44,7 @@ export class PartyExpedition {
  private queued={dash:false,charge:false,release:false,cancel:false,interact:false,restart:false,element:false};
  private sendAt=0;
  private appliedWorld?:PartyWorld;
+ private lastImpact=0;
  private mirrorHost?:PartyActor;
  private mirrors=new Map<number,Mirror>();
  private projectiles:Phaser.GameObjects.Rectangle[]=[];
@@ -127,7 +131,7 @@ export class PartyExpedition {
   const shots:PartyWorld['shots']=[...(a.hunter?.projectilePoses()??[]),...(this.partner?.hunter?.projectilePoses()??[])].map(shot=>({...shot,friendly:true}));
   for(const e of a.enemies as readonly Presented[])for(const shot of e.shots??[])if(shot.active)shots.push({x:shot.x,y:shot.y,rotation:shot.angle});
   const world:PartyWorld={area:a.area,time:now,progression:a.progression,flags:a.flags,host,partner,enemies:enemies.filter(e=>!['warden','soterrado','vesper'].includes(e.species)),boss:captureBoss(a.boss),signalPortal:a.signalPortal,resources:a.resources,resourceAwarded:a.resourceAwarded,potionUsed:a.potionUsed,visited:a.visited,returnStation:a.returnStation,expeditionReturn:a.expeditionReturn,loot:a.loot,lootAwarded:[...room.lootAwarded.values()].slice(-512),
-   message:(a.hud as unknown as {discoveryMessage:Phaser.GameObjects.Text}).discoveryMessage.visible?(a.hud as unknown as {discoveryMessage:Phaser.GameObjects.Text}).discoveryMessage.text:'',prompt:prompt.available,action:prompt.action,shots};
+   impacts:a.impacts,message:(a.hud as unknown as {discoveryMessage:Phaser.GameObjects.Text}).discoveryMessage.visible?(a.hud as unknown as {discoveryMessage:Phaser.GameObjects.Text}).discoveryMessage.text:'',prompt:prompt.available,action:prompt.action,shots};
   room.send('world',world);
  }
  private resizeHealth(enemy:Enemy,max:number):void {
@@ -163,6 +167,12 @@ export class PartyExpedition {
   const previousPose=this.appliedWorld?.partner;
   const freshWorld=world!==this.appliedWorld;
   if(freshWorld){if(a.sync(world))return;this.appliedWorld=world;}
+  if(freshWorld) for(const hit of (world.impacts??[]).slice(-24)) {
+   if(!Number.isSafeInteger(hit.id)||hit.id<=this.lastImpact)continue;
+   this.lastImpact=hit.id;
+   if(![hit.x,hit.y,hit.damage,hit.color,hit.at].every(Number.isFinite)||hit.damage<=0||world.time-hit.at>650)continue;
+   a.impact(hit);
+  }
   if(!this.hiddenLocalEnemies){
    for(const enemy of a.enemies){
     const e=enemy as Presented;e.view?.setVisible(false);

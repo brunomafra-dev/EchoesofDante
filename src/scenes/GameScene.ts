@@ -18,6 +18,9 @@ import { AstralCombat } from '../combat/AstralCombat';
 import { AstralArt,preloadAstralArt } from '../visual/AstralArt';
 import { AstralPanel } from '../ui/AstralPanel';
 import { ASTRAL, ASTRAL_ELEMENTS, ELEMENT_COLORS } from '../config/classes';
+import type { AstralElement } from '../config/classes';
+import { damageText, damageTextColor, elementalMultiplier } from '../config/elementalCombat';
+import type { ImpactPose } from '../network/CoopSession';
 import { HunterArt, preloadHunterArt } from '../visual/HunterArt';
 import { SaberAttack } from '../combat/Attack';
 import { applyDamage } from '../combat/Damage';
@@ -122,6 +125,8 @@ export class GameScene extends Phaser.Scene {
   private controls!: Controls;
   private arena!: LandingBase | Arena | CavernArea | WardenArena | ResonanceValley | SiroccoBasin | ReferenceArea;
   private referenceImpacts?: ReferenceImpacts;
+  private impactHistory: ImpactPose[] = [];
+  private impactSequence = 0;
   private valley?: ResonanceValley;
   private signalPortal?: SignalPortal;
   private chapterPortal?: ChapterPortal;
@@ -334,6 +339,7 @@ export class GameScene extends Phaser.Scene {
     this.threshold = undefined;
     this.mechanism = undefined;
     this.referenceImpacts = undefined;
+    this.impactHistory = []; // Sequence stays monotonic across same-region retries.
     this.echoSites = [];
     if(this.economyRoom!==coopSession.code){this.economyRoom=coopSession.code;this.resourceAwarded.clear();this.potionUsed=0;this.peerPotionReady=0;}
     this.base=undefined;
@@ -865,7 +871,7 @@ export class GameScene extends Phaser.Scene {
         (enemy, damage, angle, precision) => this.resolvePlayerHits(time, [enemy], damage, angle, 0x5fe6d8, this.player.position, precision));
       this.hud.setHunterMomentum(this.hunter.momentum);
     } else if(this.astral){
-      this.astral.update(time,dt,targets,this.arena.obstacles,this.movementBounds,(enemy,damage,angle,heavy,element,origin,force)=>this.resolvePlayerHits(time,[enemy],damage,angle,ELEMENT_COLORS[element],origin,heavy,this.equipment.snapshot().slots,force),heavy.phase==='CHARGING');
+      this.astral.update(time,dt,targets,this.arena.obstacles,this.movementBounds,(enemy,damage,angle,heavy,element,origin,force)=>this.resolvePlayerHits(time,[enemy],damage,angle,ELEMENT_COLORS[element],origin,heavy,this.equipment.snapshot().slots,force,element),heavy.phase==='CHARGING');
       this.astralPanel?.update(this.astral.energy,this.astral.element,heavy.phase,this.player.isDead,this.inputModalOpen);
     } else {
       const sweep = this.attack.advance(time, this.player.position, facing, targets);
@@ -1378,7 +1384,9 @@ export class GameScene extends Phaser.Scene {
       } : undefined,
       firing: this.astral?this.time.now<this.astral.firedUntil:this.hunter ? this.time.now < this.hunter.firedUntil : this.attack.pose(this.time.now, this.player.rotation).phase !== 'READY',
       id: enemy => this.hollowSpawnIds.get(enemy), species: enemy => this.enemySpecies.get(enemy),
-      hit: (targets, damage, angle, from, heavy,knockback,color) => this.resolvePlayerHits(this.time.now, targets, damage, angle, color??0x5fe6d8, from, heavy,coopSession.peer?.equipment??{},knockback),
+      hit: (targets, damage, angle, from, heavy,knockback,color,element) => this.resolvePlayerHits(this.time.now, targets, damage, angle, color??0x5fe6d8, from, heavy,coopSession.peer?.equipment??{},knockback,element),
+      impacts: this.impactHistory.filter(hit => this.time.now-hit.at < 650),
+      impact: hit => this.impact(hit, hit.color, hit.damage, hit.angle, hit.effective, false),
       prompt: position => {
         if(this.area!=='base'&&this.canReturnBase(position)&&distance(position,{x:this.returnStation.x-90,y:this.returnStation.y})<65)return{available:true,action:'RETORNAR'};
         if(this.area==='base')return{available:BASE.services.some(s=>distance(position,s)<100)||distance(position,BASE.exit)<105,action:'CONVERSAR'};
@@ -1581,16 +1589,17 @@ export class GameScene extends Phaser.Scene {
     this.resolvePlayerHits(now, hits, this.player.attackDamage, saberAngle, 0xaafce1, this.player.position, false);
   }
 
-  private resolvePlayerHits(now: number, hits: Enemy[], damage: number, angle: number, color: number, from: Vec2, chargeHit: boolean, slots:EquipmentSnapshot['slots']=this.equipment.snapshot().slots,knockback?:number): void {
+  private resolvePlayerHits(now: number, hits: Enemy[], damage: number, angle: number, color: number, from: Vec2, chargeHit: boolean, slots:EquipmentSnapshot['slots']=this.equipment.snapshot().slots,knockback?:number,element?:AstralElement): void {
     const bonuses=equipmentStats(slots);
     damage=Math.round(damage*(1+bonuses.damage)*(chargeHit?1+bonuses.charge:1));
     if (hits.length) this.cameras.main.shake(chargeHit ? 75 : 55, chargeHit ? 0.003 : 0.0024);
     for (const enemy of hits) {
       if ((enemy === this.warden || enemy === this.soterrado || enemy === this.vesper) && !(enemy as Warden | Soterrado | Vesper).canBeHit) continue;
-      const result = applyDamage(enemy.health, damage);
+      const multiplier = elementalMultiplier(element, this.enemySpecies.get(enemy));
+      const result = applyDamage(enemy.health, Math.round(damage * multiplier));
       if (!result.applied) continue;
       this.sounds.hit();
-      this.impact(enemy.position, color, result.amount, angle);
+      this.impact(enemy.position, color, result.amount, angle, multiplier > 1);
       if (chargeHit&&knockback===undefined) {
         const wave = this.add.circle(enemy.position.x, enemy.position.y, 14).setStrokeStyle(3, 0x5fe6d8, 0.82).setDepth(15001);
         this.tweens.add({ targets: wave, scale: 2.4, alpha: 0, duration: 190, onComplete: () => wave.destroy() });
@@ -1688,9 +1697,13 @@ export class GameScene extends Phaser.Scene {
     return true;
   }
 
-  private impact(position: Vec2, color: number, damage: number, saberAngle?: number): void {
+  private impact(position: Vec2, color: number, damage: number, saberAngle?: number, effective = false, broadcast = true): void {
+    if (broadcast && coopSession.role === 'host') {
+      this.impactHistory.push({id: ++this.impactSequence, at: this.time.now, ...position, color, damage, angle: saberAngle, effective});
+      if (this.impactHistory.length > 24) this.impactHistory.shift();
+    }
     if (this.referenceImpacts) {
-      this.referenceImpacts.hit(this.time.now, position, color, damage, saberAngle);
+      this.referenceImpacts.hit(this.time.now, position, color, damage, saberAngle, effective);
       return;
     }
     const saberHit = saberAngle !== undefined;
@@ -1702,7 +1715,7 @@ export class GameScene extends Phaser.Scene {
       const spark = this.add.ellipse(position.x, position.y, 11, 3, color, 0.9).setRotation(angle).setDepth(15002);
       this.tweens.add({ targets: spark, x: position.x + Math.cos(angle) * 28, y: position.y + Math.sin(angle) * 28, alpha: 0, scaleX: 0.35, duration: 180, onComplete: () => spark.destroy() });
     }
-    const label = this.add.text(position.x, position.y - 31, `${damage}`, { fontFamily: 'Barlow Condensed, sans-serif', fontSize: '24px', fontStyle: 'bold', color: color === 0xff8f82 ? '#ff968a' : '#d4ffe9', stroke: '#14312d', strokeThickness: 4 }).setOrigin(0.5).setDepth(15002);
+    const label = this.add.text(position.x, position.y - 31, damageText(damage, effective), { fontFamily: 'Barlow Condensed, sans-serif', fontSize: '24px', fontStyle: 'bold', color: damageTextColor(color, '#d4ffe9'), stroke: '#14312d', strokeThickness: 4 }).setOrigin(0.5).setDepth(15002);
     this.tweens.add({ targets: label, y: label.y - 32, alpha: 0, duration: 520, onComplete: () => label.destroy() });
   }
 
