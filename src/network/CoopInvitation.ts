@@ -14,8 +14,9 @@ export function roomCode(value: string): string | undefined {
 }
 
 export function invitationLink(code: string): string {
-  const lab=location.pathname.endsWith('/threat-playtest.html');
-  const url = new URL(lab?'threat-playtest.html':import.meta.env.BASE_URL, location.href);
+  const astral=location.pathname.endsWith('/astral-playtest.html');
+  const lab=astral||location.pathname.endsWith('/threat-playtest.html');
+  const url = new URL(lab?(astral?'astral-playtest.html':'threat-playtest.html'):import.meta.env.BASE_URL, location.href);
   url.search = ''; url.hash = '';
   url.searchParams.set('sala', code);
   if(lab){const params=new URLSearchParams(location.search);url.searchParams.set('region',params.get('region')??'forest');url.searchParams.set('kit',params.get('kit')??'basic');url.searchParams.set('class',params.get('class')==='hunter'?'warrior':'hunter');}

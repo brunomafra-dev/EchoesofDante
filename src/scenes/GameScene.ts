@@ -14,6 +14,10 @@ import { preloadModularArt } from '../visual/ModularTorso';
 import { characterProfiles } from '../systems/CharacterProfiles';
 import { HUNTER, type PlayableClass } from '../config/classes';
 import { HunterCombat } from '../combat/HunterCombat';
+import { AstralCombat } from '../combat/AstralCombat';
+import { AstralArt,preloadAstralArt } from '../visual/AstralArt';
+import { AstralPanel } from '../ui/AstralPanel';
+import { ASTRAL } from '../config/classes';
 import { HunterArt, preloadHunterArt } from '../visual/HunterArt';
 import { SaberAttack } from '../combat/Attack';
 import { applyDamage } from '../combat/Damage';
@@ -86,6 +90,9 @@ export class GameScene extends Phaser.Scene {
   private classId: PlayableClass = 'warrior';
   private hunter?: HunterCombat;
   private hunterArt?: HunterArt;
+  private astral?:AstralCombat;
+  private astralArt?:AstralArt;
+  private astralPanel?:AstralPanel;
   private readonly equipment = new Equipment();
   private economy:EconomySnapshot=validEconomy(undefined,true);
   private base?:LandingBase;
@@ -103,7 +110,7 @@ export class GameScene extends Phaser.Scene {
   private equipmentDialog!:EquipmentDialog;
   private lootKills=0;
   private inventoryUnpaused=false;
-  private get characterMaxHp(): number { return (this.classId === 'hunter' ? Math.round(this.progression.maxHp * HUNTER.hpRatio) : this.progression.maxHp)+equipmentStats(this.equipment.snapshot().slots).hp; }
+  private get characterMaxHp(): number { return (this.classId === 'hunter' ? Math.round(this.progression.maxHp * HUNTER.hpRatio) : this.classId==='astral'?Math.round(this.progression.maxHp*ASTRAL.hpRatio):this.progression.maxHp)+equipmentStats(this.equipment.snapshot().slots).hp; }
   private party?: PartyExpedition;
   private coopWorldXp?: number;
   private coopLayout = '';
@@ -226,12 +233,12 @@ export class GameScene extends Phaser.Scene {
 
   constructor(private readonly qualityReference: false | 'baseline' | 'reference' = false,
     private readonly originalWarrior = false, private readonly shellReady?: (scene: GameScene) => void,
-    private readonly glacierPlaytest?: { area: 'base' | 'forest' | 'icecave' | 'icenest'; classId: 'warrior' | 'hunter'; sex?:CharacterSex; pilot?:boolean; inventory?:boolean; economy?:boolean; look?:import('../config/appearance').EquipmentLook; weaponLook?:import('../config/appearance').WeaponStyle }) { super('Game'); }
+    private readonly glacierPlaytest?: { area: 'base' | 'forest' | 'icecave' | 'icenest'; classId: PlayableClass; sex?:CharacterSex; pilot?:boolean; inventory?:boolean; economy?:boolean; look?:import('../config/appearance').EquipmentLook; weaponLook?:import('../config/appearance').WeaponStyle }) { super('Game'); }
 
   preload(): void {
     preloadItemIcons(this);
     for(const key of ['landing-shuttle','field-shelter','base-medic-civilian','base-smith-civilian','base-expedition-civilian','base-refugee-a','base-refugee-b','resource-1','resource-2','resource-3'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/base/${key}.png`);
-    preloadHunterArt(this);
+    preloadHunterArt(this);preloadAstralArt(this);
     preloadModularArt(this);
     if (!this.textures.exists('glacier-ground')) this.load.image('glacier-ground', `${import.meta.env.BASE_URL}assets/visual/environment/glacier-ground.webp`);
     for (const [key, file] of [['vesper-motion', 'vesper-motion'], ['dante-iceCarapace-motion', 'ice-carapace-motion']]) if (!this.textures.exists(key)) this.load.spritesheet(key, `${import.meta.env.BASE_URL}assets/visual/characters/${file}.png`, { frameWidth: 256, frameHeight: 256 });
@@ -293,7 +300,7 @@ export class GameScene extends Phaser.Scene {
     if (!this.journeyLoaded) { this.journeyLoaded = true; this.restoreJourney(); }
     resetEnvironmentOcclusion(this);
     this.classId = this.glacierPlaytest?.classId ?? (this.qualityReference ? 'warrior' : characterProfiles.active.classId);
-    this.hunter = undefined; this.hunterArt = undefined;
+    this.hunter = undefined; this.hunterArt = undefined;this.astral=undefined;this.astralArt=undefined;this.astralPanel=undefined;
     this.attack = new SaberAttack(id => this.progression.upgradeRank(id));
     this.charge = new KineticCharge(id => this.progression.upgradeRank(id));
     this.waveDrawn = false;
@@ -411,6 +418,7 @@ export class GameScene extends Phaser.Scene {
       this.hunter = new HunterCombat(this, id => this.progression.upgradeRank(id));
       this.hunterArt = new HunterArt(this, this.player.view, entry.x, entry.y,this.player.sex);
     }
+    if(this.classId==='astral'){this.astral=new AstralCombat(this,id=>this.progression.upgradeRank(id));this.astralArt=new AstralArt(this,this.player.view,entry.x,entry.y,this.player.sex);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.astral?.destroy());}
     this.updateEquipmentAppearance();
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
     this.transferHp = undefined;
@@ -418,7 +426,8 @@ export class GameScene extends Phaser.Scene {
     this.controls = new Controls(this, () => this.sounds.unlock(), () => {
       if (!this.player.isDead && !this.records?.isOpen && !this.inputModalOpen) this.beginStrike(this.time.now);
     });
-    this.controls.setCombatPresentation(this.classId === 'hunter');
+    this.controls.setCombatPresentation(this.classId !== 'warrior', this.classId === 'astral');
+    if(this.astral)this.astralPanel=new AstralPanel(this,()=>this.controls.queueElement());
     this.updateMusicRegion(true);
     this.sounds.setMusicFocus(1);
     const spawns = this.area === 'forest' ? FOREST_SPAWNS : CAVERN_HOLLOWS;
@@ -453,7 +462,7 @@ export class GameScene extends Phaser.Scene {
         this.enemySpecies.set(this.soterrado, 'soterrado');
       } else this.sounds.stopMusic();
     }
-    this.hud = new Hud(this, () => this.restart(), this.classId === 'hunter');
+    this.hud = new Hud(this, () => this.restart(), this.classId === 'hunter',this.classId==='astral');
     if (this.qualityReference === 'reference') this.referenceImpacts = new ReferenceImpacts(this);
     this.navigation = this.qualityReference ? undefined : new WorldNavigator(this, () => ({ bounds: this.movementBounds, obstacles: this.arena.obstacles }));
     this.explorationGuide = new ExplorationGuide(this, this.navigation);
@@ -546,7 +555,7 @@ export class GameScene extends Phaser.Scene {
     }, () => {
       this.resumeFromModal();
       if (this.progression.upgradePointsAvailable > 0) this.time.delayedCall(100, () => this.showAvailableUpgrade());
-    }, this.classId === 'hunter');
+    }, this.classId === 'hunter',this.classId==='astral');
     const flush = () => this.saveProgress();
     const hidden = () => { if (document.hidden) flush(); };
     window.addEventListener('pagehide', flush);
@@ -566,7 +575,7 @@ export class GameScene extends Phaser.Scene {
     this.loot=new EquipmentDrops(this,coopSession.role==='guest'?'guest':'host');
     this.equipmentDialog=new EquipmentDialog(this,()=>this.equipment.snapshot(),(slot,id,uid)=>this.equipItem(slot,id,uid),()=>this.closeEquipment(),()=>this.openEquipment(),this.classId);
     this.resources=new ResourceDrops(this,coopSession.role==='guest'?'guest':'host');
-    this.basePanel=new BasePanel(this,()=>({economy:this.economy,equipment:this.equipment.snapshot(),area:this.area,hp:this.player.hp,maxHp:this.player.maxHp,classId:this.classId,returnAvailable:this.canReturnBase(),returnArea:this.expeditionReturn?.area,canLead:coopSession.role!=='guest'}),a=>this.serviceAction(a),(area,resume)=>this.baseTravel(area,resume),()=>this.usePotion(),()=>{this.serviceUnpaused=coopSession.connected;if(!this.serviceUnpaused)this.pauseForModal();else {this.controls.cancelForRecords();this.charge.stop();this.hunter?.clear();}},()=>{if(!this.serviceUnpaused)this.resumeFromModal();else this.controls.cancelForRecords();this.serviceUnpaused=false});
+    this.basePanel=new BasePanel(this,()=>({economy:this.economy,equipment:this.equipment.snapshot(),area:this.area,hp:this.player.hp,maxHp:this.player.maxHp,classId:this.classId,returnAvailable:this.canReturnBase(),returnArea:this.expeditionReturn?.area,canLead:coopSession.role!=='guest'}),a=>this.serviceAction(a),(area,resume)=>this.baseTravel(area,resume),()=>this.usePotion(),()=>{this.serviceUnpaused=coopSession.connected;if(!this.serviceUnpaused)this.pauseForModal();else {this.controls.cancelForRecords();this.charge.stop();this.hunter?.clear();this.astral?.clear();}},()=>{if(!this.serviceUnpaused)this.resumeFromModal();else this.controls.cancelForRecords();this.serviceUnpaused=false});
     if(this.area!=='base'){this.add.image(this.returnStation.x-90,this.returnStation.y,'item-accessory-2').setDisplaySize(30,40).setDepth(this.returnStation.y);this.add.text(this.returnStation.x-90,this.returnStation.y-52,'BASE · MAPA',{fontFamily:'Barlow Condensed',fontSize:'13px',color:'#e0c596',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(10003);}
     if(this.area==='base')this.saveProgress();
     this.shellReady?.(this);
@@ -788,7 +797,7 @@ export class GameScene extends Phaser.Scene {
     this.controls.setDead(this.player.isDead,!waiting);
     this.updateExplorationGuide();
     if (this.player.isDead) {
-      this.hunter?.clear();this.charge.stop();this.sounds.setMusicFocus(1);
+      this.hunter?.clear();this.astral?.clear();this.charge.stop();this.sounds.setMusicFocus(1);
       this.hud.showDeath(waiting,this.deathLoss);
       if (this.controls.restartPressed || this.party?.takeRestart()) {this.restart();if(!waiting)return;}
       if(!this.party?.partner||this.party.partner.player.isDead||!coopSession.peerConnected)return;
@@ -797,13 +806,15 @@ export class GameScene extends Phaser.Scene {
     const input = this.inputModalOpen||this.player.isDead?{x:0,y:0}:this.controls.movement();
     const aim = this.controls.aimFrom(this.player.position);
     this.charge.tick(time);
+    if(this.controls.elementPressed&&!this.player.isDead&&!this.inputModalOpen&&this.charge.phase==='READY')this.astral?.cycle();
     if (this.controls.chargeCancelled) this.charge.stop();
-    if (!this.player.isDead && !this.inputModalOpen && this.controls.chargePressed && !this.player.isDashing && this.attack.pose(time, aim).phase === 'READY' && this.charge.start(time)) {
+    if (!this.player.isDead && !this.inputModalOpen && this.controls.chargePressed && (!this.astral||this.astral.canCharge) && !this.player.isDashing && this.attack.pose(time, aim).phase === 'READY' && this.charge.start(time)) {
       this.sounds.charge();
     }
     if ((this.controls.chargeReleased || (this.charge.phase === 'CHARGING' && !this.controls.chargeHeld)) && this.charge.release(time, aim, this.player.position)) {
       this.sounds.swing();
       if (this.hunter) this.hunter.fire(time, this.player.position, aim, this.charge.damage);
+      else if(this.astral)this.astral.cast(time,this.player.position,aim,this.charge.level(time));
       else this.chargeBurst();
     }
     const heavy = this.charge.pose(time);
@@ -832,6 +843,7 @@ export class GameScene extends Phaser.Scene {
     this.player.update(time, dt, input, facing, this.area === 'warden' || this.area === 'sandpit' || this.area === 'icenest' ? this.playerObstacles : this.arena.obstacles, pose, heavy, this.movementBounds);
     this.updateMusicRegion();
     this.hunterArt?.update(this.player.position.x, this.player.position.y, facing, time < (this.hunter?.firedUntil ?? 0), this.player.isDashing, heavy);
+    this.astralArt?.update(this.player.position.x,this.player.position.y,facing,time<(this.astral?.firedUntil??0),this.player.isDashing,heavy,this.astral!.element);
     updateEnvironmentOcclusion(this, this.player.position, dt);
     if (wasDashing && !this.player.isDashing) this.dashEnd();
     if (this.player.isDashing && time - this.lastDashTrail > 30) {
@@ -844,14 +856,17 @@ export class GameScene extends Phaser.Scene {
     if (this.vesper?.canBeHit) this.bossTargets.push(this.vesper);
     const targets = this.area === 'warden' || this.area === 'sandpit' || this.area === 'icenest' ? this.bossTargets : this.enemies;
     if (this.charge.wavePending) {
-      const waveHits = this.charge.takeHits(time, this.hunter ? [] : targets);
+      const waveHits = this.charge.takeHits(time, this.hunter||this.astral ? [] : targets);
       this.resolvePlayerHits(time, waveHits, this.charge.damage, this.charge.angle, 0x5fe6d8, this.charge.origin, true);
     }
-    if (!this.hunter) this.renderKineticWave(time);
+    if (!this.hunter&&!this.astral) this.renderKineticWave(time);
     if (this.hunter) {
       this.hunter.update(dt, this.player.position, !heavyBusy && Math.hypot(this.player.velocity.x, this.player.velocity.y) > 1, targets, this.arena.obstacles, this.movementBounds,
         (enemy, damage, angle, precision) => this.resolvePlayerHits(time, [enemy], damage, angle, 0x5fe6d8, this.player.position, precision));
       this.hud.setHunterMomentum(this.hunter.momentum);
+    } else if(this.astral){
+      this.astral.update(time,dt,targets,this.arena.obstacles,this.movementBounds,(enemy,damage,angle,heavy)=>this.resolvePlayerHits(time,[enemy],damage,angle,0x5fe6d8,this.player.position,heavy,this.equipment.snapshot().slots,0),heavy.phase==='CHARGING');
+      this.astralPanel?.update(this.astral.energy,this.astral.element,heavy.phase,this.player.isDead,this.inputModalOpen);
     } else {
       const sweep = this.attack.advance(time, this.player.position, facing, targets);
       this.resolveSaberHits(time, sweep.hits, sweep.pose.worldAngle);
@@ -864,7 +879,7 @@ export class GameScene extends Phaser.Scene {
         this.saveProgress();
       }
       const target = this.party?.targetFor(enemy) ?? this.player;
-      enemy.update(time, dt, target.position, target.isDead, this.arena.obstacles, impact => this.enemyStrike(enemy, impact, impact?.victim && impact.victim === this.party?.partner?.player.position ? this.party!.partner!.player : impact?.victim === this.player.position ? this.player : target), this.movementBounds, coopSession.role === 'host' ? [this.player,...(this.party?.partner?.player ? [this.party.partner.player] : [])].filter(p=>!p.isDead).map(p=>p.position) : undefined);
+      enemy.update(time, dt*Math.min(this.astral?.movementScale(enemy,time)??1,this.party?.partner?.astral?.movementScale(enemy,time)??1), target.position, target.isDead, this.arena.obstacles, impact => this.enemyStrike(enemy, impact, impact?.victim && impact.victim === this.party?.partner?.player.position ? this.party!.partner!.player : impact?.victim === this.player.position ? this.player : target), this.movementBounds, coopSession.role === 'host' ? [this.player,...(this.party?.partner?.player ? [this.party.partner.player] : [])].filter(p=>!p.isDead).map(p=>p.position) : undefined);
     }
     this.enemies = this.enemies.filter(enemy => !enemy.isDead);
     this.hud.update(this.player.hp, this.player.maxHp, this.player.dashProgress, this.charge.getProgress(time), heavy.phase, heavy.level,
@@ -1331,7 +1346,7 @@ export class GameScene extends Phaser.Scene {
   private partyBridge(): PartyBridge {
     return {
       area: this.area, player: this.player, controls: this.controls, enemies: this.enemies,
-      obstacles: this.arena.obstacles, solidObstacles: (this.warden && !this.warden.isDead || this.soterrado?.solid || this.vesper?.solid) ? [...this.arena.obstacles, { ...(this.warden ?? this.soterrado ?? this.vesper)!.position, radius: (this.warden ?? this.soterrado ?? this.vesper)!.radius }] : this.arena.obstacles, bounds: this.movementBounds, hud: this.hud, hunter: this.hunter,
+      obstacles: this.arena.obstacles, solidObstacles: (this.warden && !this.warden.isDead || this.soterrado?.solid || this.vesper?.solid) ? [...this.arena.obstacles, { ...(this.warden ?? this.soterrado ?? this.vesper)!.position, radius: (this.warden ?? this.soterrado ?? this.vesper)!.radius }] : this.arena.obstacles, bounds: this.movementBounds, hud: this.hud, hunter: this.hunter,astral:this.astral,
       boss: this.warden ?? this.soterrado ?? this.vesper,
       signalPortal:this.signalPortal?.active??false,resources:this.resources?.snapshot()??[],resourceAwarded:[...this.resourceAwarded.values()],potionUsed:this.potionUsed,visited:this.economy.visited,returnStation:this.returnStation,expeditionReturn:this.expeditionReturn,
       cue:kind=>{if(kind==='dash')this.sounds.dash();else if(kind==='charge')this.sounds.charge();else if(kind==='release')this.sounds.swing();else {this.sounds.hurt();this.player.flashHurt();}},
@@ -1356,14 +1371,14 @@ export class GameScene extends Phaser.Scene {
       progression: this.progression.snapshot(),
       flags: Object.fromEntries(JOURNEY_FLAGS.map(key => [key, this[key]])) as JourneyFlags,
       phase: this.charge.phase, chargeLevel: this.charge.level(this.time.now),
-      wave: !this.hunter && this.charge.waveVisible(this.time.now) ? {
+      wave: !this.hunter && !this.astral && this.charge.waveVisible(this.time.now) ? {
         x: this.charge.origin.x + Math.cos(this.charge.angle) * (KINETIC_CHARGE.waveStart + KINETIC_CHARGE.waveTravel * this.charge.waveProgress(this.time.now)),
         y: this.charge.origin.y + Math.sin(this.charge.angle) * (KINETIC_CHARGE.waveStart + KINETIC_CHARGE.waveTravel * this.charge.waveProgress(this.time.now)),
         rotation: this.charge.angle, width: KINETIC_CHARGE.waveThickness, height: this.charge.waveHalfWidth * 2,
       } : undefined,
-      firing: this.hunter ? this.time.now < this.hunter.firedUntil : this.attack.pose(this.time.now, this.player.rotation).phase !== 'READY',
+      firing: this.astral?this.time.now<this.astral.firedUntil:this.hunter ? this.time.now < this.hunter.firedUntil : this.attack.pose(this.time.now, this.player.rotation).phase !== 'READY',
       id: enemy => this.hollowSpawnIds.get(enemy), species: enemy => this.enemySpecies.get(enemy),
-      hit: (targets, damage, angle, from, heavy) => this.resolvePlayerHits(this.time.now, targets, damage, angle, 0x5fe6d8, from, heavy,coopSession.peer?.equipment??{}),
+      hit: (targets, damage, angle, from, heavy,knockback) => this.resolvePlayerHits(this.time.now, targets, damage, angle, 0x5fe6d8, from, heavy,coopSession.peer?.equipment??{},knockback),
       prompt: position => {
         if(this.area!=='base'&&this.canReturnBase(position)&&distance(position,{x:this.returnStation.x-90,y:this.returnStation.y})<65)return{available:true,action:'RETORNAR'};
         if(this.area==='base')return{available:BASE.services.some(s=>distance(position,s)<100)||distance(position,BASE.exit)<105,action:'CONVERSAR'};
@@ -1395,6 +1410,8 @@ export class GameScene extends Phaser.Scene {
           { phase: pose.phase as 'READY' | 'CHARGING' | 'RELEASE', level: pose.level, swingProgress: pose.releaseProgress??0 }, pose.dash, pose.dead);
         this.hunterArt?.update(pose.x, pose.y, pose.aim, pose.firing, pose.dash, { phase: pose.phase as 'READY' | 'CHARGING' | 'RELEASE', level: pose.level });
         this.hunter?.beamView.render(pose.beam);
+        this.astral?.render(pose.astral);
+        if(pose.astral){this.astralArt?.update(pose.x,pose.y,pose.aim,pose.firing,pose.dash,{phase:pose.phase as 'READY'|'CHARGING'|'RELEASE',level:pose.level},pose.astral.element);this.astralPanel?.update(pose.astral.energy,pose.astral.element,pose.phase as 'READY'|'CHARGING'|'RELEASE',pose.dead,this.inputModalOpen);}
         if (pose.dead && !previousDead) this.hud.showDeath(!!coopSession.world?.boss?.active&&!coopSession.world.host.dead);
       },
     };
@@ -1548,6 +1565,7 @@ export class GameScene extends Phaser.Scene {
     if(this.clickNearbyPortal())return;
     if (coopSession.role === 'guest') { this.party?.queueAttack(); return; }
     if (this.charge.phase !== 'READY') return;
+    if(this.astral){const aim=this.controls.aimFrom(this.player.position);if(this.astral.fire(now,this.player.position,aim,this.astralArt!.projectileOffset(aim)))this.sounds.swing();return;}
     if (this.hunter) {
       if (this.hunter.fire(now, this.player.position, this.controls.aimFrom(this.player.position))) this.sounds.swing();
       return;
@@ -1563,7 +1581,7 @@ export class GameScene extends Phaser.Scene {
     this.resolvePlayerHits(now, hits, this.player.attackDamage, saberAngle, 0xaafce1, this.player.position, false);
   }
 
-  private resolvePlayerHits(now: number, hits: Enemy[], damage: number, angle: number, color: number, from: Vec2, chargeHit: boolean, slots:EquipmentSnapshot['slots']=this.equipment.snapshot().slots): void {
+  private resolvePlayerHits(now: number, hits: Enemy[], damage: number, angle: number, color: number, from: Vec2, chargeHit: boolean, slots:EquipmentSnapshot['slots']=this.equipment.snapshot().slots,knockback?:number): void {
     const bonuses=equipmentStats(slots);
     damage=Math.round(damage*(1+bonuses.damage)*(chargeHit?1+bonuses.charge:1));
     if (hits.length) this.cameras.main.shake(chargeHit ? 75 : 55, chargeHit ? 0.003 : 0.0024);
@@ -1573,7 +1591,7 @@ export class GameScene extends Phaser.Scene {
       if (!result.applied) continue;
       this.sounds.hit();
       this.impact(enemy.position, color, result.amount, angle);
-      if (chargeHit) {
+      if (chargeHit&&knockback!==0) {
         const wave = this.add.circle(enemy.position.x, enemy.position.y, 14).setStrokeStyle(3, 0x5fe6d8, 0.82).setDepth(15001);
         this.tweens.add({ targets: wave, scale: 2.4, alpha: 0, duration: 190, onComplete: () => wave.destroy() });
       }
@@ -1606,7 +1624,7 @@ export class GameScene extends Phaser.Scene {
           this.hollowSpawnIds.delete(enemy);
         }
         this.saveProgress();
-      } else enemy.hurt(now, from, chargeHit ? KINETIC_CHARGE.knockback : 300);
+      } else enemy.hurt(now, from, knockback??(chargeHit ? KINETIC_CHARGE.knockback : 300));
     }
   }
 
@@ -1785,7 +1803,7 @@ export class GameScene extends Phaser.Scene {
     if (coopSession.role === 'host') this.party?.cancelPartnerCharge();
     if (coopSession.role === 'guest') coopSession.send('input', { x: 0, y: 0, aim: 0, attack: false, dash: false, charge: false, held: false, release: false, cancel: true, interact: false, restart: false });
     this.charge.stop();
-    this.hunter?.clear();
+    this.hunter?.clear();this.astral?.clear();
     this.kineticWave.clear(); this.waveDrawn = false;
     this.recordsPausedAt = this.game.loop.now;
     this.input.enabled = false;
@@ -1916,16 +1934,16 @@ export class GameScene extends Phaser.Scene {
     return available;
   }
 
-  private updateEquipmentAppearance():void {const slots=this.equipment.snapshot().slots;this.player.setEquipmentAppearance(slots);this.hunterArt?.setEquipment(slots);if(this.glacierPlaytest?.look)this.setPlaytestAppearance(this.glacierPlaytest.look);if(this.glacierPlaytest?.weaponLook)this.setPlaytestWeapon(this.glacierPlaytest.weaponLook);}
-  setPlaytestAppearance(look:import('../config/appearance').EquipmentLook):void {if(!this.glacierPlaytest)return;this.player.setEquipmentLook(look);this.hunterArt?.setEquipmentLook(look);}
+  private updateEquipmentAppearance():void {const slots=this.equipment.snapshot().slots;this.player.setEquipmentAppearance(slots);this.hunterArt?.setEquipment(slots);this.astralArt?.setEquipment(slots);if(this.glacierPlaytest?.look)this.setPlaytestAppearance(this.glacierPlaytest.look);if(this.glacierPlaytest?.weaponLook)this.setPlaytestWeapon(this.glacierPlaytest.weaponLook);}
+  setPlaytestAppearance(look:import('../config/appearance').EquipmentLook):void {if(!this.glacierPlaytest)return;this.player.setEquipmentLook(look);this.hunterArt?.setEquipmentLook(look);this.astralArt?.setEquipmentLook(look);}
 
-  setPlaytestWeapon(style:import('../config/appearance').WeaponStyle):void {if(!this.glacierPlaytest)return;this.player.setWeaponLook(style);this.hunterArt?.setWeaponLook(style);}
+  setPlaytestWeapon(style:import('../config/appearance').WeaponStyle):void {if(!this.glacierPlaytest)return;this.player.setWeaponLook(style);this.hunterArt?.setWeaponLook(style);this.astralArt?.setWeaponLook(style);}
 
   openExpedition():void{if(!this.player.isDead)this.basePanel.open('map');}
   openEquipment():void {
     if(this.player.isDead||this.equipmentDialog.isOpen)return;
     this.inventoryUnpaused=coopSession.connected;
-    if(!this.inventoryUnpaused)this.pauseForModal();else{this.controls.cancelForRecords();this.charge.stop();this.hunter?.clear();}
+    if(!this.inventoryUnpaused)this.pauseForModal();else{this.controls.cancelForRecords();this.charge.stop();this.hunter?.clear();this.astral?.clear();}
     this.equipmentDialog.open();
   }
 
@@ -1966,7 +1984,7 @@ export class GameScene extends Phaser.Scene {
     const index=Math.max(0,Math.floor(this.lootKills/EQUIPMENT_DROP_INTERVAL)-1)%candidates.length;
     const id=boss?candidates.find(id=>EQUIPMENT[id].slot==='accessory')!:candidates[index];
     this.loot.add(id,enemy.position,'host',this.classId);
-    if(coopSession.peer)this.loot.add(id,enemy.position,'guest',coopSession.peer.classId as 'warrior'|'hunter');
+    if(coopSession.peer)this.loot.add(id,enemy.position,'guest',coopSession.peer.classId as PlayableClass);
   }
   private get inputModalOpen():boolean{return !!(this.equipmentDialog?.isOpen||this.basePanel?.isOpen)}
   private bossActive():boolean{if(coopSession.role==='guest')return coopSession.world?.boss?.active===true;const b=this.warden??this.soterrado??this.vesper;return !!b&&!b.isDead&&b.state!=='DORMANT';}

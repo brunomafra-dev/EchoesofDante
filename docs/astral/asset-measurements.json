@@ -1,0 +1,163 @@
+{
+  "public\\assets\\visual\\characters\\wardrobe-astral-male-none.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 134499
+  },
+  "public\\assets\\visual\\characters\\wardrobe-astral-male-basic.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 145343
+  },
+  "public\\assets\\visual\\characters\\wardrobe-astral-male-reinforced.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 151180
+  },
+  "public\\assets\\visual\\characters\\wardrobe-astral-female-none.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 125843
+  },
+  "public\\assets\\visual\\characters\\wardrobe-astral-female-basic.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 135404
+  },
+  "public\\assets\\visual\\characters\\wardrobe-astral-female-reinforced.png": {
+    "dimensions": [
+      1024,
+      768
+    ],
+    "bytes": 141983
+  },
+  "public\\assets\\visual\\characters\\astral-starter-weapon.png": {
+    "dimensions": [
+      128,
+      96
+    ],
+    "bytes": 15157
+  },
+  "public\\assets\\items\\astral-weapon-1.png": {
+    "dimensions": [
+      96,
+      96
+    ],
+    "bytes": 9434
+  },
+  "public\\assets\\items\\ground\\astral-weapon-1.png": {
+    "dimensions": [
+      96,
+      96
+    ],
+    "bytes": 9481
+  },
+  "public\\assets\\visual\\characters\\astral-current-weapon.png": {
+    "dimensions": [
+      128,
+      96
+    ],
+    "bytes": 16397
+  },
+  "public\\assets\\items\\astral-weapon-2.png": {
+    "dimensions": [
+      96,
+      96
+    ],
+    "bytes": 10155
+  },
+  "public\\assets\\items\\ground\\astral-weapon-2.png": {
+    "dimensions": [
+      96,
+      96
+    ],
+    "bytes": 10189
+  },
+  "public\\assets\\visual\\characters\\astral-advanced-weapon.png": {
+    "dimensions": [
+      128,
+      96
+    ],
+    "bytes": 17114
+  },
+  "public\\assets\\items\\astral-weapon-3.png": {
+    "dimensions": [
+      96,
+      96
+    ],
+    "bytes": 10624
+  },
+  "public\\assets\\items\\ground\\astral-weapon-3.png": {
+    "dimensions": [
+      96,
+      96
+    ],
+    "bytes": 10646
+  },
+  "public\\assets\\visual\\astral\\astral-energy-zone.png": {
+    "dimensions": [
+      256,
+      256
+    ],
+    "bytes": 14657
+  },
+  "public\\assets\\visual\\astral\\astral-energy-bolt.png": {
+    "dimensions": [
+      64,
+      32
+    ],
+    "bytes": 267
+  },
+  "public\\assets\\visual\\astral\\astral-fire-zone.png": {
+    "dimensions": [
+      256,
+      256
+    ],
+    "bytes": 14665
+  },
+  "public\\assets\\visual\\astral\\astral-fire-bolt.png": {
+    "dimensions": [
+      64,
+      32
+    ],
+    "bytes": 267
+  },
+  "public\\assets\\visual\\astral\\astral-water-zone.png": {
+    "dimensions": [
+      256,
+      256
+    ],
+    "bytes": 14702
+  },
+  "public\\assets\\visual\\astral\\astral-water-bolt.png": {
+    "dimensions": [
+      64,
+      32
+    ],
+    "bytes": 269
+  },
+  "public\\assets\\visual\\astral\\astral-earth-zone.png": {
+    "dimensions": [
+      256,
+      256
+    ],
+    "bytes": 14652
+  },
+  "public\\assets\\visual\\astral\\astral-earth-bolt.png": {
+    "dimensions": [
+      64,
+      32
+    ],
+    "bytes": 266
+  }
+}

@@ -1,11 +1,11 @@
 import Phaser from 'phaser';
-import { EQUIPMENT,RARITY_COLORS,validItem,type EquipmentId,type InventoryItem } from '../config/equipment';
+import { equipmentName,EQUIPMENT,RARITY_COLORS,validItem,type EquipmentId,type InventoryItem } from '../config/equipment';
 import type { Vec2 } from '../utils/math';
-export type LootPose=InventoryItem&{x:number;y:number;owner:'host'|'guest';classId:'warrior'|'hunter'};
+export type LootPose=InventoryItem&{x:number;y:number;owner:'host'|'guest';classId:'warrior'|'hunter'|'astral'};
 export const PICKUP_RADIUS=64;
 export function itemIcon(id:EquipmentId,classId='warrior'):string {const d=EQUIPMENT[id];return `${d.slot==='weapon'?classId+'-weapon':d.slot}-${d.tier}`;}
 export function preloadItemIcons(scene:Phaser.Scene):void {
- for(const tier of [1,2,3])for(const slot of ['helmet','armor','legs','boots','gloves','accessory','warrior-weapon','hunter-weapon']){
+ for(const tier of [1,2,3])for(const slot of ['helmet','armor','legs','boots','gloves','accessory','warrior-weapon','hunter-weapon','astral-weapon']){
   const key=`${slot}-${tier}`;if(!scene.textures.exists('item-'+key))scene.load.image('item-'+key,`${import.meta.env.BASE_URL}assets/items/${key}.png`);
   if(!scene.textures.exists('drop-'+key))scene.load.image('drop-'+key,`${import.meta.env.BASE_URL}assets/items/ground/${key}.png`);}
 }
@@ -14,7 +14,7 @@ type Entry={pose:LootPose;image:Phaser.GameObjects.Image;label:Phaser.GameObject
 export class EquipmentDrops {
  private entries:Entry[]=[];
  constructor(private scene:Phaser.Scene,private viewer:'host'|'guest'='host'){}
- add(id:EquipmentId,position:Vec2,owner:'host'|'guest'='host',classId:'warrior'|'hunter'='warrior',uid=crypto.randomUUID()):LootPose|undefined {
+ add(id:EquipmentId,position:Vec2,owner:'host'|'guest'='host',classId:'warrior'|'hunter'|'astral'='warrior',uid=crypto.randomUUID()):LootPose|undefined {
   if(this.entries.filter(e=>e.active&&e.pose.owner===owner).length>=24)return;
   const pose={uid,id,...position,owner,classId};this.show(pose);return pose;
  }
@@ -23,7 +23,7 @@ export class EquipmentDrops {
   if(!entry){entry={pose,active:false,image:this.scene.add.image(0,0,'item-'+itemIcon(pose.id,pose.classId)),label:this.scene.add.text(0,0,'',{fontFamily:'Barlow Condensed',fontSize:'13px',stroke:'#07120f',strokeThickness:3}).setOrigin(.5)};this.entries.push(entry);}
   entry.pose=pose;entry.active=true;const visible=pose.owner===this.viewer;
   entry.image.setTexture('drop-'+itemIcon(pose.id,pose.classId)).setDisplaySize(44,44).setPosition(pose.x,pose.y).setDepth(pose.y+1).setVisible(visible);
-  entry.label.setText(EQUIPMENT[pose.id].name).setColor(RARITY_COLORS[EQUIPMENT[pose.id].rarity]).setPosition(pose.x,pose.y-28).setDepth(10003).setVisible(visible);
+  entry.label.setText(equipmentName(pose.id,pose.classId)).setColor(RARITY_COLORS[EQUIPMENT[pose.id].rarity]).setPosition(pose.x,pose.y-28).setDepth(10003).setVisible(visible);
  }
  nearest(position:Vec2,owner:'host'|'guest'=this.viewer):LootPose|undefined {
   let nearest:LootPose|undefined,range=PICKUP_RADIUS;

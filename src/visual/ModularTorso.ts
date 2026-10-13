@@ -43,7 +43,7 @@ export class ModularTorso {
       for(let f=0;f<height/256*4;f++)texture.add(f,0,f%4*256,Math.floor(f/4)*256,256,256);
       this.canvases.push(texture);
     }
-    if(classId==='hunter')this.keys.front=this.keys.back=this.keys.side=this.canvases[0].key;
+    if(classId!=='warrior')this.keys.front=this.keys.back=this.keys.side=this.canvases[0].key;
     body.setData('wardrobeKeys',this.keys);
     body.setData('clothShoulders',scene.cache.json.get('character-shoulder-registration')[`${classId}-${sex}`]);
     this.setLook(equipmentLook());

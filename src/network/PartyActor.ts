@@ -2,6 +2,9 @@ import Phaser from 'phaser';
 import { Player } from '../entities/Player';
 import { SaberAttack, type SaberPose } from '../combat/Attack';
 import { KineticCharge } from '../combat/KineticCharge';
+import { AstralCombat } from '../combat/AstralCombat';
+import { AstralArt } from '../visual/AstralArt';
+import { ASTRAL } from '../config/classes';
 import { HunterCombat } from '../combat/HunterCombat';
 import { HunterArt } from '../visual/HunterArt';
 import type { Enemy } from '../entities/Enemy';
@@ -19,6 +22,8 @@ export class PartyActor {
  readonly attack: SaberAttack;
  readonly charge: KineticCharge;
  readonly hunter?: HunterCombat;
+ readonly astral?:AstralCombat;
+ private astralArt?:AstralArt;
  private readonly art?: HunterArt;
  private readonly label: Phaser.GameObjects.Text;
  private readonly wave: Phaser.GameObjects.Ellipse;
@@ -30,38 +35,41 @@ export class PartyActor {
  constructor(scene:Phaser.Scene, readonly profile:PartyProfile, position:Vec2, maxHp:number) {
   this.refreshBuild();
   const rank=(id:AbilityUpgradeId)=>this.progression.upgradeRank(id);
-  const hp=Math.round(this.progression.maxHp*(profile.classId==='hunter'?HUNTER.hpRatio:1))+equipmentStats(profile.equipment??{}).hp;
+  const hp=Math.round(this.progression.maxHp*(profile.classId==='hunter'?HUNTER.hpRatio:profile.classId==='astral'?ASTRAL.hpRatio:1))+equipmentStats(profile.equipment??{}).hp;
   this.attack=new SaberAttack(rank);this.charge=new KineticCharge(rank);
   this.player=new Player(scene,position.x,position.y,profile.build?hp:maxHp,false,true,rank,profile.classId,profile.sex);
   if(profile.classId==='hunter'){this.hunter=new HunterCombat(scene,rank);this.art=new HunterArt(scene,this.player.view,position.x,position.y,profile.sex);}
+  if(profile.classId==='astral'){this.astral=new AstralCombat(scene,rank);this.astralArt=new AstralArt(scene,this.player.view,position.x,position.y,this.player.sex);}
   this.label=scene.add.text(position.x,position.y-75,profile.name,{fontSize:'13px',color:'#d9e6ca',stroke:'#080e0c',strokeThickness:2}).setOrigin(.5).setDepth(10003);
   this.wave=scene.add.ellipse(0,0,10,80,0x5fe6d8,.6).setVisible(false).setDepth(14999);
  }
  update(now:number,dt:number,input:PartyInput,targets:readonly Enemy[],obstacles:readonly Obstacle[],bounds:MovementBounds|undefined,
-  hit:(targets:Enemy[],damage:number,angle:number,origin:Vec2,heavy:boolean)=>void,solidObstacles:readonly Obstacle[]=obstacles):void {
+  hit:(targets:Enemy[],damage:number,angle:number,origin:Vec2,heavy:boolean,knockback?:number)=>void,solidObstacles:readonly Obstacle[]=obstacles):void {
   const oldLevel=this.progression.level;this.refreshBuild();this.setAppearance();
-  const max=Math.round(this.progression.maxHp*(this.profile.classId==='hunter'?HUNTER.hpRatio:1))+equipmentStats(this.profile.equipment??{}).hp;
+  const max=Math.round(this.progression.maxHp*(this.profile.classId==='hunter'?HUNTER.hpRatio:this.profile.classId==='astral'?ASTRAL.hpRatio:1))+equipmentStats(this.profile.equipment??{}).hp;
   if(this.player.maxHp!==max){this.player.health.max=max;this.player.health.current=!this.player.isDead&&this.progression.level>oldLevel?max:Math.min(max,this.player.hp);}
   this.now = now;
-  if(this.player.isDead){this.hunter?.clear();this.charge.stop();this.wave.setVisible(false);return;}
-  this.charge.tick(now);if(input.cancel)this.charge.stop();
-  if(input.charge&&!this.player.isDashing&&this.attack.pose(now,input.aim).phase==='READY')this.charge.start(now);
+  if(this.player.isDead){this.hunter?.clear();this.astral?.clear();this.charge.stop();this.wave.setVisible(false);return;}
+  this.charge.tick(now);if(input.element&&this.charge.phase==='READY')this.astral?.cycle();if(input.cancel)this.charge.stop();
+  if(input.charge&&(!this.astral||this.astral.canCharge)&&!this.player.isDashing&&this.attack.pose(now,input.aim).phase==='READY')this.charge.start(now);
   if((input.release||this.charge.phase==='CHARGING'&&!input.held)&&this.charge.release(now,input.aim,this.player.position))
-   this.hunter?.fire(now,this.player.position,input.aim,this.charge.damage);
+   {this.hunter?.fire(now,this.player.position,input.aim,this.charge.damage);this.astral?.cast(now,this.player.position,input.aim,this.charge.level(now));}
   if(this.charge.phase==='READY'){
    this.player.rotation=input.aim;
    if(input.dash)this.player.startDash(now,{x:input.x,y:input.y});
-   if(input.attack){if(this.hunter)this.hunter.fire(now,this.player.position,input.aim);else this.attack.start(now);}
+   if(input.attack){if(this.astral)this.astral.fire(now,this.player.position,input.aim,this.astralArt!.projectileOffset(input.aim));else if(this.hunter)this.hunter.fire(now,this.player.position,input.aim);else this.attack.start(now);}
   }
   const heavy=this.charge.pose(now),aim=heavy.phase==='RELEASE'?this.charge.angle:input.aim;
   this.pose=this.attack.pose(now,aim);
   this.player.update(now,dt,{x:input.x,y:input.y},aim,solidObstacles,this.pose,heavy,bounds);
   this.art?.update(this.player.position.x,this.player.position.y,aim,now<(this.hunter?.firedUntil??0),this.player.isDashing,heavy);
+  this.astralArt?.update(this.player.position.x,this.player.position.y,aim,now<(this.astral?.firedUntil??0),this.player.isDashing,heavy,this.astral!.element);
   if(this.hunter){
    this.charge.takeHits(now,[]);
    this.hunter.update(dt,this.player.position,Math.hypot(this.player.velocity.x,this.player.velocity.y)>1,targets,obstacles,bounds,
     (enemy,damage,angle,precision)=>hit([enemy],damage,angle,this.player.position,precision));
-  }else{
+  }else if(this.astral){this.charge.takeHits(now,[]);this.astral.update(now,dt,targets,obstacles,bounds,(enemy,damage,angle,heavy)=>hit([enemy],damage,angle,this.player.position,heavy,0),heavy.phase==='CHARGING');}
+  else{
    const sweep=this.attack.advance(now,this.player.position,aim,targets);if(sweep.hits.length)hit(sweep.hits,this.player.attackDamage,sweep.pose.worldAngle,this.player.position,false);
    const hits=this.charge.takeHits(now,targets);if(hits.length)hit(hits,this.charge.damage,this.charge.angle,this.charge.origin,true);
    const progress=this.charge.waveProgress(now),range=KINETIC_CHARGE.waveStart+progress*KINETIC_CHARGE.waveTravel;
@@ -73,16 +81,16 @@ export class PartyActor {
  snapshot():PartyPose {
   const p=this.player;
   return{strike:{...this.pose},releaseProgress:this.charge.pose(this.now).swingProgress,velocity:{...p.velocity},x:p.position.x,y:p.position.y,aim:p.rotation,hp:p.hp,maxHp:p.maxHp,dead:p.isDead,dash:p.isDashing,
-   phase:this.charge.phase,level:this.charge.pose(this.now).level,firing:this.pose.phase!=='READY'||(this.hunter?.firedUntil??0)>this.now,
+   phase:this.charge.phase,level:this.charge.pose(this.now).level,astral:this.astral?.snapshot(),firing:(this.astral?.firedUntil??0)>this.now||this.pose.phase!=='READY'||(this.hunter?.firedUntil??0)>this.now,
    swingProgress:this.pose.swingProgress,dashCooldown:p.dashCooldown,chargeCooldown:this.charge.cooldown,dashReady:p.dashProgress,chargeReady:this.charge.getProgress(this.now),momentum:this.hunter?.momentum,beam:this.hunter?.beamPose(),
    wave:this.wave.visible?{x:this.wave.x,y:this.wave.y,rotation:this.wave.rotation,width:this.wave.displayWidth,height:this.wave.displayHeight}:undefined};
  }
- cancelCharge():void{this.charge.stop();this.hunter?.clear();this.wave.setVisible(false);}
+ cancelCharge():void{this.charge.stop();this.hunter?.clear();this.astral?.clear();this.wave.setVisible(false);}
  private refreshBuild():void {
   const build=this.profile.build,key=JSON.stringify(build);if(key===this.buildKey)return;this.buildKey=key;
   this.progression.restore({xp:build?.xp??0,abilityUpgrades:build?.abilityUpgrades,bossRewards:build?.bossRewards,echoes:[],sourceLocated:false,passageOpen:false,rewardedHollows:[],rewardedRoutes:[]});
  }
- private setAppearance():void {const slots=this.profile.equipment??{},key=JSON.stringify(slots);if(key===this.appearanceKey)return;this.appearanceKey=key;this.player.setEquipmentAppearance(slots);this.art?.setEquipment(slots);}
+ private setAppearance():void {const slots=this.profile.equipment??{},key=JSON.stringify(slots);if(key===this.appearanceKey)return;this.appearanceKey=key;this.player.setEquipmentAppearance(slots);this.art?.setEquipment(slots);this.astralArt?.setEquipment(slots);}
  render(pose:PartyPose,now:number,dt:number):void {
   this.setAppearance();
   this.player.health.max=pose.maxHp;this.player.health.current=pose.hp;
@@ -91,12 +99,12 @@ export class PartyActor {
   this.player.renderRemote(position,pose.aim,pose.strike??{phase:pose.firing?'SWING':'READY',relativeAngle:0,worldAngle:pose.aim,swingProgress:pose.swingProgress??.5},
     {phase:pose.phase as 'READY'|'CHARGING'|'RELEASE',level:pose.level,swingProgress:pose.releaseProgress??0},pose.dash,pose.dead);
   this.art?.update(position.x,position.y,pose.aim,pose.firing,pose.dash,{phase:pose.phase as 'READY'|'CHARGING'|'RELEASE',level:pose.level});
-  this.hunter?.beamView.render(pose.beam);
+  this.hunter?.beamView.render(pose.beam);this.astral?.render(pose.astral);if(pose.astral)this.astralArt?.update(position.x,position.y,pose.aim,pose.firing,pose.dash,{phase:pose.phase as 'READY'|'CHARGING'|'RELEASE',level:pose.level},pose.astral.element);
   this.label.setPosition(position.x,position.y-75);void now;
   this.wave.setVisible(!!pose.wave);if(pose.wave)this.wave.setPosition(pose.wave.x,pose.wave.y).setRotation(pose.wave.rotation).setDisplaySize(pose.wave.width,pose.wave.height);
  }
  destroy():void {
-  this.hunter?.destroy(); this.player.destroy();
+  this.hunter?.destroy();this.astral?.destroy(); this.player.destroy();
   this.label.destroy();this.wave.destroy();
  }
 }

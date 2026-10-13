@@ -14,9 +14,17 @@ const HUNTER_LIST = UPGRADE_LIST.map(upgrade => ({
   }[upgrade.id]),
 }));
 
+const ASTRAL_LIST=UPGRADE_LIST.map(upgrade=>({...upgrade,...({
+ saberArc:{ability:'MANOPLA',title:'Pulso concentrado',description:'Cada grau acrescenta 3 ao dano básico.'},
+ saberReach:{ability:'MANOPLA',title:'Foco de projeção',description:'Cada grau acrescenta 40 unidades ao alcance básico.'},
+ dashCooldown:{ability:'DESLOCAMENTO',title:'Recarga evasiva',description:'Cada grau reduz a recarga da esquiva em 120 ms.'},
+ dashDuration:{ability:'DESLOCAMENTO',title:'Passo prolongado',description:'Cada grau prolonga a esquiva em 20 ms.'},
+ chargeWidth:{ability:'CAMPO',title:'Lente ampliada',description:'Cada grau amplia o raio do campo em 6 unidades.'},
+ chargePower:{ability:'CAMPO',title:'Projeção densa',description:'Cada grau acrescenta 4 a 6 ao impacto inicial, conforme a carga.'},
+}[upgrade.id])}));
 // A compact, modal choice shown only at mastery levels. It owns no gameplay rules.
 export class AbilityUpgradeDialog {
-  private get upgrades() { return this.hunter ? HUNTER_LIST : UPGRADE_LIST; }
+  private get upgrades() { return this.astral ? ASTRAL_LIST : this.hunter ? HUNTER_LIST : UPGRADE_LIST; }
   private readonly dialog: HTMLDialogElement;
   private readonly heading: HTMLElement;
   private readonly points: HTMLElement;
@@ -25,7 +33,7 @@ export class AbilityUpgradeDialog {
   private padButtons: boolean[] = [];
 
   constructor(scene: Phaser.Scene, private readonly onChoose: (id: AbilityUpgradeId) => boolean,
-    private readonly onClose: () => void, private readonly hunter = false) {
+    private readonly onClose: () => void, private readonly hunter = false,private readonly astral=false) {
     this.dialog = document.createElement('dialog');
     this.dialog.className = 'records-dialog ability-upgrade-dialog';
     this.dialog.setAttribute('aria-labelledby', 'ability-upgrade-title');
@@ -36,6 +44,7 @@ export class AbilityUpgradeDialog {
     this.points = this.dialog.querySelector('.upgrade-points')!;
     const options = this.dialog.querySelector('.ability-upgrade-options')!;
     if (hunter) this.dialog.querySelector('header small')!.textContent = 'DOMÍNIO DO STAR HUNTER';
+    if(astral)this.dialog.querySelector('header small')!.textContent='DOMÍNIO DO MANIPULADOR ASTRAL';
     for (const upgrade of this.upgrades) {
       const button = document.createElement('button');
       button.type = 'button';

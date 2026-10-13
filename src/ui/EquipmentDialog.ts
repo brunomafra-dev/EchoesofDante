@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { BAG_SIZE,EQUIPMENT,EQUIPMENT_SLOTS,SLOT_NAMES,RARITY_COLORS,equipmentStats,type EquipmentId,type EquipmentSlot,type EquipmentSnapshot } from '../config/equipment';
+import { BAG_SIZE,equipmentName,EQUIPMENT,EQUIPMENT_SLOTS,SLOT_NAMES,RARITY_COLORS,equipmentStats,type EquipmentId,type EquipmentSlot,type EquipmentSnapshot } from '../config/equipment';
 import { itemIcon } from '../systems/EquipmentDrops';
 export class EquipmentDialog {
  private dialog=document.createElement('dialog');private launcher=document.createElement('button');
@@ -22,11 +22,11 @@ export class EquipmentDialog {
   const stats=equipmentStats(data.slots);this.dialog.querySelector('.inventory-totals')!.textContent=`Bônus: +${stats.hp} vida · ${Math.round(stats.resistance*100)}% proteção · +${Math.round(stats.damage*100)}% dano · +${Math.round(stats.charge*100)}% Q`;
   const equipped=this.dialog.querySelector('.inventory-equipped')!;
   for(const slot of EQUIPMENT_SLOTS){const id=data.slots[slot],button=document.createElement('button');button.type='button';button.dataset.slot=slot;button.className='inventory-slot';
-   if(id)button.append(this.icon(id));const label=document.createElement('span');label.textContent=SLOT_NAMES[slot];button.append(label);button.title=id?EQUIPMENT[id].name:'Sem equipamento';
+   if(id)button.append(this.icon(id));const label=document.createElement('span');label.textContent=SLOT_NAMES[slot];button.append(label);button.title=id?equipmentName(id,this.classId):'Sem equipamento';
    button.onclick=()=>{this.selected=data.equipped?.[slot]??'';this.showDetails();};equipped.append(button);}
   const grid=this.dialog.querySelector('.inventory-grid')!;
   for(let i=0;i<BAG_SIZE;i++){const item=bag[i],button=document.createElement('button');button.type='button';button.className='inventory-cell';
-   button.disabled=!item;if(item){button.dataset.item=item.id;button.dataset.uid=item.uid;button.style.setProperty('--rarity',RARITY_COLORS[EQUIPMENT[item.id].rarity]);button.append(this.icon(item.id));button.title=EQUIPMENT[item.id].name;button.setAttribute('aria-label',button.title);button.onclick=()=>{this.selected=item.uid;this.showDetails();};}else button.setAttribute('aria-label','Espaço vazio');grid.append(button);}
+   button.disabled=!item;if(item){button.dataset.item=item.id;button.dataset.uid=item.uid;button.style.setProperty('--rarity',RARITY_COLORS[EQUIPMENT[item.id].rarity]);button.append(this.icon(item.id));button.title=equipmentName(item.id,this.classId);button.setAttribute('aria-label',button.title);button.onclick=()=>{this.selected=item.uid;this.showDetails();};}else button.setAttribute('aria-label','Espaço vazio');grid.append(button);}
   this.showDetails();
  }
  private showDetails():void {
@@ -35,10 +35,10 @@ export class EquipmentDialog {
   for(const cell of Array.from(this.dialog.querySelectorAll<HTMLElement>('[data-uid]')))cell.classList.toggle('selected',cell.dataset.uid===this.selected);
   if(!item){panel.textContent='Selecione um equipamento para ver atributos e comparar.';return;}
   const d=EQUIPMENT[item.id],worn=data.equipped?.[d.slot]===item.uid;
-  const title=document.createElement('h2');title.textContent=d.name;title.style.color=RARITY_COLORS[d.rarity];panel.append(this.icon(item.id),title);
+  const title=document.createElement('h2');title.textContent=equipmentName(item.id,this.classId);title.style.color=RARITY_COLORS[d.rarity];panel.append(this.icon(item.id),title);
   const kind=document.createElement('small');kind.textContent=`${SLOT_NAMES[d.slot]} · ${d.rarity} · ${worn?'equipado':'na mochila'}`;panel.append(kind);
   const desc=document.createElement('p');desc.textContent=d.description;panel.append(desc);
-  const current=data.slots[d.slot],comparison=document.createElement('p');comparison.textContent=`Atual: ${current?EQUIPMENT[current].name:'sem equipamento'}`;panel.append(comparison);
+  const current=data.slots[d.slot],comparison=document.createElement('p');comparison.textContent=`Atual: ${current?equipmentName(current,this.classId):'sem equipamento'}`;panel.append(comparison);
   const before=equipmentStats(data.slots),after=equipmentStats({...data.slots,[d.slot]:worn?undefined:item.id});
   const delta=document.createElement('p');delta.className='inventory-comparison';delta.textContent=(Object.keys(before) as (keyof typeof before)[]).filter(k=>Math.abs(after[k]-before[k])>.0001).map(k=>{const value=k==='hp'?after[k]-before[k]:Math.round((after[k]-before[k])*100);return `${value>0?'+':''}${value}${k==='hp'?' vida':k==='resistance'?'% proteção':k==='damage'?'% dano':'% Q'}`;}).join(' · ')||'Mesmos atributos';panel.append(delta);
   const button=document.createElement('button');button.type='button';button.dataset.equip=item.uid;button.textContent=worn?'RETIRAR PARA A MOCHILA':'EQUIPAR';button.onclick=()=>{

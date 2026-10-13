@@ -1,0 +1,23 @@
+{
+  "errors": [],
+  "method": "Real Node WebSocket clients against the local relay",
+  "unknownRegionsRejected": true,
+  "invalidClassRejected": true,
+  "fullRoomRejected": true,
+  "inputNormalized": true,
+  "authorityAndRegionEnforced": true,
+  "hostWorldRelayed": true,
+  "guestSlotReusable": true,
+  "hostEndBroadcast": true,
+  "badJsonHandled": true,
+  "staleTransportReplacement": true,
+  "reservationExpires": true,
+  "allCampaignRegionsAccepted": true,
+  "lootReceiptsAndLateJoin": true,
+  "equipmentSlotsValidated": true,
+  "travelEpochsAndAuthority": true,
+  "rewardReceiptsWithoutReplay": true,
+  "bothRolesReconnected": true,
+  "reservedSlot": true,
+  "passed": true
+}

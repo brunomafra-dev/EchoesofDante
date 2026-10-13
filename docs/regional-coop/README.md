@@ -1,6 +1,10 @@
 # Expedições em dupla · 0.1.78
 
-## Revisão atual · 0.1.89 · protocolo 5
+## Revisão atual · 0.1.90 · protocolo 6
+
+O Manipulador Astral integra a mesma campanha, como anfitrião ou visitante, com energia/elemento/campos autoritativos e equipamentos pessoais. A sala continua para **duas pessoas**, escolhidas entre Guerreiro, Hunter e Astral. Quatro participantes e a restrição de uma classe de cada aguardam a etapa 7. [Kit, teste e estado de publicação](../astral/README.md).
+
+### Progressão e visitante · 0.1.89
 
 Visitante com nível/HP/aprimoramentos pessoais, poses reais de combate, recargas autoritativas, mira local e interpolação visual limitada. Atualização de perfil não cancela a carga. Ambos acionam portais; clicar no portal ativo próximo também usa INTERACT. Morte de um aliado não encerra o boss; derrota da dupla reinicia, vitória recupera o caído. Penalidade pessoal de 10% dos créditos por morte, sem perder XP/material/itens. [Curva, laboratório e QA](../progression-threat/README.md). É necessário publicar frontend e relay juntos; blueprint mantém deploy por commit.
 

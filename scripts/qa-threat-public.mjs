@@ -10,18 +10,18 @@ for(const p of[h,g]){p.setDefaultTimeout(65000);p.setDefaultNavigationTimeout(90
 const until=async test=>{for(let i=0;i<300;i++){if(test())return;await g.waitForTimeout(100)}throw Error('Published snapshot condition timed out')};
 const key=async(k,ms)=>{await g.keyboard.down(k);await g.waitForTimeout(ms);await g.keyboard.up(k);await g.waitForTimeout(180)};
 try{
- report.health=await(await fetch('https://echoes-of-dante-rooms.onrender.com/coop/health',{signal:AbortSignal.timeout(60000)})).json();assert.equal(report.health.protocol,5);
+ report.health=await(await fetch('https://echoes-of-dante-rooms.onrender.com/coop/health',{signal:AbortSignal.timeout(60000)})).json();assert.equal(report.health.protocol,6);
  await h.goto(base);await h.locator('.threat-lab').waitFor();await h.locator('.threat-lab').evaluate(e=>e.open=false);await h.locator('.expedition-credits').waitFor();await h.keyboard.press('Escape');
  await h.locator('[data-shell="coop"]').click();await h.locator('[data-shell="coop-create"]').click();await h.locator('[name="coop-invite"]').waitFor();
  const link=await h.locator('[name="coop-invite"]').inputValue();const u=new URL(link);assert.equal(u.pathname,'/threat-playtest.html');assert.equal(u.searchParams.get('class'),'hunter');
  await g.goto(link);await g.locator('[data-shell="play-character"]').waitFor();assert.ok(!joined.some(m=>m.role==='guest'));await g.locator('[data-shell="play-character"]').click();await g.locator('.threat-lab').evaluate(e=>e.open=false);
- await until(()=>world?.partner&&joined.some(m=>m.role==='guest'));assert.ok(joined.every(m=>m.protocol===5));report.checks.push('Public protocol 5, real room creation, isolated invite and character confirmation');
+ await until(()=>world?.partner&&joined.some(m=>m.role==='guest'));assert.ok(joined.every(m=>m.protocol===6));report.checks.push('Public protocol 6, real room creation, isolated invite and character confirmation');
  const before={...world.partner};await key('d',320);await until(()=>world.partner.x>before.x+20);await key('Space',100);await until(()=>world.partner.dashReady<.6);await g.waitForTimeout(1800);
  await g.keyboard.down('q');await until(()=>world.partner.phase==='CHARGING'&&world.partner.level>.2);await g.keyboard.up('q');await until(()=>world.partner.chargeReady<.4);report.checks.push('Published guest movement, Dash with cooldown and hold/release Q');
  await g.screenshot({path:out+'/guest.png'});report.frames=frames;report.pose={maxHp:world.partner.maxHp,dashCooldown:world.partner.dashCooldown,chargeCooldown:world.partner.chargeCooldown};
  assert.equal(await h.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('echoes-of-dante.')).length),0);assert.equal(await g.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('echoes-of-dante.')).length),0);
  report.checks.push('Published laboratory preserves real localStorage');assert.deepEqual(report.errors,[]);report.passed=true;
-}catch(e){report.passed=false;report.status=report.health?.protocol!==5?'blocked-relay-deployment':'failed';report.failure=String(e);throw e}finally{
+}catch(e){report.passed=false;report.status=report.health?.protocol!==6?'blocked-relay-deployment':'failed';report.failure=String(e);throw e}finally{
  try{if(!await h.locator('.application-shell[open]').count())await h.keyboard.press('Escape');if(await h.locator('[data-shell="coop"]').count())await h.locator('[data-shell="coop"]').click({timeout:2000});if(await h.locator('[data-shell="coop-leave"]').count())await h.locator('[data-shell="coop-leave"]').click({timeout:2000})}catch{}
  await browser.close();await writeFile(out+'/public.json',JSON.stringify(report,null,2));
 }

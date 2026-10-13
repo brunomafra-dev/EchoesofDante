@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import {EQUIPMENT,EQUIPMENT_IDS,type EquipmentSnapshot} from '../config/equipment';
+import {equipmentName,EQUIPMENT,EQUIPMENT_IDS,type EquipmentSnapshot} from '../config/equipment';
 import {MATERIAL_NAMES,REGION_NAMES,recipe,salePrice,POTION_PRICE,type EconomySnapshot} from '../config/economy';
 import type {ServiceAction} from '../systems/BaseEconomy';
 import {itemIcon} from '../systems/EquipmentDrops';
@@ -39,7 +39,7 @@ export class BasePanel{
    for(const id of EQUIPMENT_IDS){
     const d=EQUIPMENT[id],r=recipe(id),owned=e.materials[r.material],row=document.createElement('div');row.className='base-item base-recipe';row.dataset.recipe=id;
     const img=document.createElement('img');img.src=`${import.meta.env.BASE_URL}assets/items/${itemIcon(id,s.classId)}.png`;img.alt='';row.append(img);
-    const info=document.createElement('div');info.className='recipe-info';const name=document.createElement('strong');name.textContent=d.name;const description=document.createElement('small');description.textContent=d.description;info.append(name,description);
+    const info=document.createElement('div');info.className='recipe-info';const name=document.createElement('strong');name.textContent=equipmentName(id,s.classId);const description=document.createElement('small');description.textContent=d.description;info.append(name,description);
     const costs=document.createElement('div');costs.className='recipe-costs';
     for(const [label,needed,have] of [['créditos',r.credits,e.credits],[MATERIAL_NAMES[r.material],r.amount,owned]] as const){const cost=document.createElement('span');cost.dataset.available=String(have>=needed);cost.textContent=`${have>=needed?'✓':'×'} ${needed} ${label} · você tem ${have.toLocaleString('pt-BR')}`;costs.append(cost)}
     info.append(costs);const status=document.createElement('small');status.className='recipe-status';const missing=[];
@@ -48,7 +48,7 @@ export class BasePanel{
     this.button(row,'FABRICAR',()=>this.operation({kind:'craft',id}),missing.length>0||bag.length>=24);content.append(row);
    }
    const h2=document.createElement('h2');h2.textContent='Peças da mochila · equipadas ficam protegidas';content.append(h2);
-   for(const item of bag){const row=document.createElement('div');row.className='base-item';const p=document.createElement('span');p.textContent=EQUIPMENT[item.id].name;row.append(p);this.button(row,`VENDER · ${salePrice(item.id)}`,()=>this.operation({kind:'sell',uid:item.uid}));this.button(row,'DESMONTAR · 2 MATERIAIS',()=>this.operation({kind:'dismantle',uid:item.uid}));content.append(row)}
+   for(const item of bag){const row=document.createElement('div');row.className='base-item';const p=document.createElement('span');p.textContent=equipmentName(item.id,s.classId);row.append(p);this.button(row,`VENDER · ${salePrice(item.id)}`,()=>this.operation({kind:'sell',uid:item.uid}));this.button(row,'DESMONTAR · 2 MATERIAIS',()=>this.operation({kind:'dismantle',uid:item.uid}));content.append(row)}
   }
   if(this.tab==='map'||this.tab==='expedition'){
    const depart=(area:keyof typeof REGION_NAMES,resume=false)=>{if(this.travel(area,resume))this.dialog.close();else{this.notice='Não foi possível viajar. Boss ativo, personagem caído ou sala desconectada bloqueiam o retorno.';this.render()}};
@@ -65,8 +65,8 @@ export class BasePanel{
   }
   if(base&&this.tab==='expedition'){
    const h=document.createElement('h2');h.textContent=`Cofre pessoal · ${e.stash.length}/48`;content.append(h);
-   for(const item of bag)this.button(content,`GUARDAR · ${EQUIPMENT[item.id].name}`,()=>this.operation({kind:'deposit',uid:item.uid}),e.stash.length>=48);
-   for(const item of e.stash)this.button(content,`RETIRAR · ${EQUIPMENT[item.id].name}`,()=>this.operation({kind:'withdraw',uid:item.uid}),bag.length>=24);
+   for(const item of bag)this.button(content,`GUARDAR · ${equipmentName(item.id,s.classId)}`,()=>this.operation({kind:'deposit',uid:item.uid}),e.stash.length>=48);
+   for(const item of e.stash)this.button(content,`RETIRAR · ${equipmentName(item.id,s.classId)}`,()=>this.operation({kind:'withdraw',uid:item.uid}),bag.length>=24);
   }
   this.dialog.querySelector('.base-notice')!.textContent=this.notice;
  }

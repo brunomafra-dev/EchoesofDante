@@ -2,12 +2,17 @@ import assert from 'node:assert/strict';
 import { mkdir,writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 const out=process.argv[2]??'docs/campaign-equipment/qa';await mkdir(out,{recursive:true});
+const hostClass=process.env.QA_HOST_CLASS??'warrior',guestClass=process.env.QA_GUEST_CLASS??'hunter';
 const browser=await chromium.launch({channel:'chrome',headless:true});
 const hc=await browser.newContext({viewport:{width:1280,height:720}}),gc=await browser.newContext({viewport:{width:1280,height:720},hasTouch:true});
-await gc.addInitScript(()=>{
+await hc.addInitScript(classId=>{
+ if(classId==='warrior'||localStorage.getItem('qa-character'))return;localStorage.setItem('qa-character','1');
+ localStorage.setItem('echoes-of-dante.characters.v1',JSON.stringify({schema:1,selected:'host',characters:[{id:'host',name:'Anfitriao',classId,sex:'male',createdAt:1}]}));
+},hostClass);
+await gc.addInitScript(classId=>{
  if(localStorage.getItem('qa-character'))return;localStorage.setItem('qa-character','1');
- localStorage.setItem('echoes-of-dante.characters.v1',JSON.stringify({schema:1,selected:'visitor',characters:[{id:'visitor',name:'Visitante',classId:'hunter',createdAt:1}]}));
-});
+ localStorage.setItem('echoes-of-dante.characters.v1',JSON.stringify({schema:1,selected:'visitor',characters:[{id:'visitor',name:'Visitante',classId,sex:'female',createdAt:1}]}));
+},guestClass);
 const h=await hc.newPage(),g=await gc.newPage();const report={method:'Two independent Chrome contexts with real local WebSockets; DEV positioning, chapter setup and shortened boss health used for coverage. Keyboard/mouse, touch viewport and Gamepad API mock; no physical devices.',errors:[],areas:[],bosses:[],cycles:[]};
 for(const p of [h,g]){p.setDefaultTimeout(45000);p.setDefaultNavigationTimeout(90000);p.on('pageerror',e=>report.errors.push(e.message));p.on('response',r=>{if(r.status()>=400)report.errors.push(r.url());});}
 const ready=p=>p.waitForFunction(()=>window.__danteGame?.scene.getScene('Game')?.player?.view.active);
@@ -29,9 +34,10 @@ async function position(x,y,guest=false){await completeMastery();await h.evaluat
 try{
  await h.goto('http://localhost:5184/?qa=play');await ready(h);await g.goto('http://localhost:5184/?qa=play');await ready(g);
  // Direct connection exercises the production protocol; menu/invite UX has its own regression QA.
- await h.evaluate(async()=>{const s=window.__danteGame.scene.getScene('Game');s.saveProgress();await window.__danteCoop.connect('ws://localhost:5184/coop','create',{name:'Anfitrião',classId:'warrior'},'forest');});
+ await h.evaluate(async()=>{const s=window.__danteGame.scene.getScene('Game');s.saveProgress();await window.__danteCoop.connect('ws://localhost:5184/coop','create',{name:'Anfitrião',classId:s.classId},'forest');});
  const code=await h.evaluate(()=>window.__danteCoop.code);
- await g.evaluate(async code=>{window.__danteGame.scene.getScene('Game').saveProgress();await window.__danteCoop.connect('ws://localhost:5184/coop','join',{name:'Visitante',classId:'hunter'},'forest',code);},code);await arrive('forest');
+ await g.evaluate(async code=>{const s=window.__danteGame.scene.getScene('Game');s.saveProgress();await window.__danteCoop.connect('ws://localhost:5184/coop','join',{name:'Visitante',classId:s.classId},'forest',code);},code);await arrive('forest');
+ report.classes={host:hostClass,guest:guestClass};
  // Visitor investigates an Echo, then all existing early-campaign interaction gates.
  for(const[x,y]of[[560,700],[1870,900],[1500,360]]){await position(x,y,true);await key(g,'e');await h.waitForTimeout(500);await completeMastery();}
  assert.equal(await h.evaluate(()=>window.__danteGame.scene.getScene('Game').progression.echoes.size),3);
@@ -54,7 +60,7 @@ try{
  for(const p of[h,g]){await p.evaluate(()=>window.__danteGame.scene.getScene('Game').openEquipment());await p.locator(`[data-item="${drop.id}"]`).click();await p.locator('[data-equip]').click();await p.locator('.equipment-dialog [data-close]').click();}
  await g.waitForTimeout(400);
  assert.equal((await state(h)).equipment.slots.weapon,drop.id);assert.equal((await state(g)).equipment.slots.weapon,drop.id);
- assert.equal((await state(h)).maxHp,await h.evaluate(()=>window.__danteGame.scene.getScene('Game').progression.maxHp));
+ assert.equal((await state(h)).maxHp,await h.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');return Math.round(s.progression.maxHp*(s.classId==='astral'?.85:s.classId==='hunter'?.8:1));}));
  report.equipmentBothPlayers=true;
  // Every connected area, and every boss's actual telegraph / phase / reward presentation.
  for(const[area,keyName,entry]of[['warden','warden',[910,760]],['sandpit','soterrado',[900,850]],['icenest','vesper',[920,990]]]){

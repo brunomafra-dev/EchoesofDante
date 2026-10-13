@@ -1,12 +1,18 @@
 # Echoes of Dante
 
+## Manipulador Astral — etapa 5 · 0.1.90
+
+Terceira classe jogável: manopla, pulso de médio alcance, Energia Astral e campos de energia/fogo/água/terra. **F / Y / botão** alterna elemento; **Q / LT / CAMPO: segurar → mirar → soltar**. Apresentações masculina/feminina, equipamento e campanha solo/dupla. [Relatório e arte](docs/astral/README.md) · [Teste reservado](https://echosofdante.vercel.app/astral-playtest.html?region=forest&kit=basic&sex=female&v=0.1.90). Frontend e relay exigem protocolo 6; a sala permanece limitada a dois jogadores.
+
+Execução autorizada pelo usuário durante sua viagem; playtests humanos das etapas 4/5 pendentes. O Vinculador ainda não é jogável.
+
 ## Progressão e cooperativo — etapa 4 · 0.1.89
 
-Curva de ameaça por região, XP regional, penalidade de morte de 10% dos créditos e correções de portais, habilidades, kit pessoal e morte da dupla. [Relatório](docs/progression-threat/README.md) · [Teste reservado](https://echosofdante.vercel.app/threat-playtest.html?region=forest&kit=basic&v=0.1.89). Base/retorno aprovados; esta etapa aguarda playtest humano antes do Astral. Frontend e relay cooperativo requerem protocolo 5.
+Curva de ameaça por região, XP regional, penalidade de morte de 10% dos créditos e correções de portais, habilidades, kit pessoal e morte da dupla. [Relatório](docs/progression-threat/README.md) · [Teste reservado](https://echosofdante.vercel.app/threat-playtest.html?region=forest&kit=basic&v=0.1.89). Base/retorno aprovados; avaliação humana desta etapa permanece pendente. A etapa 5 foi autorizada separadamente durante a viagem do usuário.
 
 ## Fundação do RPG — plano aprovado
 
-[Plano de implementação e checklist](docs/RPG_FOUNDATION_ROADMAP.md): personagens modulares, equipamentos visíveis, inventário, base de pouso, economia, Astral, Vinculador, cooperativo de quatro jogadores e prólogo. **Etapas 0–3 aprovadas; etapa 4 entregue para validação.** As funcionalidades futuras estão identificadas como planejadas.
+[Plano de implementação e checklist](docs/RPG_FOUNDATION_ROADMAP.md): personagens modulares, equipamentos visíveis, inventário, base de pouso, economia, Astral, Vinculador, cooperativo de quatro jogadores e prólogo. **Etapas 0–3 aprovadas; etapas 4/5 aguardam avaliação humana.** As funcionalidades futuras estão identificadas como planejadas.
 
 ## Expedição glacial · 0.1.76
 

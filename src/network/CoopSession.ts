@@ -12,9 +12,9 @@ import type { ExpeditionReturn } from '../systems/ExpeditionReturn';
 export const COOP_AREAS: readonly JourneyArea[] = ['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest'];
 const CONNECTIONS: Partial<Record<JourneyArea, readonly JourneyArea[]>> = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave'] };
 export type PartyProfile = {name: string; classId: PlayableClass;sex?:import('../config/appearance').CharacterSex;bagFree?:number;potions?:number;equipment?:EquipmentSnapshot['slots'];build?:Pick<ProgressionSnapshot,'xp'|'abilityUpgrades'|'bossRewards'>};
-export type PartyInput = {x:number;y:number;aim:number;attack:boolean;dash:boolean;charge:boolean;held:boolean;release:boolean;cancel:boolean;interact:boolean;restart:boolean};
+export type PartyInput = {x:number;y:number;aim:number;attack:boolean;dash:boolean;charge:boolean;held:boolean;release:boolean;cancel:boolean;interact:boolean;restart:boolean;element?:boolean};
 export const NO_INPUT: PartyInput={x:0,y:0,aim:0,attack:false,dash:false,charge:false,held:false,release:false,cancel:false,interact:false,restart:false};
-export type PartyPose={x:number;y:number;aim:number;hp:number;maxHp:number;dead:boolean;dash:boolean;phase:string;level:number;firing:boolean;dashReady?:number;chargeReady?:number;momentum?:number;beam?:HunterBeamPose;strike?:SaberPose;releaseProgress?:number;velocity?:{x:number;y:number};deathId?:string;dashCooldown?:number;chargeCooldown?:number;swingProgress?:number;wave?:{x:number;y:number;rotation:number;width:number;height:number}};
+export type PartyPose={x:number;y:number;aim:number;hp:number;maxHp:number;dead:boolean;dash:boolean;phase:string;level:number;firing:boolean;dashReady?:number;chargeReady?:number;momentum?:number;astral?:import('../combat/AstralCombat').AstralPose;beam?:HunterBeamPose;strike?:SaberPose;releaseProgress?:number;velocity?:{x:number;y:number};deathId?:string;dashCooldown?:number;chargeCooldown?:number;swingProgress?:number;wave?:{x:number;y:number;rotation:number;width:number;height:number}};
 export type CreatureLayer={texture:string;frame:string;x:number;y:number;width:number;height:number;rotation:number;flip:boolean;depth:number;originX:number;originY:number};
 export type CreaturePose={id:number;species:string;x:number;y:number;hp:number;maxHp:number;radius:number;texture:string;frame:string;flip:boolean;size:number;rotation:number;
  warning:boolean;angle:number;warningX:number;warningY:number;warningWidth:number;warningHeight:number;layers?:CreatureLayer[];projectile?:{x:number;y:number;rotation:number}};
@@ -63,7 +63,7 @@ export class CoopSession {
    if(this.socket!==ws)return;
    let m;try{m=JSON.parse(event.data);}catch{return;}
    if(m.type==='joined'&&(m.role==='host'||m.role==='guest')){
-    if(m.protocol!==5){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização da campanha. Sua jornada solo continua disponível.');reject(new Error(this.message));return;}
+    if(m.protocol!==6){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização da campanha. Sua jornada solo continua disponível.');reject(new Error(this.message));return;}
     joined=true;clearTimeout(this.timeout);this.role=m.role;this.connected=true;this.token=m.token;this.code=m.code;this.epoch=m.epoch;
     this.peer=m.peer;this.peerConnected=m.peerConnected===true;this.input={...NO_INPUT};this.inputAt=0;this.world=undefined;
     this.area=m.area;this.travelling=false;
@@ -94,7 +94,7 @@ export class CoopSession {
     this.message='Travessia em dupla · aguardando a nova região.';this.changed();
    }else if(m.type==='service-request'&&this.role==='host'){if(m.action==='potion')this.potionRequest=true;else if(m.action==='return')this.baseRequest=true;else if(m.action==='heal')this.healRequest=true;
    }else if(m.type==='input'&&this.role==='host'&&m.epoch===this.epoch){
-    for(const key of ['dash','charge','release','cancel','interact','restart'] as const)m.input[key] ||= this.input[key];
+    for(const key of ['dash','charge','release','cancel','interact','restart','element'] as const)m.input[key] ||= this.input[key];
     this.input=m.input;this.inputAt=performance.now();
    }else if(m.type==='world'&&this.role==='guest'&&m.epoch===this.epoch&&m.world&&COOP_AREAS.includes(m.world.area)&&Array.isArray(m.world.enemies)&&m.world.enemies.length<=32){
     this.world=m.world;this.worldAt=performance.now();this.credit(m.receipt,m.total,m.items,m.resources,m.bosses);
@@ -141,7 +141,7 @@ export class CoopSession {
   this.localMenu=paused;
   if(this.role==='host'&&this.connected)this.socket?.send(JSON.stringify({type:'pause',paused}));
  }
- consumeEdges():void{for(const key of ['dash','charge','release','cancel','interact','restart'] as const)this.input[key]=false;}
+ consumeEdges():void{for(const key of ['dash','charge','release','cancel','interact','restart','element'] as const)this.input[key]=false;}
  disconnect(restoreGuest=true):boolean{
   const guest=this.role==='guest';
   if(guest&&this.rewardTotal>0)this.credit(this.receipt,this.rewardTotal);

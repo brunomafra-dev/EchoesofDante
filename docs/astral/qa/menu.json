@@ -1,0 +1,17 @@
+{
+  "method": "Chrome headless; actual creation UI and reload in an isolated browser profile.",
+  "errors": [],
+  "profiles": [
+    {
+      "classId": "astral",
+      "sex": "male",
+      "body": "dressed-astral-male-1-all"
+    },
+    {
+      "classId": "astral",
+      "sex": "female",
+      "body": "dressed-astral-female-1-all"
+    }
+  ],
+  "passed": true
+}

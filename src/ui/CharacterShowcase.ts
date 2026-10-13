@@ -43,14 +43,14 @@ export class CharacterShowcase {
   private ready = false;
   private readonly bodyName: string;
   constructor(readonly classId: CharacterClass, readonly sex: CharacterSex = characterSex(classId)) {
-    this.bodyName = `${classId==='hunter'?hunterBody(sex):warriorBody(sex,'front')}.png`;
+    this.bodyName = `${classId==='astral'?`wardrobe-astral-${sex}-none`:classId==='hunter'?hunterBody(sex):warriorBody(sex,'front')}.png`;
     this.canvas.className = 'showcase-canvas'; this.canvas.setAttribute('role', 'img');
-    this.canvas.setAttribute('aria-label', classId === 'hunter' ? 'Star Hunter com rifle de pulso' : 'Guerreiro Galáctico com sabre de energia');
+    this.canvas.setAttribute('aria-label', classId === 'astral' ? 'Manipulador Astral com manopla tecnológica' : classId === 'hunter' ? 'Star Hunter com rifle de pulso' : 'Guerreiro Galáctico com sabre de energia');
     const ratio = Math.min(2, window.devicePixelRatio || 1);
     this.canvas.width = 320 * ratio; this.canvas.height = 360 * ratio;
     this.ctx = this.canvas.getContext('2d')!; this.ctx.scale(ratio, ratio);
     this.caption.className = 'showcase-caption'; this.caption.textContent = 'PREPARADO PARA DANTE';
-    const names = classId === 'hunter' ? [this.bodyName, 'star-hunter-weapon-v2.png','hunter-starter-weapon.png','expedition-arm-kit.png'] :
+    const names = classId === 'astral'?[this.bodyName,'astral-starter-weapon.png','expedition-arm-kit.png']:classId === 'hunter' ? [this.bodyName, 'star-hunter-weapon-v2.png','hunter-starter-weapon.png','expedition-arm-kit.png'] :
       [this.bodyName, 'expedition-arm-kit.png', 'warrior-starter-weapon.png'];
     void Promise.all(names.map(async name => this.loaded.set(name, await image(name)))).then(async () => {
       if (this.disposed) return;
@@ -59,7 +59,7 @@ export class CharacterShowcase {
       const registration=await fetch(base+'character-arm-registration.json').then(r=>r.json());
       this.armBounds=registration['expedition-arm-kit'];
       const shoulders=await fetch(base+'character-shoulder-registration.json').then(r=>r.json());
-      this.shoulderSockets=shoulders[`${classId}-${sex}`];
+      this.shoulderSockets=classId==='astral'?await fetch(base+'astral-shoulders.json').then(r=>r.json()).then(d=>d[sex]):shoulders[`${classId}-${sex}`];
       if(this.disposed)return;
       this.ready = true; this.paint(-1);
       if (this.pendingDemo) this.play(this.pendingManual);
@@ -92,7 +92,8 @@ export class CharacterShowcase {
     const phase = dash ? 'dash' : charge ? 'charge' : release ? 'release' : strike ? 'attack' : 'idle';
     if (this.canvas.dataset.demoPhase !== phase) {
       this.canvas.dataset.demoPhase = phase;
-      this.caption.textContent = this.classId === 'hunter' ?
+      this.caption.textContent = this.classId === 'astral' ?
+        ({idle:'ENERGIA ASTRAL · CONTROLE',attack:'PULSO DA MANOPLA',dash:'DESLOCAMENTO EVASIVO',charge:'PROJETANDO UM CAMPO',release:'RESPOSTA ELEMENTAL'}[phase]):this.classId === 'hunter' ?
         ({ idle: 'PRECISÃO · MOBILIDADE', attack: 'RIFLE DE PULSO', dash: 'PASSO DE FASE', charge: 'CARREGANDO O FEIXE', release: 'FEIXE PERFURANTE' }[phase]) :
         ({ idle: 'FORÇA · RESISTÊNCIA', attack: 'SABRE DE ENERGIA', dash: 'ESQUIVA DO VAZIO', charge: 'CARGA CINÉTICA', release: 'ONDA CINÉTICA' }[phase]);
     }
@@ -102,7 +103,7 @@ export class CharacterShowcase {
     c.fillStyle = '#00000055'; c.beginPath(); c.ellipse(0, 39, 28, 8, 0, 0, Math.PI * 2); c.fill();
     c.fillStyle = '#050c0a88'; c.beginPath(); c.ellipse(0, 39, 16, 4, 0, 0, Math.PI * 2); c.fill();
     if (dash) { c.strokeStyle = '#5fe6d850'; c.lineWidth = 2; c.beginPath(); c.moveTo(26, 15); c.lineTo(51, 15); c.moveTo(22, 23); c.lineTo(40, 23); c.stroke(); }
-    if (this.classId === 'hunter') this.hunter(t, strike, dash, charge, release);
+    if(this.classId==='astral')this.astral(t,strike,dash,charge,release);else if (this.classId === 'hunter') this.hunter(t, strike, dash, charge, release);
     else this.warrior(t, strike, dash, charge, release);
     if (charge) {
       const progress = (t - 2) / 1.05;
@@ -114,6 +115,14 @@ export class CharacterShowcase {
   private sprite(name: string, frame: number, columns: number, size: number, x: number, y: number, w: number, h: number): void {
     const img = this.loaded.get(name); if (!img) return;
     this.ctx.drawImage(img, frame % columns * size, Math.floor(frame / columns) * size, size, size, x, y, w, h);
+  }
+  private astral(t:number,strike:boolean,dash:boolean,charge:boolean,release:boolean):void{
+    const c=this.ctx,frame=dash?[1,0,2,0][Math.floor((t-1.15)*8)%4]:0,sockets=this.shoulderSockets[frame];
+    this.sprite(this.bodyName,frame,4,256,-64,-83,128,128);
+    const x=sockets.right.x/2-64,y=sockets.right.y/2-83,hand={x:x+26,y:y+12};
+    for(const pass of [0,1]){this.armPass=pass;this.arm('astral',x,y,hand.x,hand.y,-1);this.arm('astral',sockets.left.x/2-64,sockets.left.y/2-83,sockets.left.x/2-70,sockets.left.y/2-59,1);}
+    const glove=this.loaded.get('astral-starter-weapon.png');if(glove)c.drawImage(glove,hand.x-11,hand.y-9,23,18);
+    if(strike||charge||release){c.fillStyle='#5fe6d8';c.beginPath();c.arc(hand.x+12+(release?55:0),hand.y,release?22:charge?5+(t-2)*7:5,0,Math.PI*2);c.fill();}
   }
   private hunter(t: number, firing: boolean, dash: boolean, charge: boolean, release: boolean): void {
     const c = this.ctx, aim = .22, pose = hunterRiflePose(aim), cos = Math.cos(aim), sin = Math.sin(aim);

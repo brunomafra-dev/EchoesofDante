@@ -8,10 +8,10 @@ export type InputMethod = 'keyboard' | 'gamepad' | 'touch';
 
 // One action surface for the scene, regardless of which device supplies it.
 export class Controls {
-  setCombatPresentation(hunter: boolean): void {
-    this.touch.setCombatPresentation(hunter); this.touchPreview.setCombatPresentation(hunter);
+  setCombatPresentation(hunter: boolean, astral = false): void {
+    this.touch.setCombatPresentation(hunter, astral); this.touchPreview.setCombatPresentation(hunter, astral);
   }
-  private keys: Record<'W' | 'A' | 'S' | 'D' | 'Q' | 'SPACE' | 'R' | 'E' | 'B', Phaser.Input.Keyboard.Key>;
+  private keys: Record<'W' | 'A' | 'S' | 'D' | 'Q' | 'SPACE' | 'R' | 'E' | 'B' | 'F', Phaser.Input.Keyboard.Key>;
   private touch: TouchControls;
   private touchPreview: TouchAimPreview;
   private lastAim = 0;
@@ -24,11 +24,15 @@ export class Controls {
   private lastPointerX = -1;
   private lastPointerY = -1;
   private padRecords = false;
+  private elementQueued=false;
+  private padElement=false;
+  queueElement():void{this.elementQueued=true;}
+  get elementPressed():boolean{const queued=this.elementQueued;this.elementQueued=false;return queued||Phaser.Input.Keyboard.JustDown(this.keys.F);}
   private recordsEdge = false;
   private padSuppressed = false;
 
   constructor(private scene: Phaser.Scene, private onGesture: () => void, private onAttack: () => void) {
-    this.keys = scene.input.keyboard!.addKeys('W,A,S,D,Q,SPACE,R,E,B') as typeof this.keys;
+    this.keys = scene.input.keyboard!.addKeys('W,A,S,D,Q,SPACE,R,E,B,F') as typeof this.keys;
     scene.input.mouse?.disableContextMenu();
     this.touch = new TouchControls(() => { this.method = 'touch'; this.onGesture(); }, () => {
       this.onAttack();
@@ -86,7 +90,9 @@ export class Controls {
   update(position: Vec2): void {
     const pad = navigator.getGamepads?.().find(gamepad => gamepad?.mapping === 'standard' && gamepad.connected);
     // Menu buttons must be released before they can become gameplay actions again.
-    if (this.padSuppressed && ![0, 5, 6, 7, 8, 9].some(index => (pad?.buttons[index]?.value ?? 0) > 0.5)) this.padSuppressed = false;
+    if (this.padSuppressed && ![0, 3, 5, 6, 7, 8, 9].some(index => (pad?.buttons[index]?.value ?? 0) > 0.5)) this.padSuppressed = false;
+    const element=!this.padSuppressed&&(pad?.buttons[3]?.value??0)>.5;
+    if(element&&!this.padElement)this.elementQueued=true;this.padElement=element;
     const records = !this.padSuppressed && (pad?.buttons[8]?.value ?? 0) > 0.5;
     this.recordsEdge = records && !this.padRecords;
     this.padRecords = records;
@@ -110,7 +116,7 @@ export class Controls {
       restart: buttons.restart && !this.padButtons.restart,
     };
     this.padButtons = buttons;
-    const anyButton = buttons.attack || buttons.dash || buttons.charge || buttons.interact || buttons.restart;
+    const anyButton = element || buttons.attack || buttons.dash || buttons.charge || buttons.interact || buttons.restart;
     const anyEdge = this.padEdges.attack || this.padEdges.dash || this.padEdges.charge ||
       this.padEdges.release || this.padEdges.interact || this.padEdges.restart;
     if (moveX || moveY || aimX || aimY || anyButton) {
@@ -129,7 +135,7 @@ export class Controls {
   get inputMethod(): InputMethod { return this.method; }
   get recordsPressed(): boolean { return this.recordsEdge || Phaser.Input.Keyboard.JustDown(this.keys.B); }
   cancelForRecords(): void {
-    this.padSuppressed = true;
+    this.elementQueued=false;this.padSuppressed = true;
     this.touch.cancelAll();
     this.touchPreview.update(undefined, { x: 0, y: 0 }, this.lastAim);
     this.scene.input.keyboard?.resetKeys();

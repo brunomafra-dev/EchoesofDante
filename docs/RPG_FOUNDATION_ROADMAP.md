@@ -174,8 +174,8 @@ Decisão do usuário em 09/10/2026: cada sprint deve terminar com um link espec�
 - [x] **Etapa 1 — Personagens modulares:** masculino/feminino, roupa, equipamento e junção dos braços aprovados pelo usuário após a versão 0.1.82 (“bem melhor”).
 - [x] **Etapa 2 — Inventário e loot:** 24 espaços, sete slots, drops pessoais, migração e persistência; miniaturas corrigidas em 0.1.84 e aprovadas pelo usuário (“Muito bom”). [Relatório/teste](inventory-loot/README.md).
 - [x] **Etapa 3 — Base e economia:** base, NPCs próprios, atlas, receitas, cofre, poções e retorno/retomada. Revisão 0.1.88 explicitamente validada pelo usuário antes da etapa 4. [Relatório/teste](base-economy/README.md).
-- [ ] **Etapa 4 — Progressão e ameaça:** entrega técnica 0.1.89: curva regional fixa, revisão de recompensas/custos, morte perde 10% dos créditos, auditoria do visitante cooperativo. [Relatório/teste](progression-threat/README.md). Aguardar validação humana da curva e dupla antes da etapa 5.
-- [ ] **Etapa 5 — Astral:** quatro elementos alternáveis, Energia Astral e campanha solo/cooperativa.
+- [ ] **Etapa 4 — Progressão e ameaça:** entrega técnica 0.1.89: curva regional fixa, revisão de recompensas/custos, morte perde 10% dos créditos, auditoria do visitante cooperativo. [Relatório/teste](progression-threat/README.md). Validação humana pendente; o usuário autorizou executar a etapa 5 durante sua viagem sem aguardar esse playtest.
+- [ ] **Etapa 5 — Astral:** entrega técnica 0.1.90: quatro elementos alternáveis, Energia Astral, manopla, apresentações masculina/feminina e integração solo/dupla. [Relatório/teste](astral/README.md). Aguardar avaliação humana das etapas 4/5 antes de iniciar o Vinculador.
 - [ ] **Etapa 6 — Vinculador:** companheiro, Vínculo e simbiose, com autonomia no solo.
 - [ ] **Etapa 7 — Equipe de quatro:** lobby, classes exclusivas, participantes individuais e bosses.
 - [ ] **Etapa 8 — Prólogo:** cinco takes, chegada, integração da base e refugiados.
@@ -253,3 +253,11 @@ Recursos/receitas da revisão 0.1.87 aprovados pelo usuário (“achei digno”)
 O usuário validou o último sprint e autorizou progressão/ameaça, acrescentando a auditoria do visitante cooperativo. Curva regional fixa de HP/dano/XP, economia anterior revisada e preservada, penalidade de 10% dos créditos por morte, aprimoramentos/kit pessoais, recargas e poses reais, portais acessíveis aos dois e derrota/vitória da dupla. Limite atual de nível 10 preservado. Relay protocolo 5; sem novos assets, mapas, classes ou sistemas de combate.
 
 [Relatório, QA e teste reservado](progression-threat/README.md). **Aguardar validação humana da curva e do cooperativo antes da etapa 5 — Astral.** As pendências históricas da etapa 3 acima foram superadas pela aprovação explícita.
+
+### Autorização de avanço durante a viagem e etapa 5 — 0.1.90
+
+Em 10/10/2026, o usuário informou que estaria ausente até terça-feira e autorizou explicitamente terminar a etapa 4 e implementar a etapa 5 sem perguntas ou validação intermediária. Essa autorização supera o bloqueio operacional acima; a avaliação humana da etapa 4 permanece pendente.
+
+Manipulador Astral com pulso de médio alcance, quatro campos elementais, Energia Astral e Q segurar/mirar/soltar; manopla e corpos originais por apresentação/vestimenta. Mesma infraestrutura de equipamento, dano, progressão, controles e campanha. Dupla ainda limitada a dois participantes, protocolo 6. [Arte, valores, QA e laboratório](astral/README.md).
+
+**Entrega técnica não significa aprovação humana.** Não avançar às etapas 6/7 sem a avaliação das etapas 4/5 após o retorno do usuário.

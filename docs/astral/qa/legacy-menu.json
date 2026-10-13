@@ -1,0 +1,9 @@
+{
+  "errors": [],
+  "method": "Chrome headless, actual selection UI and reload; no physical playtest.",
+  "creationAndReload": true,
+  "lettersAL": true,
+  "legacyDefaults": true,
+  "sexButtonPresent": true,
+  "passed": true
+}

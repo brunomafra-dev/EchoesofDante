@@ -18,14 +18,14 @@ import { equipmentStats } from '../config/equipment';
 import type { ExpeditionReturn } from '../systems/ExpeditionReturn';
 
 export type PartyBridge={
- area:JourneyArea;player:Player;controls:Controls;enemies:readonly Enemy[];obstacles:readonly Obstacle[];bounds?:MovementBounds;hud:Hud;hunter?:HunterCombat;
+ area:JourneyArea;player:Player;controls:Controls;enemies:readonly Enemy[];obstacles:readonly Obstacle[];bounds?:MovementBounds;hud:Hud;hunter?:HunterCombat;astral?:import('../combat/AstralCombat').AstralCombat;
  strike:import('../combat/Attack').SaberPose;releaseProgress:number;progression:ProgressionSnapshot;flags:JourneyFlags;phase:string;chargeLevel:number;firing:boolean;wave?:PartyPose['wave'];
  boss?:NetworkBoss;bossRender:(boss:PartyWorld['boss'])=>void;
  inputBlocked:boolean;bossActive:boolean;cue:(kind:'dash'|'charge'|'release'|'hurt')=>void;loot:PartyWorld['loot'];lootRender:(loot:PartyWorld['loot'])=>void;baseMaxHp:number;
  solidObstacles:readonly Obstacle[];
  signalPortal:boolean;resources:ResourceDrop[];resourceAwarded:ResourceDrop[];potionUsed:number;visited:JourneyArea[];returnStation:Vec2;expeditionReturn?:ExpeditionReturn;
  id:(enemy:Enemy)=>number|undefined;species:(enemy:Enemy)=>SpeciesId|undefined;
- hit:(targets:Enemy[],damage:number,angle:number,from:Vec2,heavy:boolean)=>void;
+ hit:(targets:Enemy[],damage:number,angle:number,from:Vec2,heavy:boolean,knockback?:number)=>void;
  prompt:(position:Vec2)=>{available:boolean;action:string};
  sync:(world:PartyWorld)=>boolean;render:(pose:PartyPose)=>void;
 };
@@ -38,7 +38,7 @@ export class PartyExpedition {
  private interaction?:Vec2;
  private attackQueued=false;
  private restartQueued=false;
- private queued={dash:false,charge:false,release:false,cancel:false,interact:false,restart:false};
+ private queued={dash:false,charge:false,release:false,cancel:false,interact:false,restart:false,element:false};
  private sendAt=0;
  private appliedWorld?:PartyWorld;
  private mirrorHost?:PartyActor;
@@ -90,7 +90,7 @@ export class PartyExpedition {
   if(!room.peer&&this.partner){this.partner.destroy();this.partner=undefined;this.peerName='';}
   if(room.peer&&(!this.partner||this.peerName!==room.peer.name)){
    this.partner?.destroy();const hp=a.baseMaxHp;
-   this.partner=new PartyActor(this.scene,room.peer,this.safePosition(),Math.round(hp*(room.peer.classId==='hunter'?.8:1))+equipmentStats(room.peer.equipment??{}).hp);this.peerName=room.peer.name;
+   this.partner=new PartyActor(this.scene,room.peer,this.safePosition(),Math.round(hp*(room.peer.classId==='hunter'?.8:room.peer.classId==='astral'?.85:1))+equipmentStats(room.peer.equipment??{}).hp);this.peerName=room.peer.name;
   }
   const input=room.peerConnected&&performance.now()-room.inputAt<500?room.input:{...NO_INPUT,cancel:true};
   if(this.partner){
@@ -107,7 +107,7 @@ export class PartyExpedition {
   if(now-this.sendAt<100)return;this.sendAt=now;
   const partner=this.partner?.snapshot();if(partner)partner.deathId=room.peerDeathId||undefined;
   const prompt=partner?a.prompt(partner):{available:false,action:'INVESTIGAR'};
-  const host:PartyPose={strike:a.strike,releaseProgress:a.releaseProgress,...a.player.position,aim:a.player.rotation,hp:a.player.hp,maxHp:a.player.maxHp,dead:a.player.isDead,dash:a.player.isDashing,phase:a.phase,level:a.chargeLevel,firing:a.firing,dashReady:a.player.dashProgress,dashCooldown:a.player.dashCooldown,wave:a.wave,beam:a.hunter?.beamPose()};
+  const host:PartyPose={strike:a.strike,releaseProgress:a.releaseProgress,...a.player.position,aim:a.player.rotation,hp:a.player.hp,maxHp:a.player.maxHp,dead:a.player.isDead,dash:a.player.isDashing,phase:a.phase,level:a.chargeLevel,firing:a.firing,dashReady:a.player.dashProgress,dashCooldown:a.player.dashCooldown,wave:a.wave,beam:a.hunter?.beamPose(),astral:a.astral?.snapshot()};
   const enemies:CreaturePose[]=a.enemies.filter(e=>!e.isDead).map((enemy,index)=>{
    const e=enemy as Presented;
    const body=e.body??e.view?.list.find(p=>p instanceof Phaser.GameObjects.Image&&p.texture.key==='hollow-body') as Phaser.GameObjects.Image|undefined
@@ -152,9 +152,9 @@ export class PartyExpedition {
   if(a.inputBlocked){this.attackQueued=false;for(const key of Object.keys(this.queued) as (keyof typeof this.queued)[])this.queued[key]=false;}
   const interact=c.interactPressed;
   const input=a.inputBlocked?{...NO_INPUT,cancel:true}:{...c.movement(),aim:c.aimFrom(a.player.position),attack:c.attacking||this.attackQueued,dash:c.dashPressed,charge:c.chargePressed,held:c.chargeHeld,
-   release:c.chargeReleased,cancel:c.chargeCancelled,interact,restart:c.restartPressed};
+   element:c.elementPressed,release:c.chargeReleased,cancel:c.chargeCancelled,interact,restart:c.restartPressed};
   for (const key of Object.keys(this.queued) as (keyof typeof this.queued)[]) {
-    this.queued[key] ||= input[key]; input[key] = this.queued[key];
+    this.queued[key] ||= !!input[key]; input[key] = this.queued[key];
   }
   if(now-this.sendAt>=40){room.send('input',input);this.sendAt=now;this.attackQueued=false;for (const key of Object.keys(this.queued) as (keyof typeof this.queued)[]) this.queued[key]=false;}
   else if(input.attack)this.attackQueued=true;
