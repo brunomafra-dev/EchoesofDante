@@ -2,6 +2,8 @@
 
 Terceira classe jogável do plano RPG. A identidade é **controlar o campo de batalha**, usando uma manopla tecnológica e ataques de médio alcance. Guerreiro e Hunter conservam seus kits. Não há combinações elementais em cadeia nesta primeira versão.
 
+**Revisão atual 0.1.91:** após o playtest, o usuário pediu básicos elementais e manifestações próprias para Q. [Revisão, arte e teste](elemental-v2/README.md). O histórico de QA 0.1.90 abaixo permanece registrado; a revisão possui evidências separadas.
+
 O usuário autorizou explicitamente a execução desta etapa durante sua viagem, sem esperar a validação humana da etapa 4. Isso autoriza avançar o trabalho; **não constitui aprovação visual ou de balanceamento** de nenhuma das duas etapas. Vinculador e cooperativo de quatro participantes continuam planejados.
 
 ## Teste reservado
@@ -14,7 +16,7 @@ O painel permite mudar região, apresentação e equipamento. Personagens tempor
 
 | Ação | Comportamento sem aprimoramentos/equipamento |
 |---|---|
-| Clique / RT / DISPARO | Pulso de energia, alcance 480, dano 18, intervalo 420 ms; recupera 10 de energia ao atingir um alvo |
+| Clique / RT / DISPARO | Raio/bola de fogo/rajada de água/pedra conforme o elemento; alcance 480, dano 18, intervalo 420 ms; recupera 10 de energia ao atingir um alvo |
 | F / Y / botão de elemento | Energia → fogo → água → terra; bloqueado durante carga/liberação |
 | Q / LT / CAMPO | Segurar → mirar → soltar; custa 30 de Energia Astral na liberação |
 | Energia Astral | 100 máximo, regeneração passiva 3/s fora do carregamento; sem custo para Dash |
@@ -25,10 +27,10 @@ Q reutiliza a preparação de 80–800 ms e a recarga de 3200 ms do sistema exis
 
 | Elemento | Resposta do Q no nível de carga mínimo/máximo |
 |---|---|
-| Energia | Explosão direta, 56–86 de dano |
+| Energia | Descarga inicial na malha elétrica, 56–86 de dano; apresentação de 1,35 s |
 | Fogo | 18–34 inicial, mais 12 a cada 0,5 s numa zona de 3 s |
 | Água | 30–52 inicial, zona de 2,5 s que reduz o movimento de criaturas comuns a 55% |
-| Terra | 40–66 inicial e interrupção de movimento de 350 ms em criaturas comuns |
+| Terra | 40–66 no surgimento da rocha após 160 ms, empurrão de força 420 e reação HURT existente em criaturas comuns |
 
 Os três bosses recebem dano, mas resistem à desaceleração e interrupção. Campos não atravessam cobertura para atingir alvos do outro lado. Bônus de dano/carga dos equipamentos continuam aplicados pelo sistema comum. Os IDs de aprimoramento existentes recebem nomes próprios: pulso, alcance, Dash, área e potência; sem nova árvore de progressão.
 
@@ -38,7 +40,7 @@ Corpos originais masculino/feminino, roupa simples e proteção básica/reforça
 
 Os três níveis de arma usam o catálogo/receitas já existentes, com nomes e miniaturas de manopla para esta classe. Materiais, fabricação, mochila e drops permanecem compatíveis; nenhum slot adicional. [Origem, prompts resumidos e preparação](illustration-prompts.md).
 
-23 PNGs de runtime, aproximadamente 1 MB no total: seis atlas 1024×768, três manoplas 128×96, seis miniaturas 96×96 e oito efeitos de 256×256/64×32. As fontes de geração ficam somente na documentação. O Phaser carrega os assets existentes; não há geração de arte no browser.
+27 PNGs de runtime, aproximadamente 1,6 MB no total: seis atlas de corpo 1024×768, três manoplas 128×96, seis miniaturas 96×96 e doze atlas elementais pequenos. As fontes de geração ficam somente na documentação. O Phaser carrega os assets existentes; não há geração de arte no browser.
 
 ## Solo e cooperativo
 
@@ -52,7 +54,7 @@ Morte preserva progressão, itens e materiais, com a penalidade de créditos da 
 
 ## Performance e validação
 
-Pool fixo por Astral: oito imagens de pulso e quatro de campo. As imagens são reutilizadas, sem tweens ou partículas extras por campo. O cenário baked não foi alterado. A guia de carga usa um único Graphics pequeno; a interface de energia só muda quando seu valor inteiro/estado muda.
+Pool fixo por Astral na revisão atual: oito imagens de projétil, quatro de piso e quatro de manifestação. As imagens são reutilizadas, sem tweens ou partículas extras por campo. O cenário baked não foi alterado. A guia de carga usa um único Graphics pequeno; a interface de energia só muda quando seu valor inteiro/estado muda.
 
 **Automação local passou. Playtest humano necessário.**
 

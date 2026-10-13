@@ -10,7 +10,7 @@ import { clothShoulder } from './ClothShoulders';
 export function preloadAstralArt(scene:Phaser.Scene):void{
  for(const sex of ['male','female'])for(const style of ['none','basic','reinforced']){const key=`wardrobe-astral-${sex}-${style}`;if(!scene.textures.exists(key))scene.load.image(key,`${import.meta.env.BASE_URL}assets/visual/characters/${key}.png`);}
  for(const tier of ['starter','current','advanced']){const key=`astral-${tier}-weapon`;if(!scene.textures.exists(key))scene.load.image(key,`${import.meta.env.BASE_URL}assets/visual/characters/${key}.png`);}
- for(const element of ['energy','fire','water','earth'])for(const kind of ['zone','bolt']){const key=`astral-${element}-${kind}`;if(!scene.textures.exists(key))scene.load.image(key,`${import.meta.env.BASE_URL}assets/visual/astral/${key}.png`);}
+ for(const element of ['energy','fire','water','earth'])for(const [kind,width,height] of [['ground',128,128],['field',192,192],['bolt',128,96]] as const){const key=`astral-${element}-${kind}`;if(!scene.textures.exists(key))scene.load.spritesheet(key,`${import.meta.env.BASE_URL}assets/visual/astral/${key}-v2.png`,{frameWidth:width,frameHeight:height});}
  if(!scene.cache.json.exists('astral-shoulders'))scene.load.json('astral-shoulders',`${import.meta.env.BASE_URL}assets/visual/characters/astral-shoulders.json`);
 }
 // Upright painted body, planted gait, articulated arms and a forearm instrument.
@@ -32,7 +32,7 @@ export class AstralArt {
   registerPaintedArmFrames(scene);
   this.limbs=Array.from({length:4},(_,i)=>scene.add.image(0,0,'expedition-arm-kit',`anatomy-${i%2}`).setOrigin(.15,.5));
   this.gauntlet=scene.add.image(0,0,'astral-starter-weapon').setDisplaySize(23,18);
-  this.glow=scene.add.image(0,0,'astral-energy-bolt').setDisplaySize(16,16).setBlendMode(Phaser.BlendModes.ADD).setVisible(false);
+  this.glow=scene.add.image(0,0,'astral-energy-bolt',0).setDisplaySize(16,16).setVisible(false);
   this.guide=scene.add.graphics();view.add([...this.limbs,this.gauntlet,this.glow,this.guide]);
   this.previous={x,y};this.update(x,y,0,false,false,{phase:'READY',level:0},'energy');
  }
@@ -64,7 +64,7 @@ export class AstralArt {
   // The far arm/instrument correctly disappear behind the torso when facing away.
   if(row===1){this.limbs.forEach(p=>this.view.sendToBack(p));this.view.sendToBack(this.gauntlet);}else{this.limbs.forEach(p=>this.view.bringToTop(p));this.view.bringToTop(this.gauntlet);}
   this.view.bringToTop(this.glow);this.view.bringToTop(this.guide);
-  const busy=heavy.phase==='CHARGING';this.glow.setPosition(hand.x+c*10,hand.y+s*10).setTint(ELEMENT_COLORS[element]).setVisible(busy||firing).setAlpha(busy?.3+heavy.level*.6:.7);
+  const busy=heavy.phase==='CHARGING';this.glow.setTexture(`astral-${element}-bolt`,0).setDisplaySize(24,18).setPosition(hand.x+c*10,hand.y+s*10).setRotation(aim).setVisible(busy||firing).setAlpha(busy?.3+heavy.level*.6:.7);
   this.guide.clear().setVisible(busy);
   if(busy){this.guide.lineStyle(2,ELEMENT_COLORS[element],.65).beginPath().arc(0,0,44,-Math.PI/2,-Math.PI/2+Math.PI*2*heavy.level,false).strokePath();
    const distance=140+240*heavy.level;this.guide.lineStyle(1,ELEMENT_COLORS[element],.4).lineBetween(0,0,c*distance,s*distance).strokeCircle(c*distance,s*distance,52+24*heavy.level);}

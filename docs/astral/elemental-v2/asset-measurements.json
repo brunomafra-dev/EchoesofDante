@@ -1,0 +1,86 @@
+{
+  "public\\assets\\visual\\astral\\astral-fire-bolt-v2.png": {
+    "dimensions": [
+      512,
+      96
+    ],
+    "bytes": 39590
+  },
+  "public\\assets\\visual\\astral\\astral-fire-field-v2.png": {
+    "dimensions": [
+      768,
+      192
+    ],
+    "bytes": 169436
+  },
+  "public\\assets\\visual\\astral\\astral-water-bolt-v2.png": {
+    "dimensions": [
+      512,
+      96
+    ],
+    "bytes": 44183
+  },
+  "public\\assets\\visual\\astral\\astral-water-field-v2.png": {
+    "dimensions": [
+      768,
+      192
+    ],
+    "bytes": 216119
+  },
+  "public\\assets\\visual\\astral\\astral-earth-bolt-v2.png": {
+    "dimensions": [
+      512,
+      96
+    ],
+    "bytes": 46217
+  },
+  "public\\assets\\visual\\astral\\astral-earth-field-v2.png": {
+    "dimensions": [
+      768,
+      192
+    ],
+    "bytes": 116589
+  },
+  "public\\assets\\visual\\astral\\astral-energy-bolt-v2.png": {
+    "dimensions": [
+      512,
+      96
+    ],
+    "bytes": 18818
+  },
+  "public\\assets\\visual\\astral\\astral-energy-field-v2.png": {
+    "dimensions": [
+      768,
+      192
+    ],
+    "bytes": 3334
+  },
+  "public\\assets\\visual\\astral\\astral-energy-ground-v2.png": {
+    "dimensions": [
+      512,
+      128
+    ],
+    "bytes": 1390
+  },
+  "public\\assets\\visual\\astral\\astral-fire-ground-v2.png": {
+    "dimensions": [
+      512,
+      128
+    ],
+    "bytes": 4211
+  },
+  "public\\assets\\visual\\astral\\astral-water-ground-v2.png": {
+    "dimensions": [
+      512,
+      128
+    ],
+    "bytes": 2062
+  },
+  "public\\assets\\visual\\astral\\astral-earth-ground-v2.png": {
+    "dimensions": [
+      512,
+      128
+    ],
+    "bytes": 3702
+  }
+}

@@ -78,8 +78,8 @@ Referências de princípios: preparação e slots de [Tibia](https://www.tibia.c
 **Astral:**
 
 - Alterna **energia → fogo → água → terra** durante o combate.
-- Ataque básico de médio alcance; Q mantém **segurar → mirar → soltar**.
-- Energia: explosão direta; fogo: zona de dano; água: zona de desaceleração; terra: impacto e interrupção curta.
+- Ataque básico de médio alcance assume o elemento escolhido: raio, bola de fogo, rajada de água ou pedra; Q mantém **segurar → mirar → soltar**.
+- Energia: malha de descarga com impacto inicial; fogo: terreno em chamas; água: onda e zona de desaceleração; terra: rocha emergindo com impacto e empurrão, usando HURT existente.
 - Recurso próprio: **Energia Astral**. Ataque básico recupera recurso; Q consome. Movimento evasivo permanece independente do recurso.
 - Primeira versão sem combinações elementais em cadeia; preservar clareza antes de acrescentá-las.
 
@@ -261,3 +261,7 @@ Em 10/10/2026, o usuário informou que estaria ausente até terça-feira e autor
 Manipulador Astral com pulso de médio alcance, quatro campos elementais, Energia Astral e Q segurar/mirar/soltar; manopla e corpos originais por apresentação/vestimenta. Mesma infraestrutura de equipamento, dano, progressão, controles e campanha. Dupla ainda limitada a dois participantes, protocolo 6. [Arte, valores, QA e laboratório](astral/README.md).
 
 **Entrega técnica não significa aprovação humana.** Não avançar às etapas 6/7 sem a avaliação das etapas 4/5 após o retorno do usuário.
+
+### Revisão elemental do Astral — 0.1.91
+
+No primeiro playtest da etapa 5, o usuário gostou da classe e pediu que o básico refletisse o elemento e que Q possuísse manifestações visuais próprias. Revisão dentro da etapa 5: projéteis elementais, chão em chamas, onda, rocha emergindo com empurrão e malha energizada. Arte original e texturas preparadas offline; mesma economia, controles e rede. [Relatório/teste](astral/elemental-v2/README.md). **Aguardar a avaliação desta revisão antes da próxima classe.**

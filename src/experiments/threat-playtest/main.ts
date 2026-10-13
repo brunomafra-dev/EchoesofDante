@@ -2,7 +2,7 @@ import { JOURNEY_FLAGS,type JourneyArea } from '../../systems/LocalJourney';
 import { PROGRESSION } from '../../config/progression';
 import { REGION_NAMES,validEconomy } from '../../config/economy';
 import { EQUIPMENT,type EquipmentId,validEquipment } from '../../config/equipment';
-import { CLASS_NAMES,type PlayableClass } from '../../config/classes';
+import { CLASS_NAMES, ELEMENT_NAMES,type PlayableClass } from '../../config/classes';
 import {characterSex} from '../../config/appearance';
 import '../../style.css';
 
@@ -44,8 +44,8 @@ panel.innerHTML=`<summary>${astralLab?'ETAPA 5':'ETAPA 4'} · TESTE RESERVADO</s
 <label>Classe <select data-class><option value="warrior" ${classId==='warrior'?'selected':''}>Guerreiro</option><option value="hunter" ${classId==='hunter'?'selected':''}>Hunter</option><option value="astral" ${classId==='astral'?'selected':''}>Astral</option></select></label>
 <label>Equipamento <select data-kit><option value="initial" ${kit==='initial'?'selected':''}>Roupa inicial</option><option value="basic" ${kit==='basic'?'selected':''}>Básico</option><option value="advanced" ${kit==='advanced'?'selected':''}>Avançado</option></select></label>
 <label>Apresentação <select data-sex><option value="male" ${sex==='male'?'selected':''}>Masculino</option><option value="female" ${sex==='female'?'selected':''}>Feminino</option></select></label>
-${astralLab?'<p>Astral: LMB / DISPARO recupera energia ao acertar. F / Y / botão troca elemento. Q / CAMPO: segure, mire e solte; custo 30. Energia explode; fogo permanece; água desacelera; terra interrompe criaturas pequenas. Bosses resistem ao controle.</p>':''}
+${astralLab?`<label>Elemento <select data-element>${Object.entries(ELEMENT_NAMES).map(([id,name])=>`<option value="${id}" ${id===(params.get('element')??'energy')?'selected':''}>${name}</option>`).join('')}</select></label><p>LMB / DISPARO: raio, bola de fogo, rajada de água ou pedra; acertar recupera energia. F / Y / botão troca elemento. Q / CAMPO: segure, mire e solte; custo 30. Rede energizada, chão em chamas, onda de água ou rocha emergindo com empurrão. Bosses resistem ao controle.</p>`:''}
 <p>H / CURAR: poção. M: base/retorno. Esc: criar sala. Convites deste laboratório também usam personagens temporários. Num boss, o caído aguarda o aliado; ambos caídos podem reiniciar.</p><a href="./test-library.html">Biblioteca de testes</a>`;
 document.body.append(panel);
-for(const name of ['region','class','kit','sex'])panel.querySelector('[data-'+name+']')!.addEventListener('change',event=>{const url=new URL(location.href);url.searchParams.set(name,(event.target as HTMLSelectElement).value);location.href=url.href});
+for(const name of ['region','class','kit','sex',...(astralLab?['element']:[])])panel.querySelector('[data-'+name+']')!.addEventListener('change',event=>{const url=new URL(location.href);url.searchParams.set(name,(event.target as HTMLSelectElement).value);location.href=url.href});
 await import('../../main');

@@ -1,0 +1,115 @@
+{
+  "method": "Chrome headless; actual Astral renderer and Hollow physics, DEV positioning/health fixtures; not human approval.",
+  "errors": [],
+  "elements": [
+    {
+      "element": "energy",
+      "x": 836.58065,
+      "initial": 850,
+      "hp": 1890,
+      "zones": [
+        {
+          "x": 834,
+          "y": 850,
+          "radius": 66.4,
+          "element": "energy",
+          "alpha": 1,
+          "age": 0.29998999999999976,
+          "angle": 0
+        }
+      ],
+      "ground": "astral-energy-ground",
+      "form": "astral-energy-field"
+    },
+    {
+      "element": "fire",
+      "x": 836.5852500000001,
+      "initial": 850,
+      "hp": 1946,
+      "zones": [
+        {
+          "x": 834,
+          "y": 850,
+          "radius": 66.4,
+          "element": "fire",
+          "alpha": 1,
+          "age": 0.29999999999999893,
+          "angle": 0
+        }
+      ],
+      "ground": "astral-fire-ground",
+      "form": "astral-fire-field"
+    },
+    {
+      "element": "water",
+      "x": 842.6212549999999,
+      "initial": 850,
+      "hp": 1928,
+      "zones": [
+        {
+          "x": 834,
+          "y": 850,
+          "radius": 66.4,
+          "element": "water",
+          "alpha": 1,
+          "age": 0.3000499999999997,
+          "angle": 0
+        }
+      ],
+      "ground": "astral-water-ground",
+      "form": "astral-water-field"
+    },
+    {
+      "element": "earth",
+      "x": 883.8610955643873,
+      "initial": 850,
+      "hp": 1912,
+      "zones": [
+        {
+          "x": 834,
+          "y": 850,
+          "radius": 66.4,
+          "element": "earth",
+          "alpha": 1,
+          "age": 0.3000400000000001,
+          "angle": 0
+        }
+      ],
+      "ground": "astral-earth-ground",
+      "form": "astral-earth-field"
+    }
+  ],
+  "projectiles": {
+    "rows": [
+      {
+        "element": "energy",
+        "captured": "energy",
+        "texture": "astral-energy-bolt",
+        "frame": 2
+      },
+      {
+        "element": "fire",
+        "captured": "fire",
+        "texture": "astral-fire-bolt",
+        "frame": 2
+      },
+      {
+        "element": "water",
+        "captured": "water",
+        "texture": "astral-water-bolt",
+        "frame": 2
+      },
+      {
+        "element": "earth",
+        "captured": "earth",
+        "texture": "astral-earth-bolt",
+        "frame": 2
+      }
+    ],
+    "pool": 410,
+    "after": 410,
+    "hidden": true
+  },
+  "fps": 57.6677622795105,
+  "passed": true
+}

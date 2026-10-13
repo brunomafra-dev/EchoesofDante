@@ -13,6 +13,7 @@ export const ASTRAL = {
   energyMax:100, energyPerHit:10, energyRegen:3, castCost:30,
   shotCooldown:420, shotDamage:18, shotSpeed:680, shotRange:480, muzzleDistance:42,
   castRange:140, chargedRange:240, radius:52, chargedRadius:24,
+  earthPush:420, earthRise:.16,
 } as const;
 export const ASTRAL_ELEMENTS = ['energy','fire','water','earth'] as const;
 export type AstralElement = typeof ASTRAL_ELEMENTS[number];

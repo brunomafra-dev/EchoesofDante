@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {chromium} from 'playwright';
-const out='docs/astral/qa/public';await mkdir(out,{recursive:true});
-const base='https://echosofdante.vercel.app/astral-playtest.html?region=forest&class=warrior&kit=basic';
+const out=process.argv[2]??'docs/astral/qa/public';await mkdir(out,{recursive:true});
+const base=process.argv[3]??'https://echosofdante.vercel.app/astral-playtest.html?region=forest&class=warrior&kit=basic';
 const report={at:new Date().toISOString(),method:'Two Chrome contexts using published Vercel laboratory and real Render WSS, keyboard/mouse. No physical devices.',errors:[],checks:[]};
 const browser=await chromium.launch({channel:'chrome',headless:true}),h=await browser.newPage({viewport:{width:1280,height:720}}),g=await browser.newPage({viewport:{width:844,height:390},hasTouch:true});
 let world,joined=[],frames=0;

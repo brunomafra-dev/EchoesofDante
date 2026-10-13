@@ -4,7 +4,7 @@ import { SaberAttack, type SaberPose } from '../combat/Attack';
 import { KineticCharge } from '../combat/KineticCharge';
 import { AstralCombat } from '../combat/AstralCombat';
 import { AstralArt } from '../visual/AstralArt';
-import { ASTRAL } from '../config/classes';
+import { ASTRAL, ELEMENT_COLORS } from '../config/classes';
 import { HunterCombat } from '../combat/HunterCombat';
 import { HunterArt } from '../visual/HunterArt';
 import type { Enemy } from '../entities/Enemy';
@@ -44,7 +44,7 @@ export class PartyActor {
   this.wave=scene.add.ellipse(0,0,10,80,0x5fe6d8,.6).setVisible(false).setDepth(14999);
  }
  update(now:number,dt:number,input:PartyInput,targets:readonly Enemy[],obstacles:readonly Obstacle[],bounds:MovementBounds|undefined,
-  hit:(targets:Enemy[],damage:number,angle:number,origin:Vec2,heavy:boolean,knockback?:number)=>void,solidObstacles:readonly Obstacle[]=obstacles):void {
+  hit:(targets:Enemy[],damage:number,angle:number,origin:Vec2,heavy:boolean,knockback?:number,color?:number)=>void,solidObstacles:readonly Obstacle[]=obstacles):void {
   const oldLevel=this.progression.level;this.refreshBuild();this.setAppearance();
   const max=Math.round(this.progression.maxHp*(this.profile.classId==='hunter'?HUNTER.hpRatio:this.profile.classId==='astral'?ASTRAL.hpRatio:1))+equipmentStats(this.profile.equipment??{}).hp;
   if(this.player.maxHp!==max){this.player.health.max=max;this.player.health.current=!this.player.isDead&&this.progression.level>oldLevel?max:Math.min(max,this.player.hp);}
@@ -68,7 +68,7 @@ export class PartyActor {
    this.charge.takeHits(now,[]);
    this.hunter.update(dt,this.player.position,Math.hypot(this.player.velocity.x,this.player.velocity.y)>1,targets,obstacles,bounds,
     (enemy,damage,angle,precision)=>hit([enemy],damage,angle,this.player.position,precision));
-  }else if(this.astral){this.charge.takeHits(now,[]);this.astral.update(now,dt,targets,obstacles,bounds,(enemy,damage,angle,heavy)=>hit([enemy],damage,angle,this.player.position,heavy,0),heavy.phase==='CHARGING');}
+  }else if(this.astral){this.charge.takeHits(now,[]);this.astral.update(now,dt,targets,obstacles,bounds,(enemy,damage,angle,heavy,element,origin,force)=>hit([enemy],damage,angle,origin,heavy,force,ELEMENT_COLORS[element]),heavy.phase==='CHARGING');}
   else{
    const sweep=this.attack.advance(now,this.player.position,aim,targets);if(sweep.hits.length)hit(sweep.hits,this.player.attackDamage,sweep.pose.worldAngle,this.player.position,false);
    const hits=this.charge.takeHits(now,targets);if(hits.length)hit(hits,this.charge.damage,this.charge.angle,this.charge.origin,true);

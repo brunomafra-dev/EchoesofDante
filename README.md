@@ -1,5 +1,9 @@
 # Echoes of Dante
 
+## Astral elemental — revisão · 0.1.91
+
+O ataque básico agora usa o elemento escolhido: raio, bola de fogo, rajada de água ou pedra. Q manifesta rede elétrica, chão em chamas, onda ou rocha emergindo com empurrão, com pinturas próprias e animação curta. Segurar/mirar/soltar e Energia Astral preservados. [Relatório e arte](docs/astral/elemental-v2/README.md) · [Teste reservado](https://echosofdante.vercel.app/astral-playtest.html?element=fire&kit=basic&v=0.1.91). Estrutura do Astral bem recebida pelo usuário; esta revisão aguarda novo playtest.
+
 ## Manipulador Astral — etapa 5 · 0.1.90
 
 Terceira classe jogável: manopla, pulso de médio alcance, Energia Astral e campos de energia/fogo/água/terra. **F / Y / botão** alterna elemento; **Q / LT / CAMPO: segurar → mirar → soltar**. Apresentações masculina/feminina, equipamento e campanha solo/dupla. [Relatório e arte](docs/astral/README.md) · [Teste reservado](https://echosofdante.vercel.app/astral-playtest.html?region=forest&kit=basic&sex=female&v=0.1.90). Frontend e relay exigem protocolo 6; a sala permanece limitada a dois jogadores.

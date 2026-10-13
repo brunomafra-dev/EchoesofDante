@@ -17,7 +17,7 @@ import { HunterCombat } from '../combat/HunterCombat';
 import { AstralCombat } from '../combat/AstralCombat';
 import { AstralArt,preloadAstralArt } from '../visual/AstralArt';
 import { AstralPanel } from '../ui/AstralPanel';
-import { ASTRAL } from '../config/classes';
+import { ASTRAL, ASTRAL_ELEMENTS, ELEMENT_COLORS } from '../config/classes';
 import { HunterArt, preloadHunterArt } from '../visual/HunterArt';
 import { SaberAttack } from '../combat/Attack';
 import { applyDamage } from '../combat/Damage';
@@ -427,7 +427,7 @@ export class GameScene extends Phaser.Scene {
       if (!this.player.isDead && !this.records?.isOpen && !this.inputModalOpen) this.beginStrike(this.time.now);
     });
     this.controls.setCombatPresentation(this.classId !== 'warrior', this.classId === 'astral');
-    if(this.astral)this.astralPanel=new AstralPanel(this,()=>this.controls.queueElement());
+    if(this.astral){this.astralPanel=new AstralPanel(this,()=>this.controls.queueElement());if(location.pathname.endsWith('/astral-playtest.html')){const element=new URLSearchParams(location.search).get('element');if(ASTRAL_ELEMENTS.includes(element as typeof ASTRAL_ELEMENTS[number]))this.astral.element=element as typeof ASTRAL_ELEMENTS[number];}}
     this.updateMusicRegion(true);
     this.sounds.setMusicFocus(1);
     const spawns = this.area === 'forest' ? FOREST_SPAWNS : CAVERN_HOLLOWS;
@@ -865,7 +865,7 @@ export class GameScene extends Phaser.Scene {
         (enemy, damage, angle, precision) => this.resolvePlayerHits(time, [enemy], damage, angle, 0x5fe6d8, this.player.position, precision));
       this.hud.setHunterMomentum(this.hunter.momentum);
     } else if(this.astral){
-      this.astral.update(time,dt,targets,this.arena.obstacles,this.movementBounds,(enemy,damage,angle,heavy)=>this.resolvePlayerHits(time,[enemy],damage,angle,0x5fe6d8,this.player.position,heavy,this.equipment.snapshot().slots,0),heavy.phase==='CHARGING');
+      this.astral.update(time,dt,targets,this.arena.obstacles,this.movementBounds,(enemy,damage,angle,heavy,element,origin,force)=>this.resolvePlayerHits(time,[enemy],damage,angle,ELEMENT_COLORS[element],origin,heavy,this.equipment.snapshot().slots,force),heavy.phase==='CHARGING');
       this.astralPanel?.update(this.astral.energy,this.astral.element,heavy.phase,this.player.isDead,this.inputModalOpen);
     } else {
       const sweep = this.attack.advance(time, this.player.position, facing, targets);
@@ -1378,7 +1378,7 @@ export class GameScene extends Phaser.Scene {
       } : undefined,
       firing: this.astral?this.time.now<this.astral.firedUntil:this.hunter ? this.time.now < this.hunter.firedUntil : this.attack.pose(this.time.now, this.player.rotation).phase !== 'READY',
       id: enemy => this.hollowSpawnIds.get(enemy), species: enemy => this.enemySpecies.get(enemy),
-      hit: (targets, damage, angle, from, heavy,knockback) => this.resolvePlayerHits(this.time.now, targets, damage, angle, 0x5fe6d8, from, heavy,coopSession.peer?.equipment??{},knockback),
+      hit: (targets, damage, angle, from, heavy,knockback,color) => this.resolvePlayerHits(this.time.now, targets, damage, angle, color??0x5fe6d8, from, heavy,coopSession.peer?.equipment??{},knockback),
       prompt: position => {
         if(this.area!=='base'&&this.canReturnBase(position)&&distance(position,{x:this.returnStation.x-90,y:this.returnStation.y})<65)return{available:true,action:'RETORNAR'};
         if(this.area==='base')return{available:BASE.services.some(s=>distance(position,s)<100)||distance(position,BASE.exit)<105,action:'CONVERSAR'};
@@ -1591,7 +1591,7 @@ export class GameScene extends Phaser.Scene {
       if (!result.applied) continue;
       this.sounds.hit();
       this.impact(enemy.position, color, result.amount, angle);
-      if (chargeHit&&knockback!==0) {
+      if (chargeHit&&knockback===undefined) {
         const wave = this.add.circle(enemy.position.x, enemy.position.y, 14).setStrokeStyle(3, 0x5fe6d8, 0.82).setDepth(15001);
         this.tweens.add({ targets: wave, scale: 2.4, alpha: 0, duration: 190, onComplete: () => wave.destroy() });
       }

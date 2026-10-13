@@ -1,0 +1,104 @@
+{
+  "method": "Chrome headless; real keyboard/mouse and local WebSocket pair; DEV fixture positioning and damage. Touch CDP and Gamepad API mock. No physical devices.",
+  "errors": [],
+  "checks": [
+    "Four distinct elemental responses, resource, boss control resistance, cover and pooled cleanup",
+    "Keyboard movement, Dash, element lock during hold and directional Q release",
+    "Cancelling charge through menu does not spend energy",
+    "Both presentations, three clothing tiers, upright front/back/side and gauntlet textures",
+    "Astral host renders on Hunter visitor with authoritative resource and illustrated fire field",
+    "Astral visitor elemental basic and illustrated Q are authoritative through the real relay",
+    "Coop mortality/respawn preserves builds and does not accumulate objects/textures",
+    "Astral visitor Gamepad API mock: movement, Dash, Y element and LT hold/release",
+    "Astral visitor CDP touch: movement, hold/drag/release, no movement while charging, attack, Dash and element button"
+  ],
+  "views": [
+    {
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "width": 1366,
+      "height": 768
+    },
+    {
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "width": 844,
+      "height": 390
+    }
+  ],
+  "core": {
+    "results": [
+      {
+        "element": "energy",
+        "damage": 86,
+        "bossDamage": 86,
+        "bossScale": 1,
+        "energy": 77.49999999999993
+      },
+      {
+        "element": "fire",
+        "damage": 82,
+        "bossDamage": 82,
+        "bossScale": 1,
+        "energy": 77.49999999999993
+      },
+      {
+        "element": "water",
+        "damage": 52,
+        "bossDamage": 52,
+        "bossScale": 1,
+        "energy": 77.49999999999993
+      },
+      {
+        "element": "earth",
+        "damage": 66,
+        "bossDamage": 66,
+        "bossScale": 1,
+        "energy": 77.49999999999993
+      }
+    ],
+    "slow": 0.55,
+    "interrupt": 1,
+    "expired": 1,
+    "force": 420,
+    "beforeRise": 500,
+    "energyAfterHit": 20.6,
+    "coveredHp": 500,
+    "rejected": false,
+    "empty": {
+      "energy": 0,
+      "element": "energy",
+      "shots": [],
+      "zones": []
+    }
+  },
+  "cycles": [
+    {
+      "objects": 400,
+      "textures": 210,
+      "tweens": 25,
+      "credits": 214
+    },
+    {
+      "objects": 400,
+      "textures": 210,
+      "tweens": 25,
+      "credits": 193
+    },
+    {
+      "objects": 400,
+      "textures": 210,
+      "tweens": 25,
+      "credits": 174
+    }
+  ],
+  "fps": {
+    "host": 59.58385068011276,
+    "guest": 59.69658487564202
+  },
+  "passed": true
+}

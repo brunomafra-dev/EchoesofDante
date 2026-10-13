@@ -25,7 +25,7 @@ export type PartyBridge={
  solidObstacles:readonly Obstacle[];
  signalPortal:boolean;resources:ResourceDrop[];resourceAwarded:ResourceDrop[];potionUsed:number;visited:JourneyArea[];returnStation:Vec2;expeditionReturn?:ExpeditionReturn;
  id:(enemy:Enemy)=>number|undefined;species:(enemy:Enemy)=>SpeciesId|undefined;
- hit:(targets:Enemy[],damage:number,angle:number,from:Vec2,heavy:boolean,knockback?:number)=>void;
+ hit:(targets:Enemy[],damage:number,angle:number,from:Vec2,heavy:boolean,knockback?:number,color?:number)=>void;
  prompt:(position:Vec2)=>{available:boolean;action:string};
  sync:(world:PartyWorld)=>boolean;render:(pose:PartyPose)=>void;
 };
