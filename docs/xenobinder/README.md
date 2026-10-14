@@ -73,3 +73,9 @@ Cooperativo **público** depende da implantação do relay protocolo 9 no Render
 `npm run typecheck`, `npm run build` e revisão de `git diff --check` passaram. Permanece somente o aviso conhecido de tamanho do bundle Phaser. Código novo: `XenobinderCombat`, `XenobinderArt`, `XenobinderPanel`; integrações pequenas em Player/GameScene/PartyActor/PartyExpedition, perfis, equipamento, HUD/seleção/aprimoramentos e apresentação touch. Nenhum mapa, narrativa, áudio, inimigo ou valor das classes anteriores foi modificado. Os testes e registro offline ficam em `scripts/*xenobinder*`; versão em package/lock, plano/README e biblioteca atualizados.
 
 **Automação passou. Playtest humano necessário.**
+
+## Publicação — 14/10/2026
+
+Implementação `3e95f2b9d72ca67ba8f94044be5a47d6a6884aa5`, versão **0.1.96**. Push para origin/main e deploy Vercel confirmados. [QA publicado](qa/public/public.json): masculino/feminino, Q consumindo Vínculo, kit avançado na Garganta, imagens carregadas e armazenamento real preservado; zero erros JS/assets. `soloPassed: true`.
+
+**Pendência externa de salas:** o Render ainda respondeu **protocolo 4**, enquanto esta versão exige **9**. O teste público registra `coop: blocked-relay-deployment`; não confundir com a dupla WebSocket local validada. Sem acesso autenticado ao painel do Render, não foi possível atualizar esse serviço. Publicar o origin/main atual em `echoes-of-dante-rooms` é necessário para validar a dupla online. A avaliação humana da classe também permanece pendente; etapa 7 não iniciada.

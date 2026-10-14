@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-14T12:08:59.844Z",
+  "method": "Browser-facing production-compatible QA: real UI, keyboard/mouse, asset loading and WebSocket frames; no DEV globals needed. Local/published service explicitly identified.",
+  "base": "https://echosofdante.vercel.app/",
+  "errors": [],
+  "checks": [
+    "Both presentations and advanced volcanic kit load without broken assets, Q spends resource and real saves stay untouched"
+  ],
+  "joined": [],
+  "health": {
+    "service": "Dante regional co-op",
+    "protocol": 4,
+    "campaign": true,
+    "rooms": 0,
+    "players": 0
+  },
+  "coop": {
+    "status": "blocked-relay-deployment",
+    "required": 9,
+    "observed": 4
+  },
+  "soloPassed": true,
+  "passed": false
+}
