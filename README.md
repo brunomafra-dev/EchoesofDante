@@ -1,6 +1,12 @@
 # Echoes of Dante
 
-## Auditoria de movimento — Astral e Vinculador · 0.1.97
+## Braços — Astral e Vinculador · revisão 02 · 0.1.98
+
+A revisão anterior foi rejeitada em playtest humano. Agora as articulações são medidas na pintura, os sprites mantêm suas proporções e o braço livre assume uma postura relaxada. Mangas/antebraços/mãos repintados, punho do condutor corrigido e manopla alinhada ao antebraço. Mesma correção no jogo, na dupla e no menu; nenhuma regra de combate alterada.
+
+[Testar Astral](https://echosofdante.vercel.app/astral-playtest.html?motion=1&kit=initial&v=0.1.98) · [Testar Vinculador](https://echosofdante.vercel.app/xenobinder-playtest.html?motion=1&kit=initial&v=0.1.98) · [Revisão e capturas](docs/caster-motion-audit/revision-02/README.md). O painel abre recolhido. Saves reais preservados; aguardar avaliação visual antes da etapa 7.
+
+## Auditoria de movimento — histórico rejeitado · 0.1.97
 
 Braços ligados aos ombros de cada vestimenta, cotovelos com comprimentos constantes, mão livre visível e instrumento registrado pelo punho. Caminhada com poses completas das pernas e alternância de apoio; equipamento mantém o corpo completo durante básico e Q. Mesmo rig no solo, na dupla e no mostruário.
 

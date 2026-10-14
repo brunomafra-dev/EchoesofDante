@@ -1,5 +1,7 @@
 # Astral e Vinculador — auditoria de movimento · 0.1.97
 
+**Rejeitada em playtest humano:** o usuário apontou braços fragmentados na captura de 14/10/2026. Os testes geométricos não validavam a anatomia da pintura. [Revisão 02 — 0.1.98](revision-02/README.md).
+
 O usuário gostou do kit, mas rejeitou braços e caminhada dos dois personagens mais recentes. Esta é uma revisão das apresentações das etapas 5/6; a equipe de quatro permanece para a etapa 7.
 
 ## Testar diretamente

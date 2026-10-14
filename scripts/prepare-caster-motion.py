@@ -34,6 +34,14 @@ def midpoint(im,ys):
         xs=[x for x in range(im.width) if im.getpixel((x,y))[3]>145]
         if xs:spans.append((min(xs)+max(xs))/2)
     return sorted(spans)[len(spans)//2] if spans else im.width/2
+
+def arm_joint(im,fraction):
+    x=round(im.width*fraction);columns=[]
+    for column in range(max(0,x-2),min(im.width,x+3)):
+        ys=[y for y in range(im.height) if im.getpixel((column,y))[3]>180]
+        if ys:columns.append((min(ys)+max(ys))/2)
+    if not columns:raise ValueError('Joint outside authored anatomy')
+    return {'x':x,'y':sorted(columns)[len(columns)//2]}
 def sockets(im):
     band=[]
     for y in range(70,92):
@@ -86,8 +94,10 @@ for cls in ['astral','xenobinder']:
 (SOURCE.parent/'assets.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
 # Separate class-specific sleeves, forearms and hands; pack/register offline.
 arm_registration={}
+arm_source=SOURCE.parent/'revision-02/source-art'
+if not arm_source.exists():arm_source=SOURCE
 for tier in ['none','basic','reinforced']:
-    sheet=Image.open(SOURCE/f'arms-{tier}.png').convert('RGBA')
+    sheet=Image.open(arm_source/f'arms-{tier}.png').convert('RGBA')
     assert sheet.getchannel('A').getextrema()[0]==0
     for cls,start in [('astral',0),('xenobinder',2)]:
         key=f'{cls}-arm-{tier}';atlas=Image.new('RGBA',(384,256));parts=[]
@@ -98,7 +108,7 @@ for tier in ['none','basic','reinforced']:
                 piece=piece.resize((round(piece.width*k),round(piece.height*k)),Image.Resampling.LANCZOS)
                 x=col*128+(128-piece.width)//2;y=row*128+(128-piece.height)//2
                 atlas.alpha_composite(piece,(x,y))
-                parts.append({'x':x,'y':y,'width':piece.width,'height':piece.height})
+                parts.append({'x':x,'y':y,'width':piece.width,'height':piece.height,'root':arm_joint(piece,.16 if col==0 else .12),'tip':arm_joint(piece,.86)})
         target=OUT/f'{key}.png';atlas.save(target,optimize=True);arm_registration[key]=parts
         report.append({'asset':str(target.relative_to(ROOT)),'dimensions':list(atlas.size),'frames':6,'bytes':target.stat().st_size})
 (OUT/'caster-arm-registration.json').write_text(json.dumps(arm_registration,indent=2)+'\n',encoding='utf-8')

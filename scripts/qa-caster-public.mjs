@@ -1,13 +1,14 @@
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
-import {mkdir,writeFile} from 'node:fs/promises';
+import {mkdir,readFile,writeFile} from 'node:fs/promises';
 const out=process.argv[2]??'docs/caster-motion-audit/public',base=process.argv[3]??'https://echosofdante.vercel.app/';await mkdir(out,{recursive:true});
+const version=JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8')).version;
 const browser=await chromium.launch({channel:'chrome',headless:true}),p=await browser.newPage({viewport:{width:1280,height:720}});
 const report={at:new Date().toISOString(),base,method:'Production UI, actual keyboard/mouse, request/texture validation; no DEV scene hooks, no physical hardware.',errors:[],cases:[],assets:[]};
 p.on('pageerror',e=>report.errors.push(e.message));p.on('response',r=>{if(r.status()>=400)report.errors.push(r.url())});
 try{
  for(const cls of ['astral','xenobinder'])for(const sex of ['male','female']){
-  await p.goto(`${base}${cls}-playtest.html?sex=${sex}&kit=initial&motion=1&v=0.1.97`,{waitUntil:'domcontentloaded',timeout:90000});
+  await p.goto(`${base}${cls}-playtest.html?sex=${sex}&kit=initial&motion=1&v=${version}`,{waitUntil:'domcontentloaded',timeout:90000});
   await p.locator(cls==='astral'?'.astral-panel':'.xenobinder-panel').waitFor();
   assert.ok((await p.locator('.threat-lab summary').innerText()).includes('MOVIMENTO'));
   await p.locator('.threat-lab').evaluate(e=>e.open=false);
@@ -22,7 +23,8 @@ try{
   assert.deepEqual(size,{width:1280,height:768});report.assets.push({src,size});
  }
  const reg=await p.request.get(base+'assets/visual/characters/caster-arm-registration.json');assert.equal(reg.status(),200);assert.equal(Object.keys(await reg.json()).length,6);
- await p.goto(base+'test-library.html');assert.ok((await p.locator('body').innerText()).includes('0.1.97'));
+ const parts=await reg.json();assert.ok(Object.values(parts).every(frames=>frames.every(p=>p.root&&p.tip)));
+ await p.goto(base+'test-library.html');assert.ok((await p.locator('body').innerText()).includes(version));
  assert.deepEqual(report.errors,[]);report.soloPassed=true;
 }catch(e){report.failure=String(e);throw e}finally{await browser.close();await writeFile(out+'/report.json',JSON.stringify(report,null,2));}
 console.log({base,soloPassed:report.soloPassed,cases:report.cases.length,atlases:report.assets.length,errors:report.errors});

@@ -4,7 +4,7 @@ import { equipmentAppearance,type EquipmentSnapshot } from '../config/equipment'
 import { weaponStyle,type CharacterSex,type EquipmentLook,type WeaponStyle } from '../config/appearance';
 import type { KineticPose } from '../combat/KineticCharge';
 import { ModularTorso } from './ModularTorso';
-import { preloadCasterArms,registerPaintedArmFrames } from './PaintedArmFrames';
+import { preloadCasterArms,registerPaintedArmFrames,type PaintedArmPart } from './PaintedArmFrames';
 import { clothShoulder,type ShoulderSockets } from './ClothShoulders';
 import { CASTER_COLUMNS,CASTER_WALK,CASTER_INSTRUMENTS,casterTargets,type ArmPose,type CasterIdentity } from './CasterPose';
 
@@ -30,6 +30,7 @@ export class AstralArt {
  private style:WeaponStyle='starter';
  private layer=-1;
  private socketStyles:Record<string,ShoulderSockets[]>;
+ private armParts:Record<string,PaintedArmPart[]>;
  private main=armPose();private other=armPose();
  private shoulder={x:0,y:0};private otherShoulder={x:0,y:0};
  private muzzle={x:0,y:0};private guideVisible=false;
@@ -40,8 +41,9 @@ export class AstralArt {
   const registration=scene.cache.json.get(identity+'-shoulders');this.socketStyles=registration.byStyle[sex];
   this.body.setData('clothShoulders',this.socketStyles.none);
   registerPaintedArmFrames(scene);
+  this.armParts=scene.cache.json.get('caster-arm-registration');
   this.limbs=Array.from({length:4},(_,i)=>scene.add.image(0,0,identity+'-arm-none',`anatomy-${i%2}`));
-  this.freeHand=scene.add.image(0,0,identity+'-arm-none','anatomy-2').setOrigin(.15,.5).setDisplaySize(8,9);
+  this.freeHand=scene.add.image(0,0,identity+'-arm-none','anatomy-2').setOrigin(.12,.5);
   this.gauntlet=scene.add.image(0,0,identity+'-starter-weapon');
   this.glow=scene.add.image(0,0,identity==='xenobinder'?'xeno-bolt':'astral-energy-bolt',0).setVisible(false);
   this.guide=scene.add.graphics();view.add([...this.limbs,this.freeHand,this.gauntlet,this.glow,this.guide]);
@@ -70,16 +72,19 @@ export class AstralArt {
   if(walking)this.travel+=(dx*c+dy*s<-.05?-1:1)*moved;this.previous.x=x;this.previous.y=y;
   const phase=((this.travel/104)%1+1)%1,frame=walking?CASTER_WALK[Math.floor(phase*4)]:0;
   this.view.setRotation(0);this.body.setFrame(row*CASTER_COLUMNS+frame).setFlipX(flip);
+  const directionChanged=this.layer!==row;
+  if(directionChanged){const outer=row===1?3:0;this.limbs.forEach((v,i)=>v.setFrame(`anatomy-${outer+i%2}`));this.freeHand.setFrame(`anatomy-${outer+2}`);}
   clothShoulder(this.body,row===1?'right':'left',this.shoulder);clothShoulder(this.body,row===1?'left':'right',this.otherShoulder);
   casterTargets(this.shoulder.x,this.shoulder.y,this.otherShoulder.x,this.otherShoulder.y,aim,firing,heavy.phase==='CHARGING',walking?Math.sin(phase*Math.PI*2):0,this.main,this.other);
   this.arm(0,this.main);this.arm(2,this.other);
-  this.freeHand.setPosition(this.other.wrist.x,this.other.wrist.y).setRotation(Math.atan2(this.other.wrist.y-this.other.elbow.y,this.other.wrist.x-this.other.elbow.x)).setFlipY(flip);
+  const hand=this.part(this.freeHand),reverse=this.other.shoulder.x>0,hx=hand.tip.x-hand.root.x,hy=hand.tip.y-hand.root.y;
+  this.freeHand.setOrigin(hand.root.x/hand.width,reverse?1-hand.root.y/hand.height:hand.root.y/hand.height).setPosition(this.other.wrist.x,this.other.wrist.y).setRotation(Math.atan2(this.other.wrist.y-this.other.elbow.y,this.other.wrist.x-this.other.elbow.x)-Math.atan2(reverse?-hy:hy,hx)).setFlipY(reverse).setScale(6.5/Math.hypot(hx,hy));
   const p=CASTER_INSTRUMENTS[this.identity][this.style],left=c<0,angle=aim-Math.atan2((p.muzzle.y-p.wrist.y)*(left?-1:1),p.muzzle.x-p.wrist.x);
   this.gauntlet.setTexture(`${this.identity}-${this.style}-weapon`).setOrigin(p.wrist.x/128,left?1-p.wrist.y/96:p.wrist.y/96).setDisplaySize(p.width,p.width*96/128).setPosition(this.main.wrist.x,this.main.wrist.y).setRotation(angle).setFlipY(left);
   const length=Math.hypot(p.muzzle.x-p.wrist.x,p.muzzle.y-p.wrist.y)*p.width/128;this.muzzle.x=this.main.wrist.x+c*length;this.muzzle.y=this.main.wrist.y+s*length;
-  if(this.layer!==row){this.layer=row;const outer=row===1?3:0;this.limbs.forEach((v,i)=>v.setFrame(`anatomy-${outer+i%2}`));this.freeHand.setFrame(`anatomy-${outer+2}`);
+  if(directionChanged){this.layer=row;
    const [upper,fore,otherUpper,otherFore]=this.limbs;
-   const order=row===1?[otherUpper,otherFore,upper,fore,this.freeHand,this.gauntlet,this.body,this.torso.image]:row===2?[otherUpper,otherFore,this.freeHand,this.body,this.torso.image,upper,fore,this.gauntlet]:[this.body,this.torso.image,otherUpper,upper,otherFore,fore,this.freeHand,this.gauntlet];
+   const order=row===1?[otherUpper,otherFore,upper,fore,this.freeHand,this.gauntlet,this.body,this.torso.image]:row===2?[otherUpper,otherFore,this.freeHand,upper,this.body,this.torso.image,fore,this.gauntlet]:[otherUpper,upper,this.body,this.torso.image,otherFore,fore,this.freeHand,this.gauntlet];
    for(const v of [...order,this.glow,this.guide])this.view.bringToTop(v);
   }
   const busy=heavy.phase==='CHARGING';this.glow.setTexture(this.identity==='xenobinder'?'xeno-bolt':`astral-${element}-bolt`,0).setDisplaySize(17,12).setPosition(this.muzzle.x,this.muzzle.y).setRotation(aim).setVisible(busy||firing).setAlpha(busy?.3+heavy.level*.6:.7);
@@ -87,6 +92,7 @@ export class AstralArt {
    const distance=this.identity==='xenobinder'?XENOBINDER.commandRange+XENOBINDER.chargedRange*heavy.level:140+240*heavy.level;this.guide.lineStyle(1,color,.4).lineBetween(0,0,c*distance,s*distance).strokeCircle(c*distance,s*distance,this.identity==='xenobinder'?XENOBINDER.pulseRadius:52+24*heavy.level);
   }else if(this.guideVisible){this.guide.clear().setVisible(false);this.guideVisible=false;}
  }
- private arm(i:number,p:ArmPose):void{this.segment(this.limbs[i],p.shoulder,p.elbow,12,5);this.segment(this.limbs[i+1],p.elbow,p.wrist,10.5,2);}
- private segment(p:Phaser.GameObjects.Image,a:{x:number;y:number},b:{x:number;y:number},h:number,overlap:number):void{const length=Math.hypot(b.x-a.x,b.y-a.y),w=length+overlap+1;p.setOrigin(overlap/w,.5).setPosition(a.x,a.y).setRotation(Math.atan2(b.y-a.y,b.x-a.x)).setDisplaySize(w,h);}
+ private part(p:Phaser.GameObjects.Image):PaintedArmPart{return this.armParts[p.texture.key][Number(p.frame.name.slice(-1))];}
+ private arm(i:number,p:ArmPose):void{this.segment(this.limbs[i],p.shoulder,p.elbow);this.segment(this.limbs[i+1],p.elbow,p.wrist);}
+ private segment(p:Phaser.GameObjects.Image,a:{x:number;y:number},b:{x:number;y:number}):void{const part=this.part(p),dx=part.tip.x-part.root.x,dy=part.tip.y-part.root.y;p.setOrigin(part.root.x/part.width,part.root.y/part.height).setPosition(a.x,a.y).setRotation(Math.atan2(b.y-a.y,b.x-a.x)-Math.atan2(dy,dx)).setScale(Math.hypot(b.x-a.x,b.y-a.y)/Math.hypot(dx,dy));}
 }

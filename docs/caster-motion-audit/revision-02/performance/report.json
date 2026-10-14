@@ -1,0 +1,49 @@
+{
+  "method": "One Chrome page, paired same-build Warrior/Astral/Xenobinder region samples. Ten-second warm-up excludes asset-loading startup; Phaser smoothed FPS plus actual scene update count. Fixture invulnerability only for stable observation.",
+  "errors": [],
+  "samples": [
+    {
+      "region": "forest",
+      "classId": "warrior",
+      "meanFps": 59.363966368623856,
+      "measuredFps": 60.01622060016221,
+      "before": {
+        "objects": 376,
+        "tweens": 25
+      },
+      "after": {
+        "objects": 376,
+        "tweens": 25
+      }
+    },
+    {
+      "region": "forest",
+      "classId": "astral",
+      "meanFps": 58.97751484211767,
+      "measuredFps": 59.91533702377075,
+      "before": {
+        "objects": 394,
+        "tweens": 25
+      },
+      "after": {
+        "objects": 394,
+        "tweens": 25
+      }
+    },
+    {
+      "region": "forest",
+      "classId": "xenobinder",
+      "meanFps": 59.297158017657544,
+      "measuredFps": 60.01304631441618,
+      "before": {
+        "objects": 391,
+        "tweens": 25
+      },
+      "after": {
+        "objects": 391,
+        "tweens": 25
+      }
+    }
+  ],
+  "passed": true
+}

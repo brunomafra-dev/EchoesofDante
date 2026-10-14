@@ -3,6 +3,7 @@ import { hunterRiflePose } from '../visual/HunterRiflePose';
 import { characterSex, hunterBody, warriorBody, type CharacterSex } from '../config/appearance';
 import type {ShoulderSockets} from '../visual/ClothShoulders';
 import {CASTER_WALK,CASTER_COLUMNS,CASTER_INSTRUMENTS,casterTargets,type ArmPose} from '../visual/CasterPose';
+import type {PaintedArmPart} from '../visual/PaintedArmFrames';
 
 type Part = { frame: number; width: number; height: number; axisY?: number };
 const images = new Map<string, Promise<HTMLImageElement>>();
@@ -33,7 +34,7 @@ export class CharacterShowcase {
   private readonly ctx: CanvasRenderingContext2D;
   private readonly loaded = new Map<string, HTMLImageElement>();
   private parts: Part[] = [];
-  private armBounds:{x:number;y:number;width:number;height:number}[]=[];
+  private armBounds:PaintedArmPart[]=[];
   private shoulderSockets:ShoulderSockets[]=[];
   private raf = 0;
   private disposed = false;
@@ -124,16 +125,18 @@ export class CharacterShowcase {
   private xenobinder(t:number,strike:boolean,dash:boolean,charge:boolean,release:boolean):void{this.caster('xenobinder',t,strike,dash,charge,release);}
   private caster(identity:'astral'|'xenobinder',t:number,strike:boolean,dash:boolean,charge:boolean,release:boolean):void{
     const c=this.ctx,frame=dash?CASTER_WALK[Math.floor((t-1.15)*8)%4]:0,sockets=this.shoulderSockets[frame];
-    this.sprite(this.bodyName,frame,CASTER_COLUMNS,256,-64,-83,128,128);
     const pose=():ArmPose=>({shoulder:{x:0,y:0},elbow:{x:0,y:0},wrist:{x:0,y:0}});
     const main=pose(),other=pose(),aim=.1;
     casterTargets(sockets.left.x/2-64,sockets.left.y/2-83,sockets.right.x/2-64,sockets.right.y/2-83,aim,strike,charge,dash?Math.sin(t*8):0,main,other);
-    for(const segment of [0,1])for(const arm of [other,main]){
-      const a=segment?arm.elbow:arm.shoulder,b=segment?arm.wrist:arm.elbow,overlap=segment?2:5;
-      const width=Math.hypot(b.x-a.x,b.y-a.y)+overlap+1;
-      c.save();c.translate(a.x,a.y);c.rotate(Math.atan2(b.y-a.y,b.x-a.x));this.armPart(segment,-overlap,-(segment?10.5:12)/2,width,segment?10.5:12);c.restore();
+    for(const segment of [0,1]){
+     if(segment===1)this.sprite(this.bodyName,frame,CASTER_COLUMNS,256,-64,-83,128,128);
+     for(const arm of [other,main]){
+      const a=segment?arm.elbow:arm.shoulder,b=segment?arm.wrist:arm.elbow,bounds=this.armBounds[segment],dx=bounds.tip.x-bounds.root.x,dy=bounds.tip.y-bounds.root.y,scale=Math.hypot(b.x-a.x,b.y-a.y)/Math.hypot(dx,dy);
+      c.save();c.translate(a.x,a.y);c.rotate(Math.atan2(b.y-a.y,b.x-a.x)-Math.atan2(dy,dx));this.armPart(segment,-bounds.root.x*scale,-bounds.root.y*scale,bounds.width*scale,bounds.height*scale);c.restore();
+     }
     }
-    c.save();c.translate(other.wrist.x,other.wrist.y);c.rotate(Math.atan2(other.wrist.y-other.elbow.y,other.wrist.x-other.elbow.x));this.armPart(2,-1.2,-4.5,8,9);c.restore();
+    const hand=this.armBounds[2],reverse=other.shoulder.x>0,hdx=hand.tip.x-hand.root.x,hdy=hand.tip.y-hand.root.y,handScale=6.5/Math.hypot(hdx,hdy);
+    c.save();c.translate(other.wrist.x,other.wrist.y);c.rotate(Math.atan2(other.wrist.y-other.elbow.y,other.wrist.x-other.elbow.x)-Math.atan2(reverse?-hdy:hdy,hdx));if(reverse)c.scale(1,-1);this.armPart(2,-hand.root.x*handScale,-hand.root.y*handScale,hand.width*handScale,hand.height*handScale);c.restore();
     const p=CASTER_INSTRUMENTS[identity].starter,weapon=this.loaded.get(identity+'-starter-weapon'),angle=aim-Math.atan2(p.muzzle.y-p.wrist.y,p.muzzle.x-p.wrist.x),scale=p.width/128;
     c.save();c.translate(main.wrist.x,main.wrist.y);c.rotate(angle);if(weapon)c.drawImage(weapon,-p.wrist.x*scale,-p.wrist.y*scale,p.width,96*scale);c.restore();
     const length=Math.hypot(p.muzzle.x-p.wrist.x,p.muzzle.y-p.wrist.y)*scale,mx=main.wrist.x+Math.cos(aim)*length,my=main.wrist.y+Math.sin(aim)*length;

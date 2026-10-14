@@ -46,7 +46,7 @@ localStorage.setItem('echoes-of-dante.journey.v1.character.'+id,JSON.stringify({
  progression:{xp:PROGRESSION.levelThresholds[level-1],echoes:['northern-ruin','mineral-signal','unknown-trace'],sourceLocated:true,passageOpen:true,rewardedHollows:[],rewardedRoutes:[],abilityUpgrades:ranks},
  flags,bestiary:params.get('affinities')==='1'?Object.fromEntries(Object.keys(SPECIES).map(id=>[id,{seen:true,defeats:0}])):{},valleyRoutes:[],valleyHabitats:[],aridHabitats:[],equipment:validEquipment({owned,slots}),economy:validEconomy({credits:237,materials:[12,12,12],potions:6,visited:Object.keys(REGION_NAMES)})}));
 sessionStorage.setItem('echoes-of-dante.launch-once',id);
-const panel=document.createElement('details');panel.className='threat-lab';panel.open=true;
+const panel=document.createElement('details');panel.className='threat-lab';panel.open=params.get('motion')!=='1';
 panel.innerHTML=`<summary>${['cinder','obsidian','caldera'].includes(region)?'CALDEIRA':xenoLab?'ETAPA 6':astralLab?'ETAPA 5':'ETAPA 4'} · TESTE RESERVADO</summary><p>Mesmo nível por região. Troque o equipamento para comparar. Seus saves reais não são alterados.</p>
 <label>Região <select data-region>${Object.entries(REGION_NAMES).map(([id,name])=>`<option value="${id}" ${id===region?'selected':''}>${name}</option>`).join('')}</select></label>
 <label>Classe <select data-class><option value="warrior" ${classId==='warrior'?'selected':''}>Guerreiro</option><option value="hunter" ${classId==='hunter'?'selected':''}>Hunter</option><option value="astral" ${classId==='astral'?'selected':''}>Astral</option><option value="xenobinder" ${classId==='xenobinder'?'selected':''}>Vinculador</option></select></label>

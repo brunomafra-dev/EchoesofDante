@@ -293,3 +293,7 @@ Vinculador: humano de expedição com condutor vivo e uma criatura original perm
 ### Revisão solicitada dos dois rigs — 0.1.97
 
 Em 14/10/2026 o usuário aprovou a sensação do kit, mas rejeitou braços e caminhada dos dois personagens mais recentes. Auditoria de manutenção dentro das etapas 5/6: ombros medidos por vestimenta, ossos de comprimento constante, punho/mão/instrumento registrados, ordenação frente/costas/perfil e poses de pernas completas produzidas offline. Mesma apresentação no solo, na dupla e no menu; nenhum valor de combate, recurso, controle, mapa ou protocolo foi alterado. [Auditoria, testes e links reservados](caster-motion-audit/README.md). **Aguardar aprovação humana desta revisão antes da etapa 7.**
+
+### Rejeição visual e revisão dos braços — 0.1.98
+
+A captura enviada pelo usuário rejeitou os braços da 0.1.97. Correção focada: pintura sem punhos artificiais nas junções, escala uniforme, articulações registradas dentro do PNG, mão proporcional/relaxada, antebraço e manopla no mesmo eixo, punho do condutor ajustado e ordenação da manga sob o torso. Pernas, corpos, kit, controles e valores preservados. QA passa a verificar pixels opacos nas junções e ausência de estiramento, além das coordenadas. [Entrega e teste](caster-motion-audit/revision-02/README.md). **Ainda aguardar aprovação visual antes da etapa 7.**

@@ -1,12 +1,12 @@
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {mkdir,writeFile} from 'node:fs/promises';
-const out='docs/caster-motion-audit/performance';await mkdir(out,{recursive:true});
+const out=process.argv[2]??'docs/caster-motion-audit/performance';await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true}),p=await browser.newPage({viewport:{width:1280,height:720}});
 const report={method:'One Chrome page, paired same-build Warrior/Astral/Xenobinder region samples. Ten-second warm-up excludes asset-loading startup; Phaser smoothed FPS plus actual scene update count. Fixture invulnerability only for stable observation.',errors:[],samples:[]};
 p.on('pageerror',e=>report.errors.push(e.message));
 try{
- for(const region of['forest','cavern','caldera'])for(const cls of['warrior','astral','xenobinder']){
+ for(const region of(process.argv[3]?.split(',')??['forest','cavern','caldera']))for(const cls of['warrior','astral','xenobinder']){
   await p.goto(`http://localhost:5184/xenobinder-playtest.html?region=${region}&class=${cls}&kit=advanced`);await p.waitForFunction(()=>window.__danteGame?.scene.getScene('Game')?.player?.view.active);await p.locator('.threat-lab').evaluate(e=>e.open=false);
   for(let i=0;i<15;i++){const b=p.locator('.ability-upgrade-dialog[open] [data-upgrade]:not(:disabled)');if(!await b.count())break;await b.first().click();}
   await p.evaluate(()=>window.__danteGame.scene.getScene('Game').player.invulnerableUntil=Infinity);await p.waitForTimeout(10000);

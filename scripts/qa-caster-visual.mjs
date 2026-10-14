@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {mkdir,writeFile} from 'node:fs/promises';
-const out='docs/caster-motion-audit/visual';await mkdir(out,{recursive:true});
+const out=process.argv[2]??'docs/caster-motion-audit/visual';await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true});
 const report={method:'Real keyboard/mouse movement, directional attacks and Q hold/release; recorded Chrome canvas, isolated saves. Reviewed screenshots, not physical/human playtest.',errors:[],cases:[],menu:[]};
 const S=(p,code,arg)=>p.evaluate(({code,arg})=>new Function('s','arg',code)(window.__danteGame.scene.getScene('Game'),arg),{code,arg});

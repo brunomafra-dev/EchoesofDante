@@ -1,0 +1,240 @@
+{
+  "method": "Chrome; paused DEV fixtures for joint PAINT alpha, uniform scaling, forearm/muzzle alignment, bones and wardrobe, then actual WASD/mouse/Space/Q gameplay and menu. No physical or human approval.",
+  "errors": [],
+  "cases": [
+    {
+      "classId": "astral",
+      "sex": "male",
+      "checks": 576,
+      "mixed": {
+        "uniform": true,
+        "foreAim": 0,
+        "painted": [
+          253,
+          252,
+          253,
+          253,
+          253,
+          252,
+          253,
+          253,
+          253,
+          252
+        ],
+        "roots": [
+          251,
+          253
+        ],
+        "lengths": [
+          18,
+          15,
+          18,
+          15.000000000000002
+        ],
+        "join": 0,
+        "aimError": 0,
+        "upperStable": true,
+        "frame": 14,
+        "bodyRotation": 0,
+        "freeHand": "anatomy-2",
+        "behind": true,
+        "weapon": "astral-advanced-weapon"
+      },
+      "minRootAlpha": 251,
+      "maxAimError": 8.881784197001252e-16,
+      "maxJointError": 0,
+      "minPaintedJointAlpha": 252,
+      "noStretchedParts": true,
+      "maxForearmAimError": 0
+    },
+    {
+      "classId": "astral",
+      "sex": "female",
+      "checks": 576,
+      "mixed": {
+        "uniform": true,
+        "foreAim": 0,
+        "painted": [
+          253,
+          252,
+          253,
+          253,
+          253,
+          252,
+          253,
+          253,
+          253,
+          252
+        ],
+        "roots": [
+          252,
+          252
+        ],
+        "lengths": [
+          18,
+          15,
+          18,
+          15.000000000000002
+        ],
+        "join": 0,
+        "aimError": 0,
+        "upperStable": true,
+        "frame": 14,
+        "bodyRotation": 0,
+        "freeHand": "anatomy-2",
+        "behind": true,
+        "weapon": "astral-advanced-weapon"
+      },
+      "minRootAlpha": 250,
+      "maxAimError": 8.881784197001252e-16,
+      "maxJointError": 0,
+      "minPaintedJointAlpha": 252,
+      "noStretchedParts": true,
+      "maxForearmAimError": 0
+    },
+    {
+      "classId": "xenobinder",
+      "sex": "male",
+      "checks": 576,
+      "mixed": {
+        "uniform": true,
+        "foreAim": 0,
+        "painted": [
+          252,
+          252,
+          253,
+          253,
+          252,
+          252,
+          253,
+          253,
+          253,
+          253
+        ],
+        "roots": [
+          252,
+          252
+        ],
+        "lengths": [
+          18,
+          15,
+          18,
+          15.000000000000002
+        ],
+        "join": 0,
+        "aimError": 9.43689570931383e-16,
+        "upperStable": true,
+        "frame": 14,
+        "bodyRotation": 0,
+        "freeHand": "anatomy-2",
+        "behind": true,
+        "weapon": "xenobinder-advanced-weapon"
+      },
+      "minRootAlpha": 251,
+      "maxAimError": 1.1102230246251565e-15,
+      "maxJointError": 0,
+      "minPaintedJointAlpha": 251,
+      "noStretchedParts": true,
+      "maxForearmAimError": 0
+    },
+    {
+      "classId": "xenobinder",
+      "sex": "female",
+      "checks": 576,
+      "mixed": {
+        "uniform": true,
+        "foreAim": 0,
+        "painted": [
+          252,
+          252,
+          253,
+          253,
+          252,
+          252,
+          253,
+          253,
+          253,
+          253
+        ],
+        "roots": [
+          252,
+          253
+        ],
+        "lengths": [
+          18,
+          15,
+          18,
+          15.000000000000002
+        ],
+        "join": 0,
+        "aimError": 9.43689570931383e-16,
+        "upperStable": true,
+        "frame": 14,
+        "bodyRotation": 0,
+        "freeHand": "anatomy-2",
+        "behind": true,
+        "weapon": "xenobinder-advanced-weapon"
+      },
+      "minRootAlpha": 252,
+      "maxAimError": 1.1102230246251565e-15,
+      "maxJointError": 0,
+      "minPaintedJointAlpha": 251,
+      "noStretchedParts": true,
+      "maxForearmAimError": 0
+    }
+  ],
+  "walking": [
+    {
+      "classId": "astral",
+      "sex": "male",
+      "frames": [
+        1,
+        4,
+        3,
+        2
+      ],
+      "stopIdle": true,
+      "holdStationary": true
+    },
+    {
+      "classId": "astral",
+      "sex": "female",
+      "frames": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "stopIdle": true,
+      "holdStationary": true
+    },
+    {
+      "classId": "xenobinder",
+      "sex": "male",
+      "frames": [
+        4,
+        1,
+        2,
+        3
+      ],
+      "stopIdle": true,
+      "holdStationary": true
+    },
+    {
+      "classId": "xenobinder",
+      "sex": "female",
+      "frames": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "stopIdle": true,
+      "holdStationary": true
+    }
+  ],
+  "continuity": {
+    "maxWristStepPerDegree": 1.667072133404746
+  },
+  "passed": true
+}

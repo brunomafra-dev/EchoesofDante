@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 type Bounds={x:number;y:number;width:number;height:number};
+export type PaintedArmPart=Bounds&{root:{x:number;y:number};tip:{x:number;y:number}};
 export function preloadCasterArms(scene:Phaser.Scene,identity:'astral'|'xenobinder'):void {
   for(const style of ['none','basic','reinforced']){
     const key=`${identity}-arm-${style}`;

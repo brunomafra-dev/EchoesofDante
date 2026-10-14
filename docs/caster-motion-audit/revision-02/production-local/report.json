@@ -1,0 +1,147 @@
+{
+  "at": "2026-10-14T14:50:51.032Z",
+  "base": "http://localhost:5190/",
+  "method": "Production UI, actual keyboard/mouse, request/texture validation; no DEV scene hooks, no physical hardware.",
+  "errors": [],
+  "cases": [
+    {
+      "cls": "astral",
+      "sex": "male",
+      "loaded": true,
+      "controlsUsed": [
+        "WASD",
+        "mouse",
+        "LMB",
+        "Q hold/aim/release",
+        "Space"
+      ],
+      "temporaryStorage": true
+    },
+    {
+      "cls": "astral",
+      "sex": "female",
+      "loaded": true,
+      "controlsUsed": [
+        "WASD",
+        "mouse",
+        "LMB",
+        "Q hold/aim/release",
+        "Space"
+      ],
+      "temporaryStorage": true
+    },
+    {
+      "cls": "xenobinder",
+      "sex": "male",
+      "loaded": true,
+      "controlsUsed": [
+        "WASD",
+        "mouse",
+        "LMB",
+        "Q hold/aim/release",
+        "Space"
+      ],
+      "temporaryStorage": true
+    },
+    {
+      "cls": "xenobinder",
+      "sex": "female",
+      "loaded": true,
+      "controlsUsed": [
+        "WASD",
+        "mouse",
+        "LMB",
+        "Q hold/aim/release",
+        "Space"
+      ],
+      "temporaryStorage": true
+    }
+  ],
+  "assets": [
+    {
+      "src": "http://localhost:5190/assets/visual/characters/wardrobe-astral-male-none.png",
+      "size": {
+        "width": 1280,
+        "height": 768
+      }
+    },
+    {
+      "src": "http://localhost:5190/assets/visual/characters/wardrobe-astral-male-basic.png",
+      "size": {
+        "width": 1280,
+        "height": 768
+      }
+    },
+    {
+      "src": "http://localhost:5190/assets/visual/characters/wardrobe-astral-male-reinforced.png",
+      "size": {
+        "width": 1280,
+        "height": 768
+      }
+    },
+    {
+      "src": "http://localhost:5190/assets/visual/characters/wardrobe-astral-female-none.png",
+      "size": {
+        "width": 1280,
+        "height": 768
+      }
+    },
+    {
+      "src": "http://localhost:5190/assets/visual/characters/wardrobe-astral-female-basic.png",
+      "size": {
+        "width": 1280,
+        "height": 768
+      }
+    },
+    {
+      "src": "http://localhost:5190/assets/visual/characters/wardrobe-astral-female-reinforced.png",
+      "size": {
+        "width": 1280,
+        "height": 768
+      }
+    },
+    {
+      "src": "http://localhost:5190/assets/visual/characters/wardrobe-xenobinder-male-none.png",
+      "size": {
+        "width": 1280,
+        "height": 768
+      }
+    },
+    {
+      "src": "http://localhost:5190/assets/visual/characters/wardrobe-xenobinder-male-basic.png",
+      "size": {
+        "width": 1280,
+        "height": 768
+      }
+    },
+    {
+      "src": "http://localhost:5190/assets/visual/characters/wardrobe-xenobinder-male-reinforced.png",
+      "size": {
+        "width": 1280,
+        "height": 768
+      }
+    },
+    {
+      "src": "http://localhost:5190/assets/visual/characters/wardrobe-xenobinder-female-none.png",
+      "size": {
+        "width": 1280,
+        "height": 768
+      }
+    },
+    {
+      "src": "http://localhost:5190/assets/visual/characters/wardrobe-xenobinder-female-basic.png",
+      "size": {
+        "width": 1280,
+        "height": 768
+      }
+    },
+    {
+      "src": "http://localhost:5190/assets/visual/characters/wardrobe-xenobinder-female-reinforced.png",
+      "size": {
+        "width": 1280,
+        "height": 768
+      }
+    }
+  ],
+  "soloPassed": true
+}

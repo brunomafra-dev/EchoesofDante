@@ -1,0 +1,158 @@
+{
+  "method": "Chrome headless; real keyboard/mouse, local WebSocket pair, CDP multi-touch and Gamepad API mock. Explicit DEV positioning/damage fixtures; no physical devices or human approval.",
+  "errors": [],
+  "checks": [
+    "Confirmed hit marks assistance; Vínculo earned; command single hit/cost; one capped nearby heal; no revival, through-wall damage/heal or unmarked autonomous attack; quiet-only recovery",
+    "PC movement/Dash; Q hold locks motion, release spends 35 and starts 6-second cooldown; dry Q rejected",
+    "Menu cancellation does not spend Vínculo or execute a command",
+    "Both sexes, three independently visible equipment tiers, upright directions and original conductor/companion atlases",
+    "Real WebSocket guest companion/resource/hold/release is host-authoritative and snapshot-only on visitor",
+    "One authoritative recovery pulse heals both living allies and replicates capped HP",
+    "Guest Gamepad API mock: stick motion/aim, RB Dash, LT hold/release",
+    "Guest CDP touch: simultaneous joystick and hold/drag, frozen charge, captured release, no browser zoom",
+    "Three co-op deaths/respawns: one companion, stable objects/textures and preserved class",
+    "Reverse pair: Xenobinder host and Astral visitor, original companion snapshot"
+  ],
+  "views": [
+    {
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "width": 1366,
+      "height": 768
+    },
+    {
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "width": 844,
+      "height": 390
+    }
+  ],
+  "core": {
+    "assist": {
+      "hp": 464,
+      "bond": 53,
+      "frame": 0
+    },
+    "command": {
+      "accepted": true,
+      "hp": 400,
+      "bond": 65,
+      "heal": 64,
+      "outside": 50,
+      "full": 100,
+      "dead": 0,
+      "pose": {
+        "bond": 65,
+        "active": true,
+        "state": "RETURN",
+        "owner": {
+          "x": 0,
+          "y": 0
+        },
+        "pet": {
+          "x": 292.7042615337901,
+          "y": 4.267791658348041,
+          "frame": 1,
+          "flip": true
+        },
+        "linked": false,
+        "shots": [],
+        "pulse": {
+          "x": 380,
+          "y": 0,
+          "radius": 112,
+          "alpha": 0.4153846153846149
+        },
+        "heals": [
+          {
+            "x": 380,
+            "y": 0,
+            "amount": 14
+          }
+        ]
+      }
+    },
+    "cover": {
+      "hp": 500,
+      "heal": 50,
+      "position": {
+        "x": -29.94621706748379,
+        "y": 17.02156370330307
+      }
+    },
+    "rejected": false,
+    "before": 0,
+    "passiveHp": 500,
+    "recoveryDistance": 68.00735254367721,
+    "combatDistance": 1195.4008749046113,
+    "dormant": {
+      "bond": 0,
+      "active": false,
+      "state": "RETURN",
+      "owner": {
+        "x": 1200,
+        "y": 0
+      },
+      "pet": {
+        "x": 4.599128448870756,
+        "y": 0.08954055387182003,
+        "frame": 1,
+        "flip": false
+      },
+      "linked": false,
+      "shots": [],
+      "heals": []
+    }
+  },
+  "guest": {
+    "bond": 65,
+    "hostHp": 57,
+    "guestHp": 40,
+    "pulse": {
+      "x": 1088.929585824519,
+      "y": 1000.1645134922445,
+      "radius": 112,
+      "alpha": 0.7948615384615386
+    }
+  },
+  "coopHeal": {
+    "h": 40,
+    "g": 40,
+    "after": {
+      "h": 50,
+      "g": 52
+    }
+  },
+  "cycles": [
+    {
+      "objects": 397,
+      "textures": 244,
+      "tweens": 25,
+      "pet": 1,
+      "xp": 0
+    },
+    {
+      "objects": 397,
+      "textures": 244,
+      "tweens": 25,
+      "pet": 1,
+      "xp": 0
+    },
+    {
+      "objects": 397,
+      "textures": 244,
+      "tweens": 25,
+      "pet": 1,
+      "xp": 0
+    }
+  ],
+  "fps": {
+    "host": 49.30393635740726,
+    "guest": 50.39722906149677
+  },
+  "passed": true
+}

@@ -126,7 +126,7 @@
       256
     ],
     "frames": 6,
-    "bytes": 88755
+    "bytes": 68104
   },
   {
     "asset": "public\\assets\\visual\\characters\\xenobinder-arm-none.png",
@@ -135,7 +135,7 @@
       256
     ],
     "frames": 6,
-    "bytes": 90599
+    "bytes": 68213
   },
   {
     "asset": "public\\assets\\visual\\characters\\astral-arm-basic.png",
@@ -144,7 +144,7 @@
       256
     ],
     "frames": 6,
-    "bytes": 89464
+    "bytes": 79872
   },
   {
     "asset": "public\\assets\\visual\\characters\\xenobinder-arm-basic.png",
@@ -153,7 +153,7 @@
       256
     ],
     "frames": 6,
-    "bytes": 96094
+    "bytes": 87653
   },
   {
     "asset": "public\\assets\\visual\\characters\\astral-arm-reinforced.png",
@@ -162,7 +162,7 @@
       256
     ],
     "frames": 6,
-    "bytes": 93236
+    "bytes": 82841
   },
   {
     "asset": "public\\assets\\visual\\characters\\xenobinder-arm-reinforced.png",
@@ -171,6 +171,6 @@
       256
     ],
     "frames": 6,
-    "bytes": 97603
+    "bytes": 87333
   }
 ]
