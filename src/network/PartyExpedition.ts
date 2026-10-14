@@ -16,6 +16,7 @@ import type {ResourceDrop} from '../systems/ResourceDrops';
 import type { ExpeditionReturn } from '../systems/ExpeditionReturn';
 import type { ImpactPose } from './CoopSession';
 import type { AstralElement } from '../config/classes';
+import { partyThreat } from '../config/difficulty';
 
 export type PartyBridge={
  area:JourneyArea;player:Player;controls:Controls;enemies:readonly Enemy[];obstacles:readonly Obstacle[];bounds?:MovementBounds;hud:Hud;hunter?:HunterCombat;astral?:import('../combat/AstralCombat').AstralCombat;xeno?:import('../combat/XenobinderCombat').XenobinderCombat;
@@ -87,10 +88,11 @@ export class PartyExpedition {
    if(this.balanced){for(const e of this.access().enemies){const base=this.resilience.get(e);if(base!==undefined)this.resizeHealth(e,base);}this.balanced=false;this.resilience=new WeakMap();}
    for(const actor of this.actors.values())actor.destroy();this.actors.clear();this.status.setVisible(false);return;
   }
+  if(!room.campaignRunning)return;
   const a=this.access(),active=room.guests.filter(m=>m.connected),live=new Set(room.guests.map(m=>m.id));
-  this.status.setVisible(true).setText(`EQUIPE ${1+active.length}/4 · ${room.connected?'SALA '+room.code:'RECONECTANDO'}`);
-  // Fixed party-size resilience; no damage or AI changes. Solo and duo retain their values.
-  for(const enemy of a.enemies){const base=this.resilience.get(enemy)??enemy.health.max;this.resilience.set(enemy,base);this.resizeHealth(enemy,Math.round(base*(1+.4*active.length)));}
+  this.status.setVisible(true).setText(`EQUIPE ${1+active.length}/${room.campaign?.size??4} · ${room.connected?'SALA '+room.code:'RECONECTANDO'}`);
+  // Fixed original team size. Disconnecting never lowers the encounter's HP.
+  for(const enemy of a.enemies){const base=this.resilience.get(enemy)??enemy.health.max;this.resilience.set(enemy,base);this.resizeHealth(enemy,Math.round(base*partyThreat(room.campaign?.size??1,(enemy as unknown)===a.boss).hp));}
   this.balanced=active.length>0;
   for(const [id,actor] of this.actors)if(!live.has(id)){actor.destroy();this.actors.delete(id);}
   for(const member of room.guests){
@@ -145,6 +147,7 @@ export class PartyExpedition {
   return this.living.reduce((nearest,p)=>nearest.isDead||Phaser.Math.Distance.BetweenPoints(p.position,enemy.position)<Phaser.Math.Distance.BetweenPoints(nearest.position,enemy.position)?p:nearest,this.localPlayer);
  }
  updateGuest(now:number,dt:number):void{
+  if(!room.campaignRunning)return;
   const a=this.access(),c=a.controls;
   const world=room.world;
   if(!room.connected||!room.peerConnected||room.hostPaused||!world?.players?.[room.id]||performance.now()-room.worldAt>1500){

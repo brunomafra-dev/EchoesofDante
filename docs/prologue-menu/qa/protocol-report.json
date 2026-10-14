@@ -1,0 +1,15 @@
+{
+  "checks": [
+    "2 players: immutable difficulty/size, original crew sealed before world runs, hash-only roster and XP baseline",
+    "2 players: departure freezes world/travel, replacement rejected, original character rejoins with cumulative receipts",
+    "2 players: room recreation retains the original manifest; difficulty changes and absent crew cannot resume",
+    "3 players: immutable difficulty/size, original crew sealed before world runs, hash-only roster and XP baseline",
+    "3 players: departure freezes world/travel, replacement rejected, original character rejoins with cumulative receipts",
+    "3 players: room recreation retains the original manifest; difficulty changes and absent crew cannot resume",
+    "4 players: immutable difficulty/size, original crew sealed before world runs, hash-only roster and XP baseline",
+    "4 players: departure freezes world/travel, replacement rejected, original character rejoins with cumulative receipts",
+    "4 players: room recreation retains the original manifest; difficulty changes and absent crew cannot resume",
+    "Solo/unfinished journeys cannot silently become cooperative campaigns"
+  ],
+  "passed": true
+}

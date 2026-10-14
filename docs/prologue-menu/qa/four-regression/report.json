@@ -1,0 +1,168 @@
+{
+  "method": "Four independent Chrome contexts (one visible camera at a time to share the QA machine GPU; all four simulations/network connections remain live), real local WebSocket relay, keyboard/mouse, touch emulation and gamepad mock. DEV campaign/position/damage fixtures; no physical-device approval.",
+  "checks": [
+    "Four unique participant IDs, four existing kits and three player mirrors in every visitor",
+    "Every kit: independent movement, basic attack, Dash, charge hold immobilizes and release starts personal cooldown",
+    "Host inventory keeps the authoritative world and visitors running",
+    "Three independent potion receipts/cooldowns/consumption",
+    "Shared gained XP, personal resource collection and one class-compatible equipment receipt each, no cross-player pickup",
+    "Existing damage path reaches each of four distinct players with personal armor resistance",
+    "Three dead allies wait for the last living Xenobinder; no premature boss restart",
+    "Collective defeat resets exactly one boss, preserves all classes and revives the group",
+    "All four campaign bosses: intro, phase thresholds, existing damage/death and unique personal rewards",
+    "Every visitor activates a physical portal; living HP survives travel and a visitor can return the party to base while host is dead",
+    "All fourteen campaign areas plus return to base keep four actors/snapshots and personal kits",
+    "Four resolutions, guest Gamepad API mock and touch charge captured hold/release without zoom",
+    "Visitor reconnect recovers the same seat/class/receipts while the others remain connected",
+    "Three collective respawns: stable object/texture counts, no duplicate actors or companions",
+    "Host departure pauses every visitor with menu-only return for fixed co-op campaigns"
+  ],
+  "errors": [],
+  "metrics": [
+    {
+      "area": "forest",
+      "objects": 440,
+      "tweens": 25,
+      "textures": 250,
+      "fps": 25.720935802436145
+    },
+    {
+      "area": "cavern",
+      "objects": 287,
+      "tweens": 4,
+      "textures": 263,
+      "fps": 25.54380889587072
+    },
+    {
+      "area": "valley",
+      "objects": 227,
+      "tweens": 3,
+      "textures": 256,
+      "fps": 24.999862471945743
+    },
+    {
+      "area": "arid",
+      "objects": 208,
+      "tweens": 3,
+      "textures": 253,
+      "fps": 33.49313142644806
+    },
+    {
+      "area": "dunes",
+      "objects": 188,
+      "tweens": 1,
+      "textures": 250,
+      "fps": 38.050901564912266
+    },
+    {
+      "area": "frost",
+      "objects": 194,
+      "tweens": 1,
+      "textures": 251,
+      "fps": 41.19188682327302
+    },
+    {
+      "area": "icecave",
+      "objects": 192,
+      "tweens": 1,
+      "textures": 251,
+      "fps": 36.015597044474134
+    },
+    {
+      "area": "cinder",
+      "objects": 191,
+      "tweens": 1,
+      "textures": 250,
+      "fps": 37.652190001323646
+    },
+    {
+      "area": "obsidian",
+      "objects": 200,
+      "tweens": 1,
+      "textures": 251,
+      "fps": 36.88523649445473
+    }
+  ],
+  "ids": [
+    "host",
+    "threat-hunter",
+    "threat-astral",
+    "threat-xenobinder"
+  ],
+  "scale": {
+    "base": 68,
+    "max": 177
+  },
+  "xpKill": {
+    "before": 45,
+    "after": 60,
+    "id": 0
+  },
+  "receivedDamage": [
+    {
+      "before": 133,
+      "after": 122
+    },
+    {
+      "before": 111,
+      "after": 100
+    },
+    {
+      "before": 117,
+      "after": 106
+    },
+    {
+      "before": 122,
+      "after": 111
+    }
+  ],
+  "bosses": [
+    {
+      "area": "warden",
+      "boss": "warden",
+      "max": 3375
+    },
+    {
+      "area": "sandpit",
+      "boss": "soterrado",
+      "max": 3699
+    },
+    {
+      "area": "icenest",
+      "boss": "vesper",
+      "max": 5280
+    },
+    {
+      "area": "caldera",
+      "boss": "titan",
+      "max": 5130
+    }
+  ],
+  "cycles": [
+    {
+      "objects": 440,
+      "textures": 250,
+      "tweens": 25,
+      "actors": 3
+    },
+    {
+      "objects": 440,
+      "textures": 250,
+      "tweens": 25,
+      "actors": 3
+    },
+    {
+      "objects": 440,
+      "textures": 250,
+      "tweens": 25,
+      "actors": 3
+    }
+  ],
+  "fps": [
+    50.960210201795434,
+    59.630553552460086,
+    59.532198886206075,
+    59.14055805491435
+  ],
+  "passed": true
+}

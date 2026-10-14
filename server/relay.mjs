@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 const catalogue=JSON.parse(readFileSync(new URL('../src/config/equipment-catalog.json',import.meta.url),'utf8'));
 import { randomBytes } from 'node:crypto';
 import { WebSocketServer, WebSocket } from 'ws';
+import {campaignCredentials,canJoinCampaign,crewIdentity,campaignState,campaignRunning} from './campaign.mjs';
 
 const areas = new Set(['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest','cinder','obsidian','caldera']);
 const connections = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave','cinder'], cinder:['icenest','obsidian'], obsidian:['cinder','caldera'], caldera: ['obsidian'] };
@@ -35,12 +36,12 @@ export function attachCoop(server, { path = '/coop' } = {}) {
     ws.send(JSON.stringify(message));
   };
   const profile = p => p && ['warrior', 'hunter','astral','xenobinder'].includes(p.classId) && typeof p.name === 'string' && p.name.trim()
-    ? { name: p.name.trim().slice(0, 24), classId: p.classId, sex: p.sex === 'male' || p.sex === 'female' ? p.sex : p.classId === 'hunter' ? 'female' : 'male', bagFree:bagFree(p.bagFree),potions:Number.isInteger(p.potions)?Math.max(0,Math.min(20,p.potions)):0,equipment:cleanEquipment(p.equipment),build:cleanBuild(p.build) } : null;
-  const seat = (ws, p, id = randomBytes(8).toString('hex')) => ({ id, ws, profile: p, token: randomBytes(24).toString('hex'), receipt: randomBytes(16).toString('hex'), total: 0, bosses:new Set(), items:new Map(),resources:{credits:0,materials:[0,0,0],used:0},timer: undefined });
+    ? { characterId:p.characterId,name: p.name.trim().slice(0, 24), classId: p.classId, sex: p.sex === 'male' || p.sex === 'female' ? p.sex : p.classId === 'hunter' ? 'female' : 'male', bagFree:bagFree(p.bagFree),potions:Number.isInteger(p.potions)?Math.max(0,Math.min(20,p.potions)):0,equipment:cleanEquipment(p.equipment),build:cleanBuild(p.build) } : null;
+  const seat = (ws, p, id = randomBytes(8).toString('hex')) => ({ id, ws, profile: p, ready:false, token: randomBytes(24).toString('hex'), receipt: randomBytes(16).toString('hex'), total: 0, bosses:new Set(), items:new Map(),resources:{credits:0,materials:[0,0,0],used:0},timer: undefined });
   const members = room => [room.host, ...room.guests.values()];
   const roster = room => members(room).map(m => ({id:m.id, profile:m.profile, connected:!!m.ws}));
   const broadcast = (room, message) => { for(const member of members(room)) send(member.ws,message); };
-  const notify = room => broadcast(room,{type:'roster',members:roster(room)});
+  const notify = room => broadcast(room,{type:'roster',members:roster(room),campaign:campaignState(room)});
   function end(room) {
     for(const member of members(room)) clearTimeout(member.timer);
     rooms.delete(room.code);
@@ -54,6 +55,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
     const member = members(room).find(m=>m.ws===ws);
     if (!member) return;
     const role = member === room.host ? 'host' : 'guest'; member.ws = undefined;
+    if(role==='guest'&&room.campaign.crew.length){clearTimeout(member.timer);notify(room);return;}
     if (explicit) {
       if (role === 'host') end(room);
       else { clearTimeout(member.timer); room.guests.delete(member.id); notify(room); }
@@ -67,7 +69,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
     member.timer.unref();
   }
   function joined(room, member) {
-    send(member.ws, { type: 'joined', protocol:10, id:member.id, role:member===room.host?'host':'guest', code: room.code, token: member.token, epoch: room.epoch,
+    send(member.ws, { type: 'joined', protocol:11, campaign:campaignState(room),id:member.id, role:member===room.host?'host':'guest', code: room.code, token: member.token, epoch: room.epoch,
       area: room.area, members:roster(room), paused: room.paused === true, receipt: member.receipt, total: member.total, bosses:[...member.bosses], items:[...member.items.values()],resources:member.resources });
     notify(room);
   }
@@ -87,7 +89,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
       if(['input','equipment','world','service-request','pause','travel'].includes(m.type))ws.messageTypes[m.type]=(ws.messageTypes[m.type]??0)+1;
       if(m.type==='inspect') {
         const room=rooms.get(String(m.code).replace(/\s/g,'').toUpperCase());
-        return send(ws,room?{type:'lobby',protocol:10,members:roster(room),area:room.area}:{type:'error',message:'Sala não encontrada. Peça um novo convite.'});
+        return send(ws,room?{type:'lobby',protocol:11,campaign:campaignState(room),members:roster(room),area:room.area}:{type:'error',message:'Sala não encontrada. Peça um novo convite.'});
       }
       if (m.type === 'resume') {
         if (typeof m.token !== 'string' || !/^[a-f0-9]{48}$/.test(m.token)) return send(ws, { type: 'error', message: 'Credencial de reconexão inválida.' });
@@ -104,25 +106,45 @@ export function attachCoop(server, { path = '/coop' } = {}) {
       if (m.type === 'create' || m.type === 'join') {
         if (ws.room) return send(ws, { type: 'error', message: 'Você já está em uma sala.' });
         const p = profile(m.profile); if (!p) return send(ws, { type: 'error', message: 'Personagem inválido.' });
+        const credentials=campaignCredentials(m.campaign,p);
+        if(!credentials)return send(ws,{type:'error',message:'Escolha um personagem desta campanha cooperativa e conclua ou pule o prólogo.'});
         if (m.type === 'create') {
+          if(credentials.memberId!==credentials.hostId)return send(ws,{type:'error',message:'A equipe original deve ser reunida pelo anfitrião desta campanha.'});
+          if([...rooms.values()].some(r=>r.campaign.id===credentials.id))return send(ws,{type:'error',message:'Esta campanha já possui uma sala. Use o convite existente.'});
           if (!areas.has(m.area)) return send(ws, { type: 'error', message: 'Região de campanha desconhecida.' });
           if (rooms.size >= 64) return send(ws, { type: 'error', message: 'Servidor ocupado.' });
           const code = randomBytes(5).toString('hex').toUpperCase();
-          const room = { code, host: seat(ws, p, 'host'), guests: new Map(), area: m.area, epoch: 0, sequence: -1, xp: undefined, bosses:new Set(p.build.bossRewards), loot:new Set(),resourceIds:new Set(),visited:new Set(['base','forest',m.area]) };
+          const {id,hostId,difficulty,size,crew}=credentials;
+          const room = { code,campaign:{id,hostId,difficulty,size,crew},started:false,host: seat(ws, p, 'host'), guests: new Map(), area: m.area, epoch: 0, sequence: -1, xp:p.build.xp, bosses:new Set(p.build.bossRewards), loot:new Set(),resourceIds:new Set(),visited:new Set(['base','forest',m.area]) };
+          room.host.fingerprint=credentials.fingerprint;
           rooms.set(code, room); ws.room = code; joined(room, room.host);
         } else {
           const room = rooms.get(String(m.code).replace(/\s/g, '').toUpperCase());
           if (!room) return send(ws, { type: 'error', message: 'Sala não encontrada. Confira o código com seu amigo.' });
-          if (room.guests.size>=3) return send(ws, { type: 'error', message: 'As quatro vagas estão ocupadas ou reservadas para reconexão.' });
+          if(!canJoinCampaign(room.campaign,credentials,p))return send(ws,{type:'error',message:'Este personagem não pertence à equipe original desta campanha.'});
+          const returning=room.guests.get(credentials.memberId);
+          if(returning){
+            if(returning.ws)return send(ws,{type:'error',message:'Este personagem já está conectado.'});
+            if(returning.fingerprint!==credentials.fingerprint)return send(ws,{type:'error',message:'Credencial do personagem inválida.'});
+            clearTimeout(returning.timer);returning.timer=undefined;returning.ws=ws;returning.profile=p;ws.room=room.code;joined(room,returning);return;
+          }
+          if (room.guests.size>=room.campaign.size-1) return send(ws, { type: 'error', message: 'Todas as vagas desta campanha estão ocupadas ou reservadas.' });
           if(members(room).some(m=>m.profile.classId===p.classId)) return send(ws,{type:'error',message:'Esta classe já está na equipe. Escolha outra classe; seu personagem não foi alterado.'});
           if (!room.host.ws) return send(ws, { type: 'error', message: 'O anfitrião está reconectando. Tente novamente em alguns segundos.' });
-          const member=seat(ws,p); room.guests.set(member.id,member); ws.room = room.code; joined(room, member);
+          const member=seat(ws,p,credentials.memberId);member.fingerprint=credentials.fingerprint;room.guests.set(member.id,member); ws.room = room.code; joined(room, member);
         }
         return;
       }
       const room = rooms.get(ws.room); if (!room) return;
       const member=members(room).find(p=>p.ws===ws);if(!member)return;
-      if(m.type==='service-request'&&member!==room.host){if(['potion','return','heal'].includes(m.action))send(room.host.ws,{type:'service-request',id:member.id,action:m.action});
+      if(m.type==='ready') {member.ready=m.ready===true;notify(room);
+      }else if(m.type==='start'&&member===room.host){
+        if(room.started)return;
+        if(members(room).length!==room.campaign.size||members(room).some(m=>!m.ws))return send(ws,{type:'error',message:'Reúna a equipe original completa para começar.'});
+        if(!room.campaign.crew.length){room.campaign.crew=members(room).map(crewIdentity);for(const member of members(room))member.ready=false;}
+        room.started=true;notify(room);
+      }else if(!campaignRunning(room)&&!['equipment','leave','pause'].includes(m.type)){return;
+      }else if(m.type==='service-request'&&member!==room.host){if(['potion','return','heal'].includes(m.action))send(room.host.ws,{type:'service-request',id:member.id,action:m.action});
       }else if(m.type==='equipment') {
         member.profile.build=cleanBuild(m.build);member.profile.equipment=cleanEquipment(m.equipment);member.profile.bagFree=bagFree(m.bagFree);member.profile.potions=Number.isInteger(m.potions)?Math.max(0,Math.min(20,m.potions)):0;
         notify(room);
@@ -183,6 +205,6 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   server.once('close', close);
   return {
     close,
-    status: () => ({ service: 'Dante regional co-op', protocol: 10, capacity:4, uniqueClasses:true, revision:process.env.RENDER_GIT_COMMIT??'local', campaign: true, rooms: rooms.size, players: clients.size }),
+    status: () => ({ service: 'Dante regional co-op', protocol: 11, capacity:4, uniqueClasses:true,fixedCampaigns:true, revision:process.env.RENDER_GIT_COMMIT??'local', campaign: true, rooms: rooms.size, players: clients.size }),
   };
 }

@@ -1,0 +1,36 @@
+{
+  "tool": "Built-in image_gen; original illustrations, no external samples",
+  "images": [
+    {
+      "id": "earth",
+      "prompt": "Original cinematic game illustration for Echoes of Dante, Organic Sci-Fi R3: painterly raster game concept art, coherent material and contact shadows, worn functional industrial human technology with restrained amber #e0863f, tactile organic surfaces, melancholic wonder and controlled grandeur, not photoreal, not low-poly, no text/logos/watermarks, no UI. Wide 16:9 frame, clear strong masses, lower 20 percent dark and quiet for Portuguese captions added by code. This is an original universe, no recognizable franchise designs. A distant wide view of an uninhabitable Earth at dusk seen beyond an abandoned coastal human settlement. Haze obscures the horizon, dry sea basin and exhausted infrastructure communicate loss without depicting or explaining the exact catastrophe. Tiny distant launch lights suggest evacuation. Restrained desaturated earth tones and smoky amber, solemn rather than explosive.",
+      "source": "C:\\Users\\1\\.codex\\generated_images\\01a0df0e-3f54-78d2-bf2c-6f7125fee783\\exec-ebcb8e1a-96b5-4930-a38d-b1090c2db06f.png",
+      "asset": "public/assets/prologue/earth.webp",
+      "editPrompt": "Edit only the sky of this image. This is Earth's surface, before humanity departs: remove the gigantic planet hanging above the horizon completely and replace its entire silhouette with continuous smoky terrestrial sky and clouds that match the existing warm dusk lighting. Keep all ruins, dry sea basin, launches, colors, framing, painterly style and lower dark caption area unchanged. No new celestial bodies, no text, no logos. Preserve 16:9."
+    },
+    {
+      "id": "evacuation",
+      "prompt": "Original cinematic game illustration for Echoes of Dante, Organic Sci-Fi R3: painterly raster game concept art, coherent material and contact shadows, worn functional industrial human technology with restrained amber #e0863f, tactile organic surfaces, melancholic wonder and controlled grandeur, not photoreal, not low-poly, no text/logos/watermarks, no UI. Wide 16:9 frame, clear strong masses, lower 20 percent dark and quiet for Portuguese captions added by code. This is an original universe, no recognizable franchise designs. Several original functional human evacuation ships lifting above Earth's clouded limb, seen from a spaceport gantry with a few small human silhouettes carrying simple expedition luggage. Same amber industrial language. Strong diagonal departure composition, hope amid exhaustion; no battle, no aliens, no military fleet spectacle.",
+      "source": "C:\\Users\\1\\.codex\\generated_images\\01a0df0e-3f54-78d2-bf2c-6f7125fee783\\exec-6faf39a4-9baf-4794-a59c-50461715bbf3.png",
+      "asset": "public/assets/prologue/evacuation.webp"
+    },
+    {
+      "id": "voyage",
+      "prompt": "Original cinematic game illustration for Echoes of Dante, Organic Sci-Fi R3: painterly raster game concept art, coherent material and contact shadows, worn functional industrial human technology with restrained amber #e0863f, tactile organic surfaces, melancholic wonder and controlled grandeur, not photoreal, not low-poly, no text/logos/watermarks, no UI. Wide 16:9 frame, clear strong masses, lower 20 percent dark and quiet for Portuguese captions added by code. This is an original universe, no recognizable franchise designs. Inside a worn human expedition ship after years of travel: scratched observation window framing deep space and a tiny fleet far away, empty practical seats and a compact navigational console with small amber lights. No readable screen text. Quiet, aging technology, fatigue and resilience. Space feels vast, no giant fantasy nebula.",
+      "source": "C:\\Users\\1\\.codex\\generated_images\\01a0df0e-3f54-78d2-bf2c-6f7125fee783\\exec-2beea318-a7d9-4261-85f4-6927204abd04.png",
+      "asset": "public/assets/prologue/voyage.webp"
+    },
+    {
+      "id": "dante",
+      "prompt": "Original cinematic game illustration for Echoes of Dante, Organic Sci-Fi R3: painterly raster game concept art, coherent material and contact shadows, worn functional industrial human technology with restrained amber #e0863f, tactile organic surfaces, melancholic wonder and controlled grandeur, not photoreal, not low-poly, no text/logos/watermarks, no UI. Wide 16:9 frame, clear strong masses, lower 20 percent dark and quiet for Portuguese captions added by code. This is an original universe, no recognizable franchise designs. The first sight of Dante from orbit: a large habitable alien planet with green #6bb464 land masses, cloud systems, mineral amber traces and subtle violet #a98cff glimmers whose source remains unknown. A small original industrial human scouting ship in the foreground approaches. Majestic planetary scale and discovery; no obvious ancestral structures or lore answers.",
+      "source": "C:\\Users\\1\\.codex\\generated_images\\01a0df0e-3f54-78d2-bf2c-6f7125fee783\\exec-91374a1d-b653-460d-a758-851994c4d0a6.png",
+      "asset": "public/assets/prologue/dante.webp"
+    },
+    {
+      "id": "landing",
+      "prompt": "Original cinematic game illustration for Echoes of Dante, Organic Sci-Fi R3: painterly raster game concept art, coherent material and contact shadows, worn functional industrial human technology with restrained amber #e0863f, tactile organic surfaces, melancholic wonder and controlled grandeur, not photoreal, not low-poly, no text/logos/watermarks, no UI. Wide 16:9 frame, clear strong masses, lower 20 percent dark and quiet for Portuguese captions added by code. This is an original universe, no recognizable franchise designs. A functional worn amber-accented expedition shuttle has landed at the edge of an alien forest on Dante, establishing a modest landing base. Small distant human expedition silhouettes leave a ramp, green irregular roots and organic rock formations ground the scene. Soft morning light, restrained violet mineral glimmer in distant geology. A hopeful playable beginning, no elaborate city, no bosses or ancient lore revelation.",
+      "source": "C:\\Users\\1\\.codex\\generated_images\\01a0df0e-3f54-78d2-bf2c-6f7125fee783\\exec-36381bc8-10f9-4b1b-a3fa-3b82cef7dc43.png",
+      "asset": "public/assets/prologue/landing.webp"
+    }
+  ]
+}

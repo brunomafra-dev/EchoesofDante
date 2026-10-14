@@ -9,9 +9,12 @@ import { validEquipment, validItem, type InventoryItem, type EquipmentSnapshot }
 import type {ResourceDrop} from '../systems/ResourceDrops';
 import type { LootPose } from '../systems/EquipmentDrops';
 import type { ExpeditionReturn } from '../systems/ExpeditionReturn';
+import { characterProfiles } from '../systems/CharacterProfiles';
+import type { CampaignLobby } from '../systems/Campaign';
+export type RoomCampaign = CampaignLobby & { started: boolean; running: boolean };
 export const COOP_AREAS: readonly JourneyArea[] = ['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest','cinder','obsidian','caldera'];
 const CONNECTIONS: Partial<Record<JourneyArea, readonly JourneyArea[]>> = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave','cinder'], cinder:['icenest','obsidian'], obsidian:['cinder','caldera'], caldera: ['obsidian'] };
-export type PartyProfile = {name: string; classId: PlayableClass;sex?:import('../config/appearance').CharacterSex;bagFree?:number;potions?:number;equipment?:EquipmentSnapshot['slots'];build?:Pick<ProgressionSnapshot,'xp'|'abilityUpgrades'|'bossRewards'>};
+export type PartyProfile = {characterId?:string;name: string; classId: PlayableClass;sex?:import('../config/appearance').CharacterSex;bagFree?:number;potions?:number;equipment?:EquipmentSnapshot['slots'];build?:Pick<ProgressionSnapshot,'xp'|'abilityUpgrades'|'bossRewards'>};
 export type PartyMember={id:string;profile:PartyProfile;connected:boolean};
 export type MemberState={input:PartyInput;attackTap:boolean;inputAt:number;deathId:string;potionUsed:number;potionReady:number;travelHp?:number};
 export type PartyInput = {x:number;y:number;aim:number;attack:boolean;dash:boolean;charge:boolean;held:boolean;release:boolean;cancel:boolean;interact:boolean;restart:boolean;element?:boolean};
@@ -28,6 +31,9 @@ export class CoopSession {
  role:'offline'|'connecting'|'host'|'guest'='offline';
  code='';message='Equipe de até quatro pessoas, uma de cada classe.';endedMessage='';
  connected=false;peerConnected=false;travelling=false;epoch=0;personalXpGained=0;rewardSaved=true;
+ campaign?:RoomCampaign;campaignSaved=true;
+ private acknowledgedCrew='';
+ get campaignRunning():boolean{return this.connected&&!!this.campaign?.running&&this.campaignSaved;}
  lastClose?:{code:number;reason:string};
  area?:JourneyArea;private pendingTravel?:JourneyArea;
  hostPaused=false;private localMenu=false;
@@ -49,7 +55,7 @@ export class CoopSession {
  readonly lootAwarded=new Map<string,InventoryItem&{owner:string}>();
  readonly resourceAwarded=new Map<string,ResourceDrop>();
  personalItems:InventoryItem[]=[];
- canTravel(from:JourneyArea,to:JourneyArea):boolean{return this.connected && (to==='base'||from==='base'||!!CONNECTIONS[from]?.includes(to));}
+ canTravel(from:JourneyArea,to:JourneyArea):boolean{return this.campaignRunning && (to==='base'||from==='base'||!!CONNECTIONS[from]?.includes(to));}
  travel(from:JourneyArea,to:JourneyArea):boolean {
   if(this.role!=='host'||!this.canTravel(from,to)||this.travelling)return false;
   this.travelling=true;this.pendingTravel=to;this.input={...NO_INPUT};this.inputAt=0;
@@ -58,14 +64,17 @@ export class CoopSession {
  }
  connect(url:string,mode:'create'|'join',profile:PartyProfile,area:JourneyArea,code=''):Promise<void>{
   if(this.role!=='offline')return Promise.reject(new Error('Encerre a sala atual primeiro.'));
+  const hero=characterProfiles.active,campaign=hero.campaign;
+  if(!campaign||campaign.mode!=='coop'||!campaign.introSeen)return Promise.reject(new Error('Crie ou selecione um personagem desta campanha cooperativa e conclua o prólogo.'));
+  if(mode==='create'&&campaign.hostId!==hero.id)return Promise.reject(new Error('Peça ao anfitrião original para reunir a equipe.'));
   let target:URL;try{target=new URL(url);if(!['ws:','wss:'].includes(target.protocol)||target.username||target.password)throw Error();}catch{return Promise.reject(new Error('Informe um endereço ws:// ou wss:// válido.'));}
   if(location.protocol==='https:'&&target.protocol!=='wss:')return Promise.reject(new Error('Esta página segura precisa de um servidor wss://.'));
   if(mode==='join'&&!/^[A-F0-9]{10}$/.test(code.replace(/\s/g,'').toUpperCase()))return Promise.reject(new Error('O código da sala tem 10 letras/números. Confira com o anfitrião.'));
   this.url=target.href;this.role='connecting';this.endedMessage='';this.message='Conectando à expedição…';this.personalXpGained=0;this.sequence=0;this.epoch=0;this.rewards=new LocalJourney();this.changed();
-  this.members=[];this.states.clear();this.requests=[];this.peerDeathId='';this.earnedBosses=[];this.lootAwarded.clear();this.resourceAwarded.clear();this.personalItems=[];this.receipt='';this.rewardTotal=0;this.rewardSaved=true;this.rewardResources={credits:0,materials:[0,0,0],used:0};
+  this.campaign=undefined;this.campaignSaved=true;this.members=[];this.states.clear();this.requests=[];this.peerDeathId='';this.earnedBosses=[];this.lootAwarded.clear();this.resourceAwarded.clear();this.personalItems=[];this.receipt='';this.rewardTotal=0;this.rewardSaved=true;this.rewardResources={credits:0,materials:[0,0,0],used:0};
   const inventory=validEquipment(this.rewards.load()?.equipment);
-  profile={...profile,build:this.rewards.load()?.progression,potions:this.rewards.load()?.economy?.potions??0,equipment:inventory.slots,bagFree:24-(inventory.items!.length-Object.keys(inventory.equipped!).length)};
-  return new Promise((resolve,reject)=>this.open({type:mode,profile,area,code},false,resolve,reject));
+  profile={...profile,characterId:hero.id,build:this.rewards.load()?.progression,potions:this.rewards.load()?.economy?.potions??0,equipment:inventory.slots,bagFree:24-(inventory.items!.length-Object.keys(inventory.equipped!).length)};
+  return new Promise((resolve,reject)=>this.open({type:mode,profile,area,code,campaign},false,resolve,reject));
  }
  private open(request:object,retry:boolean,resolve:()=>void=()=>{},reject:(reason:Error)=>void=()=>{}):void {
   const ws=new WebSocket(this.url);this.socket=ws;let joined=false;
@@ -75,11 +84,11 @@ export class CoopSession {
    if(this.socket!==ws)return;
    let m;try{m=JSON.parse(event.data);}catch{return;}
    if(m.type==='joined'&&(m.role==='host'||m.role==='guest')){
-    if(m.protocol!==10){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização da campanha. Sua jornada solo continua disponível.');reject(new Error(this.message));return;}
+    if(m.protocol!==11){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização das campanhas. Seus personagens permanecem preservados.');reject(new Error(this.message));return;}
     joined=true;clearTimeout(this.timeout);this.role=m.role;this.connected=true;this.token=m.token;this.code=m.code;this.epoch=m.epoch;
-    this.id=m.id;this.setRoster(m.members);this.input={...NO_INPUT};this.inputAt=0;this.world=undefined;
+    this.id=m.id;this.acknowledgedCrew='';this.setCampaign(m.campaign);this.setRoster(m.members);this.input={...NO_INPUT};this.inputAt=0;this.world=undefined;
     this.area=m.area;this.travelling=false;
-    if(this.role==='host'&&this.pendingTravel&&this.pendingTravel!==m.area){
+    if(this.role==='host'&&this.campaignRunning&&this.pendingTravel&&this.pendingTravel!==m.area){
      this.travelling=true;ws.send(JSON.stringify({type:'travel',area:this.pendingTravel,epoch:this.epoch}));
     }else this.pendingTravel=undefined;
     this.message=retry?'Conexão recuperada.':m.role==='host'&&!this.guests.length?'Sala criada. Envie o link para convidar seu amigo.':'Equipe pronta. XP e drops são pessoais.';
@@ -98,7 +107,7 @@ export class CoopSession {
    }else if(m.type==='pause'&&this.role==='guest'){
     this.hostPaused=m.paused===true;
    }else if(m.type==='roster'){
-    this.setRoster(m.members);this.message='Equipe atualizada · vagas de desconectados ficam reservadas por 20 segundos.';this.changed();
+    this.setCampaign(m.campaign);this.setRoster(m.members);this.message=this.campaignRunning?'Equipe original reunida.':this.campaign?.started?'Campanha pausada · aguardando a equipe original completa.':'Reúna todos os integrantes para começar.';if(!this.campaignRunning){this.clearInputs();this.travelling=false;this.pendingTravel=undefined;}this.changed();
    }else if(m.type==='travel'&&m.epoch>this.epoch&&COOP_AREAS.includes(m.area)){
     this.clearInputs();this.requests=[];
     this.epoch=m.epoch;this.area=m.area;this.pendingTravel=undefined;this.world=undefined;this.input={...NO_INPUT};this.inputAt=0;this.travelling=false;
@@ -148,8 +157,15 @@ export class CoopSession {
  requestBase():void{if(this.role==='guest'&&this.connected)this.socket?.send(JSON.stringify({type:'service-request',action:'return'}));}
  requestHeal():void{if(this.role==='guest'&&this.connected)this.socket?.send(JSON.stringify({type:'service-request',action:'heal'}));}
  takeRequests(){return this.requests.splice(0);}
+ startCampaign():void{if(this.role==='host'&&this.connected&&this.campaignSaved)this.socket?.send(JSON.stringify({type:'start'}));}
+ retryCampaignSave():void{if(!this.campaign)return;this.campaignSaved=characterProfiles.sealCrew(this.campaign.crew);this.socket?.send(JSON.stringify({type:'ready',ready:this.campaignSaved}));this.changed();}
+ private setCampaign(campaign:RoomCampaign):void{
+  if(!campaign||campaign.id!==characterProfiles.active.campaign?.id)return;
+  this.campaign=campaign;
+  if(campaign.crew.length){const previous=this.campaignSaved;this.campaignSaved=characterProfiles.sealCrew(campaign.crew);const key=JSON.stringify(campaign.crew);if(previous!==this.campaignSaved||this.acknowledgedCrew!==key){this.acknowledgedCrew=key;this.socket?.send(JSON.stringify({type:'ready',ready:this.campaignSaved}));}}
+ }
  send(type:'input'|'world',payload:PartyInput|PartyWorld):boolean{
-  if(!this.connected||this.travelling||this.socket?.readyState!==WebSocket.OPEN)return false;
+  if(!this.connected||!this.campaignRunning||this.travelling||this.socket?.readyState!==WebSocket.OPEN)return false;
   if(this.socket.bufferedAmount>1048576){this.socket.close(4001,'Reconectando a expedição congestionada.');return false;}
   if(this.socket.bufferedAmount>131072&&!(type==='input'&&(payload as PartyInput).cancel))return false;
   this.socket.send(JSON.stringify(type==='input'?{type,input:payload,epoch:this.epoch}:{type,world:payload,epoch:this.epoch,sequence:++this.sequence}));
@@ -167,7 +183,7 @@ export class CoopSession {
   // If storage fails, keep the visit open so the player can retry instead of losing XP silently.
   if(guest&&!this.rewardSaved){this.message='Não foi possível salvar o XP. Libere o armazenamento e tente sair novamente.';this.changed();return false;}
   if(this.socket?.readyState===WebSocket.OPEN)this.socket.send(JSON.stringify({type:'leave'}));
-  this.role='offline';this.endedMessage='';this.connected=false;this.peerConnected=false;this.members=[];this.states.clear();this.requests=[];this.world=undefined;this.input={...NO_INPUT};this.token='';this.travelling=false;this.pendingTravel=undefined;this.area=undefined;
+  this.role='offline';this.endedMessage='';this.connected=false;this.peerConnected=false;this.campaign=undefined;this.members=[];this.states.clear();this.requests=[];this.world=undefined;this.input={...NO_INPUT};this.token='';this.travelling=false;this.pendingTravel=undefined;this.area=undefined;
   clearTimeout(this.timeout);clearTimeout(this.retryTimer);
   const socket=this.socket;this.socket=undefined;socket?.close();this.changed();if(guest&&restoreGuest)location.reload();return true;
  }

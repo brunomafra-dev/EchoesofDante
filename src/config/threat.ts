@@ -1,5 +1,6 @@
 import type { JourneyArea } from '../systems/LocalJourney';
 import type { Enemy } from '../entities/Enemy';
+import { DIFFICULTIES, type DifficultyId } from './difficulty';
 
 // Fixed regional tuning. Equipment, level and potions never change these values.
 export const REGIONAL_THREAT = {
@@ -19,8 +20,8 @@ export function regionalThreat(area:JourneyArea,x=0) {
   return REGIONAL_THREAT[area];
 }
 // Applied once when each actor is created, including renewed habitats.
-export function tuneEnemy(enemy:Enemy,area:JourneyArea):void {
-  const max=Math.round(enemy.health.max*regionalThreat(area,enemy.position.x).hp);
+export function tuneEnemy(enemy:Enemy,area:JourneyArea,difficulty:DifficultyId='normal'):void {
+  const max=Math.round(enemy.health.max*regionalThreat(area,enemy.position.x).hp*DIFFICULTIES[difficulty].hp);
   enemy.health.max=max;enemy.health.current=max;
 }
 export const deathCreditLoss=(credits:number):number=>Math.floor(credits*.1);

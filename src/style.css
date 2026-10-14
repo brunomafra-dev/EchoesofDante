@@ -197,3 +197,19 @@ body:has(.application-shell[open]) .astral-panel,body.records-open .astral-panel
 .party-lobby {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem;margin:1rem 0;}
 .party-lobby>div {display:flex;flex-direction:column;gap:.25rem;padding:.7rem;background:#101f1c;border:1px solid #65766355;}
 .party-lobby span {font-size:.85rem;color:#c2ceb4;}
+.difficulty-choice[aria-pressed="true"]{border-color:#d9bb83;background:#334638;box-shadow:inset 4px 0 #d9bb83}
+.campaign-lab-help{position:fixed;bottom:max(6px,env(safe-area-inset-bottom));left:8px;z-index:45000;padding:6px 10px;max-width:min(450px,90vw);color:#d9dac7;background:#13231eee;font:12px/1.4 system-ui;border-radius:4px}.campaign-lab-help summary{cursor:pointer}.campaign-lab-help a{color:#e3c893}.campaign-lab-help button{min-height:36px;cursor:pointer}.campaign-lab-help[open]{padding:12px}
+.application-shell select{width:100%;min-height:44px;background:#182a24;color:#e6e4d4;padding:8px;border:1px solid #798770}
+.application-shell.is-prologue{padding:0;overflow:hidden;background:#07110f}
+.is-prologue .shell-layout{display:block;max-width:none;height:100dvh}
+.is-prologue .shell-brand{display:none}.is-prologue .shell-content{height:100%}
+.prologue{position:relative;height:100%;overflow:hidden;isolation:isolate;background:#081519}
+.prologue-painting{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.prologue::after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#030b10f5 0%,#030b10bd 20%,transparent 58%)}
+.prologue-caption{position:absolute;bottom:max(100px,16vh);left:max(6vw,env(safe-area-inset-left));right:6vw;max-width:720px;text-shadow:0 2px 6px #000}
+.prologue-caption small{color:#dac39d;letter-spacing:.2em}.prologue-caption h2{font-size:clamp(28px,4vw,54px);margin:.3em 0}.prologue-caption p{font:clamp(16px,1.7vw,22px)/1.5 system-ui;color:#f2eadb}
+.prologue-controls{position:absolute;bottom:max(18px,env(safe-area-inset-bottom));left:max(6vw,env(safe-area-inset-left));right:max(6vw,env(safe-area-inset-right));display:flex;gap:10px;flex-wrap:wrap}
+.prologue-controls button{min-height:44px;padding:10px 18px;background:#0b1d22d9;color:#e8dfcd;border:1px solid #c3af8077;border-radius:4px;cursor:pointer}
+.prologue-controls button:focus-visible{outline:2px solid #f4cf8d;outline-offset:3px}
+.prologue-progress{position:absolute;bottom:0;left:0;right:0;height:3px;background:#152e31}.prologue-progress span{display:block;height:100%;background:#d6b87b;transform-origin:left;transform:scaleX(0)}
+@media(max-height:500px){.prologue-caption{bottom:76px;max-width:620px}.prologue-caption h2{font-size:28px;margin:4px 0}.prologue-caption p{font-size:14px;margin:4px 0}.prologue-caption small{font-size:10px}.prologue-controls{bottom:max(10px,env(safe-area-inset-bottom));gap:6px}.prologue-controls button{font-size:11px;padding:8px 12px}}

@@ -136,9 +136,15 @@ Produzir **cinco takes**, aproximadamente oito segundos cada:
 
 Usar ilustrações originais, movimento suave, som, música e legendas em português. Botão **PULAR** sempre disponível; opção **REVER INTRODUÇÃO** no menu.
 
-Exibir uma vez neste navegador, após criar o primeiro personagem. Em convites cooperativos, permitir pular ou concluir antes de confirmar prontidão no lobby.
+Exibir ao criar cada nova jornada, conforme a revisão autorizada de 14/10/2026. Personagens antigos não recebem introdução retroativa. Em convites cooperativos, permitir pular ou concluir antes de confirmar prontidão no lobby.
 
 A abertura confirma a nova premissa fornecida: humanidade em fuga e expedição pioneira. Não definir a causa exata da perda da Terra nem explicar o Signal, o registro humano ancestral ou a origem de Dante.
+
+### Revisão autorizada de menus e campanhas — 14/10/2026 · 0.1.100
+
+O usuário autorizou implementar o prólogo junto da reorganização de menus e dificuldades, sem aguardar nova resposta durante a execução. A decisão posterior confirmou **exigir a equipe original completa** para continuar. Essa autorização supera a espera operacional anterior da etapa 7; não constitui aprovação visual por automação.
+
+Solo e cooperativo usam personagens separados, sem troca de herói durante a expedição. Dificuldade e tamanho 2–4 são fixados na criação; presença temporária e equipamentos não os reduzem. A sala só começa após todos guardarem o manifesto. Ausência interrompe a simulação/relógio até o retorno. Jornada cooperativa não vira solo. Cinco takes por nova jornada, pular/rever, início na base existente. [Entrega e evidências](prologue-menu/README.md).
 
 ## 5. Validação, compatibilidade e limites
 
@@ -180,7 +186,7 @@ Decisão do usuário em 09/10/2026: cada sprint deve terminar com um link espec�
 - [ ] **Interlúdio 5A — Caldeira:** entrega técnica 0.1.94, autorizada antes do Vinculador. Região vulcânica e boss gigante mineral de lava; campanha, dupla local e três kits validados automaticamente. [Entrega e QA](caldera/README.md). Aguardar aprovação humana de visual/ritmo/dificuldade.
 - [x] **Etapa 6 — Vinculador:** kit/companheiro bem recebidos pelo usuário, seguidos de rejeição dos braços; revisão 0.1.98 aprovada em 14/10/2026 (“agora sim perfeito!”). [Relatório e teste](xenobinder/README.md). QA solo/dupla local; quatro participantes e publicação coordenada das salas pertencem à etapa 7.
 - [ ] **Etapa 7 — Equipe de quatro:** entrega técnica 0.1.99, lobby e quatro classes exclusivas, estado/recibos individuais e campanha/bosses. Frontend/relay protocolo 10 publicados; QA público de quatro sessões Chrome passou em 14/10/2026. [Relatório/teste](party-four/README.md). Aguardar playtest humano antes do prólogo.
-- [ ] **Etapa 8 — Prólogo:** cinco takes, chegada, integração da base e refugiados.
+- [ ] **Etapa 8 — Prólogo:** entrega técnica 0.1.100: cinco takes originais, chegada à base existente, menus, dificuldades e campanhas de equipe fixa. [Regras, QA e teste reservado](prologue-menu/README.md). Aguardar avaliação humana; presença de refugiados após o Warden reutiliza a base já existente.
 
 ### Registro inicial — Etapa 0
 

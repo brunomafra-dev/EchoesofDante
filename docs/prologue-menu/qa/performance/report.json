@@ -1,0 +1,167 @@
+{
+  "method": "One visible Chrome host at 1280x720, three Node WebSocket mock guests using existing kits; no visitor browser/render load on this workstation. DEV isolated region fixtures. Five warm FPS samples per region; not a four-device benchmark.",
+  "measurements": [
+    {
+      "area": "forest",
+      "actors": 1,
+      "objects": 393,
+      "textures": 242,
+      "tweens": 25,
+      "size": 2,
+      "fps": [
+        54.781768798828125,
+        54.781768798828125,
+        56.086326599121094,
+        56.086326599121094,
+        57.06474494934082
+      ],
+      "enemy": {
+        "max": 105,
+        "base": 68,
+        "boss": false
+      }
+    },
+    {
+      "area": "forest",
+      "actors": 2,
+      "objects": 417,
+      "textures": 244,
+      "tweens": 25,
+      "size": 3,
+      "fps": [
+        53.48283386230469,
+        55.112125396728516,
+        55.112125396728516,
+        56.33409404754639,
+        56.33409404754639
+      ],
+      "enemy": {
+        "max": 139,
+        "base": 68,
+        "boss": false
+      }
+    },
+    {
+      "area": "forest",
+      "actors": 3,
+      "objects": 440,
+      "textures": 250,
+      "tweens": 25,
+      "size": 4,
+      "fps": [
+        53.0687255859375,
+        54.801544189453125,
+        54.801544189453125,
+        56.351158142089844,
+        56.351158142089844
+      ],
+      "enemy": {
+        "max": 177,
+        "base": 68,
+        "boss": false
+      }
+    },
+    {
+      "area": "cavern",
+      "actors": 3,
+      "objects": 287,
+      "textures": 263,
+      "tweens": 4,
+      "size": 4,
+      "fps": [
+        53.13621520996094,
+        54.6021614074707,
+        54.6021614074707,
+        55.95162105560303,
+        55.95162105560303
+      ],
+      "enemy": {
+        "max": 198,
+        "base": 76,
+        "boss": false
+      }
+    },
+    {
+      "area": "warden",
+      "actors": 3,
+      "objects": 133,
+      "textures": 246,
+      "tweens": 0,
+      "size": 4,
+      "fps": [
+        54.217803955078125,
+        55.663352966308594,
+        55.663352966308594,
+        56.997514724731445,
+        56.997514724731445
+      ],
+      "enemy": {
+        "max": 3375,
+        "base": 1125,
+        "boss": true
+      }
+    },
+    {
+      "area": "arid",
+      "actors": 3,
+      "objects": 218,
+      "textures": 255,
+      "tweens": 17,
+      "size": 4,
+      "fps": [
+        54.32452392578125,
+        55.99339294433594,
+        55.99339294433594,
+        56.99504470825195,
+        56.99504470825195
+      ],
+      "enemy": {
+        "max": 203,
+        "base": 78,
+        "boss": false
+      }
+    },
+    {
+      "area": "frost",
+      "actors": 3,
+      "objects": 193,
+      "textures": 251,
+      "tweens": 3,
+      "size": 4,
+      "fps": [
+        54.643035888671875,
+        55.982276916503906,
+        55.982276916503906,
+        56.98670768737793,
+        56.98670768737793
+      ],
+      "enemy": {
+        "max": 400,
+        "base": 154,
+        "boss": false
+      }
+    },
+    {
+      "area": "caldera",
+      "actors": 3,
+      "objects": 216,
+      "textures": 253,
+      "tweens": 1,
+      "size": 4,
+      "fps": [
+        55.385231018066406,
+        55.385231018066406,
+        56.538923263549805,
+        56.538923263549805,
+        57.65419244766235
+      ],
+      "enemy": {
+        "max": 445,
+        "base": 171,
+        "boss": false
+      }
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

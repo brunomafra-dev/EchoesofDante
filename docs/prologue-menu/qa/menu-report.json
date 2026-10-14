@@ -1,0 +1,23 @@
+{
+  "checks": [
+    "Clean home: only Play and Settings; no automatically created hero",
+    "New named female/male-capable hero launches the illustrated prologue; Earth lasts approximately 8 seconds",
+    "All five original images load, settings suspend the current take, completion lands at base and persists immutable solo difficulty",
+    "Pause offers no hero swap; return to title, replay and Continue preserve the selected hero without replaying intro",
+    "Difficulty changes real enemy HP and damage, without changing player base combat",
+    "Four desktop/mobile landscape resolutions preserve readable prologue controls",
+    "Reserved lab keeps real character registry byte-for-byte untouched across reloads"
+  ],
+  "errors": [],
+  "metrics": [
+    {
+      "difficulty": "easy",
+      "enemyHP": 48
+    },
+    {
+      "difficulty": "hard",
+      "enemyHP": 92
+    }
+  ],
+  "passed": true
+}

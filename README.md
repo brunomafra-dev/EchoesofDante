@@ -1,5 +1,13 @@
 # Echoes of Dante
 
+## Campanhas e chegada a Dante · 0.1.100
+
+Início com **Jogar / Configurações**. Cada personagem possui sua jornada solo ou cooperativa e dificuldade fixa: **Fezes puríssima**, **Marromenos** ou **Chama 🔥**. Novos personagens recebem cinco takes ilustrados e começam na base. O prólogo pode ser pulado e revisto.
+
+No cooperativo, o anfitrião escolhe uma equipe de **2–4 classes diferentes**. Para continuar, **todos os personagens originais precisam retornar**; sem substituição ou conversão em solo. Se faltar alguém, o mundo e seu relógio param. A vida, o dano e algumas reservas de inimigos consideram a dificuldade e o tamanho fixo do grupo.
+
+[Testar esta entrega sem alterar seus personagens](https://echosofdante.vercel.app/campaign-playtest.html?v=0.1.100) · [Regras, arte, QA e limitações](docs/prologue-menu/README.md). Cliente e servidor de salas requerem **protocolo 11**. Saves continuam locais ao navegador; o laboratório usa somente dados temporários da aba. Avaliação humana da introdução e do balanceamento permanece necessária.
+
 ## Expedição de quatro — etapa 7 · 0.1.99
 
 Guerreiro, Hunter, Astral e Vinculador na mesma sala, uma pessoa por classe. Convites pedem a escolha de personagem e mostram vagas; cada integrante mantém equipamento, recursos, poções, recargas e recompensas pessoais. Todos podem investigar e atravessar portais; menus pessoais não pausam a equipe. Campanha e bosses continuam sob autoridade do anfitrião, com reconexão e reinício coletivo.

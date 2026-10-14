@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
 import { tuneEnemy,regionalThreat,deathCreditLoss } from '../config/threat';
+import { DIFFICULTIES, difficultyId, partyThreat } from '../config/difficulty';
+import { PARTY_ENCOUNTERS } from '../config/partyEncounters';
 import {BASE} from '../config/base';
 import { XenobinderCombat } from '../combat/XenobinderCombat';
 import { XenobinderArt,preloadXenobinderArt } from '../visual/XenobinderArt';
@@ -236,6 +238,12 @@ export class GameScene extends Phaser.Scene {
   private abilityUpgradeDialog?: AbilityUpgradeDialog;
   private recordsPausedAt = 0;
   private recordsTimeOffset = 0;
+  private partyPause?: number;
+  private modalPaused = false;
+  private guestCheckpoint = '';
+  private partyResidents = new Set<number>();
+  private get campaignDifficulty() { return difficultyId(characterProfiles.active.campaign?.difficulty); }
+  private get campaignDamage() { return DIFFICULTIES[this.campaignDifficulty].damage * partyThreat(characterProfiles.active.campaign?.size ?? 1).damage; }
   private readonly progression = new Progression();
   private attack = new SaberAttack();
   private charge = new KineticCharge();
@@ -316,7 +324,7 @@ export class GameScene extends Phaser.Scene {
       this.audioCleanupBound = true;
       this.game.events.once(Phaser.Core.Events.DESTROY, () => this.sounds.destroy());
     }
-    this.recordsTimeOffset = 0;this.guestUpgradeScheduled=false;
+    this.recordsTimeOffset = 0;this.partyPause=undefined;this.modalPaused=false;this.guestCheckpoint='';this.partyResidents.clear();this.guestUpgradeScheduled=false;
     this.coopModal=false;this.inventoryUnpaused=false;this.serviceUnpaused=false;
     this.input.enabled=true;if(this.input.keyboard)this.input.keyboard.enabled=true;
     // Phaser pauses timers/tweens, but its absolute clock jumps on resume.
@@ -469,7 +477,7 @@ export class GameScene extends Phaser.Scene {
     const spawns = this.area === 'forest' ? FOREST_SPAWNS : CAVERN_HOLLOWS;
     if (this.area === 'forest' || this.area === 'cavern') spawns.forEach((point, index) => {
       const enemy = new HollowCrawler(this, point.x, point.y, this.area === 'forest' ? FOREST_PATROLS[index] : undefined, this.qualityReference === 'reference');
-      tuneEnemy(enemy,this.area);this.enemies.push(enemy);
+      tuneEnemy(enemy,this.area,this.campaignDifficulty);this.enemies.push(enemy);
       this.enemySpecies.set(enemy, 'crawler');
       this.hollowSpawnIds.set(enemy, this.area === 'forest' ? index : FOREST_SPAWNS.length + index);
     });
@@ -485,13 +493,13 @@ export class GameScene extends Phaser.Scene {
     if(this.area==='caldera'){
       for(const h of CALDERA_ENCOUNTERS)this.spawnSiroccoResident(h);
       this.calderaVisited=true;this.titanHud=new WardenHud(this,'O INCANDESCENTE');
-      if(!this.titanDefeated){this.titan=new CalderaTitan(this,cue=>this.titanCue(cue),()=>this.finishTitan());tuneEnemy(this.titan,this.area);this.enemies.push(this.titan);this.enemySpecies.set(this.titan,'titan');}
+      if(!this.titanDefeated){this.titan=new CalderaTitan(this,cue=>this.titanCue(cue),()=>this.finishTitan());tuneEnemy(this.titan,this.area,this.campaignDifficulty);this.enemies.push(this.titan);this.enemySpecies.set(this.titan,'titan');}
     }
     if (this.area === 'icenest') {
       this.icenestVisited = true; this.vesperHud = new WardenHud(this, 'VÉSPER · SOPRO BRANCO');
       if (!this.vesperDefeated) {
         this.vesper = new Vesper(this, cue => this.vesperCue(cue), () => { this.glacier?.resolve();this.reviveBossSurvivors(); this.hud.showDiscovery('O GELO SILENCIOU\nINVESTIGUE O REGISTRO DO NINHO'); this.sounds.signal(); });
-        tuneEnemy(this.vesper,this.area);this.enemies.push(this.vesper); this.enemySpecies.set(this.vesper, 'vesper');
+        tuneEnemy(this.vesper,this.area,this.campaignDifficulty);this.enemies.push(this.vesper); this.enemySpecies.set(this.vesper, 'vesper');
       } else this.sounds.stopMusic();
     }
     if (this.area === 'sandpit') {
@@ -500,7 +508,7 @@ export class GameScene extends Phaser.Scene {
       if (!this.soterradoDefeated) {
         this.soterrado = new Soterrado(this, SANDPIT.spawn.x, SANDPIT.spawn.y, this.sandpit!.bounds,
           (cue, attack) => this.soterradoCue(cue, attack), () => this.finishSoterrado());
-        tuneEnemy(this.soterrado,this.area);this.enemies.push(this.soterrado);
+        tuneEnemy(this.soterrado,this.area,this.campaignDifficulty);this.enemies.push(this.soterrado);
         this.enemySpecies.set(this.soterrado, 'soterrado');
       } else this.sounds.stopMusic();
     }
@@ -513,7 +521,7 @@ export class GameScene extends Phaser.Scene {
       this.wardenHud = new WardenHud(this);
       if (!this.wardenDefeated) {
         this.warden = new Warden(this, 1170, 735, this.wardenArena!.bounds, (cue, attack) => this.wardenCue(cue, attack), () => this.finishWarden());
-        tuneEnemy(this.warden,this.area);this.enemies.push(this.warden);
+        tuneEnemy(this.warden,this.area,this.campaignDifficulty);this.enemies.push(this.warden);
         this.enemySpecies.set(this.warden, 'warden');
       } else {
         this.sounds.stopMusic();
@@ -629,6 +637,7 @@ export class GameScene extends Phaser.Scene {
   update(time: number, delta: number): void {
     time -= this.recordsTimeOffset;
     if (this.transitioning) return;
+    if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return;
     if(!this.inputModalOpen)this.controls.update(this.player.position);
     if(this.area==='base'&&!this.inputModalOpen&&(BASE.services.some(s=>distance(this.player.position,s)<100)||coopSession.role!=='guest'&&distance(this.player.position,BASE.exit)<105)&&this.controls.interactPressed){const service=BASE.services.find(s=>distance(this.player.position,s)<100);if(service){this.basePanel.open(service.id);return;}if(coopSession.role!=='guest'&&distance(this.player.position,BASE.exit)<105){this.transitionArea('forest');return;}}
     if(coopSession.role==='guest'&&this.area==='base'){const near=BASE.services.some(s=>distance(this.player.position,s)<100);if(near){this.controls.setInteractAvailable(true,'CONVERSAR');this.hud.setDiscoveryPrompt(true,'CONVERSAR')}}
@@ -644,6 +653,7 @@ export class GameScene extends Phaser.Scene {
       return;
     }
     this.party?.updateHost(time, Math.min(delta / 1000, .04));
+    this.spawnPartyResidents();
     const ownerKey=coopSession.guests.map(m=>m.id).join(':');
     if(ownerKey!==this.dropOwnersKey){this.dropOwnersKey=ownerKey;const owners=new Set(['host',...coopSession.guests.map(m=>m.id)]);this.resources.retainOwners(owners);this.loot.retainOwners(owners);}
     this.referenceImpacts?.update(time);
@@ -1151,7 +1161,7 @@ export class GameScene extends Phaser.Scene {
           const enemy: Enemy = resident.kind === 'crawler'
             ? new HollowCrawler(this, resident.x, resident.y)
             : new DanteCreature(this, resident.kind, resident.x, resident.y);
-          tuneEnemy(enemy,this.area);this.enemies.push(enemy); this.hollowSpawnIds.set(enemy, spawnId + offset);
+          tuneEnemy(enemy,this.area,this.campaignDifficulty);this.enemies.push(enemy); this.hollowSpawnIds.set(enemy, spawnId + offset);
           this.enemySpecies.set(enemy, resident.kind);
         });
       }
@@ -1406,7 +1416,7 @@ export class GameScene extends Phaser.Scene {
   private spawnDeepHollows(): void {
     DEEP_HOLLOWS.forEach((patrol,index) => {
       const enemy = new HollowCrawler(this,patrol[0].x,patrol[0].y,patrol);
-      tuneEnemy(enemy,this.area);this.enemies.push(enemy);
+      tuneEnemy(enemy,this.area,this.campaignDifficulty);this.enemies.push(enemy);
       this.enemySpecies.set(enemy, 'crawler');
       this.hollowSpawnIds.set(enemy,FOREST_SPAWNS.length+CAVERN_HOLLOWS.length+index);
     });
@@ -1515,6 +1525,7 @@ export class GameScene extends Phaser.Scene {
     const own=this.journey.load()?.progression;
     this.progression.restore({...world.progression,xp:own?.xp??0,abilityUpgrades:own?.abilityUpgrades,bossRewards:own?.bossRewards});
     for (const key of JOURNEY_FLAGS) this[key] = world.flags[key] === true;
+    this.persistGuestCampaign(world);
     const bossArea=['warden','sandpit','icenest','caldera'].includes(world.area);
     const layoutFlags=bossArea?Object.fromEntries(Object.entries(world.flags).filter(([key])=>!['titanReached','titanDefeated','titanClueSeen','calderaCheckpointReached','vesperReached','vesperDefeated','vesperClueSeen','wardenDefeated','wardenEndingSeen','soterradoDefeated','soterradoClueSeen'].includes(key))):world.flags;
     const layout = world.area + JSON.stringify(layoutFlags) + world.progression.echoes.join(',');
@@ -1741,13 +1752,13 @@ export class GameScene extends Phaser.Scene {
   private enemyStrike(enemy: Enemy, impact?: EnemyImpact, target: Player = this.player): void {
     if (target !== this.player) {
       if (target.isDead || target.invulnerable || (!impact?.ranged && distance(enemy.position, target.position) > (enemy.attackRange ?? CRAWLER.attackRange) + PLAYER.radius)) return;
-      const result = applyDamage(target.health, Math.max(1,Math.round((impact?.damage ?? enemy.attackDamage ?? CRAWLER.attackDamage)*regionalThreat(this.area,enemy.position.x).damage*(1-equipmentStats(this.party?.actorFor(target)?.profile.equipment??{}).resistance))));
+      const result = applyDamage(target.health, Math.max(1,Math.round((impact?.damage ?? enemy.attackDamage ?? CRAWLER.attackDamage)*regionalThreat(this.area,enemy.position.x).damage*this.campaignDamage*(1-equipmentStats(this.party?.actorFor(target)?.profile.equipment??{}).resistance))));
       if (result.applied) { target.flashHurt(); target.setHurtGrace(this.time.now + PLAYER.hurtCooldown); this.impact(target.position, 0xff8f82, result.amount); }
       if (result.died) this.handleDeath(target);
       return;
     }
     if (this.player.isDead || this.player.invulnerable || (!impact?.ranged && distance(enemy.position, this.player.position) > (enemy.attackRange ?? CRAWLER.attackRange) + PLAYER.radius)) return;
-    const result = applyDamage(this.player.health, Math.max(1,Math.round((impact?.damage ?? enemy.attackDamage ?? CRAWLER.attackDamage)*regionalThreat(this.area,enemy.position.x).damage*(1-equipmentStats(this.equipment.snapshot().slots).resistance))));
+    const result = applyDamage(this.player.health, Math.max(1,Math.round((impact?.damage ?? enemy.attackDamage ?? CRAWLER.attackDamage)*regionalThreat(this.area,enemy.position.x).damage*this.campaignDamage*(1-equipmentStats(this.equipment.snapshot().slots).resistance))));
     if (!result.applied) return;
     this.sounds.hurt();
     this.player.flashHurt();
@@ -1922,11 +1933,13 @@ export class GameScene extends Phaser.Scene {
     this.recordsPausedAt = this.game.loop.now;
     this.input.enabled = false;
     if (this.input.keyboard) this.input.keyboard.enabled = false;
-    if(!this.coopModal)this.scene.pause();
+    if(!this.coopModal){this.modalPaused=true;this.scene.pause();}
   }
 
   private resumeFromModal(): void {
     if(this.coopModal){this.coopModal=false;this.controls.cancelForRecords();this.input.enabled=true;if(this.input.keyboard)this.input.keyboard.enabled=true;return;}
+    if(!this.modalPaused)return;
+    this.modalPaused=false;
     coopSession.setMenu(false);
     if (coopSession.role === 'host') { coopSession.consumeEdges(); coopSession.inputAt = 0; }
     this.recordsTimeOffset += this.game.loop.now - this.recordsPausedAt;
@@ -1952,7 +1965,19 @@ export class GameScene extends Phaser.Scene {
     if (this.player.isDead || this.records?.isOpen || this.abilityUpgradeDialog?.isOpen || this.transitioning || this.scene.isPaused()||this.coopModal) return false;
     this.pauseForModal(); this.saveProgress(); this.sounds.setMusicFocus(0); return true;
   }
-  resumeFromShell(): void { if (this.coopModal||this.scene.isPaused()) this.resumeFromModal(); this.sounds.setMusicFocus(1); this.sounds.unlock(); }
+  resumeFromShell(): void { if (this.coopModal||this.modalPaused) this.resumeFromModal(); this.sounds.setMusicFocus(1); this.sounds.unlock(); }
+  // Freeze the scene and its combat clock, including Phaser timers. A personal
+  // menu that was already paused owns its own timestamp and resumes separately.
+  setPartyWaiting(waiting:boolean):void {
+    if(waiting){
+      if(this.partyPause!==undefined||this.scene.isPaused())return;
+      this.controls.cancelForRecords();this.charge.stop();this.hunter?.clear();this.astral?.clear();this.xeno?.clear();this.kineticWave.clear();this.waveDrawn=false;
+      this.party?.cancelPartnerCharge();this.partyPause=this.game.loop.now;this.scene.pause();this.sounds.setMusicFocus(0);
+    }else if(this.partyPause!==undefined){
+      this.recordsTimeOffset+=this.game.loop.now-this.partyPause;this.partyPause=undefined;this.time.now=this.game.loop.now-this.recordsTimeOffset;
+      this.controls.cancelForRecords();this.scene.resume();this.sounds.setMusicFocus(1);
+    }
+  }
   setShellVolumes(master: number, music: number, sfx: number): void { this.sounds.setVolumes(master, music, sfx); }
   flushForShell(): boolean { return this.saveProgress(); }
   shellPlayerDead(): boolean { return this.player?.isDead ?? false; }
@@ -1962,7 +1987,7 @@ export class GameScene extends Phaser.Scene {
     const readyAt = this.valleyHabitatCooldowns.get(habitat.id);
     if (readyAt !== undefined && (Date.now() < readyAt || this.explorationNear(habitat, VALLEY_RENEWAL.safeDistance))) return false;
     const enemy = new ValleyCreature(this, habitat.kind, habitat.x, habitat.y);
-    tuneEnemy(enemy,this.area);this.enemies.push(enemy);
+    tuneEnemy(enemy,this.area,this.campaignDifficulty);this.enemies.push(enemy);
     this.enemySpecies.set(enemy, habitat.kind);
     this.hollowSpawnIds.set(enemy, habitat.id);
     this.valleyResidents.set(habitat.id, enemy);
@@ -1970,12 +1995,29 @@ export class GameScene extends Phaser.Scene {
     return true;
   }
 
+  private spawnPartyResidents():void {
+    const size=characterProfiles.active.campaign?.size??1;
+    if(size<2||coopSession.role!=='host')return;
+    const bounds=this.movementBounds;
+    for(const h of PARTY_ENCOUNTERS[this.area]??[]){
+      if(h.minParty>size||this.partyResidents.has(h.id)||!this.explorationNear(h,550))continue;
+      if(bounds&&(h.x<bounds.left+40||h.x>bounds.right-40||h.y<bounds.top+40||h.y>bounds.bottom-40))continue;
+      // Never put a reserve inside a solid footprint or a safe arrival point.
+      let position={x:h.x,y:h.y};
+      const clear=(p:Vec2)=>this.arena.obstacles.every(o=>distance(p,o)>o.radius+38);
+      if(!clear(position)){const alternative=[[0,70],[70,0],[0,-70],[-70,0]].map(([x,y])=>({x:h.x+x,y:h.y+y})).find(p=>clear(p)&&(!bounds||p.x>bounds.left+40&&p.x<bounds.right-40&&p.y>bounds.top+40&&p.y<bounds.bottom-40));if(!alternative)continue;position=alternative;}
+      this.partyResidents.add(h.id);
+      const enemy:Enemy=h.kind==='crawler'?new HollowCrawler(this,position.x,position.y):h.kind==='carapace'||h.kind==='thorn'||h.kind==='iceCarapace'?new ValleyCreature(this,h.kind,position.x,position.y):['emberHound','fumarole','slagback'].includes(h.kind)?new VolcanicCreature(this,h.kind as VolcanicKind,position.x,position.y):new DanteCreature(this,h.kind as SiroccoKind|FrostKind,position.x,position.y);
+      tuneEnemy(enemy,this.area,this.campaignDifficulty);this.enemies.push(enemy);this.enemySpecies.set(enemy,h.kind);this.hollowSpawnIds.set(enemy,h.id);
+    }
+  }
+
   private spawnSiroccoResident(habitat: { id: number; kind: SiroccoKind | FrostKind | VolcanicKind | 'iceCarapace'; x: number; y: number }): boolean {
     if (this.siroccoResidents.has(habitat.id)) return false;
     const readyAt = this.siroccoHabitatCooldowns.get(habitat.id);
     if (readyAt !== undefined && (Date.now() < readyAt || this.explorationNear(habitat, SIROCCO_RENEWAL.safeDistance))) return false;
     const enemy = ['emberHound','fumarole','slagback'].includes(habitat.kind)?new VolcanicCreature(this,habitat.kind as VolcanicKind,habitat.x,habitat.y):habitat.kind === 'iceCarapace' ? new ValleyCreature(this, 'iceCarapace', habitat.x, habitat.y) : new DanteCreature(this, habitat.kind as SiroccoKind|FrostKind, habitat.x, habitat.y);
-    tuneEnemy(enemy,this.area);this.enemies.push(enemy);
+    tuneEnemy(enemy,this.area,this.campaignDifficulty);this.enemies.push(enemy);
     this.enemySpecies.set(enemy, habitat.kind);
     this.hollowSpawnIds.set(enemy, habitat.id);
     this.siroccoResidents.set(habitat.id, enemy);
@@ -2038,6 +2080,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private saveProgress(): boolean {
+    if(coopSession.role==='guest'&&characterProfiles.active.campaign?.mode==='coop'&&coopSession.world)return this.persistGuestCampaign(coopSession.world);
     if (this.visitingCoop || coopSession.role === 'guest' || this.qualityReference || this.glacierPlaytest || !this.player || this.resettingJourney) return false;
     const flags = Object.fromEntries(JOURNEY_FLAGS.map(key => [key, this[key]])) as JourneyFlags;
     const available = this.journey.save({ schema: 1, updatedAt: Date.now(), area: this.area,
@@ -2045,6 +2088,19 @@ export class GameScene extends Phaser.Scene {
       flags, bestiary: this.bestiary.snapshot(), valleyRoutes: [...this.valleyRoutes], valleyHabitats: [...this.valleyHabitatCooldowns],
       aridHabitats: [...this.siroccoHabitatCooldowns],equipment:this.equipment.snapshot(),economy:this.economy,expeditionReturn:this.expeditionReturn });
     this.records?.setSaveAvailable(available);
+    return available;
+  }
+
+  private persistGuestCampaign(world:PartyWorld):boolean {
+    if(characterProfiles.active.campaign?.mode!=='coop')return false;
+    const saved=this.journey.load();
+    const key=JSON.stringify([world.area,world.flags,world.progression.echoes,world.progression.sourceLocated,world.progression.passageOpen,world.visited,world.expeditionReturn]);
+    if(key===this.guestCheckpoint)return true;
+    const progression={...world.progression,xp:saved?.progression.xp??0,abilityUpgrades:saved?.progression.abilityUpgrades,bossRewards:saved?.progression.bossRewards};
+    const available=this.journey.save({schema:1,updatedAt:Date.now(),area:world.area,hp:Math.max(1,Math.round(world.players[coopSession.id]?.hp??this.player.hp)),progression,
+      flags:world.flags,bestiary:saved?.bestiary??this.bestiary.snapshot(),valleyRoutes:saved?.valleyRoutes??[],valleyHabitats:saved?.valleyHabitats??[],aridHabitats:saved?.aridHabitats??[],
+      equipment:saved?.equipment??this.equipment.snapshot(),economy:{...validEconomy(saved?.economy),visited:[...new Set([...(saved?.economy?.visited??[]),...(world.visited??[]),world.area])]},expeditionReturn:world.expeditionReturn,coopReceipts:saved?.coopReceipts});
+    if(available)this.guestCheckpoint=key;
     return available;
   }
 

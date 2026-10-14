@@ -1,0 +1,137 @@
+{
+  "checks": [
+    "Full real menu flow: 2 classes, every browser saves the original crew before Play",
+    "Any missing original member freezes the scene, combat clock and travel; host never runs a smaller/easier party",
+    "Original saved character rejoins through the invitation, keeps its stable seat and resumes without cooldown time skipping",
+    "Each co-op character stores shared discoveries/checkpoints while retaining its personal build and economy",
+    "Host termination offers menu only; original host recreates the saved campaign, all original guests return, no replacement or solo continuation",
+    "Solo Continue excludes every co-op hero"
+  ],
+  "errors": [],
+  "metrics": [
+    {
+      "enemies": 9,
+      "now": 20633.8,
+      "hp": 143,
+      "base": 92
+    }
+  ],
+  "resume": {
+    "frozen": 20767.6,
+    "resumed": 22134.199999999997,
+    "wall": 10046
+  },
+  "checkpoints": [
+    {
+      "schema": 1,
+      "updatedAt": 1792011490977,
+      "area": "forest",
+      "hp": 80,
+      "progression": {
+        "xp": 0,
+        "echoes": [
+          "northern-ruin",
+          "mineral-signal",
+          "unknown-trace"
+        ],
+        "sourceLocated": true,
+        "passageOpen": true,
+        "rewardedHollows": [],
+        "rewardedRoutes": [],
+        "abilityUpgrades": {
+          "saberArc": 0,
+          "saberReach": 0,
+          "dashCooldown": 0,
+          "dashDuration": 0,
+          "chargeWidth": 0,
+          "chargePower": 0
+        },
+        "bossRewards": []
+      },
+      "flags": {
+        "cavernDepthSeen": true,
+        "deepPassageOpen": true,
+        "deepAreaSeen": false,
+        "deepCavernEntered": false,
+        "deepEndSeen": false,
+        "deeperEntered": false,
+        "exteriorEntered": false,
+        "fragmentSeen": false,
+        "approachSeen": false,
+        "firstEchoSeen": false,
+        "wardenReached": false,
+        "wardenGateOpen": false,
+        "wardenDefeated": false,
+        "wardenEndingSeen": false,
+        "valleyVisited": false,
+        "valleyLandmarkSeen": false,
+        "valleyEndSeen": false,
+        "valleyCheckpointReached": false,
+        "valleyFrontierReached": false,
+        "valleyFrontierSignalSeen": false,
+        "valleyFrontierEndSeen": false,
+        "aridVisited": false,
+        "aridSignalSeen": false,
+        "aridFrontierEntered": false,
+        "aridFrontierReached": false,
+        "dunesVisited": false,
+        "dunesRuinsSeen": false,
+        "dunesDepthSeen": false,
+        "soterradoReached": false,
+        "soterradoDefeated": false,
+        "soterradoClueSeen": false,
+        "frostVisited": false,
+        "frostSignalSeen": false,
+        "frostEndSeen": false,
+        "icecaveVisited": false,
+        "icecaveSignalSeen": false,
+        "icenestVisited": false,
+        "vesperReached": false,
+        "vesperDefeated": false,
+        "vesperClueSeen": false,
+        "calderaVisited": false,
+        "calderaRelaySeen": false,
+        "calderaCheckpointReached": false,
+        "titanReached": false,
+        "titanDefeated": false,
+        "titanClueSeen": false,
+        "cinderVisited": false,
+        "cinderSignalSeen": false,
+        "obsidianVisited": false,
+        "obsidianSignalSeen": false
+      },
+      "bestiary": {},
+      "valleyRoutes": [],
+      "valleyHabitats": [],
+      "aridHabitats": [],
+      "equipment": {
+        "schema": 2,
+        "owned": [],
+        "slots": {},
+        "items": [],
+        "equipped": {}
+      },
+      "economy": {
+        "deathReceipts": [],
+        "claimed": [],
+        "schema": 1,
+        "credits": 0,
+        "materials": [
+          0,
+          0,
+          0
+        ],
+        "potions": 3,
+        "potionReadyAt": 0,
+        "stash": [],
+        "visited": [
+          "base",
+          "forest"
+        ],
+        "receipts": []
+      },
+      "coopReceipts": []
+    }
+  ],
+  "passed": true
+}

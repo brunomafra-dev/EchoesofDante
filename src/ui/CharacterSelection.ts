@@ -1,4 +1,5 @@
-import { characterProfiles, type CharacterClass } from '../systems/CharacterProfiles';
+import { characterProfiles, type CharacterClass, type CharacterProfile } from '../systems/CharacterProfiles';
+import { DIFFICULTIES, difficultyId } from '../config/difficulty';
 import { CLASS_NAMES, CLASS_REGISTRY } from '../config/classes';
 import { characterSex, SEX_NAMES, type CharacterSex } from '../config/appearance';
 import { PROGRESSION } from '../config/progression';
@@ -24,16 +25,16 @@ function element<K extends keyof HTMLElementTagNameMap>(tag: K, className: strin
 export class CharacterSelection {
   private readonly previews: CharacterShowcase[] = [];
   private deleteDialog?: HTMLDialogElement;
-  constructor(private readonly root: HTMLElement, mode: 'characters' | 'create', actions: Actions, private readonly joiningRoom = false, private readonly occupied: readonly string[] = []) {
+  constructor(private readonly root: HTMLElement, mode: 'characters' | 'create', actions: Actions, private readonly joiningRoom = false, private readonly occupied: readonly string[] = [], private readonly context: { profiles?: readonly CharacterProfile[]; title?: string; subtitle?: string; allowCreate?: boolean } = {}) {
     const header = element('header', 'selection-header');
     const title = element('div', 'selection-title');
     title.append(element('small', '', 'ECHOES OF DANTE / EXPEDIÇÃO'));
-    const h = element('h2', '', joiningRoom ? mode === 'create' ? 'Crie seu personagem para a sala' : 'Com qual personagem você vai jogar?' : mode === 'create' ? 'Escolha quem você será' : 'Suas expedições'); h.id = 'shell-title'; title.append(h);
-    title.append(element('p', '', joiningRoom ? 'Escolha seu personagem para entrar com seu amigo. Sua jornada solo será preservada.' : mode === 'create' ? 'Selecione uma classe para ver seu estilo de combate.' : 'Escolha um personagem. Sua jornada começa de onde você parou.'));
+    const h = element('h2', '', context.title ?? (joiningRoom ? mode === 'create' ? 'Crie seu personagem para a sala' : 'Com qual personagem você vai jogar?' : mode === 'create' ? 'Escolha quem você será' : 'Suas expedições')); h.id = 'shell-title'; title.append(h);
+    title.append(element('p', '', context.subtitle ?? (joiningRoom ? 'Use o personagem vinculado a esta campanha.' : mode === 'create' ? 'Selecione uma classe para ver seu estilo de combate.' : 'Escolha um personagem. Sua jornada começa de onde você parou.')));
     header.append(title);
     const headerActions = element('div', 'selection-header-actions');
     headerActions.append(button('← VOLTAR', 'back', actions.back)); header.append(headerActions);
-    if (mode === 'characters') {
+    if (mode === 'characters' && context.allowCreate !== false) {
       const create = button('+ CRIAR NOVO', 'new-character', actions.newCharacter); create.className = 'selection-primary';
       create.disabled = characterProfiles.list.length >= 6;
       if (create.disabled) create.title = 'Limite de seis personagens neste navegador'; headerActions.append(create);
@@ -100,21 +101,22 @@ export class CharacterSelection {
     footer.append(detail, controls); this.root.append(gallery, footer);
   }
   private characters(actions: Actions): void {
-    if (!characterProfiles.list.length) {
+    const profiles = this.context.profiles ?? characterProfiles.list;
+    if (!profiles.length) {
       const empty = element('section', 'empty-characters');
       empty.append(element('h3', '', 'Sua próxima jornada começa aqui.'), element('p', '', 'Você ainda não tem personagens. Crie um novo para explorar Dante.'));
       this.root.append(empty); return;
     }
     const layout = element('div', 'saved-selection'), list = element('div', 'saved-characters'); list.setAttribute('role', 'group'); list.setAttribute('aria-label', 'Personagens salvos');
     const display = element('div', 'saved-display'), details = element('div', 'selection-info');
-    let selected = characterProfiles.active.id, current: CharacterShowcase | undefined;
+    let selected = profiles.some(p => p.id === characterProfiles.active.id) ? characterProfiles.active.id : profiles[0].id, current: CharacterShowcase | undefined;
     const play = button(this.joiningRoom ? 'ENTRAR NA SALA →' : 'CONTINUAR JORNADA →', 'play-character', () => actions.play(selected)); play.className = 'selection-primary';
     const replay = button('↻ VER EM AÇÃO', 'replay', () => current?.play(true));
     const remove = button('EXCLUIR PERSONAGEM', 'delete-character', () => this.confirmDelete(selected, actions.remove, remove));
     remove.className = 'selection-delete';
     const tools = element('div', 'saved-display-actions'); tools.append(replay, remove);
     const show = (id: string) => {
-      const hero = characterProfiles.list.find(h => h.id === id); if (!hero) return;
+      const hero = profiles.find(h => h.id === id); if (!hero) return;
       selected = id; current?.destroy(); this.previews.length = 0;
       play.disabled=this.occupied.includes(hero.classId);
       play.textContent=play.disabled?'CLASSE OCUPADA':this.joiningRoom?'ENTRAR NA SALA →':'CONTINUAR JORNADA →';
@@ -123,7 +125,7 @@ export class CharacterSelection {
       for (const b of Array.from(list.querySelectorAll<HTMLButtonElement>('button'))) b.setAttribute('aria-pressed', String(b.dataset.shell === `character-${id}`));
       current.play();
     };
-    for (const hero of characterProfiles.list) {
+    for (const hero of profiles) {
       let level = 1, region = 'Nova expedição';
       try {
         const saved = JSON.parse(localStorage.getItem(characterProfiles.keyFor(hero.id)) ?? 'null');
@@ -132,7 +134,7 @@ export class CharacterSelection {
         if (saved) region = names[saved.area] ?? 'Expedição';
       } catch { /* A corrupt journey safely starts through LocalJourney. */ }
       const card = button('', `character-${hero.id}`, () => show(hero.id)); card.className = 'saved-character'; card.setAttribute('aria-pressed', 'false');
-      card.append(element('strong', '', hero.name), element('span', '', `${CLASS_NAMES[hero.classId]} · NV ${level}`), element('small', '', `${region}${hero.id === characterProfiles.active.id ? ' · ATUAL' : ''}`)); list.append(card);
+      card.append(element('strong', '', hero.name), element('span', '', `${CLASS_NAMES[hero.classId]} · NV ${level}`), element('small', '', `${region} · ${hero.campaign?.mode === 'coop' ? `Equipe de ${hero.campaign.size}` : 'Solo'} · ${DIFFICULTIES[difficultyId(hero.campaign?.difficulty)].name}`)); list.append(card);
     }
     layout.append(list, display); this.root.append(layout); show(selected);
     if (characterProfiles.list.length >= 6) this.root.append(element('p', 'shell-status', 'Seis personagens salvos neste navegador. Limite de criação atingido.'));
@@ -143,6 +145,7 @@ export class CharacterSelection {
     dialog.setAttribute('aria-labelledby', 'character-delete-title'); dialog.setAttribute('aria-describedby', 'character-delete-description');
     const title = element('h3', '', `Excluir “${hero.name}”?`); title.id = 'character-delete-title';
     const description = element('p', '', 'O personagem e toda a sua jornada salva serão apagados deste navegador. Esta ação não pode ser desfeita.'); description.id = 'character-delete-description';
+    if(hero.campaign?.mode==='coop'&&hero.campaign.crew.length)description.textContent+=' A equipe original não poderá continuar sem este personagem; outra classe ou outro personagem não poderá substituí-lo.';
     const dismiss = () => { this.cancelDeletion(); if (trigger.isConnected) trigger.focus({ preventScroll: true }); };
     const cancel = button('CANCELAR', 'cancel-delete', dismiss);
     const confirm = button('EXCLUIR', 'confirm-delete', () => { dismiss(); remove(id); }); confirm.className = 'selection-delete';
