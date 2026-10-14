@@ -104,3 +104,11 @@ O teste de retomada encontrou e corrigiu duas regressões: classe do próprio ti
 ## Publicação
 
 Esta entrega exige **protocolo 11** no relay e cliente correspondente. Se o Render ainda estiver na versão anterior, o jogo informa que o servidor precisa atualizar; não tenta entrar em uma campanha incompatível. Deploy Vercel e Render são independentes. O estado público efetivamente verificado será registrado ao encerrar a entrega.
+
+### Verificação pública — 14/10/2026, 18h25 BRT
+
+**Vercel publicada**, commit de implementação `0e1cc545e2e3a3da4a08f6acb2d48ae4f00b0e6d`. [QA no endereço oficial](qa/public/report.json): criação de Astral, cinco imagens, entrada solo após o prólogo, dificuldade persistida, menu inicial e configurações por touch/gamepad. Sem erro JS ou asset quebrado. O laboratório também está publicado.
+
+**Cooperativo público pendente de infraestrutura.** Requisições ao `/coop/health` público expiraram. O [incidente oficial do Render](https://status.render.com/incidents/8tsd93r1wbmz) permanece identificado: builds/deploys não iniciam em todas as regiões e deploys de serviços gratuitos estão pausados. [Estado consultado e fontes](qa/public/deployment.json). Não foi possível confirmar o protocolo 11 na hospedagem nem executar quatro amigos no relay público; os testes de quatro da build compilada usaram o relay local real.
+
+Após a recuperação do serviço, conferir `/coop/health` com protocolo 11 e executar `QA_BASE=https://echosofdante.vercel.app` e `QA_OUT=docs/prologue-menu/qa/public-coop` com `node scripts/qa-campaign-production.mjs`, sem `QA_NO_COOP`. Isso valida quatro navegadores no endereço público. A pendência é de publicação/verificação, sem requerer mudança adicional de gameplay ou avançar outra etapa do plano.

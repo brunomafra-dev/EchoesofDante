@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-10-14T21:25:34.911160+00:00",
+  "source": "https://status.render.com/api/v2/incidents/8tsd93r1wbmz.json",
+  "id": "8tsd93r1wbmz",
+  "name": "Builds, deploys, and queued deploys are not starting in all regions",
+  "status": "identified",
+  "updatedAt": "2026-10-14T21:04:54.130Z",
+  "latest": "Builds are failing to start again across all regions, and our team is still working to address the root cause. Deploys for free services remain paused. We'll share another update as soon as we have more information.",
+  "vercelFeatureCommit": "0e1cc545e2e3a3da4a08f6acb2d48ae4f00b0e6d",
+  "vercelStatus": "success",
+  "relayVerified": false,
+  "relayProblem": "Public health requests time out; provider reports free-service deployments paused.",
+  "vercelSource": "https://api.github.com/repos/brunomafra-dev/EchoesofDante/commits/0e1cc545e2e3a3da4a08f6acb2d48ae4f00b0e6d/status"
+}
