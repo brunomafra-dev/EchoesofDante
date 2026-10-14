@@ -1,0 +1,49 @@
+{
+  "method": "Real keyboard/mouse movement, directional attacks and Q hold/release; recorded Chrome canvas, isolated saves. Reviewed screenshots, not physical/human playtest.",
+  "errors": [],
+  "cases": [
+    {
+      "cls": "astral",
+      "sex": "male",
+      "recorded": true
+    },
+    {
+      "cls": "astral",
+      "sex": "female",
+      "recorded": true
+    },
+    {
+      "cls": "xenobinder",
+      "sex": "male",
+      "recorded": true
+    },
+    {
+      "cls": "xenobinder",
+      "sex": "female",
+      "recorded": true
+    }
+  ],
+  "menu": [
+    {
+      "cls": "astral",
+      "sex": "male",
+      "ready": true
+    },
+    {
+      "cls": "astral",
+      "sex": "female",
+      "ready": true
+    },
+    {
+      "cls": "xenobinder",
+      "sex": "male",
+      "ready": true
+    },
+    {
+      "cls": "xenobinder",
+      "sex": "female",
+      "ready": true
+    }
+  ],
+  "passed": true
+}

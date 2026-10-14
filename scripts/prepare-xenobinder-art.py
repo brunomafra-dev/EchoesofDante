@@ -31,33 +31,11 @@ def isolate(frame):
     for x,y in largest:kp[x,y]=255
     keep=keep.filter(ImageFilter.MaxFilter(7));frame.putalpha(ImageChops.multiply(frame.getchannel('A'),keep))
     return tight(frame)
-shoulders={}
-for sex in ['male','female']:
-    sheet=Image.open(SOURCE/f'{sex}.png').convert('RGBA');assert sheet.getchannel('A').getextrema()[0]==0
-    sockets=[]
-    for tier,style in enumerate(['none','basic','reinforced']):
-        atlas=Image.new('RGBA',(1024,768))
-        for direction in range(3):
-            part=isolate(sheet.crop((round(direction*sheet.width/3),round(tier*sheet.height/3),round((direction+1)*sheet.width/3),round((tier+1)*sheet.height/3))))
-            scale=224/part.height;part=part.resize((round(part.width*scale),224),Image.Resampling.LANCZOS)
-            base=Image.new('RGBA',(256,256));base.alpha_composite(part,((256-part.width)//2,20))
-            for frame in range(4):
-                body=base.copy()
-                if frame in [1,2]:
-                    sign=1 if frame==1 else -1
-                    legs=base.crop((0,152,256,256));body.paste((0,0,0,0),(0,154,256,256))
-                    body.alpha_composite(legs.crop((0,0,128,104)),(sign*2,152-sign*2))
-                    body.alpha_composite(legs.crop((128,0,256,104)),(128-sign*2,152+sign*2))
-                atlas.alpha_composite(body,(frame*256,direction*256))
-                if tier==0:
-                    band=[]
-                    for y in range(70,92):
-                        xs=[x for x in range(55,201) if base.getpixel((x,y))[3]>145]
-                        if xs:band.append((max(xs)-min(xs),y,min(xs),max(xs)))
-                    _,y,left,right=max(band);sockets.append({'left':{'x':left+7,'y':y},'right':{'x':right-7,'y':y}})
-        save(atlas,OUT/f'wardrobe-xenobinder-{sex}-{style}.png')
-    shoulders[sex]=sockets
-(OUT/'xenobinder-shoulders.json').write_text(json.dumps(shoulders,indent=2)+'\n',encoding='utf-8')
+# Audited complete walk poses replace the old cut/shift leg export.
+import runpy
+runpy.run_path(str(ROOT/'scripts/prepare-caster-motion.py'),run_name='__main__')
+for entry in json.loads((ROOT/'docs/caster-motion-audit/assets.json').read_text(encoding='utf-8')):
+    if 'wardrobe-xenobinder-' in entry['asset']:measurements[entry['asset']]={'dimensions':entry['dimensions'],'bytes':entry['bytes']}
 sheet=Image.open(SOURCE/'symbiont.png').convert('RGBA');assert sheet.getchannel('A').getextrema()[0]==0
 frames=[isolate(sheet.crop((round(i%4*sheet.width/4),round(i//4*sheet.height/2),round((i%4+1)*sheet.width/4),round((i//4+1)*sheet.height/2)))) for i in range(8)]
 scale=min(230/max(f.width for f in frames),226/max(f.height for f in frames));atlas=Image.new('RGBA',(1024,512))

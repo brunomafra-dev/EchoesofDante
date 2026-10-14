@@ -1,5 +1,11 @@
 # Echoes of Dante
 
+## Auditoria de movimento — Astral e Vinculador · 0.1.97
+
+Braços ligados aos ombros de cada vestimenta, cotovelos com comprimentos constantes, mão livre visível e instrumento registrado pelo punho. Caminhada com poses completas das pernas e alternância de apoio; equipamento mantém o corpo completo durante básico e Q. Mesmo rig no solo, na dupla e no mostruário.
+
+[Testar Astral](https://echosofdante.vercel.app/astral-playtest.html?motion=1&kit=initial&v=0.1.97) · [Testar Vinculador](https://echosofdante.vercel.app/xenobinder-playtest.html?motion=1&kit=initial&v=0.1.97) · [Auditoria, capturas e gravações](docs/caster-motion-audit/README.md). Personagens temporários; saves reais preservados. Kit, valores, controles e campanha permanecem iguais. **Aguardar avaliação humana dos braços e da caminhada antes da etapa 7.**
+
 ## Vinculador de Dante — etapa 6 · 0.1.96
 
 Quarta classe jogável: condutor simbiótico e companheiro permanente original. O básico marca assistência; acertos de ambos acumulam **Vínculo**. **Q / LT / COMANDO: segurar → mirar → soltar** comanda uma investida e um pulso curto de recuperação para aliados vivos próximos ao ponto de chegada. Custo 35, recarga 6 s; não revive. Apresentações masculina/feminina, vestimentas e armas próprias, equipamentos visíveis e mesma campanha/input.

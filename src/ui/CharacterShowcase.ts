@@ -2,6 +2,7 @@ import type { CharacterClass } from '../systems/CharacterProfiles';
 import { hunterRiflePose } from '../visual/HunterRiflePose';
 import { characterSex, hunterBody, warriorBody, type CharacterSex } from '../config/appearance';
 import type {ShoulderSockets} from '../visual/ClothShoulders';
+import {CASTER_WALK,CASTER_COLUMNS,CASTER_INSTRUMENTS,casterTargets,type ArmPose} from '../visual/CasterPose';
 
 type Part = { frame: number; width: number; height: number; axisY?: number };
 const images = new Map<string, Promise<HTMLImageElement>>();
@@ -51,14 +52,15 @@ export class CharacterShowcase {
     this.ctx = this.canvas.getContext('2d')!; this.ctx.scale(ratio, ratio);
     this.caption.className = 'showcase-caption'; this.caption.textContent = 'PREPARADO PARA DANTE';
     if(classId==='xenobinder')this.canvas.setAttribute('aria-label','Vinculador de Dante com condutor e companheiro simbionte');
-    const names = classId === 'xenobinder'?[this.bodyName,'xenobinder-starter-weapon.png','dante-symbiont-motion.png','expedition-arm-kit.png']:classId === 'astral'?[this.bodyName,'astral-starter-weapon.png','expedition-arm-kit.png']:classId === 'hunter' ? [this.bodyName, 'star-hunter-weapon-v2.png','hunter-starter-weapon.png','expedition-arm-kit.png'] :
+    const names = classId === 'xenobinder'?[this.bodyName,'xenobinder-starter-weapon.png','dante-symbiont-motion.png','xenobinder-arm-none.png']:classId === 'astral'?[this.bodyName,'astral-starter-weapon.png','astral-arm-none.png']:classId === 'hunter' ? [this.bodyName, 'star-hunter-weapon-v2.png','hunter-starter-weapon.png','expedition-arm-kit.png'] :
       [this.bodyName, 'expedition-arm-kit.png', 'warrior-starter-weapon.png'];
     void Promise.all(names.map(async name => this.loaded.set(name, await image(name)))).then(async () => {
       if (this.disposed) return;
       if (classId === 'hunter') this.parts = await rifleParts();
       if (this.disposed) return;
-      const registration=await fetch(base+'character-arm-registration.json').then(r=>r.json());
-      this.armBounds=registration['expedition-arm-kit'];
+      const caster=classId==='astral'||classId==='xenobinder';
+      const registration=await fetch(base+(caster?'caster-arm-registration.json':'character-arm-registration.json')).then(r=>r.json());
+      this.armBounds=registration[caster?`${classId}-arm-none`:'expedition-arm-kit'];
       const shoulders=await fetch(base+'character-shoulder-registration.json').then(r=>r.json());
       this.shoulderSockets=classId==='xenobinder'?await fetch(base+'xenobinder-shoulders.json').then(r=>r.json()).then(d=>d[sex]):classId==='astral'?await fetch(base+'astral-shoulders.json').then(r=>r.json()).then(d=>d[sex]):shoulders[`${classId}-${sex}`];
       if(this.disposed)return;
@@ -118,27 +120,33 @@ export class CharacterShowcase {
     const img = this.loaded.get(name); if (!img) return;
     this.ctx.drawImage(img, frame % columns * size, Math.floor(frame / columns) * size, size, size, x, y, w, h);
   }
-  private astral(t:number,strike:boolean,dash:boolean,charge:boolean,release:boolean):void{
-    const c=this.ctx,frame=dash?[1,0,2,0][Math.floor((t-1.15)*8)%4]:0,sockets=this.shoulderSockets[frame];
-    this.sprite(this.bodyName,frame,4,256,-64,-83,128,128);
-    const x=sockets.right.x/2-64,y=sockets.right.y/2-83,hand={x:x+26,y:y+12};
-    for(const pass of [0,1]){this.armPass=pass;this.arm('astral',x,y,hand.x,hand.y,-1);this.arm('astral',sockets.left.x/2-64,sockets.left.y/2-83,sockets.left.x/2-70,sockets.left.y/2-59,1);}
-    const glove=this.loaded.get('astral-starter-weapon.png');if(glove)c.drawImage(glove,hand.x-11,hand.y-9,23,18);
-    if(strike||charge||release){c.fillStyle='#5fe6d8';c.beginPath();c.arc(hand.x+12+(release?55:0),hand.y,release?22:charge?5+(t-2)*7:5,0,Math.PI*2);c.fill();}
-  }
-  private xenobinder(t:number,strike:boolean,dash:boolean,charge:boolean,release:boolean):void{
-    const c=this.ctx,frame=dash?[1,0,2,0][Math.floor((t-1.15)*8)%4]:0,sockets=this.shoulderSockets[frame];
-    this.sprite(this.bodyName,frame,4,256,-64,-83,128,128);
-    const x=sockets.right.x/2-64,y=sockets.right.y/2-83,hand={x:x+24,y:y+14};
-    for(const pass of [0,1]){this.armPass=pass;this.arm('xenobinder',x,y,hand.x,hand.y,-1);this.arm('xenobinder',sockets.left.x/2-64,sockets.left.y/2-83,sockets.left.x/2-72,sockets.left.y/2-60,1);}
-    const conductor=this.loaded.get('xenobinder-starter-weapon.png');if(conductor)c.drawImage(conductor,hand.x-14,hand.y-11,30,22.5);
-    const petFrame=release?5:charge?4:strike?3:dash?1+Math.floor(t*8)%2:0;
-    const advance=release?Math.sin((t-3.05)/.4*Math.PI)*11:0;
-    c.fillStyle='#07180b66';c.beginPath();c.ellipse(43+advance,40,21,5,0,0,Math.PI*2);c.fill();
-    this.sprite('dante-symbiont-motion.png',petFrame,4,256,15+advance,39-55*244/256,55,55);
-    if(charge){c.strokeStyle='#6bb46499';c.lineWidth=1;c.beginPath();c.moveTo(hand.x,hand.y);c.quadraticCurveTo(24,5,43,27);c.stroke();}
-    if(release){c.strokeStyle='#a6dc94';c.lineWidth=2;c.beginPath();c.ellipse(43+advance,39,26,8,0,0,Math.PI*2);c.stroke();}
-    if(strike){c.fillStyle='#a6dc94';c.beginPath();c.ellipse(hand.x+18,hand.y,6,2,0,0,Math.PI*2);c.fill();}
+  private astral(t:number,strike:boolean,dash:boolean,charge:boolean,release:boolean):void{this.caster('astral',t,strike,dash,charge,release);}
+  private xenobinder(t:number,strike:boolean,dash:boolean,charge:boolean,release:boolean):void{this.caster('xenobinder',t,strike,dash,charge,release);}
+  private caster(identity:'astral'|'xenobinder',t:number,strike:boolean,dash:boolean,charge:boolean,release:boolean):void{
+    const c=this.ctx,frame=dash?CASTER_WALK[Math.floor((t-1.15)*8)%4]:0,sockets=this.shoulderSockets[frame];
+    this.sprite(this.bodyName,frame,CASTER_COLUMNS,256,-64,-83,128,128);
+    const pose=():ArmPose=>({shoulder:{x:0,y:0},elbow:{x:0,y:0},wrist:{x:0,y:0}});
+    const main=pose(),other=pose(),aim=.1;
+    casterTargets(sockets.left.x/2-64,sockets.left.y/2-83,sockets.right.x/2-64,sockets.right.y/2-83,aim,strike,charge,dash?Math.sin(t*8):0,main,other);
+    for(const segment of [0,1])for(const arm of [other,main]){
+      const a=segment?arm.elbow:arm.shoulder,b=segment?arm.wrist:arm.elbow,overlap=segment?2:5;
+      const width=Math.hypot(b.x-a.x,b.y-a.y)+overlap+1;
+      c.save();c.translate(a.x,a.y);c.rotate(Math.atan2(b.y-a.y,b.x-a.x));this.armPart(segment,-overlap,-(segment?10.5:12)/2,width,segment?10.5:12);c.restore();
+    }
+    c.save();c.translate(other.wrist.x,other.wrist.y);c.rotate(Math.atan2(other.wrist.y-other.elbow.y,other.wrist.x-other.elbow.x));this.armPart(2,-1.2,-4.5,8,9);c.restore();
+    const p=CASTER_INSTRUMENTS[identity].starter,weapon=this.loaded.get(identity+'-starter-weapon'),angle=aim-Math.atan2(p.muzzle.y-p.wrist.y,p.muzzle.x-p.wrist.x),scale=p.width/128;
+    c.save();c.translate(main.wrist.x,main.wrist.y);c.rotate(angle);if(weapon)c.drawImage(weapon,-p.wrist.x*scale,-p.wrist.y*scale,p.width,96*scale);c.restore();
+    const length=Math.hypot(p.muzzle.x-p.wrist.x,p.muzzle.y-p.wrist.y)*scale,mx=main.wrist.x+Math.cos(aim)*length,my=main.wrist.y+Math.sin(aim)*length;
+    if(identity==='astral'){
+      if(strike||charge||release){c.fillStyle='#5fe6d8';c.beginPath();c.arc(mx+(release?55:0),my,release?22:charge?4+(t-2)*5:4,0,Math.PI*2);c.fill();}
+    }else{
+      const petFrame=release?5:charge?4:strike?3:dash?1+Math.floor(t*8)%2:0,advance=release?Math.sin((t-3.05)/.4*Math.PI)*11:0;
+      c.fillStyle='#07180b66';c.beginPath();c.ellipse(43+advance,40,21,5,0,0,Math.PI*2);c.fill();
+      this.sprite('dante-symbiont-motion.png',petFrame,4,256,15+advance,39-55*244/256,55,55);
+      if(charge){c.strokeStyle='#6bb46499';c.lineWidth=1;c.beginPath();c.moveTo(mx,my);c.quadraticCurveTo(24,5,43,27);c.stroke();}
+      if(release){c.strokeStyle='#a6dc94';c.lineWidth=2;c.beginPath();c.ellipse(43+advance,39,26,8,0,0,Math.PI*2);c.stroke();}
+      if(strike){c.fillStyle='#a6dc94';c.beginPath();c.ellipse(mx+8,my,6,2,0,0,Math.PI*2);c.fill();}
+    }
   }
   private hunter(t: number, firing: boolean, dash: boolean, charge: boolean, release: boolean): void {
     const c = this.ctx, aim = .22, pose = hunterRiflePose(aim), cos = Math.cos(aim), sin = Math.sin(aim);
@@ -196,7 +204,7 @@ export class CharacterShowcase {
       c.strokeStyle = '#5fe6d8'; c.lineWidth = 3; c.beginPath(); c.ellipse(0, 0, 7, 35, 0, 0, Math.PI * 2); c.stroke(); c.restore();
     }
   }
-  private armPart(frame:number,x:number,y:number,w:number,h:number):void {const b=this.armBounds[frame],img=this.loaded.get('expedition-arm-kit.png');if(b&&img)this.ctx.drawImage(img,b.x,b.y,b.width,b.height,x,y,w,h);}
+  private armPart(frame:number,x:number,y:number,w:number,h:number):void {const b=this.armBounds[frame],img=this.loaded.get(this.classId==='astral'||this.classId==='xenobinder'?`${this.classId}-arm-none.png`:'expedition-arm-kit.png');if(b&&img)this.ctx.drawImage(img,b.x,b.y,b.width,b.height,x,y,w,h);}
   private armPass=0;
   private part(frame: number, x: number, y: number, angle: number, w: number, h: number, ox: number, oy: number): void {
     if(frame>=2){const c=this.ctx;c.save();c.translate(x,y);c.rotate(angle);this.armPart(frame<4?frame-2:2,-w*ox,-h*oy,w,h);c.restore();return;}

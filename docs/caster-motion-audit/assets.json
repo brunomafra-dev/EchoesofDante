@@ -1,0 +1,176 @@
+[
+  {
+    "asset": "public\\assets\\visual\\characters\\wardrobe-astral-male-none.png",
+    "dimensions": [
+      1280,
+      768
+    ],
+    "frames": 15,
+    "feet": 244,
+    "bytes": 285711
+  },
+  {
+    "asset": "public\\assets\\visual\\characters\\wardrobe-astral-male-basic.png",
+    "dimensions": [
+      1280,
+      768
+    ],
+    "frames": 15,
+    "feet": 244,
+    "bytes": 308690
+  },
+  {
+    "asset": "public\\assets\\visual\\characters\\wardrobe-astral-male-reinforced.png",
+    "dimensions": [
+      1280,
+      768
+    ],
+    "frames": 15,
+    "feet": 244,
+    "bytes": 335044
+  },
+  {
+    "asset": "public\\assets\\visual\\characters\\wardrobe-astral-female-none.png",
+    "dimensions": [
+      1280,
+      768
+    ],
+    "frames": 15,
+    "feet": 244,
+    "bytes": 281434
+  },
+  {
+    "asset": "public\\assets\\visual\\characters\\wardrobe-astral-female-basic.png",
+    "dimensions": [
+      1280,
+      768
+    ],
+    "frames": 15,
+    "feet": 244,
+    "bytes": 300991
+  },
+  {
+    "asset": "public\\assets\\visual\\characters\\wardrobe-astral-female-reinforced.png",
+    "dimensions": [
+      1280,
+      768
+    ],
+    "frames": 15,
+    "feet": 244,
+    "bytes": 328946
+  },
+  {
+    "asset": "public\\assets\\visual\\characters\\wardrobe-xenobinder-male-none.png",
+    "dimensions": [
+      1280,
+      768
+    ],
+    "frames": 15,
+    "feet": 244,
+    "bytes": 310717
+  },
+  {
+    "asset": "public\\assets\\visual\\characters\\wardrobe-xenobinder-male-basic.png",
+    "dimensions": [
+      1280,
+      768
+    ],
+    "frames": 15,
+    "feet": 244,
+    "bytes": 340161
+  },
+  {
+    "asset": "public\\assets\\visual\\characters\\wardrobe-xenobinder-male-reinforced.png",
+    "dimensions": [
+      1280,
+      768
+    ],
+    "frames": 15,
+    "feet": 244,
+    "bytes": 373630
+  },
+  {
+    "asset": "public\\assets\\visual\\characters\\wardrobe-xenobinder-female-none.png",
+    "dimensions": [
+      1280,
+      768
+    ],
+    "frames": 15,
+    "feet": 244,
+    "bytes": 303854
+  },
+  {
+    "asset": "public\\assets\\visual\\characters\\wardrobe-xenobinder-female-basic.png",
+    "dimensions": [
+      1280,
+      768
+    ],
+    "frames": 15,
+    "feet": 244,
+    "bytes": 338850
+  },
+  {
+    "asset": "public\\assets\\visual\\characters\\wardrobe-xenobinder-female-reinforced.png",
+    "dimensions": [
+      1280,
+      768
+    ],
+    "frames": 15,
+    "feet": 244,
+    "bytes": 374675
+  },
+  {
+    "asset": "public\\assets\\visual\\characters\\astral-arm-none.png",
+    "dimensions": [
+      384,
+      256
+    ],
+    "frames": 6,
+    "bytes": 88755
+  },
+  {
+    "asset": "public\\assets\\visual\\characters\\xenobinder-arm-none.png",
+    "dimensions": [
+      384,
+      256
+    ],
+    "frames": 6,
+    "bytes": 90599
+  },
+  {
+    "asset": "public\\assets\\visual\\characters\\astral-arm-basic.png",
+    "dimensions": [
+      384,
+      256
+    ],
+    "frames": 6,
+    "bytes": 89464
+  },
+  {
+    "asset": "public\\assets\\visual\\characters\\xenobinder-arm-basic.png",
+    "dimensions": [
+      384,
+      256
+    ],
+    "frames": 6,
+    "bytes": 96094
+  },
+  {
+    "asset": "public\\assets\\visual\\characters\\astral-arm-reinforced.png",
+    "dimensions": [
+      384,
+      256
+    ],
+    "frames": 6,
+    "bytes": 93236
+  },
+  {
+    "asset": "public\\assets\\visual\\characters\\xenobinder-arm-reinforced.png",
+    "dimensions": [
+      384,
+      256
+    ],
+    "frames": 6,
+    "bytes": 97603
+  }
+]

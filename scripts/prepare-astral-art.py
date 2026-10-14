@@ -16,43 +16,15 @@ def tight(im):
     if not b:raise ValueError('Empty authored asset')
     return im.crop(b)
 
-sheet=Image.open(SOURCE/'bodies.png').convert('RGBA')
-columns=[90,320,580,790,1020,1265,1536]
-shoulders={};measurements={}
+measurements={}
 def save(im,path):
     im.save(path,optimize=True)
     measurements[str(path.relative_to(ROOT))]={'dimensions':list(im.size),'bytes':path.stat().st_size}
-
-for sex,col in [('male',0),('female',3)]:
-    sockets=[]
-    for tier,style in enumerate(['none','basic','reinforced']):
-        atlas=Image.new('RGBA',(1024,768))
-        for direction in range(3):
-            x1,x2=columns[col+direction:col+direction+2]
-            y1=round(tier*sheet.height/3);y2=round((tier+1)*sheet.height/3)
-            part=tight(sheet.crop((x1,y1,x2,y2)))
-            scale=224/part.height
-            part=part.resize((round(part.width*scale),224),Image.Resampling.LANCZOS)
-            base=Image.new('RGBA',(256,256));base.alpha_composite(part,((256-part.width)//2,20))
-            for frame in range(4):
-                body=base.copy()
-                # Tiny rigid displacements of the painted complete legs; no stretching.
-                if frame in [1,2]:
-                    sign=1 if frame==1 else -1
-                    legs=base.crop((0,152,256,256));body.paste((0,0,0,0),(0,154,256,256))
-                    left=legs.crop((0,0,128,104));right=legs.crop((128,0,256,104))
-                    body.alpha_composite(left,(sign*2,152-sign*2));body.alpha_composite(right,(128-sign*2,152+sign*2))
-                atlas.alpha_composite(body,(frame*256,direction*256))
-                if tier==0:
-                    band=[]
-                    for y in range(70,92):
-                        xs=[x for x in range(55,201) if base.getpixel((x,y))[3]>145]
-                        if xs:band.append((max(xs)-min(xs),y,min(xs),max(xs)))
-                    _,y,left,right=max(band)
-                    sockets.append({'left':{'x':left+7,'y':y},'right':{'x':right-7,'y':y}})
-        save(atlas,OUT/f'wardrobe-astral-{sex}-{style}.png')
-    shoulders[sex]=sockets
-(OUT/'astral-shoulders.json').write_text(json.dumps(shoulders,indent=2)+'\n',encoding='utf-8')
+# The audited body pipeline has authored walk poses; never restore shifted leg strips.
+import runpy
+runpy.run_path(str(ROOT/'scripts/prepare-caster-motion.py'),run_name='__main__')
+for entry in json.loads((ROOT/'docs/caster-motion-audit/assets.json').read_text(encoding='utf-8')):
+    if 'wardrobe-astral-' in entry['asset']:measurements[entry['asset']]={'dimensions':entry['dimensions'],'bytes':entry['bytes']}
 
 weapons=Image.open(SOURCE/'gauntlets.png').convert('RGBA')
 for i,style in enumerate(['starter','current','advanced']):

@@ -1,0 +1,230 @@
+{
+  "astral-arm-none": [
+    {
+      "x": 4,
+      "y": 34,
+      "width": 120,
+      "height": 59
+    },
+    {
+      "x": 132,
+      "y": 41,
+      "width": 120,
+      "height": 46
+    },
+    {
+      "x": 260,
+      "y": 30,
+      "width": 120,
+      "height": 68
+    },
+    {
+      "x": 4,
+      "y": 163,
+      "width": 120,
+      "height": 58
+    },
+    {
+      "x": 132,
+      "y": 167,
+      "width": 120,
+      "height": 49
+    },
+    {
+      "x": 260,
+      "y": 149,
+      "width": 120,
+      "height": 86
+    }
+  ],
+  "xenobinder-arm-none": [
+    {
+      "x": 4,
+      "y": 33,
+      "width": 120,
+      "height": 61
+    },
+    {
+      "x": 132,
+      "y": 40,
+      "width": 120,
+      "height": 47
+    },
+    {
+      "x": 260,
+      "y": 28,
+      "width": 120,
+      "height": 72
+    },
+    {
+      "x": 4,
+      "y": 162,
+      "width": 120,
+      "height": 59
+    },
+    {
+      "x": 132,
+      "y": 167,
+      "width": 120,
+      "height": 50
+    },
+    {
+      "x": 260,
+      "y": 149,
+      "width": 120,
+      "height": 86
+    }
+  ],
+  "astral-arm-basic": [
+    {
+      "x": 4,
+      "y": 36,
+      "width": 120,
+      "height": 56
+    },
+    {
+      "x": 132,
+      "y": 36,
+      "width": 120,
+      "height": 56
+    },
+    {
+      "x": 260,
+      "y": 26,
+      "width": 120,
+      "height": 75
+    },
+    {
+      "x": 4,
+      "y": 163,
+      "width": 120,
+      "height": 57
+    },
+    {
+      "x": 132,
+      "y": 164,
+      "width": 120,
+      "height": 55
+    },
+    {
+      "x": 260,
+      "y": 155,
+      "width": 120,
+      "height": 74
+    }
+  ],
+  "xenobinder-arm-basic": [
+    {
+      "x": 4,
+      "y": 35,
+      "width": 120,
+      "height": 57
+    },
+    {
+      "x": 132,
+      "y": 35,
+      "width": 120,
+      "height": 57
+    },
+    {
+      "x": 260,
+      "y": 27,
+      "width": 120,
+      "height": 73
+    },
+    {
+      "x": 4,
+      "y": 163,
+      "width": 120,
+      "height": 58
+    },
+    {
+      "x": 132,
+      "y": 163,
+      "width": 120,
+      "height": 58
+    },
+    {
+      "x": 260,
+      "y": 155,
+      "width": 120,
+      "height": 73
+    }
+  ],
+  "astral-arm-reinforced": [
+    {
+      "x": 4,
+      "y": 38,
+      "width": 120,
+      "height": 52
+    },
+    {
+      "x": 132,
+      "y": 38,
+      "width": 120,
+      "height": 52
+    },
+    {
+      "x": 260,
+      "y": 28,
+      "width": 120,
+      "height": 72
+    },
+    {
+      "x": 4,
+      "y": 164,
+      "width": 120,
+      "height": 55
+    },
+    {
+      "x": 132,
+      "y": 166,
+      "width": 120,
+      "height": 52
+    },
+    {
+      "x": 260,
+      "y": 157,
+      "width": 120,
+      "height": 70
+    }
+  ],
+  "xenobinder-arm-reinforced": [
+    {
+      "x": 4,
+      "y": 35,
+      "width": 120,
+      "height": 58
+    },
+    {
+      "x": 132,
+      "y": 36,
+      "width": 120,
+      "height": 56
+    },
+    {
+      "x": 260,
+      "y": 27,
+      "width": 120,
+      "height": 73
+    },
+    {
+      "x": 4,
+      "y": 163,
+      "width": 120,
+      "height": 57
+    },
+    {
+      "x": 132,
+      "y": 164,
+      "width": 120,
+      "height": 55
+    },
+    {
+      "x": 260,
+      "y": 156,
+      "width": 120,
+      "height": 72
+    }
+  ]
+}

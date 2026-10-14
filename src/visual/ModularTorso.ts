@@ -38,9 +38,9 @@ export class ModularTorso {
     this.keys={front:prefix+'-front',back:prefix+'-back',side:prefix+'-side'};
     for(let i=0;i<(classId==='warrior'?3:1);i++){
       const key=classId==='warrior'?this.keys[DIRECTIONS[i]]:prefix+'-all';
-      const height=classId==='warrior'?256:768;
-      const texture=scene.textures.createCanvas(key,1024,height)!;
-      for(let f=0;f<height/256*4;f++)texture.add(f,0,f%4*256,Math.floor(f/4)*256,256,256);
+      const height=classId==='warrior'?256:768,columns=classId==='astral'||classId==='xenobinder'?5:4;
+      const texture=scene.textures.createCanvas(key,columns*256,height)!;
+      for(let f=0;f<height/256*columns;f++)texture.add(f,0,f%columns*256,Math.floor(f/columns)*256,256,256);
       this.canvases.push(texture);
     }
     if(classId!=='warrior')this.keys.front=this.keys.back=this.keys.side=this.canvases[0].key;
@@ -62,14 +62,14 @@ export class ModularTorso {
     const signature=PARTS.map(p=>look[p]).join('/');if(signature===this.signature)return;
     this.signature=signature;
     const sources=Object.fromEntries(['none','basic','reinforced'].map(style=>[style,this.scene.textures.get(`wardrobe-${this.classId}-${this.sex}-${style}`).getSourceImage() as HTMLImageElement]));
-    const splits=this.classId==='warrior'?[0,88,154,213,256]:[0,71,148,216,256];
+    const splits=this.classId==='warrior'?[0,88,154,213,256]:this.classId==='astral'||this.classId==='xenobinder'?[0,71,132,216,256]:[0,71,148,216,256];
     for(let i=0;i<this.canvases.length;i++){
       const texture=this.canvases[i],ctx=texture.context;ctx.clearRect(0,0,texture.width,texture.height);
       const firstRow=this.classId==='warrior'?i:0,rows=this.classId==='warrior'?1:3;
       for(let row=0;row<rows;row++)for(let p=0;p<PARTS.length;p++){
         const top=splits[p],height=splits[p+1]-top,source=sources[look[PARTS[p]]];
         // Replace the entire anatomical band. No unarmored body is drawn beneath it.
-        ctx.drawImage(source,0,(firstRow+row)*256+top,1024,height,0,row*256+top,1024,height);
+        ctx.drawImage(source,0,(firstRow+row)*256+top,texture.width,height,0,row*256+top,texture.width,height);
       }
       texture.refresh();
     }
