@@ -1,0 +1,42 @@
+{
+  "base": "https://echosofdante.vercel.app",
+  "method": "Public compiled build, one Chrome context, reduced motion, no DEV exports; automatic full prologue with no skip/advance input.",
+  "errors": [],
+  "timeline": {
+    "takes": [
+      {
+        "take": "earth",
+        "at": 3961
+      },
+      {
+        "take": "evacuation",
+        "at": 11889.699999988079
+      },
+      {
+        "take": "voyage",
+        "at": 19921.5
+      },
+      {
+        "take": "dante",
+        "at": 27940.39999999106
+      },
+      {
+        "take": "landing",
+        "at": 35954.19999998808
+      }
+    ],
+    "end": 44031.29999999702
+  },
+  "durations": [
+    7928.699999988079,
+    8031.800000011921,
+    8018.899999991059,
+    8013.79999999702,
+    8077.100000008941
+  ],
+  "saved": {
+    "introSeen": true,
+    "area": "base"
+  },
+  "passed": true
+}

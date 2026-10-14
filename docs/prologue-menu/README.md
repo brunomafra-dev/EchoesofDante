@@ -87,6 +87,7 @@ Resultados técnicos e capturas em `qa/`. Scripts desta entrega:
 | Typecheck / build de produção | `npm run typecheck` e `npm run build`, sem erros; aviso conhecido do chunk Phaser acima de 500 KB |
 | Relay 2/3/4, equipe original, impedimento de substituição e pausa | [Protocolo](qa/protocol-report.json) |
 | Menu, nomes com A/L e acentos, cinco imagens, take de ~8 s, pular/rever, pausa nas configurações | [Menu](qa/menu-report.json) |
+| Cinco takes avançando automaticamente, sem pular/avançar, na build pública e com movimento reduzido | [Linha do tempo pública](qa/public/timeline-report.json): 7,93 / 8,03 / 8,02 / 8,01 / 8,08 segundos; chegou à base e salvou a introdução |
 | Entrada real, ausência, retorno, marcos pessoais e nova sala com os mesmos personagens | [Dupla](qa/continuity-2-report.json) e [quatro](qa/continuity-4-report.json) |
 | Quatro kits, poções, recompensas pessoais, dano, portais por cada visitante, 14 regiões e quatro bosses | [Regressão de quatro](qa/four-regression/report.json) |
 | Três derrotas/respawns coletivos | 440 objetos, 250 texturas, 25 tweens e três aliados remotos em todos os ciclos; sem crescimento |
