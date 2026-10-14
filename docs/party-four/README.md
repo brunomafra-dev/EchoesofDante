@@ -45,6 +45,14 @@ Durante boss, mortos aguardam enquanto existir alguém vivo. Derrota coletiva pe
 
 O health passa a informar protocolo, capacidade e `RENDER_GIT_COMMIT`, quando disponível. Atualizar frontend e relay juntos; confirmar o health antes de declarar cooperativo público validado.
 
+### Validação pública — 14/10/2026
+
+Frontend Vercel e relay Render confirmados na entrega **0.1.99**, commit `c529cbf345046f6b4fdc360aea03757a7fbb4f6a`: health informa **protocolo 10, capacidade 4 e classes exclusivas**. O usuário concluiu o deploy pelo painel após um incidente do Render que atrasava builds; essa publicação manual não comprova o funcionamento do gatilho automático dos próximos commits.
+
+[QA público](public-qa/report.json): passou com quatro contextos Chrome independentes na URL real, sem relay local, mocks de rede ou hooks DEV. Convites com confirmação, bloqueio de classe ocupada, escolha de Astral, criação de Vinculadora feminina, quatro participantes recebendo snapshots enquanto o anfitrião usa o menu, encerramento para os três visitantes e retomada da jornada própria. Zero erros JS/assets; ao terminar, o serviço informou zero salas e zero conexões. [Captura das quatro vagas](public-qa/four-slots.png).
+
+Esse ensaio valida conexão e fluxo público do lobby; não substitui a campanha humana em quatro aparelhos. O laboratório está disponível para esse playtest. Aguardar aprovação antes do prólogo.
+
 ## QA e avaliação humana
 
 Scripts desta etapa:

@@ -1,0 +1,25 @@
+{
+  "method": "Published Vercel build and real Render relay, four independent Chrome contexts on one workstation. Real menus and WebSocket frames; no DEV globals, network mocks or simulation fixtures. Private QA browser profiles; not a physical four-device test or a full public campaign balance playthrough.",
+  "checks": [
+    "Production invite asks for own character, shows occupied classes and joins only after explicit confirmation",
+    "Duplicate class disabled; explicit Astral choice survives reload and uses its own network kit",
+    "Normal main-game invite creates a missing Xenobinder, types A/L, preserves female presentation and joins after reload",
+    "Four live production participants; four-slot lobby and snapshots continue while host uses its menu",
+    "Host leave reaches all three visitors; solo restoration preserves the new character and its own campaign"
+  ],
+  "errors": [],
+  "passed": true,
+  "frontend": "https://echosofdante.vercel.app",
+  "relay": "wss://echoes-of-dante-rooms.onrender.com/coop",
+  "healthAfterTest": {
+    "service": "Dante regional co-op",
+    "protocol": 10,
+    "capacity": 4,
+    "uniqueClasses": true,
+    "revision": "c529cbf345046f6b4fdc360aea03757a7fbb4f6a",
+    "campaign": true,
+    "rooms": 0,
+    "players": 0
+  },
+  "checkedAt": "2026-10-14T19:54:50.108119+00:00"
+}
