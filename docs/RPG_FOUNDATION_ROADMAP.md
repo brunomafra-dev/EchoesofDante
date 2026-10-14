@@ -176,9 +176,9 @@ Decisão do usuário em 09/10/2026: cada sprint deve terminar com um link espec�
 - [x] **Etapa 2 — Inventário e loot:** 24 espaços, sete slots, drops pessoais, migração e persistência; miniaturas corrigidas em 0.1.84 e aprovadas pelo usuário (“Muito bom”). [Relatório/teste](inventory-loot/README.md).
 - [x] **Etapa 3 — Base e economia:** base, NPCs próprios, atlas, receitas, cofre, poções e retorno/retomada. Revisão 0.1.88 explicitamente validada pelo usuário antes da etapa 4. [Relatório/teste](base-economy/README.md).
 - [ ] **Etapa 4 — Progressão e ameaça:** entrega técnica 0.1.89: curva regional fixa, revisão de recompensas/custos, morte perde 10% dos créditos, auditoria do visitante cooperativo. [Relatório/teste](progression-threat/README.md). Validação humana pendente; o usuário autorizou executar a etapa 5 durante sua viagem sem aguardar esse playtest.
-- [ ] **Etapa 5 — Astral:** entrega técnica 0.1.90: quatro elementos alternáveis, Energia Astral, manopla, apresentações masculina/feminina e integração solo/dupla. [Relatório/teste](astral/README.md). Aguardar avaliação humana das etapas 4/5 antes de iniciar o Vinculador.
+- [x] **Etapa 5 — Astral:** kit/elementos e afinidades bem recebidos pelo usuário nas revisões 0.1.91–0.1.93; braços/apresentação aprovados após a revisão 0.1.98. [Relatório/teste](astral/README.md). QA solo/dupla local; avaliação geral de dificuldade da etapa 4 permanece pendente.
 - [ ] **Interlúdio 5A — Caldeira:** entrega técnica 0.1.94, autorizada antes do Vinculador. Região vulcânica e boss gigante mineral de lava; campanha, dupla local e três kits validados automaticamente. [Entrega e QA](caldera/README.md). Aguardar aprovação humana de visual/ritmo/dificuldade.
-- [ ] **Etapa 6 — Vinculador:** entrega técnica 0.1.96; companheiro original, assistência marcada, Vínculo, investida/recuperação, apresentação e equipamento solo/dupla. [Relatório e teste](xenobinder/README.md). Autorizado explicitamente após a revisão vulcânica; aguardando playtest humano. Quatro participantes permanecem na etapa 7.
+- [x] **Etapa 6 — Vinculador:** kit/companheiro bem recebidos pelo usuário, seguidos de rejeição dos braços; revisão 0.1.98 aprovada em 14/10/2026 (“agora sim perfeito!”). [Relatório e teste](xenobinder/README.md). QA solo/dupla local; quatro participantes e publicação coordenada das salas pertencem à etapa 7.
 - [ ] **Etapa 7 — Equipe de quatro:** lobby, classes exclusivas, participantes individuais e bosses.
 - [ ] **Etapa 8 — Prólogo:** cinco takes, chegada, integração da base e refugiados.
 
@@ -297,3 +297,7 @@ Em 14/10/2026 o usuário aprovou a sensação do kit, mas rejeitou braços e cam
 ### Rejeição visual e revisão dos braços — 0.1.98
 
 A captura enviada pelo usuário rejeitou os braços da 0.1.97. Correção focada: pintura sem punhos artificiais nas junções, escala uniforme, articulações registradas dentro do PNG, mão proporcional/relaxada, antebraço e manopla no mesmo eixo, punho do condutor ajustado e ordenação da manga sob o torso. Pernas, corpos, kit, controles e valores preservados. QA passa a verificar pixels opacos nas junções e ausência de estiramento, além das coordenadas. [Entrega e teste](caster-motion-audit/revision-02/README.md). **Ainda aguardar aprovação visual antes da etapa 7.**
+
+### Aprovação visual e próxima etapa — 14/10/2026
+
+O usuário aprovou a revisão 0.1.98 (“agora sim perfeito!”) e perguntou qual é o próximo passo. Registro encerra a pendência visual dos dois personagens. Etapa 7: salas/lobby de até quatro pessoas, classes exclusivas, estado individual de cada participante, campanha/bosses, reconexão e recompensas pessoais. Primeiro alinhar frontend/relay publicados; não declarar quatro jogadores implementados, nem iniciar o prólogo. Pendências gerais de balanceamento da etapa 4 e avaliação vulcânica continuam registradas e devem entrar no playtest da campanha cooperativa. Nenhum gameplay foi alterado neste registro.

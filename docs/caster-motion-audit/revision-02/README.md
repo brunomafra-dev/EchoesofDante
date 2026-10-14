@@ -49,4 +49,4 @@ Uma execução cooperativa foi descartada após um reload do laboratório durant
 
 Sprites articulados com três vistas; não é um esqueleto 3D. Sem teste físico em celular/gamepad. Dupla validada no relay local protocolo 9; a pendência anterior do Render não é resolvida por esta alteração visual.
 
-**Automação passou; aprovação visual humana ainda pendente.** Compare a postura frontal da captura original, lados/costas, ataque/Q e equipamentos antes da etapa 7.
+**Visual aprovado pelo usuário em 14/10/2026:** “agora sim perfeito!”. A aprovação supera a rejeição da 0.1.97 e encerra esta revisão dos braços; não equivale a teste físico de gamepad/mobile ou validação de quatro participantes. Próxima etapa do plano: equipe de quatro.
