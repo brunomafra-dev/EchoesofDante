@@ -179,7 +179,7 @@ Decisão do usuário em 09/10/2026: cada sprint deve terminar com um link espec�
 - [x] **Etapa 5 — Astral:** kit/elementos e afinidades bem recebidos pelo usuário nas revisões 0.1.91–0.1.93; braços/apresentação aprovados após a revisão 0.1.98. [Relatório/teste](astral/README.md). QA solo/dupla local; avaliação geral de dificuldade da etapa 4 permanece pendente.
 - [ ] **Interlúdio 5A — Caldeira:** entrega técnica 0.1.94, autorizada antes do Vinculador. Região vulcânica e boss gigante mineral de lava; campanha, dupla local e três kits validados automaticamente. [Entrega e QA](caldera/README.md). Aguardar aprovação humana de visual/ritmo/dificuldade.
 - [x] **Etapa 6 — Vinculador:** kit/companheiro bem recebidos pelo usuário, seguidos de rejeição dos braços; revisão 0.1.98 aprovada em 14/10/2026 (“agora sim perfeito!”). [Relatório e teste](xenobinder/README.md). QA solo/dupla local; quatro participantes e publicação coordenada das salas pertencem à etapa 7.
-- [ ] **Etapa 7 — Equipe de quatro:** lobby, classes exclusivas, participantes individuais e bosses.
+- [ ] **Etapa 7 — Equipe de quatro:** entrega técnica 0.1.99, lobby e quatro classes exclusivas, estado/recibos individuais e campanha/bosses. [Relatório/teste](party-four/README.md). Aguardar publicação coordenada do relay protocolo 10 e playtest humano antes do prólogo.
 - [ ] **Etapa 8 — Prólogo:** cinco takes, chegada, integração da base e refugiados.
 
 ### Registro inicial — Etapa 0
@@ -301,3 +301,9 @@ A captura enviada pelo usuário rejeitou os braços da 0.1.97. Correção focada
 ### Aprovação visual e próxima etapa — 14/10/2026
 
 O usuário aprovou a revisão 0.1.98 (“agora sim perfeito!”) e perguntou qual é o próximo passo. Registro encerra a pendência visual dos dois personagens. Etapa 7: salas/lobby de até quatro pessoas, classes exclusivas, estado individual de cada participante, campanha/bosses, reconexão e recompensas pessoais. Primeiro alinhar frontend/relay publicados; não declarar quatro jogadores implementados, nem iniciar o prólogo. Pendências gerais de balanceamento da etapa 4 e avaliação vulcânica continuam registradas e devem entrar no playtest da campanha cooperativa. Nenhum gameplay foi alterado neste registro.
+
+### Avanço autorizado — etapa 7 · 0.1.99
+
+O usuário autorizou a implementação (“Vamos nessa!”). Quatro vagas exclusivas, IDs estáveis, estado por participante, convites com escolha explícita, campanha compartilhada e recompensas pessoais; relay protocolo 10. Personagens, arte, kits, regiões e bosses existentes reutilizados. Resistência dos inimigos por quantidade de participantes, sem alterar dano/IA ou escalar com equipamento. Menus pessoais não pausam a equipe; derrota coletiva, travessias, reconexão e saída do anfitrião tratadas para os quatro.
+
+[Laboratório reservado](https://echosofdante.vercel.app/party-playtest.html?region=base&kit=basic&v=0.1.99) · [Implementação, QA e limites](party-four/README.md). Frontend e relay devem publicar o mesmo protocolo; a confirmação pública fica registrada no relatório desta etapa. **Aguardar playtest humano da equipe antes da etapa 8 — prólogo.** Balanceamento geral da etapa 4 e avaliação da campanha vulcânica continuam incluídos nessa validação; automação não substitui aprovação humana.

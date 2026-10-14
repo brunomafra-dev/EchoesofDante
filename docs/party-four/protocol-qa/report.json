@@ -1,0 +1,12 @@
+{
+  "checks": [
+    "Atomic four-seat/unique-class enforcement, stable IDs and secret-free read-only lobby",
+    "Normalized input and consumable requests routed by the authenticated connection seat, not a supplied ID",
+    "Shared XP gains with distinct idempotent personal equipment/material/potion receipts",
+    "Reserved class/seat and cumulative rewards survive socket reconnection and old-transport replacement",
+    "Congested snapshots may drop; travel/epochs remain reliable for all four and cumulative XP is recovered",
+    "Host-only world/travel, synchronized epochs and stale input rejection",
+    "Explicit departure frees only its class; new occupant inherits no receipts; host end reaches all three visitors"
+  ],
+  "passed": true
+}

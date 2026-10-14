@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { coopSession as room, NO_INPUT, type PartyWorld, type CreaturePose, type PartyPose } from './CoopSession';
+import { coopSession as room, NO_INPUT, type PartyWorld, type CreaturePose, type PartyPose, type PartyProfile } from './CoopSession';
 import { PartyActor } from './PartyActor';
 import type { Player } from '../entities/Player';
 import type { Enemy } from '../entities/Enemy';
@@ -10,11 +10,9 @@ import type { JourneyArea, JourneyFlags } from '../systems/LocalJourney';
 import type { ProgressionSnapshot } from '../systems/Progression';
 import {moveWithCollisions,type MovementBounds,type Obstacle} from '../systems/Movement';
 import type { Vec2 } from '../utils/math';
-import { characterProfiles } from '../systems/CharacterProfiles';
 import { SPECIES, type SpeciesId } from '../config/bestiary';
 import { BossMirror, captureBoss, type NetworkBoss } from './BossPresentation';
 import type {ResourceDrop} from '../systems/ResourceDrops';
-import { equipmentStats } from '../config/equipment';
 import type { ExpeditionReturn } from '../systems/ExpeditionReturn';
 import type { ImpactPose } from './CoopSession';
 import type { AstralElement } from '../config/classes';
@@ -27,25 +25,32 @@ export type PartyBridge={
  solidObstacles:readonly Obstacle[];
  signalPortal:boolean;resources:ResourceDrop[];resourceAwarded:ResourceDrop[];potionUsed:number;visited:JourneyArea[];returnStation:Vec2;expeditionReturn?:ExpeditionReturn;
  id:(enemy:Enemy)=>number|undefined;species:(enemy:Enemy)=>SpeciesId|undefined;
- hit:(targets:Enemy[],damage:number,angle:number,from:Vec2,heavy:boolean,knockback?:number,color?:number,element?:AstralElement)=>void;
+ hit:(targets:Enemy[],damage:number,angle:number,from:Vec2,heavy:boolean,knockback?:number,color?:number,element?:AstralElement,profile?:PartyProfile)=>void;
  impacts:ImpactPose[];impact:(hit:ImpactPose)=>void;
- prompt:(position:Vec2)=>{available:boolean;action:string};
+ prompt:(position:Vec2,owner:string)=>{available:boolean;action:string};
  sync:(world:PartyWorld)=>boolean;render:(pose:PartyPose)=>void;
 };
 type Presented=Enemy&{view?:Phaser.GameObjects.Container;body?:Phaser.GameObjects.Image;telegraph?:Phaser.GameObjects.Ellipse;warning?:Phaser.GameObjects.Graphics;direction?:number;attackAngle?:number;projectile?:Phaser.GameObjects.Ellipse;shots?:{active:boolean;x:number;y:number;angle:number}[]};
 type Mirror={body:Phaser.GameObjects.Image;shadow:Phaser.GameObjects.Ellipse;warning:Phaser.GameObjects.Ellipse;line:Phaser.GameObjects.Line;hp:Phaser.GameObjects.Rectangle;name:Phaser.GameObjects.Text;layers:Phaser.GameObjects.Image[]};
+const INPUT_EDGES=['dash','charge','release','cancel','interact','restart','element'] as const;
 // Regional host authority. There is no second AI simulation in the visitor browser.
 export class PartyExpedition {
- partner?:PartyActor;
- private peerName='';
- private interaction?:Vec2;
+ readonly actors=new Map<string,PartyActor>();
+ get partner():PartyActor|undefined{return this.actors.values().next().value;}
+ get players():Player[]{return [...this.actors].filter(([id])=>room.guests.find(m=>m.id===id)?.connected).map(([,a])=>a.player);}
+ actorFor(player:Player):PartyActor|undefined{return [...this.actors.values()].find(a=>a.player===player);}
+ idFor(player:Player):string|undefined{return [...this.actors].find(([,a])=>a.player===player)?.[0];}
+ get living():Player[]{return [this.localPlayer,...this.players].filter(p=>!p.isDead);}
+ private interactions:{id:string;position:Vec2}[]=[];
+
  private attackQueued=false;
  private restartQueued=false;
  private queued={dash:false,charge:false,release:false,cancel:false,interact:false,restart:false,element:false};
  private sendAt=0;
  private appliedWorld?:PartyWorld;
  private lastImpact=0;
- private mirrorHost?:PartyActor;
+ private readonly playerMirrors=new Map<string,PartyActor>();
+ get mirrorHost():PartyActor|undefined{return this.playerMirrors.get('host');}
  private mirrors=new Map<number,Mirror>();
  private projectiles:Phaser.GameObjects.Rectangle[]=[];
  private readonly visitorWave:Phaser.GameObjects.Ellipse;
@@ -67,51 +72,47 @@ export class PartyExpedition {
  queueInteraction():void{this.queued.interact=true;}
  queueAttack():void{this.attackQueued=true;}
  queueRestart():void{this.queued.restart=true;}
- cancelPartnerCharge():void{this.partner?.cancelCharge();}
- takeInteraction():Vec2|undefined{const p=this.interaction;this.interaction=undefined;return p;}
+ cancelPartnerCharge():void{for(const actor of this.actors.values())actor.cancelCharge();}
+ takeInteraction():{id:string;position:Vec2}|undefined{return this.interactions.shift();}
  takeRestart():boolean{const requested=this.restartQueued;this.restartQueued=false;return requested;}
  private safePosition():Vec2{
   const a=this.access(),b=a.bounds;
   for(const [dx,dy]of[[80,0],[-80,0],[0,80],[0,-80],[0,0]]){
    const p={x:a.player.position.x+dx,y:a.player.position.y+dy};
-   if((!b||p.x>b.left+18&&p.x<b.right-18&&p.y>b.top+18&&p.y<b.bottom-18)&&a.obstacles.every(o=>Math.hypot(o.x-p.x,o.y-p.y)>o.radius+20))return p;
+   if((!b||p.x>b.left+18&&p.x<b.right-18&&p.y>b.top+18&&p.y<b.bottom-18)&&a.obstacles.every(o=>Math.hypot(o.x-p.x,o.y-p.y)>o.radius+20)&&this.players.every(actor=>Math.hypot(actor.position.x-p.x,actor.position.y-p.y)>40))return p;
   }return{...a.player.position};
  }
  updateHost(now:number,dt:number):void{
   if(room.role!=='host'){
    if(this.balanced){for(const e of this.access().enemies){const base=this.resilience.get(e);if(base!==undefined)this.resizeHealth(e,base);}this.balanced=false;this.resilience=new WeakMap();}
-   if(this.partner){this.partner.destroy();this.partner=undefined;this.peerName='';}this.status.setVisible(false);return;
+   for(const actor of this.actors.values())actor.destroy();this.actors.clear();this.status.setVisible(false);return;
   }
-  const a=this.access();this.status.setVisible(true).setText(room.peer?
-   room.peerConnected?`DUPLA · ${characterProfiles.active.name} + ${room.peer.name}`:'DUPLA · COMPANHEIRO RECONECTANDO':`SALA ${room.code} · AGUARDANDO COMPANHEIRO`);
-  // Only health changes for two participants; damage, AI, speed and solo values stay intact.
-  for(const enemy of a.enemies){
-   const base=this.resilience.get(enemy)??enemy.health.max;this.resilience.set(enemy,base);
-   const max=room.peer?Math.round(base*1.4):base;
-   this.resizeHealth(enemy,max);
-  }
-  this.balanced=!!room.peer;
-  if(!room.peer&&this.partner){this.partner.destroy();this.partner=undefined;this.peerName='';}
-  if(room.peer&&(!this.partner||this.peerName!==`${room.peer.name}:${room.peer.classId}:${room.peer.sex}`)){
-   this.partner?.destroy();const hp=a.baseMaxHp;
-   this.partner=new PartyActor(this.scene,room.peer,this.safePosition(),Math.round(hp*(room.peer.classId==='hunter'?.8:room.peer.classId==='xenobinder'?.9:room.peer.classId==='astral'?.85:1))+equipmentStats(room.peer.equipment??{}).hp);this.peerName=`${room.peer.name}:${room.peer.classId}:${room.peer.sex}`;
-  }
-  const input=room.peerConnected&&performance.now()-room.inputAt<500?room.input:{...NO_INPUT,cancel:true};
-  if(this.partner){
-   const waiting=a.bossActive&&(!a.player.isDead||room.peerConnected&&!this.partner.player.isDead);
-   if(input.restart&&!waiting){
-    if(a.player.isDead)this.restartQueued=true;
-    else if(this.partner.player.isDead){this.partner.player.revive(this.safePosition());this.partner.cancelCharge();}
-   }
-   this.partner.profile.equipment=room.peer?.equipment;this.partner.profile.build=room.peer?.build;
-   this.partner.update(now,dt,input,a.enemies,a.obstacles,a.bounds,a.hit,a.solidObstacles,[a.player,this.partner.player]);
-   if(input.interact&&!this.partner.player.isDead)this.interaction={...this.partner.player.position};
+  const a=this.access(),active=room.guests.filter(m=>m.connected),live=new Set(room.guests.map(m=>m.id));
+  this.status.setVisible(true).setText(`EQUIPE ${1+active.length}/4 · ${room.connected?'SALA '+room.code:'RECONECTANDO'}`);
+  // Fixed party-size resilience; no damage or AI changes. Solo and duo retain their values.
+  for(const enemy of a.enemies){const base=this.resilience.get(enemy)??enemy.health.max;this.resilience.set(enemy,base);this.resizeHealth(enemy,Math.round(base*(1+.4*active.length)));}
+  this.balanced=active.length>0;
+  for(const [id,actor] of this.actors)if(!live.has(id)){actor.destroy();this.actors.delete(id);}
+  for(const member of room.guests){
+   let actor=this.actors.get(member.id);
+   if(!actor){actor=new PartyActor(this.scene,member.profile,this.safePosition(),a.baseMaxHp);const state=room.state(member.id);if(state.travelHp!==undefined){actor.player.health.current=Math.max(1,Math.min(state.travelHp,actor.player.maxHp));state.travelHp=undefined;}this.actors.set(member.id,actor);}
+   actor.profile.equipment=member.profile.equipment;actor.profile.build=member.profile.build;
+   const state=room.state(member.id),age=performance.now()-state.inputAt;
+   let input=member.connected&&age<500&&!state.input.cancel?{...state.input,attack:state.input.attack||state.attackTap}:{...NO_INPUT,aim:actor.player.rotation,cancel:true};
+   // A short jitter must not release/fire a held skill. Movement stays stopped;
+   // explicit cancellation/disconnection wins, and an unconfirmed hold expires.
+   if(member.connected&&!state.input.cancel&&age>=500&&age<1500&&state.input.held&&actor.charge.phase==='CHARGING')input={...NO_INPUT,aim:actor.player.rotation,held:true};
+   const waiting=a.bossActive&&this.living.length>0;
+   if(input.restart&&!waiting){if(a.player.isDead)this.restartQueued=true;else if(actor.player.isDead){actor.player.revive(this.safePosition());actor.cancelCharge();}}
+   actor.update(now,dt,input,a.enemies,a.obstacles,a.bounds,(targets,damage,angle,from,heavy,knockback,color,element)=>a.hit(targets,damage,angle,from,heavy,knockback,color,element,member.profile),a.solidObstacles,[a.player,...this.players]);
+   if(input.interact&&!actor.player.isDead)this.interactions.push({id:member.id,position:{...actor.player.position}});
   }
   room.consumeEdges();
   if(now-this.sendAt<100)return;this.sendAt=now;
-  const partner=this.partner?.snapshot();if(partner)partner.deathId=room.peerDeathId||undefined;
-  const prompt=partner?a.prompt(partner):{available:false,action:'INVESTIGAR'};
+  const players:PartyWorld['players']={};
+  for(const [id,actor]of this.actors){const state=room.state(id),pose=actor.snapshot(),prompt=a.prompt(pose,id);players[id]={...pose,deathId:state.deathId||undefined,potionUsed:state.potionUsed,prompt:prompt.available,action:prompt.action};}
   const host:PartyPose={strike:a.strike,releaseProgress:a.releaseProgress,...a.player.position,aim:a.player.rotation,hp:a.player.hp,maxHp:a.player.maxHp,dead:a.player.isDead,dash:a.player.isDashing,phase:a.phase,level:a.chargeLevel,firing:a.firing,dashReady:a.player.dashProgress,dashCooldown:a.player.dashCooldown,wave:a.wave,beam:a.hunter?.beamPose(),astral:a.astral?.snapshot(),xenobinder:a.xeno?.snapshot()};
+  players.host={...host,prompt:false,action:'INVESTIGAR',potionUsed:0};
   const enemies:CreaturePose[]=a.enemies.filter(e=>!e.isDead).map((enemy,index)=>{
    const e=enemy as Presented;
    const body=e.body??e.view?.list.find(p=>p instanceof Phaser.GameObjects.Image&&p.texture.key==='hollow-body') as Phaser.GameObjects.Image|undefined
@@ -128,10 +129,10 @@ export class PartyExpedition {
     warningX:e.telegraph?.x??e.position.x,warningY:e.telegraph?.y??e.position.y,warningWidth:e.telegraph?.width??100,warningHeight:e.telegraph?.height??45,
     projectile:e.projectile?.visible?{x:e.projectile.x,y:e.projectile.y,rotation:e.projectile.rotation}:undefined};
   });
-  const shots:PartyWorld['shots']=[...(a.hunter?.projectilePoses()??[]),...(this.partner?.hunter?.projectilePoses()??[])].map(shot=>({...shot,friendly:true}));
+  const shots:PartyWorld['shots']=[...(a.hunter?.projectilePoses()??[]),...[...this.actors.values()].flatMap(actor=>actor.hunter?.projectilePoses()??[])].map(shot=>({...shot,friendly:true}));
   for(const e of a.enemies as readonly Presented[])for(const shot of e.shots??[])if(shot.active)shots.push({x:shot.x,y:shot.y,rotation:shot.angle});
-  const world:PartyWorld={area:a.area,time:now,progression:a.progression,flags:a.flags,host,partner,enemies:enemies.filter(e=>!['warden','soterrado','vesper','titan'].includes(e.species)),boss:captureBoss(a.boss),signalPortal:a.signalPortal,resources:a.resources,resourceAwarded:a.resourceAwarded,potionUsed:a.potionUsed,visited:a.visited,returnStation:a.returnStation,expeditionReturn:a.expeditionReturn,loot:a.loot,lootAwarded:[...room.lootAwarded.values()].slice(-512),
-   impacts:a.impacts,message:(a.hud as unknown as {discoveryMessage:Phaser.GameObjects.Text}).discoveryMessage.visible?(a.hud as unknown as {discoveryMessage:Phaser.GameObjects.Text}).discoveryMessage.text:'',prompt:prompt.available,action:prompt.action,shots};
+  const world:PartyWorld={area:a.area,time:now,progression:a.progression,flags:a.flags,host,players,enemies:enemies.filter(e=>!['warden','soterrado','vesper','titan'].includes(e.species)),boss:captureBoss(a.boss),signalPortal:a.signalPortal,resources:a.resources,resourceAwarded:a.resourceAwarded,potionUsed:a.potionUsed,visited:a.visited,returnStation:a.returnStation,expeditionReturn:a.expeditionReturn,loot:a.loot,lootAwarded:[...room.lootAwarded.values()].slice(-512),
+   impacts:a.impacts,message:a.hud.partyMessage,prompt:false,action:'INVESTIGAR',shots};
   room.send('world',world);
  }
  private resizeHealth(enemy:Enemy,max:number):void {
@@ -139,32 +140,30 @@ export class PartyExpedition {
   const fraction=enemy.health.current/enemy.health.max;enemy.health.max=max;
   enemy.health.current=enemy.isDead?0:Math.max(1,Math.round(max*fraction));
  }
- showConnection():void{this.status.setVisible(true).setText('DUPLA · RECONECTANDO');}
+ showConnection():void{this.status.setVisible(true).setText('EQUIPE · RECONECTANDO');}
  targetFor(enemy:Enemy):Player{
-  const local=this.localPlayer,p=this.partner?.player;
-  if(room.peerConnected&&p&&!p.isDead&&(local.isDead||Math.hypot(p.position.x-enemy.position.x,p.position.y-enemy.position.y)<Math.hypot(local.position.x-enemy.position.x,local.position.y-enemy.position.y)))return p;
-  return local;
+  return this.living.reduce((nearest,p)=>nearest.isDead||Phaser.Math.Distance.BetweenPoints(p.position,enemy.position)<Phaser.Math.Distance.BetweenPoints(nearest.position,enemy.position)?p:nearest,this.localPlayer);
  }
  updateGuest(now:number,dt:number):void{
   const a=this.access(),c=a.controls;
   const world=room.world;
-  if(!room.connected||!room.peerConnected||room.hostPaused||!world||performance.now()-room.worldAt>1500){
-   this.attackQueued=false;for(const key of Object.keys(this.queued) as (keyof typeof this.queued)[])this.queued[key]=false;
-   this.status.setVisible(true).setText(!room.connected?'DUPLA · RECONECTANDO':!room.peerConnected?'DUPLA · ANFITRIÃO RECONECTANDO':room.hostPaused?'DUPLA · ANFITRIÃO NO MENU':'DUPLA · AGUARDANDO A REGIÃO');
+  if(!room.connected||!room.peerConnected||room.hostPaused||!world?.players?.[room.id]||performance.now()-room.worldAt>1500){
+   this.attackQueued=false;for(const key of INPUT_EDGES)this.queued[key]=false;
+   this.status.setVisible(true).setText(!room.connected?'EQUIPE · RECONECTANDO':!room.peerConnected?'EQUIPE · ANFITRIÃO RECONECTANDO':room.hostPaused?'EQUIPE · ANFITRIÃO NO MENU':'EQUIPE · AGUARDANDO A REGIÃO');
    if(now-this.sendAt>=100){room.send('input',{...NO_INPUT,cancel:true});this.sendAt=now;}return;
   }
-  if(a.inputBlocked){this.attackQueued=false;for(const key of Object.keys(this.queued) as (keyof typeof this.queued)[])this.queued[key]=false;}
+  if(a.inputBlocked){this.attackQueued=false;for(const key of INPUT_EDGES)this.queued[key]=false;}
   const interact=c.interactPressed;
   const input=a.inputBlocked?{...NO_INPUT,cancel:true}:{...c.movement(),aim:c.aimFrom(a.player.position),attack:c.attacking||this.attackQueued,dash:c.dashPressed,charge:c.chargePressed,held:c.chargeHeld,
    element:c.elementPressed,release:c.chargeReleased,cancel:c.chargeCancelled,interact,restart:c.restartPressed};
-  for (const key of Object.keys(this.queued) as (keyof typeof this.queued)[]) {
+  for (const key of INPUT_EDGES) {
     this.queued[key] ||= !!input[key]; input[key] = this.queued[key];
   }
-  if(now-this.sendAt>=40){room.send('input',input);this.sendAt=now;this.attackQueued=false;for (const key of Object.keys(this.queued) as (keyof typeof this.queued)[]) this.queued[key]=false;}
+  if(now-this.sendAt>=40&&room.send('input',input)){this.sendAt=now;this.attackQueued=false;for (const key of INPUT_EDGES) this.queued[key]=false;}
   else if(input.attack)this.attackQueued=true;
-  this.status.setVisible(true).setText(room.rewardSaved?`DUPLA · ${room.peer?.name??'ANFITRIÃO'} · XP PESSOAL +${room.personalXpGained}`:'DUPLA · XP AINDA NÃO SALVO NO NAVEGADOR');
-  if(!world||!world.partner)return;
-  const previousPose=this.appliedWorld?.partner;
+  this.status.setVisible(true).setText(room.rewardSaved?`EQUIPE · ${room.peer?.name??'ANFITRIÃO'} · XP PESSOAL +${room.personalXpGained}`:'EQUIPE · XP AINDA NÃO SALVO NO NAVEGADOR');
+  if(!world||!world.players[room.id])return;
+  const previousPose=this.appliedWorld?.players[room.id];
   const freshWorld=world!==this.appliedWorld;
   if(freshWorld){if(a.sync(world))return;this.appliedWorld=world;}
   if(freshWorld) for(const hit of (world.impacts??[]).slice(-24)) {
@@ -182,7 +181,7 @@ export class PartyExpedition {
   }
   if(a.boss) for(const object of a.boss.coopObjects) (object as Phaser.GameObjects.Image).setVisible(false);
   if(freshWorld){this.bossMirror.render(world.boss);a.bossRender(world.boss);a.lootRender(world.loot);}
-  const p=world.partner,delta=Math.hypot(p.x-a.player.position.x,p.y-a.player.position.y),t=delta>300?1:Math.min(1,dt*18);
+  const p=world.players[room.id],delta=Math.hypot(p.x-a.player.position.x,p.y-a.player.position.y),t=delta>300?1:Math.min(1,dt*18);
   const presented={x:p.x,y:p.y};
   // Bounded presentation extrapolation only; host remains the sole combat simulator.
   const age=Math.max(0,Math.min(.12,(performance.now()-room.worldAt)/1000));
@@ -190,14 +189,14 @@ export class PartyExpedition {
   const readiness=Math.min(1,(p.dashReady??1)+age/(p.dashCooldown??a.player.dashCooldown)*1000);
   a.render({...p,aim:p.phase==='RELEASE'?p.aim:input.aim,x:Phaser.Math.Linear(a.player.position.x,presented.x,t),y:Phaser.Math.Linear(a.player.position.y,presented.y,t)});
   if(freshWorld){if(p.dash&&!previousPose?.dash)a.cue('dash');if(p.phase==='CHARGING'&&previousPose?.phase!=='CHARGING')a.cue('charge');if(p.phase==='RELEASE'&&previousPose?.phase!=='RELEASE')a.cue('release');if(previousPose&&p.hp<previousPose.hp)a.cue('hurt');}
-  if(!this.mirrorHost&&room.peer)this.mirrorHost=new PartyActor(this.scene,room.peer,world.host,world.host.maxHp);
-  if(this.mirrorHost)this.mirrorHost.profile.equipment=room.peer?.equipment;
-  this.mirrorHost?.render(world.host,now,dt);
+  const otherIds=new Set(room.members.filter(m=>m.id!==room.id).map(m=>m.id));
+  for(const [id,mirror]of this.playerMirrors)if(!otherIds.has(id)){mirror.destroy();this.playerMirrors.delete(id);}
+  for(const member of room.members){if(member.id===room.id)continue;const pose=world.players[member.id];if(!pose)continue;let mirror=this.playerMirrors.get(member.id);if(!mirror){mirror=new PartyActor(this.scene,member.profile,pose,pose.maxHp);this.playerMirrors.set(member.id,mirror);}mirror.profile.equipment=member.profile.equipment;mirror.render(pose,now,dt);}
   this.visitorWave.setVisible(!!p.wave);if(p.wave)this.visitorWave.setPosition(p.wave.x,p.wave.y).setRotation(p.wave.rotation).setDisplaySize(p.wave.width,p.wave.height);
   a.hud.setHunterMomentum(p.momentum??0);
   a.hud.update(p.hp,p.maxHp,readiness,p.chargeReady??1,p.phase as 'READY'|'CHARGING'|'RELEASE',p.level,p.dashCooldown??a.player.dashCooldown,p.chargeCooldown);
-  if(p.dead)a.hud.showDeath(!!world.boss?.active&&!world.host.dead);else a.hud.hideDeath();
-  c.setDead(p.dead,!(world.boss?.active&&!world.host.dead));c.setInteractAvailable(world.prompt,world.action);a.hud.setDiscoveryPrompt(world.prompt,world.action);
+  if(p.dead)a.hud.showDeath(!!world.boss?.active&&room.members.some(m=>m.connected&&m.id!==room.id&&!world.players[m.id]?.dead));else a.hud.hideDeath();
+  c.setDead(p.dead,!(world.boss?.active&&!world.host.dead));c.setInteractAvailable(p.prompt,p.action);a.hud.setDiscoveryPrompt(p.prompt,p.action);
   const live=new Set<number>();
   for(const e of world.enemies){
    live.add(e.id);let m=this.mirrors.get(e.id);
@@ -229,5 +228,5 @@ export class PartyExpedition {
   while(this.projectiles.length<shots.length)this.projectiles.push(this.scene.add.rectangle(0,0,23,5,0xffbd54,.9));
   this.projectiles.forEach((view,i)=>{const shot=shots[i];view.setVisible(!!shot);if(shot)view.setFillStyle('friendly' in shot&&shot.friendly?0x5fe6d8:0xffbd54,.9).setPosition(shot.x,shot.y).setRotation(shot.rotation).setDepth(shot.y+5);});
  }
- destroy():void{this.partner?.destroy();this.mirrorHost?.destroy();this.visitorWave.destroy();this.status.destroy();this.bossMirror.destroy();}
+ destroy():void{for(const actor of [...this.actors.values(),...this.playerMirrors.values()])actor.destroy();this.actors.clear();this.playerMirrors.clear();for(const m of this.mirrors.values()){for(const key of ['body','shadow','warning','line','hp','name'] as const)m[key].destroy();m.layers.forEach(p=>p.destroy());}this.mirrors.clear();this.projectiles.forEach(p=>p.destroy());this.visitorWave.destroy();this.status.destroy();this.bossMirror.destroy();}
 }

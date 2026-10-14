@@ -28,7 +28,10 @@ const state = page => page.evaluate(() => {
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } }); watch(page);
   await page.goto(base); await ready(page);
-  async function key(code, ms = 80) { await page.keyboard.down(code); await page.waitForTimeout(ms); await page.keyboard.up(code); await page.waitForTimeout(100); }
+  // The RPG foundation now offers real upgrade choices; finish those before
+  // sending gameplay keys instead of treating the modal as a failed interaction.
+  async function upgrades() { for(let i=0;i<18;i++) { if(!await page.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');return s.progression.upgradePointsAvailable>0&&!s.bossActive()&&!s.records.isOpen;}))break;await page.evaluate(()=>window.__danteGame.scene.getScene('Game').showAvailableUpgrade());const b=page.locator('.ability-upgrade-dialog[open] [data-upgrade]:not(:disabled)').first();await b.waitFor({state:'visible'});await b.click();await page.waitForTimeout(100); } }
+  async function key(code, ms = 80) { await upgrades();await page.keyboard.down(code); await page.waitForTimeout(ms); await page.keyboard.up(code); await page.waitForTimeout(100); }
   async function pos(x, y) { await page.evaluate(p => { const s = window.__danteGame.scene.getScene('Game'); Object.assign(s.player.position, p); s.player.invulnerableUntil = Infinity; }, { x, y }); await page.waitForTimeout(150); }
   async function reload() { await page.reload(); await ready(page); await page.waitForTimeout(450); }
   assert.equal((await state(page)).echoes, 0);
@@ -93,13 +96,13 @@ try {
     const s = window.__danteGame.scene.getScene('Game'), e = s.valleyResidents.get(900);
     e.health.current = 1; s.resolveSaberHits(s.time.now, [e], 0);
   }); await page.waitForTimeout(650);
-  let after = await state(page); assert.equal(after.xp, oldXp + 15); assert.ok(!after.residents.includes(900));
+  let after = await state(page); assert.equal(after.xp, oldXp + 22); assert.ok(!after.residents.includes(900));
   assert.equal(after.bestiary.carapace.defeats, 1);
   const wait = after.cooldowns.find(([id]) => id === 900)[1] - Date.now(); assert.ok(wait > 87_000 && wait <= 90_000);
   // Reload retains kills, cooldowns, bestiary, HP and region access.
   await page.evaluate(() => { const s = window.__danteGame.scene.getScene('Game'); s.player.health.current = 73; s.saveProgress(); });
   await reload(); after = await state(page);
-  assert.equal(after.area, 'valley'); assert.equal(after.hp, 73); assert.equal(after.xp, oldXp + 15); assert.equal(after.level, 3);
+  assert.equal(after.area, 'valley'); assert.equal(after.hp, 73); assert.equal(after.xp, oldXp + 22); assert.equal(after.level, 3);
   assert.ok(after.won && after.first && after.landmark); assert.equal(after.routes.length, 3); assert.equal(after.bestiary.carapace.defeats, 1); assert.ok(!after.residents.includes(900));
   // DEV expires the timer, but actual proximity safety still prevents a spawn in front of the player.
   await pos(900,855); await page.evaluate(() => window.__danteGame.scene.getScene('Game').valleyHabitatCooldowns.set(900, Date.now() - 1));
@@ -107,14 +110,14 @@ try {
   await pos(1860,570); await page.waitForTimeout(500); assert.ok((await state(page)).residents.includes(900));
   const count = (await state(page)).enemies; await page.waitForTimeout(800); assert.equal((await state(page)).enemies, count);
   await page.evaluate(() => { const s = window.__danteGame.scene.getScene('Game'), e = s.valleyResidents.get(900); e.health.current = 1; s.resolveSaberHits(s.time.now, [e], 0); });
-  assert.equal((await state(page)).xp, oldXp + 30); assert.equal((await state(page)).bestiary.carapace.defeats, 2);
-  report.renewal = { delayMs: 90_000, safeDistance: 480, expiry: 'DEV timestamp override', repeatedKillXp: 15, reloadCannotResetCooldown: true };
+  assert.equal((await state(page)).xp, oldXp + 44); assert.equal((await state(page)).bestiary.carapace.defeats, 2);
+  report.renewal = { delayMs: 90_000, safeDistance: 480, expiry: 'DEV timestamp override', repeatedKillXp: 22, reloadCannotResetCooldown: true };
   // Death/respawn/reload cycles retain one journal/root and bounded scene objects.
   const cycles = [];
   for (let i = 0; i < 3; i++) {
     await page.evaluate(() => { const s = window.__danteGame.scene.getScene('Game'); s.player.health.current = 1; s.player.invulnerableUntil = 0; s.enemyStrike(s.enemies[0], { damage: 11, ranged: true }); });
     await page.waitForTimeout(620); assert.ok((await state(page)).dead); await key('r'); await page.waitForTimeout(850); await reload();
-    const r = await state(page); assert.equal(r.hp, r.maxHp); assert.equal(r.xp, oldXp + 30); assert.equal(r.bestiary.carapace.defeats, 2); assert.equal(r.roots, 1); assert.equal(r.records, 1);
+    const r = await state(page); assert.equal(r.hp, r.maxHp); assert.equal(r.xp, oldXp + 44); assert.equal(r.bestiary.carapace.defeats, 2); assert.equal(r.roots, 1); assert.equal(r.records, 1);
     assert.deepEqual(r.p, { x: 1860, y: 570 }); assert.ok(!r.residents.includes(900)); cycles.push(r);
   }
   for (const c of cycles.slice(1)) for (const k of ['objects','tweens','enemies','roots','records']) assert.equal(c[k], cycles[0][k]);
@@ -150,7 +153,7 @@ try {
     Storage.prototype.setItem=original; return {meanFps:values.reduce((a,b)=>a+b,0)/values.length, writesDuringIdle:writes, objects:s.children.list.length, tweens:s.tweens.getTweens().length, saveBytes:localStorage.getItem('echoes-of-dante.journey.v1').length};
   }); assert.equal(report.performance.writesDuringIdle, 0);
   // Confirmed reset must not be overwritten by pagehide flushing the old journey.
-  await page.locator('.records-button').click(); await page.locator('[data-reset]').click(); await page.locator('[data-cancel]').click(); assert.equal((await state(page)).xp, oldXp+30);
+  await page.locator('.records-button').click(); await page.locator('[data-reset]').click(); await page.locator('[data-cancel]').click(); assert.equal((await state(page)).xp, oldXp+44);
   await page.locator('[data-reset]').click(); await page.locator('[data-confirm]').click(); await page.waitForTimeout(900); await ready(page);
   assert.equal((await state(page)).area,'forest'); assert.equal((await state(page)).echoes,0); assert.equal((await state(page)).xp,0); assert.deepEqual((await state(page)).bestiary,{});
   report.confirmedReset = true;

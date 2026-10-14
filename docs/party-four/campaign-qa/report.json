@@ -1,0 +1,135 @@
+{
+  "method": "Four independent Chrome contexts (one visible camera at a time to share the QA machine GPU; all four simulations/network connections remain live), real local WebSocket relay, keyboard/mouse, touch emulation and gamepad mock. DEV campaign/position/damage fixtures; no physical-device approval.",
+  "checks": [
+    "Four unique participant IDs, four existing kits and three player mirrors in every visitor",
+    "Three dead allies wait for the last living Xenobinder; no premature boss restart",
+    "Collective defeat resets exactly one boss, preserves all classes and revives the group",
+    "All four campaign bosses: intro, phase thresholds, existing damage/death and unique personal rewards",
+    "All fourteen campaign areas plus return to base keep four actors/snapshots and personal kits",
+    "Four resolutions, guest Gamepad API mock and touch charge captured hold/release without zoom",
+    "Visitor reconnect recovers the same seat/class/receipts while the others remain connected",
+    "Three collective respawns: stable object/texture counts, no duplicate actors or companions",
+    "Host departure pauses every visitor with explicit solo/menu choices"
+  ],
+  "errors": [],
+  "metrics": [
+    {
+      "area": "forest",
+      "objects": 440,
+      "tweens": 25,
+      "textures": 250,
+      "fps": 30.149310146483426
+    },
+    {
+      "area": "cavern",
+      "objects": 287,
+      "tweens": 4,
+      "textures": 263,
+      "fps": 25.759714109360928
+    },
+    {
+      "area": "valley",
+      "objects": 221,
+      "tweens": 3,
+      "textures": 255,
+      "fps": 24.433990158518817
+    },
+    {
+      "area": "arid",
+      "objects": 206,
+      "tweens": 9,
+      "textures": 253,
+      "fps": 30.48422334608404
+    },
+    {
+      "area": "dunes",
+      "objects": 182,
+      "tweens": 2,
+      "textures": 250,
+      "fps": 35.19165010236701
+    },
+    {
+      "area": "frost",
+      "objects": 187,
+      "tweens": 1,
+      "textures": 250,
+      "fps": 39.14020603015154
+    },
+    {
+      "area": "icecave",
+      "objects": 191,
+      "tweens": 7,
+      "textures": 251,
+      "fps": 39.550832567378045
+    },
+    {
+      "area": "cinder",
+      "objects": 183,
+      "tweens": 1,
+      "textures": 249,
+      "fps": 38.09653546276647
+    },
+    {
+      "area": "obsidian",
+      "objects": 192,
+      "tweens": 1,
+      "textures": 250,
+      "fps": 39.15163817376596
+    }
+  ],
+  "ids": [
+    "host",
+    "a3640e5e2b8fe4ce",
+    "ca2667d3758cdfa7",
+    "9605182288d97481"
+  ],
+  "bosses": [
+    {
+      "area": "warden",
+      "boss": "warden",
+      "max": 2475
+    },
+    {
+      "area": "sandpit",
+      "boss": "soterrado",
+      "max": 2713
+    },
+    {
+      "area": "icenest",
+      "boss": "vesper",
+      "max": 3872
+    },
+    {
+      "area": "caldera",
+      "boss": "titan",
+      "max": 3762
+    }
+  ],
+  "cycles": [
+    {
+      "objects": 440,
+      "textures": 250,
+      "tweens": 25,
+      "actors": 3
+    },
+    {
+      "objects": 440,
+      "textures": 250,
+      "tweens": 25,
+      "actors": 3
+    },
+    {
+      "objects": 440,
+      "textures": 250,
+      "tweens": 25,
+      "actors": 3
+    }
+  ],
+  "fps": [
+    47.44659532362803,
+    60.220095855985335,
+    59.52161665835534,
+    59.958378460815055
+  ],
+  "passed": true
+}

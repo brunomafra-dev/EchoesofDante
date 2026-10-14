@@ -24,7 +24,7 @@ function element<K extends keyof HTMLElementTagNameMap>(tag: K, className: strin
 export class CharacterSelection {
   private readonly previews: CharacterShowcase[] = [];
   private deleteDialog?: HTMLDialogElement;
-  constructor(private readonly root: HTMLElement, mode: 'characters' | 'create', actions: Actions, private readonly joiningRoom = false) {
+  constructor(private readonly root: HTMLElement, mode: 'characters' | 'create', actions: Actions, private readonly joiningRoom = false, private readonly occupied: readonly string[] = []) {
     const header = element('header', 'selection-header');
     const title = element('div', 'selection-title');
     title.append(element('small', '', 'ECHOES OF DANTE / EXPEDIÇÃO'));
@@ -85,6 +85,8 @@ export class CharacterSelection {
         refreshPreview();
       });
       card.className = 'class-display'; card.dataset.class = classId; card.setAttribute('aria-pressed', 'false');
+      card.disabled=this.occupied.includes(classId);
+      if(card.disabled)card.title='Classe ocupada nesta equipe (inclui vaga em reconexão).';
       card.setAttribute('aria-label', `Selecionar ${CLASS_NAMES[classId]}`);
       card.append(this.stage(classId).stage, element('strong', 'class-name', CLASS_NAMES[classId]), element('small', 'class-role', identity[classId].role)); gallery.append(card);
     }
@@ -114,6 +116,8 @@ export class CharacterSelection {
     const show = (id: string) => {
       const hero = characterProfiles.list.find(h => h.id === id); if (!hero) return;
       selected = id; current?.destroy(); this.previews.length = 0;
+      play.disabled=this.occupied.includes(hero.classId);
+      play.textContent=play.disabled?'CLASSE OCUPADA':this.joiningRoom?'ENTRAR NA SALA →':'CONTINUAR JORNADA →';
       const entry = this.stage(hero.classId,characterSex(hero.classId,hero.sex)); current = entry.preview; display.replaceChildren(entry.stage, details, tools, play);
       details.replaceChildren(element('h3', '', hero.name), element('p', '', CLASS_NAMES[hero.classId]), element('small', 'selection-kit', identity[hero.classId].kit));
       for (const b of Array.from(list.querySelectorAll<HTMLButtonElement>('button'))) b.setAttribute('aria-pressed', String(b.dataset.shell === `character-${id}`));

@@ -12,6 +12,8 @@ import type { ExpeditionReturn } from '../systems/ExpeditionReturn';
 export const COOP_AREAS: readonly JourneyArea[] = ['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest','cinder','obsidian','caldera'];
 const CONNECTIONS: Partial<Record<JourneyArea, readonly JourneyArea[]>> = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave','cinder'], cinder:['icenest','obsidian'], obsidian:['cinder','caldera'], caldera: ['obsidian'] };
 export type PartyProfile = {name: string; classId: PlayableClass;sex?:import('../config/appearance').CharacterSex;bagFree?:number;potions?:number;equipment?:EquipmentSnapshot['slots'];build?:Pick<ProgressionSnapshot,'xp'|'abilityUpgrades'|'bossRewards'>};
+export type PartyMember={id:string;profile:PartyProfile;connected:boolean};
+export type MemberState={input:PartyInput;attackTap:boolean;inputAt:number;deathId:string;potionUsed:number;potionReady:number;travelHp?:number};
 export type PartyInput = {x:number;y:number;aim:number;attack:boolean;dash:boolean;charge:boolean;held:boolean;release:boolean;cancel:boolean;interact:boolean;restart:boolean;element?:boolean};
 export const NO_INPUT: PartyInput={x:0,y:0,aim:0,attack:false,dash:false,charge:false,held:false,release:false,cancel:false,interact:false,restart:false};
 export type PartyPose={x:number;y:number;aim:number;hp:number;maxHp:number;dead:boolean;dash:boolean;phase:string;level:number;firing:boolean;dashReady?:number;chargeReady?:number;momentum?:number;astral?:import('../combat/AstralCombat').AstralPose;xenobinder?:import('../combat/XenobinderCombat').XenobinderPose;beam?:HunterBeamPose;strike?:SaberPose;releaseProgress?:number;velocity?:{x:number;y:number};deathId?:string;dashCooldown?:number;chargeCooldown?:number;swingProgress?:number;wave?:{x:number;y:number;rotation:number;width:number;height:number}};
@@ -19,15 +21,23 @@ export type CreatureLayer={texture:string;frame:string;x:number;y:number;width:n
 export type ImpactPose={id:number;at:number;x:number;y:number;color:number;damage:number;angle?:number;effective?:boolean;resisted?:boolean};
 export type CreaturePose={id:number;species:string;x:number;y:number;hp:number;maxHp:number;radius:number;texture:string;frame:string;flip:boolean;size:number;rotation:number;
  warning:boolean;angle:number;warningX:number;warningY:number;warningWidth:number;warningHeight:number;layers?:CreatureLayer[];projectile?:{x:number;y:number;rotation:number}};
-export type PartyWorld={area:JourneyArea;time:number;progression:ProgressionSnapshot;flags:JourneyFlags;host:PartyPose;partner?:PartyPose;enemies:CreaturePose[];impacts?:ImpactPose[];boss?:BossPose;signalPortal?:boolean;loot?:LootPose[];lootAwarded?:InventoryItem[];resources?:ResourceDrop[];resourceAwarded?:ResourceDrop[];potionUsed?:number;returnStation?:{x:number;y:number};expeditionReturn?:ExpeditionReturn;visited?:JourneyArea[];message:string;prompt:boolean;action:string;shots:{x:number;y:number;rotation:number;friendly?:boolean}[]};
+export type ParticipantPose=PartyPose&{prompt:boolean;action:string;potionUsed:number};
+export type PartyWorld={players:Record<string,ParticipantPose>;area:JourneyArea;time:number;progression:ProgressionSnapshot;flags:JourneyFlags;host:PartyPose;partner?:PartyPose;enemies:CreaturePose[];impacts?:ImpactPose[];boss?:BossPose;signalPortal?:boolean;loot?:LootPose[];lootAwarded?:(InventoryItem&{owner:string})[];resources?:ResourceDrop[];resourceAwarded?:ResourceDrop[];potionUsed?:number;returnStation?:{x:number;y:number};expeditionReturn?:ExpeditionReturn;visited?:JourneyArea[];message:string;prompt:boolean;action:string;shots:{x:number;y:number;rotation:number;friendly?:boolean}[]};
 // One connection across scene restarts. The relay grants roles; only host worlds are accepted.
 export class CoopSession {
  role:'offline'|'connecting'|'host'|'guest'='offline';
- code='';message='Cooperativo para duas pessoas.';endedMessage='';
+ code='';message='Equipe de até quatro pessoas, uma de cada classe.';endedMessage='';
  connected=false;peerConnected=false;travelling=false;epoch=0;personalXpGained=0;rewardSaved=true;
+ lastClose?:{code:number;reason:string};
  area?:JourneyArea;private pendingTravel?:JourneyArea;
  hostPaused=false;private localMenu=false;
- peer?:PartyProfile;world?:PartyWorld;input:PartyInput={...NO_INPUT};inputAt=0;worldAt=0;
+ id='host'; members:PartyMember[]=[];
+ readonly states=new Map<string,MemberState>();
+ get guests():PartyMember[]{return this.members.filter(m=>m.id!=='host');}
+ get peer():PartyProfile|undefined{return (this.role==='guest'?this.members.find(m=>m.id==='host'):this.guests[0])?.profile;}
+ get ownPose():ParticipantPose|undefined{return this.world?.players[this.id];}
+ state(id:string):MemberState{let s=this.states.get(id);if(!s){s={input:{...NO_INPUT},attackTap:false,inputAt:0,deathId:'',potionUsed:0,potionReady:0};this.states.set(id,s);}return s;}
+ input:PartyInput={...NO_INPUT};inputAt=0;world?:PartyWorld;worldAt=0;
  private socket?:WebSocket;
  private url='';private token='';private sequence=0;private retryAt=0;
  private retryTimer?:ReturnType<typeof setTimeout>;
@@ -35,8 +45,9 @@ export class CoopSession {
  private rewards=new LocalJourney();private receipt='';private rewardTotal=0;private rewardResources={credits:0,materials:[0,0,0],used:0};
  peerDeathId='';
  private earnedBosses:string[]=[];
- private potionRequest=false;private baseRequest=false;private healRequest=false;
- readonly lootAwarded=new Map<string,InventoryItem>();
+ private requests:{id:string;action:'potion'|'return'|'heal'}[]=[];
+ readonly lootAwarded=new Map<string,InventoryItem&{owner:string}>();
+ readonly resourceAwarded=new Map<string,ResourceDrop>();
  personalItems:InventoryItem[]=[];
  canTravel(from:JourneyArea,to:JourneyArea):boolean{return this.connected && (to==='base'||from==='base'||!!CONNECTIONS[from]?.includes(to));}
  travel(from:JourneyArea,to:JourneyArea):boolean {
@@ -51,7 +62,7 @@ export class CoopSession {
   if(location.protocol==='https:'&&target.protocol!=='wss:')return Promise.reject(new Error('Esta página segura precisa de um servidor wss://.'));
   if(mode==='join'&&!/^[A-F0-9]{10}$/.test(code.replace(/\s/g,'').toUpperCase()))return Promise.reject(new Error('O código da sala tem 10 letras/números. Confira com o anfitrião.'));
   this.url=target.href;this.role='connecting';this.endedMessage='';this.message='Conectando à expedição…';this.personalXpGained=0;this.sequence=0;this.epoch=0;this.rewards=new LocalJourney();this.changed();
-  this.peerDeathId='';this.earnedBosses=[];this.lootAwarded.clear();this.personalItems=[];this.receipt='';this.rewardTotal=0;this.rewardSaved=true;this.rewardResources={credits:0,materials:[0,0,0],used:0};
+  this.members=[];this.states.clear();this.requests=[];this.peerDeathId='';this.earnedBosses=[];this.lootAwarded.clear();this.resourceAwarded.clear();this.personalItems=[];this.receipt='';this.rewardTotal=0;this.rewardSaved=true;this.rewardResources={credits:0,materials:[0,0,0],used:0};
   const inventory=validEquipment(this.rewards.load()?.equipment);
   profile={...profile,build:this.rewards.load()?.progression,potions:this.rewards.load()?.economy?.potions??0,equipment:inventory.slots,bagFree:24-(inventory.items!.length-Object.keys(inventory.equipped!).length)};
   return new Promise((resolve,reject)=>this.open({type:mode,profile,area,code},false,resolve,reject));
@@ -64,17 +75,21 @@ export class CoopSession {
    if(this.socket!==ws)return;
    let m;try{m=JSON.parse(event.data);}catch{return;}
    if(m.type==='joined'&&(m.role==='host'||m.role==='guest')){
-    if(m.protocol!==9){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização da campanha. Sua jornada solo continua disponível.');reject(new Error(this.message));return;}
+    if(m.protocol!==10){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização da campanha. Sua jornada solo continua disponível.');reject(new Error(this.message));return;}
     joined=true;clearTimeout(this.timeout);this.role=m.role;this.connected=true;this.token=m.token;this.code=m.code;this.epoch=m.epoch;
-    this.peer=m.peer;this.peerConnected=m.peerConnected===true;this.input={...NO_INPUT};this.inputAt=0;this.world=undefined;
+    this.id=m.id;this.setRoster(m.members);this.input={...NO_INPUT};this.inputAt=0;this.world=undefined;
     this.area=m.area;this.travelling=false;
     if(this.role==='host'&&this.pendingTravel&&this.pendingTravel!==m.area){
      this.travelling=true;ws.send(JSON.stringify({type:'travel',area:this.pendingTravel,epoch:this.epoch}));
     }else this.pendingTravel=undefined;
-    this.message=retry?'Conexão recuperada.':m.role==='host'&&!m.peer?'Sala criada. Envie o link para convidar seu amigo.':'Dupla pronta. O XP ganho fica com seu personagem.';
+    this.message=retry?'Conexão recuperada.':m.role==='host'&&!this.guests.length?'Sala criada. Envie o link para convidar seu amigo.':'Equipe pronta. XP e drops são pessoais.';
     this.hostPaused=m.paused===true;
     if(this.role==='host')this.setMenu(this.localMenu);
-    if(this.role==='guest')this.credit(m.receipt,m.total,m.items,m.resources,m.bosses);
+    if(this.role==='guest'){
+     this.credit(m.receipt,m.total,m.items,m.resources,m.bosses);
+     const own=this.rewards.load(),inventory=validEquipment(own?.equipment);
+     this.updateEquipment(inventory.slots,24-(inventory.items!.length-Object.keys(inventory.equipped!).length),own?.economy?.potions??0);
+    }
     this.changed();resolve();
    }else if(m.type==='error'){
     this.message=String(m.message);
@@ -82,28 +97,29 @@ export class CoopSession {
     else{this.travelling=false;this.changed();}
    }else if(m.type==='pause'&&this.role==='guest'){
     this.hostPaused=m.paused===true;
-   }else if(m.type==='peer'){
-    const returning=!this.peerConnected||this.peer?.name!==m.profile?.name||this.peer?.classId!==m.profile?.classId;
-    if(!this.peer||this.peer.name!==m.profile?.name||this.peer.classId!==m.profile?.classId)this.peerDeathId='';
-    this.peer=m.profile;this.peerConnected=true;if(returning){this.input={...NO_INPUT};this.inputAt=0;}this.message='Companheiro conectado.';this.changed();
-   }else if(m.type==='peer-offline'){
-    this.peerConnected=false;this.input={...NO_INPUT};this.inputAt=0;this.message='Companheiro reconectando · vaga reservada por 20 segundos.';this.changed();
-   }else if(m.type==='peer-left'){
-    this.peer=undefined;this.peerDeathId='';this.peerConnected=false;this.input={...NO_INPUT};this.message='Companheiro saiu. A sala continua aberta.';this.changed();
+   }else if(m.type==='roster'){
+    this.setRoster(m.members);this.message='Equipe atualizada · vagas de desconectados ficam reservadas por 20 segundos.';this.changed();
    }else if(m.type==='travel'&&m.epoch>this.epoch&&COOP_AREAS.includes(m.area)){
+    this.clearInputs();this.requests=[];
     this.epoch=m.epoch;this.area=m.area;this.pendingTravel=undefined;this.world=undefined;this.input={...NO_INPUT};this.inputAt=0;this.travelling=false;
-    this.message='Travessia em dupla · aguardando a nova região.';this.changed();
-   }else if(m.type==='service-request'&&this.role==='host'){if(m.action==='potion')this.potionRequest=true;else if(m.action==='return')this.baseRequest=true;else if(m.action==='heal')this.healRequest=true;
-   }else if(m.type==='input'&&this.role==='host'&&m.epoch===this.epoch){
-    for(const key of ['dash','charge','release','cancel','interact','restart','element'] as const)m.input[key] ||= this.input[key];
-    this.input=m.input;this.inputAt=performance.now();
+    this.message='Travessia em equipe · aguardando a nova região.';this.changed();
+   }else if(m.type==='service-request'&&this.role==='host'){if(this.guests.some(p=>p.id===m.id)&&['potion','return','heal'].includes(m.action))this.requests.push({id:m.id,action:m.action});
+   }else if(m.type==='input'&&this.role==='host'&&m.epoch===this.epoch&&this.guests.some(p=>p.id===m.id)){
+    const state=this.state(m.id);
+    state.attackTap ||= m.input.attack===true;
+    for(const key of ['dash','charge','release','cancel','interact','restart','element'] as const)m.input[key] ||= state.input[key];
+    state.input=m.input;state.inputAt=performance.now();
+   }else if(m.type==='awards-ack'&&this.role==='host'){
+    for(const id of (m.items??[]).slice(0,512))this.lootAwarded.delete(id);
+    for(const id of (m.resources??[]).slice(0,512))this.resourceAwarded.delete(id);
    }else if(m.type==='world'&&this.role==='guest'&&m.epoch===this.epoch&&m.world&&COOP_AREAS.includes(m.world.area)&&Array.isArray(m.world.enemies)&&m.world.enemies.length<=32){
     this.world=m.world;this.worldAt=performance.now();this.credit(m.receipt,m.total,m.items,m.resources,m.bosses);
    }else if(m.type==='ended'||m.type==='replaced')this.fail(m.type==='ended'?'O dono da sala saiu do jogo.':String(m.message));
   };
   ws.onerror=()=>{if(!retry&&!joined&&this.socket===ws){this.fail('O cooperativo está indisponível nesta conexão. Tente novamente em alguns segundos; sua jornada solo continua disponível.');reject(new Error(this.message));}};
-  ws.onclose=()=>{
+  ws.onclose=event=>{
    if(this.socket!==ws)return;
+   this.lastClose={code:event.code,reason:event.reason};
    clearTimeout(this.timeout);this.socket=undefined;this.connected=false;this.input={...NO_INPUT};this.inputAt=0;
    if(!this.token){this.fail('A conexão foi encerrada.');reject(new Error(this.message));return;}
    if(!retry)this.retryAt=performance.now()+15000;
@@ -131,25 +147,27 @@ export class CoopSession {
  requestPotion():void{if(this.role==='guest'&&this.connected)this.socket?.send(JSON.stringify({type:'service-request',action:'potion'}));}
  requestBase():void{if(this.role==='guest'&&this.connected)this.socket?.send(JSON.stringify({type:'service-request',action:'return'}));}
  requestHeal():void{if(this.role==='guest'&&this.connected)this.socket?.send(JSON.stringify({type:'service-request',action:'heal'}));}
- takePotionRequest():boolean{const v=this.potionRequest;this.potionRequest=false;return v;}
- takeBaseRequest():boolean{const v=this.baseRequest;this.baseRequest=false;return v;}
- takeHealRequest():boolean{const v=this.healRequest;this.healRequest=false;return v;}
- send(type:'input'|'world',payload:PartyInput|PartyWorld):void{
-  if(!this.connected||this.travelling||this.socket?.readyState!==WebSocket.OPEN||this.socket.bufferedAmount>131072)return;
+ takeRequests(){return this.requests.splice(0);}
+ send(type:'input'|'world',payload:PartyInput|PartyWorld):boolean{
+  if(!this.connected||this.travelling||this.socket?.readyState!==WebSocket.OPEN)return false;
+  if(this.socket.bufferedAmount>1048576){this.socket.close(4001,'Reconectando a expedição congestionada.');return false;}
+  if(this.socket.bufferedAmount>131072&&!(type==='input'&&(payload as PartyInput).cancel))return false;
   this.socket.send(JSON.stringify(type==='input'?{type,input:payload,epoch:this.epoch}:{type,world:payload,epoch:this.epoch,sequence:++this.sequence}));
+  return true;
  }
  setMenu(paused:boolean):void {
   this.localMenu=paused;
   if(this.role==='host'&&this.connected)this.socket?.send(JSON.stringify({type:'pause',paused}));
  }
- consumeEdges():void{for(const key of ['dash','charge','release','cancel','interact','restart','element'] as const)this.input[key]=false;}
+ consumeEdges():void{for(const state of this.states.values()){state.attackTap=false;for(const key of ['dash','charge','release','cancel','interact','restart','element'] as const)state.input[key]=false;}}
+ private clearInputs():void{for(const state of this.states.values()){state.input={...NO_INPUT,cancel:true};state.attackTap=false;state.inputAt=0;}}
  disconnect(restoreGuest=true):boolean{
   const guest=this.role==='guest';
-  if(guest&&this.rewardTotal>0)this.credit(this.receipt,this.rewardTotal);
+  if(guest&&this.receipt)this.credit(this.receipt,this.rewardTotal);
   // If storage fails, keep the visit open so the player can retry instead of losing XP silently.
   if(guest&&!this.rewardSaved){this.message='Não foi possível salvar o XP. Libere o armazenamento e tente sair novamente.';this.changed();return false;}
   if(this.socket?.readyState===WebSocket.OPEN)this.socket.send(JSON.stringify({type:'leave'}));
-  this.role='offline';this.endedMessage='';this.connected=false;this.peerConnected=false;this.peer=undefined;this.world=undefined;this.input={...NO_INPUT};this.token='';this.travelling=false;this.pendingTravel=undefined;this.area=undefined;
+  this.role='offline';this.endedMessage='';this.connected=false;this.peerConnected=false;this.members=[];this.states.clear();this.requests=[];this.world=undefined;this.input={...NO_INPUT};this.token='';this.travelling=false;this.pendingTravel=undefined;this.area=undefined;
   clearTimeout(this.timeout);clearTimeout(this.retryTimer);
   const socket=this.socket;this.socket=undefined;socket?.close();this.changed();if(guest&&restoreGuest)location.reload();return true;
  }
@@ -161,10 +179,18 @@ export class CoopSession {
   this.endedMessage=message;this.connected=false;this.peerConnected=false;this.hostPaused=false;
   this.input={...NO_INPUT};this.inputAt=0;this.travelling=false;this.pendingTravel=undefined;
   clearTimeout(this.timeout);clearTimeout(this.retryTimer);
-  if(this.rewardTotal>0)this.credit(this.receipt,this.rewardTotal);
+  if(this.receipt)this.credit(this.receipt,this.rewardTotal);
   const socket=this.socket;this.socket=undefined;
   if(socket?.readyState===WebSocket.OPEN)socket.send(JSON.stringify({type:'leave'}));
   socket?.close();this.changed();
+ }
+ private setRoster(raw:PartyMember[]):void{
+  if(!Array.isArray(raw)||raw.length>4)return;
+  this.members=raw;const live=new Set(raw.map(m=>m.id));
+  for(const [uid,item]of this.lootAwarded)if(!live.has(item.owner))this.lootAwarded.delete(uid);
+  for(const [uid,item]of this.resourceAwarded)if(!live.has(item.owner))this.resourceAwarded.delete(uid);
+  for(const [id,state] of this.states){if(!live.has(id))this.states.delete(id);else if(!raw.find(m=>m.id===id)?.connected){state.input={...NO_INPUT,cancel:true};state.attackTap=false;state.inputAt=0;}}
+  this.peerConnected=this.role==='guest'?!!raw.find(m=>m.id==='host')?.connected:raw.some(m=>m.id!=='host'&&m.connected);
  }
  private changed():void{window.dispatchEvent(new Event('dante-coop'));}
 }

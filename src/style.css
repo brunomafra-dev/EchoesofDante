@@ -194,3 +194,6 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
 .xenobinder-panel{background:#122017ce;border-color:#6bb46455;color:#dce8cf;pointer-events:none}.xenobinder-panel meter{accent-color:#6bb464}
 body:has(.application-shell[open]) .astral-panel,body.records-open .astral-panel{visibility:hidden}
 @media(max-width:900px){.astral-panel{top:26%;padding:5px 7px;font-size:12px;max-width:170px}.astral-panel small{font-size:10px}}
+.party-lobby {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem;margin:1rem 0;}
+.party-lobby>div {display:flex;flex-direction:column;gap:.25rem;padding:.7rem;background:#101f1c;border:1px solid #65766355;}
+.party-lobby span {font-size:.85rem;color:#c2ceb4;}

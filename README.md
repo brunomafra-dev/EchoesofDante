@@ -1,5 +1,11 @@
 # Echoes of Dante
 
+## Expedição de quatro — etapa 7 · 0.1.99
+
+Guerreiro, Hunter, Astral e Vinculador na mesma sala, uma pessoa por classe. Convites pedem a escolha de personagem e mostram vagas; cada integrante mantém equipamento, recursos, poções, recargas e recompensas pessoais. Todos podem investigar e atravessar portais; menus pessoais não pausam a equipe. Campanha e bosses continuam sob autoridade do anfitrião, com reconexão e reinício coletivo.
+
+[Teste reservado da equipe](https://echosofdante.vercel.app/party-playtest.html?region=base&kit=basic&v=0.1.99) · [Regras, QA e limitações](docs/party-four/README.md). Quatro personagens temporários preservam seus saves reais. O serviço de salas precisa do protocolo **10**. Aguardar playtest humano antes da etapa 8 — prólogo.
+
 ## Braços — Astral e Vinculador · revisão 02 · 0.1.98
 
 A revisão anterior foi rejeitada em playtest humano. Agora as articulações são medidas na pintura, os sprites mantêm suas proporções e o braço livre assume uma postura relaxada. Mangas/antebraços/mãos repintados, punho do condutor corrigido e manopla alinhada ao antebraço. Mesma correção no jogo, na dupla e no menu; nenhuma regra de combate alterada.

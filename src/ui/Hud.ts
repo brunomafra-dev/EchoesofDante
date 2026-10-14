@@ -30,6 +30,9 @@ export class Hud {
   private deathGroup: Array<{ setVisible(value: boolean): unknown }> = [];
   private discoveryPrompt: Phaser.GameObjects.Text;
   private discoveryMessage: Phaser.GameObjects.Text;
+  private sharedMessage='';
+  private sharedUntil=0;
+  get partyMessage():string{return this.scene.time.now<this.sharedUntil?this.sharedMessage:'';}
   private progressText: Phaser.GameObjects.Text;
   private progressHint: Phaser.GameObjects.Text;
   private levelMessage: Phaser.GameObjects.Text;
@@ -204,7 +207,8 @@ export class Hud {
     this.actionHint.setVisible(nearby);
   }
 
-  showDiscovery(message: string): void {
+  showDiscovery(message: string, share = true): void {
+    if(share){this.sharedMessage=message;this.sharedUntil=this.scene.time.now+NORTHERN_DISCOVERY.messageDuration;}
     this.discoveryTimer?.remove(false);
     this.discoveryMessage.setText(message);
     this.discoveryMessage.setVisible(true);

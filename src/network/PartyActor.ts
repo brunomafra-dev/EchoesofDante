@@ -55,11 +55,11 @@ export class PartyActor {
   if(this.player.maxHp!==max){this.player.health.max=max;this.player.health.current=!this.player.isDead&&this.progression.level>oldLevel?max:Math.min(max,this.player.hp);}
   this.now = now;
   if(this.player.isDead){this.hunter?.clear();this.astral?.clear();this.xeno?.dormant();this.charge.stop();this.wave.setVisible(false);return;}
-  this.charge.tick(now);if(input.element&&this.charge.phase==='READY')this.astral?.cycle();if(input.cancel){this.charge.stop();this.xeno?.clear();}
-  if(input.charge&&(!this.astral||this.astral.canCharge)&&(!this.xeno||this.xeno.canCharge)&&!this.player.isDashing&&this.attack.pose(now,input.aim).phase==='READY')this.charge.start(now);
-  if((input.release||this.charge.phase==='CHARGING'&&!input.held)&&this.charge.release(now,input.aim,this.player.position))
+  this.charge.tick(now);if(input.element&&this.charge.phase==='READY')this.astral?.cycle();if(input.cancel)this.cancelCharge();
+  if(!input.cancel&&input.charge&&(!this.astral||this.astral.canCharge)&&(!this.xeno||this.xeno.canCharge)&&!this.player.isDashing&&this.attack.pose(now,input.aim).phase==='READY')this.charge.start(now);
+  if(!input.cancel&&(input.release||this.charge.phase==='CHARGING'&&!input.held)&&this.charge.release(now,input.aim,this.player.position))
    {this.hunter?.fire(now,this.player.position,input.aim,this.charge.damage);this.astral?.cast(now,this.player.position,input.aim,this.charge.level(now));this.xeno?.command(now,this.player.position,input.aim,this.charge.level(now),obstacles,bounds);}
-  if(this.charge.phase==='READY'){
+  if(this.charge.phase==='READY'&&!input.cancel){
    this.player.rotation=input.aim;
    if(input.dash)this.player.startDash(now,{x:input.x,y:input.y});
    if(input.attack){if(this.xeno)this.xeno.fire(now,this.player.position,input.aim,this.xenoArt!.projectileOffset(input.aim));else if(this.astral)this.astral.fire(now,this.player.position,input.aim,this.astralArt!.projectileOffset(input.aim));else if(this.hunter)this.hunter.fire(now,this.player.position,input.aim);else this.attack.start(now);}

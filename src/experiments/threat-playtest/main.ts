@@ -14,6 +14,8 @@ Storage.prototype.getItem=function(key){return this===localStorage&&key.startsWi
 Storage.prototype.setItem=function(key,value){if(this===localStorage&&key.startsWith('echoes-of-dante.'))isolated.set(key,String(value));else set.call(this,key,value)};
 Storage.prototype.removeItem=function(key){if(this===localStorage&&key.startsWith('echoes-of-dante.'))isolated.delete(key);else remove.call(this,key)};
 const params=new URLSearchParams(location.search);
+const partyLab=location.pathname.endsWith('/party-playtest.html');
+if(partyLab){try{const approval=JSON.parse(sessionStorage.getItem('echoes-of-dante.invite-character-once')??'null');const selected=approval?.id?.replace(/^threat-/,'');if(['warrior','hunter','astral','xenobinder'].includes(selected))params.set('class',selected);}catch{/* Explicit selection can be repeated if session storage is unavailable. */}}
 const region=(Object.hasOwn(REGION_NAMES,params.get('region')??'')?params.get('region'):location.pathname.endsWith('/caldera-playtest.html')?(params.get('boss')==='1'?'caldera':'cinder'):'forest') as JourneyArea;
 const xenoLab=location.pathname.endsWith('/xenobinder-playtest.html');
 const astralLab=location.pathname.endsWith('/astral-playtest.html');
@@ -46,6 +48,12 @@ localStorage.setItem('echoes-of-dante.journey.v1.character.'+id,JSON.stringify({
  progression:{xp:PROGRESSION.levelThresholds[level-1],echoes:['northern-ruin','mineral-signal','unknown-trace'],sourceLocated:true,passageOpen:true,rewardedHollows:[],rewardedRoutes:[],abilityUpgrades:ranks},
  flags,bestiary:params.get('affinities')==='1'?Object.fromEntries(Object.keys(SPECIES).map(id=>[id,{seen:true,defeats:0}])):{},valleyRoutes:[],valleyHabitats:[],aridHabitats:[],equipment:validEquipment({owned,slots}),economy:validEconomy({credits:237,materials:[12,12,12],potions:6,visited:Object.keys(REGION_NAMES)})}));
 sessionStorage.setItem('echoes-of-dante.launch-once',id);
+if(partyLab){
+ const sample=localStorage.getItem('echoes-of-dante.journey.v1.character.'+id)!;
+ const classes=['warrior','hunter','astral','xenobinder'] as const;
+ for(const cls of classes)if(cls!==classId)localStorage.setItem('echoes-of-dante.journey.v1.character.threat-'+cls,sample);
+ localStorage.setItem('echoes-of-dante.characters.v1',JSON.stringify({schema:1,selected:id,characters:classes.map(cls=>({id:'threat-'+cls,name:('Teste '+CLASS_NAMES[cls]).slice(0,24),classId:cls,sex:cls===classId?sex:characterSex(cls),createdAt:1}))}));
+}
 const panel=document.createElement('details');panel.className='threat-lab';panel.open=params.get('motion')!=='1';
 panel.innerHTML=`<summary>${['cinder','obsidian','caldera'].includes(region)?'CALDEIRA':xenoLab?'ETAPA 6':astralLab?'ETAPA 5':'ETAPA 4'} · TESTE RESERVADO</summary><p>Mesmo nível por região. Troque o equipamento para comparar. Seus saves reais não são alterados.</p>
 <label>Região <select data-region>${Object.entries(REGION_NAMES).map(([id,name])=>`<option value="${id}" ${id===region?'selected':''}>${name}</option>`).join('')}</select></label>
@@ -53,10 +61,11 @@ panel.innerHTML=`<summary>${['cinder','obsidian','caldera'].includes(region)?'CA
 <label>Equipamento <select data-kit><option value="initial" ${kit==='initial'?'selected':''}>Roupa inicial</option><option value="basic" ${kit==='basic'?'selected':''}>Básico</option><option value="advanced" ${kit==='advanced'?'selected':''}>Avançado</option></select></label>
 <label>Apresentação <select data-sex><option value="male" ${sex==='male'?'selected':''}>Masculino</option><option value="female" ${sex==='female'?'selected':''}>Feminino</option></select></label>
 ${astralLab?`<label>Elemento <select data-element>${Object.entries(ELEMENT_NAMES).map(([id,name])=>`<option value="${id}" ${id===(params.get('element')??'energy')?'selected':''}>${name}</option>`).join('')}</select></label><p>LMB / DISPARO: raio, bola de fogo, rajada de água ou pedra; acertar recupera energia. F / Y / botão troca elemento. Q / CAMPO: segure, mire e solte; custo 30. Rede energizada, chão em chamas, onda de água ou rocha emergindo com empurrão. Bosses resistem ao controle.</p><p>Todas as espécies têm fraqueza (+25%, ↑) e resistência (−25%, ↓); outras combinações são neutras. Números mantêm a cor do ataque. No gelo: fogo causa mais dano, água causa menos. Consulte os perfis nos Registros.${params.get('affinities')==='1'?' Todos os perfis estão observados apenas neste laboratório.':''}</p>`:''}
-<p>H / CURAR: poção. M: base/retorno. Esc: criar sala. Convites deste laboratório também usam personagens temporários. Num boss, o caído aguarda o aliado; ambos caídos podem reiniciar.</p><a href="./test-library.html">Biblioteca de testes</a>`;
+<p>H / CURAR: poção. M: base/retorno. Esc: criar sala. Convites deste laboratório também usam personagens temporários. Num boss, caídos aguardam os aliados; a equipe pode reiniciar quando todos caem.</p><a href="./test-library.html">Biblioteca de testes</a>`;
 if(['cinder','obsidian','caldera'].includes(region))panel.insertAdjacentHTML('beforeend','<p>Explore os desvios, investigue o registro de basalto e atravesse o limiar. Água favorece o combate contra criaturas térmicas. <a href="./caldera-playtest.html?boss=1&kit=advanced">Começar perto do boss</a> · <a href="./caldera-playtest.html?kit=advanced">Explorar desde a entrada</a></p>');
 if(xenoLab)panel.insertAdjacentHTML('beforeend','<p>O básico marca um alvo para o simbionte. Acertos recuperam Vínculo. Q: segure, mire e solte; a investida termina com um pulso curto de recuperação. Custo 35, recarga 6 s. Não revive aliados.</p>');
 if(params.get('motion')==='1'){panel.querySelector('summary')!.textContent='MOVIMENTO E BRAÇOS · TESTE RESERVADO';panel.insertAdjacentHTML('beforeend','<p>Revisão do Astral e Vinculador: ande para frente, de costas e na diagonal enquanto muda a mira. Confira mãos/arma, use básico e segure Q mirando em volta. Compare roupa inicial/básica/avançada e as duas apresentações no painel.</p>');}
 document.body.append(panel);
+if(partyLab){panel.open=false;panel.querySelector('summary')!.textContent='ETAPA 7 · EQUIPE DE QUATRO · TESTE RESERVADO';panel.insertAdjacentHTML('beforeend','<p>Esc → JOGAR COM AMIGO → criar sala e copiar o convite. Cada convidado escolhe uma das quatro classes temporárias. Não há classes repetidas. Todos podem investigar e usar portais; campanha segue o anfitrião. Mochila/menu não pausam aliados. Num boss, só reinicia quando todos caem. Estes personagens desaparecem ao fechar o teste.</p>');}
 for(const name of ['region','class','kit','sex',...(astralLab?['element']:[])])panel.querySelector('[data-'+name+']')!.addEventListener('change',event=>{const url=new URL(location.href);url.searchParams.set(name,(event.target as HTMLSelectElement).value);location.href=url.href});
 await import('../../main');

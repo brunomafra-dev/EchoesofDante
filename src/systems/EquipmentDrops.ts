@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { equipmentName,EQUIPMENT,RARITY_COLORS,validItem,type EquipmentId,type InventoryItem } from '../config/equipment';
 import type { Vec2 } from '../utils/math';
-export type LootPose=InventoryItem&{x:number;y:number;owner:'host'|'guest';classId:'warrior'|'hunter'|'astral'|'xenobinder'};
+export type LootPose=InventoryItem&{x:number;y:number;owner:string;classId:'warrior'|'hunter'|'astral'|'xenobinder'};
 export const PICKUP_RADIUS=64;
 export function itemIcon(id:EquipmentId,classId='warrior'):string {const d=EQUIPMENT[id];return `${d.slot==='weapon'?classId+'-weapon':d.slot}-${d.tier}`;}
 export function preloadItemIcons(scene:Phaser.Scene):void {
@@ -13,8 +13,8 @@ type Entry={pose:LootPose;image:Phaser.GameObjects.Image;label:Phaser.GameObject
 // At most 24 ground items per participant/region. Views are pooled and reused.
 export class EquipmentDrops {
  private entries:Entry[]=[];
- constructor(private scene:Phaser.Scene,private viewer:'host'|'guest'='host'){}
- add(id:EquipmentId,position:Vec2,owner:'host'|'guest'='host',classId:'warrior'|'hunter'|'astral'|'xenobinder'='warrior',uid=crypto.randomUUID()):LootPose|undefined {
+ constructor(private scene:Phaser.Scene,private viewer:string='host'){}
+ add(id:EquipmentId,position:Vec2,owner:string='host',classId:'warrior'|'hunter'|'astral'|'xenobinder'='warrior',uid=crypto.randomUUID()):LootPose|undefined {
   if(this.entries.filter(e=>e.active&&e.pose.owner===owner).length>=24)return;
   const pose={uid,id,...position,owner,classId};this.show(pose);return pose;
  }
@@ -25,14 +25,15 @@ export class EquipmentDrops {
   entry.image.setTexture('drop-'+itemIcon(pose.id,pose.classId)).setDisplaySize(44,44).setPosition(pose.x,pose.y).setDepth(pose.y+1).setVisible(visible);
   entry.label.setText(equipmentName(pose.id,pose.classId)).setColor(RARITY_COLORS[EQUIPMENT[pose.id].rarity]).setPosition(pose.x,pose.y-28).setDepth(10003).setVisible(visible);
  }
- nearest(position:Vec2,owner:'host'|'guest'=this.viewer):LootPose|undefined {
+ nearest(position:Vec2,owner:string=this.viewer):LootPose|undefined {
   let nearest:LootPose|undefined,range=PICKUP_RADIUS;
   for(const e of this.entries)if(e.active&&e.pose.owner===owner){const d=Math.hypot(e.pose.x-position.x,e.pose.y-position.y);if(d<range){range=d;nearest=e.pose;}}return nearest;
  }
  take(uid:string):void {const e=this.entries.find(e=>e.active&&e.pose.uid===uid);if(e){e.active=false;e.image.setVisible(false);e.label.setVisible(false);}}
+ retainOwners(owners:ReadonlySet<string>):void{for(const e of this.entries)if(e.active&&!owners.has(e.pose.owner)){e.active=false;e.image.setVisible(false);e.label.setVisible(false);}}
  snapshot():LootPose[]{return this.entries.filter(e=>e.active).map(e=>({...e.pose}));}
  render(poses:readonly LootPose[]):void {
-  const safe=poses.slice(0,48).filter(p=>validItem(p)&&Number.isFinite(p.x)&&Number.isFinite(p.y));const live=new Set(safe.map(p=>p.uid));
+  const safe=poses.filter(p=>p.owner===this.viewer).slice(0,24).filter(p=>validItem(p)&&Number.isFinite(p.x)&&Number.isFinite(p.y));const live=new Set(safe.map(p=>p.uid));
   for(const e of this.entries)if(!live.has(e.pose.uid)){e.active=false;e.image.setVisible(false);e.label.setVisible(false);}for(const p of safe)this.show(p);
  }
 }

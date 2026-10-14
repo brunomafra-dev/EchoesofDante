@@ -1,0 +1,12 @@
+{
+  "method": "Compiled production build, four independent Chrome contexts, real UI and WebSocket frames. No DEV globals or simulation fixtures. Newly created main-game character is in a private QA browser profile.",
+  "checks": [
+    "Production invite asks for own character, shows occupied classes and joins only after explicit confirmation",
+    "Duplicate class disabled; explicit Astral choice survives reload and uses its own network kit",
+    "Normal main-game invite creates a missing Xenobinder, types A/L, preserves female presentation and joins after reload",
+    "Four live production participants; four-slot lobby and snapshots continue while host uses its menu",
+    "Host leave reaches all three visitors; solo restoration preserves the new character and its own campaign"
+  ],
+  "errors": [],
+  "passed": true
+}

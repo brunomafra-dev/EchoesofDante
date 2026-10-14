@@ -31,7 +31,7 @@ export class XenobinderCombat {
   this.pulseView=scene.add.image(0,0,'xeno-pulse').setVisible(false);this.linkView=scene.add.image(0,0,'xeno-link').setOrigin(0,.5).setVisible(false);
   this.markView=scene.add.ellipse(0,0,36,17,0x6bb464,.12).setStrokeStyle(2,0x6bb464,.8).setVisible(false);
   this.shotViews=Array.from({length:6},()=>scene.add.image(0,0,'xeno-bolt').setVisible(false));
-  this.healViews=Array.from({length:2},()=>scene.add.text(0,0,'',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#a6dc94',stroke:'#10251b',strokeThickness:2}).setOrigin(.5).setVisible(false));
+  this.healViews=Array.from({length:4},()=>scene.add.text(0,0,'',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#a6dc94',stroke:'#10251b',strokeThickness:2}).setOrigin(.5).setVisible(false));
  }
  get canCharge():boolean{return this.active&&this.bond>=X.commandCost&&this.state!=='COMMAND';}
  fire(now:number,origin:Vec2,angle:number,offset:Vec2={x:0,y:0}):boolean{
@@ -114,7 +114,7 @@ export class XenobinderCombat {
  snapshot():XenobinderPose{return{bond:this.bond,active:this.active,state:this.state,owner:{...this.owner},pet:{...this.position,frame:this.frame,flip:this.flip},
   linked:this.charging||this.state==='COMMAND',mark:this.marked&&!this.marked.isDead?{...this.marked.position}:undefined,
   shots:this.shots.filter(s=>s.active&&s.travel>=X.muzzleDistance).map(s=>({x:s.x+s.offset.x,y:s.y+s.offset.y,angle:s.angle})),
-  pulse:this.pulse?{...this.pulse,radius:X.pulseRadius,alpha:this.pulseRemaining/.65}:undefined,heals:this.heals.slice(0,2)};}
+  pulse:this.pulse?{...this.pulse,radius:X.pulseRadius,alpha:this.pulseRemaining/.65}:undefined,heals:this.heals.slice(0,4)};}
  render(pose?:XenobinderPose,dt=.016):void{
   const active=!!pose?.active;this.body.setVisible(active);this.shadow.setVisible(active);
   if(pose&&active){const gap=distance(this.body,pose.pet),t=gap>300?1:Math.min(1,dt*20);const x=Phaser.Math.Linear(this.body.x,pose.pet.x,t),y=Phaser.Math.Linear(this.body.y-10,pose.pet.y,t);

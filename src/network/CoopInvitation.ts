@@ -15,7 +15,7 @@ export function roomCode(value: string): string | undefined {
 
 export function invitationLink(code: string): string {
   const filename=location.pathname.split('/').pop()??'';
-  const lab=['astral-playtest.html','threat-playtest.html','caldera-playtest.html','xenobinder-playtest.html'].includes(filename);
+  const lab=['party-playtest.html','astral-playtest.html','threat-playtest.html','caldera-playtest.html','xenobinder-playtest.html'].includes(filename);
   const url = new URL(lab?filename:import.meta.env.BASE_URL, location.href);
   url.search = ''; url.hash = '';
   url.searchParams.set('sala', code);

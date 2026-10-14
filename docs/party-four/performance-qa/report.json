@@ -1,0 +1,90 @@
+{
+  "method": "One visible Chrome host at 1280x720, three Node WebSocket mock guests using existing kits; no visitor browser/render load on this workstation. DEV isolated region fixtures. Five warm FPS samples per region; not a four-device benchmark.",
+  "measurements": [
+    {
+      "area": "forest",
+      "actors": 3,
+      "objects": 440,
+      "textures": 250,
+      "tweens": 25,
+      "fps": [
+        53.5418701171875,
+        55.156402587890625,
+        55.156402587890625,
+        56.36730194091797,
+        56.36730194091797
+      ]
+    },
+    {
+      "area": "cavern",
+      "actors": 3,
+      "objects": 287,
+      "textures": 263,
+      "tweens": 4,
+      "fps": [
+        53.63554382324219,
+        55.22665786743164,
+        55.22665786743164,
+        56.66999340057373,
+        56.66999340057373
+      ]
+    },
+    {
+      "area": "warden",
+      "actors": 3,
+      "objects": 133,
+      "textures": 246,
+      "tweens": 0,
+      "fps": [
+        54.87168884277344,
+        54.87168884277344,
+        56.40376663208008,
+        56.40376663208008,
+        57.30282497406006
+      ]
+    },
+    {
+      "area": "arid",
+      "actors": 3,
+      "objects": 198,
+      "textures": 252,
+      "tweens": 4,
+      "fps": [
+        54.51678466796875,
+        54.51678466796875,
+        55.88758850097656,
+        55.88758850097656,
+        57.16569137573242
+      ]
+    },
+    {
+      "area": "frost",
+      "actors": 3,
+      "objects": 191,
+      "textures": 251,
+      "tweens": 10,
+      "fps": [
+        55.12052917480469,
+        55.12052917480469,
+        56.340396881103516,
+        56.340396881103516,
+        57.50529766082764
+      ]
+    },
+    {
+      "area": "caldera",
+      "actors": 3,
+      "objects": 216,
+      "textures": 253,
+      "tweens": 1,
+      "fps": [
+        54.53619384765625,
+        56.15214538574219,
+        56.15214538574219,
+        57.11410903930664,
+        57.11410903930664
+      ]
+    }
+  ],
+  "errors": []
+}

@@ -2,6 +2,8 @@ import type { GameScene } from '../scenes/GameScene';
 import { characterProfiles } from '../systems/CharacterProfiles';
 import { coopSession, COOP_AREAS } from '../network/CoopSession';
 import { coopEndpoint } from '../network/CoopEndpoint';
+import { inspectRoom } from '../network/PartyLobby';
+import type { PartyMember } from '../network/CoopSession';
 import { roomCode, invitationLink, clearInvitation, setInvitation } from '../network/CoopInvitation';
 import { CLASS_NAMES } from '../config/classes';
 import { CharacterSelection } from './CharacterSelection';
@@ -31,6 +33,8 @@ export class ApplicationShell {
   private inviteApproved = false;
   private waitingForFriend = false;
   private coopBusy = false;
+  private lobby?:PartyMember[];
+  private inspecting=false;
   private connectionAttempt = 0;
   private padPrevious: boolean[] = [];
   private padFrame = 0;
@@ -143,6 +147,7 @@ export class ApplicationShell {
   private launchCharacter(id: string): void {
     if (this.launching) return;
     const joining = this.pendingJoin && !this.inviteAttempted;
+    if(joining&&this.lobby?.some(m=>m.profile.classId===characterProfiles.list.find(p=>p.id===id)?.classId)){this.status('Essa classe já está ocupada. Escolha ou crie outra classe.');return;}
     if (id === characterProfiles.active.id) {
       if (joining) { this.inviteApproved = true; this.show('coop'); void this.connectCoop('join'); }
       else this.resume();
@@ -203,7 +208,11 @@ export class ApplicationShell {
       this.coopBusy = false;
       this.waitingForFriend = false;
       this.pendingJoin = false; this.inviteApproved = false;
-      if (this.page === 'coop' && this.dialog.open) { this.render(); this.status(error instanceof Error ? error.message : 'Não foi possível entrar na sala. Tente novamente.'); }
+      if (this.page === 'coop' && this.dialog.open) {
+        if(mode==='join'&&code&&error instanceof Error&&error.message.includes('classe')){this.pendingJoin=true;this.inviteAttempted=false;this.lobby=undefined;setInvitation(code);this.show('characters');}
+        else this.render();
+        this.status(error instanceof Error ? error.message : 'Não foi possível entrar na sala. Tente novamente.');
+      }
     }
   }
   private async copyInvite(input: HTMLInputElement): Promise<void> {
@@ -224,7 +233,7 @@ export class ApplicationShell {
       this.heading('Sala encerrada', coopSession.endedMessage);
       this.action('INICIAR JOGO SOLO', 'coop-solo', () => this.returnToSolo(true));
       this.action('VOLTAR AO MENU', 'coop-home', () => this.returnToSolo(false));
-      this.status(coopSession.rewardSaved ? 'Continue sua própria jornada. O XP ganho na dupla foi preservado.' : 'O XP ainda não foi salvo. Libere o armazenamento do navegador e tente continuar novamente.');
+      this.status(coopSession.rewardSaved ? 'Continue sua própria jornada. As recompensas pessoais da equipe foram preservadas.' : 'As recompensas ainda não foram salvas. Libere o armazenamento do navegador e tente continuar novamente.');
     } else if (this.page === 'home' || this.page === 'pause') {
       const hero = characterProfiles.active;
       const hasCharacters = characterProfiles.list.length > 0;
@@ -254,7 +263,8 @@ export class ApplicationShell {
           if (!hero) { this.status('Informe um nome. Se o armazenamento estiver bloqueado, continue com seu personagem atual.'); return; }
           this.launchCharacter(hero.id);
         },
-      }, this.pendingJoin && !this.inviteAttempted);
+      }, this.pendingJoin && !this.inviteAttempted, this.pendingJoin?this.lobby?.map(m=>m.profile.classId):[]);
+      if(this.pendingJoin){this.renderRoster(this.lobby??[]);if(!this.lobby&&!this.inspecting)void this.inspectInvitation();}
       if (this.pendingJoin && !this.inviteAttempted) this.status('Seu convite está aguardando. Escolha ou crie um personagem para entrar na sala.');
     } else if (this.page === 'coop') {
       this.heading('Jogar com amigo', 'Crie uma sala e envie o link. Seu amigo escolhe o personagem e entra pelo convite.');
@@ -269,6 +279,7 @@ export class ApplicationShell {
         this.action(busy ? 'CONECTANDO…' : 'ENTRAR NA SALA', 'coop-join', () => this.connectCoop('join')).disabled = busy || !this.scene;
         if (!busy && create.disabled && this.scene) this.status('Você pode criar uma sala em qualquer região da campanha.');
       } else {
+        this.renderRoster(coopSession.members);
         this.status('SALA ' + coopSession.code + ' · ' + coopSession.message);
         const invite = document.createElement('input'); invite.name = 'coop-invite'; invite.readOnly = true;
         invite.value = invitationLink(coopSession.code); invite.setAttribute('aria-label', 'Link de convite da sala');
@@ -303,8 +314,20 @@ export class ApplicationShell {
     if (coopSession.endedMessage) { this.showEndedVisit(); return; }
     if (!this.dialog.open || this.page !== 'coop') return;
     if (this.waitingForFriend && coopSession.role === 'host' && coopSession.peerConnected) { this.resume(); return; }
-    this.status((coopSession.code ? 'SALA ' + coopSession.code + ' · ' : '') + coopSession.message);
+    this.render();
   };
+  private async inspectInvitation():Promise<void>{
+    this.inspecting=true;const code=this.coopCode;
+    try{const roster=await inspectRoom(await coopEndpoint(),code);if(this.coopCode===code&&this.pendingJoin){this.lobby=roster;this.inspecting=false;this.render();}}
+    catch(error){if(this.pendingJoin)this.status(error instanceof Error?error.message:'Não foi possível consultar a sala.');}
+    finally{this.inspecting=false;this.content.querySelector<HTMLButtonElement>('[data-shell="lobby-refresh"]')?.removeAttribute('disabled');}
+  }
+  private renderRoster(members:PartyMember[]):void{
+    const roster=document.createElement('section');roster.className='party-lobby';roster.setAttribute('aria-label','Quatro vagas da equipe');
+    for(const classId of ['warrior','hunter','astral','xenobinder'] as const){const member=members.find(m=>m.profile.classId===classId),slot=document.createElement('div');slot.dataset.partyClass=classId;const name=document.createElement('strong'),state=document.createElement('span');name.textContent=CLASS_NAMES[classId];state.textContent=member?`${member.profile.name} · ${member.connected?'conectado':'reconectando (vaga reservada)'}`:'VAGA LIVRE';slot.append(name,state);roster.append(slot);}
+    this.content.append(roster);
+    if(this.pendingJoin)this.action('ATUALIZAR VAGAS','lobby-refresh',()=>{if(!this.inspecting)void this.inspectInvitation();}).disabled=this.inspecting;
+  }
   private editableKey = (event: KeyboardEvent): void => {
     const target = event.target;
     if (target instanceof HTMLElement && target.closest('input, textarea, [contenteditable="true"]')) event.stopImmediatePropagation();
