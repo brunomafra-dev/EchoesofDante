@@ -1,4 +1,4 @@
-# Etapa 6 — Vinculador de Dante · 0.1.96
+# Etapa 6 — Domador de feras · 0.1.96
 
 [Teste reservado](https://echosofdante.vercel.app/xenobinder-playtest.html?kit=basic&v=0.1.96) · [Equipamento feminino inicial](https://echosofdante.vercel.app/xenobinder-playtest.html?sex=female&kit=initial&v=0.1.96) · [Incandescente](https://echosofdante.vercel.app/xenobinder-playtest.html?region=caldera&boss=1&kit=basic&v=0.1.96).
 
@@ -14,7 +14,7 @@ Humano de expedição com condutor simbiótico, equipamento funcional e um **Sim
 - **Vínculo:** 0–100, começa em 35, cresce por acertos em combate; sem geração passiva. Recurso de combate reinicia em 35 quando o ator é recriado na troca de região/respawn, como estado local do kit; não é uma nova moeda persistente.
 - **Esquiva:** mesmos controles e semântica de movimento; valores próprios conservadores. HP 90% da referência do Guerreiro antes dos equipamentos. [Valores completos](balance.md).
 
-Os seis aprimoramentos existentes continuam pessoais; títulos e descrições correspondem ao kit do Vinculador. Inventário, receitas, custos, atributos e IDs de equipamentos são compartilhados com a infraestrutura atual. Condutor de campo / simbiótico / ressonância têm miniaturas próprias no chão e na mochila. Capacete, torso, pernas, botas, luvas e acessório continuam visíveis sem colar uma armadura sobre outra.
+Os seis aprimoramentos existentes continuam pessoais; títulos e descrições correspondem ao kit do Domador de feras. Inventário, receitas, custos, atributos e IDs de equipamentos são compartilhados com a infraestrutura atual. Condutor de campo / simbiótico / ressonância têm miniaturas próprias no chão e na mochila. Capacete, torso, pernas, botas, luvas e acessório continuam visíveis sem colar uma armadura sobre outra.
 
 O dano do kit usa o verde Natureza e permanece não elemental: não assume fraquezas/resistências do Astral. Nenhum valor das três classes anteriores foi alterado.
 
@@ -58,9 +58,9 @@ QA local: ambas as apresentações, três conjuntos, quatro resoluções (1280×
 - [Regressão anterior](campaign-regression/campaign.json): Ecos e passagem pelo visitante, Cavern, Warden, Vale, Siroco, Dunas, Soterrado, Fratura, Galerias e Vésper; dano, loot, equipamento, saves e respawn, sem erros.
 - [Regressão Astral](astral-regression/astral.json): quatro elementos, roupa, manopla, controle, recurso, campo, solo/dupla/touch/gamepad. Passou. Uma execução concorrente perdeu um prazo de réplica do elemento; execução isolada passou sem alterar a lógica do Astral.
 - [Incandescente com HP normal](normal-fight/report.json): kit básico no nível regional, três fases, quatro ataques; vitória em 46,7 s, cinco comandos, três esquivas e dano recebido. Driver lê avisos; sem teleporte, invulnerabilidade ou edição de HP durante a luta. Não equivale a avaliação humana de dificuldade.
-- [Convite pelo menu](qa/invite/public.json): criação real, convite mantido no laboratório, confirmação de personagem e visitante Vinculador; protocolo 9 local, sem gravar saves reais. Convites da Caldeira também preservam seu laboratório.
+- [Convite pelo menu](qa/invite/public.json): criação real, convite mantido no laboratório, confirmação de personagem e visitante Domador de feras; protocolo 9 local, sem gravar saves reais. Convites da Caldeira também preservam seu laboratório.
 - [Campanha e colisão do companheiro](world/world.json): carregamento/movimento e posição livre em 14 destinos, da Base à Caldeira. Fixtures regionais declaradas, sem afirmar percurso manual completo. Três respawns solo conservaram 15 XP e restauraram HP: 391 objetos, 234 texturas, um simbionte em todos os ciclos.
-- [Performance estabilizada](world/performance.json): comparação Guerreiro/Vinculador na mesma build, uma janela, 10 s de aquecimento por região. Floresta/Cavern/Caldeira: média suavizada **59,1–59,4 FPS**, contagem real **59,8–60,0 FPS** em ambas as classes; objetos constantes. As amostras regionais curtas de 47–50 FPS incluíam a recuperação da média suavizada após carregamento, portanto não representam o regime estabilizado.
+- [Performance estabilizada](world/performance.json): comparação Guerreiro/Domador de feras na mesma build, uma janela, 10 s de aquecimento por região. Floresta/Cavern/Caldeira: média suavizada **59,1–59,4 FPS**, contagem real **59,8–60,0 FPS** em ambas as classes; objetos constantes. As amostras regionais curtas de 47–50 FPS incluíam a recuperação da média suavizada após carregamento, portanto não representam o regime estabilizado.
 
 ## Limites e playtest humano
 

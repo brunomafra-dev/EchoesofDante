@@ -1,0 +1,20 @@
+{
+  "base": "http://127.0.0.1:5192",
+  "method": "Compiled browser build: New Game creates the selected profile and starts one original MP4 cinematic.",
+  "errors": [],
+  "video": {
+    "source": "/assets/prologue/arrival-trailer.mp4",
+    "duration": 19.583333,
+    "currentTime": 0.789437,
+    "paused": false,
+    "captions": 0
+  },
+  "saved": {
+    "name": "AL Cinemática",
+    "classId": "warrior",
+    "difficulty": "normal",
+    "introSeen": true,
+    "area": "base"
+  },
+  "passed": true
+}

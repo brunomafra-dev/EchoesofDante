@@ -65,9 +65,9 @@ Sem acesso físico a iPhone/gamepad. Perseguição direta pode manter criaturas 
 
 Dupla integrada a todas as conexões novas, snapshots das pinturas e avisos, interações do visitante e recompensa. **Relay requer protocolo 8**; validação local não confirma deploy público do Render. A sala continua limitada a dois jogadores.
 
-**Playtest humano necessário:** avaliar diferença entre os três mapas, leitura de criaturas, caminhada/apoio, intensidade dos grupos, espaços de descanso e preparação para o boss. Não iniciar Vinculador antes dessa avaliação.
+**Playtest humano necessário:** avaliar diferença entre os três mapas, leitura de criaturas, caminhada/apoio, intensidade dos grupos, espaços de descanso e preparação para o boss. Não iniciar Domador de feras antes dessa avaliação.
 
-Atualização de execução em 13/10/2026: o usuário autorizou explicitamente finalizar esta revisão e implementar a etapa 6 sem esperar uma validação intermediária. Revisão encerrada tecnicamente em `83cf3a6`. A regra de espera acima é o registro histórico anterior; avaliação perceptual continua humana e não foi presumida aprovada. [Vinculador](../../xenobinder/README.md).
+Atualização de execução em 13/10/2026: o usuário autorizou explicitamente finalizar esta revisão e implementar a etapa 6 sem esperar uma validação intermediária. Revisão encerrada tecnicamente em `83cf3a6`. A regra de espera acima é o registro histórico anterior; avaliação perceptual continua humana e não foi presumida aprovada. [Domador de feras](../../xenobinder/README.md).
 
 ## Publicação
 

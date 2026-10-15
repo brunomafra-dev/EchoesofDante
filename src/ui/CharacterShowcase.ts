@@ -2,7 +2,7 @@ import type { CharacterClass } from '../systems/CharacterProfiles';
 import { hunterRiflePose } from '../visual/HunterRiflePose';
 import { characterSex, hunterBody, warriorBody, type CharacterSex } from '../config/appearance';
 import type {ShoulderSockets} from '../visual/ClothShoulders';
-import {CASTER_WALK,CASTER_COLUMNS,CASTER_INSTRUMENTS,casterTargets,type ArmPose} from '../visual/CasterPose';
+import {CASTER_WALK,CASTER_COLUMNS,CASTER_INSTRUMENTS} from '../visual/CasterPose';
 import type {PaintedArmPart} from '../visual/PaintedArmFrames';
 
 type Part = { frame: number; width: number; height: number; axisY?: number };
@@ -52,18 +52,19 @@ export class CharacterShowcase {
     this.canvas.width = 320 * ratio; this.canvas.height = 360 * ratio;
     this.ctx = this.canvas.getContext('2d')!; this.ctx.scale(ratio, ratio);
     this.caption.className = 'showcase-caption'; this.caption.textContent = 'PREPARADO PARA DANTE';
-    if(classId==='xenobinder')this.canvas.setAttribute('aria-label','Vinculador de Dante com condutor e companheiro simbionte');
-    const names = classId === 'xenobinder'?[this.bodyName,'xenobinder-starter-weapon.png','dante-symbiont-motion.png','xenobinder-arm-none.png']:classId === 'astral'?[this.bodyName,'astral-starter-weapon.png','astral-arm-none.png']:classId === 'hunter' ? [this.bodyName, 'star-hunter-weapon-v2.png','hunter-starter-weapon.png','expedition-arm-kit.png'] :
+    if(classId==='xenobinder')this.canvas.setAttribute('aria-label','Domador de feras com condutor e companheiro simbionte');
+    const names = classId === 'xenobinder'?[this.bodyName,'xenobinder-starter-weapon.png','dante-symbiont-motion.png']:classId === 'astral'?[this.bodyName,'astral-starter-weapon.png']:classId === 'hunter' ? [this.bodyName, 'star-hunter-weapon-v2.png','hunter-starter-weapon.png','expedition-arm-kit.png'] :
       [this.bodyName, 'expedition-arm-kit.png', 'warrior-starter-weapon.png'];
     void Promise.all(names.map(async name => this.loaded.set(name, await image(name)))).then(async () => {
       if (this.disposed) return;
       if (classId === 'hunter') this.parts = await rifleParts();
       if (this.disposed) return;
-      const caster=classId==='astral'||classId==='xenobinder';
-      const registration=await fetch(base+(caster?'caster-arm-registration.json':'character-arm-registration.json')).then(r=>r.json());
-      this.armBounds=registration[caster?`${classId}-arm-none`:'expedition-arm-kit'];
-      const shoulders=await fetch(base+'character-shoulder-registration.json').then(r=>r.json());
-      this.shoulderSockets=classId==='xenobinder'?await fetch(base+'xenobinder-shoulders.json').then(r=>r.json()).then(d=>d[sex]):classId==='astral'?await fetch(base+'astral-shoulders.json').then(r=>r.json()).then(d=>d[sex]):shoulders[`${classId}-${sex}`];
+      if(classId!=='astral'&&classId!=='xenobinder'){
+        const registration=await fetch(base+'character-arm-registration.json').then(r=>r.json());
+        this.armBounds=registration['expedition-arm-kit'];
+        const shoulders=await fetch(base+'character-shoulder-registration.json').then(r=>r.json());
+        this.shoulderSockets=shoulders[`${classId}-${sex}`];
+      }
       if(this.disposed)return;
       this.ready = true; this.paint(-1);
       if (this.pendingDemo) this.play(this.pendingManual);
@@ -104,10 +105,11 @@ export class CharacterShowcase {
     }
     let shift = 0;
     if (dash) shift = -Math.sin((t - 1.15) / .65 * Math.PI) * (this.classId === 'hunter' ? 17 : 12);
-    c.save(); c.translate(135, 224); c.scale(2.25, 2.25); c.translate(shift, 0);
+    const displayX=this.classId==='xenobinder'?126:160;
+    c.save(); c.translate(displayX, 224); c.scale(2.25, 2.25); c.translate(shift, 0);
     c.fillStyle = '#00000055'; c.beginPath(); c.ellipse(0, 39, 28, 8, 0, 0, Math.PI * 2); c.fill();
     c.fillStyle = '#050c0a88'; c.beginPath(); c.ellipse(0, 39, 16, 4, 0, 0, Math.PI * 2); c.fill();
-    if (dash) { c.strokeStyle = '#5fe6d850'; c.lineWidth = 2; c.beginPath(); c.moveTo(26, 15); c.lineTo(51, 15); c.moveTo(22, 23); c.lineTo(40, 23); c.stroke(); }
+    if (dash) { c.strokeStyle = '#5fe6d850'; c.lineWidth = 2; c.beginPath(); c.moveTo(-42, 15); c.lineTo(-23, 15); c.moveTo(-38, 23); c.lineTo(-22, 23); c.stroke(); }
     if(this.classId==='xenobinder')this.xenobinder(t,strike,dash,charge,release);else if(this.classId==='astral')this.astral(t,strike,dash,charge,release);else if (this.classId === 'hunter') this.hunter(t, strike, dash, charge, release);
     else this.warrior(t, strike, dash, charge, release);
     if (charge) {
@@ -124,22 +126,19 @@ export class CharacterShowcase {
   private astral(t:number,strike:boolean,dash:boolean,charge:boolean,release:boolean):void{this.caster('astral',t,strike,dash,charge,release);}
   private xenobinder(t:number,strike:boolean,dash:boolean,charge:boolean,release:boolean):void{this.caster('xenobinder',t,strike,dash,charge,release);}
   private caster(identity:'astral'|'xenobinder',t:number,strike:boolean,dash:boolean,charge:boolean,release:boolean):void{
-    const c=this.ctx,frame=dash?CASTER_WALK[Math.floor((t-1.15)*8)%4]:0,sockets=this.shoulderSockets[frame];
-    const pose=():ArmPose=>({shoulder:{x:0,y:0},elbow:{x:0,y:0},wrist:{x:0,y:0}});
-    const main=pose(),other=pose(),aim=.1;
-    casterTargets(sockets.left.x/2-64,sockets.left.y/2-83,sockets.right.x/2-64,sockets.right.y/2-83,aim,strike,charge,dash?Math.sin(t*8):0,main,other);
-    for(const segment of [0,1]){
-     if(segment===1)this.sprite(this.bodyName,frame,CASTER_COLUMNS,256,-64,-83,128,128);
-     for(const arm of [other,main]){
-      const a=segment?arm.elbow:arm.shoulder,b=segment?arm.wrist:arm.elbow,bounds=this.armBounds[segment],dx=bounds.tip.x-bounds.root.x,dy=bounds.tip.y-bounds.root.y,scale=Math.hypot(b.x-a.x,b.y-a.y)/Math.hypot(dx,dy);
-      c.save();c.translate(a.x,a.y);c.rotate(Math.atan2(b.y-a.y,b.x-a.x)-Math.atan2(dy,dx));this.armPart(segment,-bounds.root.x*scale,-bounds.root.y*scale,bounds.width*scale,bounds.height*scale);c.restore();
-     }
-    }
-    const hand=this.armBounds[2],reverse=other.shoulder.x>0,hdx=hand.tip.x-hand.root.x,hdy=hand.tip.y-hand.root.y,handScale=6.5/Math.hypot(hdx,hdy);
-    c.save();c.translate(other.wrist.x,other.wrist.y);c.rotate(Math.atan2(other.wrist.y-other.elbow.y,other.wrist.x-other.elbow.x)-Math.atan2(reverse?-hdy:hdy,hdx));if(reverse)c.scale(1,-1);this.armPart(2,-hand.root.x*handScale,-hand.root.y*handScale,hand.width*handScale,hand.height*handScale);c.restore();
-    const p=CASTER_INSTRUMENTS[identity].starter,weapon=this.loaded.get(identity+'-starter-weapon'),angle=aim-Math.atan2(p.muzzle.y-p.wrist.y,p.muzzle.x-p.wrist.x),scale=p.width/128;
-    c.save();c.translate(main.wrist.x,main.wrist.y);c.rotate(angle);if(weapon)c.drawImage(weapon,-p.wrist.x*scale,-p.wrist.y*scale,p.width,96*scale);c.restore();
-    const length=Math.hypot(p.muzzle.x-p.wrist.x,p.muzzle.y-p.wrist.y)*scale,mx=main.wrist.x+Math.cos(aim)*length,my=main.wrist.y+Math.sin(aim)*length;
+    const c=this.ctx,frame=dash?CASTER_WALK[Math.floor((t-1.15)*8)%4]:0;
+    // These authored body frames already include complete, naturally joined arms.
+    // Re-drawing the menu rig's arm atlases over them produced a second pair of
+    // elbows/forearms, which made both caster portraits look broken.
+    this.sprite(this.bodyName,frame,CASTER_COLUMNS,256,-64,-83,128,128);
+    const p=CASTER_INSTRUMENTS[identity].starter,weapon=this.loaded.get(identity+'-starter-weapon.png'),scale=p.width/128;
+    // Rest the prop at the painted hand's actual waist-level position. Gameplay
+    // keeps its independent aim rig; this is only the character-select portrait.
+    const hand={x:identity==='astral'?11:10,y:-22};
+    const aim=identity==='astral'?1.45:-1.0;
+    const angle=aim-Math.atan2(p.muzzle.y-p.wrist.y,p.muzzle.x-p.wrist.x);
+    c.save();c.translate(hand.x,hand.y);c.rotate(angle);if(weapon)c.drawImage(weapon,-p.wrist.x*scale,-p.wrist.y*scale,p.width,96*scale);c.restore();
+    const length=Math.hypot(p.muzzle.x-p.wrist.x,p.muzzle.y-p.wrist.y)*scale,mx=hand.x+Math.cos(aim)*length,my=hand.y+Math.sin(aim)*length;
     if(identity==='astral'){
       if(strike||charge||release){c.fillStyle='#5fe6d8';c.beginPath();c.arc(mx+(release?55:0),my,release?22:charge?4+(t-2)*5:4,0,Math.PI*2);c.fill();}
     }else{

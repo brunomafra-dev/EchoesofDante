@@ -1,5 +1,13 @@
 # Campanhas, equipe original e chegada a Dante
 
+## Revisão 0.1.101 — nova criação, cinemática e retratos
+
+O fluxo de **Novo jogo** começa na seleção/criação do personagem; a dificuldade vem depois, numa tela independente. A tela oferece somente **Fezes puríssima**, **Marromenos** e **Chama 🔥**, sem descrições adicionais. **Começar expedição** persiste personagem e dificuldade e inicia imediatamente a campanha.
+
+O prólogo é agora um vídeo H.264 único, contínuo, de 19,6 s e 1280×720, sem títulos/cartões ou texto sobre a imagem. Os retratos de Astral e Domador usam os braços já pintados no corpo e ancoram a manopla/condutor à pose de repouso. Capturas: [Astral masc.](qa/character-selection-astral.png), [Domador masc.](qa/character-selection-domador.png), [Astral fem.](qa/character-selection-astral-female.png) e [Domadora fem.](qa/character-selection-xenobinder-female.png). O nome de exibição da classe passa a ser **Domador de feras**; o identificador técnico `xenobinder` permanece para não invalidar personagens e saves.
+
+**QA desta revisão:** `npm run typecheck`, `npm run build`, `node scripts/qa-campaign-menu.mjs` e `node scripts/qa-prologue-timeline.mjs` passaram. O smoke de produção em Chrome também cobre touch, gamepad e solo; a verificação do relay cooperativo é separada e exige protocolo 11 ativo. Playtest humano do vídeo e da aparência dos braços continua recomendado.
+
 ## Escopo
 
 Autorização do usuário em 14/10/2026: reorganizar o menu, separar jornadas solo/cooperativas, fixar dificuldade e tamanho da equipe e implementar o prólogo nesta entrega. Essa autorização substitui a espera operacional anterior pela etapa 8; não representa aprovação humana das novas ilustrações.
@@ -14,7 +22,7 @@ O laboratório usa somente armazenamento de sessão próprio, inclusive para sel
 - Jogar: **Continuar expedição / Novo jogo / Cooperativo**.
 - Continuar solo abre somente personagens solo, com suas próprias jornadas.
 - Cooperativo: **Iniciar novo jogo / Continuar jogando com amigos / Entrar por convite**.
-- Novo jogo define dificuldade; em equipe, define também **2, 3 ou 4 integrantes**, com classes diferentes. Depois cria nome, classe e apresentação.
+- Novo jogo abre primeiro a seleção de classe, nome e apresentação; em seguida, a tela separada da dificuldade. Em equipe, essa segunda etapa também define **2, 3 ou 4 integrantes**, com classes diferentes. **Começar expedição** cria a jornada e a inicia diretamente, sem voltar ao menu para escolher continuar.
 - Configurações estão disponíveis em todos os menus, inclusive no prólogo. Esc e o botão B do controle voltam pela hierarquia; Start abre a pausa.
 - Durante a expedição não existe troca de personagem. Retornar ao início salva e encerra a conexão antes de selecionar outra jornada.
 
@@ -55,21 +63,13 @@ Reservas são posições pequenas e definidas por dados, próximas de encontros 
 
 ## Prólogo
 
-Cinco pinturas originais, aproximadamente **8 segundos por take / 40 segundos no total**:
-
-1. **O último lar:** a Terra já não pode abrigar a humanidade.
-2. **O que levamos:** evacuação e sobreviventes.
-3. **Anos entre estrelas:** desgaste e esperança.
-4. **Dante:** aproximação do planeta.
-5. **A primeira expedição:** pouso para reconhecer e preparar a chegada dos demais.
-
-Novo personagem assiste antes de entrar na jornada. Pular ou avançar está sempre disponível. Configurações e aba oculta suspendem o take; rever nas configurações não altera progresso. Ao terminar, solo chega à base; cooperativo abre a formação da equipe antes de começar na base. Não revela origem do Signal, First Echo ou história do Warden.
+Novo personagem assiste a uma **cinemática MP4 contínua de 19,6 segundos**, sem cartões, títulos ou legendas sobre a imagem. A abertura acompanha a Terra em colapso, a evacuação, a viagem, a descoberta de Dante e o primeiro pouso. Movimento de câmera, transições e atmosfera são renderizados offline; o jogo reproduz um único vídeo. Pular permanece disponível. Configurações e aba oculta pausam a cinemática; rever nas configurações não altera progresso. Ao terminar, solo chega à base; cooperativo abre a formação da equipe antes de começar na base. Não revela origem do Signal, First Echo ou história do Warden.
 
 ### Arte e áudio
 
-`public/assets/prologue/`: cinco WebP de **1439 × 810**, aproximadamente **847 KB somados**. Imagens originais geradas com a ferramenta de imagem, preparadas offline; [prompts e origem](illustration-prompts.json). Sem fontes externas ou geração durante o jogo. Renderização usa uma imagem reutilizada, legenda e movimento CSS discreto; respeita preferência por movimento reduzido.
+`public/assets/prologue/arrival-trailer.mp4`: H.264, **1280 × 720**, **19,6 s**, aproximadamente **2,69 MB**. As cinco pinturas WebP originais são placas-fonte; [prompts e origem](illustration-prompts.json). O filme offline recebe pan/zoom, dissoluções, poeira luminosa e letterbox; não há texto na imagem nem geração durante o jogo. Para regenerar: `python scripts/render-prologue-trailer.py` (Pillow + imageio-ffmpeg no ambiente de autoria). O navegador toca o MP4 em um elemento de vídeo, sem recriar os quadros.
 
-Áudio reutiliza a trilha das profundezas pelo AudioManager existente. Volumes compartilhados com as configurações, botão para desbloquear som e funcionamento silencioso quando autoplay é recusado. Aprovação da narrativa visual e escuta dependem de playtest humano.
+O vídeo é silencioso; a ambiência usa o AudioManager existente e respeita os volumes globais. Autoplay silencioso permite a reprodução após o reload; o botão **SOM** libera o áudio do jogo após interação. Aprovação do ritmo visual e da escuta depende de playtest humano.
 
 ## Verificação
 
@@ -86,8 +86,8 @@ Resultados técnicos e capturas em `qa/`. Scripts desta entrega:
 |---|---|
 | Typecheck / build de produção | `npm run typecheck` e `npm run build`, sem erros; aviso conhecido do chunk Phaser acima de 500 KB |
 | Relay 2/3/4, equipe original, impedimento de substituição e pausa | [Protocolo](qa/protocol-report.json) |
-| Menu, nomes com A/L e acentos, cinco imagens, take de ~8 s, pular/rever, pausa nas configurações | [Menu](qa/menu-report.json) |
-| Cinco takes avançando automaticamente, sem pular/avançar, na build pública e com movimento reduzido | [Linha do tempo pública](qa/public/timeline-report.json): 7,93 / 8,03 / 8,02 / 8,01 / 8,08 segundos; chegou à base e salvou a introdução |
+| Menu, nomes com A/L e acentos, personagem antes da dificuldade, início direto e vídeo sem cartões | [Menu](qa/menu-report.json) |
+| MP4 contínuo, metadados, progressão de tempo, ausência de texto sobreposto e chegada à base | [Linha do tempo local](qa/local/timeline-report.json); [captura](qa/local/arrival-trailer.png) |
 | Entrada real, ausência, retorno, marcos pessoais e nova sala com os mesmos personagens | [Dupla](qa/continuity-2-report.json) e [quatro](qa/continuity-4-report.json) |
 | Quatro kits, poções, recompensas pessoais, dano, portais por cada visitante, 14 regiões e quatro bosses | [Regressão de quatro](qa/four-regression/report.json) |
 | Três derrotas/respawns coletivos | 440 objetos, 250 texturas, 25 tweens e três aliados remotos em todos os ciclos; sem crescimento |
@@ -100,7 +100,7 @@ Nenhum erro JS ou carregamento de asset nos relatórios concluídos. Na mediçã
 
 O teste de retomada encontrou e corrigiu duas regressões: classe do próprio titular marcada como ocupada e pausa de menu confundida com pausa da equipe, contabilizando tempo duas vezes. Os ciclos foram repetidos até os relatórios de dupla/quatro passarem, inclusive recebimento do mundo e salvamento após voltar.
 
-**Resultado humano:** pendente. Os multiplicadores iniciais requerem teste de diversão nas três dificuldades e com grupos reais; automação não decide esse balanceamento. Não houve teste físico de iPhone ou gamepad. Avaliar as pinturas, ritmo/legibilidade das legendas e música.
+**Resultado humano:** pendente. Os multiplicadores iniciais requerem teste de diversão nas três dificuldades e com grupos reais; automação não decide esse balanceamento. Não houve teste físico de iPhone ou gamepad. Avaliar o ritmo da cinemática, a integração visual dos itens nos retratos e a música.
 
 ## Publicação
 

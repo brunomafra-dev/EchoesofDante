@@ -1,8 +1,10 @@
 {
   "checks": [
     "Clean home: only Play and Settings; no automatically created hero",
-    "New named female/male-capable hero launches the illustrated prologue; Earth lasts approximately 8 seconds",
-    "All five original images load, settings suspend the current take, completion lands at base and persists immutable solo difficulty",
+    "Character gallery uses the approved Domador de feras display name",
+    "New Game selects class/name before difficulty, then directly launches one cinematic MP4 without text cards",
+    "Settings pause and resume the same video position",
+    "The new campaign is saved with the selected difficulty and enters the game immediately after the cinematic",
     "Pause offers no hero swap; return to title, replay and Continue preserve the selected hero without replaying intro",
     "Difficulty changes real enemy HP and damage, without changing player base combat",
     "Four desktop/mobile landscape resolutions preserve readable prologue controls",

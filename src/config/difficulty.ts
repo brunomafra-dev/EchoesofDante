@@ -1,7 +1,7 @@
 export const DIFFICULTIES = {
-  easy: { name: 'Fezes puríssima', description: 'Superfácil · para explorar e conhecer Dante.', hp: 0.7, damage: 0.45 },
-  normal: { name: 'Marromenos', description: 'Médio · equilíbrio entre exploração e combate.', hp: 1, damage: 1 },
-  hard: { name: 'Chama 🔥', description: 'Difícil · inimigos mais resistentes e perigosos.', hp: 1.35, damage: 1.35 },
+  easy: { name: 'Fezes puríssima', hp: 0.7, damage: 0.45 },
+  normal: { name: 'Marromenos', hp: 1, damage: 1 },
+  hard: { name: 'Chama 🔥', hp: 1.35, damage: 1.35 },
 } as const;
 export type DifficultyId = keyof typeof DIFFICULTIES;
 export const difficultyId = (value: unknown): DifficultyId => value === 'easy' || value === 'hard' ? value : 'normal';

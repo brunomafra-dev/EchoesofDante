@@ -2,7 +2,7 @@
 
 ## Escopo
 
-Uma sala comporta **Guerreiro, Hunter, Astral e Vinculador**, sem repetir classes. Mesma campanha e build web; sem login, matchmaking, servidor de mundo persistente ou save em nuvem. O anfitrião continua simulando o combate.
+Uma sala comporta **Guerreiro, Hunter, Astral e Domador de feras**, sem repetir classes. Mesma campanha e build web; sem login, matchmaking, servidor de mundo persistente ou save em nuvem. O anfitrião continua simulando o combate.
 
 Teste reservado: [abrir laboratório](https://echosofdante.vercel.app/party-playtest.html?region=base&kit=basic&v=0.1.99). `Esc → Jogar com amigo → Criar sala`, copiar convite e abrir nos outros aparelhos. Cada convidado confirma um personagem próprio. O laboratório fornece quatro personagens temporários; equipamentos, créditos, XP e progresso reais ficam preservados. Escolher região/classe no painel antes de criar a sala. Para testar um boss diretamente, escolha sua região antes de abrir a sala: o encontro atual permanece vivo e os acessos anteriores são preparados somente no laboratório.
 
@@ -21,7 +21,7 @@ Teste reservado: [abrir laboratório](https://echosofdante.vercel.app/party-play
 
 Resistência inicial por tamanho da equipe: **1 pessoa = 100%; 2 = 140%; 3 = 180%; 4 = 220% da vida original**. Preserva a proporção de HP ao entrar/sair alguém. Dano, velocidade, IA, telegraphs, ataques e valores do solo continuam iguais; não escala com equipamento. É uma primeira calibragem, sujeita ao playtest.
 
-Inimigos consideram todos os participantes vivos/conectados. Zonas do Astral contribuem para o controle; o pulso do Vinculador considera todos os aliados vivos próximos e possui quatro posições de feedback. Não revive aliados e mantém custo, cura e alcance anteriores.
+Inimigos consideram todos os participantes vivos/conectados. Zonas do Astral contribuem para o controle; o pulso do Domador de feras considera todos os aliados vivos próximos e possui quatro posições de feedback. Não revive aliados e mantém custo, cura e alcance anteriores.
 
 Durante boss, mortos aguardam enquanto existir alguém vivo. Derrota coletiva permite reiniciar um único encontro; vitória recupera os caídos. A penalidade existente de 10% dos créditos usa um recibo individual por morte; XP, materiais e equipamento permanecem. Nenhum boss novo ou alteração nos kits.
 
@@ -49,7 +49,7 @@ O health passa a informar protocolo, capacidade e `RENDER_GIT_COMMIT`, quando di
 
 Frontend Vercel e relay Render confirmados na entrega **0.1.99**, commit `c529cbf345046f6b4fdc360aea03757a7fbb4f6a`: health informa **protocolo 10, capacidade 4 e classes exclusivas**. O usuário concluiu o deploy pelo painel após um incidente do Render que atrasava builds; essa publicação manual não comprova o funcionamento do gatilho automático dos próximos commits.
 
-[QA público](public-qa/report.json): passou com quatro contextos Chrome independentes na URL real, sem relay local, mocks de rede ou hooks DEV. Convites com confirmação, bloqueio de classe ocupada, escolha de Astral, criação de Vinculadora feminina, quatro participantes recebendo snapshots enquanto o anfitrião usa o menu, encerramento para os três visitantes e retomada da jornada própria. Zero erros JS/assets; ao terminar, o serviço informou zero salas e zero conexões. [Captura das quatro vagas](public-qa/four-slots.png).
+[QA público](public-qa/report.json): passou com quatro contextos Chrome independentes na URL real, sem relay local, mocks de rede ou hooks DEV. Convites com confirmação, bloqueio de classe ocupada, escolha de Astral, criação de Domadora de feras feminina, quatro participantes recebendo snapshots enquanto o anfitrião usa o menu, encerramento para os três visitantes e retomada da jornada própria. Zero erros JS/assets; ao terminar, o serviço informou zero salas e zero conexões. [Captura das quatro vagas](public-qa/four-slots.png).
 
 Esse ensaio valida conexão e fluxo público do lobby; não substitui a campanha humana em quatro aparelhos. O laboratório está disponível para esse playtest. Aguardar aprovação antes do prólogo.
 
@@ -75,7 +75,7 @@ Três reinícios coletivos da Floresta: **440 objetos, 250 texturas, 25 tweens, 
 
 Ensaio separado: aproximadamente **54–58 FPS**, cinco amostras aquecidas por região, em Floresta, Cavernas, Warden, Siroco, Fratura Boreal e Caldeira; três kits remotos usando básicos/Q. Registra o custo da simulação do anfitrião, não latência pela internet, quatro GPUs ou balanceamento de lutas completas. Arenas foram medidas sem forçar todas as fases dos bosses.
 
-[Menus na build de produção](production-qa/report.json): passaram com quatro Chromes, sem hooks DEV. Confirmação de personagem, classe duplicada bloqueada, escolha explícita de Astral após reload, criação de Vinculadora feminina com nome contendo A/L, snapshots durante menu do anfitrião e restauração da jornada pessoal após encerramento. Captura: [quatro vagas](production-qa/four-slots.png).
+[Menus na build de produção](production-qa/report.json): passaram com quatro Chromes, sem hooks DEV. Confirmação de personagem, classe duplicada bloqueada, escolha explícita de Astral após reload, criação de Domadora de feras feminina com nome contendo A/L, snapshots durante menu do anfitrião e restauração da jornada pessoal após encerramento. Captura: [quatro vagas](production-qa/four-slots.png).
 
 O QA histórico da jornada foi atualizado para escolher os aprimoramentos já existentes antes de enviar teclas de gameplay e esperar os **22 XP** regionais do Vale introduzidos na etapa 4. Não foram alterados mapa, recompensas ou a curva para adequar o teste.
 

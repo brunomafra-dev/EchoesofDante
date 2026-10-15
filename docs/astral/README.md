@@ -4,7 +4,7 @@ Terceira classe jogável do plano RPG. A identidade é **controlar o campo de ba
 
 **Revisão atual 0.1.93:** após aprovar as cores, o usuário pediu fraquezas e resistências em todas as criaturas. Todas as 13 espécies possuem perfil explícito, com +25%/−25%, números ↑/↓ e informação no bestiário. [Perfis completos e teste](species-profiles/README.md) · [Cor do dano anterior](elemental-affinities/README.md) · [Arte elemental](elemental-v2/README.md). Evidências anteriores preservadas; aguardar playtest desta revisão antes da próxima classe.
 
-O usuário autorizou explicitamente a execução desta etapa durante sua viagem, sem esperar a validação humana da etapa 4. Isso autoriza avançar o trabalho; **não constitui aprovação visual ou de balanceamento** de nenhuma das duas etapas. Vinculador e cooperativo de quatro participantes continuam planejados.
+O usuário autorizou explicitamente a execução desta etapa durante sua viagem, sem esperar a validação humana da etapa 4. Isso autoriza avançar o trabalho; **não constitui aprovação visual ou de balanceamento** de nenhuma das duas etapas. Domador de feras e cooperativo de quatro participantes continuam planejados.
 
 ## Teste reservado
 
@@ -85,4 +85,4 @@ Capturas: [masculino básico](qa/male-basic.webp), [feminino básico](qa/female-
 - Na dupla, testar Astral como dono e visitante: Dash, campos, energia, portais e respawn.
 - No iPhone, conferir o botão de elemento e movimento + segurar/arrastar/soltar CAMPO.
 
-Não avançar ao Vinculador nem a quatro jogadores sem a avaliação das etapas 4/5.
+Não avançar ao Domador de feras nem a quatro jogadores sem a avaliação das etapas 4/5.

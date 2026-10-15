@@ -10,7 +10,7 @@ const identity = {
   warrior: { role: 'CORPO A CORPO · RESISTÊNCIA', fantasy: 'Entre na batalha. Domine o espaço próximo.', kit: 'Sabre de energia · Esquiva do vazio · Carga cinética' },
   hunter: { role: 'DISTÂNCIA · PRECISÃO', fantasy: 'Controle a distância. Encontre sua janela de disparo.', kit: 'Rifle de pulso · Passo de fase · Feixe perfurante' },
   astral: { role: 'MÉDIO ALCANCE · CONTROLE', fantasy: 'Controle o campo. Conduza as forças de Dante pela manopla.', kit: 'Manopla astral · Energia, fogo, água e terra · Campos direcionais' },
-  xenobinder:{role:'COMPANHEIRO · SIMBIOSE',fantasy:'Lute em simbiose. Oriente uma criatura de Dante e proteja sua expedição.',kit:'Condutor simbiótico · Companheiro permanente · Investida e recuperação'},
+  xenobinder:{role:'DOMADOR · SIMBIOSE',fantasy:'Lute em simbiose. Oriente uma criatura de Dante e proteja sua expedição.',kit:'Condutor simbiótico · Companheiro permanente · Investida e recuperação'},
 };
 type Actions = { back: () => void; create: (name: string, classId: CharacterClass, sex: CharacterSex) => void; play: (id: string) => void; remove: (id: string) => void; newCharacter: () => void };
 function button(text: string, id: string, action: () => void): HTMLButtonElement {
@@ -71,7 +71,7 @@ export class CharacterSelection {
       const next=this.stage(selected,sexSelect.value as CharacterSex);card.querySelector('.character-stage')!.replaceWith(next.stage);next.preview.play();
     };
     sexSelect.addEventListener('change',()=>{sexChosen=true;refreshPreview();});
-    const create = button(this.joiningRoom ? 'CRIAR E ENTRAR NA SALA →' : 'COMEÇAR EXPEDIÇÃO →', 'create', () => { if (selected) actions.create(input.value, selected, sexSelect.value as CharacterSex); });
+    const create = button(this.joiningRoom ? 'CRIAR E ENTRAR NA SALA →' : 'CONTINUAR →', 'create', () => { if (selected) actions.create(input.value, selected, sexSelect.value as CharacterSex); });
     create.className = 'selection-primary'; create.disabled = true;
     input.addEventListener('input', () => create.disabled = !selected || !input.value.trim());
     input.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.isComposing && !create.disabled) { event.preventDefault(); create.click(); } });

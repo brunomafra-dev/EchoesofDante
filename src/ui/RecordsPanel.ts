@@ -85,7 +85,7 @@ export class RecordsPanel {
   get isOpen(): boolean { return this.dialog.open; }
   setXenobinderHelp():void {
     const help=this.dialog.querySelector('.records-controls')!;
-    help.innerHTML='<summary>Controles do Vinculador</summary><p>PC: WASD move, mouse mira, clique esquerdo marca assistência, Espaço esquiva. Q: segure, mire e solte o comando. E investiga; B abre os registros.</p><p>Gamepad: LS move, RS mira, RT marca assistência, RB esquiva, LT segura/mira/solta o comando; A investiga.</p><p>Touch: joystick à esquerda; DISPARO marca assistência. Segure COMANDO, arraste e solte. A investida termina com recuperação de aliados vivos próximos à chegada do simbionte.</p><p>Acertos acumulam Vínculo. Comando custa 35 e recarrega em 6 s. Cancelar preserva recurso. O pulso não revive nem cura através de paredes.</p>';
+    help.innerHTML='<summary>Controles do Domador de feras</summary><p>PC: WASD move, mouse mira, clique esquerdo marca assistência, Espaço esquiva. Q: segure, mire e solte o comando. E investiga; B abre os registros.</p><p>Gamepad: LS move, RS mira, RT marca assistência, RB esquiva, LT segura/mira/solta o comando; A investiga.</p><p>Touch: joystick à esquerda; DISPARO marca assistência. Segure COMANDO, arraste e solte. A investida termina com recuperação de aliados vivos próximos à chegada do simbionte.</p><p>Acertos acumulam Vínculo. Comando custa 35 e recarrega em 6 s. Cancelar preserva recurso. O pulso não revive nem cura através de paredes.</p>';
   }
   markDiscovery(): void {
     this.button.textContent = 'REGISTROS • NOVO';

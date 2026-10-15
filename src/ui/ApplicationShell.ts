@@ -10,6 +10,8 @@ import { DIFFICULTIES, type DifficultyId } from '../config/difficulty';
 import { CharacterSelection } from './CharacterSelection';
 import { Prologue } from './Prologue';
 import { AUDIO } from '../config/audio';
+import type { CharacterClass } from '../systems/CharacterProfiles';
+import type { CharacterSex } from '../config/appearance';
 
 type Page = 'home' | 'play' | 'pause' | 'characters' | 'coop-characters' | 'create' | 'difficulty' | 'coop-menu' | 'invite' | 'coop' | 'settings' | 'prologue' | 'coop-ended';
 const LAUNCH = 'echoes-of-dante.launch-once', APPROVAL = 'echoes-of-dante.invite-character-once', SETTINGS = 'echoes-of-dante.settings.v1';
@@ -28,6 +30,7 @@ export class ApplicationShell {
   private launchOnce = false;
   private entry?: 'create' | 'join';
   private creation: CampaignCreation = { mode: 'solo', difficulty: 'normal', size: 1 };
+  private pendingCharacter?: { name: string; classId: CharacterClass; sex: CharacterSex };
   private code = roomCode(location.href) ?? '';
   private pendingInvite = !!this.code;
   private lobby?: RoomInspection;
@@ -107,12 +110,21 @@ export class ApplicationShell {
     }
     if (this.page === 'pause') { this.resume(); return; }
     if (this.page === 'coop') { if (coopSession.role !== 'offline' || this.busy) { this.returnHome(); return; } this.show('coop-menu'); return; }
-    const destination: Partial<Record<Page, Page>> = { play:'home', characters:'play', 'coop-characters':'coop-menu', difficulty:this.creation.mode === 'solo' ? 'play':'coop-menu', create:this.pendingInvite ? 'invite':'difficulty', 'coop-menu':'play', invite:'coop-menu' };
+    const destination: Partial<Record<Page, Page>> = { play:'home', characters:'play', 'coop-characters':'coop-menu', difficulty:'create', create:this.pendingInvite ? 'invite':this.creation.mode === 'solo' ? 'play':'coop-menu', 'coop-menu':'play', invite:'coop-menu' };
+    if (this.page === 'create' && !this.pendingInvite) this.pendingCharacter = undefined;
     if (this.page === 'invite' || this.page === 'coop-characters') { this.pendingInvite = false; clearInvitation(); }
     this.show(destination[this.page] ?? 'home');
   }
   private settings(): void { this.settingsReturn = this.page; this.prologue?.pause(); this.show('settings'); }
-  private beginNew(mode: 'solo' | 'coop'): void { this.pendingInvite = false; this.lobby = undefined; clearInvitation(); this.creation = { mode, difficulty:'normal', size:mode === 'coop' ? 2:1 }; this.show('difficulty'); }
+  private beginNew(mode: 'solo' | 'coop'): void { this.pendingInvite = false; this.lobby = undefined; this.pendingCharacter = undefined; clearInvitation(); this.creation = { mode, difficulty:'normal', size:mode === 'coop' ? 2:1 }; this.show('create'); }
+  private startNewCampaign(): void {
+    const pending = this.pendingCharacter;
+    if (!pending || this.launching) return;
+    const hero = characterProfiles.create(pending.name, pending.classId, pending.sex, this.creation);
+    if (!hero) { this.status('Não foi possível criar o personagem. Confira o nome, o limite de personagens e o armazenamento do navegador.'); return; }
+    this.pendingCharacter = undefined;
+    this.launch(hero.id);
+  }
   private launch(id: string): void {
     if (this.launching || this.playing || coopSession.role !== 'offline') return;
     const hero = characterProfiles.list.find(p => p.id === id); if (!hero) return;
@@ -204,9 +216,9 @@ export class ApplicationShell {
       this.action('RETOMAR','continue', () => this.resume()); this.action('MAPA DA EXPEDIÇÃO','expedition', () => { this.resume(); this.scene?.openExpedition(); });
       this.action('MOCHILA E EQUIPAMENTOS','equipment', () => { this.resume(); this.scene?.openEquipment(); }); this.action('VOLTAR À TELA INICIAL','home', () => this.returnHome());
     } else if (this.page === 'difficulty') {
-      this.heading(this.creation.mode === 'coop' ? 'Nova expedição em equipe':'Nova expedição', 'A dificuldade pertence à jornada e permanece a mesma ao continuar.');
+      this.heading('Dificuldade', 'Escolha o nível da expedição.');
       for (const id of ['easy','normal','hard'] as DifficultyId[]) {
-        const d = DIFFICULTIES[id], b = this.action(`${d.name} · ${d.description}`, `difficulty-${id}`, () => { this.creation.difficulty = id; this.render(); });
+        const d = DIFFICULTIES[id], b = this.action(d.name, `difficulty-${id}`, () => { this.creation.difficulty = id; this.render(); });
         b.className = 'difficulty-choice'; b.setAttribute('aria-pressed', String(this.creation.difficulty === id));
       }
       if (this.creation.mode === 'coop') {
@@ -215,7 +227,8 @@ export class ApplicationShell {
         select.value = String(this.creation.size); select.onchange = () => { this.creation.size = Number(select.value); }; label.append(select); this.content.append(label);
         const p = document.createElement('p'); p.textContent = 'Para continuar depois, todos os personagens originais deverão voltar. Sem substituições e sem continuar solo.'; this.content.append(p);
       }
-      this.action('CRIAR PERSONAGEM','new-character', () => this.show('create')).disabled = characterProfiles.list.length >= 6; this.action('VOLTAR','back', () => this.back());
+      this.action('COMEÇAR EXPEDIÇÃO →','start-new-game', () => this.startNewCampaign()).disabled = !this.pendingCharacter;
+      this.action('VOLTAR','back', () => this.back());
     } else if (characters) {
       const cooperative = this.page === 'coop-characters';
       const profiles = characterProfiles.list.filter(p => cooperative ? p.campaign?.mode === 'coop' && (!this.pendingInvite || p.campaign.id === this.lobby?.campaign.id&&(!this.lobby.campaign.crew.length||this.lobby.campaign.crew.some(m=>m.id===p.id))) : p.campaign?.mode !== 'coop');
@@ -229,8 +242,13 @@ export class ApplicationShell {
         },
         create: (name, classId, sex) => {
           if (this.launching) return;
-          const hero = characterProfiles.create(name, classId, sex, this.creation);
-          if (hero) this.launch(hero.id); else this.status('Informe um nome e verifique o espaço de personagens e o armazenamento do navegador.');
+          if (this.pendingInvite) {
+            const hero = characterProfiles.create(name, classId, sex, this.creation);
+            if (hero) this.launch(hero.id); else this.status('Informe um nome e verifique o espaço de personagens e o armazenamento do navegador.');
+            return;
+          }
+          this.pendingCharacter = { name, classId, sex };
+          this.show('difficulty');
         },
       }, this.pendingInvite, this.pendingInvite && this.page==='create' ? this.lobby?.members.map(m => m.profile.classId):[], {
         profiles, title: cooperative ? 'Continuar com a equipe original':undefined,

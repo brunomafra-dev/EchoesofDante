@@ -73,7 +73,7 @@ Referências de princípios: preparação e slots de [Tibia](https://www.tibia.c
 | Guerreiro Galáctico | Dominar o combate próximo | Sabre, resistência, Dash e Carga Cinética |
 | Star Hunter | Controlar a distância | Rifle, mobilidade, Momentum e feixe carregado |
 | Manipulador Astral | Controlar o campo | Manopla, quatro elementos e zonas direcionais |
-| **Vinculador de Dante — Xenobinder** | Lutar em simbiose | Arma biológica tecnológica, companheiro e apoio limitado |
+| **Domador de feras — Xenobinder** | Lutar em simbiose | Arma biológica tecnológica, companheiro e apoio limitado |
 
 **Astral:**
 
@@ -83,7 +83,7 @@ Referências de princípios: preparação e slots de [Tibia](https://www.tibia.c
 - Recurso próprio: **Energia Astral**. Ataque básico recupera recurso; Q consome. Movimento evasivo permanece independente do recurso.
 - Primeira versão sem combinações elementais em cadeia; preservar clareza antes de acrescentá-las.
 
-**Vinculador:**
+**Domador de feras:**
 
 - Uma criatura original permanente acompanha o personagem.
 - Ataque básico orienta a assistência do companheiro.
@@ -117,8 +117,8 @@ Os números dos novos kits serão registrados no documento de balanceamento ante
 | **3 — Base e economia** | Nave, NPCs, mapa, cofre, poções, compras e fabricação | Completar uma expedição e retornar para melhorar o personagem |
 | **4 — Progressão e ameaça** | Revisar recompensas e encontros das regiões existentes | Equipamento e poções ajudam sem eliminar o desafio |
 | **5 — Astral** | Kit elemental, recurso, apresentação masculina/feminina | Campanha e bosses jogáveis no solo e em dupla |
-| **5A — Caldeira de Dante** | Expansão vulcânica após Vésper, exploração, descoberta, boss Incandescente e dupla | Playtest humano da nova região/boss antes do Vinculador |
-| **6 — Vinculador** | Companheiro, simbiose, recurso e apresentação | Criatura navega e não domina nem prejudica o combate |
+| **5A — Caldeira de Dante** | Expansão vulcânica após Vésper, exploração, descoberta, boss Incandescente e dupla | Playtest humano da nova região/boss antes do Domador de feras |
+| **6 — Domador de feras** | Companheiro, simbiose, recurso e apresentação | Criatura navega e não domina nem prejudica o combate |
 | **7 — Equipe de quatro** | Lobby sem classes repetidas, estados individuais e bosses para quatro | Campanha completa com as quatro classes |
 | **8 — Prólogo** | Introdução, integração narrativa da base e chegada de refugiados | Novo jogador entende a missão e começa a jogar rapidamente |
 
@@ -126,7 +126,7 @@ Cada etapa terá implementação, QA, revisão visual, documentação, versão q
 
 ## 4. Introdução e narrativa
 
-Produzir **cinco takes**, aproximadamente oito segundos cada:
+Versão atualizada em 0.1.101: apresentar esses cinco momentos numa **cinemática MP4 contínua**, com movimento de câmera e transições, sem cartões ou texto sobre a imagem. O primeiro rascunho em takes foi substituído após a revisão do usuário.
 
 1. Terra inabitável e evacuação.
 2. Partida das naves com os sobreviventes.
@@ -134,7 +134,7 @@ Produzir **cinco takes**, aproximadamente oito segundos cada:
 4. Descoberta de Dante e aproximação orbital.
 5. Pouso da equipe; início da missão de reconhecimento.
 
-Usar ilustrações originais, movimento suave, som, música e legendas em português. Botão **PULAR** sempre disponível; opção **REVER INTRODUÇÃO** no menu.
+Usar ilustrações originais animadas por pan/zoom, dissoluções e atmosfera. Botão **PULAR** sempre disponível; opção **REVER INTRODUÇÃO** no menu. A faixa visual não exibe texto; idioma e comunicação ficam nos menus do jogo.
 
 Exibir ao criar cada nova jornada, conforme a revisão autorizada de 14/10/2026. Personagens antigos não recebem introdução retroativa. Em convites cooperativos, permitir pular ou concluir antes de confirmar prontidão no lobby.
 
@@ -145,6 +145,10 @@ A abertura confirma a nova premissa fornecida: humanidade em fuga e expedição 
 O usuário autorizou implementar o prólogo junto da reorganização de menus e dificuldades, sem aguardar nova resposta durante a execução. A decisão posterior confirmou **exigir a equipe original completa** para continuar. Essa autorização supera a espera operacional anterior da etapa 7; não constitui aprovação visual por automação.
 
 Solo e cooperativo usam personagens separados, sem troca de herói durante a expedição. Dificuldade e tamanho 2–4 são fixados na criação; presença temporária e equipamentos não os reduzem. A sala só começa após todos guardarem o manifesto. Ausência interrompe a simulação/relógio até o retorno. Jornada cooperativa não vira solo. Cinco takes por nova jornada, pular/rever, início na base existente. [Entrega e evidências](prologue-menu/README.md).
+
+### Revisão do fluxo e da cinemática — 15/10/2026 · 0.1.101
+
+Nome/apresentação do personagem primeiro; dificuldade numa tela seguinte, com apenas os três nomes aprovados. Confirmar começa a campanha sem uma volta ao menu. O prólogo passou de cartões a um MP4 original de 19,6 s, sem texto sobreposto. A seleção desenha a pose completa pintada do Astral e do **Domador de feras**, sem duplicar os braços com rig articulado por cima. [Evidências e capturas](prologue-menu/README.md).
 
 ## 5. Validação, compatibilidade e limites
 
@@ -183,10 +187,10 @@ Decisão do usuário em 09/10/2026: cada sprint deve terminar com um link espec�
 - [x] **Etapa 3 — Base e economia:** base, NPCs próprios, atlas, receitas, cofre, poções e retorno/retomada. Revisão 0.1.88 explicitamente validada pelo usuário antes da etapa 4. [Relatório/teste](base-economy/README.md).
 - [ ] **Etapa 4 — Progressão e ameaça:** entrega técnica 0.1.89: curva regional fixa, revisão de recompensas/custos, morte perde 10% dos créditos, auditoria do visitante cooperativo. [Relatório/teste](progression-threat/README.md). Validação humana pendente; o usuário autorizou executar a etapa 5 durante sua viagem sem aguardar esse playtest.
 - [x] **Etapa 5 — Astral:** kit/elementos e afinidades bem recebidos pelo usuário nas revisões 0.1.91–0.1.93; braços/apresentação aprovados após a revisão 0.1.98. [Relatório/teste](astral/README.md). QA solo/dupla local; avaliação geral de dificuldade da etapa 4 permanece pendente.
-- [ ] **Interlúdio 5A — Caldeira:** entrega técnica 0.1.94, autorizada antes do Vinculador. Região vulcânica e boss gigante mineral de lava; campanha, dupla local e três kits validados automaticamente. [Entrega e QA](caldera/README.md). Aguardar aprovação humana de visual/ritmo/dificuldade.
-- [x] **Etapa 6 — Vinculador:** kit/companheiro bem recebidos pelo usuário, seguidos de rejeição dos braços; revisão 0.1.98 aprovada em 14/10/2026 (“agora sim perfeito!”). [Relatório e teste](xenobinder/README.md). QA solo/dupla local; quatro participantes e publicação coordenada das salas pertencem à etapa 7.
+- [ ] **Interlúdio 5A — Caldeira:** entrega técnica 0.1.94, autorizada antes do Domador de feras. Região vulcânica e boss gigante mineral de lava; campanha, dupla local e três kits validados automaticamente. [Entrega e QA](caldera/README.md). Aguardar aprovação humana de visual/ritmo/dificuldade.
+- [x] **Etapa 6 — Domador de feras:** kit/companheiro bem recebidos pelo usuário, seguidos de rejeição dos braços; revisão 0.1.98 aprovada em 14/10/2026 (“agora sim perfeito!”). [Relatório e teste](xenobinder/README.md). QA solo/dupla local; quatro participantes e publicação coordenada das salas pertencem à etapa 7.
 - [ ] **Etapa 7 — Equipe de quatro:** entrega técnica 0.1.99, lobby e quatro classes exclusivas, estado/recibos individuais e campanha/bosses. Frontend/relay protocolo 10 publicados; QA público de quatro sessões Chrome passou em 14/10/2026. [Relatório/teste](party-four/README.md). Aguardar playtest humano antes do prólogo.
-- [ ] **Etapa 8 — Prólogo:** entrega técnica 0.1.100: cinco takes originais, chegada à base existente, menus, dificuldades e campanhas de equipe fixa. [Regras, QA e teste reservado](prologue-menu/README.md). Aguardar avaliação humana; presença de refugiados após o Warden reutiliza a base já existente.
+- [ ] **Etapa 8 — Prólogo:** entrega técnica 0.1.101: cinemática MP4 contínua, chegada à base existente, menus, dificuldades em telas separadas e campanhas de equipe fixa. [Regras, QA e teste reservado](prologue-menu/README.md). Aguardar avaliação humana do ritmo e dos retratos; presença de refugiados após o Warden reutiliza a base já existente.
 
 ### Registro inicial — Etapa 0
 
@@ -280,21 +284,21 @@ Manifestações de 0.1.91 aprovadas pelo usuário (“Gostei bastante”). Solic
 
 ### Perfis de todas as espécies — 0.1.93
 
-Revisão de 0.1.92 bem recebida; o usuário ampliou explicitamente a regra para todas as criaturas e pediu resistência à água nos glaciais. Configuração obrigatória para as 13 espécies, incluindo bosses: uma fraqueza (+25%), uma resistência (−25%) e dois elementos neutros. Mesma regra por alvo no solo e na dupla; setas ↑/↓ e perfis no bestiário. [Tabela, QA e teste reservado](astral/species-profiles/README.md). Não há combinações encadeadas, imunidades, novos ataques ou antecipação de outra etapa. **Validar esta matriz e as pendências da etapa 4 antes do Vinculador.**
+Revisão de 0.1.92 bem recebida; o usuário ampliou explicitamente a regra para todas as criaturas e pediu resistência à água nos glaciais. Configuração obrigatória para as 13 espécies, incluindo bosses: uma fraqueza (+25%), uma resistência (−25%) e dois elementos neutros. Mesma regra por alvo no solo e na dupla; setas ↑/↓ e perfis no bestiário. [Tabela, QA e teste reservado](astral/species-profiles/README.md). Não há combinações encadeadas, imunidades, novos ataques ou antecipação de outra etapa. **Validar esta matriz e as pendências da etapa 4 antes do Domador de feras.**
 
 ### Mudança autorizada de prioridade — Caldeira · 0.1.94
 
-O usuário confirmou que os perfis elementais funcionam e, antes da etapa 6, solicitou uma região vulcânica caminhável. Aprovou a proposta de Caldeira após Vésper e acrescentou explicitamente um boss semelhante em escala a um gigante de lava. Interlúdio 5A: caminhos de basalto, dois desvios, registro ancestral, mecanismo, checkpoint, arena e O Incandescente, criatura original. Reutilizar kit/economia/colisões/rede; conservar os limites atuais de nível/classes/participantes. Próxima ordem autorizada: **Caldeira → playtest humano → Vinculador → equipe de quatro → prólogo**. Pendências de avaliação geral da etapa 4 continuam registradas. Não copiar conteúdo/arte/layout de jogos citados como referências.
+O usuário confirmou que os perfis elementais funcionam e, antes da etapa 6, solicitou uma região vulcânica caminhável. Aprovou a proposta de Caldeira após Vésper e acrescentou explicitamente um boss semelhante em escala a um gigante de lava. Interlúdio 5A: caminhos de basalto, dois desvios, registro ancestral, mecanismo, checkpoint, arena e O Incandescente, criatura original. Reutilizar kit/economia/colisões/rede; conservar os limites atuais de nível/classes/participantes. Próxima ordem autorizada: **Caldeira → playtest humano → Domador de feras → equipe de quatro → prólogo**. Pendências de avaliação geral da etapa 4 continuam registradas. Não copiar conteúdo/arte/layout de jogos citados como referências.
 
 ### Revisão de escopo — expedição vulcânica · 0.1.95
 
-O usuário considerou a 0.1.94 insuficiente por ter apenas um mapa com boss e moradores reutilizados. Solicitou **pelo menos três mapas até o boss e monstros autênticos do ambiente**. Costa das Cinzas e Garganta de Obsidiana antecedem as Forjas, com três espécies novas, 24 habitantes, seis desvios e registros que revelam passagem. Incandescente preservado no final. [Entrega, arte e QA](caldera/expansion/README.md). Não interpretar a revisão anterior como aprovação humana; aguardar playtest desta expedição antes do Vinculador.
+O usuário considerou a 0.1.94 insuficiente por ter apenas um mapa com boss e moradores reutilizados. Solicitou **pelo menos três mapas até o boss e monstros autênticos do ambiente**. Costa das Cinzas e Garganta de Obsidiana antecedem as Forjas, com três espécies novas, 24 habitantes, seis desvios e registros que revelam passagem. Incandescente preservado no final. [Entrega, arte e QA](caldera/expansion/README.md). Não interpretar a revisão anterior como aprovação humana; aguardar playtest desta expedição antes do Domador de feras.
 
 ### Encerramento vulcânico e avanço autorizado — etapa 6 · 0.1.96
 
-Em 13/10/2026, o usuário solicitou explicitamente revisar/commitar a tarefa vulcânica e implementar imediatamente o Vinculador, com o kit descrito no plano. Essa autorização supera a espera operacional anterior; não equivale a aprovação visual da expedição por automação. Revisão vulcânica encerrada em `83cf3a6`, após `95f9bfa`, ambas em origin/main.
+Em 13/10/2026, o usuário solicitou explicitamente revisar/commitar a tarefa vulcânica e implementar imediatamente o Domador de feras, com o kit descrito no plano. Essa autorização supera a espera operacional anterior; não equivale a aprovação visual da expedição por automação. Revisão vulcânica encerrada em `83cf3a6`, após `95f9bfa`, ambas em origin/main.
 
-Vinculador: humano de expedição com condutor vivo e uma criatura original permanente; FOLLOW/ASSIST/COMMAND/RETURN, assistência somente ao alvo acertado, Vínculo acumulado em combate, Q hold/aim/release com investida e recuperação próxima limitada. Corpo/armas/companheiro raster original offline, equipamento por partes e mesma infraestrutura de combate/campanha/dupla. Protocolo 9; não antecipar quatro jogadores ou prólogo. [Entrega e QA](xenobinder/README.md). **Aguardar validação humana da etapa 6 antes da etapa 7.**
+Domador de feras: humano de expedição com condutor vivo e uma criatura original permanente; FOLLOW/ASSIST/COMMAND/RETURN, assistência somente ao alvo acertado, Vínculo acumulado em combate, Q hold/aim/release com investida e recuperação próxima limitada. Corpo/armas/companheiro raster original offline, equipamento por partes e mesma infraestrutura de combate/campanha/dupla. Protocolo 9; não antecipar quatro jogadores ou prólogo. [Entrega e QA](xenobinder/README.md). **Aguardar validação humana da etapa 6 antes da etapa 7.**
 
 ### Revisão solicitada dos dois rigs — 0.1.97
 

@@ -1,4 +1,4 @@
-# Astral e Vinculador — auditoria de movimento · 0.1.97
+# Astral e Domador de feras — auditoria de movimento · 0.1.97
 
 **Rejeitada em playtest humano:** o usuário apontou braços fragmentados na captura de 14/10/2026. Os testes geométricos não validavam a anatomia da pintura. [Revisão 02 — 0.1.98](revision-02/README.md).
 
@@ -7,7 +7,7 @@ O usuário gostou do kit, mas rejeitou braços e caminhada dos dois personagens 
 ## Testar diretamente
 
 - [Astral / roupa inicial](https://echosofdante.vercel.app/astral-playtest.html?motion=1&kit=initial&v=0.1.97)
-- [Vinculador / roupa inicial](https://echosofdante.vercel.app/xenobinder-playtest.html?motion=1&kit=initial&v=0.1.97)
+- [Domador de feras / roupa inicial](https://echosofdante.vercel.app/xenobinder-playtest.html?motion=1&kit=initial&v=0.1.97)
 
 O mesmo rig está no jogo principal. Os laboratórios isolam as chaves de saves e permitem trocar região, apresentação e equipamento. Recolha o painel para jogar.
 
@@ -47,7 +47,7 @@ A representação continua ilustrada Organic Sci-Fi/D. Guerreiro e Hunter não r
 Gravações com teclado/mouse reais em Chrome:
 
 - [Astral: caminhar, recuar, atacar, mirar e carregar](visual/astral-motion.webm)
-- [Vinculador: caminhar, recuar, atacar, mirar e carregar](visual/xenobinder-motion.webm)
+- [Domador de feras: caminhar, recuar, atacar, mirar e carregar](visual/xenobinder-motion.webm)
 
 As capturas anteriores incluem a oscilação de transparência de uma fixture de invulnerabilidade; as novas usam apresentação opaca. São evidência anatômica, não comparação pixel a pixel de opacidade.
 
@@ -74,7 +74,7 @@ Amostras isoladas com dez segundos de aquecimento, Floresta/Cavern/Caldeira e co
 - FPS suavizado: **59.13–59.38**.
 - Atualizações efetivamente contadas: aproximadamente **59.8–60.25 FPS**.
 - Objetos/tweens estáveis durante cada amostra.
-- Três respawns cooperativos: **397 objetos, 244 texturas, 25 tweens e um companheiro** em todos os ciclos do teste do Vinculador.
+- Três respawns cooperativos: **397 objetos, 244 texturas, 25 tweens e um companheiro** em todos os ciclos do teste do Domador de feras.
 - Um objeto adicional por rig para a mão livre; seis texturas pequenas novas. Atlas do corpo aumenta de quatro para cinco colunas. Nenhuma textura é criada por passada, nenhum tween de braço é acumulado e nenhum desenho de roupa acontece por frame.
 
 [Benchmark atual](performance/report.json) · [Benchmark anterior](../xenobinder/world/performance.json). FPS de QA com múltiplas janelas e carregamento não é usado como benchmark isolado.

@@ -1,32 +1,34 @@
 # Echoes of Dante
 
-## Campanhas e chegada a Dante · 0.1.100
+## Novo jogo e cinemática de chegada · 0.1.101
 
-Início com **Jogar / Configurações**. Cada personagem possui sua jornada solo ou cooperativa e dificuldade fixa: **Fezes puríssima**, **Marromenos** ou **Chama 🔥**. Novos personagens recebem cinco takes ilustrados e começam na base. O prólogo pode ser pulado e revisto.
+Novo jogo agora segue uma ordem clara: **escolha classe, nome e apresentação → escolha a dificuldade → comece a expedição**. A dificuldade aparece numa tela própria, com somente **Fezes puríssima**, **Marromenos** e **Chama 🔥**. Confirmar cria o personagem e inicia a jornada sem voltar ao menu.
+
+A chegada a Dante é um vídeo MP4 contínuo, sem cartões nem texto sobre a imagem. O seletor de personagem também deixou de desenhar braços articulados por cima dos braços já pintados nos corpos do Astral e do Domador; os itens são posicionados na pose natural do retrato. O jogo chama a classe de **Domador de feras**.
 
 No cooperativo, o anfitrião escolhe uma equipe de **2–4 classes diferentes**. Para continuar, **todos os personagens originais precisam retornar**; sem substituição ou conversão em solo. Se faltar alguém, o mundo e seu relógio param. A vida, o dano e algumas reservas de inimigos consideram a dificuldade e o tamanho fixo do grupo.
 
-[Testar esta entrega sem alterar seus personagens](https://echosofdante.vercel.app/campaign-playtest.html?v=0.1.100) · [Regras, arte, QA e limitações](docs/prologue-menu/README.md). Cliente e servidor de salas requerem **protocolo 11**. Saves continuam locais ao navegador; o laboratório usa somente dados temporários da aba. Avaliação humana da introdução e do balanceamento permanece necessária.
+[Testar esta entrega sem alterar seus personagens](https://echosofdante.vercel.app/campaign-playtest.html?v=0.1.101) · [Regras, arte, QA e limitações](docs/prologue-menu/README.md). Cliente e servidor de salas requerem **protocolo 11**. Saves continuam locais ao navegador; o laboratório usa somente dados temporários da aba. Avaliação humana do vídeo e dos retratos permanece necessária.
 
 ## Expedição de quatro — etapa 7 · 0.1.99
 
-Guerreiro, Hunter, Astral e Vinculador na mesma sala, uma pessoa por classe. Convites pedem a escolha de personagem e mostram vagas; cada integrante mantém equipamento, recursos, poções, recargas e recompensas pessoais. Todos podem investigar e atravessar portais; menus pessoais não pausam a equipe. Campanha e bosses continuam sob autoridade do anfitrião, com reconexão e reinício coletivo.
+Guerreiro, Hunter, Astral e Domador de feras na mesma sala, uma pessoa por classe. Convites pedem a escolha de personagem e mostram vagas; cada integrante mantém equipamento, recursos, poções, recargas e recompensas pessoais. Todos podem investigar e atravessar portais; menus pessoais não pausam a equipe. Campanha e bosses continuam sob autoridade do anfitrião, com reconexão e reinício coletivo.
 
 [Teste reservado da equipe](https://echosofdante.vercel.app/party-playtest.html?region=base&kit=basic&v=0.1.99) · [Regras, QA e limitações](docs/party-four/README.md). Quatro personagens temporários preservam seus saves reais. O serviço de salas precisa do protocolo **10**. Aguardar playtest humano antes da etapa 8 — prólogo.
 
-## Braços — Astral e Vinculador · revisão 02 · 0.1.98
+## Braços — Astral e Domador de feras · revisão 02 · 0.1.98
 
 A revisão anterior foi rejeitada em playtest humano. Agora as articulações são medidas na pintura, os sprites mantêm suas proporções e o braço livre assume uma postura relaxada. Mangas/antebraços/mãos repintados, punho do condutor corrigido e manopla alinhada ao antebraço. Mesma correção no jogo, na dupla e no menu; nenhuma regra de combate alterada.
 
-[Testar Astral](https://echosofdante.vercel.app/astral-playtest.html?motion=1&kit=initial&v=0.1.98) · [Testar Vinculador](https://echosofdante.vercel.app/xenobinder-playtest.html?motion=1&kit=initial&v=0.1.98) · [Revisão e capturas](docs/caster-motion-audit/revision-02/README.md). O painel abre recolhido. Saves reais preservados. Visual aprovado pelo usuário em 14/10/2026; próxima etapa: cooperativo de quatro jogadores.
+[Testar Astral](https://echosofdante.vercel.app/astral-playtest.html?motion=1&kit=initial&v=0.1.98) · [Testar Domador de feras](https://echosofdante.vercel.app/xenobinder-playtest.html?motion=1&kit=initial&v=0.1.98) · [Revisão e capturas](docs/caster-motion-audit/revision-02/README.md). O painel abre recolhido. Saves reais preservados. Visual aprovado pelo usuário em 14/10/2026; próxima etapa: cooperativo de quatro jogadores.
 
 ## Auditoria de movimento — histórico rejeitado · 0.1.97
 
 Braços ligados aos ombros de cada vestimenta, cotovelos com comprimentos constantes, mão livre visível e instrumento registrado pelo punho. Caminhada com poses completas das pernas e alternância de apoio; equipamento mantém o corpo completo durante básico e Q. Mesmo rig no solo, na dupla e no mostruário.
 
-[Testar Astral](https://echosofdante.vercel.app/astral-playtest.html?motion=1&kit=initial&v=0.1.97) · [Testar Vinculador](https://echosofdante.vercel.app/xenobinder-playtest.html?motion=1&kit=initial&v=0.1.97) · [Auditoria, capturas e gravações](docs/caster-motion-audit/README.md). Personagens temporários; saves reais preservados. Kit, valores, controles e campanha permanecem iguais. **Aguardar avaliação humana dos braços e da caminhada antes da etapa 7.**
+[Testar Astral](https://echosofdante.vercel.app/astral-playtest.html?motion=1&kit=initial&v=0.1.97) · [Testar Domador de feras](https://echosofdante.vercel.app/xenobinder-playtest.html?motion=1&kit=initial&v=0.1.97) · [Auditoria, capturas e gravações](docs/caster-motion-audit/README.md). Personagens temporários; saves reais preservados. Kit, valores, controles e campanha permanecem iguais. **Aguardar avaliação humana dos braços e da caminhada antes da etapa 7.**
 
-## Vinculador de Dante — etapa 6 · 0.1.96
+## Domador de feras — etapa 6 · 0.1.96
 
 Quarta classe jogável: condutor simbiótico e companheiro permanente original. O básico marca assistência; acertos de ambos acumulam **Vínculo**. **Q / LT / COMANDO: segurar → mirar → soltar** comanda uma investida e um pulso curto de recuperação para aliados vivos próximos ao ponto de chegada. Custo 35, recarga 6 s; não revive. Apresentações masculina/feminina, vestimentas e armas próprias, equipamentos visíveis e mesma campanha/input.
 
@@ -36,13 +38,13 @@ Quarta classe jogável: condutor simbiótico e companheiro permanente original. 
 
 O percurso agora é **Vésper → Costa das Cinzas → Garganta de Obsidiana → Forjas da Caldeira → Incandescente**. Três mapas exploráveis com registros, seis desvios e 24 habitantes em grupos separados. Rasga-brasa, Fole de Magma e Dorso de Basalto possuem pinturas, poses, anatomias e ataques próprios; nenhum habitante do Siroco ocupa esses mapas. Dois pisos e duas trilhas originais novos. Saves antigos, classes, equipamentos, câmera e boss preservados.
 
-[Começar a expedição](https://echosofdante.vercel.app/caldera-playtest.html?kit=advanced&v=0.1.95) · [Arte, percurso e testes](docs/caldera/expansion/README.md). Laboratório começa na Costa e preserva seus personagens. Dupla integrada ao percurso; servidor público exige protocolo 8. Aguardar playtest humano antes do Vinculador.
+[Começar a expedição](https://echosofdante.vercel.app/caldera-playtest.html?kit=advanced&v=0.1.95) · [Arte, percurso e testes](docs/caldera/expansion/README.md). Laboratório começa na Costa e preserva seus personagens. Dupla integrada ao percurso; servidor público exige protocolo 8. Aguardar playtest humano antes do Domador de feras.
 
 ## Caldeira de Dante + O Incandescente · 0.1.94
 
 Após Vésper e o registro do Ninho, um portal leva à Caldeira: basalto caminhável, dois desvios, habitantes térmicos e um registro ancestral que abre o limiar do **Incandescente**. Boss original de lava/mineral, três fases e quatro ataques anunciados; checkpoint próximo, 260 XP e um domínio único. Água é vantagem, fogo é resistência. Arte raster e duas trilhas originais produzidas offline; classes, câmera e controles preservados.
 
-[Explorar diretamente](https://echosofdante.vercel.app/caldera-playtest.html?kit=advanced&v=0.1.94) · [Testar o boss](https://echosofdante.vercel.app/caldera-playtest.html?boss=1&kit=basic&v=0.1.94) · [Arte, testes e limitações](docs/caldera/README.md). Personagens temporários preservam sua campanha. Coop validado com duas instâncias Chrome e WebSockets locais; publicação das salas exige relay protocolo 7. **Aguardar playtest humano antes do Vinculador.**
+[Explorar diretamente](https://echosofdante.vercel.app/caldera-playtest.html?kit=advanced&v=0.1.94) · [Testar o boss](https://echosofdante.vercel.app/caldera-playtest.html?boss=1&kit=basic&v=0.1.94) · [Arte, testes e limitações](docs/caldera/README.md). Personagens temporários preservam sua campanha. Coop validado com duas instâncias Chrome e WebSockets locais; publicação das salas exige relay protocolo 7. **Aguardar playtest humano antes do Domador de feras.**
 
 ## Fraquezas e resistências de todas as espécies · 0.1.93
 
@@ -60,7 +62,7 @@ O ataque básico agora usa o elemento escolhido: raio, bola de fogo, rajada de �
 
 Terceira classe jogável: manopla, pulso de médio alcance, Energia Astral e campos de energia/fogo/água/terra. **F / Y / botão** alterna elemento; **Q / LT / CAMPO: segurar → mirar → soltar**. Apresentações masculina/feminina, equipamento e campanha solo/dupla. [Relatório e arte](docs/astral/README.md) · [Teste reservado](https://echosofdante.vercel.app/astral-playtest.html?region=forest&kit=basic&sex=female&v=0.1.90). Frontend e relay exigem protocolo 6; a sala permanece limitada a dois jogadores.
 
-Execução autorizada pelo usuário durante sua viagem; playtests humanos das etapas 4/5 pendentes. O Vinculador ainda não é jogável.
+Execução autorizada pelo usuário durante sua viagem; playtests humanos das etapas 4/5 pendentes. O Domador de feras ainda não é jogável.
 
 ## Progressão e cooperativo — etapa 4 · 0.1.89
 
@@ -68,7 +70,7 @@ Curva de ameaça por região, XP regional, penalidade de morte de 10% dos crédi
 
 ## Fundação do RPG — plano aprovado
 
-[Plano de implementação e checklist](docs/RPG_FOUNDATION_ROADMAP.md): personagens modulares, equipamentos visíveis, inventário, base de pouso, economia, Astral, Vinculador, cooperativo de quatro jogadores e prólogo. **Etapas 0–3 aprovadas; etapas 4/5 aguardam avaliação humana.** As funcionalidades futuras estão identificadas como planejadas.
+[Plano de implementação e checklist](docs/RPG_FOUNDATION_ROADMAP.md): personagens modulares, equipamentos visíveis, inventário, base de pouso, economia, Astral, Domador de feras, cooperativo de quatro jogadores e prólogo. **Etapas 0–3 aprovadas; etapas 4/5 aguardam avaliação humana.** As funcionalidades futuras estão identificadas como planejadas.
 
 ## Expedição glacial · 0.1.76
 

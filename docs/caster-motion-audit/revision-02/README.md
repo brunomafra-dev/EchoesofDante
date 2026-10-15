@@ -1,10 +1,10 @@
-# Braços do Astral e Vinculador — revisão 02 · 0.1.98
+# Braços do Astral e Domador de feras — revisão 02 · 0.1.98
 
 A captura do usuário rejeitou os braços da 0.1.97. As posições matemáticas se encontravam, mas a pintura apresentava punhos/cortes artificiais, mãos comprimidas e cotovelos muito abertos. A validação anterior não verificava esses defeitos.
 
 ## Teste reservado
 
-[Astral](https://echosofdante.vercel.app/astral-playtest.html?motion=1&kit=initial&v=0.1.98) · [Vinculador](https://echosofdante.vercel.app/xenobinder-playtest.html?motion=1&kit=initial&v=0.1.98).
+[Astral](https://echosofdante.vercel.app/astral-playtest.html?motion=1&kit=initial&v=0.1.98) · [Domador de feras](https://echosofdante.vercel.app/xenobinder-playtest.html?motion=1&kit=initial&v=0.1.98).
 
 Mesma correção no jogo principal, menu e dupla. O painel abre recolhido; clique no resumo para trocar apresentação, roupa e região. Saves reais preservados.
 
@@ -17,7 +17,7 @@ Mesma correção no jogo principal, menu e dupla. O painel abre recolhido; cliqu
 - Braço livre próximo ao corpo; antebraço de lançamento e manopla no mesmo eixo.
 - Elevação interpolada ao girar a mira, sem salto de limiar.
 - Manga sob o torso, evitando duplicar a ombreira já pintada.
-- Origem do condutor do Vinculador movida da manga para o punho.
+- Origem do condutor do Domador de feras movida da manga para o punho.
 - Mesmas proporções e pontos no mostruário.
 
 Corpos, passadas, cabeças, kit, dano, recursos, controles, IA, mapas, câmera e protocolo preservados. Instrumentos conservam a pintura; corrigimos seu encaixe. O offset do projétil continua exclusivamente visual.
@@ -26,7 +26,7 @@ Corpos, passadas, cabeças, kit, dano, recursos, controles, IA, mapas, câmera e
 
 [Antes/depois](comparison.jpg) · [Frente/costas/perfil e Q](qa/).
 
-[Movimento do Astral](visual/astral-motion.webm) · [Movimento do Vinculador](visual/xenobinder-motion.webm).
+[Movimento do Astral](visual/astral-motion.webm) · [Movimento do Domador de feras](visual/xenobinder-motion.webm).
 
 Arte original com imagegen integrado; [prompts](illustration-prompts.md), fontes em `source-art/`, preparação offline com `scripts/prepare-caster-motion.py`. Seis atlases **384×256**, seis frames por textura. Corpos mantêm 1280×768. Nenhum objeto, tween ou processo de geração acrescentado em runtime.
 
@@ -45,7 +45,7 @@ Uma execução cooperativa foi descartada após um reload do laboratório durant
 
 ## Performance e limites
 
-[Benchmark](performance/report.json): aproximadamente **59–60 FPS** após aquecimento, comparando Guerreiro/Astral/Vinculador na Floresta. Objetos/tweens estáveis. Nos três respawns cooperativos: 397 objetos, 244 texturas, 25 tweens e um companheiro em todos os ciclos.
+[Benchmark](performance/report.json): aproximadamente **59–60 FPS** após aquecimento, comparando Guerreiro/Astral/Domador de feras na Floresta. Objetos/tweens estáveis. Nos três respawns cooperativos: 397 objetos, 244 texturas, 25 tweens e um companheiro em todos os ciclos.
 
 Sprites articulados com três vistas; não é um esqueleto 3D. Sem teste físico em celular/gamepad. Dupla validada no relay local protocolo 9; a pendência anterior do Render não é resolvida por esta alteração visual.
 

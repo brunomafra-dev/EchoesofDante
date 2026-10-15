@@ -1,4 +1,4 @@
-# Vinculador — valores iniciais, etapa 6
+# Domador de feras — valores iniciais, etapa 6
 
 Registro antes da implementação do kit. Reutilizar dano, equipamento, movimento, Health, Enemy e Q existentes; os valores abaixo pertencem somente à nova classe.
 

@@ -18,7 +18,7 @@ O laboratório reutiliza o jogo e inicia uma jornada temporária na Floresta. N�
 
 - Masculino/feminino para Guerreiro e Hunter; mesmos atributos e kit por classe.
 - Saves sem sexo preservam Guerreiro masculino e Hunter feminino. Campo aditivo no schema 1; nenhuma jornada é apagada.
-- Registro das quatro classes: Guerreiro, Hunter, Astral e Vinculador. As duas últimas continuam indisponíveis.
+- Registro das quatro classes: Guerreiro, Hunter, Astral e Domador de feras. As duas últimas continuam indisponíveis.
 - Um conjunto piloto de torso com frente/costas/lado e uma arma por classe. Os itens existentes dos três níveis reutilizam esse conjunto; ainda não há aparência única por tier.
 - Corpo ilustrado, torso sobreposto, braços articulados e arma com pivôs existentes. Ordenação acompanha frente/costas/lado, conservando ambas as mãos.
 - Itens equipados aparecem no jogo e nos atores cooperativos. A prévia de criação mostra o corpo básico; a comparação de equipamentos ocorre no laboratório e em jogo.

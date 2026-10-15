@@ -2,7 +2,7 @@
 
 Entrega histórica. A expansão vigente é a [expedição de três mapas com criaturas originais — 0.1.95](expansion/README.md); o laboratório sem parâmetros agora começa na Costa das Cinzas.
 
-Interlúdio 5A autorizado pelo usuário antes do Vinculador. Uma região vulcânica caminhável após Vésper, com exploração e um boss original. Mantém Organic Sci-Fi R3/referência D, classes, controles, câmera, economia e nível máximo 10.
+Interlúdio 5A autorizado pelo usuário antes do Domador de feras. Uma região vulcânica caminhável após Vésper, com exploração e um boss original. Mantém Organic Sci-Fi R3/referência D, classes, controles, câmera, economia e nível máximo 10.
 
 ## Teste reservado
 
@@ -41,7 +41,7 @@ HP inicial 950 × fator regional 1,8 = **1710 solo**; dupla usa o fator existent
 
 ## Recompensa e consequência
 
-Vitória concede **260 XP e um ponto de domínio único**, usando bossRewards; material âmbar/créditos e acessório pessoal garantido do catálogo atual. Nenhum conjunto novo foi criado. Corpo colapsa, energia se perde e o registro térmico responde: o Signal atravessa a crosta e outras câmaras respondem. Não revela a origem de Dante nem inicia o Vinculador.
+Vitória concede **260 XP e um ponto de domínio único**, usando bossRewards; material âmbar/créditos e acessório pessoal garantido do catálogo atual. Nenhum conjunto novo foi criado. Corpo colapsa, energia se perde e o registro térmico responde: o Signal atravessa a crosta e outras câmaras respondem. Não revela a origem de Dante nem inicia o Domador de feras.
 
 Morte cobra os 10% atuais dos créditos e preserva XP/equipamento/materiais. Reinício retorna ao checkpoint; HP/fase/ataques/timers/VFX do boss são reconstruídos uma vez. Após vitória, ele não reaparece na sessão/save. Na dupla, um sobrevivente mantém o combate; ambos caídos reiniciam, e vitória recupera aliados caídos.
 
@@ -69,7 +69,7 @@ Resultados em [QA da região](qa/report.json), [combates completos](normal-fight
 
 Sem teste físico de iPhone/gamepad. Movimento de perseguição direta permanece: habitantes podem ficar junto de rochas, sem pathfinding novo. A câmera continua seguindo o jogador; kiting muito distante pode deixar parte do corpo do boss fora da tela, mantendo barra e avisos dirigidos ao jogador. Os habitantes permanecem nos limites do mapa durante a luta, sem serem puxados para a arena pela restrição do jogador.
 
-**Automação não aprova diversão, autenticidade visual ou dificuldade. Playtest humano necessário.** Após esta expansão validada, retornar à etapa 6 — Vinculador; não iniciar a próxima classe nesta entrega.
+**Automação não aprova diversão, autenticidade visual ou dificuldade. Playtest humano necessário.** Após esta expansão validada, retornar à etapa 6 — Domador de feras; não iniciar a próxima classe nesta entrega.
 
 ## Publicação e arquivos
 
