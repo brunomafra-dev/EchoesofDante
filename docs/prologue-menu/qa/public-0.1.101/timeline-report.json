@@ -1,0 +1,20 @@
+{
+  "base": "https://echosofdante.vercel.app",
+  "method": "Compiled browser build: New Game creates the selected profile and starts one original MP4 cinematic.",
+  "errors": [],
+  "video": {
+    "source": "/assets/prologue/arrival-trailer.mp4",
+    "duration": 19.583333,
+    "currentTime": 0.77302,
+    "paused": false,
+    "captions": 0
+  },
+  "saved": {
+    "name": "AL Cinemática",
+    "classId": "warrior",
+    "difficulty": "normal",
+    "introSeen": true,
+    "area": "base"
+  },
+  "passed": true
+}

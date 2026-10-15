@@ -113,3 +113,9 @@ Esta entrega exige **protocolo 11** no relay e cliente correspondente. Se o Rend
 **Cooperativo público pendente de infraestrutura.** Requisições ao `/coop/health` público expiraram. O [incidente oficial do Render](https://status.render.com/incidents/8tsd93r1wbmz) permanece identificado: builds/deploys não iniciam em todas as regiões e deploys de serviços gratuitos estão pausados. [Estado consultado e fontes](qa/public/deployment.json). Não foi possível confirmar o protocolo 11 na hospedagem nem executar quatro amigos no relay público; os testes de quatro da build compilada usaram o relay local real.
 
 Após a recuperação do serviço, conferir `/coop/health` com protocolo 11 e executar `QA_BASE=https://echosofdante.vercel.app` e `QA_OUT=docs/prologue-menu/qa/public-coop` com `node scripts/qa-campaign-production.mjs`, sem `QA_NO_COOP`. Isso valida quatro navegadores no endereço público. A pendência é de publicação/verificação, sem requerer mudança adicional de gameplay ou avançar outra etapa do plano.
+
+### Verificação pública da revisão 0.1.101 — 15/10/2026
+
+O deploy Vercel do commit `6b9af3ec1b3c9e2f8765a14def359e63dbc5767b` concluiu. O vídeo respondeu com HTTP 200, tipo `video/mp4` e 2.686.953 bytes. [Smoke público](qa/public-0.1.101/report.json) passou no fluxo de nova campanha, dificuldade, cinemática, entrada na base, menu oficial, touch e gamepad; [teste da reprodução](qa/public-0.1.101/timeline-report.json) confirmou 19,58 s, avanço do vídeo e ausência de texto sobreposto. Sem erros JS ou de assets. Essa rodada excluiu deliberadamente o relay cooperativo; a alteração não mudou o protocolo.
+
+O teste público está disponível em [campaign-playtest.html?v=0.1.101](https://echosofdante.vercel.app/campaign-playtest.html?v=0.1.101) e pela [Biblioteca de testes](https://echosofdante.vercel.app/test-library.html). Playtest humano continua recomendado para avaliar a abertura e os retratos.
