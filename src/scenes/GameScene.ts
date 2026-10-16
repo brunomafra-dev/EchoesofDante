@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import {CoopNames} from '../visual/CoopNames';
 import { tuneEnemy,regionalThreat,deathCreditLoss } from '../config/threat';
 import { DIFFICULTIES, difficultyId, partyThreat } from '../config/difficulty';
 import { PARTY_ENCOUNTERS } from '../config/partyEncounters';
@@ -625,6 +626,7 @@ export class GameScene extends Phaser.Scene {
       this.time.delayedCall(350, () => this.showAvailableUpgrade());
     }
     this.party = this.qualityReference || this.glacierPlaytest ? undefined : new PartyExpedition(this, () => this.partyBridge());
+    new CoopNames(this,()=>{const players=this.party?.presentations??new Map();players.set(coopSession.id,this.player);return players;});
     this.loot=new EquipmentDrops(this,coopSession.role==='guest'?coopSession.id:'host');
     this.equipmentDialog=new EquipmentDialog(this,()=>this.equipment.snapshot(),(slot,id,uid)=>this.equipItem(slot,id,uid),()=>this.closeEquipment(),()=>this.openEquipment(),this.classId);
     this.resources=new ResourceDrops(this,coopSession.role==='guest'?coopSession.id:'host');
@@ -871,7 +873,7 @@ export class GameScene extends Phaser.Scene {
     if (this.player.isDead) {
       this.hunter?.clear();this.astral?.clear();if(this.xeno){this.xeno.dormant();this.xenoPanel?.update(this.xeno.snapshot(),"READY",true);}this.charge.stop();this.sounds.setMusicFocus(1);
       this.hud.showDeath(waiting,this.deathLoss);
-      if (this.controls.restartPressed || this.party?.takeRestart()) {this.restart();if(!waiting)return;}
+      if ((!this.inputModalOpen&&this.controls.restartPressed) || this.party?.takeRestart()) {this.restart();if(!waiting)return;}
       if(!this.party?.players.some(p=>!p.isDead))return;
     }
     const dt = Math.min(delta / 1000, 0.04);
@@ -2157,7 +2159,8 @@ export class GameScene extends Phaser.Scene {
     this.loot.add(id,enemy.position,'host',this.classId);
     for(const m of coopSession.guests)if(m.connected)this.loot.add(id,enemy.position,m.id,m.profile.classId);
   }
-  private get inputModalOpen():boolean{return !!(this.coopModal||this.equipmentDialog?.isOpen||this.basePanel?.isOpen)}
+  setChatTyping(_typing:boolean):void{this.controls.cancelForRecords();this.charge.stop();this.party?.cancelLocalInput();this.clickedInteraction=false;}
+  private get inputModalOpen():boolean{return !!(coopSession.chatTyping||this.coopModal||this.equipmentDialog?.isOpen||this.basePanel?.isOpen)}
   private bossActive():boolean{if(coopSession.role==='guest')return coopSession.world?.boss?.active===true;const b=this.warden??this.soterrado??this.vesper??this.titan;return !!b&&!b.isDead&&b.state!=='DORMANT';}
   private canReturnBase(position=this.player?.position,participant=this.player):boolean{return this.area!=='base'&&!!position&&!participant.isDead&&!this.bossActive()&&!this.transitioning;}
   private baseTravel(area:JourneyArea,resume=false,participant=this.player):boolean{

@@ -1,3 +1,4 @@
+import {coopSession} from '../network/CoopSession';
 import Phaser from 'phaser';
 import { ABILITY_UPGRADES, type AbilityUpgradeId, type AbilityUpgradeRanks } from '../config/abilityUpgrades';
 
@@ -135,6 +136,7 @@ export class AbilityUpgradeDialog {
     if (!this.isOpen) return;
     const pad = this.readPad();
     const buttons = pad?.buttons.map(button => button.pressed || button.value > 0.5) ?? [];
+    if(coopSession.chatTyping){this.padButtons=buttons;this.frame=requestAnimationFrame(this.pollPad);return;}
     const edge = (index: number) => buttons[index] && !this.padButtons[index];
     if (edge(12) || edge(14)) this.focusBy(-1);
     else if (edge(13) || edge(15)) this.focusBy(1);

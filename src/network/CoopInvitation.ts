@@ -19,6 +19,7 @@ export function invitationLink(code: string): string {
   const url = new URL(lab?filename:import.meta.env.BASE_URL, location.href);
   url.search = ''; url.hash = '';
   url.searchParams.set('sala', code);
+  if(filename==='campaign-playtest.html'&&new URLSearchParams(location.search).has('chat'))url.searchParams.set('chat','1');
   if(lab&&filename!=='campaign-playtest.html'){const params=new URLSearchParams(location.search);url.searchParams.set('region',params.get('region')??(filename==='caldera-playtest.html'?(params.get('boss')==='1'?'caldera':'cinder'):'forest'));url.searchParams.set('kit',params.get('kit')??'basic');url.searchParams.set('class',params.get('class')==='hunter'?'warrior':'hunter');if(params.get('boss')==='1')url.searchParams.set('boss','1');}
   return url.href;
 }

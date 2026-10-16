@@ -69,7 +69,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
     member.timer.unref();
   }
   function joined(room, member) {
-    send(member.ws, { type: 'joined', protocol:11, campaign:campaignState(room),id:member.id, role:member===room.host?'host':'guest', code: room.code, token: member.token, epoch: room.epoch,
+    send(member.ws, { type: 'joined', protocol:12, chatHistory:room.chat, campaign:campaignState(room),id:member.id, role:member===room.host?'host':'guest', code: room.code, token: member.token, epoch: room.epoch,
       area: room.area, members:roster(room), paused: room.paused === true, receipt: member.receipt, total: member.total, bosses:[...member.bosses], items:[...member.items.values()],resources:member.resources });
     notify(room);
   }
@@ -89,7 +89,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
       if(['input','equipment','world','service-request','pause','travel'].includes(m.type))ws.messageTypes[m.type]=(ws.messageTypes[m.type]??0)+1;
       if(m.type==='inspect') {
         const room=rooms.get(String(m.code).replace(/\s/g,'').toUpperCase());
-        return send(ws,room?{type:'lobby',protocol:11,campaign:campaignState(room),members:roster(room),area:room.area}:{type:'error',message:'Sala não encontrada. Peça um novo convite.'});
+        return send(ws,room?{type:'lobby',protocol:12,campaign:campaignState(room),members:roster(room),area:room.area}:{type:'error',message:'Sala não encontrada. Peça um novo convite.'});
       }
       if (m.type === 'resume') {
         if (typeof m.token !== 'string' || !/^[a-f0-9]{48}$/.test(m.token)) return send(ws, { type: 'error', message: 'Credencial de reconexão inválida.' });
@@ -115,7 +115,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
           if (rooms.size >= 64) return send(ws, { type: 'error', message: 'Servidor ocupado.' });
           const code = randomBytes(5).toString('hex').toUpperCase();
           const {id,hostId,difficulty,size,crew}=credentials;
-          const room = { code,campaign:{id,hostId,difficulty,size,crew},started:false,host: seat(ws, p, 'host'), guests: new Map(), area: m.area, epoch: 0, sequence: -1, xp:p.build.xp, bosses:new Set(p.build.bossRewards), loot:new Set(),resourceIds:new Set(),visited:new Set(['base','forest',m.area]) };
+          const room = { code,chat:[],chatSequence:0,campaign:{id,hostId,difficulty,size,crew},started:false,host: seat(ws, p, 'host'), guests: new Map(), area: m.area, epoch: 0, sequence: -1, xp:p.build.xp, bosses:new Set(p.build.bossRewards), loot:new Set(),resourceIds:new Set(),visited:new Set(['base','forest',m.area]) };
           room.host.fingerprint=credentials.fingerprint;
           rooms.set(code, room); ws.room = code; joined(room, room.host);
         } else {
@@ -137,6 +137,19 @@ export function attachCoop(server, { path = '/coop' } = {}) {
       }
       const room = rooms.get(ws.room); if (!room) return;
       const member=members(room).find(p=>p.ws===ws);if(!member)return;
+      // Chat remains available before Start and while the original crew reunites.
+      // The socket owns the author; no supplied name/id/timestamp is trusted.
+      if(m.type==='chat'){
+        if(typeof m.text!=='string'||Array.from(m.text).length>200)return send(ws,{type:'chat-error',message:'Use até 200 caracteres.'});
+        const text=m.text.replace(/[\u0000-\u001f\u007f]/g,' ').trim();
+        if(!text)return send(ws,{type:'chat-error',message:'Escreva uma mensagem.'});
+        const at=Date.now();
+        if(at-(member.chatAt??0)<1000)return send(ws,{type:'chat-error',message:'Aguarde 1 segundo entre mensagens.'});
+        member.chatAt=at;
+        const message={id:room.code+':'+(++room.chatSequence),author:member.id,name:member.profile.name,text,at};
+        room.chat.push(message);if(room.chat.length>100)room.chat.shift();
+        broadcast(room,{type:'chat',message});return;
+      }
       if(m.type==='ready') {member.ready=m.ready===true;notify(room);
       }else if(m.type==='start'&&member===room.host){
         if(room.started)return;
@@ -205,6 +218,6 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   server.once('close', close);
   return {
     close,
-    status: () => ({ service: 'Dante regional co-op', protocol: 11, capacity:4, uniqueClasses:true,fixedCampaigns:true, revision:process.env.RENDER_GIT_COMMIT??'local', campaign: true, rooms: rooms.size, players: clients.size }),
+    status: () => ({ service: 'Dante regional co-op', protocol: 12, chat:true, capacity:4, uniqueClasses:true,fixedCampaigns:true, revision:process.env.RENDER_GIT_COMMIT??'local', campaign: true, rooms: rooms.size, players: clients.size }),
   };
 }

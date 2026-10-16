@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "Lobby chat: authenticated author, relay ID/time, accents and literal HTML; room inspection cannot send",
+    "200 Unicode characters accepted; oversized/empty/rate-limited messages rejected without queued delivery",
+    "Four simultaneous authors get unique IDs; chat survives campaign start and region travel",
+    "Chat works while original crew is missing; authenticated rejoin recovers room history",
+    "History is capped at 100 and resume returns exactly one copy of each retained message",
+    "Ending the room discards its in-memory history"
+  ],
+  "passed": true
+}

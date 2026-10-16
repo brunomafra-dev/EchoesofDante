@@ -6,8 +6,8 @@ Plano aprovado em 16/10/2026. Complementa o [plano da fundação RPG](RPG_FOUNDA
 
 | Ordem | Entrega | Estado |
 | --- | --- | --- |
-| 1 | Personagens completos + início pelo clique na dificuldade | 0.1.102 não aprovada; [correção 0.1.103](character-cohesion/revision-03/README.md); aguardar playtest |
-| 2 | Nomes e chat da equipe | Aguardar validação humana da entrega 1 |
+| 1 | Personagens completos + início pelo clique na dificuldade | [0.1.103](character-cohesion/revision-03/README.md) validada para avançar; pente fino visual posterior |
+| 2 | Nomes e chat da equipe | [0.1.104](party-chat/README.md) implementada; aguardar playtest humano |
 | 3 | Piloto de cinemática; abertura completa após aprovação | Aguardar entrega 2 e aprovação do piloto |
 | 4 | Missões, diálogos e diário desde a chegada | Planejada |
 | 5 | Dois mapas e primeiro núcleo habitável | Planejada |

@@ -29,7 +29,6 @@ export class PartyActor {
  readonly astral?:AstralCombat;
  private astralArt?:AstralArt;
  private readonly art?: HunterArt;
- private readonly label: Phaser.GameObjects.Text;
  private readonly wave: Phaser.GameObjects.Ellipse;
   private pose: SaberPose = { phase:'READY',relativeAngle:-.42,worldAngle:0,swingProgress:0 };
   private now = 0;
@@ -45,7 +44,6 @@ export class PartyActor {
   if(profile.classId==='hunter'){this.hunter=new HunterCombat(scene,rank);this.art=new HunterArt(scene,this.player.view,position.x,position.y,profile.sex);}
   if(profile.classId==='xenobinder'){this.xeno=new XenobinderCombat(scene,rank,position);this.xenoArt=new XenobinderArt(scene,this.player.view,position.x,position.y,this.player.sex);}
   if(profile.classId==='astral'){this.astral=new AstralCombat(scene,rank);this.astralArt=new AstralArt(scene,this.player.view,position.x,position.y,this.player.sex);}
-  this.label=scene.add.text(position.x,position.y-75,profile.name,{fontSize:'13px',color:'#d9e6ca',stroke:'#080e0c',strokeThickness:2}).setOrigin(.5).setDepth(10003);
   this.wave=scene.add.ellipse(0,0,10,80,0x5fe6d8,.6).setVisible(false).setDepth(14999);
  }
  update(now:number,dt:number,input:PartyInput,targets:readonly Enemy[],obstacles:readonly Obstacle[],bounds:MovementBounds|undefined,
@@ -83,7 +81,6 @@ export class PartyActor {
    this.wave.setVisible(this.charge.waveVisible(now)).setDisplaySize(KINETIC_CHARGE.waveThickness,this.charge.waveHalfWidth*2)
     .setPosition(this.charge.origin.x+Math.cos(this.charge.angle)*range,this.charge.origin.y+Math.sin(this.charge.angle)*range).setRotation(this.charge.angle);
   }
-  this.label.setPosition(this.player.position.x,this.player.position.y-75);
  }
  snapshot():PartyPose {
   const p=this.player;
@@ -108,11 +105,11 @@ export class PartyActor {
   this.art?.update(position.x,position.y,pose.aim,pose.firing,pose.dash,{phase:pose.phase as 'READY'|'CHARGING'|'RELEASE',level:pose.level});
   this.hunter?.beamView.render(pose.beam);this.astral?.render(pose.astral);if(pose.astral)this.astralArt?.update(position.x,position.y,pose.aim,pose.firing,pose.dash,{phase:pose.phase as 'READY'|'CHARGING'|'RELEASE',level:pose.level},pose.astral.element);
   this.xeno?.render(pose.xenobinder,dt);if(pose.xenobinder)this.xenoArt?.update(position.x,position.y,pose.aim,pose.firing,pose.dash,{phase:pose.phase as 'READY'|'CHARGING'|'RELEASE',level:pose.level},'energy');
-  this.label.setPosition(position.x,position.y-75);void now;
+  void now;
   this.wave.setVisible(!!pose.wave);if(pose.wave)this.wave.setPosition(pose.wave.x,pose.wave.y).setRotation(pose.wave.rotation).setDisplaySize(pose.wave.width,pose.wave.height);
  }
  destroy():void {
   this.hunter?.destroy();this.astral?.destroy();this.xeno?.destroy(); this.player.destroy();
-  this.label.destroy();this.wave.destroy();
+  this.wave.destroy();
  }
 }

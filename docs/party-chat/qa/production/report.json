@@ -1,0 +1,13 @@
+{
+  "base": "http://localhost:5190",
+  "method": "Production-compatible Chrome, DOM-only UI and real relay, no DEV exports or simulated messages. Isolated temporary characters.",
+  "checks": [
+    "Protocol 12: real invite, saved author names with accents and chat/history in the production lobby",
+    "Compiled gameplay: Enter opens/sends, other client receives full text, history expands and party speech renders",
+    "Unacknowledged send retains its draft, reports timeout, never queues itself and succeeds once on explicit retry",
+    "Touch composer and Send fit four target resolutions plus a reduced 160px-high viewport for keyboard space",
+    "Host exit discards chat history and shows the existing campaign-ended screen"
+  ],
+  "errors": [],
+  "passed": true
+}

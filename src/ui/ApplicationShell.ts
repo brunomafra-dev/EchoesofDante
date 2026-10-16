@@ -13,6 +13,7 @@ import { AUDIO } from '../config/audio';
 import type { CharacterClass } from '../systems/CharacterProfiles';
 import type { CharacterSex } from '../config/appearance';
 import { LocalJourney } from '../systems/LocalJourney';
+import { CoopChat } from './CoopChat';
 
 type Page = 'home' | 'play' | 'pause' | 'characters' | 'coop-characters' | 'create' | 'party-size' | 'difficulty' | 'coop-menu' | 'invite' | 'coop' | 'settings' | 'prologue' | 'coop-ended' | 'launching';
 const LAUNCH = 'echoes-of-dante.launch-once', APPROVAL = 'echoes-of-dante.invite-character-once', SETTINGS = 'echoes-of-dante.settings.v1';
@@ -22,6 +23,7 @@ export class ApplicationShell {
   private readonly menuButton = document.createElement('button');
   private readonly content: HTMLElement;
   private scene?: GameScene;
+  private readonly chat=new CoopChat(typing=>this.scene?.setChatTyping(typing));
   private selection?: CharacterSelection;
   private prologue?: Prologue;
   private page: Page = 'home';
@@ -106,9 +108,9 @@ export class ApplicationShell {
     if (campaign && !campaign.introSeen) { this.showPrologue(); return; }
     if (campaign?.mode === 'coop' && !coopSession.campaignRunning) { this.show('coop'); this.open(); return; }
     this.selection?.destroy(); this.selection = undefined; this.playing = true;
-    this.dialog.close(); document.body.classList.remove('shell-open'); this.scene.setPartyWaiting(false); this.scene.resumeFromShell(); this.scene.game.canvas.focus({ preventScroll: true });
+    this.dialog.close(); document.body.classList.remove('shell-open'); this.scene.setPartyWaiting(false); this.scene.resumeFromShell(); if(!this.chat.typing)this.scene.game.canvas.focus({ preventScroll: true });
   }
-  private show(page: Page): void { this.page = page; this.render(); this.content.querySelector<HTMLButtonElement>('button:not(:disabled)')?.focus({ preventScroll: true }); }
+  private show(page: Page): void { this.page = page; this.render(); if(!this.chat.typing)this.content.querySelector<HTMLButtonElement>('button:not(:disabled)')?.focus({ preventScroll: true }); }
   private heading(title: string, subtitle: string): void { const h = document.createElement('h2'); h.id = 'shell-title'; h.textContent = title; const p = document.createElement('p'); p.textContent = subtitle; this.content.append(h, p); }
   private action(label: string, id: string, action: () => void): HTMLButtonElement { const b = document.createElement('button'); b.type = 'button'; b.dataset.shell = id; b.textContent = label; b.onclick = action; this.content.append(b); return b; }
   private status(text: string): void { let p = this.content.querySelector('.shell-status'); if (!p) { p = document.createElement('p'); p.className = 'shell-status'; p.setAttribute('role', 'status'); this.content.append(p); } p.textContent = text; }
@@ -331,6 +333,7 @@ export class ApplicationShell {
   private applyVolumes(): void { this.scene?.setShellVolumes(this.volumes.master,this.volumes.music,this.volumes.sfx); this.prologue?.volumes(this.volumes.master,this.volumes.music,this.volumes.sfx); }
   private pollPad = (): void => {
     const pad = Array.from(navigator.getGamepads?.() ?? []).find(p => p?.connected && p.mapping === 'standard'), down = pad ? pad.buttons.map(b => b.pressed || b.value > .5):[];
+    if(this.chat.frame(document.querySelector<HTMLElement>('dialog[open]:not(.application-shell)')??(this.dialog.open?this.dialog:document.body),down,this.padPrevious)){this.padPrevious=down;this.padFrame=requestAnimationFrame(this.pollPad);return;}
     if (down[9] && !this.padPrevious[9] && !document.querySelector('dialog[open]:not(.application-shell)')) { if (this.dialog.open) this.back(); else this.openPause(); }
     if (this.dialog.open) {
       const buttons = Array.from((this.content.querySelector('.character-delete-dialog[open]') ?? this.content).querySelectorAll<HTMLElement>('button:not(:disabled),select:not(:disabled),input:not(:disabled)'));
@@ -346,5 +349,5 @@ export class ApplicationShell {
     }
     this.padPrevious = down; this.padFrame = requestAnimationFrame(this.pollPad);
   };
-  destroy(): void { this.selection?.destroy(); this.prologue?.destroy(); cancelAnimationFrame(this.padFrame); window.removeEventListener('keydown',this.keyDown,true); window.removeEventListener('keydown',this.editableKey); window.removeEventListener('keyup',this.editableKey); window.removeEventListener('dante-coop',this.coopChanged); this.dialog.remove(); this.menuButton.remove(); }
+  destroy(): void { this.chat.destroy();this.selection?.destroy(); this.prologue?.destroy(); cancelAnimationFrame(this.padFrame); window.removeEventListener('keydown',this.keyDown,true); window.removeEventListener('keyup',this.editableKey); window.removeEventListener('keydown',this.editableKey); window.removeEventListener('dante-coop',this.coopChanged); this.dialog.remove(); this.menuButton.remove(); }
 }

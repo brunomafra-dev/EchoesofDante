@@ -1,3 +1,4 @@
+import {coopSession} from '../network/CoopSession';
 import Phaser from 'phaser';
 import { BAG_SIZE,equipmentName,EQUIPMENT,EQUIPMENT_SLOTS,SLOT_NAMES,RARITY_COLORS,equipmentStats,type EquipmentId,type EquipmentSlot,type EquipmentSnapshot } from '../config/equipment';
 import { itemIcon } from '../systems/EquipmentDrops';
@@ -52,6 +53,7 @@ export class EquipmentDialog {
  };
  private focus(delta:number):void{const buttons=Array.from(this.dialog.querySelectorAll<HTMLButtonElement>('button:not(:disabled)'));const current=buttons.indexOf(document.activeElement as HTMLButtonElement);buttons[(current+delta+buttons.length)%buttons.length]?.focus();}
  private poll=():void=>{const pad=navigator.getGamepads?.().find(p=>p?.connected&&p.mapping==='standard'),buttons=pad?.buttons.map(b=>b.pressed||b.value>.5)??[],edge=(i:number)=>buttons[i]&&!this.previous[i];
+  if(coopSession.chatTyping){this.previous=buttons;this.frame=requestAnimationFrame(this.poll);return;}
   if(this.isOpen){if(edge(12)||edge(14))this.focus(-1);else if(edge(13)||edge(15))this.focus(1);else if(edge(0))(document.activeElement as HTMLButtonElement)?.click();else if(edge(1)||edge(9))this.dialog.close();}
   else if(edge(9)&&!document.querySelector('.application-shell')&&!document.querySelector('dialog[open]'))this.launch();this.previous=buttons;this.frame=requestAnimationFrame(this.poll);};
 }

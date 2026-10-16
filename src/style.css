@@ -212,3 +212,15 @@ body:has(.application-shell[open]) .astral-panel,body.records-open .astral-panel
 .prologue-progress{position:absolute;z-index:1;bottom:0;left:0;right:0;height:3px;background:#152e31}.prologue-progress span{display:block;height:100%;background:#d6b87b;transform-origin:left;transform:scaleX(0)}
 .prologue-error{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);width:min(540px,calc(100% - 32px));padding:18px 20px;text-align:center;background:#08110fe8;border:1px solid #c3af8077;border-radius:4px;color:#f2eadb}
 @media(max-height:500px){.prologue-controls{bottom:max(10px,env(safe-area-inset-bottom));gap:6px}.prologue-controls button{font-size:11px;padding:8px 12px}}
+
+/* Team chat stays quiet until opened; no gameplay panel or blue frame. */
+.coop-chat{position:fixed;z-index:10010;left:max(12px,env(safe-area-inset-left));bottom:max(52px,env(safe-area-inset-bottom));width:min(340px,calc(100vw - 24px));font:13px/1.35 system-ui;color:#e2e7d7;pointer-events:auto;text-align:left}
+.coop-chat[hidden],.coop-chat [hidden]{display:none!important}
+.coop-chat button{width:auto;min-height:30px;padding:5px 9px;margin:0 5px 4px 0;border:0;border-radius:3px;background:#10201ce8;color:#d9dfcf;font:600 11px/1.2 system-ui;cursor:pointer}
+.coop-chat button:focus-visible,.coop-chat input:focus-visible{outline:1px solid #c9ab6e;outline-offset:2px}
+.coop-chat-log{max-height:145px;overflow:auto;overscroll-behavior:contain;padding:8px 10px;margin:0 0 5px;list-style:none;background:#0a1512e8;border-radius:4px;word-break:break-word}
+.coop-chat-log li+li{margin-top:5px}.coop-chat-log strong{color:#dfc897;font-weight:600}
+.coop-chat form{display:flex;flex-wrap:wrap;gap:4px;background:#0a1512f2;padding:8px;border-radius:4px}
+.coop-chat input{box-sizing:border-box;width:100%;min-height:34px;background:#172820;color:#f0f0de;border:1px solid #5b6854;border-radius:3px;padding:7px;font:16px system-ui}
+.coop-chat small{align-self:center;margin-right:auto;color:#adb7a3}.coop-chat-status{margin:4px 0 0;font-size:11px;color:#e4bd91;background:#10201cdd}.coop-chat-status:empty{display:none}
+@media(max-width:900px),(pointer:coarse){.coop-chat{left:50%;transform:translateX(-50%);bottom:max(12px,env(safe-area-inset-bottom));top:auto;width:min(300px,calc(100vw - 24px))}.coop-chat-log{max-height:82px}.coop-chat.is-writing{top:max(8px,env(safe-area-inset-top));bottom:auto;overflow-y:auto}}

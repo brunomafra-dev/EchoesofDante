@@ -52,6 +52,8 @@ export class PartyExpedition {
  private lastImpact=0;
  private readonly playerMirrors=new Map<string,PartyActor>();
  get mirrorHost():PartyActor|undefined{return this.playerMirrors.get('host');}
+ get presentations():Map<string,Player>{return new Map([...(room.role==='host'?this.actors:this.playerMirrors)].map(([id,a])=>[id,a.player]));}
+ cancelLocalInput():void{this.attackQueued=false;for(const key of INPUT_EDGES)this.queued[key]=false;if(room.role==='guest')room.send('input',{...NO_INPUT,cancel:true});}
  private mirrors=new Map<number,Mirror>();
  private projectiles:Phaser.GameObjects.Rectangle[]=[];
  private readonly visitorWave:Phaser.GameObjects.Ellipse;

@@ -1,0 +1,41 @@
+{
+  "method": "Four isolated Chrome clients with CDP focus emulation and real relay; after verifying four rendered names, two spectator render loops are parked to fit workstation resources. Host and moving Hunter continue rendering. UI creation/chat/input; DEV fixtures for travel, safe positions and death. Touch/gamepad emulated, no physical-device or human visual approval.",
+  "checks": [
+    "Four named classes create/join the reserved campaign; lobby history is recovered without replayed bubbles",
+    "Same compact name component for all four local/remote heroes; saved names only",
+    "Simultaneous accents have unique IDs and one history entry per client; HTML remains literal text",
+    "Long bubble uses at most three lines and ellipsis; full history remains; bubbles expire after five seconds",
+    "Enter cancels held Q without release; typed shortcuts do not move/attack/spend/open menus; another player moves while host types; Escape restores control",
+    "Visitor chat sends immediate neutral/cancel input to authoritative host",
+    "Transport reconnect recovers missing history once; no old bubbles are replayed",
+    "Region travel preserves chat; fallen visitor can send, typing R does not respawn, normal R still works after closing",
+    "Four resolutions fit the composer; touch opens/cancels; gamepad R3 opens the same field and B cancels",
+    "Stable four names/four reusable bubbles, one chat root and no object/texture/tween/listener growth in the sampled interval",
+    "Room end clears history and the lab preserves real storage; zero JS/asset errors"
+  ],
+  "errors": [],
+  "metrics": [
+    {
+      "before": {
+        "objects": 449,
+        "textures": 255,
+        "tweens": 24,
+        "poststep": 2,
+        "names": 4,
+        "bubbles": 4,
+        "chatRoots": 1
+      },
+      "after": {
+        "objects": 449,
+        "textures": 255,
+        "tweens": 24,
+        "poststep": 2,
+        "names": 4,
+        "bubbles": 4,
+        "chatRoots": 1
+      },
+      "fps": 60.105746209187515
+    }
+  ],
+  "passed": true
+}

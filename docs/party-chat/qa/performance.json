@@ -1,0 +1,95 @@
+{
+  "method": "One rendering Chrome host plus three real relay clients without renderers, approximating the per-device rendering cost. DEV fixtures freeze enemies; three Base/Forest round trips. Not a physical four-device network measurement.",
+  "cycles": [
+    {
+      "objects": 449,
+      "textures": 255,
+      "tweens": 24,
+      "poststep": 2,
+      "names": 4,
+      "bubbles": 4,
+      "chatRoots": 1
+    },
+    {
+      "objects": 449,
+      "textures": 255,
+      "tweens": 24,
+      "poststep": 2,
+      "names": 4,
+      "bubbles": 4,
+      "chatRoots": 1
+    },
+    {
+      "objects": 449,
+      "textures": 255,
+      "tweens": 24,
+      "poststep": 2,
+      "names": 4,
+      "bubbles": 4,
+      "chatRoots": 1
+    }
+  ],
+  "errors": [],
+  "sample": {
+    "fps": 59.93207697960173,
+    "loopFps": 57.57794904708862
+  },
+  "before": {
+    "objects": 449,
+    "textures": 255,
+    "tweens": 24,
+    "poststep": 2,
+    "names": 4,
+    "bubbles": 4,
+    "chatRoots": 1
+  },
+  "eventsBefore": {
+    "mousemove": 1,
+    "pointerdown": 1,
+    "pointerup": 1,
+    "touchstart": 1,
+    "touchend": 1,
+    "touchcancel": 1,
+    "mousedown": 2,
+    "mouseup": 2,
+    "click": 1,
+    "auxclick": 1,
+    "dblclick": 1,
+    "contextmenu": 1,
+    "keydown": 9,
+    "keyup": 3,
+    "beforeunload": 1,
+    "__playwright_global_listeners_check__": 1,
+    "dante-chat": 1,
+    "dante-coop": 2,
+    "resize": 2,
+    "blur": 2,
+    "focus": 1,
+    "pagehide": 1
+  },
+  "eventsAfter": {
+    "mousemove": 1,
+    "pointerdown": 1,
+    "pointerup": 1,
+    "touchstart": 1,
+    "touchend": 1,
+    "touchcancel": 1,
+    "mousedown": 2,
+    "mouseup": 2,
+    "click": 1,
+    "auxclick": 1,
+    "dblclick": 1,
+    "contextmenu": 1,
+    "keydown": 9,
+    "keyup": 3,
+    "beforeunload": 1,
+    "__playwright_global_listeners_check__": 1,
+    "dante-chat": 1,
+    "dante-coop": 2,
+    "resize": 2,
+    "blur": 2,
+    "focus": 1,
+    "pagehide": 1
+  },
+  "passed": true
+}
