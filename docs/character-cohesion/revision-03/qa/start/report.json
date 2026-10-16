@@ -1,0 +1,14 @@
+{
+  "base": "http://localhost:5190",
+  "method": "Official entry point, fresh isolated Chrome contexts; natural MP4 completion and blocked sessionStorage, not only the lab/Skip path. Run separately from other browser suites because the prologue intentionally pauses on tab/window blur. Human visual approval pending.",
+  "errors": [],
+  "checks": [
+    "Fresh official browser: New Game exists and Continue is absent",
+    "New Astral: one difficulty click, natural video end, direct playable game, no title/play/continue detour and no duplicate character",
+    "Existing save: Continue appears; New Game starts the new Hunter and preserves the previous Astral progression/equipment",
+    "All sessionStorage I/O blocked: New Game still starts directly and survives natural video completion",
+    "Four target resolutions: touch on difficulty starts gameplay directly; no Continue in a fresh browser",
+    "A transient arrival-save failure stays in the start flow and retries the same hero directly, without title/Continue or replaying the video"
+  ],
+  "passed": true
+}

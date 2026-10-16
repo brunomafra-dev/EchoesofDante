@@ -127,7 +127,8 @@ export class CharacterShowcase {
   private caster(identity:'astral'|'xenobinder',t:number,strike:boolean,dash:boolean,charge:boolean,release:boolean):void{
     const c=this.ctx,frame=dash?CASTER_WALK[Math.floor((t-1.15)*8)%4]:0;
     const main=newArm(),other=newArm(),left={x:0,y:0},right={x:0,y:0};
-    const sockets=this.shoulderSockets[frame],aim=Math.PI/2;
+    const gesture=strike?Math.sin((t-.25)/.7*Math.PI):charge?Math.min(1,(t-2)/1.05):release?Math.max(0,1-(t-3.05)/.4):0;
+    const sockets=this.shoulderSockets[frame],aim=Math.PI/2-gesture*.65;
     projectShoulder(sockets.left,0,-19,.5,.5,false,left);
     projectShoulder(sockets.right,0,-19,.5,.5,false,right);
     casterTargets(left.x,left.y,right.x,right.y,aim,strike,charge,dash?Math.sin(t*8):0,main,other);
@@ -221,6 +222,13 @@ export class CharacterShowcase {
   private bone(frame:number,a:{x:number;y:number},b:{x:number;y:number}):void{
     const part=this.armBounds[frame],transform=paintedSegment(part,a,b),c=this.ctx;
     c.save();c.translate(a.x,a.y);c.rotate(transform.angle);c.scale(transform.scale,transform.scale);
+    if(frame===1&&(this.classId==='astral'||this.classId==='xenobinder')){
+      // The authored forearm has a pointed cut edge. At portrait scale that
+      // corner looked like a second elbow. Round the joint, keeping its real
+      // painted pixels, attachment and proportional scale; no extra limb.
+      const dx=part.tip.x-part.root.x,dy=part.tip.y-part.root.y,axis=Math.atan2(dy,dx),length=Math.hypot(dx,dy),radius=part.height*.36;
+      c.rotate(axis);c.beginPath();c.moveTo(0,-radius);c.lineTo(length,-radius);c.arc(length,0,radius,-Math.PI/2,Math.PI/2);c.lineTo(0,radius);c.arc(0,0,radius,Math.PI/2,Math.PI*1.5);c.closePath();c.clip();c.rotate(-axis);
+    }
     this.armPart(frame,-part.root.x,-part.root.y,part.width,part.height);c.restore();
   }
   private glove(x:number,y:number,angle:number):void{

@@ -44,6 +44,7 @@ export class LocalJourney {
   status = 'O progresso será salvo neste navegador.';
   private key?: string;
   private owner?: string;
+  constructor(owner?:string){if(owner){this.owner=owner;this.key=characterProfiles.keyFor(owner);}}
   private storageKey(): string {
     if (!this.key) { this.owner = characterProfiles.active.id; this.key = characterProfiles.keyFor(this.owner); }
     return this.key;

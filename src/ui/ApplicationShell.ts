@@ -12,8 +12,9 @@ import { Prologue } from './Prologue';
 import { AUDIO } from '../config/audio';
 import type { CharacterClass } from '../systems/CharacterProfiles';
 import type { CharacterSex } from '../config/appearance';
+import { LocalJourney } from '../systems/LocalJourney';
 
-type Page = 'home' | 'play' | 'pause' | 'characters' | 'coop-characters' | 'create' | 'party-size' | 'difficulty' | 'coop-menu' | 'invite' | 'coop' | 'settings' | 'prologue' | 'coop-ended';
+type Page = 'home' | 'play' | 'pause' | 'characters' | 'coop-characters' | 'create' | 'party-size' | 'difficulty' | 'coop-menu' | 'invite' | 'coop' | 'settings' | 'prologue' | 'coop-ended' | 'launching';
 const LAUNCH = 'echoes-of-dante.launch-once', APPROVAL = 'echoes-of-dante.invite-character-once', SETTINGS = 'echoes-of-dante.settings.v1';
 
 export class ApplicationShell {
@@ -46,8 +47,15 @@ export class ApplicationShell {
 
   constructor() {
     const hero = characterProfiles.active;
+    // An explicit navigation carries the selected journey across the page load.
+    // Storage of the journey and the request to start it are independent: browsers
+    // may allow localStorage while rejecting the old sessionStorage launch flag.
+    const url=new URL(location.href),requested=url.searchParams.get('iniciar');
+    this.launchOnce=requested===hero.id&&characterProfiles.list.some(p=>p.id===hero.id);
+    if(this.launchOnce&&this.pendingInvite)this.entry='join';
+    if(requested!==null){url.searchParams.delete('iniciar');history.replaceState(history.state,'',url);}
     try {
-      this.launchOnce = sessionStorage.getItem(LAUNCH) === hero.id; sessionStorage.removeItem(LAUNCH);
+      this.launchOnce ||= sessionStorage.getItem(LAUNCH) === hero.id; sessionStorage.removeItem(LAUNCH);
       const approved = JSON.parse(sessionStorage.getItem(APPROVAL) ?? 'null'); sessionStorage.removeItem(APPROVAL);
       if (this.pendingInvite && approved?.code === this.code && approved?.id === hero.id) this.entry = 'join';
       const saved = JSON.parse(localStorage.getItem(SETTINGS) ?? 'null');
@@ -57,6 +65,7 @@ export class ApplicationShell {
       if (hero.campaign.hostId === hero.id) this.entry = 'create'; else this.page = 'invite';
     }
     if (this.pendingInvite && !this.entry) this.page = 'invite';
+    if(this.launchOnce)this.page='launching';
     this.menuButton.className = 'main-menu-button'; this.menuButton.type = 'button'; this.menuButton.textContent = 'MENU';
     this.menuButton.setAttribute('aria-label', 'Abrir menu — Esc'); this.menuButton.onclick = () => this.openPause();
     this.menuButton.addEventListener('pointerdown', e => { if (e.pointerType === 'touch') { e.preventDefault(); this.openPause(); } });
@@ -105,7 +114,7 @@ export class ApplicationShell {
   private status(text: string): void { let p = this.content.querySelector('.shell-status'); if (!p) { p = document.createElement('p'); p.className = 'shell-status'; p.setAttribute('role', 'status'); this.content.append(p); } p.textContent = text; }
   private back(): void {
     if (this.selection?.confirmingDeletion) { this.selection.cancelDeletion(); return; }
-    if (this.page === 'prologue' || this.page === 'coop-ended') return;
+    if (this.page === 'prologue' || this.page === 'coop-ended' || this.page==='launching') return;
     if (this.page === 'settings') {
       if (this.settingsReturn === 'prologue' && this.prologue) { this.page = 'prologue'; this.render(); this.prologue.resume(); }
       else this.show(this.settingsReturn); return;
@@ -136,10 +145,11 @@ export class ApplicationShell {
     if (!characterProfiles.select(id)) { this.status('Não foi possível guardar a seleção. Libere o armazenamento do navegador.'); return; }
     this.launching = true;
     try {
-      sessionStorage.setItem(LAUNCH, id);
       if (this.pendingInvite) { setInvitation(this.code); sessionStorage.setItem(APPROVAL, JSON.stringify({ code:this.code, id })); }
-    } catch { /* The selected journey stays available from Continue. */ }
-    location.reload();
+    } catch { /* The explicit start request below does not require session storage. */ }
+    const target=new URL(location.href);target.searchParams.set('iniciar',id);
+    if(this.pendingInvite)target.searchParams.set('sala',this.code);
+    location.replace(target.href);
   }
   private showPrologue(replay = false): void {
     if (this.prologue) return;
@@ -147,13 +157,17 @@ export class ApplicationShell {
     this.prologue = new Prologue(() => {
       this.prologue?.destroy(); this.prologue = undefined;
       if (replay) { this.settingsReturn=replayReturn;this.show('settings'); return; }
-      if (!characterProfiles.markIntroSeen(characterProfiles.active.id)) {
-        this.show('home'); this.status('Não foi possível salvar a chegada. Libere o armazenamento e continue o personagem para tentar novamente.'); return;
-      }
-      if (characterProfiles.active.campaign?.mode === 'coop') { this.show('coop'); void this.connect(this.pendingInvite ? 'join':'create'); }
-      else this.resume();
+      this.completeArrival();
     }, () => this.settings());
     this.page = 'prologue'; this.render(); this.applyVolumes(); this.open(); this.prologue.resume();
+  }
+  private completeArrival():void {
+    if(!characterProfiles.markIntroSeen(characterProfiles.active.id)){
+      this.show('launching');this.status('Não foi possível salvar a chegada. Libere o armazenamento e tente novamente.');
+      this.action('TENTAR NOVAMENTE','retry-arrival',()=>this.completeArrival());return;
+    }
+    if(characterProfiles.active.campaign?.mode==='coop'){this.show('coop');void this.connect(this.pendingInvite?'join':'create');}
+    else this.resume();
   }
   private async inspect(): Promise<void> {
     const code = roomCode(this.code); if (!code) { this.status('Cole o convite ou o código de 10 letras/números.'); return; }
@@ -208,12 +222,15 @@ export class ApplicationShell {
     this.selection?.destroy(); this.selection = undefined; this.content.replaceChildren();
     const characters = ['characters','coop-characters','create'].includes(this.page);
     this.dialog.classList.toggle('is-character-page', characters); this.dialog.classList.toggle('is-prologue', this.page === 'prologue');
+    if(this.page==='launching'){this.heading('Iniciando expedição', 'Preparando sua chegada a Dante…');return;}
     if (this.page === 'prologue' && this.prologue) { this.content.append(this.prologue.view); return; }
     if (this.page === 'home') {
       this.heading('Sua próxima descoberta', 'Uma expedição. Um planeta ainda desconhecido.'); this.action('JOGAR','play', () => this.show('play'));
     } else if (this.page === 'play') {
       this.heading('Jogar', 'Cada personagem guarda sua própria jornada neste navegador.');
-      this.action('CONTINUAR EXPEDIÇÃO','continue', () => this.show('characters')); this.action('NOVO JOGO','new-game', () => this.beginNew('solo')); this.action('COOPERATIVO','coop', () => this.show('coop-menu')); this.action('VOLTAR','back', () => this.back());
+      this.action('NOVO JOGO','new-game', () => this.beginNew('solo'));
+      if(this.savedSoloProfiles().length)this.action('CONTINUAR EXPEDIÇÃO','continue', () => this.show('characters'));
+      this.action('COOPERATIVO','coop', () => this.show('coop-menu')); this.action('VOLTAR','back', () => this.back());
     } else if (this.page === 'pause') {
       this.heading('Expedição pausada', `${characterProfiles.active.name} · ${CLASS_NAMES[characterProfiles.active.classId]}`);
       this.action('RETOMAR','continue', () => this.resume()); this.action('MAPA DA EXPEDIÇÃO','expedition', () => { this.resume(); this.scene?.openExpedition(); });
@@ -235,7 +252,7 @@ export class ApplicationShell {
       this.action('VOLTAR','back', () => this.back());
     } else if (characters) {
       const cooperative = this.page === 'coop-characters';
-      const profiles = characterProfiles.list.filter(p => cooperative ? p.campaign?.mode === 'coop' && (!this.pendingInvite || p.campaign.id === this.lobby?.campaign.id&&(!this.lobby.campaign.crew.length||this.lobby.campaign.crew.some(m=>m.id===p.id))) : p.campaign?.mode !== 'coop');
+      const profiles = cooperative?characterProfiles.list.filter(p => p.campaign?.mode === 'coop' && (!this.pendingInvite || p.campaign.id === this.lobby?.campaign.id&&(!this.lobby.campaign.crew.length||this.lobby.campaign.crew.some(m=>m.id===p.id)))):this.savedSoloProfiles();
       this.selection = new CharacterSelection(this.content, this.page === 'create' ? 'create':'characters', {
         back: () => this.back(), newCharacter: () => this.beginNew(cooperative ? 'coop':'solo'), play: id => this.launch(id),
         remove: id => {
@@ -263,7 +280,7 @@ export class ApplicationShell {
       if (cooperative && !profiles.length) this.status('Nenhum personagem desta equipe neste navegador. Use o navegador original; personagens solo não podem substituí-lo.');
     } else if (this.page === 'coop-menu') {
       this.heading('Cooperativo', 'Até quatro exploradores, uma classe de cada.'); this.action('INICIAR NOVO JOGO','coop-new', () => this.beginNew('coop'));
-      this.action('CONTINUAR JOGANDO COM AMIGOS','coop-continue', () => { this.pendingInvite = false; this.show('coop-characters'); });
+      if(characterProfiles.list.some(p=>p.campaign?.mode==='coop'&&new LocalJourney(p.id).load()))this.action('CONTINUAR JOGANDO COM AMIGOS','coop-continue', () => { this.pendingInvite = false; this.show('coop-characters'); });
       this.action('ENTRAR POR CONVITE','invite', () => this.show('invite')); this.action('VOLTAR','back', () => this.back());
     } else if (this.page === 'invite') {
       this.heading('Reunir a equipe', 'Cole o convite. Uma campanha iniciada aceita somente seus personagens originais.');
@@ -300,6 +317,7 @@ export class ApplicationShell {
     }
     if (this.page !== 'settings') this.action('CONFIGURAÇÕES','settings', () => this.settings());
   }
+  private savedSoloProfiles(){return characterProfiles.list.filter(p=>p.campaign?.mode!=='coop'&&new LocalJourney(p.id).load()!==undefined);}
   private roster(): void {
     const roster = document.createElement('section'); roster.className = 'party-lobby'; roster.setAttribute('aria-label','Equipe original');
     const crew = coopSession.campaign?.crew ?? [];

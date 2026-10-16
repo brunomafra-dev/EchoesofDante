@@ -1,5 +1,7 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**Correção vigente da entrega 1: [0.1.103 — seletor e início direto](character-cohesion/revision-03/README.md).** A 0.1.102 não foi aprovada pelo usuário. Não avançar a nomes/chat antes de validar esta revisão.
+
 **Sequência vigente em 16/10/2026:** [correções visuais, comunicação e primeira colonização](DANTE_COLONIZATION_PLAN.md). A 0.1.101 foi **rejeitada visualmente**. Entregar personagens/início, aguardar playtest, depois chat, piloto de cinemática, missões e mapas/assentamento. Os registros de entregas abaixo são históricos, não uma aprovação do prólogo ou dos retratos.
 
 Plano aprovado pelo usuário e arquivado em **09/10/2026**. Base de execução: **0.1.78**, commit `90a5dcaf33842652d55e29279b273f149e566e1f`.

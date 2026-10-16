@@ -6,7 +6,7 @@ const browser=await chromium.launch({channel:'chrome',args:['--disable-backgroun
 const report={base,method:process.env.QA_NO_COOP==='1'?'Compiled public build, DOM-only Chrome solo/menu checks; cooperative relay not checked. No DEV exports or physical-device claim.':'Compiled build, DOM-only Chrome automation, real relay. No DEV exports, no physical-device claim.',checks:[],errors:[],participants:[]},pages=[];
 const click=(p,id)=>p.locator(`[data-shell="${id}"]`).click();const wait=ms=>new Promise(r=>setTimeout(r,ms));
 const check=t=>{console.log(t);report.checks.push(t)};
-async function page(viewport={width:1280,height:720}){const p=await browser.newPage({viewport,hasTouch:true});pages.push(p);p.setDefaultTimeout(process.env.QA_NO_COOP==='1'?30000:90000);p.on('pageerror',e=>report.errors.push(e.message));p.on('response',r=>{if(r.status()>=400)report.errors.push(r.url())});p.wire={poses:[],};p.on('websocket',ws=>{for(const direction of ['framereceived','framesent'])ws.on(direction,({payload})=>{let m;try{m=JSON.parse(payload.toString())}catch{return;}if(m.type==='joined')Object.assign(p.wire,{protocol:m.protocol,id:m.id,code:m.code});if(m.type==='world'&&m.world){p.wire.players=Object.keys(m.world.players??{});p.wire.world=m.world.players;for(const [id,pose]of Object.entries(m.world.players??{})){p.wire.poses.push({id,x:pose.x,y:pose.y,phase:pose.phase,firing:pose.firing,dash:pose.dash,dashReady:pose.dashReady});}if(p.wire.poses.length>4000)p.wire.poses.splice(0,2000);}});});return p;}
+async function page(viewport={width:1280,height:720}){const p=await browser.newPage({viewport,hasTouch:true});pages.push(p);const cdp=await p.context().newCDPSession(p);await cdp.send('Emulation.setFocusEmulationEnabled',{enabled:true});p.setDefaultTimeout(process.env.QA_NO_COOP==='1'?30000:90000);p.on('pageerror',e=>report.errors.push(e.message));p.on('response',r=>{if(r.status()>=400)report.errors.push(r.url())});p.wire={poses:[],};p.on('websocket',ws=>{for(const direction of ['framereceived','framesent'])ws.on(direction,({payload})=>{let m;try{m=JSON.parse(payload.toString())}catch{return;}if(m.type==='joined')Object.assign(p.wire,{protocol:m.protocol,id:m.id,code:m.code});if(m.type==='world'&&m.world){p.wire.players=Object.keys(m.world.players??{});p.wire.world=m.world.players;for(const [id,pose]of Object.entries(m.world.players??{})){p.wire.poses.push({id,x:pose.x,y:pose.y,phase:pose.phase,firing:pose.firing,dash:pose.dash,dashReady:pose.dashReady});}if(p.wire.poses.length>4000)p.wire.poses.splice(0,2000);}});});return p;}
 async function hero(p,cls,{difficulty='normal',size,cooperative=false}={}){
  await click(p,'choose-'+cls);await p.locator('[name=character-name]').fill('Teste '+cls);await click(p,'create');
  if(await p.locator('[name=party-size]').count()){
@@ -28,11 +28,18 @@ try{
  if(process.env.QA_ACTIONS==='1'){
   report.actions=[];
   for(const p of pages){
-   await p.bringToFront();const id=p.wire.id,before=p.wire.world[id];p.wire.poses=[];
-   await p.keyboard.down('d');await p.waitForTimeout(600);await p.keyboard.up('d');await p.waitForTimeout(150);
+   await p.bringToFront();await p.waitForTimeout(1000);const id=p.wire.id,before=p.wire.world[id];p.wire.poses=[];
+   // Input is consumed by Phaser and then sampled by the relay. Await the
+   // observed action, rather than releasing a key before a busy frame sees it.
+   const observed=async(test,label)=>{for(let n=0;n<100;n++){if(test())return;await wait(50);}throw Error('Unobserved '+label+' for '+id);};
+   const ownHas=test=>p.wire.poses.some(s=>s.id===id&&test(s));
+   await p.keyboard.down('d');try{await observed(()=>Math.hypot(p.wire.world[id].x-before.x,p.wire.world[id].y-before.y)>3,'movement');}finally{await p.keyboard.up('d');}
    const after=p.wire.world[id];assert.ok(Math.hypot(after.x-before.x,after.y-before.y)>3,JSON.stringify({id,before,after}));
-   await p.mouse.move(900,400);await p.mouse.down();await p.waitForTimeout(600);await p.mouse.up();await p.waitForTimeout(350);
-   await p.keyboard.press('Space');await p.waitForTimeout(500);await p.keyboard.down('q');await p.waitForTimeout(700);await p.keyboard.up('q');await p.waitForTimeout(400);
+   await p.mouse.move(900,400);await p.mouse.down();try{await observed(()=>ownHas(s=>s.firing),'attack');}finally{await p.mouse.up();}await p.waitForTimeout(350);
+   await p.keyboard.down('Space');try{await observed(()=>ownHas(s=>s.dash||s.dashReady<.95),'dash');}finally{await p.keyboard.up('Space');}
+   await observed(()=>!p.wire.world[id].dash&&p.wire.world[id].strike?.phase==='READY','recovery before Q');
+   await p.keyboard.down('q');try{await observed(()=>ownHas(s=>s.phase==='CHARGING'),'Q hold');await p.waitForTimeout(450);}finally{await p.keyboard.up('q');}
+   await observed(()=>ownHas(s=>s.phase==='RELEASE'),'Q release');
    const own=p.wire.poses.filter(s=>s.id===id),result={id,moved:true,attack:own.some(s=>s.firing),dash:own.some(s=>s.dash||s.dashReady<.95),hold:own.some(s=>s.phase==='CHARGING'),release:own.some(s=>s.phase==='RELEASE')};
    assert.ok(result.attack&&result.dash&&result.hold&&result.release,JSON.stringify(result));report.actions.push(result);
   }

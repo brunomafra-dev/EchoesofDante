@@ -15,7 +15,7 @@ Storage.prototype.setItem=function(key,value){if(this===localStorage&&key.starts
 Storage.prototype.removeItem=function(key){if(this===localStorage&&key.startsWith('echoes-of-dante.'))isolated.delete(key);else remove.call(this,key)};
 const params=new URLSearchParams(location.search);
 const partyLab=location.pathname.endsWith('/party-playtest.html');
-if(partyLab){try{const approval=JSON.parse(sessionStorage.getItem('echoes-of-dante.invite-character-once')??'null');const selected=approval?.id?.replace(/^threat-/,'');if(['warrior','hunter','astral','xenobinder'].includes(selected))params.set('class',selected);}catch{/* Explicit selection can be repeated if session storage is unavailable. */}}
+if(partyLab){let selected=params.get('iniciar')?.replace(/^threat-/,'');try{selected??=JSON.parse(sessionStorage.getItem('echoes-of-dante.invite-character-once')??'null')?.id?.replace(/^threat-/,'');}catch{/* URL start intent does not depend on session storage. */}if(selected&&['warrior','hunter','astral','xenobinder'].includes(selected))params.set('class',selected);}
 const region=(Object.hasOwn(REGION_NAMES,params.get('region')??'')?params.get('region'):location.pathname.endsWith('/caldera-playtest.html')?(params.get('boss')==='1'?'caldera':'cinder'):'forest') as JourneyArea;
 const xenoLab=location.pathname.endsWith('/xenobinder-playtest.html');
 const astralLab=location.pathname.endsWith('/astral-playtest.html');

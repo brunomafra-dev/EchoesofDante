@@ -1,5 +1,7 @@
 # Etapa 1 — personagens completos e início imediato
 
+**Correção vigente: [0.1.103 — início direto e cotovelos](revision-03/README.md).** O usuário não aprovou os braços da 0.1.102 e encontrou retorno indevido ao menu. Os resultados abaixo são evidências técnicas anteriores, não aprovação visual.
+
 Versão de entrega: **0.1.102**. Parte do [plano aprovado](../DANTE_COLONIZATION_PLAN.md). **Avaliação humana pendente.** Esta entrega não implementa chat, cinemática nova, missões ou regiões.
 
 ## Como testar sem alterar seus personagens

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {mkdir,writeFile} from 'node:fs/promises';
-const base=process.env.QA_BASE??'http://localhost:5190',out='docs/character-cohesion/qa/menu';await mkdir(out,{recursive:true});
+const base=process.env.QA_BASE??'http://localhost:5190',out=process.env.QA_OUT??'docs/character-cohesion/qa/menu';await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'chrome'}),p=await browser.newPage({viewport:{width:1280,height:720},reducedMotion:'reduce'});
 const report={base,method:'Compiled-build character selection; actual UI changes, both presentations of all four classes, finite manual demo and screenshots. Human visual assessment pending.',errors:[],previews:[]};
 p.on('pageerror',e=>report.errors.push(e.message));p.on('response',r=>{if(r.status()>=400)report.errors.push(r.url())});
