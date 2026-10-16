@@ -51,6 +51,8 @@ Usar somente `profile.name` salvo: **Guilherme**, sem classe nem prefixo de anfi
 
 ## 3 — Cinemática real
 
+Preparação atual: [teste único Wan2.2 na fal.ai](cinematic-pilot/revision-02/wan-test.md), cerca de 5 s para verificar atuação a partir da cena inteira antes do piloto de 12 s. Ferramentas offline prontas; credencial local pendente, nenhum vídeo novo gerado ou gasto realizado. A meta de 12 s e o bloqueio das entregas seguintes permanecem.
+
 Primeiro validar **12 segundos na ponte da nave**: pessoas operam equipamentos, caminham, olham e gesticulam numa conversa, com atuação perceptível mesmo com câmera parada. Não é carrossel ou zoom em pinturas.
 
 Após aprovação humana: aproximadamente **55 segundos** com evacuação da Terra, viagem, descoberta de Dante, descida e pouso. Texto em português, ambiente/efeitos, sem dublagem nesta entrega. Animação produzida **offline**, **MP4 1280×720, 24 FPS**; manter pular, rever, pausa e mobile. Não prometer geração de filme a partir da mera exportação de imagens.
