@@ -1,6 +1,14 @@
 # Echoes of Dante
 
-## Novo jogo e cinemática de chegada · 0.1.101
+## Cena piloto na ponte · 0.1.105
+
+[Assistir ao piloto reservado de 12 segundos](https://echosofdante.vercel.app/cinematic-pilot.html?v=0.1.105): Nara atravessa a ponte, Ivo opera o console, os dois se olham e gesticulam numa conversa legendada. Animação 2D por recortes articulados, câmera fixa, som original e exportação offline H.264/AAC, 1280×720/24 FPS. Não acessa saves nem inicia o jogo. [Produção, fontes, QA e limites](docs/cinematic-pilot/README.md).
+
+Nomes e chat cooperativo da 0.1.104 foram validados pelo usuário. O piloto aguarda avaliação humana antes da abertura completa e da substituição do prólogo provisório no jogo.
+
+## Histórico rejeitado — novo jogo e cinemática de chegada · 0.1.101
+
+Registro da tentativa anterior; as afirmações visuais abaixo não constituem aprovação. A cinemática de pinturas com zoom e os retratos foram rejeitados. Fluxo corrigido na 0.1.103; filme novo depende da validação do piloto acima.
 
 Novo jogo agora segue uma ordem clara: **escolha classe, nome e apresentação → escolha a dificuldade → comece a expedição**. A dificuldade aparece numa tela própria, com somente **Fezes puríssima**, **Marromenos** e **Chama 🔥**. Confirmar cria o personagem e inicia a jornada sem voltar ao menu.
 

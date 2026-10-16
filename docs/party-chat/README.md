@@ -45,7 +45,7 @@ Os relatórios ficam em [qa](qa/). A publicação pública depende de **Vercel e
 - Sem erros JavaScript/assets nas baterias Chrome. Quatro resoluções e uma viewport reduzida de 160 px de altura mantiveram campo e Enviar acessíveis. Teclado virtual real, rede móvel e quatro aparelhos físicos ainda precisam de playtest.
 - [Captura compilada](qa/production/team-chat.png) e [balões agrupados](qa/browser/team-chat.png). Autenticidade, conforto de leitura e posição das falas precisam de avaliação humana; automação não os aprova.
 
-**Aguardar a validação do usuário antes da etapa 3.** O refinamento visual dos braços da etapa 1 continua reservado ao pente fino posterior autorizado.
+**Validada pelo usuário:** “Deu certo perfeito irmão”. Render confirmou protocolo 12/chat ativo no commit `2d3e8f7`; smoke público entre dois navegadores passou (convite, lobby, gameplay, histórico, timeout/reenvio explícito e saída do anfitrião, sem erros JS/assets). O usuário autorizou a etapa 3 — piloto da cinemática. O refinamento visual dos braços da etapa 1 continua reservado ao pente fino posterior autorizado.
 
 ## Escopo preservado
 

@@ -1,0 +1,27 @@
+{
+  "base": "http://localhost:5190",
+  "method": "Chrome, compiled standalone viewer; real H.264/AAC playback. Touch and gamepad emulated, not physical-device or artistic approval.",
+  "checks": [
+    "MP4 real, 1280×720 / 12s, inline playback and Portuguese caption track; no autoplay with sound",
+    "Play, pause and sound toggle work through the viewer",
+    "Four target resolutions, no horizontal overflow; captioned frame visible",
+    "Touch replay starts at zero and the complete 12-second film reaches its final state",
+    "Gamepad mock: A starts/pauses and directional input moves focus to Replay",
+    "No game boot, world art loading or save/session mutation in the reserved viewer",
+    "Skip returns to the test library, which links directly to this pilot"
+  ],
+  "errors": [],
+  "video": {
+    "width": 1280,
+    "height": 720,
+    "duration": 12,
+    "paused": true,
+    "playsInline": true,
+    "tracks": 1
+  },
+  "decode": {
+    "totalFrames": 542,
+    "droppedFrames": 4
+  },
+  "passed": true
+}

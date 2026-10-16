@@ -1,6 +1,6 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
-**Entrega vigente: [0.1.104 — nomes e chat da equipe](party-chat/README.md).** O usuário validou a 0.1.103 para avançar, reservando um pente fino visual para depois. A etapa 2 aguarda playtest humano; não avançar ao piloto da cinemática antes dessa validação.
+**Entrega vigente: [0.1.105 — cena piloto na ponte](cinematic-pilot/README.md).** O usuário validou nomes/chat da 0.1.104 (“Deu certo perfeito irmão”) e autorizou o piloto. Animação 2D articulada, MP4 de 12 s, câmera fixa e laboratório separado. Aguardar aprovação humana do piloto antes da abertura completa; missões e mapas continuam nas próximas etapas. O pente fino dos personagens continua reservado para depois.
 
 **Sequência vigente em 16/10/2026:** [correções visuais, comunicação e primeira colonização](DANTE_COLONIZATION_PLAN.md). A 0.1.101 foi **rejeitada visualmente**. Entregar personagens/início, aguardar playtest, depois chat, piloto de cinemática, missões e mapas/assentamento. Os registros de entregas abaixo são históricos, não uma aprovação do prólogo ou dos retratos.
 
