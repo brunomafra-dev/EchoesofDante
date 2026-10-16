@@ -1,4 +1,4 @@
-"""Verify the exported film, including motion with a genuinely static camera."""
+"""Historical format QA for REJECTED 0.1.105; NOT validation of the new film."""
 from pathlib import Path
 import importlib.util
 import json
@@ -58,6 +58,7 @@ for t in np.arange(0, 12, 1/24):
 assert max_leg < 114, max_leg
 report['maximumLegTargetDistance'] = max_leg
 report['passed'] = True
+report['visualStatus'] = '0.1.105 rejected by user; this is historical technical QA only'
 report['limitation'] = 'Checks encoding, independent character motion and reachable leg targets. Does not approve acting, anatomical naturalness or cinematic quality.'
 (root / 'docs/cinematic-pilot/qa/media-report.json').write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')
 print(json.dumps(report, indent=2))

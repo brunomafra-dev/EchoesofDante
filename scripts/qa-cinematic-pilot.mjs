@@ -2,6 +2,9 @@ import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {mkdir,writeFile} from 'node:fs/promises';
 
+// Historical playback QA must not claim the rejected cutout movie is current.
+throw new Error('QA da 0.1.105 rejeitada. Use qa-cinematic-reference.mjs para o quadro-base; o novo filme ainda não foi gerado.');
+
 const base=process.env.QA_BASE??'http://localhost:5190';
 const out=process.env.QA_OUT??'docs/cinematic-pilot/qa/browser';
 await mkdir(out,{recursive:true});

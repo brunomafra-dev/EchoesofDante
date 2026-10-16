@@ -1,10 +1,10 @@
 # Echoes of Dante
 
-## Cena piloto na ponte · 0.1.105
+## Cinemática — revisão em andamento · 0.1.106
 
-[Assistir ao piloto reservado de 12 segundos](https://echosofdante.vercel.app/cinematic-pilot.html?v=0.1.105): Nara atravessa a ponte, Ivo opera o console, os dois se olham e gesticulam numa conversa legendada. Animação 2D por recortes articulados, câmera fixa, som original e exportação offline H.264/AAC, 1280×720/24 FPS. Não acessa saves nem inicia o jogo. [Produção, fontes, QA e limites](docs/cinematic-pilot/README.md).
+[Nova referência com personagens inteiros](https://echosofdante.vercel.app/cinematic-pilot.html?v=0.1.106). A 0.1.105 foi rejeitada por anatomia e atuação quebradas. A montagem de membros foi abandonada. O laboratório mostra um **quadro-base estático; o novo filme ainda não foi gerado**. [Pesquisa de ferramentas, fontes e dependência de conexão](docs/cinematic-pilot/revision-02/README.md).
 
-Nomes e chat cooperativo da 0.1.104 foram validados pelo usuário. O piloto aguarda avaliação humana antes da abertura completa e da substituição do prólogo provisório no jogo.
+Nomes e chat cooperativo da 0.1.104 foram validados. A etapa 3 continua aberta; abertura completa e missões aguardam um novo piloto com movimento contínuo e aprovação humana.
 
 ## Histórico rejeitado — novo jogo e cinemática de chegada · 0.1.101
 

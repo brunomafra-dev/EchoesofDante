@@ -1,0 +1,17 @@
+{
+  "base": "http://localhost:5190",
+  "method": "Chrome: static whole-scene reference only. Does NOT validate or claim a new video.",
+  "checks": [
+    "Whole-scene raster loads; explicit static-reference label; rejected movie not presented as current candidate",
+    "Four target resolutions: complete image fits, no horizontal overflow; touch opens historical disclosure",
+    "No character/campaign/save mutation; old MP4 is explicitly rejected history"
+  ],
+  "errors": [],
+  "videoGenerated": false,
+  "passed": true,
+  "image": {
+    "width": 1672,
+    "height": 941,
+    "source": "http://localhost:5190/assets/cinematic-pilot/bridge-whole-characters.webp"
+  }
+}

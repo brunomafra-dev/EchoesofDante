@@ -343,4 +343,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    raise SystemExit('REJEITADO: piloto 0.1.105. Render por membros desativado. Leia docs/cinematic-pilot/revision-02/README.md; o novo filme exige animar personagens inteiros.')

@@ -8,7 +8,7 @@ Plano aprovado em 16/10/2026. Complementa o [plano da fundação RPG](RPG_FOUNDA
 | --- | --- | --- |
 | 1 | Personagens completos + início pelo clique na dificuldade | [0.1.103](character-cohesion/revision-03/README.md) validada para avançar; pente fino visual posterior |
 | 2 | Nomes e chat da equipe | [0.1.104](party-chat/README.md) validada pelo usuário: “Deu certo perfeito irmão”; Render/Vercel e chat público conferidos |
-| 3 | Piloto de cinemática; abertura completa após aprovação | [0.1.105 — ponte da nave](cinematic-pilot/README.md), animação 2D articulada de 12 s; aguardar aprovação humana antes do filme completo |
+| 3 | Piloto de cinemática; abertura completa após aprovação | **0.1.105 rejeitada** por anatomia/montagem dos membros. [Revisão 02](cinematic-pilot/revision-02/README.md): quadro com corpos inteiros; novo filme ainda pendente de geração. Não avançar |
 | 4 | Missões, diálogos e diário desde a chegada | Planejada |
 | 5 | Dois mapas e primeiro núcleo habitável | Planejada |
 

@@ -1,5 +1,7 @@
 # Etapa 3 — cena piloto da ponte · 0.1.105
 
+> **REJEITADA PELO USUÁRIO.** Anatomia e movimento por recortes ficaram quebrados. A automação abaixo não validou o resultado visual. O script de render foi desativado. [Revisão atual: corpos inteiros](revision-02/README.md). O novo filme ainda não foi gerado; o laboratório mostra somente o quadro-base, explicitamente estático. O restante desta página é histórico da tentativa rejeitada.
+
 [Assistir ao piloto](https://echosofdante.vercel.app/cinematic-pilot.html?v=0.1.105) · [Biblioteca](https://echosofdante.vercel.app/test-library.html)
 
 ## Entrega e gate humano

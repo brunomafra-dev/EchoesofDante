@@ -5,35 +5,33 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#101512">
   <link rel="icon" href="data:,">
-  <title>Dante — Cena piloto da ponte</title>
+  <title>Dante — Nova referência da cinemática</title>
 </head>
 <body>
   <main>
-    <header><a href="test-library.html">← Biblioteca de testes</a><span>ETAPA 3 · CENA PILOTO · 0.1.105</span></header>
+    <header><a href="test-library.html">← Biblioteca de testes</a><span>ETAPA 3 · REVISÃO 02 · 0.1.106</span></header>
     <h1>Uma chance de abrigo</h1>
-    <p class="intro">12 segundos na ponte da DANTE-01. Câmera fixa, atuação articulada, conversa em português e som ambiente.</p>
-    <section class="screen" aria-label="Cena piloto de chegada a Dante">
-      <video id="film" controls playsinline preload="metadata" poster="assets/cinematic-pilot/bridge-poster.webp" aria-label="Nara e Ivo na ponte da nave, em órbita de Dante">
-        <source src="assets/cinematic-pilot/bridge-pilot.mp4" type="video/mp4">
-        <track kind="captions" src="assets/cinematic-pilot/bridge-pt.vtt" srclang="pt-BR" label="Português" default>
-        Seu navegador não reproduz este vídeo. <a href="assets/cinematic-pilot/bridge-pilot.mp4">Abrir MP4</a>.
-      </video>
-    </section>
-    <nav class="controls" aria-label="Controles do piloto">
-      <button id="play" type="button">Assistir cena</button>
-      <button id="replay" type="button">Rever do início</button>
-      <button id="sound" type="button" aria-pressed="true">Som ligado</button>
-      <a href="test-library.html" id="skip">Pular</a>
-      <output id="state" role="status" aria-live="polite">Pronto para assistir · 12 s</output>
+    <p class="intro">Nova referência: personagens inteiros, desenhados junto com o ambiente.</p>
+    <figure class="screen">
+      <img src="assets/cinematic-pilot/bridge-whole-characters.webp" width="1672" height="941" alt="Ivo, de corpo inteiro, trabalha com as duas mãos apoiadas no console da ponte. Nara está ao lado dele, também de corpo inteiro, com os pés apoiados no chão. Dante aparece pela janela.">
+      <figcaption>QUADRO-BASE ESTÁTICO · AINDA NÃO É O NOVO FILME</figcaption>
+    </figure>
+    <p class="status" role="note">O piloto 0.1.105 foi rejeitado visualmente. A animação por recortes de membros foi abandonada. A geração do novo vídeo ainda está pendente.</p>
+    <nav class="controls" aria-label="Referência e biblioteca">
+      <a href="assets/cinematic-pilot/bridge-whole-characters.webp" target="_blank" rel="noopener">Abrir imagem completa</a>
+      <a href="test-library.html">Voltar à biblioteca</a>
     </nav>
-    <p class="hint">Espaço: pausar/retomar · Setas no vídeo: avançar/recuar · Tela cheia disponível no player. Gamepad: direcional navega e A confirma.</p>
-    <details><summary>Roteiro e o que avaliar</summary>
-      <p>Ivo trabalha no console enquanto Nara atravessa a ponte. Ele se vira para conversar; ela para, responde e indica o planeta.</p>
-      <p><strong>Ivo:</strong> Água líquida. Atmosfera compatível.<br><strong>Nara:</strong> Então existe uma chance.<br><strong>Nara:</strong> Prepare o reconhecimento. Ninguém desce sozinho.</p>
-      <p>Avalie os passos, as mãos no console, os gestos, o contato com o chão e se esta atuação funciona como direção para a abertura. É animação 2D por recortes articulados; não inclui dublagem nem sincronização labial.</p>
-      <p>Este teste não acessa personagens, campanhas ou saves. A abertura completa e sua substituição no jogo aguardam sua aprovação.</p>
+    <details><summary>Como será o novo teste</summary>
+      <p>O próximo clipe deve animar esta cena inteira, preservando a anatomia e a identidade dos personagens entre os quadros. Ivo opera o console e olha para Nara; ela responde e indica o planeta. A câmera permanece parada.</p>
+      <p>Não serão usados sprites de pernas, braços ou cabeças montados separadamente. Pan, zoom ou dissolução de imagens também não cumprem o objetivo. O novo vídeo precisa ser gerado e inspecionado antes de aparecer aqui.</p>
+      <p>Roteiro preservado: “Água líquida. Atmosfera compatível.” / “Então existe uma chance.” / “Prepare o reconhecimento. Ninguém desce sozinho.”</p>
+      <p>A geração de vídeo depende da integração com uma ferramenta de vídeo. O laboratório não gera vídeo em runtime e não exige conta externa dos jogadores.</p>
     </details>
-    <footer><a href="assets/cinematic-pilot/bridge-pilot.mp4" download>Baixar MP4</a> · <a href="./">Jogo principal</a></footer>
+    <details><summary>Histórico rejeitado — 0.1.105</summary>
+      <p>Os testes técnicos do primeiro MP4 passaram, mas o usuário rejeitou a anatomia e a atuação. Esse teste não é uma referência aprovada.</p>
+      <a href="assets/cinematic-pilot/bridge-pilot.mp4">Abrir o MP4 antigo, rejeitado</a>
+    </details>
+    <footer>Teste separado da campanha, sem acesso a saves. <a href="./">Jogo principal</a></footer>
   </main>
   <script type="module" src="/src/experiments/cinematic-pilot/main.ts"></script>
 </body>
