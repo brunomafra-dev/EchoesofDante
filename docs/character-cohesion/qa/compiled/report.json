@@ -1,0 +1,71 @@
+{
+  "base": "http://localhost:5190",
+  "method": "Compiled build, DOM-only Chrome automation, real relay. No DEV exports, no physical-device claim.",
+  "checks": [
+    "Compiled campaign: four different classes form and start through real invitations, protocol 11 and four-player world in every browser",
+    "Compiled four-player campaign: each existing class moves, attacks, dashes and holds/releases Q through real network snapshots",
+    "Compiled host departure offers menu only to every cooperative hero",
+    "Compiled menu: gamepad A/B navigation and D-pad volume adjustment",
+    "Compiled touch input opens the Play menu from the title screen",
+    "Official entry point uses the same new menu; no automatic character or active expedition"
+  ],
+  "errors": [],
+  "participants": [
+    {
+      "protocol": 11,
+      "id": "host",
+      "players": 4
+    },
+    {
+      "protocol": 11,
+      "id": "fb175828-bfa5-4d52-8c26-814a5bef4de0",
+      "players": 4
+    },
+    {
+      "protocol": 11,
+      "id": "f197bdd6-ec9c-4f59-a177-ea6683e0b65b",
+      "players": 4
+    },
+    {
+      "protocol": 11,
+      "id": "c26b3f4d-8c65-4ca3-8ecd-c52f15d5d4a0",
+      "players": 4
+    }
+  ],
+  "actions": [
+    {
+      "id": "host",
+      "moved": true,
+      "attack": true,
+      "dash": true,
+      "hold": true,
+      "release": true
+    },
+    {
+      "id": "fb175828-bfa5-4d52-8c26-814a5bef4de0",
+      "moved": true,
+      "attack": true,
+      "dash": true,
+      "hold": true,
+      "release": true
+    },
+    {
+      "id": "f197bdd6-ec9c-4f59-a177-ea6683e0b65b",
+      "moved": true,
+      "attack": true,
+      "dash": true,
+      "hold": true,
+      "release": true
+    },
+    {
+      "id": "c26b3f4d-8c65-4ca3-8ecd-c52f15d5d4a0",
+      "moved": true,
+      "attack": true,
+      "dash": true,
+      "hold": true,
+      "release": true
+    }
+  ],
+  "cooperativeChecked": true,
+  "passed": true
+}

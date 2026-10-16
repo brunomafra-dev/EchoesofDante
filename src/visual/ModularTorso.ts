@@ -31,7 +31,7 @@ export class ModularTorso {
   private signature='';
   bakeCount=0;
   private readonly accessory:Phaser.GameObjects.Image;
-  constructor(private scene:Phaser.Scene,rig:Phaser.GameObjects.Container,private classId:PlayableClass,private sex:CharacterSex,body:Phaser.GameObjects.Image){
+  constructor(private scene:Phaser.Scene,rig:Phaser.GameObjects.Container,private classId:PlayableClass,private sex:CharacterSex,private body:Phaser.GameObjects.Image){
     this.image=scene.add.container(0,0);rig.add(this.image);
     this.accessory=scene.add.image(-12,6,'item-accessory-1').setDisplaySize(10,10).setVisible(false);this.image.add(this.accessory);
     const id=++serial,prefix=`dressed-${classId}-${sex}-${id}`;
@@ -58,6 +58,8 @@ export class ModularTorso {
     this.setLook({...equipmentLook(),torso:value?(reinforced?'reinforced':'basic'):'none'});
   }
   setLook(look:EquipmentLook):void {
+    const styles=this.scene.cache.json.get('character-shoulder-registration').byStyle?.[`${this.classId}-${this.sex}`];
+    if(styles)this.body.setData('clothShoulders',styles[look.torso]);
     this.look={...look};this.image.setVisible(Object.values(look).some(v=>v!=='none'));
     const signature=PARTS.map(p=>look[p]).join('/');if(signature===this.signature)return;
     this.signature=signature;

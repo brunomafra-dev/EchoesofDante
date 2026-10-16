@@ -6,7 +6,7 @@ const base = process.env.QA_BASE ?? 'https://echosofdante.vercel.app';
 const out = process.env.QA_OUT ?? 'docs/prologue-menu/qa/public';
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ channel: 'chrome', headless: true, args: ['--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows'] });
-const report = { base, method: 'Compiled browser build: New Game creates the selected profile and starts one original MP4 cinematic.', errors: [] };
+const report = { base, method: 'Compiled browser build: New Game creates the selected profile and plays the legacy placeholder MP4. This is a playback check, not cinematic or visual approval.', errors: [] };
 const click = (page, id) => page.locator(`[data-shell="${id}"]`).evaluate(element => element.click());
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 }, reducedMotion: 'reduce' });
@@ -17,7 +17,7 @@ try {
   await page.locator('[name=character-name]').fill('AL Cinemática');
   await click(page, 'create');
   assert.deepEqual(await page.locator('[data-shell^="difficulty-"]').allTextContents(), ['Fezes puríssima', 'Marromenos', 'Chama 🔥']);
-  await click(page, 'difficulty-normal'); await click(page, 'start-new-game');
+  await click(page, 'difficulty-normal');
   const video = page.locator('.prologue-video'); await video.waitFor();
   await page.waitForFunction(() => { const element = document.querySelector('.prologue-video'); return element?.readyState >= 2 && element.duration > 19 && element.currentTime > .75; });
   report.video = await video.evaluate(element => ({ source: new URL(element.currentSrc).pathname, duration: element.duration, currentTime: element.currentTime, paused: element.paused, captions: document.querySelectorAll('.prologue-caption').length }));

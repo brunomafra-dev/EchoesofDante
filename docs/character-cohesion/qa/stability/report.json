@@ -1,0 +1,239 @@
+{
+  "method": "One Chrome page; actual PartyActor render compared with local visual transforms; controlled Forest idle samples and three real scene death/restarts per class. No human/device approval.",
+  "errors": [],
+  "mirrors": [
+    {
+      "sex": "male",
+      "classId": "warrior",
+      "cases": 128,
+      "maxDifference": 0
+    },
+    {
+      "sex": "female",
+      "classId": "warrior",
+      "cases": 128,
+      "maxDifference": 0
+    },
+    {
+      "sex": "male",
+      "classId": "hunter",
+      "cases": 128,
+      "maxDifference": 0
+    },
+    {
+      "sex": "female",
+      "classId": "hunter",
+      "cases": 128,
+      "maxDifference": 0
+    },
+    {
+      "sex": "male",
+      "classId": "astral",
+      "cases": 128,
+      "maxDifference": 0
+    },
+    {
+      "sex": "female",
+      "classId": "astral",
+      "cases": 128,
+      "maxDifference": 0
+    },
+    {
+      "sex": "male",
+      "classId": "xenobinder",
+      "cases": 128,
+      "maxDifference": 0
+    },
+    {
+      "sex": "female",
+      "classId": "xenobinder",
+      "cases": 128,
+      "maxDifference": 0
+    }
+  ],
+  "performance": [
+    {
+      "classId": "warrior",
+      "measuredFps": 59.977508434337125,
+      "loopFps": 57.510104179382324,
+      "before": {
+        "objects": 374,
+        "tweens": 24,
+        "textures": 239,
+        "inputListeners": 2,
+        "touchRoots": 1
+      },
+      "after": {
+        "objects": 374,
+        "tweens": 24,
+        "textures": 239,
+        "inputListeners": 2,
+        "touchRoots": 1
+      }
+    },
+    {
+      "classId": "hunter",
+      "measuredFps": 60.167270003744854,
+      "loopFps": 57.52245211601257,
+      "before": {
+        "objects": 386,
+        "tweens": 24,
+        "textures": 238,
+        "inputListeners": 2,
+        "touchRoots": 1
+      },
+      "after": {
+        "objects": 386,
+        "tweens": 24,
+        "textures": 238,
+        "inputListeners": 2,
+        "touchRoots": 1
+      }
+    },
+    {
+      "classId": "astral",
+      "measuredFps": 59.85186663000156,
+      "loopFps": 57.39490842819214,
+      "before": {
+        "objects": 392,
+        "tweens": 24,
+        "textures": 237,
+        "inputListeners": 2,
+        "touchRoots": 1
+      },
+      "after": {
+        "objects": 392,
+        "tweens": 24,
+        "textures": 237,
+        "inputListeners": 2,
+        "touchRoots": 1
+      }
+    },
+    {
+      "classId": "xenobinder",
+      "measuredFps": 59.988002399788215,
+      "loopFps": 57.50447702407837,
+      "before": {
+        "objects": 391,
+        "tweens": 24,
+        "textures": 241,
+        "inputListeners": 2,
+        "touchRoots": 1
+      },
+      "after": {
+        "objects": 391,
+        "tweens": 24,
+        "textures": 241,
+        "inputListeners": 2,
+        "touchRoots": 1
+      }
+    }
+  ],
+  "respawns": [
+    {
+      "classId": "warrior",
+      "cycles": [
+        {
+          "objects": 374,
+          "textures": 239,
+          "tweens": 24,
+          "inputListeners": 2,
+          "touchRoots": 1
+        },
+        {
+          "objects": 374,
+          "textures": 239,
+          "tweens": 24,
+          "inputListeners": 2,
+          "touchRoots": 1
+        },
+        {
+          "objects": 374,
+          "textures": 239,
+          "tweens": 24,
+          "inputListeners": 2,
+          "touchRoots": 1
+        }
+      ]
+    },
+    {
+      "classId": "hunter",
+      "cycles": [
+        {
+          "objects": 386,
+          "textures": 238,
+          "tweens": 24,
+          "inputListeners": 2,
+          "touchRoots": 1
+        },
+        {
+          "objects": 386,
+          "textures": 238,
+          "tweens": 24,
+          "inputListeners": 2,
+          "touchRoots": 1
+        },
+        {
+          "objects": 386,
+          "textures": 238,
+          "tweens": 24,
+          "inputListeners": 2,
+          "touchRoots": 1
+        }
+      ]
+    },
+    {
+      "classId": "astral",
+      "cycles": [
+        {
+          "objects": 392,
+          "textures": 237,
+          "tweens": 24,
+          "inputListeners": 2,
+          "touchRoots": 1
+        },
+        {
+          "objects": 392,
+          "textures": 237,
+          "tweens": 24,
+          "inputListeners": 2,
+          "touchRoots": 1
+        },
+        {
+          "objects": 392,
+          "textures": 237,
+          "tweens": 24,
+          "inputListeners": 2,
+          "touchRoots": 1
+        }
+      ]
+    },
+    {
+      "classId": "xenobinder",
+      "cycles": [
+        {
+          "objects": 391,
+          "textures": 241,
+          "tweens": 24,
+          "inputListeners": 2,
+          "touchRoots": 1
+        },
+        {
+          "objects": 391,
+          "textures": 241,
+          "tweens": 24,
+          "inputListeners": 2,
+          "touchRoots": 1
+        },
+        {
+          "objects": 391,
+          "textures": 241,
+          "tweens": 24,
+          "inputListeners": 2,
+          "touchRoots": 1
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

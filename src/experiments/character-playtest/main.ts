@@ -5,7 +5,7 @@ import { VIEW_HEIGHT,VIEW_WIDTH } from '../../config/game';
 import '../../style.css';
 import '../glacier-playtest/playtest.css';
 const params=new URLSearchParams(location.search);
-const classId=params.get('class')==='hunter'?'hunter':'warrior';
+const classId=(['warrior','hunter','astral','xenobinder'].includes(params.get('class')??'')?params.get('class'):'warrior') as import('../../config/classes').PlayableClass;
 const sex=params.get('sex')==='female'?'female':'male';
 const kit=params.get('kit');
 const style:ProtectionStyle=kit==='basic'?'basic':kit==='reinforced'||kit==='pilot'?'reinforced':'none';
@@ -16,7 +16,7 @@ const weaponParam=params.get('weapon');
 const weaponLook:WeaponStyle=weaponParam==='starter'||weaponParam==='current'||weaponParam==='advanced'?weaponParam:style==='none'?'starter':style==='basic'?'current':'advanced';
 for(const link of Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-choice]'))){
   const next=new URLSearchParams(params);next.set(link.dataset.choice!,link.dataset.value!);if(link.dataset.choice==='kit')for(const part of PROTECTION_PARTS)next.delete(part);
-  link.href=`character-playtest.html?${next}`;
+  link.href=`${location.pathname}?${next}`;
   const selected=link.dataset.choice==='class'?classId:link.dataset.choice==='sex'?sex:style==='none'?'clothes':style;
   if(link.dataset.value===selected)link.setAttribute('aria-current','true');
 }

@@ -40,11 +40,10 @@ export class HunterArt {
     const dx = x - this.previous.x, dy = y - this.previous.y, moved = Math.hypot(dx, dy);
     this.previous.x = x; this.previous.y = y;
     const walking = moved > .05 && moved < 30 && !dashing;
-    if (walking) this.travel += moved;
     const vx = Math.cos(aim), vy = Math.sin(aim), vertical = Math.abs(vy) > Math.abs(vx);
+    if (walking) this.travel += (dx*vx+dy*vy<-.05?-1:1)*moved;
     const row = vertical ? vy > 0 ? 0 : 1 : 2, flip = !vertical && vx < 0;
-    const backwards = dx * vx + dy * vy < -.05;
-    const phase = ((this.travel / 104 * (backwards ? -1 : 1)) % 1 + 1) % 1;
+    const phase = ((this.travel / 104) % 1 + 1) % 1;
     const frame = walking ? [1, 0, 2, 0][Math.floor(phase * 4)] : 0;
     this.view.setRotation(0);
     this.body.setFrame(row * 4 + frame).setFlipX(flip);

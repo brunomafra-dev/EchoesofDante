@@ -1,4 +1,5 @@
 import type Phaser from 'phaser';
+import { projectShoulder } from './HumanPose';
 
 export type ShoulderPoint={x:number;y:number};
 export type ShoulderSockets={left:ShoulderPoint;right:ShoulderPoint};
@@ -10,6 +11,5 @@ export function clothShoulder(body:Phaser.GameObjects.Image,side:'left'|'right',
   const frame=Number(body.frame.name);
   const row=body.texture.key.endsWith('-back')?1:body.texture.key.endsWith('-side')?2:0;
   const socket=sockets[body.texture.key.endsWith('-all')?frame:row*4+frame][side];
-  out.x=body.x+(socket.x-128)*body.scaleX*(body.flipX?-1:1);
-  out.y=body.y+(socket.y-128)*body.scaleY;
+  projectShoulder(socket,body.x,body.y,body.scaleX,body.scaleY,body.flipX,out);
 }

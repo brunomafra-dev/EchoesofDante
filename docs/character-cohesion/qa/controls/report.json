@@ -1,0 +1,10 @@
+{
+  "method": "Chrome Touch/CDP and standard Gamepad API mock in the actual Hunter gameplay rig, no physical device.",
+  "errors": [],
+  "checks": [
+    "Touch joystick moves the dressed Hunter",
+    "Touch strike, Dash and Q hold/release animate the same rig",
+    "Gamepad movement, attack, Dash and Q hold/release remain available"
+  ],
+  "passed": true
+}

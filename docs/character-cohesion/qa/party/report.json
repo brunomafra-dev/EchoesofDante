@@ -1,0 +1,696 @@
+{
+  "method": "Four independent Chrome contexts (one visible camera at a time to share the QA machine GPU; all four simulations/network connections remain live), real local WebSocket relay, keyboard/mouse, touch emulation and gamepad mock. DEV campaign/position/damage fixtures; no physical-device approval.",
+  "checks": [
+    "Four unique participant IDs, four existing kits and three player mirrors in every visitor"
+  ],
+  "errors": [],
+  "metrics": [],
+  "ids": [
+    "host",
+    "threat-hunter",
+    "threat-astral",
+    "threat-xenobinder"
+  ],
+  "scale": {
+    "base": 68,
+    "max": 177
+  },
+  "failure": "TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.",
+  "frames": [
+    [
+      {
+        "type": "joined",
+        "id": "host",
+        "epoch": 0
+      }
+    ],
+    [
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      }
+    ],
+    [
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      }
+    ],
+    [
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      },
+      {
+        "type": "world",
+        "total": 0,
+        "xp": 0,
+        "epoch": 0
+      }
+    ]
+  ],
+  "bossAtFailure": null,
+  "hostStates": [
+    {
+      "id": "threat-hunter",
+      "input": {
+        "x": 0,
+        "y": 0,
+        "aim": 0,
+        "attack": false,
+        "dash": false,
+        "charge": false,
+        "held": false,
+        "release": false,
+        "cancel": true,
+        "interact": false,
+        "restart": false,
+        "element": false
+      },
+      "age": 5,
+      "pose": {
+        "strike": {
+          "phase": "READY",
+          "relativeAngle": -0.42,
+          "worldAngle": -0.42,
+          "swingProgress": 0
+        },
+        "releaseProgress": 0,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "x": 1439.8749999999993,
+        "y": 400,
+        "aim": 0,
+        "hp": 103,
+        "maxHp": 103,
+        "dead": false,
+        "dash": false,
+        "phase": "READY",
+        "level": 0,
+        "firing": false,
+        "swingProgress": 0,
+        "dashCooldown": 1450,
+        "chargeCooldown": 3200,
+        "dashReady": 1,
+        "chargeReady": 1,
+        "momentum": 0
+      }
+    },
+    {
+      "id": "threat-astral",
+      "input": {
+        "x": 0,
+        "y": 0,
+        "aim": 0,
+        "attack": false,
+        "dash": false,
+        "charge": false,
+        "held": false,
+        "release": false,
+        "cancel": false,
+        "interact": false,
+        "restart": false,
+        "element": false
+      },
+      "age": 6555.9000000059605,
+      "pose": {
+        "strike": {
+          "phase": "READY",
+          "relativeAngle": -0.42,
+          "worldAngle": -0.42,
+          "swingProgress": 0
+        },
+        "releaseProgress": 0,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "x": 400,
+        "y": 1150,
+        "aim": 0,
+        "hp": 108,
+        "maxHp": 108,
+        "dead": false,
+        "dash": false,
+        "phase": "READY",
+        "level": 0,
+        "astral": {
+          "energy": 100,
+          "element": "energy",
+          "shots": [],
+          "zones": []
+        },
+        "firing": false,
+        "swingProgress": 0,
+        "dashCooldown": 1650,
+        "chargeCooldown": 3200,
+        "dashReady": 1,
+        "chargeReady": 1
+      }
+    },
+    {
+      "id": "threat-xenobinder",
+      "input": {
+        "x": 0,
+        "y": 0,
+        "aim": 0,
+        "attack": false,
+        "dash": false,
+        "charge": false,
+        "held": false,
+        "release": false,
+        "cancel": false,
+        "interact": false,
+        "restart": false,
+        "element": false
+      },
+      "age": 94460.5,
+      "pose": {
+        "strike": {
+          "phase": "READY",
+          "relativeAngle": -0.42,
+          "worldAngle": -0.42,
+          "swingProgress": 0
+        },
+        "releaseProgress": 0,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "x": 400,
+        "y": 1230,
+        "aim": 0,
+        "hp": 113,
+        "maxHp": 113,
+        "dead": false,
+        "dash": false,
+        "phase": "READY",
+        "level": 0,
+        "xenobinder": {
+          "bond": 35,
+          "active": true,
+          "state": "FOLLOW",
+          "owner": {
+            "x": 400,
+            "y": 1230
+          },
+          "pet": {
+            "x": 345,
+            "y": 1270,
+            "frame": 0,
+            "flip": false
+          },
+          "linked": false,
+          "shots": [],
+          "heals": []
+        },
+        "firing": false,
+        "swingProgress": 0,
+        "dashCooldown": 1750,
+        "chargeCooldown": 6000,
+        "dashReady": 1,
+        "chargeReady": 1
+      },
+      "canCharge": true
+    }
+  ],
+  "last": [
+    {
+      "title": "Dante — Equipe de quatro",
+      "visibility": "visible",
+      "canvas": true,
+      "scene": 6,
+      "loader": 3,
+      "area": "forest",
+      "transitioning": false,
+      "roomArea": "forest",
+      "epoch": 0,
+      "worldAge": 94679.19999998808,
+      "clock": false,
+      "potions": 6,
+      "resources": {
+        "credits": 0,
+        "materials": [
+          0,
+          0,
+          0
+        ],
+        "used": 0
+      },
+      "dialogs": [
+        "application-shell"
+      ],
+      "xp": 0,
+      "saved": true,
+      "status": "Campanha pausada · aguardando a equipe original completa."
+    },
+    {
+      "title": "Dante — Equipe de quatro",
+      "visibility": "visible",
+      "canvas": true,
+      "scene": 6,
+      "loader": 3,
+      "area": "forest",
+      "transitioning": false,
+      "roomArea": "forest",
+      "epoch": 0,
+      "worldArea": "forest",
+      "worldAge": 25.19999998807907,
+      "clock": false,
+      "potions": 6,
+      "resources": {
+        "credits": 0,
+        "materials": [
+          0,
+          0,
+          0
+        ],
+        "used": 0
+      },
+      "dialogs": [
+        "application-shell"
+      ],
+      "xp": 0,
+      "saved": true,
+      "status": "Campanha pausada · aguardando a equipe original completa.",
+      "close": {
+        "code": 1008,
+        "reason": "Limite de mensagens: equipment=2,input=294"
+      }
+    },
+    {
+      "title": "Dante — Equipe de quatro",
+      "visibility": "visible",
+      "canvas": true,
+      "scene": 6,
+      "loader": 3,
+      "area": "forest",
+      "transitioning": false,
+      "roomArea": "forest",
+      "epoch": 0,
+      "worldArea": "forest",
+      "worldAge": 102.90000000596046,
+      "clock": false,
+      "potions": 6,
+      "resources": {
+        "credits": 0,
+        "materials": [
+          0,
+          0,
+          0
+        ],
+        "used": 0
+      },
+      "dialogs": [
+        "application-shell"
+      ],
+      "xp": 0,
+      "saved": true,
+      "status": "Campanha pausada · aguardando a equipe original completa."
+    },
+    {
+      "title": "Dante — Equipe de quatro",
+      "visibility": "visible",
+      "canvas": true,
+      "scene": 6,
+      "loader": 3,
+      "area": "forest",
+      "transitioning": false,
+      "roomArea": "forest",
+      "epoch": 0,
+      "worldArea": "forest",
+      "worldAge": 20436,
+      "clock": false,
+      "potions": 6,
+      "resources": {
+        "credits": 0,
+        "materials": [
+          0,
+          0,
+          0
+        ],
+        "used": 0
+      },
+      "dialogs": [
+        "application-shell"
+      ],
+      "xp": 0,
+      "saved": true,
+      "status": "A reconexão expirou. Entre novamente com o código da sala.",
+      "close": {
+        "code": 1006,
+        "reason": ""
+      }
+    }
+  ]
+}

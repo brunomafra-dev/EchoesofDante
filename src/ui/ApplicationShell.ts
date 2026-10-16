@@ -7,13 +7,13 @@ import { inspectRoom, type RoomInspection } from '../network/PartyLobby';
 import { roomCode, invitationLink, clearInvitation, setInvitation } from '../network/CoopInvitation';
 import { CLASS_NAMES } from '../config/classes';
 import { DIFFICULTIES, type DifficultyId } from '../config/difficulty';
-import { CharacterSelection } from './CharacterSelection';
+import { CharacterSelection, type CharacterDraft } from './CharacterSelection';
 import { Prologue } from './Prologue';
 import { AUDIO } from '../config/audio';
 import type { CharacterClass } from '../systems/CharacterProfiles';
 import type { CharacterSex } from '../config/appearance';
 
-type Page = 'home' | 'play' | 'pause' | 'characters' | 'coop-characters' | 'create' | 'difficulty' | 'coop-menu' | 'invite' | 'coop' | 'settings' | 'prologue' | 'coop-ended';
+type Page = 'home' | 'play' | 'pause' | 'characters' | 'coop-characters' | 'create' | 'party-size' | 'difficulty' | 'coop-menu' | 'invite' | 'coop' | 'settings' | 'prologue' | 'coop-ended';
 const LAUNCH = 'echoes-of-dante.launch-once', APPROVAL = 'echoes-of-dante.invite-character-once', SETTINGS = 'echoes-of-dante.settings.v1';
 
 export class ApplicationShell {
@@ -31,6 +31,8 @@ export class ApplicationShell {
   private entry?: 'create' | 'join';
   private creation: CampaignCreation = { mode: 'solo', difficulty: 'normal', size: 1 };
   private pendingCharacter?: { name: string; classId: CharacterClass; sex: CharacterSex };
+  private draft?: CharacterDraft;
+  private creating=false;
   private code = roomCode(location.href) ?? '';
   private pendingInvite = !!this.code;
   private lobby?: RoomInspection;
@@ -110,18 +112,19 @@ export class ApplicationShell {
     }
     if (this.page === 'pause') { this.resume(); return; }
     if (this.page === 'coop') { if (coopSession.role !== 'offline' || this.busy) { this.returnHome(); return; } this.show('coop-menu'); return; }
-    const destination: Partial<Record<Page, Page>> = { play:'home', characters:'play', 'coop-characters':'coop-menu', difficulty:'create', create:this.pendingInvite ? 'invite':this.creation.mode === 'solo' ? 'play':'coop-menu', 'coop-menu':'play', invite:'coop-menu' };
+    const destination: Partial<Record<Page, Page>> = { play:'home', characters:'play', 'coop-characters':'coop-menu', difficulty:this.creation.mode==='coop'?'party-size':'create', 'party-size':'create', create:this.pendingInvite ? 'invite':this.creation.mode === 'solo' ? 'play':'coop-menu', 'coop-menu':'play', invite:'coop-menu' };
     if (this.page === 'create' && !this.pendingInvite) this.pendingCharacter = undefined;
     if (this.page === 'invite' || this.page === 'coop-characters') { this.pendingInvite = false; clearInvitation(); }
     this.show(destination[this.page] ?? 'home');
   }
   private settings(): void { this.settingsReturn = this.page; this.prologue?.pause(); this.show('settings'); }
-  private beginNew(mode: 'solo' | 'coop'): void { this.pendingInvite = false; this.lobby = undefined; this.pendingCharacter = undefined; clearInvitation(); this.creation = { mode, difficulty:'normal', size:mode === 'coop' ? 2:1 }; this.show('create'); }
+  private beginNew(mode: 'solo' | 'coop'): void { this.pendingInvite = false; this.lobby = undefined; this.pendingCharacter = undefined; this.draft=undefined;clearInvitation(); this.creation = { mode, difficulty:'normal', size:mode === 'coop' ? 2:1 }; this.show('create'); }
   private startNewCampaign(): void {
     const pending = this.pendingCharacter;
-    if (!pending || this.launching) return;
+    if (!pending || this.launching || this.creating || this.playing || coopSession.role!=='offline') return;
+    this.creating=true;
     const hero = characterProfiles.create(pending.name, pending.classId, pending.sex, this.creation);
-    if (!hero) { this.status('Não foi possível criar o personagem. Confira o nome, o limite de personagens e o armazenamento do navegador.'); return; }
+    if (!hero) { this.creating=false;this.status('Não foi possível criar o personagem. Confira o nome, o limite de personagens e o armazenamento do navegador.'); return; }
     this.pendingCharacter = undefined;
     this.launch(hero.id);
   }
@@ -216,18 +219,19 @@ export class ApplicationShell {
       this.action('RETOMAR','continue', () => this.resume()); this.action('MAPA DA EXPEDIÇÃO','expedition', () => { this.resume(); this.scene?.openExpedition(); });
       this.action('MOCHILA E EQUIPAMENTOS','equipment', () => { this.resume(); this.scene?.openEquipment(); }); this.action('VOLTAR À TELA INICIAL','home', () => this.returnHome());
     } else if (this.page === 'difficulty') {
-      this.heading('Dificuldade', 'Escolha o nível da expedição.');
+      this.heading('Dificuldade', '');
       for (const id of ['easy','normal','hard'] as DifficultyId[]) {
-        const d = DIFFICULTIES[id], b = this.action(d.name, `difficulty-${id}`, () => { this.creation.difficulty = id; this.render(); });
-        b.className = 'difficulty-choice'; b.setAttribute('aria-pressed', String(this.creation.difficulty === id));
+        const d = DIFFICULTIES[id], b = this.action(d.name, `difficulty-${id}`, () => { this.creation.difficulty = id; this.startNewCampaign(); });
+        b.className = 'difficulty-choice';b.disabled=!this.pendingCharacter||this.creating||this.launching;
       }
-      if (this.creation.mode === 'coop') {
+      this.action('VOLTAR','back', () => this.back());
+    } else if(this.page==='party-size'){
+      this.heading('Sua equipe', 'Quantos exploradores vão jogar juntos?');
         const label = document.createElement('label'); label.textContent = 'Tamanho da equipe original'; const select = document.createElement('select'); select.name = 'party-size';
         for (const size of [2,3,4]) { const option = document.createElement('option'); option.value = String(size); option.textContent = `${size} jogadores · classes diferentes`; select.append(option); }
         select.value = String(this.creation.size); select.onchange = () => { this.creation.size = Number(select.value); }; label.append(select); this.content.append(label);
         const p = document.createElement('p'); p.textContent = 'Para continuar depois, todos os personagens originais deverão voltar. Sem substituições e sem continuar solo.'; this.content.append(p);
-      }
-      this.action('COMEÇAR EXPEDIÇÃO →','start-new-game', () => this.startNewCampaign()).disabled = !this.pendingCharacter;
+      this.action('ESCOLHER DIFICULDADE →','choose-difficulty',()=>this.show('difficulty'));
       this.action('VOLTAR','back', () => this.back());
     } else if (characters) {
       const cooperative = this.page === 'coop-characters';
@@ -248,12 +252,13 @@ export class ApplicationShell {
             return;
           }
           this.pendingCharacter = { name, classId, sex };
-          this.show('difficulty');
+          this.show(this.creation.mode==='coop'?'party-size':'difficulty');
         },
       }, this.pendingInvite, this.pendingInvite && this.page==='create' ? this.lobby?.members.map(m => m.profile.classId):[], {
         profiles, title: cooperative ? 'Continuar com a equipe original':undefined,
         subtitle: cooperative ? 'O anfitrião reúne a sala. Os demais entram pelo novo convite com os mesmos personagens.':undefined,
         allowCreate: !cooperative,
+        draft:this.draft,onDraft:draft=>{this.draft=draft;},
       });
       if (cooperative && !profiles.length) this.status('Nenhum personagem desta equipe neste navegador. Use o navegador original; personagens solo não podem substituí-lo.');
     } else if (this.page === 'coop-menu') {

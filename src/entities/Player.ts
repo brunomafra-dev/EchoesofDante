@@ -1,5 +1,6 @@
 import { equipmentAppearance } from '../config/equipment';
 import Phaser from 'phaser';
+import { warriorReach, warriorSweep } from '../visual/HumanPose';
 import type { SaberPose } from '../combat/Attack';
 import type { KineticPose } from '../combat/KineticCharge';
 import { Health } from '../combat/Health';
@@ -220,7 +221,7 @@ export class Player {
     const attackTwist = pose.phase === 'READY' ? 0 : clamp(pose.relativeAngle * 0.075, -0.1, 0.1);
     this.bodyRig.setPosition((this.isDashing ? 5 : 0) + bob * sinAim, bob * cosAim + (this.isDashing ? -1 : 0));
     const heavyLean = heavy.phase === 'CHARGING' ? -0.03 - heavy.level * 0.04 : heavy.phase === 'RELEASE' ? (1 - heavy.swingProgress) * 0.08 : 0;
-    const handReach = heavy.phase === 'CHARGING' ? -4 - heavy.level * 4 : heavy.phase === 'RELEASE' ? Math.sin(heavy.swingProgress * Math.PI) * 8 : 0;
+    const handReach = warriorReach(heavy);
     const presentationLean = this.referencePresentation && !this.paintedArt ? poseWarrior(this.leftLeg, this.rightLeg, this.bodyRig,
       stride, this.stepPhase, walking, this.travelDirection, aim, pose, heavy, this.isDashing, now < this.hitFlashUntil) : 0;
     if (this.paintedArt) {
@@ -229,7 +230,7 @@ export class Player {
       this.bodyRig.setPosition(0, 0);
       this.paintedArt.update(aim, this.stepPhase, walking, this.travelDirection, pose, heavy, this.isDashing);
     }
-    this.setAim(aim, (this.paintedArt ? 0 : (walking ? stride * 0.015 : 0) + attackTwist + heavyLean + presentationLean), handReach, pose.phase === 'READY' ? 0 : pose.relativeAngle * 3);
+    this.setAim(aim, (this.paintedArt ? 0 : (walking ? stride * 0.015 : 0) + attackTwist + heavyLean + presentationLean), handReach, warriorSweep(pose));
     this.hurtOverlay.setAlpha(now < this.hitFlashUntil ? 0.72 : 0);
 
     this.view.setPosition(this.position.x, this.position.y).setDepth(this.position.y);
@@ -281,7 +282,7 @@ export class Player {
     this.isDead = dead; this.isDashing = dashing;
     this.hurtOverlay.setAlpha(this.scene.time.now<this.hitFlashUntil?.72:0);
     this.paintedArt?.update(aim, this.stepPhase, moved > .1, travel, pose, heavy, dashing);
-    this.setAim(aim); this.renderWeapon(aim, pose, heavy);
+    this.setAim(aim,0,warriorReach(heavy),warriorSweep(pose)); this.renderWeapon(aim, pose, heavy);
     this.view.setPosition(position.x, position.y).setDepth(position.y).setAlpha(dead ? .25 : dashing ? .74 : 1);
     this.shadow.setPosition(position.x, position.y + 39).setDepth(position.y - 3);
     this.groundContact.setPosition(position.x, position.y + 39).setDepth(position.y - 2);

@@ -1,10 +1,12 @@
 # Campanhas, equipe original e chegada a Dante
 
+> **Revisão 0.1.101 rejeitada visualmente em 16/10/2026.** O vídeo abaixo é uma exportação de pinturas com movimento de câmera, não o filme com atuação solicitado. A descrição de braços completos no corpo também estava incorreta. A [correção dos personagens/início](../character-cohesion/README.md) e o [plano atualizado](../DANTE_COLONIZATION_PLAN.md) substituem essas decisões. Os resultados antigos de QA são históricos, sem aprovação visual.
+
 ## Revisão 0.1.101 — nova criação, cinemática e retratos
 
 O fluxo de **Novo jogo** começa na seleção/criação do personagem; a dificuldade vem depois, numa tela independente. A tela oferece somente **Fezes puríssima**, **Marromenos** e **Chama 🔥**, sem descrições adicionais. **Começar expedição** persiste personagem e dificuldade e inicia imediatamente a campanha.
 
-O prólogo é agora um vídeo H.264 único, contínuo, de 19,6 s e 1280×720, sem títulos/cartões ou texto sobre a imagem. Os retratos de Astral e Domador usam os braços já pintados no corpo e ancoram a manopla/condutor à pose de repouso. Capturas: [Astral masc.](qa/character-selection-astral.png), [Domador masc.](qa/character-selection-domador.png), [Astral fem.](qa/character-selection-astral-female.png) e [Domadora fem.](qa/character-selection-xenobinder-female.png). O nome de exibição da classe passa a ser **Domador de feras**; o identificador técnico `xenobinder` permanece para não invalidar personagens e saves.
+O rascunho legado é H.264 de 19,6 s e 1280×720, sem títulos/cartões ou texto sobre a imagem. Na tentativa 0.1.101 os retratos de Astral e Domador removeram a articulação: **a pintura possui mangas cortadas e não contém braços completos**. Capturas históricas: [Astral masc.](qa/character-selection-astral.png), [Domador masc.](qa/character-selection-domador.png), [Astral fem.](qa/character-selection-astral-female.png) e [Domadora fem.](qa/character-selection-xenobinder-female.png). O nome de exibição da classe continua **Domador de feras**; `xenobinder` permanece como identificador técnico para não invalidar saves.
 
 **QA desta revisão:** `npm run typecheck`, `npm run build`, `node scripts/qa-campaign-menu.mjs` e `node scripts/qa-prologue-timeline.mjs` passaram. O smoke de produção em Chrome também cobre touch, gamepad e solo; a verificação do relay cooperativo é separada e exige protocolo 11 ativo. Playtest humano do vídeo e da aparência dos braços continua recomendado.
 
@@ -22,7 +24,7 @@ O laboratório usa somente armazenamento de sessão próprio, inclusive para sel
 - Jogar: **Continuar expedição / Novo jogo / Cooperativo**.
 - Continuar solo abre somente personagens solo, com suas próprias jornadas.
 - Cooperativo: **Iniciar novo jogo / Continuar jogando com amigos / Entrar por convite**.
-- Novo jogo abre primeiro a seleção de classe, nome e apresentação; em seguida, a tela separada da dificuldade. Em equipe, essa segunda etapa também define **2, 3 ou 4 integrantes**, com classes diferentes. **Começar expedição** cria a jornada e a inicia diretamente, sem voltar ao menu para escolher continuar.
+- Fluxo corrigido na 0.1.102: personagem → **clicar na dificuldade inicia**. No coop, tamanho da equipe (2–4) numa tela antes da dificuldade. Não há mais o botão adicional **Começar expedição**.
 - Configurações estão disponíveis em todos os menus, inclusive no prólogo. Esc e o botão B do controle voltam pela hierarquia; Start abre a pausa.
 - Durante a expedição não existe troca de personagem. Retornar ao início salva e encerra a conexão antes de selecionar outra jornada.
 

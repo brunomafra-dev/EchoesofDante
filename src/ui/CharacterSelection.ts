@@ -13,6 +13,7 @@ const identity = {
   xenobinder:{role:'DOMADOR · SIMBIOSE',fantasy:'Lute em simbiose. Oriente uma criatura de Dante e proteja sua expedição.',kit:'Condutor simbiótico · Companheiro permanente · Investida e recuperação'},
 };
 type Actions = { back: () => void; create: (name: string, classId: CharacterClass, sex: CharacterSex) => void; play: (id: string) => void; remove: (id: string) => void; newCharacter: () => void };
+export type CharacterDraft = { name: string; classId: CharacterClass; sex: CharacterSex };
 function button(text: string, id: string, action: () => void): HTMLButtonElement {
   const el = document.createElement('button'); el.type = 'button'; el.textContent = text; el.dataset.shell = id;
   el.addEventListener('click', action); return el;
@@ -25,7 +26,7 @@ function element<K extends keyof HTMLElementTagNameMap>(tag: K, className: strin
 export class CharacterSelection {
   private readonly previews: CharacterShowcase[] = [];
   private deleteDialog?: HTMLDialogElement;
-  constructor(private readonly root: HTMLElement, mode: 'characters' | 'create', actions: Actions, private readonly joiningRoom = false, private readonly occupied: readonly string[] = [], private readonly context: { profiles?: readonly CharacterProfile[]; title?: string; subtitle?: string; allowCreate?: boolean } = {}) {
+  constructor(private readonly root: HTMLElement, mode: 'characters' | 'create', actions: Actions, private readonly joiningRoom = false, private readonly occupied: readonly string[] = [], private readonly context: { profiles?: readonly CharacterProfile[]; title?: string; subtitle?: string; allowCreate?: boolean; draft?: CharacterDraft; onDraft?: (draft:CharacterDraft)=>void } = {}) {
     const header = element('header', 'selection-header');
     const title = element('div', 'selection-title');
     title.append(element('small', '', 'ECHOES OF DANTE / EXPEDIÇÃO'));
@@ -70,10 +71,11 @@ export class CharacterSelection {
       if(old)this.previews.splice(this.previews.indexOf(old),1);
       const next=this.stage(selected,sexSelect.value as CharacterSex);card.querySelector('.character-stage')!.replaceWith(next.stage);next.preview.play();
     };
-    sexSelect.addEventListener('change',()=>{sexChosen=true;refreshPreview();});
+    const remember=()=>{if(selected)this.context.onDraft?.({name:input.value,classId:selected,sex:sexSelect.value as CharacterSex});};
+    sexSelect.addEventListener('change',()=>{sexChosen=true;remember();refreshPreview();});
     const create = button(this.joiningRoom ? 'CRIAR E ENTRAR NA SALA →' : 'CONTINUAR →', 'create', () => { if (selected) actions.create(input.value, selected, sexSelect.value as CharacterSex); });
     create.className = 'selection-primary'; create.disabled = true;
-    input.addEventListener('input', () => create.disabled = !selected || !input.value.trim());
+    input.addEventListener('input', () => {create.disabled = !selected || !input.value.trim();remember();});
     input.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.isComposing && !create.disabled) { event.preventDefault(); create.click(); } });
     for (const classId of ['warrior', 'hunter','astral','xenobinder'] as const) {
       const card = button('', `choose-${classId}`, () => {
@@ -84,6 +86,7 @@ export class CharacterSelection {
         selectedTitle.textContent = CLASS_NAMES[classId]; description.textContent = identity[classId].fantasy; kit.textContent = identity[classId].kit;
         input.disabled = false; replay.disabled = false; create.disabled = !input.value.trim();
         refreshPreview();
+        remember();
       });
       card.className = 'class-display'; card.dataset.class = classId; card.setAttribute('aria-pressed', 'false');
       card.disabled=this.occupied.includes(classId);
@@ -99,6 +102,11 @@ export class CharacterSelection {
     const footer = element('div', 'creation-footer'), controls = element('div', 'selection-controls'); controls.append(sexLabel,label, create);
     const detail = element('div', 'selection-detail'); detail.append(info, replay);
     footer.append(detail, controls); this.root.append(gallery, footer);
+    const draft=this.context.draft;
+    if(draft&&!this.occupied.includes(draft.classId)){
+      input.value=draft.name;sexSelect.value=draft.sex;sexChosen=true;
+      gallery.querySelector<HTMLButtonElement>(`[data-class="${draft.classId}"]`)?.click();
+    }
   }
   private characters(actions: Actions): void {
     const profiles = this.context.profiles ?? characterProfiles.list;

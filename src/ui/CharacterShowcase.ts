@@ -1,11 +1,11 @@
 import type { CharacterClass } from '../systems/CharacterProfiles';
 import { hunterRiflePose } from '../visual/HunterRiflePose';
-import { characterSex, hunterBody, warriorBody, type CharacterSex } from '../config/appearance';
+import { characterSex, type CharacterSex } from '../config/appearance';
 import type {ShoulderSockets} from '../visual/ClothShoulders';
-import {CASTER_WALK,CASTER_COLUMNS,CASTER_INSTRUMENTS} from '../visual/CasterPose';
+import {CASTER_WALK,CASTER_COLUMNS,CASTER_INSTRUMENTS,casterTargets} from '../visual/CasterPose';
 import type {PaintedArmPart} from '../visual/PaintedArmFrames';
+import { heldArm, newArm, paintedSegment, paintedHand, projectShoulder, warriorHand } from '../visual/HumanPose';
 
-type Part = { frame: number; width: number; height: number; axisY?: number };
 const images = new Map<string, Promise<HTMLImageElement>>();
 const base = `${import.meta.env.BASE_URL}assets/visual/characters/`;
 function image(name: string): Promise<HTMLImageElement> {
@@ -19,12 +19,6 @@ function image(name: string): Promise<HTMLImageElement> {
   }
   return result;
 }
-let metadata: Promise<Part[]> | undefined;
-function rifleParts(): Promise<Part[]> {
-  return metadata ??= fetch(base + 'star-hunter-weapon-v2.json').then(r => {
-    if (!r.ok) throw new Error('Prévia indisponível'); return r.json() as Promise<Part[]>;
-  }).catch(() => [] as Part[]);
-}
 
 // Menu-only illustration playback. Uses the actual painted body/arm/weapon
 // atlases, no Phaser instance, simulation, enemies, sound or gameplay timers.
@@ -33,7 +27,6 @@ export class CharacterShowcase {
   readonly caption = document.createElement('span');
   private readonly ctx: CanvasRenderingContext2D;
   private readonly loaded = new Map<string, HTMLImageElement>();
-  private parts: Part[] = [];
   private armBounds:PaintedArmPart[]=[];
   private shoulderSockets:ShoulderSockets[]=[];
   private raf = 0;
@@ -45,7 +38,7 @@ export class CharacterShowcase {
   private ready = false;
   private readonly bodyName: string;
   constructor(readonly classId: CharacterClass, readonly sex: CharacterSex = characterSex(classId)) {
-    this.bodyName = `${classId==='xenobinder'?`wardrobe-xenobinder-${sex}-none`:classId==='astral'?`wardrobe-astral-${sex}-none`:classId==='hunter'?hunterBody(sex):warriorBody(sex,'front')}.png`;
+    this.bodyName = `wardrobe-${classId}-${sex}-none.png`;
     this.canvas.className = 'showcase-canvas'; this.canvas.setAttribute('role', 'img');
     this.canvas.setAttribute('aria-label', classId === 'astral' ? 'Manipulador Astral com manopla tecnológica' : classId === 'hunter' ? 'Star Hunter com rifle de pulso' : 'Guerreiro Galáctico com sabre de energia');
     const ratio = Math.min(2, window.devicePixelRatio || 1);
@@ -53,17 +46,23 @@ export class CharacterShowcase {
     this.ctx = this.canvas.getContext('2d')!; this.ctx.scale(ratio, ratio);
     this.caption.className = 'showcase-caption'; this.caption.textContent = 'PREPARADO PARA DANTE';
     if(classId==='xenobinder')this.canvas.setAttribute('aria-label','Domador de feras com condutor e companheiro simbionte');
-    const names = classId === 'xenobinder'?[this.bodyName,'xenobinder-starter-weapon.png','dante-symbiont-motion.png']:classId === 'astral'?[this.bodyName,'astral-starter-weapon.png']:classId === 'hunter' ? [this.bodyName, 'star-hunter-weapon-v2.png','hunter-starter-weapon.png','expedition-arm-kit.png'] :
+    const names = classId === 'xenobinder'?[this.bodyName,'xenobinder-arm-none.png','xenobinder-starter-weapon.png','dante-symbiont-motion.png']:classId === 'astral'?[this.bodyName,'astral-arm-none.png','astral-starter-weapon.png']:classId === 'hunter' ? [this.bodyName,'hunter-starter-weapon.png','expedition-arm-kit.png'] :
       [this.bodyName, 'expedition-arm-kit.png', 'warrior-starter-weapon.png'];
     void Promise.all(names.map(async name => this.loaded.set(name, await image(name)))).then(async () => {
       if (this.disposed) return;
-      if (classId === 'hunter') this.parts = await rifleParts();
       if (this.disposed) return;
       if(classId!=='astral'&&classId!=='xenobinder'){
         const registration=await fetch(base+'character-arm-registration.json').then(r=>r.json());
         this.armBounds=registration['expedition-arm-kit'];
         const shoulders=await fetch(base+'character-shoulder-registration.json').then(r=>r.json());
         this.shoulderSockets=shoulders[`${classId}-${sex}`];
+      }else{
+        const [registration,shoulders]=await Promise.all([
+          fetch(base+'caster-arm-registration.json').then(r=>r.json()),
+          fetch(base+classId+'-shoulders.json').then(r=>r.json()),
+        ]);
+        this.armBounds=registration[`${classId}-arm-none`];
+        this.shoulderSockets=shoulders.byStyle[sex].none;
       }
       if(this.disposed)return;
       this.ready = true; this.paint(-1);
@@ -127,15 +126,22 @@ export class CharacterShowcase {
   private xenobinder(t:number,strike:boolean,dash:boolean,charge:boolean,release:boolean):void{this.caster('xenobinder',t,strike,dash,charge,release);}
   private caster(identity:'astral'|'xenobinder',t:number,strike:boolean,dash:boolean,charge:boolean,release:boolean):void{
     const c=this.ctx,frame=dash?CASTER_WALK[Math.floor((t-1.15)*8)%4]:0;
-    // These authored body frames already include complete, naturally joined arms.
-    // Re-drawing the menu rig's arm atlases over them produced a second pair of
-    // elbows/forearms, which made both caster portraits look broken.
+    const main=newArm(),other=newArm(),left={x:0,y:0},right={x:0,y:0};
+    const sockets=this.shoulderSockets[frame],aim=Math.PI/2;
+    projectShoulder(sockets.left,0,-19,.5,.5,false,left);
+    projectShoulder(sockets.right,0,-19,.5,.5,false,right);
+    casterTargets(left.x,left.y,right.x,right.y,aim,strike,charge,dash?Math.sin(t*8):0,main,other);
+    // Same opaque sleeve roots and draw order as the actual caster actor.
+    this.bone(0,other.shoulder,other.elbow);this.bone(0,main.shoulder,main.elbow);
     this.sprite(this.bodyName,frame,CASTER_COLUMNS,256,-64,-83,128,128);
+    this.bone(1,other.elbow,other.wrist);this.bone(1,main.elbow,main.wrist);
+    const hp=this.armBounds[2],reverse=other.shoulder.x>0;
+    const handAngle=Math.atan2(other.wrist.y-other.elbow.y,other.wrist.x-other.elbow.x)-Math.atan2((hp.tip.y-hp.root.y)*(reverse?-1:1),hp.tip.x-hp.root.x);
+    c.save();c.translate(other.wrist.x,other.wrist.y);c.rotate(handAngle);c.scale(1,reverse?-1:1);
+    const hs=6.5/Math.hypot(hp.tip.x-hp.root.x,hp.tip.y-hp.root.y);
+    this.armPart(2,-hp.root.x*hs,-hp.root.y*hs,hp.width*hs,hp.height*hs);c.restore();
     const p=CASTER_INSTRUMENTS[identity].starter,weapon=this.loaded.get(identity+'-starter-weapon.png'),scale=p.width/128;
-    // Rest the prop at the painted hand's actual waist-level position. Gameplay
-    // keeps its independent aim rig; this is only the character-select portrait.
-    const hand={x:identity==='astral'?11:10,y:-22};
-    const aim=identity==='astral'?1.45:-1.0;
+    const hand=main.wrist;
     const angle=aim-Math.atan2(p.muzzle.y-p.wrist.y,p.muzzle.x-p.wrist.x);
     c.save();c.translate(hand.x,hand.y);c.rotate(angle);if(weapon)c.drawImage(weapon,-p.wrist.x*scale,-p.wrist.y*scale,p.width,96*scale);c.restore();
     const length=Math.hypot(p.muzzle.x-p.wrist.x,p.muzzle.y-p.wrist.y)*scale,mx=hand.x+Math.cos(aim)*length,my=hand.y+Math.sin(aim)*length;
@@ -154,9 +160,8 @@ export class CharacterShowcase {
     const c = this.ctx, aim = .22, pose = hunterRiflePose(aim), cos = Math.cos(aim), sin = Math.sin(aim);
     const frame = dash ? 1 + Math.min(2, Math.floor((t - 1.15) * 7)) : 0;
     this.canvas.dataset.facing = 'front';
-    if (!this.parts.length) return;
     const grip = (along: number, across: number) => ({ x: pose.x + along * cos - across * sin, y: pose.y + along * sin + across * cos });
-    const main = grip(-4, 9), support = grip(16, 7);
+    const main = grip(-7, 9), support = grip(13, 7);
     const sockets=this.shoulderSockets[frame];
     const arms=()=>{
       this.arm('hunter',sockets.left.x/2-64,sockets.left.y/2-83,main.x,main.y,-1);
@@ -167,7 +172,7 @@ export class CharacterShowcase {
     this.armPass=1;arms();
     const starter=this.loaded.get('hunter-starter-weapon.png');
     c.save();c.translate(pose.x,pose.y);c.rotate(aim);if(starter)c.drawImage(starter,-18,-34/128*30,60,30);c.restore();
-    this.part(4, main.x, main.y, aim, 7.5, 9, .65, .5); this.part(5, support.x, support.y, aim, 7.5, 9, .65, .5);
+    this.glove(main.x,main.y,aim);this.glove(support.x,support.y,aim);
     c.save(); c.translate(pose.muzzleX, pose.muzzleY); c.rotate(aim);
     if (charge) { c.fillStyle = '#baffef'; c.beginPath(); c.arc(0, 0, 2 + (t - 2) * 4, 0, Math.PI * 2); c.fill(); }
     if (firing) {
@@ -182,13 +187,14 @@ export class CharacterShowcase {
   }
   private warrior(t: number, strike: boolean, dash: boolean, charge: boolean, release: boolean): void {
     const c = this.ctx, frame = dash ? [1,0,2,0][Math.floor((t-1.15)*8)%4] : 0;
-    const angle = strike ? -1.6 + Math.max(0, t - .45) * 4.5 : release ? -.2 : charge ? -1.6 : -1.1;
-    const x = strike ? 20 : 15, y = charge ? -24 : -17;
+    const aim=Math.PI/2,angle=aim+(strike?-1.6+Math.max(0,t-.45)*4.5:release?.9:charge?-.9:-.42);
+    const hand={x:0,y:0};warriorHand(aim,frame?-31:-30,charge?-6:release?8:0,strike?3:0,hand);
+    const {x,y}=hand;
     const sx = x - 10 * Math.cos(angle), sy = y - 10 * Math.sin(angle);
     const sockets=this.shoulderSockets[frame];
     const arms=()=>{
-      this.arm('warrior',sockets.left.x/2-64,sockets.left.y/2-79,x-4*Math.cos(angle),y-4*Math.sin(angle),-1);
-      this.arm('warrior',sockets.right.x/2-64,sockets.right.y/2-79,sx-4*Math.cos(angle),sy-4*Math.sin(angle),1);
+      this.arm('warrior',sockets.left.x/2-64,sockets.left.y/2-79,x-5.5*Math.cos(angle),y-5.5*Math.sin(angle),-1);
+      this.arm('warrior',sockets.right.x/2-64,sockets.right.y/2-79,sx-5.5*Math.cos(angle),sy-5.5*Math.sin(angle),1);
     };
     this.sprite(this.bodyName, frame, 4, 256, -64, -79, 128, 128);
     this.armPass=0;arms();
@@ -196,7 +202,7 @@ export class CharacterShowcase {
     const saber = this.loaded.get('warrior-starter-weapon.png');
     c.save(); c.translate(x, y); c.rotate(angle); if (saber) c.drawImage(saber, -39, -17, 128, 32); c.restore();
     for (const [hx, hy] of [[x, y], [sx, sy]]) {
-      c.save(); c.translate(hx, hy); c.rotate(angle); this.armPart(2,-5,-5,8,10); c.restore();
+      this.glove(hx-5.5*Math.cos(angle),hy-5.5*Math.sin(angle),angle);
     }
     if (strike) {
       c.strokeStyle = '#5fe6d85c'; c.lineWidth = 4; c.beginPath(); c.arc(x, y, 60, angle - .4, angle + .3); c.stroke();
@@ -208,24 +214,17 @@ export class CharacterShowcase {
   }
   private armPart(frame:number,x:number,y:number,w:number,h:number):void {const b=this.armBounds[frame],img=this.loaded.get(this.classId==='astral'||this.classId==='xenobinder'?`${this.classId}-arm-none.png`:'expedition-arm-kit.png');if(b&&img)this.ctx.drawImage(img,b.x,b.y,b.width,b.height,x,y,w,h);}
   private armPass=0;
-  private part(frame: number, x: number, y: number, angle: number, w: number, h: number, ox: number, oy: number): void {
-    if(frame>=2){const c=this.ctx;c.save();c.translate(x,y);c.rotate(angle);this.armPart(frame<4?frame-2:2,-w*ox,-h*oy,w,h);c.restore();return;}
-    const p = this.parts[frame], img = this.loaded.get('star-hunter-weapon-v2.png'); if (!p || !img) return;
-    const c = this.ctx; c.save(); c.translate(x, y); c.rotate(angle);
-    c.drawImage(img, frame % 2 * 256 + Math.floor((256 - p.width) / 2), Math.floor(frame / 2) * 256 + 16,
-      p.width, p.height, -w * ox, -h * oy, w, h); c.restore();
-  }
   private arm(kind: CharacterClass, sx: number, sy: number, wx: number, wy: number, side: number): void {
-    const dx = wx - sx, dy = wy - sy, distance = Math.max(.001, Math.hypot(dx, dy));
-    const length = Math.max(17, distance / 2 + .5), bend = Math.min(10, Math.sqrt(Math.max(0, length * length - distance * distance / 4)));
-    const ex = sx + dx / 2 - dy / distance * bend * side, ey = sy + dy / 2 + dx / distance * bend * side;
-    for (const [fromX, fromY, toX, toY, segment] of [[sx, sy, ex, ey, 0], [ex, ey, wx, wy, 1]]) {
-      if(segment!==this.armPass)continue;
-      const overlap=segment?2:5;
-      const angle = Math.atan2(toY - fromY, toX - fromX), width = Math.hypot(toX - fromX, toY - fromY) + 2+overlap;
-      if (kind === 'hunter') this.part(2 + segment, fromX, fromY, angle, width, segment ? 10 : 11.5, overlap/width, .5);
-      else { const c = this.ctx; c.save(); c.translate(fromX, fromY); c.rotate(angle);
-        this.armPart(segment,-overlap,-(segment?10.5:12.5)/2,width,segment?10.5:12.5); c.restore(); }
-    }
+    const p=newArm();heldArm(sx,sy,wx,wy,-side,kind==='warrior'?18:17,kind==='warrior'?12:10,p);
+    if(this.armPass===0)this.bone(0,p.shoulder,p.elbow);else this.bone(1,p.elbow,p.wrist);
+  }
+  private bone(frame:number,a:{x:number;y:number},b:{x:number;y:number}):void{
+    const part=this.armBounds[frame],transform=paintedSegment(part,a,b),c=this.ctx;
+    c.save();c.translate(a.x,a.y);c.rotate(transform.angle);c.scale(transform.scale,transform.scale);
+    this.armPart(frame,-part.root.x,-part.root.y,part.width,part.height);c.restore();
+  }
+  private glove(x:number,y:number,angle:number):void{
+    const p=this.armBounds[2],t=paintedHand(p,angle),c=this.ctx;
+    c.save();c.translate(x,y);c.rotate(t.angle);c.scale(t.scale,t.scale);this.armPart(2,-p.root.x,-p.root.y,p.width,p.height);c.restore();
   }
 }

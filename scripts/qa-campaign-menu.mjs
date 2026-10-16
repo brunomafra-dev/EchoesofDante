@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {mkdir,writeFile} from 'node:fs/promises';
-const out='docs/prologue-menu/qa';await mkdir(out,{recursive:true});
+const out=process.env.QA_OUT??'docs/prologue-menu/qa';await mkdir(out,{recursive:true});
 const base=process.env.QA_BASE??'http://localhost:5184';
 const browser=await chromium.launch({channel:'chrome',headless:true,args:['--disable-background-timer-throttling','--disable-renderer-backgrounding','--disable-backgrounding-occluded-windows']});
 const report={checks:[],errors:[],metrics:[]},check=t=>{console.log(t);report.checks.push(t)};
@@ -15,7 +15,7 @@ async function create(p,cls,name,difficulty='easy'){
  await button(p,`difficulty-${difficulty}`).waitFor();
  assert.deepEqual(await p.locator('[data-shell^="difficulty-"]').allTextContents(),['Fezes puríssima','Marromenos','Chama 🔥']);
  assert.equal(await p.locator('.difficulty-choice').evaluateAll(bs=>bs.some(b=>b.textContent.includes('·'))),false);
- await button(p,`difficulty-${difficulty}`).click();await button(p,'start-new-game').click();await p.locator('.prologue-video').waitFor();
+ await button(p,`difficulty-${difficulty}`).click();await p.locator('.prologue-video').waitFor();
 }
 try{
  const p=await browser.newPage({viewport:{width:1280,height:720}});watch(p);

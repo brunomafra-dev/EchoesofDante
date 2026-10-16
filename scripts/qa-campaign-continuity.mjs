@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {mkdir,writeFile} from 'node:fs/promises';
-const size=Number(process.env.QA_SIZE??4);const out='docs/prologue-menu/qa';await mkdir(out,{recursive:true});const base=process.env.QA_BASE??'http://localhost:5184';
+const size=Number(process.env.QA_SIZE??4);const out=process.env.QA_OUT??'docs/prologue-menu/qa';await mkdir(out,{recursive:true});const base=process.env.QA_BASE??'http://localhost:5184';
 const b=await chromium.launch({channel:'chrome',args:['--disable-background-timer-throttling','--disable-renderer-backgrounding','--disable-backgrounding-occluded-windows']});
 const report={checks:[],errors:[],metrics:[]},pages=[],check=t=>{console.log(t);report.checks.push(t)};
 const click=(p,id)=>p.locator(`[data-shell="${id}"]`).click();
@@ -9,11 +9,11 @@ const ready=p=>p.waitForFunction(()=>window.__danteGame?.scene.getScene('Game')?
 const scene=(p,code,arg)=>p.evaluate(({code,arg})=>new Function('s','r','arg',code)(window.__danteGame.scene.getScene('Game'),window.__danteCoop,arg),{code,arg});
 const active=p=>p.waitForFunction(()=>document.querySelector('.application-shell')&&!document.querySelector('.application-shell').open&&window.__danteGame.scene.isActive('Game'));
 async function page(){const p=await b.newPage({viewport:{width:1280,height:720},hasTouch:true});p.setDefaultTimeout(60000);p.on('pageerror',e=>report.errors.push(e.message));p.on('response',r=>{if(r.status()>=400)report.errors.push(r.url())});pages.push(p);return p;}
-async function create(p,cls){console.log('Creating',cls);await click(p,'choose-'+cls);await p.locator('[name=character-name]').fill('Original '+cls);await click(p,'create');await click(p,'prologue-skip');console.log('Skipped',cls);await p.waitForFunction(()=>window.__danteCoop?.connected);console.log('Connected',cls);}
+async function create(p,cls){console.log('Creating',cls);await click(p,'choose-'+cls);await p.locator('[name=character-name]').fill('Original '+cls);await click(p,'create');if(await p.locator('[name=party-size]').count()){await p.locator('[name=party-size]').selectOption(String(size));await click(p,'choose-difficulty');await click(p,'difficulty-hard');}await click(p,'prologue-skip');console.log('Skipped',cls);await p.waitForFunction(()=>window.__danteCoop?.connected);console.log('Connected',cls);}
 async function reload(p,id){await Promise.all([p.waitForEvent('domcontentloaded'),click(p,id)]);await ready(p);}
 try{
  const h=await page();await h.goto(base+'/campaign-playtest.html');await ready(h);
- for(const id of ['play','coop','coop-new','difficulty-hard'])await click(h,id);await h.locator('[name=party-size]').selectOption(String(size));await click(h,'new-character');await create(h,'warrior');
+ for(const id of ['play','coop','coop-new'])await click(h,id);await create(h,'warrior');
  const code=await scene(h,'return r.code');const original=await scene(h,'return s.player.position.x');await h.waitForTimeout(450);assert.equal(await scene(h,'return s.player.position.x'),original);
  for(const cls of ['hunter','astral','xenobinder'].slice(0,size-1)){const p=await page();await p.goto(`${base}/campaign-playtest.html?sala=${code}`);await create(p,cls);}
  await click(h,'coop-start');for(const p of pages)await active(p);

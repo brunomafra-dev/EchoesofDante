@@ -1,5 +1,7 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**Sequência vigente em 16/10/2026:** [correções visuais, comunicação e primeira colonização](DANTE_COLONIZATION_PLAN.md). A 0.1.101 foi **rejeitada visualmente**. Entregar personagens/início, aguardar playtest, depois chat, piloto de cinemática, missões e mapas/assentamento. Os registros de entregas abaixo são históricos, não uma aprovação do prólogo ou dos retratos.
+
 Plano aprovado pelo usuário e arquivado em **09/10/2026**. Base de execução: **0.1.78**, commit `90a5dcaf33842652d55e29279b273f149e566e1f`.
 
 Este documento é a referência de implementação desta evolução. As funcionalidades descritas são metas; o checklist ao final distingue o que foi entregue do que permanece planejado. Art Bible, World Shape Language e o descritivo de classes continuam válidos.
@@ -24,7 +26,7 @@ Referências de princípios: preparação e slots de [Tibia](https://www.tibia.c
 - Cooperativo de até quatro jogadores, sem repetir classes.
 - Morte: perda de **10% dos créditos carregados**, arredondada para baixo; conservar XP, materiais e equipamentos.
 - Durante bosses, mortos aguardam os aliados. Reiniciar somente quando todos morrerem.
-- Introdução ilustrada cinematográfica, pulável.
+- Cinemática com atuação, validada primeiro num piloto, pulável.
 - Itens pessoais, sem comércio entre jogadores nesta evolução.
 
 ## 2. Regras do jogo e da arquitetura
@@ -126,7 +128,7 @@ Cada etapa terá implementação, QA, revisão visual, documentação, versão q
 
 ## 4. Introdução e narrativa
 
-Versão atualizada em 0.1.101: apresentar esses cinco momentos numa **cinemática MP4 contínua**, com movimento de câmera e transições, sem cartões ou texto sobre a imagem. O primeiro rascunho em takes foi substituído após a revisão do usuário.
+Decisão vigente: piloto de atuação de 12 s na ponte da nave, com câmera parada, antes da abertura completa de aproximadamente 55 s. MP4 1280×720/24 FPS, animação offline, conversa/texto em português e ambiente/efeitos sem dublagem. A exportação de pinturas animadas da 0.1.101 foi rejeitada; não é o objetivo aprovado.
 
 1. Terra inabitável e evacuação.
 2. Partida das naves com os sobreviventes.
@@ -134,7 +136,7 @@ Versão atualizada em 0.1.101: apresentar esses cinco momentos numa **cinemátic
 4. Descoberta de Dante e aproximação orbital.
 5. Pouso da equipe; início da missão de reconhecimento.
 
-Usar ilustrações originais animadas por pan/zoom, dissoluções e atmosfera. Botão **PULAR** sempre disponível; opção **REVER INTRODUÇÃO** no menu. A faixa visual não exibe texto; idioma e comunicação ficam nos menus do jogo.
+Usar personagens atuando, operando equipamentos, andando e gesticulando. Não reutilizar pinturas com pan/zoom como cinemática. Manter **PULAR**, **REVER INTRODUÇÃO**, pausa e mobile. Produzir a abertura completa somente após aprovação humana do piloto.
 
 Exibir ao criar cada nova jornada, conforme a revisão autorizada de 14/10/2026. Personagens antigos não recebem introdução retroativa. Em convites cooperativos, permitir pular ou concluir antes de confirmar prontidão no lobby.
 
@@ -148,7 +150,7 @@ Solo e cooperativo usam personagens separados, sem troca de herói durante a exp
 
 ### Revisão do fluxo e da cinemática — 15/10/2026 · 0.1.101
 
-Nome/apresentação do personagem primeiro; dificuldade numa tela seguinte, com apenas os três nomes aprovados. Confirmar começa a campanha sem uma volta ao menu. O prólogo passou de cartões a um MP4 original de 19,6 s, sem texto sobreposto. A seleção desenha a pose completa pintada do Astral e do **Domador de feras**, sem duplicar os braços com rig articulado por cima. [Evidências e capturas](prologue-menu/README.md).
+Registro histórico da tentativa: nome/apresentação antes da dificuldade e MP4 de 19,6 s. **Rejeitada pelo usuário:** faltava atuação, havia confirmação adicional e os corpos com mangas cortadas ficaram sem braços completos no seletor. [Evidências históricas](prologue-menu/README.md). A correção segue o novo plano, com geometria/articulações compartilhadas e clique na dificuldade iniciando a jornada.
 
 ## 5. Validação, compatibilidade e limites
 
@@ -190,7 +192,7 @@ Decisão do usuário em 09/10/2026: cada sprint deve terminar com um link espec�
 - [ ] **Interlúdio 5A — Caldeira:** entrega técnica 0.1.94, autorizada antes do Domador de feras. Região vulcânica e boss gigante mineral de lava; campanha, dupla local e três kits validados automaticamente. [Entrega e QA](caldera/README.md). Aguardar aprovação humana de visual/ritmo/dificuldade.
 - [x] **Etapa 6 — Domador de feras:** kit/companheiro bem recebidos pelo usuário, seguidos de rejeição dos braços; revisão 0.1.98 aprovada em 14/10/2026 (“agora sim perfeito!”). [Relatório e teste](xenobinder/README.md). QA solo/dupla local; quatro participantes e publicação coordenada das salas pertencem à etapa 7.
 - [ ] **Etapa 7 — Equipe de quatro:** entrega técnica 0.1.99, lobby e quatro classes exclusivas, estado/recibos individuais e campanha/bosses. Frontend/relay protocolo 10 publicados; QA público de quatro sessões Chrome passou em 14/10/2026. [Relatório/teste](party-four/README.md). Aguardar playtest humano antes do prólogo.
-- [ ] **Etapa 8 — Prólogo:** entrega técnica 0.1.101: cinemática MP4 contínua, chegada à base existente, menus, dificuldades em telas separadas e campanhas de equipe fixa. [Regras, QA e teste reservado](prologue-menu/README.md). Aguardar avaliação humana do ritmo e dos retratos; presença de refugiados após o Warden reutiliza a base já existente.
+- [ ] **Etapa 8 — Prólogo:** tentativa 0.1.101 rejeitada visualmente. Seguir o [plano atualizado](DANTE_COLONIZATION_PLAN.md): personagens → comunicação → piloto real de atuação → abertura aprovada → missões → dois mapas/primeiro assentamento. Nenhum filme ou missão é considerado entregue pela exportação anterior.
 
 ### Registro inicial — Etapa 0
 
@@ -321,3 +323,9 @@ O usuário autorizou a implementação (“Vamos nessa!”). Quatro vagas exclus
 ### Publicação coordenada confirmada — etapa 7 · 14/10/2026
 
 Após o usuário concluir o deploy manual do commit `c529cbf` no Render, o health confirmou protocolo 10, quatro vagas e classes exclusivas. QA de quatro contextos Chrome passou contra Vercel/Render reais, sem simulação local de rede: convites, seleção/criação de personagens, roster, snapshots, saída do anfitrião e recuperação da jornada solo. [Evidência pública](party-four/public-qa/report.json). A indisponibilidade de publicação está resolvida para esta versão; o gatilho automático futuro ainda não foi comprovado. Versão preservada em 0.1.99, pois este registro é documental. **Aguardando playtest humano; etapa 8 não iniciada.**
+
+### Correções visuais e novo plano — entrega 1 · 0.1.102
+
+O usuário rejeitou a apresentação 0.1.101 e aprovou a sequência [personagens/início → nomes/chat → piloto de atuação → missões → mapas/assentamento](DANTE_COLONIZATION_PLAN.md), com validação humana entre entregas. Esta é somente a primeira: corpos/encaixes registrados, braços/mãos proporcionais, poses compartilhadas entre seletor e campanha, alinhamento do Guerreiro remoto, passada assinada do Hunter e início pelo clique na dificuldade. No coop, tamanho da equipe vem antes da dificuldade. Rascunho preservado ao voltar/configurar e criação protegida contra clique repetido.
+
+[Laboratório, comparação e QA](character-cohesion/README.md): 6.912 poses, 1.024 comparações local/remoto, oito retratos com demos, quatro resoluções, teclado/touch/gamepad, equipe compilada com quatro navegadores e ações reais de cada kit. Floresta próxima de 60 updates/s nas amostras individuais; três reinícios por classe sem crescimento das contagens monitoradas. A execução longa legada de campanha teve timeout de visitante e fica registrada separadamente, sem afirmar validação integral da campanha. Nenhum novo raster/mapa/regra de combate/protocolo. **Aguardar playtest visual do usuário antes de nomes/chat. A cinemática anterior continua provisória; o piloto real pertence à entrega 3.**

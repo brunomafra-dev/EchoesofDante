@@ -7,6 +7,7 @@ import { ModularTorso } from './ModularTorso';
 import { preloadCasterArms,registerPaintedArmFrames,type PaintedArmPart } from './PaintedArmFrames';
 import { clothShoulder,type ShoulderSockets } from './ClothShoulders';
 import { CASTER_COLUMNS,CASTER_WALK,CASTER_INSTRUMENTS,casterTargets,type ArmPose,type CasterIdentity } from './CasterPose';
+import { paintedSegment } from './HumanPose';
 
 export function preloadAstralArt(scene:Phaser.Scene):void{
  preloadCasterArms(scene,'astral');
@@ -94,5 +95,5 @@ export class AstralArt {
  }
  private part(p:Phaser.GameObjects.Image):PaintedArmPart{return this.armParts[p.texture.key][Number(p.frame.name.slice(-1))];}
  private arm(i:number,p:ArmPose):void{this.segment(this.limbs[i],p.shoulder,p.elbow);this.segment(this.limbs[i+1],p.elbow,p.wrist);}
- private segment(p:Phaser.GameObjects.Image,a:{x:number;y:number},b:{x:number;y:number}):void{const part=this.part(p),dx=part.tip.x-part.root.x,dy=part.tip.y-part.root.y;p.setOrigin(part.root.x/part.width,part.root.y/part.height).setPosition(a.x,a.y).setRotation(Math.atan2(b.y-a.y,b.x-a.x)-Math.atan2(dy,dx)).setScale(Math.hypot(b.x-a.x,b.y-a.y)/Math.hypot(dx,dy));}
+ private segment(p:Phaser.GameObjects.Image,a:{x:number;y:number},b:{x:number;y:number}):void{const part=this.part(p),transform=paintedSegment(part,a,b);p.setOrigin(part.root.x/part.width,part.root.y/part.height).setPosition(a.x,a.y).setRotation(transform.angle).setScale(transform.scale);}
 }

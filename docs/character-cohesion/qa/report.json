@@ -1,0 +1,152 @@
+{
+  "method": "Chrome; actual menu/input and paused visual fixtures, opaque attachment/scale checks and screenshots. No human approval or physical-device claim.",
+  "checks": [
+    "One difficulty click starts once; name/sex/class survive Back/Settings; A/L typing works; no extra confirm or party size on solo difficulty",
+    "Reserved campaign test preserves real saves",
+    "Coop chooses size before difficulty, starts opening and opens real local lobby for four",
+    "Eight presentations: 3 weapons × 4 clothing/mixed kits × 8 aim directions × 9 action/walking poses; opaque sleeve/body joints and uniformly scaled arms/hands",
+    "Four target resolutions, touch starts from difficulty without extra confirmation"
+  ],
+  "errors": [],
+  "rigs": [
+    {
+      "sex": "male",
+      "classId": "warrior",
+      "cases": 864,
+      "minRoot": 250,
+      "minPaint": 252,
+      "uniform": true,
+      "finite": true,
+      "failures": []
+    },
+    {
+      "sex": "female",
+      "classId": "warrior",
+      "cases": 864,
+      "minRoot": 212,
+      "minPaint": 252,
+      "uniform": true,
+      "finite": true,
+      "failures": []
+    },
+    {
+      "sex": "male",
+      "classId": "hunter",
+      "cases": 864,
+      "minRoot": 248,
+      "minPaint": 252,
+      "uniform": true,
+      "finite": true,
+      "failures": []
+    },
+    {
+      "sex": "female",
+      "classId": "hunter",
+      "cases": 864,
+      "minRoot": 250,
+      "minPaint": 252,
+      "uniform": true,
+      "finite": true,
+      "failures": []
+    },
+    {
+      "sex": "male",
+      "classId": "astral",
+      "cases": 864,
+      "minRoot": 251,
+      "minPaint": 252,
+      "uniform": true,
+      "finite": true,
+      "failures": []
+    },
+    {
+      "sex": "female",
+      "classId": "astral",
+      "cases": 864,
+      "minRoot": 250,
+      "minPaint": 252,
+      "uniform": true,
+      "finite": true,
+      "failures": []
+    },
+    {
+      "sex": "male",
+      "classId": "xenobinder",
+      "cases": 864,
+      "minRoot": 251,
+      "minPaint": 251,
+      "uniform": true,
+      "finite": true,
+      "failures": []
+    },
+    {
+      "sex": "female",
+      "classId": "xenobinder",
+      "cases": 864,
+      "minRoot": 252,
+      "minPaint": 251,
+      "uniform": true,
+      "finite": true,
+      "failures": []
+    }
+  ],
+  "inputs": [
+    {
+      "cls": "warrior",
+      "sex": "male",
+      "basic": true,
+      "holdRelease": true,
+      "dash": true
+    },
+    {
+      "cls": "warrior",
+      "sex": "female",
+      "basic": true,
+      "holdRelease": true,
+      "dash": true
+    },
+    {
+      "cls": "hunter",
+      "sex": "male",
+      "basic": true,
+      "holdRelease": true,
+      "dash": true
+    },
+    {
+      "cls": "hunter",
+      "sex": "female",
+      "basic": true,
+      "holdRelease": true,
+      "dash": true
+    },
+    {
+      "cls": "astral",
+      "sex": "male",
+      "basic": true,
+      "holdRelease": true,
+      "dash": true
+    },
+    {
+      "cls": "astral",
+      "sex": "female",
+      "basic": true,
+      "holdRelease": true,
+      "dash": true
+    },
+    {
+      "cls": "xenobinder",
+      "sex": "male",
+      "basic": true,
+      "holdRelease": true,
+      "dash": true
+    },
+    {
+      "cls": "xenobinder",
+      "sex": "female",
+      "basic": true,
+      "holdRelease": true,
+      "dash": true
+    }
+  ],
+  "passed": true
+}
