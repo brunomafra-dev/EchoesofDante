@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "date": "2026-10-17",
+  "url": "https://echosofdante.vercel.app/assets/cinematic-opening/opening-workprint.mp4",
+  "status": 200,
+  "mime": "video/mp4",
+  "bytes": 11851719,
+  "sha256": "073692ce22c083e212c7cfaf48fb4a71df34a538032e23331781d268c64b2bfb",
+  "matchesLocal": true,
+  "completeFilm": false
+}
