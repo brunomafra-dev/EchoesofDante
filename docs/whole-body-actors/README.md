@@ -45,6 +45,7 @@ Equipamentos mistos e diferentes armas exigirão uma solução de produção pr�
 - `node scripts/qa-whole-body.mjs`: [Chrome e apresentação](qa/report.json), 32 poses, teclado/mouse, touch emulado, gamepad mock e quatro resoluções (1280×720, 1366×768, 1920×1080 e 844×390). **~60 atualizações/s** na amostra local, zero erros JS/assets ou warnings de textura. Seis ciclos A/B/reposicionar: **28 objetos, 52 texturas, zero tweens, 14 listeners de shutdown e um root touch**, iguais antes/depois. Save sentinela preservado. Menu principal compilado também abriu sem erros e sem carregar os assets/handle do laboratório. Não é medição da campanha ou coop.
 - Inspeção pelo agente: vistas das duas pranchas e quadros da cena conferidos; a conjuração frontal corrigida agora aponta para a frente. Isso não equivale a aprovação visual do usuário.
 - Nenhuma alteração em `GameScene`, `Player`, `Controls`, `TouchControls`, combate, IA, HP/XP, progressão, protocolo de rede ou personagens selecionados. Não foi refeito o playthrough completo de bosses por uma prova de apresentação isolada.
+- **Publicação conferida em 17/10/2026:** Vercel publicou `c1128a3ce32b25b1173055cbeb89a752d25f6978` (`feat: add whole-body character comparison lab`). [QA público](qa/public-report.json) passou com as mesmas poses, inputs, resoluções, ciclos e proteção de saves, ~60 atualizações/s, zero erros/warnings e menu principal sem assets do protótipo. **Automação passou; playtest humano necessário.**
 
 ## Quadro da cinemática preservado
 
