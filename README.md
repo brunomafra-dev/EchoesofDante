@@ -2,7 +2,7 @@
 
 ## Cinemática — teste curto de movimento · 0.1.107
 
-[Assistir à amostra gerada](https://echosofdante.vercel.app/cinematic-motion-test.html?v=0.1.107). Uma geração gratuita no Hugging Face ZeroGPU, a partir da cena inteira: **5,06 segundos, 832×480, 16 FPS, sem áudio**. A 0.1.105 com montagem de membros continua rejeitada. Esta amostra aguarda avaliação humana e ainda não cumpre o piloto final de 12 segundos/720p/24 FPS. Campanha e saves preservados. [Origem, quadros, QA e limitações](docs/cinematic-pilot/revision-03/README.md).
+[Assistir à amostra aprovada pelo usuário](https://echosofdante.vercel.app/cinematic-motion-test.html?v=0.1.107). Uma geração gratuita no Hugging Face ZeroGPU, a partir da cena inteira: **5,06 segundos, 832×480, 16 FPS, sem áudio**. Direção de movimento aprovada em 17/10/2026. A 0.1.105 com montagem de membros continua rejeitada. O piloto final de 12 segundos/720p/24 FPS, com legendas e áudio, ainda não foi entregue. Campanha e saves preservados. [Origem, aprovação, QA e limitações](docs/cinematic-pilot/revision-03/README.md).
 
 Nomes e chat cooperativo da 0.1.104 foram validados. A etapa 3 continua aberta; abertura completa e missões aguardam um novo piloto com movimento contínuo e aprovação humana.
 

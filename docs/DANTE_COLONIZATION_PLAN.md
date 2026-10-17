@@ -8,7 +8,7 @@ Plano aprovado em 16/10/2026. Complementa o [plano da fundação RPG](RPG_FOUNDA
 | --- | --- | --- |
 | 1 | Personagens completos + início pelo clique na dificuldade | [0.1.103](character-cohesion/revision-03/README.md) validada para avançar; pente fino visual posterior |
 | 2 | Nomes e chat da equipe | [0.1.104](party-chat/README.md) validada pelo usuário: “Deu certo perfeito irmão”; Render/Vercel e chat público conferidos |
-| 3 | Piloto de cinemática; abertura completa após aprovação | **0.1.105 rejeitada** por anatomia/montagem dos membros. [0.1.107](cinematic-pilot/revision-03/README.md): amostra real gratuita de 5,06 s no Hugging Face; avaliação visual pendente. Piloto de 12 s ainda em andamento. Não avançar |
+| 3 | Piloto de cinemática; abertura completa após aprovação | **0.1.105 rejeitada** por anatomia/montagem dos membros. [0.1.107](cinematic-pilot/revision-03/README.md): amostra gratuita de 5,06 s **aprovada pelo usuário em 17/10/2026**. Próximo: piloto de 12 s com legendas/ambiente e avaliação própria. Abertura completa e missões ainda aguardam |
 | 4 | Missões, diálogos e diário desde a chegada | Planejada |
 | 5 | Dois mapas e primeiro núcleo habitável | Planejada |
 

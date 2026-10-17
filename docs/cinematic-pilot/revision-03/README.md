@@ -2,7 +2,7 @@
 
 [Abrir a prévia](https://echosofdante.vercel.app/cinematic-motion-test.html?v=0.1.107) · [MP4](https://echosofdante.vercel.app/assets/cinematic-pilot/bridge-hf-motion-test.mp4) · [Quadros amostrados](contact-sheet.jpg)
 
-**Um clipe real foi gerado e baixado. Aprovação visual pendente. Ainda não é o piloto final de 12 segundos.** A etapa 3 continua aberta; nenhuma missão, mapa ou abertura completa foi antecipada.
+**Teste curto aprovado visualmente pelo usuário em 17/10/2026: “iradoooooooooo aprovado”. Ainda não é o piloto final de 12 segundos.** A aprovação valida a direção de movimento com corpos inteiros desta amostra; a etapa 3 continua aberta. Nenhuma missão, mapa ou abertura completa foi antecipada.
 
 ## Alternativa verificada na prática
 
@@ -22,7 +22,7 @@ Em 17/10/2026 foi testado o Space público [Wan2.2 14B Fast](https://huggingface
 
 Seis quadros ao longo dos cinco segundos mostram mudanças de pose: Ivo deixa o console e olha para Nara; ela muda o olhar e gesticula. Os corpos foram gerados continuamente a partir da cena inteira. Não há montagem local de membros ou movimento de câmera aplicado por código.
 
-O modelo **não seguiu integralmente** os pés plantados/movimentos contidos do prompt: há deslocamento dos personagens e alteração do enquadramento. Rostos, mãos, apoio dos pés e consistência da roupa precisam ser julgados em movimento. A amostra não recebe o rótulo de direção aprovada. Resolução e cadência são inferiores ao alvo final de 1280×720/24 FPS; não converter FPS por repetição de quadros e declarar essa meta cumprida.
+O modelo **não seguiu integralmente** os pés plantados/movimentos contidos do prompt: há deslocamento dos personagens e alteração do enquadramento. Essas limitações foram registradas antes do playtest; o usuário aprovou a direção do teste curto. Resolução e cadência continuam inferiores ao alvo final de 1280×720/24 FPS; não converter FPS por repetição de quadros e declarar essa meta cumprida.
 
 ## QA técnico
 
@@ -32,6 +32,12 @@ O modelo **não seguiu integralmente** os pés plantados/movimentos contidos do 
 - `node scripts/qa-cinematic-reference.mjs`: referência estática anterior preservada em rota separada.
 - Não foi alterado código de campanha, personagem, coop, combate, câmera, input ou saves. Não foi necessário repetir o percurso até bosses para uma página isolada de mídia.
 
-Os resultados de execução ficam nos relatórios de QA. Passar nesses testes **não valida anatomia, atuação ou autenticidade**. O usuário deve assistir ao clipe antes de decidir novos takes; o roteiro de 12 s, legendas e ambiente sonoro permanecem para a sequência da etapa.
+Os resultados de execução ficam nos relatórios de QA. Passar nesses testes **não valida anatomia, atuação ou autenticidade**. A aprovação posterior veio do playtest explícito do usuário. O roteiro de 12 s, legendas e ambiente sonoro permanecem para a sequência da etapa.
 
-**Resultado local:** typecheck/build passaram; aviso conhecido do chunk Phaser maior que 500 kB. [Chrome da prévia](qa/report.json) passou com zero erros nas quatro resoluções, teclado e toque no painel. Referência estática também passou, com evidência temporária em `%TEMP%\dante-hf-motion-reference-qa`. FFmpeg decodificou os 81 quadros: H.264 High, yuv420p, nenhuma faixa de áudio. Avaliação visual humana continua pendente.
+**Resultado local:** typecheck/build passaram; aviso conhecido do chunk Phaser maior que 500 kB. [Chrome da prévia](qa/report.json) passou com zero erros nas quatro resoluções, teclado e toque no painel. Referência estática também passou, com evidência temporária em `%TEMP%\dante-hf-motion-reference-qa`. FFmpeg decodificou os 81 quadros: H.264 High, yuv420p, nenhuma faixa de áudio. O QA publicado também passou; evidência em `%TEMP%\dante-010107-public-motion-qa`. Os campos `visualApproval: pending` nos relatórios de geração/QA são históricos, anteriores à avaliação do usuário.
+
+## Aprovação humana e sequência
+
+Em 17/10/2026 o usuário assistiu à prévia publicada e aprovou o teste: **“iradoooooooooo aprovado”**. Arquivo aprovado: SHA-256 `81b8f0d17466c19a16c506804fd3b94634ac08cf6fa0d7be5e2fc7a60802cd79`, sem alteração do MP4 após o playtest.
+
+Próxima entrega da etapa 3: piloto completo de aproximadamente 12 segundos, mantendo os personagens inteiros, continuidade entre takes, legendas em português e áudio ambiente original. Essa entrega terá avaliação própria antes da abertura de 55 segundos. A aprovação desta amostra não encerra a etapa 3 nem aprova antecipadamente cenas ainda não produzidas. Créditos pagos não foram autorizados por este playtest; manter a rota gratuita e respeitar suas cotas.
