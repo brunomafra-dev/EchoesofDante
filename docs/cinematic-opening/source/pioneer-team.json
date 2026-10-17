@@ -1,0 +1,11 @@
+{
+  "origin": "Original built-in image_gen.imagegen; generated 2026-10-17",
+  "width": 1672,
+  "height": 941,
+  "bytes": 2829691,
+  "sha256": "2977f266d3653edaaed2915f3b055c0cfd61d7ef0059f712e9ad4795f00807fb",
+  "prompt": "docs/cinematic-opening/prompts/pioneer-team-image.txt",
+  "animated": false,
+  "humanApproval": "pending",
+  "videoQuotaUsed": false
+}

@@ -1,5 +1,9 @@
 # Echoes of Dante
 
+## Experimento visual — personagem inteiro · 0.1.110
+
+[Comparar rig atual / corpo inteiro](https://echosofdante.vercel.app/whole-body-playtest.html?v=0.1.110). Prova isolada do Astral feminino: 32 poses completas, oito direções, caminhada e conjuração; controles existentes, Dash e Q. Use **Ampliar** para inspecionar ombros, cotovelos e mãos. [Origem, QA e limites](docs/whole-body-actors/README.md). Não substitui os personagens da campanha; equipamentos e demais classes aguardam avaliação humana.
+
 ## Cinemática — prévia parcial de 36 segundos · 0.1.109
 
 [Assistir à prévia da abertura](https://echosofdante.vercel.app/cinematic-opening.html?v=0.1.109): Terra, evacuação, viagem, descoberta de Dante e conversa na ponte. Cenas inteiras animadas offline, legendas em português e áudio original. **Ainda faltam descida e desembarque**: a conta gratuita HF atingiu o limite de gerações. Não houve compra; tomadas prontas preservadas para retomar após renovação da cota. Fonte 832×480/16 FPS, exportada em 1280×720/24 FPS por ampliação/interpolação. O prólogo do jogo permanece intacto. [Produção, QA e limites](docs/cinematic-opening/README.md). Avaliação humana desta prévia pendente; missões/mapas aguardam o filme completo.

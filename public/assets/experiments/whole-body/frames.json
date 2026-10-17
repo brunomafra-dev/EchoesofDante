@@ -1,0 +1,590 @@
+{
+  "frames": [
+    {
+      "index": 0,
+      "direction": "S",
+      "action": "idle",
+      "sourceCell": [
+        0,
+        0,
+        314,
+        314
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 15108,
+      "muzzle": {
+        "x": 152.64,
+        "y": 84.96
+      }
+    },
+    {
+      "index": 1,
+      "direction": "S",
+      "action": "walk-a",
+      "sourceCell": [
+        314,
+        0,
+        627,
+        314
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 14083,
+      "muzzle": {
+        "x": 152.64,
+        "y": 84.25
+      }
+    },
+    {
+      "index": 2,
+      "direction": "S",
+      "action": "walk-b",
+      "sourceCell": [
+        627,
+        0,
+        940,
+        314
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 14112,
+      "muzzle": {
+        "x": 152.64,
+        "y": 84.25
+      }
+    },
+    {
+      "index": 3,
+      "direction": "S",
+      "action": "cast",
+      "sourceCell": [
+        940,
+        0,
+        1254,
+        314
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 16558,
+      "muzzle": {
+        "x": 152.64,
+        "y": 84.96
+      }
+    },
+    {
+      "index": 4,
+      "direction": "SE",
+      "action": "idle",
+      "sourceCell": [
+        0,
+        314,
+        314,
+        627
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 15993,
+      "muzzle": {
+        "x": 204.16,
+        "y": 90.13
+      }
+    },
+    {
+      "index": 5,
+      "direction": "SE",
+      "action": "walk-a",
+      "sourceCell": [
+        314,
+        314,
+        627,
+        627
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 14228,
+      "muzzle": {
+        "x": 204.16,
+        "y": 89.44
+      }
+    },
+    {
+      "index": 6,
+      "direction": "SE",
+      "action": "walk-b",
+      "sourceCell": [
+        627,
+        314,
+        940,
+        627
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 14973,
+      "muzzle": {
+        "x": 204.16,
+        "y": 89.44
+      }
+    },
+    {
+      "index": 7,
+      "direction": "SE",
+      "action": "cast",
+      "sourceCell": [
+        940,
+        314,
+        1254,
+        627
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 17303,
+      "muzzle": {
+        "x": 204.16,
+        "y": 90.13
+      }
+    },
+    {
+      "index": 8,
+      "direction": "E",
+      "action": "idle",
+      "sourceCell": [
+        0,
+        627,
+        314,
+        940
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 12749,
+      "muzzle": {
+        "x": 201.92,
+        "y": 74.52
+      }
+    },
+    {
+      "index": 9,
+      "direction": "E",
+      "action": "walk-a",
+      "sourceCell": [
+        314,
+        627,
+        627,
+        940
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 14311,
+      "muzzle": {
+        "x": 201.92,
+        "y": 73.76
+      }
+    },
+    {
+      "index": 10,
+      "direction": "E",
+      "action": "walk-b",
+      "sourceCell": [
+        627,
+        627,
+        940,
+        940
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 14653,
+      "muzzle": {
+        "x": 201.92,
+        "y": 73.76
+      }
+    },
+    {
+      "index": 11,
+      "direction": "E",
+      "action": "cast",
+      "sourceCell": [
+        940,
+        627,
+        1254,
+        940
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 16560,
+      "muzzle": {
+        "x": 201.92,
+        "y": 74.52
+      }
+    },
+    {
+      "index": 12,
+      "direction": "NE",
+      "action": "idle",
+      "sourceCell": [
+        0,
+        940,
+        314,
+        1254
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 14881,
+      "muzzle": {
+        "x": 201.92,
+        "y": 80.52
+      }
+    },
+    {
+      "index": 13,
+      "direction": "NE",
+      "action": "walk-a",
+      "sourceCell": [
+        314,
+        940,
+        627,
+        1254
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 13801,
+      "muzzle": {
+        "x": 201.92,
+        "y": 70.75
+      }
+    },
+    {
+      "index": 14,
+      "direction": "NE",
+      "action": "walk-b",
+      "sourceCell": [
+        627,
+        940,
+        940,
+        1254
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 14259,
+      "muzzle": {
+        "x": 201.92,
+        "y": 80.75
+      }
+    },
+    {
+      "index": 15,
+      "direction": "NE",
+      "action": "cast",
+      "sourceCell": [
+        940,
+        940,
+        1254,
+        1254
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 16466,
+      "muzzle": {
+        "x": 201.92,
+        "y": 85.52
+      }
+    },
+    {
+      "index": 16,
+      "direction": "N",
+      "action": "idle",
+      "sourceCell": [
+        0,
+        0,
+        314,
+        314
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 14464,
+      "muzzle": {
+        "x": 170.56,
+        "y": 33.44
+      }
+    },
+    {
+      "index": 17,
+      "direction": "N",
+      "action": "walk-a",
+      "sourceCell": [
+        314,
+        0,
+        627,
+        314
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 13401,
+      "muzzle": {
+        "x": 170.56,
+        "y": 32.5
+      }
+    },
+    {
+      "index": 18,
+      "direction": "N",
+      "action": "walk-b",
+      "sourceCell": [
+        627,
+        0,
+        940,
+        314
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 13249,
+      "muzzle": {
+        "x": 170.56,
+        "y": 32.5
+      }
+    },
+    {
+      "index": 19,
+      "direction": "N",
+      "action": "cast",
+      "sourceCell": [
+        940,
+        0,
+        1254,
+        314
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 14832,
+      "muzzle": {
+        "x": 170.56,
+        "y": 33.44
+      }
+    },
+    {
+      "index": 20,
+      "direction": "NW",
+      "action": "idle",
+      "sourceCell": [
+        0,
+        314,
+        314,
+        627
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 14551,
+      "muzzle": {
+        "x": 47.36,
+        "y": 41.07
+      }
+    },
+    {
+      "index": 21,
+      "direction": "NW",
+      "action": "walk-a",
+      "sourceCell": [
+        314,
+        314,
+        627,
+        627
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 13406,
+      "muzzle": {
+        "x": 47.36,
+        "y": 40.16
+      }
+    },
+    {
+      "index": 22,
+      "direction": "NW",
+      "action": "walk-b",
+      "sourceCell": [
+        627,
+        314,
+        940,
+        627
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 14155,
+      "muzzle": {
+        "x": 47.36,
+        "y": 40.16
+      }
+    },
+    {
+      "index": 23,
+      "direction": "NW",
+      "action": "cast",
+      "sourceCell": [
+        940,
+        314,
+        1254,
+        627
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 15902,
+      "muzzle": {
+        "x": 47.36,
+        "y": 41.07
+      }
+    },
+    {
+      "index": 24,
+      "direction": "W",
+      "action": "idle",
+      "sourceCell": [
+        0,
+        627,
+        314,
+        940
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 12578,
+      "muzzle": {
+        "x": 33.92,
+        "y": 74.52
+      }
+    },
+    {
+      "index": 25,
+      "direction": "W",
+      "action": "walk-a",
+      "sourceCell": [
+        314,
+        627,
+        627,
+        940
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 15221,
+      "muzzle": {
+        "x": 33.92,
+        "y": 73.76
+      }
+    },
+    {
+      "index": 26,
+      "direction": "W",
+      "action": "walk-b",
+      "sourceCell": [
+        627,
+        627,
+        940,
+        940
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 14387,
+      "muzzle": {
+        "x": 33.92,
+        "y": 73.76
+      }
+    },
+    {
+      "index": 27,
+      "direction": "W",
+      "action": "cast",
+      "sourceCell": [
+        940,
+        627,
+        1254,
+        940
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 16624,
+      "muzzle": {
+        "x": 33.92,
+        "y": 74.52
+      }
+    },
+    {
+      "index": 28,
+      "direction": "SW",
+      "action": "idle",
+      "sourceCell": [
+        0,
+        940,
+        314,
+        1254
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 15334,
+      "muzzle": {
+        "x": 38.4,
+        "y": 144.24
+      }
+    },
+    {
+      "index": 29,
+      "direction": "SW",
+      "action": "walk-a",
+      "sourceCell": [
+        314,
+        940,
+        627,
+        1254
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 14215,
+      "muzzle": {
+        "x": 38.4,
+        "y": 133.75
+      }
+    },
+    {
+      "index": 30,
+      "direction": "SW",
+      "action": "walk-b",
+      "sourceCell": [
+        627,
+        940,
+        940,
+        1254
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 15208,
+      "muzzle": {
+        "x": 38.4,
+        "y": 142.75
+      }
+    },
+    {
+      "index": 31,
+      "direction": "SW",
+      "action": "cast",
+      "sourceCell": [
+        940,
+        940,
+        1254,
+        1254
+      ],
+      "wholeFigureOnly": true,
+      "feetY": 244,
+      "alphaPixels": 15342,
+      "muzzle": {
+        "x": 38.4,
+        "y": 143.24
+      }
+    }
+  ],
+  "directions": [
+    "S",
+    "SE",
+    "E",
+    "NE",
+    "N",
+    "NW",
+    "W",
+    "SW"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "base": "http://localhost:5190",
+  "passed": true,
+  "checks": [
+    "32 complete frames selectable; one upright Image, uniform scale, common foot anchor; no articulated candidate limbs",
+    "Actual keyboard WASD, continuous mouse aim, basic projectile, Q hold/release with resource/zone, element switch and Dash use existing classes",
+    "Six A/B/reset cycles preserve objects, textures, tweens, shutdown listeners and one touch root",
+    "Gamepad mock axes and LT hold/release; existing touch attack gesture; four responsive resolutions",
+    "No campaign saves/relay; storage sentinels untouched; zero JS/asset/texture warnings",
+    "Main menu opens in compiled build without lab handle or prototype assets; no main JS errors"
+  ],
+  "errors": [],
+  "warnings": [],
+  "humanApproval": "pending",
+  "stability": {
+    "before": {
+      "objects": 28,
+      "textures": 52,
+      "tweens": 0,
+      "shutdownListeners": 14,
+      "touch": 1
+    },
+    "after": {
+      "objects": 28,
+      "textures": 52,
+      "tweens": 0,
+      "shutdownListeners": 14,
+      "touch": 1
+    }
+  },
+  "observedUpdatesPerSecond": 59.99900828087703
+}

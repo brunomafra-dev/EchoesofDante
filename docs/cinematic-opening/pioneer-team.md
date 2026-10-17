@@ -2,7 +2,7 @@
 
 Solicitada pelo usuário em 17/10/2026: mostrar os heróis designados para desbravar Dante. Complementa a abertura autorizada e o [descritivo oficial das classes](../classes/README.md); não cria nomes canônicos para os personagens personalizáveis.
 
-**Estado: cena planejada, ainda sem imagem ou vídeo produzido.** A [prévia de 36 segundos](https://echosofdante.vercel.app/cinematic-opening.html?v=0.1.109) não contém esta cena. Não registrar esta inclusão como filme concluído ou aprovado visualmente.
+**Estado: quadro-base inteiro gerado, animação ainda pendente.** [Imagem original](source/pioneer-team.png), [metadados](source/pioneer-team.json) e [prompt](prompts/pioneer-team-image.txt) preservados. A geração foi interrompida antes de incorporar o arquivo; ele foi salvo na revisão 0.1.110. A [prévia de 36 segundos](https://echosofdante.vercel.app/cinematic-opening.html?v=0.1.109) não contém esta cena. Não registrar o quadro estático como filme concluído ou aprovado visualmente.
 
 ## Encaixe e duração
 
