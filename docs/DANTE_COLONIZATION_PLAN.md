@@ -51,6 +51,8 @@ Usar somente `profile.name` salvo: **Guilherme**, sem classe nem prefixo de anfi
 
 ## 3 — Cinemática real
 
+**Adição solicitada em 17/10/2026:** apresentar as quatro classes como equipe pioneira designada para reconhecer Dante. [Cena planejada de 4,5 s no hangar](cinematic-opening/pioneer-team.md), após a ponte e antes da descida; total previsto ~59 s. Sem criatura nativa a bordo antes de conhecer a fauna do planeta. Cena ainda não gerada, fora da prévia 0.1.109. Não avançar missões/mapas por causa desta atualização documental.
+
 Piloto [0.1.108](cinematic-pilot/revision-04/README.md) aprovado pelo usuário em 17/10/2026, liberando a [abertura completa](cinematic-opening/README.md). Manter cenas inteiras e a técnica aprovada, com ampliação/interpolação explicitadas; sem remontagem de membros ou preenchimento de duração com quadros parados. A [preparação fal.ai](cinematic-pilot/revision-02/wan-test.md) permanece histórica, sem recarga/geração paga. Missões e mapas aguardam a avaliação da abertura completa.
 
 Primeiro validar **12 segundos na ponte da nave**: pessoas operam equipamentos, caminham, olham e gesticulam numa conversa, com atuação perceptível mesmo com câmera parada. Não é carrossel ou zoom em pinturas.
