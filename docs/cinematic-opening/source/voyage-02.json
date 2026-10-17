@@ -1,0 +1,18 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": true,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 1.25,
+  "steps": 4,
+  "seed": 115,
+  "sourceHash": "34795bedc1f62f08f4ffe8f5f7b4090a7daaf56f3813f1fb8850ce0d28eba86b",
+  "prompt": "One continuous continuation of the exact supplied complete scene. Continue the distant fleet gliding slowly outside the same fixed observation window. Keep the empty cabin, furniture, glass and subdued amber lighting unchanged. Preserve the original painted Organic Sci-Fi R3 game illustration, lighting, anatomy, ship structure, materials and whole-scene composition. Fixed camera, no zoom or pan, no cuts, no text, no subtitles, no music. Real motion inside the scene; never a still-picture slideshow.",
+  "startedAt": "2026-10-17T18:44:57.280Z",
+  "status": "downloaded",
+  "transport": "Authenticated Gradio REST; no redirects",
+  "eventId": "520d74d89e474934860f08c484a1bfc7",
+  "actualSeed": 115,
+  "bytes": 164849,
+  "videoHash": "803c21735e3751aabb07a93000f089fd34dd402eaa73cb5d2b3ceb3b1f5f3b93",
+  "finishedAt": "2026-10-17T18:45:10.992Z"
+}

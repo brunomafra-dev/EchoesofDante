@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-17",
+  "successfulNewTakes": 8,
+  "furtherGenerationStopped": true,
+  "completeFilmProduced": false,
+  "attempts": [
+    {
+      "authenticated": true,
+      "paidCredentialsUsed": false,
+      "startedAt": "2026-10-17T18:48:40.448Z",
+      "finishedAt": "2026-10-17T18:48:43.493Z",
+      "status": "failed",
+      "error": "Error: Space rejected generation: null",
+      "shot": "descent-01",
+      "videoProduced": false
+    },
+    {
+      "authenticated": true,
+      "paidCredentialsUsed": false,
+      "startedAt": "2026-10-17T18:51:31.374Z",
+      "finishedAt": "2026-10-17T18:51:33.073Z",
+      "status": "failed",
+      "error": "Error: Space rejected generation: You have exceeded your ZeroGPU runs limit. Subscribe to Hugging Face PRO to get 40 min of ZeroGPU quota a day - https://huggingface.co/subscribe/pro?from=ZeroGPU",
+      "shot": "landing-01",
+      "videoProduced": false
+    }
+  ]
+}

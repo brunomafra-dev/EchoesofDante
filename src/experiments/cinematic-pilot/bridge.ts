@@ -17,7 +17,7 @@ play.addEventListener('click', () => { if (video.paused) void start(); else vide
 replay.addEventListener('click', () => { video.currentTime = 0; void start(); });
 video.addEventListener('play', () => { play.textContent = 'Pausar'; status.textContent = 'Reproduzindo.'; });
 video.addEventListener('pause', () => { play.textContent = 'Reproduzir'; status.textContent = 'Pausado.'; });
-video.addEventListener('ended', () => { status.textContent = 'Fim do piloto. Avalie a atuação antes da abertura completa.'; });
+video.addEventListener('ended', () => { status.textContent = video.dataset.endMessage ?? 'Fim do piloto. Avalie a atuação antes da abertura completa.'; });
 video.addEventListener('error', () => { status.textContent = 'Não foi possível carregar o vídeo. Tente baixar o MP4.'; });
 
 const controls = [play, replay, skip];

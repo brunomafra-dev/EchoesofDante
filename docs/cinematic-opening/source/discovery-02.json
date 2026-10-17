@@ -1,0 +1,18 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": true,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 1.25,
+  "steps": 4,
+  "seed": 117,
+  "sourceHash": "3a683fd649116ad1bb67695e71441e1d4e9586793e6be91288795b76feb48695",
+  "prompt": "One continuous continuation of the exact supplied complete scene. Continue the intact expedition vessel moving toward the same planet. Preserve the green land, cloud masses, amber and faint violet palette. Slow restrained orbital motion only. Preserve the original painted Organic Sci-Fi R3 game illustration, lighting, anatomy, ship structure, materials and whole-scene composition. Fixed camera, no zoom or pan, no cuts, no text, no subtitles, no music. Real motion inside the scene; never a still-picture slideshow.",
+  "startedAt": "2026-10-17T18:47:38.284Z",
+  "status": "downloaded",
+  "transport": "Authenticated Gradio REST; no redirects",
+  "eventId": "21311054e18845f385816698dcc308d2",
+  "actualSeed": 117,
+  "bytes": 187706,
+  "videoHash": "3aa5b0fb561d0b3df64f20a529ea037be6e694e3e1d0a98c896ba00206861645",
+  "finishedAt": "2026-10-17T18:48:12.507Z"
+}

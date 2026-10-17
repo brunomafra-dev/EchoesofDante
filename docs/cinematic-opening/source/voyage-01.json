@@ -1,0 +1,18 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": true,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 5,
+  "steps": 4,
+  "seed": 114,
+  "sourceHash": "a4e4cb0c757c7a2279bba4507d38218c9853827a1fa6639320907d1c27a4bcc7",
+  "prompt": "One continuous five-second shot. The distant ships outside the scratched window glide slowly across the starfield in a steady formation, tiny amber engine lights gently varying. A small loose cloth on the left chair shifts subtly with ventilation. The cabin, seats, scratched glass and consoles stay fixed. Quiet, exhausted years of travel, no new characters or planets. Preserve the original painted Organic Sci-Fi R3 game illustration, lighting, anatomy, ship structure, materials and whole-scene composition. Fixed camera, no zoom or pan, no cuts, no text, no subtitles, no music. Real motion inside the scene; never a still-picture slideshow.",
+  "startedAt": "2026-10-17T18:43:21.472Z",
+  "status": "downloaded",
+  "transport": "Authenticated Gradio REST; no redirects",
+  "eventId": "d39bd68f324346e1bdb55742456720e8",
+  "actualSeed": 114,
+  "bytes": 715982,
+  "videoHash": "9f54f79a9440e3fb91d1007408a21525ddb93ce30a439089e3ba741b296d9c03",
+  "finishedAt": "2026-10-17T18:44:04.457Z"
+}

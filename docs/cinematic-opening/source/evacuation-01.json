@@ -1,0 +1,18 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": true,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 5,
+  "steps": 4,
+  "seed": 112,
+  "sourceHash": "427b4bba2e308f60e195f4e5a738ae3bde66a8bec2e9253887dd86a5644b6ddd",
+  "prompt": "One continuous five-second shot. The complete industrial civilian ships lift slowly up and away from their gantries, steady warm engine plumes blowing vapour downward. The few small complete human figures take careful natural steps carrying their bags; bodies and limbs stay connected. No crowd duplication. Clouds drift below the platform. Preserve the original painted Organic Sci-Fi R3 game illustration, lighting, anatomy, ship structure, materials and whole-scene composition. Fixed camera, no zoom or pan, no cuts, no text, no subtitles, no music. Real motion inside the scene; never a still-picture slideshow.",
+  "startedAt": "2026-10-17T18:40:19.185Z",
+  "status": "downloaded",
+  "transport": "Authenticated Gradio REST; no redirects",
+  "eventId": "255bf11d61b84eb3b451801ed0108abe",
+  "actualSeed": 112,
+  "bytes": 1220882,
+  "videoHash": "dbc62e838c776a6e2499a9ff920229327f9b259237b5242c56d8178a229c150b",
+  "finishedAt": "2026-10-17T18:41:15.573Z"
+}

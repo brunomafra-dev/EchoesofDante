@@ -28,7 +28,9 @@ export async function generateAuthenticatedTake({ space, token, inputBytes, inpu
   report.status = 'submitted'; report.transport = 'Authenticated Gradio REST; no redirects'; report.eventId = job.event_id;
   await save();
   console.log('Submitted one request using the user account quota. No automatic retries.');
-  const events = await request(`/gradio_api/call/generate_video/${job.event_id}`);
+  // The simplified /call stream discards output.error and reports only null.
+  // Read the regular stream for the SAME event, without submitting another job.
+  const events = await request(`/gradio_api/queue/data?session_hash=${job.event_id}`);
   const reader = events.body.getReader();
   const decoder = new TextDecoder();
   let buffer = '', result, lastPrint = 0;
@@ -42,6 +44,15 @@ export async function generateAuthenticatedTake({ space, token, inputBytes, inpu
         const block = buffer.slice(0, end); buffer = buffer.slice(end + 2);
         const kind = block.match(/^event: (.+)$/m)?.[1];
         const raw = block.split('\n').filter(l => l.startsWith('data: ')).map(l => l.slice(6)).join('\n');
+        if (!kind && raw) {
+          const message = JSON.parse(raw);
+          if (message.msg === 'process_completed') {
+            if (!message.success) throw new Error(`Space rejected generation: ${String(message.output?.error ?? message.message ?? 'No detailed reason provided').replaceAll(token, '[redacted]')}`);
+            result = message.output?.data;
+          } else if (message.msg === 'unexpected_error') {
+            throw new Error(`Space error: ${String(message.message ?? 'Unknown').replaceAll(token, '[redacted]')}`);
+          }
+        }
         if (kind === 'error') throw new Error(`Space rejected generation: ${raw.slice(0, 1200).replaceAll(token, '[redacted]')}`);
         if (kind === 'complete') result = JSON.parse(raw);
       }

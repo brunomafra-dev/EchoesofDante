@@ -1,0 +1,18 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": true,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 1.25,
+  "steps": 4,
+  "seed": 113,
+  "sourceHash": "3e7d9f64132b7686fb4c7b8db3160b728bcd79af7bdea0eb2aff3c8a2e9a0057",
+  "prompt": "One continuous continuation of the exact supplied complete scene. Continue the same ships ascending away from the launch structures, maintaining their original shapes. Vapour settles around the gantries and the small people continue their careful steps. Preserve the original painted Organic Sci-Fi R3 game illustration, lighting, anatomy, ship structure, materials and whole-scene composition. Fixed camera, no zoom or pan, no cuts, no text, no subtitles, no music. Real motion inside the scene; never a still-picture slideshow.",
+  "startedAt": "2026-10-17T18:41:57.730Z",
+  "status": "downloaded",
+  "transport": "Authenticated Gradio REST; no redirects",
+  "eventId": "cc9cfc9b7ae64069b6b14592fbe34f3d",
+  "actualSeed": 113,
+  "bytes": 293426,
+  "videoHash": "2301ad5998abc90dd1e0308d615ee8758b0391fceba0df1f241bbaad8cf14a32",
+  "finishedAt": "2026-10-17T18:42:17.393Z"
+}

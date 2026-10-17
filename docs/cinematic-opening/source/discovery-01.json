@@ -1,0 +1,18 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": true,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 5,
+  "steps": 4,
+  "seed": 116,
+  "sourceHash": "1872ae2f2eb1ada53c7413fa4d5655ae4bdb2b75291c3a8292ec4d4005a12369",
+  "prompt": "One continuous five-second shot. The intact original expedition vessel moves slowly forward toward Dante, becoming slightly more distant while keeping every hull section and engine shape. The planet rotates imperceptibly with soft cloud movement. Vast scale, quiet discovery. No laser beams, explosions, warp tunnels, visible temples or new lore symbols. Preserve the original painted Organic Sci-Fi R3 game illustration, lighting, anatomy, ship structure, materials and whole-scene composition. Fixed camera, no zoom or pan, no cuts, no text, no subtitles, no music. Real motion inside the scene; never a still-picture slideshow.",
+  "startedAt": "2026-10-17T18:46:04.669Z",
+  "status": "downloaded",
+  "transport": "Authenticated Gradio REST; no redirects",
+  "eventId": "86a79b00e0b041e59aa884cf503c866c",
+  "actualSeed": 116,
+  "bytes": 942626,
+  "videoHash": "915a8bbe473f7c70eab21108024be90e25ac2f190abad03f6fe379aed0b90072",
+  "finishedAt": "2026-10-17T18:46:55.664Z"
+}

@@ -1,0 +1,18 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": true,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 5,
+  "steps": 4,
+  "seed": 110,
+  "sourceHash": "4dce803e82918fc5f83178fc3de1aa6705d4f6cdd328c477991b28f31a71ecd5",
+  "prompt": "One continuous five-second shot. The small distant evacuation rockets rise slowly into the clouds, leaving narrow trails. Dust and low haze drift gently across the dry basin. The ruins stay fixed. Loss, not explosions. Preserve the original painted Organic Sci-Fi R3 game illustration, lighting, anatomy, ship structure, materials and whole-scene composition. Fixed camera, no zoom or pan, no cuts, no text, no subtitles, no music. Real motion inside the scene; never a still-picture slideshow.",
+  "startedAt": "2026-10-17T18:36:38.407Z",
+  "status": "downloaded",
+  "transport": "Authenticated Gradio REST; no redirects",
+  "eventId": "976b46cb7eb34147bdbbf527ca78102c",
+  "actualSeed": 110,
+  "bytes": 550983,
+  "videoHash": "6482b2313f8a3a7fdc1a325de6c53063e30e002ae99122d249fed6fae8bcbe3f",
+  "finishedAt": "2026-10-17T18:37:46.963Z"
+}

@@ -26,13 +26,13 @@ const server = createServer(async (req, res) => {
     const { data } = JSON.parse(body);
     assert.deepEqual(data.slice(2), [4, 'disconnected limbs, detached arms, extra fingers, broken wrists, sliding feet, changing faces, body morphing, camera movement, zoom, pan, cuts, subtitles, text', 5, 1, 1, 110, false]);
     json({ event_id: 'synthetic-job' });
-  } else if (req.url === '/gradio_api/call/generate_video/synthetic-job') {
+  } else if (req.url === '/gradio_api/queue/data?session_hash=synthetic-job') {
     res.writeHead(200, { 'Content-Type': 'text/event-stream' });
-    if (mode === 'quota') { res.end(`event: error\ndata: ${JSON.stringify('You have exceeded quota '+fakeToken)}\n\n`); return; }
+    if (mode === 'quota') { res.end(`data: ${JSON.stringify({msg:'process_completed',success:false,output:{error:'You have exceeded quota '+fakeToken}})}\n\n`); return; }
     res.write('event: heartbeat\r');
     await new Promise(resolve => setTimeout(resolve, 10));
     res.write('\ndata: null\r\n\r\n');
-    res.end(`event: complete\ndata: ${JSON.stringify([{ url: (mode === 'external-result' ? externalUrl : base)+'/gradio_api/file=/tmp/result.mp4' }, 110])}\n\n`);
+    res.end(`data: ${JSON.stringify({msg:'process_completed',success:true,output:{data:[{url:(mode === 'external-result' ? externalUrl : base)+'/gradio_api/file=/tmp/result.mp4'},110]}})}\n\n`);
   } else if (req.url === '/gradio_api/file=/tmp/result.mp4') {
     res.end(Buffer.concat([Buffer.alloc(4), Buffer.from('ftypisom')]));
   } else { res.writeHead(404); res.end(); }

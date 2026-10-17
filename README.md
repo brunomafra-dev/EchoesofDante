@@ -1,16 +1,20 @@
 # Echoes of Dante
 
+## Cinemática — prévia parcial de 36 segundos · 0.1.109
+
+[Assistir à prévia da abertura](https://echosofdante.vercel.app/cinematic-opening.html?v=0.1.109): Terra, evacuação, viagem, descoberta de Dante e conversa na ponte. Cenas inteiras animadas offline, legendas em português e áudio original. **Ainda faltam descida e desembarque**: a conta gratuita HF atingiu o limite de gerações. Não houve compra; tomadas prontas preservadas para retomar após renovação da cota. Fonte 832×480/16 FPS, exportada em 1280×720/24 FPS por ampliação/interpolação. O prólogo do jogo permanece intacto. [Produção, QA e limites](docs/cinematic-opening/README.md). Avaliação humana desta prévia pendente; missões/mapas aguardam o filme completo.
+
 ## Cinemática — piloto completo de 12 segundos · 0.1.108
 
 [Assistir ao novo piloto](https://echosofdante.vercel.app/cinematic-bridge-pilot.html?v=0.1.108). Cena inteira animada com Ivo e Nara, legendas em português e ambiente original da nave, sem dublagem. Fonte Wan2.2 em **832×480/16 FPS**, exportada para **1280×720/24 FPS com interpolação de movimento e ampliação**, sem loops ou quadros parados para completar a duração. Não é geração nativa em 720p. [Origem, QA e limites](docs/cinematic-pilot/revision-04/README.md).
 
-**Piloto aprovado pelo usuário em 17/10/2026.** [Abertura completa em produção](docs/cinematic-opening/README.md): roteiro de ~55 segundos, descida original, áudio e legendas preparados. Geração das novas cenas aguarda autenticação na conta gratuita Hugging Face após esgotar a cota anônima. Ainda não existe um novo filme completo; campanha, coop e saves preservados. Missões/mapas aguardam a abertura e seu playtest.
+**Piloto aprovado pelo usuário em 17/10/2026.** [Abertura completa em produção](docs/cinematic-opening/README.md): roteiro de ~55 segundos; primeiros 36 segundos disponíveis na prévia acima. Restam descida/desembarque após a renovação da cota gratuita. Campanha, coop e saves preservados; missões/mapas aguardam a abertura e seu playtest.
 
 ## Cinemática — teste curto de movimento · 0.1.107
 
 [Assistir à amostra aprovada pelo usuário](https://echosofdante.vercel.app/cinematic-motion-test.html?v=0.1.107). Uma geração gratuita no Hugging Face ZeroGPU, a partir da cena inteira: **5,06 segundos, 832×480, 16 FPS, sem áudio**. Direção de movimento aprovada em 17/10/2026. A 0.1.105 com montagem de membros continua rejeitada. O piloto de 12 segundos com legendas e áudio está na entrega 0.1.108 acima, com avaliação própria. Campanha e saves preservados. [Origem, aprovação, QA e limitações](docs/cinematic-pilot/revision-03/README.md).
 
-Nomes e chat cooperativo da 0.1.104 foram validados. A etapa 3 continua aberta; abertura completa e missões aguardam um novo piloto com movimento contínuo e aprovação humana.
+Nomes e chat cooperativo da 0.1.104 foram validados. O piloto de movimento foi aprovado; a etapa 3 continua aberta até concluir e avaliar a abertura completa.
 
 ## Histórico rejeitado — novo jogo e cinemática de chegada · 0.1.101
 

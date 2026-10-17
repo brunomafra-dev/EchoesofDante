@@ -33,7 +33,8 @@ const prompt = (await readFile(path.resolve(root, options.prompt), 'utf8')).trim
 const hfToken = process.env.HF_TOKEN?.trim();
 if (hfToken) {
   const identity = await fetch('https://huggingface.co/api/whoami-v2', { headers: { Authorization: `Bearer ${hfToken}` }, redirect: 'error' });
-  if (!identity.ok()) throw new Error(`Hugging Face authentication HTTP ${identity.status()}; nothing submitted.`);
+  if (!identity.ok) throw new Error(`Hugging Face authentication HTTP ${identity.status}; nothing submitted.`);
+  await identity.body?.cancel();
 }
 const sourceHash = createHash('sha256').update(await readFile(input)).digest('hex');
 await mkdir(out, { recursive: true });

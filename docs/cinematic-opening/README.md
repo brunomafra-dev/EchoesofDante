@@ -1,5 +1,35 @@
 # Abertura completa — produção
 
+## Prévia parcial · 0.1.109
+
+[Assistir aos primeiros 36 segundos](https://echosofdante.vercel.app/cinematic-opening.html?v=0.1.109) · [MP4](https://echosofdante.vercel.app/assets/cinematic-opening/opening-workprint.mp4) · [Quadros do corte](workprint-contact.jpg) · [Biblioteca](https://echosofdante.vercel.app/test-library.html)
+
+**Filme completo ainda pendente.** Foram geradas oito tomadas autenticadas gratuitas para Terra, evacuação, viagem e descoberta. Junto com os 12 segundos aprovados da ponte, compõem uma prévia de **36 segundos**. Não substitui o prólogo ativo nem encerra a etapa 3. Faltam **descida e desembarque: 18,75 segundos**. A aprovação humana do piloto não aprova automaticamente estas quatro cenas novas.
+
+Em 17/10/2026 o token local foi validado com GET 200, sem cobrança. As oito gerações terminaram com vídeo baixado. A tentativa seguinte, de descida, falhou com erro opaco no stream simplificado do Gradio; o transporte foi corrigido para conservar `output.error` do mesmo evento. Uma tentativa de desembarque confirmou: **“You have exceeded your ZeroGPU runs limit.”** Nenhum vídeo dessas duas cenas foi produzido. [Registro de bloqueio](source/authenticated-limit.json). Interrompidas novas gerações após a confirmação; sem compra, retries automáticos ou rotação de contas. Retomar com a mesma conta após renovação da cota, sem prometer um horário de liberação.
+
+### Corte, mídia e continuidade
+
+- **Arquivo:** `opening-workprint.mp4`, 11.851.719 bytes (~11,3 MiB), H.264/YUV420p, **864 quadros, 1280×720/24 FPS**, AAC estéreo 48 kHz. [Manifesto, hashes e intervalos de origem](workprint-media.json).
+- **Geração:** Wan2.2 no mesmo Space gratuito, fonte 832×480/16 FPS. Duas tomadas por cena nova: 5 s e 1,25 s solicitados. A continuação recebe o quadro inteiro 79; o primeiro quadro repetido de referência não entra na montagem. Usados 100 quadros reais por cena para fornecer margem à interpolação, cortando a 6 s. A ponte usa as três fontes aprovadas, não o MP4 já interpolado.
+- **Tratamento offline:** interpolação de movimento 16→24 FPS; ampliação proporcional para 1248×720 com margens laterais de 16 px. Não estica a arte. Não é geração nativa em 720p. Sem loops, imagem congelada, zoom aplicado às pinturas ou montagem independente de membros.
+- **Som:** recorte inicial de 36 s do mix original de 54,75 s, com saída suave de 1,4 s. Legendas PT-BR incorporadas no alto para evitar os controles nativos; [VTT](../../public/assets/cinematic-opening/workprint.pt-BR.vtt) e transcrição no laboratório. Sem dublagem.
+- **Runtime:** um elemento HTML Video nativo; nenhum Phaser, relay, objeto de combate, textura de jogo ou timer de cenário instanciado pelo laboratório. Teclado, touch e gamepad usam o player já existente. O vídeo só carrega metadados antes de reproduzir; não inicia sozinho.
+- **Assets reutilizados:** quatro ilustrações originais de `public/assets/prologue`, três fontes da ponte aprovada e CSS/player do piloto. Nenhuma arte nova nesta revisão; a imagem original de descida já preparada continua aguardando animação.
+- **Reprodução da montagem:** `python scripts/assemble-cinematic-opening.py --workprint`. O modo padrão continua exigindo as sete cenas e recusa um filme completo com fontes faltantes. `scripts/import-opening-take.py` verifica recibo/hash, metadados e prepara quadros de inspeção antes de importar uma tomada.
+
+### Validação desta revisão
+
+- **Automatizado:** `npm run typecheck`, `npm run build` e QA de transporte passaram. Build conserva o aviso conhecido do chunk Phaser >500 kB, sem dependências novas.
+- `QA_FILM=workprint python scripts/qa-bridge-media.py`: [864 quadros decodificados](qa/media-report.json), zero duplicatas adjacentes, hashes corretos, sete legendas UTF-8 e áudio sem clipping (pico 0,1614; RMS 0,0297). Isso não aprova anatomia ou atuação.
+- [QA Chrome/player](qa/player/report.json): passou em 1280×720, 1366×768, 1920×1080 e 844×390, quadro completo sem rolagem horizontal. Reprodução natural dos 36 s, pausa/rever/pular, transcrição touch, gamepad emulado, cinco replays com DOM estável e um único vídeo. Zero erros JS/assets e **zero quadros descartados em 876 apresentados/consultados**, incluindo buscas. São 24 FPS do vídeo; não uma medição de FPS do combate. Save sentinela preservado.
+- [Regressão do piloto de 12 s](qa/pilot-regression.json) passou com os mesmos controles/resoluções; hashes dos dois MP4s aprovados permanecem intactos. [Guarda da montagem](qa/delivery.json): o modo completo recusa fontes ausentes e não cria um filme falso. A publicação será conferida após o push.
+- **Inspeção visual pelo agente:** quadros dos oito takes e da montagem conferidos. Há movimento de pessoas/naves, propulsão e névoa; não são apenas mudanças locais de enquadramento. O modelo também move a câmera em algumas cenas apesar do prompt fixo. Diferenças de detalhe e continuidade entre tomadas persistem e devem ser julgadas no vídeo.
+- **Playtest humano necessário:** ritmo, autenticidade visual, rostos/mãos, continuidade, áudio e passagem para a ponte. Não declarar uma nova aprovação visual por causa do QA.
+- **Escopo:** campanha, combate, classes, menus, coop, protocolo e saves não foram modificados. O fluxo completo de campanha não foi reexecutado nesta revisão isolada. Nenhuma missão ou mapa novo antecipado.
+
+## Histórico da preparação · 0.1.108
+
 ## Autorização e direção
 
 Em 17/10/2026 o usuário aprovou o piloto 0.1.108: **“irmão muito bom! vamos produzir a abertura completa”**. A aprovação libera a abertura prevista na etapa 3; missões e mapas permanecem para as etapas seguintes.
@@ -48,7 +78,7 @@ Com a conta configurada, `-Generate -InputImage ARQUIVO -PromptFile PROMPT -Seco
 
 - `node scripts/qa-hf-cinematic-api.mjs`: cinco cenários **sintéticos locais**, sem GPU: sucesso, cota recusada, redirecionamento, API alterada e resultado em host estranho. Verifica POST único e ausência de vazamento do token simulado. [Resultado](qa/hf-transport.json). Isso não comprova geração autenticada real.
 - [Preparação de áudio/legendas](qa/preparation.json): 54,75 s (+padding AAC), áudio sem clipping, onze legendas UTF-8 e guarda que impede fabricar vídeo sem fontes. Nenhuma chamada ao provedor por esses testes.
-- Parser PowerShell e `node --check` dos autores passaram. A credencial real e a geração autenticada ainda aguardam a configuração local.
+- Parser PowerShell e `node --check` dos autores passaram. Na preparação 0.1.108, a credencial real e a geração autenticada ainda aguardavam a configuração local; ambas foram confirmadas na revisão 0.1.109 acima.
 - `npm run typecheck`, `npm run build` e `git diff --check` passaram. O build mantém somente o aviso conhecido do chunk Phaser maior que 500 kB; os bundles do jogo continuam iguais. Essas verificações não validam a geração/renderização de cenas ainda ausentes.
 
-**Estado: produção em andamento, abertura completa ainda não gerada.** O prólogo ativo permanece intacto. Versão do jogo continua 0.1.108; não publicar a preparação como se fosse uma nova cinemática concluída. Após obter as tomadas: revisão visual, exportação, laboratório, integração, QA de início/coop/pausa/mobile, versão e publicação. Missões/mapas continuam fora desta entrega.
+**Estado atual: produção em andamento, abertura completa ainda não gerada.** O prólogo ativo permanece intacto. A 0.1.109 publica exclusivamente a prévia parcial, identificada como tal. Após obter as tomadas finais: revisão visual, exportação completa, laboratório, integração, QA de início/coop/pausa/mobile, versão e publicação. Missões/mapas continuam fora desta entrega.

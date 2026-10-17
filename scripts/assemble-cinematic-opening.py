@@ -20,7 +20,6 @@ WORK = ROOT / '.local/cinematic-opening/assembly'
 PUBLIC = ROOT / 'public/assets/cinematic-opening'
 FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
 DURATION = PLAN['targetSeconds']
-OUTPUT = PUBLIC / 'arrival-whole-scene.mp4'
 
 
 def run(args, **kwargs):
@@ -82,7 +81,7 @@ def sound():
                  'origin': 'Original offline NumPy synthesis, seed 109; no voice, external samples or repeated music loop'}
 
 
-def captions():
+def captions(prefix='arrival', limit=DURATION):
     def clock(value):
         ms = round(value*1000)
         return f'{ms//3600000:02}:{ms//60000%60:02}:{ms//1000%60:02}.{ms%1000:03}'
@@ -101,13 +100,18 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 '''
     for start, end, speaker, text in PLAN['captions']:
         assert 0 <= start < end <= DURATION
+        if start >= limit:
+            continue
+        end = min(end, limit)
         line = f'{speaker}: {text}' if speaker else text
         vtt += f'{clock(start)} --> {clock(end)}\n{line}\n\n'
         if speaker:
             line = f'{{\\b1\\c&H83BBD9&}}{speaker}{{\\b0\\c&HF3F3E8&}}: {text}'
         ass += f'Dialogue: 0,{clock(start)[:-1]},{clock(end)[:-1]},Default,,0,0,0,,{line}\n'
-    (PUBLIC / 'arrival.pt-BR.vtt').write_text(vtt.rstrip()+'\n', encoding='utf-8')
-    (WORK / 'captions.ass').write_text(ass, encoding='utf-8')
+    (PUBLIC / f'{prefix}.pt-BR.vtt').write_text(vtt.rstrip()+'\n', encoding='utf-8')
+    ass_path = WORK / f'{prefix}-captions.ass'
+    ass_path.write_text(ass, encoding='utf-8')
+    return ass_path
 
 
 def sources(shot):
@@ -119,12 +123,16 @@ def sources(shot):
             (DOC / f"source/{shot['id']}-02.mp4", 1, min(80, round((shot['seconds']-5+.25)*16)))]
 
 
-def assemble():
-    missing = [p.relative_to(ROOT).as_posix() for s in PLAN['shots'] for p, _, _ in sources(s) if not p.exists()]
+def assemble(workprint=False):
+    shots = PLAN['shots'][:5] if workprint else PLAN['shots']
+    seconds = sum(s['seconds'] for s in shots)
+    output = PUBLIC / ('opening-workprint.mp4' if workprint else 'arrival-whole-scene.mp4')
+    missing = [p.relative_to(ROOT).as_posix() for s in shots for p, _, _ in sources(s) if not p.exists()]
     if missing:
         raise RuntimeError('Footage missing; no placeholder film will be produced:\n'+'\n'.join(missing))
     manifests = []
-    for shot in PLAN['shots']:
+    for shot in shots:
+        print(f"Processing whole-motion shot: {shot['id']}", flush=True)
         native = WORK / f"{shot['id']}-native.mp4"
         process = subprocess.Popen([FFMPEG, '-y', '-v', 'error', '-f', 'rawvideo', '-pix_fmt', 'bgr24',
                                     '-s', '832x480', '-r', '16', '-i', '-', '-an', '-c:v', 'libx264',
@@ -153,27 +161,31 @@ def assemble():
         c = cv2.VideoCapture(str(piece)); frames = int(c.get(7)); c.release()
         assert frames == round(shot['seconds']*24), (shot['id'], frames)
         manifests.append({'id': shot['id'], 'seconds': shot['seconds'], 'source': used, 'frames': frames})
-    (WORK / 'concat.txt').write_text(''.join(f"file '{s['id']}.mp4'\n" for s in PLAN['shots']), encoding='utf-8')
+    (WORK / 'concat.txt').write_text(''.join(f"file '{s['id']}.mp4'\n" for s in shots), encoding='utf-8')
     wav, audio = sound()
-    captions()
+    ass = captions('workprint' if workprint else 'arrival', seconds)
     run(['-f', 'concat', '-safe', '1', '-i', 'concat.txt', '-i', wav,
-         '-vf', 'ass=captions.ass', '-t', DURATION, '-c:v', 'libx264', '-crf', '21', '-preset', 'medium',
-         '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart', OUTPUT], cwd=WORK)
-    c = cv2.VideoCapture(str(OUTPUT))
+         '-vf', f'ass={ass.name}', '-af', f'afade=t=out:st={seconds-1.4}:d=1.4', '-t', seconds, '-c:v', 'libx264', '-crf', '21', '-preset', 'medium',
+         '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart', output], cwd=WORK)
+    c = cv2.VideoCapture(str(output))
     info = {'width': int(c.get(3)), 'height': int(c.get(4)), 'fps': c.get(5), 'frames': int(c.get(7)),
-            'bytes': OUTPUT.stat().st_size, 'sha256': digest(OUTPUT)}
+            'bytes': output.stat().st_size, 'sha256': digest(output)}
     c.release()
-    assert (info['width'], info['height'], info['fps'], info['frames']) == (1280, 720, 24, round(DURATION*24))
-    report = {'completeFilm': True, 'humanApproval': 'pending', 'native720p24': False,
+    assert (info['width'], info['height'], info['fps'], info['frames']) == (1280, 720, 24, round(seconds*24))
+    report = {'completeFilm': not workprint, 'workprint': workprint, 'seconds': seconds,
+              'missingShots': [s['id'] for s in PLAN['shots'] if s not in shots],
+              'humanApproval': 'pending', 'native720p24': False,
               'sourceFps': 16, 'interpolation': 'FFmpeg motion compensated; whole frames',
               'loopOrFrozenFiller': False, 'shots': manifests, 'audio': audio, 'output': info}
-    (DOC / 'media.json').write_text(json.dumps(report, indent=2, ensure_ascii=False)+'\n', encoding='utf-8')
+    (DOC / ('workprint-media.json' if workprint else 'media.json')).write_text(json.dumps(report, indent=2, ensure_ascii=False)+'\n', encoding='utf-8')
     print(json.dumps(info))
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--audio-only', action='store_true')
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument('--audio-only', action='store_true')
+    mode.add_argument('--workprint', action='store_true', help='Export only the finished first five shots, explicitly not the full film')
     args = parser.parse_args()
     WORK.mkdir(parents=True, exist_ok=True)
     PUBLIC.mkdir(parents=True, exist_ok=True)
@@ -184,4 +196,4 @@ if __name__ == '__main__':
         (DOC / 'audio.json').write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')
         print('Audio and captions prepared; complete film NOT produced.')
     else:
-        assemble()
+        assemble(workprint=args.workprint)

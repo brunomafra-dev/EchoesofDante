@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "version": "0.1.109",
+  "completeFilmProduced": false,
+  "fullAssemblyRejectsMissingFootage": true,
+  "approvedPilotAssetsUnchanged": true,
+  "requiresGenerationQuotaRenewal": true,
+  "newlyGeneratedTakes": 8,
+  "workprintSeconds": 36,
+  "missingSeconds": 18.75,
+  "gamePrologueIntegrated": false,
+  "tests": [
+    "npm run typecheck",
+    "npm run build",
+    "QA_FILM=workprint python scripts/qa-bridge-media.py",
+    "QA_FILM=workprint node scripts/qa-bridge-pilot.mjs",
+    "node scripts/qa-hf-cinematic-api.mjs"
+  ],
+  "humanApproval": "pending"
+}
