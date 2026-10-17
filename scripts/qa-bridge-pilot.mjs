@@ -85,8 +85,11 @@ try {
   assert.equal(await p.evaluate(() => document.activeElement.id), 'replay');
   await padButton(0);
   assert.ok(await video.evaluate(v => v.currentTime < 1));
-  await padButton(1);
-  await p.waitForURL('**/test-library.html');
+  // B leaves this document. Do not release it through an evaluate racing navigation.
+  await Promise.all([
+    p.waitForURL('**/test-library.html'),
+    p.evaluate(() => { window.qaPad.buttons[1].pressed = true; }),
+  ]);
   assert.equal(await p.locator('a.launch[href="cinematic-bridge-pilot.html?v=0.1.108"]').count(), 1);
   report.checks.push('Gamepad mock X replay, directional focus, A activate, B skip to library');
   assert.deepEqual(await p.evaluate(() => ({ local: { ...localStorage }, session: { ...sessionStorage } })), {
