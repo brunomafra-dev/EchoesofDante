@@ -1,0 +1,11 @@
+{
+  "provider": "Public Hugging Face ZeroGPU demo",
+  "space": "zerogpu-aoti/wan2-2-fp8da-aoti-faster",
+  "authenticated": false,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 5,
+  "startedAt": "2026-10-17T13:41:57.713Z",
+  "status": "downloaded",
+  "bytes": 1041995,
+  "finishedAt": "2026-10-17T13:42:54.042Z"
+}

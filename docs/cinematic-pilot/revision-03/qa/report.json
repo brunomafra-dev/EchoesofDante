@@ -1,0 +1,22 @@
+{
+  "base": "http://localhost:5190",
+  "checks": [
+    "Native video decodes real 832x480 / 5.06s clip; 16 FPS label; no autoplay; full pilot explicitly pending",
+    "Keyboard native play, pause holds time, reaches end, replay restarts",
+    "Four resolutions keep complete video in frame; touch disclosure works",
+    "Library points to clip; no campaign/save mutation; no game, relay or generation runs in the lab"
+  ],
+  "errors": [],
+  "visualApproval": "pending",
+  "fullPilotComplete": false,
+  "media": {
+    "width": 832,
+    "height": 480,
+    "duration": 5.0625,
+    "controls": true,
+    "playsInline": true,
+    "autoPlay": false,
+    "paused": true
+  },
+  "passed": true
+}

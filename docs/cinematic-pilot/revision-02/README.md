@@ -1,5 +1,7 @@
 # Revisão 02 — personagens inteiros · 0.1.106
 
+**Atualização 17/10/2026:** [teste curto 0.1.107](../revision-03/README.md) gerado gratuitamente no Hugging Face ZeroGPU. Esta revisão preserva o quadro-base e o histórico de preparação; o piloto final de 12 segundos ainda não está concluído.
+
 **A 0.1.105 foi rejeitada pelo usuário. O novo filme ainda não foi produzido.** Esta revisão entrega o quadro-base inteiro e corrige o estado do laboratório; não encerra a etapa 3.
 
 [Referência atual](https://echosofdante.vercel.app/cinematic-pilot.html?v=0.1.106)

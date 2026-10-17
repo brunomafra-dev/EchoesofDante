@@ -1,8 +1,8 @@
 # Echoes of Dante
 
-## Cinemática — revisão em andamento · 0.1.106
+## Cinemática — teste curto de movimento · 0.1.107
 
-[Nova referência com personagens inteiros](https://echosofdante.vercel.app/cinematic-pilot.html?v=0.1.106). A 0.1.105 foi rejeitada por anatomia e atuação quebradas. A montagem de membros foi abandonada. O laboratório mostra um **quadro-base estático; o novo filme ainda não foi gerado**. [Pesquisa de ferramentas, fontes e dependência de conexão](docs/cinematic-pilot/revision-02/README.md).
+[Assistir à amostra gerada](https://echosofdante.vercel.app/cinematic-motion-test.html?v=0.1.107). Uma geração gratuita no Hugging Face ZeroGPU, a partir da cena inteira: **5,06 segundos, 832×480, 16 FPS, sem áudio**. A 0.1.105 com montagem de membros continua rejeitada. Esta amostra aguarda avaliação humana e ainda não cumpre o piloto final de 12 segundos/720p/24 FPS. Campanha e saves preservados. [Origem, quadros, QA e limitações](docs/cinematic-pilot/revision-03/README.md).
 
 Nomes e chat cooperativo da 0.1.104 foram validados. A etapa 3 continua aberta; abertura completa e missões aguardam um novo piloto com movimento contínuo e aprovação humana.
 
