@@ -31,7 +31,7 @@ Depois basta informar ao Codex **“acesso configurado”**. Ele poderá enviar 
 - Um pedido, **121 quadros a 24 FPS**, resolução solicitada 720p, 16:9: cerca de **5 segundos**. A duração e resolução efetivas precisam ser medidas no arquivo recebido.
 - [Prompt curto](wan-test-prompt.txt): Ivo opera o console e olha para Nara; Nara escuta e gesticula de forma contida. Corpos completos, pés apoiados, câmera fixa, sem cortes. A geração pode falhar visualmente mesmo com esse direcionamento.
 - Sem interpolação, expansão automática do prompt, loop, câmera animada ou repetição de quadros para simular atuação. Este teste não tenta comprimir a conversa inteira de 12 segundos.
-- **Preço anunciado em 16/10/2026: US$ 0,15 por vídeo.** O script consulta a [API de preços](https://fal.ai/docs/documentation/model-apis/pricing) e só envia se confirmar USD, unidade `video`, preço positivo de até 0,15. Mudança de tarifa/unidade ou falha nessa consulta bloqueia o POST. É uma verificação antes do envio, não um contrato de preço do provedor nem autorização para recarregar a conta.
+- **Preço anunciado em 16/10/2026: US$ 0,15 por vídeo.** O script consulta a [API de preços](https://fal.ai/docs/documentation/model-apis/pricing) e só envia se confirmar USD, unidade `video` ou `videos`, preço positivo de até 0,15. Mudança de tarifa/unidade ou falha nessa consulta bloqueia o POST. É uma verificação antes do envio, não um contrato de preço do provedor nem autorização para recarregar a conta.
 
 ## Comandos
 
@@ -84,3 +84,9 @@ Executado em 16/10/2026, sem credencial ou chamadas reais ao provedor:
 - `git diff --check`.
 
 Sem dependências novas, mudanças na campanha, saves, controles ou relay. Versão do jogo preservada em **0.1.106**: somente ferramentas offline e documentação. A etapa continua em andamento, não é uma entrega de filme.
+
+### Credencial validada — 17/10/2026
+
+Configuração local concluída pelo usuário. Consulta **GET**, sem geração: API de preços autenticada retornou **HTTP 200**, endpoint Wan2.2 5B, **USD 0,15**, unidade real **`videos`**. Controle sem autenticação retornou **HTTP 401**. A chave foi decifrada somente em memória, enviada ao domínio oficial e não foi impressa ou gravada no repositório. Nenhuma consulta de saldo foi feita; o usuário informou que ainda não adicionou créditos.
+
+O retorno real revelou a unidade no plural, enquanto o exemplo documental e os mocks usavam `video`. Ajustado o guard para aceitar somente as duas grafias por vídeo, mantendo teto, moeda, bloqueio de unidades por segundo e proteção contra reenvio. QA atualizado: **16 testes simulados passaram**. Nenhum POST de geração ou compra foi realizado nesta validação.

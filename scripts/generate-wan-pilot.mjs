@@ -102,7 +102,7 @@ export async function run({ mode = 'dry-run', key = process.env.FAL_KEY, fetchIm
     const pricing = await json(fetchImpl,
       `https://api.fal.ai/v1/models/pricing?endpoint_id=${encodeURIComponent(ENDPOINT)}`, { headers });
     const price = pricing.prices?.find(p => p.endpoint_id === ENDPOINT);
-    if (!price || price.currency !== 'USD' || price.unit !== 'video' ||
+    if (!price || price.currency !== 'USD' || !['video', 'videos'].includes(price.unit) ||
       typeof price.unit_price !== 'number' || price.unit_price <= 0 || price.unit_price > MAX_PRICE_USD) {
       throw new Error('Preço não confirmado como até US$ 0,15 por vídeo. Geração bloqueada antes do envio.');
     }

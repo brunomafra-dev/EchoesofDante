@@ -28,7 +28,7 @@ O usuário perguntou sobre custo antes de conectar. Preços oficiais consultados
 
 ## Próximo trabalho dependente da conexão
 
-**Caminho atual autorizado:** teste único de cerca de 5 s com **Wan2.2 5B na fal.ai**, antes de produzir o piloto completo. [Configuração local, comandos, limite consultado de US$ 0,15 e QA](wan-test.md). Execução preparada sem instalar modelos/dependências; falta configurar a chave da conta localmente. Nenhuma geração paga foi enviada. Runway permanece apenas como alternativa pesquisada, sem conexão.
+**Caminho atual autorizado:** teste único de cerca de 5 s com **Wan2.2 5B na fal.ai**, antes de produzir o piloto completo. [Configuração local, comandos, limite consultado de US$ 0,15 e QA](wan-test.md). Chave local e autenticação confirmadas em 17/10/2026 por GET de preços: HTTP 200, USD 0,15 por vídeo; controle sem chave HTTP 401. Usuário ainda não adicionou créditos; nenhuma geração paga foi enviada. Runway foi conectado pelo usuário, que informou plano Free com 500 créditos, mas nenhum modelo de imagem para vídeo liberado nessa integração.
 
 1. Gerar movimento contínuo usando **a cena completa** como referência, preservando rostos, anatomia, figurino e contato com o cenário. Câmera fixa e ações contidas no console/conversa.
 2. Inspecionar o vídeo e amostras de mãos, braços, pernas e rostos ao longo de todo o movimento. Rejeitar deformações, membros extras, pessoas deslizando ou cortes incoerentes. Não regenerar automaticamente; avaliar o teste antes de decidir novo gasto.

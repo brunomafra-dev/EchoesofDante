@@ -71,6 +71,12 @@ test('changed public image stops before POST', async t => {
   assert.equal(f.calls.filter(c => c.options.method === 'POST').length, 0);
 });
 
+test('live pricing unit videos is accepted as per-video billing, not per-second', async t => {
+  const f = await fixture(t, { price: { unit: 'videos' } });
+  assert.equal((await f.invoke({ mode: 'generate' })).state, 'submitted');
+  assert.equal(f.calls.filter(c => c.options.method === 'POST').length, 1);
+});
+
 test('one POST, saved receipt, resume downloads without forwarding key; no new POST', async t => {
   const f = await fixture(t);
   await f.invoke({ mode: 'generate' });
