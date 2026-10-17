@@ -1,0 +1,14 @@
+{
+  "tool": "Built-in image_gen.imagegen",
+  "mode": "reference-guided original scene generation",
+  "asset": "docs/cinematic-opening/source/descent.png",
+  "width": 1672,
+  "height": 941,
+  "bytes": 2757366,
+  "sha256": "8ded42b2338774e2d1ee4b27a23fa90d7b4019ff3b40488a75ffafc60f32aa3e",
+  "prompt": "../prompts/descent-image.txt",
+  "references": [
+    "public/assets/prologue/landing.webp",
+    "public/assets/prologue/dante.webp"
+  ]
+}

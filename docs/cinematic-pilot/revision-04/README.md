@@ -2,7 +2,7 @@
 
 [Assistir ao piloto](https://echosofdante.vercel.app/cinematic-bridge-pilot.html?v=0.1.108) · [MP4](https://echosofdante.vercel.app/assets/cinematic-pilot/bridge-whole-scene-pilot.mp4) · [Biblioteca](https://echosofdante.vercel.app/test-library.html) · [Quadros](contact-sheet.jpg)
 
-**Playtest humano necessário.** A amostra de cinco segundos foi aprovada em 17/10/2026; esta montagem completa tem avaliação própria. Não foi iniciada a abertura de 55 segundos nem a etapa de missões/mapas. O prólogo ativo continua provisório.
+**Piloto aprovado pelo usuário em 17/10/2026:** “irmão muito bom! vamos produzir a abertura completa”. A aprovação libera a [produção da abertura de aproximadamente 55 segundos](../../cinematic-opening/README.md). O filme completo terá avaliação própria; missões/mapas continuam aguardando. O prólogo ativo continua provisório até existir a substituição completa.
 
 ## Cena e narrativa
 
@@ -57,4 +57,4 @@ Não medir FPS de gameplay neste laboratório: a mídia tem cadência de 24 FPS.
 
 **Publicação conferida em 17/10/2026:** Vercel publicou a 0.1.108; página e MP4 responderam 200, SHA-256 público igual ao local. [QA público completo](qa/public-report.json) passou nas quatro resoluções, incluindo teclado, touch e saída pelo gamepad, com zero erros JS/assets e zero quadros descartados no trecho medido (300 apresentados/consultados, incluindo buscas). A primeira execução pública revelou uma corrida no próprio helper de QA ao soltar B durante a navegação; o helper passou a aguardar a mudança de página sem tentar escrever no documento anterior. Não foi uma falha do player.
 
-**Próximo gate:** usuário assistir à montagem com som e avaliar atuação, anatomia, continuidade, leitura das legendas e ritmo. Só depois avançar para a abertura completa; missões e mapas seguem o plano arquivado.
+**Gate do piloto concluído:** aprovação humana explícita acima; abertura completa autorizada. Os campos `humanApproval: pending` nos relatórios de geração/QA são históricos, anteriores ao playtest. A nova abertura terá seu próprio teste antes das missões e mapas.

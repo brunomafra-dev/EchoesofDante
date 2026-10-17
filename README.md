@@ -4,7 +4,7 @@
 
 [Assistir ao novo piloto](https://echosofdante.vercel.app/cinematic-bridge-pilot.html?v=0.1.108). Cena inteira animada com Ivo e Nara, legendas em português e ambiente original da nave, sem dublagem. Fonte Wan2.2 em **832×480/16 FPS**, exportada para **1280×720/24 FPS com interpolação de movimento e ampliação**, sem loops ou quadros parados para completar a duração. Não é geração nativa em 720p. [Origem, QA e limites](docs/cinematic-pilot/revision-04/README.md).
 
-O piloto aguarda playtest próprio. O teste curto abaixo foi aprovado; a abertura completa e as missões continuam dependendo da aprovação desta entrega. Campanha, coop e saves preservados.
+**Piloto aprovado pelo usuário em 17/10/2026.** [Abertura completa em produção](docs/cinematic-opening/README.md): roteiro de ~55 segundos, descida original, áudio e legendas preparados. Geração das novas cenas aguarda autenticação na conta gratuita Hugging Face após esgotar a cota anônima. Ainda não existe um novo filme completo; campanha, coop e saves preservados. Missões/mapas aguardam a abertura e seu playtest.
 
 ## Cinemática — teste curto de movimento · 0.1.107
 

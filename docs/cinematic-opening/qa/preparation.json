@@ -1,0 +1,14 @@
+{
+  "preparationChecksPassed": true,
+  "completeFilm": false,
+  "providerCallsByThisTest": 0,
+  "missingFootageGuard": true,
+  "audio": {
+    "secondsWithAacPadding": 54.76266666666667,
+    "peak": 0.2411486804485321,
+    "rms": 0.03465137630701065,
+    "bytes": 889077
+  },
+  "captions": 11,
+  "humanOpeningApproval": "not applicable; film not yet produced"
+}

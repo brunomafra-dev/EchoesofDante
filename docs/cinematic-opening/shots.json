@@ -1,0 +1,52 @@
+{
+  "title": "Um lugar para recomeçar",
+  "targetSeconds": 54.75,
+  "outputFps": 24,
+  "sourceFps": 16,
+  "shots": [
+    {
+      "id": "earth", "seconds": 6, "image": "public/assets/prologue/earth.webp", "seed": 110,
+      "motion": "The small distant evacuation rockets rise slowly into the clouds, leaving narrow trails. Dust and low haze drift gently across the dry basin. The ruins stay fixed. Loss, not explosions.",
+      "ending": "Continue the rising rockets and drifting low haze. The ruined coast remains fixed and unchanged. No new launches appear."
+    },
+    {
+      "id": "evacuation", "seconds": 6, "image": "public/assets/prologue/evacuation.webp", "seed": 112,
+      "motion": "The complete industrial civilian ships lift slowly up and away from their gantries, steady warm engine plumes blowing vapour downward. The few small complete human figures take careful natural steps carrying their bags; bodies and limbs stay connected. No crowd duplication. Clouds drift below the platform.",
+      "ending": "Continue the same ships ascending away from the launch structures, maintaining their original shapes. Vapour settles around the gantries and the small people continue their careful steps."
+    },
+    {
+      "id": "voyage", "seconds": 6, "image": "public/assets/prologue/voyage.webp", "seed": 114,
+      "motion": "The distant ships outside the scratched window glide slowly across the starfield in a steady formation, tiny amber engine lights gently varying. A small loose cloth on the left chair shifts subtly with ventilation. The cabin, seats, scratched glass and consoles stay fixed. Quiet, exhausted years of travel, no new characters or planets.",
+      "ending": "Continue the distant fleet gliding slowly outside the same fixed observation window. Keep the empty cabin, furniture, glass and subdued amber lighting unchanged."
+    },
+    {
+      "id": "discovery", "seconds": 6, "image": "public/assets/prologue/dante.webp", "seed": 116,
+      "motion": "The intact original expedition vessel moves slowly forward toward Dante, becoming slightly more distant while keeping every hull section and engine shape. The planet rotates imperceptibly with soft cloud movement. Vast scale, quiet discovery. No laser beams, explosions, warp tunnels, visible temples or new lore symbols.",
+      "ending": "Continue the intact expedition vessel moving toward the same planet. Preserve the green land, cloud masses, amber and faint violet palette. Slow restrained orbital motion only."
+    },
+    { "id": "bridge", "seconds": 12, "approvedPilot": true },
+    {
+      "id": "descent", "seconds": 9, "image": "docs/cinematic-opening/source/descent.png", "seed": 118,
+      "motion": "The complete civilian shuttle glides forward and gradually descends toward the forest clearing far below. Its engine lights remain restrained amber. Small cloud wisps pass around the hull and trail behind it. Keep the entire original ship, its ivory worn hull, two rear nacelles and fins rigid and structurally intact. The valley, waterfalls and organic forest masses stay coherent. No people outside, no open ramp in flight, no city, no battle.",
+      "ending": "Continue the same intact shuttle descending gently toward the forest clearing. It moves away from the viewpoint toward the valley; clouds pass naturally around it. Keep gear retracted and the ramp shut. Do not turn it into a different ship."
+    },
+    {
+      "id": "landing", "seconds": 9.75, "image": "public/assets/prologue/landing.webp", "seed": 120,
+      "motion": "The small complete expedition people walk carefully down the ramp and onto the solid forest ground. Their bodies remain whole, feet make grounded alternating steps. The landed shuttle, ramp and cargo stay rigid and fixed. Thin morning mist drifts, distant waterfalls flow and a few leaves move gently. No new crowd, no limb splitting, no morphing ship, no growing buildings. The start of reconnaissance, not an established colony.",
+      "ending": "Continue the same small complete expedition people taking natural steps away from the ramp into the clearing. Keep the landed ship, open ramp and modest cargo fixed. Waterfalls flow and thin mist drifts gently. End with the expedition facing the forest, no new people or buildings."
+    }
+  ],
+  "captions": [
+    [0.6, 5.5, "", "A Terra já não podia nos abrigar."],
+    [6.6, 11.4, "", "Partimos com quem ainda podíamos salvar."],
+    [12.5, 17.5, "", "Durante anos, procuramos um lugar para recomeçar."],
+    [18.6, 23.4, "", "Até encontrarmos Dante."],
+    [24.5, 27.8, "IVO", "Água líquida. Atmosfera compatível."],
+    [28.1, 30.8, "NARA", "Então existe uma chance."],
+    [31.2, 35.6, "NARA", "Prepare o reconhecimento. Ninguém desce sozinho."],
+    [36.7, 40.1, "IVO", "Área de pouso à vista."],
+    [40.7, 44.5, "NARA", "Primeiro a equipe. Os outros aguardam em órbita."],
+    [46.1, 49.1, "NARA", "DANTE-01 em solo."],
+    [49.7, 54.3, "NARA", "Antes de trazer os outros, precisamos conhecer este lugar."]
+  ]
+}

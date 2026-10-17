@@ -1,0 +1,31 @@
+[
+  {
+    "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+    "authenticated": false,
+    "paidCredentialsUsed": false,
+    "requestedSeconds": 5,
+    "steps": 4,
+    "seed": 110,
+    "sourceHash": "4dce803e82918fc5f83178fc3de1aa6705d4f6cdd328c477991b28f31a71ecd5",
+    "prompt": "A continuous five-second cinematic shot of this exact devastated Earth coast. The small distant evacuation rockets actually rise slowly into the clouds, leaving narrow trails. Dust and low haze drift gently across the dry basin; cloud shadows move slowly while the abandoned buildings remain fixed and structurally intact. Restrained sombre atmosphere, loss rather than explosions. Preserve the original painted Organic Sci-Fi game illustration, amber dusk lighting, geography and every architectural mass. Fixed camera, no zoom, no pan, no cuts, no new celestial bodies, no new text, no subtitles, no music. Real movement inside the scene, not a still-picture slideshow.",
+    "startedAt": "2026-10-17T16:00:26.469Z",
+    "status": "failed",
+    "error": "Error: No result before deadline. Do not resubmit without checking the attempt.",
+    "finishedAt": "2026-10-17T16:04:33.564Z"
+  },
+  {
+    "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+    "authenticated": false,
+    "paidCredentialsUsed": false,
+    "requestedSeconds": 5,
+    "steps": 4,
+    "seed": 112,
+    "sourceHash": "427b4bba2e308f60e195f4e5a738ae3bde66a8bec2e9253887dd86a5644b6ddd",
+    "prompt": "A single continuous five-second cinematic departure from this exact original illustrated spaceport. The complete industrial civilian ships lift slowly up and away from their gantries, steady warm engine plumes blowing vapour downward. The few small complete human figures take careful natural steps forward carrying their bags, bodies and limbs remain connected; no crowd duplication. Cloud layers drift below the platform. Preserve the same ships, architecture, painted Organic Sci-Fi style, amber industrial lighting and framing. Fixed camera. No zoom, pan, cuts, new spaceships, battle, new text, subtitles or music. Movement is physically inside the scene, not a moving still image.",
+    "startedAt": "2026-10-17T16:05:22.842Z",
+    "status": "failed",
+    "error": "Error: Erro",
+    "finishedAt": "2026-10-17T16:05:30.723Z",
+    "observedReason": "You have exceeded your ZeroGPU runs limit. Authentication requested by the provider."
+  }
+]

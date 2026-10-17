@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "syntheticOnly": true,
+  "paidOrGpuRequests": 0,
+  "cases": [
+    {
+      "mode": "success",
+      "generationPosts": 1,
+      "noRetries": true,
+      "noTokenLeak": true
+    },
+    {
+      "mode": "quota",
+      "generationPosts": 1,
+      "noRetries": true,
+      "noTokenLeak": true
+    },
+    {
+      "mode": "redirect",
+      "generationPosts": 0,
+      "noRetries": true,
+      "noTokenLeak": true
+    },
+    {
+      "mode": "schema",
+      "generationPosts": 0,
+      "noRetries": true,
+      "noTokenLeak": true
+    },
+    {
+      "mode": "external-result",
+      "generationPosts": 1,
+      "noRetries": true,
+      "noTokenLeak": true
+    }
+  ]
+}
