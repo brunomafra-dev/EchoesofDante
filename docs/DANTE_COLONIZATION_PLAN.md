@@ -8,7 +8,7 @@ Plano aprovado em 16/10/2026. Complementa o [plano da fundação RPG](RPG_FOUNDA
 | --- | --- | --- |
 | 1 | Personagens completos + início pelo clique na dificuldade | [0.1.103](character-cohesion/revision-03/README.md) validada para avançar; pente fino visual posterior |
 | 2 | Nomes e chat da equipe | [0.1.104](party-chat/README.md) validada pelo usuário: “Deu certo perfeito irmão”; Render/Vercel e chat público conferidos |
-| 3 | Piloto de cinemática; abertura completa após aprovação | **0.1.105 rejeitada** por anatomia/montagem dos membros. [0.1.107](cinematic-pilot/revision-03/README.md): amostra gratuita de 5,06 s **aprovada pelo usuário em 17/10/2026**. Próximo: piloto de 12 s com legendas/ambiente e avaliação própria. Abertura completa e missões ainda aguardam |
+| 3 | Piloto de cinemática; abertura completa após aprovação | **0.1.105 rejeitada** por anatomia/montagem dos membros. Amostra 0.1.107 aprovada pelo usuário em 17/10/2026. [0.1.108](cinematic-pilot/revision-04/README.md): piloto de 12 s, cena inteira, legendas/ambiente, **aguarda playtest próprio**. Fonte 480p/16 FPS, exportação 720p/24 FPS com interpolação/ampliação. Abertura completa e missões ainda aguardam |
 | 4 | Missões, diálogos e diário desde a chegada | Planejada |
 | 5 | Dois mapas e primeiro núcleo habitável | Planejada |
 
@@ -51,7 +51,7 @@ Usar somente `profile.name` salvo: **Guilherme**, sem classe nem prefixo de anfi
 
 ## 3 — Cinemática real
 
-Preparação atual: [teste único Wan2.2 na fal.ai](cinematic-pilot/revision-02/wan-test.md), cerca de 5 s para verificar atuação a partir da cena inteira antes do piloto de 12 s. Credencial/autenticação locais validadas em 17/10/2026; usuário ainda não adicionou créditos, nenhum vídeo novo gerado ou gasto realizado. A meta de 12 s e o bloqueio das entregas seguintes permanecem.
+Entrega atual: [piloto de 12 segundos](cinematic-pilot/revision-04/README.md), produzido gratuitamente no Hugging Face ZeroGPU com a cena inteira. Fonte 480p/16 FPS, exportação 720p/24 FPS por interpolação/ampliação; legendas e ambiente original. A amostra inicial foi aprovada, mas este piloto completo ainda aguarda avaliação. A [preparação fal.ai](cinematic-pilot/revision-02/wan-test.md) permanece histórica: autenticação validada, sem recarga nem geração paga. Não antecipar abertura completa ou missões antes do playtest.
 
 Primeiro validar **12 segundos na ponte da nave**: pessoas operam equipamentos, caminham, olham e gesticulam numa conversa, com atuação perceptível mesmo com câmera parada. Não é carrossel ou zoom em pinturas.
 

@@ -1,0 +1,15 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": false,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 2.25,
+  "steps": 4,
+  "seed": 109,
+  "sourceHash": "69dc2bd25a758fd12161a4cc103d027c70fd39903106172e49eff597163efba3",
+  "prompt": "A continuous two-second closing beat from the supplied spaceship bridge frame. Preserve both complete characters exactly, their faces, clothing, proportions, location, environment and the painted Organic Sci-Fi illustration style. The woman finishes her thought with one small decisive nod, lowers her hand gently and glances toward the planet. The engineer looks toward the same view. Their feet stay planted on the floor; natural breathing and subtle blinks. Keep hands and arms connected to their torsos. Stationary camera and unchanged framing. No zoom, no pan, no walking, no cuts, no generated text, no subtitles, no speech or music.",
+  "startedAt": "2026-10-17T15:23:56.115Z",
+  "status": "downloaded",
+  "bytes": 364507,
+  "videoHash": "9fa68ca44722bed38e6e47343bf5782b5460ff4df5627cf82a15a62a79babc6b",
+  "finishedAt": "2026-10-17T15:24:22.808Z"
+}

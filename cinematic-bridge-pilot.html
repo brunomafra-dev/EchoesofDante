@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101512">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/src/experiments/cinematic-pilot/style.css">
+  <title>Dante — Uma chance de abrigo</title>
+</head>
+<body>
+  <main>
+    <header><a href="test-library.html">← Biblioteca de testes</a><span>ETAPA 3 · PILOTO · 0.1.108</span></header>
+    <h1>Uma chance de abrigo</h1>
+    <p class="intro">Ivo encontrou condições de sobrevivência. Nara prepara o primeiro reconhecimento de Dante.</p>
+    <figure class="screen">
+      <video controls playsinline preload="metadata" tabindex="0" aria-label="Piloto de 12 segundos na ponte da nave" poster="assets/cinematic-pilot/bridge-whole-characters.webp">
+        <source src="assets/cinematic-pilot/bridge-whole-scene-pilot.mp4" type="video/mp4">
+        Seu navegador não reproduz este vídeo. Use o link para baixar o MP4.
+      </video>
+      <figcaption>12 SEGUNDOS · LEGENDAS EM PORTUGUÊS · AMBIENTE ORIGINAL · SEM DUBLAGEM</figcaption>
+    </figure>
+    <nav class="controls" aria-label="Controles do piloto">
+      <button type="button" id="play">Reproduzir</button>
+      <button type="button" id="replay">Rever do início</button>
+      <a id="skip" href="test-library.html">Pular / voltar à biblioteca</a>
+      <a href="assets/cinematic-pilot/bridge-whole-scene-pilot.mp4" download>Baixar MP4</a>
+    </nav>
+    <p id="playback-status" role="status" aria-live="polite">Pronto para assistir. Ative o som do dispositivo.</p>
+    <p class="status">Piloto para avaliação, separado do jogo. Fonte gerada em 832×480 / 16 FPS; exportação 1280×720 / 24 FPS com ampliação e interpolação de movimento. Não é geração nativa em 720p. A abertura completa aguarda seu playtest.</p>
+    <details><summary>Conversa e comparação</summary>
+      <p><strong>Ivo:</strong> Água líquida. Atmosfera compatível.</p>
+      <p><strong>Nara:</strong> Então existe uma chance.</p>
+      <p><strong>Nara:</strong> Prepare o reconhecimento. Ninguém desce sozinho.</p>
+      <p><a href="cinematic-motion-test.html?v=0.1.107">Rever a amostra de cinco segundos aprovada</a> · <a href="cinematic-pilot.html?v=0.1.106">Quadro-base</a> · <a href="assets/cinematic-pilot/bridge-whole-scene-pilot.pt-BR.vtt" download>Legendas VTT</a></p>
+      <p>Observe conexão dos membros, mãos, rostos, apoio dos pés e continuidade entre trechos. O modelo ainda apresenta pequenas variações de rosto e câmera. Nenhum personagem foi montado por partes; não há loop, imagem congelada ou câmera animada pelo código.</p>
+      <p>Teclado: Tab e Enter nos botões; controles nativos do vídeo. Gamepad: direcional escolhe, A confirma, X revê, B volta. Touch: use os botões ou os controles do vídeo.</p>
+    </details>
+    <footer>Sem acesso aos seus personagens ou saves. <a href="./">Jogo principal</a></footer>
+  </main>
+  <script type="module" src="/src/experiments/cinematic-pilot/bridge.ts"></script>
+</body>
+</html>

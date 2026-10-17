@@ -1,0 +1,15 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": false,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 5,
+  "steps": 4,
+  "seed": 108,
+  "sourceHash": "d1118b3993121401f1845841e0c049480063dc110260f92a6cbff940942ee2f3",
+  "prompt": "A single continuous five-second continuation of the exact supplied spaceship bridge frame. The complete characters keep their faces, clothes, body proportions and precise positions. The woman listens to the engineer, turns her head toward him and answers with a small natural open-hand gesture, then looks toward the planet through the window. The engineer watches her and makes a restrained nod. Both remain standing in place with their feet firmly supported, subtle breathing and blinks. Entire bodies remain anatomically connected throughout the motion. Preserve the painted Organic Sci-Fi illustration style, console layout and warm lighting. Completely locked camera, fixed framing, no zoom, no pan, no walking, no cuts. No generated words, subtitles, speech or music.",
+  "startedAt": "2026-10-17T15:20:09.052Z",
+  "status": "downloaded",
+  "bytes": 871281,
+  "videoHash": "195a443d3e343d1e10060ee65310d81b86cb3d1e343775c2f950d3aec5253294",
+  "finishedAt": "2026-10-17T15:20:57.376Z"
+}

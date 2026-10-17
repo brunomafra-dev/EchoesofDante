@@ -1,8 +1,14 @@
 # Echoes of Dante
 
+## Cinemática — piloto completo de 12 segundos · 0.1.108
+
+[Assistir ao novo piloto](https://echosofdante.vercel.app/cinematic-bridge-pilot.html?v=0.1.108). Cena inteira animada com Ivo e Nara, legendas em português e ambiente original da nave, sem dublagem. Fonte Wan2.2 em **832×480/16 FPS**, exportada para **1280×720/24 FPS com interpolação de movimento e ampliação**, sem loops ou quadros parados para completar a duração. Não é geração nativa em 720p. [Origem, QA e limites](docs/cinematic-pilot/revision-04/README.md).
+
+O piloto aguarda playtest próprio. O teste curto abaixo foi aprovado; a abertura completa e as missões continuam dependendo da aprovação desta entrega. Campanha, coop e saves preservados.
+
 ## Cinemática — teste curto de movimento · 0.1.107
 
-[Assistir à amostra aprovada pelo usuário](https://echosofdante.vercel.app/cinematic-motion-test.html?v=0.1.107). Uma geração gratuita no Hugging Face ZeroGPU, a partir da cena inteira: **5,06 segundos, 832×480, 16 FPS, sem áudio**. Direção de movimento aprovada em 17/10/2026. A 0.1.105 com montagem de membros continua rejeitada. O piloto final de 12 segundos/720p/24 FPS, com legendas e áudio, ainda não foi entregue. Campanha e saves preservados. [Origem, aprovação, QA e limitações](docs/cinematic-pilot/revision-03/README.md).
+[Assistir à amostra aprovada pelo usuário](https://echosofdante.vercel.app/cinematic-motion-test.html?v=0.1.107). Uma geração gratuita no Hugging Face ZeroGPU, a partir da cena inteira: **5,06 segundos, 832×480, 16 FPS, sem áudio**. Direção de movimento aprovada em 17/10/2026. A 0.1.105 com montagem de membros continua rejeitada. O piloto de 12 segundos com legendas e áudio está na entrega 0.1.108 acima, com avaliação própria. Campanha e saves preservados. [Origem, aprovação, QA e limitações](docs/cinematic-pilot/revision-03/README.md).
 
 Nomes e chat cooperativo da 0.1.104 foram validados. A etapa 3 continua aberta; abertura completa e missões aguardam um novo piloto com movimento contínuo e aprovação humana.
 

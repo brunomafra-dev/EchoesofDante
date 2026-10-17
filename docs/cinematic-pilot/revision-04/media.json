@@ -1,0 +1,67 @@
+{
+  "sources": [
+    {
+      "path": "public/assets/cinematic-pilot/bridge-hf-motion-test.mp4",
+      "sha256": "81b8f0d17466c19a16c506804fd3b94634ac08cf6fa0d7be5e2fc7a60802cd79",
+      "width": 832,
+      "height": 480,
+      "fps": 16.0,
+      "frames": 81,
+      "bytes": 1041995
+    },
+    {
+      "path": "docs/cinematic-pilot/revision-04/source/take-02.mp4",
+      "sha256": "195a443d3e343d1e10060ee65310d81b86cb3d1e343775c2f950d3aec5253294",
+      "width": 832,
+      "height": 480,
+      "fps": 16.0,
+      "frames": 81,
+      "bytes": 871281
+    },
+    {
+      "path": "docs/cinematic-pilot/revision-04/source/take-03.mp4",
+      "sha256": "9fa68ca44722bed38e6e47343bf5782b5460ff4df5627cf82a15a62a79babc6b",
+      "width": 832,
+      "height": 480,
+      "fps": 16.0,
+      "frames": 37,
+      "bytes": 364507
+    }
+  ],
+  "keptFrameRangesExclusive": [
+    [
+      0,
+      80
+    ],
+    [
+      1,
+      81
+    ],
+    [
+      1,
+      37
+    ]
+  ],
+  "sourceFrames": 196,
+  "sourceSecondsIncludingLookahead": 12.25,
+  "processing": "Whole frames; remove duplicate conditioning frames; motion-compensated 16 to 24 FPS interpolation; Lanczos upscale without stretching; trim to 12 s; burn PT-BR captions; original stereo ambience",
+  "native720p24": false,
+  "loopOrFreezeOrSlowMotion": false,
+  "output": {
+    "width": 1280,
+    "height": 720,
+    "fps": 24.0,
+    "frames": 288,
+    "bytes": 4865134,
+    "sha256": "0bb2031f668dab779e7accc5a50ae76b4e4317237898ccac8dd3bf075b3b3d3d"
+  },
+  "audio": {
+    "sampleRate": 48000,
+    "channels": 2,
+    "seconds": 12,
+    "peak": 0.14728131807120826,
+    "rms": 0.037992971789751,
+    "origin": "Original deterministic NumPy synthesis; no samples, music or voiceover"
+  },
+  "humanApproval": "pending; earlier five-second sample approval does not approve this pilot"
+}
