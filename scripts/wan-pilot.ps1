@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param(
     [switch]$Configure,
+    [switch]$FromClipboard,
     [switch]$Generate,
     [switch]$Resume
 )
@@ -8,12 +9,31 @@ $ErrorActionPreference = 'Stop'
 $scriptFile = Join-Path $PSScriptRoot 'generate-wan-pilot.mjs'
 $credentialDir = Join-Path $env:LOCALAPPDATA 'EchoesOfDante\authoring'
 $credentialFile = Join-Path $credentialDir 'fal-key.dpapi'
+if ($FromClipboard -and -not $Configure) {
+    throw '-FromClipboard deve ser usado junto com -Configure.'
+}
 if ((@($Configure, $Generate, $Resume) | Where-Object { $_ }).Count -gt 1) {
     throw 'Use somente um modo: -Configure, -Generate ou -Resume.'
 }
 if ($Configure) {
     # Windows DPAPI: encrypted for this Windows user; never stored inside the repo.
-    $secret = Read-Host 'Cole a chave fal.ai (entrada oculta; nao envie no chat)' -AsSecureString
+    if ($FromClipboard) {
+        # Prompt AFTER starting the command: copying the command may replace the key.
+        Read-Host 'Agora copie sua chave na fal.ai, volte aqui e aperte Enter (sem colar)' | Out-Null
+        $clipboardText = $null
+        try {
+            $clipboardText = (Get-Clipboard -Raw)
+            if ($null -eq $clipboardText) { throw 'Area de transferencia vazia. Copie a chave na fal.ai e tente novamente.' }
+            $clipboardText = $clipboardText.Trim()
+            if ($clipboardText.Length -lt 20 -or $clipboardText.Length -gt 512 -or $clipboardText -match '\s|[\x00-\x1f\x7f]') {
+                throw 'O conteudo copiado nao parece uma chave. Copie somente a chave, sem comandos ou espacos.'
+            }
+            $secret = ConvertTo-SecureString -String $clipboardText -AsPlainText -Force
+        } finally { $clipboardText = $null }
+    } else {
+        Write-Output 'A entrada e oculta: caracteres colados nao aparecem. Aperte Enter para confirmar.'
+        $secret = Read-Host 'Cole a chave fal.ai (entrada oculta; nao envie no chat)' -AsSecureString
+    }
     if ($secret.Length -eq 0) { throw 'Chave vazia. Nenhuma configuracao foi gravada.' }
     try {
         [System.IO.Directory]::CreateDirectory($credentialDir) | Out-Null

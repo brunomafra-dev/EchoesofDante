@@ -14,6 +14,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\wan-pilot.ps1 -Con
 
 Cole a chave **somente no campo oculto desse comando**, nunca no chat. A configuração cifra a chave com Windows DPAPI para seu usuário, fora do repositório: `%LOCALAPPDATA%\EchoesOfDante\authoring\fal-key.dpapi`. Não inicia geração. A opção de execução vale somente para esse processo; não muda a política permanente do Windows.
 
+**Se Ctrl+V parecer não funcionar:** a entrada segura não mostra os caracteres colados. Aperte Enter para confirmar. Como alternativa, cancele com Ctrl+C e execute:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\wan-pilot.ps1 -Configure -FromClipboard
+```
+
+Quando o comando pedir, **volte à fal.ai e copie a chave novamente** (copiar o próprio comando pode ter substituído a chave). Retorne ao terminal e aperte apenas **Enter**. O configurador lê a área de transferência diretamente, sem imprimir a chave. Não cole a chave no chat ou na linha de comando. Área vazia, comandos e texto com espaços são recusados antes de gravar; uma configuração anterior permanece intacta nesses casos.
+
 Depois basta informar ao Codex **“acesso configurado”**. Ele poderá enviar o teste autorizado e retomar a consulta. Não precisa instalar Wan, baixar pesos, abrir Render ou colocar chave na Vercel. `FAL_KEY` já configurada no processo também é aceita. Não usar `VITE_FAL_KEY`.
 
 ## Teste proposto
@@ -70,7 +78,7 @@ Executado em 16/10/2026, sem credencial ou chamadas reais ao provedor:
 
 - `node --check scripts/generate-wan-pilot.mjs`.
 - `node --test scripts/qa-wan-pilot.mjs`: **15 testes passaram**, HTTP inteiramente simulado. Cobrem preço maior/unidade diferente, imagem pública divergente, credencial ausente, concorrência, timeout ambíguo, retomada, domínio da fila, download sem chave e HTML inválido.
-- Wrapper PowerShell em modo padrão: apenas simulação, sem gravação de credencial ou envio. O caminho de entrada oculta/DPAPI ainda depende da configuração real pelo usuário.
+- Wrapper PowerShell em modo padrão: apenas simulação, sem gravação de credencial ou envio. Em 17/10/2026, `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/qa-wan-config.ps1` validou importação da área de transferência simulada e cifragem/decifragem DPAPI com chave fictícia num diretório temporário. Quatro entradas inválidas preservaram o arquivo anterior; `-FromClipboard` sem `-Configure` foi recusado. O QA não lê o clipboard real, não usa a conta e não gera vídeo. A chave real ainda precisa ser configurada pelo usuário.
 - `npm run typecheck` e `npm run build`: passaram; apenas o aviso já conhecido do bundle Phaser maior que 500 kB.
 - `node scripts/qa-cinematic-reference.mjs`: Chrome local, quatro resoluções, touch e sentinelas de save preservadas; zero erros JS/assets. Evidência temporária em `%TEMP%\dante-wan-preparation-qa`. O teste confirma somente o quadro estático, com `videoGenerated: false`.
 - `git diff --check`.
