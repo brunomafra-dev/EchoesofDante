@@ -1,0 +1,191 @@
+[
+  {
+    "file": "astral-female-basic.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1540893,
+    "sha256": "02ce428ca887818f3d5e0df235c107ec67f92e74d04634d5f51c196f6593b8ec"
+  },
+  {
+    "file": "astral-female-none.png",
+    "width": 1254,
+    "height": 2508,
+    "bytes": 2387841,
+    "sha256": "0eb74f480147ef21f4d439ce33aee997eab83d3137a10cda5bfdd1212991210c"
+  },
+  {
+    "file": "astral-female-reinforced.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1808365,
+    "sha256": "93ef2c5021b1662571e707e6d86ec3ae4d9e20d10ff7bc90b7720fe25d3c9ee7"
+  },
+  {
+    "file": "astral-male-basic.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1695495,
+    "sha256": "87d5a54291ac4bf654904be885cbc34407469417692486ca79d87ee04bb69da2"
+  },
+  {
+    "file": "astral-male-none.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1502548,
+    "sha256": "e367bd2eb30c8c7e78b9fa08b45961154d446ee2b9e4c687248ee7a9a4c8d304"
+  },
+  {
+    "file": "astral-male-reinforced.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1947376,
+    "sha256": "3408f232b1301f99b692b7315e7f1853920ae71fc95321eede390ac020891b1f"
+  },
+  {
+    "file": "hunter-female-basic.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1569117,
+    "sha256": "e16e1ca0d0fba16f6baf6bf9e98953bd66d9580a06406c868ac31aeb7879b609"
+  },
+  {
+    "file": "hunter-female-none.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1554068,
+    "sha256": "2813e4e2eaa953a9997b6c2fd1a793b7e5cc3767fd57a7f7d329aa5adcd18fd2"
+  },
+  {
+    "file": "hunter-female-reinforced.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1675985,
+    "sha256": "ed1617b40c9a0912035f83f16327eaef8acd8a632ab432656deff13e4dceafa1"
+  },
+  {
+    "file": "hunter-female-sw-correction.png",
+    "width": 1448,
+    "height": 1086,
+    "bytes": 1598957,
+    "sha256": "63badb95dd71d339b89247b1f784508083511722df35b29564114027a3c9e7d7"
+  },
+  {
+    "file": "hunter-male-basic.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1970217,
+    "sha256": "89776bab70e282cc7f5cfd0a001177e1672c9f480f942daa0846cb9375c28495"
+  },
+  {
+    "file": "hunter-male-none.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1598668,
+    "sha256": "38347e3c8db2a234845ce060ab2a6761bf0ed0afee133eafe602aa02f50affbc"
+  },
+  {
+    "file": "hunter-male-reinforced.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 2056701,
+    "sha256": "78c71534fab0026832b6beb0d532bfeee1dafec7a9cc5c1f7eb043f47c7fe230"
+  },
+  {
+    "file": "warrior-female-basic.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1948531,
+    "sha256": "26486de794e6bd9c93658210be99a5dedebb46d91d4e8bca9a666dc0707cb0d5"
+  },
+  {
+    "file": "warrior-female-none.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1540456,
+    "sha256": "3e2a3906fc128f906310195183183a0cf7cc2473df0f2a4f00ab636bf0f096e6"
+  },
+  {
+    "file": "warrior-female-reinforced.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 2054946,
+    "sha256": "4a9db4bdd3035396e33091832616fb719d9b437361393727ceb9e8fc3d723bba"
+  },
+  {
+    "file": "warrior-female-sw-correction.png",
+    "width": 1448,
+    "height": 1086,
+    "bytes": 1762957,
+    "sha256": "4f9269b2ab6a9c10f68168cff5821fafab35e82716256e4dd5de6972cbfd2577"
+  },
+  {
+    "file": "warrior-male-basic.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1900043,
+    "sha256": "e07148b5b1db6a8a7fcced5079d54550272a7fcb0a3420a598a1bc76c1322ca7"
+  },
+  {
+    "file": "warrior-male-none.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1524933,
+    "sha256": "fbf4f2981cf2c5eaf581acacccd3d00d96c334cd900723cb8fe7b685d8faa1a4"
+  },
+  {
+    "file": "warrior-male-reinforced.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 2130208,
+    "sha256": "756fbb9ef15eea0092c878bb3dd1f0079cd1b32d7c1e44d8065912a9e55b89aa"
+  },
+  {
+    "file": "warrior-male-sw-correction.png",
+    "width": 1448,
+    "height": 1086,
+    "bytes": 1669384,
+    "sha256": "3c00d25fde289ff869ae46edd478c88f370b211f34b66292aba2ed54474ac055"
+  },
+  {
+    "file": "xenobinder-female-basic.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 2104427,
+    "sha256": "fbb84031b777a5d3ec739fb8671af2330bad90032ea9e56dee634b44eca92ccb"
+  },
+  {
+    "file": "xenobinder-female-none.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1551522,
+    "sha256": "94f5093dd5c12d5de7d4dbeb1ee615983d0ea7827d346c6a615bff8fcc420041"
+  },
+  {
+    "file": "xenobinder-female-reinforced.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 2151054,
+    "sha256": "f31a34ab512c4ded6ceb491e56efcfec5ab164f95883ecd4dba8d4b3f1d4fb77"
+  },
+  {
+    "file": "xenobinder-male-basic.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1875041,
+    "sha256": "0348a7f5af4ee9851dc5e4ce09e5b5d0b847631f9fac8b9fcc361e3e9c82c86f"
+  },
+  {
+    "file": "xenobinder-male-none.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1549732,
+    "sha256": "836536bc4ba5e3c3cd703e30ed467aa371c4b9c819a58db1bbba071352542317"
+  },
+  {
+    "file": "xenobinder-male-reinforced.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 2127232,
+    "sha256": "84f2a94100932c68458e34c9a074c6219524538262195cd0e9c459c6214366a3"
+  }
+]

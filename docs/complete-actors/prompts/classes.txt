@@ -1,0 +1,13 @@
+Shared layout: layout.txt. Shared equipment edits: equipment.txt. Tool: image_gen.imagegen, transparent_background=true. All references were inspected before generation.
+
+Warrior: athletic adult human male/female, short brown hair, charcoal practical shirt, olive-grey trousers, sturdy boots. Simple short metal sword held naturally; basic cyan energy saber; advanced engineered cyan saber. Complete connected shoulders, elbows, wrists and hands in every pose.
+
+Hunter: athletic human explorer male/female, short hair/ponytail, charcoal-blue fieldshirt, tan harness, grey trousers, grounded human boots. Simple compact pistol initially, compact pulse carbine and advanced rifle for protected outfits. Both hands painted holding the weapon; no separate hand overlays, robot legs or huge weapons. Action points along the row direction.
+
+Astral: blue technical uniform, masculine short dark hair/female practical bun. One small engineered left forearm gauntlet. Original female plain-clothes poses are the approved two-sheet prototype. Armor edits preserve whole-human pose.
+
+Beast Tamer: olive fieldjacket, dark trousers, practical boots, amber utility hardware, small green engineered wristconductor. Original wardrobe identity, complete arms reconstructed in painting. Basic/reinforced ivory-olive carapace integrated into human brackets. Pet omitted from sheets; existing companion remains separate.
+
+Corrections: use full 4-column x 3-row sheet, twelve complete SW figures, one equipment tier per row; idle, leftstep, rightstep, action columns. Full heads, hands, weapons and both boots within cells. Repaint the WHOLE person, never individual limbs. Resulting right-facing corrections are mirrored as whole figures during preparation; this is explicitly documented rather than claiming preserved handedness.
+
+Rejected generations included omitted eighth rows, cropped feet and missing swords. These prompted complete-pose corrective sheets. The final source inventory with actual dimensions/hashes is sources.json; the runtime extraction inventory is assets.json. Requested dimensions are not a claim about native output resolution.

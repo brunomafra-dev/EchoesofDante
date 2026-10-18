@@ -1,3 +1,4 @@
+import { completeMuzzle } from '../visual/CompleteActorFrames';
 import Phaser from 'phaser';
 import {CoopNames} from '../visual/CoopNames';
 import { tuneEnemy,regionalThreat,deathCreditLoss } from '../config/threat';
@@ -5,7 +6,7 @@ import { DIFFICULTIES, difficultyId, partyThreat } from '../config/difficulty';
 import { PARTY_ENCOUNTERS } from '../config/partyEncounters';
 import {BASE} from '../config/base';
 import { XenobinderCombat } from '../combat/XenobinderCombat';
-import { XenobinderArt,preloadXenobinderArt } from '../visual/XenobinderArt';
+import { CompleteActorArt,preloadCompleteActors } from '../visual/CompleteActorArt';
 import { XenobinderPanel } from '../ui/XenobinderPanel';
 import { XENOBINDER } from '../config/classes';
 import { VOLCANIC,VOLCANIC_ENCOUNTERS,VOLCANIC_CREATURES,type VolcanicKind } from '../config/volcanic';
@@ -23,18 +24,15 @@ import {ResourceDrops,type ResourceDrop} from '../systems/ResourceDrops';
 import { coopSession, type PartyWorld } from '../network/CoopSession';
 import { PartyExpedition, type PartyBridge } from '../network/PartyExpedition';
 import { characterSex, type CharacterSex } from '../config/appearance';
-import { preloadModularArt } from '../visual/ModularTorso';
 import { characterProfiles } from '../systems/CharacterProfiles';
 import { HUNTER, type PlayableClass } from '../config/classes';
 import { HunterCombat } from '../combat/HunterCombat';
 import { AstralCombat } from '../combat/AstralCombat';
-import { AstralArt,preloadAstralArt } from '../visual/AstralArt';
 import { AstralPanel } from '../ui/AstralPanel';
 import { ASTRAL, ASTRAL_ELEMENTS, ELEMENT_COLORS } from '../config/classes';
 import type { AstralElement } from '../config/classes';
 import { damageText, damageTextColor, elementalMultiplier } from '../config/elementalCombat';
 import type { ImpactPose } from '../network/CoopSession';
-import { HunterArt, preloadHunterArt } from '../visual/HunterArt';
 import { SaberAttack } from '../combat/Attack';
 import { applyDamage } from '../combat/Damage';
 import { KineticCharge } from '../combat/KineticCharge';
@@ -92,7 +90,6 @@ import { WorldNavigator } from '../ui/WorldNavigator';
 import { distance, normalized, type Vec2 } from '../utils/math';
 import { ReferenceArea } from '../experiments/quality-reference/ReferenceArea';
 import { ReferenceImpacts } from '../experiments/quality-reference/ReferenceImpacts';
-import { preloadWarriorArt } from '../visual/WarriorArt';
 import { Equipment } from '../systems/Equipment';
 import { preloadItemIcons,EquipmentDrops } from '../systems/EquipmentDrops';
 import { EquipmentDialog } from '../ui/EquipmentDialog';
@@ -107,9 +104,9 @@ export class GameScene extends Phaser.Scene {
   private deathLoss=0;
   private classId: PlayableClass = 'warrior';
   private hunter?: HunterCombat;
-  private hunterArt?: HunterArt;
+  private hunterArt?: CompleteActorArt;
   private astral?:AstralCombat;
-  private astralArt?:AstralArt;
+  private astralArt?:CompleteActorArt;
   private astralPanel?:AstralPanel;
   private readonly equipment = new Equipment();
   private economy:EconomySnapshot=validEconomy(undefined,true);
@@ -128,7 +125,7 @@ export class GameScene extends Phaser.Scene {
   private lootKills=0;
   private inventoryUnpaused=false;
   private get characterMaxHp(): number { return (this.classId === 'hunter' ? Math.round(this.progression.maxHp * HUNTER.hpRatio) : this.classId==='xenobinder'?Math.round(this.progression.maxHp*XENOBINDER.hpRatio):this.classId==='astral'?Math.round(this.progression.maxHp*ASTRAL.hpRatio):this.progression.maxHp)+equipmentStats(this.equipment.snapshot().slots).hp; }
-  private xeno?:XenobinderCombat;private xenoArt?:XenobinderArt;private xenoPanel?:XenobinderPanel;
+  private xeno?:XenobinderCombat;private xenoArt?:CompleteActorArt;private xenoPanel?:XenobinderPanel;
   private party?: PartyExpedition;
   private coopWorldXp?: number;
   private coopLayout = '';
@@ -268,8 +265,8 @@ export class GameScene extends Phaser.Scene {
   preload(): void {
     preloadItemIcons(this);
     for(const key of ['landing-shuttle','field-shelter','base-medic-civilian','base-smith-civilian','base-expedition-civilian','base-refugee-a','base-refugee-b','resource-1','resource-2','resource-3'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/base/${key}.png`);
-    preloadHunterArt(this);preloadAstralArt(this);preloadXenobinderArt(this);
-    preloadModularArt(this);
+    preloadCompleteActors(this);
+    for(const key of ['warrior-starter-weapon','warrior-pilot-weapon','warrior-saber-painted'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/visual/characters/${key}.png`);
     for(const key of ['cinder-ground','obsidian-ground'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/visual/environment/${key}.webp`);
     for(const s of Object.values(VOLCANIC_CREATURES))if(!this.textures.exists(s.texture))this.load.spritesheet(s.texture,`${import.meta.env.BASE_URL}assets/visual/characters/${s.texture}.png`,{frameWidth:256,frameHeight:256});
     if(!this.textures.exists('caldera-ground'))this.load.image('caldera-ground',`${import.meta.env.BASE_URL}assets/visual/environment/caldera-ground.webp`);
@@ -314,7 +311,6 @@ export class GameScene extends Phaser.Scene {
       `${import.meta.env.BASE_URL}assets/visual/environment/sirocco-east-ground.webp`);
     if (!this.textures.exists('dunes-ground')) this.load.image('dunes-ground',
       `${import.meta.env.BASE_URL}assets/visual/environment/dunes-ground.webp`);
-    if (this.qualityReference !== 'baseline' && !this.originalWarrior) preloadWarriorArt(this);
     if (this.qualityReference === 'reference' && !this.textures.exists('reference-basin-floor')) {
       this.load.image('reference-basin-floor', `${import.meta.env.BASE_URL}assets/experiments/quality-reference/basin-floor.webp`);
     }
@@ -458,11 +454,11 @@ export class GameScene extends Phaser.Scene {
     this.player = new Player(this, entry.x, entry.y, this.characterMaxHp, this.qualityReference === 'reference',
       this.qualityReference !== 'baseline' && !this.originalWarrior, id => this.progression.upgradeRank(id), this.classId, characterSex(this.classId,this.glacierPlaytest?this.glacierPlaytest.sex:this.qualityReference?undefined:characterProfiles.active.sex));
     if (this.classId === 'hunter') {
-      this.hunter = new HunterCombat(this, id => this.progression.upgradeRank(id));
-      this.hunterArt = new HunterArt(this, this.player.view, entry.x, entry.y,this.player.sex);
+      this.hunter = new HunterCombat(this, id => this.progression.upgradeRank(id),aim=>completeMuzzle('hunter',aim));
+      this.hunterArt = new CompleteActorArt(this, this.player.view, entry.x, entry.y,this.player.sex,'hunter');
     }
-    if(this.classId==='astral'){this.astral=new AstralCombat(this,id=>this.progression.upgradeRank(id));this.astralArt=new AstralArt(this,this.player.view,entry.x,entry.y,this.player.sex);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.astral?.destroy());}
-    if(this.classId==='xenobinder'){this.xeno=new XenobinderCombat(this,id=>this.progression.upgradeRank(id),entry);this.xenoArt=new XenobinderArt(this,this.player.view,entry.x,entry.y,this.player.sex);const combat=this.xeno;this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>combat.destroy());}
+    if(this.classId==='astral'){this.astral=new AstralCombat(this,id=>this.progression.upgradeRank(id));this.astralArt=new CompleteActorArt(this,this.player.view,entry.x,entry.y,this.player.sex,'astral');this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.astral?.destroy());}
+    if(this.classId==='xenobinder'){this.xeno=new XenobinderCombat(this,id=>this.progression.upgradeRank(id),entry);this.xenoArt=new CompleteActorArt(this,this.player.view,entry.x,entry.y,this.player.sex,'xenobinder');const combat=this.xeno;this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>combat.destroy());}
     this.updateEquipmentAppearance();
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
     this.transferHp = undefined;

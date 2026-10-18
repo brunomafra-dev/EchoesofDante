@@ -17,8 +17,8 @@ export class HunterCombat {
   private readonly shots: Shot[];
   readonly beamView: HunterBeamView;
   private beam?: HunterBeamPose & { damage: number; pending: boolean; remaining: number };
-  constructor(scene: Phaser.Scene, private rank: (id: 'saberArc' | 'saberReach' | 'chargeWidth') => number) {
-    this.beamView = new HunterBeamView(scene);
+  constructor(scene: Phaser.Scene, private rank: (id: 'saberArc' | 'saberReach' | 'chargeWidth') => number, private opticalMuzzle?: (angle:number)=>Vec2) {
+    this.beamView = new HunterBeamView(scene,opticalMuzzle);
     this.shots = Array.from({ length: 8 }, () => ({ view: scene.add.rectangle(0, 0, 24, 4, 0x5fe6d8, .9).setVisible(false),
       active: false, x: 0, y: 0, angle: 0, travelled: 0, range: 0, speed: 0, damage: 0, precision: false, radius: 4 }));
   }
@@ -96,7 +96,7 @@ export class HunterCombat {
       if (first<=travel || s.travelled>=s.range || bounds && (s.x<bounds.left||s.x>bounds.right||s.y<bounds.top||s.y>bounds.bottom)) {
         s.active=false;s.view.setVisible(false);
       } else {
-        const rifle = hunterRiflePose(s.angle);
+        const rifle = this.rifle(s.angle);
         s.view.setVisible(s.travelled >= HUNTER_MUZZLE_DISTANCE)
           .setPosition(s.x + rifle.x,s.y + rifle.y).setRotation(s.angle).setDepth(s.y+5);
       }
@@ -110,8 +110,12 @@ export class HunterCombat {
   destroy(): void { this.beamView.destroy();for (const shot of this.shots) shot.view.destroy(); }
   projectilePoses(): {x:number;y:number;rotation:number}[] {
     return this.shots.filter(s=>s.active && s.travelled >= HUNTER_MUZZLE_DISTANCE).map(s=>{
-      const rifle = hunterRiflePose(s.angle);
+      const rifle = this.rifle(s.angle);
       return {x:s.x+rifle.x,y:s.y+rifle.y,rotation:s.angle};
     });
+  }
+  private rifle(angle:number):Vec2 {
+    const muzzle=this.opticalMuzzle?.(angle);
+    return muzzle?{x:muzzle.x-Math.cos(angle)*HUNTER_MUZZLE_DISTANCE,y:muzzle.y-Math.sin(angle)*HUNTER_MUZZLE_DISTANCE}:hunterRiflePose(angle);
   }
 }

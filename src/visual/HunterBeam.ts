@@ -10,7 +10,7 @@ export class HunterBeamView {
   private readonly light: Phaser.GameObjects.Rectangle;
   private readonly core: Phaser.GameObjects.Rectangle;
   private readonly muzzle: Phaser.GameObjects.Ellipse;
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Phaser.Scene,private opticalMuzzle?:(angle:number)=>{x:number;y:number}) {
     this.halo = scene.add.rectangle(0, 0, 1, 1, 0x5fe6d8, .16).setOrigin(0, .5);
     this.light = scene.add.rectangle(0, 0, 1, 1, 0x5fe6d8, .65).setOrigin(0, .5);
     this.core = scene.add.rectangle(0, 0, 1, 1, 0xeefff5, .95).setOrigin(0, .5);
@@ -22,7 +22,8 @@ export class HunterBeamView {
     if (!pose) return;
     const width = pose.halfWidth * 2;
     const rifle = hunterRiflePose(pose.angle);
-    const x = pose.x + rifle.muzzleX, y = pose.y + rifle.muzzleY;
+    const muzzle=this.opticalMuzzle?.(pose.angle);
+    const x = pose.x + (muzzle?.x??rifle.muzzleX), y = pose.y + (muzzle?.y??rifle.muzzleY);
     if (pose.length <= HUNTER_MUZZLE_DISTANCE) {
       this.view.setVisible(false); return;
     }

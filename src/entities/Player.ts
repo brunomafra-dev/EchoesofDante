@@ -16,6 +16,8 @@ import { characterSex, weaponStyle, type WeaponStyle, type EquipmentLook, type C
 import type { EquipmentSnapshot } from '../config/equipment';
 import { ModularTorso } from '../visual/ModularTorso';
 import { ASTRAL,HUNTER,XENOBINDER, type PlayableClass } from '../config/classes';
+import { CompleteActorArt } from '../visual/CompleteActorArt';
+import { completeKey,completeMuzzle } from '../visual/CompleteActorFrames';
 
 export type PlayerAnimationState = 'IDLE' | 'WALK' | 'ATTACK_WINDUP' | 'ATTACK_SWING' | 'ATTACK_RECOVERY' | 'DASH' | 'CHARGE' | 'CHARGE_RELEASE' | 'HURT' | 'DEAD';
 
@@ -37,6 +39,7 @@ export class Player {
   private bodyRig: Phaser.GameObjects.Container;
   private torso: Phaser.GameObjects.Image;
   private paintedArt?: WarriorArt;
+  private completeArt?: CompleteActorArt;
   private paintedArms?: WarriorArms;
   private modularTorso?: ModularTorso;
   private supportArm: Phaser.GameObjects.Image;
@@ -85,12 +88,14 @@ export class Player {
     this.hurtOverlay.setAlpha(0);
     this.weapon = new EnergySaber(scene, paintedPresentation);
     const glove = scene.add.circle(0, 0, 5, 0x203d47).setStrokeStyle(1.5, 0x9bb8b3);
-    this.supportGlove = paintedPresentation ? scene.add.image(0, 0, 'warrior-arm-kit', 2) :
+    this.supportGlove = paintedPresentation && scene.textures.exists('warrior-arm-kit') ? scene.add.image(0, 0, 'warrior-arm-kit', 2) :
       scene.add.circle(0, 0, 4.5, 0x203d47).setStrokeStyle(1.5, 0xd4dbce);
     this.handAnchor = scene.add.container(0, 0, [this.weapon.view, glove]);
     this.bodyRig = scene.add.container(0, 0, [this.torso, this.supportUpperArm, this.supportArm, this.saberArm, this.handAnchor, this.supportGlove, this.hurtOverlay]);
     this.view = scene.add.container(x, y, [this.legsRig, this.bodyRig]).setDepth(y);
-    if (paintedPresentation && classId==='warrior') {
+    if(paintedPresentation&&classId==='warrior'&&scene.textures.exists(completeKey(classId,sex,'none'))){
+      this.completeArt=new CompleteActorArt(scene,this.view,x,y,sex,classId);
+    }else if (paintedPresentation && classId==='warrior') {
       this.paintedArt = new WarriorArt(this.torso,sex);
       glove.setVisible(false);
       this.modularTorso=new ModularTorso(scene,this.bodyRig,'warrior',sex,this.torso);
@@ -103,14 +108,15 @@ export class Player {
   }
 
   setEquipmentAppearance(slots:EquipmentSnapshot['slots']):void {
+    this.completeArt?.setEquipment(slots);
     if(this.classId==='warrior')this.modularTorso?.setLook(equipmentAppearance(slots));
     this.modularTorso?.setAccessory(!!slots.accessory);
     if(this.modularTorso)this.paintedArms?.setProtection(this.modularTorso.look);
     this.weapon.setStyle(weaponStyle(slots.weapon));
   }
 
-  setWeaponLook(style:WeaponStyle):void {this.weapon.setStyle(style);}
-  setEquipmentLook(look:EquipmentLook):void {this.modularTorso?.setLook(look);this.paintedArms?.setProtection(look);}
+  setWeaponLook(style:WeaponStyle):void {this.completeArt?.setWeaponLook(style);this.weapon.setStyle(style);}
+  setEquipmentLook(look:EquipmentLook):void {this.completeArt?.setEquipmentLook(look);this.modularTorso?.setLook(look);this.paintedArms?.setProtection(look);}
 
   private makeLeg(x: number): Phaser.GameObjects.Image {
     return this.scene.add.image(x, 0, 'warrior-boot').setDisplaySize(40, 100);
@@ -120,6 +126,12 @@ export class Player {
   setAim(aim: number, bodyLean = 0, handReach = 0, sweep = 0): void {
     this.rotation = aim;
     this.bodyLean = bodyLean;
+    if(this.view.getData('completeActor')){
+      this.view.setRotation(0);this.bodyLean=0;
+      const p=completeMuzzle(this.classId,aim);
+      this.gripWorld.x=this.position.x+p.x;this.gripWorld.y=this.position.y+p.y;
+      return;
+    }
     this.view.setRotation(aim);
     this.legsRig.setRotation(-aim);
     this.bodyRig.setRotation(-aim + bodyLean);
@@ -244,6 +256,12 @@ export class Player {
 
   renderWeapon(aim: number, pose: SaberPose, heavy: KineticPose): void {
     if (this.classId !== 'warrior') { this.weapon.clearEffects(); return; }
+    if(this.completeArt){
+      this.completeArt.update(this.position.x,this.position.y,aim,pose.phase!=='READY',this.isDashing,heavy);
+      this.weapon.render(this.position,this.gripWorld,aim,0,pose,heavy,this.isDashing);
+      this.weapon.view.setVisible(false);
+      return;
+    }
     this.weapon.render(this.position, this.gripWorld, aim, this.bodyLean, pose, heavy, this.isDashing);
     const offset = this.weapon.supportGripX * this.weapon.view.scaleX;
     const gripX = this.handAnchor.x + Math.cos(this.weapon.view.rotation) * offset;
@@ -270,6 +288,7 @@ export class Player {
   }
 
   flashHurt(): void {
+    (this.view.getData('completeActor') as CompleteActorArt|undefined)?.flashHurt();
     this.hitFlashUntil = this.scene.time.now + 140;
     this.hurtOverlay.setAlpha(0.8);
   }

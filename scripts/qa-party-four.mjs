@@ -11,7 +11,7 @@ const ready=p=>p.waitForFunction(()=>window.__danteGame?.scene.getScene('Game')?
 const check=t=>{report.checks.push(t);console.log(t)};
 const view=async p=>{for(const page of pages)await scene(page,'s.cameras.main.visible=arg',page===p);};
 const key=async(p,k,ms=120)=>{await view(p);await p.bringToFront();await p.keyboard.down(k);await p.waitForTimeout(Math.max(ms,500));await p.keyboard.up(k);await p.waitForTimeout(160)};
-async function upgrades(p){for(let i=0;i<30;i++){if(!await scene(p,'return s.progression.upgradePointsAvailable>0&&!s.bossActive()'))break;const b=p.locator('.ability-upgrade-dialog[open] [data-upgrade]:not(:disabled)');await b.first().waitFor({state:'visible',timeout:5000});await b.first().click();await p.waitForTimeout(100)}}
+async function upgrades(p){for(let i=0;i<30;i++){if(!await scene(p,'return s.progression.upgradePointsAvailable>0&&!s.bossActive()&&!s.player.isDead'))break;await scene(p,'s.showAvailableUpgrade()');const b=p.locator('.ability-upgrade-dialog[open] [data-upgrade]:not(:disabled)');await b.first().waitFor({state:'visible',timeout:15000});await b.first().click();await p.waitForTimeout(100)}}
 async function waitParty(){await pages[0].waitForFunction(()=>window.__danteGame.scene.getScene('Game').party?.actors.size===3);for(const p of pages.slice(1))await p.waitForFunction(()=>Object.keys(window.__danteCoop.world?.players??{}).length===4&&window.__danteGame.scene.getScene('Game').party?.playerMirrors.size===3);await view(pages[0]);}
 async function travel(area){await pages[0].bringToFront();await view(pages[0]);assert.ok(await scene(pages[0],'return s.transitionArea(arg)',area));for(const p of pages){await p.waitForFunction(area=>window.__danteGame.scene.getScene('Game').area===area&&window.__danteGame.scene.isActive('Game'),area,{timeout:60000});await ready(p);await upgrades(p);}await waitParty();await pages[0].waitForTimeout(350);await scene(pages[0],'for(const p of [s.player,...s.party.players])p.invulnerableUntil=Infinity');console.log('Travel',area);}
 try{
@@ -40,6 +40,7 @@ try{
   await key(p,'Space');await p.mouse.move(1150,360);await p.mouse.click(1150,360);await p.waitForTimeout(450);
   if(i)await scene(h,'const a=s.party.actors.get(arg);a.charge.lastReleasedAt=-Infinity;if(a.astral)a.astral.energy=100;if(a.xeno)a.xeno.bond=100',id);
   else await scene(h,'s.charge.lastReleasedAt=-Infinity');
+  await h.waitForFunction(id=>{const s=window.__danteGame.scene.getScene('Game'),a=id==='host'?s:s.party.actors.get(id);return !a.player.isDashing&&a.attack.pose(s.time.now,a.player.rotation).phase==='READY'},id,{timeout:15000});
   await view(p);await p.bringToFront();await p.keyboard.down('q');await h.waitForFunction(id=>{const s=window.__danteGame.scene.getScene('Game');return (id==='host'?s.charge:s.party.actors.get(id).charge).phase==='CHARGING'},id,{timeout:15000,polling:100});await p.waitForTimeout(300);
   assert.equal(await scene(h,'return (arg==="host"?s.charge:s.party.actors.get(arg).charge).phase',id),'CHARGING');
   assert.equal(await scene(h,'const p=arg==="host"?s.player:s.party.actors.get(arg).player;return Math.hypot(p.velocity.x,p.velocity.y)',id),0);

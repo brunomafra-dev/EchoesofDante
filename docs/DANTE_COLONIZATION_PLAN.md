@@ -101,3 +101,8 @@ Ampliar save/sincronização para missões/assentamento. Campanhas antigas prese
 ## Limites permanentes
 
 Não substituir combate, controles, câmera ou direção D. Não revelar origem do Signal, da assinatura humana ancestral ou de Dante. Não antecipar fases posteriores sem o gate humano. Não criar geração de arte em runtime, redraw de cenário estático ou infraestrutura genérica desnecessária.
+
+
+### Manutenção autorizada: personagens inteiros — 17/10/2026
+
+Protótipo feminino aprovado pelo usuário; autorizada aplicação nas quatro classes, menu e cooperativo. [Arte e verificações](complete-actors/README.md). Isso não inicia missões nem encerra a abertura pendente.

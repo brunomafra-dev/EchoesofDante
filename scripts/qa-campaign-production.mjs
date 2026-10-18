@@ -36,6 +36,7 @@ try{
    await p.keyboard.down('d');try{await observed(()=>Math.hypot(p.wire.world[id].x-before.x,p.wire.world[id].y-before.y)>3,'movement');}finally{await p.keyboard.up('d');}
    const after=p.wire.world[id];assert.ok(Math.hypot(after.x-before.x,after.y-before.y)>3,JSON.stringify({id,before,after}));
    await p.mouse.move(900,400);await p.mouse.down();try{await observed(()=>ownHas(s=>s.firing),'attack');}finally{await p.mouse.up();}await p.waitForTimeout(350);
+   await observed(()=>!p.wire.world[id].dash&&p.wire.world[id].strike?.phase==='READY','recovery before Dash');
    await p.keyboard.down('Space');try{await observed(()=>ownHas(s=>s.dash||s.dashReady<.95),'dash');}finally{await p.keyboard.up('Space');}
    await observed(()=>!p.wire.world[id].dash&&p.wire.world[id].strike?.phase==='READY','recovery before Q');
    await p.keyboard.down('q');try{await observed(()=>ownHas(s=>s.phase==='CHARGING'),'Q hold');await p.waitForTimeout(450);}finally{await p.keyboard.up('q');}

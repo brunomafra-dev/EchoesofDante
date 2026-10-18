@@ -1,15 +1,14 @@
+import { completeMuzzle } from '../visual/CompleteActorFrames';
 import Phaser from 'phaser';
 import { Player } from '../entities/Player';
 import { SaberAttack, type SaberPose } from '../combat/Attack';
 import { KineticCharge } from '../combat/KineticCharge';
 import { XenobinderCombat,type LinkedAlly } from '../combat/XenobinderCombat';
-import { XenobinderArt } from '../visual/XenobinderArt';
+import { CompleteActorArt } from '../visual/CompleteActorArt';
 import { XENOBINDER } from '../config/classes';
 import { AstralCombat } from '../combat/AstralCombat';
-import { AstralArt } from '../visual/AstralArt';
 import { ASTRAL, ELEMENT_COLORS, type AstralElement } from '../config/classes';
 import { HunterCombat } from '../combat/HunterCombat';
-import { HunterArt } from '../visual/HunterArt';
 import type { Enemy } from '../entities/Enemy';
 import type { MovementBounds, Obstacle } from '../systems/Movement';
 import type { Vec2 } from '../utils/math';
@@ -25,10 +24,10 @@ export class PartyActor {
  readonly attack: SaberAttack;
  readonly charge: KineticCharge;
  readonly hunter?: HunterCombat;
- readonly xeno?:XenobinderCombat;private xenoArt?:XenobinderArt;
+ readonly xeno?:XenobinderCombat;private xenoArt?:CompleteActorArt;
  readonly astral?:AstralCombat;
- private astralArt?:AstralArt;
- private readonly art?: HunterArt;
+ private astralArt?:CompleteActorArt;
+ private readonly art?: CompleteActorArt;
  private readonly wave: Phaser.GameObjects.Ellipse;
   private pose: SaberPose = { phase:'READY',relativeAngle:-.42,worldAngle:0,swingProgress:0 };
   private now = 0;
@@ -41,9 +40,9 @@ export class PartyActor {
   const hp=Math.round(this.progression.maxHp*(profile.classId==='hunter'?HUNTER.hpRatio:profile.classId==='xenobinder'?XENOBINDER.hpRatio:profile.classId==='astral'?ASTRAL.hpRatio:1))+equipmentStats(profile.equipment??{}).hp;
   this.attack=new SaberAttack(rank);this.charge=new KineticCharge(rank,profile.classId==='xenobinder'?XENOBINDER.commandCooldown:undefined);
   this.player=new Player(scene,position.x,position.y,profile.build?hp:maxHp,false,true,rank,profile.classId,profile.sex);
-  if(profile.classId==='hunter'){this.hunter=new HunterCombat(scene,rank);this.art=new HunterArt(scene,this.player.view,position.x,position.y,profile.sex);}
-  if(profile.classId==='xenobinder'){this.xeno=new XenobinderCombat(scene,rank,position);this.xenoArt=new XenobinderArt(scene,this.player.view,position.x,position.y,this.player.sex);}
-  if(profile.classId==='astral'){this.astral=new AstralCombat(scene,rank);this.astralArt=new AstralArt(scene,this.player.view,position.x,position.y,this.player.sex);}
+  if(profile.classId==='hunter'){this.hunter=new HunterCombat(scene,rank,aim=>completeMuzzle('hunter',aim));this.art=new CompleteActorArt(scene,this.player.view,position.x,position.y,this.player.sex,'hunter');}
+  if(profile.classId==='xenobinder'){this.xeno=new XenobinderCombat(scene,rank,position);this.xenoArt=new CompleteActorArt(scene,this.player.view,position.x,position.y,this.player.sex,'xenobinder');}
+  if(profile.classId==='astral'){this.astral=new AstralCombat(scene,rank);this.astralArt=new CompleteActorArt(scene,this.player.view,position.x,position.y,this.player.sex,'astral');}
   this.wave=scene.add.ellipse(0,0,10,80,0x5fe6d8,.6).setVisible(false).setDepth(14999);
  }
  update(now:number,dt:number,input:PartyInput,targets:readonly Enemy[],obstacles:readonly Obstacle[],bounds:MovementBounds|undefined,

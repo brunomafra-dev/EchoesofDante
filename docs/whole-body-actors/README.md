@@ -50,3 +50,8 @@ Equipamentos mistos e diferentes armas exigirão uma solução de produção pr�
 ## Quadro da cinemática preservado
 
 A geração da equipe, interrompida antes de ser incorporada, foi salva em `docs/cinematic-opening/source/pioneer-team.png`, com [prompt](../cinematic-opening/prompts/pioneer-team-image.txt) e [metadados](../cinematic-opening/source/pioneer-team.json). Há uma cópia WebP para consulta na biblioteca. É **imagem estática**, não uma nova cena de vídeo, e não altera os 36 segundos publicados. Animação continua pendente de cota HF; nenhuma conta adicional ou compra foi utilizada.
+
+
+### Validação humana — 17/10/2026
+
+O usuário aprovou o teste de personagem inteiro e autorizou sua aplicação às quatro classes e duas apresentações. A restrição anterior de não expandir foi superada por essa autorização. Ver [corpos completos](../complete-actors/README.md). O comparativo original continua preservado como registro.
