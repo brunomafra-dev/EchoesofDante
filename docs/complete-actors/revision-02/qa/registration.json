@@ -1,0 +1,116 @@
+{
+  "passed": true,
+  "atlases": [
+    {
+      "file": "warrior-male-none.png",
+      "maxHeadAxisDriftPixels": 1.496,
+      "frontSupportCentroidX": [
+        107.955,
+        87.859
+      ]
+    },
+    {
+      "file": "warrior-male-basic.png",
+      "maxHeadAxisDriftPixels": 1.265,
+      "frontSupportCentroidX": [
+        112.492,
+        93.441
+      ]
+    },
+    {
+      "file": "warrior-male-reinforced.png",
+      "maxHeadAxisDriftPixels": 1.194,
+      "frontSupportCentroidX": [
+        111.508,
+        94.172
+      ]
+    },
+    {
+      "file": "warrior-female-none.png",
+      "maxHeadAxisDriftPixels": 0.941,
+      "frontSupportCentroidX": [
+        102.76,
+        88.745
+      ]
+    },
+    {
+      "file": "warrior-female-basic.png",
+      "maxHeadAxisDriftPixels": 1.179,
+      "frontSupportCentroidX": [
+        107.938,
+        92.722
+      ]
+    },
+    {
+      "file": "warrior-female-reinforced.png",
+      "maxHeadAxisDriftPixels": 1.493,
+      "frontSupportCentroidX": [
+        106.986,
+        91.016
+      ]
+    },
+    {
+      "file": "hunter-male-none.png",
+      "maxHeadAxisDriftPixels": 0.963,
+      "frontSupportCentroidX": [
+        104.355,
+        87.279
+      ]
+    },
+    {
+      "file": "hunter-male-basic.png",
+      "maxHeadAxisDriftPixels": 1.075,
+      "frontSupportCentroidX": [
+        102.575,
+        83.5
+      ]
+    },
+    {
+      "file": "hunter-male-reinforced.png",
+      "maxHeadAxisDriftPixels": 0.961,
+      "frontSupportCentroidX": [
+        102.266,
+        82.626
+      ]
+    },
+    {
+      "file": "hunter-female-none.png",
+      "maxHeadAxisDriftPixels": 1.478,
+      "frontSupportCentroidX": [
+        105.656,
+        74.037
+      ]
+    },
+    {
+      "file": "hunter-female-basic.png",
+      "maxHeadAxisDriftPixels": 0.825,
+      "frontSupportCentroidX": [
+        106.96,
+        73.766
+      ]
+    },
+    {
+      "file": "hunter-female-reinforced.png",
+      "maxHeadAxisDriftPixels": 1.418,
+      "frontSupportCentroidX": [
+        106.0,
+        72.527
+      ]
+    }
+  ],
+  "unchangedOtherClasses": [
+    "public/assets/visual/complete-actors/astral-male-none.png",
+    "public/assets/visual/complete-actors/astral-male-basic.png",
+    "public/assets/visual/complete-actors/astral-male-reinforced.png",
+    "public/assets/visual/complete-actors/astral-female-none.png",
+    "public/assets/visual/complete-actors/astral-female-basic.png",
+    "public/assets/visual/complete-actors/astral-female-reinforced.png",
+    "public/assets/visual/complete-actors/xenobinder-male-none.png",
+    "public/assets/visual/complete-actors/xenobinder-male-basic.png",
+    "public/assets/visual/complete-actors/xenobinder-male-reinforced.png",
+    "public/assets/visual/complete-actors/xenobinder-female-none.png",
+    "public/assets/visual/complete-actors/xenobinder-female-basic.png",
+    "public/assets/visual/complete-actors/xenobinder-female-reinforced.png"
+  ],
+  "downloadBytes": 22678986
+}

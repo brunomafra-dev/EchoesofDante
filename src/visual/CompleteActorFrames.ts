@@ -4,8 +4,13 @@ import type { PlayableClass } from '../config/classes';
 export const COMPLETE_FRAME=192, COMPLETE_FEET=183, COMPLETE_DISPLAY=128;
 export const COMPLETE_STYLES=['none','basic','reinforced'] as const;
 export function completeDirection(aim:number):number {return ((Math.round((Math.PI/2-aim)/(Math.PI/4))%8)+8)%8;}
-export function completeFrame(aim:number,travel:number,walking:boolean,action:boolean):number {
- const column=action?3:walking?[0,1,0,2][Math.floor((((travel/104)%1+1)%1)*4)]:0;
+export function completeStride(classId?:PlayableClass):number{return classId==='warrior'?144:classId==='hunter'?152:104;}
+export function completeFrame(aim:number,travel:number,walking:boolean,action:boolean,classId?:PlayableClass):number {
+ const phase=((travel/completeStride(classId))%1+1)%1;
+ // These two classes have authored opposite contact poses. The wide idle
+ // stance is not a passing step: inserting it between contacts caused a hop.
+ const grounded=classId==='warrior'||classId==='hunter';
+ const column=action?3:walking?grounded?(phase<.5?1:2):[0,1,0,2][Math.floor(phase*4)]:0;
  return completeDirection(aim)*4+column;
 }
 export function completeKey(classId:PlayableClass,sex:string,style:ProtectionStyle):string{return `complete-${classId}-${sex}-${style}`;}

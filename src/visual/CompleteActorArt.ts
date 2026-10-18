@@ -55,7 +55,7 @@ export class CompleteActorArt {
   const walking=moved>.05&&moved<32&&!dash&&heavy.phase==='READY';
   if(walking)this.travel+=(dx*Math.cos(aim)+dy*Math.sin(aim)<-.05?-1:1)*moved;
   this.previous.x=x;this.previous.y=y;
-  this.view.setRotation(0);this.body.setFrame(completeFrame(aim,this.travel,walking,firing||heavy.phase!=='READY')).setRotation(0).setFlip(false,false);
+  this.view.setRotation(0);this.body.setFrame(completeFrame(aim,this.travel,walking,firing||heavy.phase!=='READY',this.identity)).setRotation(0).setFlip(false,false);
   if(this.scene.time.now<this.hurtUntil)this.body.setTint(0xffac98);else this.body.clearTint();
   const busy=heavy.phase==='CHARGING';
   if(busy&&this.identity!=='warrior'){

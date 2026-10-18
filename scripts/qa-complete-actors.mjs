@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {mkdir,writeFile} from 'node:fs/promises';
-const base=process.env.QA_BASE??'http://localhost:5184',out='docs/complete-actors/qa';
+const base=process.env.QA_BASE??'http://localhost:5184',out=process.env.QA_OUT??'docs/complete-actors/qa';
 await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',args:['--disable-background-timer-throttling','--disable-renderer-backgrounding','--disable-backgrounding-occluded-windows']});
-const report={passed:false,errors:[],warnings:[],actors:[],checks:[],humanApproval:'Only original female Astral prototype approved; expanded cast awaits playtest.'};
+const report={passed:false,errors:[],warnings:[],actors:[],checks:[],humanApproval:'User approved full figures, requested Warrior/Hunter gait and distinct Hunter identity. This revision awaits playtest.'};
 const p=await browser.newPage({viewport:{width:1280,height:720},hasTouch:true});
 p.setDefaultTimeout(60000);p.on('pageerror',e=>report.errors.push(e.message));p.on('response',r=>{if(r.status()>=400)report.errors.push(r.url());});p.on('console',m=>{if(['warning','error'].includes(m.type()))report.warnings.push(m.text());});
 await p.addInitScript(()=>{localStorage.setItem('complete-save-sentinel','preserve');window.qaPad={connected:false,mapping:'standard',axes:[0,0,0,0],buttons:Array.from({length:17},()=>({pressed:false,value:0}))};Object.defineProperty(navigator,'getGamepads',{value:()=>[window.qaPad]});});
@@ -16,6 +16,7 @@ try{
   const result=await S(async s=>{
    s.scene.pause();const actor=s.player.view.getData('completeActor'),position={...s.player.position};
    const {PartyActor}=await import('/src/network/PartyActor.ts');
+   const {completeStride}=await import('/src/visual/CompleteActorFrames.ts');
    const remote=new PartyActor(s,{id:'qa-visual',name:'Visual QA',classId:s.classId,sex:s.player.sex,equipment:{}},position,100);
    const mirror=remote.player.view.getData('completeActor');
    let cases=0;const frames=new Set();
@@ -26,7 +27,7 @@ try{
      s.setPlaytestWeapon(weapon);mirror.setWeaponLook(weapon);
      for(let row=0;row<8;row++)for(let action=0;action<4;action++){
       const aim=Math.PI/2-row*Math.PI/4,heavy={phase:action===3?'CHARGING':'READY',level:.7},walk=action===1||action===2;
-      for(const a of [actor,mirror]){a.travel=(action===1?1.1:3.1)*26;a.previous={x:position.x-(walk?Math.cos(aim):0),y:position.y-(walk?Math.sin(aim):0)};a.update(position.x,position.y,aim,action===3,false,heavy,'fire');}
+      for(const a of [actor,mirror]){a.travel=(action===1?1.1:3.1)*completeStride(s.classId)/4;a.previous={x:position.x-(walk?Math.cos(aim):0),y:position.y-(walk?Math.sin(aim):0)};a.update(position.x,position.y,aim,action===3,false,heavy,'fire');}
       const f=Number(actor.body.frame.name);if(f!==row*4+action)throw Error('Wrong frame '+[tier,weapon,row,action,f]);
       if(f!==Number(mirror.body.frame.name))throw Error('Remote frame mismatch');
       if(actor.body.rotation!==0||actor.body.scaleX!==actor.body.scaleY||actor.body.flipX||actor.body.flipY)throw Error('Deformed whole image');

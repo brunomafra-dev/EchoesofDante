@@ -342,3 +342,7 @@ O usuário rejeitou a apresentação 0.1.101 e aprovou a sequência [personagens
 ### Corpos completos aprovados e expansão autorizada — 0.1.111
 
 Em 17/10/2026, o usuário aprovou explicitamente o protótipo de Astral feminino (“está perfeito”) e autorizou aplicar a mesma ferramenta às quatro classes, nas duas apresentações, com commit/push. Manutenção visual autorizada: poses humanas completas em seletor, campanha e aliados cooperativos; equipamento preparado em atlas fixo na troca, sem articulações remontadas por frame. A aprovação do teste anterior não representa aprovação automática das novas pinturas. [Entrega, arte e QA](complete-actors/README.md). Abertura completa continua pendente da cota de vídeo; missões e expansão permanecem na ordem aprovada.
+
+### Passada e identidade — revisão 0.1.112
+
+Em 18/10/2026 o usuário aprovou o resultado geral da representação inteira, mas pediu correção da caminhada do Guerreiro/Hunter, percebida como saltos, e aparência própria para o Hunter. Revisão restrita: pinturas inteiras de contatos opostos, registro pelo eixo do corpo, ciclo visual mais calmo sem postura parada entre passos e Hunter com identidade/roupas distintas nas duas apresentações. Astral/Domador mantêm seus PNGs; gameplay e rede preservados. [Relatório, fontes e teste reservado](complete-actors/revision-02/README.md). **Aguardar playtest desta revisão antes de outra etapa; a abertura completa e o plano de missões continuam pendentes na ordem aprovada.**

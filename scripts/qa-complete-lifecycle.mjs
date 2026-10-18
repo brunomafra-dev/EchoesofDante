@@ -25,4 +25,4 @@ try{
  }
  assert.deepEqual(report.errors,[]);report.passed=true;
 }catch(error){report.failure=String(error);throw error;}
-finally{await writeFile('docs/complete-actors/qa/lifecycle.json',JSON.stringify(report,null,2)+'\n');await browser.close();}
+finally{await writeFile((process.env.QA_OUT??'docs/complete-actors/qa')+'/lifecycle.json',JSON.stringify(report,null,2)+'\n');await browser.close();}

@@ -1,0 +1,138 @@
+[
+  {
+    "file": "contact-corrections.png",
+    "width": 1286,
+    "height": 1223,
+    "bytes": 1286763,
+    "sha256": "a182e90fc152feed4174a715b824550300b080375ac7f8244613bbdb5663459e",
+    "origin": "image_gen.imagegen; original whole-figure artwork"
+  },
+  {
+    "file": "hunter-female-basic.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1676210,
+    "sha256": "227df4b46f65bfd60d0045edd4b7867b5a020aa81b59e89d0e69efb7abf0434c",
+    "origin": "image_gen.imagegen; original whole-figure artwork"
+  },
+  {
+    "file": "hunter-female-left-contact.png",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 1838932,
+    "sha256": "c3e480a48d9edc8081476bf3a8673cefb5334c64ed2dd8df6d045e63c62dcd1f",
+    "origin": "image_gen.imagegen; original whole-figure artwork"
+  },
+  {
+    "file": "hunter-female-none.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1586919,
+    "sha256": "a28ce2c9ae1188abb62d26e69a604de8ec73211784d3dae85149cfe1d67e1a35",
+    "origin": "image_gen.imagegen; original whole-figure artwork"
+  },
+  {
+    "file": "hunter-female-reinforced.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1711340,
+    "sha256": "8068ac24a4f52a995e71653c26cc2fe1ea1b5c2bb2e5de490a157c118fc72403",
+    "origin": "image_gen.imagegen; original whole-figure artwork"
+  },
+  {
+    "file": "hunter-female-right-contact.png",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 1836919,
+    "sha256": "92f8e94e805f3dc259da0fa8abafeff61c8e2b440ed56f4c2dbfbcc39077a501",
+    "origin": "image_gen.imagegen; original whole-figure artwork"
+  },
+  {
+    "file": "hunter-male-basic.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1732827,
+    "sha256": "8a870b2eb645b9867654b36eb76d7b910f5223e9cc0c946b1576303a0ef3b130",
+    "origin": "image_gen.imagegen; original whole-figure artwork"
+  },
+  {
+    "file": "hunter-male-left-contact.png",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 1790530,
+    "sha256": "e88f14862ab0fde49552efbb0aa512c419dd91dd4d25ee7f674772ef65b92b43",
+    "origin": "image_gen.imagegen; original whole-figure artwork"
+  },
+  {
+    "file": "hunter-male-none.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1509329,
+    "sha256": "d6b77470469ac3454e0bbe9aec20652efe788cb6b6abc88caa5361b6730b4af2",
+    "origin": "image_gen.imagegen; original whole-figure artwork"
+  },
+  {
+    "file": "hunter-male-rear-right.png",
+    "width": 1774,
+    "height": 887,
+    "bytes": 1298440,
+    "sha256": "554b672f4cda634e2056a7f0da7fa3c8776a3706fd6e5b96c899c5174f033380",
+    "origin": "image_gen.imagegen; original whole-figure artwork"
+  },
+  {
+    "file": "hunter-male-reinforced.png",
+    "width": 887,
+    "height": 1774,
+    "bytes": 1690678,
+    "sha256": "f7c3b75549ec742e105f2e8b1f376b659101e8743347476f8c8f44a1f9af4c03",
+    "origin": "image_gen.imagegen; original whole-figure artwork"
+  },
+  {
+    "file": "hunter-male-right-contact.png",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 1885540,
+    "sha256": "fd9e79e2d8a9fa4c1f8ca95bd01f04da2653eab3696152f470fa5b5a4d2cbcb8",
+    "origin": "image_gen.imagegen; original whole-figure artwork"
+  },
+  {
+    "file": "rear-contacts.png",
+    "width": 1150,
+    "height": 1368,
+    "bytes": 1466007,
+    "sha256": "9d54fcd85859bf3790ae4c9361a555d732d97413f4d971442ab8b70c071f0e59",
+    "origin": "image_gen.imagegen; original whole-figure artwork"
+  },
+  {
+    "file": "warrior-female-left-contact.png",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 2025332,
+    "sha256": "490e1e5871bbe7e8eb6b5116723555e0bf37b9a4bd809c68ae2842669134fad3",
+    "origin": "image_gen.imagegen; original whole-figure artwork"
+  },
+  {
+    "file": "warrior-female-right-contact.png",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 1903236,
+    "sha256": "45c09eb6aec080b4b0c4aa20af3494230a28538d8fae26c7e59bded91dbbb8c8",
+    "origin": "image_gen.imagegen; original whole-figure artwork"
+  },
+  {
+    "file": "warrior-male-left-contact.png",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 1981964,
+    "sha256": "fd9379158229d35d59e22ac52a26d738ad35b150e381b6cc5091050653e61e09",
+    "origin": "image_gen.imagegen; original whole-figure artwork"
+  },
+  {
+    "file": "warrior-male-right-contact.png",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 1989917,
+    "sha256": "1483b3afc20715dee454ccb6a4a2c39427763684c2f714f4970fa82451461217",
+    "origin": "image_gen.imagegen; original whole-figure artwork"
+  }
+]

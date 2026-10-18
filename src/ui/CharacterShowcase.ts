@@ -26,7 +26,7 @@ export class CharacterShowcase {
   const c=this.ctx;c.clearRect(0,0,320,360);const dash=t>=1.15&&t<1.8,charge=t>=2&&t<3.05,release=t>=3.05&&t<3.45,strike=t>=.25&&t<.95;
   const phase=dash?'dash':charge?'charge':release?'release':strike?'attack':'idle';this.canvas.dataset.demoPhase=phase;this.canvas.dataset.facing='front';
   this.caption.textContent=charge?'SEGURAR · MIRAR':release?'SOLTAR · EXECUTAR':dash?'REPOSICIONAMENTO':strike?({warrior:'ATAQUE DO SABRE',hunter:'DISPARO DE PULSO',astral:'PULSO ELEMENTAL',xenobinder:'ASSISTÊNCIA DO SIMBIONTE'})[this.classId]:({warrior:'FORÇA · RESISTÊNCIA',hunter:'PRECISÃO · MOBILIDADE',astral:'ENERGIA ASTRAL · CONTROLE',xenobinder:'VÍNCULO · SIMBIOSE'})[this.classId];
-  const aim=strike||charge||release?Math.PI/4:Math.PI/2,frame=completeFrame(aim,Math.max(0,t-1.15)*180,dash,strike||charge||release);this.canvas.dataset.frame=String(frame);
+  const aim=strike||charge||release?Math.PI/4:Math.PI/2,frame=completeFrame(aim,Math.max(0,t-1.15)*180,dash,strike||charge||release,this.classId);this.canvas.dataset.frame=String(frame);
   c.save();c.translate(this.classId==='xenobinder'?123:160,224);c.scale(2.25,2.25);if(dash)c.translate(-Math.sin((t-1.15)/.65*Math.PI)*(this.classId==='hunter'?17:12),0);
   c.fillStyle='#00000055';c.beginPath();c.ellipse(0,39,28,8,0,0,Math.PI*2);c.fill();c.fillStyle='#050c0a88';c.beginPath();c.ellipse(0,39,16,4,0,0,Math.PI*2);c.fill();
   if(this.atlas)c.drawImage(this.atlas,frame%4*COMPLETE_FRAME,Math.floor(frame/4)*COMPLETE_FRAME,COMPLETE_FRAME,COMPLETE_FRAME,-64,39-COMPLETE_FEET*128/COMPLETE_FRAME,128,128);
