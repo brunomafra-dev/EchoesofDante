@@ -34,6 +34,12 @@ try{
       if(actor.body.y!==39||actor.body.originY!==183/192)throw Error('Ground registration');
       const a=actor.body.texture.context.getImageData(actor.body.frame.cutX,actor.body.frame.cutY,192,192).data,b=mirror.body.texture.context.getImageData(mirror.body.frame.cutX,mirror.body.frame.cutY,192,192).data;
       let ink=0;for(let i=0;i<a.length;i++){if(a[i]!==b[i])throw Error('Remote equipment mismatch');if(i%4===3&&a[i]>32)ink++;}
+      const idle=actor.body.texture.context.getImageData(0,row*192,192,192).data;
+      // Same equipped head in every action of a view: catches helmet flicker
+      // which a nonempty-frame/scale check alone cannot detect.
+      for(let y=16;y<43;y++)for(let x=76;x<116;x++)for(let c=0;c<4;c++){
+       const i=(y*192+x)*4+c;if(a[i]!==idle[i])throw Error('Helmet changed during pose '+[tier,row,action,x,y]);
+      }
       if(ink<2000)throw Error('Empty/incomplete figure');frames.add(f);cases++;
      }
     }

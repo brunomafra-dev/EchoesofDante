@@ -17,7 +17,7 @@ import type { EquipmentSnapshot } from '../config/equipment';
 import { ModularTorso } from '../visual/ModularTorso';
 import { ASTRAL,HUNTER,XENOBINDER, type PlayableClass } from '../config/classes';
 import { CompleteActorArt } from '../visual/CompleteActorArt';
-import { completeKey,completeMuzzle } from '../visual/CompleteActorFrames';
+import { completeKey } from '../visual/CompleteActorFrames';
 
 export type PlayerAnimationState = 'IDLE' | 'WALK' | 'ATTACK_WINDUP' | 'ATTACK_SWING' | 'ATTACK_RECOVERY' | 'DASH' | 'CHARGE' | 'CHARGE_RELEASE' | 'HURT' | 'DEAD';
 
@@ -128,7 +128,7 @@ export class Player {
     this.bodyLean = bodyLean;
     if(this.view.getData('completeActor')){
       this.view.setRotation(0);this.bodyLean=0;
-      const p=completeMuzzle(this.classId,aim);
+      const p=(this.view.getData('completeActor') as CompleteActorArt).muzzle(aim);
       this.gripWorld.x=this.position.x+p.x;this.gripWorld.y=this.position.y+p.y;
       return;
     }

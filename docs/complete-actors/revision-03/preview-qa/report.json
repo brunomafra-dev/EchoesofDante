@@ -1,0 +1,243 @@
+{
+  "passed": true,
+  "errors": [],
+  "warnings": [],
+  "previews": [
+    {
+      "cls": "warrior",
+      "sex": "male",
+      "objects": 12,
+      "textures": 9,
+      "tweens": 0,
+      "sleeping": true,
+      "visibleTarget": false,
+      "frame": 0,
+      "observed": {
+        "basic": true,
+        "hold": true,
+        "release": true,
+        "beam": false,
+        "wave": true,
+        "elements": [],
+        "petStates": [],
+        "healed": false
+      }
+    },
+    {
+      "cls": "warrior",
+      "sex": "female",
+      "objects": 12,
+      "textures": 9,
+      "tweens": 0,
+      "sleeping": true,
+      "visibleTarget": false,
+      "frame": 0,
+      "observed": {
+        "basic": true,
+        "hold": true,
+        "release": true,
+        "beam": false,
+        "wave": true,
+        "elements": [],
+        "petStates": [],
+        "healed": false
+      }
+    },
+    {
+      "cls": "hunter",
+      "sex": "male",
+      "objects": 18,
+      "textures": 8,
+      "tweens": 0,
+      "sleeping": true,
+      "visibleTarget": false,
+      "frame": 0,
+      "observed": {
+        "basic": true,
+        "hold": true,
+        "release": true,
+        "beam": true,
+        "wave": false,
+        "elements": [],
+        "petStates": [],
+        "healed": false
+      }
+    },
+    {
+      "cls": "hunter",
+      "sex": "female",
+      "objects": 18,
+      "textures": 8,
+      "tweens": 0,
+      "sleeping": true,
+      "visibleTarget": false,
+      "frame": 0,
+      "observed": {
+        "basic": true,
+        "hold": true,
+        "release": true,
+        "beam": true,
+        "wave": false,
+        "elements": [],
+        "petStates": [],
+        "healed": false
+      }
+    },
+    {
+      "cls": "astral",
+      "sex": "male",
+      "objects": 25,
+      "textures": 20,
+      "tweens": 0,
+      "sleeping": true,
+      "visibleTarget": false,
+      "frame": 0,
+      "observed": {
+        "basic": true,
+        "hold": true,
+        "release": true,
+        "beam": false,
+        "wave": false,
+        "elements": [
+          "energy"
+        ],
+        "petStates": [],
+        "healed": false
+      }
+    },
+    {
+      "cls": "astral",
+      "sex": "female",
+      "objects": 25,
+      "textures": 20,
+      "tweens": 0,
+      "sleeping": true,
+      "visibleTarget": false,
+      "frame": 0,
+      "observed": {
+        "basic": true,
+        "hold": true,
+        "release": true,
+        "beam": false,
+        "wave": false,
+        "elements": [
+          "energy"
+        ],
+        "petStates": [],
+        "healed": false
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "sex": "male",
+      "objects": 24,
+      "textures": 16,
+      "tweens": 0,
+      "sleeping": true,
+      "visibleTarget": false,
+      "frame": 0,
+      "observed": {
+        "basic": true,
+        "hold": true,
+        "release": true,
+        "beam": false,
+        "wave": false,
+        "elements": [],
+        "petStates": [
+          "RETURN",
+          "FOLLOW",
+          "ASSIST",
+          "COMMAND"
+        ],
+        "healed": true
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "sex": "female",
+      "objects": 24,
+      "textures": 16,
+      "tweens": 0,
+      "sleeping": true,
+      "visibleTarget": false,
+      "frame": 0,
+      "observed": {
+        "basic": true,
+        "hold": true,
+        "release": true,
+        "beam": false,
+        "wave": false,
+        "elements": [],
+        "petStates": [
+          "RETURN",
+          "FOLLOW",
+          "ASSIST",
+          "COMMAND"
+        ],
+        "healed": true
+      }
+    }
+  ],
+  "cleanup": [
+    {
+      "cycle": 0,
+      "listeners": {
+        "beforeunload": 1,
+        "touchstart": 1,
+        "touchend": 1,
+        "touchcancel": 1,
+        "mousedown": 1,
+        "mouseup": 1,
+        "keydown": 9,
+        "keyup": 3,
+        "dante-chat": 1,
+        "dante-coop": 2,
+        "resize": 2,
+        "blur": 2,
+        "focus": 1,
+        "pagehide": 1
+      },
+      "destroyedGames": 4
+    },
+    {
+      "cycle": 1,
+      "listeners": {
+        "beforeunload": 1,
+        "touchstart": 1,
+        "touchend": 1,
+        "touchcancel": 1,
+        "mousedown": 1,
+        "mouseup": 1,
+        "keydown": 9,
+        "keyup": 3,
+        "dante-chat": 1,
+        "dante-coop": 2,
+        "resize": 2,
+        "blur": 2,
+        "focus": 1,
+        "pagehide": 1
+      },
+      "destroyedGames": 4
+    },
+    {
+      "cycle": 2,
+      "listeners": {
+        "beforeunload": 1,
+        "touchstart": 1,
+        "touchend": 1,
+        "touchcancel": 1,
+        "mousedown": 1,
+        "mouseup": 1,
+        "keydown": 9,
+        "keyup": 3,
+        "dante-chat": 1,
+        "dante-coop": 2,
+        "resize": 2,
+        "blur": 2,
+        "focus": 1,
+        "pagehide": 1
+      },
+      "destroyedGames": 4
+    }
+  ]
+}

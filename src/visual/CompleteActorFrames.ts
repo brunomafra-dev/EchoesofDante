@@ -1,5 +1,6 @@
-import { type EquipmentLook, type ProtectionStyle, type WeaponStyle } from '../config/appearance';
+import { type CharacterSex,type EquipmentLook, type ProtectionStyle, type WeaponStyle } from '../config/appearance';
 import type { PlayableClass } from '../config/classes';
+import registration from './actorRegistration.json';
 
 export const COMPLETE_FRAME=192, COMPLETE_FEET=183, COMPLETE_DISPLAY=128;
 export const COMPLETE_STYLES=['none','basic','reinforced'] as const;
@@ -23,30 +24,41 @@ const EMITTERS:Record<PlayableClass,readonly (readonly [number,number])[]>={
  astral:[[122,86],[160,81],[172,81],[153,63],[121,53],[32,72],[24,83],[42,96]],
  xenobinder:[[130,69],[164,71],[173,68],[158,51],[125,43],[29,65],[25,75],[36,98]],
 };
-export function completeMuzzle(classId:PlayableClass,aim:number):{x:number;y:number}{
+export function completeRegistration(classId:PlayableClass,sex:CharacterSex,style:ProtectionStyle,frame:number):{scale:number;x:number;y:number}{
+ const [cx,neck]=registration[`${classId}-${sex}`][style][frame];
+ const scale=(COMPLETE_FEET-55)/(COMPLETE_FEET-neck);
+ return{scale,x:96-cx*scale,y:COMPLETE_FEET*(1-scale)};
+}
+export function completeMuzzle(classId:PlayableClass,aim:number,sex:CharacterSex='male',style:ProtectionStyle='none'):{x:number;y:number}{
  const [x,y]=EMITTERS[classId][completeDirection(aim)];
- return{x:(x-96)*COMPLETE_DISPLAY/COMPLETE_FRAME,y:39+(y-COMPLETE_FEET)*COMPLETE_DISPLAY/COMPLETE_FRAME};
+ const p=completeRegistration(classId,sex,style,completeDirection(aim)*4+3);
+ return{x:(x*p.scale+p.x-96)*COMPLETE_DISPLAY/COMPLETE_FRAME,y:39+(y*p.scale+p.y-COMPLETE_FEET)*COMPLETE_DISPLAY/COMPLETE_FRAME};
 }
 
 // Clothing changes replace pixels in a complete registered pose, once on equip.
 // They never move a shoulder/elbow/hand or draw another body over the first.
-export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record<ProtectionStyle,CanvasImageSource>,look:EquipmentLook,weapon:WeaponStyle,classId:PlayableClass):void {
+export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record<ProtectionStyle,CanvasImageSource>,look:EquipmentLook,weapon:WeaponStyle,classId:PlayableClass,sex:CharacterSex='male'):void {
  const size=COMPLETE_FRAME;
  const weaponTier:ProtectionStyle=weapon==='starter'?'none':weapon==='current'?'basic':'reinforced';
  ctx.clearRect(0,0,size*4,size*8);
  for(let f=0;f<32;f++){
   const x=f%4*size,y=Math.floor(f/4)*size;
-  ctx.drawImage(sources[look.torso],x,y,size,size,x,y,size,size);
+  const draw=(style:ProtectionStyle,sourceFrame=f)=>{
+   const p=completeRegistration(classId,sex,style,sourceFrame);
+   ctx.save();ctx.beginPath();ctx.rect(x,y,size,size);ctx.clip();
+   ctx.translate(x+p.x,y+p.y);ctx.scale(p.scale,p.scale);
+   ctx.drawImage(sources[style],sourceFrame%4*size,Math.floor(sourceFrame/4)*size,size,size,0,0,size,size);ctx.restore();
+  };
+  draw(look.torso);
   const replace=(style:ProtectionStyle,rx:number,ry:number,w:number,h:number)=>{
-   ctx.clearRect(x+rx,y+ry,w,h);ctx.drawImage(sources[style],x+rx,y+ry,w,h,x+rx,y+ry,w,h);
+   ctx.save();ctx.beginPath();ctx.rect(x+rx,y+ry,w,h);ctx.clip();ctx.clearRect(x+rx,y+ry,w,h);draw(style);ctx.restore();
   };
   const material=(style:ProtectionStyle,rx:number,ry:number,w:number,h:number)=>{
    // A different glove/tool painting must never erase a finger, introduce a
    // second wrist or move the silhouette of the connected underlying pose.
    ctx.save();ctx.beginPath();ctx.rect(x+rx,y+ry,w,h);ctx.clip();ctx.globalCompositeOperation='source-atop';
-   ctx.drawImage(sources[style],x+rx,y+ry,w,h,x+rx,y+ry,w,h);ctx.restore();
+   draw(style);ctx.restore();
   };
-  replace(look.helmet,0,0,size,55);
   replace(look.legs,0,116,size,43);
   replace(look.boots,0,159,size,size-159);
   // The main hand/tool is authored as a continuous grip. Its pixels are baked
@@ -67,5 +79,14 @@ export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record
     else if(row>=5)material(weaponTier,8,98,61,24);
    }
   }
+  // One registered head per view/helmet, reused across complete poses at bake.
+  // A rectangular strip across the whole sprite erased raised hands and let
+  // an unhelmeted action painting replace the equipped helmet.
+  const rowHead=Math.floor(f/4)*4;
+  const headStyle=classId==='hunter'&&look.helmet==='basic'?'reinforced':look.helmet;
+  const headFrame=classId==='xenobinder'&&headStyle==='reinforced'&&rowHead===16?12:rowHead+(classId==='hunter'&&headStyle!=='none'?1:0);
+  ctx.save();ctx.beginPath();ctx.moveTo(x+65,y);ctx.lineTo(x+127,y);ctx.lineTo(x+127,y+42);
+  ctx.lineTo(x+116,y+55);ctx.lineTo(x+76,y+55);ctx.lineTo(x+65,y+42);ctx.closePath();ctx.clip();
+  ctx.clearRect(x+65,y,62,55);draw(headStyle,headFrame);ctx.restore();
  }
 }

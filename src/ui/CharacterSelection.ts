@@ -82,10 +82,11 @@ export class CharacterSelection {
         selected = classId;
         sexSelect.disabled=false;cycleSex.disabled=false;if(!sexChosen)sexSelect.value=characterSex(classId);
         for (const b of Array.from(gallery.querySelectorAll<HTMLButtonElement>('[data-class]'))) b.setAttribute('aria-pressed', String(b.dataset.class === classId));
-        for (const p of this.previews) p.classId === classId ? p.play() : p.stop();
+        for (const p of this.previews) p.stop();
         selectedTitle.textContent = CLASS_NAMES[classId]; description.textContent = identity[classId].fantasy; kit.textContent = identity[classId].kit;
         input.disabled = false; replay.disabled = false; create.disabled = !input.value.trim();
-        refreshPreview();
+        const current=this.previews.find(p=>p.classId===selected);
+        if(current?.sex===sexSelect.value)current.play();else refreshPreview();
         remember();
       });
       card.className = 'class-display'; card.dataset.class = classId; card.setAttribute('aria-pressed', 'false');

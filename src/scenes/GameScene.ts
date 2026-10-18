@@ -454,7 +454,7 @@ export class GameScene extends Phaser.Scene {
     this.player = new Player(this, entry.x, entry.y, this.characterMaxHp, this.qualityReference === 'reference',
       this.qualityReference !== 'baseline' && !this.originalWarrior, id => this.progression.upgradeRank(id), this.classId, characterSex(this.classId,this.glacierPlaytest?this.glacierPlaytest.sex:this.qualityReference?undefined:characterProfiles.active.sex));
     if (this.classId === 'hunter') {
-      this.hunter = new HunterCombat(this, id => this.progression.upgradeRank(id),aim=>completeMuzzle('hunter',aim));
+      this.hunter = new HunterCombat(this, id => this.progression.upgradeRank(id),aim=>this.hunterArt?.muzzle(aim)??completeMuzzle('hunter',aim,this.player.sex));
       this.hunterArt = new CompleteActorArt(this, this.player.view, entry.x, entry.y,this.player.sex,'hunter');
     }
     if(this.classId==='astral'){this.astral=new AstralCombat(this,id=>this.progression.upgradeRank(id));this.astralArt=new CompleteActorArt(this,this.player.view,entry.x,entry.y,this.player.sex,'astral');this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.astral?.destroy());}

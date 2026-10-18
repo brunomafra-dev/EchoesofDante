@@ -346,3 +346,7 @@ Em 17/10/2026, o usuário aprovou explicitamente o protótipo de Astral feminino
 ### Passada e identidade — revisão 0.1.112
 
 Em 18/10/2026 o usuário aprovou o resultado geral da representação inteira, mas pediu correção da caminhada do Guerreiro/Hunter, percebida como saltos, e aparência própria para o Hunter. Revisão restrita: pinturas inteiras de contatos opostos, registro pelo eixo do corpo, ciclo visual mais calmo sem postura parada entre passos e Hunter com identidade/roupas distintas nas duas apresentações. Astral/Domador mantêm seus PNGs; gameplay e rede preservados. [Relatório, fontes e teste reservado](complete-actors/revision-02/README.md). **Aguardar playtest desta revisão antes de outra etapa; a abertura completa e o plano de missões continuam pendentes na ordem aprovada.**
+
+### Capacete, proporções e mostruário — revisão 0.1.113
+
+O playtest da 0.1.112 apontou cobertura de cabeça e tamanho inconsistentes ao andar/atacar e mudar a mira; o usuário também solicitou prévias fiéis ao básico/Q. Manutenção nas quatro classes e duas apresentações: composição registrada pelo pescoço/plano dos pés, cabeça equipada estável por vista e mostruário isolado que executa os componentes reais de combate. Nenhum PNG ou regra de combate/save/protocolo foi substituído. [Diagnóstico, limites, QA e testes](complete-actors/revision-03/README.md). **Aguardar avaliação humana desta revisão. Não antecipar cinematográfica completa, missões ou expansão.**

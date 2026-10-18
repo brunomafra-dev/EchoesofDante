@@ -46,9 +46,10 @@ export class CompleteActorArt {
  private bake():void{
   const signature=JSON.stringify([this.look,this.style]);if(signature===this.signature)return;this.signature=signature;
   const sources=Object.fromEntries(COMPLETE_STYLES.map(style=>[style,this.scene.textures.get(completeKey(this.identity,this.sex,style)).getSourceImage()])) as Record<typeof COMPLETE_STYLES[number],HTMLImageElement>;
-  composeCompleteAtlas(this.texture.context,sources,this.look,this.style,this.identity);this.texture.refresh();this.bakeCount++;
+  composeCompleteAtlas(this.texture.context,sources,this.look,this.style,this.identity,this.sex);this.texture.refresh();this.bakeCount++;
  }
- projectileOffset(aim:number):{x:number;y:number}{const p=completeMuzzle(this.identity,aim);return{x:p.x-Math.cos(aim)*ASTRAL.muzzleDistance,y:p.y-Math.sin(aim)*ASTRAL.muzzleDistance};}
+ muzzle(aim:number):{x:number;y:number}{return completeMuzzle(this.identity,aim,this.sex,this.look.torso);}
+ projectileOffset(aim:number):{x:number;y:number}{const p=this.muzzle(aim);return{x:p.x-Math.cos(aim)*ASTRAL.muzzleDistance,y:p.y-Math.sin(aim)*ASTRAL.muzzleDistance};}
  flashHurt():void{this.hurtUntil=this.scene.time.now+140;}
  update(x:number,y:number,aim:number,firing:boolean,dash=false,heavy:Pick<KineticPose,'phase'|'level'>={phase:'READY',level:0},element:AstralElement='energy'):void{
   const dx=x-this.previous.x,dy=y-this.previous.y,moved=Math.hypot(dx,dy);
