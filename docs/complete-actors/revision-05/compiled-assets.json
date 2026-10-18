@@ -1,0 +1,24 @@
+{
+  "version": "0.1.115",
+  "errors": [],
+  "scenes": [
+    {
+      "cls": "warrior",
+      "sex": "female",
+      "created": true,
+      "movementAndAttackInput": true
+    },
+    {
+      "cls": "hunter",
+      "sex": "male",
+      "created": true,
+      "movementAndAttackInput": true
+    }
+  ],
+  "hashes": {
+    "assets/Controls-nhPTTo-z.js": "b2c6a69d5e4a521dd29d0cd364ba7a28ce18bd88a702d01efb20d680a7370cb8",
+    "assets/visual/complete-actors/warrior-female-none.png": "9bd09bf8942ab1a1b9e5dd7b6739c900df2f0a0b24fa633b253f4d13d024cee9",
+    "assets/visual/complete-actors/hunter-male-none.png": "59616a05dc313c1e75a36366914e517486b46f0eab298de2cb1c594ac3ff4a1f"
+  },
+  "passed": true
+}

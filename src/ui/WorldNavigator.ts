@@ -84,7 +84,9 @@ export class WorldNavigator {
     if (show) {
       const next = this.route.find(p => Math.hypot(p.x - player.x, p.y - player.y) > 62) ?? this.route.at(-1)!;
       const angle = Math.atan2(next.y - player.y, next.x - player.x);
-      this.arrow.setPosition(player.x + Math.cos(angle) * 48, player.y + Math.sin(angle) * 34 + 10)
+      // Keep the route marker outside the complete figure, including the head
+      // when the destination lies north. The old small ellipse crossed wrists.
+      this.arrow.setPosition(player.x + Math.cos(angle) * 76, player.y + Math.sin(angle) * 80 - 10)
         .setRotation(angle - Math.PI / 2);
     }
     const title = target ? `Próximo destino: ${target.name} · M recolhe o mapa` : 'M recolhe o mapa';

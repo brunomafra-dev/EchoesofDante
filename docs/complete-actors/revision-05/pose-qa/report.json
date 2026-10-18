@@ -1,0 +1,151 @@
+{
+  "passed": true,
+  "baseline": "c57d61f",
+  "errors": [],
+  "cases": [
+    {
+      "actor": "warrior-female",
+      "style": "none",
+      "row": 0,
+      "frame": 2,
+      "bodyAlphaMismatch": 0,
+      "opaque": 5304
+    },
+    {
+      "actor": "warrior-female",
+      "style": "none",
+      "row": 1,
+      "frame": 6,
+      "bodyAlphaMismatch": 0,
+      "opaque": 5714
+    },
+    {
+      "actor": "warrior-female",
+      "style": "none",
+      "row": 2,
+      "frame": 10,
+      "bodyAlphaMismatch": 0,
+      "opaque": 5337
+    },
+    {
+      "actor": "warrior-female",
+      "style": "none",
+      "row": 7,
+      "frame": 30,
+      "bodyAlphaMismatch": 0,
+      "opaque": 6055
+    },
+    {
+      "actor": "warrior-female",
+      "style": "basic",
+      "row": 0,
+      "frame": 2,
+      "bodyAlphaMismatch": 0,
+      "opaque": 5409
+    },
+    {
+      "actor": "warrior-female",
+      "style": "basic",
+      "row": 1,
+      "frame": 6,
+      "bodyAlphaMismatch": 0,
+      "opaque": 5852
+    },
+    {
+      "actor": "warrior-female",
+      "style": "basic",
+      "row": 2,
+      "frame": 10,
+      "bodyAlphaMismatch": 0,
+      "opaque": 5369
+    },
+    {
+      "actor": "warrior-female",
+      "style": "basic",
+      "row": 7,
+      "frame": 30,
+      "bodyAlphaMismatch": 0,
+      "opaque": 6004
+    },
+    {
+      "actor": "warrior-female",
+      "style": "reinforced",
+      "row": 0,
+      "frame": 2,
+      "bodyAlphaMismatch": 0,
+      "opaque": 5642
+    },
+    {
+      "actor": "warrior-female",
+      "style": "reinforced",
+      "row": 1,
+      "frame": 6,
+      "bodyAlphaMismatch": 0,
+      "opaque": 5826
+    },
+    {
+      "actor": "warrior-female",
+      "style": "reinforced",
+      "row": 2,
+      "frame": 10,
+      "bodyAlphaMismatch": 0,
+      "opaque": 5635
+    },
+    {
+      "actor": "warrior-female",
+      "style": "reinforced",
+      "row": 7,
+      "frame": 30,
+      "bodyAlphaMismatch": 0,
+      "opaque": 6259
+    },
+    {
+      "actor": "hunter-male",
+      "style": "none",
+      "row": 7,
+      "frame": 30,
+      "bodyAlphaMismatch": 0,
+      "opaque": 6132
+    },
+    {
+      "actor": "hunter-male",
+      "style": "basic",
+      "row": 7,
+      "frame": 30,
+      "bodyAlphaMismatch": 0,
+      "opaque": 6214
+    },
+    {
+      "actor": "hunter-male",
+      "style": "reinforced",
+      "row": 7,
+      "frame": 30,
+      "bodyAlphaMismatch": 0,
+      "opaque": 6319
+    },
+    {
+      "actor": "hunter-female",
+      "style": "none",
+      "row": 7,
+      "frame": 30,
+      "bodyAlphaMismatch": 0,
+      "opaque": 5493
+    },
+    {
+      "actor": "hunter-female",
+      "style": "basic",
+      "row": 7,
+      "frame": 30,
+      "bodyAlphaMismatch": 0,
+      "opaque": 5494
+    },
+    {
+      "actor": "hunter-female",
+      "style": "reinforced",
+      "row": 7,
+      "frame": 30,
+      "bodyAlphaMismatch": 0,
+      "opaque": 5939
+    }
+  ]
+}

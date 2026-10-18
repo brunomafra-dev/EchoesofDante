@@ -5,6 +5,7 @@ from pathlib import Path
 from PIL import Image
 import cv2
 import numpy as np
+from functools import lru_cache
 
 ROOT = Path(__file__).resolve().parents[1]
 DOC = ROOT / 'docs/complete-actors'
@@ -13,6 +14,23 @@ REV = DOC / 'revision-02'
 SIZE = 192
 ROWS = ['S', 'SE', 'E', 'NE', 'N', 'NW', 'W', 'SW']
 manifest = {}
+
+@lru_cache(maxsize=32)
+def source_image(path):
+    return Image.open(path).convert('RGBA')
+
+def column_bounds(source,count):
+    # Generated sheets have uneven outer margins. Equal thirds cut wrists.
+    alpha=np.array(source)[:,:,3]
+    weights=(alpha>128).sum(axis=0).astype(float);xs=np.arange(source.width)
+    centers=np.interp((np.arange(count)+.5)/count,np.cumsum(weights)/weights.sum(),xs)
+    for _ in range(40):
+        labels=np.abs(xs[:,None]-centers).argmin(axis=1)
+        updated=np.array([np.average(xs[labels==i],weights=weights[labels==i]) for i in range(count)])
+        if np.max(np.abs(updated-centers))<.01:break
+        centers=updated
+    centers.sort()
+    return [0]+[round((a+b)/2) for a,b in zip(centers[:-1],centers[1:])]+[source.width]
 def row_bounds(source, count=8):
     alpha=np.array(source)[:,:,3]
     # Registration of complete figures; tolerate the uneven gutters in the artwork.
@@ -52,14 +70,29 @@ def contact_pose(actor,style,row,side):
         source_row=0 if actor=='warrior-male' else 1 if side=='left' else 2
     if side=='right' and actor=='hunter-male' and row==4:
         path=REV/'source'/'hunter-male-rear-right.png';count=1;source_row=0
-    art=Image.open(path).convert('RGBA')
+    mirrored=False
+    if side=='right' and actor=='warrior-female':
+        path=DOC/'revision-05'/'source'/('warrior-female-right-front.png' if row<4 else 'warrior-female-right-back.png')
+        count=4;source_row=row%4
+    if side=='right' and actor.startswith('hunter') and row==7:
+        path=DOC/'revision-05'/'source'/'hunter-sw-contact.png';count=2
+        source_row=0 if actor=='hunter-male' else 1;mirrored=True
+    if side=='right' and actor=='hunter-male' and row==6:
+        path=REV/'source'/'hunter-male-left-contact.png';count=8;source_row=2;mirrored=True
+    art=source_image(path)
     assert art.getchannel('A').getextrema()[0]==0, path.name
     by=row_bounds(art,count)
+    if path.name=='hunter-sw-contact.png':by=[0,512,1024]
+    if path.name=='hunter-male-right-contact.png':by=[0,212,410,596,788,986,1176,1354,1536]
+    if path.name.startswith('warrior-female-right-') and count==4:by=[0,432,800,1152,1536] if 'front' in path.name else [0,392,768,1140,1536]
     col=['none','basic','reinforced'].index(style)
-    box=(round(col*art.width/3),by[source_row],round((col+1)*art.width/3),by[source_row+1])
+    bx=column_bounds(art,3)
+    box=(max(0,bx[col]-8),by[source_row],min(art.width,bx[col+1]+8),by[source_row+1])
     whole=main_figure(art.crop(box),True);bbox=whole.getchannel('A').getbbox()
+    if mirrored:
+        whole=whole.transpose(Image.Transpose.FLIP_LEFT_RIGHT);bbox=whole.getchannel('A').getbbox()
     assert bbox and bbox[3]-bbox[1]>whole.height*.5,(path.name,row,col,bbox)
-    return whole,bbox,box,False,path
+    return whole,bbox,box,mirrored,path
 for cls in ['warrior', 'hunter', 'astral', 'xenobinder']:
     for sex in ['male', 'female']:
         actor = f'{cls}-{sex}'
@@ -146,7 +179,7 @@ for cls in ['warrior', 'hunter', 'astral', 'xenobinder']:
                     top=183-height
                     if stable and col<3:
                         left=round(head_target-(headxs[col]-bbox[0])*scale)
-                        top=19
+                        top=183-height
                         assert top+height<=SIZE and left>=0 and left+width<=SIZE,(path.name,row,col,left,top,width,height)
                     frame = Image.new('RGBA',(SIZE,SIZE))
                     frame.alpha_composite(cropped.resize((width,height),Image.Resampling.LANCZOS),(left,top))
@@ -156,7 +189,14 @@ for cls in ['warrior', 'hunter', 'astral', 'xenobinder']:
                                    'correction':f'{actor}-sw-correction.png' if corrected else None}
                     if stable:info.update({'sourceFile':frame_source.relative_to(ROOT).as_posix(),
                                            'registration':'head-axis/uniform-whole-figure' if col<3 else 'feet',
-                                           'scale':scale,'left':left,'top':top,'headX':head_target if col<3 else None})
+                                           'scale':scale,'left':left,'top':top,
+                                           'headX':round(left+(headxs[col]-bbox[0])*scale,3) if col<3 else None,
+                                           'neckY':round(183-128*height/164,3) if col<3 else None,
+                                           'importHeight':height,'mirrored':corrected,
+                                           'cropMargins':[bbox[0],bbox[1],whole.width-bbox[2],whole.height-bbox[3]]})
+                    if stable:
+                        ya,xa=np.where(np.array(whole)[:,:,3]>128)
+                        info['sourceCoreMargins']=[int(xa.min()),int(ya.min()),int(whole.width-xa.max()-1),int(whole.height-ya.max()-1)]
                     frames.append(info)
             target = OUT / f'{actor}-{style}.png'
             atlas.save(target,optimize=True)

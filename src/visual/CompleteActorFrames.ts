@@ -17,13 +17,9 @@ export function completeFrame(aim:number,travel:number,walking:boolean,action:bo
 }
 export function completeKey(classId:PlayableClass,sex:string,style:ProtectionStyle):string{return `complete-${classId}-${sex}-${style}`;}
 
-// Authored three-quarter Hunter paintings have extra apparent mass. Calibrate
-// the COMPLETE figure once in the atlas, uniformly about its ground contact.
-// Never change Image/container/camera scale as the player moves the cursor.
-export function completeViewScale(classId:PlayableClass,sex:CharacterSex,row:number):number{
- if(classId!=='hunter')return 1;
- return row===1?(sex==='female'?.94:.97):row===7?(sex==='female'?.88:.92):1;
-}
+// Kept for historical audit scripts. Fixed source imports now supply the
+// complete figure; a direction-dependent shrink must not conceal a bad crop.
+export function completeViewScale(_classId:PlayableClass,_sex:CharacterSex,_row:number):number{return 1;}
 
 // Optical anchors in the authored action poses. Simulation still starts on the
 // original ground-plane ray; these coordinates only place the visible emission.

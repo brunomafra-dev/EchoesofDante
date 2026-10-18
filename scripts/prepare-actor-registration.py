@@ -7,9 +7,10 @@ from PIL import Image, ImageDraw
 
 ROOT=Path(__file__).resolve().parents[1]
 ART=ROOT/'public/assets/visual/complete-actors'
-OUT=ROOT/'docs/complete-actors/revision-03'
+OUT=ROOT/'docs/complete-actors/revision-05'
 OUT.mkdir(parents=True,exist_ok=True)
 data={};audit=[]
+manifest=json.loads((ART/'manifest.json').read_text(encoding='utf-8'))
 # Reviewed exceptions: matching a braid/raised hand is not a neck anchor.
 OVERRIDES={('hunter-female','reinforced',15):(79,56),
            ('hunter-female','reinforced',19):(87,56)}
@@ -35,9 +36,11 @@ for cls in ['warrior','hunter','astral','xenobinder']:
       if best is None or score<best[0]:best=(score,25+loc[0],4+loc[1],t.shape[1],t.shape[0])
      score,left,y,w,h=best
      neck=(round(left+w/2,2),y+h)
-     # Revision 02 registered these entire locomotion figures at this axis.
+     # Use the actual head/ground axis recorded by the source importer.
      # Template matching a different painting must not move it onto a shoulder.
-     if cls in ['warrior','hunter'] and col<3:neck=(96,55)
+     if cls in ['warrior','hunter'] and col<3:
+      imported=manifest[actor]['styles'][style]['frames'][f]
+      neck=(imported['headX'],imported['neckY'])
      if (actor,style,f) in OVERRIDES:neck=OVERRIDES[actor,style,f]
      anchors.append(list(neck))
      audit.append({'actor':actor,'style':style,'frame':f,'score':round(score,4),'neck':list(neck)})

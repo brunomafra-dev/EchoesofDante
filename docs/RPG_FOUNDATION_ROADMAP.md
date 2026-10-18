@@ -1,5 +1,7 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**Manutenção visual em 18/10/2026 · 0.1.115:** cinco capturas do usuário expuseram cortes de braços/espada na Guerreira e proporção do passo do Hunter que a 0.1.114 não resolveu. [Revisão 05](complete-actors/revision-05/README.md): importação pelos limites reais das figuras, três fontes corretivas com pessoas completas, registro cabeça/chão medido e seta fora do corpo. QA de corpo inteiro substitui o indicador limitado de área da cabeça. Campanha/seletor/aliados compartilham a correção. **Aguardar playtest humano; nenhuma nova etapa de conteúdo iniciada.**
+
 **Prova visual autorizada em 17/10/2026 · 0.1.110:** usuário pediu testar personagens pintados inteiros antes da implementação. [Laboratório A/B do Astral](whole-body-actors/README.md), oito vistas e 32 poses completas, isolado da campanha. Não substitui classes/equipamentos nem altera a ordem das etapas; aguardar playtest para decidir a estratégia de produção. Quadro-base estático da equipe pioneira também foi salvo; vídeo ainda pendente.
 
 **Roteiro ampliado em 17/10/2026:** usuário solicitou a [apresentação da equipe pioneira](cinematic-opening/pioneer-team.md), com Guerreiro, Hunter, Astral e Domador preparando o reconhecimento. Cena de ~4,5 s prevista entre ponte e descida; abertura planejada passa de 54,75 a ~59 s. Quadro-base estático salvo na 0.1.110; animação ainda pendente. Prévia publicada permanece com 36 s e integração na campanha continua pendente.

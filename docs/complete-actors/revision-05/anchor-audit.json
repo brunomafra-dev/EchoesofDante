@@ -1,0 +1,7682 @@
+[
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      96.095,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 1,
+    "score": 0.1429,
+    "neck": [
+      95.7,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 2,
+    "score": 0.143,
+    "neck": [
+      95.602,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 3,
+    "score": 0.1147,
+    "neck": [
+      87.0,
+      56
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      96.04,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 5,
+    "score": 0.208,
+    "neck": [
+      96.275,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 6,
+    "score": 0.2259,
+    "neck": [
+      95.655,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 7,
+    "score": 0.2019,
+    "neck": [
+      105.0,
+      55
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 8,
+    "score": -0.0,
+    "neck": [
+      96.173,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 9,
+    "score": 0.1817,
+    "neck": [
+      96.2,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 10,
+    "score": 0.2002,
+    "neck": [
+      95.798,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 11,
+    "score": 0.1477,
+    "neck": [
+      105.0,
+      59
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      95.838,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 13,
+    "score": 0.2702,
+    "neck": [
+      95.742,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 14,
+    "score": 0.2485,
+    "neck": [
+      95.503,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 15,
+    "score": 0.1767,
+    "neck": [
+      68.0,
+      58
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      95.973,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 17,
+    "score": 0.3525,
+    "neck": [
+      95.619,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 18,
+    "score": 0.1897,
+    "neck": [
+      96.299,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 19,
+    "score": 0.2456,
+    "neck": [
+      63.5,
+      65
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      96.254,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 21,
+    "score": 0.4128,
+    "neck": [
+      96.193,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 22,
+    "score": 0.2622,
+    "neck": [
+      95.924,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 23,
+    "score": 0.1983,
+    "neck": [
+      114.0,
+      57
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      96.419,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 25,
+    "score": 0.2362,
+    "neck": [
+      96.389,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 26,
+    "score": 0.2742,
+    "neck": [
+      96.259,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 27,
+    "score": 0.1569,
+    "neck": [
+      89.0,
+      58
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      95.565,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 29,
+    "score": 0.2273,
+    "neck": [
+      95.688,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 30,
+    "score": 0.2324,
+    "neck": [
+      96.396,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "none",
+    "frame": 31,
+    "score": 0.2344,
+    "neck": [
+      81.0,
+      57
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      95.915,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 1,
+    "score": 0.2099,
+    "neck": [
+      96.153,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 2,
+    "score": 0.1848,
+    "neck": [
+      96.364,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 3,
+    "score": 0.1976,
+    "neck": [
+      91.0,
+      55
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      96.176,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 5,
+    "score": 0.3402,
+    "neck": [
+      96.431,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 6,
+    "score": 0.3085,
+    "neck": [
+      95.962,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 7,
+    "score": 0.2102,
+    "neck": [
+      105.0,
+      56
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 8,
+    "score": -0.0,
+    "neck": [
+      96.356,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 9,
+    "score": 0.3325,
+    "neck": [
+      95.942,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 10,
+    "score": 0.333,
+    "neck": [
+      95.749,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 11,
+    "score": 0.2465,
+    "neck": [
+      109.0,
+      57
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      95.861,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 13,
+    "score": 0.4857,
+    "neck": [
+      96.247,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 14,
+    "score": 0.4164,
+    "neck": [
+      96.312,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 15,
+    "score": 0.288,
+    "neck": [
+      68.0,
+      57
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 16,
+    "score": -0.0,
+    "neck": [
+      96.105,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 17,
+    "score": 0.6248,
+    "neck": [
+      96.45,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 18,
+    "score": 0.4873,
+    "neck": [
+      96.299,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 19,
+    "score": 0.412,
+    "neck": [
+      63.5,
+      62
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      95.734,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 21,
+    "score": 0.5562,
+    "neck": [
+      95.589,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 22,
+    "score": 0.5548,
+    "neck": [
+      95.803,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 23,
+    "score": 0.2429,
+    "neck": [
+      115.0,
+      58
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      95.784,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 25,
+    "score": 0.351,
+    "neck": [
+      96.317,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 26,
+    "score": 0.3373,
+    "neck": [
+      96.465,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 27,
+    "score": 0.2192,
+    "neck": [
+      86.0,
+      59
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      95.695,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 29,
+    "score": 0.274,
+    "neck": [
+      96.291,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 30,
+    "score": 0.4791,
+    "neck": [
+      95.511,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "basic",
+    "frame": 31,
+    "score": 0.3321,
+    "neck": [
+      86.0,
+      59
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      95.539,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 1,
+    "score": 0.1471,
+    "neck": [
+      96.196,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 2,
+    "score": 0.1358,
+    "neck": [
+      95.721,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 3,
+    "score": 0.1818,
+    "neck": [
+      97.0,
+      57
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      96.067,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 5,
+    "score": 0.2426,
+    "neck": [
+      96.058,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 6,
+    "score": 0.2473,
+    "neck": [
+      96.265,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 7,
+    "score": 0.1657,
+    "neck": [
+      106.0,
+      56
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      95.618,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 9,
+    "score": 0.2744,
+    "neck": [
+      96.351,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 10,
+    "score": 0.2937,
+    "neck": [
+      96.168,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 11,
+    "score": 0.1595,
+    "neck": [
+      103.0,
+      56
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      95.593,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 13,
+    "score": 0.3715,
+    "neck": [
+      96.158,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 14,
+    "score": 0.3966,
+    "neck": [
+      96.128,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 15,
+    "score": 0.2484,
+    "neck": [
+      67.0,
+      59
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      95.666,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 17,
+    "score": 0.4776,
+    "neck": [
+      96.261,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 18,
+    "score": 0.337,
+    "neck": [
+      96.195,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 19,
+    "score": 0.4127,
+    "neck": [
+      58.5,
+      64
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      95.642,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 21,
+    "score": 0.3269,
+    "neck": [
+      95.669,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 22,
+    "score": 0.3111,
+    "neck": [
+      96.133,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 23,
+    "score": 0.1369,
+    "neck": [
+      116.0,
+      58
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      95.895,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 25,
+    "score": 0.2286,
+    "neck": [
+      95.907,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 26,
+    "score": 0.2257,
+    "neck": [
+      96.1,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 27,
+    "score": 0.1433,
+    "neck": [
+      87.0,
+      60
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      96.232,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 29,
+    "score": 0.2421,
+    "neck": [
+      96.475,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 30,
+    "score": 0.2291,
+    "neck": [
+      95.847,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-male",
+    "style": "reinforced",
+    "frame": 31,
+    "score": 0.1885,
+    "neck": [
+      88.0,
+      60
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      96.105,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 1,
+    "score": 0.2368,
+    "neck": [
+      96.041,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 2,
+    "score": 0.1689,
+    "neck": [
+      96.444,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 3,
+    "score": 0.1293,
+    "neck": [
+      93.0,
+      56
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      95.552,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 5,
+    "score": 0.2184,
+    "neck": [
+      95.813,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 6,
+    "score": 0.2082,
+    "neck": [
+      96.337,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 7,
+    "score": 0.1613,
+    "neck": [
+      105.0,
+      56
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      95.723,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 9,
+    "score": 0.2261,
+    "neck": [
+      95.54,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 10,
+    "score": 0.2652,
+    "neck": [
+      96.159,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 11,
+    "score": 0.1662,
+    "neck": [
+      105.0,
+      57
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      95.778,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 13,
+    "score": 0.3428,
+    "neck": [
+      95.85,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 14,
+    "score": 0.2607,
+    "neck": [
+      95.504,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 15,
+    "score": 0.1564,
+    "neck": [
+      67.0,
+      54
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      96.261,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 17,
+    "score": 0.4226,
+    "neck": [
+      95.881,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 18,
+    "score": 0.2534,
+    "neck": [
+      95.545,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 19,
+    "score": 0.3655,
+    "neck": [
+      66.5,
+      56
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      96.488,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 21,
+    "score": 0.3763,
+    "neck": [
+      95.922,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 22,
+    "score": 0.2765,
+    "neck": [
+      95.964,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 23,
+    "score": 0.1832,
+    "neck": [
+      120.0,
+      56
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      95.751,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 25,
+    "score": 0.1619,
+    "neck": [
+      95.904,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 26,
+    "score": 0.2109,
+    "neck": [
+      96.251,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 27,
+    "score": 0.2098,
+    "neck": [
+      111.0,
+      55
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      95.789,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 29,
+    "score": 0.3502,
+    "neck": [
+      95.833,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 30,
+    "score": 0.25,
+    "neck": [
+      95.771,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "none",
+    "frame": 31,
+    "score": 0.3743,
+    "neck": [
+      79.0,
+      56
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      96.154,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 1,
+    "score": 0.315,
+    "neck": [
+      96.322,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 2,
+    "score": 0.4781,
+    "neck": [
+      96.038,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 3,
+    "score": 0.1944,
+    "neck": [
+      96.0,
+      55
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      95.716,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 5,
+    "score": 0.2939,
+    "neck": [
+      95.732,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 6,
+    "score": 0.4055,
+    "neck": [
+      96.422,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 7,
+    "score": 0.1672,
+    "neck": [
+      104.0,
+      54
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      96.266,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 9,
+    "score": 0.2894,
+    "neck": [
+      95.899,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 10,
+    "score": 0.3981,
+    "neck": [
+      95.544,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 11,
+    "score": 0.1693,
+    "neck": [
+      105.0,
+      59
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      95.535,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 13,
+    "score": 0.6237,
+    "neck": [
+      96.202,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 14,
+    "score": 0.3867,
+    "neck": [
+      95.937,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 15,
+    "score": 0.1982,
+    "neck": [
+      73.0,
+      55
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      96.183,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 17,
+    "score": 0.5502,
+    "neck": [
+      95.949,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 18,
+    "score": 0.5301,
+    "neck": [
+      96.465,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 19,
+    "score": 0.3046,
+    "neck": [
+      73.0,
+      57
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      95.86,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 21,
+    "score": 0.5489,
+    "neck": [
+      96.066,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 22,
+    "score": 0.429,
+    "neck": [
+      95.814,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 23,
+    "score": 0.1931,
+    "neck": [
+      96.0,
+      60
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      96.217,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 25,
+    "score": 0.3293,
+    "neck": [
+      95.804,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 26,
+    "score": 0.4197,
+    "neck": [
+      95.565,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 27,
+    "score": 0.1941,
+    "neck": [
+      104.0,
+      57
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      95.875,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 29,
+    "score": 0.4102,
+    "neck": [
+      96.432,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 30,
+    "score": 0.3531,
+    "neck": [
+      96.317,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "basic",
+    "frame": 31,
+    "score": 0.3274,
+    "neck": [
+      87.0,
+      57
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      96.24,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 1,
+    "score": 0.2658,
+    "neck": [
+      95.624,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 2,
+    "score": 0.2725,
+    "neck": [
+      95.596,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 3,
+    "score": 0.1241,
+    "neck": [
+      102.0,
+      57
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      95.593,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 5,
+    "score": 0.2211,
+    "neck": [
+      96.236,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 6,
+    "score": 0.2583,
+    "neck": [
+      96.015,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 7,
+    "score": 0.1002,
+    "neck": [
+      110.0,
+      56
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      95.98,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 9,
+    "score": 0.2798,
+    "neck": [
+      96.356,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 10,
+    "score": 0.3419,
+    "neck": [
+      96.086,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 11,
+    "score": 0.1773,
+    "neck": [
+      110.0,
+      56
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      95.568,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 13,
+    "score": 0.5707,
+    "neck": [
+      95.821,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 14,
+    "score": 0.45,
+    "neck": [
+      95.712,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 15,
+    "score": 0.2451,
+    "neck": [
+      80.5,
+      51
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      95.506,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 17,
+    "score": 0.3771,
+    "neck": [
+      96.17,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 18,
+    "score": 0.367,
+    "neck": [
+      96.323,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 19,
+    "score": 0.2504,
+    "neck": [
+      79.0,
+      58
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      96.383,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 21,
+    "score": 0.4209,
+    "neck": [
+      96.498,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 22,
+    "score": 0.4806,
+    "neck": [
+      96.328,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 23,
+    "score": 0.155,
+    "neck": [
+      96.0,
+      57
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      95.791,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 25,
+    "score": 0.2884,
+    "neck": [
+      95.715,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 26,
+    "score": 0.4636,
+    "neck": [
+      96.177,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 27,
+    "score": 0.1176,
+    "neck": [
+      108.0,
+      57
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      96.108,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 29,
+    "score": 0.2152,
+    "neck": [
+      96.312,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 30,
+    "score": 0.2101,
+    "neck": [
+      96.366,
+      55.0
+    ]
+  },
+  {
+    "actor": "warrior-female",
+    "style": "reinforced",
+    "frame": 31,
+    "score": 0.1082,
+    "neck": [
+      89.0,
+      57
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      95.968,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 1,
+    "score": 0.1363,
+    "neck": [
+      95.9,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 2,
+    "score": 0.16,
+    "neck": [
+      95.768,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 3,
+    "score": 0.0994,
+    "neck": [
+      86.0,
+      54
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      96.467,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 5,
+    "score": 0.1594,
+    "neck": [
+      96.499,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 6,
+    "score": 0.223,
+    "neck": [
+      95.531,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 7,
+    "score": 0.1608,
+    "neck": [
+      105.0,
+      55
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      95.796,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 9,
+    "score": 0.2227,
+    "neck": [
+      95.906,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 10,
+    "score": 0.3001,
+    "neck": [
+      96.042,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 11,
+    "score": 0.1503,
+    "neck": [
+      129.0,
+      53
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      95.935,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 13,
+    "score": 0.1768,
+    "neck": [
+      95.801,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 14,
+    "score": 0.2698,
+    "neck": [
+      95.564,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 15,
+    "score": 0.12,
+    "neck": [
+      67.0,
+      55
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      96.151,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 17,
+    "score": 0.1383,
+    "neck": [
+      95.797,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 18,
+    "score": 0.293,
+    "neck": [
+      95.815,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 19,
+    "score": 0.172,
+    "neck": [
+      70.5,
+      52
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      95.894,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 21,
+    "score": 0.1776,
+    "neck": [
+      95.671,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 22,
+    "score": 0.2917,
+    "neck": [
+      96.166,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 23,
+    "score": 0.1416,
+    "neck": [
+      107.0,
+      56
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      95.881,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 25,
+    "score": 0.2015,
+    "neck": [
+      95.584,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 26,
+    "score": 0.1798,
+    "neck": [
+      96.245,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 27,
+    "score": 0.1126,
+    "neck": [
+      111.0,
+      53
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      95.848,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 29,
+    "score": 0.1232,
+    "neck": [
+      95.516,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 30,
+    "score": 0.1764,
+    "neck": [
+      95.808,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "none",
+    "frame": 31,
+    "score": 0.1019,
+    "neck": [
+      98.0,
+      56
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 0,
+    "score": -0.0,
+    "neck": [
+      96.022,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 1,
+    "score": 0.1371,
+    "neck": [
+      95.639,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 2,
+    "score": 0.165,
+    "neck": [
+      96.328,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 3,
+    "score": 0.1385,
+    "neck": [
+      92.0,
+      53
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      95.633,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 5,
+    "score": 0.189,
+    "neck": [
+      96.401,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 6,
+    "score": 0.22,
+    "neck": [
+      96.344,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 7,
+    "score": 0.1878,
+    "neck": [
+      110.0,
+      54
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      96.237,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 9,
+    "score": 0.2238,
+    "neck": [
+      96.281,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 10,
+    "score": 0.2612,
+    "neck": [
+      96.385,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 11,
+    "score": 0.162,
+    "neck": [
+      128.0,
+      53
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      95.97,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 13,
+    "score": 0.1925,
+    "neck": [
+      96.466,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 14,
+    "score": 0.2034,
+    "neck": [
+      96.175,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 15,
+    "score": 0.1559,
+    "neck": [
+      71.5,
+      51
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      95.665,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 17,
+    "score": 0.1454,
+    "neck": [
+      95.602,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 18,
+    "score": 0.3062,
+    "neck": [
+      95.687,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 19,
+    "score": 0.1981,
+    "neck": [
+      75.0,
+      52
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      96.012,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 21,
+    "score": 0.1881,
+    "neck": [
+      96.132,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 22,
+    "score": 0.2201,
+    "neck": [
+      95.598,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 23,
+    "score": 0.1618,
+    "neck": [
+      109.0,
+      57
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      95.767,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 25,
+    "score": 0.1711,
+    "neck": [
+      95.971,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 26,
+    "score": 0.1669,
+    "neck": [
+      96.394,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 27,
+    "score": 0.1439,
+    "neck": [
+      106.0,
+      53
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      96.324,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 29,
+    "score": 0.1633,
+    "neck": [
+      96.411,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 30,
+    "score": 0.1546,
+    "neck": [
+      95.916,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "basic",
+    "frame": 31,
+    "score": 0.134,
+    "neck": [
+      91.0,
+      55
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      95.776,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 1,
+    "score": 0.1648,
+    "neck": [
+      96.136,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 2,
+    "score": 0.1964,
+    "neck": [
+      96.323,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 3,
+    "score": 0.265,
+    "neck": [
+      96.0,
+      53
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      95.827,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 5,
+    "score": 0.2754,
+    "neck": [
+      96.38,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 6,
+    "score": 0.2536,
+    "neck": [
+      95.822,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 7,
+    "score": 0.2102,
+    "neck": [
+      111.0,
+      54
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      95.803,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 9,
+    "score": 0.2504,
+    "neck": [
+      96.13,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 10,
+    "score": 0.2893,
+    "neck": [
+      95.561,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 11,
+    "score": 0.2112,
+    "neck": [
+      129.0,
+      53
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      95.929,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 13,
+    "score": 0.3224,
+    "neck": [
+      95.869,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 14,
+    "score": 0.3153,
+    "neck": [
+      96.237,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 15,
+    "score": 0.3203,
+    "neck": [
+      74.0,
+      55
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      95.554,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 17,
+    "score": 0.2082,
+    "neck": [
+      95.59,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 18,
+    "score": 0.3518,
+    "neck": [
+      95.904,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 19,
+    "score": 0.3022,
+    "neck": [
+      80.0,
+      54
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      96.21,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 21,
+    "score": 0.4322,
+    "neck": [
+      96.473,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 22,
+    "score": 0.3931,
+    "neck": [
+      95.726,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 23,
+    "score": 0.2724,
+    "neck": [
+      108.0,
+      55
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      95.693,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 25,
+    "score": 0.2409,
+    "neck": [
+      95.652,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 26,
+    "score": 0.193,
+    "neck": [
+      96.319,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 27,
+    "score": 0.1597,
+    "neck": [
+      107.0,
+      53
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      96.307,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 29,
+    "score": 0.2428,
+    "neck": [
+      96.229,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 30,
+    "score": 0.2102,
+    "neck": [
+      95.819,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-male",
+    "style": "reinforced",
+    "frame": 31,
+    "score": 0.136,
+    "neck": [
+      100.0,
+      55
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      96.403,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 1,
+    "score": 0.1637,
+    "neck": [
+      96.164,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 2,
+    "score": 0.1487,
+    "neck": [
+      95.939,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 3,
+    "score": 0.1304,
+    "neck": [
+      101.0,
+      54
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      96.433,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 5,
+    "score": 0.2016,
+    "neck": [
+      95.625,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 6,
+    "score": 0.1968,
+    "neck": [
+      96.296,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 7,
+    "score": 0.1268,
+    "neck": [
+      110.0,
+      53
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      95.64,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 9,
+    "score": 0.2743,
+    "neck": [
+      95.875,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 10,
+    "score": 0.2477,
+    "neck": [
+      96.425,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 11,
+    "score": 0.1596,
+    "neck": [
+      127.0,
+      53
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      96.25,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 13,
+    "score": 0.331,
+    "neck": [
+      96.455,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 14,
+    "score": 0.2948,
+    "neck": [
+      96.409,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 15,
+    "score": 0.1523,
+    "neck": [
+      89.5,
+      51
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      95.515,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 17,
+    "score": 0.3436,
+    "neck": [
+      95.702,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 18,
+    "score": 0.4317,
+    "neck": [
+      95.961,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 19,
+    "score": 0.2243,
+    "neck": [
+      77.5,
+      53
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      95.75,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 21,
+    "score": 0.2422,
+    "neck": [
+      96.405,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 22,
+    "score": 0.3464,
+    "neck": [
+      96.331,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 23,
+    "score": 0.1587,
+    "neck": [
+      120.0,
+      54
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      96.372,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 25,
+    "score": 0.2758,
+    "neck": [
+      95.842,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 26,
+    "score": 0.2631,
+    "neck": [
+      95.946,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 27,
+    "score": 0.1178,
+    "neck": [
+      112.0,
+      53
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      95.559,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 29,
+    "score": 0.1798,
+    "neck": [
+      95.898,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 30,
+    "score": 0.2023,
+    "neck": [
+      95.817,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "none",
+    "frame": 31,
+    "score": 0.0965,
+    "neck": [
+      97.0,
+      55
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      96.316,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 1,
+    "score": 0.1557,
+    "neck": [
+      96.343,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 2,
+    "score": 0.1291,
+    "neck": [
+      96.052,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 3,
+    "score": 0.1352,
+    "neck": [
+      101.0,
+      51
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      95.529,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 5,
+    "score": 0.1728,
+    "neck": [
+      95.728,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 6,
+    "score": 0.1657,
+    "neck": [
+      96.04,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 7,
+    "score": 0.1277,
+    "neck": [
+      118.0,
+      53
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 8,
+    "score": -0.0,
+    "neck": [
+      96.117,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 9,
+    "score": 0.2234,
+    "neck": [
+      96.376,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 10,
+    "score": 0.1819,
+    "neck": [
+      95.767,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 11,
+    "score": 0.1277,
+    "neck": [
+      128.0,
+      53
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      95.769,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 13,
+    "score": 0.2424,
+    "neck": [
+      95.701,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 14,
+    "score": 0.2177,
+    "neck": [
+      96.239,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 15,
+    "score": 0.1514,
+    "neck": [
+      91.5,
+      51
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      95.784,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 17,
+    "score": 0.2386,
+    "neck": [
+      96.173,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 18,
+    "score": 0.345,
+    "neck": [
+      95.928,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 19,
+    "score": 0.2331,
+    "neck": [
+      89.5,
+      52
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      96.465,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 21,
+    "score": 0.1919,
+    "neck": [
+      96.372,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 22,
+    "score": 0.2009,
+    "neck": [
+      95.908,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 23,
+    "score": 0.1263,
+    "neck": [
+      119.0,
+      52
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      96.361,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 25,
+    "score": 0.2084,
+    "neck": [
+      96.422,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 26,
+    "score": 0.2014,
+    "neck": [
+      96.028,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 27,
+    "score": 0.123,
+    "neck": [
+      106.0,
+      53
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      95.62,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 29,
+    "score": 0.1493,
+    "neck": [
+      96.462,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 30,
+    "score": 0.1551,
+    "neck": [
+      95.9,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "basic",
+    "frame": 31,
+    "score": 0.0951,
+    "neck": [
+      104.0,
+      57
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      95.513,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 1,
+    "score": 0.2908,
+    "neck": [
+      95.897,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 2,
+    "score": 0.2153,
+    "neck": [
+      95.668,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 3,
+    "score": 0.2058,
+    "neck": [
+      105.0,
+      56
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      95.572,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 5,
+    "score": 0.3089,
+    "neck": [
+      96.215,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 6,
+    "score": 0.2985,
+    "neck": [
+      96.479,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 7,
+    "score": 0.1852,
+    "neck": [
+      109.0,
+      53
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      96.372,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 9,
+    "score": 0.3134,
+    "neck": [
+      95.692,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 10,
+    "score": 0.3167,
+    "neck": [
+      96.327,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 11,
+    "score": 0.1431,
+    "neck": [
+      130.0,
+      53
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      95.785,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 13,
+    "score": 0.3743,
+    "neck": [
+      95.666,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 14,
+    "score": 0.3801,
+    "neck": [
+      95.56,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 15,
+    "score": 0.2942,
+    "neck": [
+      79,
+      56
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      95.763,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 17,
+    "score": 0.341,
+    "neck": [
+      95.524,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 18,
+    "score": 0.5101,
+    "neck": [
+      96.208,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 19,
+    "score": 0.4507,
+    "neck": [
+      87,
+      56
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      96.307,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 21,
+    "score": 0.3767,
+    "neck": [
+      95.601,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 22,
+    "score": 0.3893,
+    "neck": [
+      96.402,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 23,
+    "score": 0.1705,
+    "neck": [
+      116.0,
+      57
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      96.205,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 25,
+    "score": 0.2989,
+    "neck": [
+      96.209,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 26,
+    "score": 0.2509,
+    "neck": [
+      95.609,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 27,
+    "score": 0.2117,
+    "neck": [
+      108.0,
+      56
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      96.196,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 29,
+    "score": 0.2829,
+    "neck": [
+      95.692,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 30,
+    "score": 0.2528,
+    "neck": [
+      95.795,
+      55.0
+    ]
+  },
+  {
+    "actor": "hunter-female",
+    "style": "reinforced",
+    "frame": 31,
+    "score": 0.1118,
+    "neck": [
+      107.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      99.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 1,
+    "score": 0.1453,
+    "neck": [
+      93.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 2,
+    "score": 0.1366,
+    "neck": [
+      105.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 3,
+    "score": 0.1419,
+    "neck": [
+      85.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      111.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 5,
+    "score": 0.1458,
+    "neck": [
+      84.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 6,
+    "score": 0.1696,
+    "neck": [
+      85.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 7,
+    "score": 0.2499,
+    "neck": [
+      120.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      107.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 9,
+    "score": 0.2071,
+    "neck": [
+      78.0,
+      53
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 10,
+    "score": 0.2174,
+    "neck": [
+      79.0,
+      59
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 11,
+    "score": 0.2505,
+    "neck": [
+      114.0,
+      60
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      91.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 13,
+    "score": 0.2341,
+    "neck": [
+      118.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 14,
+    "score": 0.2831,
+    "neck": [
+      90.5,
+      50
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 15,
+    "score": 0.2434,
+    "neck": [
+      66.0,
+      53
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      90.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 17,
+    "score": 0.1665,
+    "neck": [
+      88.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 18,
+    "score": 0.1784,
+    "neck": [
+      92.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 19,
+    "score": 0.1958,
+    "neck": [
+      62.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      106.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 21,
+    "score": 0.2627,
+    "neck": [
+      121.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 22,
+    "score": 0.2249,
+    "neck": [
+      123.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 23,
+    "score": 0.2682,
+    "neck": [
+      131.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      71.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 25,
+    "score": 0.2059,
+    "neck": [
+      114.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 26,
+    "score": 0.1815,
+    "neck": [
+      119.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 27,
+    "score": 0.1872,
+    "neck": [
+      74.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      61.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 29,
+    "score": 0.2322,
+    "neck": [
+      108.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 30,
+    "score": 0.288,
+    "neck": [
+      104.0,
+      58
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "none",
+    "frame": 31,
+    "score": 0.2525,
+    "neck": [
+      113.0,
+      60
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      98.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 1,
+    "score": 0.1568,
+    "neck": [
+      91.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 2,
+    "score": 0.1703,
+    "neck": [
+      106.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 3,
+    "score": 0.1922,
+    "neck": [
+      78.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      106.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 5,
+    "score": 0.1597,
+    "neck": [
+      82.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 6,
+    "score": 0.1815,
+    "neck": [
+      83.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 7,
+    "score": 0.2234,
+    "neck": [
+      120.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      108.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 9,
+    "score": 0.1802,
+    "neck": [
+      77.0,
+      50
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 10,
+    "score": 0.1785,
+    "neck": [
+      80.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 11,
+    "score": 0.2555,
+    "neck": [
+      115.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      90.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 13,
+    "score": 0.2231,
+    "neck": [
+      118.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 14,
+    "score": 0.1888,
+    "neck": [
+      89.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 15,
+    "score": 0.2317,
+    "neck": [
+      62.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      92.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 17,
+    "score": 0.1392,
+    "neck": [
+      87.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 18,
+    "score": 0.1409,
+    "neck": [
+      90.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 19,
+    "score": 0.1664,
+    "neck": [
+      65.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      106.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 21,
+    "score": 0.2085,
+    "neck": [
+      118.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 22,
+    "score": 0.1641,
+    "neck": [
+      119.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 23,
+    "score": 0.1594,
+    "neck": [
+      127.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      71.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 25,
+    "score": 0.1598,
+    "neck": [
+      112.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 26,
+    "score": 0.1875,
+    "neck": [
+      119.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 27,
+    "score": 0.1814,
+    "neck": [
+      76.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      61.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 29,
+    "score": 0.2374,
+    "neck": [
+      109.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 30,
+    "score": 0.2398,
+    "neck": [
+      103.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "basic",
+    "frame": 31,
+    "score": 0.2255,
+    "neck": [
+      108.0,
+      59
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      100.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 1,
+    "score": 0.1408,
+    "neck": [
+      92.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 2,
+    "score": 0.1246,
+    "neck": [
+      107.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 3,
+    "score": 0.1464,
+    "neck": [
+      86.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      106.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 5,
+    "score": 0.1217,
+    "neck": [
+      83.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 6,
+    "score": 0.1118,
+    "neck": [
+      83.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 7,
+    "score": 0.1699,
+    "neck": [
+      118.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      107.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 9,
+    "score": 0.1972,
+    "neck": [
+      76.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 10,
+    "score": 0.1894,
+    "neck": [
+      79.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 11,
+    "score": 0.3152,
+    "neck": [
+      113.0,
+      61
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      95.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 13,
+    "score": 0.1201,
+    "neck": [
+      109.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 14,
+    "score": 0.1149,
+    "neck": [
+      93.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 15,
+    "score": 0.0969,
+    "neck": [
+      66.0,
+      58
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      96.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 17,
+    "score": 0.2099,
+    "neck": [
+      90.0,
+      47
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 18,
+    "score": 0.1936,
+    "neck": [
+      92.0,
+      47
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 19,
+    "score": 0.1766,
+    "neck": [
+      72.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      107.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 21,
+    "score": 0.2441,
+    "neck": [
+      122.0,
+      53
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 22,
+    "score": 0.1813,
+    "neck": [
+      121.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 23,
+    "score": 0.1785,
+    "neck": [
+      126.0,
+      53
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      72.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 25,
+    "score": 0.1408,
+    "neck": [
+      111.0,
+      53
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 26,
+    "score": 0.1438,
+    "neck": [
+      114.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 27,
+    "score": 0.1328,
+    "neck": [
+      75.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 28,
+    "score": -0.0,
+    "neck": [
+      63.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 29,
+    "score": 0.2249,
+    "neck": [
+      111.0,
+      48
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 30,
+    "score": 0.1465,
+    "neck": [
+      106.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-male",
+    "style": "reinforced",
+    "frame": 31,
+    "score": 0.1309,
+    "neck": [
+      100.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      97.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 1,
+    "score": 0.1204,
+    "neck": [
+      93.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 2,
+    "score": 0.1261,
+    "neck": [
+      105.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 3,
+    "score": 0.1359,
+    "neck": [
+      85.0,
+      58
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      106.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 5,
+    "score": 0.112,
+    "neck": [
+      85.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 6,
+    "score": 0.197,
+    "neck": [
+      82.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 7,
+    "score": 0.2415,
+    "neck": [
+      105.0,
+      58
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      109.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 9,
+    "score": 0.1991,
+    "neck": [
+      70.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 10,
+    "score": 0.1891,
+    "neck": [
+      68.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 11,
+    "score": 0.2176,
+    "neck": [
+      111.0,
+      60
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      81.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 13,
+    "score": 0.2,
+    "neck": [
+      112.0,
+      53
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 14,
+    "score": 0.167,
+    "neck": [
+      118.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 15,
+    "score": 0.195,
+    "neck": [
+      51.0,
+      58
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      95.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 17,
+    "score": 0.2241,
+    "neck": [
+      95.0,
+      53
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 18,
+    "score": 0.2209,
+    "neck": [
+      104.0,
+      52
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 19,
+    "score": 0.2929,
+    "neck": [
+      116.5,
+      59
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      103.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 21,
+    "score": 0.183,
+    "neck": [
+      76.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 22,
+    "score": 0.162,
+    "neck": [
+      73.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 23,
+    "score": 0.2268,
+    "neck": [
+      127.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      107.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 25,
+    "score": 0.1714,
+    "neck": [
+      121.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 26,
+    "score": 0.1915,
+    "neck": [
+      127.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 27,
+    "score": 0.2231,
+    "neck": [
+      77.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      65.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 29,
+    "score": 0.0869,
+    "neck": [
+      105.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 30,
+    "score": 0.1031,
+    "neck": [
+      110.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "none",
+    "frame": 31,
+    "score": 0.4775,
+    "neck": [
+      148.5,
+      74
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      97.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 1,
+    "score": 0.1819,
+    "neck": [
+      92.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 2,
+    "score": 0.2122,
+    "neck": [
+      104.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 3,
+    "score": 0.2626,
+    "neck": [
+      86.0,
+      60
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      106.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 5,
+    "score": 0.151,
+    "neck": [
+      85.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 6,
+    "score": 0.219,
+    "neck": [
+      81.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 7,
+    "score": 0.2391,
+    "neck": [
+      103.0,
+      59
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 8,
+    "score": -0.0,
+    "neck": [
+      109.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 9,
+    "score": 0.2295,
+    "neck": [
+      72.0,
+      58
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 10,
+    "score": 0.2527,
+    "neck": [
+      68.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 11,
+    "score": 0.2488,
+    "neck": [
+      111.0,
+      60
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      81.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 13,
+    "score": 0.1983,
+    "neck": [
+      113.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 14,
+    "score": 0.2161,
+    "neck": [
+      117.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 15,
+    "score": 0.2232,
+    "neck": [
+      51.0,
+      60
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      96.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 17,
+    "score": 0.2772,
+    "neck": [
+      93.5,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 18,
+    "score": 0.3003,
+    "neck": [
+      102.5,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 19,
+    "score": 0.3122,
+    "neck": [
+      116.5,
+      59
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      103.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 21,
+    "score": 0.1981,
+    "neck": [
+      77.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 22,
+    "score": 0.1717,
+    "neck": [
+      75.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 23,
+    "score": 0.2171,
+    "neck": [
+      127.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      106.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 25,
+    "score": 0.1919,
+    "neck": [
+      124.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 26,
+    "score": 0.1781,
+    "neck": [
+      128.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 27,
+    "score": 0.2466,
+    "neck": [
+      76.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      65.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 29,
+    "score": 0.1882,
+    "neck": [
+      106.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 30,
+    "score": 0.18,
+    "neck": [
+      111.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "basic",
+    "frame": 31,
+    "score": 0.4473,
+    "neck": [
+      119.5,
+      59
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      96.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 1,
+    "score": 0.1575,
+    "neck": [
+      91.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 2,
+    "score": 0.1045,
+    "neck": [
+      103.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 3,
+    "score": 0.1597,
+    "neck": [
+      91.0,
+      57
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      106.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 5,
+    "score": 0.118,
+    "neck": [
+      83.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 6,
+    "score": 0.1713,
+    "neck": [
+      84.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 7,
+    "score": 0.1616,
+    "neck": [
+      104.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 8,
+    "score": -0.0,
+    "neck": [
+      105.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 9,
+    "score": 0.1912,
+    "neck": [
+      72.0,
+      52
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 10,
+    "score": 0.1677,
+    "neck": [
+      72.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 11,
+    "score": 0.1858,
+    "neck": [
+      110.0,
+      52
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      79.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 13,
+    "score": 0.1806,
+    "neck": [
+      111.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 14,
+    "score": 0.1981,
+    "neck": [
+      114.0,
+      53
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 15,
+    "score": 0.2123,
+    "neck": [
+      51.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      93.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 17,
+    "score": 0.1612,
+    "neck": [
+      96.0,
+      53
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 18,
+    "score": 0.1853,
+    "neck": [
+      103.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 19,
+    "score": 0.1842,
+    "neck": [
+      111.5,
+      61
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      106.0,
+      56
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 21,
+    "score": 0.1623,
+    "neck": [
+      81.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 22,
+    "score": 0.1825,
+    "neck": [
+      76.0,
+      53
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 23,
+    "score": 0.1701,
+    "neck": [
+      128.0,
+      53
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      109.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 25,
+    "score": 0.187,
+    "neck": [
+      126.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 26,
+    "score": 0.1654,
+    "neck": [
+      131.0,
+      53
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 27,
+    "score": 0.1918,
+    "neck": [
+      85.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      68.0,
+      55
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 29,
+    "score": 0.1566,
+    "neck": [
+      110.0,
+      53
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 30,
+    "score": 0.1279,
+    "neck": [
+      116.0,
+      54
+    ]
+  },
+  {
+    "actor": "astral-female",
+    "style": "reinforced",
+    "frame": 31,
+    "score": 0.3711,
+    "neck": [
+      117.5,
+      52
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      99.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 1,
+    "score": 0.1762,
+    "neck": [
+      94.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 2,
+    "score": 0.1571,
+    "neck": [
+      102.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 3,
+    "score": 0.1786,
+    "neck": [
+      88.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      106.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 5,
+    "score": 0.1697,
+    "neck": [
+      82.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 6,
+    "score": 0.1656,
+    "neck": [
+      82.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 7,
+    "score": 0.1589,
+    "neck": [
+      119.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      109.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 9,
+    "score": 0.1656,
+    "neck": [
+      76.0,
+      54
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 10,
+    "score": 0.1605,
+    "neck": [
+      74.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 11,
+    "score": 0.1961,
+    "neck": [
+      116.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      99.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 13,
+    "score": 0.1397,
+    "neck": [
+      119.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 14,
+    "score": 0.1267,
+    "neck": [
+      95.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 15,
+    "score": 0.1413,
+    "neck": [
+      71.5,
+      53
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      93.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 17,
+    "score": 0.1324,
+    "neck": [
+      93.5,
+      54
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 18,
+    "score": 0.1316,
+    "neck": [
+      88.5,
+      54
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 19,
+    "score": 0.1356,
+    "neck": [
+      78.5,
+      49
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      112.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 21,
+    "score": 0.1471,
+    "neck": [
+      117.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 22,
+    "score": 0.1528,
+    "neck": [
+      127.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 23,
+    "score": 0.1672,
+    "neck": [
+      112.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      74.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 25,
+    "score": 0.1234,
+    "neck": [
+      118.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 26,
+    "score": 0.1183,
+    "neck": [
+      121.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 27,
+    "score": 0.1448,
+    "neck": [
+      73.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      63.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 29,
+    "score": 0.1934,
+    "neck": [
+      109.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 30,
+    "score": 0.1698,
+    "neck": [
+      107.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "none",
+    "frame": 31,
+    "score": 0.1448,
+    "neck": [
+      110.0,
+      59
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      98.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 1,
+    "score": 0.2582,
+    "neck": [
+      96.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 2,
+    "score": 0.2371,
+    "neck": [
+      103.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 3,
+    "score": 0.2183,
+    "neck": [
+      92.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 4,
+    "score": -0.0,
+    "neck": [
+      104.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 5,
+    "score": 0.1921,
+    "neck": [
+      82.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 6,
+    "score": 0.1832,
+    "neck": [
+      81.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 7,
+    "score": 0.1976,
+    "neck": [
+      118.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      110.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 9,
+    "score": 0.1624,
+    "neck": [
+      78.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 10,
+    "score": 0.1479,
+    "neck": [
+      76.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 11,
+    "score": 0.1895,
+    "neck": [
+      117.0,
+      54
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      98.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 13,
+    "score": 0.1985,
+    "neck": [
+      109.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 14,
+    "score": 0.2118,
+    "neck": [
+      94.0,
+      53
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 15,
+    "score": 0.218,
+    "neck": [
+      82.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      93.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 17,
+    "score": 0.2551,
+    "neck": [
+      96.0,
+      49
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 18,
+    "score": 0.2637,
+    "neck": [
+      93.0,
+      49
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 19,
+    "score": 0.2057,
+    "neck": [
+      87.0,
+      54
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      114.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 21,
+    "score": 0.1678,
+    "neck": [
+      119.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 22,
+    "score": 0.1709,
+    "neck": [
+      124.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 23,
+    "score": 0.2015,
+    "neck": [
+      114.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      74.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 25,
+    "score": 0.1688,
+    "neck": [
+      118.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 26,
+    "score": 0.1652,
+    "neck": [
+      121.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 27,
+    "score": 0.2113,
+    "neck": [
+      75.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      66.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 29,
+    "score": 0.1821,
+    "neck": [
+      113.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 30,
+    "score": 0.1926,
+    "neck": [
+      111.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "basic",
+    "frame": 31,
+    "score": 0.2122,
+    "neck": [
+      112.0,
+      60
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      98.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 1,
+    "score": 0.1847,
+    "neck": [
+      95.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 2,
+    "score": 0.1758,
+    "neck": [
+      104.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 3,
+    "score": 0.1803,
+    "neck": [
+      95.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      101.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 5,
+    "score": 0.19,
+    "neck": [
+      86.0,
+      49
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 6,
+    "score": 0.1847,
+    "neck": [
+      85.0,
+      53
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 7,
+    "score": 0.1727,
+    "neck": [
+      119.0,
+      54
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      105.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 9,
+    "score": 0.1404,
+    "neck": [
+      76.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 10,
+    "score": 0.1576,
+    "neck": [
+      73.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 11,
+    "score": 0.2312,
+    "neck": [
+      116.0,
+      61
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      99.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 13,
+    "score": 0.1572,
+    "neck": [
+      108.0,
+      53
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 14,
+    "score": 0.1157,
+    "neck": [
+      96.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 15,
+    "score": 0.1741,
+    "neck": [
+      73.0,
+      54
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      94.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 17,
+    "score": 0.1816,
+    "neck": [
+      95.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 18,
+    "score": 0.1567,
+    "neck": [
+      88.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 19,
+    "score": 0.1565,
+    "neck": [
+      86.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      114.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 21,
+    "score": 0.1536,
+    "neck": [
+      118.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 22,
+    "score": 0.1582,
+    "neck": [
+      122.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 23,
+    "score": 0.1791,
+    "neck": [
+      113.0,
+      59
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 24,
+    "score": -0.0,
+    "neck": [
+      92.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 25,
+    "score": 0.1156,
+    "neck": [
+      114.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 26,
+    "score": 0.131,
+    "neck": [
+      116.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 27,
+    "score": 0.1549,
+    "neck": [
+      81.0,
+      59
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      66.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 29,
+    "score": 0.1687,
+    "neck": [
+      118.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 30,
+    "score": 0.1422,
+    "neck": [
+      114.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-male",
+    "style": "reinforced",
+    "frame": 31,
+    "score": 0.2128,
+    "neck": [
+      109.0,
+      66
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      97.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 1,
+    "score": 0.1645,
+    "neck": [
+      93.0,
+      54
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 2,
+    "score": 0.1322,
+    "neck": [
+      101.0,
+      54
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 3,
+    "score": 0.1303,
+    "neck": [
+      85.0,
+      54
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      108.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 5,
+    "score": 0.1464,
+    "neck": [
+      84.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 6,
+    "score": 0.1601,
+    "neck": [
+      80.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 7,
+    "score": 0.1615,
+    "neck": [
+      117.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      102.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 9,
+    "score": 0.162,
+    "neck": [
+      76.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 10,
+    "score": 0.1701,
+    "neck": [
+      73.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 11,
+    "score": 0.1903,
+    "neck": [
+      116.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      100.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 13,
+    "score": 0.2116,
+    "neck": [
+      118.0,
+      52
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 14,
+    "score": 0.1991,
+    "neck": [
+      92.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 15,
+    "score": 0.2136,
+    "neck": [
+      81.5,
+      52
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      95.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 17,
+    "score": 0.1724,
+    "neck": [
+      92.5,
+      52
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 18,
+    "score": 0.1572,
+    "neck": [
+      88.5,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 19,
+    "score": 0.1786,
+    "neck": [
+      82.5,
+      52
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      114.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 21,
+    "score": 0.1412,
+    "neck": [
+      119.0,
+      54
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 22,
+    "score": 0.1382,
+    "neck": [
+      121.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 23,
+    "score": 0.1384,
+    "neck": [
+      109.0,
+      54
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      74.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 25,
+    "score": 0.1421,
+    "neck": [
+      117.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 26,
+    "score": 0.1296,
+    "neck": [
+      120.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 27,
+    "score": 0.1603,
+    "neck": [
+      69.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 28,
+    "score": -0.0,
+    "neck": [
+      65.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 29,
+    "score": 0.1522,
+    "neck": [
+      115.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 30,
+    "score": 0.1421,
+    "neck": [
+      108.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "none",
+    "frame": 31,
+    "score": 0.1208,
+    "neck": [
+      111.0,
+      59
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      98.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 1,
+    "score": 0.1726,
+    "neck": [
+      97.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 2,
+    "score": 0.1847,
+    "neck": [
+      105.0,
+      54
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 3,
+    "score": 0.1583,
+    "neck": [
+      102.0,
+      54
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      113.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 5,
+    "score": 0.1696,
+    "neck": [
+      87.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 6,
+    "score": 0.178,
+    "neck": [
+      86.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 7,
+    "score": 0.139,
+    "neck": [
+      119.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      106.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 9,
+    "score": 0.1192,
+    "neck": [
+      75.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 10,
+    "score": 0.1229,
+    "neck": [
+      74.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 11,
+    "score": 0.1293,
+    "neck": [
+      111.0,
+      61
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      96.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 13,
+    "score": 0.0826,
+    "neck": [
+      119.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 14,
+    "score": 0.0772,
+    "neck": [
+      90.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 15,
+    "score": 0.0921,
+    "neck": [
+      91.0,
+      58
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      99.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 17,
+    "score": 0.1753,
+    "neck": [
+      114.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 18,
+    "score": 0.1651,
+    "neck": [
+      92.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 19,
+    "score": 0.1682,
+    "neck": [
+      96.0,
+      53
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      107.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 21,
+    "score": 0.1271,
+    "neck": [
+      116.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 22,
+    "score": 0.1191,
+    "neck": [
+      119.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 23,
+    "score": 0.1184,
+    "neck": [
+      110.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      81.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 25,
+    "score": 0.1196,
+    "neck": [
+      117.0,
+      58
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 26,
+    "score": 0.1203,
+    "neck": [
+      119.0,
+      58
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 27,
+    "score": 0.1383,
+    "neck": [
+      83.0,
+      60
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      68.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 29,
+    "score": 0.1116,
+    "neck": [
+      123.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 30,
+    "score": 0.0972,
+    "neck": [
+      117.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "basic",
+    "frame": 31,
+    "score": 0.1538,
+    "neck": [
+      109.0,
+      58
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 0,
+    "score": 0.0,
+    "neck": [
+      96.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 1,
+    "score": 0.1539,
+    "neck": [
+      97.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 2,
+    "score": 0.1549,
+    "neck": [
+      105.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 3,
+    "score": 0.1529,
+    "neck": [
+      101.0,
+      53
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 4,
+    "score": 0.0,
+    "neck": [
+      101.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 5,
+    "score": 0.1986,
+    "neck": [
+      90.0,
+      51
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 6,
+    "score": 0.1977,
+    "neck": [
+      90.0,
+      51
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 7,
+    "score": 0.1545,
+    "neck": [
+      122.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 8,
+    "score": 0.0,
+    "neck": [
+      104.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 9,
+    "score": 0.1582,
+    "neck": [
+      75.0,
+      57
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 10,
+    "score": 0.0991,
+    "neck": [
+      76.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 11,
+    "score": 0.1274,
+    "neck": [
+      111.0,
+      63
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 12,
+    "score": 0.0,
+    "neck": [
+      98.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 13,
+    "score": 0.1256,
+    "neck": [
+      117.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 14,
+    "score": 0.127,
+    "neck": [
+      95.0,
+      52
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 15,
+    "score": 0.0767,
+    "neck": [
+      89.0,
+      59
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 16,
+    "score": 0.0,
+    "neck": [
+      101.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 17,
+    "score": 0.1569,
+    "neck": [
+      113.0,
+      58
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 18,
+    "score": 0.1051,
+    "neck": [
+      90.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 19,
+    "score": 0.1005,
+    "neck": [
+      95.0,
+      61
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 20,
+    "score": 0.0,
+    "neck": [
+      108.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 21,
+    "score": 0.1054,
+    "neck": [
+      113.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 22,
+    "score": 0.0925,
+    "neck": [
+      116.0,
+      56
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 23,
+    "score": 0.1429,
+    "neck": [
+      107.0,
+      60
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 24,
+    "score": 0.0,
+    "neck": [
+      84.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 25,
+    "score": 0.0818,
+    "neck": [
+      115.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 26,
+    "score": 0.0908,
+    "neck": [
+      114.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 27,
+    "score": 0.1459,
+    "neck": [
+      99.0,
+      60
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 28,
+    "score": 0.0,
+    "neck": [
+      68.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 29,
+    "score": 0.0583,
+    "neck": [
+      123.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 30,
+    "score": 0.0495,
+    "neck": [
+      117.0,
+      55
+    ]
+  },
+  {
+    "actor": "xenobinder-female",
+    "style": "reinforced",
+    "frame": 31,
+    "score": 0.1162,
+    "neck": [
+      97.0,
+      63
+    ]
+  }
+]
