@@ -1,6 +1,6 @@
 # Personagens completos — 0.1.111
 
-**Revisão atual:** [0.1.113 — equipamento consistente e prévias reais](revision-03/README.md). [Revisão 0.1.112](revision-02/README.md). O texto abaixo preserva o relatório da entrega original; links antigos do laboratório carregam os assets atuais.
+**Revisão atual:** [0.1.114 — Guerreira e diagonais do Hunter](revision-04/README.md). [Revisão 0.1.113](revision-03/README.md). [Revisão 0.1.112](revision-02/README.md). O texto abaixo preserva o relatório da entrega original; links antigos do laboratório carregam os assets atuais.
 
 O usuário aprovou a prova do Astral feminino e autorizou expandir a mesma técnica às quatro classes. Esta entrega aplica **poses pintadas de pessoas inteiras** ao Guerreiro, Hunter, Astral e Domador de feras, masculino/feminino, na seleção, na campanha e nos aliados cooperativos. Organic Sci-Fi R3 / D preservado.
 

@@ -1,0 +1,627 @@
+{
+  "passed": true,
+  "errors": [],
+  "views": [
+    {
+      "cls": "warrior",
+      "sex": "female",
+      "style": "none",
+      "skyInk": [
+        0,
+        0
+      ],
+      "connected": [
+        {
+          "row": 0,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "headFraction": 0.9986754966887417
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "headFraction": 0.9986754966887417
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "headFraction": 0.9986754966887417
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "headFraction": 0.9986754966887417
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 7,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 7,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 7,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 7,
+          "col": 3,
+          "headFraction": 1
+        }
+      ]
+    },
+    {
+      "cls": "warrior",
+      "sex": "female",
+      "style": "basic",
+      "skyInk": [
+        0,
+        0
+      ],
+      "connected": [
+        {
+          "row": 0,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 7,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 7,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 7,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 7,
+          "col": 3,
+          "headFraction": 1
+        }
+      ]
+    },
+    {
+      "cls": "warrior",
+      "sex": "female",
+      "style": "reinforced",
+      "skyInk": [
+        0,
+        0
+      ],
+      "connected": [
+        {
+          "row": 0,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "headFraction": 1
+        },
+        {
+          "row": 7,
+          "col": 0,
+          "headFraction": 1
+        },
+        {
+          "row": 7,
+          "col": 1,
+          "headFraction": 1
+        },
+        {
+          "row": 7,
+          "col": 2,
+          "headFraction": 1
+        },
+        {
+          "row": 7,
+          "col": 3,
+          "headFraction": 1
+        }
+      ]
+    },
+    {
+      "cls": "hunter",
+      "sex": "male",
+      "style": "none",
+      "beforeRatios": [
+        1.0740740740740742,
+        1.2567901234567902
+      ],
+      "afterRatios": [
+        1.0518518518518518,
+        1.1135802469135803
+      ],
+      "calibration": [
+        1,
+        0.97,
+        0.92
+      ]
+    },
+    {
+      "cls": "hunter",
+      "sex": "male",
+      "style": "basic",
+      "beforeRatios": [
+        1.0813953488372092,
+        1.067829457364341
+      ],
+      "afterRatios": [
+        1.0775193798449612,
+        0.9108527131782945
+      ],
+      "calibration": [
+        1,
+        0.97,
+        0.92
+      ]
+    },
+    {
+      "cls": "hunter",
+      "sex": "male",
+      "style": "reinforced",
+      "beforeRatios": [
+        1.0813953488372092,
+        1
+      ],
+      "afterRatios": [
+        1.0775193798449612,
+        0.8992248062015504
+      ],
+      "calibration": [
+        1,
+        0.97,
+        0.92
+      ]
+    },
+    {
+      "cls": "hunter",
+      "sex": "female",
+      "style": "none",
+      "beforeRatios": [
+        1.2716346153846154,
+        1.4158653846153846
+      ],
+      "afterRatios": [
+        1.1682692307692308,
+        1.1778846153846154
+      ],
+      "calibration": [
+        1,
+        0.94,
+        0.88
+      ]
+    },
+    {
+      "cls": "hunter",
+      "sex": "female",
+      "style": "basic",
+      "beforeRatios": [
+        1.1158088235294117,
+        1.125
+      ],
+      "afterRatios": [
+        1.0220588235294117,
+        0.9356617647058824
+      ],
+      "calibration": [
+        1,
+        0.94,
+        0.88
+      ]
+    },
+    {
+      "cls": "hunter",
+      "sex": "female",
+      "style": "reinforced",
+      "beforeRatios": [
+        1.1158088235294117,
+        1.125
+      ],
+      "afterRatios": [
+        1.0220588235294117,
+        0.9356617647058824
+      ],
+      "calibration": [
+        1,
+        0.94,
+        0.88
+      ]
+    }
+  ]
+}

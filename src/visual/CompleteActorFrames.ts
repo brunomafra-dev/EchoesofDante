@@ -1,6 +1,7 @@
 import { type CharacterSex,type EquipmentLook, type ProtectionStyle, type WeaponStyle } from '../config/appearance';
 import type { PlayableClass } from '../config/classes';
 import registration from './actorRegistration.json';
+import warriorFemaleHeads from './warriorFemaleHeads.json';
 
 export const COMPLETE_FRAME=192, COMPLETE_FEET=183, COMPLETE_DISPLAY=128;
 export const COMPLETE_STYLES=['none','basic','reinforced'] as const;
@@ -15,6 +16,14 @@ export function completeFrame(aim:number,travel:number,walking:boolean,action:bo
  return completeDirection(aim)*4+column;
 }
 export function completeKey(classId:PlayableClass,sex:string,style:ProtectionStyle):string{return `complete-${classId}-${sex}-${style}`;}
+
+// Authored three-quarter Hunter paintings have extra apparent mass. Calibrate
+// the COMPLETE figure once in the atlas, uniformly about its ground contact.
+// Never change Image/container/camera scale as the player moves the cursor.
+export function completeViewScale(classId:PlayableClass,sex:CharacterSex,row:number):number{
+ if(classId!=='hunter')return 1;
+ return row===1?(sex==='female'?.94:.97):row===7?(sex==='female'?.88:.92):1;
+}
 
 // Optical anchors in the authored action poses. Simulation still starts on the
 // original ground-plane ray; these coordinates only place the visible emission.
@@ -32,7 +41,8 @@ export function completeRegistration(classId:PlayableClass,sex:CharacterSex,styl
 export function completeMuzzle(classId:PlayableClass,aim:number,sex:CharacterSex='male',style:ProtectionStyle='none'):{x:number;y:number}{
  const [x,y]=EMITTERS[classId][completeDirection(aim)];
  const p=completeRegistration(classId,sex,style,completeDirection(aim)*4+3);
- return{x:(x*p.scale+p.x-96)*COMPLETE_DISPLAY/COMPLETE_FRAME,y:39+(y*p.scale+p.y-COMPLETE_FEET)*COMPLETE_DISPLAY/COMPLETE_FRAME};
+ const view=completeViewScale(classId,sex,completeDirection(aim));
+ return{x:(x*p.scale+p.x-96)*view*COMPLETE_DISPLAY/COMPLETE_FRAME,y:39+(y*p.scale+p.y-COMPLETE_FEET)*view*COMPLETE_DISPLAY/COMPLETE_FRAME};
 }
 
 // Clothing changes replace pixels in a complete registered pose, once on equip.
@@ -41,8 +51,14 @@ export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record
  const size=COMPLETE_FRAME;
  const weaponTier:ProtectionStyle=weapon==='starter'?'none':weapon==='current'?'basic':'reinforced';
  ctx.clearRect(0,0,size*4,size*8);
+ const atlas=ctx,tile=document.createElement('canvas');tile.width=size;tile.height=size;
+ ctx=tile.getContext('2d')!;
  for(let f=0;f<32;f++){
-  const x=f%4*size,y=Math.floor(f/4)*size;
+  // Identical local coordinates avoid subpixel rounding changing the head
+  // between atlas columns after uniform view calibration.
+  const x=0,y=0;ctx.clearRect(0,0,size,size);
+  const view=completeViewScale(classId,sex,Math.floor(f/4));
+  ctx.save();ctx.translate(x+96*(1-view),y+COMPLETE_FEET*(1-view));ctx.scale(view,view);ctx.translate(-x,-y);
   const draw=(style:ProtectionStyle,sourceFrame=f)=>{
    const p=completeRegistration(classId,sex,style,sourceFrame);
    ctx.save();ctx.beginPath();ctx.rect(x,y,size,size);ctx.clip();
@@ -83,10 +99,27 @@ export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record
   // A rectangular strip across the whole sprite erased raised hands and let
   // an unhelmeted action painting replace the equipped helmet.
   const rowHead=Math.floor(f/4)*4;
+  if(classId==='hunter'){
+   // Empty sky beside the registered skull must not retain a gutter fragment.
+   ctx.clearRect(x,y,65,36);ctx.clearRect(x+127,y,65,36);
+  }
   const headStyle=classId==='hunter'&&look.helmet==='basic'?'reinforced':look.helmet;
-  const headFrame=classId==='xenobinder'&&headStyle==='reinforced'&&rowHead===16?12:rowHead+(classId==='hunter'&&headStyle!=='none'?1:0);
-  ctx.save();ctx.beginPath();ctx.moveTo(x+65,y);ctx.lineTo(x+127,y);ctx.lineTo(x+127,y+42);
-  ctx.lineTo(x+116,y+55);ctx.lineTo(x+76,y+55);ctx.lineTo(x+65,y+42);ctx.closePath();ctx.clip();
-  ctx.clearRect(x+65,y,62,55);draw(headStyle,headFrame);ctx.restore();
+  const femaleContact=classId==='warrior'&&sex==='female'&&(row===2||row===4);
+  const headFrame=classId==='xenobinder'&&headStyle==='reinforced'&&rowHead===16?12:rowHead+((classId==='hunter'&&headStyle!=='none')||femaleContact?1:0);
+  ctx.save();ctx.beginPath();
+  if(classId==='warrior'&&sex==='female'){
+   // A wider skull cap protects the hair silhouette. Taper before the neck
+   // so an upraised forearm beside the head is never cut by a rectangle.
+   ctx.moveTo(x+60,y);ctx.lineTo(x+140,y);ctx.lineTo(x+136,y+40);
+   ctx.lineTo(x+116,y+55);ctx.lineTo(x+76,y+55);ctx.lineTo(x+60,y+40);ctx.closePath();
+   ctx.clip();ctx.clearRect(x+60,y,80,55);ctx.beginPath();
+   for(const [sy,sx,width]of warriorFemaleHeads[headStyle][row])ctx.rect(x+sx,y+sy,width,1);
+  }else{
+   ctx.moveTo(x+65,y);ctx.lineTo(x+127,y);ctx.lineTo(x+127,y+42);
+   ctx.lineTo(x+116,y+55);ctx.lineTo(x+76,y+55);ctx.lineTo(x+65,y+42);ctx.closePath();
+  }
+  ctx.clip();if(classId!=='warrior'||sex!=='female')ctx.clearRect(x+65,y,62,55);
+  draw(headStyle,headFrame);ctx.restore();ctx.restore();
+  atlas.drawImage(tile,f%4*size,Math.floor(f/4)*size);
  }
 }

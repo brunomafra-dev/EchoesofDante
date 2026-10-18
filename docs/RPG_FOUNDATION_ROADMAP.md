@@ -350,3 +350,7 @@ Em 18/10/2026 o usuário aprovou o resultado geral da representação inteira, m
 ### Capacete, proporções e mostruário — revisão 0.1.113
 
 O playtest da 0.1.112 apontou cobertura de cabeça e tamanho inconsistentes ao andar/atacar e mudar a mira; o usuário também solicitou prévias fiéis ao básico/Q. Manutenção nas quatro classes e duas apresentações: composição registrada pelo pescoço/plano dos pés, cabeça equipada estável por vista e mostruário isolado que executa os componentes reais de combate. Nenhum PNG ou regra de combate/save/protocolo foi substituído. [Diagnóstico, limites, QA e testes](complete-actors/revision-03/README.md). **Aguardar avaliação humana desta revisão. Não antecipar cinematográfica completa, missões ou expansão.**
+
+### Cabeça da Guerreira e diagonais do Hunter — revisão 0.1.114
+
+O usuário aprovou a 0.1.113 no geral e corrigiu explicitamente o caso remanescente para **Guerreira feminina**, além da impressão de zoom nas diagonais frontais do Star Hunter. Manutenção: referências de cabeça íntegras e máscaras técnicas, calibração uniforme da figura inteira nas duas diagonais do Hunter, emissão visual alinhada e bake por quadro com coordenadas locais iguais. [Comparações, testes e limites](complete-actors/revision-04/README.md). **Aguardar playtest destas correções; não avançar conteúdo.**
