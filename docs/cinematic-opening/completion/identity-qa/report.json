@@ -1,0 +1,414 @@
+{
+  "passed": true,
+  "errors": [],
+  "actors": [
+    {
+      "classId": "hunter",
+      "sex": "female",
+      "canonicalSource": "hunter-female-basic frame 0 of each view",
+      "comparisons": 24,
+      "pixels": 10766,
+      "metrics": [
+        {
+          "tier": "none",
+          "row": 0,
+          "samples": 398,
+          "rgbMean": 0,
+          "alphaMean": 0,
+          "maxChannelDifference": 0,
+          "previousFaceRgbMean": 24.57956448911223
+        },
+        {
+          "tier": "none",
+          "row": 1,
+          "samples": 439,
+          "rgbMean": 0.4783599088838269,
+          "alphaMean": 0.10022779043280182,
+          "maxChannelDifference": 4
+        },
+        {
+          "tier": "none",
+          "row": 2,
+          "samples": 512,
+          "rgbMean": 0.916015625,
+          "alphaMean": 0.13671875,
+          "maxChannelDifference": 5
+        },
+        {
+          "tier": "none",
+          "row": 3,
+          "samples": 455,
+          "rgbMean": 0.46593406593406594,
+          "alphaMean": 0.09230769230769231,
+          "maxChannelDifference": 2
+        },
+        {
+          "tier": "none",
+          "row": 4,
+          "samples": 374,
+          "rgbMean": 0.7201426024955436,
+          "alphaMean": 0.15775401069518716,
+          "maxChannelDifference": 4
+        },
+        {
+          "tier": "none",
+          "row": 5,
+          "samples": 495,
+          "rgbMean": 0.5656565656565656,
+          "alphaMean": 0.1111111111111111,
+          "maxChannelDifference": 3
+        },
+        {
+          "tier": "none",
+          "row": 6,
+          "samples": 445,
+          "rgbMean": 0.699625468164794,
+          "alphaMean": 0.14831460674157304,
+          "maxChannelDifference": 4
+        },
+        {
+          "tier": "none",
+          "row": 7,
+          "samples": 480,
+          "rgbMean": 0.6756944444444445,
+          "alphaMean": 0.12083333333333333,
+          "maxChannelDifference": 5
+        },
+        {
+          "tier": "basic",
+          "row": 0,
+          "samples": 384,
+          "rgbMean": 0.4991319444444444,
+          "alphaMean": 0.10416666666666667,
+          "maxChannelDifference": 2,
+          "previousFaceRgbMean": 25.02170138888889
+        },
+        {
+          "tier": "basic",
+          "row": 1,
+          "samples": 439,
+          "rgbMean": 0.4783599088838269,
+          "alphaMean": 0.10022779043280182,
+          "maxChannelDifference": 4
+        },
+        {
+          "tier": "basic",
+          "row": 2,
+          "samples": 512,
+          "rgbMean": 0.916015625,
+          "alphaMean": 0.13671875,
+          "maxChannelDifference": 5
+        },
+        {
+          "tier": "basic",
+          "row": 3,
+          "samples": 455,
+          "rgbMean": 0.46593406593406594,
+          "alphaMean": 0.09230769230769231,
+          "maxChannelDifference": 2
+        },
+        {
+          "tier": "basic",
+          "row": 4,
+          "samples": 374,
+          "rgbMean": 0.7201426024955436,
+          "alphaMean": 0.15775401069518716,
+          "maxChannelDifference": 4
+        },
+        {
+          "tier": "basic",
+          "row": 5,
+          "samples": 495,
+          "rgbMean": 0.5656565656565656,
+          "alphaMean": 0.1111111111111111,
+          "maxChannelDifference": 3
+        },
+        {
+          "tier": "basic",
+          "row": 6,
+          "samples": 445,
+          "rgbMean": 0.699625468164794,
+          "alphaMean": 0.14831460674157304,
+          "maxChannelDifference": 4
+        },
+        {
+          "tier": "basic",
+          "row": 7,
+          "samples": 480,
+          "rgbMean": 0.6756944444444445,
+          "alphaMean": 0.12083333333333333,
+          "maxChannelDifference": 5
+        },
+        {
+          "tier": "reinforced",
+          "row": 0,
+          "samples": 384,
+          "rgbMean": 0.4991319444444444,
+          "alphaMean": 0.10416666666666667,
+          "maxChannelDifference": 2,
+          "previousFaceRgbMean": 25.02170138888889
+        },
+        {
+          "tier": "reinforced",
+          "row": 1,
+          "samples": 439,
+          "rgbMean": 0.4783599088838269,
+          "alphaMean": 0.10022779043280182,
+          "maxChannelDifference": 4
+        },
+        {
+          "tier": "reinforced",
+          "row": 2,
+          "samples": 512,
+          "rgbMean": 0.916015625,
+          "alphaMean": 0.13671875,
+          "maxChannelDifference": 5
+        },
+        {
+          "tier": "reinforced",
+          "row": 3,
+          "samples": 455,
+          "rgbMean": 0.46593406593406594,
+          "alphaMean": 0.09230769230769231,
+          "maxChannelDifference": 2
+        },
+        {
+          "tier": "reinforced",
+          "row": 4,
+          "samples": 374,
+          "rgbMean": 0.7201426024955436,
+          "alphaMean": 0.15775401069518716,
+          "maxChannelDifference": 4
+        },
+        {
+          "tier": "reinforced",
+          "row": 5,
+          "samples": 495,
+          "rgbMean": 0.5656565656565656,
+          "alphaMean": 0.1111111111111111,
+          "maxChannelDifference": 3
+        },
+        {
+          "tier": "reinforced",
+          "row": 6,
+          "samples": 445,
+          "rgbMean": 0.699625468164794,
+          "alphaMean": 0.14831460674157304,
+          "maxChannelDifference": 4
+        },
+        {
+          "tier": "reinforced",
+          "row": 7,
+          "samples": 480,
+          "rgbMean": 0.6756944444444445,
+          "alphaMean": 0.12083333333333333,
+          "maxChannelDifference": 5
+        }
+      ]
+    },
+    {
+      "classId": "hunter",
+      "sex": "male",
+      "canonicalSource": "hunter-male-basic frame 0 of each view",
+      "comparisons": 24,
+      "pixels": 11438,
+      "metrics": [
+        {
+          "tier": "none",
+          "row": 0,
+          "samples": 441,
+          "rgbMean": 0,
+          "alphaMean": 0,
+          "maxChannelDifference": 0,
+          "previousFaceRgbMean": 28.239606953892668
+        },
+        {
+          "tier": "none",
+          "row": 1,
+          "samples": 436,
+          "rgbMean": 0.4831804281345566,
+          "alphaMean": 0.11467889908256881,
+          "maxChannelDifference": 2
+        },
+        {
+          "tier": "none",
+          "row": 2,
+          "samples": 498,
+          "rgbMean": 0.8654618473895582,
+          "alphaMean": 0.0823293172690763,
+          "maxChannelDifference": 6
+        },
+        {
+          "tier": "none",
+          "row": 3,
+          "samples": 502,
+          "rgbMean": 0.6221779548472776,
+          "alphaMean": 0.16135458167330677,
+          "maxChannelDifference": 4
+        },
+        {
+          "tier": "none",
+          "row": 4,
+          "samples": 407,
+          "rgbMean": 0.6568386568386568,
+          "alphaMean": 0.16216216216216217,
+          "maxChannelDifference": 3
+        },
+        {
+          "tier": "none",
+          "row": 5,
+          "samples": 543,
+          "rgbMean": 0.06015960712093309,
+          "alphaMean": 0.02578268876611418,
+          "maxChannelDifference": 2
+        },
+        {
+          "tier": "none",
+          "row": 6,
+          "samples": 478,
+          "rgbMean": 0.41422594142259417,
+          "alphaMean": 0.09414225941422594,
+          "maxChannelDifference": 3
+        },
+        {
+          "tier": "none",
+          "row": 7,
+          "samples": 505,
+          "rgbMean": 0.4745874587458746,
+          "alphaMean": 0.16633663366336635,
+          "maxChannelDifference": 2
+        },
+        {
+          "tier": "basic",
+          "row": 0,
+          "samples": 445,
+          "rgbMean": 0.31086142322097376,
+          "alphaMean": 0.0449438202247191,
+          "maxChannelDifference": 3,
+          "previousFaceRgbMean": 27.660674157303372
+        },
+        {
+          "tier": "basic",
+          "row": 1,
+          "samples": 436,
+          "rgbMean": 0.4831804281345566,
+          "alphaMean": 0.11467889908256881,
+          "maxChannelDifference": 2
+        },
+        {
+          "tier": "basic",
+          "row": 2,
+          "samples": 498,
+          "rgbMean": 0.8654618473895582,
+          "alphaMean": 0.0823293172690763,
+          "maxChannelDifference": 6
+        },
+        {
+          "tier": "basic",
+          "row": 3,
+          "samples": 502,
+          "rgbMean": 0.6221779548472776,
+          "alphaMean": 0.16135458167330677,
+          "maxChannelDifference": 4
+        },
+        {
+          "tier": "basic",
+          "row": 4,
+          "samples": 407,
+          "rgbMean": 0.6568386568386568,
+          "alphaMean": 0.16216216216216217,
+          "maxChannelDifference": 3
+        },
+        {
+          "tier": "basic",
+          "row": 5,
+          "samples": 543,
+          "rgbMean": 0.06015960712093309,
+          "alphaMean": 0.02578268876611418,
+          "maxChannelDifference": 2
+        },
+        {
+          "tier": "basic",
+          "row": 6,
+          "samples": 478,
+          "rgbMean": 0.41422594142259417,
+          "alphaMean": 0.09414225941422594,
+          "maxChannelDifference": 3
+        },
+        {
+          "tier": "basic",
+          "row": 7,
+          "samples": 505,
+          "rgbMean": 0.4745874587458746,
+          "alphaMean": 0.16633663366336635,
+          "maxChannelDifference": 2
+        },
+        {
+          "tier": "reinforced",
+          "row": 0,
+          "samples": 445,
+          "rgbMean": 0.31086142322097376,
+          "alphaMean": 0.0449438202247191,
+          "maxChannelDifference": 3,
+          "previousFaceRgbMean": 27.660674157303372
+        },
+        {
+          "tier": "reinforced",
+          "row": 1,
+          "samples": 436,
+          "rgbMean": 0.4831804281345566,
+          "alphaMean": 0.11467889908256881,
+          "maxChannelDifference": 2
+        },
+        {
+          "tier": "reinforced",
+          "row": 2,
+          "samples": 498,
+          "rgbMean": 0.8654618473895582,
+          "alphaMean": 0.0823293172690763,
+          "maxChannelDifference": 6
+        },
+        {
+          "tier": "reinforced",
+          "row": 3,
+          "samples": 502,
+          "rgbMean": 0.6221779548472776,
+          "alphaMean": 0.16135458167330677,
+          "maxChannelDifference": 4
+        },
+        {
+          "tier": "reinforced",
+          "row": 4,
+          "samples": 407,
+          "rgbMean": 0.6568386568386568,
+          "alphaMean": 0.16216216216216217,
+          "maxChannelDifference": 3
+        },
+        {
+          "tier": "reinforced",
+          "row": 5,
+          "samples": 543,
+          "rgbMean": 0.06015960712093309,
+          "alphaMean": 0.02578268876611418,
+          "maxChannelDifference": 2
+        },
+        {
+          "tier": "reinforced",
+          "row": 6,
+          "samples": 478,
+          "rgbMean": 0.41422594142259417,
+          "alphaMean": 0.09414225941422594,
+          "maxChannelDifference": 3
+        },
+        {
+          "tier": "reinforced",
+          "row": 7,
+          "samples": 505,
+          "rgbMean": 0.4745874587458746,
+          "alphaMean": 0.16633663366336635,
+          "maxChannelDifference": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 {
-  "seconds": 54.75,
+  "seconds": 59.25,
   "sampleRate": 48000,
   "channels": 2,
-  "peak": 0.24378195967542873,
-  "rms": 0.035102386996655,
+  "peak": 0.2311899263778505,
+  "rms": 0.034822526668044744,
   "origin": "Original offline NumPy synthesis, seed 109; no voice, external samples or repeated music loop"
 }

@@ -1,0 +1,181 @@
+{
+  "completeFilm": true,
+  "workprint": false,
+  "seconds": 59.25,
+  "missingShots": [],
+  "humanApproval": "pending",
+  "native720p24": false,
+  "sourceFps": 16,
+  "interpolation": "FFmpeg motion compensated; whole frames",
+  "loopOrFrozenFiller": false,
+  "shots": [
+    {
+      "id": "earth",
+      "seconds": 6,
+      "source": [
+        {
+          "path": "docs/cinematic-opening/source/earth-01.mp4",
+          "startFrame": 0,
+          "usedFrames": 80,
+          "sha256": "6482b2313f8a3a7fdc1a325de6c53063e30e002ae99122d249fed6fae8bcbe3f"
+        },
+        {
+          "path": "docs/cinematic-opening/source/earth-02.mp4",
+          "startFrame": 1,
+          "usedFrames": 20,
+          "sha256": "81036c1593fb691b8706ca09c881634780b1b9ba872c784806e1e4cebb222b5c"
+        }
+      ],
+      "frames": 144
+    },
+    {
+      "id": "evacuation",
+      "seconds": 6,
+      "source": [
+        {
+          "path": "docs/cinematic-opening/source/evacuation-01.mp4",
+          "startFrame": 0,
+          "usedFrames": 80,
+          "sha256": "dbc62e838c776a6e2499a9ff920229327f9b259237b5242c56d8178a229c150b"
+        },
+        {
+          "path": "docs/cinematic-opening/source/evacuation-02.mp4",
+          "startFrame": 1,
+          "usedFrames": 20,
+          "sha256": "2301ad5998abc90dd1e0308d615ee8758b0391fceba0df1f241bbaad8cf14a32"
+        }
+      ],
+      "frames": 144
+    },
+    {
+      "id": "voyage",
+      "seconds": 6,
+      "source": [
+        {
+          "path": "docs/cinematic-opening/source/voyage-01.mp4",
+          "startFrame": 0,
+          "usedFrames": 80,
+          "sha256": "9f54f79a9440e3fb91d1007408a21525ddb93ce30a439089e3ba741b296d9c03"
+        },
+        {
+          "path": "docs/cinematic-opening/source/voyage-02.mp4",
+          "startFrame": 1,
+          "usedFrames": 20,
+          "sha256": "803c21735e3751aabb07a93000f089fd34dd402eaa73cb5d2b3ceb3b1f5f3b93"
+        }
+      ],
+      "frames": 144
+    },
+    {
+      "id": "discovery",
+      "seconds": 6,
+      "source": [
+        {
+          "path": "docs/cinematic-opening/source/discovery-01.mp4",
+          "startFrame": 0,
+          "usedFrames": 80,
+          "sha256": "915a8bbe473f7c70eab21108024be90e25ac2f190abad03f6fe379aed0b90072"
+        },
+        {
+          "path": "docs/cinematic-opening/source/discovery-02.mp4",
+          "startFrame": 1,
+          "usedFrames": 20,
+          "sha256": "3aa5b0fb561d0b3df64f20a529ea037be6e694e3e1d0a98c896ba00206861645"
+        }
+      ],
+      "frames": 144
+    },
+    {
+      "id": "bridge",
+      "seconds": 12,
+      "source": [
+        {
+          "path": "public/assets/cinematic-pilot/bridge-hf-motion-test.mp4",
+          "startFrame": 0,
+          "usedFrames": 80,
+          "sha256": "81b8f0d17466c19a16c506804fd3b94634ac08cf6fa0d7be5e2fc7a60802cd79"
+        },
+        {
+          "path": "docs/cinematic-pilot/revision-04/source/take-02.mp4",
+          "startFrame": 1,
+          "usedFrames": 80,
+          "sha256": "195a443d3e343d1e10060ee65310d81b86cb3d1e343775c2f950d3aec5253294"
+        },
+        {
+          "path": "docs/cinematic-pilot/revision-04/source/take-03.mp4",
+          "startFrame": 1,
+          "usedFrames": 36,
+          "sha256": "9fa68ca44722bed38e6e47343bf5782b5460ff4df5627cf82a15a62a79babc6b"
+        }
+      ],
+      "frames": 288
+    },
+    {
+      "id": "pioneers",
+      "seconds": 4.5,
+      "source": [
+        {
+          "path": "docs/cinematic-opening/source/pioneers-01.mp4",
+          "startFrame": 0,
+          "usedFrames": 80,
+          "sha256": "0c9e4e6d7ae5af8c41c63c7eaf98438994a96251440500c612069eefcddd1b81"
+        }
+      ],
+      "frames": 108
+    },
+    {
+      "id": "descent",
+      "seconds": 9,
+      "source": [
+        {
+          "path": "docs/cinematic-opening/source/descent-01.mp4",
+          "startFrame": 0,
+          "usedFrames": 80,
+          "sha256": "325a7317649f8ab01400538a064e699fc7dc19a764d6120ba5903b24f3b25be0"
+        },
+        {
+          "path": "docs/cinematic-opening/source/descent-02.mp4",
+          "startFrame": 1,
+          "usedFrames": 68,
+          "sha256": "1d24ac9d73079b135f328145369698bd740c57fe0306fe0bc8cc4643d4544162"
+        }
+      ],
+      "frames": 216
+    },
+    {
+      "id": "landing",
+      "seconds": 9.75,
+      "source": [
+        {
+          "path": "docs/cinematic-opening/source/landing-01.mp4",
+          "startFrame": 0,
+          "usedFrames": 80,
+          "sha256": "1a0ec711bfe23d937c534fd3705ad4a202e501a010a29971a9610370088aba2a"
+        },
+        {
+          "path": "docs/cinematic-opening/source/landing-02.mp4",
+          "startFrame": 1,
+          "usedFrames": 80,
+          "sha256": "148b685e781bb861ef673937a69326ee9aa7b98f7b305773abe257bc37a4b256"
+        }
+      ],
+      "frames": 234
+    }
+  ],
+  "audio": {
+    "seconds": 59.25,
+    "sampleRate": 48000,
+    "channels": 2,
+    "peak": 0.2311899263778505,
+    "rms": 0.034822526668044744,
+    "origin": "Original offline NumPy synthesis, seed 109; no voice, external samples or repeated music loop"
+  },
+  "output": {
+    "width": 1280,
+    "height": 720,
+    "fps": 24.0,
+    "frames": 1422,
+    "bytes": 25027247,
+    "sha256": "f4490e5a6938a02fd7089242a5f8cc2258e5287ff91894de4973c4a902df8a91"
+  }
+}

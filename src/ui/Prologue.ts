@@ -1,13 +1,12 @@
-import { AudioManager } from '../systems/Sound';
-
-// A single offline-rendered film. Its source plates and generation process live
-// in public/assets/prologue and scripts/render-prologue-trailer.py.
+// One whole-scene animated film with its own original mixed audio.
+// Sources and production are documented in docs/cinematic-opening.
 export class Prologue {
   readonly view = document.createElement('section');
   readonly video = document.createElement('video');
   private readonly progress = document.createElement('span');
   private readonly error = document.createElement('p');
-  private readonly sound = new AudioManager();
+  private readonly soundButton = document.createElement('button');
+  private readonly pauseButton = document.createElement('button');
   private frame = 0;
   private active = false;
   private finished = false;
@@ -16,16 +15,20 @@ export class Prologue {
     this.view.className = 'prologue';
     this.view.setAttribute('aria-label', 'Prólogo cinematográfico — chegada a Dante');
     this.video.className = 'prologue-video';
-    this.video.src = `${import.meta.env.BASE_URL}assets/prologue/arrival-trailer.mp4`;
-    this.video.preload = 'auto'; this.video.muted = true; this.video.playsInline = true;
+    this.video.src = `${import.meta.env.BASE_URL}assets/cinematic-opening/arrival-whole-scene.mp4`;
+    this.video.preload = 'metadata'; this.video.playsInline = true;
     this.video.setAttribute('aria-label', 'Cinemática da evacuação da Terra e da chegada a Dante.');
     this.video.addEventListener('ended', this.finish);
     this.video.addEventListener('error', this.videoError);
 
     const track = document.createElement('div'); track.className = 'prologue-progress'; track.append(this.progress);
     const controls = document.createElement('nav'); controls.className = 'prologue-controls'; controls.setAttribute('aria-label', 'Controles da cinemática');
+    this.soundButton.type='button';this.soundButton.dataset.shell='prologue-sound';
+    this.soundButton.onclick=()=>{this.video.muted=!this.video.muted;this.updateSound();};
+    this.pauseButton.type='button';this.pauseButton.dataset.shell='prologue-pause';this.pauseButton.textContent='PAUSAR';
+    this.pauseButton.onclick=()=>{if(this.active)this.pause();else this.resume();};
+    this.updateSound();controls.append(this.soundButton,this.pauseButton);
     for (const [label, id, callback] of [
-      ['SOM', 'prologue-sound', () => this.sound.unlock()],
       ['CONFIGURAÇÕES', 'settings', settings],
       ['PULAR', 'prologue-skip', () => this.finish()],
     ] as const) {
@@ -33,31 +36,35 @@ export class Prologue {
     }
     this.error.className = 'prologue-error'; this.error.setAttribute('role', 'status'); this.error.hidden = true;
     this.view.append(this.video, this.error, track, controls);
-    this.sound.setArea('deep');
     document.addEventListener('visibilitychange', this.visibility);
   }
 
-  volumes(master: number, music: number, sfx: number): void { this.sound.setVolumes(master, music, sfx); }
+  volumes(master: number, music: number, _sfx: number): void { this.video.volume=Math.max(0,Math.min(1,master*music)); }
+
+  private updateSound():void {this.soundButton.textContent=this.video.muted?'ATIVAR SOM':'SOM ATIVO';this.soundButton.setAttribute('aria-pressed',String(!this.video.muted));}
 
   resume(): void {
     if (this.finished) return;
-    this.active = true; this.sound.setMusicFocus(1); this.sound.unlock();
-    void this.video.play().then(() => { this.view.dataset.state = 'playing'; }).catch(() => {
-      if (this.active && !this.finished) this.videoError();
+    this.active = true;this.pauseButton.textContent='PAUSAR';
+    void this.video.play().then(() => { if(!this.active)this.video.pause();else this.view.dataset.state = 'playing'; }).catch(() => {
+      if (!this.active || this.finished) return;
+      // Mobile browsers can reject unmuted playback after navigation. Preserve
+      // the film and offer an explicit sound gesture without blocking arrival.
+      this.video.muted=true;this.updateSound();
+      void this.video.play().then(()=>{if(!this.active)this.video.pause();else this.view.dataset.state='playing';}).catch(()=>{if(this.active&&!this.finished)this.videoError();});
     });
     cancelAnimationFrame(this.frame); this.frame = requestAnimationFrame(this.tick);
   }
 
   pause(): void {
-    this.active = false; this.video.pause(); this.sound.setMusicFocus(0); cancelAnimationFrame(this.frame);
+    this.active = false; this.video.pause();this.pauseButton.textContent='CONTINUAR';cancelAnimationFrame(this.frame);
   }
 
   private visibility = (): void => {
     if (document.hidden) {
-      this.video.pause(); this.sound.setMusicFocus(0); cancelAnimationFrame(this.frame);
+      this.video.pause();cancelAnimationFrame(this.frame);
     } else if (this.active) {
-      this.sound.setMusicFocus(1); void this.video.play().catch(() => this.videoError());
-      this.frame = requestAnimationFrame(this.tick);
+      this.resume();
     }
   };
 
@@ -82,6 +89,6 @@ export class Prologue {
   destroy(): void {
     this.finished = true; this.pause(); this.video.removeEventListener('ended', this.finish);
     this.video.removeEventListener('error', this.videoError); document.removeEventListener('visibilitychange', this.visibility);
-    this.sound.destroy(); this.view.remove();
+    this.video.removeAttribute('src');this.video.load();this.view.remove();
   }
 }

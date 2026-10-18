@@ -1,5 +1,7 @@
 # Abertura completa — produção
 
+**Entrega atual: [0.1.116 — filme completo, 59,25 s](completion/README.md).** Em 18/10/2026 a cota gratuita voltou a funcionar. Equipe com identidades atuais, descida e desembarque gerados, montados e integrados ao início solo/cooperativo. [Assistir ao corte completo](https://echosofdante.vercel.app/cinematic-opening.html?v=0.1.116). Piloto aprovado e corte anterior preservados; **avaliação visual do filme completo pendente**. Os estados de bloqueio e preparação abaixo são históricos.
+
 ## Adição solicitada — apresentação da equipe
 
 Em 17/10/2026 o usuário pediu uma cena dos heróis designados para desbravar Dante. [Roteiro da equipe pioneira](pioneer-team.md): Guerreiro, Hunter, Astral e Domador, quatro pessoas inteiras no hangar depois da ponte e antes da descida. Acrescenta aproximadamente 4,5 s; total previsto passa a ~59 s. Não há criatura nativa a bordo antes do primeiro reconhecimento. **Quadro-base estático gerado e salvo na 0.1.110; animação ainda pendente e fora da prévia.** Restam agora a animação da equipe e as duas cenas finais. O corte publicado e seu manifesto de 36 s permanecem intactos; roteiro executável, som e legendas serão atualizados juntos ao produzir a cena.

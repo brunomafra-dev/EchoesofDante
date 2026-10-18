@@ -23,8 +23,8 @@ sources = [source for shot in manifest['shots'] for source in shot['source']] if
 for source in sources:
     assert hashlib.sha256((ROOT / source['path']).read_bytes()).hexdigest() == source['sha256']
 c = cv2.VideoCapture(str(media))
-expected_frames = 864 if WORKPRINT else 1314 if OPENING else 288
-expected_duration = 36 if WORKPRINT else 54.75 if OPENING else 12
+expected_duration = manifest['seconds'] if PRODUCTION else 12
+expected_frames = round(expected_duration*24)
 assert (c.get(3), c.get(4), c.get(5), c.get(7)) == (1280, 720, 24, expected_frames)
 count, repeated, run, longest = 0, 0, 0, 0
 previous = None
@@ -57,7 +57,7 @@ rms = float(np.sqrt(np.mean(audio**2)))
 assert abs(audio_seconds - expected_duration) < 0.05
 assert 0.01 < rms < 0.15 and peak < 0.95
 vtt = (ROOT / ('public/assets/cinematic-opening/workprint.pt-BR.vtt' if WORKPRINT else 'public/assets/cinematic-opening/arrival.pt-BR.vtt' if OPENING else 'public/assets/cinematic-pilot/bridge-whole-scene-pilot.pt-BR.vtt')).read_text(encoding='utf-8')
-expected_cues = 7 if WORKPRINT else 11 if OPENING else 3
+expected_cues = 7 if WORKPRINT else len(json.loads((DOC/'shots.json').read_text(encoding='utf-8'))['captions']) if OPENING else 3
 assert vtt.count('-->') == expected_cues and 'Ninguém desce sozinho.' in vtt
 report = {'passed': True, 'humanApproval': 'pending', 'decodedFrames': count, 'fps': 24,
           'nativeSourceFps': 16, 'interpolation': True, 'exactAdjacentDuplicates': repeated,

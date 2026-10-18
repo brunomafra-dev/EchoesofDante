@@ -1,0 +1,18 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": true,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 5,
+  "steps": 4,
+  "seed": 120,
+  "sourceHash": "8644260492deecda03d61185e73b63e5d06690018410bc883586b1cc375d38cd",
+  "prompt": "One continuous five-second shot. The small complete expedition people walk carefully down the ramp and onto the solid forest ground. Their bodies remain whole, feet make grounded alternating steps. The landed shuttle, ramp and cargo stay rigid and fixed. Thin morning mist drifts, distant waterfalls flow and a few leaves move gently. No new crowd, no limb splitting, no morphing ship, no growing buildings. The start of reconnaissance, not an established colony. Preserve the original painted Organic Sci-Fi R3 game illustration, lighting, anatomy, ship structure, materials and whole-scene composition. Fixed camera, no zoom or pan, no cuts, no text, no subtitles, no music. Real motion inside the scene; never a still-picture slideshow.",
+  "startedAt": "2026-10-18T19:26:08.784Z",
+  "status": "downloaded",
+  "transport": "Authenticated Gradio REST; no redirects",
+  "eventId": "b7b14bc799f2440ea22232f0b6a61f40",
+  "actualSeed": 120,
+  "bytes": 1406888,
+  "videoHash": "1a0ec711bfe23d937c534fd3705ad4a202e501a010a29971a9610370088aba2a",
+  "finishedAt": "2026-10-18T19:26:57.870Z"
+}

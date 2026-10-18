@@ -1,0 +1,18 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": true,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 5,
+  "steps": 4,
+  "seed": 121,
+  "sourceHash": "58e0c6c3166642d02915acd5ea2b56bed2c999f6cbe0f074a53131c646f0aa24",
+  "prompt": "One continuous continuation of the exact supplied complete scene. Continue the same small complete expedition people taking natural steps away from the ramp into the clearing. Keep the landed ship, open ramp and modest cargo fixed. Waterfalls flow and thin mist drifts gently. End with the expedition facing the forest, no new people or buildings. Preserve the original painted Organic Sci-Fi R3 game illustration, lighting, anatomy, ship structure, materials and whole-scene composition. Fixed camera, no zoom or pan, no cuts, no text, no subtitles, no music. Real motion inside the scene; never a still-picture slideshow.",
+  "startedAt": "2026-10-18T19:28:07.769Z",
+  "status": "downloaded",
+  "transport": "Authenticated Gradio REST; no redirects",
+  "eventId": "862ec2da78b047aeba2b57c6410db4ef",
+  "actualSeed": 121,
+  "bytes": 1415884,
+  "videoHash": "148b685e781bb861ef673937a69326ee9aa7b98f7b305773abe257bc37a4b256",
+  "finishedAt": "2026-10-18T19:28:56.323Z"
+}

@@ -1,0 +1,18 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": true,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 5,
+  "steps": 4,
+  "seed": 118,
+  "sourceHash": "8ded42b2338774e2d1ee4b27a23fa90d7b4019ff3b40488a75ffafc60f32aa3e",
+  "prompt": "One continuous five-second shot. The complete civilian shuttle glides forward and gradually descends toward the forest clearing far below. Its engine lights remain restrained amber. Small cloud wisps pass around the hull and trail behind it. Keep the entire original ship, its ivory worn hull, two rear nacelles and fins rigid and structurally intact. The valley, waterfalls and organic forest masses stay coherent. No people outside, no open ramp in flight, no city, no battle. Preserve the original painted Organic Sci-Fi R3 game illustration, lighting, anatomy, ship structure, materials and whole-scene composition. Fixed camera, no zoom or pan, no cuts, no text, no subtitles, no music. Real motion inside the scene; never a still-picture slideshow.",
+  "startedAt": "2026-10-18T19:21:56.847Z",
+  "status": "downloaded",
+  "transport": "Authenticated Gradio REST; no redirects",
+  "eventId": "9a7489820f284f62af685bcc7d97c9c8",
+  "actualSeed": 118,
+  "bytes": 1948813,
+  "videoHash": "325a7317649f8ab01400538a064e699fc7dc19a764d6120ba5903b24f3b25be0",
+  "finishedAt": "2026-10-18T19:22:51.251Z"
+}

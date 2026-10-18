@@ -99,9 +99,13 @@ export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record
    // Empty sky beside the registered skull must not retain a gutter fragment.
    ctx.clearRect(x,y,65,36);ctx.clearRect(x+127,y,65,36);
   }
-  const headStyle=classId==='hunter'&&look.helmet==='basic'?'reinforced':look.helmet;
+  // The approved Hunter identity reference is the open-faced basic painting.
+  // Its face remains the same in initial clothes and mixed armor. The earlier
+  // unarmored sheet painted a different face, especially for the female Hunter.
+  const hunterOpenFace=classId==='hunter'&&look.helmet==='none';
+  const headStyle=hunterOpenFace?'basic':classId==='hunter'&&look.helmet==='basic'?'reinforced':look.helmet;
   const femaleContact=classId==='warrior'&&sex==='female'&&(row===2||row===4);
-  const headFrame=classId==='xenobinder'&&headStyle==='reinforced'&&rowHead===16?12:rowHead+((classId==='hunter'&&headStyle!=='none')||femaleContact?1:0);
+  const headFrame=classId==='xenobinder'&&headStyle==='reinforced'&&rowHead===16?12:rowHead+((classId==='hunter'&&!hunterOpenFace&&headStyle!=='none')||femaleContact?1:0);
   ctx.save();ctx.beginPath();
   if(classId==='warrior'&&sex==='female'){
    // A wider skull cap protects the hair silhouette. Taper before the neck

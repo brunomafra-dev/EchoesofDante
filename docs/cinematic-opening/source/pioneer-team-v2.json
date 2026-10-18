@@ -1,0 +1,12 @@
+{
+  "origin": "Original image_gen.imagegen edit, 2026-10-18",
+  "width": 1672,
+  "height": 941,
+  "bytes": 2737439,
+  "sha256": "3acb014b217a0fb3c0508fb2e1898cf86b780d02499033045f7d8b52d50b2e4b",
+  "prompt": "docs/cinematic-opening/prompts/pioneer-team-image-v2.txt",
+  "supersedes": "pioneer-team.png",
+  "reason": "Current complete-figure class identities, especially dark-skinned silver-haired blue/amber Star Hunter",
+  "humanApproval": "User approved updated still and authorized animation",
+  "animation": "pioneers-01.mp4"
+}

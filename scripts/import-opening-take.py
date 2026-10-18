@@ -15,9 +15,11 @@ plan = json.loads((DOC / 'shots.json').read_text(encoding='utf-8'))
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('shot', choices=[s['id'] for s in plan['shots'] if not s.get('approvedPilot')])
 parser.add_argument('part', type=int, choices=[1, 2])
+parser.add_argument('--from-directory', help='Completed attempt under .local; retain previous failed receipts')
 args = parser.parse_args()
 name = f'{args.shot}-{args.part:02}'
-folder = ROOT / f'.local/cinematic-opening/account/{name}'
+folder = (ROOT / args.from_directory).resolve() if args.from_directory else ROOT / f'.local/cinematic-opening/account/{name}'
+assert folder.is_relative_to((ROOT/'.local').resolve()), 'Attempt must remain under .local'
 receipt = json.loads((folder / 'attempt.json').read_text(encoding='utf-8'))
 video = folder / 'take.mp4'
 sha = hashlib.sha256(video.read_bytes()).hexdigest()

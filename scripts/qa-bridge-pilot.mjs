@@ -1,17 +1,17 @@
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile, readFile } from 'node:fs/promises';
 
 const base = process.env.QA_BASE ?? 'http://localhost:5190';
 const opening = process.env.QA_FILM === 'opening';
 const workprint = process.env.QA_FILM === 'workprint';
 const production = opening || workprint;
-const route = production ? 'cinematic-opening.html?v=0.1.109' : 'cinematic-bridge-pilot.html?v=0.1.108';
-const duration = workprint ? 36 : opening ? 54.75 : 12;
+const route = workprint ? 'cinematic-workprint.html?v=0.1.109' : opening ? 'cinematic-opening.html?v=0.1.116' : 'cinematic-bridge-pilot.html?v=0.1.108';
+const duration = workprint ? 36 : opening ? JSON.parse(await readFile('docs/cinematic-opening/shots.json','utf8')).targetSeconds : 12;
 const out = process.env.QA_OUT ?? (production ? 'docs/cinematic-opening/qa/player' : 'docs/cinematic-pilot/revision-04/qa');
 await mkdir(out, { recursive: true });
 const report = { base, checks: [], errors: [], humanApproval: 'pending', completeOpening: opening, partialWorkprint: workprint };
-const browser = await chromium.launch({ channel: 'chrome' });
+const browser = await chromium.launch({ channel: 'chrome',args:['--disable-background-timer-throttling','--disable-renderer-backgrounding'] });
 try {
   const context = await browser.newContext({ viewport: { width: 1280, height: 720 }, hasTouch: true });
   const p = await context.newPage();

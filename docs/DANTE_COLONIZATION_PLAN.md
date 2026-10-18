@@ -8,7 +8,7 @@ Plano aprovado em 16/10/2026. Complementa o [plano da fundação RPG](RPG_FOUNDA
 | --- | --- | --- |
 | 1 | Personagens completos + início pelo clique na dificuldade | [0.1.103](character-cohesion/revision-03/README.md) validada para avançar; pente fino visual posterior |
 | 2 | Nomes e chat da equipe | [0.1.104](party-chat/README.md) validada pelo usuário: “Deu certo perfeito irmão”; Render/Vercel e chat público conferidos |
-| 3 | Piloto de cinemática; abertura completa após aprovação | **0.1.105 rejeitada** por montagem de membros. Piloto [0.1.108](cinematic-pilot/revision-04/README.md) **aprovado pelo usuário em 17/10/2026**. [0.1.109: prévia parcial de 36 s](cinematic-opening/README.md): Terra, evacuação, viagem, descoberta e ponte. Conta gratuita HF validada; oito tomadas novas geradas antes de atingir o limite. Descida/desembarque (18,75 s) aguardam renovação da cota. Fonte 480p/16 FPS, exportação 720p/24 FPS por interpolação/ampliação. Filme completo, integração na campanha e playtest ainda pendentes; missões/mapas aguardam |
+| 3 | Piloto de cinemática; abertura completa após aprovação | **0.1.116: filme completo de 59,25 s**, equipe atualizada, descida e desembarque. Integrado ao início solo/coop; piloto e corte parcial preservados. [Entrega e limites](cinematic-opening/completion/README.md). Filme completo aguarda validação visual; missões/mapas aguardam |
 | 4 | Missões, diálogos e diário desde a chegada | Planejada |
 | 5 | Dois mapas e primeiro núcleo habitável | Planejada |
 

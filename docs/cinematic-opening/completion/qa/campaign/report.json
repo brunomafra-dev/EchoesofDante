@@ -1,0 +1,36 @@
+{
+  "base": "http://localhost:5190",
+  "method": "Compiled build, DOM-only Chrome automation, real relay. No DEV exports, no physical-device claim.",
+  "checks": [
+    "Compiled campaign: four different classes form and start through real invitations, protocol 12 and four-player world in every browser",
+    "Compiled host departure offers menu only to every cooperative hero",
+    "Compiled menu: gamepad A/B navigation and D-pad volume adjustment",
+    "Compiled touch input opens the Play menu from the title screen",
+    "Official entry point uses the same new menu; no automatic character or active expedition"
+  ],
+  "errors": [],
+  "participants": [
+    {
+      "protocol": 12,
+      "id": "host",
+      "players": 4
+    },
+    {
+      "protocol": 12,
+      "id": "3b2bda0c-678b-44fb-9b49-b6818b466229",
+      "players": 4
+    },
+    {
+      "protocol": 12,
+      "id": "10ca8a92-a313-41d2-bdaf-7a29e956bc31",
+      "players": 4
+    },
+    {
+      "protocol": 12,
+      "id": "9ff172d8-bb4e-40f2-878c-4e6c29fb22e6",
+      "players": 4
+    }
+  ],
+  "cooperativeChecked": true,
+  "passed": true
+}

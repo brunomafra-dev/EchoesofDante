@@ -20,6 +20,8 @@ WORK = ROOT / '.local/cinematic-opening/assembly'
 PUBLIC = ROOT / 'public/assets/cinematic-opening'
 FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
 DURATION = PLAN['targetSeconds']
+DESCENT = sum(s['seconds'] for s in PLAN['shots'][:next(i for i,s in enumerate(PLAN['shots']) if s['id']=='descent')])
+LANDING = sum(s['seconds'] for s in PLAN['shots'][:next(i for i,s in enumerate(PLAN['shots']) if s['id']=='landing')])
 
 
 def run(args, **kwargs):
@@ -43,26 +45,26 @@ def sound():
     def region(start, end, fade=0.6):
         return np.clip((t-start)/fade, 0, 1) * np.clip((end-t)/fade, 0, 1)
 
-    wind = air * (0.023*region(0, 12) + 0.01*region(12, 36) + 0.037*region(36, 47) + 0.016*region(45, DURATION))
+    wind = air * (0.023*region(0, 12) + 0.01*region(12, DESCENT) + 0.037*region(DESCENT, LANDING+2) + 0.016*region(LANDING, DURATION))
     engine = (np.sin(2*np.pi*48*t) + 0.45*np.sin(2*np.pi*96*t) + 0.2*np.sin(2*np.pi*144*t))
     engine *= (0.009*region(0, 6) + 0.055*region(6, 12) + 0.022*region(12, 24)
-               + 0.038*region(24, 36) + 0.053*region(36, 46) + 0.012*region(46, 49))
+               + 0.038*region(24, DESCENT) + 0.053*region(DESCENT, LANDING+1) + 0.012*region(LANDING+1, LANDING+4))
     score = np.zeros(len(t))
     # One deliberately sparse original phrase over the film, no repeating loop.
     for start, end, notes in [(0.3, 10, [73.416, 110]), (12, 23, [65.406, 98]),
-                              (18.4, 31, [73.416, 110, 164.814]), (36.5, 47.5, [87.307, 130.813]),
-                              (46, DURATION, [73.416, 110, 146.832])]:
+                              (18.4, 31, [73.416, 110, 164.814]), (DESCENT+.5, LANDING+2.5, [87.307, 130.813]),
+                              (LANDING+1, DURATION, [73.416, 110, 146.832])]:
         env = region(start, end, 2.4)
         for j, note in enumerate(notes):
             score += 0.006*env*(np.sin(2*np.pi*note*t + j*.7) + .23*np.sin(2*np.pi*note*2*t))
     left, right = engine + wind + score, engine + np.roll(wind, 197) + score
-    for start, freq in [(24.9, 660), (25.12, 880), (26.8, 590), (37.1, 740), (44.6, 420)]:
+    for start, freq in [(24.9, 660), (25.12, 880), (26.8, 590), (DESCENT+1.1, 740), (LANDING-.4, 420)]:
         age = t-start
         env = np.where(age >= 0, np.exp(-np.maximum(age, 0)/.07), 0)
         ping = .024*np.sin(2*np.pi*freq*age)*env
         left += ping*.85
         right += ping
-    for start, freq in [(48.1, 1750), (50.5, 2200), (52.2, 1500)]:
+    for start, freq in [(LANDING+3.1, 1750), (LANDING+5.5, 2200), (LANDING+7.2, 1500)]:
         age = t-start
         env = np.where((age >= 0) & (age < .38), np.sin(np.pi*np.clip(age/.38, 0, 1))**2, 0)
         chirp = .009*env*np.sin(2*np.pi*(freq*age + 350*age**2))
@@ -119,6 +121,8 @@ def sources(shot):
         return [(ROOT / 'public/assets/cinematic-pilot/bridge-hf-motion-test.mp4', 0, 80),
                 (ROOT / 'docs/cinematic-pilot/revision-04/source/take-02.mp4', 1, 80),
                 (ROOT / 'docs/cinematic-pilot/revision-04/source/take-03.mp4', 1, 36)]
+    if shot['seconds']<=5:
+        return [(DOC / f"source/{shot['id']}-01.mp4", 0, 80)]
     return [(DOC / f"source/{shot['id']}-01.mp4", 0, 80),
             (DOC / f"source/{shot['id']}-02.mp4", 1, min(80, round((shot['seconds']-5+.25)*16)))]
 

@@ -1,0 +1,18 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": true,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 5,
+  "steps": 4,
+  "seed": 127,
+  "sourceHash": "3acb014b217a0fb3c0508fb2e1898cf86b780d02499033045f7d8b52d50b2e4b",
+  "prompt": "One continuous five-second shot. Four complete human expedition specialists prepare quietly in the same orbital hangar. The armored warrior on the left briefly checks the hilt with his gloved hands and looks toward the others. The female hunter beside him lowers her compact rifle slightly and turns her gaze toward the exit. The woman in blue touches the controls on her opposite astral gauntlet with a small deliberate gesture. The field handler on the right secures the strap at his waist and looks toward the team. Each person stays in their own space with both feet planted and one restrained natural gesture, subtle breathing and small head movement. Preserve all four distinct faces, connected shoulders, elbows, hands, clothes and equipment. Keep every person whole and grounded. No firing, combat, pets, elemental magic, crossing bodies or new people. The orbital planet and hangar structure remain coherent. Preserve the original painted Organic Sci-Fi R3 game illustration, lighting, anatomy, ship structure, materials and whole-scene composition. Fixed camera, no zoom or pan, no cuts, no text, no subtitles, no music. Real motion inside the scene; never a still-picture slideshow.",
+  "startedAt": "2026-10-18T19:16:22.507Z",
+  "status": "downloaded",
+  "transport": "Authenticated Gradio REST; no redirects",
+  "eventId": "4d594b5fabfd48d0b2f81f1a0b72fb75",
+  "actualSeed": 127,
+  "bytes": 1885535,
+  "videoHash": "0c9e4e6d7ae5af8c41c63c7eaf98438994a96251440500c612069eefcddd1b81",
+  "finishedAt": "2026-10-18T19:17:12.996Z"
+}

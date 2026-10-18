@@ -1,5 +1,7 @@
 # Equipe pioneira — adição ao roteiro
 
+**Atualização 18/10/2026 · 0.1.116:** [quadro v2](source/pioneer-team-v2.png) aprovado pelo usuário, com Hunter atualizada a partir dos personagens completos. A animação está concluída e ocupa 36–40,5 s do [filme de 59,25 s](completion/README.md). A tomada anterior à correção foi preservada como substituída e não entra na edição. Os itens pendentes no relato abaixo descrevem a preparação histórica.
+
 Solicitada pelo usuário em 17/10/2026: mostrar os heróis designados para desbravar Dante. Complementa a abertura autorizada e o [descritivo oficial das classes](../classes/README.md); não cria nomes canônicos para os personagens personalizáveis.
 
 **Estado: quadro-base inteiro gerado, animação ainda pendente.** [Imagem original](source/pioneer-team.png), [metadados](source/pioneer-team.json) e [prompt](prompts/pioneer-team-image.txt) preservados. A geração foi interrompida antes de incorporar o arquivo; ele foi salvo na revisão 0.1.110. A [prévia de 36 segundos](https://echosofdante.vercel.app/cinematic-opening.html?v=0.1.109) não contém esta cena. Não registrar o quadro estático como filme concluído ou aprovado visualmente.

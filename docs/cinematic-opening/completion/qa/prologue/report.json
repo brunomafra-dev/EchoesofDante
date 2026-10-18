@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "checks": [
+    "Whole-film source/duration, mix volume, pause/resume/settings preserve position, sound toggles",
+    "Natural ending and skip share one completion, media released on destroy"
+  ],
+  "errors": [],
+  "media": {
+    "src": "http://localhost:5184/assets/cinematic-opening/arrival-whole-scene.mp4",
+    "duration": 59.25,
+    "volume": 0.2,
+    "loop": false
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": true,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 4.25,
+  "steps": 4,
+  "seed": 119,
+  "sourceHash": "feb7f04cb9a6c055d6e158750d563d718374b8dfc7219ef36e0f7009cfea852a",
+  "prompt": "One continuous continuation of the exact supplied complete scene. Continue the same intact shuttle descending gently toward the forest clearing. It moves away from the viewpoint toward the valley; clouds pass naturally around it. Keep gear retracted and the ramp shut. Do not turn it into a different ship. Preserve the original painted Organic Sci-Fi R3 game illustration, lighting, anatomy, ship structure, materials and whole-scene composition. Fixed camera, no zoom or pan, no cuts, no text, no subtitles, no music. Real motion inside the scene; never a still-picture slideshow.",
+  "startedAt": "2026-10-18T19:23:35.841Z",
+  "status": "downloaded",
+  "transport": "Authenticated Gradio REST; no redirects",
+  "eventId": "fcc924508bc644ab98c11aec28753b8a",
+  "actualSeed": 119,
+  "bytes": 1328742,
+  "videoHash": "1d24ac9d73079b135f328145369698bd740c57fe0306fe0bc8cc4643d4544162",
+  "finishedAt": "2026-10-18T19:24:12.976Z"
+}

@@ -16,7 +16,7 @@ if not args.shot:
     for shot in PLAN['shots']:
         if shot.get('approvedPilot'):
             continue
-        print(json.dumps({'id': shot['id'], 'seconds': shot['seconds'], 'missing': [i for i in (1, 2) if not (DOC / f"source/{shot['id']}-{i:02}.mp4").exists()]}))
+        print(json.dumps({'id': shot['id'], 'seconds': shot['seconds'], 'missing': [i for i in ([1] if shot['seconds']<=5 else [1,2]) if not (DOC / f"source/{shot['id']}-{i:02}.mp4").exists()]}))
 else:
     shot = next(s for s in PLAN['shots'] if s['id'] == args.shot and not s.get('approvedPilot'))
     if not args.part:
@@ -26,6 +26,8 @@ else:
         prompt = 'One continuous five-second shot. ' + shot['motion']
         seconds = 5
     else:
+        if shot['seconds']<=5:
+            parser.error('This short scene needs only one complete take')
         source = DOC / f"source/{shot['id']}-01.mp4"
         c = cv2.VideoCapture(str(source))
         if c.get(cv2.CAP_PROP_FPS) != 16 or c.get(cv2.CAP_PROP_FRAME_COUNT) < 80:

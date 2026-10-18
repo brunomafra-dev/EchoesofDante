@@ -1,6 +1,6 @@
 {
   "title": "Um lugar para recomeçar",
-  "targetSeconds": 54.75,
+  "targetSeconds": 59.25,
   "outputFps": 24,
   "sourceFps": 16,
   "shots": [
@@ -26,6 +26,11 @@
     },
     { "id": "bridge", "seconds": 12, "approvedPilot": true },
     {
+      "id": "pioneers", "seconds": 4.5, "image": "docs/cinematic-opening/source/pioneer-team-v2.png", "seed": 127,
+      "motion": "Four complete human expedition specialists prepare quietly in the same orbital hangar. The armored warrior on the left briefly checks the hilt with his gloved hands and looks toward the others. The female hunter beside him lowers her compact rifle slightly and turns her gaze toward the exit. The woman in blue touches the controls on her opposite astral gauntlet with a small deliberate gesture. The field handler on the right secures the strap at his waist and looks toward the team. Each person stays in their own space with both feet planted and one restrained natural gesture, subtle breathing and small head movement. Preserve all four distinct faces, connected shoulders, elbows, hands, clothes and equipment. Keep every person whole and grounded. No firing, combat, pets, elemental magic, crossing bodies or new people. The orbital planet and hangar structure remain coherent.",
+      "ending": "The same four complete people finish their equipment checks and look toward the hangar exit."
+    },
+    {
       "id": "descent", "seconds": 9, "image": "docs/cinematic-opening/source/descent.png", "seed": 118,
       "motion": "The complete civilian shuttle glides forward and gradually descends toward the forest clearing far below. Its engine lights remain restrained amber. Small cloud wisps pass around the hull and trail behind it. Keep the entire original ship, its ivory worn hull, two rear nacelles and fins rigid and structurally intact. The valley, waterfalls and organic forest masses stay coherent. No people outside, no open ramp in flight, no city, no battle.",
       "ending": "Continue the same intact shuttle descending gently toward the forest clearing. It moves away from the viewpoint toward the valley; clouds pass naturally around it. Keep gear retracted and the ramp shut. Do not turn it into a different ship."
@@ -44,9 +49,10 @@
     [24.5, 27.8, "IVO", "Água líquida. Atmosfera compatível."],
     [28.1, 30.8, "NARA", "Então existe uma chance."],
     [31.2, 35.6, "NARA", "Prepare o reconhecimento. Ninguém desce sozinho."],
-    [36.7, 40.1, "IVO", "Área de pouso à vista."],
-    [40.7, 44.5, "NARA", "Primeiro a equipe. Os outros aguardam em órbita."],
-    [46.1, 49.1, "NARA", "DANTE-01 em solo."],
-    [49.7, 54.3, "NARA", "Antes de trazer os outros, precisamos conhecer este lugar."]
+    [36.5, 40, "NARA", "Vocês reconhecem o terreno. A frota aguarda."],
+    [41.2, 44.6, "IVO", "Área de pouso à vista."],
+    [45.2, 49, "NARA", "Primeiro a equipe. Os outros aguardam em órbita."],
+    [50.6, 53.6, "NARA", "DANTE-01 em solo."],
+    [54.2, 58.8, "NARA", "Antes de trazer os outros, precisamos conhecer este lugar."]
   ]
 }

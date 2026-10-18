@@ -1,0 +1,199 @@
+{
+  "passed": true,
+  "errors": [],
+  "warnings": [],
+  "actors": [
+    {
+      "classId": "warrior",
+      "sex": "male",
+      "cases": 384,
+      "frames": 32,
+      "visible": [
+        "Image"
+      ],
+      "before": {
+        "objects": 381,
+        "textures": 207,
+        "tweens": 24,
+        "listeners": 21
+      },
+      "after": {
+        "objects": 381,
+        "textures": 207,
+        "tweens": 24,
+        "listeners": 21
+      },
+      "remainingActorTextures": 1
+    },
+    {
+      "classId": "warrior",
+      "sex": "female",
+      "cases": 384,
+      "frames": 32,
+      "visible": [
+        "Image"
+      ],
+      "before": {
+        "objects": 381,
+        "textures": 207,
+        "tweens": 24,
+        "listeners": 21
+      },
+      "after": {
+        "objects": 381,
+        "textures": 207,
+        "tweens": 24,
+        "listeners": 21
+      },
+      "remainingActorTextures": 1
+    },
+    {
+      "classId": "hunter",
+      "sex": "male",
+      "cases": 384,
+      "frames": 32,
+      "visible": [
+        "Image"
+      ],
+      "before": {
+        "objects": 402,
+        "textures": 208,
+        "tweens": 24,
+        "listeners": 21
+      },
+      "after": {
+        "objects": 402,
+        "textures": 208,
+        "tweens": 24,
+        "listeners": 21
+      },
+      "remainingActorTextures": 1
+    },
+    {
+      "classId": "hunter",
+      "sex": "female",
+      "cases": 384,
+      "frames": 32,
+      "visible": [
+        "Image"
+      ],
+      "before": {
+        "objects": 402,
+        "textures": 208,
+        "tweens": 24,
+        "listeners": 21
+      },
+      "after": {
+        "objects": 402,
+        "textures": 208,
+        "tweens": 24,
+        "listeners": 21
+      },
+      "remainingActorTextures": 1
+    },
+    {
+      "classId": "astral",
+      "sex": "male",
+      "cases": 384,
+      "frames": 32,
+      "visible": [
+        "Image"
+      ],
+      "before": {
+        "objects": 415,
+        "textures": 207,
+        "tweens": 24,
+        "listeners": 23
+      },
+      "after": {
+        "objects": 415,
+        "textures": 207,
+        "tweens": 24,
+        "listeners": 23
+      },
+      "remainingActorTextures": 1
+    },
+    {
+      "classId": "astral",
+      "sex": "female",
+      "cases": 384,
+      "frames": 32,
+      "visible": [
+        "Image"
+      ],
+      "before": {
+        "objects": 415,
+        "textures": 207,
+        "tweens": 24,
+        "listeners": 23
+      },
+      "after": {
+        "objects": 415,
+        "textures": 207,
+        "tweens": 24,
+        "listeners": 23
+      },
+      "remainingActorTextures": 1
+    },
+    {
+      "classId": "xenobinder",
+      "sex": "male",
+      "cases": 384,
+      "frames": 32,
+      "visible": [
+        "Image"
+      ],
+      "before": {
+        "objects": 413,
+        "textures": 215,
+        "tweens": 24,
+        "listeners": 23
+      },
+      "after": {
+        "objects": 413,
+        "textures": 215,
+        "tweens": 24,
+        "listeners": 23
+      },
+      "remainingActorTextures": 1
+    },
+    {
+      "classId": "xenobinder",
+      "sex": "female",
+      "cases": 384,
+      "frames": 32,
+      "visible": [
+        "Image"
+      ],
+      "before": {
+        "objects": 413,
+        "textures": 215,
+        "tweens": 24,
+        "listeners": 23
+      },
+      "after": {
+        "objects": 413,
+        "textures": 215,
+        "tweens": 24,
+        "listeners": 23
+      },
+      "remainingActorTextures": 1
+    }
+  ],
+  "checks": [
+    "warrior: actual WASD/mouse/basic/Q hold-release/Dash; whole pose remains upright",
+    "hunter: actual WASD/mouse/basic/Q hold-release/Dash; whole pose remains upright",
+    "astral: actual WASD/mouse/basic/Q hold-release/Dash; whole pose remains upright",
+    "xenobinder: actual WASD/mouse/basic/Q hold-release/Dash; whole pose remains upright",
+    "Four complete-figure previews, both presentations; no anatomical parts fetched by selector",
+    "Four resolutions, real touch event and gamepad axes mock"
+  ],
+  "humanApproval": "User approved full figures, requested Warrior/Hunter gait and distinct Hunter identity. This revision awaits playtest.",
+  "performance": {
+    "fps": 53.24249267578125,
+    "objects": 386,
+    "textures": 207,
+    "tweens": 24,
+    "actorTextures": 1
+  }
+}

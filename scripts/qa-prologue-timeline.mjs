@@ -3,10 +3,10 @@ import { chromium } from 'playwright';
 import { mkdir, writeFile } from 'node:fs/promises';
 
 const base = process.env.QA_BASE ?? 'https://echosofdante.vercel.app';
-const out = process.env.QA_OUT ?? 'docs/prologue-menu/qa/public';
+const out = process.env.QA_OUT ?? 'docs/cinematic-opening/completion/qa/timeline';
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ channel: 'chrome', headless: true, args: ['--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows'] });
-const report = { base, method: 'Compiled browser build: New Game creates the selected profile and plays the legacy placeholder MP4. This is a playback check, not cinematic or visual approval.', errors: [] };
+const report = { base, method: 'Compiled browser build: New Game creates one selected profile and plays the complete whole-scene opening. Natural ending enters the campaign. Technical playback check, not visual approval.', errors: [] };
 const click = (page, id) => page.locator(`[data-shell="${id}"]`).evaluate(element => element.click());
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 }, reducedMotion: 'reduce' });
@@ -21,9 +21,9 @@ try {
   const video = page.locator('.prologue-video'); await video.waitFor();
   await page.waitForFunction(() => { const element = document.querySelector('.prologue-video'); return element?.readyState >= 2 && element.duration > 19 && element.currentTime > .75; });
   report.video = await video.evaluate(element => ({ source: new URL(element.currentSrc).pathname, duration: element.duration, currentTime: element.currentTime, paused: element.paused, captions: document.querySelectorAll('.prologue-caption').length }));
-  assert.equal(report.video.source, '/assets/prologue/arrival-trailer.mp4'); assert.ok(report.video.duration > 19 && report.video.duration < 21);
+  assert.equal(report.video.source, '/assets/cinematic-opening/arrival-whole-scene.mp4'); assert.equal(report.video.duration,59.25);
   assert.equal(report.video.paused, false); assert.equal(report.video.captions, 0);
-  await page.screenshot({ path: `${out}/arrival-trailer.png` });
+  await page.screenshot({ path: `${out}/arrival-film.png` });
   await video.evaluate(element => { element.currentTime = element.duration - .15; });
   await page.waitForFunction(() => document.querySelector('.application-shell') && !document.querySelector('.application-shell').open, {}, { timeout: 10000 });
   const saved = await page.evaluate(() => {
