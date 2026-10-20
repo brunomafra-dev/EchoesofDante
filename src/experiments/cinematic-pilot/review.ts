@@ -2,17 +2,17 @@ import './bridge';
 
 const takes = {
   film: { file: 'arrival-whole-scene.mp4', title: 'Abertura completa',
-    caption: '59 SEGUNDOS · NOVO DESEMBARQUE · LEGENDAS EM PORTUGUÊS · ÁUDIO ORIGINAL',
-    description: 'Filme completo com o Guerreiro, Hunter, Astral e Domador saindo primeiro. A tripulação permanece atrás da equipe. Mesma versão na campanha; a dublagem ainda está no teste separado.',
+    caption: '54 SEGUNDOS · NOVO DESEMBARQUE · TRÊS VOZES EM PORTUGUÊS · CONCAT',
+    description: 'Abertura dublada: narrador, Ivo e Nara mantêm vozes próprias em todas as cenas. Os quatro heróis desembarcam primeiro. Mesma versão na campanha.',
     end: 'Fim da abertura. A expedição começa agora.' },
   landing: { file: 'landing-heroes.mp4', title: 'Novo desembarque dos quatro heróis',
     caption: 'OS QUATRO HERÓIS À FRENTE · TRIPULAÇÃO ATRÁS · CENA INTEIRA ANIMADA',
-    description: 'Trecho final isolado: os quatro pioneiros saem na frente e observam o terreno antes da tripulação. Confira identidades, anatomia e movimento. A câmera acompanha ligeiramente o grupo durante a caminhada.',
+    description: 'Cena refeita com menos ruído no ambiente, movimentos curtos e os quatro corpos inteiros no quadro. Os heróis reconhecem o terreno; a tripulação permanece atrás. Confira a nova composição e a fala final de Nara.',
     end: 'Fim do desembarque. A equipe abre o caminho.' },
   voices: { file: 'bridge-voice-proof.mp4', title: 'Ponte dublada em português',
     caption: 'IVO E NARA · VOZES EM PORTUGUÊS · TESTE EDITADO NO CONCAT',
     description: 'Prova de 12 segundos com três falas e duas vozes locais. Avalie naturalidade, clareza e volume. A atuação já aprovada foi preservada; este teste não adiciona sincronização labial.',
-    end: 'Fim do teste. Avalie as vozes antes da dublagem completa.' },
+    end: 'Fim da ponte. Estas vozes também estão na abertura completa.' },
 } as const;
 type Take = keyof typeof takes;
 const video = document.querySelector<HTMLVideoElement>('video')!;

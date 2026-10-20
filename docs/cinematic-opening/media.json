@@ -1,74 +1,12 @@
 {
   "completeFilm": true,
   "workprint": false,
-  "seconds": 59.25,
+  "seconds": 54.25,
   "missingShots": [],
-  "humanApproval": "pending",
+  "humanApproval": "pending: revised landing and complete voice casting",
   "native720p24": false,
   "sourceFps": 16,
-  "interpolation": "FFmpeg motion compensated; whole frames",
-  "selectiveRestoration": {
-    "model": "realesr-animevideov3 x2",
-    "blend": 0.55,
-    "sourceSize": [
-      832,
-      480
-    ],
-    "restoredSize": [
-      1664,
-      960
-    ],
-    "sourceFps": 16,
-    "nativeHD": false,
-    "binarySha256": "07e49f7cbb4ede01ae4dd4c399d3a7e5846e3d2085c3128eff881e55cb7b1a0c",
-    "modelSha256": "548a36f9c3f4ab8da56cd3b13badf23968bee207b396dad14d04b830e5f2ab2d",
-    "shots": [
-      {
-        "id": "bridge",
-        "frames": 196,
-        "source": [
-          {
-            "path": "public/assets/cinematic-pilot/bridge-hf-motion-test.mp4",
-            "sha256": "81b8f0d17466c19a16c506804fd3b94634ac08cf6fa0d7be5e2fc7a60802cd79",
-            "start": 0,
-            "count": 80
-          },
-          {
-            "path": "docs/cinematic-pilot/revision-04/source/take-02.mp4",
-            "sha256": "195a443d3e343d1e10060ee65310d81b86cb3d1e343775c2f950d3aec5253294",
-            "start": 1,
-            "count": 80
-          },
-          {
-            "path": "docs/cinematic-pilot/revision-04/source/take-03.mp4",
-            "sha256": "9fa68ca44722bed38e6e47343bf5782b5460ff4df5627cf82a15a62a79babc6b",
-            "start": 1,
-            "count": 36
-          }
-        ]
-      },
-      {
-        "id": "landing",
-        "frames": 160,
-        "source": [
-          {
-            "path": "docs/cinematic-opening/source/landing-heroes-v2-01.mp4",
-            "sha256": "af0fe0c4d24a8d09ab5b7ff393ce064cbb2d1ee56acbc66675bfdb7c7d300d65",
-            "start": 0,
-            "count": 80
-          },
-          {
-            "path": "docs/cinematic-opening/source/landing-heroes-v2-02.mp4",
-            "sha256": "20d692b451871031b6ebf31fce8bf0ca697036623eceee1e5e83f443a7771151",
-            "start": 1,
-            "count": 80
-          }
-        ]
-      }
-    ],
-    "elapsedSeconds": 1340.4679999999998,
-    "passed": true
-  },
+  "interpolation": "FFmpeg whole-frame motion compensated 16 to 24",
   "loopOrFrozenFiller": false,
   "shots": [
     {
@@ -89,7 +27,8 @@
         }
       ],
       "frames": 144,
-      "reusedPictureIntermediate": true
+      "reusedPictureIntermediate": true,
+      "pictureSha256": "a538cf579d298f75f3b0b52e057e5a35ec5d03012742cae462564343347694fb"
     },
     {
       "id": "evacuation",
@@ -109,7 +48,8 @@
         }
       ],
       "frames": 144,
-      "reusedPictureIntermediate": true
+      "reusedPictureIntermediate": true,
+      "pictureSha256": "7cf4713c23b5969ec69015c5d09996f05f633331c14551fce2f2d9caccb31b88"
     },
     {
       "id": "voyage",
@@ -129,7 +69,8 @@
         }
       ],
       "frames": 144,
-      "reusedPictureIntermediate": true
+      "reusedPictureIntermediate": true,
+      "pictureSha256": "38f63680ea9ba12d235c359103ddf2f86dd2a60b97da885db2297089c86cea1a"
     },
     {
       "id": "discovery",
@@ -149,7 +90,8 @@
         }
       ],
       "frames": 144,
-      "reusedPictureIntermediate": true
+      "reusedPictureIntermediate": true,
+      "pictureSha256": "421e15fcf769b9c19853d0fd0491b2328a6c6e6a929eb00929abe575d8b23316"
     },
     {
       "id": "bridge",
@@ -175,7 +117,9 @@
         }
       ],
       "frames": 288,
-      "restoration": "55% Real-ESRGAN x2 + 45% original, offline"
+      "restoration": "55% Real-ESRGAN x2 + 45% original, offline",
+      "reusedPictureIntermediate": true,
+      "pictureSha256": "addabec555f240e5d55ca61667651020863972583b9535e1b8c9771996242925"
     },
     {
       "id": "pioneers",
@@ -189,7 +133,8 @@
         }
       ],
       "frames": 108,
-      "reusedPictureIntermediate": true
+      "reusedPictureIntermediate": true,
+      "pictureSha256": "bee37d6076847012cafc7cbd7e6cf9b416a0abd936b1aebede2a3a9f056fe6fc"
     },
     {
       "id": "descent",
@@ -209,43 +154,205 @@
         }
       ],
       "frames": 216,
-      "reusedPictureIntermediate": true
+      "reusedPictureIntermediate": true,
+      "pictureSha256": "ba94534a4bb279f1faca7a32d5dcf596e4797b4b8a5ce53a5b7f9a625e606960"
     },
     {
       "id": "landing",
-      "seconds": 9.75,
+      "seconds": 4.75,
       "source": [
         {
-          "path": "docs/cinematic-opening/source/landing-heroes-v2-01.mp4",
+          "path": "docs/cinematic-opening/source/landing-heroes-v3-01.mp4",
           "startFrame": 0,
           "usedFrames": 80,
-          "sha256": "af0fe0c4d24a8d09ab5b7ff393ce064cbb2d1ee56acbc66675bfdb7c7d300d65"
-        },
-        {
-          "path": "docs/cinematic-opening/source/landing-heroes-v2-02.mp4",
-          "startFrame": 1,
-          "usedFrames": 80,
-          "sha256": "20d692b451871031b6ebf31fce8bf0ca697036623eceee1e5e83f443a7771151"
+          "sha256": "073541d82ca79298fb3cb070e2bfae5cadfabdd0b53c3e182ff4af6280d23d04"
         }
       ],
-      "frames": 234,
-      "restoration": "55% Real-ESRGAN x2 + 45% original, offline"
+      "frames": 114,
+      "restoration": "55% Real-ESRGAN x2 + 45% original, offline",
+      "pictureSha256": "701e7638a909fe592c2cd38684db27b532336fb63dea115279e745735671e97b"
     }
   ],
+  "editor": "Concat 0.2.8 MCP, actual timeline/export",
   "audio": {
-    "seconds": 59.25,
-    "sampleRate": 48000,
-    "channels": 2,
-    "peak": 0.2311899263778505,
-    "rms": 0.034822526668044744,
-    "origin": "Original offline NumPy synthesis, seed 109; no voice, external samples or repeated music loop"
+    "origin": "Original ambience + local Kokoro PT-BR speech, Concat mix",
+    "voiceReport": {
+      "engine": "kokoro-onnx 0.5.0, CPU, Kokoro-82M int8",
+      "language": "pt-br",
+      "modelSha256": "ae315a79b623f244700e4afb9246c46a26066782e049ba174bf3ba433970ee9c",
+      "voicesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+      "voiceClone": false,
+      "paidService": false,
+      "humanApproval": "pending",
+      "lines": [
+        {
+          "id": "earth",
+          "speaker": "NARRADOR",
+          "voice": "pm_santa",
+          "start": 0.6,
+          "end": 5.5,
+          "text": "A Terra já não podia nos abrigar.",
+          "speed": 1.0,
+          "seconds": 2.2186666666666666,
+          "sampleRate": 24000,
+          "peak": 0.36965110898017883,
+          "path": "docs/cinematic-opening/revision-03/voices/earth.wav",
+          "sha256": "2c8d3b917a6724f5b3ef0665e5e780a954dde6521138971eeb4bded66820bbee"
+        },
+        {
+          "id": "evacuation",
+          "speaker": "NARRADOR",
+          "voice": "pm_santa",
+          "start": 6.6,
+          "end": 11.4,
+          "text": "Partimos com quem ainda podíamos salvar.",
+          "speed": 1.0,
+          "seconds": 2.7093333333333334,
+          "sampleRate": 24000,
+          "peak": 0.3241254985332489,
+          "path": "docs/cinematic-opening/revision-03/voices/evacuation.wav",
+          "sha256": "568fc929cf75cb98202a07ee95cd7e6ac4c9afbff51e57251e93b28644371a96"
+        },
+        {
+          "id": "voyage",
+          "speaker": "NARRADOR",
+          "voice": "pm_santa",
+          "start": 12.5,
+          "end": 17.5,
+          "text": "Durante anos, procuramos um lugar para recomeçar.",
+          "speed": 1.0,
+          "seconds": 2.9013333333333335,
+          "sampleRate": 24000,
+          "peak": 0.4448856711387634,
+          "path": "docs/cinematic-opening/revision-03/voices/voyage.wav",
+          "sha256": "a6303288ca5ac427e7594fde04ebffa8517f7a9dc3518039a692be32696e69cb"
+        },
+        {
+          "id": "discovery",
+          "speaker": "NARRADOR",
+          "voice": "pm_santa",
+          "start": 18.6,
+          "end": 23.4,
+          "text": "Até encontrarmos Dante.",
+          "speed": 1.0,
+          "seconds": 1.8346666666666667,
+          "sampleRate": 24000,
+          "peak": 0.33908402919769287,
+          "path": "docs/cinematic-opening/revision-03/voices/discovery.wav",
+          "sha256": "0285a9392ea206f2109c6e2d1304fc36ba0383084840d79dc9f70cf28c78629b"
+        },
+        {
+          "id": "ivo-water",
+          "speaker": "IVO",
+          "voice": "pm_alex",
+          "start": 24.5,
+          "end": 27.8,
+          "text": "Água líquida. Atmosfera compatível.",
+          "speed": 1.0,
+          "reuse": "docs/cinematic-opening/revision-02/voices/ivo-water.wav",
+          "seconds": 2.4106666666666667,
+          "sampleRate": 24000,
+          "peak": 0.400848388671875,
+          "path": "docs/cinematic-opening/revision-03/voices/ivo-water.wav",
+          "sha256": "eb03d50d13dc21797edae995ce45ca58504763f41919c7f1c3f9c0254f755168"
+        },
+        {
+          "id": "nara-chance",
+          "speaker": "NARA",
+          "voice": "pf_dora",
+          "start": 28.1,
+          "end": 30.8,
+          "text": "Então existe uma chance.",
+          "speed": 1.0,
+          "reuse": "docs/cinematic-opening/revision-02/voices/nara-chance.wav",
+          "seconds": 1.664,
+          "sampleRate": 24000,
+          "peak": 0.428192138671875,
+          "path": "docs/cinematic-opening/revision-03/voices/nara-chance.wav",
+          "sha256": "2f95a7b443227e16589ec4fa03df979a5a08e46d50d89cf88212e97799c516ea"
+        },
+        {
+          "id": "nara-team",
+          "speaker": "NARA",
+          "voice": "pf_dora",
+          "start": 31.2,
+          "end": 35.6,
+          "text": "Prepare o reconhecimento. Ninguém desce sozinho.",
+          "speed": 1.0,
+          "reuse": "docs/cinematic-opening/revision-02/voices/nara-team.wav",
+          "seconds": 2.9226666666666667,
+          "sampleRate": 24000,
+          "peak": 0.385009765625,
+          "path": "docs/cinematic-opening/revision-03/voices/nara-team.wav",
+          "sha256": "1f30d6872e0e854db82041411f25e6bef29f8da6dd7b31ae507b0810e068da8a"
+        },
+        {
+          "id": "nara-pioneers",
+          "speaker": "NARA",
+          "voice": "pf_dora",
+          "start": 36.5,
+          "end": 40,
+          "text": "Vocês reconhecem o terreno. A frota aguarda.",
+          "speed": 1.0,
+          "seconds": 2.7946666666666666,
+          "sampleRate": 24000,
+          "peak": 0.3508370816707611,
+          "path": "docs/cinematic-opening/revision-03/voices/nara-pioneers.wav",
+          "sha256": "359a97334ea9f35df71f6619d2d3e66d944e3f3a35a13cbb69649d32df328e1d"
+        },
+        {
+          "id": "ivo-descent",
+          "speaker": "IVO",
+          "voice": "pm_alex",
+          "start": 41.2,
+          "end": 44.6,
+          "text": "Área de pouso à vista.",
+          "speed": 1.0,
+          "seconds": 1.664,
+          "sampleRate": 24000,
+          "peak": 0.4272703528404236,
+          "path": "docs/cinematic-opening/revision-03/voices/ivo-descent.wav",
+          "sha256": "e127b71ff246e0fe79ba4c5ee90d4f3dbeee870d0c6e0f48d2414645a28ccc36"
+        },
+        {
+          "id": "nara-orbit",
+          "speaker": "NARA",
+          "voice": "pf_dora",
+          "start": 45.2,
+          "end": 49,
+          "text": "Primeiro a equipe. Os outros aguardam em órbita.",
+          "speed": 1.0,
+          "seconds": 2.88,
+          "sampleRate": 24000,
+          "peak": 0.3136617839336395,
+          "path": "docs/cinematic-opening/revision-03/voices/nara-orbit.wav",
+          "sha256": "11ef95b383f3e04df94367875ae7b0902efd6068ce81b2d831c593972285c3d4"
+        },
+        {
+          "id": "nara-landing",
+          "speaker": "NARA",
+          "voice": "pf_dora",
+          "start": 50,
+          "end": 53.9,
+          "text": "DANTE-01 em solo. Primeiro, o reconhecimento.",
+          "speed": 1.0,
+          "seconds": 2.9226666666666667,
+          "sampleRate": 24000,
+          "peak": 0.3768656551837921,
+          "path": "docs/cinematic-opening/revision-03/voices/nara-landing.wav",
+          "sha256": "40628ad744330bdc1c66bfc17595f3b4bcf47223026d4fd9ed3417d20ea6ad82"
+        }
+      ]
+    },
+    "lipSync": false,
+    "fixedSpeakerVoices": true
   },
   "output": {
     "width": 1280,
     "height": 720,
     "fps": 24.0,
-    "frames": 1422,
-    "bytes": 41923942,
-    "sha256": "227cd3a7c2c4bfdaea2c6b7067119e8f32721e65e74670609da58431c833fc47"
+    "frames": 1302,
+    "bytes": 35150224,
+    "sha256": "f26c34e0c6f2b553b9be09adbf76bc189168f37d23b89944a544f88009eb4467"
   }
 }

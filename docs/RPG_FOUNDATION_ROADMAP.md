@@ -362,3 +362,7 @@ O usuário aprovou a 0.1.113 no geral e corrigiu explicitamente o caso remanesce
 ### Revisão autorizada da abertura — 0.1.117
 
 Em 20/10/2026 o usuário autorizou testar o Concat e pediu melhorar a imagem e fazer os quatro heróis desembarcarem primeiro. Revisão dentro da etapa 3: novo quadro inteiro com identidades atuais, duas tomadas de desembarque, restauração moderada da ponte/desembarque e menor compressão final. Prova separada de 12 s com Ivo/Nara em português, editada e exportada no Concat; sem sincronização labial nova ou dublagem integral antecipada. [Produção, laboratório e QA](cinematic-opening/revision-02/README.md). Nenhuma mudança de personagem, combate, coop ou save. **Aguardar avaliação humana do filme e das vozes antes de dublar o restante ou iniciar missões/mapas.**
+
+### Desembarque e elenco — revisão 0.1.118
+
+Em 20/10/2026 o usuário aprovou a ponte, rejeitou a qualidade do desembarque e autorizou vozes distintas por personagem, com montagem no Concat. Novo quadro e animação inteiros do desembarque, movimentos curtos e menos informação concorrente. Corte de 54,25 s: continuação bloqueada pela cota gratuita; a cena final usa somente a nova tomada de 4,75 s, sem preencher com o desembarque rejeitado. Onze falas com três vozes fixas para narrador, Ivo e Nara; os WAVs aprovados da ponte foram preservados. [Entrega, fontes e QA](cinematic-opening/revision-03/README.md). Os heróis não falam neste roteiro e ainda não receberam elenco próprio. **Aguardar aprovação humana desta revisão antes de missões/mapas.**

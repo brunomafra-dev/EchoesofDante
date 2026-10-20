@@ -1,0 +1,15 @@
+{
+  "tool": "image_gen.imagegen, built-in",
+  "output": "docs/cinematic-opening/source/landing-heroes-v3.png",
+  "width": 1672,
+  "height": 941,
+  "bytes": 3059425,
+  "sha256": "caf9a5bd6503fa53a1c8e01f1190d6ac9dd68074a4acddeccb14f2a092d9d8d0",
+  "references": [
+    "docs/cinematic-opening/source/landing-heroes-v2.png",
+    "docs/cinematic-opening/source/pioneer-team-v2.png",
+    "approved bridge whole scene, revision-02/bridge-before.png"
+  ],
+  "prompt": "docs/cinematic-opening/prompts/landing-heroes-image-v3.txt",
+  "runtimeGeneration": false
+}

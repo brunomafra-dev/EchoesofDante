@@ -1,0 +1,18 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": true,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 5,
+  "steps": 8,
+  "seed": 142,
+  "sourceHash": "caf9a5bd6503fa53a1c8e01f1190d6ac9dd68074a4acddeccb14f2a092d9d8d0",
+  "prompt": "One continuous five-second shot. Four complete pioneers leave the ramp very slowly. The armored warrior and silver braided dark skinned hunter each take only ONE short grounded step to the right, then stop and look into the clearing. The astral woman and olive field handler behind them only shift weight and look around, keeping their feet on the ramp. Preserve four full bodies at the SAME SCREEN SIZE from head to boots at all times. Keep every face, shoulder, hand, weapon, uniform and ship panel unchanged. Both civilians wait inside the dark doorway far behind. The shuttle and ramp stay absolutely fixed. Only small breathing, small eye and head turns, light breeze in leaves and distant drifting mist. Camera locked firmly on a tripod, no tracking, no push-in, no zoom, no reframing. The foreground and background do not move toward the viewer. Grounded restrained whole-body acting, preserve painted material texture and quiet soft lighting. Preserve the original painted Organic Sci-Fi R3 game illustration, lighting, anatomy, ship structure, materials and whole-scene composition. Fixed camera, no zoom or pan, no cuts, no text, no subtitles, no music. Real motion inside the scene; never a still-picture slideshow.",
+  "startedAt": "2026-10-20T14:24:05.574Z",
+  "status": "downloaded",
+  "transport": "Authenticated Gradio REST; no redirects",
+  "eventId": "99f75fe8362446998b6d0d9b349e7317",
+  "actualSeed": 142,
+  "bytes": 2270567,
+  "videoHash": "073541d82ca79298fb3cb070e2bfae5cadfabdd0b53c3e182ff4af6280d23d04",
+  "finishedAt": "2026-10-20T14:25:58.307Z"
+}

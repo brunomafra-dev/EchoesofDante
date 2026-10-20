@@ -1,13 +1,13 @@
 // Documented Gradio REST endpoint of the same free Space used by the public UI.
 // Tokens are sent only to that exact origin, redirects forbidden; never logged.
-export async function generateAuthenticatedTake({ space, token, inputBytes, inputName, prompt, seconds, seed, timeout, report, save }) {
+export async function generateAuthenticatedTake({ space, token, inputBytes, inputName, prompt, seconds, seed, steps = 4, timeout, report, save }) {
   async function request(endpoint, options = {}) {
     const url = new URL(endpoint, space);
     if (url.origin !== space) throw new Error('Untrusted generation origin.');
     const response = await fetch(url, { ...options, redirect: 'error',
       headers: { ...options.headers, Authorization: `Bearer ${token}` },
       signal: AbortSignal.timeout(timeout * 1000) });
-    if (!response.ok) throw new Error(`Space HTTP ${response.status()}: ${(await response.text()).slice(0, 500).replaceAll(token, '[redacted]')}`);
+    if (!response.ok) throw new Error(`Space HTTP ${response.status}: ${(await response.text()).slice(0, 500).replaceAll(token, '[redacted]')}`);
     return response;
   }
   const info = await request('/gradio_api/info').then(r => r.json());
@@ -22,7 +22,7 @@ export async function generateAuthenticatedTake({ space, token, inputBytes, inpu
   // Exactly one generation POST. No retries, account switching or billing endpoint.
   const job = await request('/gradio_api/call/generate_video', { method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ data: [{ path: uploaded[0], meta: { _type: 'gradio.FileData' } }, prompt, 4, negative, seconds, 1, 1, seed, false] }),
+    body: JSON.stringify({ data: [{ path: uploaded[0], meta: { _type: 'gradio.FileData' } }, prompt, steps, negative, seconds, 1, 1, seed, false] }),
   }).then(r => r.json());
   if (!/^[a-zA-Z0-9-]+$/.test(job.event_id)) throw new Error('Invalid event ID; do not resubmit before inspection.');
   report.status = 'submitted'; report.transport = 'Authenticated Gradio REST; no redirects'; report.eventId = job.event_id;

@@ -96,7 +96,8 @@ try {
     p.waitForURL('**/test-library.html'),
     p.evaluate(() => { window.qaPad.buttons[1].pressed = true; }),
   ]);
-  assert.equal(await p.locator(`a.launch[href="${route}"]`).count(), 1);
+  const libraryRoute = opening ? `cinematic-review.html?take=film&v=${version}` : route;
+  assert.equal(await p.locator(`a.launch[href="${libraryRoute}"]`).count(), 1);
   report.checks.push('Gamepad mock X replay, directional focus, A activate, B skip to library');
   assert.deepEqual(await p.evaluate(() => ({ local: { ...localStorage }, session: { ...sessionStorage } })), {
     local: { 'pilot-save-sentinel': 'preserve' }, session: { 'pilot-save-sentinel': 'preserve' },

@@ -3,6 +3,7 @@
 Official Real-ESRGAN ncnn binary/models stay in ignored .local/tools. This prepares
 the 16fps frames; the assembler mixes restored/original before interpolation.
 """
+import argparse
 import hashlib
 import importlib.util
 import json
@@ -18,7 +19,11 @@ sys.dont_write_bytecode = True
 spec = importlib.util.spec_from_file_location('opening', ROOT / 'scripts/assemble-cinematic-opening.py')
 opening = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(opening)
-WORK = ROOT / '.local/cinematic-opening/revision-02/restoration'
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--revision', choices=['revision-02', 'revision-03'], default='revision-02')
+parser.add_argument('--shots', nargs='+', choices=['bridge', 'landing'], default=['bridge', 'landing'])
+args = parser.parse_args()
+WORK = ROOT / f'.local/cinematic-opening/{args.revision}/restoration'
 tool = ROOT / '.local/tools/upscale/realesrgan-ncnn-vulkan-v0.2.0-windows/realesrgan-ncnn-vulkan.exe'
 model = ROOT / '.local/tools/upscale/models-bundle/models'
 all_inputs, all_outputs = WORK / 'input', WORK / 'output'
@@ -29,7 +34,7 @@ manifest = {'model': 'realesr-animevideov3 x2', 'blend': .55, 'sourceSize': [832
             'binarySha256': opening.digest(tool),
             'modelSha256': opening.digest(model / 'realesr-animevideov3-x2.bin'), 'shots': []}
 for shot in opening.PLAN['shots']:
-    if shot['id'] not in ['bridge', 'landing']:
+    if shot['id'] not in args.shots:
         continue
     used, index = [], 0
     for source, start, count in opening.sources(shot):
@@ -63,5 +68,5 @@ for shot in manifest['shots']:
         frame = cv2.imread(str(p))
         assert frame is not None and frame.shape[:2] == (960, 1664), str(p)
 manifest['passed'] = True
-(ROOT / 'docs/cinematic-opening/revision-02/restoration.json').write_text(json.dumps(manifest, indent=2)+'\n', encoding='utf-8')
+(ROOT / f'docs/cinematic-opening/{args.revision}/restoration.json').write_text(json.dumps(manifest, indent=2)+'\n', encoding='utf-8')
 print('Restoration complete; no runtime model needed.', flush=True)

@@ -1,0 +1,168 @@
+{
+  "seconds": 54.25,
+  "shots": [
+    {
+      "id": "earth",
+      "seconds": 6,
+      "source": [
+        {
+          "path": "docs/cinematic-opening/source/earth-01.mp4",
+          "startFrame": 0,
+          "usedFrames": 80,
+          "sha256": "6482b2313f8a3a7fdc1a325de6c53063e30e002ae99122d249fed6fae8bcbe3f"
+        },
+        {
+          "path": "docs/cinematic-opening/source/earth-02.mp4",
+          "startFrame": 1,
+          "usedFrames": 20,
+          "sha256": "81036c1593fb691b8706ca09c881634780b1b9ba872c784806e1e4cebb222b5c"
+        }
+      ],
+      "frames": 144,
+      "reusedPictureIntermediate": true,
+      "pictureSha256": "a538cf579d298f75f3b0b52e057e5a35ec5d03012742cae462564343347694fb"
+    },
+    {
+      "id": "evacuation",
+      "seconds": 6,
+      "source": [
+        {
+          "path": "docs/cinematic-opening/source/evacuation-01.mp4",
+          "startFrame": 0,
+          "usedFrames": 80,
+          "sha256": "dbc62e838c776a6e2499a9ff920229327f9b259237b5242c56d8178a229c150b"
+        },
+        {
+          "path": "docs/cinematic-opening/source/evacuation-02.mp4",
+          "startFrame": 1,
+          "usedFrames": 20,
+          "sha256": "2301ad5998abc90dd1e0308d615ee8758b0391fceba0df1f241bbaad8cf14a32"
+        }
+      ],
+      "frames": 144,
+      "reusedPictureIntermediate": true,
+      "pictureSha256": "7cf4713c23b5969ec69015c5d09996f05f633331c14551fce2f2d9caccb31b88"
+    },
+    {
+      "id": "voyage",
+      "seconds": 6,
+      "source": [
+        {
+          "path": "docs/cinematic-opening/source/voyage-01.mp4",
+          "startFrame": 0,
+          "usedFrames": 80,
+          "sha256": "9f54f79a9440e3fb91d1007408a21525ddb93ce30a439089e3ba741b296d9c03"
+        },
+        {
+          "path": "docs/cinematic-opening/source/voyage-02.mp4",
+          "startFrame": 1,
+          "usedFrames": 20,
+          "sha256": "803c21735e3751aabb07a93000f089fd34dd402eaa73cb5d2b3ceb3b1f5f3b93"
+        }
+      ],
+      "frames": 144,
+      "reusedPictureIntermediate": true,
+      "pictureSha256": "38f63680ea9ba12d235c359103ddf2f86dd2a60b97da885db2297089c86cea1a"
+    },
+    {
+      "id": "discovery",
+      "seconds": 6,
+      "source": [
+        {
+          "path": "docs/cinematic-opening/source/discovery-01.mp4",
+          "startFrame": 0,
+          "usedFrames": 80,
+          "sha256": "915a8bbe473f7c70eab21108024be90e25ac2f190abad03f6fe379aed0b90072"
+        },
+        {
+          "path": "docs/cinematic-opening/source/discovery-02.mp4",
+          "startFrame": 1,
+          "usedFrames": 20,
+          "sha256": "3aa5b0fb561d0b3df64f20a529ea037be6e694e3e1d0a98c896ba00206861645"
+        }
+      ],
+      "frames": 144,
+      "reusedPictureIntermediate": true,
+      "pictureSha256": "421e15fcf769b9c19853d0fd0491b2328a6c6e6a929eb00929abe575d8b23316"
+    },
+    {
+      "id": "bridge",
+      "seconds": 12,
+      "source": [
+        {
+          "path": "public/assets/cinematic-pilot/bridge-hf-motion-test.mp4",
+          "startFrame": 0,
+          "usedFrames": 80,
+          "sha256": "81b8f0d17466c19a16c506804fd3b94634ac08cf6fa0d7be5e2fc7a60802cd79"
+        },
+        {
+          "path": "docs/cinematic-pilot/revision-04/source/take-02.mp4",
+          "startFrame": 1,
+          "usedFrames": 80,
+          "sha256": "195a443d3e343d1e10060ee65310d81b86cb3d1e343775c2f950d3aec5253294"
+        },
+        {
+          "path": "docs/cinematic-pilot/revision-04/source/take-03.mp4",
+          "startFrame": 1,
+          "usedFrames": 36,
+          "sha256": "9fa68ca44722bed38e6e47343bf5782b5460ff4df5627cf82a15a62a79babc6b"
+        }
+      ],
+      "frames": 288,
+      "restoration": "55% Real-ESRGAN x2 + 45% original, offline",
+      "reusedPictureIntermediate": true,
+      "pictureSha256": "addabec555f240e5d55ca61667651020863972583b9535e1b8c9771996242925"
+    },
+    {
+      "id": "pioneers",
+      "seconds": 4.5,
+      "source": [
+        {
+          "path": "docs/cinematic-opening/source/pioneers-01.mp4",
+          "startFrame": 0,
+          "usedFrames": 80,
+          "sha256": "0c9e4e6d7ae5af8c41c63c7eaf98438994a96251440500c612069eefcddd1b81"
+        }
+      ],
+      "frames": 108,
+      "reusedPictureIntermediate": true,
+      "pictureSha256": "bee37d6076847012cafc7cbd7e6cf9b416a0abd936b1aebede2a3a9f056fe6fc"
+    },
+    {
+      "id": "descent",
+      "seconds": 9,
+      "source": [
+        {
+          "path": "docs/cinematic-opening/source/descent-01.mp4",
+          "startFrame": 0,
+          "usedFrames": 80,
+          "sha256": "325a7317649f8ab01400538a064e699fc7dc19a764d6120ba5903b24f3b25be0"
+        },
+        {
+          "path": "docs/cinematic-opening/source/descent-02.mp4",
+          "startFrame": 1,
+          "usedFrames": 68,
+          "sha256": "1d24ac9d73079b135f328145369698bd740c57fe0306fe0bc8cc4643d4544162"
+        }
+      ],
+      "frames": 216,
+      "reusedPictureIntermediate": true,
+      "pictureSha256": "ba94534a4bb279f1faca7a32d5dcf596e4797b4b8a5ce53a5b7f9a625e606960"
+    },
+    {
+      "id": "landing",
+      "seconds": 4.75,
+      "source": [
+        {
+          "path": "docs/cinematic-opening/source/landing-heroes-v3-01.mp4",
+          "startFrame": 0,
+          "usedFrames": 80,
+          "sha256": "073541d82ca79298fb3cb070e2bfae5cadfabdd0b53c3e182ff4af6280d23d04"
+        }
+      ],
+      "frames": 114,
+      "restoration": "55% Real-ESRGAN x2 + 45% original, offline",
+      "pictureSha256": "701e7638a909fe592c2cd38684db27b532336fb63dea115279e745735671e97b"
+    }
+  ]
+}

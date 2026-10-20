@@ -1,0 +1,26 @@
+{
+  "film": {
+    "width": 1280,
+    "height": 720,
+    "fps": 24.0,
+    "frames": 1302,
+    "bytes": 35150224,
+    "sha256": "f26c34e0c6f2b553b9be09adbf76bc189168f37d23b89944a544f88009eb4467"
+  },
+  "landing": {
+    "width": 1280,
+    "height": 720,
+    "fps": 24.0,
+    "frames": 114,
+    "bytes": 5010284,
+    "sha256": "3e4ba63a3a446aa862d91e04471aa2e2db757c8b3a0b816ceb0c6919ea12e96c"
+  },
+  "approvedBridgeVoiceProof": {
+    "width": 1280,
+    "height": 720,
+    "fps": 24.0,
+    "frames": 288,
+    "bytes": 5920154,
+    "sha256": "dcf21a041b5c34288f319d75ee0309152de65e63aa7a803dd0fee05eec0841f2"
+  }
+}

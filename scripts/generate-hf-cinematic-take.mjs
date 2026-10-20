@@ -12,7 +12,7 @@ const space = 'https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space';
 const args = process.argv.slice(2);
 const options = {};
 for (let i = 0; i < args.length; i += 2) {
-  if (!['--input', '--prompt', '--seconds', '--seed', '--out', '--timeout-seconds'].includes(args[i]) || !args[i + 1]) {
+  if (!['--input', '--prompt', '--seconds', '--seed', '--steps', '--out', '--timeout-seconds'].includes(args[i]) || !args[i + 1]) {
     throw new Error('Expected --input FILE --prompt FILE --seconds 0.5..5 --seed NUMBER --out .local/DIR');
   }
   options[args[i].slice(2)] = args[i + 1];
@@ -20,6 +20,8 @@ for (let i = 0; i < args.length; i += 2) {
 if (!options.input || !options.prompt || !options.out) throw new Error('Input, prompt and output required.');
 const seconds = Number(options.seconds);
 const seed = Number(options.seed ?? 108);
+const steps = Number(options.steps ?? 4);
+if (!Number.isInteger(steps) || steps < 1 || steps > 30) throw new Error('Steps must match the public UI range 1..30.');
 const timeout = Number(options['timeout-seconds'] ?? 240);
 if (!Number.isFinite(timeout) || timeout < 30 || timeout > 900) throw new Error('Timeout must be 30..900 seconds.');
 if (!Number.isFinite(seconds) || seconds < 0.5 || seconds > 5 || !Number.isSafeInteger(seed) || seed < 0) {
@@ -40,12 +42,12 @@ const sourceHash = createHash('sha256').update(await readFile(input)).digest('he
 await mkdir(out, { recursive: true });
 const receiptFile = path.join(out, 'attempt.json');
 const report = { space, authenticated: Boolean(hfToken), paidCredentialsUsed: false, requestedSeconds: seconds,
-  steps: 4, seed, sourceHash, prompt, startedAt: new Date().toISOString(), status: 'preparing' };
+  steps, seed, sourceHash, prompt, startedAt: new Date().toISOString(), status: 'preparing' };
 await writeFile(receiptFile, JSON.stringify(report, null, 2), { flag: 'wx' });
 if (hfToken) {
   try {
     const bytes = await generateAuthenticatedTake({ space, token: hfToken, inputBytes: await readFile(input),
-      inputName: path.basename(input), prompt, seconds, seed, timeout, report,
+      inputName: path.basename(input), prompt, seconds, seed, steps, timeout, report,
       save: () => writeFile(receiptFile, JSON.stringify(report, null, 2)) });
     await writeFile(path.join(out, 'take.mp4'), bytes);
     report.status = 'downloaded'; report.bytes = bytes.length;
@@ -80,7 +82,7 @@ try {
   await p.getByLabel('Prompt', { exact: true }).fill(prompt);
   await p.locator('input[aria-label="number input for Duration (seconds)"]').fill(String(seconds));
   await p.getByText('Advanced Settings', { exact: true }).click();
-  await p.locator('input[aria-label="number input for Inference Steps"]').fill('4');
+  await p.locator('input[aria-label="number input for Inference Steps"]').fill(String(steps));
   await p.locator('input[aria-label="number input for Seed"]').fill(String(seed));
   await p.getByLabel('Randomize seed', { exact: true }).uncheck();
   await p.getByLabel('Negative Prompt', { exact: true }).fill('disconnected limbs, detached arms, extra fingers, broken wrists, sliding feet, changing faces, body morphing, camera movement, zoom, pan, cuts, subtitles, text');

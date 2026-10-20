@@ -7,6 +7,7 @@ param(
     [string]$PromptFile,
     [double]$Seconds = 5,
     [int]$Seed = 110,
+    [ValidateRange(1, 30)][int]$Steps = 4,
     [string]$OutputDirectory
 )
 $ErrorActionPreference = 'Stop'
@@ -85,7 +86,7 @@ try {
         if ($response.StatusCode -ne 200) { throw 'Autenticacao nao confirmada.' }
         Write-Output 'Autenticacao Hugging Face valida. Nenhuma geracao ou compra realizada.'
     } else {
-        & node (Join-Path $PSScriptRoot 'generate-hf-cinematic-take.mjs') --input $InputImage --prompt $PromptFile --seconds $Seconds --seed $Seed --out $OutputDirectory --timeout-seconds 600
+        & node (Join-Path $PSScriptRoot 'generate-hf-cinematic-take.mjs') --input $InputImage --prompt $PromptFile --seconds $Seconds --seed $Seed --steps $Steps --out $OutputDirectory --timeout-seconds 600
         $resultCode = $LASTEXITCODE
     }
 } finally {

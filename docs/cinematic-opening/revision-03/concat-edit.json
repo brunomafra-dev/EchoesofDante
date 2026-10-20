@@ -1,0 +1,1326 @@
+[
+  {
+    "tool": "concat_version",
+    "arguments": {},
+    "result": {
+      "concat": "0.2.8"
+    }
+  },
+  {
+    "tool": "project_create",
+    "arguments": {
+      "location": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03",
+      "name": "opening-dubbed",
+      "video": {
+        "width": 1280,
+        "height": 720,
+        "rateNum": 24,
+        "rateDen": 1,
+        "colorSpace": "sdr"
+      }
+    },
+    "result": {}
+  },
+  {
+    "tool": "timeline_read",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed"
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": false,
+      "media": [],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "opening-dubbed",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [],
+        "duration": 0,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "T1",
+            "index": 0
+          },
+          {
+            "id": "T2",
+            "index": 1
+          },
+          {
+            "id": "T3",
+            "index": 2
+          },
+          {
+            "id": "T4",
+            "index": 3
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\earth.mp4"
+    },
+    "result": {
+      "createdId": "m1"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m1",
+      "trackId": "T1",
+      "start": 0
+    },
+    "result": {
+      "createdId": "c2"
+    }
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\evacuation.mp4"
+    },
+    "result": {
+      "createdId": "m3"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m3",
+      "trackId": "T1",
+      "start": 6
+    },
+    "result": {
+      "createdId": "c4"
+    }
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\voyage.mp4"
+    },
+    "result": {
+      "createdId": "m5"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m5",
+      "trackId": "T1",
+      "start": 12
+    },
+    "result": {
+      "createdId": "c6"
+    }
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\discovery.mp4"
+    },
+    "result": {
+      "createdId": "m7"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m7",
+      "trackId": "T1",
+      "start": 18
+    },
+    "result": {
+      "createdId": "c8"
+    }
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4"
+    },
+    "result": {
+      "createdId": "m9"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m9",
+      "trackId": "T1",
+      "start": 24
+    },
+    "result": {
+      "createdId": "c10"
+    }
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\pioneers.mp4"
+    },
+    "result": {
+      "createdId": "m11"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m11",
+      "trackId": "T1",
+      "start": 36
+    },
+    "result": {
+      "createdId": "c12"
+    }
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\descent.mp4"
+    },
+    "result": {
+      "createdId": "m13"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m13",
+      "trackId": "T1",
+      "start": 40.5
+    },
+    "result": {
+      "createdId": "c14"
+    }
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\landing.mp4"
+    },
+    "result": {
+      "createdId": "m15"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m15",
+      "trackId": "T1",
+      "start": 49.5
+    },
+    "result": {
+      "createdId": "c16"
+    }
+  },
+  {
+    "tool": "track_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "bottom": true
+    },
+    "result": {
+      "createdId": "t17"
+    }
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\expedition-mix.wav"
+    },
+    "result": {
+      "createdId": "m18"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m18",
+      "trackId": "t17",
+      "start": 0
+    },
+    "result": {
+      "createdId": "c19"
+    }
+  },
+  {
+    "tool": "clip_update",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "clipId": "c19",
+      "patch": {
+        "volume": 0.65,
+        "fadeIn": 0.15,
+        "fadeOut": 0.4
+      }
+    },
+    "result": {}
+  },
+  {
+    "tool": "track_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed"
+    },
+    "result": {
+      "createdId": "t20"
+    }
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\earth.wav"
+    },
+    "result": {
+      "createdId": "m21"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m21",
+      "trackId": "t20",
+      "start": 0.6
+    },
+    "result": {
+      "createdId": "c22"
+    }
+  },
+  {
+    "tool": "clip_update",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "clipId": "c22",
+      "patch": {
+        "volume": 1.5690470984928124
+      }
+    },
+    "result": {}
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\evacuation.wav"
+    },
+    "result": {
+      "createdId": "m23"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m23",
+      "trackId": "t20",
+      "start": 6.6
+    },
+    "result": {
+      "createdId": "c24"
+    }
+  },
+  {
+    "tool": "clip_update",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "clipId": "c24",
+      "patch": {
+        "volume": 1.7894303367820454
+      }
+    },
+    "result": {}
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\voyage.wav"
+    },
+    "result": {
+      "createdId": "m25"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m25",
+      "trackId": "t20",
+      "start": 12.5
+    },
+    "result": {
+      "createdId": "c26"
+    }
+  },
+  {
+    "tool": "clip_update",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "clipId": "c26",
+      "patch": {
+        "volume": 1.303705733015378
+      }
+    },
+    "result": {}
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\discovery.wav"
+    },
+    "result": {
+      "createdId": "m27"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m27",
+      "trackId": "t20",
+      "start": 18.6
+    },
+    "result": {
+      "createdId": "c28"
+    }
+  },
+  {
+    "tool": "clip_update",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "clipId": "c28",
+      "patch": {
+        "volume": 1.710490468608441
+      }
+    },
+    "result": {}
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\ivo-water.wav"
+    },
+    "result": {
+      "createdId": "m29"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m29",
+      "trackId": "t20",
+      "start": 24.5
+    },
+    "result": {
+      "createdId": "c30"
+    }
+  },
+  {
+    "tool": "clip_update",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "clipId": "c30",
+      "patch": {
+        "volume": 1.4469311001141987
+      }
+    },
+    "result": {}
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\nara-chance.wav"
+    },
+    "result": {
+      "createdId": "m31"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m31",
+      "trackId": "t20",
+      "start": 28.1
+    },
+    "result": {
+      "createdId": "c32"
+    }
+  },
+  {
+    "tool": "clip_update",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "clipId": "c32",
+      "patch": {
+        "volume": 1.3545321074763024
+      }
+    },
+    "result": {}
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\nara-team.wav"
+    },
+    "result": {
+      "createdId": "m33"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m33",
+      "trackId": "t20",
+      "start": 31.2
+    },
+    "result": {
+      "createdId": "c34"
+    }
+  },
+  {
+    "tool": "clip_update",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "clipId": "c34",
+      "patch": {
+        "volume": 1.5064552948636651
+      }
+    },
+    "result": {}
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\nara-pioneers.wav"
+    },
+    "result": {
+      "createdId": "m35"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m35",
+      "trackId": "t20",
+      "start": 36.5
+    },
+    "result": {
+      "createdId": "c36"
+    }
+  },
+  {
+    "tool": "clip_update",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "clipId": "c36",
+      "patch": {
+        "volume": 1.653188987999547
+      }
+    },
+    "result": {}
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\ivo-descent.wav"
+    },
+    "result": {
+      "createdId": "m37"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m37",
+      "trackId": "t20",
+      "start": 41.2
+    },
+    "result": {
+      "createdId": "c38"
+    }
+  },
+  {
+    "tool": "clip_update",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "clipId": "c38",
+      "patch": {
+        "volume": 1.3574543521315126
+      }
+    },
+    "result": {}
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\nara-orbit.wav"
+    },
+    "result": {
+      "createdId": "m39"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m39",
+      "trackId": "t20",
+      "start": 45.2
+    },
+    "result": {
+      "createdId": "c40"
+    }
+  },
+  {
+    "tool": "clip_update",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "clipId": "c40",
+      "patch": {
+        "volume": 1.8491254902851308
+      }
+    },
+    "result": {}
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\nara-landing.wav"
+    },
+    "result": {
+      "createdId": "m41"
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "mediaId": "m41",
+      "trackId": "t20",
+      "start": 50
+    },
+    "result": {
+      "createdId": "c42"
+    }
+  },
+  {
+    "tool": "clip_update",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "clipId": "c42",
+      "patch": {
+        "volume": 1.5390099681997875
+      }
+    },
+    "result": {}
+  },
+  {
+    "tool": "captions_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed",
+      "offsetY": -0.41,
+      "captions": [
+        {
+          "start": 0.6,
+          "end": 5.5,
+          "text": "A Terra já não podia nos abrigar."
+        },
+        {
+          "start": 6.6,
+          "end": 11.4,
+          "text": "Partimos com quem ainda podíamos salvar."
+        },
+        {
+          "start": 12.5,
+          "end": 17.5,
+          "text": "Durante anos, procuramos um lugar para recomeçar."
+        },
+        {
+          "start": 18.6,
+          "end": 23.4,
+          "text": "Até encontrarmos Dante."
+        },
+        {
+          "start": 24.5,
+          "end": 27.8,
+          "text": "IVO: Água líquida. Atmosfera compatível."
+        },
+        {
+          "start": 28.1,
+          "end": 30.8,
+          "text": "NARA: Então existe uma chance."
+        },
+        {
+          "start": 31.2,
+          "end": 35.6,
+          "text": "NARA: Prepare o reconhecimento. Ninguém desce sozinho."
+        },
+        {
+          "start": 36.5,
+          "end": 40,
+          "text": "NARA: Vocês reconhecem o terreno. A frota aguarda."
+        },
+        {
+          "start": 41.2,
+          "end": 44.6,
+          "text": "IVO: Área de pouso à vista."
+        },
+        {
+          "start": 45.2,
+          "end": 49,
+          "text": "NARA: Primeiro a equipe. Os outros aguardam em órbita."
+        },
+        {
+          "start": 50,
+          "end": 53.9,
+          "text": "NARA: DANTE-01 em solo. Primeiro, o reconhecimento."
+        }
+      ],
+      "style": {
+        "fontFamily": "\"Segoe UI\"",
+        "fontSize": 0.034,
+        "fontWeight": 500,
+        "color": "#f3f3e8",
+        "background": "#101610b0",
+        "maxWidth": 0.9,
+        "shadow": true
+      }
+    },
+    "result": {
+      "createdId": "c54"
+    }
+  },
+  {
+    "tool": "project_save",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed"
+    },
+    "result": {}
+  },
+  {
+    "tool": "timeline_read",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed"
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "media": [
+        {
+          "duration": 6,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "earth.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\earth.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 6,
+          "height": 720,
+          "id": "m3",
+          "kind": "video",
+          "name": "evacuation.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\evacuation.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 6,
+          "height": 720,
+          "id": "m5",
+          "kind": "video",
+          "name": "voyage.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\voyage.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 6,
+          "height": 720,
+          "id": "m7",
+          "kind": "video",
+          "name": "discovery.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\discovery.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m9",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 4.5,
+          "height": 720,
+          "id": "m11",
+          "kind": "video",
+          "name": "pioneers.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\pioneers.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 9,
+          "height": 720,
+          "id": "m13",
+          "kind": "video",
+          "name": "descent.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\descent.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 4.75,
+          "height": 720,
+          "id": "m15",
+          "kind": "video",
+          "name": "landing.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\landing.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 54.25,
+          "hasAudio": true,
+          "id": "m18",
+          "kind": "audio",
+          "name": "expedition-mix.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\expedition-mix.wav"
+        },
+        {
+          "duration": 2.219,
+          "hasAudio": true,
+          "id": "m21",
+          "kind": "audio",
+          "name": "earth.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\earth.wav"
+        },
+        {
+          "duration": 2.709,
+          "hasAudio": true,
+          "id": "m23",
+          "kind": "audio",
+          "name": "evacuation.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\evacuation.wav"
+        },
+        {
+          "duration": 2.901,
+          "hasAudio": true,
+          "id": "m25",
+          "kind": "audio",
+          "name": "voyage.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\voyage.wav"
+        },
+        {
+          "duration": 1.835,
+          "hasAudio": true,
+          "id": "m27",
+          "kind": "audio",
+          "name": "discovery.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\discovery.wav"
+        },
+        {
+          "duration": 2.411,
+          "hasAudio": true,
+          "id": "m29",
+          "kind": "audio",
+          "name": "ivo-water.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\ivo-water.wav"
+        },
+        {
+          "duration": 1.664,
+          "hasAudio": true,
+          "id": "m31",
+          "kind": "audio",
+          "name": "nara-chance.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\nara-chance.wav"
+        },
+        {
+          "duration": 2.923,
+          "hasAudio": true,
+          "id": "m33",
+          "kind": "audio",
+          "name": "nara-team.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\nara-team.wav"
+        },
+        {
+          "duration": 2.795,
+          "hasAudio": true,
+          "id": "m35",
+          "kind": "audio",
+          "name": "nara-pioneers.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\nara-pioneers.wav"
+        },
+        {
+          "duration": 1.664,
+          "hasAudio": true,
+          "id": "m37",
+          "kind": "audio",
+          "name": "ivo-descent.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\ivo-descent.wav"
+        },
+        {
+          "duration": 2.88,
+          "hasAudio": true,
+          "id": "m39",
+          "kind": "audio",
+          "name": "nara-orbit.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\nara-orbit.wav"
+        },
+        {
+          "duration": 2.923,
+          "hasAudio": true,
+          "id": "m41",
+          "kind": "audio",
+          "name": "nara-landing.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-03\\voices\\nara-landing.wav"
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "opening-dubbed",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 6,
+            "end": 6,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "earth.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          },
+          {
+            "duration": 54.25,
+            "end": 54.25,
+            "fadeIn": 0.15,
+            "fadeOut": 0.4,
+            "id": "c19",
+            "kind": "audio",
+            "media": "m18",
+            "name": "expedition-mix.wav",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "t17",
+            "volume": 0.65
+          },
+          {
+            "duration": 2.2187,
+            "end": 2.8187,
+            "id": "c22",
+            "kind": "audio",
+            "media": "m21",
+            "name": "earth.wav",
+            "sourceStart": 0,
+            "start": 0.6,
+            "track": "t20",
+            "volume": 1.569
+          },
+          {
+            "duration": 4.9,
+            "end": 5.5,
+            "id": "c44",
+            "kind": "text",
+            "name": "A Terra já não podia nos abrigar.",
+            "offsetY": -0.41,
+            "start": 0.6,
+            "text": "A Terra já não podia nos abrigar.",
+            "track": "t43"
+          },
+          {
+            "duration": 6,
+            "end": 12,
+            "id": "c4",
+            "kind": "video",
+            "media": "m3",
+            "name": "evacuation.mp4",
+            "sourceStart": 0,
+            "start": 6,
+            "track": "T1"
+          },
+          {
+            "duration": 2.7093,
+            "end": 9.3093,
+            "id": "c24",
+            "kind": "audio",
+            "media": "m23",
+            "name": "evacuation.wav",
+            "sourceStart": 0,
+            "start": 6.6,
+            "track": "t20",
+            "volume": 1.7894
+          },
+          {
+            "duration": 4.8,
+            "end": 11.4,
+            "id": "c45",
+            "kind": "text",
+            "name": "Partimos com quem ainda podíamos salvar.",
+            "offsetY": -0.41,
+            "start": 6.6,
+            "text": "Partimos com quem ainda podíamos salvar.",
+            "track": "t43"
+          },
+          {
+            "duration": 6,
+            "end": 18,
+            "id": "c6",
+            "kind": "video",
+            "media": "m5",
+            "name": "voyage.mp4",
+            "sourceStart": 0,
+            "start": 12,
+            "track": "T1"
+          },
+          {
+            "duration": 2.9013,
+            "end": 15.4013,
+            "id": "c26",
+            "kind": "audio",
+            "media": "m25",
+            "name": "voyage.wav",
+            "sourceStart": 0,
+            "start": 12.5,
+            "track": "t20",
+            "volume": 1.3037
+          },
+          {
+            "duration": 5,
+            "end": 17.5,
+            "id": "c46",
+            "kind": "text",
+            "name": "Durante anos, procuramos um lugar para r",
+            "offsetY": -0.41,
+            "start": 12.5,
+            "text": "Durante anos, procuramos um lugar para recomeçar.",
+            "track": "t43"
+          },
+          {
+            "duration": 6,
+            "end": 24,
+            "id": "c8",
+            "kind": "video",
+            "media": "m7",
+            "name": "discovery.mp4",
+            "sourceStart": 0,
+            "start": 18,
+            "track": "T1"
+          },
+          {
+            "duration": 1.8347,
+            "end": 20.4347,
+            "id": "c28",
+            "kind": "audio",
+            "media": "m27",
+            "name": "discovery.wav",
+            "sourceStart": 0,
+            "start": 18.6,
+            "track": "t20",
+            "volume": 1.7105
+          },
+          {
+            "duration": 4.8,
+            "end": 23.4,
+            "id": "c47",
+            "kind": "text",
+            "name": "Até encontrarmos Dante.",
+            "offsetY": -0.41,
+            "start": 18.6,
+            "text": "Até encontrarmos Dante.",
+            "track": "t43"
+          },
+          {
+            "duration": 12,
+            "end": 36,
+            "id": "c10",
+            "kind": "video",
+            "media": "m9",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 24,
+            "track": "T1"
+          },
+          {
+            "duration": 2.4107,
+            "end": 26.9107,
+            "id": "c30",
+            "kind": "audio",
+            "media": "m29",
+            "name": "ivo-water.wav",
+            "sourceStart": 0,
+            "start": 24.5,
+            "track": "t20",
+            "volume": 1.4469
+          },
+          {
+            "duration": 3.3,
+            "end": 27.8,
+            "id": "c48",
+            "kind": "text",
+            "name": "IVO: Água líquida. Atmosfera compatível.",
+            "offsetY": -0.41,
+            "start": 24.5,
+            "text": "IVO: Água líquida. Atmosfera compatível.",
+            "track": "t43"
+          },
+          {
+            "duration": 1.664,
+            "end": 29.764,
+            "id": "c32",
+            "kind": "audio",
+            "media": "m31",
+            "name": "nara-chance.wav",
+            "sourceStart": 0,
+            "start": 28.1,
+            "track": "t20",
+            "volume": 1.3545
+          },
+          {
+            "duration": 2.7,
+            "end": 30.8,
+            "id": "c49",
+            "kind": "text",
+            "name": "NARA: Então existe uma chance.",
+            "offsetY": -0.41,
+            "start": 28.1,
+            "text": "NARA: Então existe uma chance.",
+            "track": "t43"
+          },
+          {
+            "duration": 2.9227,
+            "end": 34.1227,
+            "id": "c34",
+            "kind": "audio",
+            "media": "m33",
+            "name": "nara-team.wav",
+            "sourceStart": 0,
+            "start": 31.2,
+            "track": "t20",
+            "volume": 1.5065
+          },
+          {
+            "duration": 4.4,
+            "end": 35.6,
+            "id": "c50",
+            "kind": "text",
+            "name": "NARA: Prepare o reconhecimento. Ninguém ",
+            "offsetY": -0.41,
+            "start": 31.2,
+            "text": "NARA: Prepare o reconhecimento. Ninguém desce sozinho.",
+            "track": "t43"
+          },
+          {
+            "duration": 4.5,
+            "end": 40.5,
+            "id": "c12",
+            "kind": "video",
+            "media": "m11",
+            "name": "pioneers.mp4",
+            "sourceStart": 0,
+            "start": 36,
+            "track": "T1"
+          },
+          {
+            "duration": 2.7947,
+            "end": 39.2947,
+            "id": "c36",
+            "kind": "audio",
+            "media": "m35",
+            "name": "nara-pioneers.wav",
+            "sourceStart": 0,
+            "start": 36.5,
+            "track": "t20",
+            "volume": 1.6532
+          },
+          {
+            "duration": 3.5,
+            "end": 40,
+            "id": "c51",
+            "kind": "text",
+            "name": "NARA: Vocês reconhecem o terreno. A frot",
+            "offsetY": -0.41,
+            "start": 36.5,
+            "text": "NARA: Vocês reconhecem o terreno. A frota aguarda.",
+            "track": "t43"
+          },
+          {
+            "duration": 9,
+            "end": 49.5,
+            "id": "c14",
+            "kind": "video",
+            "media": "m13",
+            "name": "descent.mp4",
+            "sourceStart": 0,
+            "start": 40.5,
+            "track": "T1"
+          },
+          {
+            "duration": 1.664,
+            "end": 42.864,
+            "id": "c38",
+            "kind": "audio",
+            "media": "m37",
+            "name": "ivo-descent.wav",
+            "sourceStart": 0,
+            "start": 41.2,
+            "track": "t20",
+            "volume": 1.3575
+          },
+          {
+            "duration": 3.4,
+            "end": 44.6,
+            "id": "c52",
+            "kind": "text",
+            "name": "IVO: Área de pouso à vista.",
+            "offsetY": -0.41,
+            "start": 41.2,
+            "text": "IVO: Área de pouso à vista.",
+            "track": "t43"
+          },
+          {
+            "duration": 2.88,
+            "end": 48.08,
+            "id": "c40",
+            "kind": "audio",
+            "media": "m39",
+            "name": "nara-orbit.wav",
+            "sourceStart": 0,
+            "start": 45.2,
+            "track": "t20",
+            "volume": 1.8491
+          },
+          {
+            "duration": 3.8,
+            "end": 49,
+            "id": "c53",
+            "kind": "text",
+            "name": "NARA: Primeiro a equipe. Os outros aguar",
+            "offsetY": -0.41,
+            "start": 45.2,
+            "text": "NARA: Primeiro a equipe. Os outros aguardam em órbita.",
+            "track": "t43"
+          },
+          {
+            "duration": 4.75,
+            "end": 54.25,
+            "id": "c16",
+            "kind": "video",
+            "media": "m15",
+            "name": "landing.mp4",
+            "sourceStart": 0,
+            "start": 49.5,
+            "track": "T1"
+          },
+          {
+            "duration": 2.9227,
+            "end": 52.9227,
+            "id": "c42",
+            "kind": "audio",
+            "media": "m41",
+            "name": "nara-landing.wav",
+            "sourceStart": 0,
+            "start": 50,
+            "track": "t20",
+            "volume": 1.539
+          },
+          {
+            "duration": 3.9,
+            "end": 53.9,
+            "id": "c54",
+            "kind": "text",
+            "name": "NARA: DANTE-01 em solo. Primeiro, o reco",
+            "offsetY": -0.41,
+            "start": 50,
+            "text": "NARA: DANTE-01 em solo. Primeiro, o reconhecimento.",
+            "track": "t43"
+          }
+        ],
+        "duration": 54.25,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "t17",
+            "index": 0
+          },
+          {
+            "id": "T1",
+            "index": 1
+          },
+          {
+            "id": "T2",
+            "index": 2
+          },
+          {
+            "id": "T3",
+            "index": 3
+          },
+          {
+            "id": "T4",
+            "index": 4
+          },
+          {
+            "id": "t20",
+            "index": 5
+          },
+          {
+            "id": "t43",
+            "index": 6
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "project_close",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-03\\opening-dubbed"
+    },
+    "result": {}
+  }
+]

@@ -128,7 +128,7 @@ def sources(shot):
             (DOC / f"source/{stem}-02.mp4", 1, min(80, round((shot['seconds']-5+.25)*16)))]
 
 
-def assemble(workprint=False, restored=False, reuse=False):
+def assemble(workprint=False, restored=False, reuse=False, revision='revision-02', pictures_only=False):
     shots = PLAN['shots'][:5] if workprint else PLAN['shots']
     seconds = sum(s['seconds'] for s in shots)
     output = PUBLIC / ('opening-workprint.mp4' if workprint else 'arrival-whole-scene.mp4')
@@ -138,9 +138,9 @@ def assemble(workprint=False, restored=False, reuse=False):
     previous_file = DOC / 'media.json'
     previous = json.loads(previous_file.read_text(encoding='utf-8')) if previous_file.exists() else {}
     restoration = None
-    restore_work = ROOT / '.local/cinematic-opening/revision-02/restoration'
+    restore_work = ROOT / f'.local/cinematic-opening/{revision}/restoration'
     if restored:
-        restoration = json.loads((DOC / 'revision-02/restoration.json').read_text(encoding='utf-8'))
+        restoration = json.loads((DOC / f'{revision}/restoration.json').read_text(encoding='utf-8'))
         assert restoration['passed'] and restoration['blend'] == .55
     manifests = []
     for shot in shots:
@@ -150,7 +150,7 @@ def assemble(workprint=False, restored=False, reuse=False):
         enhanced = restored and shot['id'] in ['bridge', 'landing']
         piece = WORK / f"{shot['id']}.mp4"
         old = next((s for s in previous.get('shots', []) if s['id'] == shot['id']), {})
-        if reuse and not enhanced and old.get('source') == used and piece.exists():
+        if reuse and old.get('source') == used and piece.exists() and bool(old.get('restoration')) == enhanced:
             cap = cv2.VideoCapture(str(piece))
             valid = (cap.get(3), cap.get(4), cap.get(5), cap.get(7)) == (1280, 720, 24, round(shot['seconds']*24))
             cap.release()
@@ -197,6 +197,12 @@ def assemble(workprint=False, restored=False, reuse=False):
         manifests.append({'id': shot['id'], 'seconds': shot['seconds'], 'source': used, 'frames': frames,
                           'restoration': '55% Real-ESRGAN x2 + 45% original, offline' if enhanced else None})
     (WORK / 'concat.txt').write_text(''.join(f"file '{s['id']}.mp4'\n" for s in shots), encoding='utf-8')
+    if pictures_only:
+        for entry in manifests:
+            entry['pictureSha256'] = digest(WORK / f"{entry['id']}.mp4")
+        (DOC / revision / 'picture-manifest.json').write_text(json.dumps({'seconds': seconds, 'shots': manifests}, indent=2)+'\n', encoding='utf-8')
+        print('Picture intermediates ready for Concat; no public film overwritten.', flush=True)
+        return
     wav, audio = sound()
     ass = captions('workprint' if workprint else 'arrival', seconds)
     run(['-f', 'concat', '-safe', '1', '-i', 'concat.txt', '-i', wav,
@@ -224,6 +230,8 @@ if __name__ == '__main__':
     mode.add_argument('--workprint', action='store_true', help='Export only the finished first five shots, explicitly not the full film')
     parser.add_argument('--restored', action='store_true', help='Require offline restored bridge/landing frames; higher-quality final encode')
     parser.add_argument('--reuse-unchanged', action='store_true', help='Reuse local picture intermediates with identical signed source lists')
+    parser.add_argument('--revision', choices=['revision-02', 'revision-03'], default='revision-02')
+    parser.add_argument('--pictures-only', action='store_true', help='Prepare verified picture pieces for Concat, without a redundant film encode')
     args = parser.parse_args()
     WORK.mkdir(parents=True, exist_ok=True)
     PUBLIC.mkdir(parents=True, exist_ok=True)
@@ -234,4 +242,4 @@ if __name__ == '__main__':
         (DOC / 'audio.json').write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')
         print('Audio and captions prepared; complete film NOT produced.')
     else:
-        assemble(workprint=args.workprint, restored=args.restored, reuse=args.reuse_unchanged)
+        assemble(workprint=args.workprint, restored=args.restored, reuse=args.reuse_unchanged, revision=args.revision, pictures_only=args.pictures_only)

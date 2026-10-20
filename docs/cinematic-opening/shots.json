@@ -1,58 +1,138 @@
 {
   "title": "Um lugar para recomeçar",
-  "targetSeconds": 59.25,
+  "targetSeconds": 54.25,
   "outputFps": 24,
   "sourceFps": 16,
   "shots": [
     {
-      "id": "earth", "seconds": 6, "image": "public/assets/prologue/earth.webp", "seed": 110,
+      "id": "earth",
+      "seconds": 6,
+      "image": "public/assets/prologue/earth.webp",
+      "seed": 110,
       "motion": "The small distant evacuation rockets rise slowly into the clouds, leaving narrow trails. Dust and low haze drift gently across the dry basin. The ruins stay fixed. Loss, not explosions.",
       "ending": "Continue the rising rockets and drifting low haze. The ruined coast remains fixed and unchanged. No new launches appear."
     },
     {
-      "id": "evacuation", "seconds": 6, "image": "public/assets/prologue/evacuation.webp", "seed": 112,
+      "id": "evacuation",
+      "seconds": 6,
+      "image": "public/assets/prologue/evacuation.webp",
+      "seed": 112,
       "motion": "The complete industrial civilian ships lift slowly up and away from their gantries, steady warm engine plumes blowing vapour downward. The few small complete human figures take careful natural steps carrying their bags; bodies and limbs stay connected. No crowd duplication. Clouds drift below the platform.",
       "ending": "Continue the same ships ascending away from the launch structures, maintaining their original shapes. Vapour settles around the gantries and the small people continue their careful steps."
     },
     {
-      "id": "voyage", "seconds": 6, "image": "public/assets/prologue/voyage.webp", "seed": 114,
+      "id": "voyage",
+      "seconds": 6,
+      "image": "public/assets/prologue/voyage.webp",
+      "seed": 114,
       "motion": "The distant ships outside the scratched window glide slowly across the starfield in a steady formation, tiny amber engine lights gently varying. A small loose cloth on the left chair shifts subtly with ventilation. The cabin, seats, scratched glass and consoles stay fixed. Quiet, exhausted years of travel, no new characters or planets.",
       "ending": "Continue the distant fleet gliding slowly outside the same fixed observation window. Keep the empty cabin, furniture, glass and subdued amber lighting unchanged."
     },
     {
-      "id": "discovery", "seconds": 6, "image": "public/assets/prologue/dante.webp", "seed": 116,
+      "id": "discovery",
+      "seconds": 6,
+      "image": "public/assets/prologue/dante.webp",
+      "seed": 116,
       "motion": "The intact original expedition vessel moves slowly forward toward Dante, becoming slightly more distant while keeping every hull section and engine shape. The planet rotates imperceptibly with soft cloud movement. Vast scale, quiet discovery. No laser beams, explosions, warp tunnels, visible temples or new lore symbols.",
       "ending": "Continue the intact expedition vessel moving toward the same planet. Preserve the green land, cloud masses, amber and faint violet palette. Slow restrained orbital motion only."
     },
-    { "id": "bridge", "seconds": 12, "approvedPilot": true },
     {
-      "id": "pioneers", "seconds": 4.5, "image": "docs/cinematic-opening/source/pioneer-team-v2.png", "seed": 127,
+      "id": "bridge",
+      "seconds": 12,
+      "approvedPilot": true
+    },
+    {
+      "id": "pioneers",
+      "seconds": 4.5,
+      "image": "docs/cinematic-opening/source/pioneer-team-v2.png",
+      "seed": 127,
       "motion": "Four complete human expedition specialists prepare quietly in the same orbital hangar. The armored warrior on the left briefly checks the hilt with his gloved hands and looks toward the others. The female hunter beside him lowers her compact rifle slightly and turns her gaze toward the exit. The woman in blue touches the controls on her opposite astral gauntlet with a small deliberate gesture. The field handler on the right secures the strap at his waist and looks toward the team. Each person stays in their own space with both feet planted and one restrained natural gesture, subtle breathing and small head movement. Preserve all four distinct faces, connected shoulders, elbows, hands, clothes and equipment. Keep every person whole and grounded. No firing, combat, pets, elemental magic, crossing bodies or new people. The orbital planet and hangar structure remain coherent.",
       "ending": "The same four complete people finish their equipment checks and look toward the hangar exit."
     },
     {
-      "id": "descent", "seconds": 9, "image": "docs/cinematic-opening/source/descent.png", "seed": 118,
+      "id": "descent",
+      "seconds": 9,
+      "image": "docs/cinematic-opening/source/descent.png",
+      "seed": 118,
       "motion": "The complete civilian shuttle glides forward and gradually descends toward the forest clearing far below. Its engine lights remain restrained amber. Small cloud wisps pass around the hull and trail behind it. Keep the entire original ship, its ivory worn hull, two rear nacelles and fins rigid and structurally intact. The valley, waterfalls and organic forest masses stay coherent. No people outside, no open ramp in flight, no city, no battle.",
       "ending": "Continue the same intact shuttle descending gently toward the forest clearing. It moves away from the viewpoint toward the valley; clouds pass naturally around it. Keep gear retracted and the ramp shut. Do not turn it into a different ship."
     },
     {
-      "id": "landing", "sourceStem": "landing-heroes-v2", "seconds": 9.75, "image": "docs/cinematic-opening/source/landing-heroes-v2.png", "seed": 130,
-      "motion": "The FOUR complete expedition HEROES are the first to disembark. The ivory armored male warrior at the front takes two slow grounded steps forward toward the clearing on the right. The dark skinned silver braided female hunter in navy and amber walks beside him with rifle pointed safely down. The woman with astral gauntlet and olive clothed male handler follow just behind these leaders, ahead of all civilians. All four keep distinct faces and connected natural anatomy, separate silhouettes, alternating planted footfalls and subtle weight transfer. The two small crew figures WAIT inside the doorway in the background and never overtake the heroes. Preserve their ordering. The complete landed shuttle and ramp remain rigid and stationary. Mist drifts gently around the valley; distant waterfalls flow. No pets, no firing, no crowd spawning, no person already ahead of the heroes, no structures appearing. First reconnaissance only.",
-      "ending": "Continue the same FOUR complete heroes taking one last careful grounded step away from the ramp, then pausing to look toward the unexplored forest on the right. The ivory armored warrior and dark skinned silver braided hunter stay in front. Astral woman and olive male handler stay directly behind them. Crew WAIT back inside the doorway, never pass the team. Preserve four distinct identities, clothes, equipment, connected anatomy and body size. Keep the shuttle and ramp fixed. End with the four pioneers ready to explore, leaves and mist moving gently. No new characters, creatures, camp or buildings."
+      "id": "landing",
+      "sourceStem": "landing-heroes-v3",
+      "seconds": 4.75,
+      "image": "docs/cinematic-opening/source/landing-heroes-v3.png",
+      "seed": 142,
+      "motion": "Four complete pioneers leave the ramp very slowly. The armored warrior and silver braided dark skinned hunter each take only ONE short grounded step to the right, then stop and look into the clearing. The astral woman and olive field handler behind them only shift weight and look around, keeping their feet on the ramp. Preserve four full bodies at the SAME SCREEN SIZE from head to boots at all times. Keep every face, shoulder, hand, weapon, uniform and ship panel unchanged. Both civilians wait inside the dark doorway far behind. The shuttle and ramp stay absolutely fixed. Only small breathing, small eye and head turns, light breeze in leaves and distant drifting mist. Camera locked firmly on a tripod, no tracking, no push-in, no zoom, no reframing. The foreground and background do not move toward the viewer. Grounded restrained whole-body acting, preserve painted material texture and quiet soft lighting.",
+      "ending": "The same four whole pioneers have stopped walking and quietly survey the forest. Only a small natural head turn from the hunter and subtle breathing and weight shifts from all four. Keep all four full bodies including boots visible, SAME SCREEN SIZE AND POSITION. No walking toward camera. The civilians remain behind inside the doorway. The entire spacecraft and ramp, forest shapes and framing stay rigid and fixed. A little mist and leaf movement only. Absolutely stationary locked tripod camera, no zoom, dolly, tracking or pan. No new figures, animals, structures, light rays or effects."
     }
   ],
   "captions": [
-    [0.6, 5.5, "", "A Terra já não podia nos abrigar."],
-    [6.6, 11.4, "", "Partimos com quem ainda podíamos salvar."],
-    [12.5, 17.5, "", "Durante anos, procuramos um lugar para recomeçar."],
-    [18.6, 23.4, "", "Até encontrarmos Dante."],
-    [24.5, 27.8, "IVO", "Água líquida. Atmosfera compatível."],
-    [28.1, 30.8, "NARA", "Então existe uma chance."],
-    [31.2, 35.6, "NARA", "Prepare o reconhecimento. Ninguém desce sozinho."],
-    [36.5, 40, "NARA", "Vocês reconhecem o terreno. A frota aguarda."],
-    [41.2, 44.6, "IVO", "Área de pouso à vista."],
-    [45.2, 49, "NARA", "Primeiro a equipe. Os outros aguardam em órbita."],
-    [50.6, 53.6, "NARA", "DANTE-01 em solo."],
-    [54.2, 58.8, "NARA", "Antes de trazer os outros, precisamos conhecer este lugar."]
+    [
+      0.6,
+      5.5,
+      "",
+      "A Terra já não podia nos abrigar."
+    ],
+    [
+      6.6,
+      11.4,
+      "",
+      "Partimos com quem ainda podíamos salvar."
+    ],
+    [
+      12.5,
+      17.5,
+      "",
+      "Durante anos, procuramos um lugar para recomeçar."
+    ],
+    [
+      18.6,
+      23.4,
+      "",
+      "Até encontrarmos Dante."
+    ],
+    [
+      24.5,
+      27.8,
+      "IVO",
+      "Água líquida. Atmosfera compatível."
+    ],
+    [
+      28.1,
+      30.8,
+      "NARA",
+      "Então existe uma chance."
+    ],
+    [
+      31.2,
+      35.6,
+      "NARA",
+      "Prepare o reconhecimento. Ninguém desce sozinho."
+    ],
+    [
+      36.5,
+      40,
+      "NARA",
+      "Vocês reconhecem o terreno. A frota aguarda."
+    ],
+    [
+      41.2,
+      44.6,
+      "IVO",
+      "Área de pouso à vista."
+    ],
+    [
+      45.2,
+      49,
+      "NARA",
+      "Primeiro a equipe. Os outros aguardam em órbita."
+    ],
+    [
+      50,
+      53.9,
+      "NARA",
+      "DANTE-01 em solo. Primeiro, o reconhecimento."
+    ]
   ]
 }

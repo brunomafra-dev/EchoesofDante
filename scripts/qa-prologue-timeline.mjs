@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile, readFile } from 'node:fs/promises';
 
+const duration = JSON.parse(await readFile('docs/cinematic-opening/shots.json','utf8')).targetSeconds;
 const base = process.env.QA_BASE ?? 'https://echosofdante.vercel.app';
 const out = process.env.QA_OUT ?? 'docs/cinematic-opening/completion/qa/timeline';
 await mkdir(out, { recursive: true });
@@ -21,7 +22,7 @@ try {
   const video = page.locator('.prologue-video'); await video.waitFor();
   await page.waitForFunction(() => { const element = document.querySelector('.prologue-video'); return element?.readyState >= 2 && element.duration > 19 && element.currentTime > .75; });
   report.video = await video.evaluate(element => ({ source: new URL(element.currentSrc).pathname, duration: element.duration, currentTime: element.currentTime, paused: element.paused, captions: document.querySelectorAll('.prologue-caption').length }));
-  assert.equal(report.video.source, '/assets/cinematic-opening/arrival-whole-scene.mp4'); assert.equal(report.video.duration,59.25);
+  assert.equal(report.video.source, '/assets/cinematic-opening/arrival-whole-scene.mp4'); assert.equal(report.video.duration,duration);
   assert.equal(report.video.paused, false); assert.equal(report.video.captions, 0);
   await page.screenshot({ path: `${out}/arrival-film.png` });
   await video.evaluate(element => { element.currentTime = element.duration - .15; });
