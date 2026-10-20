@@ -1,0 +1,10 @@
+{
+  "language": "pt-br",
+  "seconds": 12,
+  "purpose": "Prova de vozes locais; não substitui a dublagem integral sem avaliação humana.",
+  "lines": [
+    {"id": "ivo-water", "speaker": "IVO", "voice": "pm_alex", "start": 0.5, "end": 3.9, "text": "Água líquida. Atmosfera compatível.", "speed": 1.0},
+    {"id": "nara-chance", "speaker": "NARA", "voice": "pf_dora", "start": 4.1, "end": 6.9, "text": "Então existe uma chance.", "speed": 1.0},
+    {"id": "nara-team", "speaker": "NARA", "voice": "pf_dora", "start": 7.2, "end": 11.9, "text": "Prepare o reconhecimento. Ninguém desce sozinho.", "speed": 1.0}
+  ]
+}

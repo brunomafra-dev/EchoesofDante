@@ -1,5 +1,7 @@
 # Abertura completa — produção
 
+**Revisão atual: [0.1.117 — heróis desembarcam primeiro, nitidez e prova de vozes](revision-02/README.md).** [Laboratório dos trechos](https://echosofdante.vercel.app/cinematic-review.html?take=landing&v=0.1.117). As entregas e bloqueios abaixo são registros históricos, anteriores a esta revisão.
+
 **Entrega atual: [0.1.116 — filme completo, 59,25 s](completion/README.md).** Em 18/10/2026 a cota gratuita voltou a funcionar. Equipe com identidades atuais, descida e desembarque gerados, montados e integrados ao início solo/cooperativo. [Assistir ao corte completo](https://echosofdante.vercel.app/cinematic-opening.html?v=0.1.116). Piloto aprovado e corte anterior preservados; **avaliação visual do filme completo pendente**. Os estados de bloqueio e preparação abaixo são históricos.
 
 ## Adição solicitada — apresentação da equipe

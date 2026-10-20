@@ -1,0 +1,18 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": true,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 5,
+  "steps": 4,
+  "seed": 130,
+  "sourceHash": "ee718c413b291253a39b7ede87b36c4ef9f9192809ce4e898ee3b77526847a2a",
+  "prompt": "One continuous five-second shot. The FOUR complete expedition HEROES are the first to disembark. The ivory armored male warrior at the front takes two slow grounded steps forward toward the clearing on the right. The dark skinned silver braided female hunter in navy and amber walks beside him with rifle pointed safely down. The woman with astral gauntlet and olive clothed male handler follow just behind these leaders, ahead of all civilians. All four keep distinct faces and connected natural anatomy, separate silhouettes, alternating planted footfalls and subtle weight transfer. The two small crew figures WAIT inside the doorway in the background and never overtake the heroes. Preserve their ordering. The complete landed shuttle and ramp remain rigid and stationary. Mist drifts gently around the valley; distant waterfalls flow. No pets, no firing, no crowd spawning, no person already ahead of the heroes, no structures appearing. First reconnaissance only. Preserve the original painted Organic Sci-Fi R3 game illustration, lighting, anatomy, ship structure, materials and whole-scene composition. Fixed camera, no zoom or pan, no cuts, no text, no subtitles, no music. Real motion inside the scene; never a still-picture slideshow.",
+  "startedAt": "2026-10-20T12:39:23.868Z",
+  "status": "downloaded",
+  "transport": "Authenticated Gradio REST; no redirects",
+  "eventId": "2bf2f38187df452c8b1f232e133d85fa",
+  "actualSeed": 130,
+  "bytes": 2768304,
+  "videoHash": "af0fe0c4d24a8d09ab5b7ff393ce064cbb2d1ee56acbc66675bfdb7c7d300d65",
+  "finishedAt": "2026-10-20T12:40:29.613Z"
+}

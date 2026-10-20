@@ -121,27 +121,53 @@ def sources(shot):
         return [(ROOT / 'public/assets/cinematic-pilot/bridge-hf-motion-test.mp4', 0, 80),
                 (ROOT / 'docs/cinematic-pilot/revision-04/source/take-02.mp4', 1, 80),
                 (ROOT / 'docs/cinematic-pilot/revision-04/source/take-03.mp4', 1, 36)]
+    stem = shot.get('sourceStem', shot['id'])
     if shot['seconds']<=5:
-        return [(DOC / f"source/{shot['id']}-01.mp4", 0, 80)]
-    return [(DOC / f"source/{shot['id']}-01.mp4", 0, 80),
-            (DOC / f"source/{shot['id']}-02.mp4", 1, min(80, round((shot['seconds']-5+.25)*16)))]
+        return [(DOC / f"source/{stem}-01.mp4", 0, 80)]
+    return [(DOC / f"source/{stem}-01.mp4", 0, 80),
+            (DOC / f"source/{stem}-02.mp4", 1, min(80, round((shot['seconds']-5+.25)*16)))]
 
 
-def assemble(workprint=False):
+def assemble(workprint=False, restored=False, reuse=False):
     shots = PLAN['shots'][:5] if workprint else PLAN['shots']
     seconds = sum(s['seconds'] for s in shots)
     output = PUBLIC / ('opening-workprint.mp4' if workprint else 'arrival-whole-scene.mp4')
     missing = [p.relative_to(ROOT).as_posix() for s in shots for p, _, _ in sources(s) if not p.exists()]
     if missing:
         raise RuntimeError('Footage missing; no placeholder film will be produced:\n'+'\n'.join(missing))
+    previous_file = DOC / 'media.json'
+    previous = json.loads(previous_file.read_text(encoding='utf-8')) if previous_file.exists() else {}
+    restoration = None
+    restore_work = ROOT / '.local/cinematic-opening/revision-02/restoration'
+    if restored:
+        restoration = json.loads((DOC / 'revision-02/restoration.json').read_text(encoding='utf-8'))
+        assert restoration['passed'] and restoration['blend'] == .55
     manifests = []
     for shot in shots:
         print(f"Processing whole-motion shot: {shot['id']}", flush=True)
+        used = [{'path': path.relative_to(ROOT).as_posix(), 'startFrame': start,
+                 'usedFrames': count, 'sha256': digest(path)} for path, start, count in sources(shot)]
+        enhanced = restored and shot['id'] in ['bridge', 'landing']
+        piece = WORK / f"{shot['id']}.mp4"
+        old = next((s for s in previous.get('shots', []) if s['id'] == shot['id']), {})
+        if reuse and not enhanced and old.get('source') == used and piece.exists():
+            cap = cv2.VideoCapture(str(piece))
+            valid = (cap.get(3), cap.get(4), cap.get(5), cap.get(7)) == (1280, 720, 24, round(shot['seconds']*24))
+            cap.release()
+            if valid:
+                manifests.append({**old, 'reusedPictureIntermediate': True})
+                print('Reusing matching picture intermediate (same source hashes).', flush=True)
+                continue
+        if enhanced:
+            proof = next(s for s in restoration['shots'] if s['id'] == shot['id'])
+            expected = [{'path': s['path'], 'sha256': s['sha256'], 'start': s['startFrame'], 'count': s['usedFrames']} for s in used]
+            assert proof['source'] == expected, 'Refuse stale restored frames'
+        size = (1248, 720) if enhanced else (832, 480)
         native = WORK / f"{shot['id']}-native.mp4"
         process = subprocess.Popen([FFMPEG, '-y', '-v', 'error', '-f', 'rawvideo', '-pix_fmt', 'bgr24',
-                                    '-s', '832x480', '-r', '16', '-i', '-', '-an', '-c:v', 'libx264',
+                                    '-s', f'{size[0]}x{size[1]}', '-r', '16', '-i', '-', '-an', '-c:v', 'libx264',
                                     '-preset', 'fast', '-crf', '12', '-pix_fmt', 'yuv420p', str(native)], stdin=subprocess.PIPE)
-        used = []
+        index = 0
         try:
             for path, start, count in sources(shot):
                 c = cv2.VideoCapture(str(path))
@@ -151,25 +177,30 @@ def assemble(workprint=False):
                     ok, frame = c.read()
                     if not ok:
                         raise RuntimeError(f'Incomplete source: {path}')
+                    if enhanced:
+                        painted = cv2.imread(str(restore_work / f"output/{shot['id']}-{index:04}.png"))
+                        assert painted is not None and painted.shape[:2] == (960, 1664)
+                        # Retain original texture; restoration is not a new face/limb rig.
+                        frame = cv2.addWeighted(cv2.resize(frame, size, interpolation=cv2.INTER_LANCZOS4), .45,
+                                                cv2.resize(painted, size, interpolation=cv2.INTER_LANCZOS4), .55, 0)
                     process.stdin.write(frame.tobytes())
+                    index += 1
                 c.release()
-                used.append({'path': path.relative_to(ROOT).as_posix(), 'startFrame': start,
-                             'usedFrames': count, 'sha256': digest(path)})
         finally:
             process.stdin.close()
         if process.wait() != 0:
             raise RuntimeError('Native source assembly failed')
-        piece = WORK / f"{shot['id']}.mp4"
         run(['-i', native, '-vf', 'minterpolate=fps=24:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1:scd=fdiff,scale=1248:720:flags=lanczos,pad=1280:720:16:0:color=0x030806,setsar=1',
              '-t', shot['seconds'], '-an', '-c:v', 'libx264', '-crf', '15', '-preset', 'medium', '-pix_fmt', 'yuv420p', piece])
         c = cv2.VideoCapture(str(piece)); frames = int(c.get(7)); c.release()
         assert frames == round(shot['seconds']*24), (shot['id'], frames)
-        manifests.append({'id': shot['id'], 'seconds': shot['seconds'], 'source': used, 'frames': frames})
+        manifests.append({'id': shot['id'], 'seconds': shot['seconds'], 'source': used, 'frames': frames,
+                          'restoration': '55% Real-ESRGAN x2 + 45% original, offline' if enhanced else None})
     (WORK / 'concat.txt').write_text(''.join(f"file '{s['id']}.mp4'\n" for s in shots), encoding='utf-8')
     wav, audio = sound()
     ass = captions('workprint' if workprint else 'arrival', seconds)
     run(['-f', 'concat', '-safe', '1', '-i', 'concat.txt', '-i', wav,
-         '-vf', f'ass={ass.name}', '-af', f'afade=t=out:st={seconds-1.4}:d=1.4', '-t', seconds, '-c:v', 'libx264', '-crf', '21', '-preset', 'medium',
+         '-vf', f'ass={ass.name}', '-af', f'afade=t=out:st={seconds-1.4}:d=1.4', '-t', seconds, '-c:v', 'libx264', '-crf', '18' if restored else '21', '-preset', 'medium',
          '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart', output], cwd=WORK)
     c = cv2.VideoCapture(str(output))
     info = {'width': int(c.get(3)), 'height': int(c.get(4)), 'fps': c.get(5), 'frames': int(c.get(7)),
@@ -180,6 +211,7 @@ def assemble(workprint=False):
               'missingShots': [s['id'] for s in PLAN['shots'] if s not in shots],
               'humanApproval': 'pending', 'native720p24': False,
               'sourceFps': 16, 'interpolation': 'FFmpeg motion compensated; whole frames',
+              'selectiveRestoration': restoration,
               'loopOrFrozenFiller': False, 'shots': manifests, 'audio': audio, 'output': info}
     (DOC / ('workprint-media.json' if workprint else 'media.json')).write_text(json.dumps(report, indent=2, ensure_ascii=False)+'\n', encoding='utf-8')
     print(json.dumps(info))
@@ -190,6 +222,8 @@ if __name__ == '__main__':
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument('--audio-only', action='store_true')
     mode.add_argument('--workprint', action='store_true', help='Export only the finished first five shots, explicitly not the full film')
+    parser.add_argument('--restored', action='store_true', help='Require offline restored bridge/landing frames; higher-quality final encode')
+    parser.add_argument('--reuse-unchanged', action='store_true', help='Reuse local picture intermediates with identical signed source lists')
     args = parser.parse_args()
     WORK.mkdir(parents=True, exist_ok=True)
     PUBLIC.mkdir(parents=True, exist_ok=True)
@@ -200,4 +234,4 @@ if __name__ == '__main__':
         (DOC / 'audio.json').write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')
         print('Audio and captions prepared; complete film NOT produced.')
     else:
-        assemble(workprint=args.workprint)
+        assemble(workprint=args.workprint, restored=args.restored, reuse=args.reuse_unchanged)

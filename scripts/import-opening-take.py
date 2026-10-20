@@ -17,7 +17,8 @@ parser.add_argument('shot', choices=[s['id'] for s in plan['shots'] if not s.get
 parser.add_argument('part', type=int, choices=[1, 2])
 parser.add_argument('--from-directory', help='Completed attempt under .local; retain previous failed receipts')
 args = parser.parse_args()
-name = f'{args.shot}-{args.part:02}'
+shot = next(s for s in plan['shots'] if s['id'] == args.shot)
+name = f"{shot.get('sourceStem', args.shot)}-{args.part:02}"
 folder = (ROOT / args.from_directory).resolve() if args.from_directory else ROOT / f'.local/cinematic-opening/account/{name}'
 assert folder.is_relative_to((ROOT/'.local').resolve()), 'Attempt must remain under .local'
 receipt = json.loads((folder / 'attempt.json').read_text(encoding='utf-8'))

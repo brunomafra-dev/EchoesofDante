@@ -20,7 +20,7 @@ video.addEventListener('pause', () => { play.textContent = 'Reproduzir'; status.
 video.addEventListener('ended', () => { status.textContent = video.dataset.endMessage ?? 'Fim do piloto. Avalie a atuação antes da abertura completa.'; });
 video.addEventListener('error', () => { status.textContent = 'Não foi possível carregar o vídeo. Tente baixar o MP4.'; });
 
-const controls = [play, replay, skip];
+const controls: HTMLElement[] = [play, replay, ...Array.from(document.querySelectorAll<HTMLButtonElement>('[data-take]')), skip];
 let frame = 0;
 let pressed: boolean[] = [];
 let focus = 0;

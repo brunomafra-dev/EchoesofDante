@@ -1,0 +1,18 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": true,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 5,
+  "steps": 4,
+  "seed": 131,
+  "sourceHash": "e026b00980ad3d2742b4b75c2dae7a6bd7b64ff64caa8ec115a916392dd0d894",
+  "prompt": "One continuous continuation of the exact supplied complete scene. Continue the same FOUR complete heroes taking one last careful grounded step away from the ramp, then pausing to look toward the unexplored forest on the right. The ivory armored warrior and dark skinned silver braided hunter stay in front. Astral woman and olive male handler stay directly behind them. Crew WAIT back inside the doorway, never pass the team. Preserve four distinct identities, clothes, equipment, connected anatomy and body size. Keep the shuttle and ramp fixed. End with the four pioneers ready to explore, leaves and mist moving gently. No new characters, creatures, camp or buildings. Preserve the original painted Organic Sci-Fi R3 game illustration, lighting, anatomy, ship structure, materials and whole-scene composition. Fixed camera, no zoom or pan, no cuts, no text, no subtitles, no music. Real motion inside the scene; never a still-picture slideshow.",
+  "startedAt": "2026-10-20T12:43:34.013Z",
+  "status": "downloaded",
+  "transport": "Authenticated Gradio REST; no redirects",
+  "eventId": "8ebcddbc51bb476ea04cfea41410dded",
+  "actualSeed": 131,
+  "bytes": 1975909,
+  "videoHash": "20d692b451871031b6ebf31fce8bf0ca697036623eceee1e5e83f443a7771151",
+  "finishedAt": "2026-10-20T12:44:23.849Z"
+}

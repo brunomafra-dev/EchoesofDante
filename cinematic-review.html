@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101512">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/src/experiments/cinematic-pilot/style.css">
+  <title>Dante — revisão da abertura e teste de vozes</title>
+  <style>
+    .takes{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.takes button{font:inherit;font-size:13px;min-height:40px;padding:8px 14px;border:1px solid #56604c;border-radius:4px;background:#1c251e;color:#d9dfd2;cursor:pointer}.takes button[aria-pressed=true]{border-color:#d9bb83;background:#3d3c28;color:#fff1ce}
+    .screen{max-width:min(100%,calc((100dvh - 280px)*16/9))}.comparisons{display:grid;grid-template-columns:1fr 1fr;gap:12px}.comparisons figure{margin:0}.comparisons img{display:block;width:100%;height:auto}.comparisons figcaption{letter-spacing:0}
+    @media(max-height:460px) and (orientation:landscape){.screen{max-width:calc((100dvh - 180px)*16/9)}.takes{margin:5px 0}.takes button{min-height:36px;padding:5px 10px}}
+    @media(max-width:600px){.comparisons{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main>
+    <header><a href="test-library.html">← Biblioteca de testes</a><span>ABERTURA · REVISÃO 02 · 0.1.117</span></header>
+    <h1>Os primeiros passos em Dante</h1>
+    <p class="intro">Os quatro heróis abrem o caminho. A tripulação vem depois.</p>
+    <nav class="takes" aria-label="Escolher trecho">
+      <button type="button" data-take="film" aria-pressed="false">Filme completo · 59 s</button>
+      <button type="button" data-take="landing" aria-pressed="false">Novo desembarque · 10 s</button>
+      <button type="button" data-take="voices" aria-pressed="false">Ponte dublada · 12 s</button>
+    </nav>
+    <figure class="screen">
+      <video controls playsinline preload="metadata" tabindex="0" aria-label="Trecho da abertura">
+        Seu navegador não reproduz este vídeo. Use o link para baixar o MP4.
+      </video>
+      <figcaption id="take-caption"></figcaption>
+    </figure>
+    <nav class="controls" aria-label="Controles do vídeo">
+      <button type="button" id="play">Reproduzir</button>
+      <button type="button" id="replay">Rever do início</button>
+      <a id="skip" href="test-library.html">Voltar à biblioteca</a>
+      <a id="download" download>Baixar este MP4</a>
+    </nav>
+    <p id="playback-status" role="status" aria-live="polite">Escolha um trecho e reproduza com som.</p>
+    <p class="status" id="take-description"></p>
+    <details id="production-info"><summary>Comparação de imagem e produção</summary>
+      <div class="comparisons">
+        <figure><img src="assets/cinematic-opening/quality-before.webp" loading="lazy" alt="Mesmo quadro do desembarque ampliado pela técnica anterior"><figcaption>Ampliação anterior</figcaption></figure>
+        <figure><img src="assets/cinematic-opening/quality-after.webp" loading="lazy" alt="Mesmo quadro do desembarque com restauração moderada"><figcaption>Restauração moderada + textura original</figcaption></figure>
+      </div>
+      <p>Fonte 832×480 / 16 FPS. Saída 1280×720 / 24 FPS, com ampliação e interpolação. Ponte e desembarque receberam restauração offline de quadros inteiros; as demais cenas foram preservadas. O arquivo final usa menor compressão. Isso não transforma a fonte em geração nativa HD.</p>
+      <p>O teste de dublagem foi editado e exportado pelo Concat. Vozes sintéticas locais em português: Ivo e Nara. O movimento original da cena foi preservado; não houve sincronização labial nova. A abertura completa continua com legendas e ambiente, aguardando sua avaliação das vozes.</p>
+      <p><strong>Ivo:</strong> Água líquida. Atmosfera compatível.<br><strong>Nara:</strong> Então existe uma chance.<br><strong>Nara:</strong> Prepare o reconhecimento. Ninguém desce sozinho.</p>
+      <p>Teclado: Tab e Enter. Gamepad: direcional escolhe os controles/trechos; A confirma, X revê, B volta. Touch: use os botões ou controles nativos do vídeo.</p>
+      <p><a href="cinematic-opening.html?v=0.1.117">Página da abertura completa</a> · <a href="https://github.com/brunomafra-dev/EchoesofDante/tree/main/docs/cinematic-opening/revision-02">Relatório e limites</a></p>
+    </details>
+    <footer>Laboratório isolado. Personagens, progresso e salas não são carregados nem alterados. <a href="./">Jogo principal</a></footer>
+  </main>
+  <script type="module" src="/src/experiments/cinematic-pilot/review.ts"></script>
+</body>
+</html>

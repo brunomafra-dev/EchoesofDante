@@ -1,0 +1,62 @@
+{
+  "model": "realesr-animevideov3 x2",
+  "blend": 0.55,
+  "sourceSize": [
+    832,
+    480
+  ],
+  "restoredSize": [
+    1664,
+    960
+  ],
+  "sourceFps": 16,
+  "nativeHD": false,
+  "binarySha256": "07e49f7cbb4ede01ae4dd4c399d3a7e5846e3d2085c3128eff881e55cb7b1a0c",
+  "modelSha256": "548a36f9c3f4ab8da56cd3b13badf23968bee207b396dad14d04b830e5f2ab2d",
+  "shots": [
+    {
+      "id": "bridge",
+      "frames": 196,
+      "source": [
+        {
+          "path": "public/assets/cinematic-pilot/bridge-hf-motion-test.mp4",
+          "sha256": "81b8f0d17466c19a16c506804fd3b94634ac08cf6fa0d7be5e2fc7a60802cd79",
+          "start": 0,
+          "count": 80
+        },
+        {
+          "path": "docs/cinematic-pilot/revision-04/source/take-02.mp4",
+          "sha256": "195a443d3e343d1e10060ee65310d81b86cb3d1e343775c2f950d3aec5253294",
+          "start": 1,
+          "count": 80
+        },
+        {
+          "path": "docs/cinematic-pilot/revision-04/source/take-03.mp4",
+          "sha256": "9fa68ca44722bed38e6e47343bf5782b5460ff4df5627cf82a15a62a79babc6b",
+          "start": 1,
+          "count": 36
+        }
+      ]
+    },
+    {
+      "id": "landing",
+      "frames": 160,
+      "source": [
+        {
+          "path": "docs/cinematic-opening/source/landing-heroes-v2-01.mp4",
+          "sha256": "af0fe0c4d24a8d09ab5b7ff393ce064cbb2d1ee56acbc66675bfdb7c7d300d65",
+          "start": 0,
+          "count": 80
+        },
+        {
+          "path": "docs/cinematic-opening/source/landing-heroes-v2-02.mp4",
+          "sha256": "20d692b451871031b6ebf31fce8bf0ca697036623eceee1e5e83f443a7771151",
+          "start": 1,
+          "count": 80
+        }
+      ]
+    }
+  ],
+  "elapsedSeconds": 1340.4679999999998,
+  "passed": true
+}

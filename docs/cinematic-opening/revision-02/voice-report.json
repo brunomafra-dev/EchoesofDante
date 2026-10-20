@@ -1,0 +1,53 @@
+{
+  "engine": "kokoro-onnx 0.5.0, CPU, Kokoro-82M int8",
+  "language": "pt-br",
+  "modelSha256": "ae315a79b623f244700e4afb9246c46a26066782e049ba174bf3ba433970ee9c",
+  "voicesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+  "voiceClone": false,
+  "paidService": false,
+  "humanApproval": "pending",
+  "lines": [
+    {
+      "id": "ivo-water",
+      "speaker": "IVO",
+      "voice": "pm_alex",
+      "start": 0.5,
+      "end": 3.9,
+      "text": "Água líquida. Atmosfera compatível.",
+      "speed": 1.0,
+      "seconds": 2.4106666666666667,
+      "sampleRate": 24000,
+      "peak": 0.4008573293685913,
+      "path": "docs/cinematic-opening/revision-02/voices/ivo-water.wav",
+      "sha256": "eb03d50d13dc21797edae995ce45ca58504763f41919c7f1c3f9c0254f755168"
+    },
+    {
+      "id": "nara-chance",
+      "speaker": "NARA",
+      "voice": "pf_dora",
+      "start": 4.1,
+      "end": 6.9,
+      "text": "Então existe uma chance.",
+      "speed": 1.0,
+      "seconds": 1.664,
+      "sampleRate": 24000,
+      "peak": 0.4282224178314209,
+      "path": "docs/cinematic-opening/revision-02/voices/nara-chance.wav",
+      "sha256": "2f95a7b443227e16589ec4fa03df979a5a08e46d50d89cf88212e97799c516ea"
+    },
+    {
+      "id": "nara-team",
+      "speaker": "NARA",
+      "voice": "pf_dora",
+      "start": 7.2,
+      "end": 11.9,
+      "text": "Prepare o reconhecimento. Ninguém desce sozinho.",
+      "speed": 1.0,
+      "seconds": 2.9226666666666667,
+      "sampleRate": 24000,
+      "peak": 0.3850373923778534,
+      "path": "docs/cinematic-opening/revision-02/voices/nara-team.wav",
+      "sha256": "1f30d6872e0e854db82041411f25e6bef29f8da6dd7b31ae507b0810e068da8a"
+    }
+  ]
+}

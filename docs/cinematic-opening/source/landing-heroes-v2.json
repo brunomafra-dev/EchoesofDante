@@ -1,0 +1,14 @@
+{
+  "origin": "Original image_gen.imagegen whole-scene generation, 2026-10-20",
+  "width": 1672,
+  "height": 941,
+  "bytes": 3158059,
+  "sha256": "ee718c413b291253a39b7ede87b36c4ef9f9192809ce4e898ee3b77526847a2a",
+  "prompt": "docs/cinematic-opening/prompts/landing-heroes-image-v2.txt",
+  "references": [
+    "docs/cinematic-opening/source/pioneer-team-v2.png",
+    "public/assets/prologue/landing.webp"
+  ],
+  "reason": "Four current heroes disembark first, civilian crew behind them",
+  "humanApproval": "pending"
+}

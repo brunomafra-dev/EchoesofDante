@@ -1,0 +1,2254 @@
+[
+  {
+    "tool": "concat_version",
+    "arguments": {},
+    "result": {
+      "apiVersion": "0.2",
+      "capabilities": [
+        "events",
+        "mcp"
+      ],
+      "concat": "0.2.8",
+      "dirs": {
+        "config": "C:\\Users\\1\\AppData\\Roaming\\app.concat.editor",
+        "data": "C:\\Users\\1\\AppData\\Local\\app.concat.editor"
+      },
+      "mcp": {
+        "mode": "headless",
+        "writesUnder": [
+          "\\\\?\\C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante"
+        ]
+      }
+    }
+  },
+  {
+    "tool": "project_open",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof"
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": false,
+      "media": [],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [],
+        "duration": 0,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "T1",
+            "index": 0
+          },
+          {
+            "id": "T2",
+            "index": 1
+          },
+          {
+            "id": "T3",
+            "index": 2
+          },
+          {
+            "id": "T4",
+            "index": 3
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "timeline_read",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof"
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": false,
+      "media": [],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [],
+        "duration": 0,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "T1",
+            "index": 0
+          },
+          {
+            "id": "T2",
+            "index": 1
+          },
+          {
+            "id": "T3",
+            "index": 2
+          },
+          {
+            "id": "T4",
+            "index": 3
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4"
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "createdId": "m1",
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [],
+        "duration": 0,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "T1",
+            "index": 0
+          },
+          {
+            "id": "T2",
+            "index": 1
+          },
+          {
+            "id": "T3",
+            "index": 2
+          },
+          {
+            "id": "T4",
+            "index": 3
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof",
+      "mediaId": "m1",
+      "trackId": "T1",
+      "start": 0
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "createdId": "c2",
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          }
+        ],
+        "duration": 12,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "T1",
+            "index": 0
+          },
+          {
+            "id": "T2",
+            "index": 1
+          },
+          {
+            "id": "T3",
+            "index": 2
+          },
+          {
+            "id": "T4",
+            "index": 3
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "track_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof",
+      "bottom": true
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "createdId": "t3",
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          }
+        ],
+        "duration": 12,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "t3",
+            "index": 0
+          },
+          {
+            "id": "T1",
+            "index": 1
+          },
+          {
+            "id": "T2",
+            "index": 2
+          },
+          {
+            "id": "T3",
+            "index": 3
+          },
+          {
+            "id": "T4",
+            "index": 4
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-ambience.wav"
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "createdId": "m4",
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 12,
+          "hasAudio": true,
+          "id": "m4",
+          "kind": "audio",
+          "name": "bridge-ambience.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-ambience.wav"
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          }
+        ],
+        "duration": 12,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "t3",
+            "index": 0
+          },
+          {
+            "id": "T1",
+            "index": 1
+          },
+          {
+            "id": "T2",
+            "index": 2
+          },
+          {
+            "id": "T3",
+            "index": 3
+          },
+          {
+            "id": "T4",
+            "index": 4
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof",
+      "mediaId": "m4",
+      "trackId": "t3",
+      "start": 0
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "createdId": "c5",
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 12,
+          "hasAudio": true,
+          "id": "m4",
+          "kind": "audio",
+          "name": "bridge-ambience.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-ambience.wav"
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          },
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c5",
+            "kind": "audio",
+            "media": "m4",
+            "name": "bridge-ambience.wav",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "t3"
+          }
+        ],
+        "duration": 12,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "t3",
+            "index": 0
+          },
+          {
+            "id": "T1",
+            "index": 1
+          },
+          {
+            "id": "T2",
+            "index": 2
+          },
+          {
+            "id": "T3",
+            "index": 3
+          },
+          {
+            "id": "T4",
+            "index": 4
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "clip_update",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof",
+      "clipId": "c5",
+      "patch": {
+        "volume": 0.65,
+        "fadeIn": 0.15,
+        "fadeOut": 0.4
+      }
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 12,
+          "hasAudio": true,
+          "id": "m4",
+          "kind": "audio",
+          "name": "bridge-ambience.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-ambience.wav"
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          },
+          {
+            "duration": 12,
+            "end": 12,
+            "fadeIn": 0.15,
+            "fadeOut": 0.4,
+            "id": "c5",
+            "kind": "audio",
+            "media": "m4",
+            "name": "bridge-ambience.wav",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "t3",
+            "volume": 0.65
+          }
+        ],
+        "duration": 12,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "t3",
+            "index": 0
+          },
+          {
+            "id": "T1",
+            "index": 1
+          },
+          {
+            "id": "T2",
+            "index": 2
+          },
+          {
+            "id": "T3",
+            "index": 3
+          },
+          {
+            "id": "T4",
+            "index": 4
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "track_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof"
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "createdId": "t6",
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 12,
+          "hasAudio": true,
+          "id": "m4",
+          "kind": "audio",
+          "name": "bridge-ambience.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-ambience.wav"
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          },
+          {
+            "duration": 12,
+            "end": 12,
+            "fadeIn": 0.15,
+            "fadeOut": 0.4,
+            "id": "c5",
+            "kind": "audio",
+            "media": "m4",
+            "name": "bridge-ambience.wav",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "t3",
+            "volume": 0.65
+          }
+        ],
+        "duration": 12,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "t3",
+            "index": 0
+          },
+          {
+            "id": "T1",
+            "index": 1
+          },
+          {
+            "id": "T2",
+            "index": 2
+          },
+          {
+            "id": "T3",
+            "index": 3
+          },
+          {
+            "id": "T4",
+            "index": 4
+          },
+          {
+            "id": "t6",
+            "index": 5
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\ivo-water.wav"
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "createdId": "m7",
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 12,
+          "hasAudio": true,
+          "id": "m4",
+          "kind": "audio",
+          "name": "bridge-ambience.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-ambience.wav"
+        },
+        {
+          "duration": 2.411,
+          "hasAudio": true,
+          "id": "m7",
+          "kind": "audio",
+          "name": "ivo-water.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\ivo-water.wav"
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          },
+          {
+            "duration": 12,
+            "end": 12,
+            "fadeIn": 0.15,
+            "fadeOut": 0.4,
+            "id": "c5",
+            "kind": "audio",
+            "media": "m4",
+            "name": "bridge-ambience.wav",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "t3",
+            "volume": 0.65
+          }
+        ],
+        "duration": 12,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "t3",
+            "index": 0
+          },
+          {
+            "id": "T1",
+            "index": 1
+          },
+          {
+            "id": "T2",
+            "index": 2
+          },
+          {
+            "id": "T3",
+            "index": 3
+          },
+          {
+            "id": "T4",
+            "index": 4
+          },
+          {
+            "id": "t6",
+            "index": 5
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof",
+      "mediaId": "m7",
+      "trackId": "t6",
+      "start": 0.5
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "createdId": "c8",
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 12,
+          "hasAudio": true,
+          "id": "m4",
+          "kind": "audio",
+          "name": "bridge-ambience.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-ambience.wav"
+        },
+        {
+          "duration": 2.411,
+          "hasAudio": true,
+          "id": "m7",
+          "kind": "audio",
+          "name": "ivo-water.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\ivo-water.wav"
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          },
+          {
+            "duration": 12,
+            "end": 12,
+            "fadeIn": 0.15,
+            "fadeOut": 0.4,
+            "id": "c5",
+            "kind": "audio",
+            "media": "m4",
+            "name": "bridge-ambience.wav",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "t3",
+            "volume": 0.65
+          },
+          {
+            "duration": 2.4107,
+            "end": 2.9107,
+            "id": "c8",
+            "kind": "audio",
+            "media": "m7",
+            "name": "ivo-water.wav",
+            "sourceStart": 0,
+            "start": 0.5,
+            "track": "t6"
+          }
+        ],
+        "duration": 12,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "t3",
+            "index": 0
+          },
+          {
+            "id": "T1",
+            "index": 1
+          },
+          {
+            "id": "T2",
+            "index": 2
+          },
+          {
+            "id": "T3",
+            "index": 3
+          },
+          {
+            "id": "T4",
+            "index": 4
+          },
+          {
+            "id": "t6",
+            "index": 5
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "clip_update",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof",
+      "clipId": "c8",
+      "patch": {
+        "volume": 1.45
+      }
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 12,
+          "hasAudio": true,
+          "id": "m4",
+          "kind": "audio",
+          "name": "bridge-ambience.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-ambience.wav"
+        },
+        {
+          "duration": 2.411,
+          "hasAudio": true,
+          "id": "m7",
+          "kind": "audio",
+          "name": "ivo-water.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\ivo-water.wav"
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          },
+          {
+            "duration": 12,
+            "end": 12,
+            "fadeIn": 0.15,
+            "fadeOut": 0.4,
+            "id": "c5",
+            "kind": "audio",
+            "media": "m4",
+            "name": "bridge-ambience.wav",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "t3",
+            "volume": 0.65
+          },
+          {
+            "duration": 2.4107,
+            "end": 2.9107,
+            "id": "c8",
+            "kind": "audio",
+            "media": "m7",
+            "name": "ivo-water.wav",
+            "sourceStart": 0,
+            "start": 0.5,
+            "track": "t6",
+            "volume": 1.45
+          }
+        ],
+        "duration": 12,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "t3",
+            "index": 0
+          },
+          {
+            "id": "T1",
+            "index": 1
+          },
+          {
+            "id": "T2",
+            "index": 2
+          },
+          {
+            "id": "T3",
+            "index": 3
+          },
+          {
+            "id": "T4",
+            "index": 4
+          },
+          {
+            "id": "t6",
+            "index": 5
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\nara-chance.wav"
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "createdId": "m9",
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 12,
+          "hasAudio": true,
+          "id": "m4",
+          "kind": "audio",
+          "name": "bridge-ambience.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-ambience.wav"
+        },
+        {
+          "duration": 2.411,
+          "hasAudio": true,
+          "id": "m7",
+          "kind": "audio",
+          "name": "ivo-water.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\ivo-water.wav"
+        },
+        {
+          "duration": 1.664,
+          "hasAudio": true,
+          "id": "m9",
+          "kind": "audio",
+          "name": "nara-chance.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\nara-chance.wav"
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          },
+          {
+            "duration": 12,
+            "end": 12,
+            "fadeIn": 0.15,
+            "fadeOut": 0.4,
+            "id": "c5",
+            "kind": "audio",
+            "media": "m4",
+            "name": "bridge-ambience.wav",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "t3",
+            "volume": 0.65
+          },
+          {
+            "duration": 2.4107,
+            "end": 2.9107,
+            "id": "c8",
+            "kind": "audio",
+            "media": "m7",
+            "name": "ivo-water.wav",
+            "sourceStart": 0,
+            "start": 0.5,
+            "track": "t6",
+            "volume": 1.45
+          }
+        ],
+        "duration": 12,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "t3",
+            "index": 0
+          },
+          {
+            "id": "T1",
+            "index": 1
+          },
+          {
+            "id": "T2",
+            "index": 2
+          },
+          {
+            "id": "T3",
+            "index": 3
+          },
+          {
+            "id": "T4",
+            "index": 4
+          },
+          {
+            "id": "t6",
+            "index": 5
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof",
+      "mediaId": "m9",
+      "trackId": "t6",
+      "start": 4.1
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "createdId": "c10",
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 12,
+          "hasAudio": true,
+          "id": "m4",
+          "kind": "audio",
+          "name": "bridge-ambience.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-ambience.wav"
+        },
+        {
+          "duration": 2.411,
+          "hasAudio": true,
+          "id": "m7",
+          "kind": "audio",
+          "name": "ivo-water.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\ivo-water.wav"
+        },
+        {
+          "duration": 1.664,
+          "hasAudio": true,
+          "id": "m9",
+          "kind": "audio",
+          "name": "nara-chance.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\nara-chance.wav"
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          },
+          {
+            "duration": 12,
+            "end": 12,
+            "fadeIn": 0.15,
+            "fadeOut": 0.4,
+            "id": "c5",
+            "kind": "audio",
+            "media": "m4",
+            "name": "bridge-ambience.wav",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "t3",
+            "volume": 0.65
+          },
+          {
+            "duration": 2.4107,
+            "end": 2.9107,
+            "id": "c8",
+            "kind": "audio",
+            "media": "m7",
+            "name": "ivo-water.wav",
+            "sourceStart": 0,
+            "start": 0.5,
+            "track": "t6",
+            "volume": 1.45
+          },
+          {
+            "duration": 1.664,
+            "end": 5.764,
+            "id": "c10",
+            "kind": "audio",
+            "media": "m9",
+            "name": "nara-chance.wav",
+            "sourceStart": 0,
+            "start": 4.1,
+            "track": "t6"
+          }
+        ],
+        "duration": 12,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "t3",
+            "index": 0
+          },
+          {
+            "id": "T1",
+            "index": 1
+          },
+          {
+            "id": "T2",
+            "index": 2
+          },
+          {
+            "id": "T3",
+            "index": 3
+          },
+          {
+            "id": "T4",
+            "index": 4
+          },
+          {
+            "id": "t6",
+            "index": 5
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "clip_update",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof",
+      "clipId": "c10",
+      "patch": {
+        "volume": 1.45
+      }
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 12,
+          "hasAudio": true,
+          "id": "m4",
+          "kind": "audio",
+          "name": "bridge-ambience.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-ambience.wav"
+        },
+        {
+          "duration": 2.411,
+          "hasAudio": true,
+          "id": "m7",
+          "kind": "audio",
+          "name": "ivo-water.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\ivo-water.wav"
+        },
+        {
+          "duration": 1.664,
+          "hasAudio": true,
+          "id": "m9",
+          "kind": "audio",
+          "name": "nara-chance.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\nara-chance.wav"
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          },
+          {
+            "duration": 12,
+            "end": 12,
+            "fadeIn": 0.15,
+            "fadeOut": 0.4,
+            "id": "c5",
+            "kind": "audio",
+            "media": "m4",
+            "name": "bridge-ambience.wav",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "t3",
+            "volume": 0.65
+          },
+          {
+            "duration": 2.4107,
+            "end": 2.9107,
+            "id": "c8",
+            "kind": "audio",
+            "media": "m7",
+            "name": "ivo-water.wav",
+            "sourceStart": 0,
+            "start": 0.5,
+            "track": "t6",
+            "volume": 1.45
+          },
+          {
+            "duration": 1.664,
+            "end": 5.764,
+            "id": "c10",
+            "kind": "audio",
+            "media": "m9",
+            "name": "nara-chance.wav",
+            "sourceStart": 0,
+            "start": 4.1,
+            "track": "t6",
+            "volume": 1.45
+          }
+        ],
+        "duration": 12,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "t3",
+            "index": 0
+          },
+          {
+            "id": "T1",
+            "index": 1
+          },
+          {
+            "id": "T2",
+            "index": 2
+          },
+          {
+            "id": "T3",
+            "index": 3
+          },
+          {
+            "id": "T4",
+            "index": 4
+          },
+          {
+            "id": "t6",
+            "index": 5
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "media_import",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof",
+      "file": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\nara-team.wav"
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "createdId": "m11",
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 12,
+          "hasAudio": true,
+          "id": "m4",
+          "kind": "audio",
+          "name": "bridge-ambience.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-ambience.wav"
+        },
+        {
+          "duration": 2.411,
+          "hasAudio": true,
+          "id": "m7",
+          "kind": "audio",
+          "name": "ivo-water.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\ivo-water.wav"
+        },
+        {
+          "duration": 1.664,
+          "hasAudio": true,
+          "id": "m9",
+          "kind": "audio",
+          "name": "nara-chance.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\nara-chance.wav"
+        },
+        {
+          "duration": 2.923,
+          "hasAudio": true,
+          "id": "m11",
+          "kind": "audio",
+          "name": "nara-team.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\nara-team.wav"
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          },
+          {
+            "duration": 12,
+            "end": 12,
+            "fadeIn": 0.15,
+            "fadeOut": 0.4,
+            "id": "c5",
+            "kind": "audio",
+            "media": "m4",
+            "name": "bridge-ambience.wav",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "t3",
+            "volume": 0.65
+          },
+          {
+            "duration": 2.4107,
+            "end": 2.9107,
+            "id": "c8",
+            "kind": "audio",
+            "media": "m7",
+            "name": "ivo-water.wav",
+            "sourceStart": 0,
+            "start": 0.5,
+            "track": "t6",
+            "volume": 1.45
+          },
+          {
+            "duration": 1.664,
+            "end": 5.764,
+            "id": "c10",
+            "kind": "audio",
+            "media": "m9",
+            "name": "nara-chance.wav",
+            "sourceStart": 0,
+            "start": 4.1,
+            "track": "t6",
+            "volume": 1.45
+          }
+        ],
+        "duration": 12,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "t3",
+            "index": 0
+          },
+          {
+            "id": "T1",
+            "index": 1
+          },
+          {
+            "id": "T2",
+            "index": 2
+          },
+          {
+            "id": "T3",
+            "index": 3
+          },
+          {
+            "id": "T4",
+            "index": 4
+          },
+          {
+            "id": "t6",
+            "index": 5
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "clip_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof",
+      "mediaId": "m11",
+      "trackId": "t6",
+      "start": 7.2
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "createdId": "c12",
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 12,
+          "hasAudio": true,
+          "id": "m4",
+          "kind": "audio",
+          "name": "bridge-ambience.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-ambience.wav"
+        },
+        {
+          "duration": 2.411,
+          "hasAudio": true,
+          "id": "m7",
+          "kind": "audio",
+          "name": "ivo-water.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\ivo-water.wav"
+        },
+        {
+          "duration": 1.664,
+          "hasAudio": true,
+          "id": "m9",
+          "kind": "audio",
+          "name": "nara-chance.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\nara-chance.wav"
+        },
+        {
+          "duration": 2.923,
+          "hasAudio": true,
+          "id": "m11",
+          "kind": "audio",
+          "name": "nara-team.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\nara-team.wav"
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          },
+          {
+            "duration": 12,
+            "end": 12,
+            "fadeIn": 0.15,
+            "fadeOut": 0.4,
+            "id": "c5",
+            "kind": "audio",
+            "media": "m4",
+            "name": "bridge-ambience.wav",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "t3",
+            "volume": 0.65
+          },
+          {
+            "duration": 2.4107,
+            "end": 2.9107,
+            "id": "c8",
+            "kind": "audio",
+            "media": "m7",
+            "name": "ivo-water.wav",
+            "sourceStart": 0,
+            "start": 0.5,
+            "track": "t6",
+            "volume": 1.45
+          },
+          {
+            "duration": 1.664,
+            "end": 5.764,
+            "id": "c10",
+            "kind": "audio",
+            "media": "m9",
+            "name": "nara-chance.wav",
+            "sourceStart": 0,
+            "start": 4.1,
+            "track": "t6",
+            "volume": 1.45
+          },
+          {
+            "duration": 2.9227,
+            "end": 10.1227,
+            "id": "c12",
+            "kind": "audio",
+            "media": "m11",
+            "name": "nara-team.wav",
+            "sourceStart": 0,
+            "start": 7.2,
+            "track": "t6"
+          }
+        ],
+        "duration": 12,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "t3",
+            "index": 0
+          },
+          {
+            "id": "T1",
+            "index": 1
+          },
+          {
+            "id": "T2",
+            "index": 2
+          },
+          {
+            "id": "T3",
+            "index": 3
+          },
+          {
+            "id": "T4",
+            "index": 4
+          },
+          {
+            "id": "t6",
+            "index": 5
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "clip_update",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof",
+      "clipId": "c12",
+      "patch": {
+        "volume": 1.45
+      }
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 12,
+          "hasAudio": true,
+          "id": "m4",
+          "kind": "audio",
+          "name": "bridge-ambience.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-ambience.wav"
+        },
+        {
+          "duration": 2.411,
+          "hasAudio": true,
+          "id": "m7",
+          "kind": "audio",
+          "name": "ivo-water.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\ivo-water.wav"
+        },
+        {
+          "duration": 1.664,
+          "hasAudio": true,
+          "id": "m9",
+          "kind": "audio",
+          "name": "nara-chance.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\nara-chance.wav"
+        },
+        {
+          "duration": 2.923,
+          "hasAudio": true,
+          "id": "m11",
+          "kind": "audio",
+          "name": "nara-team.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\nara-team.wav"
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          },
+          {
+            "duration": 12,
+            "end": 12,
+            "fadeIn": 0.15,
+            "fadeOut": 0.4,
+            "id": "c5",
+            "kind": "audio",
+            "media": "m4",
+            "name": "bridge-ambience.wav",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "t3",
+            "volume": 0.65
+          },
+          {
+            "duration": 2.4107,
+            "end": 2.9107,
+            "id": "c8",
+            "kind": "audio",
+            "media": "m7",
+            "name": "ivo-water.wav",
+            "sourceStart": 0,
+            "start": 0.5,
+            "track": "t6",
+            "volume": 1.45
+          },
+          {
+            "duration": 1.664,
+            "end": 5.764,
+            "id": "c10",
+            "kind": "audio",
+            "media": "m9",
+            "name": "nara-chance.wav",
+            "sourceStart": 0,
+            "start": 4.1,
+            "track": "t6",
+            "volume": 1.45
+          },
+          {
+            "duration": 2.9227,
+            "end": 10.1227,
+            "id": "c12",
+            "kind": "audio",
+            "media": "m11",
+            "name": "nara-team.wav",
+            "sourceStart": 0,
+            "start": 7.2,
+            "track": "t6",
+            "volume": 1.45
+          }
+        ],
+        "duration": 12,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "t3",
+            "index": 0
+          },
+          {
+            "id": "T1",
+            "index": 1
+          },
+          {
+            "id": "T2",
+            "index": 2
+          },
+          {
+            "id": "T3",
+            "index": 3
+          },
+          {
+            "id": "T4",
+            "index": 4
+          },
+          {
+            "id": "t6",
+            "index": 5
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "captions_add",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof",
+      "offsetY": -0.41,
+      "captions": [
+        {
+          "start": 0.5,
+          "end": 3.9,
+          "text": "IVO: Água líquida. Atmosfera compatível."
+        },
+        {
+          "start": 4.1,
+          "end": 6.9,
+          "text": "NARA: Então existe uma chance."
+        },
+        {
+          "start": 7.2,
+          "end": 11.9,
+          "text": "NARA: Prepare o reconhecimento. Ninguém desce sozinho."
+        }
+      ],
+      "style": {
+        "fontFamily": "\"Segoe UI\"",
+        "fontSize": 0.034,
+        "fontWeight": 500,
+        "color": "#f3f3e8",
+        "background": "#101610b0",
+        "maxWidth": 0.9,
+        "shadow": true
+      }
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "createdId": "c16",
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 12,
+          "hasAudio": true,
+          "id": "m4",
+          "kind": "audio",
+          "name": "bridge-ambience.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-ambience.wav"
+        },
+        {
+          "duration": 2.411,
+          "hasAudio": true,
+          "id": "m7",
+          "kind": "audio",
+          "name": "ivo-water.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\ivo-water.wav"
+        },
+        {
+          "duration": 1.664,
+          "hasAudio": true,
+          "id": "m9",
+          "kind": "audio",
+          "name": "nara-chance.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\nara-chance.wav"
+        },
+        {
+          "duration": 2.923,
+          "hasAudio": true,
+          "id": "m11",
+          "kind": "audio",
+          "name": "nara-team.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\nara-team.wav"
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          },
+          {
+            "duration": 12,
+            "end": 12,
+            "fadeIn": 0.15,
+            "fadeOut": 0.4,
+            "id": "c5",
+            "kind": "audio",
+            "media": "m4",
+            "name": "bridge-ambience.wav",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "t3",
+            "volume": 0.65
+          },
+          {
+            "duration": 2.4107,
+            "end": 2.9107,
+            "id": "c8",
+            "kind": "audio",
+            "media": "m7",
+            "name": "ivo-water.wav",
+            "sourceStart": 0,
+            "start": 0.5,
+            "track": "t6",
+            "volume": 1.45
+          },
+          {
+            "duration": 3.4,
+            "end": 3.9,
+            "id": "c14",
+            "kind": "text",
+            "name": "IVO: Água líquida. Atmosfera compatível.",
+            "offsetY": -0.41,
+            "start": 0.5,
+            "text": "IVO: Água líquida. Atmosfera compatível.",
+            "track": "t13"
+          },
+          {
+            "duration": 1.664,
+            "end": 5.764,
+            "id": "c10",
+            "kind": "audio",
+            "media": "m9",
+            "name": "nara-chance.wav",
+            "sourceStart": 0,
+            "start": 4.1,
+            "track": "t6",
+            "volume": 1.45
+          },
+          {
+            "duration": 2.8,
+            "end": 6.9,
+            "id": "c15",
+            "kind": "text",
+            "name": "NARA: Então existe uma chance.",
+            "offsetY": -0.41,
+            "start": 4.1,
+            "text": "NARA: Então existe uma chance.",
+            "track": "t13"
+          },
+          {
+            "duration": 2.9227,
+            "end": 10.1227,
+            "id": "c12",
+            "kind": "audio",
+            "media": "m11",
+            "name": "nara-team.wav",
+            "sourceStart": 0,
+            "start": 7.2,
+            "track": "t6",
+            "volume": 1.45
+          },
+          {
+            "duration": 4.7,
+            "end": 11.9,
+            "id": "c16",
+            "kind": "text",
+            "name": "NARA: Prepare o reconhecimento. Ninguém ",
+            "offsetY": -0.41,
+            "start": 7.2,
+            "text": "NARA: Prepare o reconhecimento. Ninguém desce sozinho.",
+            "track": "t13"
+          }
+        ],
+        "duration": 12,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "t3",
+            "index": 0
+          },
+          {
+            "id": "T1",
+            "index": 1
+          },
+          {
+            "id": "T2",
+            "index": 2
+          },
+          {
+            "id": "T3",
+            "index": 3
+          },
+          {
+            "id": "T4",
+            "index": 4
+          },
+          {
+            "id": "t6",
+            "index": 5
+          },
+          {
+            "id": "t13",
+            "index": 6
+          }
+        ]
+      }
+    }
+  },
+  {
+    "tool": "project_save",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof"
+    },
+    "result": {}
+  },
+  {
+    "tool": "timeline_read",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-voice-proof"
+    },
+    "result": {
+      "canRedo": false,
+      "canUndo": true,
+      "media": [
+        {
+          "duration": 12,
+          "height": 720,
+          "id": "m1",
+          "kind": "video",
+          "name": "bridge.mp4",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\assembly\\bridge.mp4",
+          "width": 1280
+        },
+        {
+          "duration": 12,
+          "hasAudio": true,
+          "id": "m4",
+          "kind": "audio",
+          "name": "bridge-ambience.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-02\\bridge-ambience.wav"
+        },
+        {
+          "duration": 2.411,
+          "hasAudio": true,
+          "id": "m7",
+          "kind": "audio",
+          "name": "ivo-water.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\ivo-water.wav"
+        },
+        {
+          "duration": 1.664,
+          "hasAudio": true,
+          "id": "m9",
+          "kind": "audio",
+          "name": "nara-chance.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\nara-chance.wav"
+        },
+        {
+          "duration": 2.923,
+          "hasAudio": true,
+          "id": "m11",
+          "kind": "audio",
+          "name": "nara-team.wav",
+          "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\cinematic-opening\\revision-02\\voices\\nara-team.wav"
+        }
+      ],
+      "project": {
+        "fps": 24,
+        "height": 720,
+        "name": "bridge-voice-proof",
+        "width": 1280
+      },
+      "timeline": {
+        "clips": [
+          {
+            "duration": 12,
+            "end": 12,
+            "id": "c2",
+            "kind": "video",
+            "media": "m1",
+            "name": "bridge.mp4",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "T1"
+          },
+          {
+            "duration": 12,
+            "end": 12,
+            "fadeIn": 0.15,
+            "fadeOut": 0.4,
+            "id": "c5",
+            "kind": "audio",
+            "media": "m4",
+            "name": "bridge-ambience.wav",
+            "sourceStart": 0,
+            "start": 0,
+            "track": "t3",
+            "volume": 0.65
+          },
+          {
+            "duration": 2.4107,
+            "end": 2.9107,
+            "id": "c8",
+            "kind": "audio",
+            "media": "m7",
+            "name": "ivo-water.wav",
+            "sourceStart": 0,
+            "start": 0.5,
+            "track": "t6",
+            "volume": 1.45
+          },
+          {
+            "duration": 3.4,
+            "end": 3.9,
+            "id": "c14",
+            "kind": "text",
+            "name": "IVO: Água líquida. Atmosfera compatível.",
+            "offsetY": -0.41,
+            "start": 0.5,
+            "text": "IVO: Água líquida. Atmosfera compatível.",
+            "track": "t13"
+          },
+          {
+            "duration": 1.664,
+            "end": 5.764,
+            "id": "c10",
+            "kind": "audio",
+            "media": "m9",
+            "name": "nara-chance.wav",
+            "sourceStart": 0,
+            "start": 4.1,
+            "track": "t6",
+            "volume": 1.45
+          },
+          {
+            "duration": 2.8,
+            "end": 6.9,
+            "id": "c15",
+            "kind": "text",
+            "name": "NARA: Então existe uma chance.",
+            "offsetY": -0.41,
+            "start": 4.1,
+            "text": "NARA: Então existe uma chance.",
+            "track": "t13"
+          },
+          {
+            "duration": 2.9227,
+            "end": 10.1227,
+            "id": "c12",
+            "kind": "audio",
+            "media": "m11",
+            "name": "nara-team.wav",
+            "sourceStart": 0,
+            "start": 7.2,
+            "track": "t6",
+            "volume": 1.45
+          },
+          {
+            "duration": 4.7,
+            "end": 11.9,
+            "id": "c16",
+            "kind": "text",
+            "name": "NARA: Prepare o reconhecimento. Ninguém ",
+            "offsetY": -0.41,
+            "start": 7.2,
+            "text": "NARA: Prepare o reconhecimento. Ninguém desce sozinho.",
+            "track": "t13"
+          }
+        ],
+        "duration": 12,
+        "id": "TL1",
+        "name": "Timeline 1",
+        "tracks": [
+          {
+            "id": "t3",
+            "index": 0
+          },
+          {
+            "id": "T1",
+            "index": 1
+          },
+          {
+            "id": "T2",
+            "index": 2
+          },
+          {
+            "id": "T3",
+            "index": 3
+          },
+          {
+            "id": "T4",
+            "index": 4
+          },
+          {
+            "id": "t6",
+            "index": 5
+          },
+          {
+            "id": "t13",
+            "index": 6
+          }
+        ]
+      }
+    }
+  }
+]

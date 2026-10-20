@@ -358,3 +358,7 @@ O playtest da 0.1.112 apontou cobertura de cabeça e tamanho inconsistentes ao a
 ### Cabeça da Guerreira e diagonais do Hunter — revisão 0.1.114
 
 O usuário aprovou a 0.1.113 no geral e corrigiu explicitamente o caso remanescente para **Guerreira feminina**, além da impressão de zoom nas diagonais frontais do Star Hunter. Manutenção: referências de cabeça íntegras e máscaras técnicas, calibração uniforme da figura inteira nas duas diagonais do Hunter, emissão visual alinhada e bake por quadro com coordenadas locais iguais. [Comparações, testes e limites](complete-actors/revision-04/README.md). **Aguardar playtest destas correções; não avançar conteúdo.**
+
+### Revisão autorizada da abertura — 0.1.117
+
+Em 20/10/2026 o usuário autorizou testar o Concat e pediu melhorar a imagem e fazer os quatro heróis desembarcarem primeiro. Revisão dentro da etapa 3: novo quadro inteiro com identidades atuais, duas tomadas de desembarque, restauração moderada da ponte/desembarque e menor compressão final. Prova separada de 12 s com Ivo/Nara em português, editada e exportada no Concat; sem sincronização labial nova ou dublagem integral antecipada. [Produção, laboratório e QA](cinematic-opening/revision-02/README.md). Nenhuma mudança de personagem, combate, coop ou save. **Aguardar avaliação humana do filme e das vozes antes de dublar o restante ou iniciar missões/mapas.**

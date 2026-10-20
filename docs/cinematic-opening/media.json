@@ -7,6 +7,68 @@
   "native720p24": false,
   "sourceFps": 16,
   "interpolation": "FFmpeg motion compensated; whole frames",
+  "selectiveRestoration": {
+    "model": "realesr-animevideov3 x2",
+    "blend": 0.55,
+    "sourceSize": [
+      832,
+      480
+    ],
+    "restoredSize": [
+      1664,
+      960
+    ],
+    "sourceFps": 16,
+    "nativeHD": false,
+    "binarySha256": "07e49f7cbb4ede01ae4dd4c399d3a7e5846e3d2085c3128eff881e55cb7b1a0c",
+    "modelSha256": "548a36f9c3f4ab8da56cd3b13badf23968bee207b396dad14d04b830e5f2ab2d",
+    "shots": [
+      {
+        "id": "bridge",
+        "frames": 196,
+        "source": [
+          {
+            "path": "public/assets/cinematic-pilot/bridge-hf-motion-test.mp4",
+            "sha256": "81b8f0d17466c19a16c506804fd3b94634ac08cf6fa0d7be5e2fc7a60802cd79",
+            "start": 0,
+            "count": 80
+          },
+          {
+            "path": "docs/cinematic-pilot/revision-04/source/take-02.mp4",
+            "sha256": "195a443d3e343d1e10060ee65310d81b86cb3d1e343775c2f950d3aec5253294",
+            "start": 1,
+            "count": 80
+          },
+          {
+            "path": "docs/cinematic-pilot/revision-04/source/take-03.mp4",
+            "sha256": "9fa68ca44722bed38e6e47343bf5782b5460ff4df5627cf82a15a62a79babc6b",
+            "start": 1,
+            "count": 36
+          }
+        ]
+      },
+      {
+        "id": "landing",
+        "frames": 160,
+        "source": [
+          {
+            "path": "docs/cinematic-opening/source/landing-heroes-v2-01.mp4",
+            "sha256": "af0fe0c4d24a8d09ab5b7ff393ce064cbb2d1ee56acbc66675bfdb7c7d300d65",
+            "start": 0,
+            "count": 80
+          },
+          {
+            "path": "docs/cinematic-opening/source/landing-heroes-v2-02.mp4",
+            "sha256": "20d692b451871031b6ebf31fce8bf0ca697036623eceee1e5e83f443a7771151",
+            "start": 1,
+            "count": 80
+          }
+        ]
+      }
+    ],
+    "elapsedSeconds": 1340.4679999999998,
+    "passed": true
+  },
   "loopOrFrozenFiller": false,
   "shots": [
     {
@@ -26,7 +88,8 @@
           "sha256": "81036c1593fb691b8706ca09c881634780b1b9ba872c784806e1e4cebb222b5c"
         }
       ],
-      "frames": 144
+      "frames": 144,
+      "reusedPictureIntermediate": true
     },
     {
       "id": "evacuation",
@@ -45,7 +108,8 @@
           "sha256": "2301ad5998abc90dd1e0308d615ee8758b0391fceba0df1f241bbaad8cf14a32"
         }
       ],
-      "frames": 144
+      "frames": 144,
+      "reusedPictureIntermediate": true
     },
     {
       "id": "voyage",
@@ -64,7 +128,8 @@
           "sha256": "803c21735e3751aabb07a93000f089fd34dd402eaa73cb5d2b3ceb3b1f5f3b93"
         }
       ],
-      "frames": 144
+      "frames": 144,
+      "reusedPictureIntermediate": true
     },
     {
       "id": "discovery",
@@ -83,7 +148,8 @@
           "sha256": "3aa5b0fb561d0b3df64f20a529ea037be6e694e3e1d0a98c896ba00206861645"
         }
       ],
-      "frames": 144
+      "frames": 144,
+      "reusedPictureIntermediate": true
     },
     {
       "id": "bridge",
@@ -108,7 +174,8 @@
           "sha256": "9fa68ca44722bed38e6e47343bf5782b5460ff4df5627cf82a15a62a79babc6b"
         }
       ],
-      "frames": 288
+      "frames": 288,
+      "restoration": "55% Real-ESRGAN x2 + 45% original, offline"
     },
     {
       "id": "pioneers",
@@ -121,7 +188,8 @@
           "sha256": "0c9e4e6d7ae5af8c41c63c7eaf98438994a96251440500c612069eefcddd1b81"
         }
       ],
-      "frames": 108
+      "frames": 108,
+      "reusedPictureIntermediate": true
     },
     {
       "id": "descent",
@@ -140,26 +208,28 @@
           "sha256": "1d24ac9d73079b135f328145369698bd740c57fe0306fe0bc8cc4643d4544162"
         }
       ],
-      "frames": 216
+      "frames": 216,
+      "reusedPictureIntermediate": true
     },
     {
       "id": "landing",
       "seconds": 9.75,
       "source": [
         {
-          "path": "docs/cinematic-opening/source/landing-01.mp4",
+          "path": "docs/cinematic-opening/source/landing-heroes-v2-01.mp4",
           "startFrame": 0,
           "usedFrames": 80,
-          "sha256": "1a0ec711bfe23d937c534fd3705ad4a202e501a010a29971a9610370088aba2a"
+          "sha256": "af0fe0c4d24a8d09ab5b7ff393ce064cbb2d1ee56acbc66675bfdb7c7d300d65"
         },
         {
-          "path": "docs/cinematic-opening/source/landing-02.mp4",
+          "path": "docs/cinematic-opening/source/landing-heroes-v2-02.mp4",
           "startFrame": 1,
           "usedFrames": 80,
-          "sha256": "148b685e781bb861ef673937a69326ee9aa7b98f7b305773abe257bc37a4b256"
+          "sha256": "20d692b451871031b6ebf31fce8bf0ca697036623eceee1e5e83f443a7771151"
         }
       ],
-      "frames": 234
+      "frames": 234,
+      "restoration": "55% Real-ESRGAN x2 + 45% original, offline"
     }
   ],
   "audio": {
@@ -175,7 +245,7 @@
     "height": 720,
     "fps": 24.0,
     "frames": 1422,
-    "bytes": 25027247,
-    "sha256": "f4490e5a6938a02fd7089242a5f8cc2258e5287ff91894de4973c4a902df8a91"
+    "bytes": 41923942,
+    "sha256": "227cd3a7c2c4bfdaea2c6b7067119e8f32721e65e74670609da58431c833fc47"
   }
 }

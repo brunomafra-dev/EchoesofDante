@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "humanApproval": "pending",
+  "seconds": 11.968,
+  "peak": 0.6641764640808105,
+  "rms": 0.0716867595911026,
+  "lines": [
+    {
+      "id": "ivo-water",
+      "voice": "pm_alex",
+      "start": 0.5,
+      "seconds": 2.4106666666666667,
+      "correlationWithRenderedAudio": 0.9423221342569112
+    },
+    {
+      "id": "nara-chance",
+      "voice": "pf_dora",
+      "start": 4.1,
+      "seconds": 1.664,
+      "correlationWithRenderedAudio": 0.936279946169773
+    },
+    {
+      "id": "nara-team",
+      "voice": "pf_dora",
+      "start": 7.2,
+      "seconds": 2.9226666666666667,
+      "correlationWithRenderedAudio": 0.9358923861346203
+    }
+  ]
+}

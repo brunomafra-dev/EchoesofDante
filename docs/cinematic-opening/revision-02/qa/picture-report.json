@@ -1,0 +1,78 @@
+{
+  "method": "Mean absolute RGB correction, sampled native frames; diagnostic only, not visual approval",
+  "samples": [
+    {
+      "shot": "bridge",
+      "frame": 0,
+      "fullRestorationMeanRgbChange": 3.779740918803419,
+      "blend": 0.55
+    },
+    {
+      "shot": "bridge",
+      "frame": 32,
+      "fullRestorationMeanRgbChange": 3.6720744858440173,
+      "blend": 0.55
+    },
+    {
+      "shot": "bridge",
+      "frame": 64,
+      "fullRestorationMeanRgbChange": 3.6762878939636754,
+      "blend": 0.55
+    },
+    {
+      "shot": "bridge",
+      "frame": 96,
+      "fullRestorationMeanRgbChange": 3.604739249465812,
+      "blend": 0.55
+    },
+    {
+      "shot": "bridge",
+      "frame": 128,
+      "fullRestorationMeanRgbChange": 3.5834752270299144,
+      "blend": 0.55
+    },
+    {
+      "shot": "bridge",
+      "frame": 192,
+      "fullRestorationMeanRgbChange": 3.555873564369658,
+      "blend": 0.55
+    },
+    {
+      "shot": "landing",
+      "frame": 0,
+      "fullRestorationMeanRgbChange": 5.408016993856838,
+      "blend": 0.55
+    },
+    {
+      "shot": "landing",
+      "frame": 32,
+      "fullRestorationMeanRgbChange": 4.894963608440171,
+      "blend": 0.55
+    },
+    {
+      "shot": "landing",
+      "frame": 64,
+      "fullRestorationMeanRgbChange": 5.054732572115385,
+      "blend": 0.55
+    },
+    {
+      "shot": "landing",
+      "frame": 96,
+      "fullRestorationMeanRgbChange": 4.4009974292200855,
+      "blend": 0.55
+    },
+    {
+      "shot": "landing",
+      "frame": 128,
+      "fullRestorationMeanRgbChange": 4.378818609775641,
+      "blend": 0.55
+    },
+    {
+      "shot": "landing",
+      "frame": 159,
+      "fullRestorationMeanRgbChange": 4.134521901709402,
+      "blend": 0.55
+    }
+  ],
+  "humanApproval": "pending"
+}

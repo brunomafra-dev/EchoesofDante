@@ -1,0 +1,33 @@
+{
+  "humanApproval": "pending",
+  "full": {
+    "width": 1280,
+    "height": 720,
+    "fps": 24.0,
+    "frames": 1422,
+    "bytes": 41923942,
+    "sha256": "227cd3a7c2c4bfdaea2c6b7067119e8f32721e65e74670609da58431c833fc47"
+  },
+  "landing": {
+    "width": 1280,
+    "height": 720,
+    "fps": 24.0,
+    "frames": 234,
+    "bytes": 11089530,
+    "sha256": "fe9a48461d5c30f68a0c268bd011b5b3c72630bdb9a4f3e365535967cdc94678"
+  },
+  "voiceProof": {
+    "width": 1280,
+    "height": 720,
+    "fps": 24.0,
+    "frames": 288,
+    "bytes": 5920154,
+    "sha256": "dcf21a041b5c34288f319d75ee0309152de65e63aa7a803dd0fee05eec0841f2"
+  },
+  "imageComparisons": {
+    "sameSourceFrame": 30,
+    "sourceShot": "landing-heroes-v2-01.mp4",
+    "before": "15e73c7ce87cfeb65ecd6ca9d944b45879b14548bd9ea4a0f3b4a04a7781e69c",
+    "after": "9596b78ae37163811570afdfb8cccfbd03c6e7d42414569ff28117ae0de4ff92"
+  }
+}

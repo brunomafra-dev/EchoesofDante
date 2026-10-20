@@ -1,5 +1,11 @@
 # Echoes of Dante
 
+## Abertura — heróis à frente e teste de vozes · 0.1.117
+
+[Novo desembarque](https://echosofdante.vercel.app/cinematic-review.html?take=landing&v=0.1.117) · [Ponte dublada em português](https://echosofdante.vercel.app/cinematic-review.html?take=voices&v=0.1.117) · [Filme completo](https://echosofdante.vercel.app/cinematic-opening.html?v=0.1.117).
+
+Os quatro heróis desembarcam primeiro; tripulação atrás. Restauração moderada da ponte/desembarque e menor compressão final; fonte continua em 480p. Prova de vozes locais de 12 segundos editada/exportada no Concat, separada do filme com legendas. [Produção, QA e limites](docs/cinematic-opening/revision-02/README.md). Aguardar avaliação humana antes de dublar o restante ou avançar às missões. Os registros abaixo são históricos.
+
 ## Experimento visual — personagem inteiro · 0.1.110
 
 [Comparar rig atual / corpo inteiro](https://echosofdante.vercel.app/whole-body-playtest.html?v=0.1.110). Prova isolada do Astral feminino: 32 poses completas, oito direções, caminhada e conjuração; controles existentes, Dash e Q. Use **Ampliar** para inspecionar ombros, cotovelos e mãos. [Origem, QA e limites](docs/whole-body-actors/README.md). Não substitui os personagens da campanha; equipamentos e demais classes aguardam avaliação humana.
