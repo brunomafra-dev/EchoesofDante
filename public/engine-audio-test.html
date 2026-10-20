@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101b1c">
+  <link rel="icon" href="data:,">
+  <title>Dante — ouvir motores isolados</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#0d1719;color:#eef0e6;font:16px/1.6 system-ui,sans-serif}main{max-width:720px;margin:auto;padding:28px 18px 50px}header{display:flex;justify-content:space-between;gap:16px;align-items:center;font-size:13px}a{color:#a6decf}h1{font-size:clamp(28px,6vw,40px);line-height:1.2;margin:30px 0 12px}h2{font-size:23px;margin:0 0 8px}.intro{color:#c5cfc5;margin-bottom:24px}.card{padding:22px;background:#172729;border:1px solid #3b5250;border-radius:12px;margin:18px 0}.card p{margin:6px 0 16px;color:#c5cfc5}.play{font:inherit;font-weight:700;background:#ddbc81;color:#142122;border:0;border-radius:8px;min-height:50px;padding:12px 18px;width:100%;cursor:pointer}.play:focus-visible,a:focus-visible,audio:focus-visible{outline:3px solid #a98cff;outline-offset:4px}audio{display:block;width:100%;height:54px;margin:16px 0 8px}.status{min-height:26px;font-size:14px}.download{display:inline-block;min-height:44px;padding:8px 0}footer{font-size:14px;color:#b0bfb6;margin-top:24px}
+  </style>
+</head>
+<body>
+<main>
+  <header><a href="test-library.html">← Biblioteca de testes</a><span>ÁUDIO ISOLADO · 0.1.122</span></header>
+  <h1>Ouvir os motores</h1>
+  <p class="intro">Toque para ouvir cada efeito sozinho, sem música nem vozes. São os arquivos originais usados no filme, antes dos filtros e ajustes de volume.</p>
+  <section class="card" aria-labelledby="takeoff-title">
+    <h2 id="takeoff-title">Decolagem</h2>
+    <p>6 segundos · efeito original</p>
+    <button class="play" type="button" data-audio="takeoff">Ouvir decolagem</button>
+    <audio id="takeoff" controls preload="metadata" aria-label="Efeito isolado de decolagem" src="assets/cinematic-opening/engine-isolated/takeoff.mp3"></audio>
+    <p class="status" role="status" aria-live="polite">Pronto para ouvir.</p>
+    <a class="download" href="assets/cinematic-opening/engine-isolated/takeoff.mp3" download>Baixar áudio de decolagem</a>
+  </section>
+  <section class="card" aria-labelledby="descent-title">
+    <h2 id="descent-title">Descida</h2>
+    <p>9 segundos · efeito original</p>
+    <button class="play" type="button" data-audio="descent">Ouvir descida</button>
+    <audio id="descent" controls preload="metadata" aria-label="Efeito isolado de descida" src="assets/cinematic-opening/engine-isolated/descent.mp3"></audio>
+    <p class="status" role="status" aria-live="polite">Pronto para ouvir.</p>
+    <a class="download" href="assets/cinematic-opening/engine-isolated/descent.mp3" download>Baixar áudio de descida</a>
+  </section>
+  <footer>Teste de escuta das fontes atuais. Avalie se o próprio efeito lembra propulsão. A campanha e seus personagens não são carregados nesta página.</footer>
+</main>
+<script>
+  const tracks = [...document.querySelectorAll('audio')];
+  for (const track of tracks) {
+    const card = track.closest('section');
+    const button = card.querySelector('button');
+    const status = card.querySelector('.status');
+    const name = track.id === 'takeoff' ? 'decolagem' : 'descida';
+    button.addEventListener('click', async () => {
+      if (!track.paused) { track.pause(); return; }
+      if (track.ended) track.currentTime = 0;
+      try { await track.play(); }
+      catch { status.textContent = 'Não foi possível reproduzir. Tente o controle abaixo ou baixe o áudio.'; }
+    });
+    track.addEventListener('play', () => {
+      tracks.forEach(other => { if (other !== track) other.pause(); });
+      button.textContent = `Pausar ${name}`;
+      status.textContent = 'Reproduzindo somente este efeito.';
+    });
+    track.addEventListener('pause', () => {
+      button.textContent = `Ouvir ${name}`;
+      if (!track.ended) status.textContent = 'Pausado.';
+    });
+    track.addEventListener('ended', () => {
+      button.textContent = `Ouvir ${name} novamente`;
+      status.textContent = 'Fim do efeito. Toque para ouvir novamente.';
+    });
+    track.addEventListener('error', () => { status.textContent = 'Não foi possível carregar este áudio. Tente recarregar a página.'; });
+  }
+</script>
+</body>
+</html>

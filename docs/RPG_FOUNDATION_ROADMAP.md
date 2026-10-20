@@ -1,5 +1,7 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**Diagnóstico · 0.1.122:** usuário ainda não reconhece propulsão na 0.1.121. [Players móveis com fontes isoladas](cinematic-opening/revision-06/engine-listening.md) para avaliação, sem nova mixagem ou geração. **Motores não aprovados; aguardar escuta.**
+
 **Revisão vigente · 0.1.121:** usuário aprovou trilha/fundo da 0.1.120 e solicitou motores mais audíveis. [Correção pontual](cinematic-opening/revision-06/README.md) na decolagem e descida, preservando as camadas aprovadas e a prioridade da dublagem. **Aguardar escuta dos motores; missões/mapas não iniciados.**
 
 **Entrega vigente em 20/10/2026 · 0.1.120:** imagem e Nara da 0.1.119 aprovadas pelo usuário. [Trilha espacial e efeitos](cinematic-opening/revision-05/README.md) adicionados por solicitação: motores, cabine, descida e desembarque; volume próximo do anterior, fundo reduzido durante as falas. Mesmos quadros e onze vozes. **Aguardar escuta da nova mixagem antes de iniciar missões/mapas.** Os registros abaixo são históricos.
