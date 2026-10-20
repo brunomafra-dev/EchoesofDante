@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "humanApproval": "pending",
+  "decodedFrames": 1302,
+  "fps": 24,
+  "nativeSourceFps": 16,
+  "interpolation": true,
+  "exactAdjacentDuplicates": 0,
+  "longestAdjacentDuplicateRun": 0,
+  "meanFrameDifference": 3.190808044515259,
+  "audioSecondsIncludingCodecPadding": 54.25066666666667,
+  "audioPeak": 0.4388815462589264,
+  "audioRms": 0.05132848769426346,
+  "outputSha256": "895f06182dc0e4f53e052e337d52b1286bd6b7fe2e8d348c91c68891a6ded616",
+  "checks": [
+    "All source/output hashes match",
+    "1302 nonblank decodable frames, 1280x720/24fps",
+    "No run of identical frames; source assembly uses real model motion",
+    "AAC stereo 48kHz; audio non-silent and below clipping; 54.25 seconds plus AAC padding",
+    "11 valid UTF-8 Portuguese caption cues"
+  ]
+}

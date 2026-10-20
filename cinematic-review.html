@@ -16,13 +16,13 @@
 </head>
 <body>
   <main>
-    <header><a href="test-library.html">← Biblioteca de testes</a><span>ABERTURA · REVISÃO 04 · 0.1.119</span></header>
+    <header><a href="test-library.html">← Biblioteca de testes</a><span>ABERTURA · REVISÃO 05 · 0.1.120</span></header>
     <h1>Os primeiros passos em Dante</h1>
-    <p class="intro">Nara orienta a equipe. Os quatro heróis abrem o caminho.</p>
+    <p class="intro">A viagem ganha som. A dublagem continua em primeiro plano.</p>
     <nav class="takes" aria-label="Escolher trecho">
-      <button type="button" data-take="film" aria-pressed="false">Filme completo · 54 s</button>
+      <button type="button" data-take="film" aria-pressed="false">Filme com novo som · 54 s</button>
       <button type="button" data-take="landing" aria-pressed="false">Nara no desembarque · 5 s</button>
-      <button type="button" data-take="voices" aria-pressed="false">Ponte dublada · 12 s</button>
+      <button type="button" data-take="voices" aria-pressed="false">Conversa na ponte · 12 s</button>
     </nav>
     <figure class="screen">
       <video controls playsinline preload="metadata" tabindex="0" aria-label="Trecho da abertura">
@@ -38,16 +38,18 @@
     </nav>
     <p id="playback-status" role="status" aria-live="polite">Escolha um trecho e reproduza com som.</p>
     <p class="status" id="take-description"></p>
-    <details id="production-info"><summary>Comparação de imagem e produção</summary>
+    <details id="production-info"><summary>Trilha, efeitos e produção</summary>
       <div class="comparisons">
         <figure><img src="assets/cinematic-opening/quality-before.webp" loading="lazy" alt="Desembarque anterior sem Nara em cena"><figcaption>Anterior: Nara fora de quadro</figcaption></figure>
         <figure><img src="assets/cinematic-opening/quality-after.webp" loading="lazy" alt="Nara de lenço laranja na rampa, atrás dos quatro pioneiros"><figcaption>Agora: Nara orienta a equipe</figcaption></figure>
       </div>
       <p>Fonte 832×480 / 16 FPS. Saída 1280×720 / 24 FPS, com ampliação e interpolação. Ponte e desembarque receberam restauração offline de quadros inteiros; as demais cenas foram preservadas. Nova tomada inteira com Nara presente durante sua fala, gestos curtos e os pioneiros à frente. A exportação final usa menor compressão; rostos e detalhes foram revisados em quadros das oito cenas. Isso não transforma a fonte em geração nativa HD.</p>
       <p>A abertura completa foi editada e exportada no Concat, com três vozes locais fixas: narrador, Ivo e Nara. As falas aprovadas da ponte foram preservadas. Não houve sincronização labial nova; os heróis ainda não têm falas nesta abertura.</p>
+      <p>Trilha original com piano suave, cordas sustentadas e camada espacial. Motores, ventilação, equipamento, apoio do módulo, passos e floresta acompanham a imagem. Música e efeitos baixam suavemente durante as falas, sem aumentar o volume geral.</p>
+      <p><a href="assets/cinematic-opening/opening-music.m4a" target="_blank" rel="noopener">Ouvir só a trilha</a> · <a href="assets/cinematic-opening/opening-effects.m4a" target="_blank" rel="noopener">Ouvir só os efeitos</a></p>
       <p><strong>Ivo:</strong> Água líquida. Atmosfera compatível.<br><strong>Nara:</strong> Então existe uma chance.<br><strong>Nara:</strong> Prepare o reconhecimento. Ninguém desce sozinho.</p>
       <p>Teclado: Tab e Enter. Gamepad: direcional escolhe os controles/trechos; A confirma, X revê, B volta. Touch: use os botões ou controles nativos do vídeo.</p>
-      <p><a href="cinematic-opening.html?v=0.1.119">Página da abertura completa</a> · <a href="https://github.com/brunomafra-dev/EchoesofDante/tree/main/docs/cinematic-opening/revision-04">Relatório e limites</a></p>
+      <p><a href="cinematic-opening.html?v=0.1.120">Página da abertura completa</a> · <a href="https://github.com/brunomafra-dev/EchoesofDante/tree/main/docs/cinematic-opening/revision-05">Relatório e limites</a></p>
     </details>
     <footer>Laboratório isolado. Personagens, progresso e salas não são carregados nem alterados. <a href="./">Jogo principal</a></footer>
   </main>

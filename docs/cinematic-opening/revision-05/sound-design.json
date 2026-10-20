@@ -1,0 +1,856 @@
+{
+  "seconds": 54.25,
+  "sampleRate": 48000,
+  "channels": 2,
+  "origin": "Original MIDI score + original generated effects; offline authored ducking",
+  "synthVersion": "FluidSynth 2.6.1",
+  "soundfont": "GeneralUser GS 2.0.3",
+  "soundfontSHA256": "9575028c7a1f589f5770fccc8cff2734566af40cd26ed836944e9a5152688cfe",
+  "midiSHA256": "05b6f3585c94d1883ba1d83f7b91d061debbe41121005ad4aae7d393bead9d8f",
+  "instrumentation": [
+    "soft piano",
+    "sustained strings",
+    "warm space pad"
+  ],
+  "notes": [
+    {
+      "part": "soft piano",
+      "start": 2.8,
+      "end": 5.6,
+      "pitch": 62,
+      "velocity": 28
+    },
+    {
+      "part": "soft piano",
+      "start": 3.8499999999999996,
+      "end": 6.6499999999999995,
+      "pitch": 69,
+      "velocity": 31
+    },
+    {
+      "part": "soft piano",
+      "start": 4.9,
+      "end": 7.7,
+      "pitch": 64,
+      "velocity": 28
+    },
+    {
+      "part": "soft piano",
+      "start": 14.0,
+      "end": 16.8,
+      "pitch": 62,
+      "velocity": 28
+    },
+    {
+      "part": "soft piano",
+      "start": 15.05,
+      "end": 17.85,
+      "pitch": 65,
+      "velocity": 31
+    },
+    {
+      "part": "soft piano",
+      "start": 16.1,
+      "end": 18.900000000000002,
+      "pitch": 64,
+      "velocity": 28
+    },
+    {
+      "part": "soft piano",
+      "start": 19.0,
+      "end": 21.8,
+      "pitch": 69,
+      "velocity": 28
+    },
+    {
+      "part": "soft piano",
+      "start": 20.05,
+      "end": 22.85,
+      "pitch": 72,
+      "velocity": 31
+    },
+    {
+      "part": "soft piano",
+      "start": 21.1,
+      "end": 23.900000000000002,
+      "pitch": 76,
+      "velocity": 28
+    },
+    {
+      "part": "soft piano",
+      "start": 22.15,
+      "end": 24.95,
+      "pitch": 74,
+      "velocity": 31
+    },
+    {
+      "part": "soft piano",
+      "start": 27.0,
+      "end": 29.8,
+      "pitch": 65,
+      "velocity": 28
+    },
+    {
+      "part": "soft piano",
+      "start": 28.05,
+      "end": 30.85,
+      "pitch": 64,
+      "velocity": 31
+    },
+    {
+      "part": "soft piano",
+      "start": 34.0,
+      "end": 36.8,
+      "pitch": 62,
+      "velocity": 28
+    },
+    {
+      "part": "soft piano",
+      "start": 35.05,
+      "end": 37.849999999999994,
+      "pitch": 69,
+      "velocity": 31
+    },
+    {
+      "part": "soft piano",
+      "start": 37.1,
+      "end": 39.9,
+      "pitch": 69,
+      "velocity": 28
+    },
+    {
+      "part": "soft piano",
+      "start": 38.15,
+      "end": 40.949999999999996,
+      "pitch": 72,
+      "velocity": 31
+    },
+    {
+      "part": "soft piano",
+      "start": 39.2,
+      "end": 42.0,
+      "pitch": 74,
+      "velocity": 28
+    },
+    {
+      "part": "soft piano",
+      "start": 43.0,
+      "end": 45.8,
+      "pitch": 67,
+      "velocity": 28
+    },
+    {
+      "part": "soft piano",
+      "start": 44.05,
+      "end": 46.849999999999994,
+      "pitch": 64,
+      "velocity": 31
+    },
+    {
+      "part": "soft piano",
+      "start": 49.8,
+      "end": 52.4,
+      "pitch": 69,
+      "velocity": 28
+    },
+    {
+      "part": "soft piano",
+      "start": 50.849999999999994,
+      "end": 52.4,
+      "pitch": 74,
+      "velocity": 31
+    },
+    {
+      "part": "soft piano",
+      "start": 51.9,
+      "end": 52.4,
+      "pitch": 76,
+      "velocity": 28
+    },
+    {
+      "part": "sustained strings",
+      "start": 0.0,
+      "end": 6.4,
+      "pitch": 50,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 0.08,
+      "end": 6.4,
+      "pitch": 57,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 0.16,
+      "end": 6.4,
+      "pitch": 60,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 0.24,
+      "end": 6.4,
+      "pitch": 64,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 6.0,
+      "end": 12.4,
+      "pitch": 46,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 6.08,
+      "end": 12.4,
+      "pitch": 53,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 6.16,
+      "end": 12.4,
+      "pitch": 57,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 6.24,
+      "end": 12.4,
+      "pitch": 60,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 12.0,
+      "end": 18.599999999999998,
+      "pitch": 48,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 12.08,
+      "end": 18.599999999999998,
+      "pitch": 55,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 12.16,
+      "end": 18.599999999999998,
+      "pitch": 60,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 12.24,
+      "end": 18.599999999999998,
+      "pitch": 64,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 18.2,
+      "end": 24.4,
+      "pitch": 53,
+      "velocity": 34
+    },
+    {
+      "part": "sustained strings",
+      "start": 18.279999999999998,
+      "end": 24.4,
+      "pitch": 57,
+      "velocity": 34
+    },
+    {
+      "part": "sustained strings",
+      "start": 18.36,
+      "end": 24.4,
+      "pitch": 60,
+      "velocity": 34
+    },
+    {
+      "part": "sustained strings",
+      "start": 18.439999999999998,
+      "end": 24.4,
+      "pitch": 64,
+      "velocity": 34
+    },
+    {
+      "part": "sustained strings",
+      "start": 24.0,
+      "end": 30.4,
+      "pitch": 50,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 24.08,
+      "end": 30.4,
+      "pitch": 57,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 24.16,
+      "end": 30.4,
+      "pitch": 60,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 24.24,
+      "end": 30.4,
+      "pitch": 64,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 30.0,
+      "end": 36.4,
+      "pitch": 46,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 30.08,
+      "end": 36.4,
+      "pitch": 53,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 30.16,
+      "end": 36.4,
+      "pitch": 57,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 30.24,
+      "end": 36.4,
+      "pitch": 60,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 36.0,
+      "end": 40.9,
+      "pitch": 53,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 36.08,
+      "end": 40.9,
+      "pitch": 57,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 36.16,
+      "end": 40.9,
+      "pitch": 60,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 36.24,
+      "end": 40.9,
+      "pitch": 64,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 40.5,
+      "end": 47.1,
+      "pitch": 48,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 40.58,
+      "end": 47.1,
+      "pitch": 55,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 40.66,
+      "end": 47.1,
+      "pitch": 62,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 40.74,
+      "end": 47.1,
+      "pitch": 64,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 46.7,
+      "end": 50.4,
+      "pitch": 50,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 46.78,
+      "end": 50.4,
+      "pitch": 57,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 46.86,
+      "end": 50.4,
+      "pitch": 62,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 46.940000000000005,
+      "end": 50.4,
+      "pitch": 64,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 50.0,
+      "end": 52.1,
+      "pitch": 50,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 50.08,
+      "end": 52.1,
+      "pitch": 57,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 50.16,
+      "end": 52.1,
+      "pitch": 62,
+      "velocity": 31
+    },
+    {
+      "part": "sustained strings",
+      "start": 50.24,
+      "end": 52.1,
+      "pitch": 64,
+      "velocity": 31
+    },
+    {
+      "part": "warm space pad",
+      "start": 0.0,
+      "end": 6.4,
+      "pitch": 62,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 0.08,
+      "end": 6.4,
+      "pitch": 69,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 0.16,
+      "end": 6.4,
+      "pitch": 65,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 6.0,
+      "end": 12.4,
+      "pitch": 58,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 6.08,
+      "end": 12.4,
+      "pitch": 65,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 6.16,
+      "end": 12.4,
+      "pitch": 65,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 12.0,
+      "end": 18.599999999999998,
+      "pitch": 60,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 12.08,
+      "end": 18.599999999999998,
+      "pitch": 67,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 12.16,
+      "end": 18.599999999999998,
+      "pitch": 67,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 18.2,
+      "end": 24.4,
+      "pitch": 65,
+      "velocity": 27
+    },
+    {
+      "part": "warm space pad",
+      "start": 18.279999999999998,
+      "end": 24.4,
+      "pitch": 69,
+      "velocity": 27
+    },
+    {
+      "part": "warm space pad",
+      "start": 18.36,
+      "end": 24.4,
+      "pitch": 67,
+      "velocity": 27
+    },
+    {
+      "part": "warm space pad",
+      "start": 24.0,
+      "end": 30.4,
+      "pitch": 62,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 24.08,
+      "end": 30.4,
+      "pitch": 69,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 24.16,
+      "end": 30.4,
+      "pitch": 65,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 30.0,
+      "end": 36.4,
+      "pitch": 58,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 30.08,
+      "end": 36.4,
+      "pitch": 65,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 30.16,
+      "end": 36.4,
+      "pitch": 65,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 36.0,
+      "end": 40.9,
+      "pitch": 65,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 36.08,
+      "end": 40.9,
+      "pitch": 69,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 36.16,
+      "end": 40.9,
+      "pitch": 67,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 40.5,
+      "end": 47.1,
+      "pitch": 60,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 40.58,
+      "end": 47.1,
+      "pitch": 67,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 40.66,
+      "end": 47.1,
+      "pitch": 67,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 46.7,
+      "end": 50.4,
+      "pitch": 62,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 46.78,
+      "end": 50.4,
+      "pitch": 69,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 46.86,
+      "end": 50.4,
+      "pitch": 69,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 50.0,
+      "end": 52.1,
+      "pitch": 62,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 50.08,
+      "end": 52.1,
+      "pitch": 69,
+      "velocity": 24
+    },
+    {
+      "part": "warm space pad",
+      "start": 50.16,
+      "end": 52.1,
+      "pitch": 69,
+      "velocity": 24
+    }
+  ],
+  "cues": [
+    {
+      "source": "earthwind",
+      "start": 0,
+      "seconds": 6,
+      "sourceOffset": 0,
+      "targetRMS": 0.011,
+      "highCutHz": 1050,
+      "fadeSeconds": 1.2
+    },
+    {
+      "source": "engine",
+      "start": 6,
+      "seconds": 6,
+      "sourceOffset": 0,
+      "targetRMS": 0.038,
+      "highCutHz": 1450,
+      "fadeSeconds": 0.65
+    },
+    {
+      "source": "cabin",
+      "start": 12,
+      "seconds": 6,
+      "sourceOffset": 0,
+      "targetRMS": 0.012,
+      "highCutHz": 1250,
+      "fadeSeconds": 0.9
+    },
+    {
+      "source": "engine",
+      "start": 18,
+      "seconds": 6,
+      "sourceOffset": 6,
+      "targetRMS": 0.015,
+      "highCutHz": 1150,
+      "fadeSeconds": 1.1
+    },
+    {
+      "source": "cabin",
+      "start": 24,
+      "seconds": 8,
+      "sourceOffset": 0,
+      "targetRMS": 0.011,
+      "highCutHz": 1400,
+      "fadeSeconds": 0.65
+    },
+    {
+      "source": "cabin",
+      "start": 31.4,
+      "seconds": 8,
+      "sourceOffset": 0,
+      "targetRMS": 0.011,
+      "highCutHz": 1400,
+      "fadeSeconds": 0.65
+    },
+    {
+      "source": "cabin",
+      "start": 38.6,
+      "seconds": 1.9,
+      "sourceOffset": 0,
+      "targetRMS": 0.009,
+      "highCutHz": 1400,
+      "fadeSeconds": 0.4
+    },
+    {
+      "source": "equipment",
+      "start": 36.2,
+      "seconds": 4,
+      "sourceOffset": 0,
+      "targetRMS": 0.011,
+      "highCutHz": 2800,
+      "fadeSeconds": 0.12
+    },
+    {
+      "source": "descent",
+      "start": 40.5,
+      "seconds": 9,
+      "sourceOffset": 0,
+      "targetRMS": 0.034,
+      "highCutHz": 1700,
+      "fadeSeconds": 0.6
+    },
+    {
+      "source": "settle",
+      "start": 49.5,
+      "seconds": 1.6,
+      "sourceOffset": 0,
+      "targetRMS": 0.022,
+      "highCutHz": 1700,
+      "fadeSeconds": 0.12
+    },
+    {
+      "source": "steps",
+      "start": 49.7,
+      "seconds": 3.6,
+      "sourceOffset": 0,
+      "targetRMS": 0.017,
+      "highCutHz": 2900,
+      "fadeSeconds": 0.1
+    },
+    {
+      "source": "forest",
+      "start": 49.5,
+      "seconds": 4.75,
+      "sourceOffset": 0,
+      "targetRMS": 0.014,
+      "highCutHz": 2200,
+      "fadeSeconds": 0.7
+    }
+  ],
+  "speechFilesChanged": false,
+  "targetSpeechMarginDB": 16,
+  "lines": [
+    {
+      "id": "earth",
+      "voiceRMS": 0.082522913813591,
+      "backgroundRMS": 0.010450219735503197,
+      "marginDB": 17.948982634770246
+    },
+    {
+      "id": "evacuation",
+      "voiceRMS": 0.09450480341911316,
+      "backgroundRMS": 0.01497800275683403,
+      "marginDB": 15.999999537550266
+    },
+    {
+      "id": "voyage",
+      "voiceRMS": 0.07320257276296616,
+      "backgroundRMS": 0.009862343780696392,
+      "marginDB": 17.410924157927937
+    },
+    {
+      "id": "discovery",
+      "voiceRMS": 0.09283942729234695,
+      "backgroundRMS": 0.011333256028592587,
+      "marginDB": 18.26755505460635
+    },
+    {
+      "id": "ivo-water",
+      "voiceRMS": 0.08076435327529907,
+      "backgroundRMS": 0.007147701922804117,
+      "marginDB": 21.06106573502381
+    },
+    {
+      "id": "nara-chance",
+      "voiceRMS": 0.07296803593635559,
+      "backgroundRMS": 0.00784609280526638,
+      "marginDB": 19.369584317088375
+    },
+    {
+      "id": "nara-team",
+      "voiceRMS": 0.07658230513334274,
+      "backgroundRMS": 0.008293520659208298,
+      "marginDB": 19.3077900736051
+    },
+    {
+      "id": "nara-pioneers",
+      "voiceRMS": 0.08125249296426773,
+      "backgroundRMS": 0.01004212535917759,
+      "marginDB": 18.160221124648647
+    },
+    {
+      "id": "ivo-descent",
+      "voiceRMS": 0.07841452956199646,
+      "backgroundRMS": 0.012427865527570248,
+      "marginDB": 15.999999917329848
+    },
+    {
+      "id": "nara-orbit",
+      "voiceRMS": 0.09364521503448486,
+      "backgroundRMS": 0.014192556962370872,
+      "marginDB": 16.38849890572069
+    },
+    {
+      "id": "nara-landing",
+      "voiceRMS": 0.07442552596330643,
+      "backgroundRMS": 0.011439257301390171,
+      "marginDB": 16.26648167715983
+    }
+  ],
+  "musicRMS": 0.01708937995135784,
+  "effectsRMS": 0.01398167759180069,
+  "expectedMixRMS": 0.05136801302433014,
+  "expectedMixPeak": 0.43950900435447693,
+  "stems": {
+    "music": {
+      "path": ".local/cinematic-opening/revision-05/music-bed.wav",
+      "sha256": "8cb89b39757af26eb35c8238aada3fa2103eb820fe10cee7e7d4c467017d57ed"
+    },
+    "effects": {
+      "path": ".local/cinematic-opening/revision-05/scene-effects.wav",
+      "sha256": "a09b046eebc761ba3f0d780b60c3dc3407a0411e79a743e48a7e8b979f9adb4d"
+    }
+  },
+  "humanApproval": "pending"
+}

@@ -1,10 +1,10 @@
 # Echoes of Dante
 
-## Abertura — Nara no desembarque e revisão dos frames · 0.1.119
+## Abertura — trilha e efeitos — 0.1.120
 
-[Filme completo dublado](https://echosofdante.vercel.app/cinematic-review.html?take=film&v=0.1.119) · [Só o desembarque](https://echosofdante.vercel.app/cinematic-review.html?take=landing&v=0.1.119).
+[Assistir com o novo som](https://echosofdante.vercel.app/cinematic-review.html?take=film&v=0.1.120) · [Desembarque](https://echosofdante.vercel.app/cinematic-review.html?take=landing&v=0.1.120).
 
-Nara aparece na rampa durante sua fala final, com os quatro pioneiros na frente. Vozes e ritmo aprovados preservados; nova tomada inteira e menor compressão final. Abertura de 54,25 s editada/exportada no Concat; narrador, Ivo e Nara mantêm vozes próprias em português. Ponte aprovada preservada; fonte continua em 480p, sem lipsync novo. [Fontes, QA e limites](docs/cinematic-opening/revision-04/README.md). Aguardar avaliação humana antes das missões. Os registros abaixo são históricos.
+Trilha espacial original, motores e ambiente ligados às cenas. Música e efeitos baixam durante as falas, com volume geral próximo do anterior. Onze falas e os quadros aprovados preservados. [Produção e QA](docs/cinematic-opening/revision-05/README.md). Aguardar avaliação da mixagem antes das missões. Os registros abaixo são históricos.
 
 ## Experimento visual — personagem inteiro · 0.1.110
 

@@ -2,16 +2,16 @@ import './bridge';
 
 const takes = {
   film: { file: 'arrival-whole-scene.mp4', title: 'Abertura completa',
-    caption: '54 SEGUNDOS · NARA ORIENTA A EQUIPE · TRÊS VOZES EM PORTUGUÊS · CONCAT',
-    description: 'Nara aparece na rampa durante sua fala final, orientando os quatro pioneiros à frente. Vozes e ritmo aprovados preservados; revisão da imagem e menor compressão. Mesma versão na campanha.',
+    caption: '54 SEGUNDOS · TRILHA ORIGINAL · MOTORES E AMBIENTE · DUBLAGEM EM PRIMEIRO PLANO',
+    description: 'Nova trilha espacial suave e efeitos ligados à imagem: decolagem, interior da nave, descida e desembarque. O fundo baixa durante as falas. Imagem, vozes e ritmo aprovados preservados. Mesma versão na campanha.',
     end: 'Fim da abertura. A expedição começa agora.' },
   landing: { file: 'landing-heroes.mp4', title: 'Nara e os quatro pioneiros',
-    caption: 'NARA NA RAMPA · OS QUATRO HERÓIS À FRENTE · CENA INTEIRA ANIMADA',
-    description: 'Nara, de jaqueta bege e lenço laranja, acompanha a saída da equipe e dá a ordem de reconhecimento. Confira sua presença durante a fala, a continuidade dos cinco personagens e os detalhes em movimento.',
+    caption: 'NARA E OS PIONEIROS · APOIO DO MÓDULO · PASSOS E FLORESTA · FUNDO SUAVE',
+    description: 'Nara orienta o reconhecimento enquanto a nave assenta, os pioneiros saem e a clareira ganha som. A fala permanece na frente da trilha e dos efeitos.',
     end: 'Fim do desembarque. A equipe abre o caminho.' },
   voices: { file: 'bridge-voice-proof.mp4', title: 'Ponte dublada em português',
-    caption: 'IVO E NARA · VOZES EM PORTUGUÊS · TESTE EDITADO NO CONCAT',
-    description: 'Prova de 12 segundos com três falas e duas vozes locais. Avalie naturalidade, clareza e volume. A atuação já aprovada foi preservada; este teste não adiciona sincronização labial.',
+    caption: 'IVO E NARA · INTERIOR DA NAVE · NOVA TRILHA AO FUNDO · CONCAT',
+    description: 'Trecho da ponte com ventilação e motor distante, música discreta e as três falas aprovadas. Confira a clareza da conversa e o volume do fundo.',
     end: 'Fim da ponte. Estas vozes também estão na abertura completa.' },
 } as const;
 type Take = keyof typeof takes;

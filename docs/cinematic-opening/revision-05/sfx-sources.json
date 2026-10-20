@@ -1,0 +1,110 @@
+{
+  "totalFreeCreditsUsed": 55,
+  "requests": 8,
+  "sources": [
+    {
+      "key": "engine",
+      "taskId": "02c12cec-ffe2-44a9-9854-b7fd44ee25f9",
+      "model": "Runway Sound Effects",
+      "prompt": "Heavy civilian spacecraft engines, original cinematic sound design. Low warm turbine rumble with layered mechanical rotation and deep controlled thrust. Begins at idle, smoothly spools up over three seconds, sustains an immense but gentle propulsion roar, then winds down. Subtle metal resonance, no sharp whine, no crackling, no sparks, no beeps, no explosions, no music, no voices. Clean isolated recording.",
+      "meta": {
+        "durationSeconds": 12
+      },
+      "path": "docs/cinematic-opening/revision-05/source/engine.mp3",
+      "bytes": 193140,
+      "sha256": "8a2979e4ec4ae74d126fdb57a8c3bd6d1158e0702de43cbdc595c1f2e03f9c6e",
+      "origin": "Original generation via connected free workspace, no purchased credits or plan upgrade"
+    },
+    {
+      "key": "cabin",
+      "taskId": "57747254-df9b-426e-800a-c432f571298e",
+      "model": "Runway Sound Effects",
+      "prompt": "Inside a quiet worn civilian spaceship cabin. Warm low ventilation fans, muffled distant turbine machinery, subtle hull vibration and very soft structural creaks. Calm believable enclosed metallic room tone, seamless ambience. No music, no voices, no alarms, no beeps, no static, no crackling, no high pitched whistle.",
+      "meta": {
+        "durationSeconds": 8
+      },
+      "path": "docs/cinematic-opening/revision-05/source/cabin.mp3",
+      "bytes": 129192,
+      "sha256": "fe4994011c89952c20e9c8cb40668c1e921d4d71d55c769f9bde1b8a1a7e69fb",
+      "origin": "Original generation via connected free workspace, no purchased credits or plan upgrade"
+    },
+    {
+      "key": "descent",
+      "taskId": "b3bf7ed7-6ec3-48ec-9ec9-349d69db272a",
+      "model": "Runway Sound Effects",
+      "prompt": "A small heavy spacecraft descending through atmosphere and decelerating to land. Smooth deep engine thrust under soft rushing air, gentle mechanical modulation, then power eases down toward a warm idle. Restrained cinematic foley, rounded low mids, no shrill turbine, no crackling, no sparks, no explosions, no voices or music.",
+      "meta": {
+        "durationSeconds": 10
+      },
+      "path": "docs/cinematic-opening/revision-05/source/descent.mp3",
+      "bytes": 160957,
+      "sha256": "ed057543c0d0e140d7f2002ccda451d2e44de7214f6341faaea0c39f3f1a3b36",
+      "origin": "Original generation via connected free workspace, no purchased credits or plan upgrade"
+    },
+    {
+      "key": "settle",
+      "taskId": "57b609ad-af34-43d8-b01c-7ed5dfffac36",
+      "model": "Runway Sound Effects",
+      "prompt": "Heavy landed spacecraft settling gently onto hydraulic landing supports. One soft weighty cushioned metallic thud, a brief low hydraulic release and a small hull creak fading naturally. Close dry industrial foley. Not an explosion or crash. No beeps, no voices, no music, no static or crackling.",
+      "meta": {
+        "durationSeconds": 3
+      },
+      "path": "docs/cinematic-opening/revision-05/source/settle.mp3",
+      "bytes": 48944,
+      "sha256": "346594ce5bb1a1705ca7b3ddeb72af900be05845251db1db8c08d194f1a37914",
+      "origin": "Original generation via connected free workspace, no purchased credits or plan upgrade"
+    },
+    {
+      "key": "steps",
+      "taskId": "dbd29a48-160b-451f-84bc-e8157fadedb5",
+      "model": "Runway Sound Effects",
+      "prompt": "Three slow distinct subdued heavy boot steps leaving a metal spaceship ramp onto damp earth. First soft metal tread, then two damp gritty soil footfalls, slight cloth and equipment movement. Close realistic quiet foley, small natural gaps between steps, no speech, no breathing, no music, no wind or electronic sounds.",
+      "meta": {
+        "durationSeconds": 4
+      },
+      "path": "docs/cinematic-opening/revision-05/source/steps.mp3",
+      "bytes": 65244,
+      "sha256": "64fd72dea7f123ea50e45364c1e2bf1e8039a979d4aab56795d58f48dd7409b7",
+      "origin": "Original generation via connected free workspace, no purchased credits or plan upgrade"
+    },
+    {
+      "key": "forest",
+      "taskId": "56fd95b3-9790-4c2f-8413-4228ec39f680",
+      "model": "Runway Sound Effects",
+      "prompt": "Very soft alien forest dawn ambience, damp leaves moving gently, a distant broad waterfall and a mild breeze. Spacious peaceful natural clearing, restrained and seamless. No foreground birds, insect shrieks, crackling, voices, footsteps or music. Quiet warm open atmosphere after landing.",
+      "meta": {
+        "durationSeconds": 8
+      },
+      "path": "docs/cinematic-opening/revision-05/source/forest.mp3",
+      "bytes": 129192,
+      "sha256": "7c42486297b535ca86a3c7bf1cb5bc6f84366a67eff5cc39ca01ebc1db2c81d6",
+      "origin": "Original generation via connected free workspace, no purchased credits or plan upgrade"
+    },
+    {
+      "key": "earthwind",
+      "taskId": "6ee1deca-3db0-4ab2-b179-202abf5c6a87",
+      "model": "Runway Sound Effects",
+      "prompt": "Quiet dry wind moving dust across a ruined empty coastline, distant broad low air movement and faint structural groans far away. Desolate restrained outdoor atmosphere. No water, birds, insects, static, crackling, sharp whistles, voices, music or explosions.",
+      "meta": {
+        "durationSeconds": 6
+      },
+      "path": "docs/cinematic-opening/revision-05/source/earthwind.mp3",
+      "bytes": 97009,
+      "sha256": "d751ae899a13be1514c7c3582e253a450861b2dd139b989cbfbdbbc0a07cea08",
+      "origin": "Original generation via connected free workspace, no purchased credits or plan upgrade"
+    },
+    {
+      "key": "equipment",
+      "taskId": "5775da72-357c-4c8a-8b2b-750ad0739d7d",
+      "model": "Runway Sound Effects",
+      "prompt": "Very quiet close foley of expedition equipment checks: a fabric strap pulled snug, a small metal buckle closing softly, leather gloves briefly handling a compact tool. Three restrained distinct gestures in a calm room, clean dry sound. No footsteps, breathing, voices, music, electronic beeps or crackling.",
+      "meta": {
+        "durationSeconds": 4
+      },
+      "path": "docs/cinematic-opening/revision-05/source/equipment.mp3",
+      "bytes": 65244,
+      "sha256": "b68bc2a95a4cf3fa32fac7c84bbc5a1ac26d2eb0f2a58f11f606bf1e25747d83",
+      "origin": "Original generation via connected free workspace, no purchased credits or plan upgrade"
+    }
+  ]
+}

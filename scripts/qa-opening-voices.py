@@ -16,7 +16,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 revision = os.environ.get('QA_REVISION', 'revision-02')
 DOC = ROOT/f'docs/cinematic-opening/{revision}'
-full = revision in ['revision-03', 'revision-04']
+full = revision in ['revision-03', 'revision-04', 'revision-05']
 video = ROOT/('public/assets/cinematic-opening/arrival-whole-scene.mp4' if full else 'public/assets/cinematic-opening/bridge-voice-proof.mp4')
 plan = json.loads((DOC/'dialogue.json').read_text(encoding='utf-8'))
 voices = json.loads((DOC/'voice-report.json').read_text(encoding='utf-8'))

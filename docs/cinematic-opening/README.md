@@ -1,6 +1,6 @@
 # Abertura completa — produção
 
-**Revisão atual: [0.1.119 — Nara no desembarque e revisão dos frames](revision-04/README.md).** [Teste direto](https://echosofdante.vercel.app/cinematic-review.html?take=landing&v=0.1.119). Filme e vozes da 0.1.118 aprovados; ajuste de Nara e imagem aguardam avaliação humana. Registros abaixo são históricos.
+**Revisão atual: [0.1.120 — trilha espacial e efeitos com prioridade à dublagem](revision-05/README.md).** [Ouvir no filme](https://echosofdante.vercel.app/cinematic-review.html?take=film&v=0.1.120). Visual e vozes da 0.1.119 aprovados; nova mixagem aguarda escuta do usuário. Registros abaixo são históricos.
 
 **Entrega atual: [0.1.116 — filme completo, 59,25 s](completion/README.md).** Em 18/10/2026 a cota gratuita voltou a funcionar. Equipe com identidades atuais, descida e desembarque gerados, montados e integrados ao início solo/cooperativo. [Assistir ao corte completo](https://echosofdante.vercel.app/cinematic-opening.html?v=0.1.116). Piloto aprovado e corte anterior preservados; **avaliação visual do filme completo pendente**. Os estados de bloqueio e preparação abaixo são históricos.
 

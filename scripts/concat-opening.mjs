@@ -7,7 +7,8 @@ import { createHash } from 'node:crypto';
 
 const root = path.resolve(import.meta.dirname, '..');
 const revisionName = process.env.CINEMATIC_REVISION ?? 'revision-03';
-if (!['revision-03', 'revision-04'].includes(revisionName)) throw new Error('Unknown cinematic revision');
+if (!['revision-03', 'revision-04', 'revision-05'].includes(revisionName)) throw new Error('Unknown cinematic revision');
+const soundOnly = revisionName === 'revision-05';
 const revision = path.join(root, 'docs/cinematic-opening', revisionName);
 const work = path.join(root, '.local/cinematic-opening', revisionName);
 const version = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8')).version;
@@ -55,25 +56,40 @@ try {
   await tool('concat_version', {});
   if (!exportOnly) {
     if (process.argv.includes('--resume-empty')) await tool('project_open', { path: project });
-    else await tool('project_create', { location: work, name: projectName, video: { width: 1280, height: 720, rateNum: 24, rateDen: 1, colorSpace: 'sdr' } });
+    else await tool('project_create', { location: work, name: projectName, video: { width: soundOnly ? 320 : 1280, height: soundOnly ? 180 : 720, rateNum: 24, rateDen: 1, colorSpace: 'sdr' } });
     const timeline = await tool('timeline_read', { path: project });
     if (timeline.timeline.clips.length) throw new Error('Refuse to duplicate a nonempty edit');
     const pictureLane = timeline.timeline.tracks[0]?.id;
     if (!pictureLane) throw new Error(`Unknown lane shape: ${JSON.stringify(timeline)}`);
-    const film = JSON.parse(await readFile(path.join(revision, 'picture-manifest.json'), 'utf8'));
-    let time = 0;
-    for (const shot of film.shots) {
-      const file = path.join(root, `.local/cinematic-opening/assembly/${shot.id}.mp4`);
-      const hash = createHash('sha256').update(await readFile(file)).digest('hex');
-      if (hash !== shot.pictureSha256) throw new Error(`Stale picture: ${shot.id}`);
-      const picture = await tool('media_import', { path: project, file });
-      await tool('clip_add', { path: project, mediaId: picture.createdId, trackId: pictureLane, start: time });
-      time += shot.seconds;
+    if (soundOnly) {
+      const picture = await tool('media_import', { path: project, file: path.join(work, 'approved-film.mp4') });
+      const clip = await tool('clip_add', { path: project, mediaId: picture.createdId, trackId: pictureLane, start: 0 });
+      await tool('clip_update', { path: project, clipId: clip.createdId, patch: { muted: true } });
+      const sound = JSON.parse(await readFile(path.join(revision, 'sound-design.json'), 'utf8'));
+      for (const key of ['music', 'effects']) {
+        const stem = sound.stems[key];
+        const file = path.join(root, stem.path);
+        if (createHash('sha256').update(await readFile(file)).digest('hex') !== stem.sha256) throw new Error(`Stale stem: ${key}`);
+        const lane = await tool('track_add', { path: project, bottom: true });
+        const media = await tool('media_import', { path: project, file });
+        await tool('clip_add', { path: project, mediaId: media.createdId, trackId: lane.createdId, start: 0 });
+      }
+    } else {
+      const film = JSON.parse(await readFile(path.join(revision, 'picture-manifest.json'), 'utf8'));
+      let time = 0;
+      for (const shot of film.shots) {
+        const file = path.join(root, `.local/cinematic-opening/assembly/${shot.id}.mp4`);
+        const hash = createHash('sha256').update(await readFile(file)).digest('hex');
+        if (hash !== shot.pictureSha256) throw new Error(`Stale picture: ${shot.id}`);
+        const picture = await tool('media_import', { path: project, file });
+        await tool('clip_add', { path: project, mediaId: picture.createdId, trackId: pictureLane, start: time });
+        time += shot.seconds;
+      }
+      const ambientLane = await tool('track_add', { path: project, bottom: true });
+      const ambient = await tool('media_import', { path: project, file: path.join(root, '.local/cinematic-opening/assembly/expedition-mix.wav') });
+      const ambientClip = await tool('clip_add', { path: project, mediaId: ambient.createdId, trackId: ambientLane.createdId, start: 0 });
+      await tool('clip_update', { path: project, clipId: ambientClip.createdId, patch: { volume: .65, fadeIn: .15, fadeOut: .4 } });
     }
-    const ambientLane = await tool('track_add', { path: project, bottom: true });
-    const ambient = await tool('media_import', { path: project, file: path.join(root, '.local/cinematic-opening/assembly/expedition-mix.wav') });
-    const ambientClip = await tool('clip_add', { path: project, mediaId: ambient.createdId, trackId: ambientLane.createdId, start: 0 });
-    await tool('clip_update', { path: project, clipId: ambientClip.createdId, patch: { volume: .65, fadeIn: .15, fadeOut: .4 } });
     const speechLane = await tool('track_add', { path: project });
     const plan = JSON.parse(await readFile(path.join(revision, 'dialogue.json'), 'utf8'));
     const voices = JSON.parse(await readFile(path.join(revision, 'voice-report.json'), 'utf8'));
@@ -86,7 +102,7 @@ try {
       const clip = await tool('clip_add', { path: project, mediaId: media.createdId, trackId: speechLane.createdId, start: line.start });
       await tool('clip_update', { path: project, clipId: clip.createdId, patch: { volume: Math.min(2, .58 / voice.peak) } });
     }
-    await tool('captions_add', { path: project, offsetY: -.41,
+    if (!soundOnly) await tool('captions_add', { path: project, offsetY: -.41,
       captions: plan.lines.map(l => ({ start: l.start, end: l.end, text: l.speaker === 'NARRADOR' ? l.text : `${l.speaker}: ${l.text}` })),
       style: { fontFamily: '"Segoe UI"', fontSize: .034, fontWeight: 500, color: '#f3f3e8',
         background: '#101610b0', maxWidth: .9, shadow: true } });
@@ -95,7 +111,7 @@ try {
   } else {
     await tool('project_open', { path: project });
     const output = path.join(work, 'film-export.mp4');
-    const started = await tool('export_start', { path: project, output, codec: 'h264', crf: revisionName === 'revision-04' ? 16 : 18, preset: 'fast' });
+    const started = await tool('export_start', { path: project, output, codec: 'h264', crf: soundOnly ? 28 : revisionName === 'revision-04' ? 16 : 18, preset: soundOnly ? 'ultrafast' : 'fast' });
     const job = started.job;
     if (!job) throw new Error(`Missing job id: ${JSON.stringify(started)}`);
     let status;

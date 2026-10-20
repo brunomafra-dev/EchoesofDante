@@ -1,0 +1,123 @@
+{
+  "language": "pt-br",
+  "seconds": 54.25,
+  "casting": {
+    "NARRADOR": {
+      "voice": "pm_santa",
+      "role": "Narrador: memória da expedição, grave e sereno"
+    },
+    "IVO": {
+      "voice": "pm_alex",
+      "role": "Engenheiro da ponte; mesma voz da prova aprovada"
+    },
+    "NARA": {
+      "voice": "pf_dora",
+      "role": "Comandante; mesma voz da prova aprovada"
+    }
+  },
+  "heroDialogue": false,
+  "lines": [
+    {
+      "id": "earth",
+      "speaker": "NARRADOR",
+      "voice": "pm_santa",
+      "start": 0.6,
+      "end": 5.5,
+      "text": "A Terra já não podia nos abrigar.",
+      "speed": 1.0
+    },
+    {
+      "id": "evacuation",
+      "speaker": "NARRADOR",
+      "voice": "pm_santa",
+      "start": 6.6,
+      "end": 11.4,
+      "text": "Partimos com quem ainda podíamos salvar.",
+      "speed": 1.0
+    },
+    {
+      "id": "voyage",
+      "speaker": "NARRADOR",
+      "voice": "pm_santa",
+      "start": 12.5,
+      "end": 17.5,
+      "text": "Durante anos, procuramos um lugar para recomeçar.",
+      "speed": 1.0
+    },
+    {
+      "id": "discovery",
+      "speaker": "NARRADOR",
+      "voice": "pm_santa",
+      "start": 18.6,
+      "end": 23.4,
+      "text": "Até encontrarmos Dante.",
+      "speed": 1.0
+    },
+    {
+      "id": "ivo-water",
+      "speaker": "IVO",
+      "voice": "pm_alex",
+      "start": 24.5,
+      "end": 27.8,
+      "text": "Água líquida. Atmosfera compatível.",
+      "speed": 1.0,
+      "reuse": "docs/cinematic-opening/revision-02/voices/ivo-water.wav"
+    },
+    {
+      "id": "nara-chance",
+      "speaker": "NARA",
+      "voice": "pf_dora",
+      "start": 28.1,
+      "end": 30.8,
+      "text": "Então existe uma chance.",
+      "speed": 1.0,
+      "reuse": "docs/cinematic-opening/revision-02/voices/nara-chance.wav"
+    },
+    {
+      "id": "nara-team",
+      "speaker": "NARA",
+      "voice": "pf_dora",
+      "start": 31.2,
+      "end": 35.6,
+      "text": "Prepare o reconhecimento. Ninguém desce sozinho.",
+      "speed": 1.0,
+      "reuse": "docs/cinematic-opening/revision-02/voices/nara-team.wav"
+    },
+    {
+      "id": "nara-pioneers",
+      "speaker": "NARA",
+      "voice": "pf_dora",
+      "start": 36.5,
+      "end": 40,
+      "text": "Vocês reconhecem o terreno. A frota aguarda.",
+      "speed": 1.0
+    },
+    {
+      "id": "ivo-descent",
+      "speaker": "IVO",
+      "voice": "pm_alex",
+      "start": 41.2,
+      "end": 44.6,
+      "text": "Área de pouso à vista.",
+      "speed": 1.0
+    },
+    {
+      "id": "nara-orbit",
+      "speaker": "NARA",
+      "voice": "pf_dora",
+      "start": 45.2,
+      "end": 49,
+      "text": "Primeiro a equipe. Os outros aguardam em órbita.",
+      "speed": 1.0
+    },
+    {
+      "id": "nara-landing",
+      "speaker": "NARA",
+      "voice": "pf_dora",
+      "start": 50,
+      "end": 53.9,
+      "text": "DANTE-01 em solo. Primeiro, o reconhecimento.",
+      "speed": 1.0
+    }
+  ]
+}

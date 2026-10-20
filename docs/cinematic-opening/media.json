@@ -3,7 +3,7 @@
   "workprint": false,
   "seconds": 54.25,
   "missingShots": [],
-  "humanApproval": "pending: Nara in landing",
+  "humanApproval": "Visuals and voices approved in 0.1.119; new music and effects pending",
   "native720p24": false,
   "sourceFps": 16,
   "interpolation": "FFmpeg whole-frame motion compensated 16 to 24",
@@ -173,9 +173,9 @@
       "pictureSha256": "791abb4a2b40d8b6a546a1e1859b4e87436a232b532559846ac536fdf3b95c9a"
     }
   ],
-  "editor": "Concat 0.2.8 MCP, actual timeline/export",
+  "editor": "Concat 0.2.8 sound edit; approved 1280x720 H.264 packets copied without re-encode",
   "audio": {
-    "origin": "Original ambience + local Kokoro PT-BR speech, Concat mix",
+    "origin": "Original MIDI score, FluidSynth/GeneralUser GS, original generated SFX, unchanged Kokoro speech",
     "voiceReport": {
       "engine": "kokoro-onnx 0.5.0, CPU, Kokoro-82M int8",
       "language": "pt-br",
@@ -344,15 +344,17 @@
         }
       ]
     },
+    "soundDesign": "docs/cinematic-opening/revision-05/sound-design.json",
+    "fixedSpeakerVoices": true,
     "lipSync": false,
-    "fixedSpeakerVoices": true
+    "dialogueDucking": true
   },
   "output": {
     "width": 1280,
     "height": 720,
     "fps": 24.0,
     "frames": 1302,
-    "bytes": 44451526,
-    "sha256": "4b353487d84857cbe7dd755c14799f1689bc9193cd8f68761dbaa0d443a36ed4"
+    "bytes": 44447402,
+    "sha256": "895f06182dc0e4f53e052e337d52b1286bd6b7fe2e8d348c91c68891a6ded616"
   }
 }
