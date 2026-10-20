@@ -1,0 +1,21 @@
+{
+  "base": "http://localhost:5184",
+  "passed": true,
+  "checks": [
+    "Original MP3 hashes and HTTP audio MIME; both decode and play naturally to completion; touch replay/pause; second source pauses the first",
+    "Four viewports without overflow; large touch buttons; keyboard Enter; library link; saves preserved; no JS/asset errors or game/canvas"
+  ],
+  "errors": [],
+  "media": [
+    {
+      "file": "takeoff.mp3",
+      "bytes": 145196,
+      "sha256": "d898de0eab4faa17052cc7869cc3d631ad3039f0448d75f5d144fbe4ced5cb8c"
+    },
+    {
+      "file": "descent.mp3",
+      "bytes": 217196,
+      "sha256": "daaa9b7ed4c3f2aa48d2c7448060cafeb2c1c417ab6b4408fde8198ae5b3fa11"
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**Proposta sonora · 0.1.123:** usuário rejeitou as fontes isoladas por falta de propulsão. [Nova base gravada e desenho de turbina](cinematic-opening/revision-07/README.md) publicados no player móvel para escuta. Não confundir força espectral medida com aprovação perceptual. **Aguardar esta avaliação antes da mixagem no filme ou avanço de etapa.**
+
 **Diagnóstico · 0.1.122:** usuário ainda não reconhece propulsão na 0.1.121. [Players móveis com fontes isoladas](cinematic-opening/revision-06/engine-listening.md) para avaliação, sem nova mixagem ou geração. **Motores não aprovados; aguardar escuta.**
 
 **Revisão vigente · 0.1.121:** usuário aprovou trilha/fundo da 0.1.120 e solicitou motores mais audíveis. [Correção pontual](cinematic-opening/revision-06/README.md) na decolagem e descida, preservando as camadas aprovadas e a prioridade da dublagem. **Aguardar escuta dos motores; missões/mapas não iniciados.**

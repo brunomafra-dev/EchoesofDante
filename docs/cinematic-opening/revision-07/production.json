@@ -1,0 +1,41 @@
+{
+  "source": {
+    "title": "Discovery STS-131: Sound of Launch",
+    "credit": "NASA",
+    "page": "https://www.nasa.gov/historical-sounds/",
+    "download": "https://www.nasa.gov/wp-content/uploads/2015/01/590189main_ringtone_131_launchNats.mp3",
+    "usage": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+    "file": "docs/cinematic-opening/revision-07/source/discovery-launch-nasa.mp3",
+    "sha256": "a08ebbedfd34d1d97c941831bd461f8790912cd2c33cabdb662a888e914d4ae7"
+  },
+  "method": "Recorded launch roar, soft saturation, original continuous turbine harmonics, throttle envelopes, offline loudness normalization",
+  "outputs": [
+    {
+      "file": "public/assets/cinematic-opening/propulsion-v2/takeoff.mp3",
+      "sha256": "d898de0eab4faa17052cc7869cc3d631ad3039f0448d75f5d144fbe4ced5cb8c",
+      "bytes": 145196,
+      "seconds": 6,
+      "sourceOffset": 0,
+      "rms": 0.14634232223033905,
+      "peak": 0.35253894329071045,
+      "audibleMidrangeRMS": 0.10425858944654465,
+      "minimumInterior100msRMS": 0.06882763653993607,
+      "targetIntegratedLUFS": -16
+    },
+    {
+      "file": "public/assets/cinematic-opening/propulsion-v2/descent.mp3",
+      "sha256": "daaa9b7ed4c3f2aa48d2c7448060cafeb2c1c417ab6b4408fde8198ae5b3fa11",
+      "bytes": 217196,
+      "seconds": 9,
+      "sourceOffset": 6,
+      "rms": 0.11123432219028473,
+      "peak": 0.3089378774166107,
+      "audibleMidrangeRMS": 0.08194801956415176,
+      "minimumInterior100msRMS": 0.048948876559734344,
+      "targetIntegratedLUFS": -16
+    }
+  ],
+  "humanApproval": "pending: replacement propulsion isolated only",
+  "filmChanged": false,
+  "generativeAPICalls": 0
+}
