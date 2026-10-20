@@ -2,12 +2,12 @@ import './bridge';
 
 const takes = {
   film: { file: 'arrival-whole-scene.mp4', title: 'Abertura completa',
-    caption: '54 SEGUNDOS · NOVO DESEMBARQUE · TRÊS VOZES EM PORTUGUÊS · CONCAT',
-    description: 'Abertura dublada: narrador, Ivo e Nara mantêm vozes próprias em todas as cenas. Os quatro heróis desembarcam primeiro. Mesma versão na campanha.',
+    caption: '54 SEGUNDOS · NARA ORIENTA A EQUIPE · TRÊS VOZES EM PORTUGUÊS · CONCAT',
+    description: 'Nara aparece na rampa durante sua fala final, orientando os quatro pioneiros à frente. Vozes e ritmo aprovados preservados; revisão da imagem e menor compressão. Mesma versão na campanha.',
     end: 'Fim da abertura. A expedição começa agora.' },
-  landing: { file: 'landing-heroes.mp4', title: 'Novo desembarque dos quatro heróis',
-    caption: 'OS QUATRO HERÓIS À FRENTE · TRIPULAÇÃO ATRÁS · CENA INTEIRA ANIMADA',
-    description: 'Cena refeita com menos ruído no ambiente, movimentos curtos e os quatro corpos inteiros no quadro. Os heróis reconhecem o terreno; a tripulação permanece atrás. Confira a nova composição e a fala final de Nara.',
+  landing: { file: 'landing-heroes.mp4', title: 'Nara e os quatro pioneiros',
+    caption: 'NARA NA RAMPA · OS QUATRO HERÓIS À FRENTE · CENA INTEIRA ANIMADA',
+    description: 'Nara, de jaqueta bege e lenço laranja, acompanha a saída da equipe e dá a ordem de reconhecimento. Confira sua presença durante a fala, a continuidade dos cinco personagens e os detalhes em movimento.',
     end: 'Fim do desembarque. A equipe abre o caminho.' },
   voices: { file: 'bridge-voice-proof.mp4', title: 'Ponte dublada em português',
     caption: 'IVO E NARA · VOZES EM PORTUGUÊS · TESTE EDITADO NO CONCAT',

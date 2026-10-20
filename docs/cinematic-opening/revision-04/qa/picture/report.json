@@ -1,0 +1,168 @@
+{
+  "passed": true,
+  "humanApproval": "pending",
+  "method": "24 sample frames from eight scenes; six additional landing views. PSNR versus identical picture intermediates, caption bands excluded. Seven unchanged scenes compare CRF16 to previous CRF18; changed landing has no before/after fidelity claim.",
+  "meanPSNRUnchangedScenes": 38.75130159652787,
+  "previousMeanPSNRUnchangedScenes": 38.15565259062145,
+  "differenceDB": 0.5956490059064166,
+  "samples": [
+    {
+      "shot": "earth",
+      "samples": [
+        {
+          "frame": 12,
+          "newEncodePSNR": 38.509427734400866,
+          "previousEncodePSNR": 38.28967461550941
+        },
+        {
+          "frame": 72,
+          "newEncodePSNR": 38.34988740716498,
+          "previousEncodePSNR": 38.05390958745568
+        },
+        {
+          "frame": 137,
+          "newEncodePSNR": 37.89809551350433,
+          "previousEncodePSNR": 37.73782152225608
+        }
+      ]
+    },
+    {
+      "shot": "evacuation",
+      "samples": [
+        {
+          "frame": 156,
+          "newEncodePSNR": 37.430253934363286,
+          "previousEncodePSNR": 37.00956760796182
+        },
+        {
+          "frame": 216,
+          "newEncodePSNR": 37.89981986476224,
+          "previousEncodePSNR": 37.349823363035156
+        },
+        {
+          "frame": 281,
+          "newEncodePSNR": 37.83028217339967,
+          "previousEncodePSNR": 37.38266718632166
+        }
+      ]
+    },
+    {
+      "shot": "voyage",
+      "samples": [
+        {
+          "frame": 300,
+          "newEncodePSNR": 41.34548854544733,
+          "previousEncodePSNR": 40.69448715403378
+        },
+        {
+          "frame": 360,
+          "newEncodePSNR": 40.91869773989045,
+          "previousEncodePSNR": 40.28583927317932
+        },
+        {
+          "frame": 425,
+          "newEncodePSNR": 40.7011178557465,
+          "previousEncodePSNR": 40.18297718864221
+        }
+      ]
+    },
+    {
+      "shot": "discovery",
+      "samples": [
+        {
+          "frame": 444,
+          "newEncodePSNR": 41.31566617831523,
+          "previousEncodePSNR": 40.53252328871403
+        },
+        {
+          "frame": 504,
+          "newEncodePSNR": 40.057809040817304,
+          "previousEncodePSNR": 39.49381781655403
+        },
+        {
+          "frame": 569,
+          "newEncodePSNR": 41.308121877436946,
+          "previousEncodePSNR": 40.67841501275009
+        }
+      ]
+    },
+    {
+      "shot": "bridge",
+      "samples": [
+        {
+          "frame": 588,
+          "newEncodePSNR": 38.20546931727325,
+          "previousEncodePSNR": 37.51894153152904
+        },
+        {
+          "frame": 720,
+          "newEncodePSNR": 38.26409920974413,
+          "previousEncodePSNR": 37.69710631900707
+        },
+        {
+          "frame": 857,
+          "newEncodePSNR": 38.432377475249716,
+          "previousEncodePSNR": 37.80599561669207
+        }
+      ]
+    },
+    {
+      "shot": "pioneers",
+      "samples": [
+        {
+          "frame": 876,
+          "newEncodePSNR": 36.89619164605945,
+          "previousEncodePSNR": 36.236904258862914
+        },
+        {
+          "frame": 918,
+          "newEncodePSNR": 36.77509714188294,
+          "previousEncodePSNR": 36.024049959759296
+        },
+        {
+          "frame": 965,
+          "newEncodePSNR": 36.31748292289901,
+          "previousEncodePSNR": 35.604419750475174
+        }
+      ]
+    },
+    {
+      "shot": "descent",
+      "samples": [
+        {
+          "frame": 984,
+          "newEncodePSNR": 37.58326362372218,
+          "previousEncodePSNR": 36.790046684921435
+        },
+        {
+          "frame": 1080,
+          "newEncodePSNR": 38.27095603868053,
+          "previousEncodePSNR": 37.36231216893784
+        },
+        {
+          "frame": 1181,
+          "newEncodePSNR": 39.467728286324835,
+          "previousEncodePSNR": 38.537404496452424
+        }
+      ]
+    },
+    {
+      "shot": "landing",
+      "samples": [
+        {
+          "frame": 1200,
+          "newEncodePSNR": 37.08689225128077
+        },
+        {
+          "frame": 1245,
+          "newEncodePSNR": 36.88470042749861
+        },
+        {
+          "frame": 1295,
+          "newEncodePSNR": 36.8361241158042
+        }
+      ]
+    }
+  ],
+  "limitation": "PSNR measures encode error against the source, not native detail, anatomy, lip synchronization or perceived acting quality."
+}

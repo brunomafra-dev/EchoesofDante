@@ -230,7 +230,7 @@ if __name__ == '__main__':
     mode.add_argument('--workprint', action='store_true', help='Export only the finished first five shots, explicitly not the full film')
     parser.add_argument('--restored', action='store_true', help='Require offline restored bridge/landing frames; higher-quality final encode')
     parser.add_argument('--reuse-unchanged', action='store_true', help='Reuse local picture intermediates with identical signed source lists')
-    parser.add_argument('--revision', choices=['revision-02', 'revision-03'], default='revision-02')
+    parser.add_argument('--revision', choices=['revision-02', 'revision-03', 'revision-04'], default='revision-02')
     parser.add_argument('--pictures-only', action='store_true', help='Prepare verified picture pieces for Concat, without a redundant film encode')
     args = parser.parse_args()
     WORK.mkdir(parents=True, exist_ok=True)

@@ -1,0 +1,20 @@
+{
+  "base": "http://localhost:5184",
+  "method": "Compiled browser build: New Game creates one selected profile and plays the complete whole-scene opening. Natural ending enters the campaign. Technical playback check, not visual approval.",
+  "errors": [],
+  "video": {
+    "source": "/assets/cinematic-opening/arrival-whole-scene.mp4",
+    "duration": 54.25,
+    "currentTime": 0.784523,
+    "paused": false,
+    "captions": 0
+  },
+  "saved": {
+    "name": "AL Cinemática",
+    "classId": "warrior",
+    "difficulty": "normal",
+    "introSeen": true,
+    "area": "base"
+  },
+  "passed": true
+}

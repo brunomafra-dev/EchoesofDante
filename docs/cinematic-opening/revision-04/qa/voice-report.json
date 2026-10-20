@@ -1,0 +1,86 @@
+{
+  "passed": true,
+  "humanApproval": "pending",
+  "seconds": 54.22933333333334,
+  "peak": 0.6569030284881592,
+  "rms": 0.07183947414159775,
+  "lines": [
+    {
+      "id": "earth",
+      "voice": "pm_santa",
+      "start": 0.6,
+      "seconds": 2.2186666666666666,
+      "correlationWithRenderedAudio": 0.9810569894724269
+    },
+    {
+      "id": "evacuation",
+      "voice": "pm_santa",
+      "start": 6.6,
+      "seconds": 2.7093333333333334,
+      "correlationWithRenderedAudio": 0.9166783070611749
+    },
+    {
+      "id": "voyage",
+      "voice": "pm_santa",
+      "start": 12.5,
+      "seconds": 2.9013333333333335,
+      "correlationWithRenderedAudio": 0.9717481330241786
+    },
+    {
+      "id": "discovery",
+      "voice": "pm_santa",
+      "start": 18.6,
+      "seconds": 1.8346666666666667,
+      "correlationWithRenderedAudio": 0.981325601068099
+    },
+    {
+      "id": "ivo-water",
+      "voice": "pm_alex",
+      "start": 24.5,
+      "seconds": 2.4106666666666667,
+      "correlationWithRenderedAudio": 0.9422500648163202
+    },
+    {
+      "id": "nara-chance",
+      "voice": "pf_dora",
+      "start": 28.1,
+      "seconds": 1.664,
+      "correlationWithRenderedAudio": 0.9276649650441158
+    },
+    {
+      "id": "nara-team",
+      "voice": "pf_dora",
+      "start": 31.2,
+      "seconds": 2.9226666666666667,
+      "correlationWithRenderedAudio": 0.9398986021224356
+    },
+    {
+      "id": "nara-pioneers",
+      "voice": "pf_dora",
+      "start": 36.5,
+      "seconds": 2.7946666666666666,
+      "correlationWithRenderedAudio": 0.9455131663532657
+    },
+    {
+      "id": "ivo-descent",
+      "voice": "pm_alex",
+      "start": 41.2,
+      "seconds": 1.664,
+      "correlationWithRenderedAudio": 0.8715146147350366
+    },
+    {
+      "id": "nara-orbit",
+      "voice": "pf_dora",
+      "start": 45.2,
+      "seconds": 2.88,
+      "correlationWithRenderedAudio": 0.9034939182753658
+    },
+    {
+      "id": "nara-landing",
+      "voice": "pf_dora",
+      "start": 50,
+      "seconds": 2.9226666666666667,
+      "correlationWithRenderedAudio": 0.9481184023279873
+    }
+  ]
+}

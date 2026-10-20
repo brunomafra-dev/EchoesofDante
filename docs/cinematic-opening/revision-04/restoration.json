@@ -1,0 +1,32 @@
+{
+  "model": "realesr-animevideov3 x2",
+  "blend": 0.55,
+  "sourceSize": [
+    832,
+    480
+  ],
+  "restoredSize": [
+    1664,
+    960
+  ],
+  "sourceFps": 16,
+  "nativeHD": false,
+  "binarySha256": "07e49f7cbb4ede01ae4dd4c399d3a7e5846e3d2085c3128eff881e55cb7b1a0c",
+  "modelSha256": "548a36f9c3f4ab8da56cd3b13badf23968bee207b396dad14d04b830e5f2ab2d",
+  "shots": [
+    {
+      "id": "landing",
+      "frames": 80,
+      "source": [
+        {
+          "path": "docs/cinematic-opening/source/landing-nara-v4-01.mp4",
+          "sha256": "17f3ec63ad31293ad27f763a7b78b40c64fe84fcc34ed9abe71336765a2f2523",
+          "start": 0,
+          "count": 80
+        }
+      ]
+    }
+  ],
+  "elapsedSeconds": 320.07900000000154,
+  "passed": true
+}

@@ -110,3 +110,7 @@ Protótipo feminino aprovado pelo usuário; autorizada aplicação nas quatro cl
 ### Revisão da abertura — 20/10/2026 · 0.1.118
 
 Ponte aprovada; desembarque 0.1.117 não aprovado. Usuário autorizou variar vozes e corrigir a cena. [Revisão 03](cinematic-opening/revision-03/README.md): novo desembarque inteiro, abertura de 54,25 s montada/dublada no Concat, narrador/Ivo/Nara com vozes fixas. Essa autorização substitui a restrição anterior de ausência de dublagem nesta entrega. Sem vozes de heróis ou lipsync inventados. **Etapa 3 continua aguardando o teste humano; etapas 4 e 5 não iniciadas.**
+
+### Aprovação e ajuste final — 0.1.119
+
+Filme/vozes 0.1.118 aprovados pelo usuário. Solicitada Nara visível na saída dos heróis e revisão dos frames. [Revisão 04](cinematic-opening/revision-04/README.md): Nara inteira na rampa, mesma identidade/voz, pioneiros à frente, menor compressão e inspeção das oito cenas. **Este ajuste aguarda avaliação humana antes de iniciar a etapa 4 — missões.**

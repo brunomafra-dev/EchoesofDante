@@ -1,0 +1,14 @@
+{
+  "tool": "image_gen.imagegen, built-in edit",
+  "output": "docs/cinematic-opening/source/landing-nara-v4.png",
+  "width": 1672,
+  "height": 941,
+  "bytes": 2917081,
+  "sha256": "8b23589f96408a6c0bdc67c133512a8ba8e5095573cb5d0d856f69162de96a00",
+  "references": [
+    "docs/cinematic-opening/source/landing-heroes-v3.png",
+    "docs/cinematic-pilot/revision-02/source/bridge-whole-characters.png"
+  ],
+  "prompt": "docs/cinematic-opening/prompts/landing-nara-image-v4.txt",
+  "runtimeGeneration": false
+}

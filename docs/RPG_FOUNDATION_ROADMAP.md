@@ -366,3 +366,7 @@ Em 20/10/2026 o usuário autorizou testar o Concat e pediu melhorar a imagem e f
 ### Desembarque e elenco — revisão 0.1.118
 
 Em 20/10/2026 o usuário aprovou a ponte, rejeitou a qualidade do desembarque e autorizou vozes distintas por personagem, com montagem no Concat. Novo quadro e animação inteiros do desembarque, movimentos curtos e menos informação concorrente. Corte de 54,25 s: continuação bloqueada pela cota gratuita; a cena final usa somente a nova tomada de 4,75 s, sem preencher com o desembarque rejeitado. Onze falas com três vozes fixas para narrador, Ivo e Nara; os WAVs aprovados da ponte foram preservados. [Entrega, fontes e QA](cinematic-opening/revision-03/README.md). Os heróis não falam neste roteiro e ainda não receberam elenco próprio. **Aguardar aprovação humana desta revisão antes de missões/mapas.**
+
+### Nara visível e revisão de imagem — 0.1.119
+
+Usuário aprovou a 0.1.118 (“Excelente!”) e pediu mostrar Nara no desembarque durante sua fala e revisar os frames. Novo quadro/cena inteira: Nara na rampa, lenço laranja e roupa da ponte, quatro heróis à frente. Sete cenas anteriores e todos os WAVs preservados; exportação Concat com menor compressão e inspeção de quadros das oito cenas. [Entrega e testes](cinematic-opening/revision-04/README.md). **Aguardar avaliação desta correção final; missões e mapas continuam na próxima etapa, não foram antecipados.**

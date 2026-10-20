@@ -1,0 +1,50 @@
+{
+  "base": "http://localhost:5184",
+  "passed": true,
+  "checks": [
+    "Three direct routes decode 720p24; plan durations; no autoplay/loop; both short films play naturally to end",
+    "All three modes fit four resolutions, touch selection and complete frame, without horizontal overflow",
+    "Eight mode/replay cycles keep one video and stable DOM; before/after images load; no game/canvas",
+    "Gamepad X replay, directional mode selection, A activate, B library; save sentinels preserved"
+  ],
+  "errors": [],
+  "humanApproval": "pending",
+  "media": [
+    {
+      "take": "film",
+      "width": 1280,
+      "height": 720,
+      "seconds": 54.25,
+      "src": "/assets/cinematic-opening/arrival-whole-scene.mp4",
+      "paused": true,
+      "autoplay": false,
+      "inline": true,
+      "controls": true,
+      "loop": false
+    },
+    {
+      "take": "landing",
+      "width": 1280,
+      "height": 720,
+      "seconds": 4.75,
+      "src": "/assets/cinematic-opening/landing-heroes.mp4",
+      "paused": true,
+      "autoplay": false,
+      "inline": true,
+      "controls": true,
+      "loop": false
+    },
+    {
+      "take": "voices",
+      "width": 1280,
+      "height": 720,
+      "seconds": 12,
+      "src": "/assets/cinematic-opening/bridge-voice-proof.mp4",
+      "paused": true,
+      "autoplay": false,
+      "inline": true,
+      "controls": true,
+      "loop": false
+    }
+  ]
+}

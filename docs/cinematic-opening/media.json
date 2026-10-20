@@ -3,7 +3,7 @@
   "workprint": false,
   "seconds": 54.25,
   "missingShots": [],
-  "humanApproval": "pending: revised landing and complete voice casting",
+  "humanApproval": "pending: Nara in landing",
   "native720p24": false,
   "sourceFps": 16,
   "interpolation": "FFmpeg whole-frame motion compensated 16 to 24",
@@ -162,15 +162,15 @@
       "seconds": 4.75,
       "source": [
         {
-          "path": "docs/cinematic-opening/source/landing-heroes-v3-01.mp4",
+          "path": "docs/cinematic-opening/source/landing-nara-v4-01.mp4",
           "startFrame": 0,
           "usedFrames": 80,
-          "sha256": "073541d82ca79298fb3cb070e2bfae5cadfabdd0b53c3e182ff4af6280d23d04"
+          "sha256": "17f3ec63ad31293ad27f763a7b78b40c64fe84fcc34ed9abe71336765a2f2523"
         }
       ],
       "frames": 114,
       "restoration": "55% Real-ESRGAN x2 + 45% original, offline",
-      "pictureSha256": "701e7638a909fe592c2cd38684db27b532336fb63dea115279e745735671e97b"
+      "pictureSha256": "791abb4a2b40d8b6a546a1e1859b4e87436a232b532559846ac536fdf3b95c9a"
     }
   ],
   "editor": "Concat 0.2.8 MCP, actual timeline/export",
@@ -352,7 +352,7 @@
     "height": 720,
     "fps": 24.0,
     "frames": 1302,
-    "bytes": 35150224,
-    "sha256": "f26c34e0c6f2b553b9be09adbf76bc189168f37d23b89944a544f88009eb4467"
+    "bytes": 44451526,
+    "sha256": "4b353487d84857cbe7dd755c14799f1689bc9193cd8f68761dbaa0d443a36ed4"
   }
 }

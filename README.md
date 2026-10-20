@@ -1,10 +1,10 @@
 # Echoes of Dante
 
-## Abertura — novo desembarque e vozes fixas · 0.1.118
+## Abertura — Nara no desembarque e revisão dos frames · 0.1.119
 
-[Filme completo dublado](https://echosofdante.vercel.app/cinematic-review.html?take=film&v=0.1.118) · [Só o desembarque](https://echosofdante.vercel.app/cinematic-review.html?take=landing&v=0.1.118).
+[Filme completo dublado](https://echosofdante.vercel.app/cinematic-review.html?take=film&v=0.1.119) · [Só o desembarque](https://echosofdante.vercel.app/cinematic-review.html?take=landing&v=0.1.119).
 
-Nova cena inteira com os quatro heróis na frente. Abertura de 54,25 s editada/exportada no Concat; narrador, Ivo e Nara mantêm vozes próprias em português. Ponte aprovada preservada; fonte continua em 480p, sem lipsync novo. [Fontes, QA e limites](docs/cinematic-opening/revision-03/README.md). Aguardar avaliação humana antes das missões. Os registros abaixo são históricos.
+Nara aparece na rampa durante sua fala final, com os quatro pioneiros na frente. Vozes e ritmo aprovados preservados; nova tomada inteira e menor compressão final. Abertura de 54,25 s editada/exportada no Concat; narrador, Ivo e Nara mantêm vozes próprias em português. Ponte aprovada preservada; fonte continua em 480p, sem lipsync novo. [Fontes, QA e limites](docs/cinematic-opening/revision-04/README.md). Aguardar avaliação humana antes das missões. Os registros abaixo são históricos.
 
 ## Experimento visual — personagem inteiro · 0.1.110
 

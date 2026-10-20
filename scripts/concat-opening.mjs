@@ -6,8 +6,11 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 
 const root = path.resolve(import.meta.dirname, '..');
-const revision = path.join(root, 'docs/cinematic-opening/revision-03');
-const work = path.join(root, '.local/cinematic-opening/revision-03');
+const revisionName = process.env.CINEMATIC_REVISION ?? 'revision-03';
+if (!['revision-03', 'revision-04'].includes(revisionName)) throw new Error('Unknown cinematic revision');
+const revision = path.join(root, 'docs/cinematic-opening', revisionName);
+const work = path.join(root, '.local/cinematic-opening', revisionName);
+const version = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8')).version;
 const exe = process.env.CONCAT_EXE ?? path.join(root, '.local/tools/concat/portable/PFiles64/Concat/concat.exe');
 const projectName = process.env.CONCAT_PROJECT ?? 'opening-dubbed';
 const project = path.join(work, projectName);
@@ -47,7 +50,7 @@ async function tool(name, args) {
 try {
   await mkdir(work, { recursive: true });
   await mkdir(revision, { recursive: true });
-  await rpc('initialize', { protocolVersion: '2025-06-18', capabilities: {}, clientInfo: { name: 'dante-film-authoring', version: '0.1.118' } });
+  await rpc('initialize', { protocolVersion: '2025-06-18', capabilities: {}, clientInfo: { name: 'dante-film-authoring', version } });
   child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
   await tool('concat_version', {});
   if (!exportOnly) {
@@ -77,7 +80,9 @@ try {
     for (const line of plan.lines) {
       const voice = voices.lines.find(v => v.id === line.id);
       if (!voice || voice.seconds > line.end-line.start) throw new Error(`Invalid voice: ${line.id}`);
-      const media = await tool('media_import', { path: project, file: path.join(revision, `voices/${line.id}.wav`) });
+      const file = path.join(root, voice.path);
+      if (createHash('sha256').update(await readFile(file)).digest('hex') !== voice.sha256) throw new Error(`Stale voice: ${line.id}`);
+      const media = await tool('media_import', { path: project, file });
       const clip = await tool('clip_add', { path: project, mediaId: media.createdId, trackId: speechLane.createdId, start: line.start });
       await tool('clip_update', { path: project, clipId: clip.createdId, patch: { volume: Math.min(2, .58 / voice.peak) } });
     }
@@ -90,7 +95,7 @@ try {
   } else {
     await tool('project_open', { path: project });
     const output = path.join(work, 'film-export.mp4');
-    const started = await tool('export_start', { path: project, output, codec: 'h264', crf: 18, preset: 'fast' });
+    const started = await tool('export_start', { path: project, output, codec: 'h264', crf: revisionName === 'revision-04' ? 16 : 18, preset: 'fast' });
     const job = started.job;
     if (!job) throw new Error(`Missing job id: ${JSON.stringify(started)}`);
     let status;

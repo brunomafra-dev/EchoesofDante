@@ -20,7 +20,7 @@ spec = importlib.util.spec_from_file_location('opening', ROOT / 'scripts/assembl
 opening = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(opening)
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--revision', choices=['revision-02', 'revision-03'], default='revision-02')
+parser.add_argument('--revision', choices=['revision-02', 'revision-03', 'revision-04'], default='revision-02')
 parser.add_argument('--shots', nargs='+', choices=['bridge', 'landing'], default=['bridge', 'landing'])
 args = parser.parse_args()
 WORK = ROOT / f'.local/cinematic-opening/{args.revision}/restoration'

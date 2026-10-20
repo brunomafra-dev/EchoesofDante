@@ -1,0 +1,30 @@
+{
+  "base": "http://localhost:5184",
+  "checks": [
+    "54.25-second MP4 decodes; native controls, inline, no autoplay/loop; source conversion disclosed",
+    "Keyboard play/pause; touch replay; entire 54.25 seconds play to end with status",
+    "Five replays retain one video and stable DOM; no game objects, textures or relay created",
+    "Four resolutions, complete frame in viewport, no horizontal overflow; touch transcript",
+    "Gamepad mock X replay, directional focus, A activate, B skip to library",
+    "Save sentinels unchanged; library link; zero JavaScript/asset errors"
+  ],
+  "errors": [],
+  "humanApproval": "pending",
+  "completeOpening": true,
+  "partialWorkprint": false,
+  "media": {
+    "width": 1280,
+    "height": 720,
+    "duration": 54.25,
+    "controls": true,
+    "inline": true,
+    "autoplay": false,
+    "loop": false,
+    "paused": true
+  },
+  "playbackQuality": {
+    "totalFrames": 1314,
+    "droppedFrames": 0
+  },
+  "passed": true
+}

@@ -1,0 +1,18 @@
+{
+  "space": "https://zerogpu-aoti-wan2-2-fp8da-aoti-faster.hf.space",
+  "authenticated": true,
+  "paidCredentialsUsed": false,
+  "requestedSeconds": 5,
+  "steps": 6,
+  "seed": 152,
+  "sourceHash": "8b23589f96408a6c0bdc67c133512a8ba8e5095573cb5d0d856f69162de96a00",
+  "prompt": "One continuous five-second complete scene. FIVE intact people: commander NARA on the LEFT ramp in her tan field jacket, olive trousers and burnt-orange neck scarf, and the FOUR pioneers on the ground ahead of her. The camera is firmly locked on a tripod, no zoom, pan, dolly or reframing. Nara stays on the ramp BEHIND the four heroes, both boots planted, her face clearly visible in three-quarter view, not turning away. From half a second onward she calmly delivers one short order, moving her mouth naturally, with only a small gentle gesture at her chest communicator. Preserve her exact face, hair bun, orange scarf, jacket and body proportions throughout. The armored male warrior, dark-skinned silver-braided female hunter, blue-clothed astral woman and olive-clothed male handler remain at the front of the clearing, alert and mostly still with small natural head turns, breathing and subtle weight transfer. Do not walk toward the camera. Preserve exactly five separate complete bodies, all heads, hands and boots in frame, stable costumes and weapons, natural connected anatomy. Keep the landed industrial ship and ramp absolutely fixed and rigid. Soft mist and a slight breeze in leaves only. Preserve the original painterly Organic Sci-Fi R3 illustrated game materials, muted green and amber light, clear natural contact shadows and selective detail. No added characters, no new creatures, no firing, no extra weapons, no floating limbs, no cuts, no text or subtitles, no music or audio. Real restrained acting inside the complete scene, not a static-picture zoom.",
+  "startedAt": "2026-10-20T16:54:24.918Z",
+  "status": "downloaded",
+  "transport": "Authenticated Gradio REST; no redirects",
+  "eventId": "5d923eb2b6b84f3d822fd273a36874c9",
+  "actualSeed": 152,
+  "bytes": 2307133,
+  "videoHash": "17f3ec63ad31293ad27f763a7b78b40c64fe84fcc34ed9abe71336765a2f2523",
+  "finishedAt": "2026-10-20T16:55:28.191Z"
+}
