@@ -3,7 +3,7 @@
   "workprint": false,
   "seconds": 54.25,
   "missingShots": [],
-  "humanApproval": "Visuals and voices approved in 0.1.119; new music and effects pending",
+  "humanApproval": "Music, ambience, visuals and voices approved in 0.1.120; stronger engines pending",
   "native720p24": false,
   "sourceFps": 16,
   "interpolation": "FFmpeg whole-frame motion compensated 16 to 24",
@@ -344,7 +344,7 @@
         }
       ]
     },
-    "soundDesign": "docs/cinematic-opening/revision-05/sound-design.json",
+    "soundDesign": "docs/cinematic-opening/revision-06/sound-design.json",
     "fixedSpeakerVoices": true,
     "lipSync": false,
     "dialogueDucking": true
@@ -354,7 +354,7 @@
     "height": 720,
     "fps": 24.0,
     "frames": 1302,
-    "bytes": 44447402,
-    "sha256": "895f06182dc0e4f53e052e337d52b1286bd6b7fe2e8d348c91c68891a6ded616"
+    "bytes": 44446248,
+    "sha256": "e513f57837a39652f01749e11acff23e677710b61b1aa825bf8453ad7aeb2cbf"
   }
 }

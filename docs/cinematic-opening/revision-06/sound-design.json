@@ -1,0 +1,94 @@
+{
+  "seconds": 54.25,
+  "sampleRate": 48000,
+  "speechFilesChanged": false,
+  "musicUnchanged": true,
+  "otherEffectsUnchanged": true,
+  "targetSpeechMarginDB": 11,
+  "integratedLoudnessToleranceLU": 2.5,
+  "cues": [
+    {
+      "source": "engine",
+      "start": 6,
+      "seconds": 6,
+      "targetRMS": 0.09,
+      "passbandHz": [
+        100,
+        2900
+      ],
+      "fadeIn": 0.15,
+      "fadeOut": 0.35,
+      "audibleMidrangeGainDB": 16.494424263095052
+    },
+    {
+      "source": "descent",
+      "start": 40.5,
+      "seconds": 9,
+      "targetRMS": 0.08,
+      "passbandHz": [
+        100,
+        2900
+      ],
+      "fadeIn": 0.15,
+      "fadeOut": 0.35,
+      "audibleMidrangeGainDB": 6.141168223316441
+    }
+  ],
+  "lines": [
+    {
+      "id": "earth",
+      "marginDB": 17.94935713137177
+    },
+    {
+      "id": "evacuation",
+      "marginDB": 13.012103001855946
+    },
+    {
+      "id": "voyage",
+      "marginDB": 17.411374087410774
+    },
+    {
+      "id": "discovery",
+      "marginDB": 18.268168640988943
+    },
+    {
+      "id": "ivo-water",
+      "marginDB": 21.06201705803211
+    },
+    {
+      "id": "nara-chance",
+      "marginDB": 19.37073533893328
+    },
+    {
+      "id": "nara-team",
+      "marginDB": 19.308351880589015
+    },
+    {
+      "id": "nara-pioneers",
+      "marginDB": 18.160669088441374
+    },
+    {
+      "id": "ivo-descent",
+      "marginDB": 13.447710371855228
+    },
+    {
+      "id": "nara-orbit",
+      "marginDB": 13.210878582397015
+    },
+    {
+      "id": "nara-landing",
+      "marginDB": 16.26700818359336
+    }
+  ],
+  "stems": {
+    "music": {
+      "path": ".local/cinematic-opening/revision-06/music-bed.wav",
+      "sha256": "8cb89b39757af26eb35c8238aada3fa2103eb820fe10cee7e7d4c467017d57ed"
+    },
+    "effects": {
+      "path": ".local/cinematic-opening/revision-06/scene-effects.wav",
+      "sha256": "8cf59b717587821e2a62848bec12173d8bd58027091f99bb5659837e30ba49fd"
+    }
+  },
+  "humanApproval": "pending: engine audibility on user speakers"
+}

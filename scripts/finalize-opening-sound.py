@@ -1,6 +1,7 @@
 """Mux the Concat sound mix onto the approved, byte-identical H.264 streams."""
 import hashlib
 import json
+import os
 import subprocess
 from pathlib import Path
 
@@ -8,8 +9,10 @@ import cv2
 import imageio_ffmpeg
 
 ROOT = Path(__file__).resolve().parents[1]
-DOC = ROOT / 'docs/cinematic-opening/revision-05'
-WORK = ROOT / '.local/cinematic-opening/revision-05'
+REVISION = os.environ.get('CINEMATIC_REVISION', 'revision-05')
+assert REVISION in ['revision-05', 'revision-06']
+DOC = ROOT / 'docs/cinematic-opening' / REVISION
+WORK = ROOT / '.local/cinematic-opening' / REVISION
 PUBLIC = ROOT / 'public/assets/cinematic-opening'
 FF = imageio_ffmpeg.get_ffmpeg_exe()
 
@@ -50,11 +53,12 @@ for key,file,start,seconds,frames in [('film','arrival-whole-scene.mp4',0,54.25,
     print(key,json.dumps(exports[key]),flush=True)
 manifest=json.loads((ROOT/'docs/cinematic-opening/media.json').read_text(encoding='utf-8'))
 manifest['output']={k:v for k,v in exports['film'].items() if k not in ['videoPacketHash','videoUnchanged','seconds']}
-manifest['humanApproval']='Visuals and voices approved in 0.1.119; new music and effects pending'
+manifest['humanApproval']=('Music, ambience, visuals and voices approved in 0.1.120; stronger engines pending'
+                           if REVISION == 'revision-06' else 'Visuals and voices approved in 0.1.119; new music and effects pending')
 manifest['editor']='Concat 0.2.8 sound edit; approved 1280x720 H.264 packets copied without re-encode'
 manifest['audio']={'origin':'Original MIDI score, FluidSynth/GeneralUser GS, original generated SFX, unchanged Kokoro speech',
                    'voiceReport':json.loads((DOC/'voice-report.json').read_text(encoding='utf-8')),
-                   'soundDesign':'docs/cinematic-opening/revision-05/sound-design.json',
+                   'soundDesign':f'docs/cinematic-opening/{REVISION}/sound-design.json',
                    'fixedSpeakerVoices':True,'lipSync':False,'dialogueDucking':True}
 (ROOT/'docs/cinematic-opening/media.json').write_text(json.dumps(manifest,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
 (DOC/'exports.json').write_text(json.dumps(exports,indent=2)+'\n',encoding='utf-8')

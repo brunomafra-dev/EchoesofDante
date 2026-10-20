@@ -1,5 +1,7 @@
 # Dante — correções visuais, comunicação cooperativa e primeira colonização
 
+**Ajuste · 0.1.121:** trilha/fundo 0.1.120 aprovados pelo usuário; reforçar aceleração e propulsores sem alterar o restante. [Revisão dos motores](cinematic-opening/revision-06/README.md), ainda sujeita à escuta humana antes da etapa 4.
+
 **Atualização · 20/10/2026 · 0.1.120:** usuário aprovou o visual/Nara da 0.1.119 e autorizou finalizar o áudio. [Trilha e efeitos](cinematic-opening/revision-05/README.md) com prioridade à dublagem; vídeo e vozes aprovados preservados. **Aguardar avaliação sonora desta entrega antes da etapa 4 — missões.**
 
 Plano aprovado em 16/10/2026. Complementa o [plano da fundação RPG](RPG_FOUNDATION_ROADMAP.md). Organic Sci-Fi R3 / referência D, Art Bible e World Shape Language permanecem oficiais.

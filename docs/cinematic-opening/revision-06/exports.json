@@ -1,0 +1,35 @@
+{
+  "film": {
+    "width": 1280,
+    "height": 720,
+    "fps": 24.0,
+    "frames": 1302,
+    "bytes": 44446248,
+    "sha256": "e513f57837a39652f01749e11acff23e677710b61b1aa825bf8453ad7aeb2cbf",
+    "videoPacketHash": "SHA256=40c97504f87f8d3e8690a3e9cf94cab4ca44dad11a0eb17ad1965b30d53a1a91",
+    "videoUnchanged": true,
+    "seconds": 54.25
+  },
+  "bridge": {
+    "width": 1280,
+    "height": 720,
+    "fps": 24.0,
+    "frames": 288,
+    "bytes": 5921005,
+    "sha256": "389bd7dd4334eea327f8456311e2bd34553084dc2addfcb91c2c87ba663bcd6f",
+    "videoPacketHash": "SHA256=452620a740d16717420181d483716828b5b97ff45e1701d84eb38a95eb324a76",
+    "videoUnchanged": true,
+    "seconds": 12
+  },
+  "landing": {
+    "width": 1280,
+    "height": 720,
+    "fps": 24.0,
+    "frames": 114,
+    "bytes": 6097486,
+    "sha256": "68d38f7dede3d1ff5c3e5382cd43c2f3d45a19d4ee06a070148bfb429b1860fb",
+    "videoPacketHash": "SHA256=926f3c268365af3c72780e05cfd0e1c3d5407a3fc2ee4e176eb19e943f9ff445",
+    "videoUnchanged": true,
+    "seconds": 4.75
+  }
+}

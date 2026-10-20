@@ -1,0 +1,50 @@
+[
+  {
+    "tool": "concat_version",
+    "arguments": {},
+    "result": {
+      "concat": "0.2.8"
+    }
+  },
+  {
+    "tool": "project_open",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-06\\opening-dubbed"
+    },
+    "result": {
+      "duration": 54.25,
+      "clips": 14
+    }
+  },
+  {
+    "tool": "export_start",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-06\\opening-dubbed",
+      "output": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-06\\film-export.mp4",
+      "codec": "h264",
+      "crf": 28,
+      "preset": "ultrafast"
+    },
+    "result": {
+      "job": "j1"
+    }
+  },
+  {
+    "tool": "export_wait",
+    "arguments": {
+      "job": "j1",
+      "timeoutSeconds": 10
+    },
+    "result": {
+      "state": "done",
+      "job": "j1"
+    }
+  },
+  {
+    "tool": "project_close",
+    "arguments": {
+      "path": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\.local\\cinematic-opening\\revision-06\\opening-dubbed"
+    },
+    "result": {}
+  }
+]

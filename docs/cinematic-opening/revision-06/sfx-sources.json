@@ -1,0 +1,26 @@
+{
+  "freeCreditsUsed": 15,
+  "requests": 2,
+  "sources": [
+    {
+      "key": "engine",
+      "taskId": "92a46795-e86b-4a0a-86af-85b93ca73523",
+      "prompt": "Spacecraft engine accelerating for takeoff: deep mechanical idle for one second, then a clearly audible rising turbine pitch and powerful warm propulsion roar, reaching full thrust at four seconds and sustaining to the end. Strong low-mid harmonics audible on laptop speakers, not just sub-bass or wind. Smooth cinematic motor, no harsh squeal, no clicks, no sparks, no music, no speech.",
+      "path": "docs/cinematic-opening/revision-06/source/engine.mp3",
+      "bytes": 97009,
+      "sha256": "6673384e0d6e2ba139da0f69f8fec27636e8010da4bc8365f0686cb0f44c9dd3",
+      "duration": 6,
+      "model": "Runway Sound Effects"
+    },
+    {
+      "key": "descent",
+      "taskId": "a4dffe4d-fe50-410f-ada6-2d4ee849e66c",
+      "prompt": "Spacecraft descent engine, nine seconds. Start with a clear warm turbine spool-up, build into controlled heavy thrust with recognizable mechanical low-mid harmonics, then pulse the retro thrusters twice during deceleration and wind down at the end. Engine should be identifiable on ordinary laptop speakers, not just bass or a wind wash. Smooth sound, no clicking, no beeps, no explosions, no music, no voices.",
+      "path": "docs/cinematic-opening/revision-06/source/descent.mp3",
+      "bytes": 145074,
+      "sha256": "8e20683adddfbc63d7dbdaf0061d5d03afb19246f26561e7e4ccd9001cec545c",
+      "duration": 9,
+      "model": "Runway Sound Effects"
+    }
+  ]
+}

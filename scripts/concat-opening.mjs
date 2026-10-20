@@ -7,8 +7,8 @@ import { createHash } from 'node:crypto';
 
 const root = path.resolve(import.meta.dirname, '..');
 const revisionName = process.env.CINEMATIC_REVISION ?? 'revision-03';
-if (!['revision-03', 'revision-04', 'revision-05'].includes(revisionName)) throw new Error('Unknown cinematic revision');
-const soundOnly = revisionName === 'revision-05';
+if (!['revision-03', 'revision-04', 'revision-05', 'revision-06'].includes(revisionName)) throw new Error('Unknown cinematic revision');
+const soundOnly = ['revision-05', 'revision-06'].includes(revisionName);
 const revision = path.join(root, 'docs/cinematic-opening', revisionName);
 const work = path.join(root, '.local/cinematic-opening', revisionName);
 const version = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8')).version;

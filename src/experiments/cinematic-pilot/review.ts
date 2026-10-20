@@ -3,7 +3,7 @@ import './bridge';
 const takes = {
   film: { file: 'arrival-whole-scene.mp4', title: 'Abertura completa',
     caption: '54 SEGUNDOS · TRILHA ORIGINAL · MOTORES E AMBIENTE · DUBLAGEM EM PRIMEIRO PLANO',
-    description: 'Nova trilha espacial suave e efeitos ligados à imagem: decolagem, interior da nave, descida e desembarque. O fundo baixa durante as falas. Imagem, vozes e ritmo aprovados preservados. Mesma versão na campanha.',
+    description: 'Motores revistos: aceleração na decolagem (6–12 s) e propulsores na descida (40,5–49,5 s), com mais presença nos intervalos da conversa. Trilha, ambiente e vozes aprovados preservados. Mesma versão na campanha.',
     end: 'Fim da abertura. A expedição começa agora.' },
   landing: { file: 'landing-heroes.mp4', title: 'Nara e os quatro pioneiros',
     caption: 'NARA E OS PIONEIROS · APOIO DO MÓDULO · PASSOS E FLORESTA · FUNDO SUAVE',

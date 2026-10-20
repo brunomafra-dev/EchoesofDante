@@ -1,10 +1,10 @@
 # Echoes of Dante
 
-## Abertura — trilha e efeitos — 0.1.120
+## Abertura — motores mais presentes — 0.1.121
 
-[Assistir com o novo som](https://echosofdante.vercel.app/cinematic-review.html?take=film&v=0.1.120) · [Desembarque](https://echosofdante.vercel.app/cinematic-review.html?take=landing&v=0.1.120).
+[Assistir com o novo som](https://echosofdante.vercel.app/cinematic-review.html?take=film&v=0.1.121) · [Desembarque](https://echosofdante.vercel.app/cinematic-review.html?take=landing&v=0.1.121).
 
-Trilha espacial original, motores e ambiente ligados às cenas. Música e efeitos baixam durante as falas, com volume geral próximo do anterior. Onze falas e os quadros aprovados preservados. [Produção e QA](docs/cinematic-opening/revision-05/README.md). Aguardar avaliação da mixagem antes das missões. Os registros abaixo são históricos.
+Trilha e fundo da 0.1.120 aprovados. Ajuste pontual na aceleração da decolagem (6–12 s) e nos propulsores da descida (40,5–49,5 s), mantendo a dublagem em primeiro plano. [Produção e QA](docs/cinematic-opening/revision-06/README.md). Aguardar escuta dos motores antes das missões. Os registros abaixo são históricos.
 
 ## Experimento visual — personagem inteiro · 0.1.110
 

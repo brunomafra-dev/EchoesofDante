@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "humanApproval": "pending: engine audibility on user devices",
+  "current": {
+    "integratedLUFS": -22.8,
+    "truePeakDBFS": -7.0
+  },
+  "previous": {
+    "integratedLUFS": -24.4,
+    "truePeakDBFS": -7.2
+  },
+  "integratedDifferenceLU": 1.5999999999999979,
+  "renderedMixCorrelation": 0.9999743591984523,
+  "minimumDialogueMarginDB": 13.012103001855946,
+  "unchangedSpeechFiles": 11,
+  "unchangedVideoStreams": 3,
+  "peak": 0.4480719268321991,
+  "rms": 0.05999333783984184,
+  "notes": "Checks rendered content/levels. Does not certify subjective sound quality or replace listening on headphones/speakers."
+}
