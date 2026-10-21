@@ -1,0 +1,9 @@
+{
+  "base": "http://localhost:5192",
+  "checks": [
+    "bytes=0-1023",
+    "bytes=-512",
+    "bytes=2048-"
+  ],
+  "passed": true
+}

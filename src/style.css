@@ -211,6 +211,20 @@ body:has(.application-shell[open]) .astral-panel,body.records-open .astral-panel
 .prologue-controls button:focus-visible{outline:2px solid #f4cf8d;outline-offset:3px}
 .prologue-progress{position:absolute;z-index:1;bottom:0;left:0;right:0;height:3px;background:#152e31}.prologue-progress span{display:block;height:100%;background:#d6b87b;transform-origin:left;transform:scaleX(0)}
 .prologue-error{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);width:min(540px,calc(100% - 32px));padding:18px 20px;text-align:center;background:#08110fe8;border:1px solid #c3af8077;border-radius:4px;color:#f2eadb}
+.prologue-error span{display:block;margin-bottom:12px}
+.prologue-error button{padding:12px 18px;min-height:44px;border:1px solid #c3af80;background:#17201b;color:#f2eadb;cursor:pointer}
+.prologue-error[hidden],.prologue-error button[hidden]{display:none}
+.mobile-display{max-width:420px;width:calc(100% - 32px);padding:28px;border:1px solid #9eac8266;border-radius:8px;background:#101d17;color:#e7ebdc;text-align:center}
+.mobile-display::backdrop{background:#030a08ed}
+.mobile-display h2{font:700 28px 'Barlow Condensed',sans-serif;margin:0 0 14px}
+.mobile-display p{line-height:1.5;font-size:14px}
+.mobile-display button{display:block;width:100%;min-height:48px;margin-top:12px;padding:12px;border:1px solid #b3aa7888;background:#243329;color:#ecebdc;font:700 15px 'Barlow Condensed',sans-serif;cursor:pointer;touch-action:manipulation}
+.mobile-display button:last-child{background:transparent;border-color:transparent;font-size:13px}
+.cinematic-check{position:fixed;inset:0;background:#020607}
+.cinematic-check .prologue{position:absolute;inset:0}
+#film-ended{position:absolute;inset:0;padding:32px;align-content:center;text-align:center}
+#film-ended a,#film-ended button{display:inline-block;margin:12px;padding:14px;background:#1c2d24;color:#e7ebdc;border:1px solid #a3ad7977;text-decoration:none}
+#film-settings{background:#13251c;color:#e7ebdc;padding:28px;border:1px solid #a3ad7977}
 @media(max-height:500px){.prologue-controls{bottom:max(10px,env(safe-area-inset-bottom));gap:6px}.prologue-controls button{font-size:11px;padding:8px 12px}}
 
 /* Team chat stays quiet until opened; no gameplay panel or blue frame. */

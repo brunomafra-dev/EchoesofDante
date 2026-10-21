@@ -1,5 +1,9 @@
 # Echoes of Dante
 
+## Abertura compatível e entrada mobile · 0.1.127
+
+[Testar somente a cinemática](https://echosofdante.vercel.app/cinematic-compatibility.html?v=0.1.127): MP4 mais leve, WebM alternativo, reprodução por toque com som e recuperação sem obrigar a pular. Mobile solicita tela cheia e horizontal quando o navegador permite; recusa mantém a opção de assistir e orienta virar o aparelho. Mesmo filme e mixagem aprovados. [Entrega, QA e limitações](docs/cinematic-compatibility/README.md). O laboratório não acessa saves.
+
 ## Primeiro assentamento · revisão 0.1.126
 
 [Testar Nascentes, Terraços e abrigo](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&settlement=1&v=0.1.126): três novas missões completam o diário da chegada. Ramificação após o Warden, duas espécies locais e instalação da carga de habitação. Base revisada como acampamento, sem manchas brancas e com o Ivo apoiado no chão. Revisão 0.1.126 reutiliza a configuração validada do servidor ao entrar pelo convite, evitando uma segunda consulta que podia expirar após criar o personagem. O teste começa no relatório pós-Warden e preserva saves reais. [Entrega, assets, QA e limites](docs/first-settlement/README.md). Avanço autorizado pelo usuário em 21/10/2026; aguardar playtest humano desta etapa antes de outra expansão.

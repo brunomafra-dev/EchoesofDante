@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "checks": [
+    "Standalone film uses compatible media",
+    "Review switches film/landing/film with correct playback"
+  ],
+  "errors": []
+}

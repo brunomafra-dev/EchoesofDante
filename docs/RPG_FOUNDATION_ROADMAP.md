@@ -1,5 +1,7 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**Manutenção · 0.1.127:** [compatibilidade da abertura e entrada mobile](cinematic-compatibility/README.md), autorizada após erro no celular e Brave. Formatos alternativos, gesto para som, recuperação sem obrigar a pular e orientação horizontal quando suportada. Filme e gameplay preservados; sem nova etapa de conteúdo.
+
 **Manutenção · 0.1.126:** o Render 14 foi confirmado no commit `b1ea13a`. O teste público encontrou nova consulta de configuração expirando após criar o convidado, embora o relay estivesse online. Reutilizar a configuração validada por página, descartar falhas para permitir nova tentativa e conferir o fluxo real de convite; sem avançar de etapa ou alterar campanha/combate. [Registro e QA](first-settlement/README.md).
 
 **Etapa atual · 0.1.125:** usuário autorizou continuar a fase 5 em 21/10/2026, concluir as missões e revisar o Ivo flutuando/manchas brancas. [Primeiro assentamento](first-settlement/README.md): Bacia das Nascentes e Terraços do Amanhecer, três missões finais, duas espécies locais e carga de habitação instalada. Acampamento revisto. Preservar filme/mixagem aprovados. QA técnico não substitui playtest humano; aguardar a validação desta entrega antes de outra etapa. Registros abaixo são históricos.

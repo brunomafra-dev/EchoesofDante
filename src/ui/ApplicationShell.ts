@@ -14,11 +14,13 @@ import type { CharacterClass } from '../systems/CharacterProfiles';
 import type { CharacterSex } from '../config/appearance';
 import { LocalJourney } from '../systems/LocalJourney';
 import { CoopChat } from './CoopChat';
+import { MobileDisplay } from './MobileDisplay';
 
 type Page = 'home' | 'play' | 'pause' | 'characters' | 'coop-characters' | 'create' | 'party-size' | 'difficulty' | 'coop-menu' | 'invite' | 'coop' | 'settings' | 'prologue' | 'coop-ended' | 'launching';
 const LAUNCH = 'echoes-of-dante.launch-once', APPROVAL = 'echoes-of-dante.invite-character-once', SETTINGS = 'echoes-of-dante.settings.v1';
 
 export class ApplicationShell {
+  private readonly mobileDisplay: MobileDisplay;
   private readonly dialog = document.createElement('dialog');
   private readonly menuButton = document.createElement('button');
   private readonly content: HTMLElement;
@@ -79,6 +81,7 @@ export class ApplicationShell {
     window.addEventListener('keydown', this.keyDown, true); window.addEventListener('keydown', this.editableKey); window.addEventListener('keyup', this.editableKey);
     window.addEventListener('dante-coop', this.coopChanged);
     this.render(); this.dialog.showModal(); document.body.classList.add('shell-open'); this.pollPad();
+    this.mobileDisplay = new MobileDisplay();
   }
   bind(scene: GameScene): void {
     this.scene = scene; this.applyVolumes();
@@ -349,5 +352,5 @@ export class ApplicationShell {
     }
     this.padPrevious = down; this.padFrame = requestAnimationFrame(this.pollPad);
   };
-  destroy(): void { this.chat.destroy();this.selection?.destroy(); this.prologue?.destroy(); cancelAnimationFrame(this.padFrame); window.removeEventListener('keydown',this.keyDown,true); window.removeEventListener('keyup',this.editableKey); window.removeEventListener('keydown',this.editableKey); window.removeEventListener('dante-coop',this.coopChanged); this.dialog.remove(); this.menuButton.remove(); }
+  destroy(): void { this.mobileDisplay.destroy();this.chat.destroy();this.selection?.destroy(); this.prologue?.destroy(); cancelAnimationFrame(this.padFrame); window.removeEventListener('keydown',this.keyDown,true); window.removeEventListener('keyup',this.editableKey); window.removeEventListener('keydown',this.editableKey); window.removeEventListener('dante-coop',this.coopChanged); this.dialog.remove(); this.menuButton.remove(); }
 }

@@ -1,4 +1,4 @@
-import './bridge';
+import { setArrivalPlayback } from './bridge';
 
 const takes = {
   film: { file: 'arrival-whole-scene.mp4', title: 'Abertura completa',
@@ -21,10 +21,11 @@ const status = document.querySelector<HTMLElement>('#playback-status')!;
 function select(key: Take) {
   const take = takes[key];
   video.pause();
-  video.src = `${import.meta.env.BASE_URL}assets/cinematic-opening/${take.file}`;
+  setArrivalPlayback(key === 'film');
+  if(key !== 'film')video.src = `${import.meta.env.BASE_URL}assets/cinematic-opening/${take.file}`;
   video.setAttribute('aria-label', take.title);
   video.dataset.endMessage = take.end;
-  video.load();
+  if(key !== 'film')video.load();
   document.querySelector('#take-caption')!.textContent = take.caption;
   document.querySelector('#take-description')!.textContent = take.description;
   document.querySelector<HTMLAnchorElement>('#download')!.href = video.src;

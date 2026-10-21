@@ -13,6 +13,7 @@ catch { console.error('Build ausente. Execute npm run build antes de npm start.'
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json',
   '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon', '.mp3': 'audio/mpeg', '.ogg': 'audio/ogg', '.wav': 'audio/wav',
+  '.mp4': 'video/mp4', '.webm': 'video/webm', '.m4a': 'audio/mp4', '.vtt': 'text/vtt; charset=utf-8',
   '.woff': 'font/woff', '.woff2': 'font/woff2' };
 const server = createServer(async (req, res) => {
   if (!['GET', 'HEAD'].includes(req.method)) { res.writeHead(405, { Allow: 'GET, HEAD' }); res.end(); return; }
@@ -30,11 +31,24 @@ const server = createServer(async (req, res) => {
   try {
     const info = await stat(file);
     if (!info.isFile()) throw Error('Not a file');
-    res.writeHead(200, { 'Content-Type': mime[extname(file)] ?? 'application/octet-stream',
-      'Content-Length': info.size, 'X-Content-Type-Options': 'nosniff',
+    let start = 0, end = info.size - 1, partial = false;
+    const range = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range ?? '');
+    if (range && (range[1] || range[2])) {
+      start = range[1] ? Number(range[1]) : Math.max(0, info.size - Number(range[2]));
+      end = range[1] && range[2] ? Math.min(Number(range[2]), end) : end;
+      if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start > end || start >= info.size) {
+        res.writeHead(416, { 'Content-Range': `bytes */${info.size}`, 'Accept-Ranges': 'bytes' }); res.end(); return;
+      }
+      partial = true;
+    }
+    res.writeHead(partial ? 206 : 200, { 'Content-Type': mime[extname(file)] ?? 'application/octet-stream',
+      'Content-Length': partial ? end - start + 1 : info.size, 'Accept-Ranges': 'bytes',
+      ...(partial ? { 'Content-Range': `bytes ${start}-${end}/${info.size}` } : {}), 'X-Content-Type-Options': 'nosniff',
       'Cache-Control': /-[\w-]{8}\.(js|css)$/.test(pathname) ? 'public, max-age=31536000, immutable' : 'no-cache' });
     if (req.method === 'HEAD') { res.end(); return; }
-    createReadStream(file).on('error', () => res.destroy()).pipe(res);
+    const stream = createReadStream(file, partial ? { start, end } : undefined);
+    stream.on('error', () => res.destroy()).pipe(res);
+    res.on('close', () => stream.destroy());
   } catch { res.writeHead(404); res.end(); }
 });
 const relay = attachCoop(server);

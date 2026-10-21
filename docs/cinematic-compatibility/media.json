@@ -1,0 +1,22 @@
+{
+  "source": "public\\assets\\cinematic-opening\\arrival-whole-scene.mp4",
+  "sourceBytes": 44446248,
+  "sourceSha256": "e513f57837a39652f01749e11acff23e677710b61b1aa825bf8453ad7aeb2cbf",
+  "width": 1280,
+  "height": 720,
+  "fps": 24,
+  "seconds": 54.25,
+  "mix": "Approved source, same edits and audio; delivery transcode only.",
+  "files": [
+    {
+      "file": "arrival-compatible-v1.mp4",
+      "bytes": 17275271,
+      "sha256": "c3e6bf68da6bafe2ff5cd0d490ef1c13b2d0a33e12631398421473db90542475"
+    },
+    {
+      "file": "arrival-compatible-v1.webm",
+      "bytes": 12573002,
+      "sha256": "094072fd758cc550087a759483d9d3954028a25d6a161a832dcb2bcaa127c090"
+    }
+  ]
+}
