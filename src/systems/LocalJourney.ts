@@ -1,3 +1,4 @@
+import {COLONY_ENCOUNTERS} from '../config/colonization';
 import { deathCreditLoss } from '../config/threat';
 import { ECHO_COUNT, FOREST_ECHOES } from '../config/discovery';
 import { VALLEY_ENCOUNTERS, VALLEY_ROUTES } from '../config/valley';
@@ -24,8 +25,8 @@ export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSee
   'valleyLandmarkSeen', 'valleyEndSeen', 'valleyCheckpointReached', 'valleyFrontierReached',
   'valleyFrontierSignalSeen', 'valleyFrontierEndSeen', 'aridVisited', 'aridSignalSeen',
   'aridFrontierEntered', 'aridFrontierReached', 'dunesVisited', 'dunesRuinsSeen', 'dunesDepthSeen',
-  'soterradoReached', 'soterradoDefeated', 'soterradoClueSeen', 'frostVisited', 'frostSignalSeen', 'frostEndSeen', 'icecaveVisited', 'icecaveSignalSeen', 'icenestVisited', 'vesperReached', 'vesperDefeated', 'vesperClueSeen','calderaVisited','calderaRelaySeen','calderaCheckpointReached','titanReached','titanDefeated','titanClueSeen','cinderVisited','cinderSignalSeen','obsidianVisited','obsidianSignalSeen'] as const;
-export type JourneyArea = 'base' | 'forest' | 'cavern' | 'warden' | 'valley' | 'arid' | 'dunes' | 'sandpit' | 'frost' | 'icecave' | 'icenest' | 'caldera' | 'cinder' | 'obsidian';
+  'soterradoReached', 'soterradoDefeated', 'soterradoClueSeen', 'frostVisited', 'frostSignalSeen', 'frostEndSeen', 'icecaveVisited', 'icecaveSignalSeen', 'icenestVisited', 'vesperReached', 'vesperDefeated', 'vesperClueSeen','calderaVisited','calderaRelaySeen','calderaCheckpointReached','titanReached','titanDefeated','titanClueSeen','cinderVisited','cinderSignalSeen','obsidianVisited','obsidianSignalSeen','springsVisited','terracesVisited'] as const;
+export type JourneyArea = 'springs' | 'terraces' | 'base' | 'forest' | 'cavern' | 'warden' | 'valley' | 'arid' | 'dunes' | 'sandpit' | 'frost' | 'icecave' | 'icenest' | 'caldera' | 'cinder' | 'obsidian';
 export type JourneyFlags = Record<typeof JOURNEY_FLAGS[number], boolean>;
 export type JourneySnapshot = {
   schema: 1; updatedAt: number; area: JourneyArea; hp: number;
@@ -110,16 +111,17 @@ export class LocalJourney {
       flags.titanReached &&= flags.calderaRelaySeen;
       flags.titanDefeated &&= flags.titanReached;
       flags.titanClueSeen &&= flags.titanDefeated;
-      const area: JourneyArea = raw.area === 'base' ? 'base' : raw.area === 'cinder' && flags.cinderVisited ? 'cinder' : raw.area === 'obsidian' && flags.obsidianVisited ? 'obsidian' : raw.area === 'caldera' && flags.calderaVisited ? 'caldera' : raw.area === 'icenest' && flags.icenestVisited ? 'icenest' : raw.area === 'icecave' && flags.icecaveVisited ? 'icecave' : raw.area === 'frost' && flags.frostVisited ? 'frost' : raw.area === 'sandpit' && flags.soterradoReached ? 'sandpit'
+      flags.springsVisited &&= flags.wardenDefeated;flags.terracesVisited &&= flags.springsVisited;
+      const area: JourneyArea = raw.area==='springs'&&flags.springsVisited?'springs':raw.area==='terraces'&&flags.terracesVisited?'terraces':raw.area === 'base' ? 'base' : raw.area === 'cinder' && flags.cinderVisited ? 'cinder' : raw.area === 'obsidian' && flags.obsidianVisited ? 'obsidian' : raw.area === 'caldera' && flags.calderaVisited ? 'caldera' : raw.area === 'icenest' && flags.icenestVisited ? 'icenest' : raw.area === 'icecave' && flags.icecaveVisited ? 'icecave' : raw.area === 'frost' && flags.frostVisited ? 'frost' : raw.area === 'sandpit' && flags.soterradoReached ? 'sandpit'
         : raw.area === 'dunes' && flags.dunesVisited ? 'dunes'
         : raw.area === 'arid' && flags.wardenDefeated && flags.valleyFrontierEndSeen && flags.aridVisited ? 'arid'
         : raw.area === 'valley' && flags.wardenDefeated ? 'valley'
         : raw.area === 'warden' && flags.wardenGateOpen ? 'warden'
         : raw.area !== 'forest' && passageOpen ? 'cavern' : 'forest';
       const routes = Array.isArray(raw.valleyRoutes) ? raw.valleyRoutes.filter((id): id is string => typeof id === 'string' && VALLEY_ROUTES.some(r => r.id === id)) : [];
-      const habitats: [number, number][] = [];
-      if (Array.isArray(raw.valleyHabitats)) for (const entry of raw.valleyHabitats.slice(0, VALLEY_ENCOUNTERS.length)) {
-        if (Array.isArray(entry) && VALLEY_ENCOUNTERS.some(h => h.id === entry[0]) && integer(entry[1], 8_640_000_000_000_000)) habitats.push([entry[0], entry[1]]);
+      const habitats: [number, number][] = [];const valleyHabitats=[...VALLEY_ENCOUNTERS,...COLONY_ENCOUNTERS.springs,...COLONY_ENCOUNTERS.terraces];
+      if (Array.isArray(raw.valleyHabitats)) for (const entry of raw.valleyHabitats.slice(0, valleyHabitats.length)) {
+        if (Array.isArray(entry) && valleyHabitats.some(h => h.id === entry[0]) && integer(entry[1], 8_640_000_000_000_000)) habitats.push([entry[0], entry[1]]);
       }
       const aridHabitats: [number, number][] = [];
       const desertHabitats = [...SIROCCO_ENCOUNTERS, ...DUNES_ENCOUNTERS, ...FROST_ENCOUNTERS, ...GLACIER_ENCOUNTERS,...CALDERA_ENCOUNTERS,...VOLCANIC_ENCOUNTERS.cinder,...VOLCANIC_ENCOUNTERS.obsidian];

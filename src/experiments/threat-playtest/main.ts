@@ -22,7 +22,7 @@ const astralLab=location.pathname.endsWith('/astral-playtest.html');
 const classId=(['warrior','hunter','astral','xenobinder'].includes(params.get('class')??'')?params.get('class'):xenoLab?'xenobinder':astralLab?'astral':'warrior') as PlayableClass;
 const sex=characterSex(classId,params.get('sex'));
 const kit=['initial','basic','advanced'].includes(params.get('kit')??'')?params.get('kit')!:'basic';
-const levels:Record<JourneyArea,number>={base:1,forest:1,cavern:3,warden:4,valley:5,arid:6,dunes:6,sandpit:7,frost:8,icecave:8,icenest:9,cinder:10,obsidian:10,caldera:10};
+const levels:Record<JourneyArea,number>={springs:5,terraces:5,base:1,forest:1,cavern:3,warden:4,valley:5,arid:6,dunes:6,sandpit:7,frost:8,icecave:8,icenest:9,cinder:10,obsidian:10,caldera:10};
 const level=levels[region],id='threat-'+classId;
 const tier=kit==='advanced'?3:1;
 const slots=Object.fromEntries(Object.entries(EQUIPMENT).filter(([,v])=>kit!=='initial'&&v.tier===tier).map(([k,v])=>[v.slot,k])) as Partial<Record<import('../../config/equipment').EquipmentSlot,EquipmentId>>;

@@ -1,8 +1,12 @@
 # Echoes of Dante
 
+## Primeiro assentamento · 0.1.125
+
+[Testar Nascentes, Terraços e abrigo](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&settlement=1&v=0.1.125): três novas missões completam o diário da chegada. Ramificação após o Warden, duas espécies locais e instalação da carga de habitação. Base revisada como acampamento, sem manchas brancas e com o Ivo apoiado no chão. O teste começa no relatório pós-Warden e preserva saves reais. [Entrega, assets, QA e limites](docs/first-settlement/README.md). Avanço autorizado pelo usuário em 21/10/2026; aguardar playtest humano desta etapa antes de outra expansão.
+
 ## Missões da expedição · 0.1.124
 
-[Testar as missões na base](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&v=0.1.124): Nara, Lia e Ivo oferecem quatro relatórios ligados à exploração e à chegada de mais humanos. Indicadores sobre os NPCs, tracker compacto, diário (J/L3), análises na Floresta e progresso compartilhado no coop. O laboratório protege saves reais e permite simular etapas avançadas. [Entrega, QA e limites](docs/arrival-missions/README.md). Aguardar validação humana antes de ampliar mapas/assentamento. Abertura aprovada preservada; registros anteriores abaixo são históricos.
+[Testar as missões na base](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&v=0.1.124): Nara, Lia e Ivo oferecem quatro relatórios ligados à exploração e à chegada de mais humanos. Indicadores sobre os NPCs, tracker compacto, diário (J/L3), análises na Floresta e progresso compartilhado no coop. O laboratório protege saves reais e permite simular etapas avançadas. [Entrega, QA e limites](docs/arrival-missions/README.md). O usuário autorizou ampliar mapas/assentamento na entrega acima. Abertura aprovada preservada; registros anteriores abaixo são históricos.
 
 ## Abertura — motores mais presentes — 0.1.121
 

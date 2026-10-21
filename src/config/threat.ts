@@ -4,6 +4,7 @@ import { DIFFICULTIES, type DifficultyId } from './difficulty';
 
 // Fixed regional tuning. Equipment, level and potions never change these values.
 export const REGIONAL_THREAT = {
+  springs:{hp:1.3,damage:1.12,xp:23},terraces:{hp:1.35,damage:1.15,xp:25},
   base: { hp:1, damage:1, xp:0 }, forest: { hp:1, damage:1, xp:15 },
   cavern: { hp:1.12, damage:1.08, xp:18 }, warden: { hp:1.25, damage:1.15, xp:120 },
   valley: { hp:1.3, damage:1.12, xp:22 }, arid: { hp:1.4, damage:1.2, xp:25 },

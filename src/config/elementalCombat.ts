@@ -4,6 +4,8 @@ import type { SpeciesId } from './bestiary';
 // Every species must have a profile. New species cannot silently remain unclassified.
 // Traits follow anatomy/material, never region/equipment scaling.
 export const ELEMENTAL_PROFILES = {
+  bankGrazer:{weakness:'energy',resistance:'water'},
+  reedSpitter:{weakness:'energy',resistance:'water'},
   emberHound: { weakness:'water', resistance:'fire' },
   fumarole: { weakness:'water', resistance:'fire' },
   slagback: { weakness:'energy', resistance:'earth' },

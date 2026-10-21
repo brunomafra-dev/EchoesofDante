@@ -46,14 +46,14 @@ export class ValleyCreature implements Enemy {
     this.flash = scene.add.ellipse(0,-18,55,30,0xffead5,0);
     this.view = scene.add.container(x,y,[this.body,this.flash]);
     this.warning = scene.add.graphics().setVisible(false);
-    if (kind === 'carapace' || kind === 'iceCarapace') {
+    if (kind === 'carapace' || kind === 'iceCarapace' || kind === 'bankGrazer') {
       this.warning.fillStyle(0xffbd54,0.13).beginPath().moveTo(0,0).arc(0,0,112,-0.9,0.9).closePath().fillPath();
       this.warning.lineStyle(3,0xffbd54,0.9).beginPath().moveTo(0,0).lineTo(Math.cos(-0.9)*112,Math.sin(-0.9)*112)
         .arc(0,0,112,-0.9,0.9).closePath().strokePath();
     } else {
       for (const angle of [-0.28,0,0.28]) {
         this.warning.lineStyle(3,0xffbd54,0.65).lineBetween(Math.cos(angle)*24,Math.sin(angle)*24,Math.cos(angle)*320,Math.sin(angle)*320);
-        this.shots.push({image:scene.add.image(x,y,'mineral-growth').setDisplaySize(24,17).setVisible(false),active:false,x,y,angle:0,distance:0});
+        this.shots.push({image:scene.add.image(x,y,kind==='reedSpitter'?'astral-water-bolt':'mineral-growth',0).setDisplaySize(kind==='reedSpitter'?36:24,kind==='reedSpitter'?24:17).setVisible(false),active:false,x,y,angle:0,distance:0});
       }
     }
     this.healthBack = scene.add.rectangle(x,y-64,48,6,0x152c2a).setDepth(10000).setVisible(false);
@@ -73,7 +73,7 @@ export class ValleyCreature implements Enemy {
       this.push.x *= Math.max(0,1-dt*10); this.push.y *= Math.max(0,1-dt*10);
     } else if (this.state === 'WINDUP') {
       if (now >= this.windupUntil) {
-        if (this.kind === 'carapace' || this.kind === 'iceCarapace') {
+        if (this.kind === 'carapace' || this.kind === 'iceCarapace' || this.kind === 'bankGrazer') {
           const toPlayer = Math.atan2(toward.y,toward.x);
           if (gap < s.range + PLAYER.radius && Math.abs(Phaser.Math.Angle.Wrap(toPlayer-this.direction)) < 0.9) onAttack({damage:s.damage});
         } else {

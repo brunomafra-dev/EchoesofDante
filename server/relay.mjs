@@ -4,11 +4,11 @@ import { randomBytes } from 'node:crypto';
 import { WebSocketServer, WebSocket } from 'ws';
 import {campaignCredentials,canJoinCampaign,crewIdentity,campaignState,campaignRunning} from './campaign.mjs';
 
-const areas = new Set(['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest','cinder','obsidian','caldera']);
-const connections = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave','cinder'], cinder:['icenest','obsidian'], obsidian:['cinder','caldera'], caldera: ['obsidian'] };
+const areas = new Set(['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest','cinder','obsidian','caldera','springs','terraces']);
+const connections = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid','springs'], springs:['valley','terraces'],terraces:['springs'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave','cinder'], cinder:['icenest','obsidian'], obsidian:['cinder','caldera'], caldera: ['obsidian'] };
 const equipmentIds=new Set(Object.keys(catalogue));
-const missionIds=new Set(['recon','survival','signal','beyond']);
-const missionEvidence=new Set(['clearing','roots','water','biology','echo1','echo2','echo3','passage','first-echo','warden']);
+const missionIds=new Set(['recon','survival','signal','beyond','water-source','safe-route','shelter']);
+const missionEvidence=new Set(['clearing','roots','water','biology','echo1','echo2','echo3','passage','first-echo','warden','spring','route-west','route-east','soil','site','shelter-built']);
 const cleanMissions=raw=>({schema:1,accepted:Array.isArray(raw?.accepted)?[...new Set(raw.accepted.filter(id=>missionIds.has(id)))]:[],completed:Array.isArray(raw?.completed)?[...new Set(raw.completed.filter(id=>missionIds.has(id)))]:[],evidence:Array.isArray(raw?.evidence)?[...new Set(raw.evidence.filter(id=>missionEvidence.has(id)))]:[]});
 const cleanEquipment=raw=>Object.fromEntries(['weapon','helmet','armor','legs','boots','gloves','accessory'].filter(slot=>equipmentIds.has(raw?.[slot])&&catalogue[raw[slot]].slot===slot).map(slot=>[slot,raw[slot]]));
 const cleanBuild = raw => ({
@@ -72,7 +72,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
     member.timer.unref();
   }
   function joined(room, member) {
-    send(member.ws, { type: 'joined', protocol:13, chatHistory:room.chat, campaign:campaignState(room),id:member.id, role:member===room.host?'host':'guest', code: room.code, token: member.token, epoch: room.epoch,
+    send(member.ws, { type: 'joined', protocol:14, chatHistory:room.chat, campaign:campaignState(room),id:member.id, role:member===room.host?'host':'guest', code: room.code, token: member.token, epoch: room.epoch,
       area: room.area, members:roster(room), paused: room.paused === true, receipt: member.receipt, total: member.total, bosses:[...member.bosses], items:[...member.items.values()],resources:member.resources });
     notify(room);
   }
@@ -92,7 +92,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
       if(['input','equipment','world','service-request','pause','travel'].includes(m.type))ws.messageTypes[m.type]=(ws.messageTypes[m.type]??0)+1;
       if(m.type==='inspect') {
         const room=rooms.get(String(m.code).replace(/\s/g,'').toUpperCase());
-        return send(ws,room?{type:'lobby',protocol:13,campaign:campaignState(room),members:roster(room),area:room.area}:{type:'error',message:'Sala não encontrada. Peça um novo convite.'});
+        return send(ws,room?{type:'lobby',protocol:14,campaign:campaignState(room),members:roster(room),area:room.area}:{type:'error',message:'Sala não encontrada. Peça um novo convite.'});
       }
       if (m.type === 'resume') {
         if (typeof m.token !== 'string' || !/^[a-f0-9]{48}$/.test(m.token)) return send(ws, { type: 'error', message: 'Credencial de reconexão inválida.' });
@@ -228,6 +228,6 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   server.once('close', close);
   return {
     close,
-    status: () => ({ service: 'Dante regional co-op', protocol: 13, missions:true, chat:true, capacity:4, uniqueClasses:true,fixedCampaigns:true, revision:process.env.RENDER_GIT_COMMIT??'local', campaign: true, rooms: rooms.size, players: clients.size }),
+    status: () => ({ service: 'Dante regional co-op', protocol: 14, missions:true, chat:true, capacity:4, uniqueClasses:true,fixedCampaigns:true, revision:process.env.RENDER_GIT_COMMIT??'local', campaign: true, rooms: rooms.size, players: clients.size }),
   };
 }

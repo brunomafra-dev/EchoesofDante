@@ -1,22 +1,32 @@
 import Phaser from 'phaser';
 import {BASE} from '../config/base';
 import type {Obstacle} from './Movement';
+import {EnvironmentPainter,createEnvironmentGround,trackEnvironmentOcclusion} from '../visual/EnvironmentArt';
 export class LandingBase{
  readonly bounds={left:70,right:1330,top:90,bottom:970};
  readonly obstacles:Obstacle[]=[{x:550,y:370,radius:112},{x:420,y:360,radius:62},{x:680,y:360,radius:62},...BASE.services.flatMap(s=>[{x:s.x,y:s.y-22,radius:20},{x:s.x,y:s.y-100,radius:55}])];
  constructor(scene:Phaser.Scene,refugees=false){
-  const floor=scene.add.renderTexture(0,0,BASE.width,BASE.height).setOrigin(0).setDepth(-10000);
-  const soil=scene.add.image(700,525,'forest-ground').setDisplaySize(1400,1050).setTint(0xa5ae92);floor.draw(soil);soil.destroy();
-  for(const[x,y,w,h]of[[550,500,650,190],[650,730,740,150],[1040,610,210,340]]){const stamp=scene.add.image(x,y,'terrain-blend').setDisplaySize(w,h).setAlpha(.45);floor.draw(stamp);stamp.destroy();}
+  createEnvironmentGround(scene,BASE.width,'forest-ground',0xa3af91);
+  const floor=scene.add.renderTexture(0,0,BASE.width,BASE.height).setOrigin(0).setDepth(-10000),painter=new EnvironmentPainter(scene,floor);
+  painter.stamp({key:'camp-ground',x:710,y:605,width:1270,height:800,alpha:.9});
+  // Worn soil is dark and low contrast. The old oversized untinted white
+  // feather masks read as fog painted on top of the campsite.
+  for(const[x,y,w,h]of [[550,515,350,95],[720,585,270,105],[935,660,230,120],[1080,760,285,100],[610,745,350,105],[400,750,230,100],[1010,560,120,230]])painter.sediment(x,y,w,h,0x5f6345,.24);
   for(const[x,y,r]of[[130,260,90],[1200,300,105],[200,860,70],[1180,930,80]]){const rock=scene.add.image(x,y,'world-rock').setDisplaySize(r*1.8,r*1.4);floor.draw(rock);rock.destroy();}
   scene.add.image(550,360,'landing-shuttle').setDisplaySize(490,330).setDepth(430);
   for(const s of BASE.services){
-   scene.add.image(s.x,s.y-98,'field-shelter').setDisplaySize(180,150).setDepth(s.y-50);
-   const platform=scene.add.image(s.x,s.y+8,'world-shadow').setDisplaySize(110,45).setAlpha(.65);floor.draw(platform);platform.destroy();
-   const npc=scene.add.image(s.x,s.y,'base-'+s.id+'-civilian').setOrigin(.5,.96);npc.setScale(96/npc.height).setDepth(s.y);
+   painter.sediment(s.x,s.y-30,235,135,0x737251,.22);painter.contact(s.x,s.y-34,145,24,.55);
+   const shelter=scene.add.image(s.x,s.y-98,'field-shelter').setDisplaySize(180,150).setDepth(s.y-50);trackEnvironmentOcclusion(scene,shelter);
+   painter.contact(s.x-5,s.y+1,36,9,.7);painter.contact(s.x-7,s.y,18,5,.85);
+   const npc=scene.add.image(s.x,s.y,'base-'+s.id+'-civilian').setOrigin(.5,.97);npc.setScale(96/npc.height).setDepth(s.y);
    scene.add.text(s.x,s.y-185,s.name,{fontFamily:'Barlow Condensed',fontSize:'16px',color:'#e3dfc7',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(10003);
   }
-  if(refugees)for(const[key,x,y]of [['a',380,500],['b',820,490]] as const){const npc=scene.add.image(x,y,'base-refugee-'+key).setOrigin(.5,.96);npc.setScale(86/npc.height).setDepth(y);}
+  for(const[x,y,w]of [[440,650,105],[895,625,112],[1120,420,100]]){
+   painter.contact(x,y+4,w*.8,15,.5);scene.add.image(x,y,'camp-supplies').setOrigin(.5,1).setDisplaySize(w,w*319/512).setDepth(y);this.obstacles.push({x,y:y-17,radius:20});
+  }
+  for(const[x,y,w]of [[160,700,100],[170,950,155],[1180,530,105],[1160,945,135],[260,470,85]]){painter.stamp({key:'root-growth',x,y,width:w,height:w*.25,tint:0xa1b38b,alpha:.65});painter.stamp({key:'dante-canopy-green',x:x-18,y:y-17,width:w*.65,height:w*.35,tint:0x9bb57e,alpha:.75});}
+  if(refugees)for(const[key,x,y]of [['a',380,500],['b',820,490]] as const){painter.contact(x,y,30,8,.65);const npc=scene.add.image(x,y,'base-refugee-'+key).setOrigin(.5,.98);npc.setScale(86/npc.height).setDepth(y);}
+  painter.destroy();
   scene.add.text(550,160,'DANTE-01 · BASE DE POUSO',{fontFamily:'Barlow Condensed',fontSize:'22px',color:'#d0c6aa',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(10003);
   scene.add.text(BASE.exit.x,BASE.exit.y-70,'FLORESTA →',{fontFamily:'Barlow Condensed',fontSize:'18px',color:'#b8caaa'}).setOrigin(.5).setDepth(10003);
  }

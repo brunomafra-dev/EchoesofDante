@@ -1,0 +1,12 @@
+{
+  "base": "http://localhost:5184",
+  "method": "Compiled build; two separate Chrome instances, real relay and normal movement/UI. Post-Warden preparation only through reserved lab buttons; no DEV globals.",
+  "checks": [
+    "Compiled coop: guest chooses own character/name, receives post-Warden team journal and accepts Lia mission",
+    "Normal guest movement crosses the Bacia, avoids deep water and records the spring through real E input",
+    "Guest recall moves the team; compiled report delivery and progression succeed",
+    "Authored forward passage enters Terraces, with bounded mixed fauna in the compiled build"
+  ],
+  "errors": [],
+  "passed": true
+}

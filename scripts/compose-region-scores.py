@@ -20,6 +20,9 @@ RATE = 22050
 DEST = ROOT / 'public/assets/audio'
 # root MIDI, BPM, bar count, tonal movement, instrumentation, soundscape seed
 SCORES = {
+    'base': (55, 60, 32, [0, 5, 7, 3, 0, 7, 5, 2], 'wood', 211),
+    'springs': (57, 56, 36, [0, 7, 5, 2, 0, 5, 9, 7], 'glass', 223),
+    'terraces': (50, 64, 36, [0, 5, 9, 7, 0, 2, 5, 7], 'air', 227),
     'cinder': (46, 62, 32, [0, 5, 3, 7, 0, -2, 5, 1], 'air', 191),
     'obsidian': (36, 56, 32, [0, 1, -2, 5, 0, 3, 7, 1], 'pulse', 197),
     'caldera': (38, 60, 36, [0, 1, 5, -2, 0, 3, 7, 1], 'stone', 173),
@@ -156,6 +159,6 @@ if __name__=='__main__':
     DEST.mkdir(parents=True,exist_ok=True)
     selected = sys.argv[1:] or list(SCORES)
     metrics = [render(name,SCORES[name]) for name in selected]
-    folder=ROOT/('docs/caldera/expansion' if any(n in ['cinder','obsidian'] for n in selected) else 'docs/caldera' if any(n in ['caldera','titan'] for n in selected) else 'docs/glacier-expansion' if any(n in ['icecave', 'vesper'] for n in selected) else 'docs/frozen-reach' if selected == ['frost'] else 'docs/soterrado-boss' if selected == ['soterrado'] else 'docs/sirocco-interior-and-sound')
+    folder=ROOT/('docs/first-settlement' if any(n in ['base','springs','terraces'] for n in selected) else 'docs/caldera/expansion' if any(n in ['cinder','obsidian'] for n in selected) else 'docs/caldera' if any(n in ['caldera','titan'] for n in selected) else 'docs/glacier-expansion' if any(n in ['icecave', 'vesper'] for n in selected) else 'docs/frozen-reach' if selected == ['frost'] else 'docs/soterrado-boss' if selected == ['soterrado'] else 'docs/sirocco-interior-and-sound')
     folder.mkdir(parents=True,exist_ok=True)
     (folder/'audio-measurements.json').write_text(json.dumps(metrics,indent=2)+'\n',encoding='utf-8')

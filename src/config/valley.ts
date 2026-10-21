@@ -17,8 +17,10 @@ export const VALLEY = {
   },
 } as const;
 
-export type ValleyKind = 'carapace' | 'thorn' | 'iceCarapace';
+export type ValleyKind = 'carapace' | 'thorn' | 'iceCarapace' | 'bankGrazer' | 'reedSpitter';
 export const VALLEY_CREATURES = {
+  bankGrazer:{name:'VIGIA DAS MARGENS',hp:112,radius:24,size:124,speed:77,detection:340,range:100,damage:14,windup:1050,recovery:1000,cooldown:2500},
+  reedSpitter:{name:'FOLE DOS JUNCOS',hp:78,radius:19,size:108,speed:81,detection:365,range:300,damage:10,windup:1100,recovery:850,cooldown:3000},
   iceCarapace: { name: 'CASCO GLACIAL', hp: 170, radius: 27, size: 132, speed: 62, detection: 350, range: 118, damage: 17, windup: 1050, recovery: 1150, cooldown: 2600 },
   carapace: { name: 'CASCO ERRANTE', hp: 136, radius: 25, size: 126, speed: 74, detection: 340,
     range: 105, damage: 18, windup: 850, recovery: 850, cooldown: 2300 },

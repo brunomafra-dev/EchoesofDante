@@ -1,0 +1,225 @@
+{
+  "method": "2 Chrome contexts plus 2 active protocol clients at 25 Hz, with real relay and inputs; host renders all original class actors. DEV positioning/invulnerability for transactions and post-Warden preparation. Protocol clients do not test remote rendering or local reward storage.",
+  "checks": [
+    "4 original classes start and share an explicitly simulated post-Warden campaign",
+    "Guest enters branch for the team, another guest records spring, guest recall and Lia turn-in work",
+    "Mixed team traverses the second new map and splits both route objectives",
+    "Guest installs shared habitat; all clients show colonists/module and occupants are moved clear of new solid footprints",
+    "All seven reports saved; each browser character receives exactly 175 new credits once",
+    "Socket resume and return to Terraces preserve the shared settlement and mission receipts"
+  ],
+  "errors": [],
+  "participants": [
+    {
+      "area": "terraces",
+      "status": {
+        "water-source": "completed",
+        "safe-route": "completed",
+        "shelter": "completed"
+      },
+      "missions": {
+        "schema": 1,
+        "accepted": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond",
+          "water-source",
+          "safe-route",
+          "shelter"
+        ],
+        "completed": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond",
+          "water-source",
+          "safe-route",
+          "shelter"
+        ],
+        "evidence": [
+          "clearing",
+          "roots",
+          "water",
+          "biology",
+          "echo1",
+          "echo2",
+          "echo3",
+          "passage",
+          "first-echo",
+          "warden",
+          "spring",
+          "route-west",
+          "route-east",
+          "soil",
+          "site",
+          "shelter-built"
+        ]
+      },
+      "credits": 475,
+      "rewards": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter"
+      ],
+      "connected": true,
+      "running": true,
+      "habitat": true,
+      "actors": 7
+    },
+    {
+      "area": "terraces",
+      "status": {
+        "water-source": "completed",
+        "safe-route": "completed",
+        "shelter": "completed"
+      },
+      "missions": {
+        "schema": 1,
+        "accepted": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond",
+          "water-source",
+          "safe-route",
+          "shelter"
+        ],
+        "completed": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond",
+          "water-source",
+          "safe-route",
+          "shelter"
+        ],
+        "evidence": [
+          "clearing",
+          "roots",
+          "water",
+          "biology",
+          "echo1",
+          "echo2",
+          "echo3",
+          "passage",
+          "first-echo",
+          "warden",
+          "spring",
+          "route-west",
+          "route-east",
+          "soil",
+          "site",
+          "shelter-built"
+        ]
+      },
+      "credits": 325,
+      "rewards": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter"
+      ],
+      "connected": true,
+      "running": true,
+      "habitat": true,
+      "actors": 6
+    }
+  ],
+  "protocolParticipants": [
+    {
+      "name": "Alvaro",
+      "area": "terraces",
+      "missions": {
+        "schema": 1,
+        "accepted": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond",
+          "water-source",
+          "safe-route",
+          "shelter"
+        ],
+        "completed": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond",
+          "water-source",
+          "safe-route",
+          "shelter"
+        ],
+        "evidence": [
+          "clearing",
+          "roots",
+          "water",
+          "biology",
+          "echo1",
+          "echo2",
+          "echo3",
+          "passage",
+          "first-echo",
+          "warden",
+          "spring",
+          "route-west",
+          "route-east",
+          "soil",
+          "site",
+          "shelter-built"
+        ]
+      }
+    },
+    {
+      "name": "Erica",
+      "area": "terraces",
+      "missions": {
+        "schema": 1,
+        "accepted": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond",
+          "water-source",
+          "safe-route",
+          "shelter"
+        ],
+        "completed": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond",
+          "water-source",
+          "safe-route",
+          "shelter"
+        ],
+        "evidence": [
+          "clearing",
+          "roots",
+          "water",
+          "biology",
+          "echo1",
+          "echo2",
+          "echo3",
+          "passage",
+          "first-echo",
+          "warden",
+          "spring",
+          "route-west",
+          "route-east",
+          "soil",
+          "site",
+          "shelter-built"
+        ]
+      }
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,104 @@
+[
+  {
+    "key": "camp-ground",
+    "file": "public/assets/colonization/camp-ground.png",
+    "dimensions": [
+      1024,
+      594
+    ],
+    "bytes": 1050209,
+    "frames": 1,
+    "sourceFile": "exec-4d4645a0-997d-43be-b401-08b1f2163ee3.png",
+    "sourceSha256": "a79ce8c85dc06975ee91588fe056091c3d30fdcfcbb84246601399f2d50b3952",
+    "sourceDimensions": [
+      1536,
+      1024
+    ],
+    "origin": "Original OpenAI built-in imagegen; transparent background; offline packing only"
+  },
+  {
+    "key": "camp-supplies",
+    "file": "public/assets/colonization/camp-supplies.png",
+    "dimensions": [
+      512,
+      319
+    ],
+    "bytes": 268637,
+    "frames": 1,
+    "sourceFile": "exec-3a935f5d-bac8-4a1c-93f3-ec82161d5da6.png",
+    "sourceSha256": "7b25947a63a53e3a2ad9366e424755d7a8a9393ad15571cbc56176c65fb2e8ec",
+    "sourceDimensions": [
+      1536,
+      1024
+    ],
+    "origin": "Original OpenAI built-in imagegen; transparent background; offline packing only"
+  },
+  {
+    "key": "spring-pool",
+    "file": "public/assets/colonization/spring-pool.png",
+    "dimensions": [
+      1024,
+      658
+    ],
+    "bytes": 1293893,
+    "frames": 1,
+    "sourceFile": "exec-312a2bd3-5f57-446a-aa62-fa327981e99b.png",
+    "sourceSha256": "f74a6bc43d56c106ab147bbe9f59d717214f274041a432abbebc2cde11021c32",
+    "sourceDimensions": [
+      1536,
+      1024
+    ],
+    "origin": "Original OpenAI built-in imagegen; transparent background; offline packing only"
+  },
+  {
+    "key": "first-habitat",
+    "file": "public/assets/colonization/first-habitat.png",
+    "dimensions": [
+      768,
+      543
+    ],
+    "bytes": 652782,
+    "frames": 1,
+    "sourceFile": "exec-cb54a190-4f0c-40c3-ae33-24ec704b78d7.png",
+    "sourceSha256": "05177a8eee3679e995dd6264a3207c8b44eb94113bea3925f44919d5239f018d",
+    "sourceDimensions": [
+      1536,
+      1024
+    ],
+    "origin": "Original OpenAI built-in imagegen; transparent background; offline packing only"
+  },
+  {
+    "key": "dante-bankGrazer-motion",
+    "file": "public/assets/colonization/dante-bankGrazer-motion.png",
+    "dimensions": [
+      1024,
+      512
+    ],
+    "bytes": 557730,
+    "frames": 8,
+    "sourceFile": "exec-701324f2-f416-4820-a58e-77a8f8479c0d.png",
+    "sourceSha256": "23b235ce6a436cb9a8a198af6630824ad7bd65b90f89e6230b38b0efe9c820f6",
+    "sourceDimensions": [
+      1536,
+      1024
+    ],
+    "origin": "Original OpenAI built-in imagegen; transparent background; offline packing only"
+  },
+  {
+    "key": "dante-reedSpitter-motion",
+    "file": "public/assets/colonization/dante-reedSpitter-motion.png",
+    "dimensions": [
+      1024,
+      512
+    ],
+    "bytes": 496721,
+    "frames": 8,
+    "sourceFile": "exec-7207b515-43c4-4d88-8e33-30587f225e5d.png",
+    "sourceSha256": "a73a7d7ad513499c52e9afa3055ed78bdb244ecce71e05a4520f5e16d75bcc16",
+    "sourceDimensions": [
+      1774,
+      887
+    ],
+    "origin": "Original OpenAI built-in imagegen; transparent background; offline packing only"
+  }
+]

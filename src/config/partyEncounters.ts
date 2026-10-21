@@ -1,12 +1,15 @@
 import type { JourneyArea } from '../systems/LocalJourney';
+import type {ColonyKind} from './colonization';
 import type { SiroccoKind } from './sirocco';
 import type { FrostKind } from './frost';
 import type { VolcanicKind } from './volcanic';
 
-type Resident = { id:number; kind:'crawler'|'carapace'|'thorn'|'iceCarapace'|SiroccoKind|FrostKind|VolcanicKind; x:number;y:number;minParty:number };
+type Resident = { id:number; kind:'crawler'|'carapace'|'thorn'|'iceCarapace'|ColonyKind|SiroccoKind|FrostKind|VolcanicKind; x:number;y:number;minParty:number };
 // Three authored reserve habitats per exploration region: +1/+2/+3 for a
 // fixed team of 2/3/4. Boss arenas and safe bases do not receive extra mobs.
 const habitats:Partial<Record<JourneyArea,readonly (readonly [Resident['kind'],number,number])[]>> = {
+  springs:[['bankGrazer',820,1040],['reedSpitter',1540,1120],['bankGrazer',2120,980]],
+  terraces:[['bankGrazer',780,960],['reedSpitter',1260,540],['bankGrazer',1700,1120]],
   forest:[['crawler',920,920],['crawler',1500,550],['crawler',1770,1100]],
   cavern:[['crawler',1110,960],['crawler',2110,930],['crawler',4100,930]],
   valley:[['carapace',1000,870],['thorn',1590,1110],['carapace',3280,920]],

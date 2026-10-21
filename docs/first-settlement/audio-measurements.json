@@ -1,0 +1,38 @@
+[
+  {
+    "track": "base",
+    "durationSeconds": 128.0,
+    "bpm": 60,
+    "bars": 32,
+    "bytes": 1793140,
+    "peak": 0.3,
+    "rms": 0.0501,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "8bcc8ead122527d769fbb0454cd929cfb021a195d7bfbb053e8f975b08b0c3b4"
+  },
+  {
+    "track": "springs",
+    "durationSeconds": 154.286,
+    "bpm": 56,
+    "bars": 36,
+    "bytes": 2161414,
+    "peak": 0.3,
+    "rms": 0.0595,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "444db31e5390697f7aca5504f2c5ef887f1900e53a8b289a775eb20ee836aba7"
+  },
+  {
+    "track": "terraces",
+    "durationSeconds": 135.0,
+    "bpm": 64,
+    "bars": 36,
+    "bytes": 1891152,
+    "peak": 0.3,
+    "rms": 0.0587,
+    "boundaryDelta": 0.0,
+    "boundaryFadeMs": 12,
+    "sha256": "67274d8b2090380e9cfe359e6bbc3a209cd9583bc17f11737ca3a8d63c655dee"
+  }
+]

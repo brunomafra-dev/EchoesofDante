@@ -3,6 +3,9 @@ export const AUDIO = {
   music: 0.48,
   sfx: 0.9,
   tracks: {
+    base:'base-journey.mp3',
+    springs:'springs-journey.mp3',
+    terraces:'terraces-journey.mp3',
     cinder: 'cinder-journey.mp3',
     obsidian: 'obsidian-journey.mp3',
     caldera: 'caldera-journey.mp3',

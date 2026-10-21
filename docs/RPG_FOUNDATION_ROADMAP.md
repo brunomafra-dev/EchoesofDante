@@ -1,6 +1,6 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
-**Etapa atual · 0.1.124:** usuário encerrou a revisão dos motores e aprovou o curta de introdução. Preservar a mixagem do filme; a proposta 0.1.123 continua somente no laboratório. Autorizou o [primeiro ciclo de missões da chegada](arrival-missions/README.md): quatro missões nos mapas atuais, diário/tracker, indicadores nos NPCs e progresso cooperativo validado pelo anfitrião. Novos mapas, três missões restantes e abrigo aguardam o playtest humano desta entrega. Os registros abaixo são históricos.
+**Etapa atual · 0.1.125:** usuário autorizou continuar a fase 5 em 21/10/2026, concluir as missões e revisar o Ivo flutuando/manchas brancas. [Primeiro assentamento](first-settlement/README.md): Bacia das Nascentes e Terraços do Amanhecer, três missões finais, duas espécies locais e carga de habitação instalada. Acampamento revisto. Preservar filme/mixagem aprovados. QA técnico não substitui playtest humano; aguardar a validação desta entrega antes de outra etapa. Registros abaixo são históricos.
 
 **Proposta sonora · 0.1.123:** usuário rejeitou as fontes isoladas por falta de propulsão. [Nova base gravada e desenho de turbina](cinematic-opening/revision-07/README.md) publicados no player móvel para escuta. Não confundir força espectral medida com aprovação perceptual. **Aguardar esta avaliação antes da mixagem no filme ou avanço de etapa.**
 

@@ -8,7 +8,7 @@ const PAINTINGS = [
   'first-echo-archive', 'sealed-threshold', 'open-threshold', 'terrain-blend',
   'guardian-lintel-closed', 'guardian-lintel-open', 'resonance-growth',
 ] as const;
-export type EnvironmentPainting = typeof PAINTINGS[number];
+export type EnvironmentPainting = typeof PAINTINGS[number] | 'spring-pool' | 'camp-supplies' | 'first-habitat' | 'camp-ground';
 
 type Occluder = { image: Phaser.GameObjects.Image; alpha: number; width: number; height: number; coverage: Uint8ClampedArray };
 const occluders = new WeakMap<Phaser.Scene, Occluder[]>();

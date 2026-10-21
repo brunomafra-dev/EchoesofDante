@@ -1,0 +1,190 @@
+{
+  "method": "Chrome; DEV positioning/encounter setup, real inputs, storage, touch emulation and Gamepad API mock; not physical-device testing",
+  "checks": [
+    "Fresh isolated journey, overhead available marker, locked NPC and short Nara acceptance",
+    "Walking objectives, live tracker, paused solo journal, return station, turn-in and duplicate rejection",
+    "Both authored samples use actual investigate input; Lia report and 30-credit personal reward",
+    "Existing Echo/fissure/mechanism discovery drives mission facts without new progression",
+    "Simulated old Warden report, personal reward receipts, reload and real-save isolation",
+    "Mission dialogue preserves existing NPC services",
+    "Three round trips: bounded world/texture/UI counts and sampled idle FPS",
+    "Journal/tracker fit 1280×720, 1366×768, 1920×1080 and 844×390",
+    "Touch: tracker/journal, contextual conversation and acceptance",
+    "Gamepad API mock: L3 journal, B close, A conversation/acceptance"
+  ],
+  "errors": [],
+  "listeners": {
+    "before": {
+      "beforeunload": 1,
+      "__playwright_global_listeners_check__": 1,
+      "mousemove": 1,
+      "pointerdown": 1,
+      "pointerup": 1,
+      "touchstart": 1,
+      "touchend": 1,
+      "touchcancel": 1,
+      "mousedown": 2,
+      "mouseup": 2,
+      "click": 1,
+      "auxclick": 1,
+      "dblclick": 1,
+      "contextmenu": 1,
+      "keydown": 10,
+      "keyup": 3,
+      "dante-chat": 1,
+      "dante-coop": 2,
+      "resize": 2,
+      "blur": 1,
+      "pagehide": 1
+    },
+    "after": {
+      "beforeunload": 1,
+      "__playwright_global_listeners_check__": 1,
+      "mousemove": 1,
+      "pointerdown": 1,
+      "pointerup": 1,
+      "touchstart": 1,
+      "touchend": 1,
+      "touchcancel": 1,
+      "mousedown": 2,
+      "mouseup": 2,
+      "click": 1,
+      "auxclick": 1,
+      "dblclick": 1,
+      "contextmenu": 1,
+      "keydown": 10,
+      "keyup": 3,
+      "dante-chat": 1,
+      "dante-coop": 2,
+      "resize": 2,
+      "blur": 1,
+      "pagehide": 1
+    }
+  },
+  "stability": {
+    "before": {
+      "area": "base",
+      "missions": {
+        "schema": 1,
+        "accepted": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond"
+        ],
+        "completed": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond"
+        ],
+        "evidence": [
+          "clearing",
+          "roots",
+          "water",
+          "biology",
+          "echo1",
+          "echo2",
+          "echo3",
+          "passage",
+          "first-echo",
+          "warden"
+        ]
+      },
+      "status": {
+        "recon": "completed",
+        "survival": "completed",
+        "signal": "completed",
+        "beyond": "completed"
+      },
+      "credits": 150,
+      "rewards": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond"
+      ],
+      "hp": 110,
+      "xp": 120,
+      "paused": false,
+      "objects": 64,
+      "textures": 217,
+      "tweens": 0,
+      "dialogs": 1,
+      "tracker": 1,
+      "pos": {
+        "x": 830,
+        "y": 735
+      }
+    },
+    "after": {
+      "area": "base",
+      "missions": {
+        "schema": 1,
+        "accepted": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond"
+        ],
+        "completed": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond"
+        ],
+        "evidence": [
+          "clearing",
+          "roots",
+          "water",
+          "biology",
+          "echo1",
+          "echo2",
+          "echo3",
+          "passage",
+          "first-echo",
+          "warden"
+        ]
+      },
+      "status": {
+        "recon": "completed",
+        "survival": "completed",
+        "signal": "completed",
+        "beyond": "completed"
+      },
+      "credits": 150,
+      "rewards": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond"
+      ],
+      "hp": 110,
+      "xp": 120,
+      "paused": false,
+      "objects": 64,
+      "textures": 217,
+      "tweens": 0,
+      "dialogs": 1,
+      "tracker": 1,
+      "pos": {
+        "x": 1040,
+        "y": 800
+      }
+    }
+  },
+  "fps": {
+    "samples": [
+      51.49623966217041,
+      53.87217974662781,
+      53.87217974662781,
+      55.654134809970856,
+      55.654134809970856,
+      56.74060110747814,
+      56.74060110747814,
+      57.555450830608606
+    ],
+    "average": 55.19819022761658
+  },
+  "passed": true
+}

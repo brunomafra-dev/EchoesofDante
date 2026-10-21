@@ -32,7 +32,7 @@ export type PartyBridge={
  prompt:(position:Vec2,owner:string)=>{available:boolean;action:string};
  sync:(world:PartyWorld)=>boolean;render:(pose:PartyPose)=>void;
 };
-type Presented=Enemy&{view?:Phaser.GameObjects.Container;body?:Phaser.GameObjects.Image;telegraph?:Phaser.GameObjects.Ellipse;warning?:Phaser.GameObjects.Graphics;direction?:number;attackAngle?:number;projectile?:Phaser.GameObjects.Ellipse;shots?:{active:boolean;x:number;y:number;angle:number}[]};
+type Presented=Enemy&{view?:Phaser.GameObjects.Container;body?:Phaser.GameObjects.Image;telegraph?:Phaser.GameObjects.Ellipse;warning?:Phaser.GameObjects.Graphics;direction?:number;attackAngle?:number;projectile?:Phaser.GameObjects.Ellipse;shots?:{active:boolean;x:number;y:number;angle:number;image?:Phaser.GameObjects.Image}[]};
 type Mirror={body:Phaser.GameObjects.Image;shadow:Phaser.GameObjects.Ellipse;warning:Phaser.GameObjects.Ellipse;line:Phaser.GameObjects.Line;hp:Phaser.GameObjects.Rectangle;name:Phaser.GameObjects.Text;layers:Phaser.GameObjects.Image[]};
 const INPUT_EDGES=['dash','charge','release','cancel','interact','restart','element'] as const;
 // Regional host authority. There is no second AI simulation in the visitor browser.
@@ -57,6 +57,7 @@ export class PartyExpedition {
  cancelLocalInput():void{this.attackQueued=false;for(const key of INPUT_EDGES)this.queued[key]=false;if(room.role==='guest')room.send('input',{...NO_INPUT,cancel:true});}
  private mirrors=new Map<number,Mirror>();
  private projectiles:Phaser.GameObjects.Rectangle[]=[];
+ private waterProjectiles=new Map<number,Phaser.GameObjects.Image>();
  private readonly visitorWave:Phaser.GameObjects.Ellipse;
  private status:Phaser.GameObjects.Text;
  private hiddenLocalEnemies=false;
@@ -135,7 +136,7 @@ export class PartyExpedition {
     projectile:e.projectile?.visible?{x:e.projectile.x,y:e.projectile.y,rotation:e.projectile.rotation}:undefined};
   });
   const shots:PartyWorld['shots']=[...(a.hunter?.projectilePoses()??[]),...[...this.actors.values()].flatMap(actor=>actor.hunter?.projectilePoses()??[])].map(shot=>({...shot,friendly:true}));
-  for(const e of a.enemies as readonly Presented[])for(const shot of e.shots??[])if(shot.active)shots.push({x:shot.x,y:shot.y,rotation:shot.angle});
+  for(const e of a.enemies as readonly Presented[])for(const shot of e.shots??[])if(shot.active)shots.push({x:shot.x,y:shot.y,rotation:shot.angle,water:shot.image?.texture.key==='astral-water-bolt'});
   const world:PartyWorld={missions:a.missions,area:a.area,time:now,progression:a.progression,flags:a.flags,host,players,enemies:enemies.filter(e=>!['warden','soterrado','vesper','titan'].includes(e.species)),boss:captureBoss(a.boss),signalPortal:a.signalPortal,resources:a.resources,resourceAwarded:a.resourceAwarded,potionUsed:a.potionUsed,visited:a.visited,returnStation:a.returnStation,expeditionReturn:a.expeditionReturn,loot:a.loot,lootAwarded:[...room.lootAwarded.values()].slice(-512),
    impacts:a.impacts,message:a.hud.partyMessage,prompt:false,action:'INVESTIGAR',shots};
   room.send('world',world);
@@ -224,7 +225,7 @@ export class PartyExpedition {
     .setOrigin(layer.originX,layer.originY).setPosition(x+layer.x,y+layer.y).setRotation(layer.rotation).setFlipX(layer.flip).setDepth(y+layer.depth*.001);});
    m.shadow.setPosition(x,y+12).setDepth(y-2).setVisible(true);
    m.warning.setPosition(e.warningX,e.warningY).setDisplaySize(e.warningWidth,e.warningHeight).setRotation(e.angle).setDepth(e.y-1).setVisible(e.warning);
-   const ranged=e.species.includes('Spitter')||e.species==='thorn'||e.species==='fumarole'||e.species==='emberHound';
+   const ranged=e.species.includes('Spitter')||e.species==='thorn'||e.species==='reedSpitter'||e.species==='fumarole'||e.species==='emberHound';
    m.line.setPosition(e.x,e.y).setRotation(e.angle).setDepth(e.y-1).setVisible(e.warning&&ranged);
    m.hp.setPosition(e.x-20,e.y-62).setDisplaySize(40*e.hp/e.maxHp,4).setDepth(10002).setVisible(damaged);
    m.name.setText(SPECIES[e.species as SpeciesId]?.name??'Criatura').setPosition(e.x,e.y-79).setDepth(10003).setVisible(damaged||e.warning);
@@ -232,7 +233,8 @@ export class PartyExpedition {
   for(const[id,m]of this.mirrors)if(!live.has(id)){for(const key of ['body','shadow','warning','line','hp','name'] as const)m[key].setVisible(false);m.layers.forEach(image=>image.setVisible(false));}
   const shots=[...world.shots,...world.enemies.flatMap(e=>e.projectile?[e.projectile]:[])].slice(0,64);
   while(this.projectiles.length<shots.length)this.projectiles.push(this.scene.add.rectangle(0,0,23,5,0xffbd54,.9));
-  this.projectiles.forEach((view,i)=>{const shot=shots[i];view.setVisible(!!shot);if(shot)view.setFillStyle('friendly' in shot&&shot.friendly?0x5fe6d8:0xffbd54,.9).setPosition(shot.x,shot.y).setRotation(shot.rotation).setDepth(shot.y+5);});
+  this.waterProjectiles.forEach(view=>view.setVisible(false));
+  this.projectiles.forEach((view,i)=>{const shot=shots[i],water=!!shot&&'water' in shot&&shot.water===true;view.setVisible(!!shot&&!water);if(!shot)return;if(water){let image=this.waterProjectiles.get(i);if(!image){image=this.scene.add.image(0,0,'astral-water-bolt',0).setDisplaySize(36,24);this.waterProjectiles.set(i,image);}image.setVisible(true).setPosition(shot.x,shot.y).setRotation(shot.rotation).setDepth(shot.y+5);}else view.setFillStyle('friendly' in shot&&shot.friendly?0x5fe6d8:0xffbd54,.9).setPosition(shot.x,shot.y).setRotation(shot.rotation).setDepth(shot.y+5);});
  }
- destroy():void{for(const actor of [...this.actors.values(),...this.playerMirrors.values()])actor.destroy();this.actors.clear();this.playerMirrors.clear();for(const m of this.mirrors.values()){for(const key of ['body','shadow','warning','line','hp','name'] as const)m[key].destroy();m.layers.forEach(p=>p.destroy());}this.mirrors.clear();this.projectiles.forEach(p=>p.destroy());this.visitorWave.destroy();this.status.destroy();this.bossMirror.destroy();}
+ destroy():void{for(const actor of [...this.actors.values(),...this.playerMirrors.values()])actor.destroy();this.actors.clear();this.playerMirrors.clear();for(const m of this.mirrors.values()){for(const key of ['body','shadow','warning','line','hp','name'] as const)m[key].destroy();m.layers.forEach(p=>p.destroy());}this.mirrors.clear();this.projectiles.forEach(p=>p.destroy());this.waterProjectiles.forEach(p=>p.destroy());this.waterProjectiles.clear();this.visitorWave.destroy();this.status.destroy();this.bossMirror.destroy();}
 }

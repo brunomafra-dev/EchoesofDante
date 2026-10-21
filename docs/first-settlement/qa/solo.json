@@ -1,0 +1,160 @@
+{
+  "method": "Chrome DEV; real interactions, authored travel and samples; explicit positions/damage for combat coverage, touch emulation and Gamepad API mock",
+  "checks": [
+    "Isolated post-Warden lab, Lia acceptance, atlas to Valley and real northern branch entry",
+    "Six residents in three authored groups, distinct whole-body species, real melee damage, death, XP and renewal receipts",
+    "Spring scan/report, unique 45 credits, forward passage into Terraces",
+    "Both terrain routes and Ivo report; shelter cannot be installed before soil analysis",
+    "Prepared expedition cargo installs habitat/reservoir/planter and colonists, three simple colliders, no duplicate structure, unique final reward",
+    "Reload preserves seven reports, new region access, settlement and rewards; real saves untouched",
+    "Death/respawn preserves settlement and mission progression",
+    "Three repeated trips have stable world/texture counts; FPS sampled independently"
+  ],
+  "errors": [],
+  "stability": {
+    "before": {
+      "area": "terraces",
+      "snapshot": {
+        "schema": 1,
+        "accepted": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond",
+          "water-source",
+          "safe-route",
+          "shelter"
+        ],
+        "completed": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond",
+          "water-source",
+          "safe-route",
+          "shelter"
+        ],
+        "evidence": [
+          "clearing",
+          "roots",
+          "water",
+          "biology",
+          "echo1",
+          "echo2",
+          "echo3",
+          "passage",
+          "first-echo",
+          "warden",
+          "spring",
+          "route-west",
+          "route-east",
+          "site",
+          "soil",
+          "shelter-built"
+        ]
+      },
+      "credits": 475,
+      "rewards": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter"
+      ],
+      "xp": 396,
+      "objects": 104,
+      "textures": 217,
+      "tweens": 0,
+      "habitat": true,
+      "obstacles": 30,
+      "hp": 0,
+      "dead": false,
+      "position": {
+        "x": 340,
+        "y": 850
+      }
+    },
+    "after": {
+      "area": "terraces",
+      "snapshot": {
+        "schema": 1,
+        "accepted": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond",
+          "water-source",
+          "safe-route",
+          "shelter"
+        ],
+        "completed": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond",
+          "water-source",
+          "safe-route",
+          "shelter"
+        ],
+        "evidence": [
+          "clearing",
+          "roots",
+          "water",
+          "biology",
+          "echo1",
+          "echo2",
+          "echo3",
+          "passage",
+          "first-echo",
+          "warden",
+          "spring",
+          "route-west",
+          "route-east",
+          "site",
+          "soil",
+          "shelter-built"
+        ]
+      },
+      "credits": 475,
+      "rewards": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter"
+      ],
+      "xp": 396,
+      "objects": 104,
+      "textures": 217,
+      "tweens": 0,
+      "habitat": true,
+      "obstacles": 30,
+      "hp": 130,
+      "dead": false,
+      "position": {
+        "x": 340,
+        "y": 850
+      }
+    }
+  },
+  "fps": {
+    "samples": [
+      50.953105449676514,
+      50.953105449676514,
+      51.464829087257385,
+      51.464829087257385,
+      51.464829087257385,
+      53.84862181544304,
+      53.84862181544304,
+      53.84862181544304,
+      55.38646636158228,
+      55.38646636158228
+    ],
+    "average": 52.86194963306188
+  },
+  "passed": true
+}

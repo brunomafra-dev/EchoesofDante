@@ -15,7 +15,7 @@ export function inspectRoom(url:string,code:string):Promise<RoomInspection> {
     socket.onopen=()=>socket.send(JSON.stringify({type:'inspect',code}));
     socket.onmessage=event=>{
       let m;try{m=JSON.parse(event.data);}catch{return;}
-      if(m.type==='lobby'&&m.protocol===13&&Array.isArray(m.members)&&m.members.length<=4&&m.campaign)finish({members:m.members,campaign:m.campaign,area:m.area});
+      if(m.type==='lobby'&&m.protocol===14&&Array.isArray(m.members)&&m.members.length<=4&&m.campaign)finish({members:m.members,campaign:m.campaign,area:m.area});
       else if(m.type==='lobby')finish(undefined,'O servidor de salas aguarda a atualização das campanhas.');
       else if(m.type==='error')finish(undefined,String(m.message));
     };

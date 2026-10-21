@@ -64,4 +64,4 @@ Amostras locais: **55,2 FPS médios na base**, chegando a 57,8; **57,7 FPS médi
 
 **21/10/2026:** usuário autorizou avançar à fase 5 e pediu corrigir o grounding do Ivo e transformar a base em um acampamento coerente. Essa autorização permite a próxima entrega, sem tratar os seus problemas visuais da base como resolvidos nesta versão.
 
-**Próximo gate:** validar indicadores, clareza do tracker, conversas e objetivos, sozinho e com amigos. Só depois iniciar os dois mapas e o primeiro núcleo habitável.
+**Atualização do gate:** o usuário autorizou a fase 5 em 21/10/2026. Os dois mapas e o primeiro núcleo habitável estão documentados na [entrega 0.1.125](../first-settlement/README.md); sua validação humana permanece pendente.

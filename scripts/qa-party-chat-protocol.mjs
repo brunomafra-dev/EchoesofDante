@@ -12,7 +12,7 @@ async function client(){const ws=new WebSocket(url),inbox=[];ws.on('message',r=>
 try{
  const id=randomUUID(),ids=Array.from({length:4},()=>randomUUID()),team=await Promise.all(ids.map(client)),campaigns=ids.map(memberId=>({id,mode:'coop',size:4,difficulty:'normal',memberId,hostId:ids[0],memberKey:randomBytes(24).toString('hex'),introSeen:true,crew:[]}));
  const profiles=['Guilherme','Lúcia','Álvaro','Érica'].map((name,i)=>({characterId:ids[i],name,classId:['warrior','hunter','astral','xenobinder'][i],sex:'female',build:{xp:0}}));
- const h=team[0];h.send({type:'create',profile:profiles[0],campaign:campaigns[0],area:'forest'});const joined=await h.next('joined');assert.equal(joined.protocol,13);assert.deepEqual(joined.chatHistory,[]);
+ const h=team[0];h.send({type:'create',profile:profiles[0],campaign:campaigns[0],area:'forest'});const joined=await h.next('joined');assert.equal(joined.protocol,14);assert.deepEqual(joined.chatHistory,[]);
  for(let i=1;i<4;i++){team[i].send({type:'join',profile:profiles[i],campaign:campaigns[i],code:joined.code});await team[i].next('joined');}
  const observer=await client();observer.send({type:'inspect',code:joined.code});await observer.next('lobby');observer.send({type:'chat',text:'intruso'});await sleep(50);assert.equal(h.inbox.some(m=>m.type==='chat'),false);
  team[1].send({type:'chat',text:'Olá <b>equipe</b>!',author:'host',name:'Falso',id:'fake',at:1});

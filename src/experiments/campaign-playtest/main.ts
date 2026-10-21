@@ -4,7 +4,8 @@ import '../../style.css';
 // character, setting or one-shot launch in the real game is read or modified.
 const get=Storage.prototype.getItem,set=Storage.prototype.setItem,remove=Storage.prototype.removeItem;
 const missionTest=new URLSearchParams(location.search).has('missions');
-const prefix=missionTest?'dante-missions-lab.':'dante-campaign-lab.';
+const settlementTest=new URLSearchParams(location.search).has('settlement');let primeSettlement=false;
+const prefix=settlementTest?'dante-settlement-lab.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
 const isolatedKey=(storage:Storage,key:string)=>prefix+(storage===localStorage?'local.':'session.')+key;
 Storage.prototype.getItem=function(key){return key.startsWith('echoes-of-dante.')?get.call(sessionStorage,isolatedKey(this,key)):get.call(this,key)};
 Storage.prototype.setItem=function(key,value){if(key.startsWith('echoes-of-dante.'))set.call(sessionStorage,isolatedKey(this,key),String(value));else set.call(this,key,value)};
@@ -19,12 +20,19 @@ if(missionTest){
  const {characterProfiles}=await import('../../systems/CharacterProfiles');
  if(!new URLSearchParams(location.search).has('sala')){
   if(!characterProfiles.list.length){const hero=characterProfiles.create('Pioneiro','warrior','male',{mode:'solo',difficulty:'normal'});
-   if(hero){characterProfiles.select(hero.id);characterProfiles.markIntroSeen(hero.id);sessionStorage.setItem('echoes-of-dante.launch-once',hero.id);}
+   if(hero){characterProfiles.select(hero.id);characterProfiles.markIntroSeen(hero.id);sessionStorage.setItem('echoes-of-dante.launch-once',hero.id);primeSettlement=settlementTest;}
   }
  }
 }
 document.body.append(details);
+if(settlementTest){
+ details.querySelector('summary')!.textContent='ETAPA 5 · NASCENTES, TERRAÇOS E ACAMPAMENTO · TESTE RESERVADO';
+ const intro=document.createElement('p');intro.textContent='Campanha anterior simulada: converse com Lia e use M para viajar ao Vale da Ressonância. Você chega perto da trilha das Nascentes; E entra. Depois explore os Terraços e conclua os três relatórios para instalar o primeiro abrigo. Confira também o acampamento e os pés do Ivo.';details.querySelector('summary')!.after(intro);
+ const stages=details.querySelector('.mission-lab-stages')!;stages.replaceChildren();
+ for(const[id,text]of [['water-source','LIA · ÁGUA PARA PERMANECER'],['safe-route','IVO · ROTA DOS TERRAÇOS'],['shelter','NARA · PRIMEIRO ABRIGO']]){const b=document.createElement('button');b.dataset.stage=id;b.textContent=text;stages.append(b);}
+}
 const {game}=await import('../../main');
+if(primeSettlement){const prime=()=>{const scene=game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene;if(scene?.sys.isActive()&&scene.seedMissionPlaytest('water-source'))game.events.off('step',prime);};game.events.on('step',prime);}
 if(missionTest)for(const b of Array.from(details.querySelectorAll<HTMLButtonElement>('[data-stage]')))b.onclick=()=>{
  const scene=game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene;
  const ok=scene?.sys.isActive()&&scene.seedMissionPlaytest(b.dataset.stage as import('../../config/missions').MissionId);

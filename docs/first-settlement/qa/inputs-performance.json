@@ -1,0 +1,55 @@
+{
+  "method": "One Chrome page at a time; DEV positions for samples/enemy preparation, real combat and UI inputs; touch emulation and Gamepad API mock, not physical hardware",
+  "checks": [
+    "Fole windup, three water shots and actual received ranged damage",
+    "Existing directed basic attack damages local fauna; Dash and held/released Charge remain usable",
+    "New regions remain readable at four resolutions; measured warmed single-page FPS and reachable spring routes",
+    "Touch: Lia acceptance, atlas, new branch, spring analysis and journal",
+    "Gamepad mock: A conversation/accept/branch/analysis, L3 journal and B close"
+  ],
+  "errors": [],
+  "fps": {
+    "springs": {
+      "samples": [
+        59.787466540554306,
+        59.84059990541573,
+        59.84059990541573,
+        60.1304499290618,
+        60.1304499290618,
+        60.09783744679635,
+        60.07337808509726,
+        60.07337808509726,
+        60.055033563822946,
+        60.055033563822946,
+        60.04127517286721,
+        60.04127517286721
+      ],
+      "average": 60.01389810832338
+    },
+    "terraces": {
+      "samples": [
+        59.26420297865573,
+        59.4481522339918,
+        59.4481522339918,
+        59.83611417549385,
+        59.83611417549385,
+        59.87708563162039,
+        59.87708563162039,
+        59.90781422371529,
+        59.90781422371529,
+        59.93086066778647,
+        59.93086066778647,
+        59.94814550083985
+      ],
+      "average": 59.767700195392585
+    }
+  },
+  "reachability": {
+    "springs": [
+      true,
+      true,
+      true
+    ]
+  },
+  "passed": true
+}

@@ -1,6 +1,6 @@
 # Dante — correções visuais, comunicação cooperativa e primeira colonização
 
-**Etapa atual · 0.1.124:** abertura completa aceita pelo usuário; ele pediu encerrar a revisão dos motores e conservar a mixagem vigente. A proposta isolada 0.1.123 não entrou no filme. Usuário autorizou o primeiro ciclo de [missões da chegada](arrival-missions/README.md), com indicadores nos NPCs e mission tracker. Quatro relatórios na campanha existente; mapas e assentamento aguardam validação humana. Os registros sonoros abaixo são históricos.
+**Etapa atual · 0.1.125:** em 21/10/2026 o usuário autorizou avançar à fase 5 e pediu corrigir o Ivo flutuando e as manchas brancas da base. [Primeiro assentamento](first-settlement/README.md): dois mapas ramificados após o Warden, três missões finais, fauna local e instalação da carga habitável. Acampamento revisto. QA técnico e aprovação humana permanecem separados; não iniciar outra etapa antes do playtest desta entrega. A abertura aprovada e a mixagem vigente foram preservadas; a proposta isolada 0.1.123 não entrou no filme. Registros sonoros abaixo são históricos.
 
 **Ajuste · 0.1.121:** trilha/fundo 0.1.120 aprovados pelo usuário; reforçar aceleração e propulsores sem alterar o restante. [Revisão dos motores](cinematic-opening/revision-06/README.md), ainda sujeita à escuta humana antes da etapa 4.
 
@@ -15,8 +15,8 @@ Plano aprovado em 16/10/2026. Complementa o [plano da fundação RPG](RPG_FOUNDA
 | 1 | Personagens completos + início pelo clique na dificuldade | [0.1.103](character-cohesion/revision-03/README.md) validada para avançar; pente fino visual posterior |
 | 2 | Nomes e chat da equipe | [0.1.104](party-chat/README.md) validada pelo usuário: “Deu certo perfeito irmão”; Render/Vercel e chat público conferidos |
 | 3 | Piloto de cinemática; abertura completa após aprovação | Abertura completa aprovada pelo usuário, incluindo vozes e trilha. Revisão sonora encerrada a pedido dele, preservando a mixagem vigente; sem integrar a proposta isolada 0.1.123 |
-| 4 | Missões, diálogos e diário desde a chegada | [0.1.124: primeiro ciclo de quatro missões](arrival-missions/README.md), indicadores nos NPCs, tracker e progresso da equipe. QA técnico separado da validação humana pendente |
-| 5 | Dois mapas e primeiro núcleo habitável | Planejada |
+| 4 | Missões, diálogos e diário desde a chegada | [0.1.124: quatro missões](arrival-missions/README.md), indicadores, tracker e progresso da equipe. Usuário autorizou avanço à fase 5 em 21/10/2026 |
+| 5 | Dois mapas e primeiro núcleo habitável | [0.1.125: Nascentes e Terraços](first-settlement/README.md), três relatórios finais, módulo e colonos; revisão do acampamento incluída. Validação humana pendente |
 
 Cada entrega termina com laboratório reservado que protege saves reais, QA, documentação, versão, commit e push. **A etapa seguinte aguarda validação humana.** Aprovação técnica e visual são registradas separadamente.
 

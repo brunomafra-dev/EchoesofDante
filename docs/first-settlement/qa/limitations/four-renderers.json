@@ -1,0 +1,350 @@
+{
+  "method": "Four isolated browser contexts with visible-document and focus emulation, 20 FPS cap on two background clients only to fit one QA machine; real relay and inputs; DEV positioning/invulnerability for transaction tests and initial post-Warden lab preparation. No physical-device claim.",
+  "checks": [
+    "4 original classes start and share an explicitly simulated post-Warden campaign"
+  ],
+  "errors": [],
+  "failure": "TimeoutError: page.waitForFunction: Timeout 20000ms exceeded.",
+  "wire": [
+    {
+      "sent": {
+        "create": 1,
+        "pause": 2,
+        "ping": 7,
+        "start": 1,
+        "ready": 1,
+        "world": 97
+      },
+      "received": {
+        "connected": 3,
+        "joined": 1,
+        "roster": 16,
+        "pause": 2,
+        "input": 524,
+        "awards-ack": 35
+      },
+      "sentWorld": {
+        "sequence": 97,
+        "epoch": 0,
+        "area": "base",
+        "enemies": 0,
+        "xp": 350,
+        "time": 156965.5
+      }
+    },
+    {
+      "sent": {
+        "inspect": 1,
+        "join": 1,
+        "equipment": 4,
+        "ping": 6,
+        "ready": 1,
+        "input": 1820
+      },
+      "received": {
+        "connected": 2,
+        "lobby": 1,
+        "joined": 1,
+        "roster": 15,
+        "pause": 1,
+        "world": 35
+      },
+      "receivedWorld": {
+        "epoch": 0,
+        "area": "base",
+        "enemies": 0,
+        "xp": 350,
+        "time": 52532.7
+      }
+    },
+    {
+      "sent": {
+        "inspect": 1,
+        "join": 1,
+        "equipment": 5,
+        "ready": 1,
+        "input": 1746,
+        "ping": 6
+      },
+      "received": {
+        "connected": 2,
+        "lobby": 1,
+        "joined": 1,
+        "roster": 13,
+        "pause": 1,
+        "world": 35
+      },
+      "receivedWorld": {
+        "epoch": 0,
+        "area": "base",
+        "enemies": 0,
+        "xp": 350,
+        "time": 52532.7
+      }
+    },
+    {
+      "sent": {
+        "inspect": 1,
+        "join": 1,
+        "equipment": 4,
+        "ready": 1,
+        "input": 1816,
+        "ping": 6
+      },
+      "received": {
+        "connected": 2,
+        "lobby": 1,
+        "joined": 1,
+        "roster": 9,
+        "pause": 1,
+        "world": 34
+      },
+      "receivedWorld": {
+        "epoch": 0,
+        "area": "base",
+        "enemies": 0,
+        "xp": 350,
+        "time": 52416
+      }
+    }
+  ],
+  "diagnostics": [
+    {
+      "area": "base",
+      "paused": false,
+      "modal": false,
+      "transition": false,
+      "loop": 50.91834742734093,
+      "now": 177515.5,
+      "position": {
+        "x": 535,
+        "y": 755
+      },
+      "players": [
+        {
+          "id": "1301fb51-a76d-42dd-b904-37a073548d73",
+          "position": {
+            "x": 395,
+            "y": 755
+          }
+        },
+        {
+          "id": "96727a7e-43d3-445e-a53f-fe803c167cc5",
+          "position": {
+            "x": 535,
+            "y": 755
+          }
+        },
+        {
+          "id": "a7ce989f-7e5f-4208-9a94-9399bb4325be",
+          "position": {
+            "x": 535,
+            "y": 755
+          }
+        }
+      ],
+      "missions": {
+        "schema": 1,
+        "accepted": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond"
+        ],
+        "completed": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond"
+        ],
+        "evidence": [
+          "clearing",
+          "roots",
+          "water",
+          "biology",
+          "echo1",
+          "echo2",
+          "echo3",
+          "passage",
+          "first-echo",
+          "warden"
+        ]
+      },
+      "notice": "",
+      "pending": false,
+      "requests": [],
+      "worldAt": 0,
+      "sendAt": 177498.8,
+      "offset": 0,
+      "localMenu": false,
+      "sequence": 97,
+      "buffered": 133833,
+      "message": "Equipe original reunida.",
+      "epoch": 0,
+      "connected": true,
+      "running": true
+    },
+    {
+      "area": "base",
+      "paused": false,
+      "modal": false,
+      "transition": false,
+      "loop": 57.22891478816133,
+      "now": 169800.2,
+      "position": {
+        "x": 475,
+        "y": 755
+      },
+      "players": [],
+      "missions": {
+        "schema": 1,
+        "accepted": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond"
+        ],
+        "completed": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond"
+        ],
+        "evidence": [
+          "clearing",
+          "roots",
+          "water",
+          "biology",
+          "echo1",
+          "echo2",
+          "echo3",
+          "passage",
+          "first-echo",
+          "warden"
+        ]
+      },
+      "notice": "",
+      "pending": false,
+      "requests": [],
+      "worldAt": 156366.39999999106,
+      "worldTime": 52182.6,
+      "sendAt": 169767,
+      "offset": 0,
+      "localMenu": false,
+      "sequence": 0,
+      "buffered": 106302,
+      "message": "Equipe original reunida.",
+      "epoch": 0,
+      "connected": true,
+      "running": true
+    },
+    {
+      "area": "base",
+      "paused": false,
+      "modal": false,
+      "transition": false,
+      "loop": 57.76969298777752,
+      "now": 159329.3,
+      "position": {
+        "x": 315,
+        "y": 755
+      },
+      "players": [],
+      "missions": {
+        "schema": 1,
+        "accepted": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond"
+        ],
+        "completed": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond"
+        ],
+        "evidence": [
+          "clearing",
+          "roots",
+          "water",
+          "biology",
+          "echo1",
+          "echo2",
+          "echo3",
+          "passage",
+          "first-echo",
+          "warden"
+        ]
+      },
+      "notice": "",
+      "pending": false,
+      "requests": [],
+      "worldAt": 143402.90000000596,
+      "worldTime": 52299.1,
+      "sendAt": 159262.7,
+      "offset": 0,
+      "localMenu": false,
+      "sequence": 0,
+      "buffered": 74520,
+      "message": "Equipe original reunida.",
+      "epoch": 0,
+      "connected": true,
+      "running": true
+    },
+    {
+      "area": "base",
+      "paused": false,
+      "modal": false,
+      "transition": false,
+      "loop": 56.79863963685206,
+      "now": 144650.4,
+      "position": {
+        "x": 395,
+        "y": 835
+      },
+      "players": [],
+      "missions": {
+        "schema": 1,
+        "accepted": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond"
+        ],
+        "completed": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond"
+        ],
+        "evidence": [
+          "clearing",
+          "roots",
+          "water",
+          "biology",
+          "echo1",
+          "echo2",
+          "echo3",
+          "passage",
+          "first-echo",
+          "warden"
+        ]
+      },
+      "notice": "",
+      "pending": false,
+      "requests": [],
+      "worldAt": 137666.79999999702,
+      "worldTime": 52082.4,
+      "sendAt": 144583.9,
+      "offset": 0,
+      "localMenu": false,
+      "sequence": 0,
+      "buffered": 104221,
+      "message": "Equipe original reunida.",
+      "epoch": 0,
+      "connected": true,
+      "running": true
+    }
+  ]
+}
