@@ -1,5 +1,7 @@
 # Dante — correções visuais, comunicação cooperativa e primeira colonização
 
+**Correção da entrega · 0.1.126:** confirmado Render no protocolo 14. Consulta de endereço passa a ser compartilhada entre inspeção do convite e entrada após criação, evitando uma nova requisição que podia expirar e anunciar indisponibilidade indevida. Falhas não são armazenadas. Manutenção da etapa 5; continua aguardando validação humana. [Detalhes](first-settlement/README.md).
+
 **Etapa atual · 0.1.125:** em 21/10/2026 o usuário autorizou avançar à fase 5 e pediu corrigir o Ivo flutuando e as manchas brancas da base. [Primeiro assentamento](first-settlement/README.md): dois mapas ramificados após o Warden, três missões finais, fauna local e instalação da carga habitável. Acampamento revisto. QA técnico e aprovação humana permanecem separados; não iniciar outra etapa antes do playtest desta entrega. A abertura aprovada e a mixagem vigente foram preservadas; a proposta isolada 0.1.123 não entrou no filme. Registros sonoros abaixo são históricos.
 
 **Ajuste · 0.1.121:** trilha/fundo 0.1.120 aprovados pelo usuário; reforçar aceleração e propulsores sem alterar o restante. [Revisão dos motores](cinematic-opening/revision-06/README.md), ainda sujeita à escuta humana antes da etapa 4.

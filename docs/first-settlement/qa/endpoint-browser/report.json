@@ -1,0 +1,19 @@
+{
+  "base": "http://localhost:5184",
+  "method": "Compiled build; two separate Chrome instances, real relay and normal movement/UI with feedback-controlled key pulses for WAN latency. Post-Warden preparation only through reserved lab buttons; no DEV globals.",
+  "checks": [
+    "Compiled coop: guest chooses own character/name, receives post-Warden team journal and accepts Lia mission",
+    "Shared mission and new northern passage remain available after invite join"
+  ],
+  "errors": [],
+  "connectionOnly": true,
+  "configurationRequests": [
+    1,
+    1
+  ],
+  "documentNavigations": [
+    4,
+    6
+  ],
+  "passed": true
+}

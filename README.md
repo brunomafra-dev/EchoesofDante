@@ -1,8 +1,8 @@
 # Echoes of Dante
 
-## Primeiro assentamento · 0.1.125
+## Primeiro assentamento · revisão 0.1.126
 
-[Testar Nascentes, Terraços e abrigo](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&settlement=1&v=0.1.125): três novas missões completam o diário da chegada. Ramificação após o Warden, duas espécies locais e instalação da carga de habitação. Base revisada como acampamento, sem manchas brancas e com o Ivo apoiado no chão. O teste começa no relatório pós-Warden e preserva saves reais. [Entrega, assets, QA e limites](docs/first-settlement/README.md). Avanço autorizado pelo usuário em 21/10/2026; aguardar playtest humano desta etapa antes de outra expansão.
+[Testar Nascentes, Terraços e abrigo](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&settlement=1&v=0.1.126): três novas missões completam o diário da chegada. Ramificação após o Warden, duas espécies locais e instalação da carga de habitação. Base revisada como acampamento, sem manchas brancas e com o Ivo apoiado no chão. Revisão 0.1.126 reutiliza a configuração validada do servidor ao entrar pelo convite, evitando uma segunda consulta que podia expirar após criar o personagem. O teste começa no relatório pós-Warden e preserva saves reais. [Entrega, assets, QA e limites](docs/first-settlement/README.md). Avanço autorizado pelo usuário em 21/10/2026; aguardar playtest humano desta etapa antes de outra expansão.
 
 ## Missões da expedição · 0.1.124
 

@@ -1,8 +1,14 @@
-# Primeiro núcleo habitável · 0.1.125
+# Primeiro núcleo habitável · revisão 0.1.126
 
-[Laboratório reservado](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&settlement=1&v=0.1.125) · [Biblioteca](https://echosofdante.vercel.app/test-library.html)
+[Laboratório reservado](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&settlement=1&v=0.1.126) · [Biblioteca](https://echosofdante.vercel.app/test-library.html)
+
+**Manutenção da conexão · 0.1.126:** após o Render publicar o protocolo 14, o teste público expôs uma segunda consulta desnecessária a `/api/coop-config` entre inspecionar o convite e terminar a criação do personagem. Essa chamada expirou e exibiu indisponibilidade apesar do relay online. Agora a página compartilha a consulta em andamento e conserva somente o endereço validado; falhas liberam uma nova tentativa. Timeout de consulta passou de 10 para 30 s. Isso não armazena sala, credenciais ou estado de saúde: a conexão e o protocolo continuam sendo conferidos pelo WebSocket. Mapas, missões, arte e combate da 0.1.125 preservados. `node scripts/qa-coop-endpoint.mjs` verifica concorrência, reutilização após criação, rejeição de endereços inválidos e recuperação após erro.
 
 Etapa 5 do [plano de colonização](../DANTE_COLONIZATION_PLAN.md), autorizada pelo usuário em 21/10/2026 junto da revisão do acampamento. Aprovação técnica e playtest humano são registrados separadamente.
+
+O cache da conexão é **da aba**, pois criar o personagem recarrega o documento. Guarda somente endereço, origem da configuração e expiração de dez minutos em sessionStorage; não conserva credenciais ou um estado de “servidor online”. O laboratório isola essa chave junto dos seus dados temporários. Cache expirado/inválido ou armazenamento bloqueado voltam à consulta normal. A primeira carga de arte em um navegador limpo ainda pode demorar; esta manutenção corrige a consulta redundante, não declara o download inicial otimizado.
+
+QA da revisão: `qa-coop-endpoint.mjs` cobre concorrência, reload, expiração, erro/retry e storage bloqueado. `QA_CONNECTION_ONLY=1 node scripts/qa-first-settlement-production.mjs` verifica a build compilada com dois Chrome, criação/reload real do convidado, **uma única consulta** de configuração, aceite remoto e passagem norte até a Bacia. Typecheck/build passaram. [Regressão da conexão](qa/endpoint-browser/report.json) e [modelo](qa/endpoint/report.json). Não substitui o playtest humano com quatro aparelhos.
 
 ## Exploração e missões
 

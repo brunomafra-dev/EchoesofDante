@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "Concurrent inspection/join share one lookup; later join reuses the validated address without another network dependency",
+    "A new document/module after character creation reuses the validated tab cache without refetching",
+    "Expired tab configuration triggers a fresh lookup",
+    "Failure is not cached; explicit retry recovers and integrated HTTPS resolves to WSS",
+    "Credentials, invalid protocols and HTTP failures never become a cached endpoint; valid retry still works",
+    "Invalid cached credentials and blocked tab storage fall back to a validated server response"
+  ],
+  "passed": true
+}
