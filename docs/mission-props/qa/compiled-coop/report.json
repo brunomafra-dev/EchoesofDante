@@ -1,0 +1,138 @@
+{
+  "base": "http://localhost:5192",
+  "method": "Compiled build; two separate Chrome instances, real relay and normal movement/UI with feedback-controlled key pulses for WAN latency. Post-Warden preparation only through reserved lab buttons; no DEV globals.",
+  "checks": [
+    "Compiled coop: guest chooses own character/name, receives post-Warden team journal and accepts Lia mission",
+    "Shared mission and new northern passage remain available after invite join",
+    "Normal guest movement crosses the Bacia, avoids deep water and records the spring through real E input",
+    "Guest recall moves the team; compiled report delivery and progression succeed"
+  ],
+  "errors": [],
+  "failure": "Error: Character fell while walking",
+  "positions": [
+    {
+      "id": "host",
+      "area": "springs",
+      "players": {
+        "a82c324f-f298-4021-8489-ca8a730eca73": {
+          "strike": {
+            "phase": "READY",
+            "relativeAngle": -0.42,
+            "worldAngle": -2.8645712763371938,
+            "swingProgress": 0
+          },
+          "releaseProgress": 0,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "x": 430,
+          "y": 1020,
+          "aim": -2.444571276337194,
+          "hp": 40,
+          "maxHp": 96,
+          "dead": false,
+          "dash": false,
+          "phase": "READY",
+          "level": 0,
+          "firing": false,
+          "swingProgress": 0,
+          "dashCooldown": 1450,
+          "chargeCooldown": 3200,
+          "dashReady": 1,
+          "chargeReady": 1,
+          "momentum": 0,
+          "potionUsed": 0,
+          "prompt": false,
+          "action": "INVESTIGAR"
+        },
+        "host": {
+          "strike": {
+            "phase": "READY",
+            "relativeAngle": -0.42,
+            "worldAngle": -3.032035994050648,
+            "swingProgress": 0
+          },
+          "releaseProgress": 0,
+          "x": 701.1952500000007,
+          "y": 1154.754899999999,
+          "aim": -2.612035994050648,
+          "hp": 0,
+          "maxHp": 120,
+          "dead": true,
+          "dash": false,
+          "phase": "READY",
+          "level": 0,
+          "firing": false,
+          "dashReady": 1,
+          "dashCooldown": 1700,
+          "prompt": false,
+          "action": "INVESTIGAR",
+          "potionUsed": 0
+        }
+      }
+    },
+    {
+      "id": "a82c324f-f298-4021-8489-ca8a730eca73",
+      "area": "springs",
+      "players": {
+        "a82c324f-f298-4021-8489-ca8a730eca73": {
+          "strike": {
+            "phase": "READY",
+            "relativeAngle": -0.42,
+            "worldAngle": -2.8645712763371938,
+            "swingProgress": 0
+          },
+          "releaseProgress": 0,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "x": 430,
+          "y": 1020,
+          "aim": -2.444571276337194,
+          "hp": 40,
+          "maxHp": 96,
+          "dead": false,
+          "dash": false,
+          "phase": "READY",
+          "level": 0,
+          "firing": false,
+          "swingProgress": 0,
+          "dashCooldown": 1450,
+          "chargeCooldown": 3200,
+          "dashReady": 1,
+          "chargeReady": 1,
+          "momentum": 0,
+          "potionUsed": 0,
+          "prompt": false,
+          "action": "INVESTIGAR"
+        },
+        "host": {
+          "strike": {
+            "phase": "READY",
+            "relativeAngle": -0.42,
+            "worldAngle": -3.032035994050648,
+            "swingProgress": 0
+          },
+          "releaseProgress": 0,
+          "x": 701.1952500000007,
+          "y": 1154.754899999999,
+          "aim": -2.612035994050648,
+          "hp": 0,
+          "maxHp": 120,
+          "dead": true,
+          "dash": false,
+          "phase": "READY",
+          "level": 0,
+          "firing": false,
+          "dashReady": 1,
+          "dashCooldown": 1700,
+          "prompt": false,
+          "action": "INVESTIGAR",
+          "potionUsed": 0
+        }
+      }
+    }
+  ]
+}

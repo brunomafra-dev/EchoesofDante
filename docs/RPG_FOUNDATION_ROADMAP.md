@@ -1,5 +1,7 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**Manutenção · 0.1.129:** [amostras, materiais e compartilhamento](mission-props/README.md). Caixas genéricas nos locais de investigação substituídas pelo objeto real; materiais passam a representar liga, carapaça e núcleo. Capa pública e metadados no HTML inicial. Recompensas, missões, colisões e protocolo preservados; laboratório reservado e aprovação visual humana pendente. Sem avançar a próxima etapa.
+
 **Manutenção · 0.1.128:** usuário relatou novamente caminhada quebrada, especificamente no Guerreiro masculino com roupa inicial. [Revisão do Guerreiro](warrior-walk/README.md): novas figuras completas de locomoção, fase independente da mira, separação de amostragem/desenho e teste do redesenho extra do ataque. Sem nova etapa de conteúdo; aprovação técnica e humana separadas.
 
 **Manutenção · 0.1.127:** [compatibilidade da abertura e entrada mobile](cinematic-compatibility/README.md), autorizada após erro no celular e Brave. Formatos alternativos, gesto para som, recuperação sem obrigar a pular e orientação horizontal quando suportada. Filme e gameplay preservados; sem nova etapa de conteúdo.

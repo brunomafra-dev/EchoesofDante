@@ -7,6 +7,7 @@ import { PARTY_ENCOUNTERS } from '../config/partyEncounters';
 import {BASE} from '../config/base';
 import {COLONY,COLONY_BRANCH,COLONY_SITES,COLONY_ENCOUNTERS} from '../config/colonization';
 import {ColonizationArea,preloadColonization} from '../systems/ColonizationArea';
+import {preloadMissionProps,addSurveyProp,type SURVEY_ART} from '../visual/MissionProps';
 import { XenobinderCombat } from '../combat/XenobinderCombat';
 import { CompleteActorArt,preloadCompleteActors } from '../visual/CompleteActorArt';
 import { XenobinderPanel } from '../ui/XenobinderPanel';
@@ -277,8 +278,9 @@ export class GameScene extends Phaser.Scene {
 
   preload(): void {
     preloadColonization(this);
+    preloadMissionProps(this);
     preloadItemIcons(this);
-    for(const key of ['landing-shuttle','field-shelter','base-medic-civilian','base-smith-civilian','base-expedition-civilian','base-refugee-a','base-refugee-b','resource-1','resource-2','resource-3'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/base/${key}.png`);
+    for(const key of ['landing-shuttle','field-shelter','base-medic-civilian','base-smith-civilian','base-expedition-civilian','base-refugee-a','base-refugee-b'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/base/${key}.png`);
     preloadCompleteActors(this);
     for(const key of ['warrior-starter-weapon','warrior-pilot-weapon','warrior-saber-painted'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/visual/characters/${key}.png`);
     for(const key of ['cinder-ground','obsidian-ground'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/visual/environment/${key}.webp`);
@@ -2282,6 +2284,24 @@ export class GameScene extends Phaser.Scene {
     if(full){this.equipment.restore(undefined);for(let i=0;i<24;i++)this.equipment.acquire({uid:`lab-full-${i}`,id:'forest-helmet'});this.updateEquipmentAppearance();}
     const candidates=id?[id]:full?['forest-armor' as const]:EQUIPMENT_IDS.filter(id=>EQUIPMENT[id].tier===1);
     candidates.forEach((item,i)=>this.loot.add(item,{x:this.player.position.x+42+(i%4)*38,y:this.player.position.y+Math.floor(i/4)*38},'host',this.classId));
+  }
+  seedMissionPropsPlaytest():boolean {
+    if(!this.glacierPlaytest?.inventory||!new URLSearchParams(location.search).has('props')||!this.player||!this.resources)return false;
+    if(!this.children.getByName('lab-survey-gallery')){
+      const ids=['water','biology','spring','route-west','soil','site'] as (keyof typeof SURVEY_ART)[];
+      const names=['Água nas raízes','Atividade biológica','Nascente','Rota sinalizada','Análise de solo','Local do abrigo'];
+      for(const [i,id]of ids.entries()){
+        const x=510+(i%3)*180,y=880+Math.floor(i/3)*145;
+        addSurveyProp(this,id,x,y);
+        this.add.text(x,y+54,names[i],{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#efe1bd',stroke:'#13231a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setName(i===0?'lab-survey-gallery':'lab-survey-label');
+      }
+      // Quiet comparison chamber only; the campaign's encounters are untouched.
+      for(const enemy of this.enemies)enemy.die();this.enemies=[];
+      Object.assign(this.player.position,{x:430,y:1130});
+    }
+    this.resources.render([]);
+    for(const tier of [1,2,3])this.resources.add({x:570+(tier-1)*125,y:1115},tier,'host');
+    return true;
   }
   resetInventoryPlaytest():void {if(!this.glacierPlaytest?.inventory)return;this.equipment.restore(undefined);this.loot.render([]);this.updateEquipmentAppearance();}
   private pickupEquipment(pose:import('../systems/EquipmentDrops').LootPose,owner?:string):void {

@@ -1,12 +1,13 @@
 import Phaser from 'phaser';
 import type {Vec2} from '../utils/math';
+import {materialTexture} from '../visual/MissionProps';
 export type ResourceDrop={uid:string;x:number;y:number;owner:string;tier:number;credits:number;amount:number};
 type Entry={pose:ResourceDrop;active:boolean;image:Phaser.GameObjects.Image};
 export class ResourceDrops{
  private entries:Entry[]=[];
  constructor(private scene:Phaser.Scene,private viewer:string){}
  add(position:Vec2,tier:number,owner:string,boss=false){if(this.entries.filter(e=>e.active&&e.pose.owner===owner).length>=32)return;this.show({uid:crypto.randomUUID(),...position,owner,tier,credits:(boss?25:4)*tier,amount:boss?6:1})}
- private show(pose:ResourceDrop){let e=this.entries.find(e=>e.pose.uid===pose.uid)??this.entries.find(e=>!e.active);if(!e){e={pose,active:true,image:this.scene.add.image(0,0,'resource-'+pose.tier)};this.entries.push(e)}e.pose=pose;e.active=true;e.image.setTexture('resource-'+pose.tier).setPosition(pose.x,pose.y).setDisplaySize(24,24).setDepth(pose.y+.5).setVisible(pose.owner===this.viewer)}
+ private show(pose:ResourceDrop){let e=this.entries.find(e=>e.pose.uid===pose.uid)??this.entries.find(e=>!e.active);if(!e){e={pose,active:true,image:this.scene.add.image(0,0,materialTexture(pose.tier)).setName('material-drop')};this.entries.push(e)}e.pose=pose;e.active=true;e.image.setTexture(materialTexture(pose.tier)).setPosition(pose.x,pose.y).setDisplaySize(36,36).setDepth(pose.y+.5).setVisible(pose.owner===this.viewer)}
  collect(position:Vec2,owner:string,accept:(pose:ResourceDrop)=>boolean){for(const e of this.entries)if(e.active&&e.pose.owner===owner&&Math.hypot(e.pose.x-position.x,e.pose.y-position.y)<48&&accept(e.pose)){e.active=false;e.image.setVisible(false)}}
  snapshot(){return this.entries.filter(e=>e.active).map(e=>({...e.pose}))}
  retainOwners(owners:ReadonlySet<string>){for(const e of this.entries)if(e.active&&!owners.has(e.pose.owner)){e.active=false;e.image.setVisible(false)}}

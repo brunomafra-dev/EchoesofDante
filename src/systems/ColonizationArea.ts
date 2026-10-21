@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import {COLONY,COLONY_ROCKS,COLONY_SITES,HABITAT,HABITAT_SOLIDS,type ColonyArea} from '../config/colonization';
 import {EnvironmentPainter,createEnvironmentGround,trackEnvironmentOcclusion} from '../visual/EnvironmentArt';
 import type {MovementBounds,Obstacle} from './Movement';
+import {addSurveyProp} from '../visual/MissionProps';
 
 export function preloadColonization(scene:Phaser.Scene):void{
  for(const key of ['camp-supplies','spring-pool','first-habitat','camp-ground'])if(!scene.textures.exists(key))scene.load.image(key,`${import.meta.env.BASE_URL}assets/colonization/${key}.png`);
@@ -35,7 +36,7 @@ export class ColonizationArea{
   label(COLONY[area].back.x+40,COLONY[area].back.y-55,area==='springs'?'← VALE DA RESSONÂNCIA':'← BACIA DAS NASCENTES');
   if(area==='springs')label(COLONY.springs.exit.x,COLONY.springs.exit.y-70,'TERRAÇOS DO AMANHECER →');
   for(const site of COLONY_SITES)if(site.area===area&&site.id!=='shelter-built'){
-   scene.add.image(site.x-28,site.y+8,'camp-supplies').setDisplaySize(44,28).setDepth(site.y-1).setAlpha(.8);
+   addSurveyProp(scene,site.id,site.x,site.y);
   }
   if(area==='terraces'){
    const building=scene.add.image(HABITAT.x,HABITAT.y,'first-habitat').setOrigin(.5,1).setDisplaySize(HABITAT.width,HABITAT.height).setDepth(HABITAT.y-20).setName('first-colonist-habitat');trackEnvironmentOcclusion(scene,building);this.habitat.push(building);

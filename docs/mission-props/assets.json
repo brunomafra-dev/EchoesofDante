@@ -1,0 +1,52 @@
+[
+  {
+    "file": "public\\assets\\mission-props\\alloy-v1.png",
+    "size": 65906,
+    "sha256": "e5d06ceeed2189516c752fdf703141df749f0335ac135837c43b7b2c3e34881f"
+  },
+  {
+    "file": "public\\assets\\mission-props\\amber-shell-v1.png",
+    "size": 62335,
+    "sha256": "c7d7b1cec822847aafe148d00f7c128afe37f8cdbd0e14481380197cb592a54a"
+  },
+  {
+    "file": "public\\assets\\mission-props\\boreal-core-v1.png",
+    "size": 68465,
+    "sha256": "7bca58a88a30cad75b45b6581cc9ad49a932cc9f6ae6e2f7fecff6ff7c14d358"
+  },
+  {
+    "file": "public\\assets\\mission-props\\water-v1.png",
+    "size": 83137,
+    "sha256": "714bbce650fda3c6df1316b289db2ee0279584fd5d43d5b90f74e487ef4344ce"
+  },
+  {
+    "file": "public\\assets\\mission-props\\biology-v1.png",
+    "size": 83798,
+    "sha256": "8c7a58c17ba55acd5e72b51df1566a18fa26abe6b9d08bde4606b0140acb78f4"
+  },
+  {
+    "file": "public\\assets\\mission-props\\spring-v1.png",
+    "size": 92906,
+    "sha256": "f04d79d5a714f61e9e936978090ad1353c4893168618dbdd7f39f347f3b905c2"
+  },
+  {
+    "file": "public\\assets\\mission-props\\route-v1.png",
+    "size": 50822,
+    "sha256": "e6ec15778db5d74e47dcfce620c4868c76c2b91f52930beea356bef625c81fdb"
+  },
+  {
+    "file": "public\\assets\\mission-props\\soil-v1.png",
+    "size": 80888,
+    "sha256": "cfc0e464ba538dc7f2f66ef42a836786c75ccc792a0e0a7334e68b814bd0cfb8"
+  },
+  {
+    "file": "public\\assets\\mission-props\\site-v1.png",
+    "size": 69989,
+    "sha256": "5dabeba6c24ed92550438df14ab7615168eccccb320b55dab32f9ccf23a51738"
+  },
+  {
+    "file": "public\\assets\\share\\dante-expedition-v1.jpg",
+    "size": 307280,
+    "sha256": "cd147ce05efa3436165c3ab96d3dd1d42e4447a10fc5230e182af5ae8ca00990"
+  }
+]

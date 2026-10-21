@@ -16,3 +16,14 @@ for(const select of Array.from(document.querySelectorAll<HTMLSelectElement>('sel
 const items=document.querySelector('select[data-item]') as HTMLSelectElement;
 for(const id of EQUIPMENT_IDS){const o=document.createElement('option');o.value=id;o.textContent=EQUIPMENT[id].name;items.append(o);}
 document.querySelector('[data-one]')!.addEventListener('click',()=>ready()?.seedInventoryPlaytest(false,items.value as typeof EQUIPMENT_IDS[number]));
+
+if(params.has('props')){
+ const style=document.createElement('style');style.textContent='.expedition-launcher{display:none}';document.head.append(style);
+ document.title='Dante — Amostras, materiais e compartilhamento';
+ document.querySelector('summary')!.textContent='AMOSTRAS E MATERIAIS · TESTE RESERVADO';
+ const nav=document.querySelector('nav')!;nav.replaceChildren();
+ const p=document.createElement('p');p.textContent='Os seis objetos de investigação e os três materiais usam a mesma arte da campanha. Caminhe sobre os materiais para coletar; as amostras desta galeria são apenas comparativas. Saves reais preservados.';nav.append(p);
+ const b=document.createElement('button');b.textContent='Repor os três materiais';b.onclick=()=>ready()?.seedMissionPropsPlaytest();nav.append(b);
+ for(const[text,href]of [['Testar missões nos mapas','campaign-playtest.html?missions=1&settlement=1&v=0.1.129'],['Ver capa de compartilhamento','assets/share/dante-expedition-v1.jpg'],['Biblioteca','test-library.html']]){const a=document.createElement('a');a.textContent=text;a.href=href;nav.append(a);}
+ const prime=()=>{if(ready()?.seedMissionPropsPlaytest()){game.events.off('step',prime);(document.querySelector('details') as HTMLDetailsElement).open=false;}};game.events.on('step',prime);
+}

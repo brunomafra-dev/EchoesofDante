@@ -1,0 +1,40 @@
+{
+  "method": "Chrome DEV: real resource collection with controlled positions, isolated lab, material pooling/guest snapshots; static HTML crawler checks on compiled server.",
+  "checks": [
+    "Six distinct investigation props and three real material silhouettes; lab starts without collecting anything automatically",
+    "Actual collection preserves 4/8/12 credits, one material per tier, pickup radius and consumption",
+    "Forty laboratory replenishments reuse three pooled drops and the six original props",
+    "Guest snapshots use the same art, filter other owners/invalid tiers and do not duplicate drops",
+    "Four resolutions captured; real character save unchanged",
+    "Compiled root and room-invitation URL contain server-visible social metadata; JPEG returns 200 with correct MIME and <500KB"
+  ],
+  "errors": [],
+  "stability": {
+    "before": {
+      "objects": 341,
+      "textures": 220,
+      "entries": 3
+    },
+    "after": {
+      "objects": 341,
+      "textures": 220,
+      "entries": 3
+    }
+  },
+  "fps": {
+    "samples": [
+      50.36045837402344,
+      50.36045837402344,
+      50.36045837402344,
+      50.36045837402344,
+      52.77034378051758,
+      52.77034378051758,
+      52.77034378051758,
+      54.827757835388184,
+      54.827757835388184,
+      54.827757835388184
+    ],
+    "average": 52.4236138343811
+  },
+  "passed": true
+}

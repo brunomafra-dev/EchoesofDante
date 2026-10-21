@@ -3,8 +3,9 @@ import {BASE} from '../config/base';
 import {SURVEY_POINTS,missionById,type MissionNpc} from '../config/missions';
 import type {Missions} from '../systems/Missions';
 import type {Vec2} from '../utils/math';
+import {addSurveyProp} from '../visual/MissionProps';
 
-// Fixed, bounded world markers. Raster roots use the existing environment family.
+// Fixed, bounded world markers. Each investigation depicts its real subject.
 export class MissionWorld{
  private npc=new Map<MissionNpc,Phaser.GameObjects.Text>();
  private sites:{id:'water'|'biology';image:Phaser.GameObjects.Image;label:Phaser.GameObjects.Text}[]=[];
@@ -13,8 +14,7 @@ export class MissionWorld{
    this.npc.set(service.id,scene.add.text(service.x,service.y-120,'!',{fontFamily:'Barlow Condensed',fontSize:'29px',fontStyle:'bold',color:'#ffbd54',stroke:'#091610',strokeThickness:4}).setOrigin(.5).setDepth(11001));
   }
   if(area==='forest')for(const p of SURVEY_POINTS)if(p.kind==='scan'){
-   scene.add.image(p.x,p.y+10,'world-shadow','ground-contact').setDisplaySize(90,28).setAlpha(.55).setDepth(p.y-3);
-   const image=scene.add.image(p.x,p.y,'root-growth').setDisplaySize(105,30).setOrigin(.5,.8).setDepth(p.y-2);
+   const image=addSurveyProp(scene,p.id,p.x,p.y);
    const label=scene.add.text(p.x,p.y+28,'◇ '+p.name,{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#f2d7a3',stroke:'#091610',strokeThickness:3}).setOrigin(.5).setDepth(11000).setVisible(false);
    this.sites.push({id:p.id,image,label});
   }

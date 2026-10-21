@@ -4,6 +4,7 @@ import { EnvironmentPainter, createEnvironmentGround } from '../visual/Environme
 import type { MovementBounds, Obstacle } from './Movement';
 import { distance, type Vec2 } from '../utils/math';
 import {COLONY_BRANCH} from '../config/colonization';
+import {addSurveyProp} from '../visual/MissionProps';
 
 // A continuous authored exterior with a new escarpment beyond the old valley.
 export class ResonanceValley {
@@ -12,7 +13,7 @@ export class ResonanceValley {
   private readonly pulse: Phaser.GameObjects.Ellipse;
   private readonly frontierPulse: Phaser.GameObjects.Ellipse;
   constructor(private readonly scene: Phaser.Scene, recorded: boolean) {
-    scene.add.image(COLONY_BRANCH.x-35,COLONY_BRANCH.y,'camp-supplies').setDisplaySize(48,30).setDepth(COLONY_BRANCH.y);
+    addSurveyProp(scene,'route-west',COLONY_BRANCH.x-35,COLONY_BRANCH.y);
     scene.add.text(COLONY_BRANCH.x,COLONY_BRANCH.y-50,'NASCENTES · TRILHA NORTE',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#dcc79b',stroke:'#152619',strokeThickness:3}).setOrigin(.5).setDepth(10003);
     createEnvironmentGround(scene, VALLEY.cameraWidth, 'forest-ground', 0xb7c2a7);
     for (const tileX of [0, 1500, 3000, 4500]) {
