@@ -1,5 +1,9 @@
 # Echoes of Dante
 
+## Missões da expedição · 0.1.124
+
+[Testar as missões na base](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&v=0.1.124): Nara, Lia e Ivo oferecem quatro relatórios ligados à exploração e à chegada de mais humanos. Indicadores sobre os NPCs, tracker compacto, diário (J/L3), análises na Floresta e progresso compartilhado no coop. O laboratório protege saves reais e permite simular etapas avançadas. [Entrega, QA e limites](docs/arrival-missions/README.md). Aguardar validação humana antes de ampliar mapas/assentamento. Abertura aprovada preservada; registros anteriores abaixo são históricos.
+
 ## Abertura — motores mais presentes — 0.1.121
 
 [Assistir com o novo som](https://echosofdante.vercel.app/cinematic-review.html?take=film&v=0.1.121) · [Desembarque](https://echosofdante.vercel.app/cinematic-review.html?take=landing&v=0.1.121).

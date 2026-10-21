@@ -7,6 +7,8 @@ import type { InputMethod } from '../input/Controls';
 import { XENOBINDER } from '../config/classes';
 
 export class Hud {
+  private missionMode=false;
+  setMissionMode(enabled:boolean):void{if(this.missionMode===enabled)return;this.missionMode=enabled;this.signalObjective.setVisible(!enabled);this.explorationHint.setVisible(!enabled);this.actionHint.setVisible(false);}
   setAreaName(name:string):void{this.areaSubtitle.setText(name);}
   private momentum = 0;
   private bond:number=XENOBINDER.bondInitial;
@@ -189,7 +191,7 @@ export class Hud {
   }
 
   setSignalObjective(synchronized: boolean, sourceLocated: boolean, passageOpen = false, inCavern = false, depthSeen = false, deepAreaSeen = false): void {
-    this.signalObjective.setVisible(true);
+    this.signalObjective.setVisible(!this.missionMode);
     this.areaSubtitle.setText(inCavern ? 'Caverna de Dante' : 'Floresta de Dante');
     if (synchronized) this.signalObjective.setText(inCavern ? deepAreaSeen ? 'SIGA O SINAL  /  ABAIXO' : depthSeen ? 'O SINAL CONTINUA  /  ABAIXO' : 'EXPLORE A CAVERNA' : passageOpen ? 'ENTRE NA CAVERNA' : sourceLocated ? 'INVESTIGUE O MECANISMO' : 'SIGA O SINAL  /  NORTE');
   }
@@ -203,8 +205,8 @@ export class Hud {
     this.explorationHint.setY(hintY);
     this.actionHint.setY(hintY);
     // Keep one supporting line. Nearby instructions replace the distant heading.
-    this.explorationHint.setVisible(!nearby);
-    this.actionHint.setVisible(nearby);
+    this.explorationHint.setVisible(!nearby&&!this.missionMode);
+    this.actionHint.setVisible(nearby&&!this.missionMode);
   }
 
   showDiscovery(message: string, share = true): void {

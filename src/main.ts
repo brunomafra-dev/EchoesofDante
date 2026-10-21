@@ -7,7 +7,7 @@ import { ApplicationShell } from './ui/ApplicationShell';
 
 const shell = new ApplicationShell();
 
-const game = new Phaser.Game({
+export const game = new Phaser.Game({
   type: Phaser.AUTO,
   width: VIEW_WIDTH,
   height: VIEW_HEIGHT,

@@ -6,7 +6,7 @@ import type {ServiceAction} from '../systems/BaseEconomy';
 import {itemIcon} from '../systems/EquipmentDrops';
 import {expeditionAtlas} from './ExpeditionAtlas';
 type Tab='medic'|'smith'|'expedition'|'map';
-type State={economy:EconomySnapshot;equipment:EquipmentSnapshot;area:keyof typeof REGION_NAMES;hp:number;maxHp:number;classId:string;returnAvailable:boolean;returnArea?:keyof typeof REGION_NAMES;canLead:boolean};
+type State={economy:EconomySnapshot;equipment:EquipmentSnapshot;area:keyof typeof REGION_NAMES;hp:number;maxHp:number;classId:string;returnAvailable:boolean;returnArea?:keyof typeof REGION_NAMES;canLead:boolean;missionArea?:keyof typeof REGION_NAMES;missionTitle?:string};
 export class BasePanel{
  private dialog=document.createElement('dialog');private bar=document.createElement('div');private tab:Tab='map';private notice='';private frame=0;private previous:boolean[]=[];
  constructor(scene:Phaser.Scene,private read:()=>State,private act:(action:ServiceAction)=>boolean,private travel:(area:keyof typeof REGION_NAMES,resume?:boolean)=>boolean,private potion:()=>boolean,private opened:()=>void,private closed:()=>void){

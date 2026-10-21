@@ -1,0 +1,27 @@
+{
+  "base": "http://localhost:5184",
+  "method": "Compiled build, separate Chrome instances, real relay and DOM controls; no DEV exports. Four-player collaboration is covered separately by coop-browser.json",
+  "checks": [
+    "Compiled isolated lab starts at base; NPC marker, real E acceptance, tracker and journal",
+    "Compiled clients on protocol 13; guest walks to Nara and host-approved acceptance reaches the team",
+    "Guest journal and named team chat coexist on published mission flow"
+  ],
+  "errors": [],
+  "participants": [
+    {
+      "protocol": 13,
+      "id": "host",
+      "accepted": [
+        "recon"
+      ]
+    },
+    {
+      "protocol": 13,
+      "id": "5ffd66b5-8979-4013-ba1b-ce55cf053745",
+      "accepted": [
+        "recon"
+      ]
+    }
+  ],
+  "passed": true
+}

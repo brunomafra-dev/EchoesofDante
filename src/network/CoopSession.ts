@@ -12,6 +12,9 @@ import type { ExpeditionReturn } from '../systems/ExpeditionReturn';
 import { characterProfiles } from '../systems/CharacterProfiles';
 import type { CampaignLobby } from '../systems/Campaign';
 import {validChat,CHAT_HISTORY,CHAT_DURATION,CHAT_LIMIT,type ChatMessage} from './PartyChat';
+import {MISSION_IDS,type MissionId} from '../config/missions';
+import type {MissionAction,MissionSnapshot} from '../systems/Missions';
+export type MissionRequest={id:string;nonce:string;action:MissionAction;mission:MissionId};
 export type RoomCampaign = CampaignLobby & { started: boolean; running: boolean };
 export const COOP_AREAS: readonly JourneyArea[] = ['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest','cinder','obsidian','caldera'];
 const CONNECTIONS: Partial<Record<JourneyArea, readonly JourneyArea[]>> = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave','cinder'], cinder:['icenest','obsidian'], obsidian:['cinder','caldera'], caldera: ['obsidian'] };
@@ -26,7 +29,7 @@ export type ImpactPose={id:number;at:number;x:number;y:number;color:number;damag
 export type CreaturePose={id:number;species:string;x:number;y:number;hp:number;maxHp:number;radius:number;texture:string;frame:string;flip:boolean;size:number;rotation:number;
  warning:boolean;angle:number;warningX:number;warningY:number;warningWidth:number;warningHeight:number;layers?:CreatureLayer[];projectile?:{x:number;y:number;rotation:number}};
 export type ParticipantPose=PartyPose&{prompt:boolean;action:string;potionUsed:number};
-export type PartyWorld={players:Record<string,ParticipantPose>;area:JourneyArea;time:number;progression:ProgressionSnapshot;flags:JourneyFlags;host:PartyPose;partner?:PartyPose;enemies:CreaturePose[];impacts?:ImpactPose[];boss?:BossPose;signalPortal?:boolean;loot?:LootPose[];lootAwarded?:(InventoryItem&{owner:string})[];resources?:ResourceDrop[];resourceAwarded?:ResourceDrop[];potionUsed?:number;returnStation?:{x:number;y:number};expeditionReturn?:ExpeditionReturn;visited?:JourneyArea[];message:string;prompt:boolean;action:string;shots:{x:number;y:number;rotation:number;friendly?:boolean}[]};
+export type PartyWorld={missions?:MissionSnapshot;players:Record<string,ParticipantPose>;area:JourneyArea;time:number;progression:ProgressionSnapshot;flags:JourneyFlags;host:PartyPose;partner?:PartyPose;enemies:CreaturePose[];impacts?:ImpactPose[];boss?:BossPose;signalPortal?:boolean;loot?:LootPose[];lootAwarded?:(InventoryItem&{owner:string})[];resources?:ResourceDrop[];resourceAwarded?:ResourceDrop[];potionUsed?:number;returnStation?:{x:number;y:number};expeditionReturn?:ExpeditionReturn;visited?:JourneyArea[];message:string;prompt:boolean;action:string;shots:{x:number;y:number;rotation:number;friendly?:boolean}[]};
 // One connection across scene restarts. The relay grants roles; only host worlds are accepted.
 export class CoopSession {
  role:'offline'|'connecting'|'host'|'guest'='offline';
@@ -81,6 +84,16 @@ export class CoopSession {
  peerDeathId='';
  private earnedBosses:string[]=[];
  private requests:{id:string;action:'potion'|'return'|'heal'}[]=[];
+ private missionRequests:MissionRequest[]=[];
+ missionNotice='';missionPending=false;private missionNonce='';private missionTimer?:ReturnType<typeof setTimeout>;
+ requestMission(action:MissionAction,mission:MissionId):boolean{
+  if(this.role!=='guest'||!this.connected||this.socket?.readyState!==WebSocket.OPEN||!this.campaignRunning||this.missionPending)return false;
+  this.missionPending=true;this.missionNonce=crypto.randomUUID();this.missionNotice='Aguardando validação da equipe…';
+  this.socket?.send(JSON.stringify({type:'mission-request',action,mission,nonce:this.missionNonce,epoch:this.epoch}));
+  this.missionTimer=setTimeout(()=>{this.missionPending=false;this.missionNotice='Sem confirmação. Confira o diário antes de tentar novamente.';},5000);return true;
+ }
+ takeMissionRequests():MissionRequest[]{return this.missionRequests.splice(0);}
+ answerMission(request:MissionRequest,ok:boolean,message:string):void{if(this.role==='host'&&this.connected)this.socket?.send(JSON.stringify({type:'mission-result',id:request.id,nonce:request.nonce,ok,message,epoch:this.epoch}));}
  readonly lootAwarded=new Map<string,InventoryItem&{owner:string}>();
  readonly resourceAwarded=new Map<string,ResourceDrop>();
  personalItems:InventoryItem[]=[];
@@ -113,7 +126,7 @@ export class CoopSession {
    if(this.socket!==ws)return;
    let m;try{m=JSON.parse(event.data);}catch{return;}
    if(m.type==='joined'&&(m.role==='host'||m.role==='guest')){
-    if(m.protocol!==12){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização de nomes e chat. Seus personagens permanecem preservados.');reject(new Error(this.message));return;}
+    if(m.protocol!==13){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização das missões da equipe. Seus personagens permanecem preservados.');reject(new Error(this.message));return;}
     joined=true;clearTimeout(this.timeout);this.role=m.role;this.connected=true;this.token=m.token;this.code=m.code;this.epoch=m.epoch;
     this.id=m.id;this.acknowledgedCrew='';this.setCampaign(m.campaign);this.setRoster(m.members);this.input={...NO_INPUT};this.inputAt=0;this.world=undefined;
     this.area=m.area;this.travelling=false;
@@ -140,9 +153,11 @@ export class CoopSession {
    }else if(m.type==='roster'){
     this.setCampaign(m.campaign);this.setRoster(m.members);this.message=this.campaignRunning?'Equipe original reunida.':this.campaign?.started?'Campanha pausada · aguardando a equipe original completa.':'Reúna todos os integrantes para começar.';if(!this.campaignRunning){this.clearInputs();this.travelling=false;this.pendingTravel=undefined;}this.changed();
    }else if(m.type==='travel'&&m.epoch>this.epoch&&COOP_AREAS.includes(m.area)){
-    this.clearInputs();this.requests=[];
+    this.clearInputs();this.requests=[];this.missionRequests=[];clearTimeout(this.missionTimer);this.missionPending=false;this.missionNonce='';
     this.epoch=m.epoch;this.area=m.area;this.pendingTravel=undefined;this.world=undefined;this.input={...NO_INPUT};this.inputAt=0;this.travelling=false;
     this.message='Travessia em equipe · aguardando a nova região.';this.changed();
+   }else if(m.type==='mission-request'&&this.role==='host'&&m.epoch===this.epoch){if(this.guests.some(p=>p.id===m.id)&&['accept','deliver'].includes(m.action)&&MISSION_IDS.includes(m.mission)&&typeof m.nonce==='string'&&this.missionRequests.length<32)this.missionRequests.push({id:m.id,action:m.action,mission:m.mission,nonce:m.nonce});
+   }else if(m.type==='mission-result'&&this.role==='guest'&&m.nonce===this.missionNonce&&this.missionPending){clearTimeout(this.missionTimer);this.missionPending=false;this.missionNonce='';this.missionNotice=String(m.message).slice(0,180);
    }else if(m.type==='service-request'&&this.role==='host'){if(this.guests.some(p=>p.id===m.id)&&['potion','return','heal'].includes(m.action))this.requests.push({id:m.id,action:m.action});
    }else if(m.type==='input'&&this.role==='host'&&m.epoch===this.epoch&&this.guests.some(p=>p.id===m.id)){
     const state=this.state(m.id);
@@ -161,7 +176,7 @@ export class CoopSession {
    if(this.socket!==ws)return;
    this.lastClose={code:event.code,reason:event.reason};
    if(this.chatPending)this.failChat('Conexão interrompida antes da confirmação. Confira o histórico ao reconectar.');
-   clearTimeout(this.timeout);this.socket=undefined;this.connected=false;this.input={...NO_INPUT};this.inputAt=0;
+   clearTimeout(this.timeout);clearTimeout(this.missionTimer);this.missionPending=false;this.missionRequests=[];this.socket=undefined;this.connected=false;this.input={...NO_INPUT};this.inputAt=0;
    if(!this.token){this.fail('A conexão foi encerrada.');reject(new Error(this.message));return;}
    if(!retry)this.retryAt=performance.now()+15000;
    this.message='Conexão interrompida · tentando recuperar a sala…';this.changed();this.retry();
@@ -210,6 +225,7 @@ export class CoopSession {
  consumeEdges():void{for(const state of this.states.values()){state.attackTap=false;for(const key of ['dash','charge','release','cancel','interact','restart','element'] as const)state.input[key]=false;}}
  private clearInputs():void{for(const state of this.states.values()){state.input={...NO_INPUT,cancel:true};state.attackTap=false;state.inputAt=0;}}
  disconnect(restoreGuest=true):boolean{
+  clearTimeout(this.missionTimer);this.missionPending=false;this.missionRequests=[];this.missionNotice='';
   const guest=this.role==='guest';
   if(guest&&this.receipt)this.credit(this.receipt,this.rewardTotal);
   // If storage fails, keep the visit open so the player can retry instead of losing XP silently.

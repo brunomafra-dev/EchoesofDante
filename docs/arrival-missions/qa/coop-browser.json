@@ -1,0 +1,151 @@
+{
+  "method": "Four Chrome contexts, real relay and UI; DEV host positioning for encounters, no simulated transport",
+  "checks": [
+    "Four different classes join isolated mission invitation and original campaign starts",
+    "Guest cannot accept remotely; host validates live NPC proximity",
+    "Guest accepts Nara mission; authoritative acceptance reaches all four journals",
+    "Local dialogue/journal blocks author input while host and other players continue",
+    "Two different guests contribute exploration goals to the same team mission",
+    "Simultaneous guest turn-ins: one shared completion and exactly 20 credits per character",
+    "Real socket interruption/resume keeps mission, personal receipt and reward without duplication",
+    "Guests accept Lia mission, investigate both samples and turn in with the existing interaction input",
+    "Fallen member retains team journal and personal reward",
+    "Guest respawn preserves accepted/completed team missions"
+  ],
+  "errors": [],
+  "participants": [
+    {
+      "status": "completed",
+      "missions": {
+        "schema": 1,
+        "accepted": [
+          "recon",
+          "survival"
+        ],
+        "completed": [
+          "recon",
+          "survival"
+        ],
+        "evidence": [
+          "clearing",
+          "roots",
+          "water",
+          "biology"
+        ]
+      },
+      "credits": 50,
+      "rewards": [
+        "recon",
+        "survival"
+      ],
+      "pos": {
+        "x": 1040,
+        "y": 800
+      },
+      "area": "base",
+      "paused": false,
+      "connected": true,
+      "running": true
+    },
+    {
+      "status": "completed",
+      "missions": {
+        "schema": 1,
+        "accepted": [
+          "recon",
+          "survival"
+        ],
+        "completed": [
+          "recon",
+          "survival"
+        ],
+        "evidence": [
+          "clearing",
+          "roots",
+          "water",
+          "biology"
+        ]
+      },
+      "credits": 50,
+      "rewards": [
+        "recon",
+        "survival"
+      ],
+      "pos": {
+        "x": 1120,
+        "y": 800
+      },
+      "area": "base",
+      "paused": false,
+      "connected": true,
+      "running": true
+    },
+    {
+      "status": "completed",
+      "missions": {
+        "schema": 1,
+        "accepted": [
+          "recon",
+          "survival"
+        ],
+        "completed": [
+          "recon",
+          "survival"
+        ],
+        "evidence": [
+          "clearing",
+          "roots",
+          "water",
+          "biology"
+        ]
+      },
+      "credits": 50,
+      "rewards": [
+        "recon",
+        "survival"
+      ],
+      "pos": {
+        "x": 960,
+        "y": 800
+      },
+      "area": "base",
+      "paused": false,
+      "connected": true,
+      "running": true
+    },
+    {
+      "status": "completed",
+      "missions": {
+        "schema": 1,
+        "accepted": [
+          "recon",
+          "survival"
+        ],
+        "completed": [
+          "recon",
+          "survival"
+        ],
+        "evidence": [
+          "clearing",
+          "roots",
+          "water",
+          "biology"
+        ]
+      },
+      "credits": 50,
+      "rewards": [
+        "recon",
+        "survival"
+      ],
+      "pos": {
+        "x": 390,
+        "y": 745
+      },
+      "area": "base",
+      "paused": false,
+      "connected": true,
+      "running": true
+    }
+  ],
+  "passed": true
+}

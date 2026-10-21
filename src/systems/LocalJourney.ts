@@ -14,6 +14,8 @@ import { characterProfiles } from './CharacterProfiles';
 import { validEquipment, validItem, type EquipmentId, type InventoryItem, type EquipmentSnapshot } from '../config/equipment';
 import {validEconomy,type EconomySnapshot} from '../config/economy';
 import {validExpeditionReturn,type ExpeditionReturn} from './ExpeditionReturn';
+import {Missions,validMissions,validMissionRewards,type MissionSnapshot} from './Missions';
+import {MISSION_IDS,type MissionId} from '../config/missions';
 
 export const JOURNEY_KEY = 'echoes-of-dante.journey.v1';
 export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSeen', 'deepCavernEntered',
@@ -33,6 +35,7 @@ export type JourneySnapshot = {
   equipment?:EquipmentSnapshot;
   economy?:EconomySnapshot;
   expeditionReturn?:ExpeditionReturn;
+  missions?:MissionSnapshot;missionRewards?:MissionId[];trackedMission?:MissionId;
 };
 
 const object = (value: unknown): Record<string, unknown> | undefined =>
@@ -132,6 +135,7 @@ export class LocalJourney {
           abilityUpgrades: object(p.abilityUpgrades) as Partial<AbilityUpgradeRanks> | undefined,
           bossRewards: [...new Set([...(Array.isArray(p.bossRewards)?p.bossRewards.filter((id):id is string=>typeof id==='string'&&['warden','soterrado','vesper','titan'].includes(id)):[]),...(flags.wardenDefeated?['warden']:[]), ...(flags.soterradoDefeated ? ['soterrado'] : []), ...(flags.vesperDefeated ? ['vesper'] : []),...(flags.titanDefeated?['titan']:[])])] },
         flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats, equipment:validEquipment(raw.equipment),economy:validEconomy(raw.economy),expeditionReturn:validExpeditionReturn(raw.expeditionReturn),
+        missions:raw.missions===undefined?undefined:validMissions(raw.missions),missionRewards:validMissionRewards(raw.missionRewards),trackedMission:MISSION_IDS.includes(raw.trackedMission as MissionId)?raw.trackedMission as MissionId:undefined,
         coopReceipts: Array.isArray(raw.coopReceipts) ? raw.coopReceipts.filter((entry): entry is {id:string;total:number} =>
           !!entry && typeof entry.id === 'string' && /^[a-f0-9]{32}$/.test(entry.id) && integer(entry.total, 1e9)).slice(-32) : [] };
     } catch {
@@ -199,6 +203,16 @@ export class LocalJourney {
     const saved=this.load();if(!saved)return false;
     saved.progression.abilityUpgrades={...progression.abilityUpgrades};
     saved.updatedAt=Date.now();return this.save(saved);
+  }
+
+  claimMissionRewards():EconomySnapshot|undefined{
+    const saved=this.load();if(!saved)return;
+    const missions=new Missions();missions.restore(saved.missions);
+    const reward=missions.claimable(saved.missionRewards??[]);
+    if(!reward.ids.length)return saved.economy;
+    const economy=validEconomy(saved.economy);economy.credits=Math.min(1e9,economy.credits+reward.credits);
+    saved.economy=economy;saved.missionRewards=[...(saved.missionRewards??[]),...reward.ids];saved.updatedAt=Date.now();
+    return this.save(saved)?economy:undefined;
   }
 
   saveEquipment(equipment:EquipmentSnapshot):boolean {

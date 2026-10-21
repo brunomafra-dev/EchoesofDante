@@ -22,7 +22,7 @@ const state = page => page.evaluate(() => {
     routes: [...s.valleyRoutes], bestiary: s.bestiary.snapshot(), cooldowns: [...s.valleyHabitatCooldowns],
     residents: [...s.valleyResidents.keys()], enemies: s.enemies.filter(e => !e.isDead).length,
     paused: s.scene.isPaused(), open: s.records.isOpen, roots: document.querySelectorAll('.touch-controls').length,
-    records: document.querySelectorAll('.records-dialog:not(.ability-upgrade-dialog):not(.equipment-dialog):not(.base-dialog)').length, objects: s.children.list.length,
+    records: document.querySelectorAll('.records-dialog:not(.ability-upgrade-dialog):not(.equipment-dialog):not(.base-dialog):not(.mission-dialog)').length, objects: s.children.list.length,
     tweens: s.tweens.getTweens().length, method: s.controls.inputMethod, phase: s.charge.phase };
 });
 try {

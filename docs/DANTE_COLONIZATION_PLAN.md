@@ -1,5 +1,7 @@
 # Dante — correções visuais, comunicação cooperativa e primeira colonização
 
+**Etapa atual · 0.1.124:** abertura completa aceita pelo usuário; ele pediu encerrar a revisão dos motores e conservar a mixagem vigente. A proposta isolada 0.1.123 não entrou no filme. Usuário autorizou o primeiro ciclo de [missões da chegada](arrival-missions/README.md), com indicadores nos NPCs e mission tracker. Quatro relatórios na campanha existente; mapas e assentamento aguardam validação humana. Os registros sonoros abaixo são históricos.
+
 **Ajuste · 0.1.121:** trilha/fundo 0.1.120 aprovados pelo usuário; reforçar aceleração e propulsores sem alterar o restante. [Revisão dos motores](cinematic-opening/revision-06/README.md), ainda sujeita à escuta humana antes da etapa 4.
 
 **Atualização · 20/10/2026 · 0.1.120:** usuário aprovou o visual/Nara da 0.1.119 e autorizou finalizar o áudio. [Trilha e efeitos](cinematic-opening/revision-05/README.md) com prioridade à dublagem; vídeo e vozes aprovados preservados. **Aguardar avaliação sonora desta entrega antes da etapa 4 — missões.**
@@ -12,8 +14,8 @@ Plano aprovado em 16/10/2026. Complementa o [plano da fundação RPG](RPG_FOUNDA
 | --- | --- | --- |
 | 1 | Personagens completos + início pelo clique na dificuldade | [0.1.103](character-cohesion/revision-03/README.md) validada para avançar; pente fino visual posterior |
 | 2 | Nomes e chat da equipe | [0.1.104](party-chat/README.md) validada pelo usuário: “Deu certo perfeito irmão”; Render/Vercel e chat público conferidos |
-| 3 | Piloto de cinemática; abertura completa após aprovação | **0.1.117: revisão do filme completo de 59,25 s**, quatro heróis desembarcam antes da tripulação; ponte/desembarque restaurados e prova de vozes PT-BR no Concat. Integrado ao início solo/coop, dublagem restrita ao teste de 12 s. [Entrega e limites](cinematic-opening/revision-02/README.md). Filme/vozes aguardam validação visual; missões/mapas aguardam |
-| 4 | Missões, diálogos e diário desde a chegada | Planejada |
+| 3 | Piloto de cinemática; abertura completa após aprovação | Abertura completa aprovada pelo usuário, incluindo vozes e trilha. Revisão sonora encerrada a pedido dele, preservando a mixagem vigente; sem integrar a proposta isolada 0.1.123 |
+| 4 | Missões, diálogos e diário desde a chegada | [0.1.124: primeiro ciclo de quatro missões](arrival-missions/README.md), indicadores nos NPCs, tracker e progresso da equipe. QA técnico separado da validação humana pendente |
 | 5 | Dois mapas e primeiro núcleo habitável | Planejada |
 
 Cada entrega termina com laboratório reservado que protege saves reais, QA, documentação, versão, commit e push. **A etapa seguinte aguarda validação humana.** Aprovação técnica e visual são registradas separadamente.

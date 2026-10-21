@@ -15,7 +15,7 @@ async function hero(p,cls,{difficulty='normal',size,cooperative=false}={}){
  }
  if(await p.locator('[data-shell="difficulty-normal"]').count())await click(p,'difficulty-'+difficulty);
  await p.locator('.prologue-video').waitFor();await click(p,'prologue-skip');
- if(cooperative){for(let n=0;n<600&&!p.wire.code;n++)await wait(100);assert.equal(p.wire.protocol,12);}
+ if(cooperative){for(let n=0;n<600&&!p.wire.code;n++)await wait(100);assert.equal(p.wire.protocol,13);}
 }
 try{
  if(process.env.QA_NO_COOP!=='1'){
@@ -24,7 +24,7 @@ try{
  for(const cls of ['hunter','astral','xenobinder']){const p=await page();await p.goto(invite);await hero(p,cls,{cooperative:true});}
  await click(h,'coop-start');for(const p of pages)await p.waitForFunction(()=>document.querySelector('.application-shell')&&!document.querySelector('.application-shell').open);
  for(let i=0;i<300&&!pages.every(p=>p.wire.players?.length===4);i++)await wait(100);
- assert.ok(pages.every(p=>p.wire.players?.length===4));report.participants=pages.map(p=>({protocol:p.wire.protocol,id:p.wire.id,players:p.wire.players.length}));check('Compiled campaign: four different classes form and start through real invitations, protocol 12 and four-player world in every browser');
+ assert.ok(pages.every(p=>p.wire.players?.length===4));report.participants=pages.map(p=>({protocol:p.wire.protocol,id:p.wire.id,players:p.wire.players.length}));check('Compiled campaign: four different classes form and start through real invitations, protocol 13 and four-player world in every browser');
  if(process.env.QA_ACTIONS==='1'){
   report.actions=[];
   for(const p of pages){

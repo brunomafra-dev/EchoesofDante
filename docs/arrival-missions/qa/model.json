@@ -1,0 +1,10 @@
+{
+  "checks": [
+    "Prerequisites, acceptance, derived readiness, turn-in, automatic tracking and duplicate rejection",
+    "Pre-existing discoveries satisfy later accepted missions; total bounded reward is 150 credits",
+    "Malformed/unknown fields are bounded and prerequisites normalized",
+    "Legacy campaign preserves Warden, access and personal progression without inventing mission rewards",
+    "Credit + receipt is atomic; storage failure retries, repeated claims/reload do not duplicate rewards"
+  ],
+  "passed": true
+}

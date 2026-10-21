@@ -1,0 +1,9 @@
+{
+  "checks": [
+    "Only running original team can request; relay supplies authenticated member ID and rejects floods",
+    "Host-only results; invalid mission, action and stale epoch never enter host queue",
+    "Shared mission snapshot reaches all three guests, with bounded known IDs only",
+    "Missing original team freezes mission requests with the campaign"
+  ],
+  "passed": true
+}

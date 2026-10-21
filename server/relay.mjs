@@ -7,6 +7,9 @@ import {campaignCredentials,canJoinCampaign,crewIdentity,campaignState,campaignR
 const areas = new Set(['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest','cinder','obsidian','caldera']);
 const connections = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave','cinder'], cinder:['icenest','obsidian'], obsidian:['cinder','caldera'], caldera: ['obsidian'] };
 const equipmentIds=new Set(Object.keys(catalogue));
+const missionIds=new Set(['recon','survival','signal','beyond']);
+const missionEvidence=new Set(['clearing','roots','water','biology','echo1','echo2','echo3','passage','first-echo','warden']);
+const cleanMissions=raw=>({schema:1,accepted:Array.isArray(raw?.accepted)?[...new Set(raw.accepted.filter(id=>missionIds.has(id)))]:[],completed:Array.isArray(raw?.completed)?[...new Set(raw.completed.filter(id=>missionIds.has(id)))]:[],evidence:Array.isArray(raw?.evidence)?[...new Set(raw.evidence.filter(id=>missionEvidence.has(id)))]:[]});
 const cleanEquipment=raw=>Object.fromEntries(['weapon','helmet','armor','legs','boots','gloves','accessory'].filter(slot=>equipmentIds.has(raw?.[slot])&&catalogue[raw[slot]].slot===slot).map(slot=>[slot,raw[slot]]));
 const cleanBuild = raw => ({
   xp:Number.isSafeInteger(raw?.xp)?Math.max(0,Math.min(1e9,raw.xp)):0,
@@ -69,7 +72,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
     member.timer.unref();
   }
   function joined(room, member) {
-    send(member.ws, { type: 'joined', protocol:12, chatHistory:room.chat, campaign:campaignState(room),id:member.id, role:member===room.host?'host':'guest', code: room.code, token: member.token, epoch: room.epoch,
+    send(member.ws, { type: 'joined', protocol:13, chatHistory:room.chat, campaign:campaignState(room),id:member.id, role:member===room.host?'host':'guest', code: room.code, token: member.token, epoch: room.epoch,
       area: room.area, members:roster(room), paused: room.paused === true, receipt: member.receipt, total: member.total, bosses:[...member.bosses], items:[...member.items.values()],resources:member.resources });
     notify(room);
   }
@@ -89,7 +92,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
       if(['input','equipment','world','service-request','pause','travel'].includes(m.type))ws.messageTypes[m.type]=(ws.messageTypes[m.type]??0)+1;
       if(m.type==='inspect') {
         const room=rooms.get(String(m.code).replace(/\s/g,'').toUpperCase());
-        return send(ws,room?{type:'lobby',protocol:12,campaign:campaignState(room),members:roster(room),area:room.area}:{type:'error',message:'Sala não encontrada. Peça um novo convite.'});
+        return send(ws,room?{type:'lobby',protocol:13,campaign:campaignState(room),members:roster(room),area:room.area}:{type:'error',message:'Sala não encontrada. Peça um novo convite.'});
       }
       if (m.type === 'resume') {
         if (typeof m.token !== 'string' || !/^[a-f0-9]{48}$/.test(m.token)) return send(ws, { type: 'error', message: 'Credencial de reconexão inválida.' });
@@ -157,6 +160,12 @@ export function attachCoop(server, { path = '/coop' } = {}) {
         if(!room.campaign.crew.length){room.campaign.crew=members(room).map(crewIdentity);for(const member of members(room))member.ready=false;}
         room.started=true;notify(room);
       }else if(!campaignRunning(room)&&!['equipment','leave','pause'].includes(m.type)){return;
+      }else if(m.type==='mission-request'&&member!==room.host){
+        if(m.epoch!==room.epoch||!['accept','deliver'].includes(m.action)||!missionIds.has(m.mission)||typeof m.nonce!=='string'||!/^[a-f0-9-]{36}$/.test(m.nonce))return;
+        if(Date.now()-(member.missionAt??0)<350)return send(ws,{type:'mission-result',nonce:m.nonce,ok:false,message:'Aguarde a confirmação do pedido anterior.'});
+        member.missionAt=Date.now();send(room.host.ws,{type:'mission-request',id:member.id,action:m.action,mission:m.mission,nonce:m.nonce,epoch:room.epoch});
+      }else if(m.type==='mission-result'&&member===room.host&&m.epoch===room.epoch){
+        const target=room.guests.get(m.id);if(target&&typeof m.nonce==='string'&&/^[a-f0-9-]{36}$/.test(m.nonce)&&typeof m.message==='string')send(target.ws,{type:'mission-result',nonce:m.nonce,ok:m.ok===true,message:m.message.slice(0,180)});
       }else if(m.type==='service-request'&&member!==room.host){if(['potion','return','heal'].includes(m.action))send(room.host.ws,{type:'service-request',id:member.id,action:m.action});
       }else if(m.type==='equipment') {
         member.profile.build=cleanBuild(m.build);member.profile.equipment=cleanEquipment(m.equipment);member.profile.bagFree=bagFree(m.bagFree);member.profile.potions=Number.isInteger(m.potions)?Math.max(0,Math.min(20,m.potions)):0;
@@ -177,6 +186,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
         const world = m.world, xp = world?.progression?.xp;
         if (m.epoch !== room.epoch || !Number.isSafeInteger(m.sequence) || m.sequence <= room.sequence || world?.area !== room.area ||
           !Array.isArray(world.enemies) || world.enemies.length > 32 || !Number.isSafeInteger(xp) || xp < 0 || xp > 1e9) return;
+        world.missions=cleanMissions(world.missions);
         room.sequence = m.sequence;room.bossActive=world.boss?.active===true;for(const area of (Array.isArray(world.visited)?world.visited:[]))if(areas.has(area))room.visited.add(area);
         const resources=(Array.isArray(world.resourceAwarded)?world.resourceAwarded:[]).slice(-512).filter(p=>p&&typeof p.uid==='string'&&/^[a-zA-Z0-9_-]{1,96}$/.test(p.uid)&&!room.resourceIds.has(p.uid)&&[1,2,3].includes(p.tier)&&Number.isInteger(p.credits)&&p.credits>=0&&p.credits<=75&&Number.isInteger(p.amount)&&p.amount>=0&&p.amount<=6);
         for(const p of resources){const recipient=room.guests.get(p.owner);if(!recipient)continue;room.resourceIds.add(p.uid);if(room.resourceIds.size>4096)room.resourceIds.delete(room.resourceIds.values().next().value);recipient.resources.credits=Math.min(1e9,recipient.resources.credits+p.credits);recipient.resources.materials[p.tier-1]=Math.min(1e9,recipient.resources.materials[p.tier-1]+p.amount);}
@@ -218,6 +228,6 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   server.once('close', close);
   return {
     close,
-    status: () => ({ service: 'Dante regional co-op', protocol: 12, chat:true, capacity:4, uniqueClasses:true,fixedCampaigns:true, revision:process.env.RENDER_GIT_COMMIT??'local', campaign: true, rooms: rooms.size, players: clients.size }),
+    status: () => ({ service: 'Dante regional co-op', protocol: 13, missions:true, chat:true, capacity:4, uniqueClasses:true,fixedCampaigns:true, revision:process.env.RENDER_GIT_COMMIT??'local', campaign: true, rooms: rooms.size, players: clients.size }),
   };
 }
