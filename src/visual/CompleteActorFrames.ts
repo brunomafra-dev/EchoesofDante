@@ -1,19 +1,29 @@
 import { type CharacterSex,type EquipmentLook, type ProtectionStyle, type WeaponStyle } from '../config/appearance';
 import type { PlayableClass } from '../config/classes';
 import registration from './actorRegistration.json';
-import warriorFemaleHeads from './warriorFemaleHeads.json';
+import warriorRegistration from './warriorWalkRegistration.json';
 
 export const COMPLETE_FRAME=192, COMPLETE_FEET=183, COMPLETE_DISPLAY=128;
 export const COMPLETE_STYLES=['none','basic','reinforced'] as const;
+export function completeFrameCount(classId:PlayableClass):number{return classId==='warrior'?40:32;}
+export function completeAsset(classId:PlayableClass,sex:string,style:ProtectionStyle):string{return `${import.meta.env.BASE_URL}assets/visual/complete-actors/${classId}-${sex}-${style}${classId==='warrior'?'-walk-v2':''}.png`;}
 export function completeDirection(aim:number):number {return ((Math.round((Math.PI/2-aim)/(Math.PI/4))%8)+8)%8;}
+export function stableCompleteDirection(aim:number,previous:number|undefined):number {
+ if(previous===undefined)return completeDirection(aim);
+ const center=Math.PI/2-previous*Math.PI/4;
+ const gap=Math.atan2(Math.sin(aim-center),Math.cos(aim-center));
+ return Math.abs(gap)<=Math.PI/8+.075?previous:completeDirection(aim);
+}
 export function completeStride(classId?:PlayableClass):number{return classId==='warrior'?144:classId==='hunter'?152:104;}
 export function completeFrame(aim:number,travel:number,walking:boolean,action:boolean,classId?:PlayableClass):number {
  const phase=((travel/completeStride(classId))%1+1)%1;
  // These two classes have authored opposite contact poses. The wide idle
  // stance is not a passing step: inserting it between contacts caused a hop.
  const grounded=classId==='warrior'||classId==='hunter';
+ const row=completeDirection(aim);
+ if(classId==='warrior'&&walking&&!action)return [row*4+1,32+row,row*4+2,32+row][Math.floor(phase*4)];
  const column=action?3:walking?grounded?(phase<.5?1:2):[0,1,0,2][Math.floor(phase*4)]:0;
- return completeDirection(aim)*4+column;
+ return row*4+column;
 }
 export function completeKey(classId:PlayableClass,sex:string,style:ProtectionStyle):string{return `complete-${classId}-${sex}-${style}`;}
 
@@ -30,7 +40,8 @@ const EMITTERS:Record<PlayableClass,readonly (readonly [number,number])[]>={
  xenobinder:[[130,69],[164,71],[173,68],[158,51],[125,43],[29,65],[25,75],[36,98]],
 };
 export function completeRegistration(classId:PlayableClass,sex:CharacterSex,style:ProtectionStyle,frame:number):{scale:number;x:number;y:number}{
- const [cx,neck]=registration[`${classId}-${sex}`][style][frame];
+ const table=classId==='warrior'?warriorRegistration[`warrior-${sex}`]:registration[`${classId}-${sex}`];
+ const [cx,neck]=table[style][frame];
  const scale=(COMPLETE_FEET-55)/(COMPLETE_FEET-neck);
  return{scale,x:96-cx*scale,y:COMPLETE_FEET*(1-scale)};
 }
@@ -46,14 +57,15 @@ export function completeMuzzle(classId:PlayableClass,aim:number,sex:CharacterSex
 export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record<ProtectionStyle,CanvasImageSource>,look:EquipmentLook,weapon:WeaponStyle,classId:PlayableClass,sex:CharacterSex='male'):void {
  const size=COMPLETE_FRAME;
  const weaponTier:ProtectionStyle=weapon==='starter'?'none':weapon==='current'?'basic':'reinforced';
- ctx.clearRect(0,0,size*4,size*8);
+ ctx.clearRect(0,0,size*4,size*Math.ceil(completeFrameCount(classId)/4));
  const atlas=ctx,tile=document.createElement('canvas');tile.width=size;tile.height=size;
  ctx=tile.getContext('2d')!;
- for(let f=0;f<32;f++){
+ for(let f=0;f<completeFrameCount(classId);f++){
   // Identical local coordinates avoid subpixel rounding changing the head
   // between atlas columns after uniform view calibration.
   const x=0,y=0;ctx.clearRect(0,0,size,size);
-  const view=completeViewScale(classId,sex,Math.floor(f/4));
+  const row=f<32?Math.floor(f/4):f-32;
+  const view=completeViewScale(classId,sex,row);
   ctx.save();ctx.translate(x+96*(1-view),y+COMPLETE_FEET*(1-view));ctx.scale(view,view);ctx.translate(-x,-y);
   const draw=(style:ProtectionStyle,sourceFrame=f)=>{
    const p=completeRegistration(classId,sex,style,sourceFrame);
@@ -75,7 +87,7 @@ export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record
   replace(look.boots,0,159,size,size-159);
   // The main hand/tool is authored as a continuous grip. Its pixels are baked
   // into the complete frame too, not attached as a rotating limb at runtime.
-  const row=Math.floor(f/4),action=f%4===3;
+  const action=f<32&&f%4===3;
   const [mx,my]=EMITTERS[classId][row];
   if(action){
    const left=mx<96,rx=left?0:Math.min(140,mx-30),ry=Math.max(56,my-12);
@@ -94,7 +106,12 @@ export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record
   // One registered head per view/helmet, reused across complete poses at bake.
   // A rectangular strip across the whole sprite erased raised hands and let
   // an unhelmeted action painting replace the equipped helmet.
-  const rowHead=Math.floor(f/4)*4;
+  // A uniform Warrior outfit is already a complete authored human. Keep its
+  // head connected to its neck instead of pasting an old idle head onto a step.
+  if(classId==='warrior'&&look.helmet===look.torso){
+   ctx.restore();atlas.drawImage(tile,f%4*size,Math.floor(f/4)*size);continue;
+  }
+  const rowHead=row*4;
   if(classId==='hunter'){
    // Empty sky beside the registered skull must not retain a gutter fragment.
    ctx.clearRect(x,y,65,36);ctx.clearRect(x+127,y,65,36);
@@ -104,21 +121,21 @@ export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record
   // unarmored sheet painted a different face, especially for the female Hunter.
   const hunterOpenFace=classId==='hunter'&&look.helmet==='none';
   const headStyle=hunterOpenFace?'basic':classId==='hunter'&&look.helmet==='basic'?'reinforced':look.helmet;
-  const femaleContact=classId==='warrior'&&sex==='female'&&(row===2||row===4);
-  const headFrame=classId==='xenobinder'&&headStyle==='reinforced'&&rowHead===16?12:rowHead+((classId==='hunter'&&!hunterOpenFace&&headStyle!=='none')||femaleContact?1:0);
+  const headFrame=classId==='warrior'?f:classId==='xenobinder'&&headStyle==='reinforced'&&rowHead===16?12:rowHead+((classId==='hunter'&&!hunterOpenFace&&headStyle!=='none')?1:0);
   ctx.save();ctx.beginPath();
-  if(classId==='warrior'&&sex==='female'){
+  if(classId==='warrior'){
    // A wider skull cap protects the hair silhouette. Taper before the neck
    // so an upraised forearm beside the head is never cut by a rectangle.
    ctx.moveTo(x+60,y);ctx.lineTo(x+140,y);ctx.lineTo(x+136,y+40);
    ctx.lineTo(x+116,y+55);ctx.lineTo(x+76,y+55);ctx.lineTo(x+60,y+40);ctx.closePath();
    ctx.clip();ctx.clearRect(x+60,y,80,55);ctx.beginPath();
-   for(const [sy,sx,width]of warriorFemaleHeads[headStyle][row])ctx.rect(x+sx,y+sy,width,1);
+   ctx.moveTo(x+60,y);ctx.lineTo(x+140,y);ctx.lineTo(x+136,y+40);
+   ctx.lineTo(x+116,y+55);ctx.lineTo(x+76,y+55);ctx.lineTo(x+60,y+40);ctx.closePath();
   }else{
    ctx.moveTo(x+65,y);ctx.lineTo(x+127,y);ctx.lineTo(x+127,y+42);
    ctx.lineTo(x+116,y+55);ctx.lineTo(x+76,y+55);ctx.lineTo(x+65,y+42);ctx.closePath();
   }
-  ctx.clip();if(classId!=='warrior'||sex!=='female')ctx.clearRect(x+65,y,62,55);
+  ctx.clip();if(classId!=='warrior')ctx.clearRect(x+65,y,62,55);
   draw(headStyle,headFrame);ctx.restore();ctx.restore();
   atlas.drawImage(tile,f%4*size,Math.floor(f/4)*size);
  }

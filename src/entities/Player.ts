@@ -251,13 +251,14 @@ export class Player {
     this.ring.setPosition(this.position.x, this.position.y + 39).setDepth(this.position.y - 1);
     this.ring.setStrokeStyle(heavyBusy ? 2.5 : 1.5, heavyBusy ? 0x5fe6d8 : this.isDashing ? 0xd7fff7 : 0x89d9d2, heavyBusy ? 0.5 + heavy.level * 0.36 : this.isDashing ? 0.78 : 0.28);
     this.view.setAlpha(this.isDashing ? 0.74 : now < this.invulnerableUntil ? 0.7 + Math.sin(now * 0.045) * 0.25 : 1);
+    this.completeArt?.update(this.position.x,this.position.y,aim,pose.phase==='SWING',this.isDashing,heavy);
     this.renderWeapon(aim, pose, heavy);
   }
 
   renderWeapon(aim: number, pose: SaberPose, heavy: KineticPose): void {
     if (this.classId !== 'warrior') { this.weapon.clearEffects(); return; }
     if(this.completeArt){
-      this.completeArt.update(this.position.x,this.position.y,aim,pose.phase!=='READY',this.isDashing,heavy);
+      this.completeArt.present(aim,pose.phase==='SWING',this.isDashing,heavy);
       this.weapon.render(this.position,this.gripWorld,aim,0,pose,heavy,this.isDashing);
       this.weapon.view.setVisible(false);
       return;
@@ -301,6 +302,7 @@ export class Player {
     this.isDead = dead; this.isDashing = dashing;
     this.hurtOverlay.setAlpha(this.scene.time.now<this.hitFlashUntil?.72:0);
     this.paintedArt?.update(aim, this.stepPhase, moved > .1, travel, pose, heavy, dashing);
+    this.completeArt?.update(position.x,position.y,aim,pose.phase==='SWING',dashing,heavy);
     this.setAim(aim,0,warriorReach(heavy),warriorSweep(pose)); this.renderWeapon(aim, pose, heavy);
     this.view.setPosition(position.x, position.y).setDepth(position.y).setAlpha(dead ? .25 : dashing ? .74 : 1);
     this.shadow.setPosition(position.x, position.y + 39).setDepth(position.y - 3);

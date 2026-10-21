@@ -1,0 +1,96 @@
+{
+  "base": "http://localhost:5185",
+  "checks": [
+    "3072 simulation frames across both presentations and four outfits; full passing/contact cycle, one-image actors and equal remote presentation",
+    "Extra attack redraw does not idle/reset gait; mouse turns do not reverse distance; aim seam hysteresis and real turns; stop settles to idle",
+    "Repeated equipment swaps preserve object/texture counts and clear all 40 atlas frames without ghost pixels",
+    "All walking poses keep an opaque head connected through the neck/torso into the lower body, including mixed helmets",
+    "Primary reproduction: male initial clothes, real WASD/mouse orbit/basic attacks, Q and Dash",
+    "Four resolutions, gamepad axes mock and real touch attack"
+  ],
+  "errors": [],
+  "actors": [
+    {
+      "sex": "male",
+      "cases": [
+        {
+          "tier": "none",
+          "views": 8,
+          "walkingFrames": 384
+        },
+        {
+          "tier": "basic",
+          "views": 8,
+          "walkingFrames": 384
+        },
+        {
+          "tier": "reinforced",
+          "views": 8,
+          "walkingFrames": 384
+        },
+        {
+          "tier": "mixed",
+          "views": 8,
+          "walkingFrames": 384
+        }
+      ],
+      "frames": 1536,
+      "atlasFrames": 40,
+      "counts": {
+        "objects": 502,
+        "textures": 212,
+        "tweens": 152
+      }
+    },
+    {
+      "sex": "female",
+      "cases": [
+        {
+          "tier": "none",
+          "views": 8,
+          "walkingFrames": 384
+        },
+        {
+          "tier": "basic",
+          "views": 8,
+          "walkingFrames": 384
+        },
+        {
+          "tier": "reinforced",
+          "views": 8,
+          "walkingFrames": 384
+        },
+        {
+          "tier": "mixed",
+          "views": 8,
+          "walkingFrames": 384
+        }
+      ],
+      "frames": 1536,
+      "atlasFrames": 40,
+      "counts": {
+        "objects": 502,
+        "textures": 212,
+        "tweens": 152
+      }
+    }
+  ],
+  "inputPositions": {
+    "start": {
+      "x": 400,
+      "y": 1230
+    },
+    "end": {
+      "x": 408.10541666666666,
+      "y": 1225.8513333333347
+    }
+  },
+  "performance": {
+    "fps": 54.918148040771484,
+    "objects": 374,
+    "textures": 212,
+    "tweens": 24,
+    "actorTextures": 1
+  },
+  "passed": true
+}

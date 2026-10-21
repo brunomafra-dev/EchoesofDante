@@ -1,0 +1,56 @@
+{
+  "base": "http://localhost:5192",
+  "method": "Compiled-build character selection; actual UI changes, both presentations of all four classes, finite manual demo and screenshots. Human visual assessment pending.",
+  "errors": [],
+  "previews": [
+    {
+      "classId": "warrior",
+      "sex": "male",
+      "idle": true,
+      "chargeDemo": true
+    },
+    {
+      "classId": "hunter",
+      "sex": "male",
+      "idle": true,
+      "chargeDemo": true
+    },
+    {
+      "classId": "astral",
+      "sex": "male",
+      "idle": true,
+      "chargeDemo": true
+    },
+    {
+      "classId": "xenobinder",
+      "sex": "male",
+      "idle": true,
+      "chargeDemo": true
+    },
+    {
+      "classId": "warrior",
+      "sex": "female",
+      "idle": true,
+      "chargeDemo": true
+    },
+    {
+      "classId": "hunter",
+      "sex": "female",
+      "idle": true,
+      "chargeDemo": true
+    },
+    {
+      "classId": "astral",
+      "sex": "female",
+      "idle": true,
+      "chargeDemo": true
+    },
+    {
+      "classId": "xenobinder",
+      "sex": "female",
+      "idle": true,
+      "chargeDemo": true
+    }
+  ],
+  "passed": true
+}

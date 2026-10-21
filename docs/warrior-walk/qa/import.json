@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "completeWalkingPaintings": 144,
+  "atlases": 6,
+  "minimumSourceMargin": 1,
+  "unmodifiedOtherClassAtlases": [
+    "public/assets/visual/complete-actors/hunter-male-none.png",
+    "public/assets/visual/complete-actors/hunter-male-basic.png",
+    "public/assets/visual/complete-actors/hunter-male-reinforced.png",
+    "public/assets/visual/complete-actors/hunter-female-none.png",
+    "public/assets/visual/complete-actors/hunter-female-basic.png",
+    "public/assets/visual/complete-actors/hunter-female-reinforced.png",
+    "public/assets/visual/complete-actors/astral-male-none.png",
+    "public/assets/visual/complete-actors/astral-male-basic.png",
+    "public/assets/visual/complete-actors/astral-male-reinforced.png",
+    "public/assets/visual/complete-actors/astral-female-none.png",
+    "public/assets/visual/complete-actors/astral-female-basic.png",
+    "public/assets/visual/complete-actors/astral-female-reinforced.png",
+    "public/assets/visual/complete-actors/xenobinder-male-none.png",
+    "public/assets/visual/complete-actors/xenobinder-male-basic.png",
+    "public/assets/visual/complete-actors/xenobinder-male-reinforced.png",
+    "public/assets/visual/complete-actors/xenobinder-female-none.png",
+    "public/assets/visual/complete-actors/xenobinder-female-basic.png",
+    "public/assets/visual/complete-actors/xenobinder-female-reinforced.png"
+  ],
+  "newDownloadBytes": 7807563,
+  "oldDownloadBytes": 5962983
+}

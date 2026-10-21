@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { CompleteActorArt } from '../visual/CompleteActorArt';
-import { COMPLETE_FRAME,completeKey } from '../visual/CompleteActorFrames';
+import { COMPLETE_FRAME,completeAsset,completeKey } from '../visual/CompleteActorFrames';
 import { SaberAttack } from '../combat/Attack';
 import { KineticCharge } from '../combat/KineticCharge';
 import { HunterCombat } from '../combat/HunterCombat';
@@ -27,7 +27,7 @@ export class CharacterPreviewScene extends Phaser.Scene {
  constructor(readonly identity:PlayableClass,readonly sex:CharacterSex,private status:(phase:string,caption:string,frame:number)=>void,private loaded:()=>void){super('Showcase');}
  preload():void{
   const base=import.meta.env.BASE_URL+'assets/visual/';
-  this.load.spritesheet(completeKey(this.identity,this.sex,'none'),`${base}complete-actors/${this.identity}-${this.sex}-none.png`,{frameWidth:COMPLETE_FRAME,frameHeight:COMPLETE_FRAME});
+  this.load.spritesheet(completeKey(this.identity,this.sex,'none'),completeAsset(this.identity,this.sex,'none'),{frameWidth:COMPLETE_FRAME,frameHeight:COMPLETE_FRAME});
   for(const key of ['hollow-body','hollow-forelimbs','hollow-rear-limbs'])this.load.image(key,`${base}characters/${key}.png`);
   if(this.identity==='warrior')this.load.image('warrior-starter-weapon',base+'characters/warrior-starter-weapon.png');
   if(this.identity==='astral')for(const element of ASTRAL_ELEMENTS)for(const [kind,w,h]of [['bolt',128,96],['ground',128,128],['field',192,192]]as const)

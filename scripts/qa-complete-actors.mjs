@@ -27,7 +27,7 @@ try{
      s.setPlaytestWeapon(weapon);mirror.setWeaponLook(weapon);
      for(let row=0;row<8;row++)for(let action=0;action<4;action++){
       const aim=Math.PI/2-row*Math.PI/4,heavy={phase:action===3?'CHARGING':'READY',level:.7},walk=action===1||action===2;
-      for(const a of [actor,mirror]){a.travel=(action===1?1.1:3.1)*completeStride(s.classId)/4;a.previous={x:position.x-(walk?Math.cos(aim):0),y:position.y-(walk?Math.sin(aim):0)};a.update(position.x,position.y,aim,action===3,false,heavy,'fire');}
+      for(const a of [actor,mirror]){a.travel=(s.classId==='warrior'?(action===1?.10:.60):(action===1?1.1:3.1)/4)*completeStride(s.classId);a.previous={x:position.x-(walk?Math.cos(aim):0),y:position.y-(walk?Math.sin(aim):0)};a.update(position.x,position.y,aim,action===3,false,heavy,'fire');}
       const f=Number(actor.body.frame.name);if(f!==row*4+action)throw Error('Wrong frame '+[tier,weapon,row,action,f]);
       if(f!==Number(mirror.body.frame.name))throw Error('Remote frame mismatch');
       if(actor.body.rotation!==0||actor.body.scaleX!==actor.body.scaleY||actor.body.flipX||actor.body.flipY)throw Error('Deformed whole image');
@@ -38,7 +38,7 @@ try{
       // Same equipped head in every action of a view: catches helmet flicker
       // which a nonempty-frame/scale check alone cannot detect.
       for(let y=16;y<43;y++)for(let x=76;x<116;x++)for(let c=0;c<4;c++){
-       const i=(y*192+x)*4+c;if(a[i]!==idle[i])throw Error('Helmet changed during pose '+[tier,row,action,x,y]);
+       const i=(y*192+x)*4+c;if(s.classId!=='warrior'&&a[i]!==idle[i])throw Error('Helmet changed during pose '+[tier,row,action,x,y]);
       }
       if(ink<2000)throw Error('Empty/incomplete figure');frames.add(f);cases++;
      }

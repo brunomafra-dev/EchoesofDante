@@ -1,0 +1,3404 @@
+{
+  "sources": [
+    {
+      "file": "docs/warrior-walk/source/male-none.png",
+      "original": "exec-6a7dc847-9261-411b-8666-ffc838ea5104.png",
+      "sha256": "5b7b52dee52dcb9572597495da9968be3cb30cfc46f59d75168d31231279ddf7",
+      "origin": "image_gen.imagegen; complete humans"
+    },
+    {
+      "file": "docs/warrior-walk/source/male-basic.png",
+      "original": "exec-36c5bea5-bbfa-428d-82e6-97e6b70bc0f1.png",
+      "sha256": "e5f63893058a77f82b71322dc5be896ea32a1c841ad76477936c4eda51e5bb43",
+      "origin": "image_gen.imagegen; complete humans"
+    },
+    {
+      "file": "docs/warrior-walk/source/male-reinforced.png",
+      "original": "exec-bd22eab3-3e63-4015-9259-9df5a563e89c.png",
+      "sha256": "a089c9d3fbb28bbf862d62861960c23361102bbcfc813bed674cc4eaf3b00b01",
+      "origin": "image_gen.imagegen; complete humans"
+    },
+    {
+      "file": "docs/warrior-walk/source/female-none.png",
+      "original": "exec-ef6a2c2c-47a9-40d0-af7c-07d4e9ff7dbe.png",
+      "sha256": "af7ecdee18a5d44f5416c7e67af6a6b5427f14dad29fe0a9667a89e842db62c3",
+      "origin": "image_gen.imagegen; complete humans"
+    },
+    {
+      "file": "docs/warrior-walk/source/female-basic.png",
+      "original": "exec-90b8e899-5416-42c5-a0af-e145587f03d0.png",
+      "sha256": "c1cc57dea3a65591278fb5ddd5455b1809c238983f85768602d404293fbaf883",
+      "origin": "image_gen.imagegen; complete humans"
+    },
+    {
+      "file": "docs/warrior-walk/source/female-reinforced.png",
+      "original": "exec-497277e8-d2d9-475a-9c0a-2bc84f33b383.png",
+      "sha256": "ffd7395be9a24cc1c7de6d2172cc4483a7799f8440b46f31ec81cfa9fa341e62",
+      "origin": "image_gen.imagegen; complete humans"
+    }
+  ],
+  "atlases": [
+    {
+      "file": "public/assets/visual/complete-actors/warrior-male-none-walk-v2.png",
+      "bytes": 1158836,
+      "width": 768,
+      "height": 1920,
+      "frames": 40,
+      "sha256": "93ed22476b788d11c3bc17ee9e84ed7f9dfef672a662ceafbc08d5dfcf140489"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/warrior-male-basic-walk-v2.png",
+      "bytes": 1357538,
+      "width": 768,
+      "height": 1920,
+      "frames": 40,
+      "sha256": "9cb6b88d43c4baf3678b9685e7fb250c1a03ffc0179283928ea2f2fd05c1b3fa"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/warrior-male-reinforced-walk-v2.png",
+      "bytes": 1436704,
+      "width": 768,
+      "height": 1920,
+      "frames": 40,
+      "sha256": "7265fc51ba1e5885b27ddddf25864aed9df49770928713c90b954cc3ed2359e2"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/warrior-female-none-walk-v2.png",
+      "bytes": 1133476,
+      "width": 768,
+      "height": 1920,
+      "frames": 40,
+      "sha256": "5843130b2c8df57d7c5b2b39b658af3c7f57f314ae512d0ce2d72f62220b6b86"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/warrior-female-basic-walk-v2.png",
+      "bytes": 1353136,
+      "width": 768,
+      "height": 1920,
+      "frames": 40,
+      "sha256": "f13cb76344a41d307f4de40267e253b6205b61d4ba56503f61dcf7363da07b51"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/warrior-female-reinforced-walk-v2.png",
+      "bytes": 1367873,
+      "width": 768,
+      "height": 1920,
+      "frames": 40,
+      "sha256": "7a5595d8aec6d1256b9e5c3b474d89b1b8afa5dbc976b60b192fc28a1a18b5f6"
+    }
+  ],
+  "frames": [
+    {
+      "actor": "male-none",
+      "frame": 1,
+      "row": 0,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        0,
+        322,
+        237
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        125,
+        32,
+        85,
+        12
+      ],
+      "uniformScale": 0.8497409326424871,
+      "top": 19,
+      "height": 164,
+      "headX": 95.57
+    },
+    {
+      "actor": "male-none",
+      "frame": 32,
+      "row": 0,
+      "sourceColumn": 1,
+      "sourceBox": [
+        322,
+        0,
+        581,
+        242
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        62,
+        33,
+        80,
+        7
+      ],
+      "uniformScale": 0.8078817733990148,
+      "top": 19,
+      "height": 164,
+      "headX": 96.057
+    },
+    {
+      "actor": "male-none",
+      "frame": 2,
+      "row": 0,
+      "sourceColumn": 2,
+      "sourceBox": [
+        581,
+        0,
+        887,
+        242
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        66,
+        32,
+        125,
+        7
+      ],
+      "uniformScale": 0.8078817733990148,
+      "top": 19,
+      "height": 164,
+      "headX": 95.758
+    },
+    {
+      "actor": "male-none",
+      "frame": 5,
+      "row": 1,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        237,
+        322,
+        459
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        123,
+        12,
+        95,
+        7
+      ],
+      "uniformScale": 0.8078817733990148,
+      "top": 19,
+      "height": 164,
+      "headX": 95.591
+    },
+    {
+      "actor": "male-none",
+      "frame": 33,
+      "row": 1,
+      "sourceColumn": 1,
+      "sourceBox": [
+        322,
+        242,
+        581,
+        458
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        63,
+        8,
+        90,
+        7
+      ],
+      "uniformScale": 0.8078817733990148,
+      "top": 19,
+      "height": 164,
+      "headX": 96.011
+    },
+    {
+      "actor": "male-none",
+      "frame": 6,
+      "row": 1,
+      "sourceColumn": 2,
+      "sourceBox": [
+        581,
+        242,
+        887,
+        457
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        73,
+        8,
+        132,
+        6
+      ],
+      "uniformScale": 0.8118811881188119,
+      "top": 19,
+      "height": 164,
+      "headX": 96.262
+    },
+    {
+      "actor": "male-none",
+      "frame": 9,
+      "row": 2,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        459,
+        322,
+        670
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        114,
+        8,
+        47,
+        10
+      ],
+      "uniformScale": 0.845360824742268,
+      "top": 19,
+      "height": 164,
+      "headX": 96.039
+    },
+    {
+      "actor": "male-none",
+      "frame": 34,
+      "row": 2,
+      "sourceColumn": 1,
+      "sourceBox": [
+        322,
+        458,
+        581,
+        672
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        59,
+        6,
+        55,
+        9
+      ],
+      "uniformScale": 0.8159203980099502,
+      "top": 19,
+      "height": 164,
+      "headX": 96.255
+    },
+    {
+      "actor": "male-none",
+      "frame": 10,
+      "row": 2,
+      "sourceColumn": 2,
+      "sourceBox": [
+        581,
+        457,
+        887,
+        673
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        59,
+        7,
+        86,
+        9
+      ],
+      "uniformScale": 0.8118811881188119,
+      "top": 19,
+      "height": 164,
+      "headX": 96.216
+    },
+    {
+      "actor": "male-none",
+      "frame": 13,
+      "row": 3,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        670,
+        322,
+        892
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        123,
+        11,
+        46,
+        5
+      ],
+      "uniformScale": 0.7884615384615384,
+      "top": 19,
+      "height": 164,
+      "headX": 95.597
+    },
+    {
+      "actor": "male-none",
+      "frame": 35,
+      "row": 3,
+      "sourceColumn": 1,
+      "sourceBox": [
+        322,
+        672,
+        581,
+        892
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        69,
+        10,
+        35,
+        4
+      ],
+      "uniformScale": 0.7922705314009661,
+      "top": 19,
+      "height": 164,
+      "headX": 95.615
+    },
+    {
+      "actor": "male-none",
+      "frame": 14,
+      "row": 3,
+      "sourceColumn": 2,
+      "sourceBox": [
+        581,
+        673,
+        887,
+        892
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        65,
+        8,
+        86,
+        4
+      ],
+      "uniformScale": 0.7884615384615384,
+      "top": 19,
+      "height": 164,
+      "headX": 95.969
+    },
+    {
+      "actor": "male-none",
+      "frame": 17,
+      "row": 4,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        892,
+        322,
+        1119
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        122,
+        5,
+        29,
+        5
+      ],
+      "uniformScale": 0.7522935779816514,
+      "top": 19,
+      "height": 164,
+      "headX": 95.988
+    },
+    {
+      "actor": "male-none",
+      "frame": 36,
+      "row": 4,
+      "sourceColumn": 1,
+      "sourceBox": [
+        322,
+        892,
+        581,
+        1120
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        60,
+        5,
+        48,
+        6
+      ],
+      "uniformScale": 0.7557603686635944,
+      "top": 19,
+      "height": 164,
+      "headX": 95.566
+    },
+    {
+      "actor": "male-none",
+      "frame": 18,
+      "row": 4,
+      "sourceColumn": 2,
+      "sourceBox": [
+        581,
+        892,
+        887,
+        1120
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        61,
+        5,
+        87,
+        6
+      ],
+      "uniformScale": 0.7522935779816514,
+      "top": 19,
+      "height": 164,
+      "headX": 95.712
+    },
+    {
+      "actor": "male-none",
+      "frame": 21,
+      "row": 5,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1119,
+        322,
+        1349
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        92,
+        7,
+        89,
+        3
+      ],
+      "uniformScale": 0.7420814479638009,
+      "top": 19,
+      "height": 164,
+      "headX": 96.242
+    },
+    {
+      "actor": "male-none",
+      "frame": 37,
+      "row": 5,
+      "sourceColumn": 1,
+      "sourceBox": [
+        322,
+        1120,
+        581,
+        1349
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        41,
+        6,
+        72,
+        3
+      ],
+      "uniformScale": 0.7420814479638009,
+      "top": 19,
+      "height": 164,
+      "headX": 96.323
+    },
+    {
+      "actor": "male-none",
+      "frame": 22,
+      "row": 5,
+      "sourceColumn": 2,
+      "sourceBox": [
+        581,
+        1120,
+        887,
+        1348
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        47,
+        6,
+        102,
+        3
+      ],
+      "uniformScale": 0.7420814479638009,
+      "top": 19,
+      "height": 164,
+      "headX": 95.539
+    },
+    {
+      "actor": "male-none",
+      "frame": 25,
+      "row": 6,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1349,
+        322,
+        1555
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        92,
+        4,
+        80,
+        6
+      ],
+      "uniformScale": 0.8282828282828283,
+      "top": 19,
+      "height": 164,
+      "headX": 96.085
+    },
+    {
+      "actor": "male-none",
+      "frame": 38,
+      "row": 6,
+      "sourceColumn": 1,
+      "sourceBox": [
+        322,
+        1349,
+        581,
+        1555
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        37,
+        3,
+        87,
+        5
+      ],
+      "uniformScale": 0.8241206030150754,
+      "top": 19,
+      "height": 164,
+      "headX": 96.261
+    },
+    {
+      "actor": "male-none",
+      "frame": 26,
+      "row": 6,
+      "sourceColumn": 2,
+      "sourceBox": [
+        581,
+        1348,
+        887,
+        1555
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        44,
+        4,
+        121,
+        6
+      ],
+      "uniformScale": 0.8241206030150754,
+      "top": 19,
+      "height": 164,
+      "headX": 95.861
+    },
+    {
+      "actor": "male-none",
+      "frame": 29,
+      "row": 7,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1555,
+        322,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        87,
+        6,
+        77,
+        14
+      ],
+      "uniformScale": 0.82,
+      "top": 19,
+      "height": 164,
+      "headX": 96.401
+    },
+    {
+      "actor": "male-none",
+      "frame": 39,
+      "row": 7,
+      "sourceColumn": 1,
+      "sourceBox": [
+        322,
+        1555,
+        581,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        29,
+        6,
+        76,
+        14
+      ],
+      "uniformScale": 0.82,
+      "top": 19,
+      "height": 164,
+      "headX": 95.798
+    },
+    {
+      "actor": "male-none",
+      "frame": 30,
+      "row": 7,
+      "sourceColumn": 2,
+      "sourceBox": [
+        581,
+        1555,
+        887,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        49,
+        6,
+        111,
+        14
+      ],
+      "uniformScale": 0.82,
+      "top": 19,
+      "height": 164,
+      "headX": 96.233
+    },
+    {
+      "actor": "male-basic",
+      "frame": 1,
+      "row": 0,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        0,
+        323,
+        238
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        122,
+        29,
+        83,
+        9
+      ],
+      "uniformScale": 0.8159203980099502,
+      "top": 19,
+      "height": 164,
+      "headX": 95.96
+    },
+    {
+      "actor": "male-basic",
+      "frame": 32,
+      "row": 0,
+      "sourceColumn": 1,
+      "sourceBox": [
+        323,
+        0,
+        583,
+        243
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        60,
+        29,
+        79,
+        4
+      ],
+      "uniformScale": 0.780952380952381,
+      "top": 19,
+      "height": 164,
+      "headX": 96.155
+    },
+    {
+      "actor": "male-basic",
+      "frame": 2,
+      "row": 0,
+      "sourceColumn": 2,
+      "sourceBox": [
+        583,
+        0,
+        887,
+        243
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        63,
+        30,
+        121,
+        5
+      ],
+      "uniformScale": 0.784688995215311,
+      "top": 19,
+      "height": 164,
+      "headX": 96.379
+    },
+    {
+      "actor": "male-basic",
+      "frame": 5,
+      "row": 1,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        238,
+        323,
+        459
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        119,
+        10,
+        93,
+        4
+      ],
+      "uniformScale": 0.7884615384615384,
+      "top": 19,
+      "height": 164,
+      "headX": 95.853
+    },
+    {
+      "actor": "male-basic",
+      "frame": 33,
+      "row": 1,
+      "sourceColumn": 1,
+      "sourceBox": [
+        323,
+        243,
+        583,
+        459
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        61,
+        5,
+        85,
+        3
+      ],
+      "uniformScale": 0.7884615384615384,
+      "top": 19,
+      "height": 164,
+      "headX": 95.776
+    },
+    {
+      "actor": "male-basic",
+      "frame": 6,
+      "row": 1,
+      "sourceColumn": 2,
+      "sourceBox": [
+        583,
+        243,
+        887,
+        459
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        68,
+        5,
+        127,
+        3
+      ],
+      "uniformScale": 0.7884615384615384,
+      "top": 19,
+      "height": 164,
+      "headX": 95.923
+    },
+    {
+      "actor": "male-basic",
+      "frame": 9,
+      "row": 2,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        459,
+        323,
+        671
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        113,
+        4,
+        46,
+        9
+      ],
+      "uniformScale": 0.82,
+      "top": 19,
+      "height": 164,
+      "headX": 95.978
+    },
+    {
+      "actor": "male-basic",
+      "frame": 34,
+      "row": 2,
+      "sourceColumn": 1,
+      "sourceBox": [
+        323,
+        459,
+        583,
+        674
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        56,
+        4,
+        49,
+        7
+      ],
+      "uniformScale": 0.8,
+      "top": 19,
+      "height": 164,
+      "headX": 95.529
+    },
+    {
+      "actor": "male-basic",
+      "frame": 10,
+      "row": 2,
+      "sourceColumn": 2,
+      "sourceBox": [
+        583,
+        459,
+        887,
+        675
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        56,
+        4,
+        76,
+        6
+      ],
+      "uniformScale": 0.7961165048543689,
+      "top": 19,
+      "height": 164,
+      "headX": 95.763
+    },
+    {
+      "actor": "male-basic",
+      "frame": 13,
+      "row": 3,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        671,
+        323,
+        894
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        120,
+        10,
+        46,
+        3
+      ],
+      "uniformScale": 0.7772511848341233,
+      "top": 19,
+      "height": 164,
+      "headX": 96.173
+    },
+    {
+      "actor": "male-basic",
+      "frame": 35,
+      "row": 3,
+      "sourceColumn": 1,
+      "sourceBox": [
+        323,
+        674,
+        583,
+        894
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        63,
+        7,
+        35,
+        2
+      ],
+      "uniformScale": 0.7699530516431925,
+      "top": 19,
+      "height": 164,
+      "headX": 96.325
+    },
+    {
+      "actor": "male-basic",
+      "frame": 14,
+      "row": 3,
+      "sourceColumn": 2,
+      "sourceBox": [
+        583,
+        675,
+        887,
+        894
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        61,
+        6,
+        81,
+        1
+      ],
+      "uniformScale": 0.7699530516431925,
+      "top": 19,
+      "height": 164,
+      "headX": 95.898
+    },
+    {
+      "actor": "male-basic",
+      "frame": 17,
+      "row": 4,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        894,
+        323,
+        1121
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        120,
+        2,
+        29,
+        4
+      ],
+      "uniformScale": 0.7420814479638009,
+      "top": 19,
+      "height": 164,
+      "headX": 95.732
+    },
+    {
+      "actor": "male-basic",
+      "frame": 36,
+      "row": 4,
+      "sourceColumn": 1,
+      "sourceBox": [
+        323,
+        894,
+        583,
+        1120
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        57,
+        2,
+        44,
+        4
+      ],
+      "uniformScale": 0.7354260089686099,
+      "top": 19,
+      "height": 164,
+      "headX": 96.344
+    },
+    {
+      "actor": "male-basic",
+      "frame": 18,
+      "row": 4,
+      "sourceColumn": 2,
+      "sourceBox": [
+        583,
+        894,
+        887,
+        1121
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        58,
+        2,
+        77,
+        4
+      ],
+      "uniformScale": 0.7321428571428571,
+      "top": 19,
+      "height": 164,
+      "headX": 95.515
+    },
+    {
+      "actor": "male-basic",
+      "frame": 21,
+      "row": 5,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1121,
+        323,
+        1350
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        91,
+        5,
+        86,
+        2
+      ],
+      "uniformScale": 0.7387387387387387,
+      "top": 19,
+      "height": 164,
+      "headX": 96.484
+    },
+    {
+      "actor": "male-basic",
+      "frame": 37,
+      "row": 5,
+      "sourceColumn": 1,
+      "sourceBox": [
+        323,
+        1120,
+        583,
+        1350
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        36,
+        5,
+        69,
+        1
+      ],
+      "uniformScale": 0.7288888888888889,
+      "top": 19,
+      "height": 164,
+      "headX": 95.756
+    },
+    {
+      "actor": "male-basic",
+      "frame": 22,
+      "row": 5,
+      "sourceColumn": 2,
+      "sourceBox": [
+        583,
+        1121,
+        887,
+        1349
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        46,
+        4,
+        99,
+        2
+      ],
+      "uniformScale": 0.7354260089686099,
+      "top": 19,
+      "height": 164,
+      "headX": 95.532
+    },
+    {
+      "actor": "male-basic",
+      "frame": 25,
+      "row": 6,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1350,
+        323,
+        1557
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        89,
+        2,
+        77,
+        2
+      ],
+      "uniformScale": 0.803921568627451,
+      "top": 19,
+      "height": 164,
+      "headX": 95.638
+    },
+    {
+      "actor": "male-basic",
+      "frame": 38,
+      "row": 6,
+      "sourceColumn": 1,
+      "sourceBox": [
+        323,
+        1350,
+        583,
+        1557
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        32,
+        2,
+        84,
+        2
+      ],
+      "uniformScale": 0.803921568627451,
+      "top": 19,
+      "height": 164,
+      "headX": 95.931
+    },
+    {
+      "actor": "male-basic",
+      "frame": 26,
+      "row": 6,
+      "sourceColumn": 2,
+      "sourceBox": [
+        583,
+        1349,
+        887,
+        1557
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        40,
+        3,
+        116,
+        1
+      ],
+      "uniformScale": 0.803921568627451,
+      "top": 19,
+      "height": 164,
+      "headX": 95.862
+    },
+    {
+      "actor": "male-basic",
+      "frame": 29,
+      "row": 7,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1557,
+        323,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        84,
+        2,
+        75,
+        10
+      ],
+      "uniformScale": 0.7922705314009661,
+      "top": 19,
+      "height": 164,
+      "headX": 95.75
+    },
+    {
+      "actor": "male-basic",
+      "frame": 39,
+      "row": 7,
+      "sourceColumn": 1,
+      "sourceBox": [
+        323,
+        1557,
+        583,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        29,
+        1,
+        74,
+        10
+      ],
+      "uniformScale": 0.7922705314009661,
+      "top": 19,
+      "height": 164,
+      "headX": 95.863
+    },
+    {
+      "actor": "male-basic",
+      "frame": 30,
+      "row": 7,
+      "sourceColumn": 2,
+      "sourceBox": [
+        583,
+        1557,
+        887,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        46,
+        2,
+        111,
+        9
+      ],
+      "uniformScale": 0.7922705314009661,
+      "top": 19,
+      "height": 164,
+      "headX": 95.938
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 1,
+      "row": 0,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        0,
+        330,
+        263
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        164,
+        90,
+        72,
+        20
+      ],
+      "uniformScale": 1.0580645161290323,
+      "top": 19,
+      "height": 164,
+      "headX": 95.719
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 32,
+      "row": 0,
+      "sourceColumn": 1,
+      "sourceBox": [
+        330,
+        0,
+        570,
+        263
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        71,
+        88,
+        73,
+        19
+      ],
+      "uniformScale": 1.0379746835443038,
+      "top": 19,
+      "height": 164,
+      "headX": 95.973
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 2,
+      "row": 0,
+      "sourceColumn": 2,
+      "sourceBox": [
+        570,
+        0,
+        887,
+        262
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        66,
+        88,
+        157,
+        18
+      ],
+      "uniformScale": 1.0445859872611465,
+      "top": 19,
+      "height": 164,
+      "headX": 95.842
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 5,
+      "row": 1,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        263,
+        330,
+        455
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        169,
+        20,
+        74,
+        20
+      ],
+      "uniformScale": 1.0718954248366013,
+      "top": 19,
+      "height": 164,
+      "headX": 96.197
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 33,
+      "row": 1,
+      "sourceColumn": 1,
+      "sourceBox": [
+        330,
+        263,
+        570,
+        455
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        75,
+        20,
+        75,
+        21
+      ],
+      "uniformScale": 1.0718954248366013,
+      "top": 19,
+      "height": 164,
+      "headX": 95.553
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 6,
+      "row": 1,
+      "sourceColumn": 2,
+      "sourceBox": [
+        570,
+        262,
+        887,
+        454
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        71,
+        18,
+        160,
+        21
+      ],
+      "uniformScale": 1.0718954248366013,
+      "top": 19,
+      "height": 164,
+      "headX": 95.841
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 9,
+      "row": 2,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        455,
+        330,
+        651
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        158,
+        20,
+        39,
+        29
+      ],
+      "uniformScale": 1.1081081081081081,
+      "top": 19,
+      "height": 164,
+      "headX": 95.882
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 34,
+      "row": 2,
+      "sourceColumn": 1,
+      "sourceBox": [
+        330,
+        455,
+        570,
+        650
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        58,
+        20,
+        58,
+        27
+      ],
+      "uniformScale": 1.1006711409395973,
+      "top": 19,
+      "height": 164,
+      "headX": 95.894
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 10,
+      "row": 2,
+      "sourceColumn": 2,
+      "sourceBox": [
+        570,
+        454,
+        887,
+        650
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        57,
+        21,
+        127,
+        27
+      ],
+      "uniformScale": 1.0933333333333333,
+      "top": 19,
+      "height": 164,
+      "headX": 95.75
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 13,
+      "row": 3,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        651,
+        330,
+        855
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        163,
+        25,
+        37,
+        23
+      ],
+      "uniformScale": 1.0379746835443038,
+      "top": 19,
+      "height": 164,
+      "headX": 96.044
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 35,
+      "row": 3,
+      "sourceColumn": 1,
+      "sourceBox": [
+        330,
+        650,
+        570,
+        854
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        74,
+        26,
+        40,
+        22
+      ],
+      "uniformScale": 1.0445859872611465,
+      "top": 19,
+      "height": 164,
+      "headX": 95.82
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 14,
+      "row": 3,
+      "sourceColumn": 2,
+      "sourceBox": [
+        570,
+        650,
+        887,
+        855
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        73,
+        26,
+        116,
+        23
+      ],
+      "uniformScale": 1.0379746835443038,
+      "top": 19,
+      "height": 164,
+      "headX": 95.548
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 17,
+      "row": 4,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        855,
+        330,
+        1063
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        161,
+        22,
+        36,
+        23
+      ],
+      "uniformScale": 1.0,
+      "top": 19,
+      "height": 164,
+      "headX": 96.453
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 36,
+      "row": 4,
+      "sourceColumn": 1,
+      "sourceBox": [
+        330,
+        854,
+        570,
+        1063
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        67,
+        23,
+        46,
+        23
+      ],
+      "uniformScale": 1.0,
+      "top": 19,
+      "height": 164,
+      "headX": 95.831
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 18,
+      "row": 4,
+      "sourceColumn": 2,
+      "sourceBox": [
+        570,
+        855,
+        887,
+        1063
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        67,
+        22,
+        116,
+        23
+      ],
+      "uniformScale": 1.0,
+      "top": 19,
+      "height": 164,
+      "headX": 96.429
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 21,
+      "row": 5,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1063,
+        330,
+        1264
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        140,
+        23,
+        80,
+        15
+      ],
+      "uniformScale": 1.0061349693251533,
+      "top": 19,
+      "height": 164,
+      "headX": 96.401
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 37,
+      "row": 5,
+      "sourceColumn": 1,
+      "sourceBox": [
+        330,
+        1063,
+        570,
+        1266
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        52,
+        24,
+        66,
+        14
+      ],
+      "uniformScale": 0.9820359281437125,
+      "top": 19,
+      "height": 164,
+      "headX": 95.771
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 22,
+      "row": 5,
+      "sourceColumn": 2,
+      "sourceBox": [
+        570,
+        1063,
+        887,
+        1265
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        55,
+        23,
+        138,
+        14
+      ],
+      "uniformScale": 0.9879518072289156,
+      "top": 19,
+      "height": 164,
+      "headX": 95.948
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 25,
+      "row": 6,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1264,
+        330,
+        1460
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        136,
+        15,
+        68,
+        24
+      ],
+      "uniformScale": 1.0314465408805031,
+      "top": 19,
+      "height": 164,
+      "headX": 95.827
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 38,
+      "row": 6,
+      "sourceColumn": 1,
+      "sourceBox": [
+        330,
+        1266,
+        570,
+        1461
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        52,
+        14,
+        71,
+        24
+      ],
+      "uniformScale": 1.0379746835443038,
+      "top": 19,
+      "height": 164,
+      "headX": 96.397
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 26,
+      "row": 6,
+      "sourceColumn": 2,
+      "sourceBox": [
+        570,
+        1265,
+        887,
+        1461
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        52,
+        15,
+        144,
+        24
+      ],
+      "uniformScale": 1.0379746835443038,
+      "top": 19,
+      "height": 164,
+      "headX": 95.716
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 29,
+      "row": 7,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1460,
+        330,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        135,
+        24,
+        68,
+        135
+      ],
+      "uniformScale": 1.0512820512820513,
+      "top": 19,
+      "height": 164,
+      "headX": 96.314
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 39,
+      "row": 7,
+      "sourceColumn": 1,
+      "sourceBox": [
+        330,
+        1461,
+        570,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        47,
+        25,
+        70,
+        132
+      ],
+      "uniformScale": 1.0445859872611465,
+      "top": 19,
+      "height": 164,
+      "headX": 96.227
+    },
+    {
+      "actor": "male-reinforced",
+      "frame": 30,
+      "row": 7,
+      "sourceColumn": 2,
+      "sourceBox": [
+        570,
+        1461,
+        887,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        48,
+        25,
+        146,
+        132
+      ],
+      "uniformScale": 1.0379746835443038,
+      "top": 19,
+      "height": 164,
+      "headX": 95.952
+    },
+    {
+      "actor": "female-none",
+      "frame": 1,
+      "row": 0,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        0,
+        324,
+        234
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        159,
+        68,
+        81,
+        19
+      ],
+      "uniformScale": 1.1156462585034013,
+      "top": 19,
+      "height": 164,
+      "headX": 95.759
+    },
+    {
+      "actor": "female-none",
+      "frame": 32,
+      "row": 0,
+      "sourceColumn": 1,
+      "sourceBox": [
+        324,
+        0,
+        569,
+        233
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        77,
+        68,
+        85,
+        17
+      ],
+      "uniformScale": 1.1006711409395973,
+      "top": 19,
+      "height": 164,
+      "headX": 96.486
+    },
+    {
+      "actor": "female-none",
+      "frame": 2,
+      "row": 0,
+      "sourceColumn": 2,
+      "sourceBox": [
+        569,
+        0,
+        887,
+        233
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        75,
+        68,
+        161,
+        17
+      ],
+      "uniformScale": 1.1006711409395973,
+      "top": 19,
+      "height": 164,
+      "headX": 96.318
+    },
+    {
+      "actor": "female-none",
+      "frame": 5,
+      "row": 1,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        234,
+        324,
+        430
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        161,
+        19,
+        77,
+        17
+      ],
+      "uniformScale": 1.0186335403726707,
+      "top": 19,
+      "height": 164,
+      "headX": 95.665
+    },
+    {
+      "actor": "female-none",
+      "frame": 33,
+      "row": 1,
+      "sourceColumn": 1,
+      "sourceBox": [
+        324,
+        233,
+        569,
+        430
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        80,
+        19,
+        81,
+        17
+      ],
+      "uniformScale": 1.0061349693251533,
+      "top": 19,
+      "height": 164,
+      "headX": 95.607
+    },
+    {
+      "actor": "female-none",
+      "frame": 6,
+      "row": 1,
+      "sourceColumn": 2,
+      "sourceBox": [
+        569,
+        233,
+        887,
+        430
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        80,
+        18,
+        151,
+        17
+      ],
+      "uniformScale": 1.0123456790123457,
+      "top": 19,
+      "height": 164,
+      "headX": 96.494
+    },
+    {
+      "actor": "female-none",
+      "frame": 9,
+      "row": 2,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        430,
+        324,
+        629
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        152,
+        19,
+        50,
+        22
+      ],
+      "uniformScale": 1.025,
+      "top": 19,
+      "height": 164,
+      "headX": 95.56
+    },
+    {
+      "actor": "female-none",
+      "frame": 34,
+      "row": 2,
+      "sourceColumn": 1,
+      "sourceBox": [
+        324,
+        430,
+        569,
+        629
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        68,
+        18,
+        59,
+        21
+      ],
+      "uniformScale": 1.0123456790123457,
+      "top": 19,
+      "height": 164,
+      "headX": 96.342
+    },
+    {
+      "actor": "female-none",
+      "frame": 10,
+      "row": 2,
+      "sourceColumn": 2,
+      "sourceBox": [
+        569,
+        430,
+        887,
+        627
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        68,
+        18,
+        123,
+        19
+      ],
+      "uniformScale": 1.0123456790123457,
+      "top": 19,
+      "height": 164,
+      "headX": 95.564
+    },
+    {
+      "actor": "female-none",
+      "frame": 13,
+      "row": 3,
+      "sourceColumn": 0,
+      "sourceBox": [
+        569,
+        1057,
+        887,
+        1265
+      ],
+      "mirroredWholeFigure": true,
+      "coreMargins": [
+        136,
+        12,
+        56,
+        22
+      ],
+      "uniformScale": 0.9318181818181818,
+      "top": 19,
+      "height": 164,
+      "headX": 96.482
+    },
+    {
+      "actor": "female-none",
+      "frame": 35,
+      "row": 3,
+      "sourceColumn": 1,
+      "sourceBox": [
+        324,
+        1056,
+        569,
+        1265
+      ],
+      "mirroredWholeFigure": true,
+      "coreMargins": [
+        73,
+        13,
+        47,
+        22
+      ],
+      "uniformScale": 0.9318181818181818,
+      "top": 19,
+      "height": 164,
+      "headX": 96.081
+    },
+    {
+      "actor": "female-none",
+      "frame": 14,
+      "row": 3,
+      "sourceColumn": 2,
+      "sourceBox": [
+        0,
+        1057,
+        324,
+        1266
+      ],
+      "mirroredWholeFigure": true,
+      "coreMargins": [
+        71,
+        14,
+        126,
+        23
+      ],
+      "uniformScale": 0.9425287356321839,
+      "top": 19,
+      "height": 164,
+      "headX": 95.821
+    },
+    {
+      "actor": "female-none",
+      "frame": 17,
+      "row": 4,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        845,
+        324,
+        1057
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        152,
+        23,
+        48,
+        12
+      ],
+      "uniformScale": 0.9213483146067416,
+      "top": 19,
+      "height": 164,
+      "headX": 95.891
+    },
+    {
+      "actor": "female-none",
+      "frame": 36,
+      "row": 4,
+      "sourceColumn": 1,
+      "sourceBox": [
+        324,
+        846,
+        569,
+        1056
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        75,
+        22,
+        47,
+        14
+      ],
+      "uniformScale": 0.9318181818181818,
+      "top": 19,
+      "height": 164,
+      "headX": 96.081
+    },
+    {
+      "actor": "female-none",
+      "frame": 18,
+      "row": 4,
+      "sourceColumn": 2,
+      "sourceBox": [
+        569,
+        845,
+        887,
+        1057
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        76,
+        23,
+        116,
+        12
+      ],
+      "uniformScale": 0.9213483146067416,
+      "top": 19,
+      "height": 164,
+      "headX": 96.253
+    },
+    {
+      "actor": "female-none",
+      "frame": 21,
+      "row": 5,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1057,
+        324,
+        1266
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        126,
+        14,
+        71,
+        23
+      ],
+      "uniformScale": 0.9425287356321839,
+      "top": 19,
+      "height": 164,
+      "headX": 95.823
+    },
+    {
+      "actor": "female-none",
+      "frame": 37,
+      "row": 5,
+      "sourceColumn": 1,
+      "sourceBox": [
+        324,
+        1056,
+        569,
+        1265
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        47,
+        13,
+        73,
+        22
+      ],
+      "uniformScale": 0.9318181818181818,
+      "top": 19,
+      "height": 164,
+      "headX": 96.465
+    },
+    {
+      "actor": "female-none",
+      "frame": 22,
+      "row": 5,
+      "sourceColumn": 2,
+      "sourceBox": [
+        569,
+        1057,
+        887,
+        1265
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        56,
+        12,
+        136,
+        22
+      ],
+      "uniformScale": 0.9318181818181818,
+      "top": 19,
+      "height": 164,
+      "headX": 95.859
+    },
+    {
+      "actor": "female-none",
+      "frame": 25,
+      "row": 6,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1266,
+        324,
+        1484
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        129,
+        23,
+        74,
+        22
+      ],
+      "uniformScale": 0.9371428571428572,
+      "top": 19,
+      "height": 164,
+      "headX": 96.27
+    },
+    {
+      "actor": "female-none",
+      "frame": 38,
+      "row": 6,
+      "sourceColumn": 1,
+      "sourceBox": [
+        324,
+        1265,
+        569,
+        1483
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        46,
+        23,
+        79,
+        21
+      ],
+      "uniformScale": 0.9425287356321839,
+      "top": 19,
+      "height": 164,
+      "headX": 96.201
+    },
+    {
+      "actor": "female-none",
+      "frame": 26,
+      "row": 6,
+      "sourceColumn": 2,
+      "sourceBox": [
+        569,
+        1265,
+        887,
+        1485
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        51,
+        24,
+        147,
+        22
+      ],
+      "uniformScale": 0.9318181818181818,
+      "top": 19,
+      "height": 164,
+      "headX": 96.089
+    },
+    {
+      "actor": "female-none",
+      "frame": 29,
+      "row": 7,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1484,
+        324,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        126,
+        23,
+        68,
+        96
+      ],
+      "uniformScale": 0.9479768786127167,
+      "top": 19,
+      "height": 164,
+      "headX": 95.997
+    },
+    {
+      "actor": "female-none",
+      "frame": 39,
+      "row": 7,
+      "sourceColumn": 1,
+      "sourceBox": [
+        324,
+        1483,
+        569,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        49,
+        23,
+        70,
+        95
+      ],
+      "uniformScale": 0.9425287356321839,
+      "top": 19,
+      "height": 164,
+      "headX": 96.145
+    },
+    {
+      "actor": "female-none",
+      "frame": 30,
+      "row": 7,
+      "sourceColumn": 2,
+      "sourceBox": [
+        569,
+        1485,
+        887,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        55,
+        22,
+        138,
+        95
+      ],
+      "uniformScale": 0.9479768786127167,
+      "top": 19,
+      "height": 164,
+      "headX": 96.429
+    },
+    {
+      "actor": "female-basic",
+      "frame": 1,
+      "row": 0,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        0,
+        328,
+        232
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        161,
+        46,
+        67,
+        10
+      ],
+      "uniformScale": 0.9213483146067416,
+      "top": 19,
+      "height": 164,
+      "headX": 95.879
+    },
+    {
+      "actor": "female-basic",
+      "frame": 32,
+      "row": 0,
+      "sourceColumn": 1,
+      "sourceBox": [
+        328,
+        0,
+        568,
+        231
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        64,
+        46,
+        76,
+        9
+      ],
+      "uniformScale": 0.9213483146067416,
+      "top": 19,
+      "height": 164,
+      "headX": 95.731
+    },
+    {
+      "actor": "female-basic",
+      "frame": 2,
+      "row": 0,
+      "sourceColumn": 2,
+      "sourceBox": [
+        568,
+        0,
+        887,
+        231
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        58,
+        46,
+        163,
+        9
+      ],
+      "uniformScale": 0.9213483146067416,
+      "top": 19,
+      "height": 164,
+      "headX": 96.281
+    },
+    {
+      "actor": "female-basic",
+      "frame": 5,
+      "row": 1,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        232,
+        328,
+        426
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        162,
+        9,
+        69,
+        4
+      ],
+      "uniformScale": 0.9010989010989011,
+      "top": 19,
+      "height": 164,
+      "headX": 96.395
+    },
+    {
+      "actor": "female-basic",
+      "frame": 33,
+      "row": 1,
+      "sourceColumn": 1,
+      "sourceBox": [
+        328,
+        231,
+        568,
+        426
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        66,
+        10,
+        74,
+        4
+      ],
+      "uniformScale": 0.9010989010989011,
+      "top": 19,
+      "height": 164,
+      "headX": 95.682
+    },
+    {
+      "actor": "female-basic",
+      "frame": 6,
+      "row": 1,
+      "sourceColumn": 2,
+      "sourceBox": [
+        568,
+        231,
+        887,
+        426
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        64,
+        10,
+        157,
+        5
+      ],
+      "uniformScale": 0.9010989010989011,
+      "top": 19,
+      "height": 164,
+      "headX": 95.955
+    },
+    {
+      "actor": "female-basic",
+      "frame": 9,
+      "row": 2,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        426,
+        328,
+        629
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        145,
+        4,
+        44,
+        10
+      ],
+      "uniformScale": 0.8631578947368421,
+      "top": 19,
+      "height": 164,
+      "headX": 95.832
+    },
+    {
+      "actor": "female-basic",
+      "frame": 34,
+      "row": 2,
+      "sourceColumn": 1,
+      "sourceBox": [
+        328,
+        426,
+        568,
+        630
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        49,
+        4,
+        51,
+        12
+      ],
+      "uniformScale": 0.8677248677248677,
+      "top": 19,
+      "height": 164,
+      "headX": 95.93
+    },
+    {
+      "actor": "female-basic",
+      "frame": 10,
+      "row": 2,
+      "sourceColumn": 2,
+      "sourceBox": [
+        568,
+        426,
+        887,
+        628
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        48,
+        4,
+        130,
+        10
+      ],
+      "uniformScale": 0.8677248677248677,
+      "top": 19,
+      "height": 164,
+      "headX": 96.175
+    },
+    {
+      "actor": "female-basic",
+      "frame": 13,
+      "row": 3,
+      "sourceColumn": 0,
+      "sourceBox": [
+        568,
+        1042,
+        887,
+        1246
+      ],
+      "mirroredWholeFigure": true,
+      "coreMargins": [
+        140,
+        8,
+        34,
+        5
+      ],
+      "uniformScale": 0.8541666666666666,
+      "top": 19,
+      "height": 164,
+      "headX": 95.797
+    },
+    {
+      "actor": "female-basic",
+      "frame": 35,
+      "row": 3,
+      "sourceColumn": 1,
+      "sourceBox": [
+        328,
+        1042,
+        568,
+        1246
+      ],
+      "mirroredWholeFigure": true,
+      "coreMargins": [
+        66,
+        8,
+        34,
+        5
+      ],
+      "uniformScale": 0.8497409326424871,
+      "top": 19,
+      "height": 164,
+      "headX": 96.494
+    },
+    {
+      "actor": "female-basic",
+      "frame": 14,
+      "row": 3,
+      "sourceColumn": 2,
+      "sourceBox": [
+        0,
+        1042,
+        328,
+        1246
+      ],
+      "mirroredWholeFigure": true,
+      "coreMargins": [
+        69,
+        8,
+        114,
+        5
+      ],
+      "uniformScale": 0.8586387434554974,
+      "top": 19,
+      "height": 164,
+      "headX": 96.265
+    },
+    {
+      "actor": "female-basic",
+      "frame": 17,
+      "row": 4,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        835,
+        328,
+        1042
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        145,
+        11,
+        31,
+        8
+      ],
+      "uniformScale": 0.8677248677248677,
+      "top": 19,
+      "height": 164,
+      "headX": 96.34
+    },
+    {
+      "actor": "female-basic",
+      "frame": 36,
+      "row": 4,
+      "sourceColumn": 1,
+      "sourceBox": [
+        328,
+        835,
+        568,
+        1042
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        59,
+        11,
+        34,
+        8
+      ],
+      "uniformScale": 0.8631578947368421,
+      "top": 19,
+      "height": 164,
+      "headX": 95.642
+    },
+    {
+      "actor": "female-basic",
+      "frame": 18,
+      "row": 4,
+      "sourceColumn": 2,
+      "sourceBox": [
+        568,
+        835,
+        887,
+        1042
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        57,
+        11,
+        114,
+        8
+      ],
+      "uniformScale": 0.8677248677248677,
+      "top": 19,
+      "height": 164,
+      "headX": 95.75
+    },
+    {
+      "actor": "female-basic",
+      "frame": 21,
+      "row": 5,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1042,
+        328,
+        1246
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        114,
+        8,
+        69,
+        5
+      ],
+      "uniformScale": 0.8586387434554974,
+      "top": 19,
+      "height": 164,
+      "headX": 96.238
+    },
+    {
+      "actor": "female-basic",
+      "frame": 37,
+      "row": 5,
+      "sourceColumn": 1,
+      "sourceBox": [
+        328,
+        1042,
+        568,
+        1246
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        34,
+        8,
+        66,
+        5
+      ],
+      "uniformScale": 0.8497409326424871,
+      "top": 19,
+      "height": 164,
+      "headX": 96.32
+    },
+    {
+      "actor": "female-basic",
+      "frame": 22,
+      "row": 5,
+      "sourceColumn": 2,
+      "sourceBox": [
+        568,
+        1042,
+        887,
+        1246
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        34,
+        8,
+        140,
+        5
+      ],
+      "uniformScale": 0.8541666666666666,
+      "top": 19,
+      "height": 164,
+      "headX": 95.911
+    },
+    {
+      "actor": "female-basic",
+      "frame": 25,
+      "row": 6,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1246,
+        328,
+        1449
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        114,
+        5,
+        74,
+        4
+      ],
+      "uniformScale": 0.845360824742268,
+      "top": 19,
+      "height": 164,
+      "headX": 96.261
+    },
+    {
+      "actor": "female-basic",
+      "frame": 38,
+      "row": 6,
+      "sourceColumn": 1,
+      "sourceBox": [
+        328,
+        1246,
+        568,
+        1449
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        31,
+        6,
+        68,
+        4
+      ],
+      "uniformScale": 0.841025641025641,
+      "top": 19,
+      "height": 164,
+      "headX": 95.619
+    },
+    {
+      "actor": "female-basic",
+      "frame": 26,
+      "row": 6,
+      "sourceColumn": 2,
+      "sourceBox": [
+        568,
+        1246,
+        887,
+        1449
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        32,
+        6,
+        145,
+        4
+      ],
+      "uniformScale": 0.841025641025641,
+      "top": 19,
+      "height": 164,
+      "headX": 96.25
+    },
+    {
+      "actor": "female-basic",
+      "frame": 29,
+      "row": 7,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1449,
+        328,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        115,
+        5,
+        65,
+        130
+      ],
+      "uniformScale": 0.8541666666666666,
+      "top": 19,
+      "height": 164,
+      "headX": 96.295
+    },
+    {
+      "actor": "female-basic",
+      "frame": 39,
+      "row": 7,
+      "sourceColumn": 1,
+      "sourceBox": [
+        328,
+        1449,
+        568,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        40,
+        5,
+        56,
+        130
+      ],
+      "uniformScale": 0.8541666666666666,
+      "top": 19,
+      "height": 164,
+      "headX": 96.148
+    },
+    {
+      "actor": "female-basic",
+      "frame": 30,
+      "row": 7,
+      "sourceColumn": 2,
+      "sourceBox": [
+        568,
+        1449,
+        887,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        38,
+        4,
+        130,
+        130
+      ],
+      "uniformScale": 0.8497409326424871,
+      "top": 19,
+      "height": 164,
+      "headX": 96.252
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 1,
+      "row": 0,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        0,
+        344,
+        252
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        185,
+        64,
+        57,
+        17
+      ],
+      "uniformScale": 0.9479768786127167,
+      "top": 19,
+      "height": 164,
+      "headX": 95.647
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 32,
+      "row": 0,
+      "sourceColumn": 1,
+      "sourceBox": [
+        344,
+        0,
+        553,
+        253
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        48,
+        64,
+        60,
+        16
+      ],
+      "uniformScale": 0.9371428571428572,
+      "top": 19,
+      "height": 164,
+      "headX": 95.701
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 2,
+      "row": 0,
+      "sourceColumn": 2,
+      "sourceBox": [
+        553,
+        0,
+        887,
+        253
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        51,
+        63,
+        183,
+        16
+      ],
+      "uniformScale": 0.9371428571428572,
+      "top": 19,
+      "height": 164,
+      "headX": 96.058
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 5,
+      "row": 1,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        252,
+        344,
+        457
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        190,
+        18,
+        57,
+        12
+      ],
+      "uniformScale": 0.9318181818181818,
+      "top": 19,
+      "height": 164,
+      "headX": 95.67
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 33,
+      "row": 1,
+      "sourceColumn": 1,
+      "sourceBox": [
+        344,
+        253,
+        553,
+        457
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        52,
+        17,
+        58,
+        11
+      ],
+      "uniformScale": 0.9265536723163842,
+      "top": 19,
+      "height": 164,
+      "headX": 95.839
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 6,
+      "row": 1,
+      "sourceColumn": 2,
+      "sourceBox": [
+        553,
+        253,
+        887,
+        458
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        53,
+        17,
+        181,
+        12
+      ],
+      "uniformScale": 0.9265536723163842,
+      "top": 19,
+      "height": 164,
+      "headX": 95.773
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 9,
+      "row": 2,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        457,
+        344,
+        660
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        175,
+        11,
+        39,
+        17
+      ],
+      "uniformScale": 0.9318181818181818,
+      "top": 19,
+      "height": 164,
+      "headX": 96.199
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 34,
+      "row": 2,
+      "sourceColumn": 1,
+      "sourceBox": [
+        344,
+        457,
+        553,
+        661
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        38,
+        12,
+        40,
+        18
+      ],
+      "uniformScale": 0.9371428571428572,
+      "top": 19,
+      "height": 164,
+      "headX": 95.658
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 10,
+      "row": 2,
+      "sourceColumn": 2,
+      "sourceBox": [
+        553,
+        458,
+        887,
+        660
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        40,
+        11,
+        161,
+        17
+      ],
+      "uniformScale": 0.9371428571428572,
+      "top": 19,
+      "height": 164,
+      "headX": 96.117
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 13,
+      "row": 3,
+      "sourceColumn": 0,
+      "sourceBox": [
+        553,
+        1087,
+        887,
+        1295
+      ],
+      "mirroredWholeFigure": true,
+      "coreMargins": [
+        171,
+        17,
+        27,
+        13
+      ],
+      "uniformScale": 0.9162011173184358,
+      "top": 19,
+      "height": 164,
+      "headX": 96.318
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 35,
+      "row": 3,
+      "sourceColumn": 1,
+      "sourceBox": [
+        344,
+        1086,
+        553,
+        1292
+      ],
+      "mirroredWholeFigure": true,
+      "coreMargins": [
+        54,
+        17,
+        22,
+        13
+      ],
+      "uniformScale": 0.9318181818181818,
+      "top": 19,
+      "height": 164,
+      "headX": 96.214
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 14,
+      "row": 3,
+      "sourceColumn": 2,
+      "sourceBox": [
+        0,
+        1086,
+        344,
+        1294
+      ],
+      "mirroredWholeFigure": true,
+      "coreMargins": [
+        54,
+        18,
+        154,
+        13
+      ],
+      "uniformScale": 0.9213483146067416,
+      "top": 19,
+      "height": 164,
+      "headX": 95.921
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 17,
+      "row": 4,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        871,
+        344,
+        1086
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        179,
+        17,
+        20,
+        18
+      ],
+      "uniformScale": 0.9111111111111111,
+      "top": 19,
+      "height": 164,
+      "headX": 95.706
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 36,
+      "row": 4,
+      "sourceColumn": 1,
+      "sourceBox": [
+        344,
+        872,
+        553,
+        1086
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        44,
+        17,
+        22,
+        17
+      ],
+      "uniformScale": 0.9060773480662984,
+      "top": 19,
+      "height": 164,
+      "headX": 96.3
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 18,
+      "row": 4,
+      "sourceColumn": 2,
+      "sourceBox": [
+        553,
+        872,
+        887,
+        1087
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        47,
+        17,
+        144,
+        18
+      ],
+      "uniformScale": 0.9010989010989011,
+      "top": 19,
+      "height": 164,
+      "headX": 96.181
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 21,
+      "row": 5,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1086,
+        344,
+        1294
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        154,
+        18,
+        54,
+        13
+      ],
+      "uniformScale": 0.9213483146067416,
+      "top": 19,
+      "height": 164,
+      "headX": 96.304
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 37,
+      "row": 5,
+      "sourceColumn": 1,
+      "sourceBox": [
+        344,
+        1086,
+        553,
+        1292
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        22,
+        17,
+        54,
+        13
+      ],
+      "uniformScale": 0.9318181818181818,
+      "top": 19,
+      "height": 164,
+      "headX": 95.65
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 22,
+      "row": 5,
+      "sourceColumn": 2,
+      "sourceBox": [
+        553,
+        1087,
+        887,
+        1295
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        27,
+        17,
+        171,
+        13
+      ],
+      "uniformScale": 0.9162011173184358,
+      "top": 19,
+      "height": 164,
+      "headX": 96.202
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 25,
+      "row": 6,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1294,
+        344,
+        1498
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        152,
+        12,
+        63,
+        16
+      ],
+      "uniformScale": 0.9265536723163842,
+      "top": 19,
+      "height": 164,
+      "headX": 96.341
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 38,
+      "row": 6,
+      "sourceColumn": 1,
+      "sourceBox": [
+        344,
+        1292,
+        553,
+        1499
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        20,
+        14,
+        58,
+        16
+      ],
+      "uniformScale": 0.9162011173184358,
+      "top": 19,
+      "height": 164,
+      "headX": 95.876
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 26,
+      "row": 6,
+      "sourceColumn": 2,
+      "sourceBox": [
+        553,
+        1295,
+        887,
+        1500
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        24,
+        12,
+        179,
+        15
+      ],
+      "uniformScale": 0.9213483146067416,
+      "top": 19,
+      "height": 164,
+      "headX": 96.12
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 29,
+      "row": 7,
+      "sourceColumn": 0,
+      "sourceBox": [
+        0,
+        1498,
+        344,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        152,
+        17,
+        57,
+        97
+      ],
+      "uniformScale": 1.0061349693251533,
+      "top": 19,
+      "height": 164,
+      "headX": 96.166
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 39,
+      "row": 7,
+      "sourceColumn": 1,
+      "sourceBox": [
+        344,
+        1499,
+        553,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        20,
+        16,
+        56,
+        97
+      ],
+      "uniformScale": 1.0123456790123457,
+      "top": 19,
+      "height": 164,
+      "headX": 95.706
+    },
+    {
+      "actor": "female-reinforced",
+      "frame": 30,
+      "row": 7,
+      "sourceColumn": 2,
+      "sourceBox": [
+        553,
+        1500,
+        887,
+        1774
+      ],
+      "mirroredWholeFigure": false,
+      "coreMargins": [
+        24,
+        15,
+        176,
+        95
+      ],
+      "uniformScale": 1.0,
+      "top": 19,
+      "height": 164,
+      "headX": 96.143
+    }
+  ]
+}

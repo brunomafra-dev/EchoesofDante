@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "errors": [],
+  "classes": [
+    {
+      "classId": "warrior",
+      "before": {
+        "objects": 374,
+        "textures": 212,
+        "actors": 1,
+        "tweens": 24,
+        "listeners": 21,
+        "touch": 1
+      },
+      "cycles": [
+        {
+          "objects": 374,
+          "textures": 212,
+          "actors": 1,
+          "tweens": 24,
+          "listeners": 21,
+          "touch": 1
+        },
+        {
+          "objects": 374,
+          "textures": 212,
+          "actors": 1,
+          "tweens": 24,
+          "listeners": 21,
+          "touch": 1
+        },
+        {
+          "objects": 374,
+          "textures": 212,
+          "actors": 1,
+          "tweens": 24,
+          "listeners": 21,
+          "touch": 1
+        }
+      ]
+    }
+  ]
+}

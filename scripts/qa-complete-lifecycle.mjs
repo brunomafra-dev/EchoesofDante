@@ -9,8 +9,8 @@ p.setDefaultTimeout(45000);p.on('pageerror',e=>report.errors.push(e.message));
 const S=fn=>p.evaluate(fn=>new Function('s',`return (${fn})(s)`)(window.__danteGame.scene.getScene('Game')),fn.toString());
 const counts=()=>S(s=>({objects:s.children.list.length,textures:s.textures.getTextureKeys().length,actors:s.textures.getTextureKeys().filter(k=>k.startsWith('complete-dressed-')).length,tweens:s.tweens.getTweens().length,listeners:s.events.listenerCount('shutdown'),touch:document.querySelectorAll('.touch-controls').length}));
 try{
- for(const cls of ['warrior','hunter','astral','xenobinder']){
-  await p.goto(`${base}/character-cohesion.html?class=${cls}&sex=female&kit=basic`);
+ for(const cls of (process.env.QA_CLASSES??'warrior,hunter,astral,xenobinder').split(',')){
+  await p.goto(`${base}/character-cohesion.html?class=${cls}&sex=${process.env.QA_SEX??'female'}&kit=${process.env.QA_KIT??'basic'}`);
   await p.waitForFunction(()=>window.__danteGame?.scene.getScene('Game')?.player?.view.getData('completeActor'));
   await p.waitForTimeout(1200);const before=await counts(),cycles=[];
   for(let i=0;i<3;i++){

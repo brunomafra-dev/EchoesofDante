@@ -1,5 +1,9 @@
 # Echoes of Dante
 
+## Caminhada do Guerreiro · 0.1.128
+
+[Testar Guerreiro masculino com roupa inicial](https://echosofdante.vercel.app/character-cohesion.html?class=warrior&sex=male&kit=clothes&v=0.1.128): ciclo com passagem entre apoios, imagens completas mais consistentes e giro da mira sem inverter os passos. Render extra do ataque preserva o movimento. Mesma apresentação na campanha, seletor e aliados. [Diagnóstico, assets e QA](docs/warrior-walk/README.md). Laboratório sem alterar saves reais; aguardar playtest humano desta manutenção.
+
 ## Abertura compatível e entrada mobile · 0.1.127
 
 [Testar somente a cinemática](https://echosofdante.vercel.app/cinematic-compatibility.html?v=0.1.127): MP4 mais leve, WebM alternativo, reprodução por toque com som e recuperação sem obrigar a pular. Mobile solicita tela cheia e horizontal quando o navegador permite; recusa mantém a opção de assistir e orienta virar o aparelho. Mesmo filme e mixagem aprovados. [Entrega, QA e limitações](docs/cinematic-compatibility/README.md). O laboratório não acessa saves.

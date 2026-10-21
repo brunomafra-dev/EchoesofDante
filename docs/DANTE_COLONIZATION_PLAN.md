@@ -1,5 +1,7 @@
 # Dante — correções visuais, comunicação cooperativa e primeira colonização
 
+**Manutenção · 0.1.128:** corrigir caminhada relatada no Guerreiro masculino com roupa inicial antes de avançar. [Assets completos, animação por distância e QA](warrior-walk/README.md). Não considerar correções anteriores uma garantia de animação aprovada; esta revisão aguarda teste humano.
+
 **Manutenção · 0.1.127:** falhas da abertura em mobile/Brave motivaram fontes H.264 Baseline e WebM, reprodução por toque com som, recuperação e solicitação de tela cheia/horizontal. [Entrega e limitações dos navegadores](cinematic-compatibility/README.md). Sem avanço de etapa; fase 5 continua aguardando playtest humano.
 
 **Correção da entrega · 0.1.126:** confirmado Render no protocolo 14. Consulta de endereço passa a ser compartilhada entre inspeção do convite e entrada após criação, evitando uma nova requisição que podia expirar e anunciar indisponibilidade indevida. Falhas não são armazenadas. Manutenção da etapa 5; continua aguardando validação humana. [Detalhes](first-settlement/README.md).
