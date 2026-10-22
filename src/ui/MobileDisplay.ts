@@ -33,7 +33,9 @@ export class MobileDisplay {
   private cancel = (event: Event): void => { event.preventDefault(); this.dismissed = true; this.sync(); };
   private gesture = (event: MouseEvent): void => {
     if (!event.isTrusted || this.dialog.open || this.dismissed || this.busy || !this.mobile()) return;
-    if (!(event.target instanceof HTMLElement) || event.target.closest('input,textarea,select,[contenteditable]')) return;
+    // Clipboard and native sharing need the same transient user gesture. Do not
+    // consume it with a fullscreen request before the invitation handler runs.
+    if (!(event.target instanceof HTMLElement) || event.target.closest('input,textarea,select,[contenteditable],[data-shell="coop-share"],[data-shell="coop-copy"]')) return;
     if (!document.fullscreenElement) void this.request();
   };
   private sync = (): void => {

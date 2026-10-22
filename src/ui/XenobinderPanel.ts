@@ -8,6 +8,6 @@ export class XenobinderPanel {
  update(pose:XenobinderPose,phase:KineticPhase,dead:boolean):void{
   const value=Math.floor(pose.bond),key=`${value}:${pose.state}:${phase}:${dead}`;if(key===this.signature)return;this.signature=key;
   const state=dead?'RECOLHIDO':phase==='CHARGING'?'AGUARDANDO DIREÇÃO':({FOLLOW:'ACOMPANHANDO',ASSIST:'ASSISTINDO',COMMAND:'INVESTIDA',RETURN:'RETORNANDO'}[pose.state]);
-  this.root.innerHTML=`<span>SIMBIONTE · ${state}</span><small>Vínculo ${value}/${X.bondMax} · Q: ${X.commandCost}${value<X.commandCost?' · RECUPERE COM ACERTOS':''}</small><meter min="0" max="100" value="${value}" aria-label="Vínculo"></meter>`;
+  this.root.innerHTML=`<span>VÍNCULO<span class="desktop-control-hint"> · ${state}</span></span><small>${value}/${X.bondMax}<span class="desktop-control-hint"> · Q: ${X.commandCost}${value<X.commandCost?' · RECUPERE COM ACERTOS':''}</span></small><meter min="0" max="100" value="${value}" aria-label="Vínculo"></meter>`;
  }
 }

@@ -1,20 +1,23 @@
 import { TOUCH } from '../config/touch';
 import { normalized, type Vec2 } from '../utils/math';
 import { protectGameplayGestures } from './GameplayGestures';
+import type {KineticPhase} from '../combat/KineticCharge';
 
 type Action = 'attack' | 'dash' | 'charge' | 'interact' | 'restart';
 type QueuedAction = Exclude<Action, 'attack'> | 'release' | 'cancel';
-type CombatGesture = { id: number; action: 'attack' | 'charge'; button: HTMLButtonElement; x: number; y: number; dragged: boolean };
+type CombatGesture = { id: number; action: 'attack' | 'charge'; button: HTMLButtonElement; x: number; y: number; dragged: boolean; active:boolean };
 
 export class TouchControls {
   setCombatPresentation(hunter: boolean, astral = false, xenobinder = false): void {
     const attack = this.root.querySelector<HTMLButtonElement>('[data-action="attack"]')!;
     attack.querySelector('b')!.textContent = hunter ? 'DISPARO' : 'GOLPE';
-    attack.setAttribute('aria-label', astral ? 'Pulso astral: toque ou arraste e solte' : hunter ? 'Rifle de pulso: toque ou arraste e solte' : 'Golpe de sabre: toque ou arraste e solte');
+    attack.querySelector('small')!.textContent='ARRASTE A MIRA';
+    attack.setAttribute('aria-label','Analógico direito: arraste para girar e atacar em qualquer direção; toque para atacar uma vez');
     const charge = this.root.querySelector<HTMLButtonElement>('[data-action="charge"]')!;
     charge.querySelector('b')!.textContent = xenobinder ? 'COMANDO' : astral ? 'CAMPO' : hunter ? 'FEIXE' : 'CARGA';
     charge.setAttribute('aria-label', astral ? 'Campo elemental: segure, mire e solte' : hunter ? 'Feixe de luz: segure, mire e solte para atravessar inimigos' : 'Carga cinética: segure, mire e solte');
-    if(xenobinder){attack.setAttribute('aria-label','Condutor: toque ou arraste e solte para marcar assistência');charge.setAttribute('aria-label','Comando do simbionte: segure, mire e solte para investir e recuperar aliados próximos');}
+    if(xenobinder){attack.querySelector('b')!.textContent='CONDUTOR';charge.setAttribute('aria-label','Comando do simbionte: segure, mire e solte para investir e recuperar aliados próximos');}
+    if(astral)attack.querySelector('b')!.textContent='PULSO';
   }
   readonly coarsePointer = matchMedia('(pointer: coarse)').matches;
   private root: HTMLDivElement;
@@ -35,6 +38,7 @@ export class TouchControls {
   private queued: Record<QueuedAction, boolean> = { dash: false, charge: false, release: false, cancel: false, interact: false, restart: false };
   private unprotect: () => void;
   private pointerCancels: (() => void)[] = [];
+  private feedbackKey='';
 
   constructor(private onGesture: () => void, private onAttack: () => void, private fallbackAim: () => number) {
     this.root = document.createElement('div');
@@ -42,7 +46,7 @@ export class TouchControls {
     this.root.innerHTML = `
       <div class="touch-move-zone" aria-label="Área de movimento"><div class="touch-move touch-pad" aria-label="Mover"><span>MOVER</span><i></i></div></div>
       <div class="touch-actions">
-        <button data-action="attack" aria-label="Golpe de sabre: toque ou arraste e solte"><span class="touch-face"><b>GOLPE</b><small>TOQUE / ARRASTE</small><i class="touch-direction"></i></span></button>
+        <button data-action="attack" class="touch-aim" aria-label="Analógico direito: arraste para girar e atacar"><span class="touch-face"><b>GOLPE</b><small>ARRASTE A MIRA</small><i class="touch-aim-knob"></i><i class="touch-direction"></i></span></button>
         <button data-action="dash" aria-label="Esquiva do vazio"><span class="touch-face"><b>ESQUIVA</b><small>MOVER</small></span></button>
         <button data-action="charge" aria-label="Carga cinética: segure, mire e solte"><span class="touch-face"><b>CARGA</b><small>SEGURE / SOLTE</small><i class="touch-direction"></i></span></button>
       </div>
@@ -84,7 +88,7 @@ export class TouchControls {
       button.classList.add('is-pressed');
       this.onGesture();
       if (action === 'attack' || action === 'charge') {
-        this.combat = { id: event.pointerId, action, button, x: event.clientX, y: event.clientY, dragged: false };
+        this.combat = { id: event.pointerId, action, button, x: event.clientX, y: event.clientY, dragged: false,active:false };
         if (action === 'charge') this.queued.charge = true;
         this.updateHint(this.combat);
       } else this.queued[action] = true;
@@ -99,11 +103,11 @@ export class TouchControls {
       const released = event.type === 'pointerup';
       if (this.combat?.id === event.pointerId && this.combat.button === button) {
         if (released) this.selectDirection(event);
-        const action = this.combat.action;
+        const {action,dragged} = this.combat;
         this.clearCombat();
         if (released) {
-          if (action === 'attack') this.onAttack();
-          else this.queued.release = true;
+          if (action === 'attack'&&!dragged) this.onAttack();
+          else if(action==='charge')this.queued.release = true;
         } else if (action === 'charge') this.cancelCharge();
       }
       button.classList.remove('is-pressed');
@@ -120,15 +124,24 @@ export class TouchControls {
     const gesture = this.combat!;
     const dx = event.clientX - gesture.x;
     const dy = event.clientY - gesture.y;
-    if (Math.hypot(dx, dy) < TOUCH.dragThreshold) return;
+    if (Math.hypot(dx, dy) < TOUCH.dragThreshold) {
+      gesture.active=false;
+      const knob=gesture.button.querySelector<HTMLElement>('.touch-aim-knob');if(knob)knob.style.transform='';
+      return;
+    }
     this.lastCombatDirection = normalized(dx, dy);
+    const first=!gesture.dragged;
     gesture.dragged = true;
+    gesture.active=true;
     gesture.button.classList.add('is-aiming');
+    const knob=gesture.button.querySelector<HTMLElement>('.touch-aim-knob');
+    if(knob){const distance=Math.hypot(dx,dy),scale=Math.min(1,24/distance);knob.style.transform=`translate(${dx*scale}px,${dy*scale}px)`;}
     this.updateHint(gesture);
+    if(first&&gesture.action==='attack')this.onAttack();
   }
 
   private updateHint(gesture: CombatGesture): void {
-    gesture.button.querySelector<HTMLElement>('small')!.textContent = gesture.action === 'charge' || gesture.dragged ? 'SOLTE PARA ATACAR' : 'ARRASTE PARA MIRAR';
+    if(gesture.action==='attack')gesture.button.querySelector<HTMLElement>('small')!.textContent=gesture.dragged?'ATACANDO':'ARRASTE PARA MIRAR';
     gesture.button.querySelector<HTMLElement>('.touch-direction')!.style.transform = `rotate(${this.aimAngle}rad)`;
   }
 
@@ -137,7 +150,8 @@ export class TouchControls {
     const { button, action } = this.combat;
     this.combat = undefined;
     button.classList.remove('is-pressed', 'is-aiming');
-    button.querySelector<HTMLElement>('small')!.textContent = action === 'charge' ? 'SEGURE / SOLTE' : 'TOQUE / ARRASTE';
+    if(action==='attack')button.querySelector<HTMLElement>('small')!.textContent='ARRASTE A MIRA';
+    const knob=button.querySelector<HTMLElement>('.touch-aim-knob');if(knob)knob.style.transform='';
   }
 
   private cancelCharge(): void {
@@ -234,8 +248,21 @@ export class TouchControls {
   takeInteract(): boolean { return this.take('interact'); }
   takeRestart(): boolean { return this.take('restart'); }
   get movement(): Vec2 { return this.moveVector; }
+  // Look without firing by touching the world; combat drags remain independent.
+  lookAt(angle:number):void{if(!this.combat)this.lastCombatDirection={x:Math.cos(angle),y:Math.sin(angle)};}
+  get attacking():boolean{return !this.dead&&this.combat?.action==='attack'&&this.combat.active;}
   get aimAngle(): number { return this.lastCombatDirection ? Math.atan2(this.lastCombatDirection.y, this.lastCombatDirection.x) : this.fallbackAim(); }
   get chargeHeld(): boolean { return this.combat?.action === 'charge'; }
+  setAbilityFeedback(dash:number,charge:number,phase:KineticPhase,level:number,dashCooldown:number,chargeCooldown:number):void{
+    const dashText=dash>=1?'PRONTA':`${((1-dash)*dashCooldown/1000).toFixed(1)}s`;
+    const chargeText=phase==='CHARGING'?`${Math.round(level*100)}%`:phase==='RELEASE'?'ATIVO':charge>=1?'PRONTO':`${((1-charge)*chargeCooldown/1000).toFixed(1)}s`;
+    const key=dashText+chargeText;if(key===this.feedbackKey)return;this.feedbackKey=key;
+    for(const[action,text,value]of [['dash',dashText,dash],['charge',chargeText,phase==='CHARGING'?level:charge]] as const){
+      const button=this.root.querySelector<HTMLElement>(`[data-action="${action}"]`)!;
+      button.querySelector('small')!.textContent=text;button.style.setProperty('--ready',`${Math.round(value*100)}%`);
+      button.dataset.ready=String(value>=1);
+    }
+  }
   get preview(): 'attack' | 'charge' | undefined { return this.dead ? undefined : this.combat?.action === 'charge' ? 'charge' : this.combat?.dragged ? 'attack' : undefined; }
   setVisible(visible: boolean): void {
     if (this.visible === visible) return;

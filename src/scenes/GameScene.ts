@@ -526,7 +526,7 @@ export class GameScene extends Phaser.Scene {
         this.enemySpecies.set(this.soterrado, 'soterrado');
       } else this.sounds.stopMusic();
     }
-    this.hud = new Hud(this, () => this.restart(), this.classId === 'hunter',this.classId==='astral',this.classId==='xenobinder');
+    this.hud = new Hud(this, () => this.restart(), this.classId === 'hunter',this.classId==='astral',this.classId==='xenobinder',(...state)=>this.controls.setAbilityFeedback(...state));
     if (this.qualityReference === 'reference') this.referenceImpacts = new ReferenceImpacts(this);
     this.navigation = this.qualityReference ? undefined : new WorldNavigator(this, () => ({ bounds: this.movementBounds, obstacles: this.arena.obstacles }));
     this.explorationGuide = new ExplorationGuide(this, this.navigation);

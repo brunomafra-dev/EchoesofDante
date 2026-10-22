@@ -46,6 +46,7 @@ export class WorldNavigator {
     this.button.setAttribute('aria-expanded', 'true');
     this.button.addEventListener('click', () => this.toggle());
     this.element.append(this.button, this.map); document.body.append(this.element);
+    if(matchMedia('(pointer: coarse)').matches)this.toggle();
     this.arrow = scene.add.triangle(0, 0, 0, 9, -7, -5, 7, -5, 0xa98cff, .82)
       .setStrokeStyle(1, 0xe8dcff, .8).setDepth(14980).setVisible(false);
     window.addEventListener('keydown', this.onKey);

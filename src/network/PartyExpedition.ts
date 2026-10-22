@@ -60,6 +60,7 @@ export class PartyExpedition {
  private waterProjectiles=new Map<number,Phaser.GameObjects.Image>();
  private readonly visitorWave:Phaser.GameObjects.Ellipse;
  private status:Phaser.GameObjects.Text;
+ private readonly coarse=matchMedia('(pointer: coarse)');
  private hiddenLocalEnemies=false;
  private readonly localPlayer:Player;
 
@@ -94,7 +95,7 @@ export class PartyExpedition {
   }
   if(!room.campaignRunning)return;
   const a=this.access(),active=room.guests.filter(m=>m.connected),live=new Set(room.guests.map(m=>m.id));
-  this.status.setVisible(true).setText(`EQUIPE ${1+active.length}/${room.campaign?.size??4} · ${room.connected?'SALA '+room.code:'RECONECTANDO'}`);
+  this.status.setVisible(!this.coarse.matches||!room.connected).setText(`EQUIPE ${1+active.length}/${room.campaign?.size??4} · ${room.connected?'SALA '+room.code:'RECONECTANDO'}`);
   // Fixed original team size. Disconnecting never lowers the encounter's HP.
   for(const enemy of a.enemies){const base=this.resilience.get(enemy)??enemy.health.max;this.resilience.set(enemy,base);this.resizeHealth(enemy,Math.round(base*partyThreat(room.campaign?.size??1,(enemy as unknown)===a.boss).hp));}
   this.balanced=active.length>0;
@@ -168,7 +169,7 @@ export class PartyExpedition {
   }
   if(now-this.sendAt>=40&&room.send('input',input)){this.sendAt=now;this.attackQueued=false;for (const key of INPUT_EDGES) this.queued[key]=false;}
   else if(input.attack)this.attackQueued=true;
-  this.status.setVisible(true).setText(room.rewardSaved?`EQUIPE · ${room.peer?.name??'ANFITRIÃO'} · XP PESSOAL +${room.personalXpGained}`:'EQUIPE · XP AINDA NÃO SALVO NO NAVEGADOR');
+  this.status.setVisible(!this.coarse.matches||!room.rewardSaved).setText(room.rewardSaved?`EQUIPE · ${room.peer?.name??'ANFITRIÃO'} · XP PESSOAL +${room.personalXpGained}`:'EQUIPE · XP AINDA NÃO SALVO NO NAVEGADOR');
   if(!world||!world.players[room.id])return;
   const previousPose=this.appliedWorld?.players[room.id];
   const freshWorld=world!==this.appliedWorld;

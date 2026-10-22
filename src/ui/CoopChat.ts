@@ -35,7 +35,7 @@ export class CoopChat{
  }
  private available():boolean{return (room.role==='host'||room.role==='guest')&&!room.endedMessage;}
  private counter():void{this.count.textContent=Array.from(this.input.value).length+'/200';}
- private layout():void{this.root.classList.toggle('is-writing',this.editing);this.form.hidden=!this.editing;this.toggle.hidden=this.editing;this.log.hidden=!this.expanded;this.historyButton.setAttribute('aria-expanded',String(this.expanded));this.counter();}
+ private layout():void{this.root.classList.toggle('is-writing',this.editing);this.root.classList.toggle('is-expanded',this.expanded);this.form.hidden=!this.editing;this.toggle.hidden=this.editing;this.log.hidden=!this.expanded;this.historyButton.setAttribute('aria-expanded',String(this.expanded));this.counter();}
  private session=():void=>{this.root.hidden=!this.available();if(this.root.hidden)this.close(false);this.refresh();};
  private refresh=():void=>{
   this.input.readOnly=room.chatPending;this.send.disabled=room.chatPending;
@@ -48,8 +48,8 @@ export class CoopChat{
   if(atBottom||this.editing)this.log.scrollTop=this.log.scrollHeight;
   this.status.textContent=room.chatError||(room.chatPending?'Enviando…':!room.connected&&this.available()?'Reconectando a sala…':'');
  };
- open():void{if(!this.available()||this.editing)return;this.previousFocus=document.activeElement instanceof HTMLElement?document.activeElement:undefined;this.editing=true;room.chatTyping=true;this.block(true);this.layout();this.input.focus({preventScroll:true});this.log.scrollTop=this.log.scrollHeight;}
- close(restore=true):void{if(!this.editing)return;this.awaitingDelivery=undefined;this.editing=false;room.chatTyping=false;this.input.value='';this.block(false);this.layout();if(restore&&this.previousFocus?.isConnected)this.previousFocus.focus({preventScroll:true});this.previousFocus=undefined;}
+ open():void{if(!this.available()||this.editing)return;this.previousFocus=document.activeElement instanceof HTMLElement?document.activeElement:undefined;this.editing=true;if(matchMedia('(pointer: coarse)').matches)this.expanded=true;room.chatTyping=true;this.block(true);this.layout();this.input.focus({preventScroll:true});this.log.scrollTop=this.log.scrollHeight;}
+ close(restore=true):void{if(!this.editing)return;this.awaitingDelivery=undefined;this.editing=false;if(matchMedia('(pointer: coarse)').matches)this.expanded=false;room.chatTyping=false;this.input.value='';this.block(false);this.layout();if(restore&&this.previousFocus?.isConnected)this.previousFocus.focus({preventScroll:true});this.previousFocus=undefined;}
  private submit():void{if(!this.editing||room.chatPending)return;this.awaitingDelivery=room.chatDelivered;if(!room.sendChat(this.input.value))this.awaitingDelivery=undefined;}
  private key=(e:KeyboardEvent):void=>{
   if(!this.available())return;
@@ -67,7 +67,7 @@ export class CoopChat{
  frame(parent:HTMLElement,down:boolean[],previous:boolean[]):boolean{
   if(this.root.parentElement!==parent){parent.append(this.root);if(this.editing)this.input.focus({preventScroll:true});}
   this.root.hidden=!this.available();if(this.root.hidden){this.close(false);return false;}
-  const height=this.editing?Math.max(80,(window.visualViewport?.height??window.innerHeight)-16)+'px':'';if(this.root.style.maxHeight!==height)this.root.style.maxHeight=height;
+  const height=this.editing?Math.max(80,(window.visualViewport?.height??window.innerHeight)-(matchMedia('(pointer: coarse)').matches?64:16))+'px':'';if(this.root.style.maxHeight!==height)this.root.style.maxHeight=height;
   if(down[11]&&!previous[11])this.open();
   if(this.editing){
    const controls=[this.input,this.send,this.cancel],index=Math.max(0,controls.indexOf(document.activeElement as HTMLInputElement));

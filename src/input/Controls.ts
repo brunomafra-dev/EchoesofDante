@@ -30,6 +30,7 @@ export class Controls {
   get elementPressed():boolean{const queued=this.elementQueued;this.elementQueued=false;return queued||Phaser.Input.Keyboard.JustDown(this.keys.F);}
   private recordsEdge = false;
   private padSuppressed = false;
+  private position:Vec2={x:0,y:0};
 
   constructor(private scene: Phaser.Scene, private onGesture: () => void, private onAttack: () => void) {
     this.keys = scene.input.keyboard!.addKeys('W,A,S,D,Q,SPACE,R,E,B,F') as typeof this.keys;
@@ -71,13 +72,13 @@ export class Controls {
     return event.pointerType === 'touch' || event.type.startsWith('touch');
   }
   private pointerDown(pointer: Phaser.Input.Pointer): void {
-    if (this.isTouchPointer(pointer)) this.method = 'touch';
+    if (this.isTouchPointer(pointer)) {this.method = 'touch';this.lookFromTouch(pointer);}
     else { if (this.method === 'touch') this.touch.cancelAll(); this.method = 'keyboard'; }
     this.onGesture();
     if (this.method === 'keyboard' && pointer.leftButtonDown()) this.onAttack();
   }
   private pointerMove(pointer: Phaser.Input.Pointer): void {
-    if (this.isTouchPointer(pointer)) return;
+    if (this.isTouchPointer(pointer)) {if(pointer.isDown)this.lookFromTouch(pointer);return;}
     if (Math.abs(pointer.x - this.lastPointerX) + Math.abs(pointer.y - this.lastPointerY) > 2) {
       if (this.method === 'touch') this.touch.cancelAll();
       this.method = 'keyboard';
@@ -85,9 +86,14 @@ export class Controls {
       this.lastPointerY = pointer.y;
     }
   }
+  private lookFromTouch(pointer:Phaser.Input.Pointer):void{
+    const world=this.scene.cameras.main.getWorldPoint(pointer.x,pointer.y);
+    if(Math.hypot(world.x-this.position.x,world.y-this.position.y)>10)this.touch.lookAt(Math.atan2(world.y-this.position.y,world.x-this.position.x));
+  }
 
   private axis(value: number): number { return Math.abs(value) < 0.22 ? 0 : value; }
   update(position: Vec2): void {
+    this.position=position;
     const pad = navigator.getGamepads?.().find(gamepad => gamepad?.mapping === 'standard' && gamepad.connected);
     // Menu buttons must be released before they can become gameplay actions again.
     if (this.padSuppressed && ![0, 3, 5, 6, 7, 8, 9].some(index => (pad?.buttons[index]?.value ?? 0) > 0.5)) this.padSuppressed = false;
@@ -158,7 +164,8 @@ export class Controls {
     }
     return this.lastAim;
   }
-  get attacking(): boolean { return this.method === 'gamepad' ? this.padButtons.attack : this.method === 'touch' ? false : this.scene.input.activePointer.isDown && this.scene.input.activePointer.leftButtonDown(); }
+  get attacking(): boolean { return this.method === 'gamepad' ? this.padButtons.attack : this.method === 'touch' ? this.touch.attacking : this.scene.input.activePointer.isDown && this.scene.input.activePointer.leftButtonDown(); }
+  setAbilityFeedback(...state:Parameters<TouchControls['setAbilityFeedback']>):void{this.touch.setAbilityFeedback(...state);}
   get chargeCancelled(): boolean { return this.touch.takeChargeCancel(); }
   get dashPressed(): boolean { return this.method === 'gamepad' ? this.padEdges.dash : this.method === 'touch' ? this.touch.takeDash() : Phaser.Input.Keyboard.JustDown(this.keys.SPACE); }
   get chargePressed(): boolean { return this.method === 'gamepad' ? this.padEdges.charge : this.method === 'touch' ? this.touch.takeChargeStart() : Phaser.Input.Keyboard.JustDown(this.keys.Q); }

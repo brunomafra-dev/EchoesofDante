@@ -227,6 +227,7 @@ export class ApplicationShell {
     this.selection?.destroy(); this.selection = undefined; this.content.replaceChildren();
     const characters = ['characters','coop-characters','create'].includes(this.page);
     this.dialog.classList.toggle('is-character-page', characters); this.dialog.classList.toggle('is-prologue', this.page === 'prologue');
+    this.dialog.classList.toggle('is-coop-page',this.page==='coop');
     if(this.page==='launching'){this.heading('Iniciando expedição', 'Preparando sua chegada a Dante…');return;}
     if (this.page === 'prologue' && this.prologue) { this.content.append(this.prologue.view); return; }
     if (this.page === 'home') {
@@ -284,7 +285,7 @@ export class ApplicationShell {
       });
       if (cooperative && !profiles.length) this.status('Nenhum personagem desta equipe neste navegador. Use o navegador original; personagens solo não podem substituí-lo.');
     } else if (this.page === 'coop-menu') {
-      this.heading('Cooperativo', 'Até quatro exploradores, uma classe de cada.'); this.action('INICIAR NOVO JOGO','coop-new', () => this.beginNew('coop'));
+      this.heading('Cooperativo', 'Crie uma sala no computador, celular ou tablet. Até quatro exploradores, uma classe de cada.'); this.action('CRIAR SALA E CONVIDAR','coop-new', () => this.beginNew('coop'));
       if(characterProfiles.list.some(p=>p.campaign?.mode==='coop'&&new LocalJourney(p.id).load()))this.action('CONTINUAR JOGANDO COM AMIGOS','coop-continue', () => { this.pendingInvite = false; this.show('coop-characters'); });
       this.action('ENTRAR POR CONVITE','invite', () => this.show('invite')); this.action('VOLTAR','back', () => this.back());
     } else if (this.page === 'invite') {
@@ -300,13 +301,18 @@ export class ApplicationShell {
         if (c?.hostId === characterProfiles.active.id) this.action(this.busy ? 'REUNINDO…':'REUNIR EQUIPE E CONVIDAR','coop-create', () => { void this.connect('create'); }).disabled = this.busy || !this.scene;
         else this.action('ENTRAR PELO CONVITE DO ANFITRIÃO','invite', () => this.show('invite'));
       } else {
-        this.roster(); this.status(coopSession.message);
+        if(!coopSession.campaignRunning){
+          const waiting=document.createElement('p');waiting.className='lobby-wait';waiting.dataset.lobbyWaiting=coopSession.role;
+          waiting.setAttribute('role','status');waiting.textContent=coopSession.role==='host'?coopSession.members.filter(m=>m.connected).length===c?.size?'Equipe pronta para iniciar':'Aguardando convidados':!coopSession.campaign?.started?'Aguardando líder':'Aguardando a equipe original';this.content.append(waiting);
+        }
+        this.roster();
+        if(coopSession.role==='host'&&!coopSession.campaign?.started)this.action('INICIAR EXPEDIÇÃO','coop-start',()=>coopSession.startCampaign()).disabled=!coopSession.campaignSaved||coopSession.members.filter(m=>m.connected).length!==c?.size;
         const input = document.createElement('input'); input.name = 'coop-invite'; input.readOnly = true; input.value = invitationLink(coopSession.code); input.setAttribute('aria-label','Convite da equipe'); this.content.append(input);
-        this.action('COPIAR CONVITE','coop-copy', () => { void navigator.clipboard?.writeText(input.value).then(() => this.status('Convite copiado.')).catch(() => { input.select(); this.status('Copie o convite selecionado.'); }); });
+        if(typeof navigator.share==='function')this.action('CONVIDAR AMIGOS','coop-share',()=>{void this.shareInvite(input,true);});
+        this.action('COPIAR CONVITE','coop-copy',()=>{void this.shareInvite(input);});
         if (!coopSession.campaignSaved) this.action('TENTAR SALVAR EQUIPE','coop-save', () => coopSession.retryCampaignSave());
-        if (coopSession.role === 'host' && !coopSession.campaign?.started) this.action('INICIAR EXPEDIÇÃO','coop-start', () => coopSession.startCampaign()).disabled = !coopSession.campaignSaved || coopSession.members.filter(m => m.connected).length !== c?.size;
         if (coopSession.campaignRunning) this.action('RETOMAR EXPEDIÇÃO','continue', () => this.resume());
-        else this.status(coopSession.campaignSaved ? `Aguardando os ${c?.size} integrantes originais. A expedição permanece parada até todos voltarem.`:'Não foi possível salvar a equipe. Libere o armazenamento e tente novamente.');
+        else this.status(coopSession.campaignSaved ? `${coopSession.members.filter(m=>m.connected).length}/${c?.size} conectados. ${coopSession.role==='host'?'Quando todos chegarem, toque em Iniciar expedição.':'O líder inicia a expedição quando a equipe estiver reunida.'}`:'Não foi possível salvar a equipe. Libere o armazenamento e tente novamente.');
       }
       this.action('VOLTAR À TELA INICIAL','home', () => this.returnHome());
     } else if (this.page === 'coop-ended') {
@@ -321,6 +327,13 @@ export class ApplicationShell {
       this.action('VOLTAR','back', () => this.back());
     }
     if (this.page !== 'settings') this.action('CONFIGURAÇÕES','settings', () => this.settings());
+  }
+  private async shareInvite(input:HTMLInputElement,native=false):Promise<void>{
+    try{
+      if(native&&typeof navigator.share==='function'){await navigator.share({title:'Echoes of Dante',text:'Venha desbravar Dante com a nossa equipe.',url:input.value});return;}
+      if(navigator.clipboard){await navigator.clipboard.writeText(input.value);this.status('Convite copiado. Envie o link aos seus amigos.');return;}
+    }catch(e){if(native&&e instanceof DOMException&&e.name==='AbortError')return;}
+    input.focus();input.select();input.setSelectionRange(0,input.value.length);this.status('Link selecionado. Toque e segure para copiar o convite.');
   }
   private savedSoloProfiles(){return characterProfiles.list.filter(p=>p.campaign?.mode!=='coop'&&new LocalJourney(p.id).load()!==undefined);}
   private roster(): void {

@@ -1,0 +1,16 @@
+{
+  "base": "http://localhost:5192",
+  "method": "Compiled app: two separate Chrome instances with phone/tablet touch emulation. Real relay, normal character creation, invitation, lobby start, chat and multitouch input; fullscreen unsupported and native sharing mocked. WebKit independent room creation. No DEV globals.",
+  "checks": [
+    "Phone creates a real room from touch-only character/team/difficulty flow, with waiting-for-guests status",
+    "Invitation preserves isolated mobile lab, supports native sharing/manual copy and keeps waiting banner visible after scrolling",
+    "Mobile host can send chat in the waiting lobby",
+    "Tablet guest joins by invitation, sees Aguardando líder and cannot start the room",
+    "Phone leader starts both devices; authoritative world arrives without a desktop host",
+    "Guest sends movement and backwards held attack together; phone host reproduces the changed aim",
+    "Gameplay chat retains real nickname and returns to one compact button after sending",
+    "Independent WebKit mobile room creation reaches a valid host lobby"
+  ],
+  "errors": [],
+  "passed": true
+}

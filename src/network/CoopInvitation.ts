@@ -22,6 +22,7 @@ export function invitationLink(code: string): string {
   if(filename==='campaign-playtest.html'&&new URLSearchParams(location.search).has('chat'))url.searchParams.set('chat','1');
   if(filename==='campaign-playtest.html'&&new URLSearchParams(location.search).has('missions'))url.searchParams.set('missions','1');
   if(filename==='campaign-playtest.html'&&new URLSearchParams(location.search).has('settlement'))url.searchParams.set('settlement','1');
+  if(filename==='campaign-playtest.html'&&new URLSearchParams(location.search).has('mobile'))url.searchParams.set('mobile','1');
   if(lab&&filename!=='campaign-playtest.html'){const params=new URLSearchParams(location.search);url.searchParams.set('region',params.get('region')??(filename==='caldera-playtest.html'?(params.get('boss')==='1'?'caldera':'cinder'):'forest'));url.searchParams.set('kit',params.get('kit')??'basic');url.searchParams.set('class',params.get('class')==='hunter'?'warrior':'hunter');if(params.get('boss')==='1')url.searchParams.set('boss','1');}
   return url.href;
 }

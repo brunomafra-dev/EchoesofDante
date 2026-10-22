@@ -46,8 +46,15 @@ export class Hud {
   private compactViewport?: boolean;
   private discoveryTimer?: Phaser.Time.TimerEvent;
   private levelTimer?: Phaser.Time.TimerEvent;
+  private readonly mobile=document.createElement('section');
+  private readonly chrome:Phaser.GameObjects.Container;
+  private readonly coarse=matchMedia('(pointer: coarse)');
+  private mobileHealth='';
+  private mobileProgress='';
 
-  constructor(private scene: Phaser.Scene, onRestart: () => void, private readonly hunter = false,private readonly astral=false,private readonly xenobinder=false) {
+  constructor(private scene: Phaser.Scene, onRestart: () => void, private readonly hunter = false,private readonly astral=false,private readonly xenobinder=false,
+    private readonly touchFeedback?:(dash:number,charge:number,phase:KineticPhase,level:number,dashCooldown:number,chargeCooldown:number)=>void) {
+    const first=scene.children.list.length;
     const text = (x: number, y: number, value: string, size: number, color = '#e8f1ed', condensed = false) => scene.add.text(x, y, value, {
       fontFamily: condensed ? 'Barlow Condensed, sans-serif' : 'DM Sans, sans-serif',
       fontSize: `${size}px`, color, fontStyle: condensed ? 'bold' : 'normal', letterSpacing: condensed ? 0.8 : 0.2,
@@ -81,6 +88,11 @@ export class Hud {
     }
     this.controlHints.push(text(VIEW_WIDTH / 2, VIEW_HEIGHT - 22, '', 12, '#c5cdb9').setOrigin(0.5, 1));
     this.showControlHelp();
+    this.chrome=scene.add.container(0,0,scene.children.list.slice(first)).setScrollFactor(0).setDepth(20000);
+    this.mobile.className='mobile-vitals';this.mobile.setAttribute('aria-label','Vida e experiência');
+    this.mobile.innerHTML='<div><strong data-hp></strong><span data-level>NV 1</span></div><div class="mobile-hp"><i></i></div><small data-xp>XP 0</small><div class="mobile-xp"><i></i></div>';
+    document.body.append(this.mobile);this.coarse.addEventListener('change',this.mobileLayout);this.mobileLayout();
+    scene.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{this.coarse.removeEventListener('change',this.mobileLayout);this.mobile.remove();});
     this.discoveryPrompt = text(VIEW_WIDTH / 2, VIEW_HEIGHT - 73, '[ E ]  INVESTIGAR', 17, '#ddd4f2', true)
       .setOrigin(0.5).setVisible(false);
     this.discoveryMessage = text(VIEW_WIDTH / 2, VIEW_HEIGHT - 154, '', 18, '#d3d9c5', true)
@@ -106,6 +118,10 @@ export class Hud {
 
   update(hp: number, maxHp: number, dashProgress: number, chargeProgress: number, chargePhase: KineticPhase, chargeLevel: number,
     dashCooldown: number = PLAYER.dashCooldown, chargeCooldown: number = KINETIC_CHARGE.cooldown): void {
+    this.touchFeedback?.(dashProgress,chargeProgress,chargePhase,chargeLevel,dashCooldown,chargeCooldown);
+    const health=`${hp}/${maxHp}`;
+    if(health!==this.mobileHealth){this.mobileHealth=health;this.mobile.querySelector('[data-hp]')!.textContent=health;
+      this.mobile.style.setProperty('--hp',`${Math.max(0,hp/maxHp)*100}%`);this.mobile.dataset.danger=String(hp<maxHp*.3);}
     this.refreshTypography();
     this.hpFill.width = 196 * hp / maxHp;
     this.hpFill.setFillStyle(hp < maxHp * 0.3 ? 0xff6a4a : 0xa4c68b);
@@ -121,6 +137,7 @@ export class Hud {
     if (this.chargeFill) this.chargeFill.width = 196 * (chargePhase === 'CHARGING' ? chargeLevel : chargeProgress);
     this.momentumText?.setText(`MOM ${this.momentum}`);
   }
+  private mobileLayout=():void=>{this.chrome.setVisible(!this.coarse.matches);};
 
   private refreshTypography(): void {
     // FIT scales the logical canvas down. Keep essential text readable on phones.
@@ -176,10 +193,14 @@ export class Hud {
   }
 
   setProgress(level: number, xp: number, nextLevelXp: number | null, echoes: number): void {
+    const progress=`${level}:${xp}:${nextLevelXp}:${this.momentum}`;
+    if(progress!==this.mobileProgress){this.mobileProgress=progress;this.mobile.querySelector('[data-level]')!.textContent=`NV ${level}`;
+      this.mobile.querySelector('[data-xp]')!.textContent=`XP ${xp}${nextLevelXp===null?'':`/${nextLevelXp}`}${this.hunter?` · MOM ${this.momentum}`:''}`;}
     this.progressText.setText(`NV ${level}   ·   ECOS ${echoes}/${ECHO_COUNT}`);
     this.progressHint.setText(nextLevelXp === null ? `XP ${xp} · Nível máximo` : `XP ${xp} / ${nextLevelXp}`);
     const previous = PROGRESSION.levelThresholds[level - 1] ?? 0;
     this.xpFill.width = 196 * (nextLevelXp === null ? 1 : Phaser.Math.Clamp((xp - previous) / (nextLevelXp - previous), 0, 1));
+    this.mobile.style.setProperty('--xp',`${this.xpFill.width/196*100}%`);
   }
 
   showExperienceAt(x: number, y: number, amount: number): void {

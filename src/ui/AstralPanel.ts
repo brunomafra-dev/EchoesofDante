@@ -12,6 +12,6 @@ export class AstralPanel {
  update(energy:number,element:AstralElement,phase:KineticPhase,dead:boolean,blocked=false):void{
   const value=Math.floor(energy),key=`${value}:${element}:${phase}:${dead}:${blocked}`;if(key===this.signature)return;this.signature=key;
   this.root.disabled=dead||blocked||phase!=='READY';this.root.dataset.element=element;
-  this.root.innerHTML=`<span>F / Y · ${ELEMENT_NAMES[element]} ↻</span><small>Energia Astral ${value}/${ASTRAL.energyMax} · Q: ${ASTRAL.castCost}${value<ASTRAL.castCost?' · RECUPERE COM ACERTOS':''}</small><meter min="0" max="100" value="${value}" aria-label="Energia Astral"></meter>`;
+  this.root.innerHTML=`<span><span class="desktop-control-hint">F / Y · </span>${ELEMENT_NAMES[element]} ↻</span><small><span class="desktop-control-hint">Energia Astral </span>${value}/${ASTRAL.energyMax}<span class="desktop-control-hint"> · Q: ${ASTRAL.castCost}${value<ASTRAL.castCost?' · RECUPERE COM ACERTOS':''}</span></small><meter min="0" max="100" value="${value}" aria-label="Energia Astral"></meter>`;
  }
 }

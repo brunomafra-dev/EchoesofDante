@@ -1,0 +1,36 @@
+{
+  "method": "Real Chrome CDP two-finger input, a DEV Hollow fixture behind the Hunter and actual projectile damage; Gamepad API mock. No direct damage invocation.",
+  "errors": [],
+  "before": {
+    "hp": 68,
+    "x": 790
+  },
+  "after": {
+    "hp": 23,
+    "x": 968.761,
+    "aim": 3.141592653589793
+  },
+  "dash": true,
+  "fps": {
+    "values": [
+      41.61328125,
+      41.61328125,
+      46.2099609375,
+      46.2099609375,
+      46.2099609375,
+      49.657470703125,
+      49.657470703125,
+      49.657470703125,
+      52.24310302734375,
+      52.24310302734375
+    ],
+    "average": 47.53150634765625
+  },
+  "pad": {
+    "method": "gamepad",
+    "move": 1,
+    "aim": 3.141592653589793,
+    "attack": true
+  },
+  "passed": true
+}

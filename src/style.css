@@ -153,7 +153,7 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
 .base-dialog{width:min(1040px,94vw)}.base-wallet,.base-notice{padding:0 20px}.base-services{padding:8px 20px 20px;max-height:65dvh;overflow:auto;overscroll-behavior:contain;touch-action:pan-x pan-y;display:flex;flex-direction:column;gap:8px}
 .base-services button{min-height:40px;padding:9px 12px;cursor:pointer;color:#e1dccb;background:#263632;border:1px solid #6b7766;border-radius:5px}.base-services button:disabled{opacity:.4;cursor:default}.base-item{display:flex;align-items:center;gap:8px}.base-item img{width:48px;height:48px;object-fit:contain}.base-item span{flex:1}.base-map{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 @media(max-height:500px){.expedition-launcher{top:65px}.expedition-launcher button{font-size:10px;padding:5px 8px}.base-services{max-height:54dvh}.base-item{flex-wrap:wrap}.base-dialog header h1{font-size:22px}.base-wallet{font-size:12px}.base-map{grid-template-columns:repeat(2,1fr)}}
-.application-shell:not([hidden]) ~ .inventory-launcher{display:none}
+.application-shell[open] ~ .inventory-launcher{display:none}
 .equipment-dialog{width:min(1000px,94vw);max-height:90dvh;color:#dfe3d6}
 .inventory-layout{display:grid;grid-template-columns:170px 1fr 245px;gap:22px;padding:20px;overflow:auto}
 .inventory-equipped{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -238,3 +238,59 @@ body:has(.application-shell[open]) .astral-panel,body.records-open .astral-panel
 .coop-chat input{box-sizing:border-box;width:100%;min-height:34px;background:#172820;color:#f0f0de;border:1px solid #5b6854;border-radius:3px;padding:7px;font:16px system-ui}
 .coop-chat small{align-self:center;margin-right:auto;color:#adb7a3}.coop-chat-status{margin:4px 0 0;font-size:11px;color:#e4bd91;background:#10201cdd}.coop-chat-status:empty{display:none}
 @media(max-width:900px),(pointer:coarse){.coop-chat{left:50%;transform:translateX(-50%);bottom:max(12px,env(safe-area-inset-bottom));top:auto;width:min(300px,calc(100vw - 24px))}.coop-chat-log{max-height:82px}.coop-chat.is-writing{top:max(8px,env(safe-area-inset-top));bottom:auto;overflow-y:auto}}
+
+/* Mobile gameplay: one edge dock, independent thumbs, no central toolbars. */
+.mobile-vitals{display:none}
+.lobby-wait{padding:9px 12px;background:#26372a;color:#e9ce92!important;border-left:3px solid #b69b60;font-weight:700}
+@media(pointer:coarse){
+ body{--mobile-top:calc(4px + env(safe-area-inset-top));--mobile-left:calc(8px + env(safe-area-inset-left));--mobile-right:calc(8px + env(safe-area-inset-right))}
+ .mobile-vitals{display:block;position:fixed;z-index:30;top:var(--mobile-top);left:var(--mobile-left);width:124px;height:42px;padding:3px 5px;color:#e8ead9;background:#091710b8;border-radius:3px;font:11px/1.15 'Barlow Condensed',sans-serif;pointer-events:none}
+ .mobile-vitals>div:first-child{display:flex;justify-content:space-between;gap:6px}.mobile-vitals strong{font-size:13px}.mobile-vitals [data-level]{font-size:11px}
+ .mobile-hp,.mobile-xp{height:4px;margin:3px 0;background:#394535}.mobile-xp{height:2px;margin:2px 0 0}
+ .mobile-hp i,.mobile-xp i{display:block;height:100%;width:var(--hp,100%);background:#a4c68b}.mobile-xp i{width:var(--xp,0%);background:#d1ad6c}
+ .mobile-vitals[data-danger=true] .mobile-hp i{background:#ff6a4a}.mobile-vitals [data-xp]{font-size:9px;white-space:nowrap}
+ body .astral-panel{top:var(--mobile-top);left:calc(144px + env(safe-area-inset-left));width:104px;max-width:104px;min-height:42px;gap:0;padding:3px 6px;border:0;border-radius:3px;font-size:11px;background:#091710b8;z-index:30}
+ body .astral-panel small{font-size:10px}.desktop-control-hint{display:none}.astral-panel>span{white-space:nowrap}.astral-panel meter{height:4px;margin:2px 0 0}
+ body .main-menu-button,body .inventory-launcher,body .records-button{top:var(--mobile-top);min-height:40px;height:40px;padding:4px;border:0;border-radius:3px;background:#091710b8;font:600 10px 'Barlow Condensed',sans-serif;z-index:31;width:40px}
+ body .main-menu-button{right:var(--mobile-right)}
+ body .inventory-launcher{right:calc(52px + env(safe-area-inset-right));font-size:0}.inventory-launcher::after{content:'BOLSA';font:600 10px 'Barlow Condensed',sans-serif}
+ body .records-button{right:calc(96px + env(safe-area-inset-right));font-size:0}.records-button::after{content:'GUIA';font:600 10px 'Barlow Condensed',sans-serif}
+ body .expedition-launcher{top:var(--mobile-top);left:auto;right:calc(140px + env(safe-area-inset-right));transform:none;gap:4px;z-index:31;height:40px}
+ body .expedition-launcher button{min-height:40px;height:40px;border:0;border-radius:3px;padding:4px;background:#091710b8;font-size:0}
+ .expedition-launcher [data-map]{width:40px;order:3}.expedition-launcher [data-map]::after{content:'ATLAS';font:600 10px 'Barlow Condensed',sans-serif}
+ .expedition-launcher [data-potion]{width:50px;order:2}.expedition-launcher [data-potion]::after{content:'✚ ' attr(data-count);font:600 13px 'Barlow Condensed',sans-serif}
+ body .expedition-credits{width:36px;max-width:48px;padding:0 3px;gap:2px;order:1;background:#091710b8;font-size:11px;overflow:hidden}.expedition-credits small{display:none}.expedition-credits::before{content:'CR';font-size:8px}.expedition-credits strong{overflow:hidden;text-overflow:ellipsis}
+ body .mission-tracker,body .mission-tracker.is-finished{top:calc(52px + env(safe-area-inset-top));left:var(--mobile-left);width:212px;max-width:30vw;z-index:29}
+ body .mission-tracker>button{padding:4px 6px;gap:2px;background:#0917109c}.mission-tracker small{display:none}.mission-tracker strong{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mission-tracker span{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ body .world-minimap{right:var(--mobile-right);top:calc(52px + env(safe-area-inset-top));width:112px;z-index:29}.world-minimap button{min-height:38px;font-size:0}.world-minimap button::after{content:'RADAR';font:600 10px 'Barlow Condensed',sans-serif}.world-minimap.is-collapsed{width:48px}
+ body .coop-chat{top:var(--mobile-top);left:auto;right:calc(278px + env(safe-area-inset-right));bottom:auto;transform:none;width:40px;z-index:32}
+ body .coop-chat:not(.is-writing):not(.is-expanded)>[data-chat=history]{display:none}
+ body .coop-chat>[data-chat=open]{width:40px;height:40px;min-height:40px;margin:0;padding:4px;font-size:0;background:#091710b8}.coop-chat>[data-chat=open]::after{content:'CHAT';font:600 10px 'Barlow Condensed',sans-serif}
+ body .coop-chat:is(.is-writing,.is-expanded){top:calc(52px + env(safe-area-inset-top));right:var(--mobile-right);width:min(320px,calc(100vw - 16px - env(safe-area-inset-left) - env(safe-area-inset-right)));max-height:calc(100dvh - 60px - env(safe-area-inset-top) - env(safe-area-inset-bottom));overflow:auto;background:#091710ee;padding:6px;border-radius:4px;z-index:24000}
+ .coop-chat.is-writing .coop-chat-log{max-height:70px}.coop-chat.is-writing form{padding:4px}.coop-chat.is-writing input{min-height:36px}
+ .touch-controls{--action-size:54px;--aim-size:100px}
+ .touch-move-zone{width:min(36vw,280px);height:min(43vh,200px)}.touch-pad{width:100px;background:#101b143d;border-color:#a1b89c44}.touch-move{left:18px;bottom:14px}.touch-pad i{width:35px;height:35px}
+ .touch-actions{display:block;right:calc(12px + env(safe-area-inset-right));bottom:calc(12px + env(safe-area-inset-bottom));width:calc(var(--aim-size) + 64px);height:calc(var(--aim-size) + 5px)}
+ .touch-actions button{position:absolute;padding:3px;width:var(--action-size);height:var(--action-size);font-size:11px;letter-spacing:0}
+ .touch-actions [data-action=attack]{right:0;bottom:0;width:var(--aim-size);height:var(--aim-size)}
+ .touch-actions [data-action=dash]{left:0;bottom:0}.touch-actions [data-action=charge]{left:0;bottom:60px}
+ .touch-face{border-radius:14px;background:#101b146f}.touch-aim .touch-face{border-radius:50%;background:#101b144d;border:1px solid #9bb5a45c!important;justify-content:flex-start;padding-top:14px;gap:3px}
+ .touch-aim-knob{position:absolute;left:calc(50% - 17px);top:calc(50% - 17px);width:34px;height:34px;border:1px solid #9bccc291;border-radius:50%;background:#51776844;pointer-events:none}
+ .touch-aim .touch-face b{z-index:1;font-size:10px}.touch-aim .touch-face small{display:block;font-size:9px;z-index:1}.touch-direction{bottom:12px}
+ .touch-actions [data-action=dash] small,.touch-actions [data-action=charge] small{display:block;font-size:9px;color:#cbd6be}
+ .touch-actions [data-action=dash] .touch-face::after,.touch-actions [data-action=charge] .touch-face::after{content:'';position:absolute;bottom:5px;left:7px;right:7px;height:2px;background:linear-gradient(90deg,#a3bca4 var(--ready,100%),#354238 var(--ready,100%))}
+ .touch-context{left:auto;right:calc(12px + env(safe-area-inset-right));bottom:calc(124px + env(safe-area-inset-bottom));transform:none}
+ .touch-context button{min-width:100px;max-width:125px;min-height:42px;padding:2px;font-size:11px}.touch-context .touch-face{min-height:38px;padding:5px}
+ body.shell-open .mobile-vitals,body.records-open .mobile-vitals,body.shell-open .mission-tracker,body.shell-open .inventory-launcher{visibility:hidden}
+ .application-shell{touch-action:pan-y}.is-coop-page .shell-brand{display:none}.is-coop-page .shell-layout{grid-template-columns:1fr;max-width:560px;gap:0;align-items:start;min-height:0}.is-coop-page .shell-content{min-width:0}.is-coop-page .party-lobby{grid-template-columns:1fr 1fr}.is-coop-page .shell-content>p{margin:6px 0}.is-coop-page .shell-content h2{font-size:24px}.is-coop-page [data-shell=coop-start]{border-color:#b6a370;background:#41513a;color:#f6efd9;font-weight:700}
+}
+@media(pointer:coarse) and (max-width:700px){
+ body .astral-panel{top:calc(52px + env(safe-area-inset-top));left:var(--mobile-left);width:96px;max-width:96px}
+ body:has(.astral-panel) .mission-tracker{left:calc(112px + env(safe-area-inset-left));max-width:calc(100vw - 208px - env(safe-area-inset-left) - env(safe-area-inset-right));width:210px}
+ body .expedition-credits{position:fixed;left:calc(86px + env(safe-area-inset-left));top:calc(27px + env(safe-area-inset-top));height:16px;background:transparent;padding:0;width:auto}
+ body .coop-chat:not(.is-writing):not(.is-expanded){right:calc(238px + env(safe-area-inset-right))}.mobile-vitals [data-xp]{display:block;max-width:70px;overflow:hidden;text-overflow:ellipsis}
+}
+@media(pointer:coarse) and (max-height:350px){.touch-controls{--aim-size:88px;--action-size:48px}.touch-actions [data-action=charge]{bottom:53px}.touch-pad{width:88px}.touch-context{bottom:calc(107px + env(safe-area-inset-bottom))}}
+@media(pointer:coarse) and (orientation:portrait){.mobile-vitals,body .astral-panel,body .mission-tracker,body .expedition-launcher,body .inventory-launcher,body .coop-chat:not(.is-writing){display:none}}
+@media(pointer:coarse){.campaign-lab-help.is-mobile-lab{top:calc(100px + env(safe-area-inset-top));bottom:auto;left:var(--mobile-left);max-height:calc(100dvh - 112px - env(safe-area-inset-top) - env(safe-area-inset-bottom));overflow:auto;padding:4px 6px;touch-action:pan-y}.campaign-lab-help.is-mobile-lab:not([open]) summary{font-size:0}.campaign-lab-help.is-mobile-lab:not([open]) summary::after{content:'LAB MOBILE ▾';font:10px system-ui}}
+@media(pointer:coarse){.is-coop-page .lobby-wait{position:sticky;top:0;z-index:3}.is-coop-page [data-shell=coop-start]{position:sticky;top:48px;z-index:2}body .application-shell .coop-chat:not(.is-writing):not(.is-expanded){right:var(--mobile-right)}}

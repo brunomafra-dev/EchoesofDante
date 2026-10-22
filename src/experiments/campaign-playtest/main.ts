@@ -4,8 +4,10 @@ import '../../style.css';
 // character, setting or one-shot launch in the real game is read or modified.
 const get=Storage.prototype.getItem,set=Storage.prototype.setItem,remove=Storage.prototype.removeItem;
 const missionTest=new URLSearchParams(location.search).has('missions');
+const mobileTest=new URLSearchParams(location.search).has('mobile');
+const mobileClass=new URLSearchParams(location.search).get('class');
 const settlementTest=new URLSearchParams(location.search).has('settlement');let primeSettlement=false;
-const prefix=settlementTest?'dante-settlement-lab.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
+const prefix=mobileTest?`dante-mobile-lab.${mobileClass??'warrior'}.`:settlementTest?'dante-settlement-lab.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
 const isolatedKey=(storage:Storage,key:string)=>prefix+(storage===localStorage?'local.':'session.')+key;
 Storage.prototype.getItem=function(key){return key.startsWith('echoes-of-dante.')?get.call(sessionStorage,isolatedKey(this,key)):get.call(this,key)};
 Storage.prototype.setItem=function(key,value){if(key.startsWith('echoes-of-dante.'))set.call(sessionStorage,isolatedKey(this,key),String(value));else set.call(this,key,value)};
@@ -19,12 +21,19 @@ if(missionTest){
  details.querySelector('[data-reset]')!.addEventListener('click',()=>{for(const key of Array.from({length:sessionStorage.length},(_,i)=>sessionStorage.key(i)))if(key?.startsWith(prefix))remove.call(sessionStorage,key);const url=new URL(location.href);url.searchParams.delete('sala');location.href=url.href;});
  const {characterProfiles}=await import('../../systems/CharacterProfiles');
  if(!new URLSearchParams(location.search).has('sala')){
-  if(!characterProfiles.list.length){const hero=characterProfiles.create('Pioneiro','warrior','male',{mode:'solo',difficulty:'normal'});
+  if(!characterProfiles.list.length){const selectedClass=mobileTest&&['warrior','hunter','astral','xenobinder'].includes(mobileClass??'')?mobileClass as import('../../config/classes').PlayableClass:'warrior';const hero=characterProfiles.create('Pioneiro',selectedClass,'male',{mode:'solo',difficulty:'normal'});
    if(hero){characterProfiles.select(hero.id);characterProfiles.markIntroSeen(hero.id);sessionStorage.setItem('echoes-of-dante.launch-once',hero.id);primeSettlement=settlementTest;}
   }
  }
 }
 document.body.append(details);
+if(mobileTest){
+ details.classList.add('is-mobile-lab');
+ details.querySelector('summary')!.textContent='MOBILE · MIRA, HUD E SALAS · TESTE RESERVADO';
+ const p=document.createElement('p');p.textContent='Esquerda: mover. Analógico direito: arraste em qualquer direção para mirar e atacar; solte para parar. Toque no cenário para olhar sem disparar. Habilidade: segure, arraste e solte; esquiva tem botão próprio. Vida/XP e atalhos ficam no topo; toque em RADAR para abrir o mapa local.';details.querySelector('summary')!.after(p);
+ const links=document.createElement('p');for(const[id,label]of [['warrior','Guerreiro'],['hunter','Hunter'],['astral','Astral'],['xenobinder','Domador']]){const a=document.createElement('a');a.href=`campaign-playtest.html?missions=1&mobile=1&class=${id}&v=0.1.130`;a.textContent=label+' · ';links.append(a);}const coop=document.createElement('a');coop.href='campaign-playtest.html?mobile=1&v=0.1.130';coop.textContent='Criar sala pelo celular/tablet';links.append(coop);details.append(links);
+ if(!missionTest){const note=document.createElement('p');note.textContent='Jogar → Cooperativo → Criar sala e convidar. Crie seu personagem, escolha equipe e dificuldade. Após a abertura, compartilhe o convite. O líder inicia quando todos se conectarem. Dados temporários desta aba; nenhum save real é alterado.';details.append(note);}
+}
 if(settlementTest){
  details.querySelector('summary')!.textContent='ETAPA 5 · NASCENTES, TERRAÇOS E ACAMPAMENTO · TESTE RESERVADO';
  const intro=document.createElement('p');intro.textContent='Campanha anterior simulada: converse com Lia e use M para viajar ao Vale da Ressonância. Você chega perto da trilha das Nascentes; E entra. Depois explore os Terraços e conclua os três relatórios para instalar o primeiro abrigo. Confira também o acampamento e os pés do Ivo.';details.querySelector('summary')!.after(intro);
