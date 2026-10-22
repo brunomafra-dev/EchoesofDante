@@ -1,5 +1,8 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**Manutenção · 0.1.132:** [jornada e HUD de desktop](journey-hud/README.md). A captura do usuário revelou a preparação automática pós-Warden no laboratório do assentamento. Removida a simulação automática, com escolha explícita e aviso persistente; destinos também exigem seus marcos reais. Missões orientam a rota existente. HUD de PC agrupado nas bordas e viewport proporcional sem faixas. Mobile 0.1.131 aprovado pelo usuário em 22/10/2026. Esta revisão aguarda playtest; sem nova etapa de conteúdo.
+
+
 **Complemento · 0.1.131:** a checagem pública do mobile encontrou assets do mundo ainda baixando enquanto a tela aguardava para iniciar o filme. [Correção do carregamento](mobile-controls/README.md): filme em paralelo ao preload, percentual após pular e continuação automática, com teste de rede retida para solo e coop. Mesmo escopo de manutenção, sem nova etapa de conteúdo.
 
 **Manutenção · 0.1.130:** [mobile: mira, interface e salas](mobile-controls/README.md). Dois polegares independentes, giro sem disparo no cenário, HUD compacto nas bordas, carga visível no botão e criação/convite de sala por toque. Estados explícitos de espera do líder/convidados. Sem nova etapa de conteúdo; campanha, combate, equipe original e protocolo 14 preservados. QA técnico separado da validação no celular/tablet real.

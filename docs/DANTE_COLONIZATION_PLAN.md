@@ -1,5 +1,8 @@
 # Dante — correções visuais, comunicação cooperativa e primeira colonização
 
+**Manutenção · 0.1.132:** [jornada e HUD de desktop](journey-hud/README.md). A captura do usuário revelou a preparação automática pós-Warden no laboratório do assentamento. Removida a simulação automática, com escolha explícita e aviso persistente; destinos também exigem seus marcos reais. Missões orientam a rota existente. HUD de PC agrupado nas bordas e viewport proporcional sem faixas. Mobile 0.1.131 aprovado pelo usuário em 22/10/2026. Esta revisão aguarda playtest; sem nova etapa de conteúdo.
+
+
 **Manutenção · 0.1.128:** corrigir caminhada relatada no Guerreiro masculino com roupa inicial antes de avançar. [Assets completos, animação por distância e QA](warrior-walk/README.md). Não considerar correções anteriores uma garantia de animação aprovada; esta revisão aguarda teste humano.
 
 **Manutenção · 0.1.127:** falhas da abertura em mobile/Brave motivaram fontes H.264 Baseline e WebM, reprodução por toque com som, recuperação e solicitação de tela cheia/horizontal. [Entrega e limitações dos navegadores](cinematic-compatibility/README.md). Sem avanço de etapa; fase 5 continua aguardando playtest humano.

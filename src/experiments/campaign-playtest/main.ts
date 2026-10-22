@@ -6,8 +6,8 @@ const get=Storage.prototype.getItem,set=Storage.prototype.setItem,remove=Storage
 const missionTest=new URLSearchParams(location.search).has('missions');
 const mobileTest=new URLSearchParams(location.search).has('mobile');
 const mobileClass=new URLSearchParams(location.search).get('class');
-const settlementTest=new URLSearchParams(location.search).has('settlement');let primeSettlement=false;
-const prefix=mobileTest?`dante-mobile-lab.${mobileClass??'warrior'}.`:settlementTest?'dante-settlement-lab.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
+const settlementTest=new URLSearchParams(location.search).has('settlement');
+const prefix=new URLSearchParams(location.search).has('journey')?'dante-journey-review-lab.':mobileTest?`dante-mobile-lab.${mobileClass??'warrior'}.`:settlementTest?'dante-settlement-lab-v2.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
 const isolatedKey=(storage:Storage,key:string)=>prefix+(storage===localStorage?'local.':'session.')+key;
 Storage.prototype.getItem=function(key){return key.startsWith('echoes-of-dante.')?get.call(sessionStorage,isolatedKey(this,key)):get.call(this,key)};
 Storage.prototype.setItem=function(key,value){if(key.startsWith('echoes-of-dante.'))set.call(sessionStorage,isolatedKey(this,key),String(value));else set.call(this,key,value)};
@@ -22,7 +22,7 @@ if(missionTest){
  const {characterProfiles}=await import('../../systems/CharacterProfiles');
  if(!new URLSearchParams(location.search).has('sala')){
   if(!characterProfiles.list.length){const selectedClass=mobileTest&&['warrior','hunter','astral','xenobinder'].includes(mobileClass??'')?mobileClass as import('../../config/classes').PlayableClass:'warrior';const hero=characterProfiles.create('Pioneiro',selectedClass,'male',{mode:'solo',difficulty:'normal'});
-   if(hero){characterProfiles.select(hero.id);characterProfiles.markIntroSeen(hero.id);sessionStorage.setItem('echoes-of-dante.launch-once',hero.id);primeSettlement=settlementTest;}
+   if(hero){characterProfiles.select(hero.id);characterProfiles.markIntroSeen(hero.id);sessionStorage.setItem('echoes-of-dante.launch-once',hero.id);}
   }
  }
 }
@@ -36,15 +36,21 @@ if(mobileTest){
 }
 if(settlementTest){
  details.querySelector('summary')!.textContent='ETAPA 5 · NASCENTES, TERRAÇOS E ACAMPAMENTO · TESTE RESERVADO';
- const intro=document.createElement('p');intro.textContent='Campanha anterior simulada: converse com Lia e use M para viajar ao Vale da Ressonância. Você chega perto da trilha das Nascentes; E entra. Depois explore os Terraços e conclua os três relatórios para instalar o primeiro abrigo. Confira também o acampamento e os pés do Ivo.';details.querySelector('summary')!.after(intro);
+ const intro=document.createElement('p');intro.textContent='O teste começa do zero, com o Warden vivo e regiões por descobrir. Para avaliar só o assentamento, abra este painel e escolha explicitamente SIMULAR. Essa escolha marca a campanha anterior como concluída apenas nesta aba.';details.querySelector('summary')!.after(intro);
  const stages=details.querySelector('.mission-lab-stages')!;stages.replaceChildren();
- for(const[id,text]of [['water-source','LIA · ÁGUA PARA PERMANECER'],['safe-route','IVO · ROTA DOS TERRAÇOS'],['shelter','NARA · PRIMEIRO ABRIGO']]){const b=document.createElement('button');b.dataset.stage=id;b.textContent=text;stages.append(b);}
+ for(const[id,text]of [['water-source','LIA · ÁGUA PARA PERMANECER'],['safe-route','IVO · ROTA DOS TERRAÇOS'],['shelter','NARA · PRIMEIRO ABRIGO']]){const b=document.createElement('button');b.dataset.stage=id;b.textContent='SIMULAR · '+text;stages.append(b);}
 }
 const {game}=await import('../../main');
-if(primeSettlement){const prime=()=>{const scene=game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene;if(scene?.sys.isActive()&&scene.seedMissionPlaytest('water-source'))game.events.off('step',prime);};game.events.on('step',prime);}
+if(new URLSearchParams(location.search).has('journey')){
+ details.classList.add('is-mobile-lab');details.querySelector('summary')!.textContent='CAMPANHA DO ZERO · HUD E PROGRESSÃO · LAB';
+ details.querySelector('.mission-lab-stages')?.remove();
+ const note=document.createElement('p');note.textContent='Sem campanha pré-concluída: aceite a missão de Nara e explore a Floresta. O atlas só permite retornar a rotas já liberadas. Seus saves reais estão protegidos.';details.querySelector('summary')!.after(note);
+}
+if(get.call(sessionStorage,prefix+'simulated')==='1')details.querySelector('summary')!.textContent='SIMULAÇÃO ATIVA · PROGRESSO ANTERIOR PREPARADO';
 if(missionTest)for(const b of Array.from(details.querySelectorAll<HTMLButtonElement>('[data-stage]')))b.onclick=()=>{
+ if(!confirm('SIMULAÇÃO DE TESTE: concluir relatórios anteriores nesta aba? Etapas após o Warden também marcam esse boss como derrotado. Para jogar a jornada completa, cancele.'))return;
  const scene=game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene;
  const ok=scene?.sys.isActive()&&scene.seedMissionPlaytest(b.dataset.stage as import('../../config/missions').MissionId);
  details.querySelector('[data-lab-notice]')!.textContent=ok?'Etapa preparada no teste temporário. Converse com o NPC indicado.':'Feche os menus e reúna a equipe; somente o anfitrião prepara etapas no cooperativo.';
- if(ok)details.open=false;
+ if(ok){set.call(sessionStorage,prefix+'simulated','1');details.querySelector('summary')!.textContent='SIMULAÇÃO ATIVA · PROGRESSO ANTERIOR PREPARADO';details.open=true;}
 };

@@ -1,5 +1,8 @@
 # Primeiro núcleo habitável · revisão 0.1.126
 
+**Revisão 0.1.132:** o teste não prepara mais a campanha pós-Warden automaticamente. Começa do zero; para simular a etapa anterior, escolha o botão no painel e confirme. O aviso de simulação permanece após reload. [Diagnóstico e novo teste da jornada](../journey-hud/README.md). Resultados originais abaixo são históricos.
+
+
 [Laboratório reservado](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&settlement=1&v=0.1.126) · [Biblioteca](https://echosofdante.vercel.app/test-library.html)
 
 **Manutenção da conexão · 0.1.126:** após o Render publicar o protocolo 14, o teste público expôs uma segunda consulta desnecessária a `/api/coop-config` entre inspecionar o convite e terminar a criação do personagem. Essa chamada expirou e exibiu indisponibilidade apesar do relay online. Agora a página compartilha a consulta em andamento e conserva somente o endereço validado; falhas liberam uma nova tentativa. Timeout de consulta passou de 10 para 30 s. Isso não armazena sala, credenciais ou estado de saúde: a conexão e o protocolo continuam sendo conferidos pelo WebSocket. Mapas, missões, arte e combate da 0.1.125 preservados. `node scripts/qa-coop-endpoint.mjs` verifica concorrência, reutilização após criação, rejeição de endereços inválidos e recuperação após erro.

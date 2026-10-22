@@ -51,6 +51,9 @@ export class Hud {
   private readonly coarse=matchMedia('(pointer: coarse)');
   private mobileHealth='';
   private mobileProgress='';
+  private readonly desktop=document.createElement('div');
+  private deathFrame!:Phaser.GameObjects.Container;
+  private deathVeil!:Phaser.GameObjects.Rectangle;
 
   constructor(private scene: Phaser.Scene, onRestart: () => void, private readonly hunter = false,private readonly astral=false,private readonly xenobinder=false,
     private readonly touchFeedback?:(dash:number,charge:number,phase:KineticPhase,level:number,dashCooldown:number,chargeCooldown:number)=>void) {
@@ -90,16 +93,19 @@ export class Hud {
     this.showControlHelp();
     this.chrome=scene.add.container(0,0,scene.children.list.slice(first)).setScrollFactor(0).setDepth(20000);
     this.mobile.className='mobile-vitals';this.mobile.setAttribute('aria-label','Vida e experiência');
-    this.mobile.innerHTML='<div><strong data-hp></strong><span data-level>NV 1</span></div><div class="mobile-hp"><i></i></div><small data-xp>XP 0</small><div class="mobile-xp"><i></i></div>';
-    document.body.append(this.mobile);this.coarse.addEventListener('change',this.mobileLayout);this.mobileLayout();
-    scene.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{this.coarse.removeEventListener('change',this.mobileLayout);this.mobile.remove();});
+    this.mobile.innerHTML='<div><strong data-hp></strong><span data-level>NV 1</span></div><div class="mobile-hp"><i></i></div><small data-xp>XP 0</small><small class="desktop-echoes" data-echoes></small><div class="mobile-xp"><i></i></div>';
+    this.desktop.className='desktop-hud';
+    this.desktop.innerHTML='<div class="desktop-location"></div><div class="desktop-guide"><strong></strong><span></span></div><div class="desktop-combat" aria-label="Habilidades"><div><kbd>ESPAÇO</kbd><span data-dash-status></span><i><b data-dash-fill></b></i></div><div><kbd>Q</kbd><span data-charge-status></span><i><b data-charge-fill></b></i></div></div>';
+    document.body.append(this.mobile,this.desktop);this.coarse.addEventListener('change',this.mobileLayout);this.mobileLayout();
+    scene.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{this.coarse.removeEventListener('change',this.mobileLayout);scene.scale.off('resize',this.screenLayout);this.mobile.remove();this.desktop.remove();});
     this.discoveryPrompt = text(VIEW_WIDTH / 2, VIEW_HEIGHT - 73, '[ E ]  INVESTIGAR', 17, '#ddd4f2', true)
       .setOrigin(0.5).setVisible(false);
     this.discoveryMessage = text(VIEW_WIDTH / 2, VIEW_HEIGHT - 154, '', 18, '#d3d9c5', true)
       .setOrigin(0.5, 0).setAlign('center').setWordWrapWidth(560).setVisible(false);
     this.levelMessage = text(VIEW_WIDTH / 2, 136, '', 19, '#e4ebc9', true)
       .setOrigin(0.5, 0).setVisible(false);
-    const veil = scene.add.rectangle(0, 0, VIEW_WIDTH, VIEW_HEIGHT, 0x05141b, 0.79).setOrigin(0).setScrollFactor(0).setDepth(30000).setVisible(false);
+    const deathStart=scene.children.list.length;
+    const veil = this.deathVeil = scene.add.rectangle(0, 0, VIEW_WIDTH, VIEW_HEIGHT, 0x05141b, 0.79).setOrigin(0).setScrollFactor(0).setDepth(30000).setVisible(false);
     const frame = scene.add.graphics().setScrollFactor(0).setDepth(30001).setVisible(false);
     frame.fillStyle(0x111c16, 0.97).fillRoundedRect(347, 199, 586, 334, 6);
     frame.lineStyle(1, 0x7d8c72, 0.3).strokeRoundedRect(347, 199, 586, 334, 6);
@@ -114,6 +120,8 @@ export class Hud {
     button.on('pointerout', () => button.setFillStyle(0x9edacf));
     button.on('pointerdown', onRestart);
     this.deathGroup = [veil, frame, overline, title, subtitle, button, this.deathButtonText];
+    this.deathFrame=scene.add.container(0,0,scene.children.list.slice(deathStart)).setScrollFactor(0).setDepth(30000);
+    scene.scale.on('resize',this.screenLayout);this.screenLayout();
   }
 
   update(hp: number, maxHp: number, dashProgress: number, chargeProgress: number, chargePhase: KineticPhase, chargeLevel: number,
@@ -136,8 +144,26 @@ export class Hud {
     this.chargeText.setColor(chargePhase === 'CHARGING' ? '#5fe6d8' : chargeProgress >= 1 ? '#b6c6b2' : '#8a9989');
     if (this.chargeFill) this.chargeFill.width = 196 * (chargePhase === 'CHARGING' ? chargeLevel : chargeProgress);
     this.momentumText?.setText(`MOM ${this.momentum}`);
+    if(this.coarse.matches)return;
+    this.domText('.desktop-location',this.areaSubtitle.text);
+    this.domText('[data-dash-status]',this.dashText.text.replace(/^\[.*?\]\s*/,''));
+    this.domText('[data-charge-status]',this.chargeText.text.replace(/^\[.*?\]\s*/,''));
+    this.domText('.desktop-combat>div:first-child kbd',this.inputMethod==='gamepad'?'RB':'ESPAÇO');
+    this.domText('.desktop-combat>div:last-child kbd',this.inputMethod==='gamepad'?'LT':'Q');
+    this.domFill('[data-dash-fill]',dashProgress);
+    this.domFill('[data-charge-fill]',chargePhase==='CHARGING'?chargeLevel:chargeProgress);
+    this.domText('.desktop-guide strong',this.signalObjective.text);
+    this.domText('.desktop-guide span',this.actionHint.visible?this.actionHint.text:this.explorationHint.text);
+    (this.desktop.querySelector('.desktop-guide') as HTMLElement).hidden=this.missionMode;
   }
-  private mobileLayout=():void=>{this.chrome.setVisible(!this.coarse.matches);};
+  private domText(selector:string,value:string):void{const el=this.desktop.querySelector(selector)!;if(el.textContent!==value)el.textContent=value;}
+  private domFill(selector:string,value:number):void{const el=this.desktop.querySelector<HTMLElement>(selector)!,width=`${Math.round(Math.max(0,Math.min(1,value))*100)}%`;if(el.style.width!==width)el.style.width=width;}
+  private mobileLayout=():void=>{this.chrome.setVisible(false);};
+  private screenLayout=():void=>{
+    const {width,height}=this.scene.scale.gameSize,dx=(width-VIEW_WIDTH)/2,dy=(height-VIEW_HEIGHT)/2;
+    this.deathFrame.setPosition(dx,dy);this.deathVeil.setPosition(-dx,-dy).setSize(width,height);
+    this.discoveryPrompt.setPosition(width/2,height-120);this.discoveryMessage.setPosition(width/2,height-200);this.levelMessage.setX(width/2);
+  };
 
   private refreshTypography(): void {
     // FIT scales the logical canvas down. Keep essential text readable on phones.
@@ -193,9 +219,10 @@ export class Hud {
   }
 
   setProgress(level: number, xp: number, nextLevelXp: number | null, echoes: number): void {
-    const progress=`${level}:${xp}:${nextLevelXp}:${this.momentum}`;
+    const progress=`${level}:${xp}:${nextLevelXp}:${this.momentum}:${echoes}`;
     if(progress!==this.mobileProgress){this.mobileProgress=progress;this.mobile.querySelector('[data-level]')!.textContent=`NV ${level}`;
       this.mobile.querySelector('[data-xp]')!.textContent=`XP ${xp}${nextLevelXp===null?'':`/${nextLevelXp}`}${this.hunter?` · MOM ${this.momentum}`:''}`;}
+    this.mobile.querySelector('[data-echoes]')!.textContent=`ECOS ${echoes}/${ECHO_COUNT}`;
     this.progressText.setText(`NV ${level}   ·   ECOS ${echoes}/${ECHO_COUNT}`);
     this.progressHint.setText(nextLevelXp === null ? `XP ${xp} · Nível máximo` : `XP ${xp} / ${nextLevelXp}`);
     const previous = PROGRESSION.levelThresholds[level - 1] ?? 0;

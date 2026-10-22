@@ -18,6 +18,8 @@ export class WardenHud {
     this.title = scene.add.text(0, -26, '', style).setOrigin(0.5, 0);
     this.cue = scene.add.text(0, 10, '', { ...style, fontSize: '14px', color: '#ffdb9b' }).setOrigin(0.5, 0);
     this.group = scene.add.container(VIEW_WIDTH / 2, 74, [back, track, this.fill, this.title, this.cue]).setScrollFactor(0).setDepth(20000).setVisible(false);
+    const layout=()=>this.group.setX(scene.scale.gameSize.width/2);layout();scene.scale.on('resize',layout);
+    scene.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>scene.scale.off('resize',layout));
   }
 
   update(boss?: BossDisplay): void {

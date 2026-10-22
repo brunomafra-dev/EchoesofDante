@@ -5,7 +5,7 @@ const base=process.env.QA_BASE??'http://localhost:5185',out=process.env.QA_OUT??
 const browser=await chromium.launch({channel:'chrome'}),report={method:'One Chrome page at a time; DEV positions for samples/enemy preparation, real combat and UI inputs; touch emulation and Gamepad API mock, not physical hardware',checks:[],errors:[]};
 const check=s=>{console.log(s);report.checks.push(s)};
 const watch=p=>{p.on('pageerror',e=>report.errors.push(e.message));p.on('response',r=>{if(r.status()>=400)report.errors.push(r.url())})};
-const ready=p=>p.waitForFunction(()=>{const s=window.__danteGame?.scene.getScene('Game');return s?.missions.current==='water-source'&&!s.transitioning});
+const ready=async p=>{await p.waitForFunction(()=>window.__danteGame?.scene.getScene('Game')?.missionUi);await p.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');if(s.missions.current==='recon')s.seedMissionPlaytest('water-source');});await p.waitForFunction(()=>{const s=window.__danteGame.scene.getScene('Game');return s.missions.current==='water-source'&&!s.transitioning;});};
 const clear=async p=>{for(let i=0;i<12&&await p.locator('.ability-upgrade-dialog[open]').count();i++){await p.evaluate(()=>document.querySelector('.ability-upgrade-dialog[open] [data-upgrade]:not(:disabled)')?.click());await p.waitForTimeout(150)}};
 const key=async(p,k,ms=140)=>{await clear(p);await p.keyboard.down(k);await p.waitForTimeout(ms);await p.keyboard.up(k);await p.waitForTimeout(250)};
 const pos=async(p,x,y)=>{await p.evaluate(({x,y})=>{const s=window.__danteGame.scene.getScene('Game');Object.assign(s.player.position,{x,y});s.player.invulnerableUntil=Infinity},{x,y});await p.waitForTimeout(250)};

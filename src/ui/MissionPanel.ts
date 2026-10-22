@@ -4,7 +4,7 @@ import {MISSIONS,NPC_NAMES,NPC_SERVICES,missionById,type MissionId,type MissionN
 import type {Missions,MissionAction,MissionStatus} from '../systems/Missions';
 import './missions.css';
 
-type State={missions:Missions;notice:string;pending:boolean};
+type State={missions:Missions;notice:string;pending:boolean;routeHint?:string};
 const STATUS:Record<MissionStatus,string>={locked:'Aguardando relatório anterior',available:'Disponível',active:'Em andamento',ready:'Pronta para entrega',completed:'Relatório entregue'};
 export class MissionPanel{
  private root=document.createElement('section');
@@ -78,12 +78,12 @@ export class MissionPanel{
   if(focus)this.dialog.querySelector<HTMLButtonElement>(`[data-mission-action="${focus}"]`)?.focus();
  }
  private refresh():void{
-  const s=this.read(),m=s.missions,id=m.current,tk=`${m.version}:${m.tracked}:${id}:${id?this.canTalk(missionById(id).npc):false}`;
+  const s=this.read(),m=s.missions,id=m.current,tk=`${m.version}:${m.tracked}:${id}:${s.routeHint}:${id?this.canTalk(missionById(id).npc):false}`;
   if(tk!==this.trackerKey){
    this.trackerKey=tk;this.tracker.replaceChildren();this.root.classList.toggle('is-finished',!id);
    const hint=document.createElement('small');hint.textContent='MISSÕES · J / L3';this.tracker.append(hint);
    if(id){const d=missionById(id),status=m.status(id),title=document.createElement('strong'),goal=document.createElement('span');title.textContent=d.title;
-    goal.textContent=status==='ready'?`✓ Entregue o relatório a ${NPC_NAMES[d.npc]}${this.canTalk(d.npc)?'':' · Base / M'}`:status==='available'?`! Converse com ${NPC_NAMES[d.npc]} na base`:d.goals.find(g=>!m.has(g.id))?.label??'Retorne à base';this.tracker.append(title,goal);
+    goal.textContent=status==='ready'?`✓ Entregue o relatório a ${NPC_NAMES[d.npc]}${this.canTalk(d.npc)?'':' · Base / M'}`:status==='available'?`! Converse com ${NPC_NAMES[d.npc]} na base`:s.routeHint??d.goals.find(g=>!m.has(g.id))?.label??'Retorne à base';this.tracker.append(title,goal);
    }else{const title=document.createElement('strong');title.textContent='Diário da expedição';this.tracker.append(title);}
   }
   if(!this.isOpen)return;

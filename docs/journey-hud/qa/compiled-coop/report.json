@@ -1,0 +1,138 @@
+{
+  "base": "http://localhost:5192",
+  "method": "Compiled app: two separate Chrome instances with phone/tablet touch emulation. Real relay, normal character creation, invitation, lobby start, chat and multitouch input; fullscreen unsupported and native sharing mocked. WebKit independent room creation. No DEV globals.",
+  "checks": [
+    "Phone creates a real room from touch-only character/team/difficulty flow, with waiting-for-guests status",
+    "Invitation preserves isolated mobile lab, supports native sharing/manual copy and keeps waiting banner visible after scrolling",
+    "Mobile host can send chat in the waiting lobby",
+    "Tablet guest joins by invitation, sees Aguardando líder and cannot start the room",
+    "Phone leader starts both devices; authoritative world arrives without a desktop host",
+    "Guest sends movement and backwards held attack together; phone host reproduces the changed aim",
+    "Gameplay chat retains real nickname and returns to one compact button after sending"
+  ],
+  "errors": [],
+  "aimSync": {
+    "pose": {
+      "strike": {
+        "phase": "READY",
+        "relativeAngle": -0.42,
+        "worldAngle": 2.721592653589793,
+        "swingProgress": 0
+      },
+      "releaseProgress": 0,
+      "velocity": {
+        "x": 0,
+        "y": 0
+      },
+      "x": 1120,
+      "y": 483.7829999999999,
+      "aim": 3.141592653589793,
+      "hp": 80,
+      "maxHp": 80,
+      "dead": false,
+      "dash": false,
+      "phase": "READY",
+      "level": 0,
+      "firing": false,
+      "swingProgress": 0,
+      "dashCooldown": 1450,
+      "chargeCooldown": 3200,
+      "dashReady": 1,
+      "chargeReady": 1,
+      "momentum": 0,
+      "potionUsed": 0,
+      "prompt": false,
+      "action": "CONVERSAR"
+    },
+    "inputTail": [
+      {
+        "x": 0,
+        "y": 0,
+        "aim": 3.141592653589793,
+        "attack": false,
+        "dash": false,
+        "charge": false,
+        "held": false,
+        "element": false,
+        "release": false,
+        "cancel": false,
+        "interact": false,
+        "restart": false
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "aim": 3.141592653589793,
+        "attack": false,
+        "dash": false,
+        "charge": false,
+        "held": false,
+        "element": false,
+        "release": false,
+        "cancel": false,
+        "interact": false,
+        "restart": false
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "aim": 3.141592653589793,
+        "attack": false,
+        "dash": false,
+        "charge": false,
+        "held": false,
+        "element": false,
+        "release": false,
+        "cancel": false,
+        "interact": false,
+        "restart": false
+      }
+    ],
+    "receivedTail": [
+      {
+        "x": 0,
+        "y": 0,
+        "aim": 3.141592653589793,
+        "attack": false,
+        "dash": false,
+        "charge": false,
+        "held": false,
+        "release": false,
+        "cancel": false,
+        "interact": false,
+        "restart": false,
+        "element": false
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "aim": 3.141592653589793,
+        "attack": false,
+        "dash": false,
+        "charge": false,
+        "held": false,
+        "release": false,
+        "cancel": false,
+        "interact": false,
+        "restart": false,
+        "element": false
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "aim": 3.141592653589793,
+        "attack": false,
+        "dash": false,
+        "charge": false,
+        "held": false,
+        "release": false,
+        "cancel": false,
+        "interact": false,
+        "restart": false,
+        "element": false
+      }
+    ]
+  },
+  "webkit": "Skipped in this run; separately validated against compiled local build",
+  "passed": true
+}

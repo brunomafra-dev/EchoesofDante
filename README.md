@@ -1,5 +1,9 @@
 # Echoes of Dante
 
+## Jornada preservada e HUD de PC · 0.1.132
+
+[Testar do zero](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&journey=1&v=0.1.132): Nara, Floresta e passagens originais, sem preparar vitórias. Atlas exige descobertas e marcos reais; missão orienta a rota. HUD agrupado nas bordas, sem sobreposição e com canvas proporcional preenchendo a janela. O antigo link do assentamento não simula mais a derrota do Warden automaticamente. [Diagnóstico, QA e limitações](docs/journey-hud/README.md). Saves reais preservados; aguardar playtest desta revisão.
+
 ## Caminhada do Guerreiro · 0.1.128
 
 [Testar Guerreiro masculino com roupa inicial](https://echosofdante.vercel.app/character-cohesion.html?class=warrior&sex=male&kit=clothes&v=0.1.128): ciclo com passagem entre apoios, imagens completas mais consistentes e giro da mira sem inverter os passos. Render extra do ataque preserva o movimento. Mesma apresentação na campanha, seletor e aliados. [Diagnóstico, assets e QA](docs/warrior-walk/README.md). Laboratório sem alterar saves reais; aguardar playtest humano desta manutenção.

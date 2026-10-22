@@ -294,3 +294,34 @@ body:has(.application-shell[open]) .astral-panel,body.records-open .astral-panel
 @media(pointer:coarse) and (orientation:portrait){.mobile-vitals,body .astral-panel,body .mission-tracker,body .expedition-launcher,body .inventory-launcher,body .coop-chat:not(.is-writing){display:none}}
 @media(pointer:coarse){.campaign-lab-help.is-mobile-lab{top:calc(100px + env(safe-area-inset-top));bottom:auto;left:var(--mobile-left);max-height:calc(100dvh - 112px - env(safe-area-inset-top) - env(safe-area-inset-bottom));overflow:auto;padding:4px 6px;touch-action:pan-y}.campaign-lab-help.is-mobile-lab:not([open]) summary{font-size:0}.campaign-lab-help.is-mobile-lab:not([open]) summary::after{content:'LAB MOBILE ▾';font:10px system-ui}}
 @media(pointer:coarse){.is-coop-page .lobby-wait{position:sticky;top:0;z-index:3}.is-coop-page [data-shell=coop-start]{position:sticky;top:48px;z-index:2}body .application-shell .coop-chat:not(.is-writing):not(.is-expanded){right:var(--mobile-right)}}
+
+/* Desktop: one spatial hierarchy. World remains clear between edge clusters. */
+.desktop-hud{display:none;pointer-events:none}
+.desktop-echoes{display:none}
+@media(pointer:fine){
+ body .mobile-vitals{display:block;position:fixed;left:16px;bottom:16px;top:auto;z-index:30;width:218px;padding:12px 14px;color:#e8ead9;background:linear-gradient(100deg,#0a1715ed,#0a1715ba);border:1px solid #9eaa872e;border-radius:4px;font:12px/1.3 'DM Sans',sans-serif;pointer-events:none}
+ .mobile-vitals>div:first-child{display:flex;justify-content:space-between;align-items:center;gap:12px}.mobile-vitals strong{font:700 22px 'Barlow Condensed',sans-serif}.mobile-vitals [data-level]{color:#c9b889;font:600 13px 'Barlow Condensed',sans-serif}
+ .mobile-hp,.mobile-xp{height:7px;background:#243329;margin:5px 0 7px;overflow:hidden;border-radius:1px}.mobile-hp i,.mobile-xp i{display:block;height:100%;width:var(--hp,100%);background:#9fc287}.mobile-vitals[data-danger=true] .mobile-hp i{background:#ff6a4a}.mobile-xp{height:2px;margin:5px 0 0}.mobile-xp i{width:var(--xp,0%);background:#d6ac62}.mobile-vitals [data-xp]{font-size:10px;color:#b6c1ac}
+ .desktop-hud{display:block}.desktop-location{position:fixed;left:18px;top:16px;max-width:calc(100vw - 300px);font:600 17px 'Barlow Condensed',sans-serif;color:#d7decd;letter-spacing:.5px;text-shadow:0 2px 4px #000}
+ .desktop-guide{position:fixed;left:18px;top:46px;width:245px;display:grid;gap:4px;font:12px/1.4 'DM Sans',sans-serif;text-shadow:0 2px 3px #000}.desktop-guide[hidden]{display:none}.desktop-guide strong{color:#d0b7e6;font-size:12px}.desktop-guide span{color:#c0ccba}
+ .desktop-combat{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);display:flex;gap:8px;width:300px;color:#dbe3d1;font:600 13px 'Barlow Condensed',sans-serif}
+ .desktop-combat>div{flex:1;min-width:0;position:relative;display:grid;gap:6px;padding:10px 12px;background:#0a1715e8;border:1px solid #9eaa8738;border-radius:4px}
+ .desktop-combat kbd{font:600 10px 'DM Sans',sans-serif;color:#c5b387}.desktop-combat span{font-size:13px;white-space:nowrap}.desktop-combat i{height:3px;background:#304033}.desktop-combat b{display:block;height:3px;width:100%;background:#8da482}.desktop-combat [data-charge-fill]{background:#5fe6d8}
+ body .astral-panel{left:50%;top:auto;bottom:100px;transform:translateX(-50%);width:220px;max-width:220px;z-index:30;border:0;border-radius:3px;padding:5px 10px;font-size:12px;background:#0a1715d9}.astral-panel small{font-size:10px}
+ body .main-menu-button,body .inventory-launcher,body .records-button{top:14px;min-height:32px;height:32px;padding:5px 10px;font:600 11px 'Barlow Condensed',sans-serif;background:#0a1715db;border:1px solid #9eaa872c;border-radius:3px;z-index:31}
+ body .main-menu-button{right:16px}body .inventory-launcher{right:73px}body .records-button{right:163px}
+ body .world-minimap{top:56px;right:16px;width:170px;z-index:29;border:1px solid #9eaa8726;border-radius:3px}.world-minimap button{min-height:26px;font-size:11px}.world-minimap.is-collapsed{width:70px}
+ body .mission-tracker,body .mission-tracker.is-finished{top:218px;left:auto;right:16px;width:240px;max-width:28vw;z-index:28}
+ body:has(.world-minimap.is-collapsed) .mission-tracker{top:94px}
+ .mission-tracker>button{padding:9px 10px;background:linear-gradient(270deg,#0a1715dc,#0a17157a);border-right:2px solid #b994564d;border-radius:0}.mission-tracker small{font-size:9px;color:#a6b19d}.mission-tracker strong{font:600 15px 'Barlow Condensed',sans-serif}.mission-tracker span{font-size:11px;line-height:1.45}
+ body .expedition-launcher{left:auto;right:16px;top:auto;bottom:16px;transform:none;align-items:stretch;gap:5px;z-index:30}.expedition-launcher button{font:600 11px 'Barlow Condensed',sans-serif;min-height:38px;padding:7px 10px;background:#0a1715e8;border:1px solid #9eaa8738}.expedition-credits{padding:5px 9px;background:#0a1715e8;border-radius:3px}.expedition-credits small{font-size:8px}.expedition-credits strong{font-size:17px}
+ body .coop-chat{left:16px;bottom:122px;top:auto;width:300px}.coop-chat:not(.is-writing):not(.is-expanded)>[data-chat=history]{display:none}.coop-chat:not(.is-writing):not(.is-expanded){width:auto}.coop-chat:not(.is-writing):not(.is-expanded)>[data-chat=open]{font-size:10px;background:#0a1715bd}
+ body.shell-open .mobile-vitals,body.records-open .mobile-vitals,body.shell-open .desktop-hud,body.records-open .desktop-hud{visibility:hidden}
+ body.shell-open .mission-tracker,body.records-open .mission-tracker{visibility:hidden}
+ .mobile-vitals .desktop-echoes{display:inline;float:right;color:#b7c1ad;font-size:10px}
+ .campaign-lab-help{top:44px;left:16px;right:auto;bottom:auto;max-width:380px;font-size:11px;z-index:32}.campaign-lab-help summary{font-size:10px}
+}
+@media(pointer:fine) and (max-width:1100px){
+ body .mobile-vitals{width:185px;left:12px;bottom:12px;padding:8px 10px}.desktop-combat{width:260px;bottom:12px}.desktop-combat>div{padding:8px}.desktop-combat span{font-size:12px}
+ body .expedition-launcher{right:12px;bottom:12px}.expedition-launcher button{padding:5px 7px;font-size:10px}.expedition-credits{padding:5px}.expedition-credits strong{font-size:14px}body .coop-chat{bottom:108px}
+}

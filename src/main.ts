@@ -13,7 +13,7 @@ export const game = new Phaser.Game({
   height: VIEW_HEIGHT,
   parent: 'game',
   backgroundColor: '#102d2c',
-  scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
+  scale: { mode: Phaser.Scale.EXPAND, autoCenter: Phaser.Scale.CENTER_BOTH },
   render: { antialias: true, pixelArt: false },
   scene: [new GameScene(false, false, scene => shell.bind(scene),undefined,progress=>shell.reportLoading(progress))],
 });

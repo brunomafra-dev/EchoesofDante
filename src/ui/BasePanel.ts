@@ -11,7 +11,7 @@ export class BasePanel{
  private dialog=document.createElement('dialog');private bar=document.createElement('div');private tab:Tab='map';private notice='';private frame=0;private previous:boolean[]=[];
  constructor(scene:Phaser.Scene,private read:()=>State,private act:(action:ServiceAction)=>boolean,private travel:(area:keyof typeof REGION_NAMES,resume?:boolean)=>boolean,private potion:()=>boolean,private opened:()=>void,private closed:()=>void){
   this.dialog.className='records-dialog base-dialog';this.dialog.setAttribute('aria-label','Serviços da expedição');
-  this.bar.className='expedition-launcher';this.bar.innerHTML='<span class="expedition-credits" aria-label="Saldo em créditos" title="Seus créditos"><small>CRÉDITOS</small><strong data-credits>0</strong></span><button data-map>MAPA · M</button><button data-potion>POÇÃO · H</button>';
+  this.bar.className='expedition-launcher';this.bar.innerHTML='<span class="expedition-credits" aria-label="Saldo em créditos" title="Seus créditos"><small>CRÉDITOS</small><strong data-credits>0</strong></span><button data-map>ATLAS · M</button><button data-potion>POÇÃO · H</button>';
   this.bar.querySelector('[data-map]')!.addEventListener('click',()=>this.open('map'));this.bar.querySelector('[data-potion]')!.addEventListener('click',()=>{this.potion();this.refreshBar()});
   this.dialog.addEventListener('close',()=>this.closed());document.body.append(this.bar,this.dialog);window.addEventListener('keydown',this.key,true);this.frame=requestAnimationFrame(this.poll);
   scene.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{cancelAnimationFrame(this.frame);window.removeEventListener('keydown',this.key,true);this.bar.remove();this.dialog.remove()});this.refreshBar();

@@ -71,8 +71,10 @@ export class PartyExpedition {
   this.localPlayer=access().player;
   this.bossMirror=new BossMirror(scene);
   this.visitorWave=scene.add.ellipse(0,0,20,120,0x5fe6d8,.6).setDepth(14999).setVisible(false);
-  this.status=scene.add.text(640,42,'',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d5e0c7',stroke:'#07120f',strokeThickness:2})
+  this.status=scene.add.text(640,14,'',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d5e0c7',stroke:'#07120f',strokeThickness:2})
    .setOrigin(.5).setScrollFactor(0).setDepth(22000).setVisible(false);
+  const layout=()=>this.status.setX(scene.scale.gameSize.width/2);layout();scene.scale.on('resize',layout);
+  scene.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>scene.scale.off('resize',layout));
   scene.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.destroy());
  }
  queueInteraction():void{this.queued.interact=true;}
