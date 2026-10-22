@@ -81,3 +81,5 @@ Relatórios e capturas em [qa](qa). Scripts `qa-mobile-controls.mjs`, `qa-mobile
 - Nenhum asset novo, textura adicional ou arte em runtime. O novo container e HUD DOM são destruídos com a cena. A medição curta do rearshot automatizado variou de 41,6 a 52,2 FPS, média 47,5; não usar isso para prometer FPS em aparelhos físicos.
 
 Validar no aparelho real: conforto dos polegares, legibilidade com o chrome do navegador, teclado virtual, folha nativa de compartilhar, fluidez como líder e recepção do convite em outro dispositivo. Esta revisão aguarda esse playtest antes da próxima etapa.
+
+**Validação humana recebida em 22/10/2026:** usuário testou e aprovou a revisão mobile (“Testado e ficou bem bom!”). A pendência geral de aprovação desta manutenção fica encerrada; os limites dos testes automatizados acima continuam registrados. Isso não aprova automaticamente os mapas/assentamento da etapa 5.

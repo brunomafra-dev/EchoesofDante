@@ -18,3 +18,7 @@ Depois de concluir qualquer atualização solicitada pelo usuário:
 4. Confira se o commit local corresponde ao remoto antes de informar que a atualização foi publicada.
 
 Não use `push --force`. Se autenticação ou rede impedirem o envio, explique o bloqueio e mantenha o commit local.
+
+## Contexto e saída do terminal
+
+Piloto do Vibe Coding Toolkit: [avaliação e reprodução](docs/toolkit-evaluation/README.md). Quando existir, use `.local/toolkit-evaluation/rtk/rtk.exe` explicitamente para consultas rotineiras de Git (`git status`, `git log`). Se não existir, use os comandos normais. Para diagnóstico, revisão exata, build e confirmação de publicação, prefira saída completa; `rtk bypass <comando>` também a preserva. Não interpretar redução de bytes como economia total de tokens. Carregue documentos por assunto e trechos relevantes; preserve os planos e gates acima.

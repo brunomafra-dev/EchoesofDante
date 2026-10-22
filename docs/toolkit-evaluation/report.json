@@ -1,0 +1,56 @@
+{
+  "method": "Paired command outputs in UTF-8 bytes, not measured model tokens or subscription usage.",
+  "toolkitRevision": "790a895304e0c08b70a5b215c9d334f1c86b816c",
+  "rtkVersion": "1.0.1 (Apache-2.0 OSS)",
+  "archiveSha256": "0e53e2eca471e15fbd3636e64e6bc0b182cbc278ed0339c80450a2dd03f4cd6b",
+  "gameCommit": "7d9a21bbf7085fbd694dc3b90be38f98543ee744",
+  "checks": [
+    "All 12 commit identifiers remain visible",
+    "Typecheck/build pass and the existing bundle-size warning remains visible",
+    "Real TS2322 error retains file and nonzero exit code",
+    "Unfiltered bypass reproduces the original git output exactly"
+  ],
+  "cases": [
+    {
+      "name": "git-log",
+      "expectedCode": 0,
+      "rawBytes": 2669,
+      "compactBytes": 1203,
+      "reductionPercent": 54.9
+    },
+    {
+      "name": "git-status",
+      "expectedCode": 0,
+      "rawBytes": 253,
+      "compactBytes": 54,
+      "reductionPercent": 78.7
+    },
+    {
+      "name": "typecheck",
+      "expectedCode": 0,
+      "rawBytes": 63,
+      "compactBytes": 15,
+      "reductionPercent": 76.2
+    },
+    {
+      "name": "build",
+      "expectedCode": 0,
+      "rawBytes": 4891,
+      "compactBytes": 4846,
+      "reductionPercent": 0.9
+    },
+    {
+      "name": "typescript-error",
+      "expectedCode": 2,
+      "rawBytes": 126,
+      "compactBytes": 157,
+      "reductionPercent": -24.6
+    }
+  ],
+  "total": {
+    "rawBytes": 8002,
+    "compactBytes": 6275,
+    "reductionPercent": 21.6
+  },
+  "binaryBytes": 15021568
+}
