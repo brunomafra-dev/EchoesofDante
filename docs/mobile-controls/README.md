@@ -1,6 +1,14 @@
-# Mobile — mira, HUD e salas · 0.1.130
+# Mobile — mira, HUD e salas · 0.1.131
 
 Manutenção autorizada em 22/10/2026 após captura e relatos de jogadores no celular. Sem avanço da próxima etapa de conteúdo. **Aprovação técnica não equivale à validação em aparelho real.**
+
+## Complemento de carregamento — 0.1.131
+
+Depois da publicação da 0.1.130, o teste externo encontrou a tela “Iniciando expedição” sem chegar ao filme dentro de 120 segundos. Diagnóstico do loader: nenhum erro JS/HTTP, mas os assets do mundo ainda baixavam (progresso de 45% a 58% na janela observada). A abertura aguardava esse carregamento terminar.
+
+Agora a abertura pode iniciar antes da cena e rodar enquanto os assets são baixados. Se terminar ou for pulada antes do mundo ficar pronto, a tela mostra o percentual real; solo ou criação/entrada na sala continuam automaticamente ao concluir. A conclusão do preload não remonta nem reinicia o vídeo em andamento. Não houve alteração no filme, formatos, mixagem ou assets do mundo. Essa correção melhora o estado de espera, sem prometer downloads instantâneos em conexões lentas.
+
+`qa-mobile-arrival-loading.mjs`: uma textura retida propositalmente, quatro verificações passaram para solo e coop; abertura antes do preload, preservação do DOM do filme, percentual após pular e conexão automática quando liberada. Relatório em `qa/loading`. Essa é a razão do complemento à versão 0.1.130 já publicada.
 
 ## Diagnóstico
 
@@ -51,9 +59,9 @@ Protocolo **14 preservado**: não há migração de save ou servidor, alteraçã
 
 ## Laboratórios protegidos
 
-- [Mira e HUD — Hunter](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&mobile=1&class=hunter&v=0.1.130).
-- [Astral](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&mobile=1&class=astral&v=0.1.130) · [Guerreiro](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&mobile=1&class=warrior&v=0.1.130) · [Domador](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&mobile=1&class=xenobinder&v=0.1.130).
-- [Criar sala pelo celular/tablet](https://echosofdante.vercel.app/campaign-playtest.html?mobile=1&v=0.1.130).
+- [Mira e HUD — Hunter](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&mobile=1&class=hunter&v=0.1.131).
+- [Astral](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&mobile=1&class=astral&v=0.1.131) · [Guerreiro](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&mobile=1&class=warrior&v=0.1.131) · [Domador](https://echosofdante.vercel.app/campaign-playtest.html?missions=1&mobile=1&class=xenobinder&v=0.1.131).
+- [Criar sala pelo celular/tablet](https://echosofdante.vercel.app/campaign-playtest.html?mobile=1&v=0.1.131).
 
 O namespace `dante-mobile-lab` vive somente no sessionStorage da aba, separado dos personagens reais. Convites mantêm o laboratório. Fechar a aba descarta os perfis temporários. O laboratório de combate permite preparar cada classe sem repetir a campanha.
 

@@ -1,5 +1,7 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**Complemento · 0.1.131:** a checagem pública do mobile encontrou assets do mundo ainda baixando enquanto a tela aguardava para iniciar o filme. [Correção do carregamento](mobile-controls/README.md): filme em paralelo ao preload, percentual após pular e continuação automática, com teste de rede retida para solo e coop. Mesmo escopo de manutenção, sem nova etapa de conteúdo.
+
 **Manutenção · 0.1.130:** [mobile: mira, interface e salas](mobile-controls/README.md). Dois polegares independentes, giro sem disparo no cenário, HUD compacto nas bordas, carga visível no botão e criação/convite de sala por toque. Estados explícitos de espera do líder/convidados. Sem nova etapa de conteúdo; campanha, combate, equipe original e protocolo 14 preservados. QA técnico separado da validação no celular/tablet real.
 
 **Manutenção · 0.1.129:** [amostras, materiais e compartilhamento](mission-props/README.md). Caixas genéricas nos locais de investigação substituídas pelo objeto real; materiais passam a representar liga, carapaça e núcleo. Capa pública e metadados no HTML inicial. Recompensas, missões, colisões e protocolo preservados; laboratório reservado e aprovação visual humana pendente. Sem avançar a próxima etapa.

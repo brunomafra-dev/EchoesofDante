@@ -15,7 +15,7 @@ export const game = new Phaser.Game({
   backgroundColor: '#102d2c',
   scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
   render: { antialias: true, pixelArt: false },
-  scene: [new GameScene(false, false, scene => shell.bind(scene))],
+  scene: [new GameScene(false, false, scene => shell.bind(scene),undefined,progress=>shell.reportLoading(progress))],
 });
 game.events.once(Phaser.Core.Events.DESTROY, () => { shell.destroy(); coopSession.disconnect(false); });
 

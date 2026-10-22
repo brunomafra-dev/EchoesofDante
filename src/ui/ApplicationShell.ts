@@ -31,6 +31,7 @@ export class ApplicationShell {
   private page: Page = 'home';
   private settingsReturn: Page = 'home';
   private playing = false;
+  private loadingProgress=0;
   private launching = false;
   private launchOnce = false;
   private entry?: 'create' | 'join';
@@ -82,6 +83,12 @@ export class ApplicationShell {
     window.addEventListener('dante-coop', this.coopChanged);
     this.render(); this.dialog.showModal(); document.body.classList.add('shell-open'); this.pollPad();
     this.mobileDisplay = new MobileDisplay();
+    // The approved film must not wait for every world texture to download.
+    if(this.launchOnce&&hero.campaign&&!hero.campaign.introSeen)this.showPrologue();
+  }
+  reportLoading(progress:number):void{
+    this.loadingProgress=Math.round(Math.max(0,Math.min(1,progress))*100);
+    const label=this.content.querySelector('[data-world-loading]');if(label)label.textContent=`Carregando o mundo · ${this.loadingProgress}%`;
   }
   bind(scene: GameScene): void {
     this.scene = scene; this.applyVolumes();
@@ -94,7 +101,7 @@ export class ApplicationShell {
     }
     scene.pauseForShell();
     if (coopSession.endedMessage) { this.ended(); return; }
-    if (!this.selection) this.render();
+    if (!this.selection&&!this.prologue) this.render();
     if (characterProfiles.active.campaign && !characterProfiles.active.campaign.introSeen && this.launchOnce) this.showPrologue();
     else if (this.entry) { const entry = this.entry; this.entry = undefined; this.show('coop'); void this.connect(entry); }
   }
@@ -171,6 +178,7 @@ export class ApplicationShell {
       this.show('launching');this.status('Não foi possível salvar a chegada. Libere o armazenamento e tente novamente.');
       this.action('TENTAR NOVAMENTE','retry-arrival',()=>this.completeArrival());return;
     }
+    if(!this.scene){this.entry=characterProfiles.active.campaign?.mode==='coop'?(this.pendingInvite?'join':'create'):undefined;this.show('launching');return;}
     if(characterProfiles.active.campaign?.mode==='coop'){this.show('coop');void this.connect(this.pendingInvite?'join':'create');}
     else this.resume();
   }
@@ -228,7 +236,7 @@ export class ApplicationShell {
     const characters = ['characters','coop-characters','create'].includes(this.page);
     this.dialog.classList.toggle('is-character-page', characters); this.dialog.classList.toggle('is-prologue', this.page === 'prologue');
     this.dialog.classList.toggle('is-coop-page',this.page==='coop');
-    if(this.page==='launching'){this.heading('Iniciando expedição', 'Preparando sua chegada a Dante…');return;}
+    if(this.page==='launching'){this.heading('Iniciando expedição', 'Preparando sua chegada a Dante…');const progress=document.createElement('p');progress.dataset.worldLoading='';progress.textContent=`Carregando o mundo · ${this.loadingProgress}%`;progress.setAttribute('role','status');this.content.append(progress);return;}
     if (this.page === 'prologue' && this.prologue) { this.content.append(this.prologue.view); return; }
     if (this.page === 'home') {
       this.heading('Sua próxima descoberta', 'Uma expedição. Um planeta ainda desconhecido.'); this.action('JOGAR','play', () => this.show('play'));
