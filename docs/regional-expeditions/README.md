@@ -60,4 +60,10 @@ Avaliar caminhando e combatendo: clareza dos desvios, leitura das descobertas, d
 
 Reprodução: `node scripts/qa-regional-model.mjs`, `node scripts/qa-regional-expeditions.mjs`, `node scripts/qa-regional-stability.mjs` e `node scripts/qa-expeditions-coop.mjs` (este usa Vite com relay atualizado na porta 5186 por padrão). `QA_BASE`/`QA_OUT` permitem escolher servidor e pasta de resultados. Reiniciar Vite após mudança no relay; os módulos do servidor são carregados no início do processo.
 
-A publicação coordenada é registrada após a verificação pública. Aprovação visual, ritmo e duração humana continuam pendentes.
+### Publicação verificada · 22/10/2026
+
+Implementação `d1b8dc9`, versão 0.1.133, enviada a origin/main. GitHub confirmou a publicação da Vercel. [Smoke público](qa/public/smoke.json): biblioteca, build sem globals DEV, início com portões bloqueados, simulação regional explícita e diário com 12 + 7 relatórios passaram; sem erro JS ou asset ausente.
+
+**Pendente externo:** o mesmo smoke terminou com falha de alinhamento do relay: Render permaneceu no protocolo **14**, revisão `edc583e0aaba2b9ff43209e6723ac0084b188dad`, após doze consultas. Esta entrega requer **15**. Isso impede declarar o cooperativo público funcional, embora o relay atualizado e os dois clientes locais tenham passado. É necessário publicar `d1b8dc9` ou posterior no serviço `echoes-of-dante-rooms`; solicitado ao usuário o estado no painel privado. O teste público completo poderá ser repetido com `node scripts/qa-expeditions-public.mjs` após o deploy. O solo está publicado e disponível no link acima.
+
+Aprovação visual, ritmo e duração humana continuam pendentes. Aguardar esse playtest antes do próximo capítulo.

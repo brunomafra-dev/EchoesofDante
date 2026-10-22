@@ -1,0 +1,24 @@
+{
+  "base": "https://echosofdante.vercel.app",
+  "checkedAt": "2026-10-22T20:17:33.835Z",
+  "method": "Public compiled Vercel build, actual isolated lab confirmation and journal UI; Render health checked separately. No DEV globals.",
+  "checks": [
+    "Published 0.1.133 library and compiled isolated lab; original gates locked on fresh expedition",
+    "Explicit regional preview works publicly; twelve regional and seven original reports remain separate"
+  ],
+  "errors": [],
+  "relay": {
+    "service": "Dante regional co-op",
+    "protocol": 14,
+    "missions": true,
+    "chat": true,
+    "capacity": 4,
+    "uniqueClasses": true,
+    "fixedCampaigns": true,
+    "revision": "edc583e0aaba2b9ff43209e6723ac0084b188dad",
+    "campaign": true,
+    "rooms": 0,
+    "players": 0
+  },
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n14 !== 15\n"
+}
