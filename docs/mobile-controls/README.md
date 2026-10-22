@@ -71,6 +71,8 @@ Relatórios e capturas em [qa](qa). Scripts `qa-mobile-controls.mjs`, `qa-mobile
 
 `npm run typecheck` e `npm run build` passaram; permanece o aviso existente de tamanho do chunk do Phaser. O primeiro script passou 24 verificações sem erros JS/HTTP. O rearshot confirmou dano real, esquiva e gamepad, também sem erros. A suíte compilada confirmou criação da sala pelo telefone, entrada do tablet, mensagens de espera, início pelo líder, chat no lobby/gameplay, entrada de mira/ataque do convidado e criação independente de sala pelo WebKit. Convites do laboratório preservam `mobile=1`; o aviso de espera fica fixo durante a rolagem do lobby.
 
+**Verificação pública da 0.1.131:** [qa/public/report.json](qa/public/report.json) e capturas de telefone/tablet. Sete verificações passaram no endereço oficial com relay real: criação pelo telefone, convite, chat no lobby, ingresso do tablet, início pelo líder, movimento/mira/ataque remoto e chat com nickname. Sem erros JS/HTTP. A checagem da mira aguarda o snapshot do anfitrião em vez de presumir sincronização em 500 ms na WAN. WebKit foi validado separadamente no build compilado local; aparelhos físicos continuam pendentes.
+
 - Quatro classes, oito direções, mover e mirar para lados opostos, deadzone e parada ao soltar.
 - Giro pelo cenário, carga percentual, soltura, cancelamento e limpeza ao abrir/fechar modais.
 - Janelas 844×390, 1600×530, 568×320 e 1024×768; desktop 1280×720 e WebKit mobile.
