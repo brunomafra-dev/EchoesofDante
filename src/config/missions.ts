@@ -1,9 +1,10 @@
 import type {JourneyArea} from '../systems/LocalJourney';
+import {REGIONAL_IDS,REGIONAL_EVIDENCE,REGIONAL_MISSIONS} from './regionalExpeditions';
 
-export const MISSION_IDS=['recon','survival','signal','beyond','water-source','safe-route','shelter'] as const;
+export const MISSION_IDS=['recon','survival','signal','beyond','water-source','safe-route','shelter',...REGIONAL_IDS] as const;
 export type MissionId=typeof MISSION_IDS[number];
 export type MissionNpc='expedition'|'medic'|'smith';
-export const MISSION_EVIDENCE=['clearing','roots','water','biology','echo1','echo2','echo3','passage','first-echo','warden','spring','route-west','route-east','soil','site','shelter-built'] as const;
+export const MISSION_EVIDENCE=['clearing','roots','water','biology','echo1','echo2','echo3','passage','first-echo','warden','spring','route-west','route-east','soil','site','shelter-built',...REGIONAL_EVIDENCE] as const;
 export type MissionEvidence=typeof MISSION_EVIDENCE[number];
 export const NPC_NAMES:Record<MissionNpc,string>={expedition:'Nara',medic:'Dra. Lia',smith:'Ivo'};
 export const NPC_SERVICES:Record<MissionNpc,string>={expedition:'Expedições e cofre',medic:'Enfermaria e suprimentos',smith:'Oficina e fabricação'};
@@ -14,8 +15,8 @@ export const SURVEY_POINTS=[
  {id:'biology',name:'Atividade biológica',x:480,y:735,radius:85,kind:'scan'},
 ] as const;
 export const ANALYSIS_POINTS=SURVEY_POINTS.filter(p=>p.kind==='scan');
-export type MissionDefinition={id:MissionId;title:string;npc:MissionNpc;requires?:MissionId;credits:number;offer:readonly string[];report:readonly string[];goals:readonly {id:MissionEvidence;label:string;area:JourneyArea}[]};
-export const MISSIONS:readonly MissionDefinition[]=[
+export type MissionDefinition={id:MissionId;title:string;npc:MissionNpc;requires?:MissionId;unlock?:MissionEvidence;regional?:boolean;region?:JourneyArea;credits:number;offer:readonly string[];report:readonly string[];goals:readonly {id:MissionEvidence;label:string;area:JourneyArea}[]};
+const STORY_MISSIONS:readonly MissionDefinition[]=[
  {id:'recon',title:'Primeiro reconhecimento',npc:'expedition',credits:20,
   offer:['A nave trouxe quem ainda podíamos salvar. Para receber mais gente, precisamos conhecer o terreno.','Reconheça a clareira e a trilha das raízes. Registre uma rota de ida e volte para me contar o que encontrou.'],
   report:['Temos uma rota inicial e sabemos onde as criaturas circulam. Vou manter os civis junto da nave.','Lia precisa analisar água e atividade biológica antes de planejarmos qualquer permanência.'],
@@ -45,4 +46,5 @@ export const MISSIONS:readonly MissionDefinition[]=[
   report:['O módulo está instalado, com reservatório e um canteiro experimental. Os primeiros colonos chegaram.','Ainda somos poucos. Mas Dante já não é só um ponto no mapa: alguém vai chamar este lugar de casa.'],
   goals:[{id:'soil',label:'Analisar o solo dos terraços',area:'terraces'},{id:'site',label:'Validar o local do abrigo',area:'terraces'},{id:'shelter-built',label:'Instalar o módulo da expedição',area:'terraces'}]},
 ];
+export const MISSIONS:readonly MissionDefinition[]=[...STORY_MISSIONS,...REGIONAL_MISSIONS];
 export const missionById=(id:MissionId):MissionDefinition=>MISSIONS.find(m=>m.id===id)!;

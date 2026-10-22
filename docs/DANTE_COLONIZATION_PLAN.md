@@ -1,5 +1,7 @@
 # Dante — correções visuais, comunicação cooperativa e primeira colonização
 
+**Próxima direção autorizada · 0.1.133:** aprofundar territórios existentes, missões e encontros; nome visível **Caçador estelar**. [Plano de expansão](DANTE_EXPANSION_ROADMAP.md) mantém colonização e progressão original, com 12 relatórios regionais opcionais na primeira entrega. Meta de 30 minutos sujeita a playtest; oito horas exigem novos capítulos futuros. [Teste reservado](regional-expeditions/README.md). Aguardar validação humana antes de outra expansão.
+
 **Manutenção · 0.1.132:** [jornada e HUD de desktop](journey-hud/README.md). A captura do usuário revelou a preparação automática pós-Warden no laboratório do assentamento. Removida a simulação automática, com escolha explícita e aviso persistente; destinos também exigem seus marcos reais. Missões orientam a rota existente. HUD de PC agrupado nas bordas e viewport proporcional sem faixas. Mobile 0.1.131 aprovado pelo usuário em 22/10/2026. Esta revisão aguarda playtest; sem nova etapa de conteúdo.
 
 

@@ -11,7 +11,7 @@ export class CharacterShowcase {
  private disposed=false;private pending=false;private pendingManual=false;private elementIndex=0;
  constructor(readonly classId:CharacterClass,readonly sex:CharacterSex=characterSex(classId)){
   this.canvas.className='showcase-canvas';this.canvas.dataset.representation='complete';this.canvas.setAttribute('role','img');
-  this.canvas.setAttribute('aria-label',({warrior:'Guerreiro Galáctico',hunter:'Star Hunter',astral:'Manipulador Astral',xenobinder:'Domador de feras'})[classId]);
+  this.canvas.setAttribute('aria-label',({warrior:'Guerreiro Galáctico',hunter:'Caçador estelar',astral:'Manipulador Astral',xenobinder:'Domador de feras'})[classId]);
   this.caption.className='showcase-caption';this.caption.textContent='PREPARANDO PRÉVIA';
   this.scene=new CharacterPreviewScene(classId,sex,(phase,caption,frame)=>{
    this.canvas.dataset.demoPhase=phase;this.canvas.dataset.frame=String(frame);this.canvas.dataset.facing=phase==='idle'?'front':'right';this.caption.textContent=caption;

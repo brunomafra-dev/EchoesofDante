@@ -1,0 +1,1128 @@
+{
+  "method": "Chrome DEV, explicit isolated region fixture; actual interaction keys, collisions, navigation grid and finite-resident receipts. Duration is not measured by this accelerated test.",
+  "checks": [
+    "Fresh lab preserves full original campaign and gates; simulation requires explicit click/confirmation",
+    "Twelve regions: three accessible authored investigations, six finite residents, actual E scans, first-kill XP and save receipt in each",
+    "NPC offers multiple reports; actual delivery awards unique 45-credit receipt; journal separates original seven and twelve regional reports"
+  ],
+  "regions": [
+    {
+      "area": "forest",
+      "sites": [
+        {
+          "name": "Vegetação da encosta",
+          "x": 380,
+          "y": 340,
+          "art": "biology",
+          "finding": "As folhas fecham quando o solo vibra. A planta percebe movimento antes de nós.",
+          "id": "exp-forest-1",
+          "mission": "exp-forest",
+          "area": "forest",
+          "radius": 85,
+          "has": true,
+          "near": 2
+        },
+        {
+          "name": "Leito úmido da floresta",
+          "x": 1120,
+          "y": 1250,
+          "art": "water",
+          "finding": "Água retida entre raízes. Uma película viva filtra os sedimentos.",
+          "id": "exp-forest-2",
+          "mission": "exp-forest",
+          "area": "forest",
+          "radius": 85,
+          "has": true,
+          "near": 4
+        },
+        {
+          "name": "Brotos da margem sul",
+          "x": 1900,
+          "y": 1310,
+          "art": "biology",
+          "finding": "Brotos pálidos crescem sob a sombra mineral. A amostra segue selada para Lia.",
+          "id": "exp-forest-3",
+          "mission": "exp-forest",
+          "area": "forest",
+          "radius": 85,
+          "has": true,
+          "near": 6
+        }
+      ],
+      "fps": 53.72783794403076,
+      "navigation": [
+        {
+          "id": "exp-forest-1",
+          "nearest": 8,
+          "clear": true
+        },
+        {
+          "id": "exp-forest-2",
+          "nearest": 7.211102550927979,
+          "clear": true
+        },
+        {
+          "id": "exp-forest-3",
+          "nearest": 10,
+          "clear": true
+        }
+      ],
+      "residents": [
+        {
+          "id": 1900,
+          "kind": "crawler"
+        },
+        {
+          "id": 1901,
+          "kind": "crawler"
+        },
+        {
+          "id": 1902,
+          "kind": "crawler"
+        },
+        {
+          "id": 1903,
+          "kind": "crawler"
+        },
+        {
+          "id": 1904,
+          "kind": "crawler"
+        },
+        {
+          "id": 1905,
+          "kind": "crawler"
+        }
+      ],
+      "firstKill": {
+        "id": 1900,
+        "xp": 15,
+        "receipt": true
+      }
+    },
+    {
+      "area": "cavern",
+      "sites": [
+        {
+          "name": "Condensação da primeira câmara",
+          "x": 730,
+          "y": 650,
+          "art": "water",
+          "finding": "A água pinga de uma parede morna. Há circulação por trás da rocha.",
+          "id": "exp-cavern-1",
+          "mission": "exp-cavern",
+          "area": "cavern",
+          "radius": 85,
+          "has": true,
+          "near": 2
+        },
+        {
+          "name": "Raízes na bacia mineral",
+          "x": 2070,
+          "y": 925,
+          "art": "biology",
+          "finding": "As fibras viraram pedra antes de serem cobertas pelas inscrições.",
+          "id": "exp-cavern-2",
+          "mission": "exp-cavern",
+          "area": "cavern",
+          "radius": 85,
+          "has": true,
+          "near": 4
+        },
+        {
+          "name": "Conduto das profundezas",
+          "x": 3630,
+          "y": 920,
+          "art": "record",
+          "finding": "O conduto foi reparado mais de uma vez. As peças pertencem a épocas diferentes.",
+          "id": "exp-cavern-3",
+          "mission": "exp-cavern",
+          "area": "cavern",
+          "radius": 85,
+          "has": true,
+          "near": 6
+        }
+      ],
+      "fps": 56.35014787106775,
+      "navigation": [
+        {
+          "id": "exp-cavern-1",
+          "nearest": 6.324555320336759,
+          "clear": true
+        },
+        {
+          "id": "exp-cavern-2",
+          "nearest": 7.810249675906656,
+          "clear": true
+        },
+        {
+          "id": "exp-cavern-3",
+          "nearest": 6,
+          "clear": true
+        }
+      ],
+      "residents": [
+        {
+          "id": 1906,
+          "kind": "skitter"
+        },
+        {
+          "id": 1907,
+          "kind": "spitter"
+        },
+        {
+          "id": 1908,
+          "kind": "skitter"
+        },
+        {
+          "id": 1909,
+          "kind": "spitter"
+        },
+        {
+          "id": 1910,
+          "kind": "skitter"
+        },
+        {
+          "id": 1911,
+          "kind": "spitter"
+        }
+      ],
+      "firstKill": {
+        "id": 1906,
+        "xp": 18,
+        "receipt": true
+      }
+    },
+    {
+      "area": "valley",
+      "sites": [
+        {
+          "name": "Abrigo das cristas",
+          "x": 1160,
+          "y": 470,
+          "art": "soil",
+          "finding": "A crista corta o vento. O terreno comporta uma parada curta da caravana.",
+          "id": "exp-valley-1",
+          "mission": "exp-valley",
+          "area": "valley",
+          "radius": 85,
+          "has": true,
+          "near": 4
+        },
+        {
+          "name": "Bacia de descanso",
+          "x": 2990,
+          "y": 1050,
+          "art": "water",
+          "finding": "O solo acumula umidade, mas marcas recentes indicam passagem de criaturas.",
+          "id": "exp-valley-2",
+          "mission": "exp-valley",
+          "area": "valley",
+          "radius": 85,
+          "has": true,
+          "near": 4
+        },
+        {
+          "name": "Margem da passagem oriental",
+          "x": 4740,
+          "y": 470,
+          "art": "record",
+          "finding": "Os sulcos convergem para a passagem. A carga deve ficar no lado alto da margem.",
+          "id": "exp-valley-3",
+          "mission": "exp-valley",
+          "area": "valley",
+          "radius": 85,
+          "has": true,
+          "near": 6
+        }
+      ],
+      "fps": 59.439244362331046,
+      "navigation": [
+        {
+          "id": "exp-valley-1",
+          "nearest": 10,
+          "clear": true
+        },
+        {
+          "id": "exp-valley-2",
+          "nearest": 11.6619037896906,
+          "clear": true
+        },
+        {
+          "id": "exp-valley-3",
+          "nearest": 10.77032961426901,
+          "clear": true
+        }
+      ],
+      "residents": [
+        {
+          "id": 1914,
+          "kind": "carapace"
+        },
+        {
+          "id": 1915,
+          "kind": "thorn"
+        },
+        {
+          "id": 1912,
+          "kind": "carapace"
+        },
+        {
+          "id": 1913,
+          "kind": "thorn"
+        },
+        {
+          "id": 1916,
+          "kind": "carapace"
+        },
+        {
+          "id": 1917,
+          "kind": "thorn"
+        }
+      ],
+      "firstKill": {
+        "id": 1914,
+        "xp": 22,
+        "receipt": true
+      }
+    },
+    {
+      "area": "arid",
+      "sites": [
+        {
+          "name": "Raízes do leito seco",
+          "x": 990,
+          "y": 1090,
+          "art": "biology",
+          "finding": "As fibras armazenam umidade sob uma casca quase impermeável.",
+          "id": "exp-arid-1",
+          "mission": "exp-arid",
+          "area": "arid",
+          "radius": 85,
+          "has": true,
+          "near": 4
+        },
+        {
+          "name": "Depósito salino",
+          "x": 2820,
+          "y": 490,
+          "art": "mineral",
+          "finding": "A crosta concentra sais irritantes. Uma película clara protege a pedra abaixo.",
+          "id": "exp-arid-2",
+          "mission": "exp-arid",
+          "area": "arid",
+          "radius": 85,
+          "has": true,
+          "near": 4
+        },
+        {
+          "name": "Sombra do paredão distante",
+          "x": 4470,
+          "y": 1090,
+          "art": "soil",
+          "finding": "Mesmo ao meio do dia, a base do paredão permanece mais fria que a trilha.",
+          "id": "exp-arid-3",
+          "mission": "exp-arid",
+          "area": "arid",
+          "radius": 85,
+          "has": true,
+          "near": 6
+        }
+      ],
+      "fps": 58.25222764857252,
+      "navigation": [
+        {
+          "id": "exp-arid-1",
+          "nearest": 12.649110640673518,
+          "clear": true
+        },
+        {
+          "id": "exp-arid-2",
+          "nearest": 7.211102550927979,
+          "clear": true
+        },
+        {
+          "id": "exp-arid-3",
+          "nearest": 12.649110640673518,
+          "clear": true
+        }
+      ],
+      "residents": [
+        {
+          "id": 1920,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1921,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1918,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1919,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1922,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1923,
+          "kind": "glassSpitter"
+        }
+      ],
+      "firstKill": {
+        "id": 1920,
+        "xp": 25,
+        "receipt": true
+      }
+    },
+    {
+      "area": "dunes",
+      "sites": [
+        {
+          "name": "Encosta das areias claras",
+          "x": 750,
+          "y": 470,
+          "art": "soil",
+          "finding": "A camada superior desliza, mas a base de areia compacta sustenta a encosta.",
+          "id": "exp-dunes-1",
+          "mission": "exp-dunes",
+          "area": "dunes",
+          "radius": 85,
+          "has": true,
+          "near": 2
+        },
+        {
+          "name": "Sedimento profundo",
+          "x": 1530,
+          "y": 1820,
+          "art": "mineral",
+          "finding": "Fragmentos antigos seguem alinhados. A duna cresceu sobre uma superfície construída.",
+          "id": "exp-dunes-2",
+          "mission": "exp-dunes",
+          "area": "dunes",
+          "radius": 85,
+          "has": true,
+          "near": 4
+        },
+        {
+          "name": "Nervuras da depressão",
+          "x": 2780,
+          "y": 1510,
+          "art": "record",
+          "finding": "O pulso atravessa a areia em intervalos irregulares. Alguma coisa responde abaixo.",
+          "id": "exp-dunes-3",
+          "mission": "exp-dunes",
+          "area": "dunes",
+          "radius": 85,
+          "has": true,
+          "near": 6
+        }
+      ],
+      "fps": 58.798602039992524,
+      "navigation": [
+        {
+          "id": "exp-dunes-1",
+          "nearest": 12.165525060596437,
+          "clear": true
+        },
+        {
+          "id": "exp-dunes-2",
+          "nearest": 11.6619037896906,
+          "clear": true
+        },
+        {
+          "id": "exp-dunes-3",
+          "nearest": 8.94427190999916,
+          "clear": true
+        }
+      ],
+      "residents": [
+        {
+          "id": 1924,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1925,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1926,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1927,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1928,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1929,
+          "kind": "glassSpitter"
+        }
+      ],
+      "firstKill": {
+        "id": 1924,
+        "xp": 28,
+        "receipt": true
+      }
+    },
+    {
+      "area": "frost",
+      "sites": [
+        {
+          "name": "Olho de água morna",
+          "x": 690,
+          "y": 470,
+          "art": "water",
+          "finding": "Uma corrente estreita atravessa o gelo. A temperatura muda com o pulso subterrâneo.",
+          "id": "exp-frost-1",
+          "mission": "exp-frost",
+          "area": "frost",
+          "radius": 85,
+          "has": true,
+          "near": 3
+        },
+        {
+          "name": "Líquens da geada",
+          "x": 1480,
+          "y": 1340,
+          "art": "biology",
+          "finding": "Os líquens crescem voltados para fissuras mornas. Há vida sob a crosta congelada.",
+          "id": "exp-frost-2",
+          "mission": "exp-frost",
+          "area": "frost",
+          "radius": 85,
+          "has": true,
+          "near": 4
+        },
+        {
+          "name": "Encosta exposta",
+          "x": 2530,
+          "y": 1300,
+          "art": "soil",
+          "finding": "O vento levou a neve fina. A equipe precisará de ancoragem para trabalhar aqui.",
+          "id": "exp-frost-3",
+          "mission": "exp-frost",
+          "area": "frost",
+          "radius": 85,
+          "has": true,
+          "near": 6
+        }
+      ],
+      "fps": 59.51309509388058,
+      "navigation": [
+        {
+          "id": "exp-frost-1",
+          "nearest": 8.94427190999916,
+          "clear": true
+        },
+        {
+          "id": "exp-frost-2",
+          "nearest": 10.19803902718557,
+          "clear": true
+        },
+        {
+          "id": "exp-frost-3",
+          "nearest": 4.47213595499958,
+          "clear": true
+        }
+      ],
+      "residents": [
+        {
+          "id": 1933,
+          "kind": "frostSpitter"
+        },
+        {
+          "id": 1930,
+          "kind": "frostPouncer"
+        },
+        {
+          "id": 1931,
+          "kind": "frostSpitter"
+        },
+        {
+          "id": 1932,
+          "kind": "frostPouncer"
+        },
+        {
+          "id": 1934,
+          "kind": "frostPouncer"
+        },
+        {
+          "id": 1935,
+          "kind": "frostSpitter"
+        }
+      ],
+      "firstKill": {
+        "id": 1933,
+        "xp": 30,
+        "receipt": true
+      }
+    },
+    {
+      "area": "icecave",
+      "sites": [
+        {
+          "name": "Poça lateral do degelo",
+          "x": 710,
+          "y": 1320,
+          "art": "water",
+          "finding": "A poça sobe e desce sem receber água do teto. Existe uma ligação sob o piso.",
+          "id": "exp-icecave-1",
+          "mission": "exp-icecave",
+          "area": "icecave",
+          "radius": 85,
+          "has": true,
+          "near": 4
+        },
+        {
+          "name": "Coluna sob a geada",
+          "x": 1580,
+          "y": 470,
+          "art": "record",
+          "finding": "A coluna foi encaixada na rocha. O gelo chegou depois da construção.",
+          "id": "exp-icecave-2",
+          "mission": "exp-icecave",
+          "area": "icecave",
+          "radius": 85,
+          "has": true,
+          "near": 4
+        },
+        {
+          "name": "Margem do canal oculto",
+          "x": 2600,
+          "y": 1340,
+          "art": "water",
+          "finding": "O canal segue na direção do ninho. Uma vibração grave percorre a água.",
+          "id": "exp-icecave-3",
+          "mission": "exp-icecave",
+          "area": "icecave",
+          "radius": 85,
+          "has": true,
+          "near": 6
+        }
+      ],
+      "fps": 59.29019685630834,
+      "navigation": [
+        {
+          "id": "exp-icecave-1",
+          "nearest": 7.211102550927979,
+          "clear": true
+        },
+        {
+          "id": "exp-icecave-2",
+          "nearest": 10.77032961426901,
+          "clear": true
+        },
+        {
+          "id": "exp-icecave-3",
+          "nearest": 2.8284271247461903,
+          "clear": true
+        }
+      ],
+      "residents": [
+        {
+          "id": 1938,
+          "kind": "iceCarapace"
+        },
+        {
+          "id": 1939,
+          "kind": "frostSpitter"
+        },
+        {
+          "id": 1936,
+          "kind": "iceCarapace"
+        },
+        {
+          "id": 1937,
+          "kind": "frostSpitter"
+        },
+        {
+          "id": 1940,
+          "kind": "iceCarapace"
+        },
+        {
+          "id": 1941,
+          "kind": "frostSpitter"
+        }
+      ],
+      "firstKill": {
+        "id": 1938,
+        "xp": 34,
+        "receipt": true
+      }
+    },
+    {
+      "area": "cinder",
+      "sites": [
+        {
+          "name": "Saída de vapor da costa",
+          "x": 640,
+          "y": 470,
+          "art": "water",
+          "finding": "O vapor condensa antes de tocar o chão. As leituras seguem seladas para análise.",
+          "id": "exp-cinder-1",
+          "mission": "exp-cinder",
+          "area": "cinder",
+          "radius": 85,
+          "has": true,
+          "near": 4
+        },
+        {
+          "name": "Cinza consolidada",
+          "x": 1480,
+          "y": 1240,
+          "art": "soil",
+          "finding": "A crosta protege um solo quente e poroso. É preciso medir gases antes de escavar.",
+          "id": "exp-cinder-2",
+          "mission": "exp-cinder",
+          "area": "cinder",
+          "radius": 85,
+          "has": true,
+          "near": 4
+        },
+        {
+          "name": "Leito térmico lateral",
+          "x": 2640,
+          "y": 490,
+          "art": "mineral",
+          "finding": "O calor segue um veio mineral. Uma troca indireta evitaria perfurar o conduto.",
+          "id": "exp-cinder-3",
+          "mission": "exp-cinder",
+          "area": "cinder",
+          "radius": 85,
+          "has": true,
+          "near": 6
+        }
+      ],
+      "fps": 59.344061008329234,
+      "navigation": [
+        {
+          "id": "exp-cinder-1",
+          "nearest": 8.246211251235321,
+          "clear": true
+        },
+        {
+          "id": "exp-cinder-2",
+          "nearest": 6.324555320336759,
+          "clear": true
+        },
+        {
+          "id": "exp-cinder-3",
+          "nearest": 15.620499351813312,
+          "clear": true
+        }
+      ],
+      "residents": [
+        {
+          "id": 1944,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1945,
+          "kind": "fumarole"
+        },
+        {
+          "id": 1942,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1943,
+          "kind": "fumarole"
+        },
+        {
+          "id": 1946,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1947,
+          "kind": "fumarole"
+        }
+      ],
+      "firstKill": {
+        "id": 1944,
+        "xp": 32,
+        "receipt": true
+      }
+    },
+    {
+      "area": "obsidian",
+      "sites": [
+        {
+          "name": "Parede de vidro escuro",
+          "x": 710,
+          "y": 470,
+          "art": "mineral",
+          "finding": "Camadas de vidro cobriram as inscrições sem apagar seu relevo.",
+          "id": "exp-obsidian-1",
+          "mission": "exp-obsidian",
+          "area": "obsidian",
+          "radius": 85,
+          "has": true,
+          "near": 4
+        },
+        {
+          "name": "Canal da margem inferior",
+          "x": 1730,
+          "y": 1220,
+          "art": "record",
+          "finding": "O canal muda de seção a intervalos regulares. Essas mudanças parecem deliberadas.",
+          "id": "exp-obsidian-2",
+          "mission": "exp-obsidian",
+          "area": "obsidian",
+          "radius": 85,
+          "has": true,
+          "near": 4
+        },
+        {
+          "name": "Divisor de pulsos",
+          "x": 2830,
+          "y": 490,
+          "art": "record",
+          "finding": "Parte do pulso se afasta das forjas. A outra direção fica fora do alcance dos sensores.",
+          "id": "exp-obsidian-3",
+          "mission": "exp-obsidian",
+          "area": "obsidian",
+          "radius": 85,
+          "has": true,
+          "near": 6
+        }
+      ],
+      "fps": 59.359184686296864,
+      "navigation": [
+        {
+          "id": "exp-obsidian-1",
+          "nearest": 8,
+          "clear": true
+        },
+        {
+          "id": "exp-obsidian-2",
+          "nearest": 12.165525060596437,
+          "clear": true
+        },
+        {
+          "id": "exp-obsidian-3",
+          "nearest": 14.422205101855958,
+          "clear": true
+        }
+      ],
+      "residents": [
+        {
+          "id": 1950,
+          "kind": "slagback"
+        },
+        {
+          "id": 1951,
+          "kind": "fumarole"
+        },
+        {
+          "id": 1948,
+          "kind": "slagback"
+        },
+        {
+          "id": 1949,
+          "kind": "fumarole"
+        },
+        {
+          "id": 1952,
+          "kind": "slagback"
+        },
+        {
+          "id": 1953,
+          "kind": "fumarole"
+        }
+      ],
+      "firstKill": {
+        "id": 1950,
+        "xp": 35,
+        "receipt": true
+      }
+    },
+    {
+      "area": "caldera",
+      "sites": [
+        {
+          "name": "Margem fria da entrada",
+          "x": 570,
+          "y": 500,
+          "art": "soil",
+          "finding": "A superfície parece fria, mas retém calor por baixo. O trabalho exige isolamento.",
+          "id": "exp-caldera-1",
+          "mission": "exp-caldera",
+          "area": "caldera",
+          "radius": 85,
+          "has": true,
+          "near": 4
+        },
+        {
+          "name": "Depósito térmico inferior",
+          "x": 1010,
+          "y": 1240,
+          "art": "mineral",
+          "finding": "O depósito guarda calor depois que o pulso cessa. Não há contato direto com lava.",
+          "id": "exp-caldera-2",
+          "mission": "exp-caldera",
+          "area": "caldera",
+          "radius": 85,
+          "has": true,
+          "near": 6
+        },
+        {
+          "name": "Conduto antes do limiar",
+          "x": 1780,
+          "y": 460,
+          "art": "record",
+          "finding": "O conduto muda de direção junto da parede. O limiar responde a uma presença além dela.",
+          "id": "exp-caldera-3",
+          "mission": "exp-caldera",
+          "area": "caldera",
+          "radius": 85,
+          "has": true,
+          "near": 6
+        }
+      ],
+      "fps": 59.89610489167735,
+      "navigation": [
+        {
+          "id": "exp-caldera-1",
+          "nearest": 11.6619037896906,
+          "clear": true
+        },
+        {
+          "id": "exp-caldera-2",
+          "nearest": 10.19803902718557,
+          "clear": true
+        },
+        {
+          "id": "exp-caldera-3",
+          "nearest": 2,
+          "clear": true
+        }
+      ],
+      "residents": [
+        {
+          "id": 1958,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1959,
+          "kind": "slagback"
+        },
+        {
+          "id": 1954,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1955,
+          "kind": "slagback"
+        },
+        {
+          "id": 1956,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1957,
+          "kind": "slagback"
+        }
+      ],
+      "firstKill": {
+        "id": 1958,
+        "xp": 36,
+        "receipt": true
+      }
+    },
+    {
+      "area": "springs",
+      "sites": [
+        {
+          "name": "Margem baixa da bacia",
+          "x": 670,
+          "y": 1190,
+          "art": "water",
+          "finding": "Água lenta deixa sedimento nas pedras. A margem muda depois de cada chuva.",
+          "id": "exp-springs-1",
+          "mission": "exp-springs",
+          "area": "springs",
+          "radius": 85,
+          "has": true,
+          "near": 2
+        },
+        {
+          "name": "Vegetação filtrante",
+          "x": 1390,
+          "y": 440,
+          "art": "biology",
+          "finding": "As raízes prendem material fino antes que a água alcance a nascente.",
+          "id": "exp-springs-2",
+          "mission": "exp-springs",
+          "area": "springs",
+          "radius": 85,
+          "has": true,
+          "near": 4
+        },
+        {
+          "name": "Afluente da margem sul",
+          "x": 2229.5641450403614,
+          "y": 1177.245869835683,
+          "art": "water",
+          "finding": "O afluente sustenta pequenas formas de vida. A captação deverá respeitar esse fluxo.",
+          "id": "exp-springs-3",
+          "mission": "exp-springs",
+          "area": "springs",
+          "radius": 85,
+          "has": true,
+          "near": 6
+        }
+      ],
+      "fps": 59.60204936203753,
+      "navigation": [
+        {
+          "id": "exp-springs-1",
+          "nearest": 12.041594578792294,
+          "clear": true
+        },
+        {
+          "id": "exp-springs-2",
+          "nearest": 6.0827625302982185,
+          "clear": true
+        },
+        {
+          "id": "exp-springs-3",
+          "nearest": 0.9417918726009713,
+          "clear": true
+        }
+      ],
+      "residents": [
+        {
+          "id": 1960,
+          "kind": "bankGrazer"
+        },
+        {
+          "id": 1961,
+          "kind": "reedSpitter"
+        },
+        {
+          "id": 1962,
+          "kind": "bankGrazer"
+        },
+        {
+          "id": 1963,
+          "kind": "reedSpitter"
+        },
+        {
+          "id": 1964,
+          "kind": "bankGrazer"
+        },
+        {
+          "id": 1965,
+          "kind": "reedSpitter"
+        }
+      ],
+      "firstKill": {
+        "id": 1960,
+        "xp": 23,
+        "receipt": true
+      }
+    },
+    {
+      "area": "terraces",
+      "sites": [
+        {
+          "name": "Terraço alto",
+          "x": 700,
+          "y": 440,
+          "art": "soil",
+          "finding": "O solo drena bem, mas precisa de proteção contra o vento.",
+          "id": "exp-terraces-1",
+          "mission": "exp-terraces",
+          "area": "terraces",
+          "radius": 85,
+          "has": true,
+          "near": 2
+        },
+        {
+          "name": "Camadas do solo exposto",
+          "x": 1410,
+          "y": 1165,
+          "art": "soil",
+          "finding": "Camadas antigas guardam matéria orgânica. A compatibilidade com sementes humanas segue incerta.",
+          "id": "exp-terraces-2",
+          "mission": "exp-terraces",
+          "area": "terraces",
+          "radius": 85,
+          "has": true,
+          "near": 4
+        },
+        {
+          "name": "Faixa de proteção natural",
+          "x": 2230,
+          "y": 470,
+          "art": "biology",
+          "finding": "Vegetação e rocha formam uma barreira baixa. A trilha deve preservar essa faixa.",
+          "id": "exp-terraces-3",
+          "mission": "exp-terraces",
+          "area": "terraces",
+          "radius": 85,
+          "has": true,
+          "near": 6
+        }
+      ],
+      "fps": 58.2024438201139,
+      "navigation": [
+        {
+          "id": "exp-terraces-1",
+          "nearest": 9.219544457292887,
+          "clear": true
+        },
+        {
+          "id": "exp-terraces-2",
+          "nearest": 11.40175425099138,
+          "clear": true
+        },
+        {
+          "id": "exp-terraces-3",
+          "nearest": 12.041594578792294,
+          "clear": true
+        }
+      ],
+      "residents": [
+        {
+          "id": 1966,
+          "kind": "bankGrazer"
+        },
+        {
+          "id": 1967,
+          "kind": "reedSpitter"
+        },
+        {
+          "id": 1968,
+          "kind": "bankGrazer"
+        },
+        {
+          "id": 1969,
+          "kind": "reedSpitter"
+        },
+        {
+          "id": 1970,
+          "kind": "bankGrazer"
+        },
+        {
+          "id": 1971,
+          "kind": "reedSpitter"
+        }
+      ],
+      "firstKill": {
+        "id": 1966,
+        "xp": 25,
+        "receipt": true
+      }
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

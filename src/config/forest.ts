@@ -6,6 +6,8 @@ export const FOREST_PATHS = [
   { width: 230, points: [FOREST_ENTRY, { x: 500, y: 1070 }, { x: 760, y: 930 }, { x: 1100, y: 760 }, { x: 1300, y: 590 }, { x: 1500, y: 470 }, { x: 1760, y: 280 }] },
   { width: 170, points: [{ x: 760, y: 930 }, { x: 550, y: 740 }, { x: 460, y: 530 }] },
   { width: 190, points: [{ x: 1100, y: 760 }, { x: 1410, y: 880 }, { x: 1770, y: 1010 }] },
+  { width: 140, points: [{ x: 550, y: 740 }, { x: 405, y: 550 }, { x: 380, y: 340 }] },
+  { width: 150, points: [{ x: 760, y: 930 }, { x: 875, y: 1195 }, { x: 1120, y: 1250 }, { x: 1520, y: 1320 }, { x: 1900, y: 1310 }, { x: 1770, y: 1010 }] },
 ];
 export const FOREST_CLEARINGS = [
   { x: 400, y: 1210, rx: 220, ry: 150 },
@@ -14,6 +16,9 @@ export const FOREST_CLEARINGS = [
   { x: 1500, y: 470, rx: 240, ry: 190 },
   { x: 1760, y: 1010, rx: 230, ry: 180 },
   { x: 1760, y: 280, rx: 170, ry: 125 },
+  { x: 380, y: 340, rx: 165, ry: 115 },
+  { x: 1120, y: 1250, rx: 175, ry: 110 },
+  { x: 1900, y: 1310, rx: 170, ry: 105 },
 ];
 export const FOREST_SPAWNS: Vec2[] = [
   { x: 800, y: 900 }, { x: 870, y: 830 },

@@ -15,7 +15,7 @@ const pilot=style==='reinforced';
 const weaponParam=params.get('weapon');
 const weaponLook:WeaponStyle=weaponParam==='starter'||weaponParam==='current'||weaponParam==='advanced'?weaponParam:style==='none'?'starter':style==='basic'?'current':'advanced';
 const identity=document.querySelector<HTMLElement>('[data-current-identity]');
-if(identity)identity.textContent=`Você está testando: ${{warrior:'Guerreiro',hunter:'Star Hunter',astral:'Manipulador Astral',xenobinder:'Domador de feras'}[classId]} · ${sex==='female'?'Feminino':'Masculino'} · ${style==='none'?'Roupa inicial':style==='basic'?'Carapaça básica':'Carapaça reforçada'}. O capacete pode ser retirado abaixo para comparar o rosto.`;
+if(identity)identity.textContent=`Você está testando: ${{warrior:'Guerreiro',hunter:'Caçador estelar',astral:'Manipulador Astral',xenobinder:'Domador de feras'}[classId]} · ${sex==='female'?'Feminino':'Masculino'} · ${style==='none'?'Roupa inicial':style==='basic'?'Carapaça básica':'Carapaça reforçada'}. O capacete pode ser retirado abaixo para comparar o rosto.`;
 for(const link of Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-choice]'))){
   const next=new URLSearchParams(params);next.set(link.dataset.choice!,link.dataset.value!);if(link.dataset.choice==='kit')for(const part of PROTECTION_PARTS)next.delete(part);
   link.href=`${location.pathname}?${next}`;

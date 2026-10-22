@@ -1,0 +1,9 @@
+{
+  "checks": [
+    "Nineteen unique missions, 36 unique investigations, 72 stable bounded residents",
+    "Discoveries before acceptance persist, never complete a report or pay a reward automatically",
+    "Original seven rewards remain 325; boss prerequisites unlock optional reports; 915 regional credits and unique reload-safe receipts",
+    "Unknown IDs rejected; finite-resident XP survives reload without duplicate reward"
+  ],
+  "passed": true
+}

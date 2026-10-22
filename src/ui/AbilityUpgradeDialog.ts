@@ -52,7 +52,7 @@ export class AbilityUpgradeDialog {
     this.heading = this.dialog.querySelector('#ability-upgrade-title')!;
     this.points = this.dialog.querySelector('.upgrade-points')!;
     const options = this.dialog.querySelector('.ability-upgrade-options')!;
-    if (hunter) this.dialog.querySelector('header small')!.textContent = 'DOMÍNIO DO STAR HUNTER';
+    if (hunter) this.dialog.querySelector('header small')!.textContent = 'DOMÍNIO DO CAÇADOR ESTELAR';
     if(astral)this.dialog.querySelector('header small')!.textContent='DOMÍNIO DO MANIPULADOR ASTRAL';
     if(xenobinder)this.dialog.querySelector('header small')!.textContent='DOMÍNIO DO VINCULADOR DE DANTE';
     for (const upgrade of this.upgrades) {

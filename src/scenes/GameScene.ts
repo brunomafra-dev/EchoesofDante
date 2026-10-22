@@ -22,11 +22,13 @@ import {LandingBase} from '../systems/LandingBase';
 import {BasePanel} from '../ui/BasePanel';
 import {Missions,validMissionRewards,type MissionAction} from '../systems/Missions';
 import {regionUnlocked} from '../systems/RegionAccess';
+import {RegionalExpeditions} from '../systems/RegionalExpeditions';
+import {REGIONAL_IDS,REGIONAL_SITES,REGIONAL_RESIDENTS} from '../config/regionalExpeditions';
 import {SURVEY_POINTS,ANALYSIS_POINTS,NPC_NAMES,missionById,type MissionId,type MissionNpc} from '../config/missions';
 import {MissionPanel} from '../ui/MissionPanel';
 import {MissionWorld} from '../ui/MissionWorld';
 import {transact,type ServiceAction} from '../systems/BaseEconomy';
-import {validEconomy,MATERIAL_NAMES,EQUIPMENT_DROP_INTERVAL,type EconomySnapshot} from '../config/economy';
+import {validEconomy,MATERIAL_NAMES,REGION_NAMES,EQUIPMENT_DROP_INTERVAL,type EconomySnapshot} from '../config/economy';
 import {safeExpeditionPosition,validExpeditionReturn,type ExpeditionReturn} from '../systems/ExpeditionReturn';
 import {ResourceDrops,type ResourceDrop} from '../systems/ResourceDrops';
 import { coopSession, type PartyWorld } from '../network/CoopSession';
@@ -124,6 +126,9 @@ export class GameScene extends Phaser.Scene {
   private readonly missions=new Missions();
   private missionRewards:MissionId[]=[];
   private missionUi?:MissionPanel;
+  private regional?:RegionalExpeditions;
+  private regionalResidents=new Set<number>();
+  private regionalSpawnTick=0;
   private missionWorld?:MissionWorld;
   private missionNotice='';
   private missionTick=0;
@@ -341,6 +346,7 @@ export class GameScene extends Phaser.Scene {
       this.game.events.once(Phaser.Core.Events.DESTROY, () => this.sounds.destroy());
     }
     this.recordsTimeOffset = 0;this.partyPause=undefined;this.modalPaused=false;this.guestCheckpoint='';this.partyResidents.clear();this.guestUpgradeScheduled=false;
+    this.regional=undefined;this.regionalResidents.clear();this.regionalSpawnTick=0;
     this.coopModal=false;this.inventoryUnpaused=false;this.serviceUnpaused=false;this.missionUi=undefined;this.missionWorld=undefined;
     this.input.enabled=true;if(this.input.keyboard)this.input.keyboard.enabled=true;
     // Phaser pauses timers/tweens, but its absolute clock jumps on resume.
@@ -649,6 +655,7 @@ export class GameScene extends Phaser.Scene {
     this.basePanel=new BasePanel(this,()=>({economy:{...this.economy,visited:this.unlockedDestinations()},equipment:this.equipment.snapshot(),area:this.area,hp:this.player.hp,maxHp:this.player.maxHp,classId:this.classId,returnAvailable:this.canReturnBase(),returnArea:this.expeditionReturn?.area,canLead:coopSession.role!=='guest',missionArea:this.missionArea(),missionTitle:this.missions.current?missionById(this.missions.current).title:undefined}),a=>this.serviceAction(a),(area,resume)=>this.baseTravel(area,resume),()=>this.usePotion(),()=>{this.serviceUnpaused=coopSession.connected;if(!this.serviceUnpaused)this.pauseForModal();else {this.controls.cancelForRecords();this.charge.stop();this.hunter?.clear();this.astral?.clear();this.xeno?.clear();}},()=>{if(!this.serviceUnpaused)this.resumeFromModal();else this.controls.cancelForRecords();this.serviceUnpaused=false});
     if(!this.qualityReference&&!this.glacierPlaytest){
       this.missionTick=0;this.missionWorld=new MissionWorld(this,this.area);
+      this.regional=new RegionalExpeditions(this,this.area,()=>({bounds:this.movementBounds,obstacles:this.arena.obstacles}));
       this.missionUi=new MissionPanel(this,()=>({missions:this.missions,routeHint:this.missionRouteHint(),notice:coopSession.role==='guest'?coopSession.missionNotice:this.missionNotice,pending:coopSession.role==='guest'&&coopSession.missionPending}),npc=>this.canTalkNpc(npc),(action,id)=>{
         if(coopSession.role==='guest')return coopSession.requestMission(action,id);
         const result=this.missionAction('host',action,id);this.missionNotice=result.message;return result.ok;
@@ -668,6 +675,7 @@ export class GameScene extends Phaser.Scene {
     if(!this.inputModalOpen)this.controls.update(this.player.position);
     if(this.area==='base'&&!this.inputModalOpen&&(BASE.services.some(s=>distance(this.player.position,s)<100)||coopSession.role!=='guest'&&distance(this.player.position,BASE.exit)<105)&&this.controls.interactPressed){const service=BASE.services.find(s=>distance(this.player.position,s)<100);if(service){if(this.missionUi)this.missionUi.openNpc(service.id);else this.basePanel.open(service.id);return;}if(coopSession.role!=='guest'&&distance(this.player.position,BASE.exit)<105){this.transitionArea('forest');return;}}
     this.missionWorld?.update(this.missions,this.player.position);
+    this.regional?.update(this.missions,this.player.position,time);
     this.colony?.setSettled(this.missions.has('shelter-built'));
     if(this.missionUi)this.hud.setMissionMode(!!this.missions.current);
     if(coopSession.role==='guest'&&this.area==='base'){const near=BASE.services.some(s=>distance(this.player.position,s)<100);if(near){this.controls.setInteractAvailable(true,'CONVERSAR');this.hud.setDiscoveryPrompt(true,'CONVERSAR')}}
@@ -686,6 +694,7 @@ export class GameScene extends Phaser.Scene {
     this.updateMissions(time);
     for(const request of coopSession.takeMissionRequests()){const result=this.missionAction(request.id,request.action,request.mission);coopSession.answerMission(request,result.ok,result.message);}
     this.spawnPartyResidents();
+    this.spawnRegionalResidents(time);
     const ownerKey=coopSession.guests.map(m=>m.id).join(':');
     if(ownerKey!==this.dropOwnersKey){this.dropOwnersKey=ownerKey;const owners=new Set(['host',...coopSession.guests.map(m=>m.id)]);this.resources.retainOwners(owners);this.loot.retainOwners(owners);}
     this.referenceImpacts?.update(time);
@@ -715,7 +724,8 @@ export class GameScene extends Phaser.Scene {
         this.colony?.setSettled(true);
         for(const p of [this.player,...(this.party?.players??[])])if(this.arena.obstacles.some(o=>distance(p.position,o)<p.radius+o.radius))Object.assign(p.position,safeExpeditionPosition(p.position,p.radius,this.arena.obstacles,this.movementBounds)??{x:2210,y:1030});
         this.hud.showDiscovery('O PRIMEIRO ABRIGO\nReservatório e canteiro experimental instalados.');
-      }else this.hud.showDiscovery(missionSite.id==='water'?'ÁGUA SUPERFICIAL\nLEITURA REGISTRADA':missionSite.id==='biology'?'ATIVIDADE BIOLÓGICA\nLEITURA REGISTRADA':`${missionSite.name.toLocaleUpperCase('pt-BR')}\nLEITURA REGISTRADA`);
+      }else if('finding' in missionSite)this.hud.showDiscovery(missionSite.name.toLocaleUpperCase('pt-BR')+'\n'+missionSite.finding);
+      else this.hud.showDiscovery(missionSite.id==='water'?'ÁGUA SUPERFICIAL\nLEITURA REGISTRADA':missionSite.id==='biology'?'ATIVIDADE BIOLÓGICA\nLEITURA REGISTRADA':`${missionSite.name.toLocaleUpperCase('pt-BR')}\nLEITURA REGISTRADA`);
       this.sounds.discovery();this.saveProgress();interact=false;
     }
     const nearbyEcho = this.echoSites.find(site => site.canInvestigate(interactionPosition, interactionDead));
@@ -2069,6 +2079,19 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
+  private spawnRegionalResidents(now:number):void{
+    if(!this.regional||now<this.regionalSpawnTick||this.player.isDead||this.bossActive())return;
+    this.regionalSpawnTick=now+200;
+    for(const h of REGIONAL_RESIDENTS){
+      if(h.area!==this.area||this.regionalResidents.has(h.id)||this.progression.hasDefeated(h.id)||!this.explorationNear(h,560))continue;
+      if(!this.regional.sites.some(s=>s.id===h.site))continue;
+      const b=this.movementBounds;
+      const p=safeExpeditionPosition(h,30,this.arena.obstacles,b);if(!p)continue;
+      const enemy:Enemy=h.kind==='crawler'?new HollowCrawler(this,p.x,p.y):h.kind==='carapace'||h.kind==='thorn'||h.kind==='iceCarapace'||h.kind==='bankGrazer'||h.kind==='reedSpitter'?new ValleyCreature(this,h.kind,p.x,p.y):h.kind==='emberHound'||h.kind==='fumarole'||h.kind==='slagback'?new VolcanicCreature(this,h.kind,p.x,p.y):new DanteCreature(this,h.kind as import('../config/expansion').CreatureKind,p.x,p.y);
+      this.regionalResidents.add(h.id);tuneEnemy(enemy,this.area,this.campaignDifficulty);this.enemies.push(enemy);this.enemySpecies.set(enemy,h.kind);this.hollowSpawnIds.set(enemy,h.id);
+    }
+  }
+
   private spawnSiroccoResident(habitat: { id: number; kind: SiroccoKind | FrostKind | VolcanicKind | 'iceCarapace'; x: number; y: number }): boolean {
     if (this.siroccoResidents.has(habitat.id)) return false;
     const readyAt = this.siroccoHabitatCooldowns.get(habitat.id);
@@ -2104,6 +2127,18 @@ export class GameScene extends Phaser.Scene {
   }
 
   // Explicit simulated reports, restricted to the isolated mission laboratory.
+  seedRegionalPlaytest(area:JourneyArea):boolean{
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!new URLSearchParams(location.search).has('depth')||coopSession.role!=='offline'||this.transitioning||this.inputModalOpen)return false;
+    const assignment=REGIONAL_SITES.find(s=>s.area===area);if(!assignment)return false;
+    for(const key of JOURNEY_FLAGS)this[key]=true;
+    this.progression.restore({...this.progression.snapshot(),xp:1500,echoes:['northern-ruin','mineral-signal','unknown-trace'],sourceLocated:true,passageOpen:true,bossRewards:['warden','soterrado','vesper','titan']});
+    const core=['recon','survival','signal','beyond','water-source','safe-route','shelter'] as const;
+    this.missions.restore({schema:1,accepted:[...core,...REGIONAL_IDS],completed:[...core],evidence:[...core.flatMap(id=>missionById(id).goals.map(g=>g.id)),'after-soterrado','after-vesper']});
+    this.missions.tracked=assignment.mission;this.missionRewards=[...core];
+    this.economy.visited=Object.keys(REGION_NAMES) as JourneyArea[];this.economy.credits=300;this.economy.potions=8;
+    for(const upgrade of ['chargePower','dashDuration','chargeWidth'] as const)for(let i=0;i<3;i++)this.progression.investUpgrade(upgrade);
+    this.transferHp=this.characterMaxHp;this.expeditionReturn=undefined;this.area=area;this.saveProgress();this.scene.restart();return true;
+  }
   seedMissionPlaytest(id:MissionId):boolean{
     if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!new URLSearchParams(location.search).has('missions')||this.inputModalOpen||this.transitioning||coopSession.role==='guest'||!this.player||this.player.isDead)return false;
     if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return false;
@@ -2139,7 +2174,8 @@ export class GameScene extends Phaser.Scene {
   }
 
   private missionSite(position:Vec2,dead:boolean){
-    if(dead)return;
+    if(dead||this.bossActive())return;
+    const regional=this.regional?.at(position);if(regional&&!this.missions.has(regional.id))return regional;
     if(this.area==='forest'&&this.missions.status('survival')==='active')return ANALYSIS_POINTS.find(p=>!this.missions.has(p.id)&&distance(position,p)<p.radius);
     return COLONY_SITES.find(p=>p.area===this.area&&this.missions.status(p.mission)==='active'&&!this.missions.has(p.id)&&distance(position,p)<p.radius&&(p.id!=='shelter-built'||this.missions.has('soil')&&this.missions.has('site')));
   }
@@ -2156,6 +2192,8 @@ export class GameScene extends Phaser.Scene {
     if(this.qualityReference||this.glacierPlaytest||coopSession.role==='guest')return;
     if(now<this.missionTick)return;this.missionTick=now+200;
     const before=this.missions.version;
+    if(this.soterradoDefeated)this.missions.record('after-soterrado');
+    if(this.vesperDefeated)this.missions.record('after-vesper');
     this.missions.observe({echoes:this.progression.echoes.size,passage:this.progression.passageOpen,firstEcho:this.firstEchoSeen,warden:this.wardenDefeated});
     if(this.area==='forest')for(const point of SURVEY_POINTS)if(point.kind==='walk'&&[this.player,...(this.party?.players??[])].some(p=>!p.isDead&&distance(p.position,point)<point.radius))this.missions.record(point.id);
     if(before!==this.missions.version)this.saveProgress();
@@ -2166,6 +2204,11 @@ export class GameScene extends Phaser.Scene {
     const status=this.missions.status(id),d=missionById(id);
     if(status==='ready'||status==='available')return 'base';
     const area=d.goals.find(g=>!this.missions.has(g.id))?.area;
+    if(d.regional&&area){
+      const route:JourneyArea[]=area==='springs'||area==='terraces'?['forest','cavern','warden','valley','springs','terraces']:['forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest','cinder','obsidian','caldera'];
+      const target=route.indexOf(area),next=route.slice(0,target+1).findIndex(a=>!this.unlockedRegion(a)||!this.economy.visited.includes(a));
+      return next<0?area:route[Math.max(0,next-1)];
+    }
     if(area==='warden'&&!this.wardenGateOpen)return this.progression.passageOpen?'cavern':'forest';
     if(area==='cavern'&&!this.progression.passageOpen)return 'forest';
     if(area==='springs'||area==='terraces')return !this.progression.passageOpen?'forest':!this.wardenGateOpen?'cavern':!this.valleyVisited?'warden':!this.springsVisited?'valley':area==='terraces'&&!this.terracesVisited?'springs':area;
@@ -2175,6 +2218,12 @@ export class GameScene extends Phaser.Scene {
   private missionRouteHint():string|undefined{
     const id=this.missions.current;if(!id||this.missions.status(id)!=='active')return;
     if(this.area==='base')return 'Saia pela Floresta ou retome sua rota descoberta no atlas.';
+    const d=missionById(id);
+    if(d.regional&&this.area!==d.region){
+      const next=this.missionArea();
+      const steps:Partial<Record<JourneyArea,string>>={forest:'Investigue os Ecos e o mecanismo; continue pela fissura.',cavern:'Siga as cavernas, o Primeiro Eco e o limiar original.',warden:'Conclua o encontro com o Warden e investigue a passagem.',valley:'Explore a passagem oriental do Vale antes de continuar.',arid:'Investigue o sinal do Siroco e a passagem para as dunas.',dunes:'Investigue as ruínas e a descida da depressão.',sandpit:'Conclua o encontro com o Soterrado e investigue o registro.',frost:'Investigue o registro da geada para acessar as galerias.',icecave:'Investigue o mecanismo do degelo antes de acessar o ninho.',icenest:'Conclua o encontro com Vésper e investigue o registro térmico.',cinder:'Leia as inscrições da costa antes de entrar na garganta.',obsidian:'Investigue o registro da garganta para abrir a caldeira.'};
+      return next===d.region?`Retome sua rota para ${REGION_NAMES[d.region!]}.`:next?steps[next]:undefined;
+    }
     if(id==='beyond'||['water-source','safe-route','shelter'].includes(id)){
       if(!this.progression.passageOpen)return 'Investigue os 3 Ecos e abra o mecanismo da fissura.';
       if(this.area==='forest')return 'Atravesse a fissura para continuar pelas cavernas.';
@@ -2193,6 +2242,8 @@ export class GameScene extends Phaser.Scene {
       if(this.area==='base')return {...BASE.services.find(s=>s.id===d.npc)!,radius:100,name:NPC_NAMES[d.npc],instruction:status==='ready'?'Entregue seu relatório.':'Converse para receber a missão.',interactionLabel:'CONVERSAR',action:'investigate'};
       return {x:this.returnStation.x-90,y:this.returnStation.y,radius:65,name:'Retorno à base',instruction:`M abre o mapa para retornar a ${NPC_NAMES[d.npc]}.`,interactionLabel:'RETORNAR',action:'enter'};
     }
+    const regionalSite=this.regional?.sites.find(s=>s.mission===id&&!this.missions.has(s.id));
+    if(regionalSite)return {...regionalSite,instruction:'Analise o local e registre a descoberta.',interactionLabel:'ANALISAR',action:'investigate'};
     const colonyMission=['water-source','safe-route','shelter'].includes(id);
     if(this.area==='base')return {...BASE.exit,radius:105,name:'Saída para a Floresta',instruction:colonyMission?'Retome sua rota descoberta pelo atlas ou siga pela Floresta.':'A expedição continua na Floresta.',interactionLabel:'SAIR',action:'enter'};
     if(colonyMission){

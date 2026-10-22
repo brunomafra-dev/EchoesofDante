@@ -1,0 +1,351 @@
+{
+  "method": "Chrome DEV, real UI/keys; explicit positioning for conversations and deliberate invalid visited-list injection. Region gate matrix via bundled production function. Physical devices pending.",
+  "checks": [
+    "All campaign destinations retain prerequisite gates; bosses and world records cannot be replaced by visited flags",
+    "Isolated journey starts with original Warden undefeated, zero Echoes/XP and no passage",
+    "Atlas locks unseen regions; authoritative travel rejects even injected destination names",
+    "Accepting Nara mission changes only its journal state, with no boss, gate or XP shortcut",
+    "Five desktop layouts: canvas fills 16:9, wide and 4:3 viewports; all eight HUD clusters fit without overlap",
+    "Reload keeps real exploration state, protects real saves and three restarts do not duplicate HUD or resize listeners",
+    "Reload does not invent cavern or Warden discovery merely because the preceding passage was opened",
+    "Settlement link no longer auto-defeats Warden; simulation requires confirmation and persists a conspicuous label across reload"
+  ],
+  "errors": [],
+  "1280x720": {
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 1280,
+      "height": 720
+    },
+    "hud": [
+      {
+        "name": ".mobile-vitals",
+        "x": 16,
+        "y": 610.40625,
+        "width": 218,
+        "height": 93.59375
+      },
+      {
+        "name": ".desktop-combat",
+        "x": 490,
+        "y": 638,
+        "width": 300,
+        "height": 66
+      },
+      {
+        "name": ".expedition-launcher",
+        "x": 1052.15625,
+        "y": 666,
+        "width": 211.84375,
+        "height": 38
+      },
+      {
+        "name": ".main-menu-button",
+        "x": 1220.453125,
+        "y": 14,
+        "width": 43.546875,
+        "height": 32
+      },
+      {
+        "name": ".inventory-launcher",
+        "x": 1142.109375,
+        "y": 14,
+        "width": 64.890625,
+        "height": 32
+      },
+      {
+        "name": ".records-button",
+        "x": 1048.46875,
+        "y": 14,
+        "width": 68.53125,
+        "height": 32
+      },
+      {
+        "name": ".world-minimap",
+        "x": 1094,
+        "y": 56,
+        "width": 170,
+        "height": 148.609375
+      },
+      {
+        "name": ".mission-tracker",
+        "x": 1024,
+        "y": 218,
+        "width": 240,
+        "height": 90.78125
+      }
+    ]
+  },
+  "1366x768": {
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 1366,
+      "height": 768
+    },
+    "hud": [
+      {
+        "name": ".mobile-vitals",
+        "x": 16,
+        "y": 658.40625,
+        "width": 218,
+        "height": 93.59375
+      },
+      {
+        "name": ".desktop-combat",
+        "x": 533,
+        "y": 686,
+        "width": 300,
+        "height": 66
+      },
+      {
+        "name": ".expedition-launcher",
+        "x": 1138.15625,
+        "y": 714,
+        "width": 211.84375,
+        "height": 38
+      },
+      {
+        "name": ".main-menu-button",
+        "x": 1306.453125,
+        "y": 14,
+        "width": 43.546875,
+        "height": 32
+      },
+      {
+        "name": ".inventory-launcher",
+        "x": 1228.109375,
+        "y": 14,
+        "width": 64.890625,
+        "height": 32
+      },
+      {
+        "name": ".records-button",
+        "x": 1134.46875,
+        "y": 14,
+        "width": 68.53125,
+        "height": 32
+      },
+      {
+        "name": ".world-minimap",
+        "x": 1180,
+        "y": 56,
+        "width": 170,
+        "height": 148.609375
+      },
+      {
+        "name": ".mission-tracker",
+        "x": 1110,
+        "y": 218,
+        "width": 240,
+        "height": 90.78125
+      }
+    ]
+  },
+  "1920x1080": {
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 1920,
+      "height": 1080
+    },
+    "hud": [
+      {
+        "name": ".mobile-vitals",
+        "x": 16,
+        "y": 970.40625,
+        "width": 218,
+        "height": 93.59375
+      },
+      {
+        "name": ".desktop-combat",
+        "x": 810,
+        "y": 998,
+        "width": 300,
+        "height": 66
+      },
+      {
+        "name": ".expedition-launcher",
+        "x": 1692.15625,
+        "y": 1026,
+        "width": 211.84375,
+        "height": 38
+      },
+      {
+        "name": ".main-menu-button",
+        "x": 1860.453125,
+        "y": 14,
+        "width": 43.546875,
+        "height": 32
+      },
+      {
+        "name": ".inventory-launcher",
+        "x": 1782.109375,
+        "y": 14,
+        "width": 64.890625,
+        "height": 32
+      },
+      {
+        "name": ".records-button",
+        "x": 1688.46875,
+        "y": 14,
+        "width": 68.53125,
+        "height": 32
+      },
+      {
+        "name": ".world-minimap",
+        "x": 1734,
+        "y": 56,
+        "width": 170,
+        "height": 148.609375
+      },
+      {
+        "name": ".mission-tracker",
+        "x": 1664,
+        "y": 218,
+        "width": 240,
+        "height": 90.78125
+      }
+    ]
+  },
+  "1912x886": {
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 1912,
+      "height": 886
+    },
+    "hud": [
+      {
+        "name": ".mobile-vitals",
+        "x": 16,
+        "y": 776.40625,
+        "width": 218,
+        "height": 93.59375
+      },
+      {
+        "name": ".desktop-combat",
+        "x": 806,
+        "y": 804,
+        "width": 300,
+        "height": 66
+      },
+      {
+        "name": ".expedition-launcher",
+        "x": 1684.15625,
+        "y": 832,
+        "width": 211.84375,
+        "height": 38
+      },
+      {
+        "name": ".main-menu-button",
+        "x": 1852.453125,
+        "y": 14,
+        "width": 43.546875,
+        "height": 32
+      },
+      {
+        "name": ".inventory-launcher",
+        "x": 1774.109375,
+        "y": 14,
+        "width": 64.890625,
+        "height": 32
+      },
+      {
+        "name": ".records-button",
+        "x": 1680.46875,
+        "y": 14,
+        "width": 68.53125,
+        "height": 32
+      },
+      {
+        "name": ".world-minimap",
+        "x": 1726,
+        "y": 56,
+        "width": 170,
+        "height": 148.609375
+      },
+      {
+        "name": ".mission-tracker",
+        "x": 1656,
+        "y": 218,
+        "width": 240,
+        "height": 90.78125
+      }
+    ]
+  },
+  "1024x768": {
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 1024,
+      "height": 768
+    },
+    "hud": [
+      {
+        "name": ".mobile-vitals",
+        "x": 12,
+        "y": 670.40625,
+        "width": 185,
+        "height": 85.59375
+      },
+      {
+        "name": ".desktop-combat",
+        "x": 382,
+        "y": 696,
+        "width": 260,
+        "height": 60
+      },
+      {
+        "name": ".expedition-launcher",
+        "x": 829.546875,
+        "y": 718,
+        "width": 182.453125,
+        "height": 38
+      },
+      {
+        "name": ".main-menu-button",
+        "x": 964.453125,
+        "y": 14,
+        "width": 43.546875,
+        "height": 32
+      },
+      {
+        "name": ".inventory-launcher",
+        "x": 886.109375,
+        "y": 14,
+        "width": 64.890625,
+        "height": 32
+      },
+      {
+        "name": ".records-button",
+        "x": 792.46875,
+        "y": 14,
+        "width": 68.53125,
+        "height": 32
+      },
+      {
+        "name": ".world-minimap",
+        "x": 838,
+        "y": 56,
+        "width": 170,
+        "height": 148.609375
+      },
+      {
+        "name": ".mission-tracker",
+        "x": 768,
+        "y": 218,
+        "width": 240,
+        "height": 90.78125
+      }
+    ]
+  },
+  "counts": {
+    "vitals": 1,
+    "hud": 1,
+    "tracker": 1,
+    "resize": 5
+  },
+  "passed": true
+}

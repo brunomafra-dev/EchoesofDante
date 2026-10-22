@@ -13,7 +13,7 @@ const profile=(c,i)=>({characterId:c.memberId,name:'QA '+i,classId:['warrior','h
 try{
  for(const size of [2,3,4]){
   const cs=campaign(size,['easy','normal','hard'][size-2]),ps=cs.map(profile),team=await Promise.all(cs.map(client)),h=team[0];
-  h.send({type:'create',profile:ps[0],campaign:cs[0],area:'forest'});const host=await h.next('joined');assert.equal(host.protocol,14);assert.equal(host.campaign.size,size);assert.equal(host.campaign.running,false);
+  h.send({type:'create',profile:ps[0],campaign:cs[0],area:'forest'});const host=await h.next('joined');assert.equal(host.protocol,15);assert.equal(host.campaign.size,size);assert.equal(host.campaign.running,false);
   for(let i=1;i<size;i++){team[i].send({type:'join',profile:ps[i],campaign:cs[i],code:host.code});await team[i].next('joined');}
   const world=(xp,sequence)=>h.send({type:'world',epoch:0,sequence,world:{area:'forest',enemies:[],players:Object.fromEntries(cs.map(c=>[c.memberId,{potionUsed:0}])),progression:{xp}}});
   world(120,1);await sleep(80);assert.ok(!team[1].inbox.some(m=>m.type==='world'));

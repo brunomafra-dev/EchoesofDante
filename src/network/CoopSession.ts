@@ -126,7 +126,7 @@ export class CoopSession {
    if(this.socket!==ws)return;
    let m;try{m=JSON.parse(event.data);}catch{return;}
    if(m.type==='joined'&&(m.role==='host'||m.role==='guest')){
-    if(m.protocol!==14){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização das missões da equipe. Seus personagens permanecem preservados.');reject(new Error(this.message));return;}
+    if(m.protocol!==15){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização das missões da equipe. Seus personagens permanecem preservados.');reject(new Error(this.message));return;}
     joined=true;clearTimeout(this.timeout);this.role=m.role;this.connected=true;this.token=m.token;this.code=m.code;this.epoch=m.epoch;
     this.id=m.id;this.acknowledgedCrew='';this.setCampaign(m.campaign);this.setRoster(m.members);this.input={...NO_INPUT};this.inputAt=0;this.world=undefined;
     this.area=m.area;this.travelling=false;

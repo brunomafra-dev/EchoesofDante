@@ -15,7 +15,7 @@ export function validMissions(raw:unknown):MissionSnapshot{
 }
 export function validMissionRewards(raw:unknown):MissionId[]{return Array.isArray(raw)?[...new Set(raw.filter((id):id is MissionId=>MISSION_IDS.includes(id)))]:[];}
 
-// Four authored assignments; the existing discovery/combat systems own the facts.
+// Story reports and regional expeditions share the existing journal/receipts.
 export class Missions{
  private state=validMissions(undefined);
  tracked?:MissionId;
@@ -26,6 +26,7 @@ export class Missions{
   const d=missionById(id);
   if(this.state.completed.includes(id))return 'completed';
   if(d.requires&&!this.state.completed.includes(d.requires))return 'locked';
+  if(d.unlock&&!this.has(d.unlock))return 'locked';
   if(!this.state.accepted.includes(id))return 'available';
   return d.goals.every(g=>this.has(g.id))?'ready':'active';
  }

@@ -1,6 +1,6 @@
 export type PlayableClass = 'warrior' | 'hunter' | 'astral' | 'xenobinder';
 export const PLAYABLE_CLASSES = ['warrior','hunter','astral','xenobinder'] as const;
-export const CLASS_NAMES = { warrior: 'Guerreiro Galáctico', hunter: 'Star Hunter', astral: 'Manipulador Astral',xenobinder:'Domador de feras' } as const;
+export const CLASS_NAMES = { warrior: 'Guerreiro Galáctico', hunter: 'Caçador estelar', astral: 'Manipulador Astral',xenobinder:'Domador de feras' } as const;
 // Playable identities share input actions, each with its own combat kit.
 export const CLASS_REGISTRY = {
   warrior: { name: CLASS_NAMES.warrior, playable: true, role: 'CORPO A CORPO · RESISTÊNCIA' },

@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {chromium} from 'playwright';
+import {mkdir,writeFile} from 'node:fs/promises';
+const base=process.env.QA_BASE??'http://localhost:5185',out=process.env.QA_OUT??'docs/regional-expeditions/qa';await mkdir(out,{recursive:true});
+const browser=await chromium.launch({channel:'chrome'}),p=await browser.newPage({viewport:{width:1280,height:720}}),report={method:'Chrome DEV; isolated forest fixture and explicit positions. Three repeated scene recreations, static layers/textures/listeners, idle FPS after warmup with no screenshots.',cycles:[],errors:[]};p.on('pageerror',e=>report.errors.push(e.message));
+const ready=()=>p.waitForFunction(()=>{const s=window.__danteGame?.scene.getScene('Game');return s?.regional&&!s.transitioning&&!s.scene.isPaused()});
+async function populate(){await ready();await p.waitForTimeout(500);for(const point of [{x:380,y:340},{x:1120,y:1250},{x:1900,y:1310},{x:1080,y:700}]){await p.evaluate(point=>{const s=window.__danteGame.scene.getScene('Game');Object.assign(s.player.position,point);s.player.invulnerableUntil=Infinity},point);await p.waitForTimeout(300)}await p.waitForTimeout(1800);return p.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');return{sites:s.regional.sites.length,baked:s.children.list.filter(o=>o.type==='RenderTexture').length,textures:Object.keys(s.textures.list).length,touch:document.querySelectorAll('.touch-controls').length,tracker:document.querySelectorAll('.mission-tracker').length,resize:s.scale.listenerCount('resize'),shutdown:s.events.listenerCount('shutdown'),regional:s.regionalResidents.size}})}
+try{
+ await p.goto(base+'/campaign-playtest.html?missions=1&depth=1');await ready();await p.evaluate(()=>window.__danteGame.scene.getScene('Game').seedRegionalPlaytest('forest'));await ready();
+ for(let i=0;i<4;i++){if(i){await p.evaluate(()=>window.__danteGame.scene.getScene('Game').scene.restart());await ready()}report.cycles.push(await populate())}
+ for(const state of report.cycles)assert.deepEqual(state,report.cycles[0]);assert.equal(report.cycles[0].sites,3);assert.equal(report.cycles[0].regional,6);
+ report.fps=await p.evaluate(async()=>{const samples=[];await new Promise(r=>setTimeout(r,1800));for(let i=0;i<12;i++){await new Promise(r=>setTimeout(r,250));samples.push(window.__danteGame.loop.actualFps)}return{samples,mean:samples.reduce((a,b)=>a+b)/samples.length}});
+ // Real player death/respawn preserves a regional scan without rebuilding extra layers.
+ await p.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');s.missions.record('exp-forest-1');s.saveProgress();s.player.invulnerableUntil=0;s.player.health.current=0});await p.waitForTimeout(500);await p.keyboard.down('r');await p.waitForTimeout(150);await p.keyboard.up('r');await ready();await p.waitForTimeout(400);assert.ok(await p.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');return !s.player.isDead&&s.missions.has('exp-forest-1')}));
+ assert.deepEqual(report.errors,[]);report.passed=true;console.log(JSON.stringify(report));
+}catch(e){report.failure=String(e);throw e}finally{await browser.close();await writeFile(out+'/stability.json',JSON.stringify(report,null,2))}

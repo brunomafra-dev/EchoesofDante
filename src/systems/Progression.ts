@@ -73,6 +73,7 @@ export class Progression {
     this.rewardedHollows.add(spawnIndex);
     return { awarded: true, leveledUp: this.award(xp) };
   }
+  hasDefeated(spawnIndex:number):boolean{return this.rewardedHollows.has(spawnIndex);}
 
   defeatRenewableResident(xp:number=PROGRESSION.hollowXp): boolean { return this.award(xp); }
 

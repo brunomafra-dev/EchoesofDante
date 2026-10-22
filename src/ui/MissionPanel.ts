@@ -12,6 +12,7 @@ export class MissionPanel{
  private dialog=document.createElement('dialog');
  private npc?:MissionNpc;
  private selected:MissionId='recon';
+ private regionalTab=false;
  private key='';private trackerKey='';private frame=0;private previous:boolean[]=[];
  private waiting?:{id:MissionId;action:MissionAction;until:number};
  private destroyed=false;
@@ -34,6 +35,7 @@ export class MissionPanel{
   this.npc=npc;const m=this.read().missions;
   this.selected=npc?MISSIONS.find(d=>d.npc===npc&&['ready','available','active'].includes(m.status(d.id)))?.id
     ??[...MISSIONS].reverse().find(d=>d.npc===npc&&m.status(d.id)==='completed')?.id??MISSIONS.find(d=>d.npc===npc)!.id:m.current??'recon';
+  this.regionalTab=!!missionById(this.selected).regional;
   this.key='';this.previous=this.pad();this.render();this.opened();this.dialog.showModal();this.dialog.querySelector<HTMLButtonElement>('[data-close]')?.focus();
  }
  private button(parent:Element,text:string,run:()=>void,id:string,disabled=false):HTMLButtonElement{
@@ -47,16 +49,20 @@ export class MissionPanel{
   const header=document.createElement('header'),title=document.createElement('div'),small=document.createElement('small'),h=document.createElement('h1');
   small.textContent=isNpc?'EXPEDIÇÃO DANTE-01':'DIÁRIO DA EXPEDIÇÃO';h.textContent=isNpc?NPC_NAMES[this.npc!]:'Missões de Dante';title.append(small,h);header.append(title);
   this.button(header,'VOLTAR',()=>this.dialog.close(),'close').dataset.close='';this.dialog.append(header);
-  if(!isNpc){
+  if(!isNpc){const tabs=document.createElement('nav');tabs.className='mission-tabs';tabs.setAttribute('aria-label','Tipo de missão');
+   for(const [regional,label]of [[false,'CAMPANHA'],[true,'EXPEDIÇÕES REGIONAIS']] as const){const b=this.button(tabs,label,()=>{this.regionalTab=regional;this.selected=MISSIONS.find(def=>!!def.regional===regional&&['active','ready','available'].includes(m.status(def.id)))?.id??MISSIONS.find(def=>!!def.regional===regional)!.id;this.render();},regional?'tab-regional':'tab-story');b.setAttribute('aria-pressed',String(this.regionalTab===regional));}this.dialog.append(tabs);
+  }
+  const options=isNpc?MISSIONS.filter(def=>def.npc===this.npc&&m.status(def.id)!=='locked'&&m.status(def.id)!=='completed'):MISSIONS.filter(def=>!!def.regional===this.regionalTab);
+  if(!isNpc||options.length>1){
    const nav=document.createElement('nav');nav.className='mission-list';nav.setAttribute('aria-label','Missões');
-   for(const def of MISSIONS){const s=m.status(def.id);const b=this.button(nav,`${s==='completed'?'✓ ':s==='ready'?'◆ ':''}${def.title} · ${STATUS[s]}`,()=>{this.selected=def.id;this.render();},'select-'+def.id);b.setAttribute('aria-pressed',String(def.id===this.selected));}
+   for(const def of options){const s=m.status(def.id);const b=this.button(nav,`${s==='completed'?'✓ ':s==='ready'?'◆ ':''}${def.title} · ${def.regional?'Expedição regional · ':''}${STATUS[s]}`,()=>{this.selected=def.id;this.render();},'select-'+def.id);b.setAttribute('aria-pressed',String(def.id===this.selected));}
    this.dialog.append(nav);
   }
   const content=document.createElement('section');content.className='mission-content';content.dataset.mission=d.id;
   const name=document.createElement('h2');name.textContent=d.title;content.append(name);
   const subtitle=document.createElement('p');subtitle.className='mission-state';subtitle.textContent=`${NPC_NAMES[d.npc]} · ${STATUS[status]}`;content.append(subtitle);
   if(status==='locked'){
-   const p=document.createElement('p');p.textContent=`Entregue o relatório de “${missionById(d.requires!).title}” para continuar.`;content.append(p);
+   const p=document.createElement('p');p.textContent=d.requires&&m.status(d.requires)!=='completed'?`Entregue o relatório de “${missionById(d.requires).title}” para continuar.`:d.unlock==='after-soterrado'?'Investigue a bacia sob as dunas e conclua o encontro com o Soterrado.':'Conclua a travessia glacial e o encontro com Vésper para receber este relatório.';content.append(p);
   }else{
    for(const line of status==='completed'||isNpc&&status==='ready'?d.report:d.offer){const p=document.createElement('p');p.textContent=line;content.append(p);}
    const goals=document.createElement('ul');goals.className='mission-goals';

@@ -1,0 +1,523 @@
+[
+  {
+    "id": "exp-forest",
+    "area": "forest",
+    "npc": "medic",
+    "requires": "recon",
+    "credits": 45,
+    "title": "Remédios entre as raízes",
+    "offer": [
+      "As reservas da enfermaria não sustentam uma colônia. Precisamos estudar o que cresce longe da trilha principal.",
+      "Registre a vegetação da encosta, o leito úmido e os brotos da margem sul. Não consuma nenhuma amostra."
+    ],
+    "report": [
+      "As três leituras indicam que a mesma planta muda conforme a umidade. Já podemos separar uma linhagem para testes.",
+      "Nenhuma amostra foi liberada para uso humano. Mas a enfermaria tem uma direção de pesquisa."
+    ],
+    "kinds": [
+      "crawler",
+      "crawler"
+    ],
+    "sites": [
+      {
+        "name": "Vegetação da encosta",
+        "x": 380,
+        "y": 340,
+        "art": "biology",
+        "finding": "As folhas fecham quando o solo vibra. A planta percebe movimento antes de nós."
+      },
+      {
+        "name": "Leito úmido da floresta",
+        "x": 1120,
+        "y": 1250,
+        "art": "water",
+        "finding": "Água retida entre raízes. Uma película viva filtra os sedimentos."
+      },
+      {
+        "name": "Brotos da margem sul",
+        "x": 1900,
+        "y": 1310,
+        "art": "biology",
+        "finding": "Brotos pálidos crescem sob a sombra mineral. A amostra segue selada para Lia."
+      }
+    ]
+  },
+  {
+    "id": "exp-cavern",
+    "area": "cavern",
+    "npc": "smith",
+    "requires": "signal",
+    "credits": 60,
+    "title": "O que corre sob a pedra",
+    "offer": [
+      "A fissura não explica toda a caverna. Quero leituras nas câmaras laterais, antes de ligar qualquer equipamento da expedição.",
+      "Procure condensação, raízes fossilizadas e um conduto soterrado. Siga as passagens que os Ecos já abriram."
+    ],
+    "report": [
+      "Os veios se comunicam por diferenças de pressão. A estrutura não estava conduzindo apenas energia.",
+      "O conduto continua abaixo da área que conseguimos medir. Não vamos perfurar sem entender sua função."
+    ],
+    "kinds": [
+      "skitter",
+      "spitter"
+    ],
+    "sites": [
+      {
+        "name": "Condensação da primeira câmara",
+        "x": 730,
+        "y": 650,
+        "art": "water",
+        "finding": "A água pinga de uma parede morna. Há circulação por trás da rocha."
+      },
+      {
+        "name": "Raízes na bacia mineral",
+        "x": 2070,
+        "y": 925,
+        "art": "biology",
+        "finding": "As fibras viraram pedra antes de serem cobertas pelas inscrições."
+      },
+      {
+        "name": "Conduto das profundezas",
+        "x": 3630,
+        "y": 920,
+        "art": "record",
+        "finding": "O conduto foi reparado mais de uma vez. As peças pertencem a épocas diferentes."
+      }
+    ]
+  },
+  {
+    "id": "exp-valley",
+    "area": "valley",
+    "npc": "expedition",
+    "requires": "beyond",
+    "credits": 65,
+    "title": "Uma caravana atravessa o vale",
+    "offer": [
+      "Exploradores atravessam depressa. Famílias, reservatórios e carga médica precisam de outra rota.",
+      "Registre abrigo do vento, um ponto de descanso e a margem da passagem oriental. A travessia original continua sendo necessária."
+    ],
+    "report": [
+      "Temos três pontos de apoio para a caravana. O caminho é mais longo, mas oferece lugares onde parar.",
+      "Vou manter as famílias na base até Lia e Ivo concluírem os preparativos."
+    ],
+    "kinds": [
+      "carapace",
+      "thorn"
+    ],
+    "sites": [
+      {
+        "name": "Abrigo das cristas",
+        "x": 1160,
+        "y": 470,
+        "art": "soil",
+        "finding": "A crista corta o vento. O terreno comporta uma parada curta da caravana."
+      },
+      {
+        "name": "Bacia de descanso",
+        "x": 2990,
+        "y": 1050,
+        "art": "water",
+        "finding": "O solo acumula umidade, mas marcas recentes indicam passagem de criaturas."
+      },
+      {
+        "name": "Margem da passagem oriental",
+        "x": 4740,
+        "y": 470,
+        "art": "record",
+        "finding": "Os sulcos convergem para a passagem. A carga deve ficar no lado alto da margem."
+      }
+    ]
+  },
+  {
+    "id": "exp-arid",
+    "area": "arid",
+    "npc": "medic",
+    "requires": "beyond",
+    "credits": 70,
+    "title": "Sobreviver ao Siroco",
+    "offer": [
+      "O calor não é o único risco do Siroco. Água, poeira e exposição decidem quanto tempo a equipe consegue trabalhar.",
+      "Compare as raízes secas, o depósito salino e uma sombra na margem distante. Descubra a região pela rota habitual."
+    ],
+    "report": [
+      "O depósito não serve para consumo. A umidade das raízes, porém, pode orientar futuras estações de coleta.",
+      "A equipe terá de trabalhar por turnos e descansar nas formações mais baixas."
+    ],
+    "kinds": [
+      "dunePouncer",
+      "glassSpitter"
+    ],
+    "sites": [
+      {
+        "name": "Raízes do leito seco",
+        "x": 990,
+        "y": 1090,
+        "art": "biology",
+        "finding": "As fibras armazenam umidade sob uma casca quase impermeável."
+      },
+      {
+        "name": "Depósito salino",
+        "x": 2820,
+        "y": 490,
+        "art": "mineral",
+        "finding": "A crosta concentra sais irritantes. Uma película clara protege a pedra abaixo."
+      },
+      {
+        "name": "Sombra do paredão distante",
+        "x": 4470,
+        "y": 1090,
+        "art": "soil",
+        "finding": "Mesmo ao meio do dia, a base do paredão permanece mais fria que a trilha."
+      }
+    ]
+  },
+  {
+    "id": "exp-dunes",
+    "area": "dunes",
+    "npc": "smith",
+    "requires": "beyond",
+    "credits": 75,
+    "title": "Sob a pele das dunas",
+    "offer": [
+      "As ruínas aparecem e somem sob a areia. Precisamos saber onde a superfície suporta nossa carga.",
+      "Compare a encosta norte, o sedimento profundo e as nervuras da depressão. Não use explosivos."
+    ],
+    "report": [
+      "A areia cobre uma estrutura vazada. O caminho seguro acompanha suas nervuras, não o centro das depressões.",
+      "As vibrações vindas de baixo não são causadas pelo vento. Mantenha atenção na descida."
+    ],
+    "kinds": [
+      "dunePouncer",
+      "glassSpitter"
+    ],
+    "sites": [
+      {
+        "name": "Encosta das areias claras",
+        "x": 750,
+        "y": 470,
+        "art": "soil",
+        "finding": "A camada superior desliza, mas a base de areia compacta sustenta a encosta."
+      },
+      {
+        "name": "Sedimento profundo",
+        "x": 1530,
+        "y": 1820,
+        "art": "mineral",
+        "finding": "Fragmentos antigos seguem alinhados. A duna cresceu sobre uma superfície construída."
+      },
+      {
+        "name": "Nervuras da depressão",
+        "x": 2780,
+        "y": 1510,
+        "art": "record",
+        "finding": "O pulso atravessa a areia em intervalos irregulares. Alguma coisa responde abaixo."
+      }
+    ]
+  },
+  {
+    "id": "exp-frost",
+    "area": "frost",
+    "npc": "medic",
+    "requires": "beyond",
+    "unlock": "after-soterrado",
+    "credits": 80,
+    "title": "Um abrigo contra a geada",
+    "offer": [
+      "Além da areia, a equipe encontrou gelo. Precisamos de um abrigo térmico antes de enviar outra patrulha.",
+      "Compare uma fonte morna, os líquens do chão e a encosta exposta. Procure diferenças, não uma cura milagrosa."
+    ],
+    "report": [
+      "Os líquens acompanham o calor que vem de baixo. Podemos usá-los para localizar áreas menos expostas.",
+      "Uma futura estação deverá ficar perto dos veios mornos, preservando a água do degelo."
+    ],
+    "kinds": [
+      "frostPouncer",
+      "frostSpitter"
+    ],
+    "sites": [
+      {
+        "name": "Olho de água morna",
+        "x": 690,
+        "y": 470,
+        "art": "water",
+        "finding": "Uma corrente estreita atravessa o gelo. A temperatura muda com o pulso subterrâneo."
+      },
+      {
+        "name": "Líquens da geada",
+        "x": 1480,
+        "y": 1340,
+        "art": "biology",
+        "finding": "Os líquens crescem voltados para fissuras mornas. Há vida sob a crosta congelada."
+      },
+      {
+        "name": "Encosta exposta",
+        "x": 2530,
+        "y": 1300,
+        "art": "soil",
+        "finding": "O vento levou a neve fina. A equipe precisará de ancoragem para trabalhar aqui."
+      }
+    ]
+  },
+  {
+    "id": "exp-icecave",
+    "area": "icecave",
+    "npc": "smith",
+    "requires": "beyond",
+    "unlock": "after-soterrado",
+    "credits": 85,
+    "title": "Água sob o gelo",
+    "offer": [
+      "As galerias podem guardar uma reserva maior que os poços da superfície. Também podem desabar sobre quem entrar.",
+      "Registre a poça lateral, a coluna antiga e a margem do canal. A passagem para o ninho mantém seu próprio mecanismo."
+    ],
+    "report": [
+      "A água está circulando. A galeria não é um reservatório fechado, e perfurar a parede mudaria a pressão.",
+      "As colunas antigas ainda suportam parte do teto. Vamos preservar essas estruturas."
+    ],
+    "kinds": [
+      "iceCarapace",
+      "frostSpitter"
+    ],
+    "sites": [
+      {
+        "name": "Poça lateral do degelo",
+        "x": 710,
+        "y": 1320,
+        "art": "water",
+        "finding": "A poça sobe e desce sem receber água do teto. Existe uma ligação sob o piso."
+      },
+      {
+        "name": "Coluna sob a geada",
+        "x": 1580,
+        "y": 470,
+        "art": "record",
+        "finding": "A coluna foi encaixada na rocha. O gelo chegou depois da construção."
+      },
+      {
+        "name": "Margem do canal oculto",
+        "x": 2600,
+        "y": 1340,
+        "art": "water",
+        "finding": "O canal segue na direção do ninho. Uma vibração grave percorre a água."
+      }
+    ]
+  },
+  {
+    "id": "exp-cinder",
+    "area": "cinder",
+    "npc": "smith",
+    "requires": "beyond",
+    "unlock": "after-vesper",
+    "credits": 90,
+    "title": "Calor que pode servir",
+    "offer": [
+      "O frio provou que precisamos de energia confiável. A costa vulcânica pode oferecer calor, se entendermos seus riscos.",
+      "Leia as saídas de vapor, a cinza consolidada e o leito térmico. Não conecte nossos sistemas aos condutos antigos."
+    ],
+    "report": [
+      "O calor é aproveitável por troca indireta. Podemos manter nossos equipamentos separados das estruturas de Dante.",
+      "Vou desenhar um coletor experimental. A costa ainda não está liberada para civis."
+    ],
+    "kinds": [
+      "emberHound",
+      "fumarole"
+    ],
+    "sites": [
+      {
+        "name": "Saída de vapor da costa",
+        "x": 640,
+        "y": 470,
+        "art": "water",
+        "finding": "O vapor condensa antes de tocar o chão. As leituras seguem seladas para análise."
+      },
+      {
+        "name": "Cinza consolidada",
+        "x": 1480,
+        "y": 1240,
+        "art": "soil",
+        "finding": "A crosta protege um solo quente e poroso. É preciso medir gases antes de escavar."
+      },
+      {
+        "name": "Leito térmico lateral",
+        "x": 2640,
+        "y": 490,
+        "art": "mineral",
+        "finding": "O calor segue um veio mineral. Uma troca indireta evitaria perfurar o conduto."
+      }
+    ]
+  },
+  {
+    "id": "exp-obsidian",
+    "area": "obsidian",
+    "npc": "expedition",
+    "requires": "beyond",
+    "unlock": "after-vesper",
+    "credits": 95,
+    "title": "As paredes guardam pulsos",
+    "offer": [
+      "As leituras da garganta não coincidem com as da costa. Alguém organizou a circulação por dentro da rocha.",
+      "Examine três trechos laterais. Quero um registro da função dessas estruturas, não uma tentativa de ativar tudo."
+    ],
+    "report": [
+      "Os pulsos se dividem antes de chegar às forjas. O sistema parece distribuir alguma coisa para mais de um destino.",
+      "Ainda não sabemos o que recebia esses fluxos. Guarde as leituras para a próxima expedição."
+    ],
+    "kinds": [
+      "slagback",
+      "fumarole"
+    ],
+    "sites": [
+      {
+        "name": "Parede de vidro escuro",
+        "x": 710,
+        "y": 470,
+        "art": "mineral",
+        "finding": "Camadas de vidro cobriram as inscrições sem apagar seu relevo."
+      },
+      {
+        "name": "Canal da margem inferior",
+        "x": 1730,
+        "y": 1220,
+        "art": "record",
+        "finding": "O canal muda de seção a intervalos regulares. Essas mudanças parecem deliberadas."
+      },
+      {
+        "name": "Divisor de pulsos",
+        "x": 2830,
+        "y": 490,
+        "art": "record",
+        "finding": "Parte do pulso se afasta das forjas. A outra direção fica fora do alcance dos sensores."
+      }
+    ]
+  },
+  {
+    "id": "exp-caldera",
+    "area": "caldera",
+    "npc": "smith",
+    "requires": "beyond",
+    "unlock": "after-vesper",
+    "credits": 100,
+    "title": "Antes de acender as forjas",
+    "offer": [
+      "A caldeira ainda opera. Antes de chegar à presença que guarda a área, precisamos entender onde podemos pisar.",
+      "Meça as margens da entrada, o depósito térmico e o conduto anterior ao limiar. Preserve os mecanismos originais."
+    ],
+    "report": [
+      "As três margens suportam uma equipe leve. A carga pesada terá de aguardar resfriamento e ancoragem.",
+      "O conduto alimenta o limiar, mas a presença além dele não é apenas uma peça da estrutura."
+    ],
+    "kinds": [
+      "emberHound",
+      "slagback"
+    ],
+    "sites": [
+      {
+        "name": "Margem fria da entrada",
+        "x": 570,
+        "y": 500,
+        "art": "soil",
+        "finding": "A superfície parece fria, mas retém calor por baixo. O trabalho exige isolamento."
+      },
+      {
+        "name": "Depósito térmico inferior",
+        "x": 1010,
+        "y": 1240,
+        "art": "mineral",
+        "finding": "O depósito guarda calor depois que o pulso cessa. Não há contato direto com lava."
+      },
+      {
+        "name": "Conduto antes do limiar",
+        "x": 1780,
+        "y": 460,
+        "art": "record",
+        "finding": "O conduto muda de direção junto da parede. O limiar responde a uma presença além dela."
+      }
+    ]
+  },
+  {
+    "id": "exp-springs",
+    "area": "springs",
+    "npc": "medic",
+    "requires": "water-source",
+    "credits": 70,
+    "title": "A nascente não está sozinha",
+    "offer": [
+      "Uma fonte estável é só o começo. Precisamos conhecer o que acontece com a água entre a nascente e o reservatório.",
+      "Compare a margem baixa, a vegetação filtrante e o afluente lateral. Preserve o fluxo original."
+    ],
+    "report": [
+      "As três leituras mostram que a vegetação retém parte dos sedimentos. Vamos filtrar nossa água sem remover essa proteção.",
+      "Uma coleta pequena e monitorada permite abastecer o primeiro abrigo sem secar as margens."
+    ],
+    "kinds": [
+      "bankGrazer",
+      "reedSpitter"
+    ],
+    "sites": [
+      {
+        "name": "Margem baixa da bacia",
+        "x": 670,
+        "y": 1190,
+        "art": "water",
+        "finding": "Água lenta deixa sedimento nas pedras. A margem muda depois de cada chuva."
+      },
+      {
+        "name": "Vegetação filtrante",
+        "x": 1390,
+        "y": 440,
+        "art": "biology",
+        "finding": "As raízes prendem material fino antes que a água alcance a nascente."
+      },
+      {
+        "name": "Afluente da margem sul",
+        "x": 2200,
+        "y": 1165,
+        "art": "water",
+        "finding": "O afluente sustenta pequenas formas de vida. A captação deverá respeitar esse fluxo."
+      }
+    ]
+  },
+  {
+    "id": "exp-terraces",
+    "area": "terraces",
+    "npc": "expedition",
+    "requires": "safe-route",
+    "credits": 80,
+    "title": "Lugar para mais alguém",
+    "offer": [
+      "O primeiro módulo vai receber poucas pessoas. Quero conhecer os limites do terreno antes de prometer lugar para mais famílias.",
+      "Registre o terraço alto, o solo exposto e uma área de proteção. Isso não autoriza construir fora do módulo reservado."
+    ],
+    "report": [
+      "Existe terreno promissor, mas ainda temos que resolver abastecimento, proteção e capacidade da nave.",
+      "Os primeiros colonos terão uma casa. A próxima leva dependerá do que conseguirmos preparar a partir daqui."
+    ],
+    "kinds": [
+      "bankGrazer",
+      "reedSpitter"
+    ],
+    "sites": [
+      {
+        "name": "Terraço alto",
+        "x": 700,
+        "y": 440,
+        "art": "soil",
+        "finding": "O solo drena bem, mas precisa de proteção contra o vento."
+      },
+      {
+        "name": "Camadas do solo exposto",
+        "x": 1410,
+        "y": 1165,
+        "art": "soil",
+        "finding": "Camadas antigas guardam matéria orgânica. A compatibilidade com sementes humanas segue incerta."
+      },
+      {
+        "name": "Faixa de proteção natural",
+        "x": 2230,
+        "y": 470,
+        "art": "biology",
+        "finding": "Vegetação e rocha formam uma barreira baixa. A trilha deve preservar essa faixa."
+      }
+    ]
+  }
+]

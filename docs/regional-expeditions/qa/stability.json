@@ -1,0 +1,64 @@
+{
+  "method": "Chrome DEV; isolated forest fixture and explicit positions. Three repeated scene recreations, static layers/textures/listeners, idle FPS after warmup with no screenshots.",
+  "cycles": [
+    {
+      "sites": 3,
+      "baked": 18,
+      "textures": 234,
+      "touch": 1,
+      "tracker": 1,
+      "resize": 5,
+      "shutdown": 26,
+      "regional": 6
+    },
+    {
+      "sites": 3,
+      "baked": 18,
+      "textures": 234,
+      "touch": 1,
+      "tracker": 1,
+      "resize": 5,
+      "shutdown": 26,
+      "regional": 6
+    },
+    {
+      "sites": 3,
+      "baked": 18,
+      "textures": 234,
+      "touch": 1,
+      "tracker": 1,
+      "resize": 5,
+      "shutdown": 26,
+      "regional": 6
+    },
+    {
+      "sites": 3,
+      "baked": 18,
+      "textures": 234,
+      "touch": 1,
+      "tracker": 1,
+      "resize": 5,
+      "shutdown": 26,
+      "regional": 6
+    }
+  ],
+  "errors": [],
+  "fps": {
+    "samples": [
+      59.722620711740646,
+      59.722620711740646,
+      59.722620711740646,
+      59.79196553380548,
+      59.79196553380548,
+      59.79196553380548,
+      59.79196553380548,
+      59.843974150354114,
+      59.843974150354114,
+      59.843974150354114,
+      59.843974150354114,
+      60.132980612765586
+    ],
+    "mean": 59.82038345705215
+  },
+  "passed": true
+}
