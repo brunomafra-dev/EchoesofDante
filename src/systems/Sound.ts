@@ -152,7 +152,6 @@ export class AudioManager {
   charge(): void { this.tone(180, 520, 0.16, 0.05, 'triangle'); }
   death(): void { this.tone(230, 45, 0.55, 0.07, 'triangle'); }
   discovery(): void { this.tone(320, 640, 0.7, 0.035, 'sine'); }
-  water():void { this.tone(530,270,.25,.018,'sine');this.tone(790,390,.14,.009,'sine'); }
   ancient(): void {
     this.tone(180, 110, 0.65, 0.045, 'triangle');
     this.tone(360, 280, 0.9, 0.018, 'sine');

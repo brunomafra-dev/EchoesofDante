@@ -1,0 +1,50 @@
+{
+  "method": "Chrome: actual walking/E, explicit DEV placement, controlled scene-time contact/settling samples, restart/resource checks and reduced-motion emulation. No physical-device claim.",
+  "checks": [
+    "Former water/mineral hotspots have no E/touch/gamepad interaction, prompt or signal response",
+    "Gentle wind moves leaves, contact bends plants around fixed roots, damping settles after departure; creatures also cause contact",
+    "Actual walking through vegetation releases bounded leaves; they expire and open trail does not emit leaves",
+    "Three restarts retain full floor frame and stable objects/textures/listeners",
+    "Reduced-motion preference freezes wind/UV and removes airborne leaves"
+  ],
+  "errors": [],
+  "motion": {
+    "anchor": [
+      570.0520833333334,
+      691.40625
+    ],
+    "after": [
+      570.0520833333334,
+      691.40625
+    ],
+    "calm": -1.110642285466497,
+    "wind": -0.9053516144490459,
+    "contact": 2.221777458659458,
+    "settled": 1.070791071622415e-7,
+    "creatureBend": -2.221777474391643,
+    "tracked": 1,
+    "uvChanged": true
+  },
+  "stability": [
+    {
+      "objects": 69,
+      "textures": 222,
+      "shutdown": 25,
+      "resize": 4
+    },
+    {
+      "objects": 69,
+      "textures": 222,
+      "shutdown": 25,
+      "resize": 4
+    },
+    {
+      "objects": 69,
+      "textures": 222,
+      "shutdown": 25,
+      "resize": 4
+    }
+  ],
+  "fps": 57.94707105021409,
+  "passed": true
+}

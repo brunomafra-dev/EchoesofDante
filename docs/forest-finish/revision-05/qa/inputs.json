@@ -1,0 +1,12 @@
+{
+  "method": "Chrome CDP multitouch, standard Gamepad API mock and WebKit smoke; no physical devices.",
+  "checks": [
+    "Mobile: independent movement and attack aiming in all eight directions",
+    "Mobile: Q retains visible hold/aim/release charge",
+    "Touch options pause/resume and fit the landscape viewport",
+    "Gamepad mock: movement, Start opens paused options, B closes and resumes",
+    "WebKit mobile: new raster environment and touch options load successfully"
+  ],
+  "errors": [],
+  "passed": true
+}

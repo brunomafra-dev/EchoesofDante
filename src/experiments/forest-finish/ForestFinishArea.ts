@@ -63,13 +63,11 @@ export class ForestFinishArea{
    for(const p of FINISH_GROUND.slice(1))outline.lineTo(p.x,p.y);outline.closePath().strokePath();
   }
  }
- nearInteraction(p:Vec2,dead=false):'water'|'signal'|undefined{return this.life?.near(p,dead);}
- respond(now:number,kind:'water'|'signal'):boolean{return this.life?.touch(now,kind)??false;}
  update(now:number,player:Player,residents:readonly {position:Vec2;isDead:boolean}[]=[]):void{
   if(!this.enhanced)return;
   const t=this.still?0:now*.001;
-  for(const b of this.boughs){b.image.setAngle(b.angle+Math.sin(t*.52+b.phase)*1.5).setY(b.y+Math.sin(t*.65+b.phase)*3);const d=Math.hypot((player.position.x-b.x)/(b.image.displayWidth*.45),(player.position.y-b.y)/(b.image.displayHeight*.4));b.image.setAlpha(.48+.52*Phaser.Math.Clamp((d-.65)/.5,0,1));}
-  for(const s of this.shadows)s.image.setPosition(s.x+Math.sin(t*.52+s.phase)*5,s.y+Math.sin(t*.65+s.phase)*2).setAngle(s.angle+Math.sin(t*.52+s.phase)*1.5);
+  for(const b of this.boughs){b.image.setAngle(b.angle+Math.sin(t*.52+b.phase)*.8).setY(b.y+Math.sin(t*.65+b.phase)*1.5);const d=Math.hypot((player.position.x-b.x)/(b.image.displayWidth*.45),(player.position.y-b.y)/(b.image.displayHeight*.4));b.image.setAlpha(.48+.52*Phaser.Math.Clamp((d-.65)/.5,0,1));}
+  for(const s of this.shadows)s.image.setPosition(s.x+Math.sin(t*.52+s.phase)*3,s.y+Math.sin(t*.65+s.phase)).setAngle(s.angle+Math.sin(t*.52+s.phase)*.8);
   this.life?.update(now,player,residents);
   for(const m of this.motes)m.image.setPosition(m.x+Math.sin(t*.24+m.phase)*28,m.y+Math.cos(t*.3+m.phase)*14).setAlpha(.08+(.5+.5*Math.sin(t*.6+m.phase))*.2);
   for(let i=0;i<this.ripples.length;i++){const phase=(t*.15+i/3)%1;this.ripples[i].setScale(.6+phase*.8).setAlpha(Math.sin(phase*Math.PI)*.45);}

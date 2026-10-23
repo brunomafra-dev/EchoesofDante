@@ -1,6 +1,6 @@
 # Clareira da Nascente · referência de acabamento · 0.1.134
 
-> **Atual: [0.1.137 — interface e floresta reativa](revision-04/README.md).** Hollow violeta aprovado pelo usuário. Nomes/vida dos inimigos sempre visíveis, cruz na vida do herói e atalhos por ícones na campanha. A clareira ganha água em movimento, plantas reativas e dois pontos de interação; ambiente permanece no laboratório, aguardando playtest.
+> **Atual: [0.1.138 — movimento ambiental natural](revision-05/README.md).** O usuário rejeitou as interações por botão da revisão 04. Gatilhos e avisos removidos; folhas recebem vento suave e cedem à passagem, com retorno amortecido e raízes fixas. Indicadores da campanha mantidos. Ambiente permanece no laboratório, aguardando playtest.
 
 > **Registro anterior: [0.1.135 — terreno físico e Hollow completo](revision-02/README.md).** O usuário aprovou o acabamento ambiental da 0.1.134 e pediu corrigir passagens sobre árvores/rochas e elevar a criatura ao novo contexto. O restante deste documento registra a primeira entrega; links com versão antiga abrem a build mais recente. O feedback da 0.1.135 originou a revisão 03 acima.
 

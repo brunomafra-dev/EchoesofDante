@@ -1,5 +1,7 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**Correção visual · 23/10/2026 · 0.1.138:** usuário esclareceu que quer respostas ambientais naturais, não pontos acionados por botão. [Revisão 05](forest-finish/revision-05/README.md): removidos os gatilhos da água/estrutura e seus avisos; vento suave, contato nos pés, retorno amortecido da vegetação e folhas somente ao roçar plantas. Sem novos assets, sem alterar missões/combate/colisões. Indicadores aprovados mantidos; aguardar playtest desta revisão reservada.
+
 **Revisão autorizada · 23/10/2026 · 0.1.137:** usuário aprovou o Hollow violeta e pediu nomes/HP permanentes, identificação da vida, atalhos sem excesso de texto e ambiente menos estático. [Revisão 04](forest-finish/revision-04/README.md): indicadores aplicados à campanha e aliados remotos; água, vegetação e respostas locais a E/toque/gamepad apenas na clareira reservada. Sem alteração de progressão ou protocolo 15. QA técnico separado da avaliação humana; aguardar playtest antes de migrar o ambiente ou iniciar conteúdo.
 
 **Leitura visual · 23/10/2026 · 0.1.136:** usuário gostou da revisão física, mas relatou que o Hollow se confundia com o ambiente e cansava a vista. [Revisão 03](forest-finish/revision-03/README.md): repintura do atlas inteiro com carapaça violeta, bordas de osso, menos manchas e comparação com a criatura anterior na mesma clareira. Apenas apresentação; aguardar validação da leitura em movimento antes da aplicação à campanha. Sem próxima etapa de conteúdo.
