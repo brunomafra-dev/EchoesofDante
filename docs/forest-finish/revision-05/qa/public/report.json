@@ -1,0 +1,12 @@
+{
+  "base": "https://echosofdante.vercel.app",
+  "checkedAt": "2026-10-23T18:50:56.362Z",
+  "method": "Compiled real page, normal Chrome, actual icon clicks and keyboard exploration/Q; responsive viewports. No DEV exports/position overrides or physical touch claim.",
+  "errors": [],
+  "checks": [
+    "Revision 05, new plant atlas, approved Hollow, labelled hero health and accessible icon HUD load publicly",
+    "Atlas, equipment and record icons open/close the real existing panels",
+    "Actual movement towards shore and Q inputs run in the published build without DEV hooks"
+  ],
+  "passed": true
+}

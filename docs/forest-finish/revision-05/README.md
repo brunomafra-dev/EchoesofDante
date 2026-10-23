@@ -24,8 +24,12 @@ Nenhuma arte nova: reutilizados chão, copas, atlas de plantas e Hollow aprovado
 - [Touch/gamepad/WebKit](qa/inputs.json): entradas existentes verificadas com emulação/mock; não foi necessário adicionar botão de ambiente.
 - [Build compilada](qa/compiled/report.json): navegação real sem globals DEV, exploração/Q, ícones, layouts 1366×768 e 844×390 e saves protegidos. Capturas locais também registram 1280×720 e 1920×1080.
 
-Publicação e [checagem do endereço público](qa/public/report.json) são registradas após o deploy. Os resultados não garantem a mesma taxa de quadros em todo aparelho.
+[Checagem do endereço público](qa/public/report.json) passou na Vercel com a revisão 05: carregamento, exploração/Q, ícones, layouts e isolamento de saves; sem erro JS/HTTP. Os resultados não garantem a mesma taxa de quadros em todo aparelho.
 
 ## Limites e aprovação
 
 Ambiente ainda reservado a esta referência solo, com saves reais isolados. A vegetação pintada no chão permanece estática; copas separadas e seis plantas respondem. Sem deformar toda a imagem, novo sistema de física ou mudança de colisões. A intensidade do vento e a integração das plantas precisam de avaliação humana caminhando. QA técnico não representa aprovação visual ou teste em aparelho físico.
+
+## Publicação · 23/10/2026
+
+Implementação `3d80f2e`, **0.1.138**, enviada a origin/main; Vercel confirmou deploy concluído e o teste público passou. Sem alteração do protocolo 15/servidor de salas. **Aguardar playtest humano antes da próxima etapa.**
