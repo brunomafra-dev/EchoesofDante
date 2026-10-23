@@ -36,3 +36,9 @@ A revisão visual também identificou um problema de reconstrução: adicionar o
 Conferidos chão integral após reiniciar, margem/ondas, plantas nas bordas, barras acima da copa e atalhos no viewport pequeno. O terreno continua uma composição ilustrada, com algumas camadas e respostas locais: rochas e árvores inteiras não são objetos 3D nem toda a pintura reage. Sem destruição, coleta ambiental nova ou mudança de colisão/gameplay. Nomes podem se aproximar quando inimigos se agrupam; avaliar a leitura em combate no celular real. Emoji e desempenho variam por dispositivo. Testes touch/WebKit/gamepad são emulados, não dispositivos físicos.
 
 Os saves reais permanecem isolados pela entrada reservada. O ambiente ainda não foi migrado para os mapas da campanha. **Aguardar avaliação do usuário desta revisão antes da próxima etapa.**
+
+## Publicação confirmada · 23/10/2026
+
+Implementação `bd173a7`, versão **0.1.137**, enviada a origin/main. GitHub/Vercel confirmaram deploy concluído. [QA no endereço público](qa/public/report.json) passou: atlas novo e Hollow aprovado carregaram, cruz/ícones acessíveis presentes, painéis reais abriram/fecharam, movimento/Q/E executados, layouts desktop/pequeno dentro da tela e sentinel de save real preservado. Nenhum erro JS/HTTP nessa execução. O teste público usa navegação e entradas reais, sem globals DEV; a verificação detalhada das respostas usa o QA local descrito acima.
+
+**Entrega técnica concluída; playtest visual humano continua pendente.** Não houve mudança de protocolo nem necessidade de atualizar o servidor de salas para estes indicadores.
