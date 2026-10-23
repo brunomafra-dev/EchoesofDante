@@ -26,7 +26,7 @@ export class RecordsPanel {
     private readonly onOpen: () => void, private readonly onClose: () => void, private readonly onReset: () => void) {
     this.button = document.createElement('button');
     this.button.className = 'records-button';
-    this.button.textContent = 'REGISTROS';
+    this.button.textContent = '📖';this.button.setAttribute('aria-label','Abrir registros');this.button.title='Registros · B';
     this.button.setAttribute('aria-haspopup', 'dialog');
     this.button.addEventListener('click', () => this.open());
     // A second finger must open the journal even while the first holds a skill.
@@ -88,7 +88,7 @@ export class RecordsPanel {
     help.innerHTML='<summary>Controles do Domador de feras</summary><p>PC: WASD move, mouse mira, clique esquerdo marca assistência, Espaço esquiva. Q: segure, mire e solte o comando. E investiga; B abre os registros.</p><p>Gamepad: LS move, RS mira, RT marca assistência, RB esquiva, LT segura/mira/solta o comando; A investiga.</p><p>Touch: joystick à esquerda; DISPARO marca assistência. Segure COMANDO, arraste e solte. A investida termina com recuperação de aliados vivos próximos à chegada do simbionte.</p><p>Acertos acumulam Vínculo. Comando custa 35 e recarrega em 6 s. Cancelar preserva recurso. O pulso não revive nem cura através de paredes.</p>';
   }
   markDiscovery(): void {
-    this.button.textContent = 'REGISTROS • NOVO';
+    this.button.textContent = '📖•';this.button.setAttribute('aria-label','Abrir registros: nova descoberta');
   }
   setSaveAvailable(available: boolean): void {
     this.button.classList.toggle('save-unavailable', !available);
@@ -140,7 +140,7 @@ export class RecordsPanel {
     }
     this.confirmation.hidden = true;
     this.content.scrollTop = 0;
-    this.button.textContent = 'REGISTROS';
+    this.button.textContent = '📖';this.button.setAttribute('aria-label','Abrir registros');this.button.title='Registros · B';
     document.body.classList.add('records-open');
     this.padButtons = this.readPad()?.buttons.map(b => b.pressed || b.value > 0.5) ?? [];
     this.dialog.showModal();

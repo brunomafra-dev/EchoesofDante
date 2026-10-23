@@ -42,7 +42,7 @@ export class WorldNavigator {
     this.destination.setAttribute('stroke-width', '2'); this.destination.setAttribute('width', '6'); this.destination.setAttribute('height', '6');
     this.playerMarker.setAttribute('d', 'M6 0L-4 -4L-2 0L-4 4Z');
     this.map.append(this.floor, this.solid, this.line, this.destination, this.playerMarker);
-    this.button.type = 'button'; this.button.textContent = 'RADAR';
+    this.button.type = 'button'; this.button.textContent = '🧭';this.button.setAttribute('aria-label','Recolher ou expandir minimapa');this.button.title='Minimapa';
     this.button.setAttribute('aria-expanded', 'true');
     this.button.addEventListener('click', () => this.toggle());
     this.element.append(this.button, this.map); document.body.append(this.element);

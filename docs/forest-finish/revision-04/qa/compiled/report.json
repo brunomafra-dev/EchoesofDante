@@ -1,0 +1,12 @@
+{
+  "base": "http://localhost:5192",
+  "checkedAt": "2026-10-23T18:23:13.136Z",
+  "method": "Compiled real page, normal Chrome, actual icon clicks and keyboard exploration/Q/E; responsive viewports. No DEV exports/position overrides or physical touch claim.",
+  "errors": [],
+  "checks": [
+    "Revision 04, new plant atlas, approved Hollow, labelled hero health and accessible icon HUD load publicly",
+    "Atlas, equipment and record icons open/close the real existing panels",
+    "Actual movement towards shore and E/Q inputs run in the published build without DEV hooks"
+  ],
+  "passed": true
+}

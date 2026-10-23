@@ -1,0 +1,40 @@
+{
+  "method": "Chrome actual keyboard/clicks and explicit DEV positions for shoreline, mineral and plant fixtures. Fixed-pool/restart checks; reduced-motion emulation. Visual comfort remains human approval.",
+  "checks": [
+    "Healthy Hollows retain name/full HP, hero has a labelled cross and compact accessible atlas/potion icons",
+    "Potion icon heals/consumes once and updates count; atlas, bag and records icons open existing dialogs and block movement",
+    "Real E input touches water and resonates with the mineral; feedback has cooldown and reuses fixed objects",
+    "Plants bend on contact, footsteps animate a six-leaf pool, water UVs move while banks remain static, leaves expire",
+    "Dante, valley and volcanic creature families also display healthy name/HP before any hit",
+    "Repeated reconstruction retains the full ground frame and stable scene objects, textures, pools and listeners",
+    "Reduced-motion preference freezes water/wind, removes airborne leaves and keeps interactions available"
+  ],
+  "errors": [],
+  "stability": [
+    {
+      "objects": 75,
+      "textures": 222,
+      "shutdown": 25,
+      "resize": 4
+    },
+    {
+      "objects": 75,
+      "textures": 222,
+      "shutdown": 25,
+      "resize": 4
+    },
+    {
+      "objects": 75,
+      "textures": 222,
+      "shutdown": 25,
+      "resize": 4
+    },
+    {
+      "objects": 75,
+      "textures": 222,
+      "shutdown": 25,
+      "resize": 4
+    }
+  ],
+  "passed": true
+}

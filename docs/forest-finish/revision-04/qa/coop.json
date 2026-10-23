@@ -1,0 +1,97 @@
+{
+  "method": "Two real Chrome contexts and local relay, two original classes, DEV campaign setup. No protocol change or physical device claim.",
+  "errors": [],
+  "host": [
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    }
+  ],
+  "guest": [
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    }
+  ],
+  "passed": true
+}

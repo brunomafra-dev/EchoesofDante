@@ -58,8 +58,8 @@ export class HollowCrawler {
       this.forestArt=new ForestCrawlerArt(scene,this.view);
       this.shadow.setAlpha(.18).setDisplaySize(68,25);
     }else if(referencePresentation)this.presentation=new CrawlerPresentation(scene,this.view,this.forelimbs,this.rearLimbs,art);
-    this.healthBack = scene.add.rectangle(x, y - 34, 42, 6, 0x0c252d).setDepth(10000).setVisible(false);
-    this.healthFill = scene.add.rectangle(x - 19, y - 34, 38, 4, 0x9bd6b4).setOrigin(0, 0.5).setDepth(10001).setVisible(false);
+    this.healthBack = scene.add.rectangle(x, y - 34, 42, 6, 0x0c252d).setDepth(15010).setVisible(true);
+    this.healthFill = scene.add.rectangle(x - 19, y - 34, 38, 4, 0x9bd6b4).setOrigin(0, 0.5).setDepth(15011).setVisible(true);
     this.name = createEnemyName(scene, x, y - 50, 'RASTEJANTE HOLLOW');
   }
 
@@ -146,10 +146,10 @@ export class HollowCrawler {
     this.shadow.setPosition(this.position.x, this.position.y + 15).setDepth(this.position.y - 2);
     this.telegraph.setPosition(this.position.x, this.position.y).setDepth(this.position.y - 1).setVisible(this.state === 'ATTACK');
     this.telegraph.setAlpha(0.65 + Math.sin(now * 0.035) * 0.25);
-    this.healthBack.setPosition(this.position.x, this.position.y - 34);
-    this.healthFill.setPosition(this.position.x - 19, this.position.y - 34);
-    this.name.setPosition(this.position.x, this.position.y - 50)
-      .setVisible(this.state === 'ATTACK' || this.health.current < this.health.max);
+    const header=this.forestArt?18:0;
+    this.healthBack.setPosition(this.position.x, this.position.y - 34-header);
+    this.healthFill.setPosition(this.position.x - 19, this.position.y - 34-header).setDisplaySize(38*this.health.current/this.health.max,4);
+    this.name.setPosition(this.position.x, this.position.y - 50-header).setVisible(true);
   }
 
   hurt(now: number, from: Vec2, force = 300): void {

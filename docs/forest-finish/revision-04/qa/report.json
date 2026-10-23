@@ -1,0 +1,99 @@
+{
+  "method": "Chrome DEV; actual inputs with explicit positions/invulnerability for combat coverage. Four classes/two presentations, current comparison, collisions, pause, restarts and isolated storage. Touch emulation/gamepad mock, not physical devices.",
+  "checks": [
+    "Four classes/two presentations retain existing complete actors, equipment, movement, eight aim directions and hold/release Q; real saves remain untouched",
+    "Options pause the solo fight and block movement until closed",
+    "Authored shore blocks the footprint while the central approach stays traversable",
+    "Existing Energy Saber produces actual damage against a Hollow in the new environment",
+    "Comparison loads current Forest renderer and new composition with the same class, kit, HP, damage and three residents",
+    "Three scene restarts retain stable objects/textures/listeners; warmed FPS sampled without screenshots",
+    "Existing enemy damage, player death and respawn reconstruct the reference without duplicate enemies"
+  ],
+  "errors": [],
+  "actors": [
+    {
+      "class": "warrior",
+      "sex": "male",
+      "kit": "basic"
+    },
+    {
+      "class": "warrior",
+      "sex": "female",
+      "kit": "clothes"
+    },
+    {
+      "class": "hunter",
+      "sex": "male",
+      "kit": "basic"
+    },
+    {
+      "class": "hunter",
+      "sex": "female",
+      "kit": "clothes"
+    },
+    {
+      "class": "astral",
+      "sex": "male",
+      "kit": "basic"
+    },
+    {
+      "class": "astral",
+      "sex": "female",
+      "kit": "clothes"
+    },
+    {
+      "class": "xenobinder",
+      "sex": "male",
+      "kit": "basic"
+    },
+    {
+      "class": "xenobinder",
+      "sex": "female",
+      "kit": "clothes"
+    }
+  ],
+  "stability": [
+    {
+      "objects": 75,
+      "textures": 222,
+      "resize": 4,
+      "shutdown": 25
+    },
+    {
+      "objects": 75,
+      "textures": 222,
+      "resize": 4,
+      "shutdown": 25
+    },
+    {
+      "objects": 75,
+      "textures": 222,
+      "resize": 4,
+      "shutdown": 25
+    },
+    {
+      "objects": 75,
+      "textures": 222,
+      "resize": 4,
+      "shutdown": 25
+    }
+  ],
+  "fps": {
+    "samples": [
+      60.01842351691083,
+      60.01842351691083,
+      60.01842351691083,
+      60.01842351691083,
+      60.01381763768312,
+      60.01381763768312,
+      60.01381763768312,
+      60.01381763768312,
+      60.010363228262335,
+      60.010363228262335,
+      60.010363228262335,
+      60.010363228262335
+    ],
+    "mean": 60.0142014609521
+  },
+  "passed": true
+}

@@ -325,3 +325,14 @@ body:has(.application-shell[open]) .astral-panel,body.records-open .astral-panel
  body .mobile-vitals{width:185px;left:12px;bottom:12px;padding:8px 10px}.desktop-combat{width:260px;bottom:12px}.desktop-combat>div{padding:8px}.desktop-combat span{font-size:12px}
  body .expedition-launcher{right:12px;bottom:12px}.expedition-launcher button{padding:5px 7px;font-size:10px}.expedition-credits{padding:5px}.expedition-credits strong{font-size:14px}body .coop-chat{bottom:108px}
 }
+
+/* Compact pictograms; accessible names and existing controls remain on buttons. */
+.health-value{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}.health-symbol{color:#b9d49d;font:700 17px system-ui;line-height:1}
+body .hud-icon,body .records-button{display:inline-flex;align-items:center;justify-content:center;gap:3px;font:20px/1 'Segoe UI Emoji','Apple Color Emoji',system-ui;min-width:40px;min-height:40px;padding:5px;box-sizing:border-box;cursor:pointer;touch-action:manipulation}
+body .hud-icon::after,body .records-button::after,body .expedition-launcher [data-map]::after,body .expedition-launcher [data-potion]::after{content:none!important}
+body .hud-icon:focus-visible,body .records-button:focus-visible{outline:2px solid #d6bb82;outline-offset:2px}
+body .hud-icon [data-potion-count]{font:600 12px system-ui;color:#eee5cc}
+body .expedition-credits small{display:inline;font:17px 'Segoe UI Emoji','Apple Color Emoji',system-ui}.expedition-credits::before{content:none!important}
+body .world-minimap button{font-size:18px}body .world-minimap button::after{content:none!important}
+@media(pointer:fine) and (min-height:501px) and (min-width:1001px){body .main-menu-button{right:16px}body .inventory-launcher{right:61px}body .records-button{right:106px}}
+@media(pointer:coarse),(max-height:500px),(max-width:1000px){body .expedition-credits{width:auto;max-width:72px;min-width:32px;display:flex;align-items:center;gap:3px}body .expedition-credits small{display:inline}body .expedition-launcher [data-potion]{width:auto;min-width:46px}.health-symbol{font-size:13px}.health-value{gap:4px}}

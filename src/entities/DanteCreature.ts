@@ -55,8 +55,8 @@ export class DanteCreature implements Enemy {
     this.body = scene.add.image(0, 15, texture, 0).setOrigin(0.5, 244 / 256).setDisplaySize(size, size);
     this.flash = scene.add.ellipse(0, 0, size * 0.65, size * 0.5, 0xf4ffdc, 0);
     this.view = scene.add.container(x, y, [this.body, this.flash]);
-    this.healthBack = scene.add.rectangle(x, y - 44, 44, 6, 0x10252b).setDepth(10000).setVisible(false);
-    this.healthFill = scene.add.rectangle(x - 20, y - 44, 40, 4, pouncer ? 0x9bd6b4 : 0xffbd54).setOrigin(0, 0.5).setDepth(10001).setVisible(false);
+    this.healthBack = scene.add.rectangle(x, y - 44, 44, 6, 0x10252b).setDepth(15010).setVisible(true);
+    this.healthFill = scene.add.rectangle(x - 20, y - 44, 40, 4, pouncer ? 0x9bd6b4 : 0xffbd54).setOrigin(0, 0.5).setDepth(15011).setVisible(true);
     this.name = createEnemyName(scene, x, y - 65, kind === 'frostPouncer' ? 'RASGA-GELO' : kind === 'frostSpitter' ? 'CUSPIDOR BOREAL' : kind === 'skitter' ? 'SALTADOR' : kind === 'dunePouncer' ? 'RASGA-AREIA' : kind === 'glassSpitter' ? 'CUSPIDOR VÍTREO' : 'CUSPIDOR');
     // One reusable projectile per creature. No projectile/listener/timer allocation loop.
     this.projectile = scene.add.ellipse(x, y, 21, 13, 0xffbd54, 0.94).setStrokeStyle(2, 0xc85639, 0.8).setVisible(false);
@@ -136,8 +136,8 @@ export class DanteCreature implements Enemy {
       .setRotation(this.attackAngle).setDepth(this.position.y - 1).setVisible(winding)
       .setAlpha(winding ? 0.5 + 0.5 * Math.min(1, (now - this.attackAt) / stats.windup) : 0);
     this.healthBack.setPosition(this.position.x, this.position.y - 44);
-    this.healthFill.setPosition(this.position.x - 20, this.position.y - 44);
-    this.name.setPosition(this.position.x, this.position.y - 65).setVisible(winding || this.health.current < this.health.max);
+    this.healthFill.setPosition(this.position.x - 20, this.position.y - 44).setDisplaySize(40*this.health.current/this.health.max,4);
+    this.name.setPosition(this.position.x, this.position.y - 65).setVisible(true);
   }
 
   private updateShot(dt: number, player: Vec2, playerDead: boolean, obstacles: readonly Obstacle[], bounds: MovementBounds | undefined, onAttack: (impact?: EnemyImpact) => void): void {

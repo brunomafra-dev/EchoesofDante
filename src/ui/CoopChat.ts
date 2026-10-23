@@ -18,8 +18,8 @@ export class CoopChat{
  get typing():boolean{return this.editing;}
  constructor(private readonly block:(typing:boolean)=>void){
   this.root.className='coop-chat';this.root.hidden=true;this.root.setAttribute('aria-label','Chat da equipe');
-  this.toggle.type='button';this.toggle.textContent='CHAT · Enter / R3';this.toggle.dataset.chat='open';this.toggle.onclick=()=>this.open();
-  this.historyButton.type='button';this.historyButton.textContent='HISTÓRICO';this.historyButton.dataset.chat='history';this.historyButton.setAttribute('aria-expanded','false');this.historyButton.onclick=()=>{this.expanded=!this.expanded;this.layout();};
+  this.toggle.type='button';this.toggle.textContent='💬';this.toggle.className='hud-icon';this.toggle.setAttribute('aria-label','Abrir chat da equipe');this.toggle.title='Chat · Enter / R3';this.toggle.dataset.chat='open';this.toggle.onclick=()=>this.open();
+  this.historyButton.type='button';this.historyButton.textContent='🕘';this.historyButton.className='hud-icon';this.historyButton.setAttribute('aria-label','Histórico do chat');this.historyButton.title='Histórico do chat';this.historyButton.dataset.chat='history';this.historyButton.setAttribute('aria-expanded','false');this.historyButton.onclick=()=>{this.expanded=!this.expanded;this.layout();};
   this.log.className='coop-chat-log';this.log.setAttribute('aria-label','Mensagens da equipe');this.log.setAttribute('aria-live','polite');this.log.setAttribute('aria-relevant','additions');
   this.input.type='text';this.input.name='team-message';this.input.maxLength=400;this.input.autocomplete='off';this.input.enterKeyHint='send';this.input.setAttribute('aria-label','Mensagem para a equipe');this.input.placeholder='Fale com a equipe…';
   this.input.oninput=()=>{this.input.value=Array.from(this.input.value).slice(0,CHAT_LIMIT).join('');this.counter();};

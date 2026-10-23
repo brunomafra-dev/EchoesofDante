@@ -33,7 +33,7 @@ export type PartyBridge={
  sync:(world:PartyWorld)=>boolean;render:(pose:PartyPose)=>void;
 };
 type Presented=Enemy&{view?:Phaser.GameObjects.Container;body?:Phaser.GameObjects.Image;telegraph?:Phaser.GameObjects.Ellipse;warning?:Phaser.GameObjects.Graphics;direction?:number;attackAngle?:number;projectile?:Phaser.GameObjects.Ellipse;shots?:{active:boolean;x:number;y:number;angle:number;image?:Phaser.GameObjects.Image}[]};
-type Mirror={body:Phaser.GameObjects.Image;shadow:Phaser.GameObjects.Ellipse;warning:Phaser.GameObjects.Ellipse;line:Phaser.GameObjects.Line;hp:Phaser.GameObjects.Rectangle;name:Phaser.GameObjects.Text;layers:Phaser.GameObjects.Image[]};
+type Mirror={body:Phaser.GameObjects.Image;shadow:Phaser.GameObjects.Ellipse;warning:Phaser.GameObjects.Ellipse;line:Phaser.GameObjects.Line;hp:Phaser.GameObjects.Rectangle;hpBack:Phaser.GameObjects.Rectangle;name:Phaser.GameObjects.Text;layers:Phaser.GameObjects.Image[]};
 const INPUT_EDGES=['dash','charge','release','cancel','interact','restart','element'] as const;
 // Regional host authority. There is no second AI simulation in the visitor browser.
 export class PartyExpedition {
@@ -213,11 +213,11 @@ export class PartyExpedition {
    if(!m){
     m={body:this.scene.add.image(e.x,e.y,e.texture),layers:[],shadow:this.scene.add.ellipse(e.x,e.y+12,e.size*.6,20,0x07191b,.5),
      warning:this.scene.add.ellipse(0,0,70,28,0xffbd54,.2).setStrokeStyle(2,0xffbd54,.8),line:this.scene.add.line(0,0,0,0,300,0,0xffbd54,.5).setOrigin(0),
-     hp:this.scene.add.rectangle(0,0,40,4,0xb9d299).setOrigin(0,.5),name:this.scene.add.text(0,0,'',{fontFamily:'Barlow Condensed',fontSize:'13px',color:'#d8e4c7',stroke:'#06110d',strokeThickness:2}).setOrigin(.5)};
+     hpBack:this.scene.add.rectangle(0,0,44,6,0x10252b),hp:this.scene.add.rectangle(0,0,40,4,0xb9d299).setOrigin(0,.5),name:this.scene.add.text(0,0,'',{fontFamily:'Barlow Condensed',fontSize:'13px',color:'#d8e4c7',stroke:'#06110d',strokeThickness:2}).setOrigin(.5)};
     this.mirrors.set(e.id,m);
    }
    if(!this.scene.textures.exists(e.texture))continue;
-   const flat=e.species==='crawler',damaged=e.hp<e.maxHp;
+   const flat=e.species==='crawler';
    const t=Math.hypot(m.shadow.x-e.x,m.shadow.y-12-e.y)>300?1:Math.min(1,dt*18);
    const x=Phaser.Math.Linear(m.shadow.x,e.x,t),y=Phaser.Math.Linear(m.shadow.y-12,e.y,t);
    m.body.setTexture(e.texture,e.frame).setDisplaySize(e.size,flat?64:e.size).setOrigin(.5,flat?.5:244/256)
@@ -230,14 +230,15 @@ export class PartyExpedition {
    m.warning.setPosition(e.warningX,e.warningY).setDisplaySize(e.warningWidth,e.warningHeight).setRotation(e.angle).setDepth(e.y-1).setVisible(e.warning);
    const ranged=e.species.includes('Spitter')||e.species==='thorn'||e.species==='reedSpitter'||e.species==='fumarole'||e.species==='emberHound';
    m.line.setPosition(e.x,e.y).setRotation(e.angle).setDepth(e.y-1).setVisible(e.warning&&ranged);
-   m.hp.setPosition(e.x-20,e.y-62).setDisplaySize(40*e.hp/e.maxHp,4).setDepth(10002).setVisible(damaged);
-   m.name.setText(SPECIES[e.species as SpeciesId]?.name??'Criatura').setPosition(e.x,e.y-79).setDepth(10003).setVisible(damaged||e.warning);
+   m.hp.setPosition(e.x-20,e.y-62).setDisplaySize(40*e.hp/e.maxHp,4).setDepth(15011).setVisible(true);
+   m.hpBack.setPosition(e.x,e.y-62).setDepth(15010).setVisible(true);
+   m.name.setText(SPECIES[e.species as SpeciesId]?.name??'Criatura').setPosition(e.x,e.y-79).setDepth(15012).setVisible(true);
   }
-  for(const[id,m]of this.mirrors)if(!live.has(id)){for(const key of ['body','shadow','warning','line','hp','name'] as const)m[key].setVisible(false);m.layers.forEach(image=>image.setVisible(false));}
+  for(const[id,m]of this.mirrors)if(!live.has(id)){for(const key of ['body','shadow','warning','line','hp','hpBack','name'] as const)m[key].setVisible(false);m.layers.forEach(image=>image.setVisible(false));}
   const shots=[...world.shots,...world.enemies.flatMap(e=>e.projectile?[e.projectile]:[])].slice(0,64);
   while(this.projectiles.length<shots.length)this.projectiles.push(this.scene.add.rectangle(0,0,23,5,0xffbd54,.9));
   this.waterProjectiles.forEach(view=>view.setVisible(false));
   this.projectiles.forEach((view,i)=>{const shot=shots[i],water=!!shot&&'water' in shot&&shot.water===true;view.setVisible(!!shot&&!water);if(!shot)return;if(water){let image=this.waterProjectiles.get(i);if(!image){image=this.scene.add.image(0,0,'astral-water-bolt',0).setDisplaySize(36,24);this.waterProjectiles.set(i,image);}image.setVisible(true).setPosition(shot.x,shot.y).setRotation(shot.rotation).setDepth(shot.y+5);}else view.setFillStyle('friendly' in shot&&shot.friendly?0x5fe6d8:0xffbd54,.9).setPosition(shot.x,shot.y).setRotation(shot.rotation).setDepth(shot.y+5);});
  }
- destroy():void{for(const actor of [...this.actors.values(),...this.playerMirrors.values()])actor.destroy();this.actors.clear();this.playerMirrors.clear();for(const m of this.mirrors.values()){for(const key of ['body','shadow','warning','line','hp','name'] as const)m[key].destroy();m.layers.forEach(p=>p.destroy());}this.mirrors.clear();this.projectiles.forEach(p=>p.destroy());this.waterProjectiles.forEach(p=>p.destroy());this.waterProjectiles.clear();this.visitorWave.destroy();this.status.destroy();this.bossMirror.destroy();}
+ destroy():void{for(const actor of [...this.actors.values(),...this.playerMirrors.values()])actor.destroy();this.actors.clear();this.playerMirrors.clear();for(const m of this.mirrors.values()){for(const key of ['body','shadow','warning','line','hp','hpBack','name'] as const)m[key].destroy();m.layers.forEach(p=>p.destroy());}this.mirrors.clear();this.projectiles.forEach(p=>p.destroy());this.waterProjectiles.forEach(p=>p.destroy());this.waterProjectiles.clear();this.visitorWave.destroy();this.status.destroy();this.bossMirror.destroy();}
 }

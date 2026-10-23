@@ -29,8 +29,8 @@ export class VolcanicCreature implements Enemy {
   this.telegraph=scene.add.ellipse(x,y,diameter,s.style==='slam'?diameter:28,0xff6a4a,.17).setStrokeStyle(2,0xffbd54,.95).setVisible(false);
   this.aimGuide=scene.add.line(0,0,0,0,s.style==='rush'?190:350,0,0xffbd54,.8).setOrigin(0).setLineWidth(2).setVisible(false);
   this.projectile=scene.add.image(x,y,'world-rock').setTint(0xffbd54).setDisplaySize(28,23).setVisible(false);
-  this.healthBack=scene.add.rectangle(x,y-60,44,6,0x10252b).setDepth(10000).setVisible(false);
-  this.healthFill=scene.add.rectangle(x-20,y-60,40,4,0xffbd54).setOrigin(0,.5).setDepth(10001).setVisible(false);
+  this.healthBack=scene.add.rectangle(x,y-60,44,6,0x10252b).setDepth(15010).setVisible(true);
+  this.healthFill=scene.add.rectangle(x-20,y-60,40,4,0xffbd54).setOrigin(0,.5).setDepth(15011).setVisible(true);
   this.name=createEnemyName(scene,x,y-78,s.name);
  }
  update(now:number,dt:number,player:Vec2,dead:boolean,obstacles:readonly Obstacle[],onAttack:(impact?:EnemyImpact)=>void,bounds?:MovementBounds,participants?:readonly Vec2[]):void{
@@ -64,9 +64,9 @@ export class VolcanicCreature implements Enemy {
   this.shadow.setPosition(this.position.x,this.position.y+10).setDepth(this.position.y-2);
   const warning=this.state==='WINDUP';this.telegraph.setPosition(this.position.x,this.position.y).setDepth(this.position.y-3).setRotation(0).setVisible(warning);
   this.aimGuide.setPosition(this.position.x,this.position.y).setRotation(this.attackAngle).setDepth(this.position.y-2).setVisible(warning&&s.style!=='slam');
-  const damaged=this.health.current<this.health.max;this.healthBack.setPosition(this.position.x,this.position.y-60).setVisible(damaged);
-  this.healthFill.setPosition(this.position.x-20,this.position.y-60).setDisplaySize(40*this.health.current/this.health.max,4).setVisible(damaged);
-  this.name.setPosition(this.position.x,this.position.y-78).setVisible(damaged||warning);
+  this.healthBack.setPosition(this.position.x,this.position.y-60).setVisible(true);
+  this.healthFill.setPosition(this.position.x-20,this.position.y-60).setDisplaySize(40*this.health.current/this.health.max,4).setVisible(true);
+  this.name.setPosition(this.position.x,this.position.y-78).setVisible(true);
  }
  private updateShot(dt:number,player:Vec2,dead:boolean,obstacles:readonly Obstacle[],attack:(impact?:EnemyImpact)=>void,bounds?:MovementBounds):void{
   if(!this.shot||dead){this.shot=undefined;this.projectile.setVisible(false);return;}

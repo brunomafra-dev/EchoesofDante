@@ -56,8 +56,8 @@ export class ValleyCreature implements Enemy {
         this.shots.push({image:scene.add.image(x,y,kind==='reedSpitter'?'astral-water-bolt':'mineral-growth',0).setDisplaySize(kind==='reedSpitter'?36:24,kind==='reedSpitter'?24:17).setVisible(false),active:false,x,y,angle:0,distance:0});
       }
     }
-    this.healthBack = scene.add.rectangle(x,y-64,48,6,0x152c2a).setDepth(10000).setVisible(false);
-    this.healthFill = scene.add.rectangle(x-22,y-64,44,4,0xc1bd79).setOrigin(0,0.5).setDepth(10001).setVisible(false);
+    this.healthBack = scene.add.rectangle(x,y-64,48,6,0x152c2a).setDepth(15010).setVisible(true);
+    this.healthFill = scene.add.rectangle(x-22,y-64,44,4,0xc1bd79).setOrigin(0,0.5).setDepth(15011).setVisible(true);
     this.name = createEnemyName(scene, x, y - 80, s.name);
   }
 
@@ -112,8 +112,8 @@ export class ValleyCreature implements Enemy {
     this.warning.setPosition(this.position.x,this.position.y).setRotation(this.direction).setDepth(this.position.y-1)
       .setVisible(this.state==='WINDUP').setAlpha(0.55+0.45*Math.min(1,(now-this.attackAt)/s.windup));
     this.healthBack.setPosition(this.position.x,this.position.y-64);
-    this.healthFill.setPosition(this.position.x-22,this.position.y-64);
-    this.name.setPosition(this.position.x,this.position.y-80).setVisible(this.state==='WINDUP'||this.health.current<this.health.max);
+    this.healthFill.setPosition(this.position.x-22,this.position.y-64).setDisplaySize(44*this.health.current/this.health.max,4);
+    this.name.setPosition(this.position.x,this.position.y-80).setVisible(true);
   }
 
   private clearShots(): void { this.shots.forEach(shot=>{shot.active=false;shot.image.setVisible(false);}); }

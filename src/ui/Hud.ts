@@ -93,7 +93,7 @@ export class Hud {
     this.showControlHelp();
     this.chrome=scene.add.container(0,0,scene.children.list.slice(first)).setScrollFactor(0).setDepth(20000);
     this.mobile.className='mobile-vitals';this.mobile.setAttribute('aria-label','Vida e experiência');
-    this.mobile.innerHTML='<div><strong data-hp></strong><span data-level>NV 1</span></div><div class="mobile-hp"><i></i></div><small data-xp>XP 0</small><small class="desktop-echoes" data-echoes></small><div class="mobile-xp"><i></i></div>';
+    this.mobile.innerHTML='<div><span class="health-value" aria-label="Vida"><span class="health-symbol" aria-hidden="true">✚</span><strong data-hp></strong></span><span data-level>NV 1</span></div><div class="mobile-hp"><i></i></div><small data-xp>XP 0</small><small class="desktop-echoes" data-echoes></small><div class="mobile-xp"><i></i></div>';
     this.desktop.className='desktop-hud';
     this.desktop.innerHTML='<div class="desktop-location"></div><div class="desktop-guide"><strong></strong><span></span></div><div class="desktop-combat" aria-label="Habilidades"><div><kbd>ESPAÇO</kbd><span data-dash-status></span><i><b data-dash-fill></b></i></div><div><kbd>Q</kbd><span data-charge-status></span><i><b data-charge-fill></b></i></div></div>';
     document.body.append(this.mobile,this.desktop);this.coarse.addEventListener('change',this.mobileLayout);this.mobileLayout();
@@ -128,7 +128,7 @@ export class Hud {
     dashCooldown: number = PLAYER.dashCooldown, chargeCooldown: number = KINETIC_CHARGE.cooldown): void {
     this.touchFeedback?.(dashProgress,chargeProgress,chargePhase,chargeLevel,dashCooldown,chargeCooldown);
     const health=`${hp}/${maxHp}`;
-    if(health!==this.mobileHealth){this.mobileHealth=health;this.mobile.querySelector('[data-hp]')!.textContent=health;
+    if(health!==this.mobileHealth){this.mobileHealth=health;this.mobile.querySelector('[data-hp]')!.textContent=health;this.mobile.querySelector('.health-value')!.setAttribute('aria-label',`Vida: ${hp} de ${maxHp}`);
       this.mobile.style.setProperty('--hp',`${Math.max(0,hp/maxHp)*100}%`);this.mobile.dataset.danger=String(hp<maxHp*.3);}
     this.refreshTypography();
     this.hpFill.width = 196 * hp / maxHp;
