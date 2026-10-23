@@ -33,13 +33,14 @@ export type PartyBridge={
  sync:(world:PartyWorld)=>boolean;render:(pose:PartyPose)=>void;
 };
 type Presented=Enemy&{view?:Phaser.GameObjects.Container;body?:Phaser.GameObjects.Image;telegraph?:Phaser.GameObjects.Ellipse;warning?:Phaser.GameObjects.Graphics;direction?:number;attackAngle?:number;projectile?:Phaser.GameObjects.Ellipse;shots?:{active:boolean;x:number;y:number;angle:number;image?:Phaser.GameObjects.Image}[]};
-type Mirror={body:Phaser.GameObjects.Image;shadow:Phaser.GameObjects.Ellipse;warning:Phaser.GameObjects.Ellipse;line:Phaser.GameObjects.Line;hp:Phaser.GameObjects.Rectangle;hpBack:Phaser.GameObjects.Rectangle;name:Phaser.GameObjects.Text;layers:Phaser.GameObjects.Image[]};
+type Mirror={body:Phaser.GameObjects.Image;shadow:Phaser.GameObjects.Ellipse;warning:Phaser.GameObjects.Ellipse;line:Phaser.GameObjects.Line;hp:Phaser.GameObjects.Rectangle;hpBack:Phaser.GameObjects.Rectangle;name:Phaser.GameObjects.Text;layers:Phaser.GameObjects.Image[];environment:{position:{x:number;y:number};isDead:boolean}};
 const INPUT_EDGES=['dash','charge','release','cancel','interact','restart','element'] as const;
 // Regional host authority. There is no second AI simulation in the visitor browser.
 export class PartyExpedition {
  readonly actors=new Map<string,PartyActor>();
  get partner():PartyActor|undefined{return this.actors.values().next().value;}
  get players():Player[]{return [...this.actors].filter(([id])=>room.guests.find(m=>m.id===id)?.connected).map(([,a])=>a.player);}
+ get environmentActors(){return [...[...this.playerMirrors.values()].map(a=>a.player),...[...this.mirrors.values()].map(m=>m.environment).filter(e=>!e.isDead)];}
  actorFor(player:Player):PartyActor|undefined{return [...this.actors.values()].find(a=>a.player===player);}
  idFor(player:Player):string|undefined{return [...this.actors].find(([,a])=>a.player===player)?.[0];}
  get living():Player[]{return [this.localPlayer,...this.players].filter(p=>!p.isDead);}
@@ -124,7 +125,7 @@ export class PartyExpedition {
   players.host={...host,prompt:false,action:'INVESTIGAR',potionUsed:0};
   const enemies:CreaturePose[]=a.enemies.filter(e=>!e.isDead).map((enemy,index)=>{
    const e=enemy as Presented;
-   const body=e.body??e.view?.list.find(p=>p instanceof Phaser.GameObjects.Image&&p.texture.key==='hollow-body') as Phaser.GameObjects.Image|undefined
+   const body=e.body??e.view?.list.find(p=>p instanceof Phaser.GameObjects.Image&&p.visible) as Phaser.GameObjects.Image|undefined
     ??e.view?.list.find(p=>p instanceof Phaser.GameObjects.Image) as Phaser.GameObjects.Image|undefined;
    const warning=e.telegraph?.visible||e.warning?.visible||false;
    // Send the existing painted limb poses, not a flattened floating Hollow.
@@ -211,7 +212,7 @@ export class PartyExpedition {
   for(const e of world.enemies){
    live.add(e.id);let m=this.mirrors.get(e.id);
    if(!m){
-    m={body:this.scene.add.image(e.x,e.y,e.texture),layers:[],shadow:this.scene.add.ellipse(e.x,e.y+12,e.size*.6,20,0x07191b,.5),
+    m={environment:{position:{x:e.x,y:e.y},isDead:false},body:this.scene.add.image(e.x,e.y,e.texture),layers:[],shadow:this.scene.add.ellipse(e.x,e.y+12,e.size*.6,20,0x07191b,.5),
      warning:this.scene.add.ellipse(0,0,70,28,0xffbd54,.2).setStrokeStyle(2,0xffbd54,.8),line:this.scene.add.line(0,0,0,0,300,0,0xffbd54,.5).setOrigin(0),
      hpBack:this.scene.add.rectangle(0,0,44,6,0x10252b),hp:this.scene.add.rectangle(0,0,40,4,0xb9d299).setOrigin(0,.5),name:this.scene.add.text(0,0,'',{fontFamily:'Barlow Condensed',fontSize:'13px',color:'#d8e4c7',stroke:'#06110d',strokeThickness:2}).setOrigin(.5)};
     this.mirrors.set(e.id,m);
@@ -220,6 +221,7 @@ export class PartyExpedition {
    const flat=e.species==='crawler';
    const t=Math.hypot(m.shadow.x-e.x,m.shadow.y-12-e.y)>300?1:Math.min(1,dt*18);
    const x=Phaser.Math.Linear(m.shadow.x,e.x,t),y=Phaser.Math.Linear(m.shadow.y-12,e.y,t);
+   Object.assign(m.environment.position,{x,y});m.environment.isDead=false;
    m.body.setTexture(e.texture,e.frame).setDisplaySize(e.size,flat?64:e.size).setOrigin(.5,flat?.5:244/256)
     .setPosition(x,y+(flat?0:15)).setFlipX(e.flip).setRotation(e.rotation).setDepth(y).setVisible(!e.layers?.length);
    const layers=e.layers??[];
@@ -234,7 +236,7 @@ export class PartyExpedition {
    m.hpBack.setPosition(e.x,e.y-62).setDepth(15010).setVisible(true);
    m.name.setText(SPECIES[e.species as SpeciesId]?.name??'Criatura').setPosition(e.x,e.y-79).setDepth(15012).setVisible(true);
   }
-  for(const[id,m]of this.mirrors)if(!live.has(id)){for(const key of ['body','shadow','warning','line','hp','hpBack','name'] as const)m[key].setVisible(false);m.layers.forEach(image=>image.setVisible(false));}
+  for(const[id,m]of this.mirrors)if(!live.has(id)){m.environment.isDead=true;for(const key of ['body','shadow','warning','line','hp','hpBack','name'] as const)m[key].setVisible(false);m.layers.forEach(image=>image.setVisible(false));}
   const shots=[...world.shots,...world.enemies.flatMap(e=>e.projectile?[e.projectile]:[])].slice(0,64);
   while(this.projectiles.length<shots.length)this.projectiles.push(this.scene.add.rectangle(0,0,23,5,0xffbd54,.9));
   this.waterProjectiles.forEach(view=>view.setVisible(false));

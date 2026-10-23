@@ -336,3 +336,13 @@ body .expedition-credits small{display:inline;font:17px 'Segoe UI Emoji','Apple 
 body .world-minimap button{font-size:18px}body .world-minimap button::after{content:none!important}
 @media(pointer:fine) and (min-height:501px) and (min-width:1001px){body .main-menu-button{right:16px}body .inventory-launcher{right:61px}body .records-button{right:106px}}
 @media(pointer:coarse),(max-height:500px),(max-width:1000px){body .expedition-credits{width:auto;max-width:72px;min-width:32px;display:flex;align-items:center;gap:3px}body .expedition-credits small{display:inline}body .expedition-launcher [data-potion]{width:auto;min-width:46px}.health-symbol{font-size:13px}.health-value{gap:4px}}
+body [data-shortcut]::before{content:attr(data-shortcut);order:2;display:inline-block;margin-left:4px;color:#dfd4ad;font:600 11px/1.2 system-ui;letter-spacing:0;pointer-events:none}
+body[data-hud-input=touch] [data-shortcut]::before,body[data-hud-input=gamepad] [data-shortcut]::before{display:none}
+body[data-hud-input=keyboard] .main-menu-button{width:72px;right:16px}
+body[data-hud-input=keyboard] .inventory-launcher{width:60px;right:94px}
+body[data-hud-input=keyboard] .records-button{width:60px;right:160px}
+body[data-hud-input=keyboard] .expedition-launcher [data-map]{min-width:60px;width:auto}
+body[data-hud-input=keyboard] .expedition-launcher [data-potion]{min-width:70px;width:auto}
+@media(pointer:coarse){body:not([data-hud-input=keyboard]) [data-shortcut]::before{display:none}}
+body .expedition-launcher button.hud-icon,body .coop-chat>[data-chat=open].hud-icon{font-size:20px}
+@media(pointer:coarse){body[data-hud-input=keyboard] .expedition-launcher{right:calc(230px + env(safe-area-inset-right))}body[data-hud-input=keyboard] .coop-chat{right:calc(452px + env(safe-area-inset-right))}}

@@ -1,0 +1,144 @@
+{
+  "method": "Two real Chrome contexts and local relay, two original classes, DEV campaign setup. No protocol change or physical device claim.",
+  "errors": [],
+  "host": [
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    }
+  ],
+  "guest": [
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    }
+  ],
+  "shared": {
+    "environment": true,
+    "actors": 9,
+    "layers": [
+      {
+        "key": "finish-hollow",
+        "width": 111.81363638996606,
+        "height": 111.81363638996608
+      },
+      {
+        "key": "finish-hollow",
+        "width": 111.81363571530605,
+        "height": 111.81363571530605
+      },
+      {
+        "key": "finish-hollow",
+        "width": 111.81363373372284,
+        "height": 111.81363373372285
+      },
+      {
+        "key": "finish-hollow",
+        "width": 111.8136378359381,
+        "height": 111.81363783593808
+      },
+      {
+        "key": "finish-hollow",
+        "width": 111.81363528502918,
+        "height": 111.81363528502916
+      },
+      {
+        "key": "finish-hollow",
+        "width": 111.81364235528257,
+        "height": 111.81364235528257
+      },
+      {
+        "key": "finish-hollow",
+        "width": 111.81363170155515,
+        "height": 111.81363170155515
+      },
+      {
+        "key": "finish-hollow",
+        "width": 111.81363150173777,
+        "height": 111.81363150173777
+      }
+    ]
+  },
+  "remoteContact": 2.224161748686828,
+  "passed": true
+}

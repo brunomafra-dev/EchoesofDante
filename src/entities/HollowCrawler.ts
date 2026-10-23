@@ -54,7 +54,7 @@ export class HollowCrawler {
     this.forelimbs = scene.add.image(0, 0, 'hollow-forelimbs').setDisplaySize(80, 64);
     this.hitFlash = scene.add.circle(-2, 0, 21, 0xeafeee, 0).setScale(1.2, 0.9);
     this.view = scene.add.container(x, y, [this.rearLimbs, art, this.core, this.forelimbs, this.hitFlash]).setDepth(y);
-    if(referencePresentation==='forest'){
+    if(referencePresentation==='forest'||scene.data.get('campaign-finish')){
       this.forestArt=new ForestCrawlerArt(scene,this.view);
       this.shadow.setAlpha(.18).setDisplaySize(68,25);
     }else if(referencePresentation)this.presentation=new CrawlerPresentation(scene,this.view,this.forelimbs,this.rearLimbs,art);

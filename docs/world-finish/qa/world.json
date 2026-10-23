@@ -1,0 +1,231 @@
+{
+  "method": "Chrome DEV: all 16 campaign regions and retained previous renderer, exact authored collision/bounds comparison, real keyboard shortcuts, camera-position fixtures, bounded motion/restarts, real saves isolated. Visual acceptance remains human.",
+  "errors": [],
+  "regions": [
+    {
+      "area": "base",
+      "ground": 1,
+      "plants": 10,
+      "objects": 64,
+      "textures": 224,
+      "hollows": 0,
+      "bossAlive": false,
+      "meanFps": 52.597164154052734,
+      "identicalPhysics": true
+    },
+    {
+      "area": "forest",
+      "ground": 1,
+      "plants": 19,
+      "objects": 353,
+      "textures": 228,
+      "hollows": 8,
+      "bossAlive": false,
+      "meanFps": 39.01640038962641,
+      "identicalPhysics": true
+    },
+    {
+      "area": "warden",
+      "ground": 1,
+      "plants": 1,
+      "objects": 59,
+      "textures": 221,
+      "hollows": 0,
+      "bossAlive": true,
+      "meanFps": 36.23828125,
+      "identicalPhysics": true
+    },
+    {
+      "area": "valley",
+      "ground": 3,
+      "plants": 10,
+      "objects": 166,
+      "textures": 232,
+      "hollows": 0,
+      "bossAlive": false,
+      "meanFps": 37.47509765625,
+      "identicalPhysics": true
+    },
+    {
+      "area": "springs",
+      "ground": 2,
+      "plants": 7,
+      "objects": 103,
+      "textures": 227,
+      "hollows": 0,
+      "bossAlive": false,
+      "meanFps": 40.083984375,
+      "identicalPhysics": true
+    },
+    {
+      "area": "terraces",
+      "ground": 2,
+      "plants": 7,
+      "objects": 105,
+      "textures": 226,
+      "hollows": 0,
+      "bossAlive": false,
+      "meanFps": 39.88671875,
+      "identicalPhysics": true
+    },
+    {
+      "area": "dunes",
+      "ground": 2,
+      "plants": 3,
+      "objects": 111,
+      "textures": 225,
+      "hollows": 0,
+      "bossAlive": false,
+      "meanFps": 40.50390625,
+      "identicalPhysics": true
+    },
+    {
+      "area": "sandpit",
+      "ground": 1,
+      "plants": 1,
+      "objects": 67,
+      "textures": 221,
+      "hollows": 0,
+      "bossAlive": true,
+      "meanFps": 37.646484375,
+      "identicalPhysics": true
+    },
+    {
+      "area": "frost",
+      "ground": 1,
+      "plants": 3,
+      "objects": 116,
+      "textures": 225,
+      "hollows": 0,
+      "bossAlive": false,
+      "meanFps": 39.8203125,
+      "identicalPhysics": true
+    },
+    {
+      "area": "icecave",
+      "ground": 1,
+      "plants": 3,
+      "objects": 114,
+      "textures": 225,
+      "hollows": 0,
+      "bossAlive": false,
+      "meanFps": 40.56640625,
+      "identicalPhysics": true
+    },
+    {
+      "area": "icenest",
+      "ground": 1,
+      "plants": 3,
+      "objects": 81,
+      "textures": 219,
+      "hollows": 0,
+      "bossAlive": true,
+      "meanFps": 36.8515625,
+      "identicalPhysics": true
+    },
+    {
+      "area": "cinder",
+      "ground": 1,
+      "plants": 3,
+      "objects": 112,
+      "textures": 224,
+      "hollows": 0,
+      "bossAlive": false,
+      "meanFps": 38.763671875,
+      "identicalPhysics": true
+    },
+    {
+      "area": "obsidian",
+      "ground": 1,
+      "plants": 3,
+      "objects": 121,
+      "textures": 225,
+      "hollows": 0,
+      "bossAlive": false,
+      "meanFps": 44.33181118965149,
+      "identicalPhysics": true
+    },
+    {
+      "area": "caldera",
+      "ground": 1,
+      "plants": 3,
+      "objects": 145,
+      "textures": 228,
+      "hollows": 0,
+      "bossAlive": true,
+      "meanFps": 40.2841796875,
+      "identicalPhysics": true
+    },
+    {
+      "area": "arid",
+      "ground": 3,
+      "plants": 4,
+      "objects": 132,
+      "textures": 228,
+      "hollows": 0,
+      "bossAlive": false,
+      "meanFps": 38.453125,
+      "identicalPhysics": true
+    },
+    {
+      "area": "cavern",
+      "ground": 4,
+      "plants": 6,
+      "objects": 126,
+      "textures": 227,
+      "hollows": 4,
+      "bossAlive": false,
+      "meanFps": 49.71795654296875,
+      "identicalPhysics": true
+    }
+  ],
+  "checks": [
+    "All 16 campaign areas render continuous terrain and bounded biome flora; bounds/obstacles exactly match previous renderer and target bosses remain alive",
+    "Visible I/M/B/H hints correspond to real inventory/atlas/records/potion keys; glyphs and accessible labels retained",
+    "Base vegetation responds at the feet with fixed roots and damped return; four restarts keep scene resources/listeners stable"
+  ],
+  "stability": [
+    {
+      "objects": 64,
+      "textures": 224,
+      "shutdown": 22,
+      "resize": 4,
+      "plants": 10
+    },
+    {
+      "objects": 64,
+      "textures": 224,
+      "shutdown": 22,
+      "resize": 4,
+      "plants": 10
+    },
+    {
+      "objects": 64,
+      "textures": 224,
+      "shutdown": 22,
+      "resize": 4,
+      "plants": 10
+    },
+    {
+      "objects": 64,
+      "textures": 224,
+      "shutdown": 22,
+      "resize": 4,
+      "plants": 10
+    }
+  ],
+  "contact": {
+    "anchor": [
+      142,
+      693.5
+    ],
+    "after": [
+      142,
+      693.5
+    ],
+    "bend": 2.217251786537309,
+    "settled": 9.489061404695456e-8,
+    "tracked": 1
+  },
+  "passed": true
+}

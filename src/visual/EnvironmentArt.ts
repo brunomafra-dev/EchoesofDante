@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import {paintCampaignGround,hasCampaignGround,addCampaignPlant} from './CampaignEnvironment';
 
 const PAINTINGS = [
   'world-rock', 'root-growth', 'world-shadow', 'rock-shelf',
@@ -85,6 +86,7 @@ export function createEnvironmentGround(
   material: 'cavern-soil' | 'cavern-ground' | 'forest-ground' = 'cavern-soil',
   tint = 0xb7c4b5,
 ): void {
+  if(paintCampaignGround(scene,width,1500,material))return;
   // Keep the TileSprite backing canvas at 512 square, rather than allocating a
   // world-sized canvas. Inverse tile scale preserves 512 world units per repeat.
   scene.add.tileSprite(0, 0, 512, 512, material).setOrigin(0)
@@ -148,6 +150,10 @@ export class EnvironmentPainter {
   constructor(private scene: Phaser.Scene, private target: Phaser.GameObjects.RenderTexture) {}
 
   stamp(s: EnvironmentStamp): void {
+    if(this.scene.data.get('campaign-finish')){
+      if(s.key==='camp-ground'&&this.scene.data.get('campaign-area')==='base')return;
+      if(s.key==='dante-canopy-green'&&s.width<=165){addCampaignPlant(this.scene,s.x,s.y+s.height*.3,Math.max(65,s.width));return;}
+    }
     if (s.frame === 'ground-contact' && !this.scene.textures.get(s.key).has(s.frame)) {
       this.scene.textures.get(s.key).add(s.frame, 0, 121, 274, 293, 131);
     }
@@ -206,6 +212,7 @@ export class EnvironmentPainter {
   }
 
   ground(key: 'forest-ground' | 'cavern-ground', alpha: number, maskSource?: Phaser.GameObjects.Graphics): void {
+    if(hasCampaignGround(this.scene)&&!maskSource)return;
     const tile = this.scene.make.tileSprite({
       key, width: this.target.width, height: this.target.height, add: false,
     }).setOrigin(0).setAlpha(alpha);

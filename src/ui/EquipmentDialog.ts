@@ -7,7 +7,7 @@ export class EquipmentDialog {
  private frame=0;private previous:boolean[]=[];private selected='';private notice='';
  constructor(scene:Phaser.Scene,private read:()=>EquipmentSnapshot,private choose:(slot:EquipmentSlot,id?:EquipmentId,uid?:string)=>boolean,close:()=>void,private launch:()=>void,private classId='warrior'){
   this.dialog.className='records-dialog equipment-dialog';this.dialog.setAttribute('aria-label','Mochila e equipamentos');
-  this.launcher.className='inventory-launcher hud-icon';this.launcher.textContent='🎒';this.launcher.setAttribute('aria-label','Abrir mochila e equipamentos');this.launcher.title='Mochila · I';this.launcher.onclick=this.launch;
+  this.launcher.className='inventory-launcher hud-icon';this.launcher.textContent='🎒';this.launcher.dataset.shortcut='I';this.launcher.setAttribute('aria-keyshortcuts','i');this.launcher.setAttribute('aria-label','Abrir mochila e equipamentos');this.launcher.title='Mochila · I';this.launcher.onclick=this.launch;
   this.dialog.addEventListener('close',()=>{document.body.classList.remove('inventory-open');close();});
   window.addEventListener('keydown',this.keyDown,true);document.body.append(this.dialog,this.launcher);this.frame=requestAnimationFrame(this.poll);
   scene.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{cancelAnimationFrame(this.frame);window.removeEventListener('keydown',this.keyDown,true);this.dialog.remove();this.launcher.remove();document.body.classList.remove('inventory-open');});

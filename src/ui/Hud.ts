@@ -195,6 +195,7 @@ export class Hud {
   }
 
   setInputMethod(method: InputMethod): void {
+    if(document.body.dataset.hudInput!==method)document.body.dataset.hudInput=method;
     if (this.inputMethod === method) return;
     this.inputMethod = method;
     this.showControlHelp();

@@ -1,0 +1,11 @@
+{
+  "method": "Chrome CDP multitouch and standard Gamepad API mock, WebKit emulation; isolated base/forest/ice/lava lab. No physical-device claim.",
+  "checks": [
+    "Mobile independent movement/aim in eight directions; keyboard letters hidden after actual touch and atlas/potion pictograms remain visible",
+    "Existing touch Q hold/aim/release, inventory and atlas remain usable",
+    "Gamepad movement and existing Start/B equipment controls, with keyboard hints hidden",
+    "WebKit mobile emulation loads volcanic region and lab options with female Astral"
+  ],
+  "errors": [],
+  "passed": true
+}

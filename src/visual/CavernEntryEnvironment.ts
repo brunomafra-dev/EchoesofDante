@@ -9,7 +9,7 @@ export class CavernEntryEnvironment {
     // The approved illustration is the ground plane. Its feathered perimeter
     // lets the existing continuous cavern-soil resume without a rectangular seam.
     scene.add.image(1200, 800, 'cavern-entry-floor').setDisplaySize(2400, 1600)
-      .setTint(0xb9c5b8).setDepth(-10000.5).setName('cavern-entry-illustrated-ground');
+      .setTint(0xb9c5b8).setDepth(-10000.5).setVisible(!scene.data.get('campaign-finish')).setName('cavern-entry-illustrated-ground');
 
     const layer = scene.add.renderTexture(350, 250, 1500, 1000).setOrigin(0)
       .setDepth(-10000).setName('cavern-entry-composition');

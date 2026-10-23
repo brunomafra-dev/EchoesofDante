@@ -1,0 +1,15 @@
+{
+  "base": "http://localhost:5192",
+  "method": "Compiled public build, DOM-only Chrome solo/menu checks; cooperative relay not checked. No DEV exports or physical-device claim.",
+  "checks": [
+    "Compiled solo: create named Astral, play the original cinematic MP4, persist difficulty and enter the game",
+    "Compiled menu: gamepad A/B navigation and D-pad volume adjustment",
+    "Compiled touch input opens the Play menu from the title screen",
+    "Official entry point uses the same new menu; no automatic character or active expedition"
+  ],
+  "errors": [],
+  "participants": [],
+  "cooperativeChecked": false,
+  "cooperativePending": "Relay intentionally excluded by QA_NO_COOP; no public relay verification.",
+  "passed": true
+}

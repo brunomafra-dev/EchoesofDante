@@ -3,7 +3,7 @@ import { WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
 import { FOREST_CLEARINGS, FOREST_PATHS, FOREST_ROCKS } from '../config/forest';
 import { FOREST_STRUCTURE_FOOTPRINTS, treeFootprint, totemFootprint } from '../config/environmentCollision';
 import type { Obstacle } from './Movement';
-import { groundContour, EnvironmentPainter, contactStamp, rockStamps, type EnvironmentStamp } from '../visual/EnvironmentArt';
+import { groundContour, EnvironmentPainter, contactStamp, rockStamps,createEnvironmentGround, type EnvironmentStamp } from '../visual/EnvironmentArt';
 
 export class Arena {
   readonly obstacles: Obstacle[] = [];
@@ -12,6 +12,7 @@ export class Arena {
   private readonly paintings: EnvironmentStamp[] = [];
 
   constructor(private scene: Phaser.Scene) {
+    if(scene.data.get('campaign-finish'))createEnvironmentGround(scene,WORLD_WIDTH,'forest-ground');
     this.draw();
     this.bakeStaticScenery();
     // Register after composition: tree placement must keep its original rock-only test.
@@ -26,7 +27,7 @@ export class Arena {
     const floor = graphics.find(object => object.depth === -10000);
     if (floor) {
       const layer = this.scene.add.renderTexture(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
-        .setOrigin(0).setDepth(floor.depth).draw(floor.setAlpha(0.72));
+        .setOrigin(0).setDepth(floor.depth).draw(floor.setAlpha(this.scene.data.get('campaign-finish')?.04:.72));
       const painter = new EnvironmentPainter(this.scene, layer);
       // Let the painted soil read as a material plane under the existing
       // clearings and paths, instead of a barely visible noise overlay.

@@ -72,7 +72,7 @@ export class ApplicationShell {
     if (this.pendingInvite && !this.entry) this.page = 'invite';
     if(this.launchOnce)this.page='launching';
     this.menuButton.className = 'main-menu-button hud-icon'; this.menuButton.type = 'button'; this.menuButton.textContent = '☰';this.menuButton.setAttribute('aria-label','Abrir menu');this.menuButton.title='Menu · Esc';
-    this.menuButton.setAttribute('aria-label', 'Abrir menu — Esc'); this.menuButton.onclick = () => this.openPause();
+    this.menuButton.dataset.shortcut='Esc';this.menuButton.setAttribute('aria-keyshortcuts','Escape');this.menuButton.setAttribute('aria-label', 'Abrir menu — Esc'); this.menuButton.onclick = () => this.openPause();
     this.menuButton.addEventListener('pointerdown', e => { if (e.pointerType === 'touch') { e.preventDefault(); this.openPause(); } });
     this.dialog.className = 'application-shell'; this.dialog.setAttribute('aria-labelledby', 'shell-title');
     this.dialog.innerHTML = '<div class="shell-layout"><section class="shell-brand"><small>DANTE · EXPEDIÇÃO</small><h1>ECHOES<br>OF DANTE</h1><p>O planeta ainda está à escuta.</p></section><section class="shell-content"></section></div>';

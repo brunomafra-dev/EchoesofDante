@@ -25,7 +25,7 @@ export class RecordsPanel {
   constructor(scene: Phaser.Scene, private readonly getRecords: () => Records,
     private readonly onOpen: () => void, private readonly onClose: () => void, private readonly onReset: () => void) {
     this.button = document.createElement('button');
-    this.button.className = 'records-button';
+    this.button.className = 'records-button';this.button.dataset.shortcut='B';this.button.setAttribute('aria-keyshortcuts','b');
     this.button.textContent = '📖';this.button.setAttribute('aria-label','Abrir registros');this.button.title='Registros · B';
     this.button.setAttribute('aria-haspopup', 'dialog');
     this.button.addEventListener('click', () => this.open());

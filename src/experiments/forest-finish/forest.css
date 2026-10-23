@@ -16,3 +16,5 @@
 .proof-enhanced .inventory-launcher,.proof-enhanced .records-button{display:inline-flex!important;top:auto;bottom:22px;right:195px;height:40px;background:#0d1e19e8;border:1px solid #b9a97b44}
 .proof-enhanced .records-button{right:240px}
 @media(max-width:1000px),(max-height:500px){.proof-enhanced .expedition-launcher{top:55px;right:max(12px,env(safe-area-inset-right));bottom:auto}.proof-enhanced .inventory-launcher,.proof-enhanced .records-button{top:55px;bottom:auto;right:calc(176px + env(safe-area-inset-right));height:40px}.proof-enhanced .records-button{right:calc(220px + env(safe-area-inset-right))}}
+.proof-enhanced[data-hud-input=keyboard] .inventory-launcher{top:68px;bottom:auto;right:22px}.proof-enhanced[data-hud-input=keyboard] .records-button{top:68px;bottom:auto;right:88px}
+@media(max-width:1000px),(max-height:500px){.proof-enhanced[data-hud-input=keyboard] .inventory-launcher{top:55px;right:245px}.proof-enhanced[data-hud-input=keyboard] .records-button{top:55px;right:311px}}

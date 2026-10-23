@@ -25,6 +25,7 @@ import {regionUnlocked} from '../systems/RegionAccess';
 import {RegionalExpeditions} from '../systems/RegionalExpeditions';
 import {REGIONAL_IDS,REGIONAL_SITES,REGIONAL_RESIDENTS} from '../config/regionalExpeditions';
 import {ForestFinishArea,FINISH_ENTRY,FINISH_SPAWNS} from '../experiments/forest-finish/ForestFinishArea';
+import {CampaignEnvironment,beginCampaignEnvironment,preloadCampaignEnvironment} from '../visual/CampaignEnvironment';
 import {SURVEY_POINTS,ANALYSIS_POINTS,NPC_NAMES,missionById,type MissionId,type MissionNpc} from '../config/missions';
 import {MissionPanel} from '../ui/MissionPanel';
 import {MissionWorld} from '../ui/MissionWorld';
@@ -223,6 +224,7 @@ export class GameScene extends Phaser.Scene {
   private readonly bossFootprint: Obstacle = { x: 0, y: 0, radius: 65 };
   private movementBounds?: MovementBounds;
   private area: JourneyArea = 'forest';
+  private campaignEnvironment?:CampaignEnvironment;
   private transferHp?: number;
   private transitioning = false;
   private cavernDepthSeen = false;
@@ -282,10 +284,11 @@ export class GameScene extends Phaser.Scene {
   private get forestProof():boolean{return this.qualityReference==='forest-reference'||this.qualityReference==='forest-current';}
   constructor(private readonly qualityReference: false | 'baseline' | 'reference' | 'forest-reference' | 'forest-current' = false,
     private readonly originalWarrior = false, private readonly shellReady?: (scene: GameScene) => void,
-    private readonly glacierPlaytest?: { area: 'base' | 'forest' | 'icecave' | 'icenest'; classId: PlayableClass; sex?:CharacterSex; pilot?:boolean; inventory?:boolean; economy?:boolean; look?:import('../config/appearance').EquipmentLook; weaponLook?:import('../config/appearance').WeaponStyle },
+    private readonly glacierPlaytest?: { area: JourneyArea; classId: PlayableClass; sex?:CharacterSex; pilot?:boolean; inventory?:boolean; economy?:boolean; environment?:boolean; environmentBaseline?:boolean; look?:import('../config/appearance').EquipmentLook; weaponLook?:import('../config/appearance').WeaponStyle },
     private readonly shellLoading?:(progress:number)=>void) { super('Game'); }
 
   preload(): void {
+    if(!this.qualityReference&&!this.glacierPlaytest?.environmentBaseline)preloadCampaignEnvironment(this,this.journeyLoaded?this.area:this.glacierPlaytest?.economy?'base':this.glacierPlaytest?.area??this.journey.load()?.area??(new URLSearchParams(location.search).has('qa')?'forest':'base'));
     if(this.forestProof){
       for(const[key,file]of [['finish-clearing','clearing-v1'],['finish-canopy','canopy-v1']])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/experiments/forest-finish/${file}.webp`);
       if(this.qualityReference==='forest-reference'&&!this.textures.exists('finish-plants'))this.load.spritesheet('finish-plants',`${import.meta.env.BASE_URL}assets/experiments/forest-finish/trail-plants-v1.webp`,{frameWidth:256,frameHeight:256});
@@ -366,6 +369,7 @@ export class GameScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.events.off(Phaser.Scenes.Events.UPDATE, syncCombatClock));
     if (!this.journeyLoaded) { this.journeyLoaded = true; this.restoreJourney(); }
     resetEnvironmentOcclusion(this);
+    beginCampaignEnvironment(this,this.qualityReference||this.glacierPlaytest?.environmentBaseline?undefined:this.area);this.data.set('campaign-area',this.area);this.campaignEnvironment=undefined;
     this.classId = this.glacierPlaytest?.classId ?? (this.qualityReference&&!this.forestProof ? 'warrior' : characterProfiles.active.classId);
     this.hunter = undefined; this.hunterArt = undefined;this.astral=undefined;this.astralArt=undefined;this.astralPanel=undefined;this.xeno=undefined;this.xenoArt=undefined;this.xenoPanel=undefined;
     this.attack = new SaberAttack(id => this.progression.upgradeRank(id));
@@ -462,6 +466,7 @@ export class GameScene extends Phaser.Scene {
       this.arena = this.cavern;
       this.movementBounds = this.arena.bounds;
     }
+    if(!this.qualityReference&&!this.glacierPlaytest?.environmentBaseline)this.campaignEnvironment=new CampaignEnvironment(this,this.area,this.movementBounds,this.arena.obstacles);
     let entry = coopSession.role === 'guest' && coopSession.ownPose ? coopSession.ownPose! : this.area === 'base'?BASE.entry:this.area==='springs'||this.area==='terraces'?COLONY[this.area].entry:this.area === 'forest' ? FOREST_ENTRY : this.area === 'valley'
       ? this.returnToValleyPortal ? VALLEY.entry : this.returnToFrontierPortal ? VALLEY.frontier.checkpoint : this.valleyFrontierReached ? VALLEY.frontier.checkpoint : this.valleyCheckpointReached ? VALLEY.checkpoint : VALLEY.entry
       : this.area === 'arid' ? this.returnFromDunes ? { x: 4770, y: 805 } : this.aridSignalSeen ? SIROCCO.frontierCheckpoint : this.aridVisited ? SIROCCO.checkpoint : SIROCCO.entry
@@ -475,6 +480,7 @@ export class GameScene extends Phaser.Scene {
       : this.returnToThreshold ? { x: 6060, y: 740 } : this.firstEchoSeen ? W.respawn
       : this.exteriorEntered ? EXPANSION.exteriorRespawn : this.deeperEntered ? EXPANSION.deeperRespawn
       : this.deepCavernEntered ? DEEP_AREA.entry : CAVERN_ENTRY;
+    if(this.glacierPlaytest?.environment&&this.area==='cavern')entry={...CAVERN_ENTRY};
     if(this.forestProof)entry={...FINISH_ENTRY};
     this.returnStation=coopSession.role==='guest'&&coopSession.world?.returnStation?{...coopSession.world.returnStation}:this.colony?{x:430,y:1140}:this.volcanic?((this.area==='cinder'?this.cinderSignalSeen:this.obsidianSignalSeen)?{...this.volcanic.config.checkpoint}:{x:460,y:830}):this.area==='caldera'?(this.calderaCheckpointReached||this.titanReached?{...CALDERA.checkpoint}:{x:450,y:820}):{x:entry.x,y:entry.y};
     if(this.expeditionArrival&&coopSession.role!=='guest')entry=safeExpeditionPosition(this.expeditionArrival,PLAYER.radius,this.arena.obstacles,this.movementBounds)??entry;
@@ -697,6 +703,7 @@ export class GameScene extends Phaser.Scene {
       this.visitingCoop = true;
       if (!this.inputModalOpen && this.controls.recordsPressed) { this.records.open(); return; }
       this.party?.updateGuest(time, Math.min(delta / 1000, .04));
+      this.campaignEnvironment?.update(time,this.player,this.party?.environmentActors??[]);
       this.hud.setInputMethod(this.controls.inputMethod);
       updateEnvironmentOcclusion(this, this.player.position, Math.min(delta / 1000, .04));
       this.updateMusicRegion(); this.updateExplorationGuide();
@@ -1032,6 +1039,7 @@ export class GameScene extends Phaser.Scene {
     this.hud.update(this.player.hp, this.player.maxHp, this.player.dashProgress, this.charge.getProgress(time), heavy.phase, heavy.level,
       this.player.dashCooldown, this.charge.cooldown);
     if(this.arena instanceof ForestFinishArea)this.arena.update(time,this.player,this.enemies);
+    this.campaignEnvironment?.update(time,this.player,[...this.enemies,...(this.party?.players??[])]);
     if (this.qualityReference) return;
     if (this.area === 'sandpit') {
       if (this.soterrado?.state === 'DORMANT' && Math.max(this.player.position.x,...(this.party?.players??[]).filter(p=>!p.isDead).map(p=>p.position.x)) >= SANDPIT.awakeningX) this.soterrado.beginIntro(time);
@@ -2275,6 +2283,14 @@ export class GameScene extends Phaser.Scene {
 
   private restoreJourney(): void {
     if (this.glacierPlaytest) {
+      if(this.glacierPlaytest.environment){
+        this.area=this.glacierPlaytest.area;
+        this.progression.restore({xp:this.area==='base'||this.area==='forest'?0:1500,echoes:['northern-ruin','mineral-signal','unknown-trace'],sourceLocated:true,passageOpen:true,rewardedHollows:[],rewardedRoutes:[],bossRewards:[]});
+        for(const upgrade of ['chargePower','dashDuration','chargeWidth','saberReach','saberArc','dashCooldown'] as const)this.progression.investUpgrade(upgrade);
+        for(const flag of ['deepPassageOpen','fragmentSeen','firstEchoSeen','wardenGateOpen'] as const)this[flag]=true;
+        this.economy=validEconomy({credits:300,materials:[30,30,30],potions:8,visited:['base','forest']});
+        return;
+      }
       if(this.glacierPlaytest.economy){this.area='base';this.economy=validEconomy({credits:300,materials:[30,30,30],potions:3,visited:['base','forest']});return;}
       if(this.glacierPlaytest.area==='forest'){
         this.area='forest';

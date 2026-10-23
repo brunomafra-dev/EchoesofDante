@@ -1,0 +1,50 @@
+[
+  {
+    "file": "public/assets/visual/world-finish/arid-floor-v1.webp",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGB",
+    "bytes": 794218,
+    "decodedRgbaBytes": 6291456
+  },
+  {
+    "file": "public/assets/visual/world-finish/camp-floor-v1.webp",
+    "width": 1448,
+    "height": 1086,
+    "mode": "RGB",
+    "bytes": 857076,
+    "decodedRgbaBytes": 6290112
+  },
+  {
+    "file": "public/assets/visual/world-finish/cave-floor-v1.webp",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGB",
+    "bytes": 718204,
+    "decodedRgbaBytes": 6291456
+  },
+  {
+    "file": "public/assets/visual/world-finish/forest-floor-v1.webp",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGB",
+    "bytes": 840932,
+    "decodedRgbaBytes": 6291456
+  },
+  {
+    "file": "public/assets/visual/world-finish/meadow-floor-v1.webp",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGB",
+    "bytes": 850602,
+    "decodedRgbaBytes": 6291456
+  },
+  {
+    "file": "public/assets/visual/world-finish/regional-plants-v1.webp",
+    "width": 512,
+    "height": 512,
+    "mode": "RGBA",
+    "bytes": 101772,
+    "decodedRgbaBytes": 1048576
+  }
+]

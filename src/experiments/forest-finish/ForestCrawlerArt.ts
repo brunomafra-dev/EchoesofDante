@@ -8,6 +8,7 @@ export class ForestCrawlerArt{
  private lastState='IDLE';
  private struckAt=-Infinity;
  constructor(scene:Phaser.Scene,private view:Phaser.GameObjects.Container){
+  if(!scene.textures.exists('finish-contact')){const canvas=scene.textures.createCanvas('finish-contact',96,96)!,c=canvas.context,g=c.createRadialGradient(48,48,0,48,48,46);g.addColorStop(0,'rgba(8,20,16,.7)');g.addColorStop(.45,'rgba(8,20,16,.3)');g.addColorStop(1,'rgba(8,20,16,0)');c.fillStyle=g;c.fillRect(0,0,96,96);canvas.refresh();}
   // Retain the common impact flash as the top child; replace only old artwork.
   for(const child of view.list.slice(0,-1)){child.setActive(false);(child as Phaser.GameObjects.Image).setVisible(false);}
   this.contact=scene.add.image(0,0,'finish-contact').setDisplaySize(78,43).setAlpha(.8);

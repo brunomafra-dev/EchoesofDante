@@ -1,0 +1,445 @@
+{
+  "method": "One persistent Phaser game, three complete cycles through 16 region constructors using explicit DEV area/restart fixtures. First cycle warms finite asset cache; next two compare objects, textures, listeners and tweens per area. Not a human campaign traversal.",
+  "cycles": [
+    [
+      {
+        "area": "base",
+        "objects": 64,
+        "textures": 224,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 0,
+        "ground": 1
+      },
+      {
+        "area": "forest",
+        "objects": 353,
+        "textures": 229,
+        "shutdown": 30,
+        "resize": 4,
+        "tweens": 20,
+        "ground": 1
+      },
+      {
+        "area": "cavern",
+        "objects": 126,
+        "textures": 229,
+        "shutdown": 26,
+        "resize": 4,
+        "tweens": 4,
+        "ground": 4
+      },
+      {
+        "area": "warden",
+        "objects": 59,
+        "textures": 227,
+        "shutdown": 23,
+        "resize": 5,
+        "tweens": 0,
+        "ground": 1
+      },
+      {
+        "area": "valley",
+        "objects": 166,
+        "textures": 237,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 3,
+        "ground": 3
+      },
+      {
+        "area": "springs",
+        "objects": 103,
+        "textures": 232,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 0,
+        "ground": 2
+      },
+      {
+        "area": "terraces",
+        "objects": 105,
+        "textures": 231,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 0,
+        "ground": 2
+      },
+      {
+        "area": "arid",
+        "objects": 132,
+        "textures": 235,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 3,
+        "ground": 3
+      },
+      {
+        "area": "dunes",
+        "objects": 111,
+        "textures": 232,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 1,
+        "ground": 2
+      },
+      {
+        "area": "sandpit",
+        "objects": 67,
+        "textures": 228,
+        "shutdown": 23,
+        "resize": 5,
+        "tweens": 0,
+        "ground": 1
+      },
+      {
+        "area": "frost",
+        "objects": 116,
+        "textures": 233,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 1,
+        "ground": 1
+      },
+      {
+        "area": "icecave",
+        "objects": 114,
+        "textures": 233,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 1,
+        "ground": 1
+      },
+      {
+        "area": "icenest",
+        "objects": 81,
+        "textures": 227,
+        "shutdown": 23,
+        "resize": 5,
+        "tweens": 1,
+        "ground": 1
+      },
+      {
+        "area": "cinder",
+        "objects": 112,
+        "textures": 232,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 1,
+        "ground": 1
+      },
+      {
+        "area": "obsidian",
+        "objects": 121,
+        "textures": 233,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 1,
+        "ground": 1
+      },
+      {
+        "area": "caldera",
+        "objects": 145,
+        "textures": 236,
+        "shutdown": 23,
+        "resize": 5,
+        "tweens": 1,
+        "ground": 1
+      }
+    ],
+    [
+      {
+        "area": "base",
+        "objects": 64,
+        "textures": 230,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 0,
+        "ground": 1
+      },
+      {
+        "area": "forest",
+        "objects": 353,
+        "textures": 233,
+        "shutdown": 30,
+        "resize": 4,
+        "tweens": 20,
+        "ground": 1
+      },
+      {
+        "area": "cavern",
+        "objects": 126,
+        "textures": 230,
+        "shutdown": 26,
+        "resize": 4,
+        "tweens": 4,
+        "ground": 4
+      },
+      {
+        "area": "warden",
+        "objects": 59,
+        "textures": 228,
+        "shutdown": 23,
+        "resize": 5,
+        "tweens": 0,
+        "ground": 1
+      },
+      {
+        "area": "valley",
+        "objects": 166,
+        "textures": 238,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 3,
+        "ground": 3
+      },
+      {
+        "area": "springs",
+        "objects": 103,
+        "textures": 233,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 0,
+        "ground": 2
+      },
+      {
+        "area": "terraces",
+        "objects": 105,
+        "textures": 232,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 0,
+        "ground": 2
+      },
+      {
+        "area": "arid",
+        "objects": 132,
+        "textures": 235,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 3,
+        "ground": 3
+      },
+      {
+        "area": "dunes",
+        "objects": 111,
+        "textures": 232,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 1,
+        "ground": 2
+      },
+      {
+        "area": "sandpit",
+        "objects": 67,
+        "textures": 228,
+        "shutdown": 23,
+        "resize": 5,
+        "tweens": 0,
+        "ground": 1
+      },
+      {
+        "area": "frost",
+        "objects": 116,
+        "textures": 233,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 1,
+        "ground": 1
+      },
+      {
+        "area": "icecave",
+        "objects": 114,
+        "textures": 233,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 1,
+        "ground": 1
+      },
+      {
+        "area": "icenest",
+        "objects": 81,
+        "textures": 227,
+        "shutdown": 23,
+        "resize": 5,
+        "tweens": 1,
+        "ground": 1
+      },
+      {
+        "area": "cinder",
+        "objects": 112,
+        "textures": 232,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 1,
+        "ground": 1
+      },
+      {
+        "area": "obsidian",
+        "objects": 121,
+        "textures": 233,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 1,
+        "ground": 1
+      },
+      {
+        "area": "caldera",
+        "objects": 145,
+        "textures": 236,
+        "shutdown": 23,
+        "resize": 5,
+        "tweens": 1,
+        "ground": 1
+      }
+    ],
+    [
+      {
+        "area": "base",
+        "objects": 64,
+        "textures": 230,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 0,
+        "ground": 1
+      },
+      {
+        "area": "forest",
+        "objects": 353,
+        "textures": 233,
+        "shutdown": 30,
+        "resize": 4,
+        "tweens": 20,
+        "ground": 1
+      },
+      {
+        "area": "cavern",
+        "objects": 126,
+        "textures": 230,
+        "shutdown": 26,
+        "resize": 4,
+        "tweens": 4,
+        "ground": 4
+      },
+      {
+        "area": "warden",
+        "objects": 59,
+        "textures": 228,
+        "shutdown": 23,
+        "resize": 5,
+        "tweens": 0,
+        "ground": 1
+      },
+      {
+        "area": "valley",
+        "objects": 166,
+        "textures": 238,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 3,
+        "ground": 3
+      },
+      {
+        "area": "springs",
+        "objects": 103,
+        "textures": 233,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 0,
+        "ground": 2
+      },
+      {
+        "area": "terraces",
+        "objects": 105,
+        "textures": 232,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 0,
+        "ground": 2
+      },
+      {
+        "area": "arid",
+        "objects": 132,
+        "textures": 235,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 3,
+        "ground": 3
+      },
+      {
+        "area": "dunes",
+        "objects": 111,
+        "textures": 232,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 1,
+        "ground": 2
+      },
+      {
+        "area": "sandpit",
+        "objects": 67,
+        "textures": 228,
+        "shutdown": 23,
+        "resize": 5,
+        "tweens": 0,
+        "ground": 1
+      },
+      {
+        "area": "frost",
+        "objects": 116,
+        "textures": 233,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 1,
+        "ground": 1
+      },
+      {
+        "area": "icecave",
+        "objects": 114,
+        "textures": 233,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 1,
+        "ground": 1
+      },
+      {
+        "area": "icenest",
+        "objects": 81,
+        "textures": 227,
+        "shutdown": 23,
+        "resize": 5,
+        "tweens": 1,
+        "ground": 1
+      },
+      {
+        "area": "cinder",
+        "objects": 112,
+        "textures": 232,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 1,
+        "ground": 1
+      },
+      {
+        "area": "obsidian",
+        "objects": 121,
+        "textures": 233,
+        "shutdown": 22,
+        "resize": 4,
+        "tweens": 1,
+        "ground": 1
+      },
+      {
+        "area": "caldera",
+        "objects": 145,
+        "textures": 236,
+        "shutdown": 23,
+        "resize": 5,
+        "tweens": 1,
+        "ground": 1
+      }
+    ]
+  ],
+  "errors": [],
+  "passed": true
+}
