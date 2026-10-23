@@ -64,6 +64,14 @@ Reprodução: `node scripts/qa-regional-model.mjs`, `node scripts/qa-regional-ex
 
 Implementação `d1b8dc9`, versão 0.1.133, enviada a origin/main. GitHub confirmou a publicação da Vercel. [Smoke público](qa/public/smoke.json): biblioteca, build sem globals DEV, início com portões bloqueados, simulação regional explícita e diário com 12 + 7 relatórios passaram; sem erro JS ou asset ausente.
 
-**Pendente externo:** o mesmo smoke terminou com falha de alinhamento do relay: Render permaneceu no protocolo **14**, revisão `edc583e0aaba2b9ff43209e6723ac0084b188dad`, após doze consultas. Esta entrega requer **15**. Isso impede declarar o cooperativo público funcional, embora o relay atualizado e os dois clientes locais tenham passado. É necessário publicar `d1b8dc9` ou posterior no serviço `echoes-of-dante-rooms`; solicitado ao usuário o estado no painel privado. O teste público completo poderá ser repetido com `node scripts/qa-expeditions-public.mjs` após o deploy. O solo está publicado e disponível no link acima.
+Na verificação inicial de 22/10, o Render permaneceu no protocolo 14 e o cooperativo público ficou pendente. O usuário informou que o deploy estava compilando/publicando; essa pendência foi resolvida na verificação abaixo.
+
+### Publicação coordenada confirmada · 23/10/2026
+
+- [Smoke público repetido](qa/public/smoke.json): Vercel 0.1.133, prévia regional, diário e portões originais passaram. Render confirmou **protocolo 15**, quatro vagas e revisão `1247c89c2150896bf9797512e354323ead7f4d7b`.
+- [Dupla pública](qa/public-coop/report.json): dois processos Chrome separados, telefone/tablet emulados, frontend Vercel e relay Render reais. Criação de sala por toque, convite, estados de espera, início pelo líder, chat com nome e movimento/ataque mirando para trás sincronizados passaram. Sete verificações, sem erro JS ou falha de asset.
+- Este teste público não utilizou globals DEV nem mudou saves reais; personagens do laboratório são temporários. Compartilhamento nativo foi mockado. Não equivale a teste em dois aparelhos físicos nem a quatro jogadores renderizados simultaneamente. A contribuição nas expedições e os recibos regionais foram verificados na dupla local acima; o catálogo completo passou no relay com quatro conexões.
+
+Solo e cooperativo estão publicados com protocolos compatíveis. Versão preservada em 0.1.133: este fechamento adiciona somente documentação/evidências. Nenhuma nova etapa foi iniciada.
 
 Aprovação visual, ritmo e duração humana continuam pendentes. Aguardar esse playtest antes do próximo capítulo.
