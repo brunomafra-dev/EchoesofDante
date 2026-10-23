@@ -1,0 +1,13 @@
+{
+  "base": "https://echosofdante.vercel.app",
+  "checkedAt": "2026-10-23T14:57:56.816Z",
+  "method": "Compiled build, actual DOM comparison/options, class/presentation/kit reloads and keyboard inputs; no DEV exports or saved campaign changes.",
+  "checks": [
+    "Published revision 02 HTML and actual whole-Hollow atlas both confirmed",
+    "Published compiled reference loads and accepts movement, attack and Q without DEV globals",
+    "Class, presentation and advanced equipment options recreate the reference in the compiled build",
+    "Current/new comparison and restart work through real page navigation"
+  ],
+  "errors": [],
+  "passed": true
+}
