@@ -190,7 +190,7 @@ export class Player {
     this.velocity.y = heavyBusy ? 0 : direction.y * speed;
     const previousX = this.position.x;
     const previousY = this.position.y;
-    moveWithCollisions(this.position, this.velocity, Math.min(deltaSeconds, 0.04), this.radius, obstacles, bounds);
+    moveWithCollisions(this.position, this.velocity, Math.min(deltaSeconds, 0.04), this.radius, obstacles, bounds,bounds?.walkable?39:0);
     const movedX = this.position.x - previousX;
     const movedY = this.position.y - previousY;
     const travelled = Math.hypot(movedX, movedY);

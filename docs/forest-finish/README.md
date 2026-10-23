@@ -1,5 +1,7 @@
 # Clareira da Nascente · referência de acabamento · 0.1.134
 
+> **Revisão vigente: [0.1.135 — terreno físico e Hollow completo](revision-02/README.md).** O usuário aprovou o acabamento ambiental da 0.1.134 e pediu corrigir passagens sobre árvores/rochas e elevar a criatura ao novo contexto. O restante deste documento registra a primeira entrega; links com versão antiga abrem a build mais recente. A revisão física/animada aguarda novo playtest.
+
 [Abrir referência jogável](https://echosofdante.vercel.app/forest-finish.html?v=0.1.134) · [Visual atual](https://echosofdante.vercel.app/forest-finish.html?mode=current&v=0.1.134) · [Biblioteca](https://echosofdante.vercel.app/test-library.html)
 
 ## Escopo e aprovação

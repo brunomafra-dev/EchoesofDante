@@ -6,19 +6,28 @@ import type {Player} from '../../entities/Player';
 
 export const FINISH_ENTRY={x:1060,y:840};
 export const FINISH_SPAWNS=[{x:1090,y:470},{x:1510,y:760},{x:1380,y:440}];
-// Same bounds and residents in both versions. These circles follow
-// the pond, raised root banks and shelves in the new painting, not extra props.
-export const FINISH_BOUNDS:MovementBounds={left:340,right:1870,top:370,bottom:1300};
-export const FINISH_SOLIDS:readonly Obstacle[]=[
- {x:505,y:403,radius:185},{x:580,y:480,radius:122},
- {x:410,y:1070,radius:160},{x:620,y:1180,radius:115},
- {x:1730,y:530,radius:150},{x:1840,y:720,radius:132},
- {x:1480,y:1200,radius:142},{x:1660,y:1290,radius:145},
- {x:420,y:705,radius:90},{x:790,y:390,radius:90},
-];
+// Authored in source-image pixels, clockwise along the actual shore/root/rock
+// bases. Grass and flat trail margins remain walkable; trunks and raised banks
+// do not. This is one connected clearing, with a southern trail and two forks.
+export const FINISH_GROUND:readonly Vec2[]=[
+ [507,1024],[604,901],[671,838],[720,770],[729,723],[701,688],
+ [635,682],[566,650],[495,608],[421,564],[359,552],[312,518],
+ [300,486],[327,454],[380,427],[445,403],[506,403],[552,378],
+ [577,340],[597,316],[636,309],[671,283],[698,234],[733,185],
+ [758,141],[775,88],[770,20],[898,20],[923,78],[913,126],
+ [935,160],[982,178],[1051,178],[1100,158],[1190,155],[1243,162],
+ [1284,187],[1375,204],[1430,211],[1517,180],[1517,245],
+ [1424,273],[1352,267],[1289,249],[1246,228],[1200,215],
+ [1132,229],[1085,249],[1072,294],[1060,353],[1092,405],
+ [1080,459],[1110,507],[1185,534],[1233,562],[1225,605],
+ [1190,625],[1128,621],[1076,623],[1008,654],[966,698],
+ [937,736],[910,774],[912,810],[886,857],[866,908],
+ [836,945],[784,1010],[776,1024],
+].map(([x,y])=>({x:x*2200/1536,y:y*1500/1024}));
+export const FINISH_BOUNDS:MovementBounds={left:0,right:2200,top:0,bottom:1500,walkable:FINISH_GROUND};
 
 export class ForestFinishArea{
- readonly bounds={...FINISH_BOUNDS};
+ readonly bounds:MovementBounds;
  readonly obstacles:Obstacle[];
  private boughs:{image:Phaser.GameObjects.Image;x:number;y:number;angle:number;phase:number}[]=[];
  private motes:{image:Phaser.GameObjects.Arc;x:number;y:number;phase:number}[]=[];
@@ -26,8 +35,9 @@ export class ForestFinishArea{
  private ripples:Phaser.GameObjects.Ellipse[]=[];
  private readonly still=matchMedia('(prefers-reduced-motion: reduce)').matches;
  constructor(scene:Phaser.Scene,readonly enhanced:boolean){
+  this.bounds=enhanced?{...FINISH_BOUNDS}:{left:340,right:1870,top:370,bottom:1300};
   if(!enhanced){this.obstacles=new Arena(scene).obstacles;return;}
-  this.obstacles=FINISH_SOLIDS.map(o=>({...o}));
+  this.obstacles=[];
   scene.add.image(1100,750,'finish-clearing').setDisplaySize(2200,1500).setDepth(-10001).setName('finish-continuous-ground');
   // True-alpha overhead foliage is separate from the ground so it can sway and
   // partially overlap actors. Only three bounded sprites; no static redraw.
@@ -40,6 +50,11 @@ export class ForestFinishArea{
   for(let i=0;i<3;i++)this.ripples.push(scene.add.ellipse(468+i*43,367+i*28,54,12).setStrokeStyle(1,0xd5e6c3,.14).setDepth(-9999));
   if(!scene.textures.exists('finish-contact')){const canvas=scene.textures.createCanvas('finish-contact',96,96)!;const c=canvas.context,g=c.createRadialGradient(48,48,0,48,48,46);g.addColorStop(0,'rgba(8,20,16,.7)');g.addColorStop(.45,'rgba(8,20,16,.3)');g.addColorStop(1,'rgba(8,20,16,0)');c.fillStyle=g;c.fillRect(0,0,96,96);canvas.refresh();}
   this.contact=scene.add.image(0,0,'finish-contact').setDisplaySize(88,31).setAlpha(.75);
+  if(import.meta.env.DEV&&new URLSearchParams(location.search).has('terrain')){
+   const outline=scene.add.graphics().setDepth(15000).setName('finish-ground-diagnostic');
+   outline.lineStyle(2,0x5fe6d8,.8).beginPath().moveTo(FINISH_GROUND[0].x,FINISH_GROUND[0].y);
+   for(const p of FINISH_GROUND.slice(1))outline.lineTo(p.x,p.y);outline.closePath().strokePath();
+  }
  }
  update(now:number,player:Player):void{
   if(!this.enhanced)return;

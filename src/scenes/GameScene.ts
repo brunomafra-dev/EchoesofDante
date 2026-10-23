@@ -286,7 +286,10 @@ export class GameScene extends Phaser.Scene {
     private readonly shellLoading?:(progress:number)=>void) { super('Game'); }
 
   preload(): void {
-    if(this.forestProof)for(const[key,file]of [['finish-clearing','clearing-v1'],['finish-canopy','canopy-v1']])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/experiments/forest-finish/${file}.webp`);
+    if(this.forestProof){
+      for(const[key,file]of [['finish-clearing','clearing-v1'],['finish-canopy','canopy-v1']])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/experiments/forest-finish/${file}.webp`);
+      if(this.qualityReference==='forest-reference'&&!this.textures.exists('finish-hollow'))this.load.spritesheet('finish-hollow',`${import.meta.env.BASE_URL}assets/experiments/forest-finish/hollow-v2.webp`,{frameWidth:256,frameHeight:256});
+    }
     if(this.shellLoading){const report=this.shellLoading,clear=()=>this.load.off(Phaser.Loader.Events.PROGRESS,report);this.load.on(Phaser.Loader.Events.PROGRESS,report);this.load.once(Phaser.Loader.Events.COMPLETE,clear);this.events.once(Phaser.Scenes.Events.SHUTDOWN,clear);}
     preloadColonization(this);
     preloadMissionProps(this);
@@ -503,7 +506,7 @@ export class GameScene extends Phaser.Scene {
     this.sounds.setMusicFocus(1);
     const spawns = this.forestProof?FINISH_SPAWNS:this.area === 'forest' ? FOREST_SPAWNS : CAVERN_HOLLOWS;
     if (this.area === 'forest' || this.area === 'cavern') spawns.forEach((point, index) => {
-      const enemy = new HollowCrawler(this, point.x, point.y, this.area === 'forest'&&!this.forestProof ? FOREST_PATROLS[index] : undefined, this.qualityReference === 'reference');
+      const enemy = new HollowCrawler(this, point.x, point.y, this.area === 'forest'&&!this.forestProof ? FOREST_PATROLS[index] : undefined, this.qualityReference==='forest-reference'?'forest':this.qualityReference === 'reference');
       tuneEnemy(enemy,this.area,this.campaignDifficulty);this.enemies.push(enemy);
       this.enemySpecies.set(enemy, 'crawler');
       this.hollowSpawnIds.set(enemy, this.area === 'forest' ? index : FOREST_SPAWNS.length + index);
