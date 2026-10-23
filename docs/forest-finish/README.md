@@ -52,3 +52,9 @@ Scripts: `qa-forest-finish.mjs` e `qa-forest-finish-inputs.mjs`; `QA_BASE`/`QA_O
 `npm run typecheck` e `npm run build` passaram; permanece o aviso conhecido de tamanho do chunk Phaser. [Build compilada](qa/compiled/report.json): navegação real, troca de classe/apresentação/kit avançado e comparação/reinício, sem globals DEV ou alteração de saves reais. [Regressão da campanha](qa/campaign/report.json): Floresta → Ecos → mecanismo → cavernas → Primeiro Eco → Warden → Vale, combate/recompensa, pausas, morte/respawn, reload e gamepad mock passaram; sem erro JS. Essa regressão usa posicionamento DEV explícito, não uma campanha humana caminhando.
 
 Revisão crítica: o terreno tem material e composição mais contínuos, mas os personagens mantêm a arte existente e podem pedir outro ajuste de nitidez/escala após o playtest. O HUD é uma proposta local; não foi migrado para todos os menus. Bancos pré-pintados e limites simples merecem revisão humana nas bordas. A tonalidade e a transparência da copa variam suavemente, e a animação ambiental respeita a preferência inicial de movimento reduzido. Publicação e QA público são registrados após o deploy. Aprovação técnica e aprovação visual humana são separadas.
+
+## Publicação confirmada · 23/10/2026
+
+Implementação `a43ca4a`, versão 0.1.134, enviada a origin/main. GitHub confirmou a publicação da Vercel. [QA público](qa/public/report.json) passou contra `https://echosofdante.vercel.app`: carregamento sem globals DEV, entrada/movimento/ataque/Q, troca de classe/apresentação/kit avançado, comparação e reinício por navegação real. Nenhum erro JS/asset ausente; sentinel dos saves reais preservado. As capturas públicas acompanham o relatório.
+
+**Entrega técnica concluída; aguardar a avaliação visual humana caminhando e lutando.** O novo acabamento está somente neste laboratório. Protocolo do cooperativo permanece 15; nenhum servidor/modelo de geração foi acrescentado à hospedagem.
