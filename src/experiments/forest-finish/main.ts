@@ -20,6 +20,9 @@ function choose(name:string,value:string){const url=new URL(location.href);url.s
 for(const b of Array.from(document.querySelectorAll<HTMLButtonElement>('[data-mode]')))b.onclick=()=>choose('mode',b.dataset.mode!);
 for(const select of Array.from(document.querySelectorAll<HTMLSelectElement>('select'))){select.value=select.name==='class'?classId:select.name==='sex'?sex:kit;select.onchange=()=>choose(select.name,select.value);}
 document.querySelector<HTMLButtonElement>('[data-retry]')!.onclick=()=>location.reload();
+const comparison=document.querySelector<HTMLAnchorElement>('[data-hollow-compare]')!,comparisonUrl=new URL(location.href),previousHollow=params.get('hollow')==='previous';
+comparisonUrl.searchParams.set('mode','reference');comparisonUrl.searchParams.set('hollow',previousHollow?'refined':'previous');comparison.href=comparisonUrl.href;
+comparison.textContent=previousHollow?'Voltar ao Hollow com leitura refinada':'Comparar com o Hollow anterior nesta clareira';
 const {GameScene}=await import('../../scenes/GameScene');
 const game=new Phaser.Game({type:Phaser.AUTO,width:VIEW_WIDTH,height:VIEW_HEIGHT,parent:'game',backgroundColor:'#0b1612',scale:{mode:Phaser.Scale.EXPAND,autoCenter:Phaser.Scale.CENTER_BOTH},render:{antialias:true,pixelArt:false},scene:[new GameScene(current?'forest-current':'forest-reference',false,()=>{document.querySelector<HTMLElement>('#loading')!.hidden=true;})]});
 const options=document.querySelector<HTMLDetailsElement>('.proof-tools details')!;

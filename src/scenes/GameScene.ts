@@ -288,7 +288,10 @@ export class GameScene extends Phaser.Scene {
   preload(): void {
     if(this.forestProof){
       for(const[key,file]of [['finish-clearing','clearing-v1'],['finish-canopy','canopy-v1']])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/experiments/forest-finish/${file}.webp`);
-      if(this.qualityReference==='forest-reference'&&!this.textures.exists('finish-hollow'))this.load.spritesheet('finish-hollow',`${import.meta.env.BASE_URL}assets/experiments/forest-finish/hollow-v2.webp`,{frameWidth:256,frameHeight:256});
+      if(this.qualityReference==='forest-reference'&&!this.textures.exists('finish-hollow')){
+        const file=new URLSearchParams(location.search).get('hollow')==='previous'?'hollow-v2':'hollow-v3';
+        this.load.spritesheet('finish-hollow',`${import.meta.env.BASE_URL}assets/experiments/forest-finish/${file}.webp`,{frameWidth:256,frameHeight:256});
+      }
     }
     if(this.shellLoading){const report=this.shellLoading,clear=()=>this.load.off(Phaser.Loader.Events.PROGRESS,report);this.load.on(Phaser.Loader.Events.PROGRESS,report);this.load.once(Phaser.Loader.Events.COMPLETE,clear);this.events.once(Phaser.Scenes.Events.SHUTDOWN,clear);}
     preloadColonization(this);

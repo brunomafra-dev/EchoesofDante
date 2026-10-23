@@ -1,0 +1,346 @@
+{
+  "method": "Authored contour vs physical footprint, swept movement/dash/knockback and connected routes; real browser actors/combat and full-body Hollow frames. DEV positioning is explicit, not a human playtest.",
+  "checks": [
+    "Six painted hazards block human/Hollow footprints at walk, dash and knockback speeds; no tunnelling or circle gaps in 4,320 swept moves",
+    "Main clearing, both northern forks, southern trail and pond lookout stay connected with a full player footprint",
+    "Real Space+d inputs stop all four classes at the painted east rock bank",
+    "Hollow uses four registered whole-creature walk frames; no legacy body/limbs are visible",
+    "Existing stationary windup/strike select complete brace and thrust poses, preserving attack timings"
+  ],
+  "errors": [],
+  "boundaries": [
+    {
+      "name": "pond",
+      "foot": 39,
+      "speed": 245,
+      "end": {
+        "x": 453.93521871421507,
+        "y": 671.8093153090142
+      }
+    },
+    {
+      "name": "pond",
+      "foot": 39,
+      "speed": 760,
+      "end": {
+        "x": 451.3397141455394,
+        "y": 674.9553814528634
+      }
+    },
+    {
+      "name": "pond",
+      "foot": 39,
+      "speed": 500,
+      "end": {
+        "x": 450.8734234638092,
+        "y": 675.5205822792032
+      }
+    },
+    {
+      "name": "pond",
+      "foot": 18,
+      "speed": 245,
+      "end": {
+        "x": 453.9352187142044,
+        "y": 692.8093153090272
+      }
+    },
+    {
+      "name": "pond",
+      "foot": 18,
+      "speed": 760,
+      "end": {
+        "x": 451.3397141455394,
+        "y": 695.9553814528634
+      }
+    },
+    {
+      "name": "pond",
+      "foot": 18,
+      "speed": 500,
+      "end": {
+        "x": 450.8734234638092,
+        "y": 696.5205822792032
+      }
+    },
+    {
+      "name": "root bank",
+      "foot": 39,
+      "speed": 245,
+      "end": {
+        "x": 762.7694946590973,
+        "y": 1442.999
+      }
+    },
+    {
+      "name": "root bank",
+      "foot": 39,
+      "speed": 760,
+      "end": {
+        "x": 762.7618676469419,
+        "y": 1442.999
+      }
+    },
+    {
+      "name": "root bank",
+      "foot": 39,
+      "speed": 500,
+      "end": {
+        "x": 762.7644943938406,
+        "y": 1442.999
+      }
+    },
+    {
+      "name": "root bank",
+      "foot": 18,
+      "speed": 245,
+      "end": {
+        "x": 762.7694946590973,
+        "y": 1463.999
+      }
+    },
+    {
+      "name": "root bank",
+      "foot": 18,
+      "speed": 760,
+      "end": {
+        "x": 762.7618676469419,
+        "y": 1463.999
+      }
+    },
+    {
+      "name": "root bank",
+      "foot": 18,
+      "speed": 500,
+      "end": {
+        "x": 762.7644943938406,
+        "y": 1463.999
+      }
+    },
+    {
+      "name": "east rocks",
+      "foot": 39,
+      "speed": 245,
+      "end": {
+        "x": 1544.716913749383,
+        "y": 557.9425110200997
+      }
+    },
+    {
+      "name": "east rocks",
+      "foot": 39,
+      "speed": 760,
+      "end": {
+        "x": 1543.9816784735956,
+        "y": 555.8033592341868
+      }
+    },
+    {
+      "name": "east rocks",
+      "foot": 39,
+      "speed": 500,
+      "end": {
+        "x": 1544.2758415568485,
+        "y": 556.2922382219792
+      }
+    },
+    {
+      "name": "east rocks",
+      "foot": 18,
+      "speed": 245,
+      "end": {
+        "x": 1544.716913749383,
+        "y": 578.9425110200997
+      }
+    },
+    {
+      "name": "east rocks",
+      "foot": 18,
+      "speed": 760,
+      "end": {
+        "x": 1543.9816784735956,
+        "y": 576.8033592341868
+      }
+    },
+    {
+      "name": "east rocks",
+      "foot": 18,
+      "speed": 500,
+      "end": {
+        "x": 1544.2758415568485,
+        "y": 577.2922382219792
+      }
+    },
+    {
+      "name": "northwest trunk",
+      "foot": 39,
+      "speed": 245,
+      "end": {
+        "x": 1036.4064284217056,
+        "y": 282.7111094108616
+      }
+    },
+    {
+      "name": "northwest trunk",
+      "foot": 39,
+      "speed": 760,
+      "end": {
+        "x": 605.834857785344,
+        "y": 582.4820300826603
+      }
+    },
+    {
+      "name": "northwest trunk",
+      "foot": 39,
+      "speed": 500,
+      "end": {
+        "x": 981.8016747256399,
+        "y": 375.018928288061
+      }
+    },
+    {
+      "name": "northwest trunk",
+      "foot": 18,
+      "speed": 245,
+      "end": {
+        "x": 1036.4064284217045,
+        "y": 303.7111094108632
+      }
+    },
+    {
+      "name": "northwest trunk",
+      "foot": 18,
+      "speed": 760,
+      "end": {
+        "x": 605.834857785344,
+        "y": 603.4820300826603
+      }
+    },
+    {
+      "name": "northwest trunk",
+      "foot": 18,
+      "speed": 500,
+      "end": {
+        "x": 981.8016747256396,
+        "y": 396.01892828806155
+      }
+    },
+    {
+      "name": "northeast trunk",
+      "foot": 39,
+      "speed": 245,
+      "end": {
+        "x": 1729.8987615262945,
+        "y": 209.65590329420834
+      }
+    },
+    {
+      "name": "northeast trunk",
+      "foot": 39,
+      "speed": 760,
+      "end": {
+        "x": 1774.137225742244,
+        "y": 215.6518849014861
+      }
+    },
+    {
+      "name": "northeast trunk",
+      "foot": 39,
+      "speed": 500,
+      "end": {
+        "x": 1774.0300772803307,
+        "y": 215.61703728328266
+      }
+    },
+    {
+      "name": "northeast trunk",
+      "foot": 18,
+      "speed": 245,
+      "end": {
+        "x": 1729.8987615262945,
+        "y": 230.65590329420834
+      }
+    },
+    {
+      "name": "northeast trunk",
+      "foot": 18,
+      "speed": 760,
+      "end": {
+        "x": 1774.137225742244,
+        "y": 236.6518849014861
+      }
+    },
+    {
+      "name": "northeast trunk",
+      "foot": 18,
+      "speed": 500,
+      "end": {
+        "x": 1774.0300772803307,
+        "y": 236.61703728328266
+      }
+    },
+    {
+      "name": "southeast shelf",
+      "foot": 39,
+      "speed": 245,
+      "end": {
+        "x": 1287.6055279163202,
+        "y": 1144.1566354753786
+      }
+    },
+    {
+      "name": "southeast shelf",
+      "foot": 39,
+      "speed": 760,
+      "end": {
+        "x": 1287.3881870975188,
+        "y": 1144.5584500136351
+      }
+    },
+    {
+      "name": "southeast shelf",
+      "foot": 39,
+      "speed": 500,
+      "end": {
+        "x": 1287.4633172571043,
+        "y": 1144.4195511609043
+      }
+    },
+    {
+      "name": "southeast shelf",
+      "foot": 18,
+      "speed": 245,
+      "end": {
+        "x": 1287.6055279163202,
+        "y": 1165.1566354753786
+      }
+    },
+    {
+      "name": "southeast shelf",
+      "foot": 18,
+      "speed": 760,
+      "end": {
+        "x": 1287.3881870975188,
+        "y": 1165.5584500136351
+      }
+    },
+    {
+      "name": "southeast shelf",
+      "foot": 18,
+      "speed": 500,
+      "end": {
+        "x": 1287.4633172571043,
+        "y": 1165.4195511609043
+      }
+    }
+  ],
+  "frames": [
+    1,
+    3,
+    0,
+    2,
+    4,
+    5
+  ],
+  "passed": true
+}

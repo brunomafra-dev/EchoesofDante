@@ -1,0 +1,20 @@
+{
+  "method": "Chrome desktop 1366x768, active scene, real keyboard movement then warmed sampling. Comparison fixture also verifies unchanged HP, damage, footprint and bounds.",
+  "samples": [
+    48.10319519042969,
+    48.10319519042969,
+    48.10319519042969,
+    51.077396392822266,
+    51.077396392822266,
+    51.077396392822266,
+    51.077396392822266,
+    53.3080472946167,
+    53.3080472946167,
+    53.3080472946167,
+    53.3080472946167,
+    55.231035470962524
+  ],
+  "mean": 51.42353298266729,
+  "objects": 61,
+  "textures": 220
+}
