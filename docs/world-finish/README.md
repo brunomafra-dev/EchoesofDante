@@ -37,6 +37,8 @@ Não foram alterados colliders, limites, câmera global, controles, IA, HP, dano
 
 O laboratório reservado simula as passagens da caverna abertas e mantém os quatro bosses vivos. A preparação de nível/equipamento vale apenas para esse teste; os pontos existentes são distribuídos para não abrir o diálogo de aperfeiçoamento ao carregar uma região. O jogo oficial não recebe esse progresso. Não há acesso de viagem do laboratório para saves reais.
 
+O seletor de kit nesse laboratório compara a **apresentação visual** das peças. Para avaliar atributos, obtenção e uso real de equipamentos, use a campanha ou o laboratório de inventário; esta visita não representa uma campanha balanceada do começo ao fim.
+
 ## Arte e implementação
 
 - [Seis assets e medidas](assets.json), total **4.162.804 bytes** em WebP; cinco pisos RGB e um atlas RGBA de 512×512. [Prompts completos e fontes](art-prompts.md). Geração offline com imagegen integrada; nenhuma geração neural em runtime ou imagem externa.
@@ -61,7 +63,7 @@ O laboratório reservado simula as passagens da caverna abertas e mantém os qua
 - [Build compilada](qa/compiled/report.json): navegação real entre regiões, troca de classe/apresentação/equipamento, atalhos e layouts, sem globals DEV e sem alterar o sentinel dos saves reais.
 - [Entrada da campanha compilada](qa/compiled-campaign/report.json): Astral nomeado, abertura MP4 original, dificuldade persistida, entrada no jogo, menu com gamepad e título por toque passaram. Esse teste exclui salas; o cooperativo está no relatório local separado acima.
 
-Publicação será registrada após o deploy. Aprovação técnica não substitui o playtest do usuário.
+[Verificação pública](qa/public/report.json) passou contra a Vercel: base, floresta, caverna, árido, gelo e cinzas, troca de classe/apresentação/kit, teclas e quatro resoluções, sem erro JS/HTTP e sem globals DEV. O sentinel de save real permaneceu intacto. Aprovação técnica não substitui o playtest do usuário.
 
 ## Revisão crítica e limites
 
@@ -70,3 +72,7 @@ A revisão visual identificou e corrigiu o encontro reto entre caverna e exterio
 Os painéis de regiões extensas reutilizam materiais e podem revelar variações espelhadas num exame prolongado. Terrenos de gelo/lava mantêm suas pinturas anteriores e seus marcos, com integração e movimento novos; não são biomas refeitos do zero. Densidade do piso, recortes entre massas antigas e novas e leitura dos agrupamentos de inimigos ainda merecem avaliação humana em movimento, especialmente no celular real.
 
 **Mudança aplicada à campanha; aguardar playtest antes de iniciar outra etapa.**
+
+## Publicação confirmada · 23/10/2026
+
+Implementação **`eea6395` · 0.1.139** enviada a origin/main. GitHub/Vercel confirmaram deploy concluído; laboratório público e campanha compartilham o novo renderizador. A aplicação não depende de um novo protocolo do Render: continuam os campos de sprites/layers e o protocolo 15 existentes. A validação cooperativa desta entrega foi local, descrita no relatório próprio; não confundir o smoke público de mapas com uma partida pública de quatro jogadores.
