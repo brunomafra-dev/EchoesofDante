@@ -1,0 +1,8 @@
+{
+  "base": "https://echosofdante.vercel.app",
+  "checkedAt": "2026-10-23T17:00:40.297Z",
+  "method": "Compiled build, actual DOM comparison/options, class/presentation/kit reloads and keyboard inputs; no DEV exports or saved campaign changes.",
+  "checks": [],
+  "errors": [],
+  "failure": "TimeoutError: page.waitForFunction: Timeout 120000ms exceeded."
+}

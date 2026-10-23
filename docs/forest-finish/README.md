@@ -2,7 +2,7 @@
 
 > **Atual: [0.1.136 — legibilidade do Hollow](revision-03/README.md).** Feedback positivo da revisão física; criatura anterior se confundia com o terreno. Nova pintura e comparação no mesmo ambiente aguardam playtest.
 
-> **Revisão vigente: [0.1.135 — terreno físico e Hollow completo](revision-02/README.md).** O usuário aprovou o acabamento ambiental da 0.1.134 e pediu corrigir passagens sobre árvores/rochas e elevar a criatura ao novo contexto. O restante deste documento registra a primeira entrega; links com versão antiga abrem a build mais recente. A revisão física/animada aguarda novo playtest.
+> **Registro anterior: [0.1.135 — terreno físico e Hollow completo](revision-02/README.md).** O usuário aprovou o acabamento ambiental da 0.1.134 e pediu corrigir passagens sobre árvores/rochas e elevar a criatura ao novo contexto. O restante deste documento registra a primeira entrega; links com versão antiga abrem a build mais recente. O feedback da 0.1.135 originou a revisão 03 acima.
 
 [Abrir referência jogável](https://echosofdante.vercel.app/forest-finish.html?v=0.1.134) · [Visual atual](https://echosofdante.vercel.app/forest-finish.html?mode=current&v=0.1.134) · [Biblioteca](https://echosofdante.vercel.app/test-library.html)
 
