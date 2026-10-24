@@ -1,3 +1,4 @@
+import {createCreatureShadow,type CreatureShadow} from '../visual/CreatureArt';
 import Phaser from 'phaser';
 import { Health } from '../combat/Health';
 import { inShockwaveSweep } from '../combat/HitDetection';
@@ -17,7 +18,7 @@ export class ValleyCreature implements Enemy {
   readonly attackDamage: number;
   readonly view: Phaser.GameObjects.Container;
   readonly warning: Phaser.GameObjects.Graphics;
-  readonly shadow: Phaser.GameObjects.Ellipse;
+  readonly shadow: CreatureShadow;
   isDead = false;
   state: 'IDLE' | 'CHASE' | 'WINDUP' | 'RECOVER' | 'HURT' | 'DEAD' = 'IDLE';
   private readonly body: Phaser.GameObjects.Image;
@@ -41,7 +42,7 @@ export class ValleyCreature implements Enemy {
     this.position = { x, y }; this.home = { x, y };
     this.health = new Health(s.hp); this.radius = s.radius;
     this.attackRange = s.range; this.attackDamage = s.damage;
-    this.shadow = scene.add.ellipse(x, y + 10, s.size * 0.6, 20, 0x13291c, 0.5);
+    this.shadow = createCreatureShadow(scene,x, y + 10, s.size * 0.6, 20, 0x13291c, 0.5);
     this.body = scene.add.image(0, 13, `dante-${kind}-motion`, 0).setOrigin(0.5,244/256).setDisplaySize(s.size,s.size);
     this.flash = scene.add.ellipse(0,-18,55,30,0xffead5,0);
     this.view = scene.add.container(x,y,[this.body,this.flash]);

@@ -1,0 +1,32 @@
+{
+  "base": "http://localhost:5192",
+  "checkedAt": "2026-10-24T13:52:47.654Z",
+  "method": "Compiled site, no DEV globals; actual specimen dropdown navigation, keyboard combat and save sentinel. Desktop and 844x390 viewport, not a physical mobile claim.",
+  "errors": [],
+  "checks": [
+    "All 18 optimized full-body atlases published byte-for-byte",
+    "Real dropdown visits regional residents and all four bosses in the compiled game",
+    "Original/new option, female Hunter, movement, basic attack and Q input without runtime errors"
+  ],
+  "atlasesRequested": [
+    "bankGrazer-v1.webp",
+    "reedSpitter-v1.webp",
+    "emberHound-v1.webp",
+    "fumarole-v1.webp",
+    "slagback-v1.webp",
+    "titan-v1.webp",
+    "vesper-v1.webp",
+    "iceCarapace-v1.webp",
+    "frostPouncer-v1.webp",
+    "frostSpitter-v1.webp",
+    "skitter-v1.webp",
+    "spitter-v1.webp",
+    "carapace-v1.webp",
+    "thorn-v1.webp",
+    "dunePouncer-v1.webp",
+    "glassSpitter-v1.webp",
+    "warden-v1.webp",
+    "soterrado-v1.webp"
+  ],
+  "passed": true
+}

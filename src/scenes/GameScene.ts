@@ -1,3 +1,4 @@
+import {preloadCreatureSheet} from '../visual/CreatureArt';
 import { completeMuzzle } from '../visual/CompleteActorFrames';
 import Phaser from 'phaser';
 import {CoopNames} from '../visual/CoopNames';
@@ -284,10 +285,11 @@ export class GameScene extends Phaser.Scene {
   private get forestProof():boolean{return this.qualityReference==='forest-reference'||this.qualityReference==='forest-current';}
   constructor(private readonly qualityReference: false | 'baseline' | 'reference' | 'forest-reference' | 'forest-current' = false,
     private readonly originalWarrior = false, private readonly shellReady?: (scene: GameScene) => void,
-    private readonly glacierPlaytest?: { area: JourneyArea; classId: PlayableClass; sex?:CharacterSex; pilot?:boolean; inventory?:boolean; economy?:boolean; environment?:boolean; environmentBaseline?:boolean; look?:import('../config/appearance').EquipmentLook; weaponLook?:import('../config/appearance').WeaponStyle },
+    private readonly glacierPlaytest?: { area: JourneyArea; classId: PlayableClass; sex?:CharacterSex; pilot?:boolean; inventory?:boolean; economy?:boolean; environment?:boolean; environmentBaseline?:boolean; creatureBaseline?:boolean; specimen?:string; look?:import('../config/appearance').EquipmentLook; weaponLook?:import('../config/appearance').WeaponStyle },
     private readonly shellLoading?:(progress:number)=>void) { super('Game'); }
 
   preload(): void {
+    this.data.set('creature-art-original',this.glacierPlaytest?.creatureBaseline===true);
     if(!this.qualityReference&&!this.glacierPlaytest?.environmentBaseline)preloadCampaignEnvironment(this,this.journeyLoaded?this.area:this.glacierPlaytest?.economy?'base':this.glacierPlaytest?.area??this.journey.load()?.area??(new URLSearchParams(location.search).has('qa')?'forest':'base'));
     if(this.forestProof){
       for(const[key,file]of [['finish-clearing','clearing-v1'],['finish-canopy','canopy-v1']])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/experiments/forest-finish/${file}.webp`);
@@ -305,13 +307,13 @@ export class GameScene extends Phaser.Scene {
     preloadCompleteActors(this);
     for(const key of ['warrior-starter-weapon','warrior-pilot-weapon','warrior-saber-painted'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/visual/characters/${key}.png`);
     for(const key of ['cinder-ground','obsidian-ground'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/visual/environment/${key}.webp`);
-    for(const s of Object.values(VOLCANIC_CREATURES))if(!this.textures.exists(s.texture))this.load.spritesheet(s.texture,`${import.meta.env.BASE_URL}assets/visual/characters/${s.texture}.png`,{frameWidth:256,frameHeight:256});
+    for(const s of Object.values(VOLCANIC_CREATURES))if(!this.textures.exists(s.texture))preloadCreatureSheet(this,s.texture,`${import.meta.env.BASE_URL}assets/visual/characters/${s.texture}.png`,256);
     if(!this.textures.exists('caldera-ground'))this.load.image('caldera-ground',`${import.meta.env.BASE_URL}assets/visual/environment/caldera-ground.webp`);
-    if(!this.textures.exists('titan-motion'))this.load.spritesheet('titan-motion',`${import.meta.env.BASE_URL}assets/visual/characters/titan-motion.png`,{frameWidth:256,frameHeight:256});
+    if(!this.textures.exists('titan-motion'))preloadCreatureSheet(this,'titan-motion',`${import.meta.env.BASE_URL}assets/visual/characters/titan-motion.png`,256);
     if (!this.textures.exists('glacier-ground')) this.load.image('glacier-ground', `${import.meta.env.BASE_URL}assets/visual/environment/glacier-ground.webp`);
-    for (const [key, file] of [['vesper-motion', 'vesper-motion'], ['dante-iceCarapace-motion', 'ice-carapace-motion']]) if (!this.textures.exists(key)) this.load.spritesheet(key, `${import.meta.env.BASE_URL}assets/visual/characters/${file}.png`, { frameWidth: 256, frameHeight: 256 });
+    for (const [key, file] of [['vesper-motion', 'vesper-motion'], ['dante-iceCarapace-motion', 'ice-carapace-motion']]) if (!this.textures.exists(key)) preloadCreatureSheet(this,key, `${import.meta.env.BASE_URL}assets/visual/characters/${file}.png`,256);
     if (!this.textures.exists('frost-ground')) this.load.image('frost-ground', `${import.meta.env.BASE_URL}assets/visual/environment/frost-ground.webp`);
-    for (const kind of ['pouncer', 'spitter']) if (!this.textures.exists(`dante-frost-${kind}-motion`)) this.load.spritesheet(`dante-frost-${kind}-motion`, `${import.meta.env.BASE_URL}assets/visual/characters/frost-${kind}-motion.png`, { frameWidth: 256, frameHeight: 256 });
+    for (const kind of ['pouncer', 'spitter']) if (!this.textures.exists(`dante-frost-${kind}-motion`)) preloadCreatureSheet(this,`dante-frost-${kind}-motion`, `${import.meta.env.BASE_URL}assets/visual/characters/frost-${kind}-motion.png`,256);
     const assetBase = `${import.meta.env.BASE_URL}assets/visual/characters/`;
     const art = [
       'warrior-body',
@@ -331,10 +333,10 @@ export class GameScene extends Phaser.Scene {
     }
     for (const key of ['dante-skitter-motion', 'dante-spitter-motion', 'dante-carapace-motion', 'dante-thorn-motion',
       'dante-dune-pouncer-motion', 'dante-glass-spitter-motion']) {
-      if (!this.textures.exists(key)) this.load.spritesheet(key, `${assetBase}${key}.png`, { frameWidth: 256, frameHeight: 256 });
+      if (!this.textures.exists(key)) preloadCreatureSheet(this,key, `${assetBase}${key}.png`,256);
     }
-    if (!this.textures.exists('warden-motion')) this.load.spritesheet('warden-motion', `${assetBase}warden-motion.png`, { frameWidth: 512, frameHeight: 512 });
-    if (!this.textures.exists('soterrado-motion')) this.load.spritesheet('soterrado-motion', `${assetBase}soterrado-motion.png`, { frameWidth: 384, frameHeight: 384 });
+    if (!this.textures.exists('warden-motion')) preloadCreatureSheet(this,'warden-motion', `${assetBase}warden-motion.png`,512);
+    if (!this.textures.exists('soterrado-motion')) preloadCreatureSheet(this,'soterrado-motion', `${assetBase}soterrado-motion.png`,384);
     for (const name of ['soterrado-burrow', 'soterrado-burrow-lip', 'soterrado-dust']) {
       if (!this.textures.exists(name)) this.load.image(name, `${import.meta.env.BASE_URL}assets/visual/environment/${name}.png`);
     }
@@ -683,6 +685,20 @@ export class GameScene extends Phaser.Scene {
     if(this.area!=='base'&&!this.forestProof){this.add.image(this.returnStation.x-90,this.returnStation.y,'item-accessory-2').setDisplaySize(30,40).setDepth(this.returnStation.y);this.add.text(this.returnStation.x-90,this.returnStation.y-52,'BASE · MAPA',{fontFamily:'Barlow Condensed',fontSize:'13px',color:'#e0c596',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(10003);}
     if(this.area==='base')this.saveProgress();
     if(this.colony)this.hud.setAreaName(COLONY[this.colony.area].name);
+    // Reserved specimen lab only: visit an existing resident, never add an AI
+    // instance or mutate a real campaign/discovery/reward.
+    if(this.glacierPlaytest?.specimen){
+      if(this.area==='cavern'){
+        const resident=EXPANSION_ENCOUNTERS.flatMap<{kind:string;x:number;y:number}>(e=>e.residents).find(e=>e.kind===this.glacierPlaytest!.specimen);
+        if(resident){Object.assign(this.player.position,{x:resident.x-230,y:resident.y+45});this.updateContinuation();}
+      }
+      const target=this.enemies.find(e=>this.enemySpecies.get(e)===this.glacierPlaytest!.specimen);
+      if(target){
+        const arrival=safeExpeditionPosition({x:target.position.x-230,y:target.position.y+45},PLAYER.radius,this.arena.obstacles,this.movementBounds);
+        if(arrival){Object.assign(this.player.position,arrival);this.returnStation={...arrival};}
+        if(this.area==='caldera')this.calderaRelaySeen=true;
+      }
+    }
     this.shellReady?.(this);
   }
 

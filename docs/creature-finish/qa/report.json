@@ -1,0 +1,624 @@
+{
+  "method": "Chrome; actual GameScene and regional residents, DEV-only accelerated individual AI updates, same collision/health/attack contracts in original/new painting modes. No real-save writes.",
+  "species": [
+    {
+      "id": "skitter",
+      "area": "cavern",
+      "frames": [
+        5,
+        6,
+        1,
+        2,
+        3,
+        4,
+        0
+      ],
+      "stats": {
+        "hp": 57,
+        "radius": 14,
+        "damage": 9
+      },
+      "deathUnique": null,
+      "beforeDeath": {
+        "tweens": 4,
+        "timers": 1
+      },
+      "states": [
+        "WINDUP",
+        "LUNGE",
+        "CHASE"
+      ],
+      "attacks": [],
+      "hits": 20,
+      "phase": null,
+      "uniform": true,
+      "unchangedPhysics": true
+    },
+    {
+      "id": "spitter",
+      "area": "cavern",
+      "frames": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        0
+      ],
+      "stats": {
+        "hp": 115,
+        "radius": 22,
+        "damage": 10
+      },
+      "deathUnique": null,
+      "beforeDeath": {
+        "tweens": 4,
+        "timers": 1
+      },
+      "states": [
+        "CHASE",
+        "WINDUP"
+      ],
+      "attacks": [],
+      "hits": 4,
+      "phase": null,
+      "uniform": true,
+      "unchangedPhysics": true
+    },
+    {
+      "id": "carapace",
+      "area": "valley",
+      "frames": [
+        5,
+        6,
+        0
+      ],
+      "stats": {
+        "hp": 177,
+        "radius": 25,
+        "damage": 18
+      },
+      "deathUnique": null,
+      "beforeDeath": {
+        "tweens": 3,
+        "timers": 2
+      },
+      "states": [
+        "WINDUP",
+        "RECOVER",
+        "CHASE"
+      ],
+      "attacks": [],
+      "hits": 8,
+      "phase": null,
+      "uniform": true,
+      "unchangedPhysics": true
+    },
+    {
+      "id": "thorn",
+      "area": "valley",
+      "frames": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        0
+      ],
+      "stats": {
+        "hp": 101,
+        "radius": 17,
+        "damage": 11
+      },
+      "deathUnique": null,
+      "beforeDeath": {
+        "tweens": 4,
+        "timers": 2
+      },
+      "states": [
+        "CHASE",
+        "WINDUP",
+        "RECOVER"
+      ],
+      "attacks": [],
+      "hits": 17,
+      "phase": null,
+      "uniform": true,
+      "unchangedPhysics": true
+    },
+    {
+      "id": "dunePouncer",
+      "area": "arid",
+      "frames": [
+        6,
+        7,
+        1,
+        2,
+        3,
+        4,
+        0
+      ],
+      "stats": {
+        "hp": 78,
+        "radius": 16,
+        "damage": 10
+      },
+      "deathUnique": null,
+      "beforeDeath": {
+        "tweens": 3,
+        "timers": 2
+      },
+      "states": [
+        "WINDUP",
+        "LUNGE",
+        "CHASE"
+      ],
+      "attacks": [],
+      "hits": 16,
+      "phase": null,
+      "uniform": true,
+      "unchangedPhysics": true
+    },
+    {
+      "id": "glassSpitter",
+      "area": "arid",
+      "frames": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        0
+      ],
+      "stats": {
+        "hp": 129,
+        "radius": 21,
+        "damage": 11
+      },
+      "deathUnique": null,
+      "beforeDeath": {
+        "tweens": 3,
+        "timers": 2
+      },
+      "states": [
+        "CHASE",
+        "WINDUP"
+      ],
+      "attacks": [],
+      "hits": 6,
+      "phase": null,
+      "uniform": true,
+      "unchangedPhysics": true
+    },
+    {
+      "id": "frostPouncer",
+      "area": "frost",
+      "frames": [
+        3,
+        4,
+        1,
+        2,
+        0
+      ],
+      "stats": {
+        "hp": 154,
+        "radius": 18,
+        "damage": 13
+      },
+      "deathUnique": null,
+      "beforeDeath": {
+        "tweens": 1,
+        "timers": 2
+      },
+      "states": [
+        "WINDUP",
+        "LUNGE",
+        "CHASE"
+      ],
+      "attacks": [],
+      "hits": 15,
+      "phase": null,
+      "uniform": true,
+      "unchangedPhysics": true
+    },
+    {
+      "id": "frostSpitter",
+      "area": "frost",
+      "frames": [
+        1,
+        2,
+        3,
+        4,
+        0
+      ],
+      "stats": {
+        "hp": 192,
+        "radius": 23,
+        "damage": 14
+      },
+      "deathUnique": null,
+      "beforeDeath": {
+        "tweens": 1,
+        "timers": 2
+      },
+      "states": [
+        "CHASE",
+        "WINDUP"
+      ],
+      "attacks": [],
+      "hits": 7,
+      "phase": null,
+      "uniform": true,
+      "unchangedPhysics": true
+    },
+    {
+      "id": "iceCarapace",
+      "area": "icecave",
+      "frames": [
+        3,
+        6,
+        0
+      ],
+      "stats": {
+        "hp": 298,
+        "radius": 27,
+        "damage": 17
+      },
+      "deathUnique": null,
+      "beforeDeath": {
+        "tweens": 1,
+        "timers": 2
+      },
+      "states": [
+        "WINDUP",
+        "RECOVER",
+        "CHASE"
+      ],
+      "attacks": [],
+      "hits": 7,
+      "phase": null,
+      "uniform": true,
+      "unchangedPhysics": true
+    },
+    {
+      "id": "emberHound",
+      "area": "cinder",
+      "frames": [
+        3,
+        4,
+        1,
+        0,
+        2
+      ],
+      "stats": {
+        "hp": 147,
+        "radius": 17,
+        "damage": 12
+      },
+      "deathUnique": null,
+      "beforeDeath": {
+        "tweens": 1,
+        "timers": 2
+      },
+      "states": [
+        "WINDUP",
+        "EXECUTE",
+        "RECOVER",
+        "CHASE"
+      ],
+      "attacks": [],
+      "hits": 312,
+      "phase": null,
+      "uniform": true,
+      "unchangedPhysics": true
+    },
+    {
+      "id": "fumarole",
+      "area": "cinder",
+      "frames": [
+        4,
+        0,
+        1,
+        2,
+        3
+      ],
+      "stats": {
+        "hp": 202,
+        "radius": 23,
+        "damage": 15
+      },
+      "deathUnique": null,
+      "beforeDeath": {
+        "tweens": 1,
+        "timers": 2
+      },
+      "states": [
+        "EXECUTE",
+        "RECOVER",
+        "CHASE",
+        "WINDUP"
+      ],
+      "attacks": [],
+      "hits": 5,
+      "phase": null,
+      "uniform": true,
+      "unchangedPhysics": true
+    },
+    {
+      "id": "slagback",
+      "area": "obsidian",
+      "frames": [
+        3,
+        4,
+        0
+      ],
+      "stats": {
+        "hp": 306,
+        "radius": 29,
+        "damage": 20
+      },
+      "deathUnique": null,
+      "beforeDeath": {
+        "tweens": 1,
+        "timers": 2
+      },
+      "states": [
+        "WINDUP",
+        "EXECUTE",
+        "RECOVER",
+        "CHASE"
+      ],
+      "attacks": [],
+      "hits": 119,
+      "phase": null,
+      "uniform": true,
+      "unchangedPhysics": true
+    },
+    {
+      "id": "bankGrazer",
+      "area": "springs",
+      "frames": [
+        5,
+        6,
+        0
+      ],
+      "stats": {
+        "hp": 146,
+        "radius": 24,
+        "damage": 14
+      },
+      "deathUnique": null,
+      "beforeDeath": {
+        "tweens": 0,
+        "timers": 1
+      },
+      "states": [
+        "WINDUP",
+        "RECOVER",
+        "CHASE"
+      ],
+      "attacks": [],
+      "hits": 7,
+      "phase": null,
+      "uniform": true,
+      "unchangedPhysics": true
+    },
+    {
+      "id": "reedSpitter",
+      "area": "springs",
+      "frames": [
+        6,
+        0,
+        5
+      ],
+      "stats": {
+        "hp": 101,
+        "radius": 19,
+        "damage": 10
+      },
+      "deathUnique": null,
+      "beforeDeath": {
+        "tweens": 0,
+        "timers": 1
+      },
+      "states": [
+        "RECOVER",
+        "CHASE",
+        "WINDUP"
+      ],
+      "attacks": [],
+      "hits": 15,
+      "phase": null,
+      "uniform": true,
+      "unchangedPhysics": true
+    },
+    {
+      "id": "warden",
+      "area": "warden",
+      "frames": [
+        3,
+        4,
+        0,
+        5,
+        6
+      ],
+      "stats": {
+        "hp": 1125,
+        "radius": 62,
+        "damage": 16
+      },
+      "deathUnique": true,
+      "beforeDeath": {
+        "tweens": 12,
+        "timers": 1
+      },
+      "states": [
+        "TELEGRAPH",
+        "EXECUTE",
+        "RECOVER",
+        "IDLE",
+        "PHASE"
+      ],
+      "attacks": [
+        "sweep",
+        "slam",
+        "rush",
+        "signal",
+        "echoes"
+      ],
+      "hits": 13,
+      "phase": 3,
+      "uniform": true,
+      "unchangedPhysics": true
+    },
+    {
+      "id": "soterrado",
+      "area": "sandpit",
+      "frames": [
+        3,
+        4,
+        0,
+        5,
+        6
+      ],
+      "stats": {
+        "hp": 1233,
+        "radius": 60,
+        "damage": 18
+      },
+      "deathUnique": true,
+      "beforeDeath": {
+        "tweens": 0,
+        "timers": 2
+      },
+      "states": [
+        "TELEGRAPH",
+        "EXECUTE",
+        "RECOVER",
+        "IDLE",
+        "PHASE"
+      ],
+      "attacks": [
+        "sweep",
+        "rush",
+        "burrow",
+        "fissure"
+      ],
+      "hits": 18,
+      "phase": 2,
+      "uniform": true,
+      "unchangedPhysics": true
+    },
+    {
+      "id": "vesper",
+      "area": "icenest",
+      "frames": [
+        3,
+        6,
+        0,
+        4,
+        5,
+        1
+      ],
+      "stats": {
+        "hp": 1760,
+        "radius": 58,
+        "damage": null
+      },
+      "deathUnique": true,
+      "beforeDeath": {
+        "tweens": 1,
+        "timers": 4
+      },
+      "states": [
+        "TELEGRAPH",
+        "EXECUTE",
+        "RECOVER",
+        "IDLE",
+        "PHASE"
+      ],
+      "attacks": [
+        "breath",
+        "tail",
+        "rush",
+        "eruption"
+      ],
+      "hits": 13,
+      "phase": 3,
+      "uniform": true,
+      "unchangedPhysics": true
+    },
+    {
+      "id": "titan",
+      "area": "caldera",
+      "frames": [
+        0,
+        3,
+        4,
+        6,
+        5
+      ],
+      "stats": {
+        "hp": 1710,
+        "radius": 64,
+        "damage": null
+      },
+      "deathUnique": true,
+      "beforeDeath": {
+        "tweens": 1,
+        "timers": 4
+      },
+      "states": [
+        "RECOVER",
+        "IDLE",
+        "TELEGRAPH",
+        "EXECUTE",
+        "PHASE"
+      ],
+      "attacks": [
+        "cleave",
+        "slam",
+        "boulders",
+        "fissure"
+      ],
+      "hits": 79,
+      "phase": 3,
+      "uniform": true,
+      "unchangedPhysics": true
+    }
+  ],
+  "errors": [],
+  "restarts": [
+    {
+      "objects": 81,
+      "textures": 220,
+      "shutdown": 23,
+      "resize": 5,
+      "tweens": 1
+    },
+    {
+      "objects": 81,
+      "textures": 220,
+      "shutdown": 23,
+      "resize": 5,
+      "tweens": 1
+    },
+    {
+      "objects": 81,
+      "textures": 220,
+      "shutdown": 23,
+      "resize": 5,
+      "tweens": 1
+    },
+    {
+      "objects": 81,
+      "textures": 220,
+      "shutdown": 23,
+      "resize": 5,
+      "tweens": 1
+    }
+  ],
+  "passed": true
+}

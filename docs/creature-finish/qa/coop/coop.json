@@ -1,0 +1,230 @@
+{
+  "method": "Two real Chrome contexts and local relay, two original classes, DEV campaign setup. No protocol change or physical device claim.",
+  "errors": [],
+  "host": [
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    },
+    {
+      "name": true,
+      "hp": 105,
+      "max": 105,
+      "bar": true
+    }
+  ],
+  "guest": [
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    },
+    {
+      "name": true,
+      "hp": true,
+      "back": true
+    }
+  ],
+  "shared": {
+    "environment": true,
+    "actors": 9,
+    "layers": [
+      {
+        "key": "finish-hollow",
+        "width": 111.88803211338664,
+        "height": 111.88803211338664
+      },
+      {
+        "key": "finish-hollow",
+        "width": 111.88803432993396,
+        "height": 111.88803432993394
+      },
+      {
+        "key": "finish-hollow",
+        "width": 111.8880371343741,
+        "height": 111.88803713437409
+      },
+      {
+        "key": "finish-hollow",
+        "width": 111.88803191434828,
+        "height": 111.88803191434829
+      },
+      {
+        "key": "finish-hollow",
+        "width": 111.88802824513361,
+        "height": 111.88802824513361
+      },
+      {
+        "key": "finish-hollow",
+        "width": 111.88803138089442,
+        "height": 111.8880313808944
+      },
+      {
+        "key": "finish-hollow",
+        "width": 111.888033579391,
+        "height": 111.888033579391
+      },
+      {
+        "key": "finish-hollow",
+        "width": 111.88803592989461,
+        "height": 111.88803592989463
+      }
+    ]
+  },
+  "remoteContact": 2.224161748686827,
+  "regions": [
+    {
+      "area": "cavern",
+      "species": "skitter",
+      "texture": "dante-skitter-motion",
+      "boss": false,
+      "mirrored": true
+    },
+    {
+      "area": "valley",
+      "species": "thorn",
+      "texture": "dante-thorn-motion",
+      "boss": false,
+      "mirrored": true
+    },
+    {
+      "area": "springs",
+      "species": "reedSpitter",
+      "texture": "dante-reedSpitter-motion",
+      "boss": false,
+      "mirrored": true
+    },
+    {
+      "area": "arid",
+      "species": "glassSpitter",
+      "texture": "dante-glass-spitter-motion",
+      "boss": false,
+      "mirrored": true
+    },
+    {
+      "area": "frost",
+      "species": "frostPouncer",
+      "texture": "dante-frost-pouncer-motion",
+      "boss": false,
+      "mirrored": true
+    },
+    {
+      "area": "icecave",
+      "species": "iceCarapace",
+      "texture": "dante-iceCarapace-motion",
+      "boss": false,
+      "mirrored": true
+    },
+    {
+      "area": "cinder",
+      "species": "fumarole",
+      "texture": "fumarole-motion",
+      "boss": false,
+      "mirrored": true
+    },
+    {
+      "area": "obsidian",
+      "species": "slagback",
+      "texture": "slagback-motion",
+      "boss": false,
+      "mirrored": true
+    },
+    {
+      "area": "warden",
+      "species": "warden",
+      "texture": "warden-motion",
+      "boss": true,
+      "mirrored": true
+    },
+    {
+      "area": "sandpit",
+      "species": "soterrado",
+      "texture": "soterrado-motion",
+      "boss": true,
+      "mirrored": true
+    },
+    {
+      "area": "icenest",
+      "species": "vesper",
+      "texture": "vesper-motion",
+      "boss": true,
+      "mirrored": true
+    },
+    {
+      "area": "caldera",
+      "species": "titan",
+      "texture": "titan-motion",
+      "boss": true,
+      "mirrored": true
+    }
+  ],
+  "passed": true
+}

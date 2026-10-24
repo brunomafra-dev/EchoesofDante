@@ -1,3 +1,4 @@
+import {createCreatureShadow,type CreatureShadow} from '../visual/CreatureArt';
 import Phaser from 'phaser';
 import { Health } from '../combat/Health';
 import { inShockwaveSweep } from '../combat/HitDetection';
@@ -11,7 +12,7 @@ import type { Enemy,EnemyImpact } from './Enemy';
 // Three volcanic anatomies, explicit rush/shot/impact states; existing combat contracts.
 export class VolcanicCreature implements Enemy {
  readonly position:Vec2;readonly health:Health;readonly radius:number;readonly attackRange:number;readonly attackDamage:number;
- readonly view:Phaser.GameObjects.Container;readonly shadow:Phaser.GameObjects.Ellipse;
+ readonly view:Phaser.GameObjects.Container;readonly shadow:CreatureShadow;
  readonly telegraph:Phaser.GameObjects.Ellipse;readonly projectile:Phaser.GameObjects.Image;
  readonly healthBack:Phaser.GameObjects.Rectangle;readonly healthFill:Phaser.GameObjects.Rectangle;
  private readonly body:Phaser.GameObjects.Image;private readonly name:Phaser.GameObjects.Text;
@@ -24,7 +25,7 @@ export class VolcanicCreature implements Enemy {
   const s=VOLCANIC_CREATURES[kind];this.position={x,y};this.home={x,y};this.health=new Health(s.hp);this.radius=s.radius;this.attackRange=s.range;this.attackDamage=s.damage;
   this.body=scene.add.image(0,14,s.texture,0).setOrigin(.5,244/256).setDisplaySize(s.size,s.size);
   this.view=scene.add.container(x,y,[this.body]);
-  this.shadow=scene.add.ellipse(x,y+10,s.size*.64,22,0x080c10,.55);
+  this.shadow=createCreatureShadow(scene,x,y+10,s.size*.64,22,0x080c10,.55);
   const diameter=s.style==='slam'?s.range*2:60;
   this.telegraph=scene.add.ellipse(x,y,diameter,s.style==='slam'?diameter:28,0xff6a4a,.17).setStrokeStyle(2,0xffbd54,.95).setVisible(false);
   this.aimGuide=scene.add.line(0,0,0,0,s.style==='rush'?190:350,0,0xffbd54,.8).setOrigin(0).setLineWidth(2).setVisible(false);

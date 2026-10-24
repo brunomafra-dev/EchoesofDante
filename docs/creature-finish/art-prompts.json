@@ -1,0 +1,182 @@
+[
+  {
+    "id": "skitter",
+    "name": "SALTADOR",
+    "texture": "dante-skitter-motion",
+    "cell": 256,
+    "columns": 4,
+    "rows": 2,
+    "source": "public/assets/visual/characters/dante-skitter-motion.png",
+    "prompt": "Upgrade this EXACT six-legged narrow cave predator sprite sheet for Echoes of Dante. Keep its narrow angular head, long hooked scythe forelegs and raised rear feelers, NOT a round one-eyed shell beast. Organic Sci-Fi R3 painted game art. Repaint all EIGHT complete creature poses in the same FOUR columns by TWO rows, preserving their exact actions, camera, right facing, equal body size and consistent anatomy. Every cell is the WHOLE animal. Material upgrade: deep purple shale plates with warm ivory worn edges, dark plum muscle at connected joints, small amber EYES on the narrow head; strong upper-left soft light, broad painted volumes, clear silhouette against a green cave, controlled detail. No green camouflage. Walking frames have feet firmly planted, minimal bouncing. Frame0 idle, 1-4 alternate walking,5 crouched warning,6 strike,7 recoil as in source. Real alpha transparency outside creatures with clean edges; absolutely NO black/brown backdrop, glow halo, floor, shadows, labels or grid. Keep comfortable transparent margins between complete figures. Landscape2:1 sheet. Preserve this animal's identity while improving dimensional material quality."
+  },
+  {
+    "id": "spitter",
+    "name": "CUSPIDOR",
+    "texture": "dante-spitter-motion",
+    "cell": 256,
+    "columns": 4,
+    "rows": 2,
+    "source": "public/assets/visual/characters/dante-spitter-motion.png",
+    "prompt": "Repaint and upgrade the EXACT creature in the attached game sprite sheet, not a different animal. CUSPIDOR: A squat SIX-legged amphibian insectoid, leathery plum hide, pale ridged back plates, bulbous AMBER organic reservoir on its back, short fleshy spout facing right. Clearly a living animal, not a tank. Preserve overview top row second creature. Preserve its species-specific body shape, limb count, action order and facing direction from SOURCE. Organic Sci-Fi R3 hand-painted dimensional game art: strongly sculpted volumes, tactile worn shell/mineral, supple connected muscle/joints, upper left warm light, cool dark plum recesses, warm ivory edge accents and restrained amber eyes/vent. Clear readable silhouette and focal face against green foliage, NOT noisy detail or outline glow. Whole complete creature in EVERY cell, no disjoint pieces, no stretching anatomy. EIGHT full poses, FOUR columns by TWO rows. Keep the SOURCE pose order exactly, including its distinct warning, attack and recoil positions. Equal square cells, comfortable transparent padding, precise consistent scale and camera in all poses; anchored walking with alternate support and barely any vertical bounce. Preserve distinct attack anticipation and follow-through. Keep the character silhouette readable at100pixels in game. Real ALPHA transparency, clean edges. NO background, floor, painted ground shadow, glow halo, labels, text, grid, frame, scenery or separate projectiles. Preserve exact target creature identity and layout. Landscape2:1. Keep camera and upright torso orientation constant across all walking frames: do not rotate the whole animal or change perspective."
+  },
+  {
+    "id": "carapace",
+    "name": "CASCO ERRANTE",
+    "texture": "dante-carapace-motion",
+    "cell": 256,
+    "columns": 4,
+    "rows": 2,
+    "source": "public/assets/visual/characters/dante-carapace-motion.png",
+    "prompt": "Repaint and upgrade the EXACT creature in the attached game sprite sheet, not a different animal. CASCO ERRANTE: Heavy SIX-legged wandering shell beast, broad layered weathered olive slate carapace with warm bone edges, compact dark plum skin, two powerful rounded front pincers, small amber eyes. Preserve overview top row third creature. Preserve its species-specific body shape, limb count, action order and facing direction from SOURCE. Organic Sci-Fi R3 hand-painted dimensional game art: strongly sculpted volumes, tactile worn shell/mineral, supple connected muscle/joints, upper left warm light, cool dark plum recesses, warm ivory edge accents and restrained amber eyes/vent. Clear readable silhouette and focal face against green foliage, NOT noisy detail or outline glow. Whole complete creature in EVERY cell, no disjoint pieces, no stretching anatomy. EIGHT full poses, FOUR columns by TWO rows. Keep the SOURCE pose order exactly, including its distinct warning, attack and recoil positions. Equal square cells, comfortable transparent padding, precise consistent scale and camera in all poses; anchored walking with alternate support and barely any vertical bounce. Preserve distinct attack anticipation and follow-through. Keep the character silhouette readable at100pixels in game. Real ALPHA transparency, clean edges. NO background, floor, painted ground shadow, glow halo, labels, text, grid, frame, scenery or separate projectiles. Preserve exact target creature identity and layout. Landscape2:1. Keep camera and upright torso orientation constant across all walking frames: do not rotate the whole animal or change perspective."
+  },
+  {
+    "id": "thorn",
+    "name": "ESPINHANTE",
+    "texture": "dante-thorn-motion",
+    "cell": 256,
+    "columns": 4,
+    "rows": 2,
+    "source": "public/assets/visual/characters/dante-thorn-motion.png",
+    "prompt": "Repaint and upgrade the EXACT creature in the attached game sprite sheet, not a different animal. ESPINHANTE: Slender grounded SIX-legged alien thorn beast, an elegant curved narrow head, raised fan of ochre bone quills swept backward, deep aubergine neck, sinewy limbs. NOT a bird flying, tree or humanoid. Preserve top row fourth creature but make its supported ground contacts obvious. Preserve its species-specific body shape, limb count, action order and facing direction from SOURCE. Organic Sci-Fi R3 hand-painted dimensional game art: strongly sculpted volumes, tactile worn shell/mineral, supple connected muscle/joints, upper left warm light, cool dark plum recesses, warm ivory edge accents and restrained amber eyes/vent. Clear readable silhouette and focal face against green foliage, NOT noisy detail or outline glow. Whole complete creature in EVERY cell, no disjoint pieces, no stretching anatomy. EIGHT full poses, FOUR columns by TWO rows. Keep the SOURCE pose order exactly, including its distinct warning, attack and recoil positions. Equal square cells, comfortable transparent padding, precise consistent scale and camera in all poses; anchored walking with alternate support and barely any vertical bounce. Preserve distinct attack anticipation and follow-through. Keep the character silhouette readable at100pixels in game. Real ALPHA transparency, clean edges. NO background, floor, painted ground shadow, glow halo, labels, text, grid, frame, scenery or separate projectiles. Preserve exact target creature identity and layout. Landscape2:1. Keep camera and upright torso orientation constant across all walking frames: do not rotate the whole animal or change perspective."
+  },
+  {
+    "id": "dunePouncer",
+    "name": "RASGA-AREIA",
+    "texture": "dante-dune-pouncer-motion",
+    "cell": 256,
+    "columns": 4,
+    "rows": 2,
+    "source": "public/assets/visual/characters/dante-dune-pouncer-motion.png",
+    "prompt": "Repaint and upgrade the EXACT creature in the attached game sprite sheet, not a different animal. RASGA-AREIA: Low SIX-legged desert sand burrower, broad sandy ivory chitin fins and ochre layered shell, dark burgundy living joints, pointed face with small bright amber eyes. Preserve first row final creature while making six load-bearing hooked feet clearly visible, not a flying ray. Preserve its species-specific body shape, limb count, action order and facing direction from SOURCE. Organic Sci-Fi R3 hand-painted dimensional game art: strongly sculpted volumes, tactile worn shell/mineral, supple connected muscle/joints, upper left warm light, cool dark plum recesses, warm ivory edge accents and restrained amber eyes/vent. Clear readable silhouette and focal face against ochre sand, NOT noisy detail or outline glow. Whole complete creature in EVERY cell, no disjoint pieces, no stretching anatomy. EIGHT full poses, FOUR columns by TWO rows. Keep the SOURCE pose order exactly, including its distinct warning, attack and recoil positions. Equal square cells, comfortable transparent padding, precise consistent scale and camera in all poses; anchored walking with alternate support and barely any vertical bounce. Preserve distinct attack anticipation and follow-through. Keep the character silhouette readable at100pixels in game. Real ALPHA transparency, clean edges. NO background, floor, painted ground shadow, glow halo, labels, text, grid, frame, scenery or separate projectiles. Preserve exact target creature identity and layout. Landscape2:1. Keep camera and upright torso orientation constant across all walking frames: do not rotate the whole animal or change perspective."
+  },
+  {
+    "id": "glassSpitter",
+    "name": "CUSPIDOR VITREO",
+    "texture": "dante-glass-spitter-motion",
+    "cell": 256,
+    "columns": 4,
+    "rows": 2,
+    "source": "public/assets/visual/characters/dante-glass-spitter-motion.png",
+    "prompt": "Repaint and upgrade the EXACT creature in the attached game sprite sheet, not a different animal. CUSPIDOR VITREO: SIX-legged desert beetle, bronze dark plum segmented living body, amber glasslike reservoir abdomen, long curved chitin horns swept backwards, pale edges and forward spout. Preserve second row first creature in overview. Not a robot. Preserve its species-specific body shape, limb count, action order and facing direction from SOURCE. Organic Sci-Fi R3 hand-painted dimensional game art: strongly sculpted volumes, tactile worn shell/mineral, supple connected muscle/joints, upper left warm light, cool dark plum recesses, warm ivory edge accents and restrained amber eyes/vent. Clear readable silhouette and focal face against ochre sand, NOT noisy detail or outline glow. Whole complete creature in EVERY cell, no disjoint pieces, no stretching anatomy. EIGHT full poses, FOUR columns by TWO rows. Keep the SOURCE pose order exactly, including its distinct warning, attack and recoil positions. Equal square cells, comfortable transparent padding, precise consistent scale and camera in all poses; anchored walking with alternate support and barely any vertical bounce. Preserve distinct attack anticipation and follow-through. Keep the character silhouette readable at100pixels in game. Real ALPHA transparency, clean edges. NO background, floor, painted ground shadow, glow halo, labels, text, grid, frame, scenery or separate projectiles. Preserve exact target creature identity and layout. Landscape2:1. Keep camera and upright torso orientation constant across all walking frames: do not rotate the whole animal or change perspective."
+  },
+  {
+    "id": "frostPouncer",
+    "name": "RASGA-GELO",
+    "texture": "dante-frost-pouncer-motion",
+    "cell": 256,
+    "columns": 4,
+    "rows": 2,
+    "source": "public/assets/visual/characters/frost-pouncer-motion.png",
+    "prompt": "Repaint and upgrade the EXACT creature in the attached game sprite sheet, not a different animal. RASGA-GELO: Low SIX-legged arctic predator with pale ice-blue ridged dorsal shell, slate violet skin, bone white hooked claws, small amber eyes. Preserve second row second creature in overview; readable warm face and darker joints against snow, not all white. Preserve its species-specific body shape, limb count, action order and facing direction from SOURCE. Organic Sci-Fi R3 hand-painted dimensional game art: strongly sculpted volumes, tactile worn shell/mineral, supple connected muscle/joints, upper left warm light, cool dark plum recesses, warm ivory edge accents and restrained amber eyes/vent. Clear readable silhouette and focal face against snow, NOT noisy detail or outline glow. Whole complete creature in EVERY cell, no disjoint pieces, no stretching anatomy. EIGHT full poses, FOUR columns by TWO rows. Keep the SOURCE pose order exactly, including its distinct warning, attack and recoil positions. Equal square cells, comfortable transparent padding, precise consistent scale and camera in all poses; anchored walking with alternate support and barely any vertical bounce. Preserve distinct attack anticipation and follow-through. Keep the character silhouette readable at100pixels in game. Real ALPHA transparency, clean edges. NO background, floor, painted ground shadow, glow halo, labels, text, grid, frame, scenery or separate projectiles. Preserve exact target creature identity and layout. Landscape2:1. Keep camera and upright torso orientation constant across all walking frames: do not rotate the whole animal or change perspective."
+  },
+  {
+    "id": "frostSpitter",
+    "name": "CUSPIDOR BOREAL",
+    "texture": "dante-frost-spitter-motion",
+    "cell": 256,
+    "columns": 4,
+    "rows": 2,
+    "source": "public/assets/visual/characters/frost-spitter-motion.png",
+    "prompt": "Repaint and upgrade the EXACT creature in the attached game sprite sheet, not a different animal. CUSPIDOR BOREAL: SIX-legged squat arctic spitting beast with layered ivory frost ridges, large plum and lavender organic back reservoir, amber vent/spout face, robust dark slate feet. Preserve second row third creature. Distinct from the agile frost pouncer. Preserve its species-specific body shape, limb count, action order and facing direction from SOURCE. Organic Sci-Fi R3 hand-painted dimensional game art: strongly sculpted volumes, tactile worn shell/mineral, supple connected muscle/joints, upper left warm light, cool dark plum recesses, warm ivory edge accents and restrained amber eyes/vent. Clear readable silhouette and focal face against snow, NOT noisy detail or outline glow. Whole complete creature in EVERY cell, no disjoint pieces, no stretching anatomy. EIGHT full poses, FOUR columns by TWO rows. Keep the SOURCE pose order exactly, including its distinct warning, attack and recoil positions. Equal square cells, comfortable transparent padding, precise consistent scale and camera in all poses; anchored walking with alternate support and barely any vertical bounce. Preserve distinct attack anticipation and follow-through. Keep the character silhouette readable at100pixels in game. Real ALPHA transparency, clean edges. NO background, floor, painted ground shadow, glow halo, labels, text, grid, frame, scenery or separate projectiles. Preserve exact target creature identity and layout. Landscape2:1. Keep camera and upright torso orientation constant across all walking frames: do not rotate the whole animal or change perspective."
+  },
+  {
+    "id": "iceCarapace",
+    "name": "CASCO GLACIAL",
+    "texture": "dante-iceCarapace-motion",
+    "cell": 256,
+    "columns": 4,
+    "rows": 2,
+    "source": "public/assets/visual/characters/ice-carapace-motion.png",
+    "prompt": "Repaint and upgrade the EXACT creature in the attached game sprite sheet, not a different animal. CASCO GLACIAL: Massive squat SIX-legged glacial shell beast, ivory glacier layered carapace, slate blue living joints, two broad ice-worn pincer forelegs, small warm amber eyes and lavender underbelly. Preserve second row fourth creature, full visible supported feet. Preserve its species-specific body shape, limb count, action order and facing direction from SOURCE. Organic Sci-Fi R3 hand-painted dimensional game art: strongly sculpted volumes, tactile worn shell/mineral, supple connected muscle/joints, upper left warm light, cool dark plum recesses, warm ivory edge accents and restrained amber eyes/vent. Clear readable silhouette and focal face against snow, NOT noisy detail or outline glow. Whole complete creature in EVERY cell, no disjoint pieces, no stretching anatomy. EIGHT full poses, FOUR columns by TWO rows. Keep the SOURCE pose order exactly, including its distinct warning, attack and recoil positions. Equal square cells, comfortable transparent padding, precise consistent scale and camera in all poses; anchored walking with alternate support and barely any vertical bounce. Preserve distinct attack anticipation and follow-through. Keep the character silhouette readable at100pixels in game. Real ALPHA transparency, clean edges. NO background, floor, painted ground shadow, glow halo, labels, text, grid, frame, scenery or separate projectiles. Preserve exact target creature identity and layout. Landscape2:1. Keep camera and upright torso orientation constant across all walking frames: do not rotate the whole animal or change perspective."
+  },
+  {
+    "id": "emberHound",
+    "name": "RASGA-BRASA",
+    "texture": "ember-hound-motion",
+    "cell": 256,
+    "columns": 3,
+    "rows": 2,
+    "source": "public/assets/visual/characters/ember-hound-motion.png",
+    "prompt": "Repaint and upgrade the EXACT creature in the attached game sprite sheet, not a different animal. RASGA-BRASA: FOUR-legged volcanic predator, obsidian and burgundy living skin, back swept basalt spines, short powerful jaw glowing warm orange internally, pale warm ash edges, heavy paws and a long low tail. Preserve second row final creature. Not a normal dog or fire elemental. Preserve its species-specific body shape, limb count, action order and facing direction from SOURCE. Organic Sci-Fi R3 hand-painted dimensional game art: strongly sculpted volumes, tactile worn shell/mineral, supple connected muscle/joints, upper left warm light, cool dark plum recesses, warm ivory edge accents and restrained amber eyes/vent. Clear readable silhouette and focal face against dark basalt, NOT noisy detail or outline glow. Whole complete creature in EVERY cell, no disjoint pieces, no stretching anatomy. SIX full poses, THREE columns by TWO rows: idle, walkA, walkB, anticipation, strike/spit/impact, hurt recoil. Equal square cells, comfortable transparent padding, precise consistent scale and camera in all poses; anchored walking with alternate support and barely any vertical bounce. Preserve distinct attack anticipation and follow-through. Keep the character silhouette readable at100pixels in game. Real ALPHA transparency, clean edges. NO background, floor, painted ground shadow, glow halo, labels, text, grid, frame, scenery or separate projectiles. Preserve exact target creature identity and layout. Landscape3:2. Keep upright torso camera orientation constant across all walking frames. Explicitly distinct forward/outward foot contacts, not identical copies or rotation. No detached projectile anywhere."
+  },
+  {
+    "id": "fumarole",
+    "name": "FOLE DE MAGMA",
+    "texture": "fumarole-motion",
+    "cell": 256,
+    "columns": 3,
+    "rows": 2,
+    "source": "public/assets/visual/characters/fumarole-motion.png",
+    "prompt": "Repaint and upgrade the EXACT creature in the attached game sprite sheet, not a different animal. FOLE DE MAGMA: SIX-legged squat living volcanic beast, rounded thick ash-brown body and TWO organic chimney bellows protruding from its back, warm orange reservoir between scoria plates, short spout head, thick clawed limbs. Preserve third row first creature. Not a demon or machine. Preserve its species-specific body shape, limb count, action order and facing direction from SOURCE. Organic Sci-Fi R3 hand-painted dimensional game art: strongly sculpted volumes, tactile worn shell/mineral, supple connected muscle/joints, upper left warm light, cool dark plum recesses, warm ivory edge accents and restrained amber eyes/vent. Clear readable silhouette and focal face against dark basalt, NOT noisy detail or outline glow. Whole complete creature in EVERY cell, no disjoint pieces, no stretching anatomy. SIX full poses, THREE columns by TWO rows: idle, walkA, walkB, anticipation, strike/spit/impact, hurt recoil. Equal square cells, comfortable transparent padding, precise consistent scale and camera in all poses; anchored walking with alternate support and barely any vertical bounce. Preserve distinct attack anticipation and follow-through. Keep the character silhouette readable at100pixels in game. Real ALPHA transparency, clean edges. NO background, floor, painted ground shadow, glow halo, labels, text, grid, frame, scenery or separate projectiles. Preserve exact target creature identity and layout. Landscape3:2. Keep upright torso camera orientation constant across all walking frames. Explicitly distinct forward/outward foot contacts, not identical copies or rotation. No detached projectile anywhere."
+  },
+  {
+    "id": "slagback",
+    "name": "DORSO DE BASALTO",
+    "texture": "slagback-motion",
+    "cell": 256,
+    "columns": 3,
+    "rows": 2,
+    "source": "public/assets/visual/characters/slagback-motion.png",
+    "prompt": "Repaint and upgrade the EXACT creature in the attached game sprite sheet, not a different animal. DORSO DE BASALTO: SIX-legged heavy volcanic shell beast, broad layered black basalt armor with strong warm grey edges, dark plum muscular joints, amber narrow eyes, immense blunt forefeet. Small glowing cracks subordinate to rock volume. Preserve third row second creature. Preserve its species-specific body shape, limb count, action order and facing direction from SOURCE. Organic Sci-Fi R3 hand-painted dimensional game art: strongly sculpted volumes, tactile worn shell/mineral, supple connected muscle/joints, upper left warm light, cool dark plum recesses, warm ivory edge accents and restrained amber eyes/vent. Clear readable silhouette and focal face against dark basalt, NOT noisy detail or outline glow. Whole complete creature in EVERY cell, no disjoint pieces, no stretching anatomy. SIX full poses, THREE columns by TWO rows: idle, walkA, walkB, anticipation, strike/spit/impact, hurt recoil. Equal square cells, comfortable transparent padding, precise consistent scale and camera in all poses; anchored walking with alternate support and barely any vertical bounce. Preserve distinct attack anticipation and follow-through. Keep the character silhouette readable at100pixels in game. Real ALPHA transparency, clean edges. NO background, floor, painted ground shadow, glow halo, labels, text, grid, frame, scenery or separate projectiles. Preserve exact target creature identity and layout. Landscape3:2. Keep upright torso camera orientation constant across all walking frames. Explicitly distinct forward/outward foot contacts, not identical copies or rotation. No detached projectile anywhere."
+  },
+  {
+    "id": "bankGrazer",
+    "name": "VIGIA DAS MARGENS",
+    "texture": "dante-bankGrazer-motion",
+    "cell": 256,
+    "columns": 4,
+    "rows": 2,
+    "source": "public/assets/colonization/dante-bankGrazer-motion.png",
+    "prompt": "Repaint and upgrade the EXACT creature in the attached game sprite sheet, not a different animal. VIGIA DAS MARGENS: SIX-legged shoreline amphibian: broad low salamander head, small gold eyes, smooth dark plum damp skin, moss olive layered shell edged with warm bone, coral-ochre gill flanges, short tapered tail. Preserve first creature in shoreline reference. Clearly not a turtle, no plants growing from it. Preserve its species-specific body shape, limb count, action order and facing direction from SOURCE. Organic Sci-Fi R3 hand-painted dimensional game art: strongly sculpted volumes, tactile worn shell/mineral, supple connected muscle/joints, upper left warm light, cool dark plum recesses, warm ivory edge accents and restrained amber eyes/vent. Clear readable silhouette and focal face against green foliage, NOT noisy detail or outline glow. Whole complete creature in EVERY cell, no disjoint pieces, no stretching anatomy. EIGHT full poses, FOUR columns by TWO rows. Keep the SOURCE pose order exactly, including its distinct warning, attack and recoil positions. Equal square cells, comfortable transparent padding, precise consistent scale and camera in all poses; anchored walking with alternate support and barely any vertical bounce. Preserve distinct attack anticipation and follow-through. Keep the character silhouette readable at100pixels in game. Real ALPHA transparency, clean edges. NO background, floor, painted ground shadow, glow halo, labels, text, grid, frame, scenery or separate projectiles. Preserve exact target creature identity and layout. Landscape2:1. Keep upright torso camera orientation constant across all walking frames. Explicitly distinct forward/outward foot contacts, not identical copies or rotation. No detached projectile anywhere."
+  },
+  {
+    "id": "reedSpitter",
+    "name": "FOLE DOS JUNCOS",
+    "texture": "dante-reedSpitter-motion",
+    "cell": 256,
+    "columns": 4,
+    "rows": 2,
+    "source": "public/assets/colonization/dante-reedSpitter-motion.png",
+    "prompt": "Repaint and upgrade the EXACT creature in the attached game sprite sheet, not a different animal. FOLE DOS JUNCOS: SIX-legged shore animal with a narrow long spout face, ochre weathered skin, a single large water-filled translucent pearl-blue organic back bladder held in pale olive shell ribs, fin-shaped crest. Preserve second shoreline creature. Darker legs contrast against vegetation. Not a bird or robot. Preserve its species-specific body shape, limb count, action order and facing direction from SOURCE. Organic Sci-Fi R3 hand-painted dimensional game art: strongly sculpted volumes, tactile worn shell/mineral, supple connected muscle/joints, upper left warm light, cool dark plum recesses, warm ivory edge accents and restrained amber eyes/vent. Clear readable silhouette and focal face against green foliage, NOT noisy detail or outline glow. Whole complete creature in EVERY cell, no disjoint pieces, no stretching anatomy. EIGHT full poses, FOUR columns by TWO rows. Keep the SOURCE pose order exactly, including its distinct warning, attack and recoil positions. Equal square cells, comfortable transparent padding, precise consistent scale and camera in all poses; anchored walking with alternate support and barely any vertical bounce. Preserve distinct attack anticipation and follow-through. Keep the character silhouette readable at100pixels in game. Real ALPHA transparency, clean edges. NO background, floor, painted ground shadow, glow halo, labels, text, grid, frame, scenery or separate projectiles. Preserve exact target creature identity and layout. Landscape2:1. Keep upright torso camera orientation constant across all walking frames. Explicitly distinct forward/outward foot contacts, not identical copies or rotation. No detached projectile anywhere."
+  },
+  {
+    "id": "warden",
+    "name": "O WARDEN",
+    "texture": "warden-motion",
+    "cell": 512,
+    "columns": 4,
+    "rows": 2,
+    "source": "public/assets/visual/characters/warden-motion.png",
+    "prompt": "Repaint and upgrade the EXACT creature in the attached game sprite sheet, not a different animal. O WARDEN: Ancient nonhumanoid guardian, SIX supported limbs, asymmetrical ivory weathered mineral exoskeleton and plum organic tissue, enormous hollow ringlike dorsal crown around a violet Signal core, long angular front scythes with ochre mineral edges. Preserve third row third creature in overview, full connected body, NOT a robot, knight, humanoid or larger Hollow. Preserve its species-specific body shape, limb count, action order and facing direction from SOURCE. Organic Sci-Fi R3 hand-painted dimensional game art: strongly sculpted volumes, tactile worn shell/mineral, supple connected muscle/joints, upper left warm light, cool dark plum recesses, warm ivory edge accents and restrained amber eyes/vent. Clear readable silhouette and focal face against green foliage, NOT noisy detail or outline glow. Whole complete creature in EVERY cell, no disjoint pieces, no stretching anatomy. EIGHT full poses, FOUR columns by TWO rows: idle, walkA, walkB, anticipation, strike, heavy impact/breath/emergence, signal/roar, collapsed death. Equal square cells, comfortable transparent padding, precise consistent scale and camera in all poses; anchored walking with alternate support and barely any vertical bounce. Preserve distinct attack anticipation and follow-through. Boss has greater age, material scale and presence; death is a genuinely collapsed whole animal, not a smaller standing pose. Real ALPHA transparency, clean edges. NO background, floor, painted ground shadow, glow halo, labels, text, grid, frame, scenery or separate projectiles. Preserve exact target creature identity and layout. Landscape2:1. IMPORTANT Warden action mapping: frame0 idle;1,2 grounded walk;3 forelimbs drawn back in crouched warning;4 wide scythe sweep;5 both scythes driven down for ground slam;6 violet CHEST core flaring under its hollow dorsal ring during Signal/phase;7 collapsed with dim chest. The ring is weathered hollow crown, chest houses the violet core. Keep ring and chest connected to torso."
+  },
+  {
+    "id": "soterrado",
+    "name": "O SOTERRADO",
+    "texture": "soterrado-motion",
+    "cell": 384,
+    "columns": 4,
+    "rows": 2,
+    "source": "public/assets/visual/characters/soterrado-motion.png",
+    "prompt": "Repaint and upgrade the EXACT creature in the attached game sprite sheet, not a different animal. O SOTERRADO: Enormous low SIX-legged burrowing desert beast, layered sun-bleached ochre and ivory carapace with backward serrated fins, mineral amber crevices, burgundy flexible hide and muscular digging foreclaws, tapering rear body. Preserve third row fourth creature; distinct grounded sand predator, not Warden or dragon. Preserve its species-specific body shape, limb count, action order and facing direction from SOURCE. Organic Sci-Fi R3 hand-painted dimensional game art: strongly sculpted volumes, tactile worn shell/mineral, supple connected muscle/joints, upper left warm light, cool dark plum recesses, warm ivory edge accents and restrained amber eyes/vent. Clear readable silhouette and focal face against ochre sand, NOT noisy detail or outline glow. Whole complete creature in EVERY cell, no disjoint pieces, no stretching anatomy. EIGHT full poses, FOUR columns by TWO rows: idle, walkA, walkB, anticipation, strike, heavy impact/breath/emergence, signal/roar, collapsed death. Equal square cells, comfortable transparent padding, precise consistent scale and camera in all poses; anchored walking with alternate support and barely any vertical bounce. Preserve distinct attack anticipation and follow-through. Boss has greater age, material scale and presence; death is a genuinely collapsed whole animal, not a smaller standing pose. Real ALPHA transparency, clean edges. NO background, floor, painted ground shadow, glow halo, labels, text, grid, frame, scenery or separate projectiles. Preserve exact target creature identity and layout. Landscape2:1. IMPORTANT Soterrado action mapping: frame0 idle;1,2 planted walking;3 claws drawn up warning;4 forward sweeping digging strike;5 foreclaws raised as it emerges;6 roaring with amber seams lit;7 genuinely collapsed. No burrow terrain in the image."
+  },
+  {
+    "id": "vesper",
+    "name": "VESPER",
+    "texture": "vesper-motion",
+    "cell": 256,
+    "columns": 4,
+    "rows": 2,
+    "source": "public/assets/visual/characters/vesper-motion.png",
+    "prompt": "Repaint and upgrade the EXACT creature in the attached game sprite sheet, not a different animal. VESPER: Ancient FOUR-legged arctic dragonlike alien, low long body with blue-black muscular skin and ivory glacier plates, two folded membranous wing fins, angular narrow head, amber eyes, long curved segmented tail. Preserve third row final creature, visible living anatomy and physical folded wings. Not a bird. Head faces right, wings never obscure the feet. Preserve its species-specific body shape, limb count, action order and facing direction from SOURCE. Organic Sci-Fi R3 hand-painted dimensional game art: strongly sculpted volumes, tactile worn shell/mineral, supple connected muscle/joints, upper left warm light, cool dark plum recesses, warm ivory edge accents and restrained amber eyes/vent. Clear readable silhouette and focal face against snow, NOT noisy detail or outline glow. Whole complete creature in EVERY cell, no disjoint pieces, no stretching anatomy. EIGHT full poses, FOUR columns by TWO rows: idle, walkA, walkB, anticipation, strike, heavy impact/breath/emergence, signal/roar, collapsed death. Equal square cells, comfortable transparent padding, precise consistent scale and camera in all poses; anchored walking with alternate support and barely any vertical bounce. Preserve distinct attack anticipation and follow-through. Boss has greater age, material scale and presence; death is a genuinely collapsed whole animal, not a smaller standing pose. Real ALPHA transparency, clean edges. NO background, floor, painted ground shadow, glow halo, labels, text, grid, frame, scenery or separate projectiles. Preserve exact target creature identity and layout. Landscape2:1. IMPORTANT override action mapping to match game: frame0 ready;1,2 planted four-legged walk;3 head lowers and jaws draw back for warning;4 tail sweep with whole body curling;5 forward rushing head-low lunge;6 jaws wide open for frost breath with two wings slightly lifted, NO ice projectile or floor shards;7 collapsed dead animal. Four legs PLUS two wings, same count all frames."
+  },
+  {
+    "id": "titan",
+    "name": "O INCANDESCENTE",
+    "texture": "titan-motion",
+    "cell": 256,
+    "columns": 4,
+    "rows": 2,
+    "source": "public/assets/visual/characters/titan-motion.png",
+    "prompt": "Repaint and upgrade the EXACT creature in the attached game sprite sheet, not a different animal. O INCANDESCENTE: Monumental nonhuman volcanic organism, wide basalt mineral torso, disproportionately huge blunt rock forelimbs, four load-bearing clawed limbs total, short recessed head with amber eyes, asymmetrical ochre-ivory scoria armor and deep orange fissured chest core. Preserve last row first creature. NOT human, robot, knight, or a person wearing armor. Preserve its species-specific body shape, limb count, action order and facing direction from SOURCE. Organic Sci-Fi R3 hand-painted dimensional game art: strongly sculpted volumes, tactile worn shell/mineral, supple connected muscle/joints, upper left warm light, cool dark plum recesses, warm ivory edge accents and restrained amber eyes/vent. Clear readable silhouette and focal face against dark basalt, NOT noisy detail or outline glow. Whole complete creature in EVERY cell, no disjoint pieces, no stretching anatomy. EIGHT full poses, FOUR columns by TWO rows: idle, walkA, walkB, anticipation, strike, heavy impact/breath/emergence, signal/roar, collapsed death. Equal square cells, comfortable transparent padding, precise consistent scale and camera in all poses; anchored walking with alternate support and barely any vertical bounce. Preserve distinct attack anticipation and follow-through. Boss has greater age, material scale and presence; death is a genuinely collapsed whole animal, not a smaller standing pose. Real ALPHA transparency, clean edges. NO background, floor, painted ground shadow, glow halo, labels, text, grid, frame, scenery or separate projectiles. Preserve exact target creature identity and layout. Landscape2:1. IMPORTANT override action mapping to match game: frame0 idle;1,2 grounded steps;3 BOTH massive forelimbs raised back for warning;4 forelimbs hit ground;5 one huge forelimb sweeps horizontally;6 one forelimb extends outward throwing (NO detached boulder);7 collapsed with chest dim. Do not make it a person wearing armor."
+  }
+]

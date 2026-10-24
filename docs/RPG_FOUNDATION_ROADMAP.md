@@ -411,3 +411,8 @@ Em 20/10/2026 o usuário aprovou a ponte, rejeitou a qualidade do desembarque e 
 ### Nara visível e revisão de imagem — 0.1.119
 
 Usuário aprovou a 0.1.118 (“Excelente!”) e pediu mostrar Nara no desembarque durante sua fala e revisar os frames. Novo quadro/cena inteira: Nara na rampa, lenço laranja e roupa da ponte, quatro heróis à frente. Sete cenas anteriores e todos os WAVs preservados; exportação Concat com menor compressão e inspeção de quadros das oito cenas. [Entrega e testes](cinematic-opening/revision-04/README.md). **Aguardar avaliação desta correção final; missões e mapas continuam na próxima etapa, não foram antecipados.**
+
+
+### Revisão visual autorizada das criaturas — 0.1.140
+
+Em 24/10/2026, após esclarecer que apenas o Hollow tinha recebido a pintura aprovada, o usuário autorizou aplicar o tratamento aos demais monstros e bosses. Manutenção visual: 18 folhas completas novas, registro dos apoios, sombra compartilhada suave e mesmas poses na campanha/cooperativo. Preservar IA, stats, geometrias de ataque, recompensas, checkpoints e missões. [Arte, teste reservado, evidências e limites](creature-finish/README.md). Não interpretar QA técnico como aprovação visual; aguardar playtest humano antes de avançar conteúdo.

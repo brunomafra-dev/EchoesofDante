@@ -1,3 +1,4 @@
+import {createCreatureShadow,type CreatureShadow} from '../visual/CreatureArt';
 import Phaser from 'phaser';
 import { coopSession as room, NO_INPUT, type PartyWorld, type CreaturePose, type PartyPose, type PartyProfile } from './CoopSession';
 import { PartyActor } from './PartyActor';
@@ -33,7 +34,7 @@ export type PartyBridge={
  sync:(world:PartyWorld)=>boolean;render:(pose:PartyPose)=>void;
 };
 type Presented=Enemy&{view?:Phaser.GameObjects.Container;body?:Phaser.GameObjects.Image;telegraph?:Phaser.GameObjects.Ellipse;warning?:Phaser.GameObjects.Graphics;direction?:number;attackAngle?:number;projectile?:Phaser.GameObjects.Ellipse;shots?:{active:boolean;x:number;y:number;angle:number;image?:Phaser.GameObjects.Image}[]};
-type Mirror={body:Phaser.GameObjects.Image;shadow:Phaser.GameObjects.Ellipse;warning:Phaser.GameObjects.Ellipse;line:Phaser.GameObjects.Line;hp:Phaser.GameObjects.Rectangle;hpBack:Phaser.GameObjects.Rectangle;name:Phaser.GameObjects.Text;layers:Phaser.GameObjects.Image[];environment:{position:{x:number;y:number};isDead:boolean}};
+type Mirror={body:Phaser.GameObjects.Image;shadow:CreatureShadow;warning:Phaser.GameObjects.Ellipse;line:Phaser.GameObjects.Line;hp:Phaser.GameObjects.Rectangle;hpBack:Phaser.GameObjects.Rectangle;name:Phaser.GameObjects.Text;layers:Phaser.GameObjects.Image[];environment:{position:{x:number;y:number};isDead:boolean}};
 const INPUT_EDGES=['dash','charge','release','cancel','interact','restart','element'] as const;
 // Regional host authority. There is no second AI simulation in the visitor browser.
 export class PartyExpedition {
@@ -212,7 +213,7 @@ export class PartyExpedition {
   for(const e of world.enemies){
    live.add(e.id);let m=this.mirrors.get(e.id);
    if(!m){
-    m={environment:{position:{x:e.x,y:e.y},isDead:false},body:this.scene.add.image(e.x,e.y,e.texture),layers:[],shadow:this.scene.add.ellipse(e.x,e.y+12,e.size*.6,20,0x07191b,.5),
+    m={environment:{position:{x:e.x,y:e.y},isDead:false},body:this.scene.add.image(e.x,e.y,e.texture),layers:[],shadow:createCreatureShadow(this.scene,e.x,e.y+12,e.size*.6,20,0x07191b,.5),
      warning:this.scene.add.ellipse(0,0,70,28,0xffbd54,.2).setStrokeStyle(2,0xffbd54,.8),line:this.scene.add.line(0,0,0,0,300,0,0xffbd54,.5).setOrigin(0),
      hpBack:this.scene.add.rectangle(0,0,44,6,0x10252b),hp:this.scene.add.rectangle(0,0,40,4,0xb9d299).setOrigin(0,.5),name:this.scene.add.text(0,0,'',{fontFamily:'Barlow Condensed',fontSize:'13px',color:'#d8e4c7',stroke:'#06110d',strokeThickness:2}).setOrigin(.5)};
     this.mirrors.set(e.id,m);

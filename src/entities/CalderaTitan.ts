@@ -1,3 +1,4 @@
+import {createCreatureShadow,type CreatureShadow} from '../visual/CreatureArt';
 import Phaser from 'phaser';
 import { Health } from '../combat/Health';
 import { inMeleeArc,inShockwaveSweep } from '../combat/HitDetection';
@@ -11,7 +12,7 @@ export type TitanCue='intro'|'warning'|'strike'|'phase'|'death';
 // Explicit heavy encounter on the established Enemy and party damage contracts.
 export class CalderaTitan implements Enemy {
  readonly health=new Health(B.hp);readonly radius=B.radius;readonly position={...B.spawn};
- readonly body:Phaser.GameObjects.Image;readonly shadow:Phaser.GameObjects.Ellipse;readonly telegraph:Phaser.GameObjects.Graphics;
+ readonly body:Phaser.GameObjects.Image;readonly shadow:CreatureShadow;readonly telegraph:Phaser.GameObjects.Graphics;
  readonly attackRange=B.cleave.range;
  state:'DORMANT'|'INTRO'|'IDLE'|'TELEGRAPH'|'EXECUTE'|'RECOVER'|'PHASE'|'DEATH'='DORMANT';
  phase:1|2|3=1;attackName:TitanAttack|null=null;isDead=false;
@@ -21,7 +22,7 @@ export class CalderaTitan implements Enemy {
  private shots:{x:number;y:number;angle:number;travel:number;active:boolean;view:Phaser.GameObjects.Image}[];
  get coopObjects():Phaser.GameObjects.GameObject[]{return[this.shadow,this.body,this.telegraph,...this.marks.map(m=>m.view),...this.shots.map(s=>s.view)];}
  constructor(private scene:Phaser.Scene,private cue:(cue:TitanCue)=>void,private finish:()=>void){
-  this.shadow=scene.add.ellipse(this.position.x,this.position.y+8,174,44,0x080b0d,.5);
+  this.shadow=createCreatureShadow(scene,this.position.x,this.position.y+8,174,44,0x080b0d,.5);
   this.body=scene.add.image(this.position.x,this.position.y+15,'titan-motion',0).setOrigin(.5,244/256).setDisplaySize(B.size,B.size);
   this.telegraph=scene.add.graphics().setVisible(false);
   this.marks=Array.from({length:3},()=>({x:0,y:0,spent:true,view:scene.add.graphics().setVisible(false)}));
@@ -79,7 +80,7 @@ export class CalderaTitan implements Enemy {
   this.gait+=travel/22;
   const frame=this.state==='EXECUTE'?this.attackName==='cleave'?5:this.attackName==='boulders'?6:4:this.state==='TELEGRAPH'?3:travel>.1?1+Math.floor(this.gait)%2:0;
   // Painted alternating support poses; feet share a registered anchor, no body spin.
-  this.body.setFrame(frame).setPosition(this.position.x,this.position.y+15).setFlipX(this.left).setRotation(0).setDepth(this.position.y).setScale(B.size/256,B.size/256*(1+Math.sin(now/650)*.006));
+  this.body.setFrame(frame).setPosition(this.position.x,this.position.y+15).setFlipX(this.left).setRotation(0).setDepth(this.position.y).setScale(B.size/256);
   if(now<this.hurtUntil)this.body.setTintFill(0xffe5bf);else this.body.clearTint();
   this.shadow.setPosition(this.position.x,this.position.y+8).setDepth(this.position.y-2);
  }

@@ -1,3 +1,4 @@
+import {createCreatureShadow,type CreatureShadow} from '../visual/CreatureArt';
 import Phaser from 'phaser';
 import { Health } from '../combat/Health';
 import { inMeleeArc, inShockwaveSweep } from '../combat/HitDetection';
@@ -20,7 +21,7 @@ export class Soterrado implements Enemy {
   readonly attackRange = B.sweep.range;
   readonly attackDamage = B.sweep.damage;
   readonly body: Phaser.GameObjects.Image;
-  readonly shadow: Phaser.GameObjects.Ellipse;
+  readonly shadow: CreatureShadow;
   readonly telegraph: Phaser.GameObjects.Graphics;
   get coopObjects(): Phaser.GameObjects.GameObject[] { return [this.shadow,this.name,this.body,this.telegraph,...this.marks.map(m=>m.graphic),...this.burrowVisual.coopObjects]; }
   private victims = new Set<Vec2>();
@@ -48,7 +49,7 @@ export class Soterrado implements Enemy {
   constructor(private readonly scene:Phaser.Scene,x:number,y:number,private readonly bounds:MovementBounds,
     private readonly onCue:(cue:SoterradoCue,attack?:SoterradoAttack)=>void,private readonly onDefeated:()=>void) {
     this.position={x,y};
-    this.shadow=scene.add.ellipse(x,y+5,160,46,0x4d291d,.55).setDepth(y-2);
+    this.shadow=createCreatureShadow(scene,x,y+5,160,46,0x4d291d,.55).setDepth(y-2);
     this.body=scene.add.image(x,y+14,'soterrado-motion',0).setOrigin(.5,.93).setDisplaySize(B.artSize,B.artSize).setDepth(y).setAlpha(0);
     this.name=createEnemyName(scene,x,y-145,'O SOTERRADO').setVisible(false);
     this.telegraph=scene.add.graphics().setVisible(false);
@@ -186,7 +187,7 @@ export class Soterrado implements Enemy {
     const reveal=sinking?1-clamp((now-this.stateAt)/350,0,1):this.state==='INTRO'?clamp((progress-.28)/.62,0,1):emerging?clamp(progress*1.2,0,1):1;
     const eased=reveal*reveal*(3-2*reveal),hidden=(1-eased)*B.artSize*.93;
     this.body.setFrame(frame).setFlipX(this.facingLeft).setRotation(0).setScale(B.artSize/384)
-      .setPosition(this.position.x,this.position.y+14+hidden-(walking?Math.abs(Math.sin(this.gait*Math.PI))*2:0)).setDepth(this.position.y);
+      .setPosition(this.position.x,this.position.y+14+hidden).setDepth(this.position.y);
     if(eased<1)this.body.setCrop(0,0,384,Math.max(1,384*.93*eased));else this.body.setCrop();
     this.body.setAlpha(this.state==='DORMANT'||eased<=0?0:1);
     if(now<this.hurtUntil)this.body.setTintFill(0xffe5c1);else this.body.clearTint();

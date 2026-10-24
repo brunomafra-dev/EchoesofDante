@@ -1,3 +1,4 @@
+import {createCreatureShadow,type CreatureShadow} from '../visual/CreatureArt';
 import Phaser from 'phaser';
 import { Health } from '../combat/Health';
 import { inShockwaveSweep } from '../combat/HitDetection';
@@ -16,7 +17,7 @@ export class DanteCreature implements Enemy {
   readonly attackRange: number;
   readonly attackDamage: number;
   readonly view: Phaser.GameObjects.Container;
-  readonly shadow: Phaser.GameObjects.Ellipse;
+  readonly shadow: CreatureShadow;
   readonly telegraph: Phaser.GameObjects.Ellipse;
   readonly healthBack: Phaser.GameObjects.Rectangle;
   readonly healthFill: Phaser.GameObjects.Rectangle;
@@ -48,7 +49,7 @@ export class DanteCreature implements Enemy {
     this.attackRange = stats.range; this.attackDamage = stats.damage;
     const pouncer = kind === 'skitter' || kind === 'dunePouncer' || kind === 'frostPouncer';
     const size = kind === 'frostPouncer' ? 112 : kind === 'frostSpitter' ? 120 : kind === 'skitter' ? 78 : kind === 'dunePouncer' ? 96 : kind === 'glassSpitter' ? 106 : 94;
-    this.shadow = scene.add.ellipse(x, y + 12, size * 0.65, 22, 0x07191b, 0.55);
+    this.shadow = createCreatureShadow(scene,x, y + 12, size * 0.65, 22, 0x07191b, 0.55);
     this.telegraph = scene.add.ellipse(x, y, pouncer ? 75 : 48, 28, 0xffbd54, 0.1)
       .setStrokeStyle(2, 0xffbd54, 0.9).setVisible(false);
     const texture = kind === 'frostPouncer' ? 'dante-frost-pouncer-motion' : kind === 'frostSpitter' ? 'dante-frost-spitter-motion' : kind === 'dunePouncer' ? 'dante-dune-pouncer-motion' : kind === 'glassSpitter' ? 'dante-glass-spitter-motion' : `dante-${kind}-motion`;

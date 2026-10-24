@@ -1,3 +1,4 @@
+import {createCreatureShadow,type CreatureShadow} from '../visual/CreatureArt';
 import Phaser from 'phaser';
 import { Health } from '../combat/Health';
 import { inMeleeArc, inShockwaveSweep } from '../combat/HitDetection';
@@ -14,7 +15,7 @@ export class Vesper implements Enemy {
   readonly radius = B.radius;
   readonly position = { ...B.spawn };
   readonly body: Phaser.GameObjects.Image;
-  readonly shadow: Phaser.GameObjects.Ellipse;
+  readonly shadow: CreatureShadow;
   readonly telegraph: Phaser.GameObjects.Graphics;
   readonly attackRange = B.breath.range;
   state: 'DORMANT' | 'INTRO' | 'IDLE' | 'TELEGRAPH' | 'EXECUTE' | 'RECOVER' | 'PHASE' | 'DEATH' = 'DORMANT';
@@ -39,7 +40,7 @@ export class Vesper implements Enemy {
   private readonly ice: Phaser.GameObjects.Image[];
 
   constructor(private scene: Phaser.Scene, private cue: (cue: IceCue) => void, private finish: () => void) {
-    this.shadow = scene.add.ellipse(this.position.x, this.position.y + 10, 175, 37, 0x051219, .3);
+    this.shadow = createCreatureShadow(scene,this.position.x, this.position.y + 10, 175, 37, 0x051219, .3);
     this.body = scene.add.image(this.position.x, this.position.y + 15, 'vesper-motion', 0)
       .setOrigin(.5, 244 / 256).setDisplaySize(B.size, B.size).setFlipX(true);
     this.telegraph = scene.add.graphics().setVisible(false);
@@ -136,7 +137,7 @@ export class Vesper implements Enemy {
     const frame = this.state === 'EXECUTE' ? this.attackName === 'tail' ? 4 : this.attackName === 'rush' ? 5 : 6
       : this.state === 'TELEGRAPH' ? 3 : travel > .1 ? 1 + Math.floor(this.gait) % 2 : 0;
     this.body.setFrame(frame).setFlipX(this.left).setPosition(this.position.x, this.position.y + 15)
-      .setDepth(this.position.y).setRotation(0).setScale(B.size / 256, B.size / 256 * (1 + Math.sin(now / 560) * .012));
+      .setDepth(this.position.y).setRotation(0).setScale(B.size / 256);
     if (now < this.hurtUntil) this.body.setTintFill(0xe9f2ff); else this.body.clearTint();
     this.shadow.setPosition(this.position.x, this.position.y + 10).setDepth(this.position.y - 2);
     if (this.state === 'EXECUTE' && this.attackName === 'breath') this.telegraph.setAlpha(.8 + Math.sin(now / 60) * .15);

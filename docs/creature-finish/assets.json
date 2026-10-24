@@ -1,0 +1,1118 @@
+[
+  {
+    "id": "skitter",
+    "texture": "dante-skitter-motion",
+    "file": "public/assets/visual/creature-finish/skitter-v1.webp",
+    "width": 1024,
+    "height": 512,
+    "frames": 8,
+    "cell": 256,
+    "bytes": 187336,
+    "rgbaBytes": 2097152,
+    "commonScale": 0.5432432432432432,
+    "groundPixel": 241,
+    "bounds": [
+      [
+        19,
+        40,
+        236,
+        241
+      ],
+      [
+        19,
+        40,
+        236,
+        241
+      ],
+      [
+        21,
+        39,
+        235,
+        241
+      ],
+      [
+        20,
+        40,
+        236,
+        241
+      ],
+      [
+        20,
+        54,
+        235,
+        241
+      ],
+      [
+        15,
+        75,
+        241,
+        241
+      ],
+      [
+        12,
+        62,
+        243,
+        241
+      ],
+      [
+        10,
+        77,
+        246,
+        241
+      ]
+    ],
+    "generatedSource": "exec-cbbf4088-70bd-420d-88b4-9bc1dcd3794b.png"
+  },
+  {
+    "id": "spitter",
+    "texture": "dante-spitter-motion",
+    "file": "public/assets/visual/creature-finish/spitter-v1.webp",
+    "width": 1024,
+    "height": 512,
+    "frames": 8,
+    "cell": 256,
+    "bytes": 165744,
+    "rgbaBytes": 2097152,
+    "commonScale": 0.5348101265822784,
+    "groundPixel": 241,
+    "bounds": [
+      [
+        18,
+        72,
+        237,
+        241
+      ],
+      [
+        21,
+        81,
+        235,
+        241
+      ],
+      [
+        18,
+        74,
+        237,
+        241
+      ],
+      [
+        17,
+        75,
+        239,
+        241
+      ],
+      [
+        16,
+        76,
+        240,
+        241
+      ],
+      [
+        18,
+        85,
+        238,
+        241
+      ],
+      [
+        16,
+        74,
+        239,
+        241
+      ],
+      [
+        12,
+        89,
+        243,
+        241
+      ]
+    ],
+    "generatedSource": "exec-5efc64e2-a2a5-47b4-a45e-651c93a881eb.png"
+  },
+  {
+    "id": "carapace",
+    "texture": "dante-carapace-motion",
+    "file": "public/assets/visual/creature-finish/carapace-v1.webp",
+    "width": 1024,
+    "height": 512,
+    "frames": 8,
+    "cell": 256,
+    "bytes": 167076,
+    "rgbaBytes": 2097152,
+    "commonScale": 0.5310955710955712,
+    "groundPixel": 241,
+    "bounds": [
+      [
+        14,
+        94,
+        242,
+        241
+      ],
+      [
+        19,
+        60,
+        236,
+        241
+      ],
+      [
+        18,
+        98,
+        237,
+        241
+      ],
+      [
+        18,
+        98,
+        238,
+        241
+      ],
+      [
+        14,
+        88,
+        242,
+        241
+      ],
+      [
+        18,
+        34,
+        237,
+        241
+      ],
+      [
+        10,
+        58,
+        245,
+        241
+      ],
+      [
+        12,
+        94,
+        243,
+        241
+      ]
+    ],
+    "generatedSource": "exec-8be595d5-a961-43c4-94d8-cfcb84654a6b.png"
+  },
+  {
+    "id": "thorn",
+    "texture": "dante-thorn-motion",
+    "file": "public/assets/visual/creature-finish/thorn-v1.webp",
+    "width": 1024,
+    "height": 512,
+    "frames": 8,
+    "cell": 256,
+    "bytes": 206438,
+    "rgbaBytes": 2097152,
+    "commonScale": 0.5011709601873536,
+    "groundPixel": 241,
+    "bounds": [
+      [
+        45,
+        27,
+        211,
+        241
+      ],
+      [
+        37,
+        45,
+        218,
+        241
+      ],
+      [
+        33,
+        47,
+        222,
+        241
+      ],
+      [
+        40,
+        45,
+        215,
+        241
+      ],
+      [
+        37,
+        51,
+        218,
+        241
+      ],
+      [
+        41,
+        29,
+        214,
+        241
+      ],
+      [
+        25,
+        59,
+        231,
+        241
+      ],
+      [
+        41,
+        55,
+        215,
+        241
+      ]
+    ],
+    "generatedSource": "exec-4328bc0b-408a-4f84-a5c3-0640d9e8770c.png"
+  },
+  {
+    "id": "dunePouncer",
+    "texture": "dante-dune-pouncer-motion",
+    "file": "public/assets/visual/creature-finish/dunePouncer-v1.webp",
+    "width": 1024,
+    "height": 512,
+    "frames": 8,
+    "cell": 256,
+    "bytes": 192650,
+    "rgbaBytes": 2097152,
+    "commonScale": 0.5172413793103449,
+    "groundPixel": 241,
+    "bounds": [
+      [
+        19,
+        76,
+        236,
+        241
+      ],
+      [
+        23,
+        50,
+        233,
+        241
+      ],
+      [
+        19,
+        53,
+        236,
+        241
+      ],
+      [
+        16,
+        50,
+        240,
+        241
+      ],
+      [
+        19,
+        52,
+        237,
+        241
+      ],
+      [
+        20,
+        50,
+        236,
+        241
+      ],
+      [
+        17,
+        68,
+        239,
+        241
+      ],
+      [
+        26,
+        59,
+        230,
+        241
+      ]
+    ],
+    "generatedSource": "exec-3d5c42eb-80d8-4a8c-a600-d5ddbbc4cf80.png"
+  },
+  {
+    "id": "glassSpitter",
+    "texture": "dante-glass-spitter-motion",
+    "file": "public/assets/visual/creature-finish/glassSpitter-v1.webp",
+    "width": 1024,
+    "height": 512,
+    "frames": 8,
+    "cell": 256,
+    "bytes": 193094,
+    "rgbaBytes": 2097152,
+    "commonScale": 0.552,
+    "groundPixel": 241,
+    "bounds": [
+      [
+        24,
+        39,
+        231,
+        241
+      ],
+      [
+        21,
+        69,
+        234,
+        241
+      ],
+      [
+        19,
+        60,
+        236,
+        241
+      ],
+      [
+        9,
+        49,
+        246,
+        241
+      ],
+      [
+        29,
+        32,
+        226,
+        241
+      ],
+      [
+        14,
+        56,
+        242,
+        241
+      ],
+      [
+        9,
+        67,
+        246,
+        241
+      ],
+      [
+        28,
+        78,
+        228,
+        241
+      ]
+    ],
+    "generatedSource": "exec-ec422250-6ebb-4e7d-8186-5b38feb7a7b0.png"
+  },
+  {
+    "id": "frostPouncer",
+    "texture": "dante-frost-pouncer-motion",
+    "file": "public/assets/visual/creature-finish/frostPouncer-v1.webp",
+    "width": 1024,
+    "height": 512,
+    "frames": 8,
+    "cell": 256,
+    "bytes": 121672,
+    "rgbaBytes": 2097152,
+    "commonScale": 0.4632768361581921,
+    "groundPixel": 241,
+    "bounds": [
+      [
+        46,
+        120,
+        210,
+        241
+      ],
+      [
+        44,
+        125,
+        211,
+        241
+      ],
+      [
+        39,
+        126,
+        217,
+        241
+      ],
+      [
+        46,
+        123,
+        209,
+        241
+      ],
+      [
+        30,
+        111,
+        225,
+        241
+      ],
+      [
+        28,
+        98,
+        227,
+        241
+      ],
+      [
+        36,
+        118,
+        219,
+        241
+      ],
+      [
+        34,
+        164,
+        221,
+        241
+      ]
+    ],
+    "generatedSource": "exec-76e3885e-58d3-42a2-a19e-d3305c5ee53b.png"
+  },
+  {
+    "id": "frostSpitter",
+    "texture": "dante-frost-spitter-motion",
+    "file": "public/assets/visual/creature-finish/frostSpitter-v1.webp",
+    "width": 1024,
+    "height": 512,
+    "frames": 8,
+    "cell": 256,
+    "bytes": 161410,
+    "rgbaBytes": 2097152,
+    "commonScale": 0.5607142857142857,
+    "groundPixel": 241,
+    "bounds": [
+      [
+        26,
+        84,
+        230,
+        241
+      ],
+      [
+        25,
+        84,
+        230,
+        241
+      ],
+      [
+        24,
+        85,
+        231,
+        241
+      ],
+      [
+        26,
+        98,
+        230,
+        241
+      ],
+      [
+        25,
+        88,
+        231,
+        241
+      ],
+      [
+        25,
+        89,
+        230,
+        241
+      ],
+      [
+        25,
+        82,
+        230,
+        241
+      ],
+      [
+        23,
+        132,
+        232,
+        241
+      ]
+    ],
+    "generatedSource": "exec-4779eee1-9a64-43dc-9ae4-2e8e01fbe562.png"
+  },
+  {
+    "id": "iceCarapace",
+    "texture": "dante-iceCarapace-motion",
+    "file": "public/assets/visual/creature-finish/iceCarapace-v1.webp",
+    "width": 1024,
+    "height": 512,
+    "frames": 8,
+    "cell": 256,
+    "bytes": 191504,
+    "rgbaBytes": 2097152,
+    "commonScale": 0.5465994962216625,
+    "groundPixel": 241,
+    "bounds": [
+      [
+        19,
+        87,
+        236,
+        241
+      ],
+      [
+        17,
+        87,
+        239,
+        241
+      ],
+      [
+        17,
+        87,
+        238,
+        241
+      ],
+      [
+        17,
+        87,
+        238,
+        241
+      ],
+      [
+        15,
+        85,
+        240,
+        241
+      ],
+      [
+        13,
+        91,
+        243,
+        241
+      ],
+      [
+        9,
+        88,
+        246,
+        241
+      ],
+      [
+        12,
+        73,
+        243,
+        241
+      ]
+    ],
+    "generatedSource": "exec-a36c281c-5e40-4194-8804-41d7f79a6191.png"
+  },
+  {
+    "id": "emberHound",
+    "texture": "ember-hound-motion",
+    "file": "public/assets/visual/creature-finish/emberHound-v1.webp",
+    "width": 768,
+    "height": 512,
+    "frames": 6,
+    "cell": 256,
+    "bytes": 117328,
+    "rgbaBytes": 1572864,
+    "commonScale": 0.44967880085653106,
+    "groundPixel": 241,
+    "bounds": [
+      [
+        23,
+        80,
+        233,
+        241
+      ],
+      [
+        23,
+        79,
+        233,
+        241
+      ],
+      [
+        27,
+        77,
+        229,
+        241
+      ],
+      [
+        25,
+        84,
+        231,
+        241
+      ],
+      [
+        17,
+        81,
+        239,
+        241
+      ],
+      [
+        22,
+        94,
+        234,
+        241
+      ]
+    ],
+    "generatedSource": "exec-29afb884-8d33-40a7-89c1-ba87a05e4b56.png"
+  },
+  {
+    "id": "fumarole",
+    "texture": "fumarole-motion",
+    "file": "public/assets/visual/creature-finish/fumarole-v1.webp",
+    "width": 768,
+    "height": 512,
+    "frames": 6,
+    "cell": 256,
+    "bytes": 132606,
+    "rgbaBytes": 1572864,
+    "commonScale": 0.47058823529411764,
+    "groundPixel": 241,
+    "bounds": [
+      [
+        21,
+        33,
+        234,
+        241
+      ],
+      [
+        17,
+        37,
+        239,
+        241
+      ],
+      [
+        22,
+        35,
+        233,
+        241
+      ],
+      [
+        13,
+        22,
+        243,
+        241
+      ],
+      [
+        10,
+        31,
+        246,
+        241
+      ],
+      [
+        11,
+        77,
+        245,
+        241
+      ]
+    ],
+    "generatedSource": "exec-51a55872-4220-459b-86b8-b94807e18509.png"
+  },
+  {
+    "id": "slagback",
+    "texture": "slagback-motion",
+    "file": "public/assets/visual/creature-finish/slagback-v1.webp",
+    "width": 768,
+    "height": 512,
+    "frames": 6,
+    "cell": 256,
+    "bytes": 147486,
+    "rgbaBytes": 1572864,
+    "commonScale": 0.47,
+    "groundPixel": 241,
+    "bounds": [
+      [
+        18,
+        34,
+        238,
+        241
+      ],
+      [
+        17,
+        34,
+        239,
+        241
+      ],
+      [
+        19,
+        38,
+        237,
+        241
+      ],
+      [
+        12,
+        46,
+        243,
+        241
+      ],
+      [
+        7,
+        38,
+        248,
+        241
+      ],
+      [
+        14,
+        44,
+        241,
+        241
+      ]
+    ],
+    "generatedSource": "exec-39d1bd49-6e89-4f7c-b15e-dcaaf6d782d6.png"
+  },
+  {
+    "id": "bankGrazer",
+    "texture": "dante-bankGrazer-motion",
+    "file": "public/assets/visual/creature-finish/bankGrazer-v1.webp",
+    "width": 1024,
+    "height": 512,
+    "frames": 8,
+    "cell": 256,
+    "bytes": 163214,
+    "rgbaBytes": 2097152,
+    "commonScale": 0.5460992907801419,
+    "groundPixel": 241,
+    "bounds": [
+      [
+        20,
+        87,
+        236,
+        241
+      ],
+      [
+        20,
+        80,
+        236,
+        241
+      ],
+      [
+        21,
+        72,
+        235,
+        241
+      ],
+      [
+        20,
+        75,
+        236,
+        241
+      ],
+      [
+        20,
+        78,
+        236,
+        241
+      ],
+      [
+        17,
+        73,
+        238,
+        241
+      ],
+      [
+        13,
+        74,
+        242,
+        241
+      ],
+      [
+        12,
+        90,
+        244,
+        241
+      ]
+    ],
+    "generatedSource": "exec-c29d7492-c63b-486c-8cf6-f829dcee5fb4.png"
+  },
+  {
+    "id": "reedSpitter",
+    "texture": "dante-reedSpitter-motion",
+    "file": "public/assets/visual/creature-finish/reedSpitter-v1.webp",
+    "width": 1024,
+    "height": 512,
+    "frames": 8,
+    "cell": 256,
+    "bytes": 155554,
+    "rgbaBytes": 2097152,
+    "commonScale": 0.5195822454308094,
+    "groundPixel": 241,
+    "bounds": [
+      [
+        28,
+        58,
+        227,
+        241
+      ],
+      [
+        29,
+        60,
+        227,
+        241
+      ],
+      [
+        30,
+        54,
+        225,
+        241
+      ],
+      [
+        27,
+        57,
+        228,
+        241
+      ],
+      [
+        29,
+        63,
+        227,
+        241
+      ],
+      [
+        26,
+        62,
+        230,
+        241
+      ],
+      [
+        16,
+        75,
+        239,
+        241
+      ],
+      [
+        16,
+        65,
+        239,
+        241
+      ]
+    ],
+    "generatedSource": "exec-4b08deae-4e84-4473-9903-a59ea26aa4c4.png"
+  },
+  {
+    "id": "warden",
+    "texture": "warden-motion",
+    "file": "public/assets/visual/creature-finish/warden-v1.webp",
+    "width": 2048,
+    "height": 1024,
+    "frames": 8,
+    "cell": 512,
+    "bytes": 478112,
+    "rgbaBytes": 8388608,
+    "commonScale": 0.9026470588235294,
+    "groundPixel": 399,
+    "bounds": [
+      [
+        66,
+        31,
+        445,
+        399
+      ],
+      [
+        68,
+        53,
+        444,
+        399
+      ],
+      [
+        72,
+        54,
+        440,
+        399
+      ],
+      [
+        66,
+        98,
+        445,
+        399
+      ],
+      [
+        65,
+        51,
+        447,
+        399
+      ],
+      [
+        65,
+        89,
+        447,
+        399
+      ],
+      [
+        67,
+        32,
+        445,
+        399
+      ],
+      [
+        62,
+        174,
+        449,
+        399
+      ]
+    ],
+    "generatedSource": "exec-734493d1-5de8-4ab9-9c7e-20a0c9417768.png"
+  },
+  {
+    "id": "soterrado",
+    "texture": "soterrado-motion",
+    "file": "public/assets/visual/creature-finish/soterrado-v1.webp",
+    "width": 1536,
+    "height": 768,
+    "frames": 8,
+    "cell": 384,
+    "bytes": 366564,
+    "rgbaBytes": 4718592,
+    "commonScale": 0.781021897810219,
+    "groundPixel": 346,
+    "bounds": [
+      [
+        23,
+        132,
+        360,
+        346
+      ],
+      [
+        24,
+        137,
+        360,
+        346
+      ],
+      [
+        30,
+        138,
+        354,
+        346
+      ],
+      [
+        20,
+        70,
+        363,
+        346
+      ],
+      [
+        23,
+        123,
+        360,
+        346
+      ],
+      [
+        21,
+        47,
+        363,
+        346
+      ],
+      [
+        20,
+        112,
+        363,
+        346
+      ],
+      [
+        19,
+        166,
+        364,
+        346
+      ]
+    ],
+    "generatedSource": "exec-ba19f7d3-8049-45fc-a7b2-93bf7bfe3cb9.png"
+  },
+  {
+    "id": "vesper",
+    "texture": "vesper-motion",
+    "file": "public/assets/visual/creature-finish/vesper-v1.webp",
+    "width": 1024,
+    "height": 512,
+    "frames": 8,
+    "cell": 256,
+    "bytes": 187342,
+    "rgbaBytes": 2097152,
+    "commonScale": 0.5432054176072234,
+    "groundPixel": 241,
+    "bounds": [
+      [
+        18,
+        75,
+        237,
+        241
+      ],
+      [
+        10,
+        96,
+        245,
+        241
+      ],
+      [
+        12,
+        94,
+        244,
+        241
+      ],
+      [
+        13,
+        110,
+        242,
+        241
+      ],
+      [
+        11,
+        71,
+        245,
+        241
+      ],
+      [
+        7,
+        102,
+        248,
+        241
+      ],
+      [
+        8,
+        60,
+        247,
+        241
+      ],
+      [
+        14,
+        143,
+        242,
+        241
+      ]
+    ],
+    "generatedSource": "exec-6089b499-37a5-4d6b-b5fe-49bf475ee0db.png"
+  },
+  {
+    "id": "titan",
+    "texture": "titan-motion",
+    "file": "public/assets/visual/creature-finish/titan-v1.webp",
+    "width": 1024,
+    "height": 512,
+    "frames": 8,
+    "cell": 256,
+    "bytes": 183896,
+    "rgbaBytes": 2097152,
+    "commonScale": 0.49584487534626037,
+    "groundPixel": 241,
+    "bounds": [
+      [
+        38,
+        44,
+        217,
+        241
+      ],
+      [
+        44,
+        49,
+        212,
+        241
+      ],
+      [
+        43,
+        50,
+        213,
+        241
+      ],
+      [
+        39,
+        32,
+        216,
+        241
+      ],
+      [
+        37,
+        73,
+        219,
+        241
+      ],
+      [
+        32,
+        44,
+        224,
+        241
+      ],
+      [
+        28,
+        55,
+        228,
+        241
+      ],
+      [
+        27,
+        118,
+        228,
+        241
+      ]
+    ],
+    "generatedSource": "exec-a325377c-987d-4a27-912f-da3b115ae4ac.png"
+  }
+]

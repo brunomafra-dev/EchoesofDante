@@ -1,3 +1,4 @@
+import {preloadCreatureSheet} from '../visual/CreatureArt';
 import Phaser from 'phaser';
 import {COLONY,COLONY_ROCKS,COLONY_SITES,HABITAT,HABITAT_SOLIDS,type ColonyArea} from '../config/colonization';
 import {EnvironmentPainter,createEnvironmentGround,trackEnvironmentOcclusion} from '../visual/EnvironmentArt';
@@ -6,7 +7,7 @@ import {addSurveyProp} from '../visual/MissionProps';
 
 export function preloadColonization(scene:Phaser.Scene):void{
  for(const key of ['camp-supplies','spring-pool','first-habitat','camp-ground'])if(!scene.textures.exists(key))scene.load.image(key,`${import.meta.env.BASE_URL}assets/colonization/${key}.png`);
- for(const key of ['bankGrazer','reedSpitter'])if(!scene.textures.exists(`dante-${key}-motion`))scene.load.spritesheet(`dante-${key}-motion`,`${import.meta.env.BASE_URL}assets/colonization/dante-${key}-motion.png`,{frameWidth:256,frameHeight:256});
+ for(const key of ['bankGrazer','reedSpitter'])if(!scene.textures.exists(`dante-${key}-motion`))preloadCreatureSheet(scene,`dante-${key}-motion`,`${import.meta.env.BASE_URL}assets/colonization/dante-${key}-motion.png`,256);
 }
 export class ColonizationArea{
  readonly bounds:MovementBounds={left:105,right:2490,top:350,bottom:1245};

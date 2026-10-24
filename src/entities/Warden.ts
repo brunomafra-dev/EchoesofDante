@@ -1,3 +1,4 @@
+import {createCreatureShadow,type CreatureShadow} from '../visual/CreatureArt';
 import Phaser from 'phaser';
 import { Health } from '../combat/Health';
 import { inMeleeArc, inShockwaveSweep } from '../combat/HitDetection';
@@ -39,7 +40,7 @@ export class Warden implements Enemy {
   readonly attackRange = WARDEN.sweep.range;
   readonly attackDamage = WARDEN.sweep.damage;
   readonly view: Phaser.GameObjects.Container;
-  readonly shadow: Phaser.GameObjects.Ellipse;
+  readonly shadow: CreatureShadow;
   readonly telegraph: Phaser.GameObjects.Graphics;
   readonly body: Phaser.GameObjects.Image;
   isDead = false;
@@ -78,10 +79,13 @@ export class Warden implements Enemy {
     private readonly onDefeated: () => void,
   ) {
     this.position = { x, y };
-    this.shadow = scene.add.ellipse(x, y + 15, 174, 60, 0x071518, 0.7).setDepth(y - 2);
+    this.shadow = createCreatureShadow(scene,x, y + 15, 174, 60, 0x071518, 0.7).setDepth(y - 2);
     this.body = scene.add.image(0, 30, 'warden-motion', 0)
       .setOrigin(0.5, 0.83).setDisplaySize(WARDEN.artSize, WARDEN.artSize).setFlipX(true);
-    this.core = scene.add.ellipse(0, -40, 27, 17, 0xa98cff, 0.13).setBlendMode(Phaser.BlendModes.ADD);
+    this.core = scene.add.ellipse(0, -40, 27, 17, 0xa98cff, 0.13).setBlendMode(Phaser.BlendModes.ADD)
+      .setVisible(!!scene.data.get('creature-art-original'));
+    // The new full poses contain the core and its Signal flare. A fixed ellipse
+    // over the chest would detach from its painted anatomy during a strike.
     this.view = scene.add.container(x, y, [this.body, this.core]).setDepth(y);
     this.name = createEnemyName(scene, x, y - 182, 'O WARDEN');
     this.telegraph = scene.add.graphics().setVisible(false);
@@ -359,10 +363,10 @@ export class Warden implements Enemy {
     this.body.setFrame(frame).setFlipX(this.facingLeft);
     if (now < this.hurtUntil) this.body.setTintFill(0xf3e4cd);
     else this.body.clearTint();
-    const gait = moving ? Math.sin(this.travelPhase * Math.PI) : 0;
     const warningProgress = warning ? clamp((now - this.stateAt) / (this.stateUntil - this.stateAt), 0, 1) : 0;
     const introProgress = this._state === 'INTRO' ? clamp((now - this.stateAt) / WARDEN.introMs, 0, 1) : 1;
-    this.body.setPosition(0, 30 - Math.abs(gait) * 2 + warningProgress * 3);
+    // Full painted poses carry the weight change; keep their foot plane fixed.
+    this.body.setPosition(0, 30);
     this.view.setPosition(this.position.x, this.position.y).setDepth(this.position.y).setRotation(0);
     this.name.setPosition(this.position.x, this.position.y - 182).setVisible(this._state !== 'DORMANT');
     // Grounded steps use actual travel; a blocked creature never cycles through a glide.
