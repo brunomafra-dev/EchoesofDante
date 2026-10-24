@@ -56,6 +56,7 @@ Nomes e HP permanentemente visíveis continuam funcionando. Avisos geométricos 
 | QA legado `qa-dante-journey.mjs` | Floresta → Ecos → mecanismo → cavernas → Primeiro Eco → Warden → Vale. Vitória, exploração, menus, cancelamento de carga, morte/respawn/reload, persistência e recuperação de save. Três ciclos estáveis, sem escritas durante idle. |
 | Resoluções | 1280×720, 1366×768, 1920×1080 e 844×390. |
 | Build compilado | `qa-creature-public.mjs` em servidor estático local: 18 arquivos conferidos byte a byte e requisitados pelo jogo, escolha real de espécies/classes, quatro bosses, comparação, ataque/Q e saves intactos, sem globals de DEV. |
+| Site público | O mesmo QA passou na Vercel: 18 folhas byte a byte e requisitadas pelo jogo publicado, quatro bosses, comparação, controles, quatro resoluções e sentinelas de local/sessionStorage preservadas, sem erros JS/HTTP. |
 | Performance | Chrome desktop, uma página ativa, oito segundos de aquecimento e cinco de amostra por encontro: **58,4–58,9 FPS**; **59,9–60,1 updates reais/s**. Amostras em Saltador, Cuspidor Vítreo, Casco Glacial, Fole de Magma e nos quatro bosses ativos. |
 
 Relatórios e capturas: [espécies](qa/report.json), [coop](qa/coop/coop.json), [entradas](qa/inputs/report.json), [campanha](qa/campaign/report.json). Fixtures de posição/clock são explícitas nos scripts. O teste de coop encerra amostras de apresentação por fixture antes de viajar, respeitando o bloqueio real de retorno à base durante boss ativo; não representa uma campanha inteira vencida pela dupla. As mortes e fases são verificadas no ensaio individual e a vitória do Warden no QA da campanha.
@@ -67,3 +68,7 @@ Relatórios e capturas: [espécies](qa/report.json), [coop](qa/coop/coop.json), 
 `src/visual/CreatureArt.ts`, carregamento em `GameScene`/`ColonizationArea`, sombras em `DanteCreature`/`ValleyCreature`/`VolcanicCreature` e nos quatro bosses, réplicas em `PartyExpedition`, laboratório `creature-finish.html`/`src/experiments/creature-finish`, `test-library.html`, Vite, versão do pacote e plano arquivado. Pinturas em `public/assets/visual/creature-finish`; scripts de preparação e QA em `scripts/*creature*`.
 
 Não houve mudança de protocolo ou servidor: permanece o protocolo 15. A validação visual do usuário e o teste em aparelhos físicos continuam pendentes; QA técnico não os substitui. Não iniciar outra etapa sem avaliação humana desta entrega.
+
+## Publicação
+
+Versão **0.1.140**, commit de implementação [`e2f1752`](https://github.com/brunomafra-dev/EchoesofDante/commit/e2f1752631aa58fe93d53badde5ae0f7a3b43874), enviado para `origin/main`. Vercel confirmou sucesso; [QA público de 24/10/2026](qa/public/report.json) confirmou os arquivos, o laboratório e a renderização sem flags de desenvolvimento. Evidências do build local: [relatório compilado](qa/compiled/report.json). A publicação não equivale à aprovação visual humana.
