@@ -85,12 +85,13 @@ export function createEnvironmentGround(
   width: number,
   material: 'cavern-soil' | 'cavern-ground' | 'forest-ground' = 'cavern-soil',
   tint = 0xb7c4b5,
+  height = 1500,
 ): void {
-  if(paintCampaignGround(scene,width,1500,material))return;
+  if(paintCampaignGround(scene,width,height,material))return;
   // Keep the TileSprite backing canvas at 512 square, rather than allocating a
   // world-sized canvas. Inverse tile scale preserves 512 world units per repeat.
   scene.add.tileSprite(0, 0, 512, 512, material).setOrigin(0)
-    .setDisplaySize(width, 1500).setTileScale(512 / width, 512 / 1500)
+    .setDisplaySize(width, height).setTileScale(512 / width, 512 / height)
     .setDepth(-10001.5).setTint(tint).setName(`continuous-${material}`);
 }
 

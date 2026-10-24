@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
-import { WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
+import { FOREST_SIZE, FOREST_BOUNDS, FOREST_CONTOUR, FOREST_BRANCH_PATHS, FOREST_BRANCH_CLEARINGS } from '../config/earlyJourney';
+import { insideGround } from './WalkableGround';
 import { FOREST_CLEARINGS, FOREST_PATHS, FOREST_ROCKS } from '../config/forest';
 import { FOREST_STRUCTURE_FOOTPRINTS, treeFootprint, totemFootprint } from '../config/environmentCollision';
 import type { Obstacle } from './Movement';
@@ -7,12 +8,13 @@ import { groundContour, EnvironmentPainter, contactStamp, rockStamps,createEnvir
 
 export class Arena {
   readonly obstacles: Obstacle[] = [];
+  readonly bounds = FOREST_BOUNDS;
   private readonly structuralFootprints: Obstacle[] = [];
   private seed = 92341;
   private readonly paintings: EnvironmentStamp[] = [];
 
   constructor(private scene: Phaser.Scene) {
-    if(scene.data.get('campaign-finish'))createEnvironmentGround(scene,WORLD_WIDTH,'forest-ground');
+    if(scene.data.get('campaign-finish'))createEnvironmentGround(scene,FOREST_SIZE.width,'forest-ground',0xb7c4b5,FOREST_SIZE.height);
     this.draw();
     this.bakeStaticScenery();
     // Register after composition: tree placement must keep its original rock-only test.
@@ -26,12 +28,17 @@ export class Arena {
       object instanceof Phaser.GameObjects.Graphics);
     const floor = graphics.find(object => object.depth === -10000);
     if (floor) {
-      const layer = this.scene.add.renderTexture(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
+      const layer = this.scene.add.renderTexture(0, 0, FOREST_SIZE.width, FOREST_SIZE.height)
         .setOrigin(0).setDepth(floor.depth).draw(floor.setAlpha(this.scene.data.get('campaign-finish')?.04:.72));
       const painter = new EnvironmentPainter(this.scene, layer);
       // Let the painted soil read as a material plane under the existing
       // clearings and paths, instead of a barely visible noise overlay.
       painter.ground('forest-ground', 0.42);
+      for(const path of FOREST_BRANCH_PATHS)for(let i=1;i<path.points.length;i++){
+        const a=path.points[i-1],b=path.points[i],steps=Math.ceil(Math.hypot(b.x-a.x,b.y-a.y)/150);
+        for(let j=0;j<=steps;j++)painter.sediment(a.x+(b.x-a.x)*j/steps,a.y+(b.y-a.y)*j/steps,
+          340,235,0x7e7755,.1);
+      }
       for (const [x, y, w, h] of [[360,450,330,135],[1030,640,410,160],[1510,1010,340,135],[1900,420,310,145]]) {
         painter.contact(x, y, w, h, 0.16);
       }
@@ -42,29 +49,46 @@ export class Arena {
     const bands = new Map<number, (Phaser.GameObjects.Graphics | EnvironmentStamp)[]>();
     for (const object of graphics) {
       if (object === floor) continue;
-      const band = Math.floor(Phaser.Math.Clamp(object.depth, 0, WORLD_HEIGHT - 1) / bandHeight);
+      const band = Math.floor(Phaser.Math.Clamp(object.depth, 0, FOREST_SIZE.height - 1) / bandHeight);
       const group = bands.get(band) ?? [];
       group.push(object);
       bands.set(band, group);
     }
     for (const stamp of this.paintings) {
       if (stamp.depth === -10000) continue;
-      const band = Math.floor(Phaser.Math.Clamp(stamp.depth ?? 0, 0, WORLD_HEIGHT - 1) / bandHeight);
+      const band = Math.floor(Phaser.Math.Clamp(stamp.depth ?? 0, 0, FOREST_SIZE.height - 1) / bandHeight);
       const group = bands.get(band) ?? [];
       group.push(stamp);
       bands.set(band, group);
     }
     for (const [band, group] of bands) {
       const top = Math.max(0, band * bandHeight - 170);
-      const bottom = Math.min(WORLD_HEIGHT, (band + 1) * bandHeight + 150);
-      const layer = this.scene.add.renderTexture(0, top, WORLD_WIDTH, bottom - top)
-        .setOrigin(0).setDepth(band * bandHeight + bandHeight / 2);
-      const painter = new EnvironmentPainter(this.scene, layer);
-      for (const object of group.sort((a, b) => (a.depth ?? 0) - (b.depth ?? 0))) {
-        if (object instanceof Phaser.GameObjects.Graphics) layer.draw(object, object.x, object.y - top);
-        else painter.stamp(object);
+      const bottom = Math.min(FOREST_SIZE.height, (band + 1) * bandHeight + 150);
+      // Sparse banks must not allocate a transparent strip across the entire
+      // enlarged world. Merge occupied spans, then cap each static cache width.
+      const span=(o:Phaser.GameObjects.Graphics|EnvironmentStamp)=>{
+        const half=o instanceof Phaser.GameObjects.Graphics?110:(o.width+o.height*.15)/2+16;
+        return {left:Math.max(0,Math.floor(o.x-half)),right:Math.min(FOREST_SIZE.width,Math.ceil(o.x+half))};
+      };
+      const ranges:{left:number;right:number}[]=[];
+      for(const next of group.map(span).sort((a,b)=>a.left-b.left)){
+        const last=ranges.at(-1);
+        if(last&&next.left<=last.right+48)last.right=Math.max(last.right,next.right);
+        else ranges.push({...next});
       }
-      painter.destroy();
+      const ordered=group.sort((a,b)=>(a.depth??0)-(b.depth??0));
+      for(const range of ranges)for(let left=range.left;left<range.right;left+=1024){
+        const right=Math.min(range.right,left+1024);
+        const layer=this.scene.add.renderTexture(left,top,right-left,bottom-top)
+          .setOrigin(0).setDepth(band*bandHeight+bandHeight/2);
+        const painter=new EnvironmentPainter(this.scene,layer);
+        for(const object of ordered){
+          const s=span(object);if(s.right<=left||s.left>=right)continue;
+          if(object instanceof Phaser.GameObjects.Graphics)layer.draw(object,object.x-left,object.y-top);
+          else painter.stamp(object);
+        }
+        painter.destroy();
+      }
     }
     graphics.forEach(object => object.destroy());
     this.paintings.length = 0;
@@ -78,12 +102,12 @@ export class Arena {
   private draw(): void {
     const scene = this.scene;
     const floor = scene.add.graphics().setDepth(-10000);
-    floor.fillStyle(0x0b252a).fillRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+    floor.fillStyle(0x0b252a).fillRect(0, 0, FOREST_SIZE.width, FOREST_SIZE.height);
     for (let i = 0; i < 25; i++) {
       this.patch(floor, 80 + this.random() * 2040, 80 + this.random() * 1340, 95 + this.random() * 220, 60 + this.random() * 135, i % 3 === 0 ? 0x173d3d : 0x123239, 0.75);
     }
     // Broad, connected soil trails leave room to dodge and read nearby enemies.
-    for (const path of FOREST_PATHS) {
+    for (const path of [...FOREST_PATHS,...FOREST_BRANCH_PATHS]) {
       for (let i = 1; i < path.points.length; i++) {
         const a = path.points[i - 1];
         const b = path.points[i];
@@ -92,7 +116,7 @@ export class Arena {
         floor.lineStyle(path.width * 0.38, 0x496353, 0.24).lineBetween(a.x, a.y, b.x, b.y);
       }
     }
-    for (const clearing of FOREST_CLEARINGS) {
+    for (const clearing of [...FOREST_CLEARINGS,...FOREST_BRANCH_CLEARINGS]) {
       this.patch(floor, clearing.x, clearing.y, clearing.rx, clearing.ry, 0x2d5144, 0.85);
       this.patch(floor, clearing.x, clearing.y, clearing.rx * 0.7, clearing.ry * 0.65, 0x3c5c49, 0.3);
     }
@@ -112,34 +136,28 @@ export class Arena {
       floor.fillStyle(0x6b8378, 0.45).fillRoundedRect(1440 + i * 28, 375 - i * 18, 20, 35, 3);
     }
     for (let i = 0; i < 290; i++) {
-      const x = 72 + this.random() * (WORLD_WIDTH - 144);
-      const y = 72 + this.random() * (WORLD_HEIGHT - 144);
+      const x = 72 + this.random() * (FOREST_SIZE.width - 144);
+      const y = 72 + this.random() * (FOREST_SIZE.height - 144);
       const r = 1 + this.random() * 2.8;
       floor.fillStyle(this.random() > 0.84 ? 0x8fb69b : 0x648d78, 0.17 + this.random() * 0.28).fillCircle(x, y, r);
     }
     FOREST_ROCKS.forEach(([x, y, radius]) => this.rock(x, y, radius));
-    // Visible rock banks cover the existing world clamp. No extra collision system.
-    for (let x = 100; x <= WORLD_WIDTH - 100; x += 125) {
-      const north = 100 + Math.sin(x * 0.009) * 24;
-      const south = WORLD_HEIGHT - 100 + Math.sin(x * 0.007) * 20;
-      this.rock(x, north, 90 + this.random() * 22);
-      this.rock(x, south, 90 + this.random() * 22);
-      this.plant(x + this.random() * 24, north - 35, 45 + this.random() * 35);
-      this.plant(x - this.random() * 24, south + 35, 45 + this.random() * 35);
-    }
-    for (let y = 225; y < WORLD_HEIGHT - 100; y += 125) {
-      const west = 100 + Math.sin(y * 0.009) * 25;
-      const east = WORLD_WIDTH - 100 + Math.sin(y * 0.008) * 25;
-      this.rock(west, y, 90 + this.random() * 22);
-      this.rock(east, y, 90 + this.random() * 22);
-      this.plant(west - 40, y, 45 + this.random() * 35);
-      this.plant(east + 40, y, 45 + this.random() * 35);
+    // A connected perimeter opens the east/south circuit. Banks are authored
+    // against the same contour as movement, with no invisible rectangular wall.
+    for (let i=0;i<FOREST_CONTOUR.length;i++) {
+      const a=FOREST_CONTOUR[i],b=FOREST_CONTOUR[(i+1)%FOREST_CONTOUR.length];
+      const n=Math.ceil(Math.hypot(b.x-a.x,b.y-a.y)/145);
+      for(let j=0;j<n;j++){
+        const t=j/n,x=a.x+(b.x-a.x)*t,y=a.y+(b.y-a.y)*t;
+        this.rock(x,y,62+this.random()*15);
+        if(j%2===0)this.plant(x,y-18,48+this.random()*20);
+      }
     }
     let trees = 0;
-    for (let i = 0; i < 240 && trees < 80; i++) {
-      const x = 210 + this.random() * (WORLD_WIDTH - 420);
-      const y = 210 + this.random() * (WORLD_HEIGHT - 420);
-      if (this.nearRoute(x, y, 65)) continue;
+    for (let i = 0; i < 320 && trees < 98; i++) {
+      const x = 210 + this.random() * (FOREST_SIZE.width - 420);
+      const y = 210 + this.random() * (FOREST_SIZE.height - 420);
+      if (!insideGround({x,y},FOREST_CONTOUR) || this.nearRoute(x, y, 65)) continue;
       if (this.obstacles.some(rock => Math.hypot(x - rock.x, y - rock.y) < rock.radius + 55)) continue;
       this.plant(x, y, 32 + this.random() * 34, trees % 16 === 0);
       trees++;
@@ -159,12 +177,14 @@ export class Arena {
     this.beacon(290, 1220);
     this.beacon(510, 1220);
     this.beacon(1740, 220);
+    // Small cover and distinct rest pockets; no interactive HUD decoration.
+    for(const [x,y,r] of [[2310,900,36],[2630,1110,32],[2850,1320,43],[2420,1480,32],[1030,1570,30]])this.rock(x,y,r);
     this.motes();
   }
 
   private nearRoute(x: number, y: number, margin: number): boolean {
-    if (FOREST_CLEARINGS.some(c => ((x - c.x) / (c.rx + margin)) ** 2 + ((y - c.y) / (c.ry + margin)) ** 2 < 1)) return true;
-    return FOREST_PATHS.some(path => path.points.slice(1).some((b, i) => {
+    if ([...FOREST_CLEARINGS,...FOREST_BRANCH_CLEARINGS].some(c => ((x - c.x) / (c.rx + margin)) ** 2 + ((y - c.y) / (c.ry + margin)) ** 2 < 1)) return true;
+    return [...FOREST_PATHS,...FOREST_BRANCH_PATHS].some(path => path.points.slice(1).some((b, i) => {
       const a = path.points[i];
       const dx = b.x - a.x;
       const dy = b.y - a.y;
@@ -222,8 +242,8 @@ export class Arena {
 
   private motes(): void {
     for (let i = 0; i < 18; i++) {
-      const x = 120 + this.random() * (WORLD_WIDTH - 240);
-      const y = 120 + this.random() * (WORLD_HEIGHT - 240);
+      const x = 120 + this.random() * (FOREST_SIZE.width - 240);
+      const y = 120 + this.random() * (FOREST_SIZE.height - 240);
       const mote = this.scene.add.circle(x, y, 1.5 + this.random() * 1.4, i % 5 === 0 ? 0xa9a2ca : 0xb4dfc5, 0.24).setDepth(y + 20);
       this.scene.tweens.add({ targets: mote, y: y - 13, alpha: 0.07, duration: 1900 + this.random() * 1800, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     }

@@ -10,6 +10,12 @@ export function insideGround(point:Vec2,contour:readonly Vec2[]):boolean{
  return inside;
 }
 
+// Navigation and arrival use the exact movement contour, including edge clearance.
+export function fitsGround(position:Vec2,radius:number,contour:readonly Vec2[],footY=0):boolean{
+ const probe={...position};constrainGround(probe,radius,contour,footY);
+ return Math.hypot(probe.x-position.x,probe.y-position.y)<.01;
+}
+
 /** Keep a circular footprint inside a concave, connected walkable surface. */
 export function constrainGround(position:Vec2,radius:number,contour:readonly Vec2[],footY=0):void{
  if(contour.length<3)return;

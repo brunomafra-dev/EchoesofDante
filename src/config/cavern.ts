@@ -21,7 +21,7 @@ export const DEEP_AREA = {
 export const DEEP_OBSTACLES = [
   { x: 1760, y: 775, radius: 96 },
   { x: 1875, y: 1035, radius: 90 },
-  { x: 2110, y: 1090, radius: 105 },
+  { x: 1960, y: 1210, radius: 58 }, // Receded footing beside the new mineral chamber.
   { x: 2220, y: 652, radius: 72 }, // The buried structure has a physical footprint.
   { x: 2350, y: 1015, radius: 88 },
   { x: 2180, y: 355, radius: 93 },

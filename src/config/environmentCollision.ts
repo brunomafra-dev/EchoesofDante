@@ -1,3 +1,4 @@
+import { cavernPocketOpening } from './earlyJourney';
 import { FOREST_ECHOES, SIGNAL_THRESHOLD } from './discovery';
 import type { Obstacle } from '../systems/Movement';
 
@@ -54,7 +55,7 @@ export function cavernShelfFootprints(): Obstacle[] {
     const x = 508 + i * 96;
     footprints.push(
       { x, y: 387 + Math.sin(i * 2.7) * 22 - 5, radius: 22 },
-      { x, y: 1103 + Math.cos(i * 1.9) * 16 + 1, radius: 22 },
+      ...(!cavernPocketOpening(x)?[{ x, y: 1103 + Math.cos(i * 1.9) * 16 + 1, radius: 22 }]:[]),
     );
   }
   return footprints;

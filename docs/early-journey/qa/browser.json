@@ -1,0 +1,397 @@
+{
+  "method": "Chrome DEV; isolated lab; actual collision/navigation graph and E scans; explicit preview/position fixtures, not measured campaign duration.",
+  "checks": [
+    "Fresh isolated lab starts at base: no Echoes, no passage, Warden alive",
+    "Closed collapse only exposes first side chamber; deeper sites and residents remain gated",
+    "All six investigations accessible, E scans work, four new stable finite residents spawn; previews never defeat Warden",
+    "New resident XP receipt survives actual local save validator and browser reload",
+    "Four recreations per expanded region retain stable object/texture/listener/tween counts; HUD stays inside all four resolutions"
+  ],
+  "regions": [
+    {
+      "area": "forest",
+      "graph": [
+        {
+          "id": "exp-forest-1",
+          "steps": 44,
+          "gap": 23.3238075793812
+        },
+        {
+          "id": "exp-forest-2",
+          "steps": 28,
+          "gap": 15.620499351813312
+        },
+        {
+          "id": "exp-forest-3",
+          "steps": 28,
+          "gap": 24.331050121192874
+        },
+        {
+          "id": "echo-north",
+          "steps": 34,
+          "gap": 64.19501538281614
+        },
+        {
+          "id": "mechanism",
+          "steps": 36,
+          "gap": 54.3323108288245
+        },
+        {
+          "id": "threshold",
+          "steps": 39,
+          "gap": 92.7631392310545
+        }
+      ],
+      "sites": [
+        {
+          "name": "Vegetação da encosta",
+          "x": 380,
+          "y": 340,
+          "art": "biology",
+          "finding": "As folhas fecham quando o solo vibra. A planta percebe movimento antes de nós.",
+          "id": "exp-forest-1",
+          "mission": "exp-forest",
+          "area": "forest",
+          "radius": 85
+        },
+        {
+          "name": "Leito úmido da floresta",
+          "x": 2730,
+          "y": 1220,
+          "art": "water",
+          "finding": "A água percorre a encosta antes de desaparecer sob as raízes. Uma película viva filtra os sedimentos; pode ser útil à futura enfermaria.",
+          "id": "exp-forest-2",
+          "mission": "exp-forest",
+          "area": "forest",
+          "radius": 85
+        },
+        {
+          "name": "Brotos da margem sul",
+          "x": 1140,
+          "y": 1640,
+          "art": "biology",
+          "finding": "Os brotos da margem sul não reagem como as folhas da encosta. A água muda a mesma espécie; Lia precisará comparar as amostras antes de cultivar qualquer coisa.",
+          "id": "exp-forest-3",
+          "mission": "exp-forest",
+          "area": "forest",
+          "radius": 85
+        }
+      ],
+      "population": [
+        {
+          "id": 0,
+          "kind": "crawler"
+        },
+        {
+          "id": 1,
+          "kind": "crawler"
+        },
+        {
+          "id": 2,
+          "kind": "crawler"
+        },
+        {
+          "id": 3,
+          "kind": "crawler"
+        },
+        {
+          "id": 4,
+          "kind": "crawler"
+        },
+        {
+          "id": 5,
+          "kind": "crawler"
+        },
+        {
+          "id": 6,
+          "kind": "crawler"
+        },
+        {
+          "id": 7,
+          "kind": "crawler"
+        },
+        {
+          "id": 1900,
+          "kind": "crawler"
+        },
+        {
+          "id": 1901,
+          "kind": "crawler"
+        },
+        {
+          "id": 1902,
+          "kind": "crawler"
+        },
+        {
+          "id": 1903,
+          "kind": "crawler"
+        },
+        {
+          "id": 1972,
+          "kind": "crawler"
+        },
+        {
+          "id": 1973,
+          "kind": "crawler"
+        },
+        {
+          "id": 1904,
+          "kind": "crawler"
+        },
+        {
+          "id": 1905,
+          "kind": "crawler"
+        }
+      ],
+      "warden": false,
+      "fps": 56.076517313718796,
+      "cycles": [
+        {
+          "objects": 423,
+          "textures": 246,
+          "shutdown": 37,
+          "resize": 5,
+          "tweens": 19,
+          "bakedPixels": 16767804,
+          "sites": 3
+        },
+        {
+          "objects": 423,
+          "textures": 246,
+          "shutdown": 37,
+          "resize": 5,
+          "tweens": 19,
+          "bakedPixels": 16767804,
+          "sites": 3
+        },
+        {
+          "objects": 423,
+          "textures": 246,
+          "shutdown": 37,
+          "resize": 5,
+          "tweens": 19,
+          "bakedPixels": 16767804,
+          "sites": 3
+        },
+        {
+          "objects": 423,
+          "textures": 246,
+          "shutdown": 37,
+          "resize": 5,
+          "tweens": 19,
+          "bakedPixels": 16767804,
+          "sites": 3
+        }
+      ]
+    },
+    {
+      "area": "cavern",
+      "graph": [
+        {
+          "id": "exp-cavern-1",
+          "steps": 27,
+          "gap": 27.78488797889961
+        },
+        {
+          "id": "exp-cavern-2",
+          "steps": 31,
+          "gap": 20.09975124224178
+        },
+        {
+          "id": "exp-cavern-3",
+          "steps": 64,
+          "gap": 18.439088914585778
+        },
+        {
+          "id": "deep-opening",
+          "steps": 1,
+          "gap": 15.620499351813312
+        },
+        {
+          "id": "first-echo",
+          "steps": 95,
+          "gap": 54.81788029466298
+        }
+      ],
+      "sites": [
+        {
+          "name": "Condensação da primeira câmara",
+          "x": 1200,
+          "y": 1350,
+          "art": "water",
+          "finding": "A água pinga de uma parede morna. Há circulação por trás da rocha.",
+          "id": "exp-cavern-1",
+          "mission": "exp-cavern",
+          "area": "cavern",
+          "radius": 85
+        },
+        {
+          "name": "Raízes na bacia mineral",
+          "x": 2090,
+          "y": 1440,
+          "art": "biology",
+          "finding": "As fibras viraram pedra antes de serem cobertas pelas inscrições.",
+          "id": "exp-cavern-2",
+          "mission": "exp-cavern",
+          "area": "cavern",
+          "radius": 85
+        },
+        {
+          "name": "Conduto das profundezas",
+          "x": 3750,
+          "y": 1360,
+          "art": "record",
+          "finding": "O conduto foi reparado mais de uma vez. As peças pertencem a épocas diferentes.",
+          "id": "exp-cavern-3",
+          "mission": "exp-cavern",
+          "area": "cavern",
+          "radius": 85
+        }
+      ],
+      "population": [
+        {
+          "id": 8,
+          "kind": "crawler"
+        },
+        {
+          "id": 9,
+          "kind": "crawler"
+        },
+        {
+          "id": 1906,
+          "kind": "crawler"
+        },
+        {
+          "id": 1907,
+          "kind": "skitter"
+        },
+        {
+          "id": 10,
+          "kind": "crawler"
+        },
+        {
+          "id": 11,
+          "kind": "crawler"
+        },
+        {
+          "id": 1908,
+          "kind": "spitter"
+        },
+        {
+          "id": 1909,
+          "kind": "crawler"
+        },
+        {
+          "id": 1974,
+          "kind": "skitter"
+        },
+        {
+          "id": 12,
+          "kind": "skitter"
+        },
+        {
+          "id": 13,
+          "kind": "skitter"
+        },
+        {
+          "id": 14,
+          "kind": "spitter"
+        },
+        {
+          "id": 15,
+          "kind": "crawler"
+        },
+        {
+          "id": 16,
+          "kind": "skitter"
+        },
+        {
+          "id": 17,
+          "kind": "spitter"
+        },
+        {
+          "id": 18,
+          "kind": "crawler"
+        },
+        {
+          "id": 19,
+          "kind": "skitter"
+        },
+        {
+          "id": 20,
+          "kind": "skitter"
+        },
+        {
+          "id": 21,
+          "kind": "spitter"
+        },
+        {
+          "id": 22,
+          "kind": "crawler"
+        },
+        {
+          "id": 23,
+          "kind": "crawler"
+        },
+        {
+          "id": 24,
+          "kind": "skitter"
+        },
+        {
+          "id": 1910,
+          "kind": "spitter"
+        },
+        {
+          "id": 1911,
+          "kind": "skitter"
+        },
+        {
+          "id": 1975,
+          "kind": "crawler"
+        }
+      ],
+      "warden": false,
+      "fps": 59.74063128325279,
+      "cycles": [
+        {
+          "objects": 144,
+          "textures": 236,
+          "shutdown": 29,
+          "resize": 5,
+          "tweens": 4,
+          "bakedPixels": 9788108,
+          "sites": 1
+        },
+        {
+          "objects": 144,
+          "textures": 236,
+          "shutdown": 29,
+          "resize": 5,
+          "tweens": 4,
+          "bakedPixels": 9788108,
+          "sites": 1
+        },
+        {
+          "objects": 144,
+          "textures": 236,
+          "shutdown": 29,
+          "resize": 5,
+          "tweens": 4,
+          "bakedPixels": 9788108,
+          "sites": 1
+        },
+        {
+          "objects": 144,
+          "textures": 236,
+          "shutdown": 29,
+          "resize": 5,
+          "tweens": 4,
+          "bakedPixels": 9788108,
+          "sites": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

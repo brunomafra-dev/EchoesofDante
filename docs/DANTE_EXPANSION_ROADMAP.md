@@ -22,6 +22,18 @@ Detalhes e evidências: [expedições regionais](regional-expeditions/README.md)
 
 ## Entrega B — percurso e ritmo, após playtest
 
+**24/10/2026:** após a aprovação das revisões visuais e a recomendação de aprofundar o primeiro arco, o usuário respondeu “então vamos”, autorizando este sprint. A duração real da entrega A continua sem medição; essa autorização não é convertida em evidência de 30 minutos.
+
+### Primeiro arco · 0.1.141
+
+- [x] Circuito oriental/sul da Floresta e três câmaras laterais nas cavernas existentes.
+- [x] Relatórios de Lia/Ivo integrados aos desvios, com IDs e recibos anteriores preservados.
+- [x] Pares de encontros diferentes, cobertura, intervalos e quatro residentes finitos adicionais.
+- [x] Contorno físico compartilhado com navegação e retorno; caminho crítico até o Warden preservado.
+- [ ] Avaliação humana de orientação, diversão e ritmo; registrar duração por atividade.
+
+[Escopo, laboratório e evidências](early-journey/README.md). Aguardar essa avaliação antes de ampliar o restante da entrega B ou iniciar o capítulo C.
+
 Usar tempos humanos para identificar trechos vazios ou repetitivos. Aprofundar corredores laterais e geografia onde os desvios atuais ainda pareçam curtos. Preservar espaços de descanso e distinguir exploração opcional do caminho para o boss. Ajustar densidade e recompensa por região, sem aumentar HP apenas para ganhar minutos. Meta: o percurso completo com exploração sustenta cerca de 30 minutos de decisões interessantes.
 
 ## Entrega C — capítulos da permanência

@@ -36,6 +36,33 @@ export function paintCampaignGround(scene:Phaser.Scene,width:number,height=1500,
  const key=name?`world-floor-${name}`:original;
  if(!key||!scene.textures.exists(key))return false;
  state.ground=true;
+ if((area==='forest'||area==='cavern')&&height>1500){
+  // Preserve the approved material scale instead of stretching existing roots
+  // and rocks to the enlarged height. Cache alpha variants once per texture.
+  const feather=(texture:string,fx:boolean,fy:boolean):string=>{
+   if(!fx&&!fy)return texture;
+   const name=`${texture}-extension-${Number(fx)}${Number(fy)}`;
+   if(!scene.textures.exists(name)){
+    const source=scene.textures.get(texture).getSourceImage() as HTMLImageElement;
+    const canvas=scene.textures.createCanvas(name,source.width,source.height)!,c=canvas.context;
+    c.drawImage(source,0,0);c.globalCompositeOperation='destination-in';
+    for(const axis of [fx?'x':'',fy?'y':''].filter(Boolean)){
+     const fade=axis==='x'?c.createLinearGradient(0,0,source.width*160/2200,0):c.createLinearGradient(0,0,0,source.height*160/1500);
+     fade.addColorStop(0,'rgba(0,0,0,0)');fade.addColorStop(1,'rgba(0,0,0,1)');c.fillStyle=fade;c.fillRect(0,0,source.width,source.height);
+    }
+    canvas.refresh();
+   }
+   return name;
+  };
+  if(area==='cavern')paintCampaignGround(scene,width,1500,original,x,0);
+  for(let row=area==='cavern'?1:0;row<2;row++)for(let col=0;col<(area==='cavern'?2:Math.ceil(width/2040));col++){
+   const px=area==='cavern'?col*2200:col*2040,py=row*1340;
+   const id=`extension/${px}/${py}`;if(state.panels.has(id))continue;state.panels.add(id);
+   scene.add.image(px,py,feather(key,area==='forest'&&col>0,row>0)).setOrigin(0).setDisplaySize(2200,1500)
+    .setDepth(-10001.5+row*.1+(area==='forest'&&col>0?.01:0)).setName('campaign-continuous-ground');
+  }
+  return true;
+ }
  if(area==='base'){
   scene.add.tileSprite(0,0,512,512,'forest-ground').setOrigin(0).setDisplaySize(width,height).setTileScale(512/width,512/height).setTint(0x89977d).setDepth(-10002);
   scene.add.image(0,0,key,'__BASE').setOrigin(0).setDisplaySize(1400,1050).setDepth(-10001.5).setName('campaign-continuous-ground');return true;
@@ -74,8 +101,8 @@ export function addCampaignPlant(scene:Phaser.Scene,x:number,y:number,size:numbe
 
 const CLUMPS:Record<JourneyArea,readonly number[][]>={
  base:[[245,500,88],[190,740,94],[880,900,82],[1100,590,88],[1140,900,90]],
- forest:[[510,1060,82],[820,1015,78],[1360,820,82],[1730,1100,92]],
- cavern:[[735,1045,76],[1400,950,78],[1900,905,78],[2360,955,80],[2980,970,74],[3660,1010,78],[4450,1020,90],[5060,1100,86],[5810,1020,88]],
+ forest:[[510,1060,82],[820,1015,78],[1360,820,82],[1730,1100,92],[2350,1050,85],[2800,1160,80],[2470,1680,85],[1090,1700,75]],
+ cavern:[[1130,1280,72],[2040,1360,74],[3820,1400,72],[735,1045,76],[1400,950,78],[1900,905,78],[2360,955,80],[2980,970,74],[3660,1010,78],[4450,1020,90],[5060,1100,86],[5810,1020,88]],
  warden:[[715,1100,72],[1680,1110,75],[1770,590,70]],
  valley:[[3220,1000,86],[3710,605,78],[4320,1030,90],[4790,650,86]],
  springs:[],terraces:[],

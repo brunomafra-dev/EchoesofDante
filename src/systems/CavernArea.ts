@@ -1,3 +1,5 @@
+import { CAVERN_SIZE, cavernContour } from '../config/earlyJourney';
+import { CavernSideChambers } from '../visual/CavernSideChambers';
 import Phaser from 'phaser';
 import { CAVERN_BOUNDS, DEEP_AREA, DEEP_OBSTACLES, DEEP_RIDGES } from '../config/cavern';
 import { CAVERN_STRUCTURE_FOOTPRINTS, cavernShelfFootprints } from '../config/environmentCollision';
@@ -27,8 +29,8 @@ export class CavernArea {
   constructor(scene: Phaser.Scene, deepPassageOpen = false, fragmentSeen = false, firstEchoSeen = false, wardenGateOpen = false) {
     // One illustrated stone substrate continues below the entry basin, every
     // deeper pocket, the exterior approach and its baked scenery layers.
-    createEnvironmentGround(scene, WARDEN_PREPARATION.cameraWidth, 'cavern-ground', 0xb7c4b5);
-    this.bounds = { ...CAVERN_BOUNDS, right: deepPassageOpen ? wardenGateOpen ? 6480 : WARDEN_PREPARATION.right : CAVERN_BOUNDS.right };
+    createEnvironmentGround(scene, WARDEN_PREPARATION.cameraWidth, 'cavern-ground', 0xb7c4b5, CAVERN_SIZE.height);
+    this.bounds = { ...CAVERN_BOUNDS, bottom:1600, walkable:cavernContour(), right: deepPassageOpen ? wardenGateOpen ? 6480 : WARDEN_PREPARATION.right : CAVERN_BOUNDS.right };
     if (!deepPassageOpen) this.obstacles.push(this.collapseObstacle);
     new CavernEntryEnvironment(scene, this.obstacles, this.collapseObstacle);
     // One reused light source makes the inscriptions readable; no per-frame redraw.
@@ -41,6 +43,7 @@ export class CavernArea {
     this.obstacles.push(...this.continuation.obstacles);
     this.wardenApproach = new WardenApproach(scene, firstEchoSeen, wardenGateOpen);
     this.obstacles.push(...this.wardenApproach.obstacles);
+    new CavernSideChambers(scene,this.obstacles);
     // Add gameplay footprints after the static visual composition.
     this.obstacles.push(...CAVERN_STRUCTURE_FOOTPRINTS, ...cavernShelfFootprints());
   }

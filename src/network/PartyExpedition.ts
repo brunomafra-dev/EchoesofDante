@@ -15,6 +15,7 @@ import { SPECIES, type SpeciesId } from '../config/bestiary';
 import { BossMirror, captureBoss, type NetworkBoss } from './BossPresentation';
 import type {ResourceDrop} from '../systems/ResourceDrops';
 import type { ExpeditionReturn } from '../systems/ExpeditionReturn';
+import { fitsGround } from '../systems/WalkableGround';
 import type { ImpactPose } from './CoopSession';
 import type { AstralElement } from '../config/classes';
 import { partyThreat } from '../config/difficulty';
@@ -89,7 +90,7 @@ export class PartyExpedition {
   const a=this.access(),b=a.bounds;
   for(const [dx,dy]of[[80,0],[-80,0],[0,80],[0,-80],[0,0]]){
    const p={x:a.player.position.x+dx,y:a.player.position.y+dy};
-   if((!b||p.x>b.left+18&&p.x<b.right-18&&p.y>b.top+18&&p.y<b.bottom-18)&&a.obstacles.every(o=>Math.hypot(o.x-p.x,o.y-p.y)>o.radius+20)&&this.players.every(actor=>Math.hypot(actor.position.x-p.x,actor.position.y-p.y)>40))return p;
+   if((!b||p.x>b.left+18&&p.x<b.right-18&&p.y>b.top+18&&p.y<b.bottom-18)&&(!b?.walkable||fitsGround(p,18,b.walkable,39))&&a.obstacles.every(o=>Math.hypot(o.x-p.x,o.y-p.y)>o.radius+20)&&this.players.every(actor=>Math.hypot(actor.position.x-p.x,actor.position.y-p.y)>40))return p;
   }return{...a.player.position};
  }
  updateHost(now:number,dt:number):void{

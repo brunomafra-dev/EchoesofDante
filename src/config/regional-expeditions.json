@@ -8,7 +8,7 @@
     "title": "Remédios entre as raízes",
     "offer": [
       "As reservas da enfermaria não sustentam uma colônia. Precisamos estudar o que cresce longe da trilha principal.",
-      "Registre a vegetação da encosta, o leito úmido e os brotos da margem sul. Não consuma nenhuma amostra."
+      "Da clareira oriental, siga as raízes para leste: um leito úmido contorna a encosta. A trilha volta pela margem sul. Há também folhas na encosta norte. Não consuma nenhuma amostra."
     ],
     "report": [
       "As três leituras indicam que a mesma planta muda conforme a umidade. Já podemos separar uma linhagem para testes.",
@@ -28,17 +28,17 @@
       },
       {
         "name": "Leito úmido da floresta",
-        "x": 1120,
-        "y": 1250,
+        "x": 2730,
+        "y": 1220,
         "art": "water",
-        "finding": "Água retida entre raízes. Uma película viva filtra os sedimentos."
+        "finding": "A água percorre a encosta antes de desaparecer sob as raízes. Uma película viva filtra os sedimentos; pode ser útil à futura enfermaria."
       },
       {
         "name": "Brotos da margem sul",
-        "x": 1900,
-        "y": 1310,
+        "x": 1140,
+        "y": 1640,
         "art": "biology",
-        "finding": "Brotos pálidos crescem sob a sombra mineral. A amostra segue selada para Lia."
+        "finding": "Os brotos da margem sul não reagem como as folhas da encosta. A água muda a mesma espécie; Lia precisará comparar as amostras antes de cultivar qualquer coisa."
       }
     ]
   },
@@ -51,7 +51,7 @@
     "title": "O que corre sob a pedra",
     "offer": [
       "A fissura não explica toda a caverna. Quero leituras nas câmaras laterais, antes de ligar qualquer equipamento da expedição.",
-      "Procure condensação, raízes fossilizadas e um conduto soterrado. Siga as passagens que os Ecos já abriram."
+      "Procure as aberturas ao sul de cada bacia: condensação na primeira, raízes além do desmoronamento e um conduto nas profundezas. As câmaras voltam à rota principal; não substituem a passagem dos Ecos."
     ],
     "report": [
       "Os veios se comunicam por diferenças de pressão. A estrutura não estava conduzindo apenas energia.",
@@ -64,22 +64,22 @@
     "sites": [
       {
         "name": "Condensação da primeira câmara",
-        "x": 730,
-        "y": 650,
+        "x": 1200,
+        "y": 1350,
         "art": "water",
         "finding": "A água pinga de uma parede morna. Há circulação por trás da rocha."
       },
       {
         "name": "Raízes na bacia mineral",
-        "x": 2070,
-        "y": 925,
+        "x": 2090,
+        "y": 1440,
         "art": "biology",
         "finding": "As fibras viraram pedra antes de serem cobertas pelas inscrições."
       },
       {
         "name": "Conduto das profundezas",
-        "x": 3630,
-        "y": 920,
+        "x": 3750,
+        "y": 1360,
         "art": "record",
         "finding": "O conduto foi reparado mais de uma vez. As peças pertencem a épocas diferentes."
       }

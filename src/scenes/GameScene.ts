@@ -1,3 +1,4 @@
+import { FOREST_SIZE, CAVERN_SIZE } from '../config/earlyJourney';
 import {preloadCreatureSheet} from '../visual/CreatureArt';
 import { completeMuzzle } from '../visual/CompleteActorFrames';
 import Phaser from 'phaser';
@@ -24,7 +25,7 @@ import {BasePanel} from '../ui/BasePanel';
 import {Missions,validMissionRewards,type MissionAction} from '../systems/Missions';
 import {regionUnlocked} from '../systems/RegionAccess';
 import {RegionalExpeditions} from '../systems/RegionalExpeditions';
-import {REGIONAL_IDS,REGIONAL_SITES,REGIONAL_RESIDENTS} from '../config/regionalExpeditions';
+import {REGIONAL_IDS,REGIONAL_SITES,REGIONAL_RESIDENTS,EARLY_ROUTE_RESIDENTS} from '../config/regionalExpeditions';
 import {ForestFinishArea,FINISH_ENTRY,FINISH_SPAWNS} from '../experiments/forest-finish/ForestFinishArea';
 import {CampaignEnvironment,beginCampaignEnvironment,preloadCampaignEnvironment} from '../visual/CampaignEnvironment';
 import {SURVEY_POINTS,ANALYSIS_POINTS,NPC_NAMES,missionById,type MissionId,type MissionNpc} from '../config/missions';
@@ -414,7 +415,7 @@ export class GameScene extends Phaser.Scene {
     if(this.forestProof){this.arena=new ForestFinishArea(this,this.qualityReference==='forest-reference');this.movementBounds=this.arena.bounds;}
     else if(this.area==='base'){this.base=new LandingBase(this,this.wardenDefeated);this.arena=this.base;this.movementBounds=this.base.bounds;}else if(this.area==='springs'||this.area==='terraces'){this.colony=new ColonizationArea(this,this.area,this.missions.has('shelter-built'));this.arena=this.colony;this.movementBounds=this.colony.bounds;}else if (this.area === 'forest') {
       this.arena = new Arena(this);
-      this.movementBounds = undefined;
+      this.movementBounds = this.arena.bounds;
       if (!this.progression.passageOpen) {
         this.gateObstacle = { x: SIGNAL_THRESHOLD.x, y: SIGNAL_THRESHOLD.y, radius: SIGNAL_THRESHOLD.obstacleRadius };
         this.arena.obstacles.push(this.gateObstacle);
@@ -485,7 +486,7 @@ export class GameScene extends Phaser.Scene {
     if(this.glacierPlaytest?.environment&&this.area==='cavern')entry={...CAVERN_ENTRY};
     if(this.forestProof)entry={...FINISH_ENTRY};
     this.returnStation=coopSession.role==='guest'&&coopSession.world?.returnStation?{...coopSession.world.returnStation}:this.colony?{x:430,y:1140}:this.volcanic?((this.area==='cinder'?this.cinderSignalSeen:this.obsidianSignalSeen)?{...this.volcanic.config.checkpoint}:{x:460,y:830}):this.area==='caldera'?(this.calderaCheckpointReached||this.titanReached?{...CALDERA.checkpoint}:{x:450,y:820}):{x:entry.x,y:entry.y};
-    if(this.expeditionArrival&&coopSession.role!=='guest')entry=safeExpeditionPosition(this.expeditionArrival,PLAYER.radius,this.arena.obstacles,this.movementBounds)??entry;
+    if(this.expeditionArrival&&coopSession.role!=='guest')entry=safeExpeditionPosition(this.expeditionArrival,PLAYER.radius,this.arena.obstacles,this.movementBounds,this.movementBounds?.walkable?39:0)??entry;
     this.expeditionArrival=undefined;
     if(!this.economy.visited.includes(this.area))this.economy.visited.push(this.area);
     this.returnToThreshold = false;
@@ -614,7 +615,7 @@ export class GameScene extends Phaser.Scene {
     if (this.area === 'cavern') this.hud.setCavernDepth(this.inDeepCavern);
     this.continuationRegion = this.exteriorEntered ? 'exterior' : this.deeperEntered ? 'deeper' : 'deep';
     if (this.area === 'cavern' && this.continuationRegion !== 'deep') this.hud.setContinuationArea(this.continuationRegion === 'exterior', this.fragmentSeen, this.firstEchoSeen);
-    this.cameras.main.setBounds(0, 0, this.colony?2600:this.volcanic?this.volcanic.config.width:this.area==='caldera'?CALDERA.width:this.area==='base'?BASE.width:this.area === 'icecave' || this.area === 'icenest' ? GLACIER[this.area].width : this.area === 'frost' ? FROST.width : this.area === 'sandpit' ? SANDPIT.width : this.area === 'valley' ? VALLEY.cameraWidth : this.area === 'arid' ? SIROCCO.cameraWidth : this.area === 'dunes' ? DUNES.width : this.area === 'cavern' ? W.cameraWidth : WORLD_WIDTH, this.colony?1500:this.volcanic?this.volcanic.config.height:this.area==='caldera'?CALDERA.height:this.area==='base'?BASE.height:this.area === 'icecave' || this.area === 'icenest' ? GLACIER[this.area].height : this.area === 'frost' ? FROST.height : this.area === 'dunes' ? DUNES.height : WORLD_HEIGHT)
+    this.cameras.main.setBounds(0, 0, this.colony?2600:this.volcanic?this.volcanic.config.width:this.area==='caldera'?CALDERA.width:this.area==='base'?BASE.width:this.area === 'icecave' || this.area === 'icenest' ? GLACIER[this.area].width : this.area === 'frost' ? FROST.width : this.area === 'sandpit' ? SANDPIT.width : this.area === 'valley' ? VALLEY.cameraWidth : this.area === 'arid' ? SIROCCO.cameraWidth : this.area === 'dunes' ? DUNES.width : this.area === 'cavern' ? W.cameraWidth : this.area === 'forest'&&!this.forestProof ? FOREST_SIZE.width : WORLD_WIDTH, this.colony?1500:this.volcanic?this.volcanic.config.height:this.area==='caldera'?CALDERA.height:this.area==='base'?BASE.height:this.area === 'icecave' || this.area === 'icenest' ? GLACIER[this.area].height : this.area === 'frost' ? FROST.height : this.area === 'dunes' ? DUNES.height : this.area==='cavern'?CAVERN_SIZE.height:this.area==='forest'&&!this.forestProof?FOREST_SIZE.height:WORLD_HEIGHT)
       .startFollow(this.player.view, false, 0.1, 0.1);
     this.cameras.main.setBackgroundColor(this.area === 'sandpit' || this.area === 'arid' || this.area === 'dunes' ? '#5c3327' : this.area === 'forest' || this.area === 'valley' ? '#102d2c' : '#07151c');
     if (this.area !== 'forest') {
@@ -694,7 +695,7 @@ export class GameScene extends Phaser.Scene {
       }
       const target=this.enemies.find(e=>this.enemySpecies.get(e)===this.glacierPlaytest!.specimen);
       if(target){
-        const arrival=safeExpeditionPosition({x:target.position.x-230,y:target.position.y+45},PLAYER.radius,this.arena.obstacles,this.movementBounds);
+        const arrival=safeExpeditionPosition({x:target.position.x-230,y:target.position.y+45},PLAYER.radius,this.arena.obstacles,this.movementBounds,this.movementBounds?.walkable?39:0);
         if(arrival){Object.assign(this.player.position,arrival);this.returnStation={...arrival};}
         if(this.area==='caldera')this.calderaRelaySeen=true;
       }
@@ -757,7 +758,7 @@ export class GameScene extends Phaser.Scene {
       this.missions.record(missionSite.id);
       if(missionSite.id==='shelter-built'){
         this.colony?.setSettled(true);
-        for(const p of [this.player,...(this.party?.players??[])])if(this.arena.obstacles.some(o=>distance(p.position,o)<p.radius+o.radius))Object.assign(p.position,safeExpeditionPosition(p.position,p.radius,this.arena.obstacles,this.movementBounds)??{x:2210,y:1030});
+        for(const p of [this.player,...(this.party?.players??[])])if(this.arena.obstacles.some(o=>distance(p.position,o)<p.radius+o.radius))Object.assign(p.position,safeExpeditionPosition(p.position,p.radius,this.arena.obstacles,this.movementBounds,this.movementBounds?.walkable?39:0)??{x:2210,y:1030});
         this.hud.showDiscovery('O PRIMEIRO ABRIGO\nReservatório e canteiro experimental instalados.');
       }else if('finding' in missionSite)this.hud.showDiscovery(missionSite.name.toLocaleUpperCase('pt-BR')+'\n'+missionSite.finding);
       else this.hud.showDiscovery(missionSite.id==='water'?'ÁGUA SUPERFICIAL\nLEITURA REGISTRADA':missionSite.id==='biology'?'ATIVIDADE BIOLÓGICA\nLEITURA REGISTRADA':`${missionSite.name.toLocaleUpperCase('pt-BR')}\nLEITURA REGISTRADA`);
@@ -1896,7 +1897,7 @@ export class GameScene extends Phaser.Scene {
 
   private reviveBossSurvivors():void {
     for(const p of [this.player,...(this.party?.players??[])])if(p?.isDead){
-      const at=safeExpeditionPosition(this.returnStation,p.radius,this.arena.obstacles,this.movementBounds)??this.returnStation;
+      const at=safeExpeditionPosition(this.returnStation,p.radius,this.arena.obstacles,this.movementBounds,this.movementBounds?.walkable?39:0)??this.returnStation;
       p.revive(at);
     }
     this.hud.hideDeath();this.saveProgress();
@@ -2120,7 +2121,7 @@ export class GameScene extends Phaser.Scene {
   private spawnRegionalResidents(now:number):void{
     if(!this.regional||now<this.regionalSpawnTick||this.player.isDead||this.bossActive())return;
     this.regionalSpawnTick=now+200;
-    for(const h of REGIONAL_RESIDENTS){
+    for(const h of [...REGIONAL_RESIDENTS,...EARLY_ROUTE_RESIDENTS]){
       if(h.area!==this.area||this.regionalResidents.has(h.id)||this.progression.hasDefeated(h.id)||!this.explorationNear(h,560))continue;
       if(!this.regional.sites.some(s=>s.id===h.site))continue;
       const b=this.movementBounds;
@@ -2164,6 +2165,18 @@ export class GameScene extends Phaser.Scene {
       &&(member==='host'||!!coopSession.guests.find(m=>m.id===member)?.connected);
   }
 
+  // Preview only; unlike the older regional fixture, this never defeats a boss.
+  seedEarlyRoutePlaytest(area:'forest'|'cavern'):boolean{
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!new URLSearchParams(location.search).has('route')||coopSession.role!=='offline'||this.transitioning||this.inputModalOpen)return false;
+    for(const flag of JOURNEY_FLAGS)this[flag]=false;
+    const core=area==='cavern'?['recon','survival','signal'] as const:['recon'] as const;
+    this.progression.restore({xp:area==='cavern'?160:0,echoes:area==='cavern'?['northern-ruin','mineral-signal','unknown-trace']:[],sourceLocated:area==='cavern',passageOpen:area==='cavern',rewardedHollows:[],rewardedRoutes:[],bossRewards:[]});
+    this.missions.restore({schema:1,accepted:[...core,area==='forest'?'exp-forest':'exp-cavern'],completed:[...core],evidence:core.flatMap(id=>missionById(id).goals.map(g=>g.id))});
+    this.missions.tracked=area==='forest'?'exp-forest':'exp-cavern';this.missionRewards=[...core];
+    this.economy.visited=['base','forest',...(area==='cavern'?['cavern'] as const:[])];
+    this.economy.credits=0;this.economy.potions=3;this.transferHp=this.characterMaxHp;
+    this.expeditionArrival=undefined;this.expeditionReturn=undefined;this.area=area;this.saveProgress();this.scene.restart();return true;
+  }
   // Explicit simulated reports, restricted to the isolated mission laboratory.
   seedRegionalPlaytest(area:JourneyArea):boolean{
     if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!new URLSearchParams(location.search).has('depth')||coopSession.role!=='offline'||this.transitioning||this.inputModalOpen)return false;

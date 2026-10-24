@@ -1,3 +1,4 @@
+import { cavernPocketOpening } from '../config/earlyJourney';
 import Phaser from 'phaser';
 import { CAVERN_BOUNDS } from '../config/cavern';
 import type { Obstacle } from '../systems/Movement';
@@ -25,7 +26,7 @@ export class CavernEntryEnvironment {
       painter.sediment(x, bottom, 210, 90, 0x29332e, 0.36);
       painter.stamp({ key: 'rock-shelf', x, y: top - 5, width: 143, height: 128,
         angle: i % 3 * 3 - 3, flipX: i % 3 === 0, tint: i % 3 ? 0x98aba4 : 0xb3b8a2 });
-      painter.stamp({ key: 'rock-shelf', x, y: bottom + 1, width: 145, height: 132,
+      if(!cavernPocketOpening(x))painter.stamp({ key: 'rock-shelf', x, y: bottom + 1, width: 145, height: 132,
         angle: i % 3 * -3, flipX: i % 3 !== 0, tint: 0x8caaa0 });
       painter.contact(x, top + 20, 136, 37, 0.55);
       painter.contact(x, bottom + 21, 138, 38, 0.5);

@@ -55,7 +55,7 @@ export const EXPANSION_WALLS = [
   wall(3740, 430, 370, 195, -3), wall(4060, 445, 330, 180, 6),
   wall(4310, 500, 260, 180, 18),
   wall(2690, 1120, 310, 175, 3), wall(2990, 1080, 340, 170, -8),
-  wall(3300, 1130, 300, 170, 4), wall(3610, 1090, 300, 170, -4),
+  wall(3300, 1130, 300, 170, 4), /* Chamber throat: its matching bank is now below the side basin. */
   wall(3910, 1110, 330, 180, 8), wall(4190, 1080, 300, 175, -6),
 ] as const;
 

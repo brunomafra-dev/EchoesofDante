@@ -1,0 +1,31 @@
+{
+  "platform": "Playwright WebKit 2359 on Windows; 844x390, touch and mobile emulated, not physical iPhone",
+  "simpleCompiledPreview": {
+    "checks": [
+      "WebKit mobile: compiled lab starts, both explicit previews work with bosses alive, no DEV global, real storage untouched"
+    ],
+    "errors": [],
+    "browsers": [
+      "WebKit mobile"
+    ],
+    "passed": true
+  },
+  "failures": [
+    {
+      "currentBuild": "0.1.141",
+      "operation": "Full-page screenshot followed by opening next preview",
+      "result": "Page/target crashed in two runs"
+    },
+    {
+      "currentBuild": "0.1.141",
+      "operation": "Forest, cavern, then forest preview without screenshots",
+      "result": "Target closed on third preview"
+    },
+    {
+      "baseline": "Public campaign-playtest.html?missions=1&depth=1 before publishing 0.1.141",
+      "operation": "Forest then cavern preview without screenshots",
+      "result": "Target page/context/browser closed while selecting cavern"
+    }
+  ],
+  "conclusion": "Partial engine probe. Same environment fails on previous public build. No physical Safari approval; repeated-map travel on real iPhone remains required."
+}

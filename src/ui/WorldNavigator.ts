@@ -3,6 +3,7 @@ import { PLAYER, WORLD_HEIGHT, WORLD_WIDTH } from '../config/game';
 import type { MovementBounds, Obstacle } from '../systems/Movement';
 import type { Vec2 } from '../utils/math';
 import type { ExplorationTarget } from './ExplorationGuide';
+import { fitsGround } from '../systems/WalkableGround';
 
 // Navigation only. A coarse, cached map of existing collision data; it never
 // moves actors, changes colliders or controls enemy AI.
@@ -99,7 +100,7 @@ export class WorldNavigator {
   private refreshGeometry(): void {
     const { bounds, obstacles } = this.geometry();
     const b = bounds ?? { left: 56, right: WORLD_WIDTH - 56, top: 56, bottom: WORLD_HEIGHT - 56 };
-    const key = `${b.left},${b.top},${b.right},${b.bottom},${obstacles.length}`;
+    const key = `${b.left},${b.top},${b.right},${b.bottom},${obstacles.length},${b.walkable?.map(p=>`${p.x}/${p.y}`).join(';')??''}`;
     if (key === this.geometryKey) return;
     this.geometryKey = key; this.bounds = { ...b };
     this.columns = Math.ceil((b.right - b.left) / this.cell); this.rows = Math.ceil((b.bottom - b.top) / this.cell);
@@ -109,6 +110,7 @@ export class WorldNavigator {
       const p = this.point(i);
       this.walkable[i] = Number(p.x <= b.right - PLAYER.radius && p.y <= b.bottom - PLAYER.radius &&
         p.x >= b.left + PLAYER.radius && p.y >= b.top + PLAYER.radius &&
+        (!b.walkable||fitsGround(p,PLAYER.radius+3,b.walkable,39)) &&
         !obstacles.some(o => Math.hypot(o.x - p.x, o.y - p.y) < o.radius + PLAYER.radius + 5));
     }
   }

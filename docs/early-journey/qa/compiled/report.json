@@ -1,0 +1,10 @@
+{
+  "checks": [
+    "Chrome: compiled lab starts, both explicit previews work with bosses alive, no DEV global, real storage untouched"
+  ],
+  "errors": [],
+  "browsers": [
+    "Chrome"
+  ],
+  "passed": true
+}
