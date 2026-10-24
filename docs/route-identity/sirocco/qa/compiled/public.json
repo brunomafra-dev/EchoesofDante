@@ -1,0 +1,13 @@
+{
+  "arc": "sirocco",
+  "version": "0.1.143",
+  "base": "http://localhost:5193",
+  "errors": [],
+  "checks": [
+    "valley: new art loads, direct preview and section selector work, production has no DEV globals, real save untouched",
+    "arid: new art loads, direct preview and section selector work, production has no DEV globals, real save untouched",
+    "dunes: new art loads, direct preview and section selector work, production has no DEV globals, real save untouched",
+    "sandpit: new art loads, direct preview and section selector work, production has no DEV globals, real save untouched"
+  ],
+  "passed": true
+}

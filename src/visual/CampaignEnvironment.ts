@@ -3,6 +3,7 @@ import type {JourneyArea} from '../systems/LocalJourney';
 import type {Vec2} from '../utils/math';
 import type {MovementBounds,Obstacle} from '../systems/Movement';
 import {preloadEarlyJourney} from './EarlyJourneyLandmarks';
+import {preloadRouteEnvironment,paintRouteEnvironment} from './RouteEnvironment';
 
 type Actor={position:Vec2;isDead:boolean;footOffset?:number};
 type Plant={image:Phaser.GameObjects.Image;x:number;y:number;bend:number;velocity:number;touching:boolean;phase:number};
@@ -16,6 +17,7 @@ const asset=(name:string)=>`${import.meta.env.BASE_URL}assets/visual/world-finis
 
 export function preloadCampaignEnvironment(scene:Phaser.Scene,area:JourneyArea):void{
  preloadEarlyJourney(scene,area);
+ preloadRouteEnvironment(scene,area);
  const floors=area==='base'?['camp']:area==='forest'?['forest']:area==='cavern'?['cave','meadow']:area==='warden'?['cave']:GREEN.has(area)?['meadow']:DRY.has(area)?['arid']:[];
  for(const name of floors)if(!scene.textures.exists(`world-floor-${name}`))scene.load.image(`world-floor-${name}`,asset(`${name}-floor`));
  for(const[key,file]of [['world-green-plants','trail-plants-v1'],['world-regional-plants','regional-plants-v1']])if(!scene.textures.exists(key))scene.load.spritesheet(key,key==='world-green-plants'?`${import.meta.env.BASE_URL}assets/experiments/forest-finish/${file}.webp`:asset('regional-plants'),{frameWidth:256,frameHeight:256});
@@ -34,6 +36,7 @@ export function hasCampaignGround(scene:Phaser.Scene):boolean{return states.get(
 export function paintCampaignGround(scene:Phaser.Scene,width:number,height=1500,original?:string,x=0,y=0):boolean{
  const state=states.get(scene);if(!state)return false;
  const area=state.area;
+ if(paintRouteEnvironment(scene,area,state.panels)){state.ground=true;return true;}
  let name=area==='base'?'camp':area==='forest'?'forest':area==='cavern'||area==='warden'?'cave':GREEN.has(area)?'meadow':DRY.has(area)&&area!=='sandpit'?'arid':undefined;
  const key=name?`world-floor-${name}`:original;
  if(!key||!scene.textures.exists(key))return false;

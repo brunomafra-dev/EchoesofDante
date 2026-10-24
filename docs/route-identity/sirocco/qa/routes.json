@@ -1,0 +1,206 @@
+{
+  "arc": "sirocco",
+  "method": "Chrome DEV, isolated direct visual fixtures and real keyboard movement. Geometry comparison to 0.1.142 and canonical survey approaches; boss attacks invoked explicitly for visual verification. Mission inputs are checked separately in the cooperative campaign. Not human balance/duration or physical devices.",
+  "errors": [],
+  "regions": [
+    {
+      "area": "valley",
+      "ground": [
+        {
+          "key": "route-floor-valley",
+          "width": 5500,
+          "height": 1500,
+          "flip": false
+        }
+      ],
+      "addedSolids": 1,
+      "sites": [],
+      "bossAlive": false,
+      "routes": [
+        {
+          "id": "exp-valley-1",
+          "steps": 12,
+          "gap": 12.165525060596437
+        },
+        {
+          "id": "exp-valley-2",
+          "steps": 46,
+          "gap": 18.110770276274835
+        },
+        {
+          "id": "exp-valley-3",
+          "steps": 91,
+          "gap": 8.246211251235321
+        }
+      ],
+      "stability": [
+        {
+          "objects": 164,
+          "textures": 230,
+          "shutdown": 22,
+          "resize": 4
+        },
+        {
+          "objects": 164,
+          "textures": 230,
+          "shutdown": 22,
+          "resize": 4
+        },
+        {
+          "objects": 164,
+          "textures": 230,
+          "shutdown": 22,
+          "resize": 4
+        }
+      ],
+      "fps": 57.486587184180514
+    },
+    {
+      "area": "arid",
+      "ground": [
+        {
+          "key": "route-floor-arid",
+          "width": 5250,
+          "height": 1500,
+          "flip": false
+        }
+      ],
+      "addedSolids": 0,
+      "sites": [],
+      "bossAlive": false,
+      "routes": [
+        {
+          "id": "exp-arid-1",
+          "steps": 9,
+          "gap": 16
+        },
+        {
+          "id": "exp-arid-2",
+          "steps": 49,
+          "gap": 10
+        },
+        {
+          "id": "exp-arid-3",
+          "steps": 88,
+          "gap": 28.844410203711917
+        }
+      ],
+      "stability": [
+        {
+          "objects": 131,
+          "textures": 227,
+          "shutdown": 22,
+          "resize": 4
+        },
+        {
+          "objects": 131,
+          "textures": 227,
+          "shutdown": 22,
+          "resize": 4
+        },
+        {
+          "objects": 130,
+          "textures": 226,
+          "shutdown": 22,
+          "resize": 4
+        }
+      ],
+      "fps": 59.323970328291914
+    },
+    {
+      "area": "dunes",
+      "ground": [
+        {
+          "key": "route-floor-dunes",
+          "width": 3200,
+          "height": 2200,
+          "flip": false
+        }
+      ],
+      "addedSolids": 3,
+      "sites": [],
+      "bossAlive": false,
+      "routes": [
+        {
+          "id": "exp-dunes-1",
+          "steps": 10,
+          "gap": 26
+        },
+        {
+          "id": "exp-dunes-2",
+          "steps": 36,
+          "gap": 18.110770276274835
+        },
+        {
+          "id": "exp-dunes-3",
+          "steps": 55,
+          "gap": 8.94427190999916
+        }
+      ],
+      "stability": [
+        {
+          "objects": 110,
+          "textures": 223,
+          "shutdown": 22,
+          "resize": 4
+        },
+        {
+          "objects": 110,
+          "textures": 223,
+          "shutdown": 22,
+          "resize": 4
+        },
+        {
+          "objects": 110,
+          "textures": 223,
+          "shutdown": 22,
+          "resize": 4
+        }
+      ],
+      "fps": 58.75019192233865
+    },
+    {
+      "area": "sandpit",
+      "ground": [
+        {
+          "key": "route-floor-sandpit",
+          "width": 1800,
+          "height": 1500,
+          "flip": false
+        }
+      ],
+      "addedSolids": 0,
+      "sites": [],
+      "bossAlive": true,
+      "routes": [],
+      "stability": [
+        {
+          "objects": 67,
+          "textures": 219,
+          "shutdown": 23,
+          "resize": 5
+        },
+        {
+          "objects": 67,
+          "textures": 219,
+          "shutdown": 23,
+          "resize": 5
+        },
+        {
+          "objects": 67,
+          "textures": 219,
+          "shutdown": 23,
+          "resize": 5
+        }
+      ],
+      "fps": 59.494924964552766,
+      "attacks": [
+        "sweep",
+        "rush",
+        "burrow",
+        "fissure"
+      ]
+    }
+  ],
+  "passed": true
+}

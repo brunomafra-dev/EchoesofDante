@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+**24/10 · lote consecutivo autorizado:** usuário pediu aplicar a referência da bacia a Vale → Soterrado, Boreal → Vésper e Cinzas → último boss, com commit/push individual e continuação imediata. [Trilhas próprias](route-identity/README.md). Para esse lote, essa autorização substitui a espera intermediária do plano; não declara duração humana atingida nem autoriza novos sistemas.
+
 **Playtest de 24/10 · revisão 0.1.142:** o usuário explorou a entrega B (0.1.141) e não percebeu mudança suficiente. Não avançar capítulo: [revisão 02](early-journey/revision-02/README.md) dá identidade à bacia/câmaras, corrige o acesso oriental e oferece chegada direta no laboratório. Avaliação visual e duração humana continuam pendentes.
 
 ## Direção autorizada em 22/10/2026

@@ -1,5 +1,6 @@
 import { FOREST_SIZE, CAVERN_SIZE, EARLY_PREVIEW_ENTRY } from '../config/earlyJourney';
 import {EarlyJourneyLandmarks} from '../visual/EarlyJourneyLandmarks';
+import {addRouteFootprints} from '../visual/RouteEnvironment';
 import {preloadCreatureSheet} from '../visual/CreatureArt';
 import { completeMuzzle } from '../visual/CompleteActorFrames';
 import Phaser from 'phaser';
@@ -289,10 +290,11 @@ export class GameScene extends Phaser.Scene {
   private get forestProof():boolean{return this.qualityReference==='forest-reference'||this.qualityReference==='forest-current';}
   constructor(private readonly qualityReference: false | 'baseline' | 'reference' | 'forest-reference' | 'forest-current' = false,
     private readonly originalWarrior = false, private readonly shellReady?: (scene: GameScene) => void,
-    private readonly glacierPlaytest?: { area: JourneyArea; classId: PlayableClass; sex?:CharacterSex; pilot?:boolean; inventory?:boolean; economy?:boolean; environment?:boolean; environmentBaseline?:boolean; creatureBaseline?:boolean; specimen?:string; look?:import('../config/appearance').EquipmentLook; weaponLook?:import('../config/appearance').WeaponStyle },
+    private readonly glacierPlaytest?: { area: JourneyArea; classId: PlayableClass; sex?:CharacterSex; pilot?:boolean; inventory?:boolean; economy?:boolean; environment?:boolean; environmentBaseline?:boolean; routeBaseline?:boolean; environmentEntry?:{x:number;y:number}; creatureBaseline?:boolean; specimen?:string; look?:import('../config/appearance').EquipmentLook; weaponLook?:import('../config/appearance').WeaponStyle },
     private readonly shellLoading?:(progress:number)=>void) { super('Game'); }
 
   preload(): void {
+    this.data.set('route-art-previous',this.glacierPlaytest?.routeBaseline===true);
     this.data.set('creature-art-original',this.glacierPlaytest?.creatureBaseline===true);
     if(!this.qualityReference&&!this.glacierPlaytest?.environmentBaseline)preloadCampaignEnvironment(this,this.journeyLoaded?this.area:this.glacierPlaytest?.economy?'base':this.glacierPlaytest?.area??this.journey.load()?.area??(new URLSearchParams(location.search).has('qa')?'forest':'base'));
     if(this.forestProof){
@@ -474,6 +476,7 @@ export class GameScene extends Phaser.Scene {
     }
     this.earlyLandmarks=undefined;
     if(!this.qualityReference&&!this.glacierPlaytest?.environmentBaseline){
+      addRouteFootprints(this,this.area,this.arena.obstacles);
       this.earlyLandmarks=new EarlyJourneyLandmarks(this,this.area,this.arena.obstacles);
       this.campaignEnvironment=new CampaignEnvironment(this,this.area,this.movementBounds,this.arena.obstacles);
     }
@@ -492,6 +495,7 @@ export class GameScene extends Phaser.Scene {
       : this.deepCavernEntered ? DEEP_AREA.entry : CAVERN_ENTRY;
     if(this.glacierPlaytest?.environment&&this.area==='cavern')entry={...CAVERN_ENTRY};
     if(this.forestProof)entry={...FINISH_ENTRY};
+    if(this.glacierPlaytest?.environment&&this.glacierPlaytest.environmentEntry)entry=safeExpeditionPosition(this.glacierPlaytest.environmentEntry,PLAYER.radius,this.arena.obstacles,this.movementBounds,this.movementBounds?.walkable?39:0)??entry;
     if(coopSession.role==='offline'&&location.pathname.split('/').pop()==='campaign-playtest.html'&&new URLSearchParams(location.search).has('route')){
       const arrival=new URLSearchParams(location.search).get('arrival');
       if(this.earlyRouteCheckpoint?.area===this.area)entry={...this.earlyRouteCheckpoint.position};
