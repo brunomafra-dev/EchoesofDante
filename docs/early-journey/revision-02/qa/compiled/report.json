@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "Chrome: compiled lab starts, both explicit previews work with bosses alive, no DEV global, real storage untouched",
+    "Chrome: both new direct links preload the authored art, enter automatically and resume on reload without DEV globals"
+  ],
+  "errors": [],
+  "browsers": [
+    "Chrome"
+  ],
+  "passed": true
+}

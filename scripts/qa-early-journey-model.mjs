@@ -17,6 +17,16 @@ report.checks.push('80 swept high-speed dash/knockback trajectories stay inside 
 assert.equal(m.safeExpeditionPosition({x:2700,y:300},18,[],m.FOREST_BOUNDS,39),undefined);
 const safe=m.safeExpeditionPosition({x:2150,y:780},18,[],m.FOREST_BOUNDS,39);assert.ok(safe&&m.fitsGround(safe,18,m.FOREST_CONTOUR,39));
 report.checks.push('Arrival rejects unreachable banks and finds a nearby valid foot position');
+for(const [area,bounds]of [['forest',m.FOREST_BOUNDS],['cavern',{left:480,top:380,right:6180,bottom:1600,walkable:m.cavernContour()}]]){
+ const solids=m.EARLY_LANDMARKS[area];
+ assert.deepEqual(m.safeExpeditionPosition(m.EARLY_PREVIEW_ENTRY[area],18,solids,bounds,39),m.EARLY_PREVIEW_ENTRY[area]);
+ for(const solid of solids){
+  const p={x:solid.x-solid.radius-45,y:solid.y};
+  for(let step=0;step<20;step++)m.moveWithCollisions(p,{x:5000,y:0},.01,18,[solid],bounds,39);
+  assert.ok(p.x<=solid.x-solid.radius-18+.01,'Dash cannot cross landmark '+area);
+ }
+}
+report.checks.push('Six painted water/root/conduit cores block swept Dash; both direct preview checkpoints stand on valid dry ground');
 const p=new m.Progression();assert.equal(m.REGIONAL_RESIDENTS.length,72);assert.equal(m.EARLY_ROUTE_RESIDENTS.length,4);
 const ids=[...m.REGIONAL_RESIDENTS,...m.EARLY_ROUTE_RESIDENTS].map(r=>r.id);assert.equal(new Set(ids).size,76);
 for(const id of m.EARLY_ROUTE_RESIDENTS.map(r=>r.id)){assert.ok(id<=1999);assert.ok(p.defeatHollow(id,15).awarded);assert.equal(p.defeatHollow(id,15).awarded,false)}

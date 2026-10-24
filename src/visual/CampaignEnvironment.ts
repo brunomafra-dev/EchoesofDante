@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import type {JourneyArea} from '../systems/LocalJourney';
 import type {Vec2} from '../utils/math';
 import type {MovementBounds,Obstacle} from '../systems/Movement';
+import {preloadEarlyJourney} from './EarlyJourneyLandmarks';
 
 type Actor={position:Vec2;isDead:boolean;footOffset?:number};
 type Plant={image:Phaser.GameObjects.Image;x:number;y:number;bend:number;velocity:number;touching:boolean;phase:number};
@@ -14,6 +15,7 @@ const DRY=new Set<JourneyArea>(['arid','dunes','sandpit']);
 const asset=(name:string)=>`${import.meta.env.BASE_URL}assets/visual/world-finish/${name}-v1.webp`;
 
 export function preloadCampaignEnvironment(scene:Phaser.Scene,area:JourneyArea):void{
+ preloadEarlyJourney(scene,area);
  const floors=area==='base'?['camp']:area==='forest'?['forest']:area==='cavern'?['cave','meadow']:area==='warden'?['cave']:GREEN.has(area)?['meadow']:DRY.has(area)?['arid']:[];
  for(const name of floors)if(!scene.textures.exists(`world-floor-${name}`))scene.load.image(`world-floor-${name}`,asset(`${name}-floor`));
  for(const[key,file]of [['world-green-plants','trail-plants-v1'],['world-regional-plants','regional-plants-v1']])if(!scene.textures.exists(key))scene.load.spritesheet(key,key==='world-green-plants'?`${import.meta.env.BASE_URL}assets/experiments/forest-finish/${file}.webp`:asset('regional-plants'),{frameWidth:256,frameHeight:256});

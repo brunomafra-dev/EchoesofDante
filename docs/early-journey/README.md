@@ -1,5 +1,7 @@
 # Percurso e ritmo — Base ao Warden · 0.1.141
 
+> **Revisão 0.1.142:** o usuário explorou o laboratório e não percebeu diferença suficiente. A primeira entrega não foi aprovada visualmente. [Revisão 02](revision-02/README.md) substitui a apresentação discreta por terreno e marcos próprios, com links que chegam diretamente aos trechos novos. As evidências abaixo permanecem como histórico da 0.1.141.
+
 [Laboratório reservado](https://echosofdante.vercel.app/campaign-playtest.html?route=1&v=0.1.141) · [Biblioteca](https://echosofdante.vercel.app/test-library.html)
 
 ## Escopo autorizado

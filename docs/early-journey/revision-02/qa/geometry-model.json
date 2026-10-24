@@ -1,0 +1,9 @@
+{
+  "checks": [
+    "80 swept high-speed dash/knockback trajectories stay inside contour and closed right clamp with hero foot offset",
+    "Arrival rejects unreachable banks and finds a nearby valid foot position",
+    "Six painted water/root/conduit cores block swept Dash; both direct preview checkpoints stand on valid dry ground",
+    "72 legacy resident IDs retained; four new finite IDs fit existing save schema and award XP once across restore"
+  ],
+  "passed": true
+}

@@ -6,7 +6,19 @@ import { EnvironmentPainter } from './EnvironmentArt';
 /** Three finite caches. The mouths stay clear; cover has matching footprints. */
 export class CavernSideChambers {
   constructor(scene:Phaser.Scene,obstacles:Obstacle[]) {
+    // Reuse the approved entry painting's quiet stone. One shared feathered
+    // canvas removes the giant repeated rubble pattern inside the new pockets.
+    const floorKey='early-chamber-quiet-floor';
+    if(!scene.textures.exists(floorKey)&&scene.textures.exists('cavern-entry-floor')){
+      const source=scene.textures.get('cavern-entry-floor').getSourceImage() as HTMLImageElement;
+      const canvas=scene.textures.createCanvas(floorKey,768,512)!,c=canvas.context;
+      c.drawImage(source,source.width*.16,source.height*.16,source.width*.68,source.height*.68,0,0,768,512);
+      c.globalCompositeOperation='destination-in';c.save();c.translate(384,256);c.scale(384,256);
+      const fade=c.createRadialGradient(0,0,.52,0,0,1);fade.addColorStop(0,'rgba(0,0,0,1)');fade.addColorStop(1,'rgba(0,0,0,0)');
+      c.fillStyle=fade;c.fillRect(-1,-1,2,2);c.restore();canvas.refresh();
+    }
     for(const [index,p] of CAVERN_POCKETS.entries()){
+      if(scene.textures.exists(floorKey))scene.add.image((p.left+p.right)/2,1280,floorKey).setDisplaySize(p.right-p.left+320,850).setDepth(-9999).setName('early-chamber-quiet-ground');
       const cache=scene.add.renderTexture(p.left-170,950,p.right-p.left+340,p.bottom-950+180)
         .setOrigin(0).setDepth(-9998).setName('cavern-side-chamber');
       const paint=new EnvironmentPainter(scene,cache);

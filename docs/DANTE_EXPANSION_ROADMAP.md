@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+**Playtest de 24/10 · revisão 0.1.142:** o usuário explorou a entrega B (0.1.141) e não percebeu mudança suficiente. Não avançar capítulo: [revisão 02](early-journey/revision-02/README.md) dá identidade à bacia/câmaras, corrige o acesso oriental e oferece chegada direta no laboratório. Avaliação visual e duração humana continuam pendentes.
+
 ## Direção autorizada em 22/10/2026
 
 O usuário pediu que Star Hunter passe a se chamar **Caçador estelar** e que o conteúdo existente ganhe profundidade: mais exploração, descobertas, habitantes e missões dentro das regiões atuais. A primeira meta é uma campanha exploratória de aproximadamente **30 minutos**; a visão futura é **oito horas de conteúdo**. Nenhuma dessas durações é uma medição desta entrega.

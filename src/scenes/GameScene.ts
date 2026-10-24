@@ -1,4 +1,5 @@
-import { FOREST_SIZE, CAVERN_SIZE } from '../config/earlyJourney';
+import { FOREST_SIZE, CAVERN_SIZE, EARLY_PREVIEW_ENTRY } from '../config/earlyJourney';
+import {EarlyJourneyLandmarks} from '../visual/EarlyJourneyLandmarks';
 import {preloadCreatureSheet} from '../visual/CreatureArt';
 import { completeMuzzle } from '../visual/CompleteActorFrames';
 import Phaser from 'phaser';
@@ -227,6 +228,8 @@ export class GameScene extends Phaser.Scene {
   private movementBounds?: MovementBounds;
   private area: JourneyArea = 'forest';
   private campaignEnvironment?:CampaignEnvironment;
+  private earlyLandmarks?:EarlyJourneyLandmarks;
+  private earlyRouteCheckpoint?:{area:'forest'|'cavern';position:{x:number;y:number}};
   private transferHp?: number;
   private transitioning = false;
   private cavernDepthSeen = false;
@@ -469,7 +472,11 @@ export class GameScene extends Phaser.Scene {
       this.arena = this.cavern;
       this.movementBounds = this.arena.bounds;
     }
-    if(!this.qualityReference&&!this.glacierPlaytest?.environmentBaseline)this.campaignEnvironment=new CampaignEnvironment(this,this.area,this.movementBounds,this.arena.obstacles);
+    this.earlyLandmarks=undefined;
+    if(!this.qualityReference&&!this.glacierPlaytest?.environmentBaseline){
+      this.earlyLandmarks=new EarlyJourneyLandmarks(this,this.area,this.arena.obstacles);
+      this.campaignEnvironment=new CampaignEnvironment(this,this.area,this.movementBounds,this.arena.obstacles);
+    }
     let entry = coopSession.role === 'guest' && coopSession.ownPose ? coopSession.ownPose! : this.area === 'base'?BASE.entry:this.area==='springs'||this.area==='terraces'?COLONY[this.area].entry:this.area === 'forest' ? FOREST_ENTRY : this.area === 'valley'
       ? this.returnToValleyPortal ? VALLEY.entry : this.returnToFrontierPortal ? VALLEY.frontier.checkpoint : this.valleyFrontierReached ? VALLEY.frontier.checkpoint : this.valleyCheckpointReached ? VALLEY.checkpoint : VALLEY.entry
       : this.area === 'arid' ? this.returnFromDunes ? { x: 4770, y: 805 } : this.aridSignalSeen ? SIROCCO.frontierCheckpoint : this.aridVisited ? SIROCCO.checkpoint : SIROCCO.entry
@@ -485,6 +492,11 @@ export class GameScene extends Phaser.Scene {
       : this.deepCavernEntered ? DEEP_AREA.entry : CAVERN_ENTRY;
     if(this.glacierPlaytest?.environment&&this.area==='cavern')entry={...CAVERN_ENTRY};
     if(this.forestProof)entry={...FINISH_ENTRY};
+    if(coopSession.role==='offline'&&location.pathname.split('/').pop()==='campaign-playtest.html'&&new URLSearchParams(location.search).has('route')){
+      const arrival=new URLSearchParams(location.search).get('arrival');
+      if(this.earlyRouteCheckpoint?.area===this.area)entry={...this.earlyRouteCheckpoint.position};
+      else if((arrival==='forest'||arrival==='cavern')&&this.area===arrival)entry={...EARLY_PREVIEW_ENTRY[arrival]};
+    }
     this.returnStation=coopSession.role==='guest'&&coopSession.world?.returnStation?{...coopSession.world.returnStation}:this.colony?{x:430,y:1140}:this.volcanic?((this.area==='cinder'?this.cinderSignalSeen:this.obsidianSignalSeen)?{...this.volcanic.config.checkpoint}:{x:460,y:830}):this.area==='caldera'?(this.calderaCheckpointReached||this.titanReached?{...CALDERA.checkpoint}:{x:450,y:820}):{x:entry.x,y:entry.y};
     if(this.expeditionArrival&&coopSession.role!=='guest')entry=safeExpeditionPosition(this.expeditionArrival,PLAYER.radius,this.arena.obstacles,this.movementBounds,this.movementBounds?.walkable?39:0)??entry;
     this.expeditionArrival=undefined;
@@ -721,6 +733,7 @@ export class GameScene extends Phaser.Scene {
       if (!this.inputModalOpen && this.controls.recordsPressed) { this.records.open(); return; }
       this.party?.updateGuest(time, Math.min(delta / 1000, .04));
       this.campaignEnvironment?.update(time,this.player,this.party?.environmentActors??[]);
+      this.earlyLandmarks?.update(time,this.player.position,message=>{if(!this.inputModalOpen)this.hud.showDiscovery(message);});
       this.hud.setInputMethod(this.controls.inputMethod);
       updateEnvironmentOcclusion(this, this.player.position, Math.min(delta / 1000, .04));
       this.updateMusicRegion(); this.updateExplorationGuide();
@@ -1057,6 +1070,7 @@ export class GameScene extends Phaser.Scene {
       this.player.dashCooldown, this.charge.cooldown);
     if(this.arena instanceof ForestFinishArea)this.arena.update(time,this.player,this.enemies);
     this.campaignEnvironment?.update(time,this.player,[...this.enemies,...(this.party?.players??[])]);
+    this.earlyLandmarks?.update(time,this.player.position,message=>{if(!this.inputModalOpen&&!this.bossActive())this.hud.showDiscovery(message);});
     if (this.qualityReference) return;
     if (this.area === 'sandpit') {
       if (this.soterrado?.state === 'DORMANT' && Math.max(this.player.position.x,...(this.party?.players??[]).filter(p=>!p.isDead).map(p=>p.position.x)) >= SANDPIT.awakeningX) this.soterrado.beginIntro(time);
@@ -2175,6 +2189,7 @@ export class GameScene extends Phaser.Scene {
     this.missions.tracked=area==='forest'?'exp-forest':'exp-cavern';this.missionRewards=[...core];
     this.economy.visited=['base','forest',...(area==='cavern'?['cavern'] as const:[])];
     this.economy.credits=0;this.economy.potions=3;this.transferHp=this.characterMaxHp;
+    this.earlyRouteCheckpoint={area,position:{...EARLY_PREVIEW_ENTRY[area]}};
     this.expeditionArrival=undefined;this.expeditionReturn=undefined;this.area=area;this.saveProgress();this.scene.restart();return true;
   }
   // Explicit simulated reports, restricted to the isolated mission laboratory.

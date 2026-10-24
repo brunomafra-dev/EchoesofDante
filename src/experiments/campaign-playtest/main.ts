@@ -7,9 +7,11 @@ const missionTest=new URLSearchParams(location.search).has('missions');
 const mobileTest=new URLSearchParams(location.search).has('mobile');
 const mobileClass=new URLSearchParams(location.search).get('class');
 const routeTest=new URLSearchParams(location.search).has('route');
+const arrivalParam=new URLSearchParams(location.search).get('arrival');
+const routeArrival=routeTest&&(arrivalParam==='forest'||arrivalParam==='cavern')?arrivalParam:undefined;
 const depthTest=new URLSearchParams(location.search).has('depth');
 const settlementTest=new URLSearchParams(location.search).has('settlement');
-const prefix=routeTest?'dante-early-route-lab.':depthTest?`dante-regional-lab.${mobileClass??'warrior'}.`:new URLSearchParams(location.search).has('journey')?'dante-journey-review-lab.':mobileTest?`dante-mobile-lab.${mobileClass??'warrior'}.`:settlementTest?'dante-settlement-lab-v2.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
+const prefix=routeTest?`dante-early-route-v2.${routeArrival??'journey'}.`:depthTest?`dante-regional-lab.${mobileClass??'warrior'}.`:new URLSearchParams(location.search).has('journey')?'dante-journey-review-lab.':mobileTest?`dante-mobile-lab.${mobileClass??'warrior'}.`:settlementTest?'dante-settlement-lab-v2.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
 const isolatedKey=(storage:Storage,key:string)=>prefix+(storage===localStorage?'local.':'session.')+key;
 Storage.prototype.getItem=function(key){return key.startsWith('echoes-of-dante.')?get.call(sessionStorage,isolatedKey(this,key)):get.call(this,key)};
 Storage.prototype.setItem=function(key,value){if(key.startsWith('echoes-of-dante.'))set.call(sessionStorage,isolatedKey(this,key),String(value));else set.call(this,key,value)};
@@ -26,6 +28,7 @@ if(missionTest||routeTest){
   if(!characterProfiles.list.length){const selectedClass=(mobileTest||depthTest||routeTest)&&['warrior','hunter','astral','xenobinder'].includes(mobileClass??'')?mobileClass as import('../../config/classes').PlayableClass:'warrior';const hero=characterProfiles.create('Pioneiro',selectedClass,'male',{mode:'solo',difficulty:'normal'});
    if(hero){characterProfiles.select(hero.id);characterProfiles.markIntroSeen(hero.id);sessionStorage.setItem('echoes-of-dante.launch-once',hero.id);}
   }
+  if(routeArrival&&characterProfiles.list.length)sessionStorage.setItem('echoes-of-dante.launch-once',characterProfiles.active.id);
  }
 }
 document.body.append(details);
@@ -53,6 +56,25 @@ if(routeTest){
  const button=document.createElement('button');button.dataset.routePreview='';button.textContent='SIMULAR CHEGADA AO TRECHO';
  button.onclick=()=>{if(!confirm('Reiniciar somente este personagem temporário no trecho escolhido? A Floresta simula o reconhecimento; a caverna simula os três Ecos e o mecanismo. Nenhum boss será derrotado. Para jogar do zero, cancele.'))return;const scene=game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene;const ok=scene?.sys.isActive()&&scene.seedEarlyRoutePlaytest(select.value as 'forest'|'cavern');details.querySelector('[data-lab-notice]')!.textContent=ok?'Trecho preparado. Bosses vivos; desmoronamento e Primeiro Eco ainda precisam ser investigados.':'Feche os menus. A prévia é solo; o cooperativo percorre a jornada completa.';if(ok){set.call(sessionStorage,prefix+'simulated','1');details.querySelector('summary')!.textContent='PRÉVIA DE TRECHO · BOSSES VIVOS';details.open=false;}};
  details.append(select,button);
+ const links=document.createElement('p');
+ for(const[id,label]of [['forest','Entrar na Bacia do Leito Vivo'],['cavern','Entrar na Câmara da Condensação'],['','Jornada completa desde a base']]){
+  const a=document.createElement('a');a.href=`campaign-playtest.html?route=1${id?'&arrival='+id:''}&v=0.1.142`;a.textContent=label;links.append(a,document.createTextNode(' · '));
+ }details.append(links);
+ if(routeArrival){
+  select.value=routeArrival;
+  note.textContent='Prévia temporária: chegada direta à expansão. Somente os pré-requisitos deste trecho são simulados; nenhum boss é derrotado. Explore o chão novo, contorne a água e encontre as análises com E. A caverna conserva o desmoronamento original antes das outras câmaras. Seus saves reais estão protegidos.';
+  if(!get.call(sessionStorage,prefix+'arrived')&&!new URLSearchParams(location.search).has('sala')){
+   const deadline=performance.now()+90000;
+   const arrive=()=>{
+    const scene=game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene;
+    if(scene?.sys.isActive()&&scene.seedEarlyRoutePlaytest(routeArrival)){
+     set.call(sessionStorage,prefix+'arrived','1');
+     details.querySelector('[data-lab-notice]')!.textContent='Trecho preparado. Bosses vivos; progresso apenas nesta aba.';
+    }else if(performance.now()<deadline)setTimeout(arrive,150);
+    else details.querySelector('[data-lab-notice]')!.textContent='Abra o painel e use SIMULAR CHEGADA AO TRECHO para tentar novamente.';
+   };setTimeout(arrive,150);
+  }
+ }
 }
 if(depthTest){
  details.classList.add('is-mobile-lab');details.querySelector('summary')!.textContent='EXPEDIÇÕES REGIONAIS · DO ZERO · TESTE RESERVADO';details.querySelector('.mission-lab-stages')?.remove();

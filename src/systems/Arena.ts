@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { FOREST_SIZE, FOREST_BOUNDS, FOREST_CONTOUR, FOREST_BRANCH_PATHS, FOREST_BRANCH_CLEARINGS } from '../config/earlyJourney';
+import { FOREST_SIZE, FOREST_BOUNDS, FOREST_CONTOUR, FOREST_BRANCH_PATHS, FOREST_BRANCH_CLEARINGS, EARLY_LANDMARKS } from '../config/earlyJourney';
 import { insideGround } from './WalkableGround';
 import { FOREST_CLEARINGS, FOREST_PATHS, FOREST_ROCKS } from '../config/forest';
 import { FOREST_STRUCTURE_FOOTPRINTS, treeFootprint, totemFootprint } from '../config/environmentCollision';
@@ -158,6 +158,7 @@ export class Arena {
       const x = 210 + this.random() * (FOREST_SIZE.width - 420);
       const y = 210 + this.random() * (FOREST_SIZE.height - 420);
       if (!insideGround({x,y},FOREST_CONTOUR) || this.nearRoute(x, y, 65)) continue;
+      if(EARLY_LANDMARKS.forest.some(p=>Math.hypot(x-p.x,y-p.y)<p.radius+90))continue;
       if (this.obstacles.some(rock => Math.hypot(x - rock.x, y - rock.y) < rock.radius + 55)) continue;
       this.plant(x, y, 32 + this.random() * 34, trees % 16 === 0);
       trees++;
@@ -171,14 +172,14 @@ export class Arena {
     this.plant(420, 390, 110, true, false);
     this.obstacles.push({ x: 420, y: 390, radius: 25 });
     [-70, 0, 70].forEach(offset => this.obstacles.push({ x: 1500 + offset, y: 285, radius: 35 }));
-    this.rock(1930, 1020, 67);
-    this.rock(1900, 1110, 45);
+    this.rock(1980, 920, 50);
+    this.rock(1980, 1270, 45);
     this.beacon(1860, 1120);
     this.beacon(290, 1220);
     this.beacon(510, 1220);
     this.beacon(1740, 220);
     // Small cover and distinct rest pockets; no interactive HUD decoration.
-    for(const [x,y,r] of [[2310,900,36],[2630,1110,32],[2850,1320,43],[2420,1480,32],[1030,1570,30]])this.rock(x,y,r);
+    for(const [x,y,r] of [[2310,900,36],[2850,1320,43],[2420,1480,32],[1030,1570,30]])this.rock(x,y,r);
     this.motes();
   }
 
