@@ -28,6 +28,8 @@ import {Missions,validMissionRewards,type MissionAction} from '../systems/Missio
 import {regionUnlocked} from '../systems/RegionAccess';
 import {RegionalExpeditions} from '../systems/RegionalExpeditions';
 import {REGIONAL_IDS,REGIONAL_SITES,REGIONAL_RESIDENTS,EARLY_ROUTE_RESIDENTS} from '../config/regionalExpeditions';
+import {SIROCCO_TRAIL_RESIDENTS,siroccoTrails} from '../config/siroccoJourney';
+import {composeSiroccoTrails} from '../visual/SiroccoJourney';
 import {ForestFinishArea,FINISH_ENTRY,FINISH_SPAWNS} from '../experiments/forest-finish/ForestFinishArea';
 import {CampaignEnvironment,beginCampaignEnvironment,preloadCampaignEnvironment} from '../visual/CampaignEnvironment';
 import {SURVEY_POINTS,ANALYSIS_POINTS,NPC_NAMES,missionById,type MissionId,type MissionNpc} from '../config/missions';
@@ -477,6 +479,7 @@ export class GameScene extends Phaser.Scene {
     this.earlyLandmarks=undefined;
     if(!this.qualityReference&&!this.glacierPlaytest?.environmentBaseline){
       addRouteFootprints(this,this.area,this.arena.obstacles);
+      composeSiroccoTrails(this,this.area,this.arena.obstacles);
       this.earlyLandmarks=new EarlyJourneyLandmarks(this,this.area,this.arena.obstacles);
       this.campaignEnvironment=new CampaignEnvironment(this,this.area,this.movementBounds,this.arena.obstacles);
     }
@@ -779,6 +782,7 @@ export class GameScene extends Phaser.Scene {
         this.hud.showDiscovery('O PRIMEIRO ABRIGO\nReservatório e canteiro experimental instalados.');
       }else if('finding' in missionSite)this.hud.showDiscovery(missionSite.name.toLocaleUpperCase('pt-BR')+'\n'+missionSite.finding);
       else this.hud.showDiscovery(missionSite.id==='water'?'ÁGUA SUPERFICIAL\nLEITURA REGISTRADA':missionSite.id==='biology'?'ATIVIDADE BIOLÓGICA\nLEITURA REGISTRADA':`${missionSite.name.toLocaleUpperCase('pt-BR')}\nLEITURA REGISTRADA`);
+      if(missionSite.id==='exp-dunes-3')this.dunes?.warnBelow();
       this.sounds.discovery();this.saveProgress();interact=false;
     }
     const nearbyEcho = this.echoSites.find(site => site.canInvestigate(interactionPosition, interactionDead));
@@ -1635,7 +1639,9 @@ export class GameScene extends Phaser.Scene {
 
   private syncCoopWorld(world: PartyWorld): boolean {
     this.visitingCoop = true;
+    const knewDuneTracks=this.missions.has('exp-dunes-3');
     this.missions.restore(world.missions);
+    if(!knewDuneTracks&&this.missions.has('exp-dunes-3'))this.dunes?.warnBelow();
     const personal=this.journey.load();if(personal){this.economy=validEconomy(personal.economy);this.equipment.restore(personal.equipment);this.basePanel?.refreshBar();}
     if(world.visited)this.economy.visited=[...new Set([...this.economy.visited,...world.visited])];
     this.expeditionReturn=validExpeditionReturn(world.expeditionReturn);
@@ -2139,7 +2145,7 @@ export class GameScene extends Phaser.Scene {
   private spawnRegionalResidents(now:number):void{
     if(!this.regional||now<this.regionalSpawnTick||this.player.isDead||this.bossActive())return;
     this.regionalSpawnTick=now+200;
-    for(const h of [...REGIONAL_RESIDENTS,...EARLY_ROUTE_RESIDENTS]){
+    for(const h of [...REGIONAL_RESIDENTS,...EARLY_ROUTE_RESIDENTS,...SIROCCO_TRAIL_RESIDENTS]){
       if(h.area!==this.area||this.regionalResidents.has(h.id)||this.progression.hasDefeated(h.id)||!this.explorationNear(h,560))continue;
       if(!this.regional.sites.some(s=>s.id===h.site))continue;
       const b=this.movementBounds;
@@ -2181,6 +2187,27 @@ export class GameScene extends Phaser.Scene {
     const service=BASE.services.find(s=>s.id===npc)!;
     return this.area==='base'&&!!player&&!player.isDead&&distance(player.position,service)<130
       &&(member==='host'||!!coopSession.guests.find(m=>m.id===member)?.connected);
+  }
+
+  // Explicit post-Warden test. Only milestones BEFORE the selected map are
+  // prepared; Soterrado stays alive, with ruins/descent still required.
+  seedSiroccoRoutePlaytest(area:'valley'|'arid'|'dunes'|'sandpit'):boolean{
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!new URLSearchParams(location.search).has('sirocco')||coopSession.role!=='offline'||this.transitioning||this.inputModalOpen)return false;
+    for(const flag of JOURNEY_FLAGS)this[flag]=false;
+    for(const flag of ['cavernDepthSeen','deepPassageOpen','deepAreaSeen','deepCavernEntered','deepEndSeen','deeperEntered','exteriorEntered','fragmentSeen','approachSeen','firstEchoSeen','wardenReached','wardenGateOpen','wardenDefeated','wardenEndingSeen','valleyVisited'] as const)this[flag]=true;
+    const index=['valley','arid','dunes','sandpit'].indexOf(area);
+    if(index>=1)for(const flag of ['valleyLandmarkSeen','valleyEndSeen','valleyCheckpointReached','valleyFrontierReached','valleyFrontierSignalSeen','valleyFrontierEndSeen','aridVisited'] as const)this[flag]=true;
+    if(index>=2)for(const flag of ['aridSignalSeen','aridFrontierEntered','aridFrontierReached','dunesVisited'] as const)this[flag]=true;
+    if(index>=3)for(const flag of ['dunesRuinsSeen','dunesDepthSeen','soterradoReached'] as const)this[flag]=true;
+    this.progression.restore({xp:350+index*200,echoes:['northern-ruin','mineral-signal','unknown-trace'],sourceLocated:true,passageOpen:true,rewardedHollows:[],rewardedRoutes:[],bossRewards:['warden']});
+    const core=['recon','survival','signal','beyond'] as const;
+    this.missions.restore({schema:1,accepted:[...core,'exp-valley','exp-arid','exp-dunes'],completed:[...core],evidence:core.flatMap(id=>missionById(id).goals.map(g=>g.id))});
+    this.missions.tracked=area==='valley'?'exp-valley':area==='arid'?'exp-arid':'exp-dunes';this.missionRewards=[...core];
+    for(const upgrade of ['chargePower','dashDuration','chargeWidth'] as const)this.progression.investUpgrade(upgrade);
+    this.economy.visited=['base','forest','cavern','warden',...(['valley','arid','dunes','sandpit'] as const).slice(0,index+1)];
+    this.economy.credits=100;this.economy.potions=5;this.transferHp=this.characterMaxHp;
+    this.earlyRouteCheckpoint=undefined;this.expeditionArrival=area==='valley'?{...VALLEY.entry}:area==='arid'?{...SIROCCO.entry}:area==='dunes'?{...DUNES.entry}:{...SANDPIT.entry};
+    this.expeditionReturn=undefined;this.area=area;this.saveProgress();this.scene.restart();return true;
   }
 
   // Preview only; unlike the older regional fixture, this never defeats a boss.
@@ -2313,7 +2340,7 @@ export class GameScene extends Phaser.Scene {
       return {x:this.returnStation.x-90,y:this.returnStation.y,radius:65,name:'Retorno à base',instruction:`M abre o mapa para retornar a ${NPC_NAMES[d.npc]}.`,interactionLabel:'RETORNAR',action:'enter'};
     }
     const regionalSite=this.regional?.sites.find(s=>s.mission===id&&!this.missions.has(s.id));
-    if(regionalSite)return {...regionalSite,instruction:'Analise o local e registre a descoberta.',interactionLabel:'ANALISAR',action:'investigate'};
+    if(regionalSite)return {...regionalSite,instruction:siroccoTrails(this.area).find(t=>t.site===regionalSite.id)?.hint??'Analise o local e registre a descoberta.',interactionLabel:'ANALISAR',action:'investigate'};
     const colonyMission=['water-source','safe-route','shelter'].includes(id);
     if(this.area==='base')return {...BASE.exit,radius:105,name:'Saída para a Floresta',instruction:colonyMission?'Retome sua rota descoberta pelo atlas ou siga pela Floresta.':'A expedição continua na Floresta.',interactionLabel:'SAIR',action:'enter'};
     if(colonyMission){

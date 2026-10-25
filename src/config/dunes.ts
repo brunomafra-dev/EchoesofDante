@@ -12,9 +12,9 @@ export const DUNES = {
 
 export const DUNES_ENCOUNTERS: readonly { id: number; kind: SiroccoKind; x: number; y: number }[] = [
   { id: 1010, kind: 'dunePouncer', x: 840, y: 1220 },
-  { id: 1011, kind: 'glassSpitter', x: 1110, y: 560 },
+  { id: 1011, kind: 'glassSpitter', x: 920, y: 1060 },
   { id: 1012, kind: 'dunePouncer', x: 1280, y: 1450 },
-  { id: 1013, kind: 'glassSpitter', x: 1740, y: 1650 },
+  { id: 1013, kind: 'glassSpitter', x: 2040, y: 1270 },
   { id: 1014, kind: 'dunePouncer', x: 2120, y: 700 },
   { id: 1015, kind: 'glassSpitter', x: 2270, y: 1540 },
   { id: 1016, kind: 'dunePouncer', x: 2860, y: 620 },

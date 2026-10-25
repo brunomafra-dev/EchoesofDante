@@ -1,0 +1,446 @@
+{
+  "method": "Chrome DEV, isolated campaign lab; explicit position/combat fixtures, real navigation graph, E scans, NPC dialogs, save/reload and original gate interactions. Not human playtime or balance.",
+  "errors": [],
+  "checks": [
+    "Original Vale signal → frontier portal → Sirocco signal → dunes portal → ruins → descent still work with real E; arrive at living Soterrado.",
+    "Nine original evidence IDs at authored loop approaches; entry/site/exit paths connected, E works, nine solid ridges and six new finite residents. Reports do not open signals/descent or defeat Soterrado.",
+    "Real NPC turn-in pays exactly 65+70+75 credits; all three mission receipts and new finite XP survive actual save validation and reload.",
+    "Three measured restarts after warmup keep ridge/listener counts stable and dynamic objects bounded; movement/Dash and HUD at four resolutions pass."
+  ],
+  "regions": [
+    {
+      "area": "valley",
+      "population": [
+        {
+          "id": 900,
+          "kind": "carapace"
+        },
+        {
+          "id": 901,
+          "kind": "thorn"
+        },
+        {
+          "id": 902,
+          "kind": "carapace"
+        },
+        {
+          "id": 903,
+          "kind": "thorn"
+        },
+        {
+          "id": 904,
+          "kind": "carapace"
+        },
+        {
+          "id": 905,
+          "kind": "thorn"
+        },
+        {
+          "id": 906,
+          "kind": "carapace"
+        },
+        {
+          "id": 907,
+          "kind": "thorn"
+        },
+        {
+          "id": 908,
+          "kind": "carapace"
+        },
+        {
+          "id": 909,
+          "kind": "thorn"
+        },
+        {
+          "id": 910,
+          "kind": "thorn"
+        },
+        {
+          "id": 911,
+          "kind": "carapace"
+        },
+        {
+          "id": 1912,
+          "kind": "carapace"
+        },
+        {
+          "id": 1913,
+          "kind": "thorn"
+        },
+        {
+          "id": 1976,
+          "kind": "carapace"
+        },
+        {
+          "id": 1914,
+          "kind": "carapace"
+        },
+        {
+          "id": 1915,
+          "kind": "carapace"
+        },
+        {
+          "id": 1977,
+          "kind": "thorn"
+        },
+        {
+          "id": 1916,
+          "kind": "thorn"
+        },
+        {
+          "id": 1917,
+          "kind": "carapace"
+        }
+      ],
+      "gates": {
+        "valley": false,
+        "arid": false,
+        "dunes": false,
+        "descent": false
+      },
+      "won": false,
+      "rewards": [
+        "warden"
+      ],
+      "ground": [
+        "route-floor-valley"
+      ],
+      "ridges": 3,
+      "receipt": {
+        "before": 350,
+        "after": 372,
+        "valid": true
+      },
+      "fps": 54.656559062656015,
+      "routes": [
+        {
+          "id": "exp-valley-1",
+          "paths": [
+            {
+              "steps": 13,
+              "gap": 25.612496949731394
+            },
+            {
+              "steps": 8,
+              "gap": 22.090722034374522
+            }
+          ]
+        },
+        {
+          "id": "exp-valley-2",
+          "paths": [
+            {
+              "steps": 16,
+              "gap": 25.238858928247925
+            },
+            {
+              "steps": 9,
+              "gap": 28.425340807103794
+            }
+          ]
+        },
+        {
+          "id": "exp-valley-3",
+          "paths": [
+            {
+              "steps": 18,
+              "gap": 20.39607805437114
+            },
+            {
+              "steps": 7,
+              "gap": 10.77032961426901
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "area": "arid",
+      "population": [
+        {
+          "id": 1000,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1001,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1002,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1003,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1004,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1005,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1006,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1007,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1008,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1009,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1918,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1919,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1978,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1920,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1921,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1979,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1922,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1923,
+          "kind": "dunePouncer"
+        }
+      ],
+      "gates": {
+        "valley": true,
+        "arid": false,
+        "dunes": false,
+        "descent": false
+      },
+      "won": false,
+      "rewards": [
+        "warden"
+      ],
+      "ground": [
+        "route-floor-arid"
+      ],
+      "ridges": 3,
+      "receipt": {
+        "before": 372,
+        "after": 397,
+        "valid": true
+      },
+      "fps": 59.767374693798665,
+      "routes": [
+        {
+          "id": "exp-arid-1",
+          "paths": [
+            {
+              "steps": 11,
+              "gap": 5
+            },
+            {
+              "steps": 6,
+              "gap": 12.649110640673518
+            }
+          ]
+        },
+        {
+          "id": "exp-arid-2",
+          "paths": [
+            {
+              "steps": 11,
+              "gap": 28.844410203711917
+            },
+            {
+              "steps": 10,
+              "gap": 25.455844122715714
+            }
+          ]
+        },
+        {
+          "id": "exp-arid-3",
+          "paths": [
+            {
+              "steps": 14,
+              "gap": 16.155494421403514
+            },
+            {
+              "steps": 7,
+              "gap": 18.973665961010276
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "area": "dunes",
+      "population": [
+        {
+          "id": 1010,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1011,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1012,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1013,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1014,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1015,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1016,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1924,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1925,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1980,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1926,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1927,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1981,
+          "kind": "glassSpitter"
+        },
+        {
+          "id": 1928,
+          "kind": "dunePouncer"
+        },
+        {
+          "id": 1929,
+          "kind": "dunePouncer"
+        }
+      ],
+      "gates": {
+        "valley": true,
+        "arid": true,
+        "dunes": false,
+        "descent": false
+      },
+      "won": false,
+      "rewards": [
+        "warden"
+      ],
+      "ground": [
+        "route-floor-dunes"
+      ],
+      "ridges": 3,
+      "receipt": {
+        "before": 417,
+        "after": 445,
+        "valid": true
+      },
+      "fps": 58.876341629011485,
+      "routes": [
+        {
+          "id": "exp-dunes-1",
+          "paths": [
+            {
+              "steps": 19,
+              "gap": 22.090722034374522
+            },
+            {
+              "steps": 15,
+              "gap": 12.806248474865697
+            }
+          ]
+        },
+        {
+          "id": "exp-dunes-2",
+          "paths": [
+            {
+              "steps": 19,
+              "gap": 12.165525060596437
+            },
+            {
+              "steps": 16,
+              "gap": 25.612496949731394
+            }
+          ]
+        },
+        {
+          "id": "exp-dunes-3",
+          "paths": [
+            {
+              "steps": 12,
+              "gap": 23.3238075793812
+            },
+            {
+              "steps": 8,
+              "gap": 6.324555320336759
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "stability": [
+    {
+      "objects": 173,
+      "textures": 240,
+      "shutdown": 26,
+      "resize": 5,
+      "ridges": 3
+    },
+    {
+      "objects": 173,
+      "textures": 240,
+      "shutdown": 26,
+      "resize": 5,
+      "ridges": 3
+    },
+    {
+      "objects": 173,
+      "textures": 240,
+      "shutdown": 26,
+      "resize": 5,
+      "ridges": 3
+    }
+  ],
+  "passed": true
+}

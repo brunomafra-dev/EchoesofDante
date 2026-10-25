@@ -1,0 +1,77 @@
+{
+  "arc": "sirocco",
+  "method": "Two independent Chrome processes with real local relay; prepared travel flags, living bosses. Guest uses real E inputs for canonical discoveries; no public relay or physical-device claim.",
+  "errors": [],
+  "regions": [
+    {
+      "area": "valley",
+      "ground": [
+        [
+          "route-floor-valley",
+          5500,
+          1500
+        ]
+      ],
+      "sharedPhysics": true,
+      "guestScans": [
+        "exp-valley-1",
+        "exp-valley-2",
+        "exp-valley-3"
+      ],
+      "bossAlive": false
+    },
+    {
+      "area": "arid",
+      "ground": [
+        [
+          "route-floor-arid",
+          5250,
+          1500
+        ]
+      ],
+      "sharedPhysics": true,
+      "guestScans": [
+        "exp-arid-1",
+        "exp-arid-2",
+        "exp-arid-3"
+      ],
+      "bossAlive": false
+    },
+    {
+      "area": "dunes",
+      "ground": [
+        [
+          "route-floor-dunes",
+          3200,
+          2200
+        ]
+      ],
+      "sharedPhysics": true,
+      "guestScans": [
+        "exp-dunes-1",
+        "exp-dunes-2",
+        "exp-dunes-3"
+      ],
+      "bossAlive": false
+    },
+    {
+      "area": "sandpit",
+      "ground": [
+        [
+          "route-floor-sandpit",
+          1800,
+          1500
+        ]
+      ],
+      "sharedPhysics": true,
+      "guestScans": [],
+      "bossAlive": true
+    }
+  ],
+  "turnIn": {
+    "creditsPerPlayer": 210,
+    "reconnected": true,
+    "duplicateReward": false
+  },
+  "passed": true
+}

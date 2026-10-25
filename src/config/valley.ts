@@ -32,15 +32,15 @@ export const VALLEY_CREATURES = {
 // None of these encounters is a door/portal unlock condition.
 export const VALLEY_ENCOUNTERS = [
   { id: 900, kind: 'carapace', x: 900, y: 855 },
-  { id: 901, kind: 'thorn', x: 1270, y: 605 },
+  { id: 901, kind: 'thorn', x: 1120, y: 930 },
   { id: 902, kind: 'carapace', x: 1470, y: 990 },
   { id: 903, kind: 'thorn', x: 1590, y: 1010 },
   { id: 904, kind: 'carapace', x: 2080, y: 1080 },
   { id: 905, kind: 'thorn', x: 2360, y: 1080 },
-  { id: 906, kind: 'carapace', x: 1380, y: 575 },
+  { id: 906, kind: 'carapace', x: 2040, y: 990 },
   { id: 907, kind: 'thorn', x: 2440, y: 1070 },
   { id: 908, kind: 'carapace', x: 3270, y: 820 },
-  { id: 909, kind: 'thorn', x: 3520, y: 1010 },
+  { id: 909, kind: 'thorn', x: 4080, y: 900 },
   { id: 910, kind: 'thorn', x: 4480, y: 605 },
   { id: 911, kind: 'carapace', x: 4650, y: 990 },
 ] as const;

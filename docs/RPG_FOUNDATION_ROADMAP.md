@@ -1,5 +1,7 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**Percurso autorizado · 25/10/2026 · 0.1.146:** terrenos anteriores aprovados pelo usuário. Continuar a entrega B com [Vale → Siroco → Soterrado](sirocco-journey/README.md): três relatórios existentes ligados a nove desvios com cobertura/retorno, seis residentes finitos e indícios ambientais do boss. Portais, ruínas, descida, arena, pagamentos e recibos preservados; nenhuma duração humana declarada. Entregar laboratório/QA/commit/push e aguardar playtest antes do arco seguinte.
+
 **Lote visual · 25/10/2026 · 0.1.145:** terceiro arco autorizado: [Costa das Cinzas ao Incandescente](route-identity/embers/README.md). Dez mapas do lote passam a usar pinturas completas próprias; preservam campanha, quests, encontros e bosses. Os dois primeiros arcos foram enviados separadamente em `d2ae660` e `524708e`. Fechar este arco com QA/commit/push, sem iniciar capítulo narrativo novo. A revisão estética final e a duração humana continuam pendentes de playtest.
 
 **Lote visual · 25/10/2026 · 0.1.144:** continuação autorizada. [Vale ao Soterrado](route-identity/sirocco/README.md) foi entregue em `d2ae660`; [arco boreal](route-identity/boreal/README.md) distingue neve aberta, galerias de degelo e o ninho antigo. Pinturas únicas na campanha/coop, referências físicas e progressão preservadas. Após QA/commit/push, seguir para Costa das Cinzas ao último boss conforme pedido explícito, mantendo aprovação visual separada.

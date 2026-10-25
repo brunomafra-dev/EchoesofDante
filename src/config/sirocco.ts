@@ -20,7 +20,7 @@ export type SiroccoKind = Extract<CreatureKind, 'dunePouncer' | 'glassSpitter'>;
 // Fixed habitats remain avoidable and never unlock the exit.
 export const SIROCCO_ENCOUNTERS = [
   { id: 1000, kind: 'dunePouncer', x: 780, y: 690 },
-  { id: 1001, kind: 'dunePouncer', x: 1020, y: 1010 },
+  { id: 1001, kind: 'dunePouncer', x: 1050, y: 700 },
   { id: 1002, kind: 'glassSpitter', x: 1400, y: 590 },
   { id: 1003, kind: 'dunePouncer', x: 1605, y: 895 },
   { id: 1004, kind: 'glassSpitter', x: 1970, y: 1010 },

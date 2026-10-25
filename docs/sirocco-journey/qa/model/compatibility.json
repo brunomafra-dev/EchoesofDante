@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "All old mission IDs, preconditions, NPCs, evidence order, prop subjects and credit values match 0.1.145; other regions unchanged.",
+    "82 finite IDs unique; six new IDs fit the existing save range and cannot award XP twice after restore.",
+    "All nine cover footprints stop a normal-speed Dash; worst-case four-player region populations stay below relay capacity."
+  ],
+  "maxPopulation": {
+    "valley": 23,
+    "arid": 21,
+    "dunes": 18
+  },
+  "passed": true
+}

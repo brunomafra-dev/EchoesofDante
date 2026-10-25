@@ -93,12 +93,12 @@
     "credits": 65,
     "title": "Uma caravana atravessa o vale",
     "offer": [
-      "Exploradores atravessam depressa. Famílias, reservatórios e carga médica precisam de outra rota.",
-      "Registre abrigo do vento, um ponto de descanso e a margem da passagem oriental. A travessia original continua sendo necessária."
+      "As primeiras famílias não podem atravessar correndo como nossa equipe. Precisamos escolher onde parar a caravana sem ocupar o território das criaturas.",
+      "Entre pela margem norte até o abrigo das raízes. Depois contorne a crista oriental pelo sul e compare o solo da bacia. Na escarpa, registre por onde a carga pode retornar à passagem. Esses desvios não substituem o sinal do Vale."
     ],
     "report": [
-      "Temos três pontos de apoio para a caravana. O caminho é mais longo, mas oferece lugares onde parar.",
-      "Vou manter as famílias na base até Lia e Ivo concluírem os preparativos."
+      "O abrigo das raízes protege uma parada curta. A bacia é firme nas bordas, mas o centro úmido deve ficar livre; a passagem alta da escarpa permite levar a carga de volta.",
+      "Marquei os pontos de apoio para uma futura caravana. As famílias continuam na base: a rota não torna a água própria para consumo e não dispensa a pesquisa de Lia."
     ],
     "kinds": [
       "carapace",
@@ -107,24 +107,24 @@
     "sites": [
       {
         "name": "Abrigo das cristas",
-        "x": 1160,
-        "y": 470,
+        "x": 1600,
+        "y": 600,
         "art": "soil",
-        "finding": "A crista corta o vento. O terreno comporta uma parada curta da caravana."
+        "finding": "As raízes rompem o vento e deixam uma faixa de chão seco. A saída a leste retorna à trilha; uma caravana não ficaria presa num beco."
       },
       {
         "name": "Bacia de descanso",
-        "x": 2990,
-        "y": 1050,
+        "x": 3610,
+        "y": 925,
         "art": "water",
-        "finding": "O solo acumula umidade, mas marcas recentes indicam passagem de criaturas."
+        "finding": "As pegadas evitam o solo escuro do centro. A borda compacta comporta reservatórios e uma parada, desde que a margem ocupada pelas criaturas fique livre."
       },
       {
         "name": "Margem da passagem oriental",
-        "x": 4740,
-        "y": 470,
+        "x": 4720,
+        "y": 620,
         "art": "record",
-        "finding": "Os sulcos convergem para a passagem. A carga deve ficar no lado alto da margem."
+        "finding": "Sulcos antigos seguem o lado alto. A carga deve contornar a rocha e voltar pelo acesso sul; o sinal da passagem oriental ainda precisa ser investigado."
       }
     ]
   },
@@ -136,12 +136,12 @@
     "credits": 70,
     "title": "Sobreviver ao Siroco",
     "offer": [
-      "O calor não é o único risco do Siroco. Água, poeira e exposição decidem quanto tempo a equipe consegue trabalhar.",
-      "Compare as raízes secas, o depósito salino e uma sombra na margem distante. Descubra a região pela rota habitual."
+      "Precisamos saber como uma equipe humana trabalha aqui sem desperdiçar a água que trouxe. Não vou enviar colonos para uma travessia sem abrigo.",
+      "Acompanhe as fibras no canal sul, compare a crosta na borda norte da salina e procure sombra ao pé da escarpa distante. Cada desvio volta à trilha. Leia o sinal do Siroco para continuar às dunas."
     ],
     "report": [
-      "O depósito não serve para consumo. A umidade das raízes, porém, pode orientar futuras estações de coleta.",
-      "A equipe terá de trabalhar por turnos e descansar nas formações mais baixas."
+      "A fibra retém umidade, mas não é uma fonte de água tratada. A crosta irritante da salina precisa ficar fora da rota dos reservatórios.",
+      "A sombra da escarpa permite uma parada protegida. Vou planejar turnos de trabalho e levar estas amostras ao laboratório antes de recomendar qualquer coleta."
     ],
     "kinds": [
       "dunePouncer",
@@ -150,24 +150,24 @@
     "sites": [
       {
         "name": "Raízes do leito seco",
-        "x": 990,
-        "y": 1090,
+        "x": 1330,
+        "y": 885,
         "art": "biology",
-        "finding": "As fibras armazenam umidade sob uma casca quase impermeável."
+        "finding": "Sob a casca seca, a fibra conserva umidade. O canal retorna à trilha pelo leste; serve para comparar temperatura e estudar uma estação de coleta, não para beber."
       },
       {
         "name": "Depósito salino",
-        "x": 2820,
-        "y": 490,
+        "x": 2830,
+        "y": 570,
         "art": "mineral",
-        "finding": "A crosta concentra sais irritantes. Uma película clara protege a pedra abaixo."
+        "finding": "A película clara é sal concentrado, não gelo nem água. A margem norte sustenta a passagem; os sulcos expostos dão linha de tiro às criaturas vítreas."
       },
       {
         "name": "Sombra do paredão distante",
-        "x": 4470,
-        "y": 1090,
+        "x": 4440,
+        "y": 915,
         "art": "soil",
-        "finding": "Mesmo ao meio do dia, a base do paredão permanece mais fria que a trilha."
+        "finding": "A rocha corta o vento quente e o chão permanece mais frio. Uma equipe pode parar aqui sem bloquear o caminho; o acesso leste retorna ao portal das dunas."
       }
     ]
   },
@@ -179,12 +179,12 @@
     "credits": 75,
     "title": "Sob a pele das dunas",
     "offer": [
-      "As ruínas aparecem e somem sob a areia. Precisamos saber onde a superfície suporta nossa carga.",
-      "Compare a encosta norte, o sedimento profundo e as nervuras da depressão. Não use explosivos."
+      "A crista divide a aproximação: por cima há uma borda firme; por baixo, um canal expõe partes de uma estrutura soterrada. Quero comparar as duas rotas.",
+      "Registre a encosta norte e o sedimento do canal sul, depois examine as nervuras junto da depressão. As ruínas ainda precisam responder antes da descida. Se a areia vibrar, afaste-se do centro."
     ],
     "report": [
-      "A areia cobre uma estrutura vazada. O caminho seguro acompanha suas nervuras, não o centro das depressões.",
-      "As vibrações vindas de baixo não são causadas pelo vento. Mantenha atenção na descida."
+      "O caminho alto oferece visão e uma entrada pelas ruínas. O canal sul permite contornar a crista, mas a carga deve acompanhar as nervuras firmes.",
+      "Os rastros terminam onde o pulso começa. Não foi o vento que levantou aquela areia: algo grande se move sob a depressão. A descida continua dependendo das inscrições das ruínas."
     ],
     "kinds": [
       "dunePouncer",
@@ -193,24 +193,24 @@
     "sites": [
       {
         "name": "Encosta das areias claras",
-        "x": 750,
-        "y": 470,
+        "x": 1070,
+        "y": 540,
         "art": "soil",
-        "finding": "A camada superior desliza, mas a base de areia compacta sustenta a encosta."
+        "finding": "A borda clara é compacta. A rota alta contorna a crista e retorna junto das ruínas; observar o disparo de longe é mais seguro que correr direto contra ele."
       },
       {
         "name": "Sedimento profundo",
         "x": 1530,
-        "y": 1820,
+        "y": 1730,
         "art": "mineral",
-        "finding": "Fragmentos antigos seguem alinhados. A duna cresceu sobre uma superfície construída."
+        "finding": "O canal sul expõe nervuras rasas e vidro moído. É possível contornar a crista por aqui e voltar a leste, mas as criaturas usam a cobertura para se aproximar."
       },
       {
         "name": "Nervuras da depressão",
-        "x": 2780,
-        "y": 1510,
+        "x": 2620,
+        "y": 1530,
         "art": "record",
-        "finding": "O pulso atravessa a areia em intervalos irregulares. Alguma coisa responde abaixo."
+        "finding": "Rastros largos acabam na areia intacta. O pulso sobe de baixo e espalha grãos contra o vento. O registro das ruínas é necessário para entender a descida."
       }
     ]
   },
