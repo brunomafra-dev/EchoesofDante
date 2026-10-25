@@ -1,0 +1,60 @@
+{
+  "arc": "boreal",
+  "method": "Two independent Chrome processes with real local relay; explicit post-Soterrado lab arrival, living Vesper; guest activates original relays. Guest uses real E inputs for canonical discoveries; no public relay or physical-device claim.",
+  "errors": [],
+  "regions": [
+    {
+      "area": "frost",
+      "ground": [
+        [
+          "route-floor-frost",
+          3000,
+          1800
+        ]
+      ],
+      "sharedPhysics": true,
+      "guestScans": [
+        "exp-frost-1",
+        "exp-frost-2",
+        "exp-frost-3"
+      ],
+      "bossAlive": false
+    },
+    {
+      "area": "icecave",
+      "ground": [
+        [
+          "route-floor-icecave",
+          3100,
+          2300
+        ]
+      ],
+      "sharedPhysics": true,
+      "guestScans": [
+        "exp-icecave-1",
+        "exp-icecave-2",
+        "exp-icecave-3"
+      ],
+      "bossAlive": false
+    },
+    {
+      "area": "icenest",
+      "ground": [
+        [
+          "route-floor-icenest",
+          2500,
+          1800
+        ]
+      ],
+      "sharedPhysics": true,
+      "guestScans": [],
+      "bossAlive": true
+    }
+  ],
+  "turnIn": {
+    "creditsPerPlayer": 165,
+    "reconnected": true,
+    "duplicateReward": false
+  },
+  "passed": true
+}

@@ -2,6 +2,7 @@ import raw from './regional-expeditions.json';
 import type {JourneyArea} from '../systems/LocalJourney';
 import type {MissionDefinition,MissionId,MissionNpc} from './missions';
 import type {SpeciesId} from './bestiary';
+import {BOREAL_SITE_KINDS} from './borealJourney';
 import {SIROCCO_SITE_KINDS} from './siroccoJourney';
 
 export const REGIONAL_IDS=['exp-forest','exp-cavern','exp-valley','exp-arid','exp-dunes','exp-frost','exp-icecave','exp-cinder','exp-obsidian','exp-caldera','exp-springs','exp-terraces'] as const;
@@ -15,7 +16,7 @@ export const REGIONAL_MISSIONS:readonly MissionDefinition[]=raw.map(m=>({id:m.id
 // IDs 1900–1971 are finite residents, outside existing habitats/party reserves.
 // Each pair lives beside a discovery; no wave loop or kill quota.
 const cavernKinds:readonly (readonly SpeciesId[])[]=[['crawler','skitter'],['spitter','crawler'],['spitter','skitter']];
-export const REGIONAL_RESIDENTS=raw.flatMap((m,region)=>m.sites.flatMap((s,site)=>(m.area==='cavern'?cavernKinds[site]:SIROCCO_SITE_KINDS[`${m.id}-${site+1}`]??m.kinds).map((kind,i)=>({id:1900+region*6+site*2+i,site:`${m.id}-${site+1}` as RegionalEvidence,area:m.area as JourneyArea,kind:kind as SpeciesId,x:s.x+(i===0?-100:100),y:s.y+(i===0?1:-1)*(m.area==='valley'||m.area==='arid'?35:70)}))));
+export const REGIONAL_RESIDENTS=raw.flatMap((m,region)=>m.sites.flatMap((s,site)=>(m.area==='cavern'?cavernKinds[site]:SIROCCO_SITE_KINDS[`${m.id}-${site+1}`]??BOREAL_SITE_KINDS[`${m.id}-${site+1}`]??m.kinds).map((kind,i)=>({id:1900+region*6+site*2+i,site:`${m.id}-${site+1}` as RegionalEvidence,area:m.area as JourneyArea,kind:kind as SpeciesId,x:s.x+(i===0?-100:100),y:s.y+(i===0?1:-1)*(m.area==='valley'||m.area==='arid'?35:70)}))));
 // First-journey approaches: four additional finite residents. These IDs never
 // shift the original campaign IDs or the 1900–1971 investigation receipts.
 export const EARLY_ROUTE_RESIDENTS = [

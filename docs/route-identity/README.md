@@ -1,5 +1,7 @@
 # Trilhas próprias — aplicação após a bacia da Floresta
 
+**25/10/2026 · percurso Boreal 0.1.147:** as pinturas 0.1.143–145 e o percurso Siroco 0.1.146 foram aprovados pelo usuário. Autorizado aprofundar somente Fratura → Galerias → Vésper; [entrega e QA](../boreal-journey/README.md). Pisos e enquadramento preservados. Aguardar playtest desta etapa antes de aprofundar o arco vulcânico.
+
 ## Autorização e sequência
 
 Em 24/10/2026 o usuário aprovou continuar a referência 0.1.142 em três entregas consecutivas, **com commit e push ao fim de cada arco e início imediato do próximo**. Essa instrução dispensa a espera intermediária descrita no plano anterior para este lote; não transforma QA em aprovação visual automática.

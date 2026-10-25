@@ -223,12 +223,12 @@
     "credits": 80,
     "title": "Um abrigo contra a geada",
     "offer": [
-      "Além da areia, a equipe encontrou gelo. Precisamos de um abrigo térmico antes de enviar outra patrulha.",
-      "Compare uma fonte morna, os líquens do chão e a encosta exposta. Procure diferenças, não uma cura milagrosa."
+      "Além da areia, o frio ameaça quem transporta água e suprimentos. Precisamos distinguir abrigo de uma encosta apenas bonita.",
+      "Contorne as dobras baixas: compare o olho de água morna, os líquens e a encosta exposta. O registro sob o gelo continua necessário para entrar nas galerias."
     ],
     "report": [
-      "Os líquens acompanham o calor que vem de baixo. Podemos usá-los para localizar áreas menos expostas.",
-      "Uma futura estação deverá ficar perto dos veios mornos, preservando a água do degelo."
+      "A face protegida conserva calor e os líquens revelam fissuras mornas. A encosta aberta exige ancoragem; ali a carga e a patrulha ficam expostas.",
+      "Vamos separar a coleta da área de descanso. Água morna ainda precisa de análise: não é autorização para beber nem enviar colonos."
     ],
     "kinds": [
       "frostPouncer",
@@ -237,24 +237,24 @@
     "sites": [
       {
         "name": "Olho de água morna",
-        "x": 690,
-        "y": 470,
+        "x": 790,
+        "y": 880,
         "art": "water",
-        "finding": "Uma corrente estreita atravessa o gelo. A temperatura muda com o pulso subterrâneo."
+        "finding": "A dobra corta o vento sem fechar a passagem. Um fio de água morna aflora ao pé da pedra; recolher amostras pela margem evita pisotear a nascente."
       },
       {
         "name": "Líquens da geada",
-        "x": 1480,
-        "y": 1340,
+        "x": 1500,
+        "y": 1300,
         "art": "biology",
-        "finding": "Os líquens crescem voltados para fissuras mornas. Há vida sob a crosta congelada."
+        "finding": "Atrás da dobra, os líquens seguem pequenas fissuras mornas. Aqui as caixas podem repousar fora do vento, sem bloquear a passagem da patrulha."
       },
       {
         "name": "Encosta exposta",
-        "x": 2530,
-        "y": 1300,
+        "x": 2390,
+        "y": 1320,
         "art": "soil",
-        "finding": "O vento levou a neve fina. A equipe precisará de ancoragem para trabalhar aqui."
+        "finding": "A neve fina desapareceu do lado exposto. A face baixa da pedra oferece pausa, mas não protege uma estação inteira. A carga precisa de ancoragem até o próximo abrigo."
       }
     ]
   },
@@ -267,12 +267,12 @@
     "credits": 85,
     "title": "Água sob o gelo",
     "offer": [
-      "As galerias podem guardar uma reserva maior que os poços da superfície. Também podem desabar sobre quem entrar.",
-      "Registre a poça lateral, a coluna antiga e a margem do canal. A passagem para o ninho mantém seu próprio mecanismo."
+      "Água circula sob as galerias. Precisamos levar recipientes e suprimentos por pedra firme, preservando os apoios antigos.",
+      "Compare a poça rasa ao sul, a coluna pela bifurcação seca e a margem do canal antes do ninho. Investigue também o mecanismo original; o relatório não abre a passagem."
     ],
     "report": [
-      "A água está circulando. A galeria não é um reservatório fechado, e perfurar a parede mudaria a pressão.",
-      "As colunas antigas ainda suportam parte do teto. Vamos preservar essas estruturas."
+      "A rota seca junto à coluna suporta melhor o transporte. O desvio da poça permite coletar sem atravessar os canais profundos; não vamos perfurar o piso.",
+      "O canal pulsa na direção do ninho e há marcas recentes no gelo. Planejarei cargas pequenas e retornos pela pedra firme. Nenhuma equipe civil deve seguir além do mecanismo sem reconhecer o perigo."
     ],
     "kinds": [
       "iceCarapace",
@@ -281,24 +281,24 @@
     "sites": [
       {
         "name": "Poça lateral do degelo",
-        "x": 710,
+        "x": 820,
         "y": 1320,
         "art": "water",
-        "finding": "A poça sobe e desce sem receber água do teto. Existe uma ligação sob o piso."
+        "finding": "A poça rasa varia sem goteira no teto. A pedra ao norte permite transportar recipientes e voltar ao salão; o canal profundo continua fora da rota."
       },
       {
         "name": "Coluna sob a geada",
-        "x": 1580,
-        "y": 470,
+        "x": 1510,
+        "y": 920,
         "art": "record",
-        "finding": "A coluna foi encaixada na rocha. O gelo chegou depois da construção."
+        "finding": "A coluna foi encaixada antes de o gelo chegar. A bifurcação seca oferece apoio aos suprimentos; remover a estrutura arriscaria tanto o teto quanto a circulação da água."
       },
       {
         "name": "Margem do canal oculto",
-        "x": 2600,
-        "y": 1340,
+        "x": 2490,
+        "y": 1330,
         "art": "water",
-        "finding": "O canal segue na direção do ninho. Uma vibração grave percorre a água."
+        "finding": "A água vibra rumo ao ninho. Sulcos paralelos saem da margem e arranham o gelo, largos demais para os moradores das galerias. O retorno seguro acompanha a pedra até o mecanismo."
       }
     ]
   },

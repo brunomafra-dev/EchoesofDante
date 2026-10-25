@@ -1,5 +1,16 @@
 # Dante — aprofundar antes de multiplicar
 
+**25/10 · Siroco aprovado, percurso Boreal autorizado · 0.1.147:** usuário testou/aprovou `0a0c5b2` e autorizou continuar a entrega B no arco **Fratura Boreal → Galerias → Vésper**. [Entrega, laboratório e evidências](boreal-journey/README.md).
+
+- [x] Inspecionar e reaproveitar os dois relatórios e seis análises de Lia/Ivo; IDs, requisitos e 80 + 85 créditos preservados.
+- [x] Seis contornos com cobertura/colisão e retorno; bifurcação seca e margens rasas sem alterar a pintura/enquadramento.
+- [x] Pares distintos, seis habitats reposicionados e quatro residentes finitos novos; sem quotas ou HP adicional.
+- [x] Sulcos no vestíbulo antecipam Vésper; registros, portais, atlas e combate originais preservados.
+- [x] Laboratório isolado, saves/recibos/reload, navegação, controles emulados, boss e dupla automatizada; evidências e limites separados de avaliação humana.
+- [ ] Aprovação humana de leitura, orientação, diversão e ritmo; duração real ainda não medida.
+
+Aguardar esse playtest antes do percurso vulcânico ou capítulo C. Esta autorização prevalece sobre a espera pelo Boreal registrada abaixo.
+
 **25/10 · aprovação e próximo percurso:** usuário aprovou os terrenos dos três arcos e autorizou o aprofundamento jogável **Vale → Siroco → Soterrado**. [Entrega 0.1.146](sirocco-journey/README.md): nove desvios integram os três relatórios existentes, seis residentes finitos adicionais, duplas variadas e preparação ambiental do Soterrado. Mantém dimensões, arte aprovada, passagens, recibos e boss vivo. QA técnico separado de diversão/duração humanas; aguardar playtest antes do Boreal ou capítulo C.
 
 **24/10 · lote consecutivo autorizado:** usuário pediu aplicar a referência da bacia a Vale → Soterrado, Boreal → Vésper e Cinzas → último boss, com commit/push individual e continuação imediata. [Trilhas próprias](route-identity/README.md). Para esse lote, essa autorização substitui a espera intermediária do plano; não declara duração humana atingida nem autoriza novos sistemas.

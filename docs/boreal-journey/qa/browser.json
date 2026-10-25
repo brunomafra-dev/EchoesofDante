@@ -1,0 +1,294 @@
+{
+  "method": "Chrome DEV, isolated campaign lab; explicit position/combat fixtures, real navigation graph, E scans, NPC dialogs, save/reload and original gate interactions. Not human playtime or balance.",
+  "errors": [],
+  "checks": [
+    "Six optional scans leave original gates closed. Real E opens Frost record, gallery mechanism and adjacent portals; Vesper remains alive, with vestibule traces.",
+    "Real NPC turn-in pays exactly 80+85 credits; both old mission receipts and new finite XP survive save validation and reload.",
+    "A completed-report save without any new resident IDs reloads via real validation; old evidence/receipts stay complete and cannot pay again.",
+    "Three measured restarts after warmup keep ridge/listener counts stable and dynamic objects bounded; movement/Dash and HUD at four resolutions pass."
+  ],
+  "regions": [
+    {
+      "area": "frost",
+      "population": [
+        {
+          "id": 1200,
+          "kind": "frostPouncer"
+        },
+        {
+          "id": 1201,
+          "kind": "frostSpitter"
+        },
+        {
+          "id": 1202,
+          "kind": "frostPouncer"
+        },
+        {
+          "id": 1203,
+          "kind": "frostSpitter"
+        },
+        {
+          "id": 1204,
+          "kind": "frostPouncer"
+        },
+        {
+          "id": 1205,
+          "kind": "frostPouncer"
+        },
+        {
+          "id": 1206,
+          "kind": "frostSpitter"
+        },
+        {
+          "id": 1207,
+          "kind": "frostPouncer"
+        },
+        {
+          "id": 1930,
+          "kind": "frostPouncer"
+        },
+        {
+          "id": 1931,
+          "kind": "frostPouncer"
+        },
+        {
+          "id": 1982,
+          "kind": "frostPouncer"
+        },
+        {
+          "id": 1932,
+          "kind": "frostSpitter"
+        },
+        {
+          "id": 1933,
+          "kind": "frostPouncer"
+        },
+        {
+          "id": 1934,
+          "kind": "frostSpitter"
+        },
+        {
+          "id": 1935,
+          "kind": "frostSpitter"
+        },
+        {
+          "id": 1983,
+          "kind": "frostSpitter"
+        }
+      ],
+      "gates": {
+        "frost": false,
+        "icecave": false
+      },
+      "won": false,
+      "rewards": [
+        "warden",
+        "soterrado"
+      ],
+      "ground": [
+        "route-floor-frost"
+      ],
+      "ridges": 3,
+      "receipt": {
+        "before": 950,
+        "after": 980,
+        "valid": true
+      },
+      "fps": 55.81508355215192,
+      "routes": [
+        {
+          "id": "exp-frost-1",
+          "paths": [
+            {
+              "steps": 8,
+              "gap": 20.09975124224178
+            },
+            {
+              "steps": 9,
+              "gap": 16.492422502470642
+            }
+          ]
+        },
+        {
+          "id": "exp-frost-2",
+          "paths": [
+            {
+              "steps": 15,
+              "gap": 17.204650534085253
+            },
+            {
+              "steps": 13,
+              "gap": 17.08800749063506
+            }
+          ]
+        },
+        {
+          "id": "exp-frost-3",
+          "paths": [
+            {
+              "steps": 13,
+              "gap": 13.416407864998739
+            },
+            {
+              "steps": 10,
+              "gap": 15.231546211727817
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "area": "icecave",
+      "population": [
+        {
+          "id": 1300,
+          "kind": "frostPouncer"
+        },
+        {
+          "id": 1301,
+          "kind": "frostSpitter"
+        },
+        {
+          "id": 1302,
+          "kind": "iceCarapace"
+        },
+        {
+          "id": 1303,
+          "kind": "frostPouncer"
+        },
+        {
+          "id": 1304,
+          "kind": "frostSpitter"
+        },
+        {
+          "id": 1305,
+          "kind": "iceCarapace"
+        },
+        {
+          "id": 1306,
+          "kind": "frostPouncer"
+        },
+        {
+          "id": 1307,
+          "kind": "frostSpitter"
+        },
+        {
+          "id": 1936,
+          "kind": "iceCarapace"
+        },
+        {
+          "id": 1937,
+          "kind": "iceCarapace"
+        },
+        {
+          "id": 1984,
+          "kind": "iceCarapace"
+        },
+        {
+          "id": 1938,
+          "kind": "frostSpitter"
+        },
+        {
+          "id": 1939,
+          "kind": "iceCarapace"
+        },
+        {
+          "id": 1985,
+          "kind": "frostSpitter"
+        },
+        {
+          "id": 1940,
+          "kind": "iceCarapace"
+        },
+        {
+          "id": 1941,
+          "kind": "frostSpitter"
+        }
+      ],
+      "gates": {
+        "frost": true,
+        "icecave": false
+      },
+      "won": false,
+      "rewards": [
+        "warden",
+        "soterrado"
+      ],
+      "ground": [
+        "route-floor-icecave"
+      ],
+      "ridges": 3,
+      "receipt": {
+        "before": 980,
+        "after": 1014,
+        "valid": true
+      },
+      "fps": 59.239953505527716,
+      "routes": [
+        {
+          "id": "exp-icecave-1",
+          "paths": [
+            {
+              "steps": 14,
+              "gap": 18.973665961010276
+            },
+            {
+              "steps": 14,
+              "gap": 14.142135623730951
+            }
+          ]
+        },
+        {
+          "id": "exp-icecave-2",
+          "paths": [
+            {
+              "steps": 9,
+              "gap": 22
+            },
+            {
+              "steps": 10,
+              "gap": 44.40720662234904
+            }
+          ]
+        },
+        {
+          "id": "exp-icecave-3",
+          "paths": [
+            {
+              "steps": 12,
+              "gap": 20.39607805437114
+            },
+            {
+              "steps": 12,
+              "gap": 21.54065922853802
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "stability": [
+    {
+      "objects": 153,
+      "textures": 236,
+      "shutdown": 26,
+      "resize": 5,
+      "ridges": 3
+    },
+    {
+      "objects": 153,
+      "textures": 236,
+      "shutdown": 26,
+      "resize": 5,
+      "ridges": 3
+    },
+    {
+      "objects": 153,
+      "textures": 236,
+      "shutdown": 26,
+      "resize": 5,
+      "ridges": 3
+    }
+  ],
+  "passed": true
+}

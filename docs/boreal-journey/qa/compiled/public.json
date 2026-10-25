@@ -1,0 +1,11 @@
+{
+  "base": "http://localhost:5193",
+  "method": "Production Chrome, direct regional links, real section selector and reload; no DEV globals, isolated real-save sentinel.",
+  "errors": [],
+  "checks": [
+    "frost: direct arrival, original art, explicit section preview and reload work; no DEV global or real-save mutation.",
+    "icecave: direct arrival, original art, explicit section preview and reload work; no DEV global or real-save mutation.",
+    "icenest: direct arrival, original art, explicit section preview and reload work; no DEV global or real-save mutation."
+  ],
+  "passed": true
+}

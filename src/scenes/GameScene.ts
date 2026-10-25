@@ -29,6 +29,8 @@ import {regionUnlocked} from '../systems/RegionAccess';
 import {RegionalExpeditions} from '../systems/RegionalExpeditions';
 import {REGIONAL_IDS,REGIONAL_SITES,REGIONAL_RESIDENTS,EARLY_ROUTE_RESIDENTS} from '../config/regionalExpeditions';
 import {SIROCCO_TRAIL_RESIDENTS,siroccoTrails} from '../config/siroccoJourney';
+import {BOREAL_TRAIL_RESIDENTS,borealTrails} from '../config/borealJourney';
+import {composeBorealTrails} from '../visual/BorealJourney';
 import {composeSiroccoTrails} from '../visual/SiroccoJourney';
 import {ForestFinishArea,FINISH_ENTRY,FINISH_SPAWNS} from '../experiments/forest-finish/ForestFinishArea';
 import {CampaignEnvironment,beginCampaignEnvironment,preloadCampaignEnvironment} from '../visual/CampaignEnvironment';
@@ -480,6 +482,7 @@ export class GameScene extends Phaser.Scene {
     if(!this.qualityReference&&!this.glacierPlaytest?.environmentBaseline){
       addRouteFootprints(this,this.area,this.arena.obstacles);
       composeSiroccoTrails(this,this.area,this.arena.obstacles);
+      composeBorealTrails(this,this.area,this.arena.obstacles);
       this.earlyLandmarks=new EarlyJourneyLandmarks(this,this.area,this.arena.obstacles);
       this.campaignEnvironment=new CampaignEnvironment(this,this.area,this.movementBounds,this.arena.obstacles);
     }
@@ -2145,7 +2148,7 @@ export class GameScene extends Phaser.Scene {
   private spawnRegionalResidents(now:number):void{
     if(!this.regional||now<this.regionalSpawnTick||this.player.isDead||this.bossActive())return;
     this.regionalSpawnTick=now+200;
-    for(const h of [...REGIONAL_RESIDENTS,...EARLY_ROUTE_RESIDENTS,...SIROCCO_TRAIL_RESIDENTS]){
+    for(const h of [...REGIONAL_RESIDENTS,...EARLY_ROUTE_RESIDENTS,...SIROCCO_TRAIL_RESIDENTS,...BOREAL_TRAIL_RESIDENTS]){
       if(h.area!==this.area||this.regionalResidents.has(h.id)||this.progression.hasDefeated(h.id)||!this.explorationNear(h,560))continue;
       if(!this.regional.sites.some(s=>s.id===h.site))continue;
       const b=this.movementBounds;
@@ -2187,6 +2190,25 @@ export class GameScene extends Phaser.Scene {
     const service=BASE.services.find(s=>s.id===npc)!;
     return this.area==='base'&&!!player&&!player.isDead&&distance(player.position,service)<130
       &&(member==='host'||!!coopSession.guests.find(m=>m.id===member)?.connected);
+  }
+
+  // Isolated post-Soterrado preview. Never completes Vesper or its clue.
+  seedBorealRoutePlaytest(area:'frost'|'icecave'|'icenest'):boolean{
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!new URLSearchParams(location.search).has('boreal')||coopSession.role!=='offline'||this.transitioning||this.inputModalOpen)return false;
+    for(const flag of JOURNEY_FLAGS)this[flag]=false;
+    for(const flag of ['cavernDepthSeen','deepPassageOpen','deepAreaSeen','deepCavernEntered','deepEndSeen','deeperEntered','exteriorEntered','fragmentSeen','approachSeen','firstEchoSeen','wardenReached','wardenGateOpen','wardenDefeated','wardenEndingSeen','valleyVisited','valleyLandmarkSeen','valleyEndSeen','valleyCheckpointReached','valleyFrontierReached','valleyFrontierSignalSeen','valleyFrontierEndSeen','aridVisited','aridSignalSeen','aridFrontierEntered','aridFrontierReached','dunesVisited','dunesRuinsSeen','dunesDepthSeen','soterradoReached','soterradoDefeated','soterradoClueSeen','frostVisited'] as const)this[flag]=true;
+    const index=['frost','icecave','icenest'].indexOf(area);
+    if(index>=1){this.frostSignalSeen=true;this.frostEndSeen=true;this.icecaveVisited=true;}
+    if(index>=2){this.icecaveSignalSeen=true;this.icenestVisited=true;}
+    this.progression.restore({xp:950+index*150,echoes:['northern-ruin','mineral-signal','unknown-trace'],sourceLocated:true,passageOpen:true,rewardedHollows:[],rewardedRoutes:[],bossRewards:['warden','soterrado']});
+    const core=['recon','survival','signal','beyond'] as const;
+    this.missions.restore({schema:1,accepted:[...core,'exp-frost','exp-icecave'],completed:[...core],evidence:[...core.flatMap(id=>missionById(id).goals.map(g=>g.id)),'after-soterrado']});
+    this.missions.tracked=area==='frost'?'exp-frost':'exp-icecave';this.missionRewards=[...core];
+    for(const upgrade of ['chargePower','dashDuration','chargeWidth'] as const)this.progression.investUpgrade(upgrade);
+    this.economy.visited=['base','forest','cavern','warden','valley','arid','dunes','sandpit',...(['frost','icecave','icenest'] as const).slice(0,index+1)];
+    this.economy.credits=100;this.economy.potions=5;this.transferHp=this.characterMaxHp;
+    this.earlyRouteCheckpoint=undefined;this.expeditionArrival=area==='frost'?{...FROST.entry}:{...GLACIER[area].entry};
+    this.expeditionReturn=undefined;this.area=area;this.saveProgress();this.scene.restart();return true;
   }
 
   // Explicit post-Warden test. Only milestones BEFORE the selected map are
@@ -2340,7 +2362,7 @@ export class GameScene extends Phaser.Scene {
       return {x:this.returnStation.x-90,y:this.returnStation.y,radius:65,name:'Retorno à base',instruction:`M abre o mapa para retornar a ${NPC_NAMES[d.npc]}.`,interactionLabel:'RETORNAR',action:'enter'};
     }
     const regionalSite=this.regional?.sites.find(s=>s.mission===id&&!this.missions.has(s.id));
-    if(regionalSite)return {...regionalSite,instruction:siroccoTrails(this.area).find(t=>t.site===regionalSite.id)?.hint??'Analise o local e registre a descoberta.',interactionLabel:'ANALISAR',action:'investigate'};
+    if(regionalSite)return {...regionalSite,instruction:[...siroccoTrails(this.area),...borealTrails(this.area)].find(t=>t.site===regionalSite.id)?.hint??'Analise o local e registre a descoberta.',interactionLabel:'ANALISAR',action:'investigate'};
     const colonyMission=['water-source','safe-route','shelter'].includes(id);
     if(this.area==='base')return {...BASE.exit,radius:105,name:'Saída para a Floresta',instruction:colonyMission?'Retome sua rota descoberta pelo atlas ou siga pela Floresta.':'A expedição continua na Floresta.',interactionLabel:'SAIR',action:'enter'};
     if(colonyMission){

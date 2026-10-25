@@ -1,0 +1,12 @@
+{
+  "checks": [
+    "All IDs, preconditions, NPCs, evidence order, subjects and credits match 0.1.146; other regions unchanged. Two missions, six scans, 80+85 credits; no nest mission added.",
+    "86 finite IDs unique; four new receipts fit existing range and cannot award XP twice after restore.",
+    "Six low covers stop normal-speed Dash; population caps 19/19 fit relay. Gallery framing and physical dimensions unchanged; nest traces precede awakening without colliders."
+  ],
+  "maxPopulation": {
+    "frost": 19,
+    "icecave": 19
+  },
+  "passed": true
+}

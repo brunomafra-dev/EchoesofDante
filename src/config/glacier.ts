@@ -39,14 +39,14 @@ export const GLACIER_ROUTES = [
   { id: 'glacier-fossil-wing', name: 'Asas na Pedra', x: 2120, y: 1350, radius: 100 },
 ] as const;
 export const GLACIER_ENCOUNTERS = [
-  { id: 1300, kind: 'frostPouncer', x: 700, y: 1130 },
+  { id: 1300, kind: 'frostPouncer', x: 570, y: 1120 },
   { id: 1301, kind: 'frostSpitter', x: 1110, y: 570 },
   { id: 1302, kind: 'iceCarapace', x: 1260, y: 870 },
   { id: 1303, kind: 'frostPouncer', x: 1380, y: 810 },
-  { id: 1304, kind: 'frostSpitter', x: 1860, y: 1120 },
+  { id: 1304, kind: 'frostSpitter', x: 1940, y: 1040 },
   { id: 1305, kind: 'iceCarapace', x: 2180, y: 1000 },
   { id: 1306, kind: 'frostPouncer', x: 2380, y: 1100 },
-  { id: 1307, kind: 'frostSpitter', x: 2540, y: 930 },
+  { id: 1307, kind: 'frostSpitter', x: 2710, y: 1150 },
 ] as const;
 
 export type IceAttack = 'breath' | 'tail' | 'rush' | 'eruption';

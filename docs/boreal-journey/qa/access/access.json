@@ -1,0 +1,11 @@
+{
+  "method": "Isolated Boreal lab; deliberately polluted visited list, real atlas and backend travel checks. No victory simulated.",
+  "errors": [],
+  "checks": [
+    "frost: original signal route connected; future regions stay disabled in atlas and rejected by travel despite visited-list pollution.",
+    "icecave: original signal route connected; future regions stay disabled in atlas and rejected by travel despite visited-list pollution.",
+    "icenest: original signal route connected; future regions stay disabled in atlas and rejected by travel despite visited-list pollution.",
+    "Boreal lab without arrival starts at base with no boss victories."
+  ],
+  "passed": true
+}

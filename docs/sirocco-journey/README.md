@@ -1,5 +1,7 @@
 # Percurso e ritmo — Vale ao Soterrado · 0.1.146
 
+**25/10/2026:** usuário confirmou que testou e aprovou esta entrega (`0a0c5b2`) e autorizou o [percurso Boreal 0.1.147](../boreal-journey/README.md). A espera pelo Boreal abaixo é histórica; diversão/duração medidas não foram declaradas.
+
 [Começar no Vale](https://echosofdante.vercel.app/campaign-playtest.html?sirocco=1&arrival=valley&v=0.1.146) · [Siroco](https://echosofdante.vercel.app/campaign-playtest.html?sirocco=1&arrival=arid&v=0.1.146) · [Dunas](https://echosofdante.vercel.app/campaign-playtest.html?sirocco=1&arrival=dunes&v=0.1.146) · [Soterrado vivo](https://echosofdante.vercel.app/campaign-playtest.html?sirocco=1&arrival=sandpit&v=0.1.146) · [Biblioteca](https://echosofdante.vercel.app/test-library.html)
 
 ## Escopo e avaliação

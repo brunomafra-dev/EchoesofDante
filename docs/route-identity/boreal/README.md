@@ -1,5 +1,7 @@
 # Fratura Boreal até Vésper — 0.1.144
 
+**Percurso 0.1.147:** após aprovação humana dos terrenos e do Siroco jogável, o arco recebe [seis desvios, encontros e vestígios](../../boreal-journey/README.md). As três pinturas desta página, o enquadramento −300/2300 das Galerias e as dimensões físicas são preservados. Aprovação da arte anterior não substitui o novo playtest de ritmo.
+
 [Fratura Boreal](https://echosofdante.vercel.app/world-finish-playtest.html?area=frost&trails=1&v=0.1.144) · [Galerias do Degelo](https://echosofdante.vercel.app/world-finish-playtest.html?area=icecave&trails=1&spot=1&v=0.1.144) · [Ninho de Vésper](https://echosofdante.vercel.app/world-finish-playtest.html?area=icenest&trails=1&v=0.1.144)
 
 Segundo arco do [lote consecutivo autorizado](../README.md). O primeiro teve commit/push `d2ae660`; esta entrega segue após ele, sem aguardar outra aprovação intermediária, conforme pedido do usuário. Avaliação estética continua humana.
