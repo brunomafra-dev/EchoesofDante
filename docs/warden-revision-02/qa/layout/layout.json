@@ -1,0 +1,55 @@
+{
+  "method": "Explicit paused slam pose for visual inspection at four viewports. No human visual approval.",
+  "errors": [],
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 720,
+      "bounds": {
+        "x": 615.4011020793346,
+        "y": 182.47612487623013,
+        "width": 250,
+        "height": 250,
+        "viewWidth": 1280,
+        "viewHeight": 720
+      }
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "bounds": {
+        "x": 615.2880458932935,
+        "y": 182.49997185078837,
+        "width": 250,
+        "height": 250,
+        "viewWidth": 1280.625,
+        "viewHeight": 720
+      }
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "bounds": {
+        "x": 615.0341899288246,
+        "y": 182.49999999596508,
+        "width": 250,
+        "height": 250,
+        "viewWidth": 1280,
+        "viewHeight": 720
+      }
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "bounds": {
+        "x": 740.3810323804651,
+        "y": 182.49999999999977,
+        "width": 250,
+        "height": 250,
+        "viewWidth": 1558.1538461538462,
+        "viewHeight": 720
+      }
+    }
+  ],
+  "passed": true
+}

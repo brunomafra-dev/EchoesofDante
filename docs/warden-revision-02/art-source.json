@@ -1,0 +1,60 @@
+{
+  "tool": "Built-in imagegen",
+  "source": "C:\\Users\\1\\.codex\\generated_images\\01a173c1-3677-75b2-89b6-2f3640ffad61\\exec-d6eb5692-88a8-4c43-a771-7c443ac19796.png",
+  "sourceSha256": "b74739ca115a0d7090cc9b73c854fd6530ed80e2e7fac98e81a81096df648533",
+  "file": "public/assets/visual/creature-finish/warden-slam-v1.webp",
+  "sha256": "1044afc97a4bd49d5505403ba6d319807a920c9a147efbde4d84f57909adfc1a",
+  "commonScale": 0.9558823529411765,
+  "cell": 512,
+  "baseline": 399,
+  "bounds": [
+    [
+      62,
+      89,
+      450,
+      399
+    ],
+    [
+      51,
+      10,
+      460,
+      399
+    ],
+    [
+      93,
+      9,
+      418,
+      399
+    ],
+    [
+      76,
+      119,
+      436,
+      399
+    ],
+    [
+      50,
+      147,
+      461,
+      399
+    ],
+    [
+      65,
+      143,
+      447,
+      399
+    ],
+    [
+      52,
+      85,
+      459,
+      399
+    ],
+    [
+      74,
+      83,
+      438,
+      399
+    ]
+  ]
+}

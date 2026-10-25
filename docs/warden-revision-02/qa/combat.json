@@ -1,0 +1,99 @@
+{
+  "method": "Actual game damage and real keyboard/mouse. State/position fixtures isolate individual attacks. Stationary trials and reactive victory keep live AI and original boss HP. Not human balance approval.",
+  "checks": [
+    "Slam: no early damage, animated contact 46, later wave 32; taking the combo never opens the core",
+    "Avoided combo opens the core; dash/grace rejection does not count as a landed boss hit",
+    "Position outside the strike plus actual Dash through ring earns opening with zero HP lost",
+    "Crossing phase HP does not cancel a committed combo",
+    "Sweep return, rush, two projectile volleys and ground impacts deal damage and close recovery after connecting",
+    "All four classes: stationary held auto attack loses with no boss damage; R restores a living encounter"
+  ],
+  "errors": [],
+  "stationary": [
+    {
+      "cls": "warrior",
+      "initialBossHp": 1125,
+      "remainingBossHp": 1125,
+      "playerDefeated": true
+    },
+    {
+      "cls": "hunter",
+      "initialBossHp": 1125,
+      "remainingBossHp": 1125,
+      "playerDefeated": true
+    },
+    {
+      "cls": "astral",
+      "initialBossHp": 1125,
+      "remainingBossHp": 1125,
+      "playerDefeated": true
+    },
+    {
+      "cls": "xenobinder",
+      "initialBossHp": 1125,
+      "remainingBossHp": 1125,
+      "playerDefeated": true
+    }
+  ],
+  "contact": {
+    "at": 9417.1,
+    "age": 283.10000000000036,
+    "state": "EXECUTE",
+    "hp": 74,
+    "frame": 4,
+    "texture": "warden-slam-motion",
+    "flash": true,
+    "wave": 70
+  },
+  "dashResult": {
+    "hp": 120,
+    "max": 120,
+    "dead": false,
+    "p": {
+      "x": 1170,
+      "y": 815
+    },
+    "boss": {
+      "position": {
+        "x": 1170,
+        "y": 735
+      },
+      "hp": 1125,
+      "max": 1125,
+      "state": "RECOVER",
+      "attack": "slam",
+      "age": 0,
+      "exposed": true,
+      "connected": false,
+      "angle": 3.141592653589793,
+      "frame": 7,
+      "texture": "warden-slam-motion",
+      "wave": 350,
+      "flash": false
+    },
+    "xp": 160,
+    "won": false,
+    "ending": false,
+    "portal": false,
+    "modal": false
+  },
+  "attacks": [
+    {
+      "attack": "sweep",
+      "hpLost": 35
+    },
+    {
+      "attack": "rush",
+      "hpLost": 44
+    },
+    {
+      "attack": "signal",
+      "hpLost": 30
+    },
+    {
+      "attack": "echoes",
+      "hpLost": 41
+    }
+  ],
+  "passed": true
+}

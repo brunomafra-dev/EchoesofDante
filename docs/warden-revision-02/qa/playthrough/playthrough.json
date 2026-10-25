@@ -1,0 +1,1007 @@
+{
+  "method": "Live normal AI, normal 1125 HP boss, starting gear and 120 HP Warrior. Script reads boss state to choose real keyboard movement/Dash and mouse attacks. Only initial approach position fixture; no HP reduction/invulnerability or AI/state manipulation during the fight.",
+  "errors": [],
+  "samples": [
+    {
+      "p": {
+        "x": 943.9902000000002,
+        "y": 760
+      },
+      "hp": 120,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1162.1806319113089,
+          "y": 735.8649368399836
+        },
+        "state": "IDLE",
+        "attack": null,
+        "age": 66.70000000000073,
+        "angle": 3.141592653589793,
+        "wave": 70,
+        "hp": 1125,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 943.9902000000002,
+        "y": 760
+      },
+      "hp": 120,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1126.9893705492007,
+          "y": 739.7576066890466
+        },
+        "state": "TELEGRAPH",
+        "attack": "sweep",
+        "age": 0,
+        "angle": 3.031425843617832,
+        "wave": 70,
+        "hp": 1125,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1076.7934094988866,
+        "y": 627.1967905011142
+      },
+      "hp": 120,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1126.9893705492007,
+          "y": 739.7576066890466
+        },
+        "state": "EXECUTE",
+        "attack": "sweep",
+        "age": 50,
+        "angle": 3.031425843617832,
+        "wave": 70,
+        "hp": 1125,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1105.676175925945,
+        "y": 598.314024074056
+      },
+      "hp": 120,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1126.9893705492007,
+          "y": 739.7576066890466
+        },
+        "state": "RECOVER",
+        "attack": "sweep",
+        "age": 67,
+        "angle": 3.031425843617832,
+        "wave": 70,
+        "hp": 1125,
+        "exposed": true
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1105.676175925945,
+        "y": 639.1383740740558
+      },
+      "hp": 120,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1128.166686132952,
+          "y": 745.4266680497994
+        },
+        "state": "IDLE",
+        "attack": null,
+        "age": 99.79999999999927,
+        "angle": 3.031425843617832,
+        "wave": 70,
+        "hp": 909,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1105.676175925945,
+        "y": 639.1383740740558
+      },
+      "hp": 120,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1128.166686132952,
+          "y": 745.4266680497994
+        },
+        "state": "TELEGRAPH",
+        "attack": "slam",
+        "age": 66.5,
+        "angle": -1.779319611431384,
+        "wave": 70,
+        "hp": 909,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1072.69713261759,
+        "y": 528.5825307657009
+      },
+      "hp": 120,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1128.166686132952,
+          "y": 745.4266680497994
+        },
+        "state": "EXECUTE",
+        "attack": "slam",
+        "age": 99.90000000000146,
+        "angle": -1.779319611431384,
+        "wave": 70,
+        "hp": 909,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1207.0402970440323,
+        "y": 658.8390951921435
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1128.166686132952,
+          "y": 745.4266680497994
+        },
+        "state": "RECOVER",
+        "attack": "slam",
+        "age": 50.10000000000218,
+        "angle": -1.779319611431384,
+        "wave": 350,
+        "hp": 909,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1207.0402970440323,
+        "y": 662.9134451921436
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1128.166686132952,
+          "y": 745.4266680497994
+        },
+        "state": "IDLE",
+        "attack": null,
+        "age": 67.09999999999854,
+        "angle": -1.779319611431384,
+        "wave": 350,
+        "hp": 909,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1207.0402970440323,
+        "y": 662.9134451921436
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1128.166686132952,
+          "y": 745.4266680497994
+        },
+        "state": "TELEGRAPH",
+        "attack": "rush",
+        "age": 0,
+        "angle": -0.8079464408354406,
+        "wave": 70,
+        "hp": 909,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1273.4626907328416,
+        "y": 847.7418888809531
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1151.617865608407,
+          "y": 720.8933371171682
+        },
+        "state": "EXECUTE",
+        "attack": "rush",
+        "age": 49.900000000001455,
+        "angle": -0.8079464408354406,
+        "wave": 70,
+        "hp": 909,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1273.4626907328416,
+        "y": 892.6773388809529
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1347.0930844707646,
+          "y": 519.3024509571571
+        },
+        "state": "RECOVER",
+        "attack": "rush",
+        "age": 33.400000000001455,
+        "angle": -0.8079464408354406,
+        "wave": 70,
+        "hp": 909,
+        "exposed": true
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1332.4105841336634,
+        "y": 617.3111454801311
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1346.5446202585804,
+          "y": 518.9014874115687
+        },
+        "state": "IDLE",
+        "attack": null,
+        "age": 0,
+        "angle": -0.8079464408354406,
+        "wave": 70,
+        "hp": 855,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1332.4105841336634,
+        "y": 617.3111454801311
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1346.5446202585804,
+          "y": 518.9014874115687
+        },
+        "state": "TELEGRAPH",
+        "attack": "slam",
+        "age": 66.89999999999782,
+        "angle": 1.7134452924533228,
+        "wave": 70,
+        "hp": 855,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1306.4296071599,
+        "y": 745.3836224538951
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1346.5446202585804,
+          "y": 518.9014874115687
+        },
+        "state": "EXECUTE",
+        "attack": "slam",
+        "age": 33.20000000000073,
+        "angle": 1.7134452924533228,
+        "wave": 70,
+        "hp": 855,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1463.9040872687137,
+        "y": 591.9908423450804
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1345.775879974584,
+          "y": 518.3581764651142
+        },
+        "state": "RECOVER",
+        "attack": "slam",
+        "age": 100,
+        "angle": 1.7134452924533228,
+        "wave": 350,
+        "hp": 801,
+        "exposed": true
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1435.0230532532698,
+        "y": 559.0330083296363
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1344.0461758673734,
+          "y": 517.4646636493345
+        },
+        "state": "PHASE",
+        "attack": null,
+        "age": 166.60000000000218,
+        "angle": 1.7134452924533228,
+        "wave": 350,
+        "hp": 693,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1435.0230532532698,
+        "y": 559.0330083296363
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1344.0461758673734,
+          "y": 517.4646636493345
+        },
+        "state": "IDLE",
+        "attack": null,
+        "age": 116.80000000000291,
+        "angle": 1.7134452924533228,
+        "wave": 350,
+        "hp": 693,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1435.0230532532698,
+        "y": 559.0330083296363
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1344.0461758673734,
+          "y": 517.4646636493345
+        },
+        "state": "TELEGRAPH",
+        "attack": "signal",
+        "age": 100,
+        "angle": 0.4285863101521226,
+        "wave": 70,
+        "hp": 693,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1300.6041868672196,
+        "y": 648.5311247156877
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1344.0461758673734,
+          "y": 517.4646636493345
+        },
+        "state": "EXECUTE",
+        "attack": "signal",
+        "age": 33.39999999999782,
+        "angle": 0.4285863101521226,
+        "wave": 70,
+        "hp": 693,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1300.6041868672196,
+        "y": 648.5311247156877
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1344.0461758673734,
+          "y": 517.4646636493345
+        },
+        "state": "RECOVER",
+        "attack": "signal",
+        "age": 0,
+        "angle": 0.4285863101521226,
+        "wave": 70,
+        "hp": 693,
+        "exposed": true
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1300.6041868672196,
+        "y": 615.8799747156877
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1343.4216800596953,
+          "y": 516.5282570085221
+        },
+        "state": "IDLE",
+        "attack": null,
+        "age": 83.40000000000146,
+        "angle": 0.4285863101521226,
+        "wave": 70,
+        "hp": 531,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1300.6041868672196,
+        "y": 615.8799747156877
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1343.4216800596953,
+          "y": 516.5282570085221
+        },
+        "state": "TELEGRAPH",
+        "attack": "slam",
+        "age": 0,
+        "angle": 1.9777117416758965,
+        "wave": 70,
+        "hp": 531,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1238.767645717629,
+        "y": 722.6005158652789
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1343.4216800596953,
+          "y": 516.5282570085221
+        },
+        "state": "EXECUTE",
+        "attack": "slam",
+        "age": 116.5,
+        "angle": 1.9777117416758965,
+        "wave": 70,
+        "hp": 531,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1352.7013236156292,
+        "y": 612.1805080803969
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1343.024284806112,
+          "y": 516.214912798343
+        },
+        "state": "RECOVER",
+        "attack": "slam",
+        "age": 83.40000000000146,
+        "angle": 1.9777117416758965,
+        "wave": 350,
+        "hp": 477,
+        "exposed": true
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1349.8151258668602,
+        "y": 615.0667058291659
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1341.0604711876035,
+          "y": 514.62714463413
+        },
+        "state": "PHASE",
+        "attack": null,
+        "age": 133.40000000000146,
+        "angle": 1.9777117416758965,
+        "wave": 350,
+        "hp": 315,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1349.8151258668602,
+        "y": 615.0667058291659
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1341.0604711876035,
+          "y": 514.62714463413
+        },
+        "state": "IDLE",
+        "attack": null,
+        "age": 83.30000000000291,
+        "angle": 1.9777117416758965,
+        "wave": 350,
+        "hp": 315,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1349.8151258668602,
+        "y": 615.0667058291659
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1341.0604711876035,
+          "y": 514.62714463413
+        },
+        "state": "TELEGRAPH",
+        "attack": "echoes",
+        "age": 100,
+        "angle": 1.4838526558967613,
+        "wave": 70,
+        "hp": 315,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1349.8151258668602,
+        "y": 615.0667058291659
+      },
+      "hp": 88,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1341.0604711876035,
+          "y": 514.62714463413
+        },
+        "state": "EXECUTE",
+        "attack": "echoes",
+        "age": 0,
+        "angle": 1.4838526558967613,
+        "wave": 70,
+        "hp": 315,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1349.8151258668602,
+        "y": 615.0667058291659
+      },
+      "hp": 47,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1341.0604711876035,
+          "y": 514.62714463413
+        },
+        "state": "RECOVER",
+        "attack": "echoes",
+        "age": 0,
+        "angle": 1.4838526558967613,
+        "wave": 70,
+        "hp": 315,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1349.8151258668602,
+        "y": 615.0667058291659
+      },
+      "hp": 47,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1341.0604711876035,
+          "y": 514.62714463413
+        },
+        "state": "IDLE",
+        "attack": null,
+        "age": 117,
+        "angle": 1.4838526558967613,
+        "wave": 70,
+        "hp": 315,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1349.8151258668602,
+        "y": 615.0667058291659
+      },
+      "hp": 47,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1341.0604711876035,
+          "y": 514.62714463413
+        },
+        "state": "TELEGRAPH",
+        "attack": "slam",
+        "age": 33.400000000001455,
+        "angle": 1.4838526558967613,
+        "wave": 70,
+        "hp": 315,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1349.8151258668602,
+        "y": 757.9923558291658
+      },
+      "hp": 47,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1341.0604711876035,
+          "y": 514.62714463413
+        },
+        "state": "EXECUTE",
+        "attack": "slam",
+        "age": 116.69999999999709,
+        "angle": 1.4838526558967613,
+        "wave": 70,
+        "hp": 315,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1359.1105035019868,
+        "y": 592.5642752808873
+      },
+      "hp": 47,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1341.0604711876035,
+          "y": 514.62714463413
+        },
+        "state": "RECOVER",
+        "attack": "slam",
+        "age": 150,
+        "angle": 1.4838526558967613,
+        "wave": 350,
+        "hp": 315,
+        "exposed": true
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1360.0550097461883,
+        "y": 600.5102328111939
+      },
+      "hp": 47,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1337.5219920811687,
+          "y": 511.59253862888306
+        },
+        "state": "IDLE",
+        "attack": null,
+        "age": 117,
+        "angle": 1.4838526558967613,
+        "wave": 350,
+        "hp": 99,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1360.0550097461883,
+        "y": 600.5102328111939
+      },
+      "hp": 47,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1337.5219920811687,
+          "y": 511.59253862888306
+        },
+        "state": "TELEGRAPH",
+        "attack": "sweep",
+        "age": 0,
+        "angle": 1.322606769640999,
+        "wave": 70,
+        "hp": 99,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1212.5886371336655,
+        "y": 532.4345302778127
+      },
+      "hp": 47,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1337.5219920811687,
+          "y": 511.59253862888306
+        },
+        "state": "EXECUTE",
+        "attack": "sweep",
+        "age": 16.69999999999709,
+        "angle": 1.322606769640999,
+        "wave": 70,
+        "hp": 99,
+        "exposed": false
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    },
+    {
+      "p": {
+        "x": 1212.5886371336655,
+        "y": 532.4345302778127
+      },
+      "hp": 47,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1337.5219920811687,
+          "y": 511.59253862888306
+        },
+        "state": "RECOVER",
+        "attack": "sweep",
+        "age": 83.90000000000146,
+        "angle": 1.322606769640999,
+        "wave": 70,
+        "hp": 99,
+        "exposed": true
+      },
+      "won": false,
+      "xp": 160,
+      "portal": false
+    }
+  ],
+  "start": {
+    "p": {
+      "x": 943.9902000000002,
+      "y": 760
+    },
+    "hp": 120,
+    "dead": false,
+    "dashReady": true,
+    "boss": {
+      "p": {
+        "x": 1170,
+        "y": 735
+      },
+      "state": "IDLE",
+      "attack": null,
+      "age": 0,
+      "angle": 3.141592653589793,
+      "wave": 70,
+      "hp": 1125,
+      "exposed": false
+    },
+    "won": false,
+    "xp": 160,
+    "portal": false
+  },
+  "end": {
+    "p": {
+      "x": 1249.3557871336654,
+      "y": 532.4345302778127
+    },
+    "hp": 47,
+    "dead": false,
+    "dashReady": true,
+    "boss": {
+      "p": {
+        "x": 1338.14774284114,
+        "y": 512.146164698284
+      },
+      "state": "DEATH",
+      "attack": null,
+      "age": 766.5999999999985,
+      "angle": 1.322606769640999,
+      "wave": 70,
+      "hp": 0,
+      "exposed": false
+    },
+    "won": true,
+    "xp": 280,
+    "portal": false
+  },
+  "passed": true
+}

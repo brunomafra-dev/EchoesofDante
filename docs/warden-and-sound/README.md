@@ -1,5 +1,7 @@
 # Warden e o som de Dante · 0.1.149
 
+**Combate rejeitado no playtest:** o usuário apontou golpes fracos e falta de animação no impacto. A [revisão 0.1.150](../warden-revision-02/README.md) substitui o piloto do Warden descrito abaixo. A música é preservada e não recebe aprovação estética por inferência.
+
 [Warden vivo](https://echosofdante.vercel.app/campaign-playtest.html?warden=1&v=0.1.149) · [Escutar a mixagem](https://echosofdante.vercel.app/soundtrack-playtest.html?v=0.1.149) · [Biblioteca](https://echosofdante.vercel.app/test-library.html)
 
 ## Autorização e escopo

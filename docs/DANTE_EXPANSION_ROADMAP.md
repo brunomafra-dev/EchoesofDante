@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+**25/10 · correção solicitada do Warden · 0.1.150:** a mecânica 0.1.149 foi rejeitada pelo usuário: pouca consequência nos golpes e impacto sem execução legível. [Revisão de contato/recuperação](warden-revision-02/README.md), mantendo HP, percurso, arte dos mapas e recompensas. Não avançar aos outros bosses ou capítulo C antes da validação humana desta revisão. A música anterior é preservada, sem aprovação estética inferida.
+
 **25/10 · Warden e revisão sonora autorizados · 0.1.149:** usuário gostou dos percursos e solicitou mecânicas próprias nos bosses, aprovando começar pelo Warden. Acrescentou música mais agradável/baixa e tensão somente ao começar a luta. [Entrega, laboratório e limites](warden-and-sound/README.md). Esta etapa preserva os terrenos e a jornada; não antecipa as mecânicas dos outros três bosses ou os capítulos da permanência. Validar primeiro a escuta e o piloto humano.
 
 - [x] Piloto do Warden: carapaça direcional, pressão com aviso completo, exposição na recuperação, mesmos valores/recompensas.

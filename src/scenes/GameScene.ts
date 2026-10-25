@@ -163,6 +163,7 @@ export class GameScene extends Phaser.Scene {
   private coopLayout = '';
   private coopMessage = '';
   private coopBossCue='';
+  private coopWardenImpact=false;
   private coopBossResolved=false;
   private visitingCoop = false;
   private player!: Player;
@@ -348,6 +349,7 @@ export class GameScene extends Phaser.Scene {
       if (!this.textures.exists(key)) preloadCreatureSheet(this,key, `${assetBase}${key}.png`,256);
     }
     if (!this.textures.exists('warden-motion')) preloadCreatureSheet(this,'warden-motion', `${assetBase}warden-motion.png`,512);
+    if (!this.textures.exists('warden-slam-motion')) this.load.spritesheet('warden-slam-motion',`${import.meta.env.BASE_URL}assets/visual/creature-finish/warden-slam-v1.webp`,{frameWidth:512,frameHeight:512});
     if (!this.textures.exists('soterrado-motion')) preloadCreatureSheet(this,'soterrado-motion', `${assetBase}soterrado-motion.png`,384);
     for (const name of ['soterrado-burrow', 'soterrado-burrow-lip', 'soterrado-dust']) {
       if (!this.textures.exists(name)) this.load.image(name, `${import.meta.env.BASE_URL}assets/visual/environment/${name}.png`);
@@ -403,7 +405,7 @@ export class GameScene extends Phaser.Scene {
     this.dunes = undefined;
     this.frost = undefined;
     this.glacier = undefined; this.vesper = undefined; this.vesperHud = undefined;this.caldera=undefined;this.volcanic=undefined;this.titan=undefined;this.titanHud=undefined;
-    this.coopBossResolved=false;this.coopBossCue='';
+    this.coopBossResolved=false;this.coopBossCue='';this.coopWardenImpact=false;
     this.coldPortal = undefined;
     this.soterrado = undefined;
     this.sandpit = undefined;
@@ -1588,9 +1590,14 @@ export class GameScene extends Phaser.Scene {
           if(boss?.state==='INTRO')this.sounds.wardenCue('intro');
           else if(boss?.state==='PHASE')this.sounds.wardenCue('phase');
           else if(boss?.state==='TELEGRAPH')this.sounds.wardenWarning(boss.attackName);
-          else if(boss?.state==='RECOVER'&&this.area==='warden')this.sounds.wardenCue('recover');
-          else if(boss?.state==='EXECUTE')this.sounds.wardenCue(boss.attackName==='rush'?'rush':boss.attackName==='sweep'||boss.attackName==='tail'?'sweep':'slam');
+          else if(boss?.state==='RECOVER'&&this.area==='warden'&&boss.visuals.some(v=>v.kind==='image'&&v.tint===0xd5f5ec))this.sounds.wardenCue('recover');
+          else if(boss?.state==='EXECUTE'&&(this.area!=='warden'||boss.attackName==='rush'))this.sounds.wardenCue(boss.attackName==='rush'?'rush':boss.attackName==='sweep'||boss.attackName==='tail'?'sweep':'slam');
           else if(boss?.isDead){this.sounds.stopMusic();this.sounds.wardenCue('death');}
+        }
+        if(this.area==='warden'){
+          const impact=!!boss?.visuals.some(v=>v.texture==='warden-ground-impact'&&v.visible&&v.alpha>.15);
+          if(impact&&!this.coopWardenImpact)this.wardenImpactFeedback(boss?.attackName??'slam');
+          this.coopWardenImpact=impact;
         }
       },
       strike:this.attack.pose(this.time.now,this.player.rotation),releaseProgress:this.charge.pose(this.time.now).swingProgress,
@@ -1733,7 +1740,8 @@ export class GameScene extends Phaser.Scene {
   }
 
   private wardenCue(cue: WardenCue, attack?: WardenAttack): void {
-    if (cue === 'execute' && attack) this.sounds.wardenCue(attack);
+    if (cue === 'impact' && attack) this.wardenImpactFeedback(attack);
+    else if (cue === 'execute' && attack === 'rush') this.sounds.wardenCue('rush');
     else if (cue === 'intro') this.sounds.wardenCue('intro');
     else if (cue === 'recover') this.sounds.wardenCue('recover');
     else if (cue === 'phase') { this.sounds.wardenCue('phase'); this.wardenArena?.setPhase(this.warden?.phase ?? 1); }
@@ -1749,6 +1757,11 @@ export class GameScene extends Phaser.Scene {
       this.wardenArena?.setEncounterActive(false);
     }
     else if (cue === 'telegraph') this.sounds.wardenWarning(attack);
+  }
+
+  private wardenImpactFeedback(attack:string):void {
+    this.sounds.wardenCue(attack==='sweep'?'sweep':attack==='signal'?'signal':attack==='echoes'?'echoes':'slam');
+    if(attack==='slam')this.cameras.main.shake(120,.0035);
   }
 
   private soterradoCue(cue: SoterradoCue, attack?: SoterradoAttack): void {
@@ -1892,17 +1905,17 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
-  private enemyStrike(enemy: Enemy, impact?: EnemyImpact, target: Player = this.player): void {
+  private enemyStrike(enemy: Enemy, impact?: EnemyImpact, target: Player = this.player): boolean {
     if (target !== this.player) {
-      if (target.isDead || target.invulnerable || (!impact?.ranged && distance(enemy.position, target.position) > (enemy.attackRange ?? CRAWLER.attackRange) + PLAYER.radius)) return;
+      if (target.isDead || target.invulnerable || (!impact?.ranged && distance(enemy.position, target.position) > (enemy.attackRange ?? CRAWLER.attackRange) + PLAYER.radius)) return false;
       const result = applyDamage(target.health, Math.max(1,Math.round((impact?.damage ?? enemy.attackDamage ?? CRAWLER.attackDamage)*regionalThreat(this.area,enemy.position.x).damage*this.campaignDamage*(1-equipmentStats(this.party?.actorFor(target)?.profile.equipment??{}).resistance))));
       if (result.applied) { target.flashHurt(); target.setHurtGrace(this.time.now + PLAYER.hurtCooldown); this.impact(target.position, 0xff8f82, result.amount); }
       if (result.died) this.handleDeath(target);
-      return;
+      return result.applied;
     }
-    if (this.player.isDead || this.player.invulnerable || (!impact?.ranged && distance(enemy.position, this.player.position) > (enemy.attackRange ?? CRAWLER.attackRange) + PLAYER.radius)) return;
+    if (this.player.isDead || this.player.invulnerable || (!impact?.ranged && distance(enemy.position, this.player.position) > (enemy.attackRange ?? CRAWLER.attackRange) + PLAYER.radius)) return false;
     const result = applyDamage(this.player.health, Math.max(1,Math.round((impact?.damage ?? enemy.attackDamage ?? CRAWLER.attackDamage)*regionalThreat(this.area,enemy.position.x).damage*this.campaignDamage*(1-equipmentStats(this.equipment.snapshot().slots).resistance))));
-    if (!result.applied) return;
+    if (!result.applied) return false;
     this.sounds.hurt();
     this.player.flashHurt();
     this.impact(this.player.position, 0xff8f82, result.amount);
@@ -1921,6 +1934,7 @@ export class GameScene extends Phaser.Scene {
       this.time.delayedCall(550, () => {if(this.player.isDead)this.hud.showDeath(this.bossActive()&&!!this.party?.players.some(p=>!p.isDead),this.deathLoss);});
     }
     this.saveProgress();
+    return result.applied;
   }
 
   private handleDeath(target:Player):void {

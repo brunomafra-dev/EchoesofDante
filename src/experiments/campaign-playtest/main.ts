@@ -16,7 +16,7 @@ const routeArrival=routeTest&&((!siroccoTest&&!borealTest&&!embersTest&&(arrival
 const depthTest=new URLSearchParams(location.search).has('depth');
 const settlementTest=new URLSearchParams(location.search).has('settlement');
 const prefix=embersTest?`dante-embers-journey-v1.${routeArrival??'journey'}.`:borealTest?`dante-boreal-journey-v1.${routeArrival??'journey'}.`:siroccoTest?`dante-sirocco-journey-v1.${routeArrival??'journey'}.`:routeTest?`dante-early-route-v2.${routeArrival??'journey'}.`:depthTest?`dante-regional-lab.${mobileClass??'warrior'}.`:new URLSearchParams(location.search).has('journey')?'dante-journey-review-lab.':mobileTest?`dante-mobile-lab.${mobileClass??'warrior'}.`:settlementTest?'dante-settlement-lab-v2.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
-const labPrefix=wardenTest?'dante-warden-sound-v1.'+ (mobileClass??'warrior')+'.':prefix;
+const labPrefix=wardenTest?'dante-warden-combat-v2.'+ (mobileClass??'warrior')+'.':prefix;
 const isolatedKey=(storage:Storage,key:string)=>labPrefix+(storage===localStorage?'local.':'session.')+key;
 Storage.prototype.getItem=function(key){return key.startsWith('echoes-of-dante.')?get.call(sessionStorage,isolatedKey(this,key)):get.call(this,key)};
 Storage.prototype.setItem=function(key,value){if(key.startsWith('echoes-of-dante.'))set.call(sessionStorage,isolatedKey(this,key),String(value));else set.call(this,key,value)};
@@ -53,11 +53,11 @@ if(settlementTest){
 const {game}=await import('../../main');
 if(wardenTest){
  details.replaceChildren(); details.classList.add('is-mobile-lab');
- const summary=document.createElement('summary');summary.textContent='WARDEN E TRILHA · TESTE RESERVADO';details.append(summary);
+ const summary=document.createElement('summary');summary.textContent='WARDEN · REVISÃO DO COMBATE · TESTE RESERVADO';details.append(summary);
  const note=document.createElement('p');note.textContent='Chegada temporária ao Warden vivo: três Ecos, mecanismo, percurso subterrâneo, Primeiro Eco e portão são simulados. Reconhecimento, sobrevivência e sinal anteriores são considerados entregues; a missão além do limiar continua aberta. Nenhuma vitória ou recompensa do Warden é simulada. Os mesmos controles e kits da campanha estão ativos; seus personagens reais estão protegidos.';details.append(note);
  const button=document.createElement('button');button.textContent='RECOMEÇAR WARDEN VIVO';button.onclick=()=>{const s=game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene;if(s?.sys.isActive())s.seedWardenPlaytest();};details.append(button);
  const links=document.createElement('p');
- for(const[id,name]of [['warrior','Guerreiro'],['hunter','Caçador estelar'],['astral','Astral'],['xenobinder','Domador']]){const a=document.createElement('a');a.href=`campaign-playtest.html?warden=1&class=${id}&v=0.1.149`;a.textContent=name;links.append(a,document.createTextNode(' · '));}details.append(links);
+ for(const[id,name]of [['warrior','Guerreiro'],['hunter','Caçador estelar'],['astral','Astral'],['xenobinder','Domador']]){const a=document.createElement('a');a.href=`campaign-playtest.html?warden=1&class=${id}&v=0.1.150`;a.textContent=name;links.append(a,document.createTextNode(' · '));}details.append(links);
  const coop=document.createElement('p');coop.textContent='Coop: Esc → início → crie uma equipe e compartilhe o convite do laboratório. Com todos presentes, o anfitrião usa RECOMEÇAR WARDEN VIVO. O convite mantém o isolamento. A chegada preparada vale somente aqui.';details.append(coop);
  const audio=document.createElement('a');audio.href='soundtrack-playtest.html?v=0.1.149';audio.textContent='Ouvir trilhas e conferir a mixagem';details.append(audio);
  if(!get.call(sessionStorage,labPrefix+'arrived')&&!new URLSearchParams(location.search).has('sala')){
