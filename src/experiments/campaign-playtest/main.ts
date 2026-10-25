@@ -6,6 +6,7 @@ const get=Storage.prototype.getItem,set=Storage.prototype.setItem,remove=Storage
 const missionTest=new URLSearchParams(location.search).has('missions');
 const mobileTest=new URLSearchParams(location.search).has('mobile');
 const mobileClass=new URLSearchParams(location.search).get('class');
+const wardenTest=new URLSearchParams(location.search).has('warden');
 const embersTest=new URLSearchParams(location.search).has('embers');
 const borealTest=new URLSearchParams(location.search).has('boreal');
 const siroccoTest=new URLSearchParams(location.search).has('sirocco');
@@ -15,7 +16,8 @@ const routeArrival=routeTest&&((!siroccoTest&&!borealTest&&!embersTest&&(arrival
 const depthTest=new URLSearchParams(location.search).has('depth');
 const settlementTest=new URLSearchParams(location.search).has('settlement');
 const prefix=embersTest?`dante-embers-journey-v1.${routeArrival??'journey'}.`:borealTest?`dante-boreal-journey-v1.${routeArrival??'journey'}.`:siroccoTest?`dante-sirocco-journey-v1.${routeArrival??'journey'}.`:routeTest?`dante-early-route-v2.${routeArrival??'journey'}.`:depthTest?`dante-regional-lab.${mobileClass??'warrior'}.`:new URLSearchParams(location.search).has('journey')?'dante-journey-review-lab.':mobileTest?`dante-mobile-lab.${mobileClass??'warrior'}.`:settlementTest?'dante-settlement-lab-v2.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
-const isolatedKey=(storage:Storage,key:string)=>prefix+(storage===localStorage?'local.':'session.')+key;
+const labPrefix=wardenTest?'dante-warden-sound-v1.'+ (mobileClass??'warrior')+'.':prefix;
+const isolatedKey=(storage:Storage,key:string)=>labPrefix+(storage===localStorage?'local.':'session.')+key;
 Storage.prototype.getItem=function(key){return key.startsWith('echoes-of-dante.')?get.call(sessionStorage,isolatedKey(this,key)):get.call(this,key)};
 Storage.prototype.setItem=function(key,value){if(key.startsWith('echoes-of-dante.'))set.call(sessionStorage,isolatedKey(this,key),String(value));else set.call(this,key,value)};
 Storage.prototype.removeItem=function(key){if(key.startsWith('echoes-of-dante.'))remove.call(sessionStorage,isolatedKey(this,key));else remove.call(this,key)};
@@ -23,15 +25,15 @@ const details=document.createElement('details');details.className='campaign-lab-
 details.innerHTML='<summary>ETAPA 1 · SELETOR E INÍCIO · TESTE RESERVADO</summary><p>Crie seu personagem e clique na dificuldade para iniciar. No coop, escolha antes o tamanho da equipe (2–4). Envie o convite deste laboratório; a campanha exige a equipe original completa.</p><p>Confira os braços das quatro classes e as duas apresentações. A cinemática antiga ainda é provisória; o piloto de atuação pertence à etapa 3.</p><p>Seus personagens reais estão protegidos. Os testes ficam apenas nesta aba; fechar a aba apaga estes personagens temporários.</p><p><a href="character-cohesion.html">Movimento e peças de equipamento</a> · <a href="test-library.html">Biblioteca</a> · <button type="button">REINICIAR TESTE</button></p>';
 if(new URLSearchParams(location.search).has('chat'))details.innerHTML='<summary>ETAPA 2 · NOMES E CHAT · TESTE RESERVADO</summary><p>Jogar → Cooperativo → Iniciar novo jogo. Crie a equipe de 2–4 pessoas e envie o convite deste laboratório. Os convidados criam classes diferentes.</p><p>Enter abre/envia; Esc cancela. Touch: CHAT. Gamepad: R3 abre o campo, B cancela. Confira nomes, falas sobre os personagens e Histórico. Escrever interrompe sua carga e bloqueia seus comandos; os aliados continuam jogando.</p><p>Limite: 200 caracteres, uma mensagem por segundo, 100 no histórico. O histórico acompanha viagens e reconexão. Falas ficam 5 segundos sobre o autor.</p><p>Seus saves reais estão protegidos; este teste usa apenas dados temporários da aba. <a href="test-library.html">Biblioteca</a> · <button type="button">REINICIAR TESTE</button></p>';
 details.querySelector('button')!.onclick=()=>{const keys=Array.from({length:sessionStorage.length},(_,i)=>sessionStorage.key(i)).filter((k):k is string=>!!k&&k.startsWith(prefix));for(const key of keys)remove.call(sessionStorage,key);const url=new URL(location.href);url.searchParams.delete('sala');location.href=url.href;};
-if(missionTest||routeTest){
+if(missionTest||routeTest||wardenTest){
  details.innerHTML='<summary>ETAPA 4 · MISSÕES DA EXPEDIÇÃO · TESTE RESERVADO</summary><p>Comece com Nara: ! âmbar indica missão disponível; ✓ verde indica relatório pronto. E conversa/analisa. J ou o tracker abre o diário; M abre o atlas. No controle, L3 abre o diário.</p><p>Os quatro relatórios preparam a chegada de mais humanos. O teste começa na base; os botões abaixo simulam etapas anteriores para avaliar cada conversa sem repetir a campanha. Não são atalhos do jogo oficial.</p><p>Para testar em equipe: Esc → Voltar ao início → Jogar → Cooperativo → Iniciar novo jogo. Envie o convite deste laboratório. Qualquer integrante pode aceitar e entregar; os objetivos são do time.</p><p>Seus personagens reais estão protegidos. <a href="test-library.html">Biblioteca</a> · <button type="button" data-reset>REINICIAR TESTE</button></p><p class="mission-lab-stages"><button data-stage="recon">NARA · RECONHECIMENTO</button> <button data-stage="survival">LIA · ANÁLISES</button> <button data-stage="signal">IVO · ECOS</button> <button data-stage="beyond">NARA · RELATÓRIO FINAL SIMULADO</button></p><p data-lab-notice role="status"></p>';
  details.querySelector('[data-reset]')!.addEventListener('click',()=>{for(const key of Array.from({length:sessionStorage.length},(_,i)=>sessionStorage.key(i)))if(key?.startsWith(prefix))remove.call(sessionStorage,key);const url=new URL(location.href);url.searchParams.delete('sala');location.href=url.href;});
  const {characterProfiles}=await import('../../systems/CharacterProfiles');
  if(!new URLSearchParams(location.search).has('sala')){
-  if(!characterProfiles.list.length){const selectedClass=(mobileTest||depthTest||routeTest)&&['warrior','hunter','astral','xenobinder'].includes(mobileClass??'')?mobileClass as import('../../config/classes').PlayableClass:'warrior';const hero=characterProfiles.create('Pioneiro',selectedClass,'male',{mode:'solo',difficulty:'normal'});
+  if(!characterProfiles.list.length){const selectedClass=(mobileTest||depthTest||routeTest||wardenTest)&&['warrior','hunter','astral','xenobinder'].includes(mobileClass??'')?mobileClass as import('../../config/classes').PlayableClass:'warrior';const hero=characterProfiles.create('Pioneiro',selectedClass,'male',{mode:'solo',difficulty:'normal'});
    if(hero){characterProfiles.select(hero.id);characterProfiles.markIntroSeen(hero.id);sessionStorage.setItem('echoes-of-dante.launch-once',hero.id);}
   }
-  if(routeArrival&&characterProfiles.list.length)sessionStorage.setItem('echoes-of-dante.launch-once',characterProfiles.active.id);
+  if((routeArrival||wardenTest)&&characterProfiles.list.length)sessionStorage.setItem('echoes-of-dante.launch-once',characterProfiles.active.id);
  }
 }
 document.body.append(details);
@@ -49,6 +51,20 @@ if(settlementTest){
  for(const[id,text]of [['water-source','LIA · ÁGUA PARA PERMANECER'],['safe-route','IVO · ROTA DOS TERRAÇOS'],['shelter','NARA · PRIMEIRO ABRIGO']]){const b=document.createElement('button');b.dataset.stage=id;b.textContent='SIMULAR · '+text;stages.append(b);}
 }
 const {game}=await import('../../main');
+if(wardenTest){
+ details.replaceChildren(); details.classList.add('is-mobile-lab');
+ const summary=document.createElement('summary');summary.textContent='WARDEN E TRILHA · TESTE RESERVADO';details.append(summary);
+ const note=document.createElement('p');note.textContent='Chegada temporária ao Warden vivo: três Ecos, mecanismo, percurso subterrâneo, Primeiro Eco e portão são simulados. Reconhecimento, sobrevivência e sinal anteriores são considerados entregues; a missão além do limiar continua aberta. Nenhuma vitória ou recompensa do Warden é simulada. Os mesmos controles e kits da campanha estão ativos; seus personagens reais estão protegidos.';details.append(note);
+ const button=document.createElement('button');button.textContent='RECOMEÇAR WARDEN VIVO';button.onclick=()=>{const s=game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene;if(s?.sys.isActive())s.seedWardenPlaytest();};details.append(button);
+ const links=document.createElement('p');
+ for(const[id,name]of [['warrior','Guerreiro'],['hunter','Caçador estelar'],['astral','Astral'],['xenobinder','Domador']]){const a=document.createElement('a');a.href=`campaign-playtest.html?warden=1&class=${id}&v=0.1.149`;a.textContent=name;links.append(a,document.createTextNode(' · '));}details.append(links);
+ const coop=document.createElement('p');coop.textContent='Coop: Esc → início → crie uma equipe e compartilhe o convite do laboratório. Com todos presentes, o anfitrião usa RECOMEÇAR WARDEN VIVO. O convite mantém o isolamento. A chegada preparada vale somente aqui.';details.append(coop);
+ const audio=document.createElement('a');audio.href='soundtrack-playtest.html?v=0.1.149';audio.textContent='Ouvir trilhas e conferir a mixagem';details.append(audio);
+ if(!get.call(sessionStorage,labPrefix+'arrived')&&!new URLSearchParams(location.search).has('sala')){
+  const deadline=performance.now()+90000;
+  const arrive=()=>{const s=game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene;if(s?.sys.isActive()&&s.seedWardenPlaytest())set.call(sessionStorage,labPrefix+'arrived','1');else if(performance.now()<deadline)setTimeout(arrive,150);};setTimeout(arrive,150);
+ }
+}
 if(routeTest){
  const seed=(scene:import('../../scenes/GameScene').GameScene,area:string)=>embersTest?scene.seedEmbersRoutePlaytest(area as 'cinder'|'obsidian'|'caldera'):borealTest?scene.seedBorealRoutePlaytest(area as 'frost'|'icecave'|'icenest'):siroccoTest?scene.seedSiroccoRoutePlaytest(area as 'valley'|'arid'|'dunes'|'sandpit'):scene.seedEarlyRoutePlaytest(area as 'forest'|'cavern');
  details.classList.add('is-mobile-lab');details.querySelector('summary')!.textContent='PERCURSO E RITMO · BASE AO WARDEN · TESTE RESERVADO';

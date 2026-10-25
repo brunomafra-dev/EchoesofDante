@@ -1,0 +1,29 @@
+{
+  "method": "Two independent Chrome processes, real local protocol-15 relay. DEV position/state fixtures; actual guest projectiles and rewards. No simulated victory.",
+  "checks": [
+    "Two real relay clients; invite retains isolated Warden lab; original party HP scaling",
+    "Guest entry starts encounter and boss music for both browsers",
+    "Actual guest Hunter bolts are rejected by the host frontal guard",
+    "Guest bolts from rear damage committed boss; authority uses bolt travel angle",
+    "Guest carapace and mark command streams exactly match host; ARC boolean normalized in place",
+    "Guest can damage open frontal core; RECOVER event drives local recovery cue",
+    "Real guest lethal hit: each member gets 120 XP once and boss music stops for both",
+    "Guest reconnect retains unique reward without duplicated XP"
+  ],
+  "errors": [],
+  "victory": [
+    {
+      "xp": 280,
+      "receipt": true,
+      "stopped": true,
+      "portal": false
+    },
+    {
+      "xp": 280,
+      "receipt": true,
+      "stopped": true,
+      "portal": false
+    }
+  ],
+  "passed": true
+}

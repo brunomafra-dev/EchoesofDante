@@ -1,5 +1,12 @@
 # Dante — aprofundar antes de multiplicar
 
+**25/10 · Warden e revisão sonora autorizados · 0.1.149:** usuário gostou dos percursos e solicitou mecânicas próprias nos bosses, aprovando começar pelo Warden. Acrescentou música mais agradável/baixa e tensão somente ao começar a luta. [Entrega, laboratório e limites](warden-and-sound/README.md). Esta etapa preserva os terrenos e a jornada; não antecipa as mecânicas dos outros três bosses ou os capítulos da permanência. Validar primeiro a escuta e o piloto humano.
+
+- [x] Piloto do Warden: carapaça direcional, pressão com aviso completo, exposição na recuperação, mesmos valores/recompensas.
+- [x] Música original por região, trim também para ajustes salvos, tensão no encontro e ducking independente de menus.
+- [x] Laboratórios isolados de combate/escuta, sem vitória do Warden simulada.
+- [ ] Aprovação humana de música, dificuldade e leitura antes de avançar.
+
 **25/10 · avanço vulcânico autorizado · 0.1.148:** após receber a entrega Boreal `db25d83`, usuário pediu continuar. [Entrega e evidências](embers-journey/README.md) aprofunda **Costa das Cinzas → Garganta de Obsidiana → Forjas da Caldeira**, sem iniciar capítulo C.
 
 - [x] Inspecionar e reaproveitar três relatórios/nove análises, com IDs, requisitos e 90 + 95 + 100 créditos anteriores.

@@ -11,6 +11,12 @@ export const WARDEN = {
   phaseTwoAt: 0.65,
   phaseThreeAt: 0.30,
   knockbackResistance: 0.08,
+  // The shell rejects frontal pressure; committed attacks leave its rear exposed.
+  guardHalfAngle: Math.PI * 0.64,
+  pressureHits: 3,
+  pressureWindowMs: 6500,
+  pressureCounterDelayMs: 220,
+  openingDamage: 1.35,
   idleMs: [680, 560, 460],
   sweep: { damage: 16, telegraphMs: 1000, executeMs: 300, recoverMs: 1400, range: 188, halfAngle: 1.05 },
   rush: { damage: 20, telegraphMs: 1150, executeMs: 660, recoverMs: 1500, speed: 550, distance: 363, halfWidth: 62 },

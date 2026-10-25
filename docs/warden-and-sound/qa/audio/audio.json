@@ -1,0 +1,192 @@
+{
+  "method": "Chrome actual HTMLAudio playback/decode, Web Audio oscillator counts and volume values; not a human listening approval.",
+  "checks": [
+    "Existing .48 music setting receives new exploration trim without changing slider",
+    "All 20 new stereo scores decode, 101-131 seconds each, finite signal and no clipped samples",
+    "Boss mix is quieter than exploration; intro duck releases smoothly",
+    "Warning ducks music, creates finite SFX voices and disposes release RAF",
+    "Warning and recovery never unmute modal/reconnect focus",
+    "Master mute gives exact zero music and no SFX oscillator",
+    "Music and SFX mute remain independent and exact",
+    "SFX voice count bounded to 12; all oscillators disconnect after cues",
+    "Master mute also silences already-running effects through the SFX gain bus",
+    "Rapid area changes leave one music voice after finite crossfade",
+    "Actual encoded MP3 loops through end without stopping",
+    "Unlock after victory/stop preserves silence",
+    "Destroy releases audio source and both finite RAF handles"
+  ],
+  "errors": [],
+  "initial": {
+    "volume": 0.21120000000000003,
+    "voices": 0,
+    "context": "running"
+  },
+  "tracks": [
+    {
+      "key": "base",
+      "seconds": 109.71428571428571,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.06147529133217567,
+      "peak": 0.3150801658630371
+    },
+    {
+      "key": "springs",
+      "seconds": 106.66666666666667,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.06337675039759728,
+      "peak": 0.34420034289360046
+    },
+    {
+      "key": "terraces",
+      "seconds": 103.78378684807257,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.061139879480767045,
+      "peak": 0.3195517361164093
+    },
+    {
+      "key": "cinder",
+      "seconds": 109.71428571428571,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.061614702338206415,
+      "peak": 0.3030908405780792
+    },
+    {
+      "key": "obsidian",
+      "seconds": 112.941179138322,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.06148067866206173,
+      "peak": 0.30972224473953247
+    },
+    {
+      "key": "caldera",
+      "seconds": 109.71428571428571,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.06042114418548655,
+      "peak": 0.29133880138397217
+    },
+    {
+      "key": "titan",
+      "seconds": 128,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.05523795208776871,
+      "peak": 0.2822713553905487
+    },
+    {
+      "key": "icecave",
+      "seconds": 120,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.06000038623647708,
+      "peak": 0.2916264533996582
+    },
+    {
+      "key": "icenest",
+      "seconds": 120,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.06137355372226675,
+      "peak": 0.34558793902397156
+    },
+    {
+      "key": "frost",
+      "seconds": 112.941179138322,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.061041697943553845,
+      "peak": 0.3338262140750885
+    },
+    {
+      "key": "forest",
+      "seconds": 103.78378684807257,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.06155212855743243,
+      "peak": 0.3132498860359192
+    },
+    {
+      "key": "cavern",
+      "seconds": 116.36362811791383,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.05967500443784906,
+      "peak": 0.31141170859336853
+    },
+    {
+      "key": "deep",
+      "seconds": 120,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.06054018638342056,
+      "peak": 0.3593716621398926
+    },
+    {
+      "key": "deeper",
+      "seconds": 109.71428571428571,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.06139235910832443,
+      "peak": 0.29756033420562744
+    },
+    {
+      "key": "exterior",
+      "seconds": 106.66666666666667,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.06218628742892015,
+      "peak": 0.36209312081336975
+    },
+    {
+      "key": "valley",
+      "seconds": 101.05263038548753,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.062299183454164256,
+      "peak": 0.35612544417381287
+    },
+    {
+      "key": "sirocco",
+      "seconds": 101.05263038548753,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.060399436058863415,
+      "peak": 0.3003072738647461
+    },
+    {
+      "key": "dunes",
+      "seconds": 112.941179138322,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.06212588038050678,
+      "peak": 0.3203933537006378
+    },
+    {
+      "key": "warden",
+      "seconds": 125.21739229024944,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.0588022789239265,
+      "peak": 0.3152408301830292
+    },
+    {
+      "key": "soterrado",
+      "seconds": 130.90909297052156,
+      "sampleRate": 44100,
+      "channels": 2,
+      "rms": 0.05751110789914241,
+      "peak": 0.3081134855747223
+    }
+  ],
+  "warning": {
+    "gain": 0.42,
+    "volume": 0.0677376,
+    "voices": 2
+  },
+  "passed": true
+}

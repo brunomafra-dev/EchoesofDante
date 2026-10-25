@@ -1385,8 +1385,8 @@ export class GameScene extends Phaser.Scene {
       }
       this.explorationGuide.hide();
       this.hud.setExplorationGuide(this.wardenDefeated ? 'O SINAL FOI LIBERADO' : 'DOMÍNIO DO GUARDIÃO',
-        this.wardenDefeated ? 'Há outro destino sob Dante.' : this.warden?.state === 'DORMANT' ? 'A presença está adiante.' : 'Observe as marcas e as janelas de ataque.',
-        this.wardenDefeated ? 'Você pode voltar pela passagem a oeste.' : 'Use a esquiva para se reposicionar.');
+        this.wardenDefeated ? 'Há outro destino sob Dante.' : this.warden?.state === 'DORMANT' ? 'A presença está adiante.' : 'O domínio desperta.',
+        this.wardenDefeated ? 'Você pode voltar pela passagem a oeste.' : '');
       return;
     }
     if (this.area === 'dunes') {
@@ -1552,7 +1552,10 @@ export class GameScene extends Phaser.Scene {
 
   private updateMusicRegion(force = false): void {
     const x = this.player.position.x;
-    const region = this.area==='springs'||this.area==='terraces'?this.area:this.area==='caldera'?(this.bossActive()?'titan':'caldera'):this.area==='base'?'base':this.area === 'sandpit' ? 'soterrado' : this.area === 'arid' ? 'sirocco' : this.area !== 'cavern' ? this.area
+    const boss = coopSession.role === 'guest' ? coopSession.world?.boss : this.warden ?? this.soterrado ?? this.vesper ?? this.titan;
+    // Death keeps the same selection, preserving the existing victory silence.
+    const encounter = !!boss && boss.state !== 'DORMANT';
+    const region = this.area==='springs'||this.area==='terraces'?this.area:this.area==='caldera'?(encounter?'titan':'caldera'):this.area==='warden'?(encounter?'warden':'deeper'):this.area==='icenest'?(encounter?'icenest':'icecave'):this.area==='base'?'base':this.area === 'sandpit' ? (encounter?'soterrado':'dunes') : this.area === 'arid' ? 'sirocco' : this.area !== 'cavern' ? this.area
       : x >= EXPANSION.exteriorX ? 'exterior' : x >= EXPANSION.deeperX ? 'deeper'
       : this.deepPassageOpen && x >= DEEP_AREA.entryX ? 'deep' : 'cavern';
     if (force || region !== this.musicRegion) {
@@ -1582,9 +1585,10 @@ export class GameScene extends Phaser.Scene {
         const cue=boss?`${boss.state}:${boss.phase}:${boss.attackName}`:'';
         if(cue!==this.coopBossCue){
           this.coopBossCue=cue;
-          if(boss?.state==='INTRO'){this.sounds.wardenCue('intro');this.sounds.setMusicFocus(.55);}
+          if(boss?.state==='INTRO')this.sounds.wardenCue('intro');
           else if(boss?.state==='PHASE')this.sounds.wardenCue('phase');
-          else if(boss?.state==='TELEGRAPH'){this.sounds.setMusicFocus(1);this.sounds.wardenCue('signal');}
+          else if(boss?.state==='TELEGRAPH')this.sounds.wardenWarning(boss.attackName);
+          else if(boss?.state==='RECOVER'&&this.area==='warden')this.sounds.wardenCue('recover');
           else if(boss?.state==='EXECUTE')this.sounds.wardenCue(boss.attackName==='rush'?'rush':boss.attackName==='sweep'||boss.attackName==='tail'?'sweep':'slam');
           else if(boss?.isDead){this.sounds.stopMusic();this.sounds.wardenCue('death');}
         }
@@ -1730,7 +1734,8 @@ export class GameScene extends Phaser.Scene {
 
   private wardenCue(cue: WardenCue, attack?: WardenAttack): void {
     if (cue === 'execute' && attack) this.sounds.wardenCue(attack);
-    else if (cue === 'intro') { this.sounds.wardenCue('intro'); this.sounds.setMusicFocus(0.45); }
+    else if (cue === 'intro') this.sounds.wardenCue('intro');
+    else if (cue === 'recover') this.sounds.wardenCue('recover');
     else if (cue === 'phase') { this.sounds.wardenCue('phase'); this.wardenArena?.setPhase(this.warden?.phase ?? 1); }
     else if (cue === 'death') {
       // Persist on the lethal hit; a restart cannot resurrect a defeated guardian.
@@ -1743,12 +1748,12 @@ export class GameScene extends Phaser.Scene {
       this.sounds.wardenCue('death');
       this.wardenArena?.setEncounterActive(false);
     }
-    else if (cue === 'telegraph') this.sounds.setMusicFocus(1);
+    else if (cue === 'telegraph') this.sounds.wardenWarning(attack);
   }
 
   private soterradoCue(cue: SoterradoCue, attack?: SoterradoAttack): void {
-    if (cue === 'intro') { this.sounds.wardenCue('intro'); this.sounds.setMusicFocus(.55); }
-    else if (cue === 'warning') { this.sounds.setMusicFocus(1); this.sounds.wardenCue(attack === 'burrow' ? 'echoes' : 'signal'); }
+    if (cue === 'intro') { this.sounds.wardenCue('intro'); }
+    else if (cue === 'warning') { this.sounds.wardenWarning(attack); }
     else if (cue === 'strike') this.sounds.wardenCue(attack === 'rush' ? 'rush' : attack === 'sweep' ? 'sweep' : 'slam');
     else if (cue === 'phase') { this.sounds.wardenCue('phase'); this.hud.showDiscovery('A AREIA CEDE\nOBSERVE AS MARCAS EM SEQUÊNCIA'); }
     else if (cue === 'death') {
@@ -1762,8 +1767,8 @@ export class GameScene extends Phaser.Scene {
   }
 
   private vesperCue(cue: IceCue): void {
-    if (cue === 'intro') { this.sounds.wardenCue('intro'); this.sounds.setMusicFocus(.55); this.hud.showDiscovery('VÉSPER · O SOPRO BRANCO'); }
-    else if (cue === 'warning') { this.sounds.setMusicFocus(1); this.sounds.wardenCue('signal'); }
+    if (cue === 'intro') { this.sounds.wardenCue('intro'); this.hud.showDiscovery('VÉSPER · O SOPRO BRANCO'); }
+    else if (cue === 'warning') { this.sounds.wardenWarning(this.vesper?.attackName); }
     else if (cue === 'strike') this.sounds.wardenCue(this.vesper?.attackName === 'rush' ? 'rush' : 'slam');
     else if (cue === 'phase') { this.sounds.wardenCue('phase'); this.hud.showDiscovery(this.vesper?.phase === 3 ? 'O NINHO RESSOA\nAS ERUPÇÕES VOLTAM EM SEQUÊNCIA' : 'O GELO SE ROMPE\nOBSERVE AS TRÊS MARCAS'); }
     else if (cue === 'death') {
@@ -1775,8 +1780,8 @@ export class GameScene extends Phaser.Scene {
   }
 
   private titanCue(cue:TitanCue):void {
-    if(cue==='intro'){this.sounds.wardenCue('intro');this.sounds.setMusicFocus(.55);this.hud.showDiscovery('O INCANDESCENTE\nA CROSTA ESTÁ VIVA');}
-    else if(cue==='warning'){this.sounds.setMusicFocus(1);this.sounds.wardenCue('signal');}
+    if(cue==='intro'){this.sounds.wardenCue('intro');this.hud.showDiscovery('O INCANDESCENTE\nA CROSTA ESTÁ VIVA');}
+    else if(cue==='warning'){this.sounds.wardenWarning(this.titan?.attackName);}
     else if(cue==='strike')this.sounds.wardenCue(this.titan?.attackName==='cleave'?'sweep':'slam');
     else if(cue==='phase'){this.sounds.wardenCue('phase');this.hud.showDiscovery(this.titan?.phase===3?'O NÚCLEO ESTÁ EXPOSTO\nFISSURAS E BLOCOS EM SEQUÊNCIA':'A CROSTA SE ROMPE\nOBSERVE AS MARCAS NO SOLO');}
     else if(cue==='death'){
@@ -1843,8 +1848,10 @@ export class GameScene extends Phaser.Scene {
     if (hits.length) this.cameras.main.shake(chargeHit ? 75 : 55, chargeHit ? 0.003 : 0.0024);
     for (const enemy of hits) {
       if ((enemy === this.warden || enemy === this.soterrado || enemy === this.vesper || enemy === this.titan) && !(enemy as Warden | Soterrado | Vesper | CalderaTitan).canBeHit) continue;
+      const shellMultiplier = enemy === this.warden ? this.warden.receiveStrike(now, angle) : 1;
+      if (shellMultiplier === 0) { this.impact(enemy.position, 0xc9b4ed, 0, angle); continue; }
       const multiplier = elementalMultiplier(element, this.enemySpecies.get(enemy));
-      const result = applyDamage(enemy.health, Math.round(damage * multiplier));
+      const result = applyDamage(enemy.health, Math.round(damage * multiplier * shellMultiplier));
       if (!result.applied) continue;
       this.sounds.hit();
       this.impact(enemy.position, color, result.amount, angle, multiplier > 1, multiplier < 1);
@@ -1948,6 +1955,13 @@ export class GameScene extends Phaser.Scene {
     if (broadcast && coopSession.role === 'host') {
       this.impactHistory.push({id: ++this.impactSequence, at: this.time.now, ...position, color, damage, angle: saberAngle, effective, resisted});
       if (this.impactHistory.length > 24) this.impactHistory.shift();
+    }
+    if (damage === 0) {
+      this.sounds.guard();
+      const spark = this.add.ellipse(position.x, position.y - 24, 34, 7, color, .9)
+        .setRotation((saberAngle ?? 0) + Math.PI / 2).setDepth(15001);
+      this.tweens.add({ targets: spark, scale: 1.8, alpha: 0, duration: 160, onComplete: () => spark.destroy() });
+      return;
     }
     if (this.referenceImpacts) {
       this.referenceImpacts.hit(this.time.now, position, color, damage, saberAngle, effective, resisted);
@@ -2252,6 +2266,22 @@ export class GameScene extends Phaser.Scene {
     this.economy.credits=100;this.economy.potions=5;this.transferHp=this.characterMaxHp;
     this.earlyRouteCheckpoint=undefined;this.expeditionArrival=area==='valley'?{...VALLEY.entry}:area==='arid'?{...SIROCCO.entry}:area==='dunes'?{...DUNES.entry}:{...SANDPIT.entry};
     this.expeditionReturn=undefined;this.area=area;this.saveProgress();this.scene.restart();return true;
+  }
+
+  // Restricted laboratory arrival: only the route BEFORE this living boss is seeded.
+  seedWardenPlaytest(): boolean {
+    if (location.pathname.split('/').pop() !== 'campaign-playtest.html' || !new URLSearchParams(location.search).has('warden') || coopSession.role === 'guest' || this.transitioning || this.inputModalOpen || !this.player || this.player.isDead) return false;
+    if (characterProfiles.active.campaign?.mode === 'coop' && !coopSession.campaignRunning) return false;
+    for (const flag of JOURNEY_FLAGS) this[flag] = false;
+    for (const flag of ['cavernDepthSeen','deepPassageOpen','deepAreaSeen','deepCavernEntered','deepEndSeen','deeperEntered','exteriorEntered','fragmentSeen','approachSeen','firstEchoSeen','wardenReached','wardenGateOpen'] as const) this[flag] = true;
+    this.progression.restore({xp:160,echoes:['northern-ruin','mineral-signal','unknown-trace'],sourceLocated:true,passageOpen:true,rewardedHollows:[],rewardedRoutes:[],bossRewards:[]});
+    const core = ['recon','survival','signal'] as const;
+    this.missions.restore({schema:1,accepted:[...core,'beyond'],completed:[...core],evidence:[...core.flatMap(id=>missionById(id).goals.map(g=>g.id)),'first-echo']});
+    this.missionRewards = [...core];
+    this.economy.visited = ['base','forest','cavern','warden'];
+    this.economy.potions = 5;
+    this.earlyRouteCheckpoint = undefined; this.expeditionArrival = undefined; this.expeditionReturn = undefined;
+    this.transferHp = this.characterMaxHp; this.area = 'warden'; this.saveProgress(); this.scene.restart(); return true;
   }
 
   // Preview only; unlike the older regional fixture, this never defeats a boss.

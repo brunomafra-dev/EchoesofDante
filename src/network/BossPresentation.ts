@@ -12,6 +12,13 @@ export type BossVisual = {
 export type BossPose = BossDisplay & { visuals:BossVisual[]; active:boolean };
 export type NetworkBoss = BossDisplay & { coopObjects:Phaser.GameObjects.GameObject[] };
 
+// Phaser ARC stores its direction as a boolean. Removing it shifts all following
+// opcodes/operands and changes the visitor's warning. Encode in place as 0/1.
+function graphicCommands(source: readonly unknown[]): number[] {
+  const commands = source.slice(0,2048).map(value => typeof value === 'boolean' ? Number(value) : value);
+  return commands.every(value => typeof value === 'number' && Number.isFinite(value)) ? commands as number[] : [];
+}
+
 export function captureBoss(boss?:NetworkBoss):BossPose|undefined {
   if(!boss)return undefined;
   const visuals:BossVisual[]=[];
@@ -28,7 +35,7 @@ export function captureBoss(boss?:NetworkBoss):BossPose|undefined {
       visuals.push({...common,kind:'image',texture:object.texture.key,frame:String(object.frame.name),flip:object.flipX,tint:object.tintTopLeft,tintFill:object.tintFill,
         crop:crop?{x:crop.x,y:crop.y,width:crop.width,height:crop.height}:undefined});
     } else if(object instanceof Phaser.GameObjects.Ellipse)visuals.push({...common,kind:'ellipse',fill:object.fillColor,fillAlpha:object.fillAlpha,stroke:object.strokeColor,strokeAlpha:object.strokeAlpha,lineWidth:object.isStroked?object.lineWidth:0});
-    else visuals.push({...common,kind:'graphics',commands:object.commandBuffer.slice(0,2048)});
+    else visuals.push({...common,kind:'graphics',commands:graphicCommands(object.commandBuffer)});
   }
   return {state:boss.state,isDead:boss.isDead,phase:boss.phase,attackName:boss.attackName,
     health:{current:boss.health.current,max:boss.health.max},active:!boss.isDead&&boss.state!=='DORMANT',visuals};
@@ -53,7 +60,7 @@ export class BossMirror {
         if(v.tintFill)object.setTintFill(v.tint??0xffffff);
         if(v.crop)object.setCrop(v.crop.x,v.crop.y,v.crop.width,v.crop.height);else object.setCrop();
       } else if(object instanceof Phaser.GameObjects.Ellipse)object.setSize(v.width,v.height).setOrigin(v.originX,v.originY).setFillStyle(v.fill??0,v.fillAlpha??1).setStrokeStyle(v.lineWidth??0,v.stroke??0,v.strokeAlpha??1);
-      else { object.commandBuffer=(v.commands??[]).filter(Number.isFinite).slice(0,2048);object.setScale(v.width,v.height); }
+      else { object.commandBuffer=graphicCommands(v.commands??[]);object.setScale(v.width,v.height); }
     });
   }
   destroy():void{this.objects.forEach(o=>o.destroy());this.objects=[];}

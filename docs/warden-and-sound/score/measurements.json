@@ -1,0 +1,322 @@
+[
+  {
+    "region": "base",
+    "family": "home",
+    "seconds": 109.714,
+    "bpm": 70,
+    "notesPerPart": [
+      48,
+      72,
+      16,
+      24
+    ],
+    "rms": 0.06499996036291122,
+    "peak": 0.34807708859443665,
+    "bytes": 1756362,
+    "sha256": "ebcd3ff96588b3c12f1075757adb0f39dc4911c247c7e53945ed54a6d791be88"
+  },
+  {
+    "region": "springs",
+    "family": "home",
+    "seconds": 106.667,
+    "bpm": 72,
+    "notesPerPart": [
+      48,
+      72,
+      16,
+      24
+    ],
+    "rms": 0.06499991565942764,
+    "peak": 0.3737711012363434,
+    "bytes": 1707882,
+    "sha256": "c4b27f9e7edde6ced575b44c1f08b54eb151322154c88519b2df7e4922ca735a"
+  },
+  {
+    "region": "terraces",
+    "family": "home",
+    "seconds": 103.784,
+    "bpm": 74,
+    "notesPerPart": [
+      48,
+      72,
+      16,
+      24
+    ],
+    "rms": 0.06499989330768585,
+    "peak": 0.34599196910858154,
+    "bytes": 1661489,
+    "sha256": "0a9a3b2e78cb6c101c51ac43cce237348753917c46ca12bd273a8c8dde88e38d"
+  },
+  {
+    "region": "forest",
+    "family": "green",
+    "seconds": 103.784,
+    "bpm": 74,
+    "notesPerPart": [
+      48,
+      72,
+      16,
+      24
+    ],
+    "rms": 0.06499989330768585,
+    "peak": 0.36165904998779297,
+    "bytes": 1661487,
+    "sha256": "3fc6d68a48af0af893b681a0a475ff714c5cb5e05e2e94d51a0b15f58ee73e08"
+  },
+  {
+    "region": "cavern",
+    "family": "stone",
+    "seconds": 116.364,
+    "bpm": 66,
+    "notesPerPart": [
+      48,
+      48,
+      16,
+      24
+    ],
+    "rms": 0.06499992311000824,
+    "peak": 0.34296637773513794,
+    "bytes": 1862944,
+    "sha256": "a2bce5c0d686d38738c6f8bd32ca9398faf909148b0958050dc7130e3d5bb783"
+  },
+  {
+    "region": "deep",
+    "family": "stone",
+    "seconds": 120.0,
+    "bpm": 64,
+    "notesPerPart": [
+      48,
+      48,
+      16,
+      24
+    ],
+    "rms": 0.06499991565942764,
+    "peak": 0.34282761812210083,
+    "bytes": 1921038,
+    "sha256": "9703aa42cba1560d4aa4545b36a4efd97a762443248f824cd8b120e22314bd36"
+  },
+  {
+    "region": "deeper",
+    "family": "stone",
+    "seconds": 109.714,
+    "bpm": 70,
+    "notesPerPart": [
+      48,
+      48,
+      16,
+      24
+    ],
+    "rms": 0.06499989330768585,
+    "peak": 0.37645378708839417,
+    "bytes": 1756364,
+    "sha256": "2aaab26a2abcfa1ada49a223b42a8cc8b8bf9c3459b1a41f5cc3872534c89887"
+  },
+  {
+    "region": "exterior",
+    "family": "green",
+    "seconds": 106.667,
+    "bpm": 72,
+    "notesPerPart": [
+      48,
+      72,
+      16,
+      24
+    ],
+    "rms": 0.06499993801116943,
+    "peak": 0.3961045742034912,
+    "bytes": 1707883,
+    "sha256": "0bc6fc9321cc54dd6ee9f21c64b21a361b6007692106cae1b81fcb05ccb0e109"
+  },
+  {
+    "region": "valley",
+    "family": "green",
+    "seconds": 101.053,
+    "bpm": 76,
+    "notesPerPart": [
+      48,
+      72,
+      16,
+      24
+    ],
+    "rms": 0.06499999016523361,
+    "peak": 0.3670620620250702,
+    "bytes": 1618020,
+    "sha256": "80d9539ef7665c4ff67c0f53cf9ef6e15ed086831b87fb312cea39973d8437d3"
+  },
+  {
+    "region": "sirocco",
+    "family": "sand",
+    "seconds": 101.053,
+    "bpm": 76,
+    "notesPerPart": [
+      48,
+      72,
+      16,
+      24
+    ],
+    "rms": 0.06499999016523361,
+    "peak": 0.3329167366027832,
+    "bytes": 1618021,
+    "sha256": "f6f277b7b2da1906ff9bf432f1c34bd79f7108d5d859767ce90db5c426a371ef"
+  },
+  {
+    "region": "dunes",
+    "family": "sand",
+    "seconds": 112.941,
+    "bpm": 68,
+    "notesPerPart": [
+      48,
+      72,
+      16,
+      24
+    ],
+    "rms": 0.06499990075826645,
+    "peak": 0.3227870464324951,
+    "bytes": 1808190,
+    "sha256": "eb89748ebcac7983b51f13be408fc63c75696eb4fdb2ce8b4800d7f9641d7533"
+  },
+  {
+    "region": "frost",
+    "family": "ice",
+    "seconds": 112.941,
+    "bpm": 68,
+    "notesPerPart": [
+      48,
+      48,
+      16,
+      24
+    ],
+    "rms": 0.06499987095594406,
+    "peak": 0.3418830335140228,
+    "bytes": 1808190,
+    "sha256": "e7f2739ca4e96e9bc3e83696ec8bb52030263cf0765441a24b9bbe464cca3956"
+  },
+  {
+    "region": "icecave",
+    "family": "ice",
+    "seconds": 120.0,
+    "bpm": 64,
+    "notesPerPart": [
+      48,
+      48,
+      16,
+      24
+    ],
+    "rms": 0.06499991565942764,
+    "peak": 0.31249403953552246,
+    "bytes": 1921041,
+    "sha256": "55546a7ed8f1370041f614c77458fb34b745eb57fe660625547b57f032e209a0"
+  },
+  {
+    "region": "cinder",
+    "family": "ember",
+    "seconds": 109.714,
+    "bpm": 70,
+    "notesPerPart": [
+      48,
+      48,
+      16,
+      24
+    ],
+    "rms": 0.06499993801116943,
+    "peak": 0.32993459701538086,
+    "bytes": 1756364,
+    "sha256": "ac6e5389f447437317c71f971bca5c7cb231c4455979f58f7d143030602f7515"
+  },
+  {
+    "region": "obsidian",
+    "family": "ember",
+    "seconds": 112.941,
+    "bpm": 68,
+    "notesPerPart": [
+      48,
+      48,
+      16,
+      24
+    ],
+    "rms": 0.06499985605478287,
+    "peak": 0.31237050890922546,
+    "bytes": 1808193,
+    "sha256": "e338e41359bc9557cb54d74288d1901b333d5c5648bf9a2cd84d194793b6fdf4"
+  },
+  {
+    "region": "caldera",
+    "family": "ember",
+    "seconds": 109.714,
+    "bpm": 70,
+    "notesPerPart": [
+      48,
+      48,
+      16,
+      24
+    ],
+    "rms": 0.06499994546175003,
+    "peak": 0.33300063014030457,
+    "bytes": 1756365,
+    "sha256": "115ed6fb54427ed1ac47bd20de6ea807fda22e3dc2f51466987b0351873dea9f"
+  },
+  {
+    "region": "warden",
+    "family": "boss",
+    "seconds": 125.217,
+    "bpm": 92,
+    "notesPerPart": [
+      72,
+      128,
+      24,
+      24
+    ],
+    "rms": 0.06499992311000824,
+    "peak": 0.4102829098701477,
+    "bytes": 2004632,
+    "sha256": "8d85f1d37900602d1c3d042350ffa3e2b2c9c45e865f675556b71c164d4c1b52"
+  },
+  {
+    "region": "soterrado",
+    "family": "boss",
+    "seconds": 130.909,
+    "bpm": 88,
+    "notesPerPart": [
+      72,
+      128,
+      24,
+      24
+    ],
+    "rms": 0.06499995291233063,
+    "peak": 0.40351489186286926,
+    "bytes": 2095750,
+    "sha256": "e342aa19351d3cbb0779fef30500f3e128fb8018c1741e488e5dfb1778d38718"
+  },
+  {
+    "region": "vesper",
+    "family": "boss",
+    "seconds": 120.0,
+    "bpm": 96,
+    "notesPerPart": [
+      72,
+      128,
+      24,
+      24
+    ],
+    "rms": 0.06499991565942764,
+    "peak": 0.4229689836502075,
+    "bytes": 1921040,
+    "sha256": "8c45d635feb23f5e419fecea7ce8298a8700e0577b5b93156c25d2c2d9e92b29"
+  },
+  {
+    "region": "titan",
+    "family": "boss",
+    "seconds": 128.0,
+    "bpm": 90,
+    "notesPerPart": [
+      72,
+      128,
+      24,
+      24
+    ],
+    "rms": 0.06499989330768585,
+    "peak": 0.4136526584625244,
+    "bytes": 2048934,
+    "sha256": "66c7be8176308a05004c96e9ddf7e1b0efb3d0e99eb42b8b77c8fb673768415d"
+  }
+]

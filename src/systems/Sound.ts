@@ -1,11 +1,12 @@
 import { AUDIO } from '../config/audio';
 
 export type MusicRegion = keyof typeof AUDIO.tracks;
-type WardenCue = 'intro' | 'sweep' | 'rush' | 'slam' | 'signal' | 'echoes' | 'phase' | 'death' | 'victory';
+type WardenCue = 'intro' | 'sweep' | 'rush' | 'slam' | 'signal' | 'echoes' | 'phase' | 'death' | 'victory' | 'recover';
 
 // One music voice, at most one outgoing voice during a finite fade, and a separate SFX bus.
 export class AudioManager {
   private context?: AudioContext;
+  private sfxBus?: GainNode;
   private music?: HTMLAudioElement;
   private area?: MusicRegion;
   private outgoing?: HTMLAudioElement;
@@ -18,6 +19,31 @@ export class AudioManager {
   private sfxVolume: number = AUDIO.sfx;
   private musicFocus = 1;
   private musicStopped = false;
+  private outgoingArea?: MusicRegion;
+  private duckFrame = 0;
+  private duckUntil = 0;
+  private cueGain = 1;
+  private voices = 0;
+  private hitAt = -Infinity;
+  private guardAt = -Infinity;
+
+  private mixFor(area?: MusicRegion): number {
+    return area && ['warden', 'soterrado', 'icenest', 'titan'].includes(area) ? AUDIO.encounterMix : AUDIO.explorationMix;
+  }
+
+  // Finite hold/release, independent of modal focus. Warnings cannot unmute a menu.
+  private duck(duration = 1000): void {
+    this.duckUntil = Math.max(this.duckUntil, performance.now() + duration);
+    this.cueGain = 0.42;
+    this.applyVolumes();
+    if (this.duckFrame) return;
+    const step = (now: number) => {
+      this.cueGain = 0.42 + 0.58 * Math.max(0, Math.min(1, (now - this.duckUntil) / 700));
+      this.applyVolumes();
+      this.duckFrame = this.cueGain < 1 ? requestAnimationFrame(step) : 0;
+    };
+    this.duckFrame = requestAnimationFrame(step);
+  }
 
   setMusicFocus(focus: number): void {
     const value = Math.max(0, Math.min(1, focus));
@@ -42,6 +68,7 @@ export class AudioManager {
     this.cancelFade();
     this.disposeOutgoing();
     this.outgoing = this.music;
+    this.outgoingArea = this.area;
     this.outgoingGain = this.currentGain;
     this.currentGain = this.unlocked ? 0 : 1;
     this.area = area;
@@ -58,7 +85,12 @@ export class AudioManager {
 
   unlock(): void {
     try {
-      if (!this.context && typeof AudioContext !== 'undefined') this.context = new AudioContext();
+      if (!this.context && typeof AudioContext !== 'undefined') {
+        this.context = new AudioContext();
+        this.sfxBus = this.context.createGain();
+        this.sfxBus.connect(this.context.destination);
+        this.applyVolumes();
+      }
       if (this.context?.state === 'suspended') void this.context.resume().catch(() => {});
       this.unlocked = true;
       this.playMusic();
@@ -85,9 +117,10 @@ export class AudioManager {
   }
 
   private applyVolumes(): void {
-    const volume = this.master * this.musicVolume * this.musicFocus;
-    if (this.music) this.music.volume = volume * this.currentGain;
-    if (this.outgoing) this.outgoing.volume = volume * this.outgoingGain;
+    if (this.sfxBus) this.sfxBus.gain.value = this.master * this.sfxVolume;
+    const volume = this.master * this.musicVolume * this.musicFocus * this.cueGain;
+    if (this.music) this.music.volume = volume * this.currentGain * this.mixFor(this.area);
+    if (this.outgoing) this.outgoing.volume = volume * this.outgoingGain * this.mixFor(this.outgoingArea);
   }
 
   private fadeIn(): void {
@@ -122,6 +155,8 @@ export class AudioManager {
 
   destroy(): void {
     this.stopMusic();
+    if (this.duckFrame) cancelAnimationFrame(this.duckFrame);
+    this.duckFrame = 0;
     this.music?.removeAttribute('src');
     this.music?.load();
     this.music = undefined;
@@ -129,7 +164,7 @@ export class AudioManager {
   }
 
   private tone(frequency: number, endFrequency: number, duration: number, volume: number, type: OscillatorType = 'sine'): void {
-    if (!this.context) return;
+    if (!this.context || !this.sfxBus || this.master === 0 || this.sfxVolume === 0 || this.voices >= 12) return;
     try {
       const now = this.context.currentTime;
       const oscillator = this.context.createOscillator();
@@ -137,16 +172,37 @@ export class AudioManager {
       oscillator.type = type;
       oscillator.frequency.setValueAtTime(frequency, now);
       oscillator.frequency.exponentialRampToValueAtTime(Math.max(1, endFrequency), now + duration);
-      gain.gain.setValueAtTime(Math.max(0.001, volume * this.master * this.sfxVolume), now);
+      gain.gain.setValueAtTime(Math.max(0.001, volume), now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
-      oscillator.connect(gain).connect(this.context.destination);
+      oscillator.connect(gain).connect(this.sfxBus);
       oscillator.start(now);
+      this.voices++;
+      oscillator.onended = () => { this.voices--; oscillator.disconnect(); gain.disconnect(); };
       oscillator.stop(now + duration);
     } catch { /* Audio is optional when the device cannot create a voice. */ }
   }
 
   swing(): void { this.tone(560, 130, 0.16, 0.055, 'sawtooth'); }
-  hit(): void { this.tone(135, 58, 0.13, 0.09, 'triangle'); }
+  hit(): void {
+    const now = performance.now();
+    if (now - this.hitAt < 80) return;
+    this.hitAt = now;
+    this.tone(135, 58, 0.13, 0.09, 'triangle');
+  }
+  guard(): void {
+    const now = performance.now();
+    if (now - this.guardAt < 160) return;
+    this.guardAt = now;
+    this.tone(690, 330, .16, .035, 'triangle');
+    this.tone(1035, 660, .12, .012);
+  }
+  wardenWarning(attack: string | null | undefined): void {
+    this.duck(1250);
+    if (attack === 'rush') { this.tone(85, 170, .65, .06, 'triangle'); this.tone(170, 250, .4, .018); }
+    else if (attack === 'slam' || attack === 'eruption') { this.tone(120, 60, .6, .06, 'triangle'); this.tone(240, 120, .35, .02); }
+    else if (attack === 'sweep' || attack === 'tail' || attack === 'cleave') { this.tone(340, 160, .35, .045, 'triangle'); this.tone(510, 240, .4, .018); }
+    else { this.tone(220, 330, .55, .045); this.tone(330, 440, .7, .018); }
+  }
   hurt(): void { this.tone(260, 75, 0.24, 0.085, 'sawtooth'); }
   dash(): void { this.tone(140, 450, 0.19, 0.045, 'triangle'); }
   charge(): void { this.tone(180, 520, 0.16, 0.05, 'triangle'); }
@@ -163,7 +219,12 @@ export class AudioManager {
 
   // Event cues share the existing finite SFX voices. No music scheduler or timers.
   wardenCue(cue: WardenCue): void {
+    this.duck(cue === 'intro' ? 2400 : cue === 'phase' ? 1600 : 700);
     switch (cue) {
+      case 'recover':
+        this.tone(260, 520, .28, .035);
+        this.tone(390, 780, .38, .014);
+        break;
       case 'intro':
         this.tone(72, 43, 1.5, 0.075, 'triangle');
         this.tone(147, 110, 1.9, 0.025);

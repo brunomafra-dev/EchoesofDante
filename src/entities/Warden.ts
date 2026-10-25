@@ -12,7 +12,7 @@ import { createEnemyName } from '../ui/EnemyName';
 export type { WardenAttack } from '../config/warden';
 
 export type WardenState = 'DORMANT' | 'INTRO' | 'IDLE' | 'TELEGRAPH' | 'EXECUTE' | 'RECOVER' | 'PHASE' | 'DEATH';
-export type WardenCue = 'intro' | 'telegraph' | 'execute' | 'phase' | 'death' | 'defeated';
+export type WardenCue = 'intro' | 'telegraph' | 'execute' | 'recover' | 'phase' | 'death' | 'defeated';
 
 type SignalShot = {
   active: boolean;
@@ -44,7 +44,12 @@ export class Warden implements Enemy {
   readonly telegraph: Phaser.GameObjects.Graphics;
   readonly body: Phaser.GameObjects.Image;
   isDead = false;
-  get coopObjects(): Phaser.GameObjects.GameObject[] { return [this.shadow,this.name,this.body,this.core,this.telegraph,...this.shots.map(s=>s.image),...this.marks.map(m=>m.visual)]; }
+  get coopObjects(): Phaser.GameObjects.GameObject[] { return [this.shadow,this.name,this.body,this.core,this.shell,this.telegraph,...this.shots.map(s=>s.image),...this.marks.map(m=>m.visual)]; }
+  private readonly shell: Phaser.GameObjects.Graphics;
+  private guardAngle = Math.PI;
+  private pressure = 0;
+  private lastPressureAt = -Infinity;
+  private deflectedUntil = 0;
   private victims = new Set<Vec2>();
   private participants?: readonly Vec2[];
   private readonly core: Phaser.GameObjects.Ellipse;
@@ -89,6 +94,11 @@ export class Warden implements Enemy {
     this.view = scene.add.container(x, y, [this.body, this.core]).setDepth(y);
     this.name = createEnemyName(scene, x, y - 182, 'O WARDEN');
     this.telegraph = scene.add.graphics().setVisible(false);
+    // Fixed geometry, drawn once. Position/rotation/visibility also travel in protocol 15.
+    this.shell = scene.add.graphics().lineStyle(6, 0xc9b4ed, 0.85)
+      .beginPath().arc(0, 0, 80, -WARDEN.guardHalfAngle, WARDEN.guardHalfAngle, false).strokePath()
+      .lineStyle(3, 0xf7e8c2, 1).lineBetween(75, -16, 88, 0).lineBetween(88, 0, 75, 16)
+      .setVisible(false);
     this.shots = Array.from({ length: 3 }, () => ({
       active: false, x, y, angle: 0, travelled: 0, previous: { x, y },
       image: scene.add.ellipse(x, y, 30, 19, 0xffbd54, 0.95)
@@ -104,6 +114,26 @@ export class Warden implements Enemy {
   get canBeHit(): boolean {
     return !this.isDead && !this.stopped && this.introduced
       && this._state !== 'INTRO' && this._state !== 'PHASE' && this._state !== 'DORMANT';
+  }
+
+  // Called on the authoritative hit path for every kit, including guest attacks.
+  // Incoming travel angle, rather than the shooter's later position, handles bolts/DOT.
+  receiveStrike(now: number, travelAngle: number): number {
+    if (!this.canBeHit) return 0;
+    if (this._state === 'RECOVER') return WARDEN.openingDamage;
+    const contactAngle = travelAngle + Math.PI;
+    const difference = Math.abs(Math.atan2(Math.sin(contactAngle - this.guardAngle), Math.cos(contactAngle - this.guardAngle)));
+    if (difference > WARDEN.guardHalfAngle) return 1;
+    this.deflectedUntil = now + 180;
+    if (this._state === 'IDLE' || this._state === 'TELEGRAPH') {
+      this.pressure = now - this.lastPressureAt > WARDEN.pressureWindowMs ? 1 : this.pressure + 1;
+      this.lastPressureAt = now;
+      if (this.pressure >= WARDEN.pressureHits) {
+        // Bring forward a fully telegraphed counter; never damage on a blocked hit.
+        if (this._state === 'IDLE') this.stateUntil = Math.min(this.stateUntil, now + WARDEN.pressureCounterDelayMs);
+      }
+    }
+    return 0;
   }
 
   beginIntro(now: number): void {
@@ -148,6 +178,7 @@ export class Warden implements Enemy {
     } else if (this._state === 'IDLE') {
       const dx = player.x - this.position.x, dy = player.y - this.position.y;
       const gap = Math.hypot(dx, dy);
+      this.guardAngle = Math.atan2(dy, dx);
       if (Math.abs(dx) > 12) this.facingLeft = dx < 0;
       if (gap > WARDEN.standOff) {
         this.velocity.x = dx / gap * WARDEN.speed;
@@ -157,7 +188,9 @@ export class Warden implements Enemy {
         const pattern = WARDEN_PATTERNS[this._phase];
         const selected = pattern[this.patternIndex++ % pattern.length];
         // Faraway targets receive a readable approach rather than repeated empty swipes.
-        this.beginAttack(now, gap > 320 && selected === 'sweep' ? 'rush' : selected, player);
+        const counter = this.pressure >= WARDEN.pressureHits;
+        if (counter) this.pressure = 0;
+        this.beginAttack(now, counter ? (gap > 230 ? 'rush' : 'slam') : gap > 320 && selected === 'sweep' ? 'rush' : selected, player);
         this.velocity.x = this.velocity.y = 0;
       }
     } else if (this._state === 'TELEGRAPH') {
@@ -168,6 +201,7 @@ export class Warden implements Enemy {
         const recovery = this._attackName ? WARDEN[this._attackName].recoverMs : 1400;
         this.clearHazards();
         this.setState('RECOVER', now, recovery);
+        this.onCue('recover');
         this.velocity.x = this.velocity.y = 0;
       }
     } else if (this._state === 'RECOVER' && now >= this.stateUntil) {
@@ -204,6 +238,7 @@ export class Warden implements Enemy {
     this.attackOrigin.x = this.position.x;
     this.attackOrigin.y = this.position.y;
     this.attackAngle = Math.atan2(player.y - this.position.y, player.x - this.position.x);
+    this.guardAngle = this.attackAngle;
     if (Math.abs(Math.cos(this.attackAngle)) > 0.1) this.facingLeft = Math.cos(this.attackAngle) < 0;
     this.setState('TELEGRAPH', now, WARDEN[attack].telegraphMs);
     this.drawTelegraph(attack, player);
@@ -357,7 +392,7 @@ export class Warden implements Enemy {
     const warning = this._state === 'TELEGRAPH';
     const execution = this._state === 'EXECUTE';
     const signalPose = this._attackName === 'signal' || this._attackName === 'echoes';
-    const frame = this._state === 'PHASE' || (warning && signalPose) ? 6
+    const frame = this._state === 'RECOVER' || this._state === 'PHASE' || (warning && signalPose) ? 6
       : warning ? 3 : execution ? signalPose ? 6 : this._attackName === 'slam' ? 5 : 4
       : moving ? 1 + Math.floor(this.travelPhase) % 2 : 0;
     this.body.setFrame(frame).setFlipX(this.facingLeft);
@@ -372,6 +407,10 @@ export class Warden implements Enemy {
     // Grounded steps use actual travel; a blocked creature never cycles through a glide.
     this.shadow.setPosition(this.position.x, this.position.y + 15).setDepth(this.position.y - 2)
       .setScale(1 + warningProgress * 0.04, 1 - warningProgress * 0.08);
+    this.shell.setPosition(this.position.x, this.position.y).setRotation(this.guardAngle)
+      .setDepth(this.position.y - 1).setVisible(this.canBeHit && this._state !== 'RECOVER')
+      .setAlpha(now < this.deflectedUntil ? 1 : this._state === 'EXECUTE' ? 0.35 : 0.65);
+    if (this._state === 'RECOVER') this.body.setTint(0xd5f5ec);
     this.core.setFillStyle(this._phase === 3 ? 0xffbd54 : 0xa98cff)
       .setAlpha(this._state === 'DORMANT' ? 0.08 : (0.18 + this._phase * 0.07 + warningProgress * 0.38) * introProgress)
       .setScale(this._state === 'PHASE' ? 1.5 : 1 + Math.sin(now * 0.004) * 0.08 + warningProgress * 0.3);
@@ -394,6 +433,7 @@ export class Warden implements Enemy {
     if (this.isDead || this.stopped) return;
     this.stopped = true;
     this.clearHazards();
+    this.shell.setVisible(false);
     this._state = 'DORMANT';
     this._attackName = null;
     this.velocity.x = this.velocity.y = this.push.x = this.push.y = 0;
@@ -409,7 +449,7 @@ export class Warden implements Enemy {
     const length = Math.max(1, Math.hypot(dx, dy));
     this.push.x = dx / length * force * WARDEN.knockbackResistance;
     this.push.y = dy / length * force * WARDEN.knockbackResistance;
-    // The boss takes ordinary damage. Its mass prevents Saber stunlock and preserves
+    // Its mass prevents Saber stunlock and preserves
     // committed warning geometry; reduced knockback is applied in idle/recovery only.
     this.body.setTintFill(0xf3e4cd);
   }
@@ -422,6 +462,7 @@ export class Warden implements Enemy {
     this._state = 'DEATH';
     this._attackName = null;
     this.clearHazards();
+    this.shell.setVisible(false);
     this.body.clearTint().setFrame(7);
     this.onCue('death');
     this.scene.tweens.add({ targets: this.core, alpha: 0, scale: 0.25, duration: 1400 });

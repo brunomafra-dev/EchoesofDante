@@ -1,0 +1,75 @@
+{
+  "method": "Chrome, real mouse/keyboard with explicit DEV position/state fixtures; actual hit path, audio engine, save/reload. Not a human balance or listening approval.",
+  "checks": [
+    "Isolated arrival: original prerequisites simulated, Warden alive, no boss receipt/portal",
+    "Actual encounter trigger selects quieter boss score after the approach",
+    "Held frontal Saber rejected; repeated pressure provokes a fully telegraphed counter",
+    "Committed facing stays fixed; real attack from the rear damages the boss",
+    "Open recovery accepts frontal damage with 1.35 multiplier and no guard arc",
+    "Direction gate is shared by projectiles, elemental zones, companion and Saber",
+    "Full 1.25s counter warning, one 25-damage hit (existing regional scaling), then an audible opening",
+    "Hunter, Astral and Domador real basic attacks respect guard and exploit opening",
+    "Four viewport captures: boss pose, carapace, committed warning and compact HUD",
+    "Real lethal hit awards 120 XP once, ending occurs and victory music stays stopped",
+    "Reload retains boss victory/receipt in isolated save; real characters untouched",
+    "Actual boss damage kills; suspend clears hazards and real R respawns boss alive"
+  ],
+  "errors": [],
+  "directions": [
+    [
+      0,
+      0
+    ],
+    [
+      1.5707963267948966,
+      0
+    ],
+    [
+      3.141592653589793,
+      1
+    ],
+    [
+      -1.5707963267948966,
+      0
+    ]
+  ],
+  "classes": [
+    {
+      "cls": "hunter",
+      "frontBlocked": true,
+      "openingHp": 840
+    },
+    {
+      "cls": "astral",
+      "frontBlocked": true,
+      "openingHp": 864
+    },
+    {
+      "cls": "xenobinder",
+      "frontBlocked": true,
+      "openingHp": 878
+    }
+  ],
+  "final": {
+    "hp": 1125,
+    "playerHp": 120,
+    "dead": false,
+    "phase": 1,
+    "state": "DORMANT",
+    "attack": null,
+    "guard": 3.141592653589793,
+    "pressure": 0,
+    "objects": 62,
+    "shell": false,
+    "xp": 160,
+    "won": false,
+    "ending": false,
+    "portal": false,
+    "music": "deeper",
+    "volume": 0,
+    "stopped": false,
+    "focus": 1,
+    "voices": 0
+  },
+  "passed": true
+}
