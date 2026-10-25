@@ -27,6 +27,7 @@ if(params.has('trails')){
  const label=document.createElement('label');label.textContent='Trecho';const select=document.createElement('select');select.name='spot';
  const spots=ROUTE_IDENTITY[area]?.spots??[];spots.forEach((spot,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=spot.name;select.append(o)});
  const spot=Math.max(0,Math.min(spots.length-1,Number(params.get('spot')??0)||0));select.value=String(spot);environmentEntry=spots[spot];
+ if(area==='caldera'&&spot===2){const note=document.createElement('p');note.textContent='Prévia da arena: o relay anterior é considerado analisado somente neste teste. O Incandescente continua vivo; nenhuma vitória ou recompensa é simulada.';panel.querySelector('div')!.append(note);}
  select.onchange=()=>{const u=new URL(location.href);u.searchParams.set('spot',select.value);location.href=u.href};label.append(select);panel.querySelector('div')!.append(label);
  const compare=document.createElement('button');compare.textContent=params.get('trails')==='previous'?'VER NOVAS TRILHAS':'COMPARAR COM 0.1.142';compare.onclick=()=>{const u=new URL(location.href);u.searchParams.set('trails',params.get('trails')==='previous'?'1':'previous');location.href=u.href};panel.querySelector('div')!.append(compare);
 }

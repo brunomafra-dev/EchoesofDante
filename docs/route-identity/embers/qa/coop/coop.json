@@ -1,0 +1,59 @@
+{
+  "arc": "embers",
+  "method": "Two independent Chrome processes with real local relay; prepared travel flags, living bosses. Guest uses real E inputs for canonical discoveries; no public relay or physical-device claim.",
+  "errors": [],
+  "regions": [
+    {
+      "area": "cinder",
+      "ground": [
+        [
+          "route-floor-cinder",
+          3100,
+          1800
+        ]
+      ],
+      "sharedPhysics": true,
+      "guestScans": [
+        "exp-cinder-1",
+        "exp-cinder-2",
+        "exp-cinder-3"
+      ],
+      "bossAlive": false
+    },
+    {
+      "area": "obsidian",
+      "ground": [
+        [
+          "route-floor-obsidian",
+          3300,
+          1800
+        ]
+      ],
+      "sharedPhysics": true,
+      "guestScans": [
+        "exp-obsidian-1",
+        "exp-obsidian-2",
+        "exp-obsidian-3"
+      ],
+      "bossAlive": false
+    },
+    {
+      "area": "caldera",
+      "ground": [
+        [
+          "route-floor-caldera",
+          3400,
+          1800
+        ]
+      ],
+      "sharedPhysics": true,
+      "guestScans": [
+        "exp-caldera-1",
+        "exp-caldera-2",
+        "exp-caldera-3"
+      ],
+      "bossAlive": true
+    }
+  ],
+  "passed": true
+}

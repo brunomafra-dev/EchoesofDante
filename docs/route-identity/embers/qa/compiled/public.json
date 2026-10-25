@@ -1,0 +1,12 @@
+{
+  "arc": "embers",
+  "version": "0.1.145",
+  "base": "http://localhost:5193",
+  "errors": [],
+  "checks": [
+    "cinder: new art loads, direct preview and section selector work, production has no DEV globals, real save untouched",
+    "obsidian: new art loads, direct preview and section selector work, production has no DEV globals, real save untouched",
+    "caldera: new art loads, direct preview and section selector work, production has no DEV globals, real save untouched"
+  ],
+  "passed": true
+}

@@ -495,7 +495,7 @@ export class GameScene extends Phaser.Scene {
       : this.deepCavernEntered ? DEEP_AREA.entry : CAVERN_ENTRY;
     if(this.glacierPlaytest?.environment&&this.area==='cavern')entry={...CAVERN_ENTRY};
     if(this.forestProof)entry={...FINISH_ENTRY};
-    if(this.glacierPlaytest?.environment&&this.glacierPlaytest.environmentEntry)entry=safeExpeditionPosition(this.glacierPlaytest.environmentEntry,PLAYER.radius,this.arena.obstacles,this.movementBounds,this.movementBounds?.walkable?39:0)??entry;
+    if(this.glacierPlaytest?.environment&&this.area===this.glacierPlaytest.area&&this.glacierPlaytest.environmentEntry)entry=safeExpeditionPosition(this.glacierPlaytest.environmentEntry,PLAYER.radius,this.arena.obstacles,this.movementBounds,this.movementBounds?.walkable?39:0)??entry;
     if(coopSession.role==='offline'&&location.pathname.split('/').pop()==='campaign-playtest.html'&&new URLSearchParams(location.search).has('route')){
       const arrival=new URLSearchParams(location.search).get('arrival');
       if(this.earlyRouteCheckpoint?.area===this.area)entry={...this.earlyRouteCheckpoint.position};
@@ -2333,6 +2333,9 @@ export class GameScene extends Phaser.Scene {
     if (this.glacierPlaytest) {
       if(this.glacierPlaytest.environment){
         this.area=this.glacierPlaytest.area;
+        // Direct arena preview prepares only its prior relay, never victory,
+        // loot or a real campaign flag. The normal entry still requires E.
+        if(this.area==='caldera'&&(this.glacierPlaytest.environmentEntry?.x??0)>=TITAN.awakeningX){this.calderaRelaySeen=true;this.calderaCheckpointReached=true;}
         this.progression.restore({xp:this.area==='base'||this.area==='forest'?0:1500,echoes:['northern-ruin','mineral-signal','unknown-trace'],sourceLocated:true,passageOpen:true,rewardedHollows:[],rewardedRoutes:[],bossRewards:[]});
         for(const upgrade of ['chargePower','dashDuration','chargeWidth','saberReach','saberArc','dashCooldown'] as const)this.progression.investUpgrade(upgrade);
         for(const flag of ['deepPassageOpen','fragmentSeen','firstEchoSeen','wardenGateOpen'] as const)this[flag]=true;

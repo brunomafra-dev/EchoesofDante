@@ -1,0 +1,170 @@
+{
+  "arc": "embers",
+  "method": "Chrome DEV, isolated direct visual fixtures and real keyboard movement. Geometry comparison to 0.1.142 and canonical survey approaches; boss attacks invoked explicitly for visual verification. Mission inputs are checked separately in the cooperative campaign. Not human balance/duration or physical devices.",
+  "errors": [],
+  "regions": [
+    {
+      "area": "cinder",
+      "ground": [
+        {
+          "key": "route-floor-cinder",
+          "width": 3100,
+          "height": 1800,
+          "flip": false
+        }
+      ],
+      "addedSolids": 0,
+      "sites": [],
+      "bossAlive": false,
+      "routes": [
+        {
+          "id": "exp-cinder-1",
+          "steps": 12,
+          "gap": 24.413111231467404
+        },
+        {
+          "id": "exp-cinder-2",
+          "steps": 26,
+          "gap": 20.591260281974
+        },
+        {
+          "id": "exp-cinder-3",
+          "steps": 54,
+          "gap": 2
+        }
+      ],
+      "stability": [
+        {
+          "objects": 113,
+          "textures": 223,
+          "shutdown": 22,
+          "resize": 4
+        },
+        {
+          "objects": 113,
+          "textures": 223,
+          "shutdown": 22,
+          "resize": 4
+        },
+        {
+          "objects": 113,
+          "textures": 223,
+          "shutdown": 22,
+          "resize": 4
+        }
+      ],
+      "fps": 59.32545129025567
+    },
+    {
+      "area": "obsidian",
+      "ground": [
+        {
+          "key": "route-floor-obsidian",
+          "width": 3300,
+          "height": 1800,
+          "flip": false
+        }
+      ],
+      "addedSolids": 0,
+      "sites": [],
+      "bossAlive": false,
+      "routes": [
+        {
+          "id": "exp-obsidian-1",
+          "steps": 15,
+          "gap": 23.3238075793812
+        },
+        {
+          "id": "exp-obsidian-2",
+          "steps": 31,
+          "gap": 10
+        },
+        {
+          "id": "exp-obsidian-3",
+          "steps": 59,
+          "gap": 4
+        }
+      ],
+      "stability": [
+        {
+          "objects": 128,
+          "textures": 224,
+          "shutdown": 22,
+          "resize": 4
+        },
+        {
+          "objects": 128,
+          "textures": 224,
+          "shutdown": 22,
+          "resize": 4
+        },
+        {
+          "objects": 121,
+          "textures": 223,
+          "shutdown": 22,
+          "resize": 4
+        }
+      ],
+      "fps": 59.9747564633239
+    },
+    {
+      "area": "caldera",
+      "ground": [
+        {
+          "key": "route-floor-caldera",
+          "width": 3400,
+          "height": 1800,
+          "flip": false
+        }
+      ],
+      "addedSolids": 0,
+      "sites": [],
+      "bossAlive": true,
+      "routes": [
+        {
+          "id": "exp-caldera-1",
+          "steps": 12,
+          "gap": 18.110770276274835
+        },
+        {
+          "id": "exp-caldera-2",
+          "steps": 18,
+          "gap": 10.19803902718557
+        },
+        {
+          "id": "exp-caldera-3",
+          "steps": 38,
+          "gap": 15.620499351813312
+        }
+      ],
+      "stability": [
+        {
+          "objects": 146,
+          "textures": 227,
+          "shutdown": 23,
+          "resize": 5
+        },
+        {
+          "objects": 145,
+          "textures": 226,
+          "shutdown": 23,
+          "resize": 5
+        },
+        {
+          "objects": 145,
+          "textures": 226,
+          "shutdown": 23,
+          "resize": 5
+        }
+      ],
+      "fps": 59.40441724842999,
+      "attacks": [
+        "cleave",
+        "slam",
+        "fissure",
+        "boulders"
+      ]
+    }
+  ],
+  "passed": true
+}

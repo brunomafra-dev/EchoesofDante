@@ -14,4 +14,7 @@ export const ROUTE_IDENTITY:Partial<Record<JourneyArea,RouteIdentity>>={
  // existing northern/southern limits, including the original relay checkpoint.
  icecave:{arc:'boreal',width:3100,height:1800,groundY:-300,groundHeight:2300,spots:[{x:650,y:1010,name:'Pedra do degelo'},{x:1530,y:970,name:'Canal sob o gelo'},{x:2600,y:1050,name:'Margem mineral'}],solids:[]},
  icenest:{arc:'boreal',width:2500,height:1800,spots:[{x:550,y:990,name:'Vestíbulo fossilizado'},{x:1200,y:1030,name:'Placa de gelo antigo'},{x:1820,y:1000,name:'Ninho de Vésper'}],solids:[]},
+ cinder:{arc:'embers',width:3100,height:1800,spots:[{x:600,y:980,name:'Praia de cinzas frias'},{x:1580,y:900,name:'Leito de poeira cinza'},{x:2600,y:1050,name:'Bancos de basalto'}],solids:[]},
+ obsidian:{arc:'embers',width:3300,height:1800,spots:[{x:520,y:980,name:'Passagem de vidro escuro'},{x:1730,y:900,name:'Prateleira violeta'},{x:2850,y:1000,name:'Canal seco da garganta'}],solids:[]},
+ caldera:{arc:'embers',width:3400,height:1800,spots:[{x:480,y:950,name:'Pátio das forjas'},{x:1780,y:900,name:'Condutos resfriados'},{x:2500,y:1000,name:'Domínio do Incandescente'}],solids:[]},
 };

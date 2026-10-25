@@ -1,0 +1,9 @@
+{
+  "method": "Chrome DEV; real section selector and E back portal, explicit position only to shorten walking.",
+  "errors": [],
+  "checks": [
+    "Default preview keeps relay unrecorded; selecting arena prepares only relay and begins a living boss, no victory/XP receipt",
+    "Real back portal uses the destination entry, not the source preview position"
+  ],
+  "passed": true
+}
