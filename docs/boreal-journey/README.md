@@ -1,5 +1,7 @@
 # Percurso Boreal — Fratura ao Vésper · 0.1.147
 
+**25/10/2026:** após receber esta entrega, o usuário pediu continuar ao [arco vulcânico 0.1.148](../embers-journey/README.md). Essa autorização substitui a espera operacional abaixo; não acrescenta medição humana de duração ou uma avaliação visual por automação.
+
 [Começar na Fratura](https://echosofdante.vercel.app/campaign-playtest.html?boreal=1&arrival=frost&v=0.1.147) · [Galerias do Degelo](https://echosofdante.vercel.app/campaign-playtest.html?boreal=1&arrival=icecave&v=0.1.147) · [Vésper vivo](https://echosofdante.vercel.app/campaign-playtest.html?boreal=1&arrival=icenest&v=0.1.147) · [Biblioteca](https://echosofdante.vercel.app/test-library.html)
 
 ## Autorização e escopo

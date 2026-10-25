@@ -1,5 +1,7 @@
 # Trilhas próprias — aplicação após a bacia da Floresta
 
+**25/10/2026 · percurso vulcânico 0.1.148:** usuário autorizou seguir após a entrega Boreal. [Costa → Obsidiana → Incandescente](../embers-journey/README.md) recebe nove desvios sobre as pinturas aprovadas, com física, relatórios e retornos. Preservar registros/limiar e aguardar playtest antes de outra etapa.
+
 **25/10/2026 · percurso Boreal 0.1.147:** as pinturas 0.1.143–145 e o percurso Siroco 0.1.146 foram aprovados pelo usuário. Autorizado aprofundar somente Fratura → Galerias → Vésper; [entrega e QA](../boreal-journey/README.md). Pisos e enquadramento preservados. Aguardar playtest desta etapa antes de aprofundar o arco vulcânico.
 
 ## Autorização e sequência

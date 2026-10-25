@@ -1,0 +1,11 @@
+{
+  "method": "Isolated Volcanic lab; deliberately polluted visited list, real atlas and backend travel checks. No victory simulated.",
+  "errors": [],
+  "checks": [
+    "cinder: original signal route connected; future regions stay disabled in atlas and rejected by travel despite visited-list pollution.",
+    "obsidian: original signal route connected; future regions stay disabled in atlas and rejected by travel despite visited-list pollution.",
+    "Caldera: living Incandescente behind original sealed throat; no relay simulated.",
+    "Volcanic lab without arrival starts at base with no boss victories."
+  ],
+  "passed": true
+}

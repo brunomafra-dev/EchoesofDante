@@ -1,0 +1,79 @@
+{
+  "method": "DEV isolated lab. Combat disabled only for scenery inspection; real E from a nearby stand position. Screenshots require visual inspection, not automatic aesthetic approval.",
+  "errors": [],
+  "sites": [
+    {
+      "id": "exp-cinder-1",
+      "stand": {
+        "x": 750,
+        "y": 1035
+      },
+      "evidence": true
+    },
+    {
+      "id": "exp-cinder-2",
+      "stand": {
+        "x": 1550,
+        "y": 1265
+      },
+      "evidence": true
+    },
+    {
+      "id": "exp-cinder-3",
+      "stand": {
+        "x": 2440,
+        "y": 1085
+      },
+      "evidence": true
+    },
+    {
+      "id": "exp-obsidian-1",
+      "stand": {
+        "x": 750,
+        "y": 1055
+      },
+      "evidence": true
+    },
+    {
+      "id": "exp-obsidian-2",
+      "stand": {
+        "x": 1750,
+        "y": 1275
+      },
+      "evidence": true
+    },
+    {
+      "id": "exp-obsidian-3",
+      "stand": {
+        "x": 2760,
+        "y": 1095
+      },
+      "evidence": true
+    },
+    {
+      "id": "exp-caldera-1",
+      "stand": {
+        "x": 650,
+        "y": 925
+      },
+      "evidence": true
+    },
+    {
+      "id": "exp-caldera-2",
+      "stand": {
+        "x": 1120,
+        "y": 1276
+      },
+      "evidence": true
+    },
+    {
+      "id": "exp-caldera-3",
+      "stand": {
+        "x": 1770,
+        "y": 1085
+      },
+      "evidence": true
+    }
+  ],
+  "passed": true
+}

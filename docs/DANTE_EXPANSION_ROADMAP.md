@@ -1,5 +1,16 @@
 # Dante — aprofundar antes de multiplicar
 
+**25/10 · avanço vulcânico autorizado · 0.1.148:** após receber a entrega Boreal `db25d83`, usuário pediu continuar. [Entrega e evidências](embers-journey/README.md) aprofunda **Costa das Cinzas → Garganta de Obsidiana → Forjas da Caldeira**, sem iniciar capítulo C.
+
+- [x] Inspecionar e reaproveitar três relatórios/nove análises, com IDs, requisitos e 90 + 95 + 100 créditos anteriores.
+- [x] Nove desvios com cobertura/colisão, aproximação e retorno; pinturas e dimensões preservadas.
+- [x] Pares variados, nove habitats reposicionados, seis residentes finitos adicionais; sem quotas ou HP artificial.
+- [x] Inscrições, registro de basalto, limiar, arena e Incandescente vivo no laboratório.
+- [x] Laboratório isolado, save/reload/recibos, dupla automatizada, controles emulados e QA do boss, com limites documentados.
+- [ ] Playtest humano de orientação, diversão e ritmo; duração real ainda não medida. Aguardar antes de outra etapa.
+
+A autorização de avanço substitui a espera operacional pelo arco vulcânico registrada abaixo; não é evidência automática de avaliação visual ou duração do Boreal.
+
 **25/10 · Siroco aprovado, percurso Boreal autorizado · 0.1.147:** usuário testou/aprovou `0a0c5b2` e autorizou continuar a entrega B no arco **Fratura Boreal → Galerias → Vésper**. [Entrega, laboratório e evidências](boreal-journey/README.md).
 
 - [x] Inspecionar e reaproveitar os dois relatórios e seis análises de Lia/Ivo; IDs, requisitos e 80 + 85 créditos preservados.

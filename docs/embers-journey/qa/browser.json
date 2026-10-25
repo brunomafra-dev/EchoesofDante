@@ -1,0 +1,429 @@
+{
+  "method": "Chrome DEV, isolated campaign lab; explicit position/combat fixtures, real navigation graph, E scans, NPC dialogs, save/reload and original gate interactions. Not human playtime or balance.",
+  "errors": [],
+  "checks": [
+    "Nine optional scans leave original gates closed. Real E opens coast, gorge and basalt records, adjacent portals and the original throat; real movement reaches the living Incandescente.",
+    "Real NPC turn-in pays exactly 90+95+100 credits; three old mission receipts and new finite XP survive save validation and reload.",
+    "A completed-report save without any new resident IDs reloads via real validation; old evidence/receipts stay complete and cannot pay again.",
+    "Three measured restarts after warmup keep ridge/listener counts stable and dynamic objects bounded; movement/Dash and HUD at four resolutions pass."
+  ],
+  "regions": [
+    {
+      "area": "cinder",
+      "population": [
+        {
+          "id": 1500,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1501,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1502,
+          "kind": "fumarole"
+        },
+        {
+          "id": 1503,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1504,
+          "kind": "fumarole"
+        },
+        {
+          "id": 1505,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1506,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1942,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1943,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1986,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1944,
+          "kind": "fumarole"
+        },
+        {
+          "id": 1945,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1946,
+          "kind": "fumarole"
+        },
+        {
+          "id": 1947,
+          "kind": "fumarole"
+        },
+        {
+          "id": 1987,
+          "kind": "fumarole"
+        }
+      ],
+      "gates": {
+        "cinder": false,
+        "obsidian": false,
+        "caldera": false
+      },
+      "won": false,
+      "rewards": [
+        "warden",
+        "vesper",
+        "soterrado"
+      ],
+      "ground": [
+        "route-floor-cinder"
+      ],
+      "ridges": 3,
+      "receipt": {
+        "before": 1500,
+        "after": 1532,
+        "valid": true
+      },
+      "fps": 57.49220514157787,
+      "routes": [
+        {
+          "id": "exp-cinder-1",
+          "paths": [
+            {
+              "steps": 7,
+              "gap": 22.360679774997898
+            },
+            {
+              "steps": 8,
+              "gap": 24.413111231467404
+            }
+          ]
+        },
+        {
+          "id": "exp-cinder-2",
+          "paths": [
+            {
+              "steps": 10,
+              "gap": 12
+            },
+            {
+              "steps": 11,
+              "gap": 21.2602916254693
+            }
+          ]
+        },
+        {
+          "id": "exp-cinder-3",
+          "paths": [
+            {
+              "steps": 8,
+              "gap": 15.620499351813312
+            },
+            {
+              "steps": 7,
+              "gap": 21.633307652783937
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "area": "obsidian",
+      "population": [
+        {
+          "id": 1600,
+          "kind": "slagback"
+        },
+        {
+          "id": 1601,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1602,
+          "kind": "fumarole"
+        },
+        {
+          "id": 1603,
+          "kind": "slagback"
+        },
+        {
+          "id": 1604,
+          "kind": "fumarole"
+        },
+        {
+          "id": 1605,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1606,
+          "kind": "slagback"
+        },
+        {
+          "id": 1607,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1948,
+          "kind": "slagback"
+        },
+        {
+          "id": 1949,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1988,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1950,
+          "kind": "fumarole"
+        },
+        {
+          "id": 1951,
+          "kind": "slagback"
+        },
+        {
+          "id": 1989,
+          "kind": "slagback"
+        },
+        {
+          "id": 1952,
+          "kind": "slagback"
+        },
+        {
+          "id": 1953,
+          "kind": "fumarole"
+        }
+      ],
+      "gates": {
+        "cinder": true,
+        "obsidian": false,
+        "caldera": false
+      },
+      "won": false,
+      "rewards": [
+        "warden",
+        "vesper",
+        "soterrado"
+      ],
+      "ground": [
+        "route-floor-obsidian"
+      ],
+      "ridges": 3,
+      "receipt": {
+        "before": 1532,
+        "after": 1567,
+        "valid": true
+      },
+      "fps": 59.68208090405824,
+      "routes": [
+        {
+          "id": "exp-obsidian-1",
+          "paths": [
+            {
+              "steps": 8,
+              "gap": 26.907248094147423
+            },
+            {
+              "steps": 10,
+              "gap": 17.204650534085253
+            }
+          ]
+        },
+        {
+          "id": "exp-obsidian-2",
+          "paths": [
+            {
+              "steps": 11,
+              "gap": 22.360679774997898
+            },
+            {
+              "steps": 11,
+              "gap": 7.211102550927979
+            }
+          ]
+        },
+        {
+          "id": "exp-obsidian-3",
+          "paths": [
+            {
+              "steps": 8,
+              "gap": 31.112698372208094
+            },
+            {
+              "steps": 6,
+              "gap": 28.425340807103794
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "area": "caldera",
+      "population": [
+        {
+          "id": 1400,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1401,
+          "kind": "fumarole"
+        },
+        {
+          "id": 1402,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1403,
+          "kind": "slagback"
+        },
+        {
+          "id": 1404,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1405,
+          "kind": "fumarole"
+        },
+        {
+          "id": 1406,
+          "kind": "slagback"
+        },
+        {
+          "id": 1407,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1408,
+          "kind": "fumarole"
+        },
+        {
+          "id": 1954,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1955,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1990,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1956,
+          "kind": "slagback"
+        },
+        {
+          "id": 1957,
+          "kind": "slagback"
+        },
+        {
+          "id": 1958,
+          "kind": "emberHound"
+        },
+        {
+          "id": 1959,
+          "kind": "fumarole"
+        },
+        {
+          "id": 1991,
+          "kind": "fumarole"
+        }
+      ],
+      "gates": {
+        "cinder": true,
+        "obsidian": true,
+        "caldera": false
+      },
+      "won": false,
+      "rewards": [
+        "warden",
+        "vesper",
+        "soterrado"
+      ],
+      "ground": [
+        "route-floor-caldera"
+      ],
+      "ridges": 3,
+      "receipt": {
+        "before": 1567,
+        "after": 1603,
+        "valid": true
+      },
+      "fps": 59.71749903746675,
+      "routes": [
+        {
+          "id": "exp-caldera-1",
+          "paths": [
+            {
+              "steps": 8,
+              "gap": 21.2602916254693
+            },
+            {
+              "steps": 10,
+              "gap": 28.284271247461902
+            }
+          ]
+        },
+        {
+          "id": "exp-caldera-2",
+          "paths": [
+            {
+              "steps": 10,
+              "gap": 25.298221281347036
+            },
+            {
+              "steps": 9,
+              "gap": 11.313708498984761
+            }
+          ]
+        },
+        {
+          "id": "exp-caldera-3",
+          "paths": [
+            {
+              "steps": 7,
+              "gap": 16.1245154965971
+            },
+            {
+              "steps": 6,
+              "gap": 29.732137494637012
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "stability": [
+    {
+      "objects": 150,
+      "textures": 235,
+      "shutdown": 26,
+      "resize": 5,
+      "ridges": 3
+    },
+    {
+      "objects": 150,
+      "textures": 235,
+      "shutdown": 26,
+      "resize": 5,
+      "ridges": 3
+    },
+    {
+      "objects": 151,
+      "textures": 236,
+      "shutdown": 26,
+      "resize": 5,
+      "ridges": 3
+    }
+  ],
+  "passed": true
+}

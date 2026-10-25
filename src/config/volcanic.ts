@@ -26,15 +26,15 @@ export const VOLCANIC={
 } as const satisfies Record<VolcanicArea,{name:string;width:number;height:number;texture:string;bounds:{left:number;right:number;top:number;bottom:number};entry:{x:number;y:number};back:{x:number;y:number};checkpoint:{x:number;y:number};relay:{x:number;y:number;radius:number};exit:{x:number;y:number};previous:string;next:string;rocks:readonly Obstacle[];routes:readonly {id:string;name:string;x:number;y:number;radius:number}[];clusters:readonly {key:string;x:number;y:number;w:number;h:number}[]}>;
 export const VOLCANIC_ENCOUNTERS={
  cinder:[
-  {id:1500,kind:'emberHound',x:800,y:1020},{id:1501,kind:'emberHound',x:1110,y:650},
-  {id:1502,kind:'fumarole',x:1260,y:1100},{id:1503,kind:'emberHound',x:1390,y:1160},
-  {id:1504,kind:'fumarole',x:2090,y:740},{id:1505,kind:'emberHound',x:2320,y:960},{id:1506,kind:'emberHound',x:2440,y:1070},
+  {id:1500,kind:'emberHound',x:590,y:1050},{id:1501,kind:'emberHound',x:1110,y:650},
+  {id:1502,kind:'fumarole',x:1220,y:1130},{id:1503,kind:'emberHound',x:1390,y:1160},
+  {id:1504,kind:'fumarole',x:2090,y:740},{id:1505,kind:'emberHound',x:2160,y:1000},{id:1506,kind:'emberHound',x:2440,y:1070},
  ],
  obsidian:[
-  {id:1600,kind:'slagback',x:790,y:1000},{id:1601,kind:'emberHound',x:1090,y:860},
-  {id:1602,kind:'fumarole',x:1370,y:1130},{id:1603,kind:'slagback',x:1450,y:1010},
+  {id:1600,kind:'slagback',x:570,y:1100},{id:1601,kind:'emberHound',x:1090,y:860},
+  {id:1602,kind:'fumarole',x:1340,y:1030},{id:1603,kind:'slagback',x:1450,y:1010},
   {id:1604,kind:'fumarole',x:2250,y:1100},{id:1605,kind:'emberHound',x:2370,y:870},
-  {id:1606,kind:'slagback',x:2660,y:1110},{id:1607,kind:'emberHound',x:2810,y:820},
+  {id:1606,kind:'slagback',x:2660,y:1110},{id:1607,kind:'emberHound',x:2950,y:1110},
  ],
 } as const;
 export const VOLCANIC_ROUTES=[...VOLCANIC.cinder.routes,...VOLCANIC.obsidian.routes];

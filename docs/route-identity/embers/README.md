@@ -1,5 +1,7 @@
 # Costa das Cinzas até o Incandescente — 0.1.145
 
+**Percurso 0.1.148:** [nove desvios, encontros e relatórios](../../embers-journey/README.md) aprofundam estes mapas por autorização do usuário. As três pinturas aprovadas permanecem, com nove coberturas físicas baixas anteriores à arena; campanha, requisitos e boss preservados. Avaliação humana do percurso continua separada da arte anterior.
+
 [Costa das Cinzas](https://echosofdante.vercel.app/world-finish-playtest.html?area=cinder&trails=1&v=0.1.145) · [Garganta de Obsidiana](https://echosofdante.vercel.app/world-finish-playtest.html?area=obsidian&trails=1&spot=1&v=0.1.145) · [Forjas da Caldeira](https://echosofdante.vercel.app/world-finish-playtest.html?area=caldera&trails=1&v=0.1.145) · [Arena do último boss](https://echosofdante.vercel.app/world-finish-playtest.html?area=caldera&trails=1&spot=2&v=0.1.145)
 
 Terceira entrega do [lote consecutivo autorizado](../README.md), após os pushes individuais `d2ae660` (Siroco) e `524708e` (Boreal). As três regiões recebem pinturas próprias na campanha solo e cooperativa, sem substituir os bosses, narrativa ou requisitos de progressão.

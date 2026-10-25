@@ -311,12 +311,12 @@
     "credits": 90,
     "title": "Calor que pode servir",
     "offer": [
-      "O frio provou que precisamos de energia confiável. A costa vulcânica pode oferecer calor, se entendermos seus riscos.",
-      "Leia as saídas de vapor, a cinza consolidada e o leito térmico. Não conecte nossos sistemas aos condutos antigos."
+      "O frio mostrou a falta de energia confiável. Na costa, precisamos separar coleta de condensação, passagem de carga e calor aproveitável.",
+      "Compare o vapor pela margem abrigada, a crosta no desvio sul e o veio mineral antes da garganta. As inscrições originais continuam necessárias para avançar."
     ],
     "report": [
-      "O calor é aproveitável por troca indireta. Podemos manter nossos equipamentos separados das estruturas de Dante.",
-      "Vou desenhar um coletor experimental. A costa ainda não está liberada para civis."
+      "A condensação pode ser analisada sem pisar na saída de vapor. A cinza consolidada oferece passagem, mas gases e calor subterrâneo ainda exigem medição.",
+      "O veio permite estudar troca indireta para aquecer água e abrigos. Vamos manter nossos equipamentos separados dos condutos de Dante; ainda não é uma área para civis."
     ],
     "kinds": [
       "emberHound",
@@ -325,24 +325,24 @@
     "sites": [
       {
         "name": "Saída de vapor da costa",
-        "x": 640,
-        "y": 470,
+        "x": 750,
+        "y": 980,
         "art": "water",
-        "finding": "O vapor condensa antes de tocar o chão. As leituras seguem seladas para análise."
+        "finding": "A condensação alcança a margem abrigada antes de se dispersar. Podemos recolher amostras por fora da saída, mantendo recipientes e patrulha no basalto firme."
       },
       {
         "name": "Cinza consolidada",
-        "x": 1480,
-        "y": 1240,
+        "x": 1550,
+        "y": 1210,
         "art": "soil",
-        "finding": "A crosta protege um solo quente e poroso. É preciso medir gases antes de escavar."
+        "finding": "A crosta resiste à passagem leve; sob ela há poros quentes. O desvio retorna à trilha sem atravessar o vapor. Cargas pesadas exigem medir gases e capacidade do solo."
       },
       {
         "name": "Leito térmico lateral",
-        "x": 2640,
-        "y": 490,
+        "x": 2440,
+        "y": 1030,
         "art": "mineral",
-        "finding": "O calor segue um veio mineral. Uma troca indireta evitaria perfurar o conduto."
+        "finding": "O veio conserva calor ao lado do conduto. Um coletor separado poderia aquecer água dos abrigos sem perfurar a circulação antiga. O retorno acompanha a dobra até a garganta."
       }
     ]
   },
@@ -355,12 +355,12 @@
     "credits": 95,
     "title": "As paredes guardam pulsos",
     "offer": [
-      "As leituras da garganta não coincidem com as da costa. Alguém organizou a circulação por dentro da rocha.",
-      "Examine três trechos laterais. Quero um registro da função dessas estruturas, não uma tentativa de ativar tudo."
+      "As paredes distribuem os pulsos que medimos na costa. Precisamos mapear a circulação antes de escolher uma rota segura para os suprimentos.",
+      "Compare os fragmentos ao pé do vidro, o canal pelo braço sul e o divisor antes das forjas. Registre a função dos trechos; preserve os mecanismos originais."
     ],
     "report": [
-      "Os pulsos se dividem antes de chegar às forjas. O sistema parece distribuir alguma coisa para mais de um destino.",
-      "Ainda não sabemos o que recebia esses fluxos. Guarde as leituras para a próxima expedição."
+      "O braço de sedimento permite transportar carga sem subir nas paredes de vidro. As mudanças do canal repartem o fluxo; não são falhas que devamos tapar.",
+      "Um pulso segue às forjas e outro escapa dos sensores. A rota humana deve acompanhar os apoios secos, sem ocupar os canais nem tentar ativar destinos desconhecidos."
     ],
     "kinds": [
       "slagback",
@@ -369,24 +369,24 @@
     "sites": [
       {
         "name": "Parede de vidro escuro",
-        "x": 710,
-        "y": 470,
+        "x": 750,
+        "y": 1000,
         "art": "mineral",
-        "finding": "Camadas de vidro cobriram as inscrições sem apagar seu relevo."
+        "finding": "Fragmentos aos pés da parede guardam o relevo das inscrições. O sedimento firme permite examiná-los e voltar ao caminho sem escalar ou cruzar as lâminas de vidro."
       },
       {
         "name": "Canal da margem inferior",
-        "x": 1730,
+        "x": 1750,
         "y": 1220,
         "art": "record",
-        "finding": "O canal muda de seção a intervalos regulares. Essas mudanças parecem deliberadas."
+        "finding": "As seções mudam de largura em intervalos regulares. O braço sul oferece retorno pela pedra, mas as caixas não devem ser apoiadas sobre o canal de distribuição."
       },
       {
         "name": "Divisor de pulsos",
-        "x": 2830,
-        "y": 490,
+        "x": 2760,
+        "y": 1040,
         "art": "record",
-        "finding": "Parte do pulso se afasta das forjas. A outra direção fica fora do alcance dos sensores."
+        "finding": "As marcas dividem dois pulsos: um segue às forjas, outro se afasta da rota. O abrigo de pedra permite comparar leituras; apenas o registro original revela a passagem."
       }
     ]
   },
@@ -399,12 +399,12 @@
     "credits": 100,
     "title": "Antes de acender as forjas",
     "offer": [
-      "A caldeira ainda opera. Antes de chegar à presença que guarda a área, precisamos entender onde podemos pisar.",
-      "Meça as margens da entrada, o depósito térmico e o conduto anterior ao limiar. Preserve os mecanismos originais."
+      "Antes da presença que guarda as forjas, precisamos reconhecer o pátio: onde descansar, onde apoiar suprimentos e de que lado passam os condutos.",
+      "Compare a margem interna da entrada, o depósito pelo contorno sul e as marcas antes do limiar. Investigue o registro de basalto original; o relatório não abre a arena."
     ],
     "report": [
-      "As três margens suportam uma equipe leve. A carga pesada terá de aguardar resfriamento e ancoragem.",
-      "O conduto alimenta o limiar, mas a presença além dele não é apenas uma peça da estrutura."
+      "O pátio comporta uma patrulha leve com isolamento nos pés. O depósito retém calor; caixas e recipientes devem ficar na pedra seca e fora dos condutos.",
+      "Marcas fundas cortam a rota antes do limiar. O guardião não é uma peça que possamos ligar. As leituras ajudam a planejar retorno e energia, sem liberar transporte civil."
     ],
     "kinds": [
       "emberHound",
@@ -413,24 +413,24 @@
     "sites": [
       {
         "name": "Margem fria da entrada",
-        "x": 570,
-        "y": 500,
+        "x": 650,
+        "y": 870,
         "art": "soil",
-        "finding": "A superfície parece fria, mas retém calor por baixo. O trabalho exige isolamento."
+        "finding": "A margem interna parece fria, mas o solo ainda guarda calor. A dobra permite uma pausa fora do conduto; o trabalho exige isolamento e retorno pela pedra firme."
       },
       {
         "name": "Depósito térmico inferior",
-        "x": 1010,
-        "y": 1240,
+        "x": 1120,
+        "y": 1230,
         "art": "mineral",
-        "finding": "O depósito guarda calor depois que o pulso cessa. Não há contato direto com lava."
+        "finding": "O depósito conserva calor depois do pulso. O contorno sul liga os apoios sem contato com lava; manter carga na borda firme preserva a circulação sob o piso."
       },
       {
         "name": "Conduto antes do limiar",
-        "x": 1780,
-        "y": 460,
+        "x": 1770,
+        "y": 1030,
         "art": "record",
-        "finding": "O conduto muda de direção junto da parede. O limiar responde a uma presença além dela."
+        "finding": "O conduto se curva antes do limiar. Riscos fundos e cinza empurrada apontam para a presença adiante. Compare aqui e volte ao registro de basalto antes de atravessar."
       }
     ]
   },

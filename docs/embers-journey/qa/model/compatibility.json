@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "All IDs, preconditions, NPCs, evidence order, subjects and credits match 0.1.147; other regions unchanged. Three missions, nine scans, 90+95+100 credits; no new mission.",
+    "92 finite IDs unique; six new receipts fit existing range and cannot award XP twice after restore.",
+    "Nine low covers stop normal-speed Dash; maximum populations fit relay. Forja loops stay before the existing sealed throat; arena stats and walls unchanged."
+  ],
+  "maxPopulation": {
+    "cinder": 18,
+    "obsidian": 19,
+    "caldera": 18
+  },
+  "passed": true
+}

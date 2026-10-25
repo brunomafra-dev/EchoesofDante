@@ -13,12 +13,12 @@ export const CALDERA = {
 // Solid shelves separating exploration from the arena; a wide throat stays open.
 export const CALDERA_WALL:readonly Obstacle[]=[430,540,650,760,1150,1260,1370].map(y=>({x:2090,y,radius:65}));
 export const CALDERA_ENCOUNTERS=[
- {id:1400,kind:'emberHound',x:750,y:1030},
+ {id:1400,kind:'emberHound',x:470,y:1090},
  {id:1401,kind:'fumarole',x:970,y:590},
  {id:1402,kind:'emberHound',x:1260,y:1220},
- {id:1403,kind:'slagback',x:1390,y:1130},
+ {id:1403,kind:'slagback',x:1460,y:1100},
  {id:1404,kind:'emberHound',x:1510,y:1150},
- {id:1405,kind:'fumarole',x:1690,y:1260},
+ {id:1405,kind:'fumarole',x:1870,y:1150},
  {id:1406,kind:'slagback',x:1120,y:860},
  {id:1407,kind:'emberHound',x:830,y:1150},
  {id:1408,kind:'fumarole',x:1350,y:550},

@@ -1,0 +1,10 @@
+{
+  "method": "Actual campaign boss/lifecycle with explicit attack, low-health and damage fixtures; real R/E, save/reload. Not a human boss balance playtest.",
+  "errors": [],
+  "checks": [
+    "All four Incandescente attacks retain visible warning and normal execution in the real campaign scene.",
+    "Two deaths/R respawns reset HP, phase and attacks with exactly one boss; XP and regional evidence preserved.",
+    "Victory XP/receipt awarded once, original record requires E, won state survives reload without recreating a live boss."
+  ],
+  "passed": true
+}
