@@ -15,7 +15,7 @@ export function paintRouteEnvironment(scene:Phaser.Scene,area:JourneyArea,panels
  const config=ROUTE_IDENTITY[area],key=routeTexture(area);
  if(!config||scene.data.get('route-art-previous')||!scene.textures.exists(key))return false;
  if(!panels.has(key)){
-  panels.add(key);scene.add.image(0,0,key).setOrigin(0).setDisplaySize(config.width,config.height).setDepth(-10001.5).setName('campaign-continuous-ground').setData('route-identity',area);
+  panels.add(key);scene.add.image(0,config.groundY??0,key).setOrigin(0).setDisplaySize(config.width,config.groundHeight??config.height).setDepth(-10001.5).setName('campaign-continuous-ground').setData('route-identity',area);
  }
  return true;
 }

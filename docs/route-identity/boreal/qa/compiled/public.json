@@ -1,0 +1,12 @@
+{
+  "arc": "boreal",
+  "version": "0.1.144",
+  "base": "http://localhost:5193",
+  "errors": [],
+  "checks": [
+    "frost: new art loads, direct preview and section selector work, production has no DEV globals, real save untouched",
+    "icecave: new art loads, direct preview and section selector work, production has no DEV globals, real save untouched",
+    "icenest: new art loads, direct preview and section selector work, production has no DEV globals, real save untouched"
+  ],
+  "passed": true
+}

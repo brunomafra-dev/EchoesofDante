@@ -1,0 +1,154 @@
+{
+  "arc": "boreal",
+  "method": "Chrome DEV, isolated direct visual fixtures and real keyboard movement. Geometry comparison to 0.1.142 and canonical survey approaches; boss attacks invoked explicitly for visual verification. Mission inputs are checked separately in the cooperative campaign. Not human balance/duration or physical devices.",
+  "errors": [],
+  "regions": [
+    {
+      "area": "frost",
+      "ground": [
+        {
+          "key": "route-floor-frost",
+          "width": 3000,
+          "height": 1800,
+          "flip": false
+        }
+      ],
+      "addedSolids": 0,
+      "sites": [],
+      "bossAlive": false,
+      "routes": [
+        {
+          "id": "exp-frost-1",
+          "steps": 16,
+          "gap": 25.612496949731394
+        },
+        {
+          "id": "exp-frost-2",
+          "steps": 26,
+          "gap": 24.16609194718914
+        },
+        {
+          "id": "exp-frost-3",
+          "steps": 47,
+          "gap": 21.2602916254693
+        }
+      ],
+      "stability": [
+        {
+          "objects": 116,
+          "textures": 223,
+          "shutdown": 22,
+          "resize": 4
+        },
+        {
+          "objects": 116,
+          "textures": 223,
+          "shutdown": 22,
+          "resize": 4
+        },
+        {
+          "objects": 116,
+          "textures": 223,
+          "shutdown": 22,
+          "resize": 4
+        }
+      ],
+      "fps": 57.89947525617664
+    },
+    {
+      "area": "icecave",
+      "ground": [
+        {
+          "key": "route-floor-icecave",
+          "width": 3100,
+          "height": 2300,
+          "flip": false
+        }
+      ],
+      "addedSolids": 0,
+      "sites": [],
+      "bossAlive": false,
+      "routes": [
+        {
+          "id": "exp-icecave-1",
+          "steps": 9,
+          "gap": 17.08800749063506
+        },
+        {
+          "id": "exp-icecave-2",
+          "steps": 31,
+          "gap": 23.40939982143925
+        },
+        {
+          "id": "exp-icecave-3",
+          "steps": 49,
+          "gap": 19.79898987322333
+        }
+      ],
+      "stability": [
+        {
+          "objects": 114,
+          "textures": 223,
+          "shutdown": 22,
+          "resize": 4
+        },
+        {
+          "objects": 121,
+          "textures": 224,
+          "shutdown": 22,
+          "resize": 4
+        },
+        {
+          "objects": 114,
+          "textures": 223,
+          "shutdown": 22,
+          "resize": 4
+        }
+      ],
+      "fps": 57.78266264026602
+    },
+    {
+      "area": "icenest",
+      "ground": [
+        {
+          "key": "route-floor-icenest",
+          "width": 2500,
+          "height": 1800,
+          "flip": false
+        }
+      ],
+      "addedSolids": 0,
+      "sites": [],
+      "bossAlive": true,
+      "routes": [],
+      "stability": [
+        {
+          "objects": 81,
+          "textures": 217,
+          "shutdown": 23,
+          "resize": 5
+        },
+        {
+          "objects": 81,
+          "textures": 217,
+          "shutdown": 23,
+          "resize": 5
+        },
+        {
+          "objects": 81,
+          "textures": 217,
+          "shutdown": 23,
+          "resize": 5
+        }
+      ],
+      "fps": 57.60541062268335,
+      "attacks": [
+        "breath",
+        "tail",
+        "rush",
+        "eruption"
+      ]
+    }
+  ],
+  "passed": true
+}

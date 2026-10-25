@@ -4,8 +4,8 @@
 
 Em 24/10/2026 o usuário aprovou continuar a referência 0.1.142 em três entregas consecutivas, **com commit e push ao fim de cada arco e início imediato do próximo**. Essa instrução dispensa a espera intermediária descrita no plano anterior para este lote; não transforma QA em aprovação visual automática.
 
-1. **Vale → Siroco → Dunas → Soterrado — 0.1.143.** Pradaria mineral, calcário, escarpa, salinas secas, sedimentos e depressão de areia.
-2. **Fratura Boreal → Galerias → Vésper — próxima entrega.** Composição própria por região de gelo.
+1. **[Vale → Siroco → Dunas → Soterrado — 0.1.143](sirocco/README.md).** Commit/push `d2ae660`: pradaria mineral, calcário, escarpa, salinas secas, sedimentos e depressão de areia.
+2. **[Fratura Boreal → Galerias → Vésper — 0.1.144](boreal/README.md).** Composição própria por região de gelo.
 3. **Costa das Cinzas → Obsidiana → último boss — entrega seguinte.** Costa vulcânica, garganta e forjas com terrenos distintos.
 
 Preservar Organic Sci-Fi R3 / referência D, personagens, criaturas, portais, missões, marcos e recompensas. Este lote dá identidade e composição ao percurso existente; não declara novos mapas, novas horas de campanha nem altera dificuldade para aumentar duração.
