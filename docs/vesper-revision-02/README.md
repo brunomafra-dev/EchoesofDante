@@ -34,7 +34,8 @@ Fixtures isolam contatos; a vitória completa e as tentativas de auto attack usa
 - [Controles](qa/controls/controls.json): quatro classes com CDP multitouch, movimento/mira independentes em oito direções, ataque para trás, carga/soltura/cancelamento, modal e gamepad mock. Quatro layouts (568×320, 844×390, 1024×768, 1600×530), três reconstruções sem duplicar HUD. Boss vivo congelado para isolar entradas; não é prova de vencer a luta no celular físico.
 - [Save antigo e atlas](qa/legacy/legacy.json): schema 1 sem sistemas opcionais, reload conserva XP/recibos anteriores e exatamente um Vésper vivo com 1760 HP. Registro e destinos vulcânicos continuam bloqueados pelos requisitos originais.
 - [Build compilada](qa/compiled/public.json): Chrome sem globais DEV, chegada isolada/reload, movimento real até o gatilho de encontro, arte e trilha carregadas, volumes independentes e biblioteca atualizada. Personagens/configurações sentinela preservados.
-- [Primeira conferência de publicação](qa/publication-attempt.json): commit `42ddb408` sincronizado com `origin/main`, mas sem status Vercel ou deployment registrado após o push; biblioteca pública ainda anterior. Protocolo público 15 confirmado. Este registro não aprova publicação. Novo push documental permite outra tentativa da integração; sem credencial local da Vercel para acionar deploy diretamente.
+- [Primeira conferência de publicação](qa/publication-attempt.json): commit `42ddb408` sincronizado com `origin/main`, mas sem deployment registrado após o push; biblioteca pública ainda anterior. Registro histórico da tentativa inicial, não aprovação. O push documental seguinte iniciou o deploy, concluído na conferência abaixo.
+- [Vercel pública](qa/published/public.json) e [hashes/protocolo](qa/published/hashes.json): deploy `344c01f5` concluído; HTML/JS, combate, arte e trilhas publicados correspondem à build local. Chrome público passou chegada, reload, gatilho real e trilha, sem tocar saves/configurações reais. Relay no protocolo 15, sem intervenção no Render.
 
 As imagens de aviso e abertura foram inspecionadas no desktop e viewport compacto. Arte reaproveitada da 0.1.152, sem recorte novo ou montagem por membros. Testes emulados não representam celular ou gamepad físico, grupo humano de quatro ou aprovação de dificuldade. Nenhuma duração global de campanha foi medida.
 
@@ -46,7 +47,7 @@ As imagens de aviso e abertura foram inspecionadas no desktop e viewport compact
 - [x] Build compilada.
 - [x] Typecheck/build/diff.
 - [x] Sincronização do commit de gameplay com `origin/main`.
-- [ ] Conferência pública: aguarda a integração GitHub/Vercel iniciar o deploy.
+- [x] Conferência pública: Vercel concluída, hashes iguais à build local e smoke público passado.
 - [ ] Playtest humano desta revisão; não iniciar Incandescente antes dele.
 
 Scripts: `qa-vesper-revision-153.mjs`, `qa-vesper-rear-auto-153.mjs`, `qa-vesper-playthrough-153.mjs`, `qa-vesper-lifecycle-153.mjs`, `qa-vesper-coop-153.mjs` e `qa-vesper-public-153.mjs`. Controles/save reutilizam `qa-vesper-controls.mjs` e `qa-vesper-legacy.mjs` com `QA_OUT` neste diretório. `npm run typecheck` e `npm run build` passaram; único aviso conhecido é o tamanho do chunk Phaser.

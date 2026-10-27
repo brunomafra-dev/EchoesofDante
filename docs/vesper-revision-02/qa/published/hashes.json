@@ -1,0 +1,43 @@
+{
+  "checks": [
+    "index.html: current build references and matching JS hashes",
+    "campaign-playtest.html: current build references and matching JS hashes",
+    "soundtrack-playtest.html: current build references and matching JS hashes",
+    "test-library.html: current build references and matching JS hashes",
+    "/assets/visual/creature-finish/vesper-reaction-v1.webp: matching new combat/art hash",
+    "/assets/GameScene-DogCihXk.js: matching new combat/art hash",
+    "forest: matching published score hash",
+    "soterrado: matching published score hash",
+    "vesper: matching published score hash",
+    "titan: matching published score hash"
+  ],
+  "coopConfig": {
+    "ready": true,
+    "relay": "wss://echoes-of-dante-rooms.onrender.com/coop"
+  },
+  "relay": {
+    "service": "Dante regional co-op",
+    "protocol": 15,
+    "missions": true,
+    "chat": true,
+    "capacity": 4,
+    "uniqueClasses": true,
+    "fixedCampaigns": true,
+    "revision": "1247c89c2150896bf9797512e354323ead7f4d7b",
+    "campaign": true,
+    "rooms": 0,
+    "players": 0
+  },
+  "passed": true,
+  "version": "0.1.153",
+  "verifiedCommit": "344c01f55277cea5684cc29dbd873ad3fe3b346e",
+  "verifiedAt": "2026-10-27T17:18:55.537716+00:00",
+  "vercelStatus": "success",
+  "deployment": "https://vercel.com/brunomafra-devs-projects/echosofdante/97sDYtBUoGrHMyBvVthRNwEpvGLC",
+  "buildAssets": [
+    {
+      "path": "dist/assets/GameScene-DogCihXk.js",
+      "sha256": "2f01fb5d79bd5c21f6b59c798da9922dc3d76e13889fe57ee3b0966b1c9b38f9"
+    }
+  ]
+}

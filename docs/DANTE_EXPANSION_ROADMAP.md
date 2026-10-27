@@ -1,6 +1,6 @@
 # Dante — aprofundar antes de multiplicar
 
-**27/10/2026 · Vésper 0.1.152 rejeitado por facilidade · revisão 0.1.153 autorizada:** usuário venceu atrás do dragão segurando auto attack. [Revisão da retaguarda](vesper-revision-02/README.md) corrige a virada que evitava o jogador, acrescenta ida/volta com avisos separados e condiciona a abertura à sequência sem dano real de cauda. HP, jornada e protocolo 15 preservados. QA técnico em registro; **aguardar novo playtest antes de Incandescente ou outro capítulo**.
+**27/10/2026 · Vésper 0.1.152 rejeitado por facilidade · revisão 0.1.153 autorizada:** usuário venceu atrás do dragão segurando auto attack. [Revisão da retaguarda](vesper-revision-02/README.md) corrige a virada que evitava o jogador, acrescenta ida/volta com avisos separados e condiciona a abertura à sequência sem dano real de cauda. HP, jornada e protocolo 15 preservados. QA técnico, hashes e smoke público conferidos; **aguardar novo playtest antes de Incandescente ou outro capítulo**.
 
 **Histórico · 27/10/2026 · Soterrado 0.1.151 aprovado e Vésper autorizado · 0.1.152:** usuário aprovou a entrega (“muito bom”) e pediu o próximo boss. [Vésper — gelo e retaguarda](vesper-counterplay/README.md): sopro deixa crostas persistentes; cauda muda o espaço e pode expor o dragão. Novas figuras inteiras, contatos sincronizados e pressão sem aumentar HP. Preservar pinturas, requisitos, recibos e protocolo 15. A aprovação anterior encerra a espera do Soterrado; aguardar playtest do Vésper antes do Incandescente.
 
