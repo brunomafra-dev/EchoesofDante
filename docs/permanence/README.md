@@ -29,7 +29,7 @@ Catálogo compartilhado reservado para cinco capítulos e 25 evidências em `src
 - [x] Typecheck/build finais e revisão/diff. Aviso conhecido dos chunks permanece.
 - [x] [Build compilada](qa/compiled/public.json): aceite real e reload, sem globais DEV, personagens/configurações sentinela intactos.
 - [x] Commit/push da água `8e647825c96e2c53704817a09db2e194bc322244`, local/remoto conferidos; Vercel publicada, [37 hashes JavaScript](qa/publication/0.1.155/hashes.json) e [smoke público](qa/publication/0.1.155/public.json) passaram.
-- [ ] Coop público: Render ainda respondeu protocolo 15 na conferência; incompatibilidade real informada ao usuário, código 16 enviado. Não declarar dupla pública validada até saúde e browsers reais passarem.
+- [ ] Coop público **dos cinco capítulos novos**: Render ainda respondeu protocolo 15 na conferência; incompatibilidade real informada ao usuário, código 16 enviado. A campanha anterior passou em [dois Chrome contra Vercel/Render reais](qa/public-coop/report.json), com nomes, convite, aceite de Lia e passagem norte. Não declarar estes capítulos novos disponíveis no coop público até o relay 16 ser publicado.
 - [ ] Playtest humano de ritmo, leitura e diversão.
 
 Os testes de objetivos usam posição/invulnerabilidade preparadas para cobrir interações. Não medem duração humana ou descoberta da solução. Arte, terrenos, estatísticas de inimigos/bosses, quatro classes, economia pessoal e controles originais preservados. Sem garantia de 30 minutos ou oito horas.
@@ -61,7 +61,7 @@ Pose opcional do estrado segue o snapshot autenticado do anfitrião no protocolo
 - [x] [Colisão e ciclo](qa/transport-safety/safety.json): caminhada/Dash param no estrado; carga espera fora do alcance, respeita crista física, morte real/R e reload preservam objetivos e uma única carga pendente. Fixtures de posição/objetivos/invulnerabilidade explicitadas; nenhuma edição da carga.
 - [x] [Modelo](qa/transport-model/model.json) e [acesso](qa/transport-access/access.json): cadeia/save/recibos, caminhos/retornos e atlas bloqueado.
 - [x] Typecheck/build final e [Chrome compilado](qa/transport-compiled/public.json) passaram. Inspeção do ponto de descarga livre e cache estático registrada no teste de ciclo.
-- [x] Vercel da 0.1.157 publicada; [37 hashes JavaScript e SHA-256](qa/publication/0.1.157/hashes.json) conferidos. Laboratório do transporte incluído no smoke cumulativo final.
+- [x] Vercel da 0.1.157 publicada; [37 hashes JavaScript e SHA-256](qa/publication/0.1.157/hashes.json) conferidos. Laboratório do transporte também passou no [Chrome público cumulativo](qa/publication/0.1.159/public.json).
 - [ ] Playtest humano. Continuação à energia já autorizada.
 
 ## 4 — Uma luz que é nossa · 0.1.158
@@ -90,7 +90,7 @@ Segundo alojamento fixo no setor oeste, com os três colisores proporcionais à 
 - [x] [Modelo](qa/arrivals-model/model.json) e [acessos](qa/arrivals-access/access.json): pré-requisitos/recibos/save antigo; geografia completa com duas casas, passagem original e aproximações dos moradores conectadas. Vista geral inspecionada, além dos pontos com personagem.
 - [x] [Controles finais](qa/final-controls/controls.json): quatro classes com CDP multitouch, oito direções independentes, carga/soltura/cancelamento, layouts 568×320, 844×390, 1024×768 e 1600×530; gamepad mock e falas por toque/A. Evidências provisórias de casa/moradores são fixtures de entrada, sem simular entrega ou recompensa deste capítulo.
 - [x] [Compilado cumulativo](qa/final-compiled/public.json): cinco links, aceite/reload e sentinelas reais, sem globais DEV.
-- [ ] Publicação final; hashes e Chrome públicos serão conferidos após o push.
+- [x] Publicação final da aplicação: commit `8e80eb1303787da4826070ab1637bf5b124ad568`, Git local/remoto sincronizados e Vercel concluída. [37 JavaScript/SHA-256](qa/publication/0.1.159/hashes.json) conferem com a build local; [cinco laboratórios públicos](qa/publication/0.1.159/public.json) passaram no Chrome, incluindo aceite/reload e sentinelas de personagens/configurações. Capturas públicas inspecionadas.
 - [ ] Playtest humano. O lote autorizado termina aqui, sem iniciar a entrega D.
 
 ## Verificação integrada e limites
@@ -100,3 +100,17 @@ Segundo alojamento fixo no setor oeste, com os três colisores proporcionais à 
 Posicionamento/invulnerabilidade são usados para cobrir objetivos e não representam um playthrough humano nem balanceamento solo/dupla. Dupla usa dois Chrome; quatro conexões foram validadas no protocolo, sem afirmar quatro renderizações humanas ou aparelhos físicos. Não foram medidos 30 minutos/oito horas. Pinturas aprovadas, figuras completas, classes, estatísticas dos bosses, cadeia original, recibos antigos e enquadramento das Galerias preservados. Nenhum PNG/MP3 novo foi necessário; geometria estática é preparada uma vez e os efeitos mudam por transformações/eventos.
 
 Scripts principais: `qa-permanence.mjs`, `qa-permanence-coop.mjs`, `qa-permanence-chain.mjs`, `qa-permanence-access.mjs`, `qa-permanence-model.mjs`, `qa-permanence-protocol.mjs`, `qa-permanence-compatibility.mjs`, `qa-permanence-haul-safety.mjs`, `qa-permanence-final-controls.mjs`, `qa-permanence-public.mjs`, `qa-permanence-public-coop.mjs` e `verify-permanence-publication.py` em `scripts/`.
+
+## Fechamento do lote
+
+| Versão | Sprint | Commit enviado para main |
+|---|---|---|
+| 0.1.155 | Água | `8e647825c96e2c53704817a09db2e194bc322244` |
+| 0.1.156 | Alimento | `a120f09e545a2c3f844a4b06afe26cf624030dbd` |
+| 0.1.157 | Transporte | `4e9c0c3354323f6790c47e047e588c4787782184` |
+| 0.1.158 | Energia / compatibilidade anterior | `02483b1dbd7cc4123dceb26f386cd7ce479e7d33` |
+| 0.1.159 | Segunda equipe | `8e80eb1303787da4826070ab1637bf5b124ad568` |
+
+Os cinco sprints tiveram QA, commit e push próprios, sem antecipar a entrega D. Todos os laboratórios estão publicados no solo e registrados na biblioteca. **Pendência externa real:** o Render público ainda informa protocolo 15/revisão `1247c89c2150896bf9797512e354323ead7f4d7b`; foi solicitado ao usuário publicar o último commit no serviço `echoes-of-dante-rooms`. Enquanto isso, o cliente mantém as campanhas anteriores nesse relay e impede começar/perder capítulos novos. Dupla local 16 passou nos cinco capítulos; isso não é declaração de dupla pública nova aprovada. Publicar o relay 16 e conferir saúde/catálogo/fluxo público antes de encerrar essa pendência.
+
+A última revisão de evidências altera somente documentação/testes; mantém a versão da aplicação. Conferência final pode usar `python scripts/verify-permanence-publication.py verify 0.1.159 --read-only`, preservando o registro do commit de implementação. Aprovação humana dos cinco capítulos segue pendente.

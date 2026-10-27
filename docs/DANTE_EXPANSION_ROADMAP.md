@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+**27/10/2026 · Lote da permanência implementado e publicado no solo · 0.1.155–0.1.159:** cinco sprints consecutivos implementados com commit/push individual: água, alimento, transporte físico, energia isolada e segunda equipe de colonos. [QA e links por capítulo](permanence/README.md). Uma jornada temporária concluiu os cinco sem nova preparação intermediária, com 500 créditos únicos; saves/recibos, morte/reload, mapas/bosses originais e quatro classes preservados. Solo público e hashes da Vercel conferidos; dupla 16 local e controles emulados passaram. **Render público ainda no protocolo 15:** campanha anterior funciona e foi testada com dois Chrome públicos; novos capítulos no coop aguardam deploy 16, sem descartar objetivos. Solicitação de atualização externa já informada ao usuário. Playtest humano do lote continua pendente; não iniciar entrega D ou outro lote sem nova orientação.
+
 **Lote da permanência · 0.1.159 · Mais duas vozes em Dante:** Baliza, manifesto, segundo alojamento e chegada de Mara e Tomás, com falas próprias. Água, alimento, transporte e energia sustentam a recepção. [Escopo, laboratório e QA](permanence/README.md). Sequência já autorizada; avaliação humana permanece separada.
 
 **Lote da permanência · 0.1.158 · Uma luz que é nossa:** Aterramento seco, descarga por setores, isolamento do circuito antigo e iluminação alimentada pela nave. Novas consequências na base e no abrigo. [Escopo, laboratório e QA](permanence/README.md). Sequência já autorizada; avaliação humana permanece separada.
