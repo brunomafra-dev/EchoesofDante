@@ -1,0 +1,43 @@
+{
+  "method": "DEV position/HP fixtures isolate lethal contacts and real Dash; normal damage resolver, R respawn and cleanup. No victory simulated.",
+  "checks": [
+    {
+      "attack": "tail",
+      "cleaned": {
+        "stopped": true,
+        "warning": false,
+        "mist": 0,
+        "frost": 0,
+        "exposed": false,
+        "won": false,
+        "xp": 1250
+      }
+    },
+    {
+      "attack": "breath",
+      "cleaned": {
+        "stopped": true,
+        "warning": false,
+        "mist": 0,
+        "frost": 0,
+        "exposed": false,
+        "won": false,
+        "xp": 1250
+      }
+    },
+    "A real Dash rejects the first contact without denying the clean combo opening after return"
+  ],
+  "errors": [],
+  "dodged": {
+    "hp": 145,
+    "max": 145,
+    "connected": false,
+    "cracked": true,
+    "exposed": true,
+    "fired": [
+      true,
+      true
+    ]
+  },
+  "passed": true
+}

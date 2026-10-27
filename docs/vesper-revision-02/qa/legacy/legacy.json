@@ -1,0 +1,23 @@
+{
+  "method": "Isolated schema-1 save with later optional systems absent, using the original parser and real reload. No Vesper victory is inserted. Real atlas UI verifies locked northern destinations.",
+  "errors": [],
+  "checks": [
+    "Legacy schema-1 reload preserves prior Warden/XP/receipt and creates exactly one living Vesper; no thermal unlock",
+    "Original atlas disables volcanic regions before their prerequisites"
+  ],
+  "after": {
+    "xp": 1250,
+    "warden": true,
+    "vesper": false,
+    "receipts": [
+      "warden",
+      "soterrado"
+    ],
+    "state": "DORMANT",
+    "max": 1760,
+    "clue": false,
+    "frost": false,
+    "actors": 1
+  },
+  "passed": true
+}

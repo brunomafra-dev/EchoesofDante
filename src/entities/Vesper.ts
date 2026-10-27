@@ -38,6 +38,8 @@ export class Vesper implements Enemy {
   private hitSpent=false;
   private fired=[false,false];
   private tailShattered=false;
+  private tailCracked=false;
+  private tailConnected=false;
   private travelled=0;
   private gait=0;
   private left=true;
@@ -66,7 +68,7 @@ export class Vesper implements Enemy {
   }
   beginIntro(now:number):void{if(this.state!=='DORMANT'||this.stopped)return;this.setState('INTRO',now,2200);this.cue('intro');}
   private setState(state:typeof this.state,now:number,ms:number):void{this.state=state;this.at=now;this.until=now+ms;}
-  update(now:number,dt:number,player:Vec2,dead:boolean,obstacles:readonly Obstacle[],onAttack:(i?:EnemyImpact)=>void,_bounds?:unknown,participants?:readonly Vec2[]):void{
+  update(now:number,dt:number,player:Vec2,dead:boolean,obstacles:readonly Obstacle[],onAttack:(i?:EnemyImpact)=>boolean|void,_bounds?:unknown,participants?:readonly Vec2[]):void{
     this.participants=participants;
     if(this.isDead||this.stopped)return;
     if(dead){this.suspend();return;}
@@ -79,10 +81,15 @@ export class Vesper implements Enemy {
       if(next>this.phase&&this.state==='IDLE'){
         this.phase=(this.phase+1) as 2|3;this.index=0;this.attackName=null;this.clear();this.setState('PHASE',now,B.phaseMs);this.cue('phase');
       }else if(this.state==='IDLE'){
-        const gap=distance(this.position,player);this.facingAngle=Math.atan2(player.y-this.position.y,player.x-this.position.x);
-        if(Math.abs(player.x-this.position.x)>12)this.left=player.x<this.position.x;
-        if(gap>180)moveWithCollisions(this.position,{x:(player.x-this.position.x)/gap*B.speed,y:(player.y-this.position.y)/gap*B.speed},dt,this.radius,obstacles,B.bounds);
-        if(now>=this.until)this.beginAttack(now,B.patterns[this.phase][this.index++%B.patterns[this.phase].length],player);
+        const attack=B.patterns[this.phase][this.index%B.patterns[this.phase].length],gap=distance(this.position,player);
+        // Keep the committed body direction between breath and tail. Turning to
+        // the target here made the supposed rear counter always miss its target.
+        if(attack!=='tail'){
+          this.facingAngle=Math.atan2(player.y-this.position.y,player.x-this.position.x);
+          if(Math.abs(player.x-this.position.x)>12)this.left=player.x<this.position.x;
+          if(gap>180)moveWithCollisions(this.position,{x:(player.x-this.position.x)/gap*B.speed,y:(player.y-this.position.y)/gap*B.speed},dt,this.radius,obstacles,B.bounds);
+        }
+        if(now>=this.until){this.index++;this.beginAttack(now,attack,player);}
       }else if(this.state==='TELEGRAPH'&&now>=this.until){
         this.setState('EXECUTE',now,B[this.attackName!].duration);if(this.attackName==='rush')this.cue('strike');
       }else if(this.state==='EXECUTE'&&this.attackName){
@@ -108,10 +115,22 @@ export class Vesper implements Enemy {
             this.cue('strike');
             for(const victim of this.participants??[player])if(inMeleeArc(this.origin,this.angle,victim,B.breath.range,B.breath.halfAngle,PLAYER.radius))this.hit(onAttack,victim,B.breath.damage);
           }
-        }else if(!this.fired[0]&&elapsed>=B.tail.contact){
-          this.fired[0]=true;this.frost.impact(now,this.origin,0,this.angle);this.cue('strike');
-          for(const victim of this.participants??[player])if(inMeleeArc(this.origin,this.angle,victim,B.tail.range,B.tail.halfAngle,PLAYER.radius))this.hit(onAttack,victim,B.tail.damage);
-          if(this.frost.shatter(now,this.origin,this.angle)>0){this.tailShattered=true;this.clear();this.setState('RECOVER',now,B.openingMs);this.cue('break');}
+        }else{
+          for(let pulse=0;pulse<2;pulse++)if(!this.fired[pulse]&&elapsed>=(pulse?B.tail.second:B.tail.contact)){
+            this.fired[pulse]=true;this.victims.clear();this.hitSpent=false;
+            this.frost.impact(now,this.origin,0,this.angle);this.cue('strike');
+            for(const victim of this.participants??[player])if(inMeleeArc(this.origin,this.angle,victim,B.tail.range,B.tail.halfAngle,PLAYER.radius))this.hit(onAttack,victim,B.tail.damage);
+            if(this.stopped)return;
+            this.tailCracked=this.frost.shatter(now,this.origin,this.angle)>0||this.tailCracked;
+            if(pulse===0){
+              // The return is locked to the opposite sector, never to a moving
+              // player. It receives its own 750 ms warning and contact effect.
+              this.angle+=Math.PI;this.drawSector('tail');this.cue('warning');
+            }else{
+              this.telegraph.setVisible(false);
+              if(this.tailCracked&&!this.tailConnected){this.tailShattered=true;this.clear();this.setState('RECOVER',now,B.openingMs);this.cue('break');}
+            }
+          }
         }
         if(this.state==='EXECUTE'&&now>=this.until){this.clear();this.setState('RECOVER',now,B[attack].recovery);}
       }else if(this.state==='RECOVER'&&now>=this.until){this.tailShattered=false;this.attackName=null;this.setState('IDLE',now,B.idleMs);}
@@ -121,21 +140,24 @@ export class Vesper implements Enemy {
     for(const victim of this.participants??[player])if(this.frost.covers(victim)&&now>=(this.frostVictims.get(victim)??-Infinity)){
       this.frostVictims.set(victim,now+B.frost.interval);onAttack({damage:B.frost.damage,ranged:true,victim});
     }
+    if(this.stopped)return;
     this.frost.update(now);this.render(now,distance(before,this.position));
   }
-  private hit(callback:(i?:EnemyImpact)=>void,victim:Vec2,damage:number):void{
+  private hit(callback:(i?:EnemyImpact)=>boolean|void,victim:Vec2,damage:number):void{
     if((!this.participants&&this.hitSpent)||this.victims.has(victim))return;
-    this.victims.add(victim);this.hitSpent=true;callback({damage,ranged:true,victim});
+    this.victims.add(victim);this.hitSpent=true;
+    const applied=callback({damage,ranged:true,victim});
+    if(this.attackName==='tail'&&applied===true)this.tailConnected=true;
   }
   private beginAttack(now:number,attack:IceAttack,player:Vec2):void{
-    this.clear();this.tailShattered=false;this.fired=[false,false];this.attackName=attack;this.hitSpent=false;this.victims.clear();this.travelled=0;Object.assign(this.origin,this.position);
-    // The tail strikes behind the body instead of repeating the frontal breath.
-    this.facingAngle=Math.atan2(player.y-this.position.y,player.x-this.position.x);this.angle=this.facingAngle+(attack==='tail'?Math.PI:0);this.left=Math.cos(this.facingAngle)<0;
+    this.clear();this.tailShattered=false;this.tailCracked=false;this.tailConnected=false;this.fired=[false,false];this.attackName=attack;this.hitSpent=false;this.victims.clear();this.travelled=0;Object.assign(this.origin,this.position);
+    if(attack!=='tail')this.facingAngle=Math.atan2(player.y-this.position.y,player.x-this.position.x);
+    this.angle=this.facingAngle+(attack==='tail'?Math.PI:0);this.left=Math.cos(this.facingAngle)<0;
     this.setState('TELEGRAPH',now,B[attack].tell);this.cue('warning');
     const g=this.telegraph.clear().setPosition(this.origin.x,this.origin.y).setRotation(this.angle).setDepth(this.position.y-3).setVisible(true).setAlpha(1);
     g.fillStyle(0xa5daee,.15).lineStyle(3,0xffd99a,.95);
     if(attack==='breath'||attack==='tail'){
-      const s=B[attack];g.beginPath().moveTo(0,0).arc(0,0,s.range,-s.halfAngle,s.halfAngle,false).closePath().fillPath().strokePath();g.lineBetween(80,-10,110,0).lineBetween(80,10,110,0);
+      this.drawSector(attack);
     }else if(attack==='rush'){
       g.fillRect(-55,-B.rush.halfWidth,B.rush.distance+110,B.rush.halfWidth*2).strokeRect(-55,-B.rush.halfWidth,B.rush.distance+110,B.rush.halfWidth*2);
       for(const x of [170,340,510])g.lineBetween(x-25,-15,x,0).lineBetween(x-25,15,x,0);
@@ -147,10 +169,16 @@ export class Vesper implements Enemy {
       });
     }
   }
+  private drawSector(attack:'breath'|'tail'):void{
+    const s=B[attack],g=this.telegraph.clear().setPosition(this.origin.x,this.origin.y).setRotation(this.angle).setDepth(this.position.y-3).setVisible(true).setAlpha(1);
+    g.fillStyle(0xa5daee,.15).lineStyle(3,0xffd99a,.95).beginPath().moveTo(0,0).arc(0,0,s.range,-s.halfAngle,s.halfAngle,false).closePath().fillPath().strokePath();
+    g.lineBetween(80,-10,110,0).lineBetween(80,10,110,0);
+  }
   private render(now:number,travel:number):void{
     this.gait+=travel/30;const age=now-this.at,opened=this.state==='RECOVER'&&this.tailShattered;
     const breath=this.attackName==='breath'&&(this.state==='TELEGRAPH'||this.state==='EXECUTE'),tail=this.attackName==='tail'&&(this.state==='TELEGRAPH'||this.state==='EXECUTE'),reaction=opened||breath||tail;
-    const frame=opened?(age<650?4:age<B.openingMs-480?5:age<B.openingMs-B.closingMs?6:7):breath?(this.state==='TELEGRAPH'?0:1):tail?(this.state==='TELEGRAPH'?2:3):this.state==='EXECUTE'?(this.attackName==='rush'?5:6):this.state==='TELEGRAPH'?3:travel>.1?1+Math.floor(this.gait)%2:0;
+    const tailWindup=this.state==='TELEGRAPH'||(age>B.tail.contact+180&&age<B.tail.second);
+    const frame=opened?(age<650?4:age<B.openingMs-480?5:age<B.openingMs-B.closingMs?6:7):breath?(this.state==='TELEGRAPH'?0:1):tail?(tailWindup?2:3):this.state==='EXECUTE'?(this.attackName==='rush'?5:6):this.state==='TELEGRAPH'?3:travel>.1?1+Math.floor(this.gait)%2:0;
     this.body.setTexture(reaction?'vesper-reaction-motion':'vesper-motion',frame).setFlipX(this.left).setPosition(this.position.x,this.position.y+15).setDepth(this.position.y).setRotation(0).setScale(B.size/(reaction?384:256));
     if(now<this.hurtUntil)this.body.setTintFill(0xe9f2ff);else if(now<this.guardedUntil)this.body.setTint(0xb6e1ed);else this.body.clearTint();
     this.shadow.setPosition(this.position.x,this.position.y+10).setDepth(this.position.y-2);

@@ -19,7 +19,7 @@ const routeArrival=routeTest&&((!siroccoTest&&!borealTest&&!embersTest&&(arrival
 const depthTest=new URLSearchParams(location.search).has('depth');
 const settlementTest=new URLSearchParams(location.search).has('settlement');
 const prefix=embersTest?`dante-embers-journey-v1.${routeArrival??'journey'}.`:borealTest?`dante-boreal-journey-v1.${routeArrival??'journey'}.`:siroccoTest?`dante-sirocco-journey-v1.${routeArrival??'journey'}.`:routeTest?`dante-early-route-v2.${routeArrival??'journey'}.`:depthTest?`dante-regional-lab.${mobileClass??'warrior'}.`:new URLSearchParams(location.search).has('journey')?'dante-journey-review-lab.':mobileTest?`dante-mobile-lab.${mobileClass??'warrior'}.`:settlementTest?'dante-settlement-lab-v2.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
-const labPrefix=vesperTest?'dante-vesper-combat-v1.'+(mobileClass??'warrior')+'.':soterradoTest?'dante-soterrado-combat-v1.'+(mobileClass??'warrior')+'.':wardenTest?'dante-warden-combat-v2.'+ (mobileClass??'warrior')+'.':prefix;
+const labPrefix=vesperTest?'dante-vesper-combat-v2.'+(mobileClass??'warrior')+'.':soterradoTest?'dante-soterrado-combat-v1.'+(mobileClass??'warrior')+'.':wardenTest?'dante-warden-combat-v2.'+ (mobileClass??'warrior')+'.':prefix;
 const isolatedKey=(storage:Storage,key:string)=>labPrefix+(storage===localStorage?'local.':'session.')+key;
 Storage.prototype.getItem=function(key){return key.startsWith('echoes-of-dante.')?get.call(sessionStorage,isolatedKey(this,key)):get.call(this,key)};
 Storage.prototype.setItem=function(key,value){if(key.startsWith('echoes-of-dante.'))set.call(sessionStorage,isolatedKey(this,key),String(value));else set.call(this,key,value)};
@@ -55,7 +55,7 @@ if(settlementTest){
 }
 const {game}=await import('../../main');
 if(bossTest){
- const label=vesperTest?'VÉSPER':soterradoTest?'SOTERRADO':'WARDEN',flag=vesperTest?'vesper':soterradoTest?'soterrado':'warden',version=vesperTest?'0.1.152':soterradoTest?'0.1.151':'0.1.150';
+ const label=vesperTest?'VÉSPER':soterradoTest?'SOTERRADO':'WARDEN',flag=vesperTest?'vesper':soterradoTest?'soterrado':'warden',version=vesperTest?'0.1.153':soterradoTest?'0.1.151':'0.1.150';
  const seed=(s:import('../../scenes/GameScene').GameScene)=>vesperTest?s.seedVesperPlaytest():soterradoTest?s.seedSoterradoPlaytest():s.seedWardenPlaytest();
  details.replaceChildren(); details.classList.add('is-mobile-lab');
  const summary=document.createElement('summary');summary.textContent=label+' · REVISÃO DO COMBATE · TESTE RESERVADO';details.append(summary);

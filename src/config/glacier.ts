@@ -63,7 +63,7 @@ export const VESPER = {
     3: ['breath', 'tail', 'eruption', 'rush', 'breath', 'tail'] as readonly IceAttack[],
   },
   breath: { tell: 1050, duration: 1240, recovery: 600, contact: 200, second: 940, damage: 38, range: 550, halfAngle: .43 },
-  tail: { tell: 800, duration: 650, recovery: 320, contact: 300, damage: 36, range: 300, halfAngle: 1.4 },
+  tail: { tell: 800, duration: 1300, recovery: 320, contact: 300, second: 1050, damage: 42, range: 300, halfAngle: 1.7 },
   rush: { tell: 850, duration: 950, recovery: 300, damage: 40, speed: 710, distance: 580, halfWidth: 62 },
   eruption: { tell: 1000, duration: 1500, recovery: 320, contact: 200, damage: 32, radius: 86, interval: 470 },
 } as const;

@@ -1,0 +1,236 @@
+{
+  "method": "Actual game damage and real mouse/keyboard. DEV state/position fixtures isolate breath, persistent frost and two-sweep tail. Class openings extended only for inspection; stationary trials keep normal AI/HP/damage. Not human difficulty approval.",
+  "checks": [
+    "Closed ice plating reduces damage to 22% through the actual common hit path",
+    "Breath contact at 200/940 ms causes two 53 HP pulses; six crusts remain after warning/attack end",
+    "Two committed tail sweeps break persistent frost; avoiding both enables 1.6x damage only after the return",
+    "Rear contact deals 59 HP; a connected combo cannot expose the chest",
+    "Reported rear position takes actual damage; fixed return has a separate warning; shattered frost does not expose after a real connected tail",
+    "Both lateral sides receive two separately timed contacts; a single victim set cannot silently cancel the return",
+    "Actual Dash preserves normal invulnerability through tail contact",
+    "Rush and timed eruptions deal real contact damage without spawning unbounded hazards",
+    "Six overlapping crusts share one 1100 ms damage interval per participant",
+    "Four actual kits can damage the physically earned opening with held basic attacks",
+    "Four stationary held-basic trials lose against living normal AI; R cleans frost and restores one living encounter"
+  ],
+  "errors": [],
+  "kits": [
+    {
+      "cls": "warrior",
+      "hpLost": 324
+    },
+    {
+      "cls": "hunter",
+      "hpLost": 240
+    },
+    {
+      "cls": "astral",
+      "hpLost": 170
+    },
+    {
+      "cls": "xenobinder",
+      "hpLost": 187
+    }
+  ],
+  "stationary": [
+    {
+      "cls": "warrior",
+      "bossStarted": 1760,
+      "bossRemaining": 1662,
+      "playerDefeated": true
+    },
+    {
+      "cls": "hunter",
+      "bossStarted": 1760,
+      "bossRemaining": 1700,
+      "playerDefeated": true
+    },
+    {
+      "cls": "astral",
+      "bossStarted": 1760,
+      "bossRemaining": 1715,
+      "playerDefeated": true
+    },
+    {
+      "cls": "xenobinder",
+      "bossStarted": 1760,
+      "bossRemaining": 1695,
+      "playerDefeated": true
+    }
+  ],
+  "initial": {
+    "p": {
+      "x": 680,
+      "y": 970
+    },
+    "hp": 145,
+    "maxHp": 145,
+    "dead": false,
+    "boss": {
+      "p": {
+        "x": 1420,
+        "y": 960
+      },
+      "hp": 1760,
+      "max": 1760,
+      "state": "DORMANT",
+      "attack": null,
+      "phase": 1,
+      "age": 41504.5,
+      "angle": 0,
+      "facing": 3.141592653589793,
+      "exposed": false,
+      "frame": 0,
+      "texture": "vesper-motion",
+      "patches": 0,
+      "shards": 0
+    },
+    "xp": 1250,
+    "won": false,
+    "clue": false,
+    "portal": false,
+    "modal": false
+  },
+  "breath": {
+    "p": {
+      "x": 1120,
+      "y": 960
+    },
+    "hp": 39,
+    "maxHp": 145,
+    "dead": false,
+    "boss": {
+      "p": {
+        "x": 1420,
+        "y": 960
+      },
+      "hp": 1738,
+      "max": 1760,
+      "state": "RECOVER",
+      "attack": "breath",
+      "phase": 1,
+      "age": 0,
+      "angle": 3.141592653589793,
+      "facing": 3.141592653589793,
+      "exposed": false,
+      "frame": 0,
+      "texture": "vesper-motion",
+      "patches": 6,
+      "shards": 0
+    },
+    "xp": 1250,
+    "won": false,
+    "clue": false,
+    "portal": false,
+    "modal": false
+  },
+  "opening": {
+    "p": {
+      "x": 1820,
+      "y": 960
+    },
+    "hp": 145,
+    "maxHp": 145,
+    "dead": false,
+    "boss": {
+      "p": {
+        "x": 1420,
+        "y": 960
+      },
+      "hp": 1760,
+      "max": 1760,
+      "state": "RECOVER",
+      "attack": "tail",
+      "phase": 1,
+      "age": 250,
+      "angle": 9.42477796076938,
+      "facing": 3.141592653589793,
+      "exposed": true,
+      "frame": 4,
+      "texture": "vesper-reaction-motion",
+      "patches": 2,
+      "shards": 4
+    },
+    "xp": 1250,
+    "won": false,
+    "clue": false,
+    "portal": false,
+    "modal": false
+  },
+  "rearCounter": {
+    "rear": {
+      "p": {
+        "x": 1620,
+        "y": 960
+      },
+      "hp": 86,
+      "maxHp": 145,
+      "dead": false,
+      "boss": {
+        "p": {
+          "x": 1420,
+          "y": 960
+        },
+        "hp": 1760,
+        "max": 1760,
+        "state": "EXECUTE",
+        "attack": "tail",
+        "phase": 1,
+        "age": 300,
+        "angle": 9.42477796076938,
+        "facing": 3.141592653589793,
+        "exposed": false,
+        "frame": 3,
+        "texture": "vesper-reaction-motion",
+        "patches": 6,
+        "shards": 0
+      },
+      "xp": 1250,
+      "won": false,
+      "clue": false,
+      "portal": false,
+      "modal": false
+    },
+    "punished": {
+      "p": {
+        "x": 1820,
+        "y": 1080
+      },
+      "hp": 86,
+      "maxHp": 145,
+      "dead": false,
+      "boss": {
+        "p": {
+          "x": 1420,
+          "y": 960
+        },
+        "hp": 1760,
+        "max": 1760,
+        "state": "RECOVER",
+        "attack": "tail",
+        "phase": 1,
+        "age": 0,
+        "angle": 9.42477796076938,
+        "facing": 3.141592653589793,
+        "exposed": false,
+        "frame": 0,
+        "texture": "vesper-motion",
+        "patches": 2,
+        "shards": 4
+      },
+      "xp": 1250,
+      "won": false,
+      "clue": false,
+      "portal": false,
+      "modal": false
+    }
+  },
+  "overlapHpLost": 66,
+  "pool": {
+    "before": 101,
+    "after": 101,
+    "objects": 25,
+    "patches": 6
+  },
+  "passed": true
+}

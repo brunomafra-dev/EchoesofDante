@@ -1,5 +1,7 @@
 # Vésper — gelo persistente e retaguarda · 0.1.152
 
+**Histórico: dificuldade rejeitada pelo usuário em 27/10/2026.** Foi possível vencer atrás do dragão com auto attack. O QA abaixo não cobria essa estratégia; não representa aprovação humana. A [revisão 0.1.153](../vesper-revision-02/README.md) substitui essas regras de cauda e usa dados temporários novos. Links antigos carregam o código atual.
+
 [Enfrentar Vésper vivo](https://echosofdante.vercel.app/campaign-playtest.html?vesper=1&v=0.1.152) · [Biblioteca](https://echosofdante.vercel.app/test-library.html)
 
 ## Autorização

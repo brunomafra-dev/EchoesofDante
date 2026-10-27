@@ -1,0 +1,2458 @@
+{
+  "method": "Live normal AI and original 1760 HP boss. Warrior at the legitimate simulated arrival level, 145 HP, normal kit. Script reads boss state and plans paths to choose real WASD/Dash/Q/mouse. No position, HP, AI, invulnerability, potions or time mutations during the fight. Controller knows the solution; not a human discovery or difficulty assessment.",
+  "errors": [],
+  "samples": [
+    {
+      "p": {
+        "x": 998.7927567702776,
+        "y": 960.6886555377251
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1420,
+          "y": 960
+        },
+        "state": "INTRO",
+        "attack": null,
+        "phase": 1,
+        "age": 500,
+        "angle": 0,
+        "facing": 3.141592653589793,
+        "hp": 1760,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1264.230656770275,
+        "y": 960.6886555377251
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1420,
+          "y": 960
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 1,
+        "age": 50,
+        "angle": 0,
+        "facing": 3.137171687070563,
+        "hp": 1760,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1264.230656770275,
+        "y": 960.6886555377251
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1420,
+          "y": 960
+        },
+        "state": "TELEGRAPH",
+        "attack": "breath",
+        "phase": 1,
+        "age": 66.70000000000073,
+        "angle": 3.136653974025915,
+        "facing": 3.136653974025915,
+        "hp": 1753,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1510.3066201765848,
+        "y": 939.818257469647
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1420,
+          "y": 960
+        },
+        "state": "EXECUTE",
+        "attack": "breath",
+        "phase": 1,
+        "age": 50,
+        "angle": 3.136653974025915,
+        "facing": 3.136653974025915,
+        "hp": 1732,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1533.4100614596496,
+        "y": 962.9216987527112
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1420,
+          "y": 960
+        },
+        "state": "RECOVER",
+        "attack": "breath",
+        "phase": 1,
+        "age": 83.29999999999927,
+        "angle": 3.136653974025915,
+        "facing": 3.136653974025915,
+        "hp": 1704,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1533.4100614596496,
+        "y": 962.9216987527112
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1420,
+          "y": 960
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 1,
+        "age": 83.29999999999927,
+        "angle": 3.136653974025915,
+        "facing": 3.136653974025915,
+        "hp": 1690,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1533.4100614596496,
+        "y": 962.9216987527112
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1420,
+          "y": 960
+        },
+        "state": "TELEGRAPH",
+        "attack": "tail",
+        "phase": 1,
+        "age": 66.70000000000073,
+        "angle": 6.278246627615708,
+        "facing": 3.136653974025915,
+        "hp": 1690,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1783.4176614596481,
+        "y": 962.9216987527112
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1420,
+          "y": 960
+        },
+        "state": "EXECUTE",
+        "attack": "tail",
+        "phase": 1,
+        "age": 0,
+        "angle": 6.278246627615708,
+        "facing": 3.136653974025915,
+        "hp": 1683,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1783.4176614596481,
+        "y": 962.9216987527112
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1420,
+          "y": 960
+        },
+        "state": "RECOVER",
+        "attack": "tail",
+        "phase": 1,
+        "age": 100.100000000004,
+        "angle": 9.419839281205501,
+        "facing": 3.136653974025915,
+        "hp": 1683,
+        "max": 1760,
+        "exposed": false,
+        "broken": true
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1760.3176849998115,
+        "y": 939.8217222928749
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1420,
+          "y": 960
+        },
+        "state": "RECOVER",
+        "attack": "tail",
+        "phase": 1,
+        "age": 250.100000000004,
+        "angle": 9.419839281205501,
+        "facing": 3.136653974025915,
+        "hp": 1683,
+        "max": 1760,
+        "exposed": true,
+        "broken": true
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1347.9517457104814,
+        "y": 912.8701924032574
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1420,
+          "y": 960
+        },
+        "state": "RECOVER",
+        "attack": "tail",
+        "phase": 1,
+        "age": 3333.3999999999996,
+        "angle": 9.419839281205501,
+        "facing": 3.136653974025915,
+        "hp": 1390,
+        "max": 1760,
+        "exposed": false,
+        "broken": true
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1324.846572015803,
+        "y": 968.6338660979354
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1420,
+          "y": 960
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 1,
+        "age": 100,
+        "angle": 9.419839281205501,
+        "facing": 3.0511041841915505,
+        "hp": 1383,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1324.846572015803,
+        "y": 968.6338660979354
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1420,
+          "y": 960
+        },
+        "state": "TELEGRAPH",
+        "attack": "rush",
+        "phase": 1,
+        "age": 66.40000000000146,
+        "angle": 3.0511041841915505,
+        "facing": 3.0511041841915505,
+        "hp": 1383,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1301.751792790808,
+        "y": 773.1310868729407
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1396.4325174837852,
+          "y": 962.1384252004481
+        },
+        "state": "EXECUTE",
+        "attack": "rush",
+        "phase": 1,
+        "age": 33.299999999995634,
+        "angle": 3.0511041841915505,
+        "facing": 3.0511041841915505,
+        "hp": 1376,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1301.751792790808,
+        "y": 773.1310868729407
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 952.3164559300369,
+          "y": 1005.2766999468444
+        },
+        "state": "RECOVER",
+        "attack": "rush",
+        "phase": 1,
+        "age": 116.69999999999709,
+        "angle": 3.0511041841915505,
+        "facing": 3.0511041841915505,
+        "hp": 1376,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1301.751792790808,
+        "y": 773.1310868729407
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 958.701704112364,
+          "y": 1001.0346923490096
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 1,
+        "age": 66.80000000000291,
+        "angle": 3.0511041841915505,
+        "facing": -0.586393561602813,
+        "hp": 1376,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1301.751792790808,
+        "y": 773.1310868729407
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "TELEGRAPH",
+        "attack": "breath",
+        "phase": 1,
+        "age": 33.400000000001455,
+        "angle": -0.5863935616028129,
+        "facing": -0.5863935616028129,
+        "hp": 1376,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1101.8856922807136,
+        "y": 1019.2006051259345
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "EXECUTE",
+        "attack": "breath",
+        "phase": 1,
+        "age": 0,
+        "angle": -0.5863935616028129,
+        "facing": -0.5863935616028129,
+        "hp": 1369,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1046.1125158208774,
+        "y": 1092.5881493286724
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "RECOVER",
+        "attack": "breath",
+        "phase": 1,
+        "age": 16.69999999999709,
+        "angle": -0.5863935616028129,
+        "facing": -0.5863935616028129,
+        "hp": 1341,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1046.1125158208774,
+        "y": 1092.5881493286724
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 1,
+        "age": 33.30000000000291,
+        "angle": -0.5863935616028129,
+        "facing": -0.5863935616028129,
+        "hp": 1327,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1046.1125158208774,
+        "y": 1092.5881493286724
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "TELEGRAPH",
+        "attack": "tail",
+        "phase": 1,
+        "age": 16.599999999998545,
+        "angle": 2.5551990919869803,
+        "facing": -0.5863935616028129,
+        "hp": 1327,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1173.8086112373044,
+        "y": 1266.4752383718612
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "EXECUTE",
+        "attack": "tail",
+        "phase": 1,
+        "age": 50,
+        "angle": 2.5551990919869803,
+        "facing": -0.5863935616028129,
+        "hp": 1320,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1173.8086112373044,
+        "y": 1270.554488371861
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "RECOVER",
+        "attack": "tail",
+        "phase": 1,
+        "age": 49.900000000001455,
+        "angle": 5.696791745576773,
+        "facing": -0.5863935616028129,
+        "hp": 1320,
+        "max": 1760,
+        "exposed": false,
+        "broken": true
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1133.3931806964667,
+        "y": 1226.0549078310235
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "RECOVER",
+        "attack": "tail",
+        "phase": 1,
+        "age": 299.90000000000146,
+        "angle": 5.696791745576773,
+        "facing": -0.5863935616028129,
+        "hp": 1320,
+        "max": 1760,
+        "exposed": true,
+        "broken": true
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1069.867379226109,
+        "y": 933.8632563606677
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "RECOVER",
+        "attack": "tail",
+        "phase": 1,
+        "age": 3299.9000000000015,
+        "angle": 5.696791745576773,
+        "facing": -0.5863935616028129,
+        "hp": 973,
+        "max": 1760,
+        "exposed": false,
+        "broken": true
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1069.867379226109,
+        "y": 933.8632563606677
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "PHASE",
+        "attack": null,
+        "phase": 2,
+        "age": 33.400000000001455,
+        "angle": 5.696791745576773,
+        "facing": -0.5863935616028129,
+        "hp": 966,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1069.867379226109,
+        "y": 933.8632563606677
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 2,
+        "age": 83.5,
+        "angle": 5.696791745576773,
+        "facing": -0.5333673759854961,
+        "hp": 959,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1069.867379226109,
+        "y": 933.8632563606677
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "TELEGRAPH",
+        "attack": "breath",
+        "phase": 2,
+        "age": 66.59999999999854,
+        "angle": -0.5333673759854961,
+        "facing": -0.5333673759854961,
+        "hp": 959,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 937.3806628170718,
+        "y": 1099.4470214733665
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "EXECUTE",
+        "attack": "breath",
+        "phase": 2,
+        "age": 0,
+        "angle": -0.5333673759854961,
+        "facing": -0.5333673759854961,
+        "hp": 938,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 937.3806628170718,
+        "y": 1099.4347714733665
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "RECOVER",
+        "attack": "breath",
+        "phase": 2,
+        "age": 83.39999999999418,
+        "angle": -0.5333673759854961,
+        "facing": -0.5333673759854961,
+        "hp": 910,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 937.3806628170718,
+        "y": 1099.4470214733665
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 2,
+        "age": 16.69999999999709,
+        "angle": -0.5333673759854961,
+        "facing": -0.5333673759854961,
+        "hp": 903,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 937.3806628170718,
+        "y": 1099.4494714733662
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "TELEGRAPH",
+        "attack": "tail",
+        "phase": 2,
+        "age": 0,
+        "angle": 2.608225277604297,
+        "facing": -0.5333673759854961,
+        "hp": 896,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 957.594441528139,
+        "y": 1341.0636501844333
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "EXECUTE",
+        "attack": "tail",
+        "phase": 2,
+        "age": 50,
+        "angle": 2.608225277604297,
+        "facing": -0.5333673759854961,
+        "hp": 889,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 957.594441528139,
+        "y": 1341.0636501844333
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "RECOVER",
+        "attack": "tail",
+        "phase": 2,
+        "age": 116.60000000000582,
+        "angle": 5.74981793119409,
+        "facing": -0.5333673759854961,
+        "hp": 889,
+        "max": 1760,
+        "exposed": false,
+        "broken": true
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 981.8906378275923,
+        "y": 1320.8516038849802
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "RECOVER",
+        "attack": "tail",
+        "phase": 2,
+        "age": 250,
+        "angle": 5.74981793119409,
+        "facing": -0.5333673759854961,
+        "hp": 889,
+        "max": 1760,
+        "exposed": true,
+        "broken": true
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1074.2766843740267,
+        "y": 926.2874573385468
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "RECOVER",
+        "attack": "tail",
+        "phase": 2,
+        "age": 3350,
+        "angle": 5.74981793119409,
+        "facing": -0.5333673759854961,
+        "hp": 565,
+        "max": 1760,
+        "exposed": false,
+        "broken": true
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1074.2766843740267,
+        "y": 930.3716073385467
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 2,
+        "age": 83.39999999999418,
+        "angle": 5.74981793119409,
+        "facing": -0.5402844836497006,
+        "hp": 558,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1074.2766843740267,
+        "y": 954.8691573385465
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "TELEGRAPH",
+        "attack": "eruption",
+        "phase": 2,
+        "age": 33.200000000004366,
+        "angle": -0.40405105378305867,
+        "facing": -0.40405105378305867,
+        "hp": 558,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1074.2766843740267,
+        "y": 774.2646573385465
+      },
+      "hp": 145,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "EXECUTE",
+        "attack": "eruption",
+        "phase": 2,
+        "age": 16.60000000000582,
+        "angle": -0.40405105378305867,
+        "facing": -0.40405105378305867,
+        "hp": 551,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1074.2766843740267,
+        "y": 774.2646573385465
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 979.4571132954821,
+          "y": 987.2459403793297
+        },
+        "state": "RECOVER",
+        "attack": "eruption",
+        "phase": 2,
+        "age": 0,
+        "angle": -0.40405105378305867,
+        "facing": -0.40405105378305867,
+        "hp": 551,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1074.2766843740267,
+        "y": 774.2646573385465
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 981.7961972163854,
+          "y": 981.9919502067589
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 2,
+        "age": 50,
+        "angle": -0.40405105378305867,
+        "facing": -1.1519400556026864,
+        "hp": 551,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1074.2766843740267,
+        "y": 774.2646573385465
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 992.7100512876427,
+          "y": 957.4775317530961
+        },
+        "state": "TELEGRAPH",
+        "attack": "rush",
+        "phase": 2,
+        "age": 16.599999999998545,
+        "angle": -1.151940055602686,
+        "facing": -1.151940055602686,
+        "hp": 551,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1248.1800159099726,
+        "y": 836.6473248941862
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 992.7100512876427,
+          "y": 957.4775317530961
+        },
+        "state": "EXECUTE",
+        "attack": "rush",
+        "phase": 2,
+        "age": 0,
+        "angle": -1.151940055602686,
+        "facing": -1.151940055602686,
+        "hp": 551,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1248.1800159099726,
+        "y": 844.7935748941865
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1267.02546075707,
+          "y": 628
+        },
+        "state": "RECOVER",
+        "attack": "rush",
+        "phase": 2,
+        "age": 83.40000000000146,
+        "angle": -1.151940055602686,
+        "facing": -1.151940055602686,
+        "hp": 551,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1248.1800159099726,
+        "y": 844.7935748941865
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1267.02546075707,
+          "y": 628
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 2,
+        "age": 33.400000000001455,
+        "angle": -1.151940055602686,
+        "facing": -1.151940055602686,
+        "hp": 551,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1248.1800159099726,
+        "y": 844.7935748941865
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1267.02546075707,
+          "y": 628
+        },
+        "state": "TELEGRAPH",
+        "attack": "tail",
+        "phase": 2,
+        "age": 100.09999999999854,
+        "angle": 1.9896525979871071,
+        "facing": -1.151940055602686,
+        "hp": 551,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1242.717578590568,
+        "y": 975.3666756712274
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1267.02546075707,
+          "y": 628
+        },
+        "state": "EXECUTE",
+        "attack": "tail",
+        "phase": 2,
+        "age": 16.69999999999709,
+        "angle": 1.9896525979871071,
+        "facing": -1.151940055602686,
+        "hp": 551,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1242.717578590568,
+        "y": 975.3666756712274
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1267.02546075707,
+          "y": 628
+        },
+        "state": "RECOVER",
+        "attack": "tail",
+        "phase": 2,
+        "age": 66.59999999999854,
+        "angle": 5.1312452515769005,
+        "facing": -1.151940055602686,
+        "hp": 551,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1242.717578590568,
+        "y": 975.3666756712274
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1266.2223605309462,
+          "y": 639.4765348074582
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 2,
+        "age": 99.90000000000146,
+        "angle": 5.1312452515769005,
+        "facing": 1.6406600258254316,
+        "hp": 551,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1242.717578590568,
+        "y": 975.3666756712274
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1264.7506255803735,
+          "y": 660.5080534625096
+        },
+        "state": "TELEGRAPH",
+        "attack": "breath",
+        "phase": 2,
+        "age": 49.900000000001455,
+        "angle": 1.6406600258254314,
+        "facing": 1.6406600258254314,
+        "hp": 551,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1172.7594742191297,
+        "y": 707.2750969776761
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1264.7506255803735,
+          "y": 660.5080534625096
+        },
+        "state": "EXECUTE",
+        "attack": "breath",
+        "phase": 2,
+        "age": 16.599999999998545,
+        "angle": 1.6406600258254314,
+        "facing": 1.6406600258254314,
+        "hp": 544,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1275.3650335765903,
+        "y": 537.9965240517971
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1264.7506255803735,
+          "y": 660.5080534625096
+        },
+        "state": "RECOVER",
+        "attack": "breath",
+        "phase": 2,
+        "age": 0,
+        "angle": 1.6406600258254314,
+        "facing": 1.6406600258254314,
+        "hp": 516,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1275.3650335765903,
+        "y": 537.9965240517971
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1264.7506255803735,
+          "y": 660.5080534625096
+        },
+        "state": "PHASE",
+        "attack": null,
+        "phase": 3,
+        "age": 83.09999999999854,
+        "angle": 1.6406600258254314,
+        "facing": 1.6406600258254314,
+        "hp": 509,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1275.3650335765903,
+        "y": 537.9965240517971
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1264.7506255803735,
+          "y": 660.5080534625096
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 3,
+        "age": 50,
+        "angle": 1.6406600258254314,
+        "facing": -1.4843720694031592,
+        "hp": 509,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1275.3650335765903,
+        "y": 537.9965240517971
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1264.7506255803735,
+          "y": 660.5080534625096
+        },
+        "state": "TELEGRAPH",
+        "attack": "breath",
+        "phase": 3,
+        "age": 16.69999999999709,
+        "angle": -1.4843720694031592,
+        "facing": -1.4843720694031592,
+        "hp": 502,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1347.2847954264005,
+        "y": 729.1917276575915
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1264.7506255803735,
+          "y": 660.5080534625096
+        },
+        "state": "EXECUTE",
+        "attack": "breath",
+        "phase": 3,
+        "age": 33.299999999995634,
+        "angle": -1.4843720694031592,
+        "facing": -1.4843720694031592,
+        "hp": 481,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1347.2847954264005,
+        "y": 729.1917276575915
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1264.7506255803735,
+          "y": 660.5080534625096
+        },
+        "state": "RECOVER",
+        "attack": "breath",
+        "phase": 3,
+        "age": 83.29999999999563,
+        "angle": -1.4843720694031592,
+        "facing": -1.4843720694031592,
+        "hp": 453,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1347.2847954264005,
+        "y": 729.1917276575915
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1264.7506255803735,
+          "y": 660.5080534625096
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 3,
+        "age": 66.90000000000146,
+        "angle": -1.4843720694031592,
+        "facing": -1.4843720694031592,
+        "hp": 446,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1347.2847954264005,
+        "y": 729.1917276575915
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1264.7506255803735,
+          "y": 660.5080534625096
+        },
+        "state": "TELEGRAPH",
+        "attack": "tail",
+        "phase": 3,
+        "age": 16.69999999999709,
+        "angle": 1.6572205841866339,
+        "facing": -1.4843720694031592,
+        "hp": 439,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1530.7409229375824,
+        "y": 879.9893551687733
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1264.7506255803735,
+          "y": 660.5080534625096
+        },
+        "state": "EXECUTE",
+        "attack": "tail",
+        "phase": 3,
+        "age": 66.59999999999854,
+        "angle": 1.6572205841866339,
+        "facing": -1.4843720694031592,
+        "hp": 432,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1530.7409229375824,
+        "y": 879.9893551687733
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1264.7506255803735,
+          "y": 660.5080534625096
+        },
+        "state": "RECOVER",
+        "attack": "tail",
+        "phase": 3,
+        "age": 49.89999999999418,
+        "angle": 4.798813237776427,
+        "facing": -1.4843720694031592,
+        "hp": 432,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1530.7409229375824,
+        "y": 879.9893551687733
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1270.6616930232456,
+          "y": 665.385557603545
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 3,
+        "age": 66.69999999999709,
+        "angle": 4.798813237776427,
+        "facing": 0.6898879662161386,
+        "hp": 432,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1530.7409229375824,
+        "y": 879.9893551687733
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1289.8815323618044,
+          "y": 681.2447652457955
+        },
+        "state": "TELEGRAPH",
+        "attack": "eruption",
+        "phase": 3,
+        "age": 16.69999999999709,
+        "angle": 0.6898879662161406,
+        "facing": 0.6898879662161406,
+        "hp": 432,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1530.7409229375824,
+        "y": 1060.5610051687734
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1289.8815323618044,
+          "y": 681.2447652457955
+        },
+        "state": "EXECUTE",
+        "attack": "eruption",
+        "phase": 3,
+        "age": 99.90000000000146,
+        "angle": 0.6898879662161406,
+        "facing": 0.6898879662161406,
+        "hp": 432,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1530.7409229375824,
+        "y": 1060.5610051687734
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1289.8815323618044,
+          "y": 681.2447652457955
+        },
+        "state": "RECOVER",
+        "attack": "eruption",
+        "phase": 3,
+        "age": 50.099999999998545,
+        "angle": 0.6898879662161406,
+        "facing": 0.6898879662161406,
+        "hp": 432,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1530.7409229375824,
+        "y": 1060.5610051687734
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1293.9914215478705,
+          "y": 687.7172042436355
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 3,
+        "age": 66.29999999999563,
+        "angle": 0.6898879662161406,
+        "facing": 1.0050503621182827,
+        "hp": 432,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1530.7409229375824,
+        "y": 1060.5610051687734
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1307.344400347837,
+          "y": 708.746077969781
+        },
+        "state": "TELEGRAPH",
+        "attack": "rush",
+        "phase": 3,
+        "age": 16.5,
+        "angle": 1.0050503621182838,
+        "facing": 1.0050503621182838,
+        "hp": 432,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1379.9667006608586,
+        "y": 1146.0010774454959
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1345.403645065255,
+          "y": 768.6834944267805
+        },
+        "state": "EXECUTE",
+        "attack": "rush",
+        "phase": 3,
+        "age": 100,
+        "angle": 1.0050503621182838,
+        "facing": 1.0050503621182838,
+        "hp": 432,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1379.9667006608586,
+        "y": 1174.5950274454958
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1624.5073102759654,
+          "y": 1208.228544272537
+        },
+        "state": "RECOVER",
+        "attack": "rush",
+        "phase": 3,
+        "age": 66.70000000000437,
+        "angle": 1.0050503621182838,
+        "facing": 1.0050503621182838,
+        "hp": 432,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1379.9667006608586,
+        "y": 1178.6791774454962
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1616.9225976499265,
+          "y": 1207.1249568176456
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 3,
+        "age": 66.70000000000437,
+        "angle": 1.0050503621182838,
+        "facing": -3.022117666242973,
+        "hp": 432,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1379.9667006608586,
+        "y": 1178.6865274454965
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1592.5112731060685,
+          "y": 1202.2058342906832
+        },
+        "state": "TELEGRAPH",
+        "attack": "breath",
+        "phase": 3,
+        "age": 49.900000000001455,
+        "angle": -2.9748641067199233,
+        "facing": -2.9748641067199233,
+        "hp": 432,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1666.7844618222598,
+        "y": 1241.1564594943347
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1592.5112731060685,
+          "y": 1202.2058342906832
+        },
+        "state": "EXECUTE",
+        "attack": "breath",
+        "phase": 3,
+        "age": 83.40000000000873,
+        "angle": -2.9748641067199233,
+        "facing": -2.9748641067199233,
+        "hp": 411,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1689.8648382820957,
+        "y": 1218.056483034498
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1592.5112731060685,
+          "y": 1202.2058342906832
+        },
+        "state": "RECOVER",
+        "attack": "breath",
+        "phase": 3,
+        "age": 66.69999999999709,
+        "angle": -2.9748641067199233,
+        "facing": -2.9748641067199233,
+        "hp": 390,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1689.8550382820945,
+        "y": 1218.056483034498
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1592.5112731060685,
+          "y": 1202.2058342906832
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 3,
+        "age": 0,
+        "angle": -2.9748641067199233,
+        "facing": -2.9748641067199233,
+        "hp": 376,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1722.5012882820931,
+        "y": 1218.056483034498
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1592.5112731060685,
+          "y": 1202.2058342906832
+        },
+        "state": "TELEGRAPH",
+        "attack": "tail",
+        "phase": 3,
+        "age": 116.5,
+        "angle": 0.16672854686986982,
+        "facing": -2.9748641067199233,
+        "hp": 369,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1954.789664741932,
+        "y": 1241.1564594943347
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1592.5112731060685,
+          "y": 1202.2058342906832
+        },
+        "state": "EXECUTE",
+        "attack": "tail",
+        "phase": 3,
+        "age": 116.59999999999127,
+        "angle": 0.16672854686986982,
+        "facing": -2.9748641067199233,
+        "hp": 369,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1954.789664741932,
+        "y": 1241.1564594943347
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1592.5112731060685,
+          "y": 1202.2058342906832
+        },
+        "state": "RECOVER",
+        "attack": "tail",
+        "phase": 3,
+        "age": 49.89999999999418,
+        "angle": 3.308321200459663,
+        "facing": -2.9748641067199233,
+        "hp": 369,
+        "max": 1760,
+        "exposed": false,
+        "broken": true
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1911.4741771594142,
+        "y": 1284.4719470768525
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1592.5112731060685,
+          "y": 1202.2058342906832
+        },
+        "state": "RECOVER",
+        "attack": "tail",
+        "phase": 3,
+        "age": 316.6000000000058,
+        "angle": 3.308321200459663,
+        "facing": -2.9748641067199233,
+        "hp": 369,
+        "max": 1760,
+        "exposed": true,
+        "broken": true
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1505.6655482721164,
+        "y": 1222.8061459208925
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1592.5112731060685,
+          "y": 1202.2058342906832
+        },
+        "state": "RECOVER",
+        "attack": "tail",
+        "phase": 3,
+        "age": 3266.600000000006,
+        "angle": 3.308321200459663,
+        "facing": -2.9748641067199233,
+        "hp": 76,
+        "max": 1760,
+        "exposed": false,
+        "broken": true
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1485.4535019726634,
+        "y": 1206.68559962144
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1592.5112731060685,
+          "y": 1202.2058342906832
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 3,
+        "age": 116.59999999999127,
+        "angle": 3.308321200459663,
+        "facing": 3.09977267724068,
+        "hp": 69,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1485.4535019726634,
+        "y": 1174.0148496214404
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1592.5112731060685,
+          "y": 1202.2058342906832
+        },
+        "state": "TELEGRAPH",
+        "attack": "breath",
+        "phase": 3,
+        "age": 100,
+        "angle": -2.884112688121706,
+        "facing": -2.884112688121706,
+        "hp": 62,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1623.9260027564123,
+        "y": 1271.4092645596793
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1592.5112731060685,
+          "y": 1202.2058342906832
+        },
+        "state": "EXECUTE",
+        "attack": "breath",
+        "phase": 3,
+        "age": 33.30000000000291,
+        "angle": -2.884112688121706,
+        "facing": -2.884112688121706,
+        "hp": 41,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1705.4720330311645,
+        "y": 1229.382682819613
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1592.5112731060685,
+          "y": 1202.2058342906832
+        },
+        "state": "RECOVER",
+        "attack": "breath",
+        "phase": 3,
+        "age": 100.19999999999709,
+        "angle": -2.884112688121706,
+        "facing": -2.884112688121706,
+        "hp": 20,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1705.4720330311645,
+        "y": 1229.382682819613
+      },
+      "hp": 100,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1592.5112731060685,
+          "y": 1202.2058342906832
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 3,
+        "age": 99.90000000000873,
+        "angle": -2.884112688121706,
+        "facing": -2.884112688121706,
+        "hp": 6,
+        "max": 1760,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 1250,
+      "clue": false
+    }
+  ],
+  "start": {
+    "p": {
+      "x": 998.7927567702776,
+      "y": 960.6886555377251
+    },
+    "hp": 145,
+    "dead": false,
+    "dashReady": true,
+    "boss": {
+      "p": {
+        "x": 1420,
+        "y": 960
+      },
+      "state": "INTRO",
+      "attack": null,
+      "phase": 1,
+      "age": 383.2999999999993,
+      "angle": 0,
+      "facing": 3.141592653589793,
+      "hp": 1760,
+      "max": 1760,
+      "exposed": false,
+      "broken": false
+    },
+    "won": false,
+    "xp": 1250,
+    "clue": false
+  },
+  "end": {
+    "p": {
+      "x": 1705.4720330311645,
+      "y": 1229.382682819613
+    },
+    "hp": 150,
+    "dead": false,
+    "dashReady": true,
+    "boss": {
+      "p": {
+        "x": 1592.5112731060685,
+        "y": 1202.2058342906832
+      },
+      "state": "DEATH",
+      "attack": "tail",
+      "phase": 3,
+      "age": 83.40000000000873,
+      "angle": 0.25747996546808727,
+      "facing": -2.884112688121706,
+      "hp": 0,
+      "max": 1760,
+      "exposed": false,
+      "broken": false
+    },
+    "won": true,
+    "xp": 1470,
+    "clue": false
+  },
+  "openingStateSamples": 12,
+  "earnedOpenings": 4,
+  "beforeClue": {
+    "p": {
+      "x": 2125.5429564810124,
+      "y": 833.814209369764
+    },
+    "hp": 150,
+    "dead": false,
+    "dashReady": true,
+    "boss": {
+      "p": {
+        "x": 1592.5112731060685,
+        "y": 1202.2058342906832
+      },
+      "state": "DEATH",
+      "attack": "tail",
+      "phase": 3,
+      "age": 6116.600000000006,
+      "angle": 0.25747996546808727,
+      "facing": -2.884112688121706,
+      "hp": 0,
+      "max": 1760,
+      "exposed": false,
+      "broken": false
+    },
+    "won": true,
+    "xp": 1470,
+    "clue": false
+  },
+  "reload": {
+    "p": {
+      "x": 680,
+      "y": 970
+    },
+    "hp": 150,
+    "dead": false,
+    "dashReady": true,
+    "boss": null,
+    "won": true,
+    "xp": 1470,
+    "clue": true
+  },
+  "passed": true
+}

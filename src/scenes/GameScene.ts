@@ -1615,9 +1615,12 @@ export class GameScene extends Phaser.Scene {
         if(this.area==='icenest'){
           const bursts=boss?.visuals.filter(v=>v.texture==='vesper-tail-impact'||v.texture==='vesper-ground-impact')??[];
           const mask=bursts.reduce((bits,v,i)=>bits|(v.visible&&v.alpha>.15?1<<i:0),0);
-          if(mask&~this.coopVesperImpacts)this.vesperImpactFeedback(boss?.attackName??'eruption');
+          if(mask&~this.coopVesperImpacts){
+            this.vesperImpactFeedback(boss?.attackName??'eruption');
+            if(boss?.attackName==='tail'&&boss.state==='EXECUTE'&&boss.visuals.some(v=>v.kind==='graphics'&&v.visible))this.sounds.wardenWarning('tail');
+          }
           this.coopVesperImpacts=mask;
-          const broken=!!boss?.visuals.some(v=>v.visible&&v.texture==='vesper-frost-shatter');
+          const broken=boss?.state==='RECOVER'&&!!boss.visuals.some(v=>v.visible&&v.texture==='vesper-reaction-motion'&&['4','5','6'].includes(v.frame??''));
           if(broken&&!this.coopVesperBreak){this.sounds.wardenCue('recover');this.cameras.main.shake(180,.003);}
           this.coopVesperBreak=broken;
         }
