@@ -50,6 +50,7 @@ O painel permite trocar classe e recomeçar. Coop: Esc → início, criar equipe
 - [Controles](qa/controls/controls.json): touch CDP nas quatro classes, oito direções independentes, olhar sem disparar, carregar/soltar/cancelar, modal, quatro layouts compactos, três reconstruções e gamepad mock. Boss vivo congelado para isolar entradas.
 - [Saves antigos e atlas](qa/legacy/legacy.json): schema 1 sem sistemas opcionais posteriores, reload conserva XP/recibos e um Vésper vivo; regiões vulcânicas continuam bloqueadas.
 - [Build compilada](qa/compiled/public.json): chegada, reload, gatilho por teclado, nova arte, música do encontro, proteção de saves/configurações e biblioteca.
+- [Vercel pública](qa/published/public.json): mesma checagem contra o endereço real. O teste aguarda a chegada temporária e resolve as escolhas de aperfeiçoamento antes de andar, também após reload; a campanha exige essas escolhas normalmente. Arte e código publicados conferidos por hash com a build local, relay público no protocolo 15.
 
 Capturas inspecionadas visualmente; os retratos diagnósticos de abertura usam pausa explícita e não medem reação humana. QA técnico não aprova dificuldade, animação ou diversão. Touch e gamepad são emulados; não houve celular físico, controle físico ou grupo humano de quatro. A duração global da campanha continua sem medição humana.
 
