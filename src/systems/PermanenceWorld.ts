@@ -1,10 +1,10 @@
 import Phaser from 'phaser';
-import {PERMANENCE_SITES,type PermanenceSite} from '../config/permanence';
+import {PERMANENCE_SITES,type PermanenceSite,type PermanencePose} from '../config/permanence';
 import type {Missions} from './Missions';
 import type {JourneyArea} from './LocalJourney';
 import type {Vec2} from '../utils/math';
 import {addSurveyProp} from '../visual/MissionProps';
-import type {Obstacle} from './Movement';
+import {moveWithCollisions,type Obstacle} from './Movement';
 
 // Authored chapter interactions share the journal, durable evidence and host
 // authority. Static props/pipework are drawn once; pulses only change alpha.
@@ -14,6 +14,9 @@ export class PermanenceWorld {
  private installed:Phaser.GameObjects.GameObject[]=[];
  private online=false;
  private stocked=false;
+ private supplied=false;
+ private haul?:{position:Vec2;solid:Obstacle;image:Phaser.GameObjects.Image};
+ private lastAt=0;
  constructor(private scene:Phaser.Scene,private area:JourneyArea,private obstacles:Obstacle[]){
   for(const site of PERMANENCE_SITES.filter(s=>s.area===area)){
    const image=(site.art==='cargo'?scene.add.image(site.x,site.y,'item-accessory-2').setDisplaySize(34,44).setDepth(site.y-2):site.art==='mineral'||site.art==='record'?scene.add.image(site.x,site.y,site.art==='mineral'?'deep-mineral':'ancient-remnant').setDisplaySize(95,68).setDepth(site.y-2):addSurveyProp(scene,site.art,site.x,site.y)).setName(site.id).setVisible(false);
@@ -32,7 +35,8 @@ export class PermanenceWorld {
    this.jet=scene.add.rectangle(1550,1010,250,38,0x84d9d2,.65).setDepth(-19).setVisible(false).setName('water-pressure');
   }
  }
- update(missions:Missions,player:Vec2,now:number):void{
+ update(missions:Missions,player:Vec2,now:number,actors:readonly {position:Vec2;isDead:boolean}[]=[],authority=true,remote?:PermanencePose):void{
+  this.updateHaul(missions,now,actors,authority,remote);
   for(const {site,image,label}of this.sites){
    const active=['active','ready'].includes(missions.status(site.mission));
    image.setVisible(active&&!missions.has(site.id));
@@ -49,6 +53,32 @@ export class PermanenceWorld {
   }
   if(missions.has('pw-online')&&!this.online){this.online=true;this.addWaterStation();}
   if(missions.has('pf-stock')&&!this.stocked){this.stocked=true;this.addFoodReserve();}
+  if(missions.has('pt-deliver')&&!this.supplied){this.supplied=true;this.addDepot();}
+ }
+ snapshot():PermanencePose{return this.haul?{haul:{...this.haul.position,kind:'cargo'}}:{};}
+ get haulPosition():Vec2|undefined{return this.haul?.position;}
+ // The cached minimap describes permanent geometry. Moving cargo stays in
+ // physical collision, while its travel never rebakes the static grid.
+ get navigationObstacles():readonly Obstacle[]{return this.haul?this.obstacles.filter(o=>o!==this.haul!.solid):this.obstacles;}
+ private updateHaul(missions:Missions,now:number,actors:readonly {position:Vec2;isDead:boolean}[],authority:boolean,remote?:PermanencePose):void{
+  const dt=Math.min(.04,Math.max(0,(now-this.lastAt)/1000));this.lastAt=now;
+  const active=this.area==='terraces'&&missions.has('pt-load')&&!missions.has('pt-deliver')&&missions.status('settle-transport')==='active';
+  if(!active){if(this.haul){const i=this.obstacles.indexOf(this.haul.solid);if(i>=0)this.obstacles.splice(i,1);this.haul.image.destroy();this.haul=undefined;}return;}
+  const start=remote?.haul??{x:850,y:1070};
+  if(!this.haul){const solid={x:start.x,y:start.y,radius:22};this.obstacles.push(solid);this.haul={position:{x:start.x,y:start.y},solid,image:this.scene.add.image(start.x,start.y,'camp-supplies').setDisplaySize(82,51).setOrigin(.5,.75).setName('permanence-haul')};}
+  const h=this.haul;
+  if(!authority){if(remote?.haul&&Number.isFinite(remote.haul.x)&&Number.isFinite(remote.haul.y))Object.assign(h.position,remote.haul);}
+  else{
+   const candidates=actors.filter(p=>!p.isDead).map(p=>({p,d:Math.hypot(p.position.x-h.position.x,p.position.y-h.position.y)})).filter(v=>v.d>70&&v.d<280).sort((a,b)=>a.d-b.d),leader=candidates[0];
+   if(leader){const dx=leader.p.position.x-h.position.x,dy=leader.p.position.y-h.position.y;moveWithCollisions(h.position,{x:dx/leader.d*165,y:dy/leader.d*165},dt,22,this.obstacles.filter(o=>o!==h.solid),{left:105,right:2490,top:350,bottom:1245});}
+  }
+  h.solid.x=h.position.x;h.solid.y=h.position.y;h.image.setPosition(h.position.x,h.position.y).setDepth(h.position.y);
+ }
+ private addDepot():void{
+  if(this.area!=='base'&&this.area!=='terraces')return;
+  const x=this.area==='base'?650:1780,y=this.area==='base'?900:1160;
+  this.scene.add.image(x,y,'camp-supplies').setDisplaySize(140,87).setOrigin(.5,1).setDepth(y-2).setName('settlement-supply-depot');this.obstacles.push({x,y:y-22,radius:30});
+  this.scene.add.text(x,y+20,'DEPÓSITO DE SUPRIMENTOS',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d9d5af',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
  }
  private addFoodReserve():void{
   if(this.area!=='base'&&this.area!=='terraces')return;
@@ -66,7 +96,9 @@ export class PermanenceWorld {
   this.scene.add.text(x,y+48,'ÁGUA TRATADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#b1d5c7',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
  }
  at(position:Vec2,missions:Missions):PermanenceSite|undefined{
-  return this.sites.map(s=>s.site).find(s=>missions.status(s.mission)==='active'&&!missions.has(s.id)&&!s.needs?.some(id=>!missions.has(id))&&Math.hypot(position.x-s.x,position.y-s.y)<s.radius);
+  const site=this.sites.map(s=>s.site).find(s=>missions.status(s.mission)==='active'&&!missions.has(s.id)&&!s.needs?.some(id=>!missions.has(id))&&Math.hypot(position.x-s.x,position.y-s.y)<s.radius);
+  if(site?.haul&&(!this.haul||Math.hypot(this.haul.position.x-site.x,this.haul.position.y-site.y)>105))return{...site,reject:'A carga ainda não chegou. Volte ao estrado e conduza-o para perto do depósito.'};
+  return site;
  }
  pressureAt(position:Vec2,missions:Missions,now:number):boolean{
   return this.area==='springs'&&missions.status('settle-water')==='active'&&!missions.has('pw-valve')&&now%3200>=1100&&now%3200<1800&&Math.abs(position.x-1550)<135&&Math.abs(position.y-1010)<32;

@@ -1,0 +1,203 @@
+{
+  "chapter": "transport",
+  "method": "Chrome DEV, isolated explicit prior-story fixture; real E/dialogue/atlas inputs. Objective positioning prepares coverage, not a timed human playthrough.",
+  "checks": [
+    "Explicit original shelter/Warden fixture only; tested chapter pending and later bosses alive",
+    "Final installation rejected before its preceding objectives",
+    "Destination rejects missing cargo; actual WASD leads physical cargo to the depot",
+    "All authored interactions and real NPC delivery; credits once, original XP/boss flags preserved",
+    "Reload keeps evidence/receipt without touching real characters/settings",
+    "Three returns preserve object/texture/collider counts",
+    "Journal remains within four viewport sizes"
+  ],
+  "errors": [],
+  "haul": [
+    {
+      "cargo": {
+        "x": 880.2610000000003,
+        "y": 1070
+      },
+      "player": {
+        "x": 960,
+        "y": 1070
+      }
+    },
+    {
+      "cargo": {
+        "x": 1125.0220000000022,
+        "y": 1070
+      },
+      "player": {
+        "x": 1274.4231999999972,
+        "y": 1070
+      }
+    },
+    {
+      "cargo": {
+        "x": 1372.5055000000064,
+        "y": 1070
+      },
+      "player": {
+        "x": 1543.9378999999947,
+        "y": 1070
+      }
+    },
+    {
+      "cargo": {
+        "x": 1620.02200000001,
+        "y": 1070
+      },
+      "player": {
+        "x": 1764.4182999999919,
+        "y": 1070
+      }
+    }
+  ],
+  "stability": {
+    "before": {
+      "area": "terraces",
+      "evidence": [
+        "clearing",
+        "roots",
+        "water",
+        "biology",
+        "echo1",
+        "echo2",
+        "echo3",
+        "passage",
+        "first-echo",
+        "warden",
+        "spring",
+        "route-west",
+        "route-east",
+        "soil",
+        "site",
+        "shelter-built",
+        "pw-intake",
+        "pw-silt",
+        "pw-filter",
+        "pw-valve",
+        "pw-online",
+        "pf-trace",
+        "pf-control",
+        "pf-sample",
+        "pf-safe",
+        "pf-stock",
+        "pt-upper",
+        "pt-lower",
+        "pt-anchor",
+        "pt-load",
+        "pt-deliver"
+      ],
+      "completed": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport"
+      ],
+      "credits": 400,
+      "rewards": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport"
+      ],
+      "xp": 350,
+      "hp": 120,
+      "flags": {
+        "warden": true,
+        "soterrado": false,
+        "vesper": false,
+        "titan": false
+      },
+      "objects": 155,
+      "textures": 250,
+      "obstacles": 33
+    },
+    "after": {
+      "area": "terraces",
+      "evidence": [
+        "clearing",
+        "roots",
+        "water",
+        "biology",
+        "echo1",
+        "echo2",
+        "echo3",
+        "passage",
+        "first-echo",
+        "warden",
+        "spring",
+        "route-west",
+        "route-east",
+        "soil",
+        "site",
+        "shelter-built",
+        "pw-intake",
+        "pw-silt",
+        "pw-filter",
+        "pw-valve",
+        "pw-online",
+        "pf-trace",
+        "pf-control",
+        "pf-sample",
+        "pf-safe",
+        "pf-stock",
+        "pt-upper",
+        "pt-lower",
+        "pt-anchor",
+        "pt-load",
+        "pt-deliver"
+      ],
+      "completed": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport"
+      ],
+      "credits": 400,
+      "rewards": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport"
+      ],
+      "xp": 350,
+      "hp": 120,
+      "flags": {
+        "warden": true,
+        "soterrado": false,
+        "vesper": false,
+        "titan": false
+      },
+      "objects": 155,
+      "textures": 250,
+      "obstacles": 33
+    }
+  },
+  "passed": true
+}

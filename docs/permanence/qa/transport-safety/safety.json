@@ -1,0 +1,23 @@
+{
+  "method": "Isolated transport lab; previous objectives prepared. Real E, walking/Dash against cargo, actual obstacle solver, common lethal hit/R and reload. No cargo coordinate or update mutation.",
+  "checks": [
+    "Actual movement and Dash cannot pass through the physical estrado",
+    "Cargo stops outside the proximity leash instead of teleporting after the player",
+    "Real cargo respects the rock shelf; its motion preserves the static navigation cache",
+    "Common lethal damage and real R preserve discrete objectives, reset cargo to safe engate and grant no delivery reward",
+    "Reload keeps one pending cargo; completed depot stays beside the unloading point, clear of the actor"
+  ],
+  "errors": [],
+  "collision": {
+    "player": {
+      "x": 810,
+      "y": 1070
+    },
+    "cargo": {
+      "x": 850,
+      "y": 1070
+    },
+    "gap": 40
+  },
+  "passed": true
+}

@@ -43,7 +43,22 @@ Os testes de objetivos usam posição/invulnerabilidade preparadas para cobrir i
 - [x] [Modelo](qa/food-model/model.json): cadeia, pré-requisitos, recibos, save anterior e falha/retry de armazenamento.
 - [x] [Navegação](qa/food-access/access.json): caminhos e retornos dos dois lotes e demais locais livres; atlas preserva bloqueios.
 - [x] Typecheck/build e [build compilada](qa/food-compiled/public.json), com regressão da chegada da água, aceite/reload e sentinelas reais preservados.
-- [ ] Publicação desta versão; solo/dupla locais não declaram compatibilidade do Render ainda antigo.
+- [x] Vercel da 0.1.156 publicada: [hashes](qa/publication/0.1.156/hashes.json) e [Chrome público](qa/publication/0.1.156/public.json) conferidos. Render ainda 15; sem declaração de coop público compatível.
 - [ ] Playtest humano. Continuação ao transporte já autorizada.
 
 Os props de cartucho/carga usam o equipamento inteiro existente; registros/minerais usam suas imagens próprias. Folhas/raízes pintadas existentes distinguem o resíduo azulado do lote seco. Capturas dos dois lotes inspecionadas; não há nova pintura de terreno ou desenho estático por frame.
+
+## 3 — O peso de permanecer · 0.1.157
+
+[Laboratório direto](https://echosofdante.vercel.app/campaign-playtest.html?permanence=transport&v=0.1.157). Simula os sete relatórios e os capítulos de água/alimento; transporte está pendente. Ivo verifica largura/apoio para o estrado, fixa a carga e solicita conduzi-la fisicamente ao depósito. O estrado se move a 165 unidades/s atrás de qualquer integrante vivo entre 70 e 280 unidades; fora do alcance ele espera. Colisão circular de raio 22 respeita rochas e jogadores, incluindo Dash. Descarga requer a presença real da carga a até 105 unidades, além da posição do integrante. Sem consumo de inventário, HP de escolta, quota ou espera obrigatória. 100 créditos pessoais únicos.
+
+Viajar, morrer/reiniciar ou recarregar recolhe a carga ainda pendente ao engate seguro (850,1070); objetivos discretos permanecem salvos. Posição do estrado é transitória, como a posição de combate, e não uma nova migração de save. Ao descarregar, o objeto móvel dá lugar ao depósito visível no abrigo/base. Depósito afastado lateralmente do ponto de interação após inspeção visual. Movimento usa a colisão existente; minimapa mantém somente geometria permanente no cache.
+
+Pose opcional do estrado segue o snapshot autenticado do anfitrião no protocolo 16, sem novo comando ou ação de rede. Convidado não simula outra carga; apresenta pose e colisor recebidos. Catálogo de IDs já foi reservado na 0.1.155.
+
+- [x] [Solo](qa/transport/solo.json): destino rejeita sem carga; condução por WASD real, descarga/diálogo e recompensa; reload/retornos/resoluções.
+- [x] [Dupla](qa/transport-coop/coop.json): convidado conduz com teclado real, pose replicada, recusa de descarga sem carga e 100 créditos por membro, uma vez, após reconexão.
+- [x] [Colisão e ciclo](qa/transport-safety/safety.json): caminhada/Dash param no estrado; carga espera fora do alcance, respeita crista física, morte real/R e reload preservam objetivos e uma única carga pendente. Fixtures de posição/objetivos/invulnerabilidade explicitadas; nenhuma edição da carga.
+- [x] [Modelo](qa/transport-model/model.json) e [acesso](qa/transport-access/access.json): cadeia/save/recibos, caminhos/retornos e atlas bloqueado.
+- [x] Typecheck/build final e [Chrome compilado](qa/transport-compiled/public.json) passaram. Inspeção do ponto de descarga livre e cache estático registrada no teste de ciclo.
+- [ ] Publicação e playtest humano. Continuação à energia já autorizada.

@@ -1,0 +1,82 @@
+{
+  "chapter": "transport",
+  "method": "DEV isolated chapter; actual navigation graph and walkable collision, real hazard health. Position and enemy-update fixtures isolate geometry/pressure.",
+  "checks": [
+    "Every authored objective has a clear footprint and connected approach/return in the real navigation graph",
+    "Polluted visited list cannot unlock later bosses/regions through the atlas"
+  ],
+  "errors": [],
+  "routes": [
+    {
+      "id": "pt-upper",
+      "paths": [
+        {
+          "steps": 16,
+          "gap": 25.63201123595259
+        },
+        {
+          "steps": 19,
+          "gap": 23.345235059857504
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pt-lower",
+      "paths": [
+        {
+          "steps": 28,
+          "gap": 9.219544457292887
+        },
+        {
+          "steps": 31,
+          "gap": 23.345235059857504
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pt-anchor",
+      "paths": [
+        {
+          "steps": 22,
+          "gap": 20.615528128088304
+        },
+        {
+          "steps": 25,
+          "gap": 23.345235059857504
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pt-load",
+      "paths": [
+        {
+          "steps": 17,
+          "gap": 24.020824298928627
+        },
+        {
+          "steps": 20,
+          "gap": 23.345235059857504
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pt-deliver",
+      "paths": [
+        {
+          "steps": 39,
+          "gap": 14.866068747318506
+        },
+        {
+          "steps": 42,
+          "gap": 23.345235059857504
+        }
+      ],
+      "clear": true
+    }
+  ],
+  "passed": true
+}

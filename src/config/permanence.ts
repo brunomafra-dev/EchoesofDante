@@ -5,7 +5,8 @@ import type {RegionalArt} from './regionalExpeditions';
 export const PERMANENCE_IDS=['settle-water','settle-food','settle-transport','settle-energy','settle-arrivals'] as const;
 export type PermanenceId=typeof PERMANENCE_IDS[number];
 export type PermanenceEvidence=`pw-${'intake'|'silt'|'filter'|'valve'|'online'}`|`pf-${'trace'|'control'|'sample'|'safe'|'stock'}`|`pt-${'upper'|'lower'|'anchor'|'load'|'deliver'}`|`pe-${'ground'|'return'|'cell'|'isolate'|'online'}`|`pc-${'beacon'|'manifest'|'shelter'|'receive'|'home'}`;
-export type PermanenceSite={id:PermanenceEvidence;mission:PermanenceId;area:JourneyArea;x:number;y:number;radius:number;name:string;finding:string;art:RegionalArt|'cargo';action:string;needs?:readonly MissionEvidence[];reject?:string;choice?:boolean};
+export type PermanenceSite={id:PermanenceEvidence;mission:PermanenceId;area:JourneyArea;x:number;y:number;radius:number;name:string;finding:string;art:RegionalArt|'cargo';action:string;needs?:readonly MissionEvidence[];reject?:string;choice?:boolean;haul?:boolean};
+export type PermanencePose={haul?:{x:number;y:number;kind:'cargo'}};
 export const PERMANENCE_SITES:readonly PermanenceSite[]=[
  {id:'pw-intake',mission:'settle-water',area:'springs',x:1680,y:650,radius:75,name:'Captação a montante',art:'water',action:'COLETAR',finding:'O sedimento vem da margem baixa. A captação alta mantém fluxo constante.'},
  {id:'pw-silt',mission:'settle-water',area:'springs',x:1510,y:1100,radius:75,name:'Sedimento da margem',art:'soil',action:'COMPARAR',finding:'O lodo obstrui o cartucho da nave; precisamos separar o retorno da captação.'},
@@ -18,6 +19,11 @@ export const PERMANENCE_SITES:readonly PermanenceSite[]=[
  {id:'pf-sample',mission:'settle-food',area:'terraces',x:1840,y:1010,radius:65,name:'Lote da borda seca',art:'biology',action:'COLHER',needs:['pf-trace','pf-control'],choice:true,finding:'Folhas íntegras e raízes sem crosta. Amostra fechada para tratamento; isso ainda não autoriza comer a flora local.'},
  {id:'pf-safe',mission:'settle-food',area:'base',x:240,y:890,radius:65,name:'Bancada de descontaminação',art:'cargo',action:'TRATAR',needs:['pf-sample','pw-online'],finding:'Lia concluiu o tratamento da amostra. O lote experimental fica identificado e separado das rações da nave.'},
  {id:'pf-stock',mission:'settle-food',area:'terraces',x:2010,y:1100,radius:70,name:'Reserva alimentar identificada',art:'cargo',action:'ARMAZENAR',needs:['pf-safe'],finding:'Reserva experimental selada. O canteiro continua em pesquisa; nenhuma colheita automática foi iniciada.'},
+ {id:'pt-upper',mission:'settle-transport',area:'terraces',x:810,y:590,radius:75,name:'Largura da crista',art:'record',action:'MEDIR',finding:'A crista aceita pessoas, mas o estrado carregado não passa entre os apoios. A carga usará a travessia inferior.'},
+ {id:'pt-lower',mission:'settle-transport',area:'terraces',x:1370,y:1100,radius:75,name:'Apoio na travessia inferior',art:'mineral',action:'VERIFICAR',finding:'Rocha firme abaixo do sedimento. Um apoio aqui mantém os recipientes afastados da margem úmida.'},
+ {id:'pt-anchor',mission:'settle-transport',area:'terraces',x:1150,y:1030,radius:70,name:'Fixação do estrado',art:'cargo',action:'FIXAR',needs:['pt-upper','pt-lower'],finding:'Estrado preso ao apoio. A rota para a carga segue pelo chão baixo; a crista continua acessível a pé.'},
+ {id:'pt-load',mission:'settle-transport',area:'terraces',x:850,y:1070,radius:70,name:'Carga reservada de suprimentos',art:'cargo',action:'ENGATAR',needs:['pt-anchor'],finding:'A carga acompanha quem se mantém por perto. Abra espaço e retome o transporte após os encontros. Viajar ou reiniciar devolve a carga ao ponto seguro de engate.'},
+ {id:'pt-deliver',mission:'settle-transport',area:'terraces',x:1900,y:1080,radius:75,name:'Depósito do abrigo',art:'cargo',action:'DESCARREGAR',needs:['pt-load'],haul:true,finding:'Recipientes e ferramentas entregues. Ivo já pode separar o equipamento da rede de energia.'},
 ];
 const goals=(id:PermanenceId)=>PERMANENCE_SITES.filter(s=>s.mission===id&&!s.reject).map(s=>({id:s.id,label:s.choice?'Colher o lote compatível':s.name,area:s.area}));
 export const PERMANENCE_MISSIONS:readonly MissionDefinition[]=[
@@ -28,5 +34,8 @@ export const PERMANENCE_MISSIONS:readonly MissionDefinition[]=[
  {id:'settle-food',title:'O que pode nos alimentar',npc:'medic',requires:'settle-water',credits:90,
   offer:['Com água tratada podemos separar a fome da pressa. As mudas da nave reagiram bem, mas há resíduos nas plantas da margem.','Compare os juncos com o canteiro de controle. Escolha um lote compatível pelas marcas nas folhas e raízes, trate a amostra na bancada da base e leve a reserva identificada ao abrigo.'],
   report:['O lote tratado está separado e identificado. Há uma pequena reserva experimental, sem misturá-la às rações de emergência.','A diferença entre as margens nos deu uma regra de coleta. Ivo pode preparar o transporte sem expor comida e água ao mesmo retorno contaminado.'],goals:goals('settle-food')},
+ {id:'settle-transport',title:'O peso de permanecer',npc:'smith',requires:'settle-food',credits:100,
+  offer:['A rota registrada serviu para levar o primeiro módulo desmontado. Agora os recipientes cheios precisam de um estrado e de apoio estável.','Meça a crista e verifique o chão baixo. Fixe o apoio, engate a carga reservada e conduza o estrado até o depósito. Ele acompanha qualquer integrante próximo; se você se afastar demais, espera onde ficou. Viajar ou reiniciar o encontro recolhe a carga ao engate seguro, sem consumir seus itens.'],
+  report:['A carga chegou intacta e o depósito está organizado. Podemos transportar os recipientes longe da água de retorno.','Separei uma célula da nave e um regulador. Nosso próximo cuidado é alimentar o abrigo sem conectar a instalação às estruturas antigas de Dante.'],goals:goals('settle-transport')},
 ];
 export const isPermanence=(id:MissionId):id is PermanenceId=>PERMANENCE_IDS.includes(id as PermanenceId);

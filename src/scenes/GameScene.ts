@@ -595,7 +595,7 @@ export class GameScene extends Phaser.Scene {
     }
     this.hud = new Hud(this, () => this.restart(), this.classId === 'hunter',this.classId==='astral',this.classId==='xenobinder',(...state)=>this.controls.setAbilityFeedback(...state));
     if (this.qualityReference === 'reference') this.referenceImpacts = new ReferenceImpacts(this);
-    this.navigation = this.qualityReference ? undefined : new WorldNavigator(this, () => ({ bounds: this.movementBounds, obstacles: this.arena.obstacles }));
+    this.navigation = this.qualityReference ? undefined : new WorldNavigator(this, () => ({ bounds: this.movementBounds, obstacles: this.permanence?.navigationObstacles??this.arena.obstacles }));
     this.explorationGuide = new ExplorationGuide(this, this.navigation);
     if (this.area === 'warden') {
       this.signalPortal = new SignalPortal(this, { x: 1500, y: 830 }, this.wardenDefeated);
@@ -748,7 +748,7 @@ export class GameScene extends Phaser.Scene {
     if(!this.inputModalOpen)this.controls.update(this.player.position);
     if(this.area==='base'&&!this.inputModalOpen&&(BASE.services.some(s=>distance(this.player.position,s)<100)||coopSession.role!=='guest'&&distance(this.player.position,BASE.exit)<105)&&this.controls.interactPressed){const service=BASE.services.find(s=>distance(this.player.position,s)<100);if(service){if(this.missionUi)this.missionUi.openNpc(service.id);else this.basePanel.open(service.id);return;}if(coopSession.role!=='guest'&&distance(this.player.position,BASE.exit)<105){this.transitionArea('forest');return;}}
     const previousSolids=this.arena.obstacles.length;
-    this.permanence?.update(this.missions,this.player.position,coopSession.role==='guest'?coopSession.world?.time??time:time);
+    this.permanence?.update(this.missions,this.player.position,coopSession.role==='guest'?coopSession.world?.time??time:time,[this.player,...(this.party?.players??[])],coopSession.role!=='guest',coopSession.world?.permanence);
     if(this.arena.obstacles.length!==previousSolids)for(const p of [this.player,...(this.party?.players??[])])if(this.arena.obstacles.some(o=>distance(p.position,o)<p.radius+o.radius))Object.assign(p.position,safeExpeditionPosition(p.position,p.radius,this.arena.obstacles,this.movementBounds)??p.position);
     this.missionWorld?.update(this.missions,this.player.position);
     this.regional?.update(this.missions,this.player.position,time);
@@ -1587,7 +1587,7 @@ export class GameScene extends Phaser.Scene {
 
   private partyBridge(): PartyBridge {
     return {
-      missions:this.missions.snapshot(),
+      permanence:this.permanence?.snapshot(),missions:this.missions.snapshot(),
       area: this.area, player: this.player, controls: this.controls, enemies: this.enemies,
       obstacles: this.arena.obstacles, solidObstacles: (this.warden && !this.warden.isDead || this.soterrado?.solid || this.vesper?.solid || this.titan?.solid) ? [...this.arena.obstacles,...this.titanCoverObstacles(), { ...(this.warden ?? this.soterrado ?? this.vesper ?? this.titan)!.position, radius: (this.warden ?? this.soterrado ?? this.vesper ?? this.titan)!.radius }] : this.arena.obstacles, bounds: this.movementBounds, hud: this.hud, hunter: this.hunter,astral:this.astral,xeno:this.xeno,
       boss: this.warden ?? this.soterrado ?? this.vesper ?? this.titan,
@@ -2548,6 +2548,8 @@ export class GameScene extends Phaser.Scene {
     }
     const regionalSite=this.regional?.sites.find(s=>s.mission===id&&!this.missions.has(s.id));
     if(regionalSite)return {...regionalSite,instruction:[...siroccoTrails(this.area),...borealTrails(this.area),...embersTrails(this.area)].find(t=>t.site===regionalSite.id)?.hint??'Analise o local e registre a descoberta.',interactionLabel:'ANALISAR',action:'investigate'};
+    const haul=this.permanence?.haulPosition;
+    if(isPermanence(id)&&haul){const target=distance(this.player.position,haul)>240?{...haul,name:'Carga reservada',radius:75}:PERMANENCE_SITES.find(s=>s.mission===id&&s.haul)!;return{...target,instruction:'Conduza a carga pelo chão baixo; ela espera se a equipe se afastar.',interactionLabel:'DESCARREGAR',action:'investigate'};}
     const chapterSite=PERMANENCE_SITES.find(s=>s.mission===id&&!this.missions.has(s.id)&&!s.needs?.some(e=>!this.missions.has(e)));
     if(chapterSite?.choice)return;
     if(chapterSite?.area===this.area)return{...chapterSite,instruction:'Use o equipamento reservado e registre o resultado.',interactionLabel:chapterSite.action,action:'investigate'};

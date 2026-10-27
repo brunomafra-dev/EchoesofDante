@@ -1,0 +1,75 @@
+{
+  "chapter": "transport",
+  "method": "Two independent Chrome + actual relay 16. DEV position/invulnerability fixtures; real guest E and authenticated dialogue, ordinary travel, durable personal credit receipts.",
+  "checks": [
+    "Guest accepts through the actual mission request; invitation keeps the isolated chapter",
+    "Real guest movement leads physical cargo, mirrored position follows host and missing cargo cannot deliver",
+    "Guest executes every authored E interaction; shared evidence survives both region passages",
+    "Real guest delivery grants the configured credit amount once per member, without later boss flags",
+    "Guest reconnect preserves its reward without duplicate credit"
+  ],
+  "errors": [],
+  "haul": [
+    {
+      "cargo": {
+        "x": 891.25,
+        "y": 1070
+      },
+      "player": {
+        "x": 960,
+        "y": 1070
+      }
+    },
+    {
+      "cargo": {
+        "x": 1138.7664999999997,
+        "y": 1070
+      },
+      "player": {
+        "x": 1322.0870000000007,
+        "y": 1070
+      }
+    },
+    {
+      "cargo": {
+        "x": 1400.011,
+        "y": 1070
+      },
+      "player": {
+        "x": 1578.728000000001,
+        "y": 1070
+      }
+    },
+    {
+      "cargo": {
+        "x": 1672.261,
+        "y": 1070
+      },
+      "player": {
+        "x": 1826.2197500000018,
+        "y": 1070
+      }
+    }
+  ],
+  "receipts": [
+    {
+      "credits": 400,
+      "receipts": 1,
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "credits": 400,
+      "receipts": 1,
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "passed": true
+}

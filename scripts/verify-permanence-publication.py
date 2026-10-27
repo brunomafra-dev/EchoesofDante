@@ -36,6 +36,6 @@ else:
         relay = json.load(response)
     out = Path('docs/permanence/qa/publication', version)
     out.mkdir(parents=True, exist_ok=True)
-    result = {'version': version, 'verifiedAt': datetime.now(timezone.utc).isoformat(), 'buildPublished': True, 'matchingJavaScript': verified, 'relay': relay, 'coopCompatible': relay.get('protocol') == 16}
+    result = {'version': version, 'verifiedAt': datetime.now(timezone.utc).isoformat(), 'buildPublished': True, 'matchingJavaScript': verified, 'sha256': manifest['assets'], 'relay': relay, 'coopCompatible': relay.get('protocol') == 16}
     (out / 'hashes.json').write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(result, indent=2))
