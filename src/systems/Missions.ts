@@ -1,3 +1,4 @@
+import permanenceCatalogue from '../config/permanence-catalog.json';
 import {MISSIONS,MISSION_IDS,MISSION_EVIDENCE,missionById,type MissionId,type MissionEvidence,type MissionNpc} from '../config/missions';
 
 export type MissionSnapshot={schema:1;accepted:MissionId[];completed:MissionId[];evidence:MissionEvidence[]};
@@ -11,7 +12,7 @@ export function validMissions(raw:unknown):MissionSnapshot{
   if(def.requires&&!completed.includes(def.requires))continue;
   if(rawAccepted.includes(def.id)){accepted.push(def.id);if(rawCompleted.includes(def.id))completed.push(def.id);}
  }
- return {schema:1,accepted,completed,evidence:Array.isArray(v?.evidence)?[...new Set(v.evidence.filter((id):id is MissionEvidence=>MISSION_EVIDENCE.includes(id)))]:[]};
+ return {schema:1,accepted,completed,evidence:Array.isArray(v?.evidence)?[...new Set(v.evidence.filter((id):id is MissionEvidence=>(MISSION_EVIDENCE as readonly string[]).includes(id)||permanenceCatalogue.evidence.includes(id)))]:[]};
 }
 export function validMissionRewards(raw:unknown):MissionId[]{return Array.isArray(raw)?[...new Set(raw.filter((id):id is MissionId=>MISSION_IDS.includes(id)))]:[];}
 
@@ -24,6 +25,7 @@ export class Missions{
  snapshot():MissionSnapshot{return {schema:1,accepted:[...this.state.accepted],completed:[...this.state.completed],evidence:[...this.state.evidence]};}
  status(id:MissionId):MissionStatus{
   const d=missionById(id);
+  if(!d)return 'locked';
   if(this.state.completed.includes(id))return 'completed';
   if(d.requires&&!this.state.completed.includes(d.requires))return 'locked';
   if(d.unlock&&!this.has(d.unlock))return 'locked';
@@ -43,7 +45,7 @@ export class Missions{
   if(action==='deliver'&&this.status(id)==='ready'){this.state.completed.push(id);this.tracked=undefined;this.version++;return true;}
   return false;
  }
- get current():MissionId|undefined{return this.tracked&&['available','active','ready'].includes(this.status(this.tracked))?this.tracked:MISSION_IDS.find(id=>['active','ready'].includes(this.status(id)))??MISSION_IDS.find(id=>this.status(id)==='available');}
+ get current():MissionId|undefined{return this.tracked&&['available','active','ready'].includes(this.status(this.tracked))?this.tracked:MISSIONS.find(d=>['active','ready'].includes(this.status(d.id)))?.id??MISSIONS.find(d=>this.status(d.id)==='available')?.id;}
  npcState(npc:MissionNpc):'available'|'ready'|undefined{const statuses=MISSIONS.filter(m=>m.npc===npc).map(m=>this.status(m.id));return statuses.includes('ready')?'ready':statuses.includes('available')?'available':undefined;}
  claimable(receipts:readonly MissionId[]):{ids:MissionId[];credits:number}{const ids=this.state.completed.filter(id=>!receipts.includes(id));return {ids,credits:ids.reduce((sum,id)=>sum+missionById(id).credits,0)};}
 }

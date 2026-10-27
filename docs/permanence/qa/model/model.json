@@ -1,0 +1,7 @@
+{
+  "checks": [
+    "Original shelter prerequisite, ordered chapters, no premature/duplicate delivery and stable restore",
+    "Legacy schema preserves story/resources; atomic credit+receipt retries after storage failure and never duplicates"
+  ],
+  "passed": true
+}

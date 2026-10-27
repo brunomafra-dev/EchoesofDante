@@ -3,7 +3,9 @@ import '../../style.css';
 // Both save namespaces stay in this tab's sessionStorage, across reloads. No
 // character, setting or one-shot launch in the real game is read or modified.
 const get=Storage.prototype.getItem,set=Storage.prototype.setItem,remove=Storage.prototype.removeItem;
-const missionTest=new URLSearchParams(location.search).has('missions');
+const permanenceChapter=new URLSearchParams(location.search).get('permanence');
+const permanenceTest=!!permanenceChapter;
+const missionTest=new URLSearchParams(location.search).has('missions')||permanenceTest;
 const mobileTest=new URLSearchParams(location.search).has('mobile');
 const mobileClass=new URLSearchParams(location.search).get('class');
 const wardenTest=new URLSearchParams(location.search).has('warden');
@@ -20,7 +22,7 @@ const routeArrival=routeTest&&((!siroccoTest&&!borealTest&&!embersTest&&(arrival
 const depthTest=new URLSearchParams(location.search).has('depth');
 const settlementTest=new URLSearchParams(location.search).has('settlement');
 const prefix=embersTest?`dante-embers-journey-v1.${routeArrival??'journey'}.`:borealTest?`dante-boreal-journey-v1.${routeArrival??'journey'}.`:siroccoTest?`dante-sirocco-journey-v1.${routeArrival??'journey'}.`:routeTest?`dante-early-route-v2.${routeArrival??'journey'}.`:depthTest?`dante-regional-lab.${mobileClass??'warrior'}.`:new URLSearchParams(location.search).has('journey')?'dante-journey-review-lab.':mobileTest?`dante-mobile-lab.${mobileClass??'warrior'}.`:settlementTest?'dante-settlement-lab-v2.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
-const labPrefix=titanTest?'dante-titan-combat-v1.'+(mobileClass??'warrior')+'.':vesperTest?'dante-vesper-combat-v2.'+(mobileClass??'warrior')+'.':soterradoTest?'dante-soterrado-combat-v1.'+(mobileClass??'warrior')+'.':wardenTest?'dante-warden-combat-v2.'+ (mobileClass??'warrior')+'.':prefix;
+const labPrefix=permanenceTest?'dante-permanence-v1.'+permanenceChapter+'.'+(mobileClass??'warrior')+'.':titanTest?'dante-titan-combat-v1.'+(mobileClass??'warrior')+'.':vesperTest?'dante-vesper-combat-v2.'+(mobileClass??'warrior')+'.':soterradoTest?'dante-soterrado-combat-v1.'+(mobileClass??'warrior')+'.':wardenTest?'dante-warden-combat-v2.'+ (mobileClass??'warrior')+'.':prefix;
 const isolatedKey=(storage:Storage,key:string)=>labPrefix+(storage===localStorage?'local.':'session.')+key;
 Storage.prototype.getItem=function(key){return key.startsWith('echoes-of-dante.')?get.call(sessionStorage,isolatedKey(this,key)):get.call(this,key)};
 Storage.prototype.setItem=function(key,value){if(key.startsWith('echoes-of-dante.'))set.call(sessionStorage,isolatedKey(this,key),String(value));else set.call(this,key,value)};
@@ -34,10 +36,10 @@ if(missionTest||routeTest||bossTest){
  details.querySelector('[data-reset]')!.addEventListener('click',()=>{for(const key of Array.from({length:sessionStorage.length},(_,i)=>sessionStorage.key(i)))if(key?.startsWith(prefix))remove.call(sessionStorage,key);const url=new URL(location.href);url.searchParams.delete('sala');location.href=url.href;});
  const {characterProfiles}=await import('../../systems/CharacterProfiles');
  if(!new URLSearchParams(location.search).has('sala')){
-  if(!characterProfiles.list.length){const selectedClass=(mobileTest||depthTest||routeTest||bossTest)&&['warrior','hunter','astral','xenobinder'].includes(mobileClass??'')?mobileClass as import('../../config/classes').PlayableClass:'warrior';const hero=characterProfiles.create('Pioneiro',selectedClass,'male',{mode:'solo',difficulty:'normal'});
+  if(!characterProfiles.list.length){const selectedClass=(mobileTest||depthTest||routeTest||bossTest||permanenceTest)&&['warrior','hunter','astral','xenobinder'].includes(mobileClass??'')?mobileClass as import('../../config/classes').PlayableClass:'warrior';const hero=characterProfiles.create('Pioneiro',selectedClass,'male',{mode:'solo',difficulty:'normal'});
    if(hero){characterProfiles.select(hero.id);characterProfiles.markIntroSeen(hero.id);sessionStorage.setItem('echoes-of-dante.launch-once',hero.id);}
   }
-  if((routeArrival||bossTest)&&characterProfiles.list.length)sessionStorage.setItem('echoes-of-dante.launch-once',characterProfiles.active.id);
+  if((routeArrival||bossTest||permanenceTest)&&characterProfiles.list.length)sessionStorage.setItem('echoes-of-dante.launch-once',characterProfiles.active.id);
  }
 }
 document.body.append(details);
@@ -55,6 +57,18 @@ if(settlementTest){
  for(const[id,text]of [['water-source','LIA · ÁGUA PARA PERMANECER'],['safe-route','IVO · ROTA DOS TERRAÇOS'],['shelter','NARA · PRIMEIRO ABRIGO']]){const b=document.createElement('button');b.dataset.stage=id;b.textContent='SIMULAR · '+text;stages.append(b);}
 }
 const {game}=await import('../../main');
+if(permanenceTest){
+ const {PERMANENCE_MISSIONS}=await import('../../config/permanence');
+ const chapter=PERMANENCE_MISSIONS.find(m=>m.id==='settle-'+permanenceChapter)??PERMANENCE_MISSIONS[0];
+ details.classList.add('is-mobile-lab');details.querySelector('summary')!.textContent=chapter.title.toLocaleUpperCase('pt-BR')+' · TESTE ISOLADO';
+ details.querySelector('.mission-lab-stages')?.remove();
+ for(const p of Array.from(details.querySelectorAll('p')))if(!p.querySelector('[data-reset]')&&!p.hasAttribute('data-lab-notice'))p.remove();
+ const note=document.createElement('p');note.textContent='Chegada direta: simula os relatórios até o primeiro abrigo e o Warden, além dos capítulos anteriores ao escolhido. Soterrado, Vésper e Incandescente continuam vivos. O capítulo selecionado está por aceitar, explorar e entregar; nenhum crédito dele foi concedido. Seus personagens e saves reais ficam protegidos nesta aba.';details.querySelector('summary')!.after(note);
+ const links=document.createElement('p');for(const cls of ['warrior','hunter','astral','xenobinder']){const a=document.createElement('a');a.href=`campaign-playtest.html?permanence=${permanenceChapter}&class=${cls}`;a.textContent=cls+' · ';links.append(a);}details.append(links);
+ const reset=details.querySelector<HTMLButtonElement>('[data-reset]')!;reset.onclick=()=>{for(const key of Array.from({length:sessionStorage.length},(_,i)=>sessionStorage.key(i)))if(key?.startsWith(labPrefix))remove.call(sessionStorage,key);const url=new URL(location.href);url.searchParams.delete('sala');location.href=url.href;};
+ if(!get.call(sessionStorage,labPrefix+'arrived')&&!new URLSearchParams(location.search).has('sala')){const deadline=performance.now()+90000;const arrive=()=>{const s=game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene;if(s?.sys.isActive()&&s.seedMissionPlaytest(chapter.id)){set.call(sessionStorage,labPrefix+'arrived','1');details.open=false;}else if(performance.now()<deadline)setTimeout(arrive,150);};setTimeout(arrive,150);}
+}
+
 if(bossTest){
  const label=titanTest?'INCANDESCENTE':vesperTest?'VÉSPER':soterradoTest?'SOTERRADO':'WARDEN',flag=titanTest?'titan':vesperTest?'vesper':soterradoTest?'soterrado':'warden',version=titanTest?'0.1.154':vesperTest?'0.1.153':soterradoTest?'0.1.151':'0.1.150';
  const seed=(s:import('../../scenes/GameScene').GameScene)=>titanTest?s.seedTitanPlaytest():vesperTest?s.seedVesperPlaytest():soterradoTest?s.seedSoterradoPlaytest():s.seedWardenPlaytest();

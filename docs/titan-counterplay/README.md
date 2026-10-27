@@ -36,7 +36,7 @@ Namespace `dante-titan-combat-v1`, separado por classe e dos saves/configuraçõ
 - [x] Touch/gamepad emulados, resoluções e inspeção visual.
 - [x] Typecheck, build e diff.
 - [x] Commit/push, sincronização e publicação; hashes e smoke público conferidos.
-- [ ] Playtest humano; não iniciar outra etapa antes dele.
+- [x] Usuário aprovou (“Gostei muito”); lote da permanência autorizado, conforme roadmap vigente.
 
 [Mecânica](qa/combat/combat.json): caminho comum de dano (100 vira 18 fechado e 170 aberto), três blocos físicos após queda, Dash bloqueado pelo basalto, onda/sombra/dano real, dois contatos do golpe de piso e dois contatos de fissura separados. Dash real atravessa a frente; limiar de fase não consome abertura. Trinta e duas disposições nos cantos mantêm pedras distintas e fora de corpo/rochas. Pool permanece em **192 objetos de cena / 20 de apresentação cooperativa**, sem crescimento ao repetir ataques. Janelas de inspeção são prolongadas por fixture; não medem tempo de reação humano.
 

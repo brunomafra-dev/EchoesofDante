@@ -1,9 +1,11 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**27/10/2026 · Incandescente aprovado e lote da permanência autorizado:** após “Gostei muito”, o usuário pediu executar água, alimento, transporte, energia e chegada de colonos em sequência, com QA/commit/push por sprint e continuação imediata enquanto está ausente. Esta autorização substitui a espera de playtest **entre estes cinco capítulos**, sem transformar automação em aprovação humana. Manter um laboratório isolado por capítulo, preservar campanha/saves/arte e não antecipar construção livre, agricultura produtiva, novos limites de nível ou a entrega D. [Escopo e evidências](permanence/README.md).
+
 **27/10/2026 · Sequência do Vésper 0.1.153 autorizada · Incandescente 0.1.154:** usuário pediu “vamos pro próximo” e confirmou continuar. [Basalto e descarga](titan-counterplay/README.md): blocos físicos temporários, frente de pressão interrompida pelos abrigos, sombra protegida e peito exposto após absorção. Preservar HP, requisitos, recibos, pintura e protocolo 15. Esta autorização encerra a espera do Vésper; **aguardar playtest humano do Incandescente antes de outra etapa**.
 
 - [x] QA local do Incandescente registrado com evidências e limites: doze derrotas com auto attack, vitória com movimento, dupla, controles, saves e build compilada. Git sincronizado, Vercel publicada e [hashes/smoke público](titan-counterplay/README.md) conferidos; relay público mantém protocolo 15.
-- [ ] Playtest humano da 0.1.154; publicação/automação não aprovam dificuldade.
+- [x] Incandescente aprovado pelo usuário (“Gostei muito”); lote seguinte autorizado na entrada mais recente.
 
 **27/10/2026 · Vésper 0.1.152 rejeitado por facilidade · revisão 0.1.153 autorizada:** usuário venceu atrás dele segurando auto attack. [Revisão da retaguarda](vesper-revision-02/README.md): manter a direção do corpo, cauda de ida/volta com avisos separados e abertura apenas após quebrar gelo sem causar dano real com a cauda. HP, campanha, arte e protocolo 15 preservados. QA anterior cobria posições frontais e não aprovava dificuldade; nova validação inclui retaguarda parada e acompanhando o corpo. **Aguardar novo playtest humano antes de Incandescente.**
 

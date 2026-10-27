@@ -1,11 +1,12 @@
+import {PERMANENCE_IDS,PERMANENCE_MISSIONS,type PermanenceEvidence} from './permanence';
 import type {JourneyArea} from '../systems/LocalJourney';
 import {REGIONAL_IDS,REGIONAL_EVIDENCE,REGIONAL_MISSIONS} from './regionalExpeditions';
 
-export const MISSION_IDS=['recon','survival','signal','beyond','water-source','safe-route','shelter',...REGIONAL_IDS] as const;
+export const MISSION_IDS=['recon','survival','signal','beyond','water-source','safe-route','shelter',...PERMANENCE_IDS,...REGIONAL_IDS] as const;
 export type MissionId=typeof MISSION_IDS[number];
 export type MissionNpc='expedition'|'medic'|'smith';
 export const MISSION_EVIDENCE=['clearing','roots','water','biology','echo1','echo2','echo3','passage','first-echo','warden','spring','route-west','route-east','soil','site','shelter-built',...REGIONAL_EVIDENCE] as const;
-export type MissionEvidence=typeof MISSION_EVIDENCE[number];
+export type MissionEvidence=typeof MISSION_EVIDENCE[number]|PermanenceEvidence;
 export const NPC_NAMES:Record<MissionNpc,string>={expedition:'Nara',medic:'Dra. Lia',smith:'Ivo'};
 export const NPC_SERVICES:Record<MissionNpc,string>={expedition:'Expedições e cofre',medic:'Enfermaria e suprimentos',smith:'Oficina e fabricação'};
 export const SURVEY_POINTS=[
@@ -46,5 +47,5 @@ const STORY_MISSIONS:readonly MissionDefinition[]=[
   report:['O módulo está instalado, com reservatório e um canteiro experimental. Os primeiros colonos chegaram.','Ainda somos poucos. Mas Dante já não é só um ponto no mapa: alguém vai chamar este lugar de casa.'],
   goals:[{id:'soil',label:'Analisar o solo dos terraços',area:'terraces'},{id:'site',label:'Validar o local do abrigo',area:'terraces'},{id:'shelter-built',label:'Instalar o módulo da expedição',area:'terraces'}]},
 ];
-export const MISSIONS:readonly MissionDefinition[]=[...STORY_MISSIONS,...REGIONAL_MISSIONS];
+export const MISSIONS:readonly MissionDefinition[]=[...STORY_MISSIONS,...PERMANENCE_MISSIONS,...REGIONAL_MISSIONS];
 export const missionById=(id:MissionId):MissionDefinition=>MISSIONS.find(m=>m.id===id)!;

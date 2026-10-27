@@ -1,0 +1,84 @@
+{
+  "chapter": "water",
+  "method": "DEV isolated chapter; actual navigation graph and walkable collision, real hazard health/Dash. Position and enemy-update fixtures isolate geometry/pressure.",
+  "checks": [
+    "Every authored objective has a clear footprint and connected approach/return in the real navigation graph",
+    "Unprotected player receives real pressure damage; durable valve isolation removes the pressure at every cycle phase",
+    "Polluted visited list cannot unlock later bosses/regions through the atlas"
+  ],
+  "errors": [],
+  "routes": [
+    {
+      "id": "pw-intake",
+      "paths": [
+        {
+          "steps": 35,
+          "gap": 19.209372712298546
+        },
+        {
+          "steps": 16,
+          "gap": 17
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pw-silt",
+      "paths": [
+        {
+          "steps": 27,
+          "gap": 12.529964086141668
+        },
+        {
+          "steps": 28,
+          "gap": 17
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pw-valve",
+      "paths": [
+        {
+          "steps": 30,
+          "gap": 7.810249675906656
+        },
+        {
+          "steps": 25,
+          "gap": 17
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pw-filter",
+      "paths": [
+        {
+          "steps": 12,
+          "gap": 30.610455730027933
+        },
+        {
+          "steps": 15,
+          "gap": 23.345235059857504
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pw-online",
+      "paths": [
+        {
+          "steps": 40,
+          "gap": 12.529964086141668
+        },
+        {
+          "steps": 43,
+          "gap": 23.345235059857504
+        }
+      ],
+      "clear": true
+    }
+  ],
+  "pressureDamage": 20,
+  "passed": true
+}
