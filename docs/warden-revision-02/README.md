@@ -1,5 +1,7 @@
 # Warden — consequência, contato e recuperação · 0.1.150
 
+**27/10/2026:** usuário testou e aprovou esta revisão (“Aprovadissimo”) e autorizou o próximo boss, [Soterrado](../soterrado-counterplay/README.md). As pendências de aprovação abaixo são o registro histórico da entrega; não equivalem a uma avaliação separada da trilha sonora.
+
 [Enfrentar o Warden vivo](https://echosofdante.vercel.app/campaign-playtest.html?warden=1&v=0.1.150) · [Biblioteca](https://echosofdante.vercel.app/test-library.html)
 
 ## Correção solicitada
@@ -52,5 +54,5 @@ Evidências adicionais: [controles](qa/controls/controls.json) e [build compilad
 
 O teste funcional confirma que as regras são executadas; não declara a dificuldade, a animação ou a diversão aprovadas. A duração global de campanha continua sem medição humana. A avaliação de volume/música anterior também não é inferida desta revisão.
 
-- [ ] Playtest humano da força dos golpes, animação, leitura e ritmo da revisão.
-- [ ] Somente após essa validação, escolher a próxima mecânica de boss.
+- [x] Playtest humano da revisão aprovado pelo usuário em 27/10/2026.
+- [x] Usuário autorizou seguir ao Soterrado após a aprovação.

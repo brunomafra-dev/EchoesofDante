@@ -30,7 +30,7 @@ export class SoterradoBurrow {
 
   dig(now:number,source:Vec2,destination:Vec2):void {
     this.open(0,source,now,240,now+60,now+750);
-    this.open(1,destination,now+SOTERRADO.burrow.tell*.46,600,now+SOTERRADO.burrow.tell,
+    this.open(1,destination,now+SOTERRADO.burrow.tell*.46,600,now+SOTERRADO.burrow.tell+SOTERRADO.burrow.contact,
       now+SOTERRADO.burrow.tell+SOTERRADO.burrow.execute+SOTERRADO.burrow.recover*.6);
   }
 

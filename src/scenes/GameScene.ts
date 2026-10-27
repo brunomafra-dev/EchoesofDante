@@ -164,6 +164,7 @@ export class GameScene extends Phaser.Scene {
   private coopMessage = '';
   private coopBossCue='';
   private coopWardenImpact=false;
+  private coopSoterradoImpacts=0;
   private coopBossResolved=false;
   private visitingCoop = false;
   private player!: Player;
@@ -351,6 +352,7 @@ export class GameScene extends Phaser.Scene {
     if (!this.textures.exists('warden-motion')) preloadCreatureSheet(this,'warden-motion', `${assetBase}warden-motion.png`,512);
     if (!this.textures.exists('warden-slam-motion')) this.load.spritesheet('warden-slam-motion',`${import.meta.env.BASE_URL}assets/visual/creature-finish/warden-slam-v1.webp`,{frameWidth:512,frameHeight:512});
     if (!this.textures.exists('soterrado-motion')) preloadCreatureSheet(this,'soterrado-motion', `${assetBase}soterrado-motion.png`,384);
+    if (!this.textures.exists('soterrado-crash-motion')) this.load.spritesheet('soterrado-crash-motion',`${import.meta.env.BASE_URL}assets/visual/creature-finish/soterrado-crash-v1.webp`,{frameWidth:384,frameHeight:384});
     for (const name of ['soterrado-burrow', 'soterrado-burrow-lip', 'soterrado-dust']) {
       if (!this.textures.exists(name)) this.load.image(name, `${import.meta.env.BASE_URL}assets/visual/environment/${name}.png`);
     }
@@ -405,7 +407,7 @@ export class GameScene extends Phaser.Scene {
     this.dunes = undefined;
     this.frost = undefined;
     this.glacier = undefined; this.vesper = undefined; this.vesperHud = undefined;this.caldera=undefined;this.volcanic=undefined;this.titan=undefined;this.titanHud=undefined;
-    this.coopBossResolved=false;this.coopBossCue='';this.coopWardenImpact=false;
+    this.coopBossResolved=false;this.coopBossCue='';this.coopWardenImpact=false;this.coopSoterradoImpacts=0;
     this.coldPortal = undefined;
     this.soterrado = undefined;
     this.sandpit = undefined;
@@ -1591,13 +1593,21 @@ export class GameScene extends Phaser.Scene {
           else if(boss?.state==='PHASE')this.sounds.wardenCue('phase');
           else if(boss?.state==='TELEGRAPH')this.sounds.wardenWarning(boss.attackName);
           else if(boss?.state==='RECOVER'&&this.area==='warden'&&boss.visuals.some(v=>v.kind==='image'&&v.tint===0xd5f5ec))this.sounds.wardenCue('recover');
-          else if(boss?.state==='EXECUTE'&&(this.area!=='warden'||boss.attackName==='rush'))this.sounds.wardenCue(boss.attackName==='rush'?'rush':boss.attackName==='sweep'||boss.attackName==='tail'?'sweep':'slam');
+          else if(boss?.state==='EXECUTE'&&(!['warden','sandpit'].includes(this.area)||boss.attackName==='rush'))this.sounds.wardenCue(boss.attackName==='rush'?'rush':boss.attackName==='sweep'||boss.attackName==='tail'?'sweep':'slam');
           else if(boss?.isDead){this.sounds.stopMusic();this.sounds.wardenCue('death');}
         }
         if(this.area==='warden'){
           const impact=!!boss?.visuals.some(v=>v.texture==='warden-ground-impact'&&v.visible&&v.alpha>.15);
           if(impact&&!this.coopWardenImpact)this.wardenImpactFeedback(boss?.attackName??'slam');
           this.coopWardenImpact=impact;
+        }
+        if(this.area==='sandpit'){
+          const bursts=boss?.visuals.filter(v=>v.texture==='soterrado-crash-impact'||v.texture==='soterrado-ground-impact')??[];
+          const mask=bursts.reduce((bits,v,i)=>bits|(v.visible&&v.alpha>.15?1<<i:0),0);
+          const fresh=mask&~this.coopSoterradoImpacts;
+          if(fresh&1)this.soterradoImpactFeedback(true);
+          else if(fresh)this.soterradoImpactFeedback(false);
+          this.coopSoterradoImpacts=mask;
         }
       },
       strike:this.attack.pose(this.time.now,this.player.rotation),releaseProgress:this.charge.pose(this.time.now).swingProgress,
@@ -1767,8 +1777,9 @@ export class GameScene extends Phaser.Scene {
   private soterradoCue(cue: SoterradoCue, attack?: SoterradoAttack): void {
     if (cue === 'intro') { this.sounds.wardenCue('intro'); }
     else if (cue === 'warning') { this.sounds.wardenWarning(attack); }
-    else if (cue === 'strike') this.sounds.wardenCue(attack === 'rush' ? 'rush' : attack === 'sweep' ? 'sweep' : 'slam');
-    else if (cue === 'phase') { this.sounds.wardenCue('phase'); this.hud.showDiscovery('A AREIA CEDE\nOBSERVE AS MARCAS EM SEQUÊNCIA'); }
+    else if (cue === 'strike') { if(attack==='rush')this.sounds.wardenCue('rush');else this.soterradoImpactFeedback(false); }
+    else if (cue === 'crash') this.soterradoImpactFeedback(true);
+    else if (cue === 'phase') { this.sounds.wardenCue('phase'); this.hud.showDiscovery('A AREIA CEDE'); }
     else if (cue === 'death') {
       this.soterradoDefeated = true;
       const reward = this.progression.defeatSoterrado();
@@ -1777,6 +1788,12 @@ export class GameScene extends Phaser.Scene {
       if (reward.leveledUp) this.levelUp(false);
       this.sounds.stopMusic(); this.sounds.wardenCue('death'); this.saveProgress();
     }
+  }
+
+  private soterradoImpactFeedback(crash:boolean):void {
+    this.sounds.wardenCue('slam');
+    if(crash)this.sounds.wardenCue('recover');
+    this.cameras.main.shake(crash?190:90,crash?.004:.0015);
   }
 
   private vesperCue(cue: IceCue): void {
@@ -1861,7 +1878,7 @@ export class GameScene extends Phaser.Scene {
     if (hits.length) this.cameras.main.shake(chargeHit ? 75 : 55, chargeHit ? 0.003 : 0.0024);
     for (const enemy of hits) {
       if ((enemy === this.warden || enemy === this.soterrado || enemy === this.vesper || enemy === this.titan) && !(enemy as Warden | Soterrado | Vesper | CalderaTitan).canBeHit) continue;
-      const shellMultiplier = enemy === this.warden ? this.warden.receiveStrike(now, angle) : 1;
+      const shellMultiplier = enemy === this.warden ? this.warden.receiveStrike(now, angle) : enemy === this.soterrado ? this.soterrado.receiveStrike(now) : 1;
       if (shellMultiplier === 0) { this.impact(enemy.position, 0xc9b4ed, 0, angle); continue; }
       const multiplier = elementalMultiplier(element, this.enemySpecies.get(enemy));
       const result = applyDamage(enemy.health, Math.round(damage * multiplier * shellMultiplier));
@@ -2280,6 +2297,23 @@ export class GameScene extends Phaser.Scene {
     this.economy.credits=100;this.economy.potions=5;this.transferHp=this.characterMaxHp;
     this.earlyRouteCheckpoint=undefined;this.expeditionArrival=area==='valley'?{...VALLEY.entry}:area==='arid'?{...SIROCCO.entry}:area==='dunes'?{...DUNES.entry}:{...SANDPIT.entry};
     this.expeditionReturn=undefined;this.area=area;this.saveProgress();this.scene.restart();return true;
+  }
+
+  // Restricted isolated arrival. Warden and the previous route are simulated;
+  // Soterrado, its personal receipt, clue and cold passage remain pending.
+  seedSoterradoPlaytest():boolean {
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!new URLSearchParams(location.search).has('soterrado')||coopSession.role==='guest'||this.transitioning||this.inputModalOpen||!this.player||this.player.isDead)return false;
+    if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return false;
+    for(const flag of JOURNEY_FLAGS)this[flag]=false;
+    for(const flag of ['cavernDepthSeen','deepPassageOpen','deepAreaSeen','deepCavernEntered','deepEndSeen','deeperEntered','exteriorEntered','fragmentSeen','approachSeen','firstEchoSeen','wardenReached','wardenGateOpen','wardenDefeated','wardenEndingSeen','valleyVisited','valleyLandmarkSeen','valleyEndSeen','valleyCheckpointReached','valleyFrontierReached','valleyFrontierSignalSeen','valleyFrontierEndSeen','aridVisited','aridSignalSeen','aridFrontierEntered','aridFrontierReached','dunesVisited','dunesRuinsSeen','dunesDepthSeen','soterradoReached'] as const)this[flag]=true;
+    this.progression.restore({xp:950,echoes:['northern-ruin','mineral-signal','unknown-trace'],sourceLocated:true,passageOpen:true,rewardedHollows:[],rewardedRoutes:[],bossRewards:['warden']});
+    const core=['recon','survival','signal','beyond'] as const;
+    this.missions.restore({schema:1,accepted:[...core,'exp-valley','exp-arid','exp-dunes'],completed:[...core],evidence:core.flatMap(id=>missionById(id).goals.map(g=>g.id))});
+    this.missions.tracked='exp-dunes';this.missionRewards=[...core];
+    for(const upgrade of ['chargePower','dashDuration','chargeWidth'] as const)this.progression.investUpgrade(upgrade);
+    this.economy.visited=['base','forest','cavern','warden','valley','arid','dunes','sandpit'];this.economy.credits=100;this.economy.potions=5;
+    this.earlyRouteCheckpoint=undefined;this.expeditionArrival={...SANDPIT.entry};this.expeditionReturn=undefined;
+    this.transferHp=this.characterMaxHp;this.area='sandpit';this.saveProgress();this.scene.restart();return true;
   }
 
   // Restricted laboratory arrival: only the route BEFORE this living boss is seeded.

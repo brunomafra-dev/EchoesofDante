@@ -1,0 +1,11 @@
+{
+  "base": "http://localhost:5193",
+  "method": "Compiled Chrome, no DEV globals: real direct arrival/reload, keyboard encounter trigger, actual score requests and audition controls; real-save sentinel.",
+  "checks": [
+    "Compiled isolated arrival/reload and real keyboard encounter load new Soterrado music; real saves/settings preserved",
+    "Public audition plays exploration/boss assets, cues, independent volume and stop controls"
+  ],
+  "errors": [],
+  "newCrashArt": true,
+  "passed": true
+}

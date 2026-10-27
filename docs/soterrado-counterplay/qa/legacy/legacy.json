@@ -1,0 +1,22 @@
+{
+  "method": "Isolated schema-1 save with later optional systems absent, using the original parser and real reload. No Soterrado victory is inserted. Real atlas UI verifies locked northern destinations.",
+  "errors": [],
+  "checks": [
+    "Legacy schema-1 reload preserves prior Warden/XP/receipt and creates exactly one living Soterrado; no cold unlock",
+    "Original atlas disables northern and volcanic regions before their prerequisites"
+  ],
+  "after": {
+    "xp": 950,
+    "warden": true,
+    "soterrado": false,
+    "receipts": [
+      "warden"
+    ],
+    "state": "DORMANT",
+    "max": 1233,
+    "clue": false,
+    "frost": false,
+    "actors": 1
+  },
+  "passed": true
+}

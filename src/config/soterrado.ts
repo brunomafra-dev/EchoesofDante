@@ -5,20 +5,23 @@ export const SANDPIT = {
   spawn: { x: 1080, y: 760 }, awakeningX: 690,
   clue: { x: 1450, y: 730, radius: 115 },
   rocks: [{ x: 690, y: 430, radius: 48 }, { x: 1310, y: 431, radius: 46 },
-    { x: 700, y: 1130, radius: 47 }, { x: 1350, y: 1115, radius: 50 }],
+    { x: 700, y: 1130, radius: 47 }, { x: 1350, y: 1115, radius: 50 },
+    // Low mineral anchors: clear lanes on both sides, away from entry/clue.
+    { x: 820, y: 590, radius: 44 }, { x: 1190, y: 965, radius: 44 }],
 } as const;
 
 export const SOTERRADO = {
-  maxHp: 850, radius: 60, artSize: 265, speed: 85, standOff: 130,
-  introMs: 2200, phaseMs: 1600, deathMs: 1900, xp: 180,
+  maxHp: 850, radius: 60, artSize: 265, speed: 120, standOff: 150,
+  introMs: 2200, phaseMs: 950, deathMs: 1900, xp: 180,
+  idleMs: 300, crashMs: 3600, openingAt: 320, closingMs: 160, openingDamage: 1.65,
   patterns: {
-    1: ['sweep', 'rush', 'burrow', 'sweep'] as const,
-    2: ['burrow', 'sweep', 'fissure', 'rush', 'sweep'] as const,
+    1: ['rush', 'burrow', 'sweep', 'rush'] as const,
+    2: ['rush', 'fissure', 'burrow', 'rush', 'sweep'] as const,
   },
-  sweep: { tell: 900, execute: 220, recover: 1150, damage: 18, range: 170, halfAngle: 1.05 },
-  rush: { tell: 1150, execute: 800, recover: 1400, damage: 24, speed: 560, distance: 350, halfWidth: 62 },
-  burrow: { tell: 1250, execute: 320, recover: 1800, damage: 26, radius: 114 },
-  fissure: { tell: 1400, execute: 1000, recover: 1500, damage: 20, radius: 80, interval: 300 },
+  sweep: { tell: 680, execute: 540, recover: 280, contact: 220, damage: 34, range: 185, halfAngle: 1.15 },
+  rush: { tell: 950, execute: 1080, recover: 320, damage: 40, speed: 740, distance: 700, halfWidth: 62 },
+  burrow: { tell: 1250, execute: 750, recover: 340, contact: 280, damage: 38, radius: 120 },
+  fissure: { tell: 950, execute: 1360, recover: 280, contact: 180, damage: 30, radius: 84, interval: 420 },
 } as const;
 export type SoterradoAttack = 'sweep' | 'rush' | 'burrow' | 'fissure';
 export type SoterradoState = 'DORMANT' | 'INTRO' | 'IDLE' | 'TELEGRAPH' | 'EXECUTE' | 'RECOVER' | 'PHASE' | 'DEATH';

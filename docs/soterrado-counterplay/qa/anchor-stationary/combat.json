@@ -1,0 +1,35 @@
+{
+  "method": "Live game damage; DEV fixtures isolate collisions/attacks. Real mouse attacks in each kit and stationary trials. Real keyboard respawn/investigation/reload. Not human balance approval.",
+  "checks": [
+    "Four stationary attempts behind a mineral anchor lose against live AI; R restores one intact living boss and preserves real saves/settings"
+  ],
+  "errors": [],
+  "stationary": [
+    {
+      "cls": "warrior",
+      "bossStarted": 1233,
+      "bossRemaining": 1233,
+      "playerDefeated": true
+    },
+    {
+      "cls": "hunter",
+      "bossStarted": 1233,
+      "bossRemaining": 1233,
+      "playerDefeated": true
+    },
+    {
+      "cls": "astral",
+      "bossStarted": 1233,
+      "bossRemaining": 1233,
+      "playerDefeated": true
+    },
+    {
+      "cls": "xenobinder",
+      "bossStarted": 1233,
+      "bossRemaining": 1233,
+      "playerDefeated": true
+    }
+  ],
+  "kits": [],
+  "passed": true
+}

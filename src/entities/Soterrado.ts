@@ -3,14 +3,15 @@ import Phaser from 'phaser';
 import { Health } from '../combat/Health';
 import { inMeleeArc, inShockwaveSweep } from '../combat/HitDetection';
 import { PLAYER } from '../config/game';
-import { SOTERRADO as B, type SoterradoAttack, type SoterradoState } from '../config/soterrado';
+import { SANDPIT, SOTERRADO as B, type SoterradoAttack, type SoterradoState } from '../config/soterrado';
 import { moveWithCollisions, type MovementBounds, type Obstacle } from '../systems/Movement';
 import { clamp, distance, type Vec2 } from '../utils/math';
 import { createEnemyName } from '../ui/EnemyName';
 import { SoterradoBurrow } from '../visual/SoterradoBurrow';
+import { SoterradoImpact } from '../visual/SoterradoImpact';
 import type { Enemy, EnemyImpact } from './Enemy';
 
-export type SoterradoCue = 'intro' | 'warning' | 'strike' | 'phase' | 'death';
+export type SoterradoCue = 'intro' | 'warning' | 'strike' | 'crash' | 'phase' | 'death';
 type Mark = { x:number; y:number; spent:boolean; graphic:Phaser.GameObjects.Graphics };
 
 // An encounter-specific Enemy: the existing saber, charge, health and damage paths apply.
@@ -23,12 +24,13 @@ export class Soterrado implements Enemy {
   readonly body: Phaser.GameObjects.Image;
   readonly shadow: CreatureShadow;
   readonly telegraph: Phaser.GameObjects.Graphics;
-  get coopObjects(): Phaser.GameObjects.GameObject[] { return [this.shadow,this.name,this.body,this.telegraph,...this.marks.map(m=>m.graphic),...this.burrowVisual.coopObjects]; }
+  get coopObjects(): Phaser.GameObjects.GameObject[] { return [this.shadow,this.name,this.body,this.telegraph,...this.marks.map(m=>m.graphic),...this.burrowVisual.coopObjects,...this.impactVisual.coopObjects]; }
   private victims = new Set<Vec2>();
   private participants?: readonly Vec2[];
   private readonly name: Phaser.GameObjects.Text;
   private readonly marks: Mark[];
   private readonly burrowVisual: SoterradoBurrow;
+  private readonly impactVisual: SoterradoImpact;
   private readonly origin: Vec2 = { x:0,y:0 };
   private readonly velocity: Vec2 = { x:0,y:0 };
   state: SoterradoState = 'DORMANT';
@@ -45,6 +47,9 @@ export class Soterrado implements Enemy {
   private stopped=false;
   private facingLeft=true;
   private hurtUntil=0;
+  private guardedUntil=0;
+  private carapaceBroken=false;
+  private contactFired=false;
 
   constructor(private readonly scene:Phaser.Scene,x:number,y:number,private readonly bounds:MovementBounds,
     private readonly onCue:(cue:SoterradoCue,attack?:SoterradoAttack)=>void,private readonly onDefeated:()=>void) {
@@ -55,11 +60,22 @@ export class Soterrado implements Enemy {
     this.telegraph=scene.add.graphics().setVisible(false);
     this.marks=Array.from({length:3},()=>({x,y,spent:true,graphic:scene.add.graphics().setVisible(false)}));
     this.burrowVisual=new SoterradoBurrow(scene);
+    this.impactVisual=new SoterradoImpact(scene);
   }
 
   get submerged():boolean { return this.attackName==='burrow'&&this.state==='TELEGRAPH'&&this.scene.time.now-this.stateAt>350; }
   get canBeHit():boolean { return !this.isDead&&!this.stopped&&this.state!=='DORMANT'&&this.state!=='INTRO'&&this.state!=='PHASE'&&!this.submerged; }
   get solid():boolean { return !this.isDead&&!this.submerged&&this.state!=='INTRO'&&this.state!=='DORMANT'; }
+  get coreExposed():boolean {
+    const age=this.scene.time.now-this.stateAt;
+    return this.state==='RECOVER'&&this.carapaceBroken&&age>=B.openingAt&&age<B.crashMs-B.closingMs;
+  }
+  // Shared authoritative path for saber, bolts, DOT, beasts and guest attacks.
+  receiveStrike(now:number):number {
+    if(!this.canBeHit)return 0;
+    if(this.coreExposed)return B.openingDamage;
+    this.guardedUntil=now+100;return 0;
+  }
   beginIntro(now:number):void {
     if(this.state!=='DORMANT'||this.stopped||this.isDead)return;
     this.setState('INTRO',now,B.introMs);this.burrowVisual.intro(now,this.position);this.onCue('intro');
@@ -75,16 +91,17 @@ export class Soterrado implements Enemy {
     dt=Math.min(dt,.04);
     this.velocity.x=this.velocity.y=0;
     this.burrowVisual.update(now);
+    this.impactVisual.update(now);
     const previous={...this.position};
     if(this.state==='DORMANT'){this.render(now,0);return;}
     if(this.state==='INTRO') {
-      if(now>=this.stateUntil)this.setState('IDLE',now,1000);
+      if(now>=this.stateUntil)this.setState('IDLE',now,B.idleMs);
       this.render(now,0);return;
     }
-    if(this.phase===1&&this.health.current<=this.health.max*.48&&this.state!=='TELEGRAPH'&&this.state!=='EXECUTE') {
+    if(this.phase===1&&this.health.current<=this.health.max*.48&&this.state==='IDLE') {
       this.phase=2;this.attackName=null;this.clearWarnings();this.setState('PHASE',now,B.phaseMs);this.onCue('phase');
     }
-    if(this.state==='PHASE') {if(now>=this.stateUntil)this.setState('IDLE',now,900);}
+    if(this.state==='PHASE') {if(now>=this.stateUntil)this.setState('IDLE',now,B.idleMs);}
     else if(this.state==='IDLE') {
       const gap=distance(player,this.position);
       if(Math.abs(player.x-this.position.x)>10)this.facingLeft=player.x<this.position.x;
@@ -100,34 +117,56 @@ export class Soterrado implements Enemy {
       }
     } else if(this.state==='TELEGRAPH'&&now>=this.stateUntil) {
       if(this.attackName==='burrow') {this.position.x=this.marks[0].x;this.position.y=this.marks[0].y;}
-      this.setState('EXECUTE',now,this.attackName?B[this.attackName].execute:220);this.onCue('strike',this.attackName??undefined);
+      this.setState('EXECUTE',now,this.attackName?B[this.attackName].execute:220);
+      if(this.attackName==='rush')this.onCue('strike','rush');
     }
     if(this.state==='EXECUTE'&&this.attackName) {
       const attack=this.attackName, elapsed=now-this.stateAt;
       if(attack==='rush') {
         const before={...this.position};
-        moveWithCollisions(this.position,{x:Math.cos(this.angle)*B.rush.speed,y:Math.sin(this.angle)*B.rush.speed},dt,this.radius,obstacles,this.bounds);
+        // Swept circle contact stops at the first surface, without the normal
+        // walking solver sliding a committed rush around a formation.
+        const dx=Math.cos(this.angle),dy=Math.sin(this.angle);
+        const wallDistance=Math.min(dx>0?(this.bounds.right-this.radius-before.x)/dx:dx<0?(this.bounds.left+this.radius-before.x)/dx:Infinity,dy>0?(this.bounds.bottom-this.radius-before.y)/dy:dy<0?(this.bounds.top+this.radius-before.y)/dy:Infinity);
+        let length=Math.max(0,Math.min(B.rush.speed*dt,B.rush.distance-this.travelled,wallDistance)),rockHit:Obstacle|undefined;
+        for(const rock of obstacles) {
+          const ox=before.x-rock.x,oy=before.y-rock.y,projection=ox*dx+oy*dy;
+          if(projection>=0)continue;
+          const radius=this.radius+rock.radius,disc=projection*projection-(ox*ox+oy*oy-radius*radius);
+          if(disc<0)continue;
+          const contact=Math.max(0,-projection-Math.sqrt(disc));
+          if(contact<=length){length=contact;rockHit=rock;}
+        }
+        const end={x:before.x+dx*length,y:before.y+dy*length};
+        this.position.x=clamp(end.x,this.bounds.left+this.radius,this.bounds.right-this.radius);
+        this.position.y=clamp(end.y,this.bounds.top+this.radius,this.bounds.bottom-this.radius);
         const step=distance(before,this.position);this.travelled+=step;
         for(const victim of this.participants??[player]) if(inShockwaveSweep(before,this.angle,victim,0,step,B.rush.halfWidth,this.radius*2,PLAYER.radius))this.hit(onAttack,victim);
-        if(this.travelled>=B.rush.distance||step<B.rush.speed*dt*.3)this.stateUntil=now;
-      } else if(attack==='sweep'&&elapsed<180) {
-        for(const victim of this.participants??[player]) if(inMeleeArc(this.origin,this.angle,victim,B.sweep.range,B.sweep.halfAngle,PLAYER.radius))this.hit(onAttack,victim);
-      } else if(attack==='burrow'&&elapsed<180) {
-        for(const victim of this.participants??[player]) if(distance(this.position,victim)<B.burrow.radius+PLAYER.radius)this.hit(onAttack,victim);
+        if(rockHit&&SANDPIT.rocks.some(rock=>rock.x===rockHit.x&&rock.y===rockHit.y)) {
+          this.carapaceBroken=true;this.clearWarnings();this.setState('RECOVER',now,B.crashMs);
+          const separation=distance(rockHit,this.position);
+          this.impactVisual.show(now,{x:this.position.x+(rockHit.x-this.position.x)*this.radius/separation,y:this.position.y+(rockHit.y-this.position.y)*this.radius/separation},0,1.2);
+          this.onCue('crash');
+        } else if(rockHit||this.travelled>=B.rush.distance||length>=wallDistance-.001)this.stateUntil=now;
+      } else if((attack==='sweep'||attack==='burrow')&&!this.contactFired&&elapsed>=B[attack].contact) {
+        this.contactFired=true;this.impactVisual.show(now,this.position,1,attack==='burrow'?1.3:.8);this.onCue('strike',attack);
+        for(const victim of this.participants??[player]) if(attack==='sweep'?inMeleeArc(this.origin,this.angle,victim,B.sweep.range,B.sweep.halfAngle,PLAYER.radius):distance(this.position,victim)<B.burrow.radius+PLAYER.radius)this.hit(onAttack,victim);
       } else if(attack==='fissure') {
         for(let i=0;i<this.marks.length;i++) {
           const mark=this.marks[i];
-          if(!mark.spent&&elapsed>=i*B.fissure.interval) {
+          if(!mark.spent&&elapsed>=B.fissure.contact+i*B.fissure.interval) {
             mark.spent=true;
+            this.victims.clear();this.activationHit=false;
+            this.impactVisual.show(now,mark,i+1,.95);this.onCue('strike','fissure');
             for(const victim of this.participants??[player]) if(distance(mark,victim)<B.fissure.radius+PLAYER.radius)this.hit(onAttack,victim);
             mark.graphic.setAlpha(.8);
           }
-          if(mark.spent)mark.graphic.setAlpha(Math.max(0,1-(elapsed-i*B.fissure.interval)/250));
+          if(mark.spent)mark.graphic.setAlpha(Math.max(0,1-(elapsed-B.fissure.contact-i*B.fissure.interval)/250));
         }
       }
-      if(now>=this.stateUntil){this.clearWarnings();this.setState('RECOVER',now,B[attack].recover);}
+      if(this.state==='EXECUTE'&&now>=this.stateUntil){this.clearWarnings();this.setState('RECOVER',now,B[attack].recover);}
     } else moveWithCollisions(this.position,this.velocity,dt,this.radius,obstacles,this.bounds);
-    if(this.state==='RECOVER'&&now>=this.stateUntil){this.attackName=null;this.setState('IDLE',now,this.phase===1?900:650);}
+    if(this.state==='RECOVER'&&now>=this.stateUntil){this.carapaceBroken=false;this.attackName=null;this.setState('IDLE',now,B.idleMs);}
     this.render(now,distance(previous,this.position));
   }
 
@@ -145,7 +184,7 @@ export class Soterrado implements Enemy {
   }
 
   private beginAttack(now:number,attack:SoterradoAttack,player:Vec2,obstacles:readonly Obstacle[]):void {
-    this.clearWarnings();this.attackName=attack;this.activationHit=false;this.victims.clear();this.travelled=0;
+    this.clearWarnings();this.carapaceBroken=false;this.contactFired=false;this.attackName=attack;this.activationHit=false;this.victims.clear();this.travelled=0;
     Object.assign(this.origin,this.position);this.angle=Math.atan2(player.y-this.position.y,player.x-this.position.x);
     if(Math.abs(Math.cos(this.angle))>.1)this.facingLeft=Math.cos(this.angle)<0;
     this.setState('TELEGRAPH',now,B[attack].tell);
@@ -157,7 +196,7 @@ export class Soterrado implements Enemy {
     } else if(attack==='rush') {
       g.fillRect(-60,-B.rush.halfWidth,B.rush.distance+120,B.rush.halfWidth*2);
       g.strokeRect(-60,-B.rush.halfWidth,B.rush.distance+120,B.rush.halfWidth*2);
-      for(const x of [150,270])g.lineBetween(x-15,-12,x,0).lineBetween(x-15,12,x,0);
+      for(const x of [150,330,510])g.lineBetween(x-15,-12,x,0).lineBetween(x-15,12,x,0);
     } else {
       g.setVisible(false);
       const count=attack==='burrow'?1:3, radius=attack==='burrow'?B.burrow.radius:B.fissure.radius;
@@ -180,29 +219,32 @@ export class Soterrado implements Enemy {
     const progress=clamp((now-this.stateAt)/Math.max(1,this.stateUntil-this.stateAt),0,1);
     const sinking=this.state==='TELEGRAPH'&&this.attackName==='burrow';
     const emerging=this.state==='INTRO'||(this.state==='EXECUTE'&&this.attackName==='burrow');
-    const frame=this.state==='PHASE'?6:emerging?5:this.state==='TELEGRAPH'?3:this.state==='EXECUTE'?4:walking?1+Math.floor(this.gait)%2:0;
+    const age=now-this.stateAt,crashed=this.state==='RECOVER'&&this.carapaceBroken;
+    const rushPose=this.attackName==='rush'&&(this.state==='TELEGRAPH'||this.state==='EXECUTE');
+    const texture=crashed||rushPose?'soterrado-crash-motion':'soterrado-motion';
+    const frame=crashed?(age<B.openingAt?2:age<650?3:age<B.crashMs-480?4+Math.floor(age/280)%2:age<B.crashMs-B.closingMs?6:7):rushPose?(this.state==='TELEGRAPH'?0:1):this.state==='PHASE'?6:emerging?5:this.state==='TELEGRAPH'?3:this.state==='EXECUTE'?4:walking?1+Math.floor(this.gait)%2:0;
     // Translate a full-size pose through the soil plane, cropping the buried
     // portion. The painted foreground lip covers the cut instead of squashing
     // the anatomy. Rendering never moves the physical body or attack origin.
     const reveal=sinking?1-clamp((now-this.stateAt)/350,0,1):this.state==='INTRO'?clamp((progress-.28)/.62,0,1):emerging?clamp(progress*1.2,0,1):1;
     const eased=reveal*reveal*(3-2*reveal),hidden=(1-eased)*B.artSize*.93;
-    this.body.setFrame(frame).setFlipX(this.facingLeft).setRotation(0).setScale(B.artSize/384)
-      .setPosition(this.position.x,this.position.y+14+hidden).setDepth(this.position.y);
+    this.body.setTexture(texture,frame).setFlipX(this.facingLeft).setRotation(0).setScale(B.artSize/384)
+      .setPosition(this.position.x+(crashed&&age<220?Math.sin(age*.08)*(1-age/220)*7:0),this.position.y+14+hidden).setDepth(this.position.y);
     if(eased<1)this.body.setCrop(0,0,384,Math.max(1,384*.93*eased));else this.body.setCrop();
     this.body.setAlpha(this.state==='DORMANT'||eased<=0?0:1);
-    if(now<this.hurtUntil)this.body.setTintFill(0xffe5c1);else this.body.clearTint();
+    if(now<this.hurtUntil)this.body.setTintFill(0xffe5c1);else if(now<this.guardedUntil)this.body.setTint(0xffcf83);else this.body.clearTint();
     this.name.setPosition(this.position.x,this.position.y-145).setVisible(this.state!=='DORMANT'&&!this.submerged&&reveal>.6);
     this.shadow.setPosition(this.position.x,this.position.y+5).setDepth(this.position.y-2).setScale(sinking?1-progress*.5:1).setAlpha(this.state==='DORMANT'?.12:.5);
   }
 
   private clearWarnings():void {this.telegraph.setVisible(false);for(const mark of this.marks){mark.spent=true;mark.graphic.setVisible(false);}}
-  suspend():void {this.stopped=true;this.clearWarnings();this.burrowVisual.clear();this.state='DORMANT';this.attackName=null;this.name.setVisible(false);this.body.setCrop().setAlpha(0);}
+  suspend():void {this.stopped=true;this.carapaceBroken=false;this.clearWarnings();this.burrowVisual.clear();this.impactVisual.clear();this.state='DORMANT';this.attackName=null;this.name.setVisible(false);this.body.setCrop().setAlpha(0);}
   hurt(now:number,_from:Vec2):void {if(this.canBeHit)this.hurtUntil=now+120;}
   die():void {
     if(this.isDead)return;
     this.isDead=true;this.health.current=0;this.state='DEATH';this.attackName=null;this.clearWarnings();this.name.setVisible(false);
-    this.burrowVisual.clear();
-    this.body.setFrame(7).setCrop().setPosition(this.position.x,this.position.y+14).clearTint().setScale(B.artSize/384).setAlpha(1);this.onCue('death');
+    this.carapaceBroken=false;this.burrowVisual.clear();this.impactVisual.clear();
+    this.body.setTexture('soterrado-motion',7).setCrop().setPosition(this.position.x,this.position.y+14).clearTint().setScale(B.artSize/384).setAlpha(1);this.onCue('death');
     this.scene.tweens.add({targets:this.body,alpha:.55,duration:B.deathMs});
     this.scene.time.delayedCall(B.deathMs,()=>this.onDefeated());
   }

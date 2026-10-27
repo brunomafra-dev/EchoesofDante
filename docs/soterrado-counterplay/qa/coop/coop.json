@@ -1,0 +1,32 @@
+{
+  "method": "Two independent Chrome processes, real local protocol-15 relay. DEV position/state fixtures, extended recovery for stable screenshots; actual guest projectiles and rewards. No simulated victory.",
+  "checks": [
+    "Two real relay clients; invite retains isolated Soterrado lab; original party HP scaling",
+    "Guest crossing starts the living encounter and low encounter score in both browsers",
+    "Actual guest Hunter bolts cannot bypass the closed carapace",
+    "Visitor receives the full locked rush corridor, including intact ARC operands",
+    "Actual guest bait causes physical collision; new full-body opening replicates and actual guest bolts cause authoritative damage",
+    "Rush contact damages the actual guest through normal party/difficulty scaling",
+    "Real guest lethal hit: 180 XP per member once, music stops, clue and cold passage remain pending",
+    "Guest reconnect preserves unique XP/receipt"
+  ],
+  "errors": [],
+  "guestDamage": 53,
+  "victory": [
+    {
+      "xp": 1130,
+      "receipt": 1,
+      "clue": false,
+      "portal": false,
+      "stopped": true
+    },
+    {
+      "xp": 1130,
+      "receipt": 1,
+      "clue": false,
+      "portal": false,
+      "stopped": true
+    }
+  ],
+  "passed": true
+}

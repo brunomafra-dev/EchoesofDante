@@ -1,0 +1,145 @@
+{
+  "method": "Live game damage; DEV fixtures isolate collisions/attacks. Real mouse attacks in each kit and stationary trials. Real keyboard respawn/investigation/reload. Not human balance approval.",
+  "checks": [
+    "Six rock colliders: entry, clue approach and both sides of the two interior anchors remain connected",
+    "Physical movement solver blocks dash-speed approaches to all mineral bases",
+    "Swept rush hits the actual rock surface, opens new whole-body pose after contact, and enables authoritative damage",
+    "Arena rim/clue collision cannot substitute for a mineral anchor",
+    "Claw, emergence and sequential fissures cause damage at contact; ordinary recovery keeps the carapace closed",
+    "Existing invulnerability rejects emergence damage without changing shell rules",
+    "All four classes damage the physical opening with actual mouse attacks; no class-specific bypass",
+    "Four stationary basic attempts lose against live AI; R restores one intact living boss and preserves real saves/settings"
+  ],
+  "errors": [],
+  "stationary": [
+    {
+      "cls": "warrior",
+      "bossStarted": 1233,
+      "bossRemaining": 1233,
+      "playerDefeated": true
+    },
+    {
+      "cls": "hunter",
+      "bossStarted": 1233,
+      "bossRemaining": 1233,
+      "playerDefeated": true
+    },
+    {
+      "cls": "astral",
+      "bossStarted": 1233,
+      "bossRemaining": 1233,
+      "playerDefeated": true
+    },
+    {
+      "cls": "xenobinder",
+      "bossStarted": 1233,
+      "bossRemaining": 1233,
+      "playerDefeated": true
+    }
+  ],
+  "kits": [
+    {
+      "cls": "warrior",
+      "hpLost": 448
+    },
+    {
+      "cls": "hunter",
+      "hpLost": 216
+    },
+    {
+      "cls": "astral",
+      "hpLost": 150
+    },
+    {
+      "cls": "xenobinder",
+      "hpLost": 196
+    }
+  ],
+  "original": {
+    "p": {
+      "x": 430,
+      "y": 790
+    },
+    "hp": 140,
+    "maxHp": 140,
+    "dead": false,
+    "boss": {
+      "p": {
+        "x": 1080,
+        "y": 760
+      },
+      "hp": 1233,
+      "max": 1233,
+      "state": "DORMANT",
+      "attack": null,
+      "age": 6641.9,
+      "angle": 0,
+      "exposed": false,
+      "broken": false,
+      "frame": 0,
+      "texture": "soterrado-motion"
+    },
+    "xp": 950,
+    "won": false,
+    "clue": false,
+    "portal": false,
+    "modal": false
+  },
+  "navigation": {
+    "rocks": 6,
+    "reachable": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "nodes": 2058
+  },
+  "physicalApproaches": 14,
+  "crash": {
+    "p": {
+      "x": 650,
+      "y": 590
+    },
+    "hp": 140,
+    "maxHp": 140,
+    "dead": false,
+    "boss": {
+      "p": {
+        "x": 924,
+        "y": 590
+      },
+      "hp": 1233,
+      "max": 1233,
+      "state": "RECOVER",
+      "attack": "rush",
+      "age": 333.40000000000055,
+      "angle": 3.141592653589793,
+      "exposed": true,
+      "broken": true,
+      "frame": 3,
+      "texture": "soterrado-crash-motion"
+    },
+    "xp": 950,
+    "won": false,
+    "clue": false,
+    "portal": false,
+    "modal": false
+  },
+  "attacks": [
+    {
+      "attack": "sweep",
+      "hpLost": 43
+    },
+    {
+      "attack": "burrow",
+      "hpLost": 48
+    },
+    {
+      "attack": "fissure",
+      "hpLost": 38
+    }
+  ],
+  "passed": true
+}
