@@ -1,0 +1,35 @@
+{
+  "method": "Two independent Chrome processes, real local protocol-15 relay. DEV position/state fixtures, extended recovery for stable screenshots; actual guest projectiles and rewards. No simulated victory.",
+  "checks": [
+    "Two real relay clients; invite retains isolated Vesper lab; original party HP scaling",
+    "Guest entry activates the living Vesper and encounter score in both browsers",
+    "Real guest bolts pass through the common 22% ice plating damage policy",
+    "Guest renders the exact locked breath sector, including the ARC direction operand",
+    "Six persistent floor crusts and full breath pose replicate after the attack ends",
+    "Persistent crust damages the actual guest through the authoritative enemy damage path",
+    "Guest-positioned rear tail clears shared hazards and the real guest attack benefits from the earned chest opening",
+    "Guest lethal hit grants 220 XP once per member, stops the score, and leaves the ninho record/thermal portal pending",
+    "Reconnect retains each personal unique reward"
+  ],
+  "errors": [],
+  "closedLoss": 36,
+  "floorDamage": 24,
+  "openLoss": 240,
+  "victory": [
+    {
+      "xp": 1470,
+      "receipt": 1,
+      "clue": false,
+      "portal": false,
+      "stopped": true
+    },
+    {
+      "xp": 1470,
+      "receipt": 1,
+      "clue": false,
+      "portal": false,
+      "stopped": true
+    }
+  ],
+  "passed": true
+}

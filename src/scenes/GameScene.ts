@@ -165,6 +165,8 @@ export class GameScene extends Phaser.Scene {
   private coopBossCue='';
   private coopWardenImpact=false;
   private coopSoterradoImpacts=0;
+  private coopVesperImpacts=0;
+  private coopVesperBreak=false;
   private coopBossResolved=false;
   private visitingCoop = false;
   private player!: Player;
@@ -326,6 +328,7 @@ export class GameScene extends Phaser.Scene {
     if(!this.textures.exists('titan-motion'))preloadCreatureSheet(this,'titan-motion',`${import.meta.env.BASE_URL}assets/visual/characters/titan-motion.png`,256);
     if (!this.textures.exists('glacier-ground')) this.load.image('glacier-ground', `${import.meta.env.BASE_URL}assets/visual/environment/glacier-ground.webp`);
     for (const [key, file] of [['vesper-motion', 'vesper-motion'], ['dante-iceCarapace-motion', 'ice-carapace-motion']]) if (!this.textures.exists(key)) preloadCreatureSheet(this,key, `${import.meta.env.BASE_URL}assets/visual/characters/${file}.png`,256);
+    if(!this.textures.exists('vesper-reaction-motion'))this.load.spritesheet('vesper-reaction-motion',`${import.meta.env.BASE_URL}assets/visual/creature-finish/vesper-reaction-v1.webp`,{frameWidth:512,frameHeight:512});
     if (!this.textures.exists('frost-ground')) this.load.image('frost-ground', `${import.meta.env.BASE_URL}assets/visual/environment/frost-ground.webp`);
     for (const kind of ['pouncer', 'spitter']) if (!this.textures.exists(`dante-frost-${kind}-motion`)) preloadCreatureSheet(this,`dante-frost-${kind}-motion`, `${import.meta.env.BASE_URL}assets/visual/characters/frost-${kind}-motion.png`,256);
     const assetBase = `${import.meta.env.BASE_URL}assets/visual/characters/`;
@@ -407,7 +410,7 @@ export class GameScene extends Phaser.Scene {
     this.dunes = undefined;
     this.frost = undefined;
     this.glacier = undefined; this.vesper = undefined; this.vesperHud = undefined;this.caldera=undefined;this.volcanic=undefined;this.titan=undefined;this.titanHud=undefined;
-    this.coopBossResolved=false;this.coopBossCue='';this.coopWardenImpact=false;this.coopSoterradoImpacts=0;
+    this.coopBossResolved=false;this.coopBossCue='';this.coopWardenImpact=false;this.coopSoterradoImpacts=0;this.coopVesperImpacts=0;this.coopVesperBreak=false;
     this.coldPortal = undefined;
     this.soterrado = undefined;
     this.sandpit = undefined;
@@ -1593,7 +1596,7 @@ export class GameScene extends Phaser.Scene {
           else if(boss?.state==='PHASE')this.sounds.wardenCue('phase');
           else if(boss?.state==='TELEGRAPH')this.sounds.wardenWarning(boss.attackName);
           else if(boss?.state==='RECOVER'&&this.area==='warden'&&boss.visuals.some(v=>v.kind==='image'&&v.tint===0xd5f5ec))this.sounds.wardenCue('recover');
-          else if(boss?.state==='EXECUTE'&&(!['warden','sandpit'].includes(this.area)||boss.attackName==='rush'))this.sounds.wardenCue(boss.attackName==='rush'?'rush':boss.attackName==='sweep'||boss.attackName==='tail'?'sweep':'slam');
+          else if(boss?.state==='EXECUTE'&&(!['warden','sandpit','icenest'].includes(this.area)||boss.attackName==='rush'))this.sounds.wardenCue(boss.attackName==='rush'?'rush':boss.attackName==='sweep'||boss.attackName==='tail'?'sweep':'slam');
           else if(boss?.isDead){this.sounds.stopMusic();this.sounds.wardenCue('death');}
         }
         if(this.area==='warden'){
@@ -1608,6 +1611,15 @@ export class GameScene extends Phaser.Scene {
           if(fresh&1)this.soterradoImpactFeedback(true);
           else if(fresh)this.soterradoImpactFeedback(false);
           this.coopSoterradoImpacts=mask;
+        }
+        if(this.area==='icenest'){
+          const bursts=boss?.visuals.filter(v=>v.texture==='vesper-tail-impact'||v.texture==='vesper-ground-impact')??[];
+          const mask=bursts.reduce((bits,v,i)=>bits|(v.visible&&v.alpha>.15?1<<i:0),0);
+          if(mask&~this.coopVesperImpacts)this.vesperImpactFeedback(boss?.attackName??'eruption');
+          this.coopVesperImpacts=mask;
+          const broken=!!boss?.visuals.some(v=>v.visible&&v.texture==='vesper-frost-shatter');
+          if(broken&&!this.coopVesperBreak){this.sounds.wardenCue('recover');this.cameras.main.shake(180,.003);}
+          this.coopVesperBreak=broken;
         }
       },
       strike:this.attack.pose(this.time.now,this.player.rotation),releaseProgress:this.charge.pose(this.time.now).swingProgress,
@@ -1799,14 +1811,20 @@ export class GameScene extends Phaser.Scene {
   private vesperCue(cue: IceCue): void {
     if (cue === 'intro') { this.sounds.wardenCue('intro'); this.hud.showDiscovery('VÉSPER · O SOPRO BRANCO'); }
     else if (cue === 'warning') { this.sounds.wardenWarning(this.vesper?.attackName); }
-    else if (cue === 'strike') this.sounds.wardenCue(this.vesper?.attackName === 'rush' ? 'rush' : 'slam');
-    else if (cue === 'phase') { this.sounds.wardenCue('phase'); this.hud.showDiscovery(this.vesper?.phase === 3 ? 'O NINHO RESSOA\nAS ERUPÇÕES VOLTAM EM SEQUÊNCIA' : 'O GELO SE ROMPE\nOBSERVE AS TRÊS MARCAS'); }
+    else if (cue === 'strike') this.vesperImpactFeedback(this.vesper?.attackName??'eruption');
+    else if (cue === 'break') {this.sounds.wardenCue('recover');this.cameras.main.shake(180,.003);}
+    else if (cue === 'phase') { this.sounds.wardenCue('phase'); this.hud.showDiscovery(this.vesper?.phase === 3 ? 'O NINHO RESSOA' : 'O GELO SE ROMPE'); }
     else if (cue === 'death') {
       this.vesperDefeated = true; const reward = this.progression.defeatVesper(); this.updateProgressHud();
       if (reward.awarded) this.hud.showExperienceAt(this.vesper!.position.x, this.vesper!.position.y, VESPER.xp);
       if (reward.leveledUp) this.levelUp(false);
       this.sounds.stopMusic(); this.sounds.wardenCue('death'); this.glacier?.setEncounterActive(false); this.saveProgress();
     }
+  }
+
+  private vesperImpactFeedback(attack:string):void {
+    this.sounds.wardenCue(attack==='rush'?'rush':attack==='tail'?'sweep':attack==='breath'?'signal':'slam');
+    if(attack==='tail'||attack==='eruption')this.cameras.main.shake(100,.002);
   }
 
   private titanCue(cue:TitanCue):void {
@@ -1878,7 +1896,7 @@ export class GameScene extends Phaser.Scene {
     if (hits.length) this.cameras.main.shake(chargeHit ? 75 : 55, chargeHit ? 0.003 : 0.0024);
     for (const enemy of hits) {
       if ((enemy === this.warden || enemy === this.soterrado || enemy === this.vesper || enemy === this.titan) && !(enemy as Warden | Soterrado | Vesper | CalderaTitan).canBeHit) continue;
-      const shellMultiplier = enemy === this.warden ? this.warden.receiveStrike(now, angle) : enemy === this.soterrado ? this.soterrado.receiveStrike(now) : 1;
+      const shellMultiplier = enemy === this.warden ? this.warden.receiveStrike(now, angle) : enemy === this.soterrado ? this.soterrado.receiveStrike(now) : enemy === this.vesper ? this.vesper.receiveStrike(now) : 1;
       if (shellMultiplier === 0) { this.impact(enemy.position, 0xc9b4ed, 0, angle); continue; }
       const multiplier = elementalMultiplier(element, this.enemySpecies.get(enemy));
       const result = applyDamage(enemy.health, Math.round(damage * multiplier * shellMultiplier));
@@ -2297,6 +2315,22 @@ export class GameScene extends Phaser.Scene {
     this.economy.credits=100;this.economy.potions=5;this.transferHp=this.characterMaxHp;
     this.earlyRouteCheckpoint=undefined;this.expeditionArrival=area==='valley'?{...VALLEY.entry}:area==='arid'?{...SIROCCO.entry}:area==='dunes'?{...DUNES.entry}:{...SANDPIT.entry};
     this.expeditionReturn=undefined;this.area=area;this.saveProgress();this.scene.restart();return true;
+  }
+
+  // Direct isolated preview: all earlier route requirements, no Vesper victory.
+  seedVesperPlaytest():boolean {
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!new URLSearchParams(location.search).has('vesper')||coopSession.role==='guest'||this.transitioning||this.inputModalOpen||!this.player||this.player.isDead)return false;
+    if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return false;
+    for(const flag of JOURNEY_FLAGS)this[flag]=false;
+    for(const flag of ['cavernDepthSeen','deepPassageOpen','deepAreaSeen','deepCavernEntered','deepEndSeen','deeperEntered','exteriorEntered','fragmentSeen','approachSeen','firstEchoSeen','wardenReached','wardenGateOpen','wardenDefeated','wardenEndingSeen','valleyVisited','valleyLandmarkSeen','valleyEndSeen','valleyCheckpointReached','valleyFrontierReached','valleyFrontierSignalSeen','valleyFrontierEndSeen','aridVisited','aridSignalSeen','aridFrontierEntered','aridFrontierReached','dunesVisited','dunesRuinsSeen','dunesDepthSeen','soterradoReached','soterradoDefeated','soterradoClueSeen','frostVisited','frostSignalSeen','frostEndSeen','icecaveVisited','icecaveSignalSeen','icenestVisited'] as const)this[flag]=true;
+    this.progression.restore({xp:1250,echoes:['northern-ruin','mineral-signal','unknown-trace'],sourceLocated:true,passageOpen:true,rewardedHollows:[],rewardedRoutes:[],bossRewards:['warden','soterrado']});
+    const core=['recon','survival','signal','beyond'] as const;
+    this.missions.restore({schema:1,accepted:[...core,'exp-frost','exp-icecave'],completed:[...core],evidence:[...core.flatMap(id=>missionById(id).goals.map(g=>g.id)),'after-soterrado']});
+    this.missions.tracked='exp-icecave';this.missionRewards=[...core];
+    for(const upgrade of ['chargePower','dashDuration','chargeWidth'] as const)this.progression.investUpgrade(upgrade);
+    this.economy.visited=['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest'];this.economy.credits=100;this.economy.potions=5;
+    this.earlyRouteCheckpoint=undefined;this.expeditionArrival=undefined;this.expeditionReturn=undefined;this.glacierArrival={...GLACIER.icenest.checkpoint};
+    this.transferHp=this.characterMaxHp;this.area='icenest';this.saveProgress();this.scene.restart();return true;
   }
 
   // Restricted isolated arrival. Warden and the previous route are simulated;

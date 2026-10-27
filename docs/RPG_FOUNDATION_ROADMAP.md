@@ -1,10 +1,16 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**27/10/2026 · Soterrado 0.1.151 aprovado e Vésper autorizado · 0.1.152:** usuário aprovou a entrega (“muito bom”) e pediu o próximo boss. [Vésper — gelo e retaguarda](vesper-counterplay/README.md): sopro deixa crostas persistentes; cauda muda o espaço e pode expor o dragão. Novas figuras inteiras, contatos sincronizados e pressão sem aumentar HP. Preservar pinturas, requisitos, recibos e protocolo 15. A aprovação anterior encerra a espera do Soterrado; aguardar playtest do Vésper antes do Incandescente.
+
+- [x] Vésper: gelo persistente, cauda traseira/quebra, oito figuras completas e contato; HP/recompensas preservados.
+- [x] QA: quatro classes, tentativa com movimento/aberturas, dupla, touch/gamepad, saves antigos/atlas, reload e build compilada. [Evidências e limites](vesper-counterplay/README.md).
+- [ ] Playtest humano do Vésper; Incandescente aguarda essa validação.
+
 **27/10/2026 · Warden 0.1.150 aprovado e Soterrado autorizado · 0.1.151:** usuário confirmou “Aprovadissimo” e pediu aplicar ao próximo boss. [Soterrado — carapaça e colisão](soterrado-counterplay/README.md): investida comprometida contra formações rompe a defesa; novas poses inteiras e contato visível. Preservar HP, pintura, jornada, recompensas e protocolo 15. Esta autorização supera a espera histórica do Warden abaixo. QA técnico separado; aguardar playtest do Soterrado antes de Vésper ou outro capítulo.
 
 - [x] Soterrado: carapaça/colisão, oito poses completas, contato e pressão; HP/recompensas originais.
 - [x] QA técnico: navegação/Dash, quatro kits, oito tentativas estacionárias, vitória com movimento, dupla, touch/gamepad, saves antigos/atlas, reload e build compilada. [Evidências e limites](soterrado-counterplay/README.md).
-- [ ] Playtest humano do Soterrado; Vésper aguarda essa avaliação.
+- [x] Soterrado aprovado pelo usuário em 27/10/2026; Vésper autorizado na entrada mais recente.
 
 **Revisão do Warden após rejeição · 0.1.150:** o usuário considerou a 0.1.149 ainda fraca, apontando impacto em área sem animação suficiente e vitória trocando auto attack. [Revisão 02](warden-revision-02/README.md): oito quadros inteiros para a queda, dano sincronizado ao contato, onda atravessável com Dash, ida/retorno na varredura, rajadas e impactos visíveis. Dano/tempos revisados; HP-base preservado. Núcleo só expõe após um ataque completo que não causou dano real; acertar alguém leva à recomposição protegida curta. Validar tentativas estacionárias e vitória com movimento, além de dupla/controles/saves. **Não interpretar QA como aprovação: aguardar novo playtest do Warden antes de outro boss.**
 

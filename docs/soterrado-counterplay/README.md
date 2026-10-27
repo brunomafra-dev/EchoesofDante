@@ -1,5 +1,7 @@
 # Soterrado — carapaça, formação e contra-ataque · 0.1.151
 
+**27/10/2026:** usuário aprovou esta entrega (“muito bom”) e autorizou o [Vésper](../vesper-counterplay/README.md). A espera descrita abaixo é o registro histórico da entrega.
+
 [Enfrentar o Soterrado vivo](https://echosofdante.vercel.app/campaign-playtest.html?soterrado=1&v=0.1.151) · [Biblioteca](https://echosofdante.vercel.app/test-library.html)
 
 ## Autorização e escopo
@@ -51,7 +53,7 @@ Coop: sair ao início pelo Esc, criar equipe, compartilhar convite do laboratór
 
 Capturas de abertura e telas compactas inspecionadas visualmente. Poses diagnósticas usam pausa explícita; não representam tempo de reação humano. Touch/gamepad são emulados; não houve celular físico, controle físico ou grupo humano de quatro. A duração global da campanha continua sem medição humana. Os testes demonstram execução das regras, não aprovação da diversão, leitura ou dificuldade.
 
-- [ ] Aprovação humana deste Soterrado.
-- [ ] Após essa aprovação, iniciar Vésper em sprint separado.
+- [x] Aprovação humana do Soterrado em 27/10/2026.
+- [x] Usuário autorizou Vésper como sprint separado.
 
 Comandos: `npm run typecheck`, `npm run build`, `git diff --check`, `node scripts/qa-soterrado-counterplay.mjs`, `node scripts/qa-soterrado-playthrough-151.mjs`, `node scripts/qa-soterrado-coop.mjs`, `node scripts/qa-soterrado-controls.mjs`, `node scripts/qa-soterrado-anchor-stationary.mjs`, `node scripts/qa-soterrado-legacy.mjs`, `node scripts/qa-soterrado-public.mjs`. Todos passaram tecnicamente; aviso conhecido de tamanho do chunk Phaser permanece.

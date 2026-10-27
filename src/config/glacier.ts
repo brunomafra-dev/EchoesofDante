@@ -52,15 +52,18 @@ export const GLACIER_ENCOUNTERS = [
 export type IceAttack = 'breath' | 'tail' | 'rush' | 'eruption';
 export const VESPER = {
   hp: 1100, radius: 58, size: 290, spawn: { x: 1420, y: 960 },
-  awakeningX: 870, speed: 86, xp: 220,
+  awakeningX: 870, speed: 115, xp: 220,
+  idleMs: 280, phaseMs: 950, openingMs: 3500, openingAt: 240, closingMs: 240,
+  armoredDamage: .22, openingDamage: 1.6,
+  frost: { count: 6, radius: 76, lifetime: 11000, damage: 16, interval: 1100 },
   bounds: { left: 890, right: 2010, top: 570, bottom: 1300 },
   patterns: {
-    1: ['breath', 'tail', 'rush', 'tail'] as readonly IceAttack[],
-    2: ['eruption', 'breath', 'rush', 'tail', 'breath'] as readonly IceAttack[],
-    3: ['breath', 'eruption', 'rush', 'tail', 'eruption'] as readonly IceAttack[],
+    1: ['breath', 'tail', 'rush', 'breath', 'tail'] as readonly IceAttack[],
+    2: ['breath', 'tail', 'eruption', 'rush', 'tail'] as readonly IceAttack[],
+    3: ['breath', 'tail', 'eruption', 'rush', 'breath', 'tail'] as readonly IceAttack[],
   },
-  breath: { tell: 1300, duration: 900, recovery: 1650, damage: 22, range: 390, halfAngle: .40 },
-  tail: { tell: 900, duration: 220, recovery: 1350, damage: 18, range: 175, halfAngle: 1.35 },
-  rush: { tell: 1150, duration: 760, recovery: 1700, damage: 24, speed: 480, distance: 340, halfWidth: 62 },
-  eruption: { tell: 1300, duration: 1150, recovery: 1600, damage: 20, radius: 72, interval: 330 },
+  breath: { tell: 1050, duration: 1240, recovery: 600, contact: 200, second: 940, damage: 38, range: 550, halfAngle: .43 },
+  tail: { tell: 800, duration: 650, recovery: 320, contact: 300, damage: 36, range: 300, halfAngle: 1.4 },
+  rush: { tell: 850, duration: 950, recovery: 300, damage: 40, speed: 710, distance: 580, halfWidth: 62 },
+  eruption: { tell: 1000, duration: 1500, recovery: 320, contact: 200, damage: 32, radius: 86, interval: 470 },
 } as const;
