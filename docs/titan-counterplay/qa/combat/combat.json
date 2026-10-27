@@ -1,0 +1,128 @@
+{
+  "method": "Real hit path, HP, keyboard, mouse and Dash. DEV state/position fixtures isolate attack rules. Opening extended only for class inspection. Not human balance approval.",
+  "checks": [
+    "Closed plating receives 18%; three announced falling blocks become physical basalt with original HP",
+    "Real keyboard and Dash cannot cross a freshly forged solid block",
+    "Basalt intercepts the real expanding front, protects its shadow, breaks physically and vents a 1.7x opening",
+    "Crossing a phase threshold does not consume an earned opening",
+    "No basalt: pressure deals actual 64 HP and no chest opening",
+    "Camping beside or behind the body receives two distinct slam contacts, 56 and 64 HP",
+    "Cleave and independently timed fissures deliver contact damage, including two different fissure contacts",
+    "Actual Dash crosses the pressure front with normal invulnerability",
+    "Thirty-two corner arrangements keep landings distinct and clear of body/scenery; fixed presentation pool",
+    "All four real kits can attack the earned opening; real saves remain isolated"
+  ],
+  "kits": [
+    {
+      "cls": "warrior",
+      "damage": 348
+    },
+    {
+      "cls": "hunter",
+      "damage": 288
+    },
+    {
+      "cls": "astral",
+      "damage": 205
+    },
+    {
+      "cls": "xenobinder",
+      "damage": 273
+    }
+  ],
+  "errors": [],
+  "initial": {
+    "hp": 155,
+    "max": 155,
+    "p": {
+      "x": 1920,
+      "y": 870
+    },
+    "boss": {
+      "hp": 1710,
+      "max": 1710,
+      "state": "DORMANT",
+      "attack": null,
+      "age": 7746.3,
+      "phase": 1,
+      "exposed": false,
+      "vented": false,
+      "covers": [],
+      "shadows": 0,
+      "wave": false
+    },
+    "won": false,
+    "clue": false,
+    "xp": 1800
+  },
+  "collision": {
+    "hp": 155,
+    "max": 155,
+    "p": {
+      "x": 2380,
+      "y": 910
+    },
+    "boss": {
+      "hp": 1692,
+      "max": 1710,
+      "state": "IDLE",
+      "attack": "boulders",
+      "age": 699.8999999999978,
+      "phase": 1,
+      "exposed": false,
+      "vented": false,
+      "covers": [
+        {
+          "x": 2502.0485677147763,
+          "y": 1074.8461679928682,
+          "radius": 42
+        },
+        {
+          "x": 2440,
+          "y": 910,
+          "radius": 42
+        },
+        {
+          "x": 2502.0485677147763,
+          "y": 745.1538320071318,
+          "radius": 42
+        }
+      ],
+      "shadows": 0,
+      "wave": false
+    },
+    "won": false,
+    "clue": false,
+    "xp": 1800
+  },
+  "sheltered": {
+    "hp": 155,
+    "max": 155,
+    "p": {
+      "x": 2350,
+      "y": 910
+    },
+    "boss": {
+      "hp": 1710,
+      "max": 1710,
+      "state": "EXECUTE",
+      "attack": "slam",
+      "age": 1316.6000000000022,
+      "phase": 1,
+      "exposed": false,
+      "vented": false,
+      "covers": [],
+      "shadows": 3,
+      "wave": true
+    },
+    "won": false,
+    "clue": false,
+    "xp": 1800
+  },
+  "pool": {
+    "before": 192,
+    "after": 192,
+    "objects": 20
+  },
+  "passed": true
+}

@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict';
+import {chromium} from 'playwright';
+import {mkdir,writeFile} from 'node:fs/promises';
+const base=process.env.QA_BASE??'http://localhost:5193',out=process.env.QA_OUT??'docs/titan-counterplay/qa/compiled';await mkdir(out,{recursive:true});
+const browser=await chromium.launch({channel:'chrome'}),p=await browser.newPage({viewport:{width:1366,height:768}});p.setDefaultTimeout(120000);
+const report={base,method:'Compiled Chrome, no DEV globals: real direct arrival/reload, keyboard encounter trigger, actual score requests and audition controls; real-save sentinel.',checks:[],errors:[]};p.on('pageerror',e=>report.errors.push(e.message));p.on('response',r=>{if(r.status()>=400)report.errors.push(r.status()+' '+r.url());if(r.url().includes('titan-v1.webp')&&[200,304].includes(r.status()))report.paintedBossArt=true});
+async function settleArrival(){
+ await p.waitForFunction(()=>sessionStorage.getItem('dante-titan-combat-v1.warrior.arrived')==='1');
+ await p.locator('.mission-tracker').waitFor({state:'attached'});
+ let quiet=0;for(let i=0;i<32;i++){await p.waitForTimeout(250);const button=p.locator('.ability-upgrade-dialog[open] [data-upgrade]:not(:disabled)').first();if(await button.count()){await button.click();quiet=0;}else if(++quiet>=6)break;}
+ await p.locator('.ability-upgrade-dialog[open]').waitFor({state:'hidden'});
+ await p.waitForFunction(()=>!document.querySelector('.application-shell[open]'));
+}
+try{
+ await p.addInitScript(()=>{localStorage.setItem('echoes-of-dante.characters.v1','real-titan-public-sentinel');localStorage.setItem('echoes-of-dante.settings.v1','real-settings-sentinel')});
+ await p.goto(base+'/campaign-playtest.html?titan=1&v=0.1.154',{waitUntil:'domcontentloaded'});
+ await settleArrival();
+ await p.locator('.mission-tracker').waitFor();assert.equal(await p.evaluate(()=>typeof window.__danteGame),'undefined');
+ await p.reload({waitUntil:'domcontentloaded'});await settleArrival();
+ const music=p.waitForResponse(r=>r.url().includes('/score-149/titan.mp3')&&[200,206].includes(r.status()));await p.keyboard.down('d');await p.waitForTimeout(1600);await p.keyboard.up('d');await music;
+ await p.waitForTimeout(1000);await p.screenshot({path:out+'/encounter.png'});assert.equal(await p.evaluate(()=>localStorage['echoes-of-dante.characters.v1']),'real-titan-public-sentinel');assert.equal(await p.evaluate(()=>localStorage['echoes-of-dante.settings.v1']),'real-settings-sentinel');report.checks.push('Compiled isolated arrival/reload and real keyboard encounter load the original Incandescente score; real saves/settings preserved');
+ await p.goto(base+'/soundtrack-playtest.html?v=0.1.154',{waitUntil:'domcontentloaded'});await p.locator('#region').selectOption('cinder');
+ const cinder=p.waitForResponse(r=>r.url().includes('/score-149/cinder.mp3'));await p.locator('#explore').click();await cinder;await p.waitForTimeout(200);
+ const titan=p.waitForResponse(r=>r.url().includes('/score-149/titan.mp3'));await p.locator('#encounter').click();await titan;await p.locator('[data-cue=rush]').click();await p.locator('#music').fill('0');await p.locator('#sfx').fill('0');await p.locator('#stop').click();report.checks.push('Public audition plays exploration/boss assets, cues, independent volume and stop controls');
+ const library=await fetch(base+'/test-library.html').then(r=>r.text());assert.ok(library.includes('0.1.154')&&library.includes('soundtrack-playtest.html')&&library.includes('titan=1'));assert.deepEqual(report.errors,[]);assert.equal(report.paintedBossArt,true);report.passed=true;
+}catch(e){report.failure=String(e);await p.screenshot({path:out+'/failure.png'}).catch(()=>{});throw e}finally{await browser.close();await writeFile(out+'/public.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));}

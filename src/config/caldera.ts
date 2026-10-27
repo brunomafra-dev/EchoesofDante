@@ -29,11 +29,13 @@ export const CALDERA_ROUTES=[
 ] as const;
 export type TitanAttack='cleave'|'slam'|'fissure'|'boulders';
 export const TITAN={
- hp:950,radius:64,size:275,spawn:{x:2690,y:910},awakeningX:2190,speed:64,xp:260,
+ hp:950,radius:64,size:275,spawn:{x:2690,y:910},awakeningX:2190,speed:90,xp:260,
+ idleMs:260,phaseMs:1000,armoredDamage:.18,openingDamage:1.7,openingMs:3400,openingAt:240,closingMs:240,
+ cover:{radius:42,distance:250,spread:.72},
  bounds:{left:2210,right:3170,top:510,bottom:1290},
- patterns:{1:['cleave','slam','boulders'],2:['fissure','cleave','boulders','slam'],3:['fissure','boulders','cleave','slam','fissure']} satisfies Record<1|2|3,TitanAttack[]>,
- cleave:{tell:950,duration:240,recovery:1450,damage:20,range:195,halfAngle:1.25},
- slam:{tell:1200,duration:300,recovery:1900,damage:24,radius:205},
- fissure:{tell:1400,duration:1050,recovery:1650,damage:22,radius:65,interval:320},
- boulders:{tell:1250,duration:1800,recovery:1650,damage:18,speed:250,range:660,radius:14,spread:.24},
+ patterns:{1:['boulders','slam','cleave','fissure'],2:['boulders','fissure','slam','cleave'],3:['boulders','cleave','fissure','slam']} satisfies Record<1|2|3,TitanAttack[]>,
+ cleave:{tell:900,duration:620,recovery:350,contact:280,damage:38,range:255,halfAngle:1.7},
+ slam:{tell:1250,duration:2350,recovery:350,contact:240,damage:40,radius:205,waveAt:950,waveStart:70,waveEnd:1150,waveSpeed:1050,waveDamage:46},
+ fissure:{tell:1100,duration:1900,recovery:350,contact:220,damage:32,radius:88,interval:720},
+ boulders:{tell:1050,duration:1250,recovery:350,contact:240,damage:34,radius:74,interval:300},
 } as const;

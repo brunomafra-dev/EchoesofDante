@@ -1,0 +1,58 @@
+{
+  "method": "Two independent Chrome processes, real local protocol-15 relay. DEV position/state fixtures, extended recovery for stable screenshots; actual guest projectiles and rewards. No simulated victory.",
+  "checks": [
+    "Two real relay clients; invite retains isolated Incandescente lab; original party HP scaling",
+    "Guest entry triggers the living Incandescente and original encounter score in both clients",
+    "Actual guest bolts pass through the common 18% armor path",
+    "Three physically forged stones replicate with identical host/guest collision circles under protocol 15",
+    "Real guest movement/Dash respects the newly forged cover",
+    "Real guest stays unharmed behind consumed basalt; exact pressure arc commands and broken stones replicate",
+    "Actual guest projectiles benefit from the pressure-earned chest opening",
+    "Unprotected guest receives real 68 HP pressure damage and does not create a free opening",
+    "Guest lethal hit awards original 260 XP once per member; thermal record remains pending and score stops",
+    "Reconnect does not duplicate the personal boss reward"
+  ],
+  "errors": [],
+  "closedLoss": 30,
+  "guestCollision": {
+    "p": {
+      "x": 2380,
+      "y": 910
+    },
+    "solids": [
+      {
+        "x": 2502.0485677147763,
+        "y": 1074.8461679928682,
+        "radius": 42
+      },
+      {
+        "x": 2440,
+        "y": 910,
+        "radius": 42
+      },
+      {
+        "x": 2502.0485677147763,
+        "y": 745.1538320071318,
+        "radius": 42
+      }
+    ]
+  },
+  "waveCommands": 168,
+  "openLoss": 336,
+  "unprotectedGuestDamage": 68,
+  "victory": [
+    {
+      "xp": 2060,
+      "receipts": 1,
+      "clue": false,
+      "stopped": true
+    },
+    {
+      "xp": 2060,
+      "receipts": 1,
+      "clue": false,
+      "stopped": true
+    }
+  ],
+  "passed": true
+}

@@ -48,6 +48,6 @@ As imagens de aviso e abertura foram inspecionadas no desktop e viewport compact
 - [x] Typecheck/build/diff.
 - [x] Sincronização do commit de gameplay com `origin/main`.
 - [x] Conferência pública: Vercel concluída, hashes iguais à build local e smoke público passado.
-- [ ] Playtest humano desta revisão; não iniciar Incandescente antes dele.
+- [x] Usuário pediu seguir ao próximo boss em 27/10/2026, autorizando o Incandescente em sprint separado.
 
 Scripts: `qa-vesper-revision-153.mjs`, `qa-vesper-rear-auto-153.mjs`, `qa-vesper-playthrough-153.mjs`, `qa-vesper-lifecycle-153.mjs`, `qa-vesper-coop-153.mjs` e `qa-vesper-public-153.mjs`. Controles/save reutilizam `qa-vesper-controls.mjs` e `qa-vesper-legacy.mjs` com `QA_OUT` neste diretório. `npm run typecheck` e `npm run build` passaram; único aviso conhecido é o tamanho do chunk Phaser.

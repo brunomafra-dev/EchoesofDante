@@ -1,9 +1,14 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**27/10/2026 · Sequência do Vésper 0.1.153 autorizada · Incandescente 0.1.154:** usuário pediu “vamos pro próximo” e confirmou continuar. [Basalto e descarga](titan-counterplay/README.md): blocos físicos temporários, frente de pressão interrompida pelos abrigos, sombra protegida e peito exposto após absorção. Preservar HP, requisitos, recibos, pintura e protocolo 15. Esta autorização encerra a espera do Vésper; **aguardar playtest humano do Incandescente antes de outra etapa**.
+
+- [x] QA local do Incandescente registrado com evidências e limites: doze derrotas com auto attack, vitória com movimento, dupla, controles, saves e build compilada. Publicação será conferida após o push.
+- [ ] Playtest humano da 0.1.154; publicação/automação não aprovam dificuldade.
+
 **27/10/2026 · Vésper 0.1.152 rejeitado por facilidade · revisão 0.1.153 autorizada:** usuário venceu atrás dele segurando auto attack. [Revisão da retaguarda](vesper-revision-02/README.md): manter a direção do corpo, cauda de ida/volta com avisos separados e abertura apenas após quebrar gelo sem causar dano real com a cauda. HP, campanha, arte e protocolo 15 preservados. QA anterior cobria posições frontais e não aprovava dificuldade; nova validação inclui retaguarda parada e acompanhando o corpo. **Aguardar novo playtest humano antes de Incandescente.**
 
 - [x] Revisão e QA técnico registrados com evidências em `docs/vesper-revision-02/`: oito derrotas com auto attack na retaguarda, vitória com movimento, dupla, controles e saves. Git sincronizado, Vercel publicada após nova tentativa, hashes e smoke público conferidos.
-- [ ] Aprovação humana da 0.1.153; não confundir publicação com aprovação.
+- [x] Usuário pediu seguir ao próximo boss em 27/10/2026; sequência autorizada na entrada mais recente.
 
 **27/10/2026 · Soterrado 0.1.151 aprovado e Vésper autorizado · 0.1.152:** usuário aprovou a entrega (“muito bom”) e pediu o próximo boss. [Vésper — gelo e retaguarda](vesper-counterplay/README.md): sopro deixa crostas persistentes; cauda muda o espaço e pode expor o dragão. Novas figuras inteiras, contatos sincronizados e pressão sem aumentar HP. Preservar pinturas, requisitos, recibos e protocolo 15. A aprovação anterior encerra a espera do Soterrado; aguardar playtest do Vésper antes do Incandescente.
 

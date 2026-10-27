@@ -167,6 +167,8 @@ export class GameScene extends Phaser.Scene {
   private coopSoterradoImpacts=0;
   private coopVesperImpacts=0;
   private coopVesperBreak=false;
+  private coopTitanImpacts=0;
+  private coopTitanVented=false;
   private coopBossResolved=false;
   private visitingCoop = false;
   private player!: Player;
@@ -410,7 +412,7 @@ export class GameScene extends Phaser.Scene {
     this.dunes = undefined;
     this.frost = undefined;
     this.glacier = undefined; this.vesper = undefined; this.vesperHud = undefined;this.caldera=undefined;this.volcanic=undefined;this.titan=undefined;this.titanHud=undefined;
-    this.coopBossResolved=false;this.coopBossCue='';this.coopWardenImpact=false;this.coopSoterradoImpacts=0;this.coopVesperImpacts=0;this.coopVesperBreak=false;
+    this.coopBossResolved=false;this.coopBossCue='';this.coopWardenImpact=false;this.coopSoterradoImpacts=0;this.coopVesperImpacts=0;this.coopVesperBreak=false;this.coopTitanImpacts=0;this.coopTitanVented=false;
     this.coldPortal = undefined;
     this.soterrado = undefined;
     this.sandpit = undefined;
@@ -1026,7 +1028,7 @@ export class GameScene extends Phaser.Scene {
     const wasDashing = this.player.isDashing;
     if (this.area === 'warden' || this.area === 'sandpit' || this.area === 'icenest' || this.area==='caldera') {
       this.playerObstacles.length = 0;
-      this.playerObstacles.push(...this.arena.obstacles);
+      this.playerObstacles.push(...this.arena.obstacles,...this.titanCoverObstacles());
       if (this.warden && !this.warden.isDead) {
         Object.assign(this.bossFootprint, this.warden.position, { radius: this.warden.radius });
         this.playerObstacles.push(this.bossFootprint);
@@ -1577,7 +1579,7 @@ export class GameScene extends Phaser.Scene {
     return {
       missions:this.missions.snapshot(),
       area: this.area, player: this.player, controls: this.controls, enemies: this.enemies,
-      obstacles: this.arena.obstacles, solidObstacles: (this.warden && !this.warden.isDead || this.soterrado?.solid || this.vesper?.solid || this.titan?.solid) ? [...this.arena.obstacles, { ...(this.warden ?? this.soterrado ?? this.vesper ?? this.titan)!.position, radius: (this.warden ?? this.soterrado ?? this.vesper ?? this.titan)!.radius }] : this.arena.obstacles, bounds: this.movementBounds, hud: this.hud, hunter: this.hunter,astral:this.astral,xeno:this.xeno,
+      obstacles: this.arena.obstacles, solidObstacles: (this.warden && !this.warden.isDead || this.soterrado?.solid || this.vesper?.solid || this.titan?.solid) ? [...this.arena.obstacles,...this.titanCoverObstacles(), { ...(this.warden ?? this.soterrado ?? this.vesper ?? this.titan)!.position, radius: (this.warden ?? this.soterrado ?? this.vesper ?? this.titan)!.radius }] : this.arena.obstacles, bounds: this.movementBounds, hud: this.hud, hunter: this.hunter,astral:this.astral,xeno:this.xeno,
       boss: this.warden ?? this.soterrado ?? this.vesper ?? this.titan,
       signalPortal:this.signalPortal?.active??false,resources:this.resources?.snapshot()??[],resourceAwarded:[...this.resourceAwarded.values()],potionUsed:this.potionUsed,visited:this.economy.visited,returnStation:this.returnStation,expeditionReturn:this.expeditionReturn,
       cue:kind=>{if(kind==='dash')this.sounds.dash();else if(kind==='charge')this.sounds.charge();else if(kind==='release')this.sounds.swing();else {this.sounds.hurt();this.player.flashHurt();}},
@@ -1596,7 +1598,7 @@ export class GameScene extends Phaser.Scene {
           else if(boss?.state==='PHASE')this.sounds.wardenCue('phase');
           else if(boss?.state==='TELEGRAPH')this.sounds.wardenWarning(boss.attackName);
           else if(boss?.state==='RECOVER'&&this.area==='warden'&&boss.visuals.some(v=>v.kind==='image'&&v.tint===0xd5f5ec))this.sounds.wardenCue('recover');
-          else if(boss?.state==='EXECUTE'&&(!['warden','sandpit','icenest'].includes(this.area)||boss.attackName==='rush'))this.sounds.wardenCue(boss.attackName==='rush'?'rush':boss.attackName==='sweep'||boss.attackName==='tail'?'sweep':'slam');
+          else if(boss?.state==='EXECUTE'&&(!['warden','sandpit','icenest','caldera'].includes(this.area)||boss.attackName==='rush'))this.sounds.wardenCue(boss.attackName==='rush'?'rush':boss.attackName==='sweep'||boss.attackName==='tail'?'sweep':'slam');
           else if(boss?.isDead){this.sounds.stopMusic();this.sounds.wardenCue('death');}
         }
         if(this.area==='warden'){
@@ -1611,6 +1613,15 @@ export class GameScene extends Phaser.Scene {
           if(fresh&1)this.soterradoImpactFeedback(true);
           else if(fresh)this.soterradoImpactFeedback(false);
           this.coopSoterradoImpacts=mask;
+        }
+        if(this.area==='caldera'){
+          const bursts=boss?.visuals.filter(v=>v.texture==='titan-ground-impact')??[];
+          const mask=bursts.reduce((bits,v,i)=>bits|(v.visible&&v.alpha>.15?1<<i:0),0);
+          if(mask&~this.coopTitanImpacts)this.titanImpactFeedback(boss?.attackName??'slam');
+          this.coopTitanImpacts=mask;
+          const vented=boss?.state==='RECOVER'&&!!boss.visuals.some(v=>v.texture==='titan-motion'&&v.frame==='6');
+          if(vented&&!this.coopTitanVented)this.sounds.wardenCue('recover');
+          this.coopTitanVented=vented;
         }
         if(this.area==='icenest'){
           const bursts=boss?.visuals.filter(v=>v.texture==='vesper-tail-impact'||v.texture==='vesper-ground-impact')??[];
@@ -1833,8 +1844,9 @@ export class GameScene extends Phaser.Scene {
   private titanCue(cue:TitanCue):void {
     if(cue==='intro'){this.sounds.wardenCue('intro');this.hud.showDiscovery('O INCANDESCENTE\nA CROSTA ESTÁ VIVA');}
     else if(cue==='warning'){this.sounds.wardenWarning(this.titan?.attackName);}
-    else if(cue==='strike')this.sounds.wardenCue(this.titan?.attackName==='cleave'?'sweep':'slam');
-    else if(cue==='phase'){this.sounds.wardenCue('phase');this.hud.showDiscovery(this.titan?.phase===3?'O NÚCLEO ESTÁ EXPOSTO\nFISSURAS E BLOCOS EM SEQUÊNCIA':'A CROSTA SE ROMPE\nOBSERVE AS MARCAS NO SOLO');}
+    else if(cue==='strike')this.titanImpactFeedback(this.titan?.attackName??'slam');
+    else if(cue==='break'){this.sounds.wardenCue('recover');this.cameras.main.shake(150,.003);}
+    else if(cue==='phase'){this.sounds.wardenCue('phase');this.hud.showDiscovery(this.titan?.phase===3?'A CALDEIRA RESSOA':'A CROSTA SE ROMPE');}
     else if(cue==='death'){
       this.titanDefeated=true;const reward=this.progression.defeatTitan();this.updateProgressHud();
       if(reward.awarded)this.hud.showExperienceAt(this.titan!.position.x,this.titan!.position.y,TITAN.xp);
@@ -1842,6 +1854,13 @@ export class GameScene extends Phaser.Scene {
       this.caldera?.resolve();this.movementBounds=this.caldera!.bounds;this.sounds.stopMusic();this.sounds.wardenCue('death');this.saveProgress();
     }
   }
+
+  private titanCoverObstacles():Obstacle[]{
+    if(this.area!=='caldera')return [];
+    if(coopSession.role==='guest')return (coopSession.world?.boss?.visuals??[]).filter(v=>v.visible&&v.texture==='titan-basalt-cover').map(v=>({x:v.x,y:v.y,radius:TITAN.cover.radius}));
+    return this.titan?.coverObstacles??[];
+  }
+  private titanImpactFeedback(attack:string):void{this.sounds.wardenCue(attack==='cleave'?'sweep':'slam');this.cameras.main.shake(100,.002);}
 
   private finishTitan():void {
     this.caldera?.resolve();this.reviveBossSurvivors();this.movementBounds=this.caldera!.bounds;
@@ -1899,7 +1918,7 @@ export class GameScene extends Phaser.Scene {
     if (hits.length) this.cameras.main.shake(chargeHit ? 75 : 55, chargeHit ? 0.003 : 0.0024);
     for (const enemy of hits) {
       if ((enemy === this.warden || enemy === this.soterrado || enemy === this.vesper || enemy === this.titan) && !(enemy as Warden | Soterrado | Vesper | CalderaTitan).canBeHit) continue;
-      const shellMultiplier = enemy === this.warden ? this.warden.receiveStrike(now, angle) : enemy === this.soterrado ? this.soterrado.receiveStrike(now) : enemy === this.vesper ? this.vesper.receiveStrike(now) : 1;
+      const shellMultiplier = enemy === this.warden ? this.warden.receiveStrike(now, angle) : enemy === this.soterrado ? this.soterrado.receiveStrike(now) : enemy === this.vesper ? this.vesper.receiveStrike(now) : enemy === this.titan ? this.titan.receiveStrike(now) : 1;
       if (shellMultiplier === 0) { this.impact(enemy.position, 0xc9b4ed, 0, angle); continue; }
       const multiplier = elementalMultiplier(element, this.enemySpecies.get(enemy));
       const result = applyDamage(enemy.health, Math.round(damage * multiplier * shellMultiplier));
@@ -2318,6 +2337,22 @@ export class GameScene extends Phaser.Scene {
     this.economy.credits=100;this.economy.potions=5;this.transferHp=this.characterMaxHp;
     this.earlyRouteCheckpoint=undefined;this.expeditionArrival=area==='valley'?{...VALLEY.entry}:area==='arid'?{...SIROCCO.entry}:area==='dunes'?{...DUNES.entry}:{...SANDPIT.entry};
     this.expeditionReturn=undefined;this.area=area;this.saveProgress();this.scene.restart();return true;
+  }
+
+  // Isolated arrival through the basalt record; Incandescente remains alive.
+  seedTitanPlaytest():boolean {
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!new URLSearchParams(location.search).has('titan')||coopSession.role==='guest'||this.transitioning||this.inputModalOpen||!this.player||this.player.isDead)return false;
+    if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return false;
+    for(const flag of JOURNEY_FLAGS)this[flag]=false;
+    for(const flag of ['cavernDepthSeen','deepPassageOpen','deepAreaSeen','deepCavernEntered','deepEndSeen','deeperEntered','exteriorEntered','fragmentSeen','approachSeen','firstEchoSeen','wardenReached','wardenGateOpen','wardenDefeated','wardenEndingSeen','valleyVisited','valleyLandmarkSeen','valleyEndSeen','valleyCheckpointReached','valleyFrontierReached','valleyFrontierSignalSeen','valleyFrontierEndSeen','aridVisited','aridSignalSeen','aridFrontierEntered','aridFrontierReached','dunesVisited','dunesRuinsSeen','dunesDepthSeen','soterradoReached','soterradoDefeated','soterradoClueSeen','frostVisited','frostSignalSeen','frostEndSeen','icecaveVisited','icecaveSignalSeen','icenestVisited','vesperReached','vesperDefeated','vesperClueSeen','cinderVisited','cinderSignalSeen','obsidianVisited','obsidianSignalSeen','calderaVisited','calderaRelaySeen','calderaCheckpointReached'] as const)this[flag]=true;
+    this.progression.restore({xp:1800,echoes:['northern-ruin','mineral-signal','unknown-trace'],sourceLocated:true,passageOpen:true,rewardedHollows:[],rewardedRoutes:[],bossRewards:['warden','soterrado','vesper']});
+    const core=['recon','survival','signal','beyond'] as const;
+    this.missions.restore({schema:1,accepted:[...core,'exp-cinder','exp-obsidian','exp-caldera'],completed:[...core],evidence:[...core.flatMap(id=>missionById(id).goals.map(g=>g.id)),'after-soterrado','after-vesper']});
+    this.missions.tracked='exp-caldera';this.missionRewards=[...core];
+    for(const upgrade of ['chargePower','dashDuration','chargeWidth'] as const)this.progression.investUpgrade(upgrade);
+    this.economy.visited=['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest','cinder','obsidian','caldera'];this.economy.credits=100;this.economy.potions=5;
+    this.earlyRouteCheckpoint=undefined;this.expeditionArrival=undefined;this.expeditionReturn=undefined;this.glacierArrival=undefined;
+    this.transferHp=this.characterMaxHp;this.area='caldera';this.saveProgress();this.scene.restart();return true;
   }
 
   // Direct isolated preview: all earlier route requirements, no Vesper victory.

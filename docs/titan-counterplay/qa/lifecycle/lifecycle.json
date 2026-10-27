@@ -1,0 +1,49 @@
+{
+  "method": "DEV position/1-HP fixtures isolate lethal attacks and cleanup; real R respawn. Isolated legacy schema-1 reload uses original parser, actual keyboard gate collision and E record rejection. No victory is simulated.",
+  "checks": [
+    {
+      "attack": "slam",
+      "cleaned": {
+        "stopped": true,
+        "covers": 0,
+        "rocks": 0,
+        "marks": 0,
+        "wave": false,
+        "warning": false,
+        "won": false,
+        "xp": 1800
+      }
+    },
+    {
+      "attack": "boulders",
+      "cleaned": {
+        "stopped": true,
+        "covers": 0,
+        "rocks": 0,
+        "marks": 0,
+        "wave": false,
+        "warning": false,
+        "won": false,
+        "xp": 1800
+      }
+    },
+    "Legacy XP/three previous boss receipts survive; living boss cannot be bypassed through sealed basalt gate or thermal record E"
+  ],
+  "errors": [],
+  "legacy": {
+    "xp": 1800,
+    "receipts": [
+      "warden",
+      "vesper",
+      "soterrado"
+    ],
+    "bosses": 1,
+    "hp": 1710,
+    "won": false,
+    "clue": false,
+    "basalt": false,
+    "gate": true
+  },
+  "gateX": 1962,
+  "passed": true
+}
