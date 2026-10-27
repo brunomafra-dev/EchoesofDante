@@ -1,0 +1,111 @@
+{
+  "chapter": "arrivals",
+  "method": "DEV isolated chapter; actual navigation graph and walkable collision, real hazard health. Position and enemy-update fixtures isolate geometry/pressure.",
+  "checks": [
+    "Every authored objective has a clear footprint and connected approach/return in the real navigation graph",
+    "Completed-settlement geometry fixture keeps both homes, resident approaches and original passage connected; no repeated structures",
+    "Polluted visited list cannot unlock later bosses/regions through the atlas"
+  ],
+  "errors": [],
+  "routes": [
+    {
+      "id": "pc-beacon",
+      "paths": [
+        {
+          "steps": 46,
+          "gap": 17.69180601295413
+        },
+        {
+          "steps": 5,
+          "gap": 17
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pc-shelter",
+      "paths": [
+        {
+          "steps": 8,
+          "gap": 6.0827625302982185
+        },
+        {
+          "steps": 11,
+          "gap": 23.345235059857504
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pc-receive",
+      "paths": [
+        {
+          "steps": 7,
+          "gap": 23
+        },
+        {
+          "steps": 10,
+          "gap": 23.345235059857504
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pc-home",
+      "paths": [
+        {
+          "steps": 8,
+          "gap": 14.0356688476182
+        },
+        {
+          "steps": 11,
+          "gap": 23.345235059857504
+        }
+      ],
+      "clear": true
+    }
+  ],
+  "settledRoutes": [
+    {
+      "target": {
+        "x": 200,
+        "y": 850
+      },
+      "steps": 11,
+      "gap": 23.345235059857504
+    },
+    {
+      "target": {
+        "x": 405,
+        "y": 865
+      },
+      "steps": 6,
+      "gap": 16.278820596099706
+    },
+    {
+      "target": {
+        "x": 765,
+        "y": 815
+      },
+      "steps": 6,
+      "gap": 15
+    },
+    {
+      "target": {
+        "x": 2210,
+        "y": 1010
+      },
+      "steps": 40,
+      "gap": 20.808652046684813
+    },
+    {
+      "target": {
+        "x": 610,
+        "y": 800
+      },
+      "steps": 1,
+      "gap": 6.0827625302982185
+    }
+  ],
+  "passed": true
+}

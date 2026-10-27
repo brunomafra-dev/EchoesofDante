@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
-import {PERMANENCE_SITES,type PermanenceSite,type PermanencePose} from '../config/permanence';
+import {PERMANENCE_SITES,PERMANENCE_RESIDENTS,type PermanenceSite,type PermanencePose} from '../config/permanence';
+import {HABITAT,HABITAT_SOLIDS} from '../config/colonization';
+import {trackEnvironmentOcclusion} from '../visual/EnvironmentArt';
 import type {Missions} from './Missions';
 import type {JourneyArea} from './LocalJourney';
 import type {Vec2} from '../utils/math';
@@ -20,6 +22,9 @@ export class PermanenceWorld {
  private power?:Phaser.GameObjects.Graphics;
  private powerBeat=-1;
  private powered=false;
+ private housed=false;
+ private arrived=false;
+ private established=false;
  constructor(private scene:Phaser.Scene,private area:JourneyArea,private obstacles:Obstacle[],private warn:()=>void=()=>{}){
   for(const site of PERMANENCE_SITES.filter(s=>s.area===area)){
    const image=(site.art==='cargo'?scene.add.image(site.x,site.y,'item-accessory-2').setDisplaySize(34,44).setDepth(site.y-2):site.art==='mineral'||site.art==='record'?scene.add.image(site.x,site.y,site.art==='mineral'?'deep-mineral':'ancient-remnant').setDisplaySize(95,68).setDepth(site.y-2):addSurveyProp(scene,site.art,site.x,site.y)).setName(site.id).setVisible(false);
@@ -66,11 +71,35 @@ export class PermanenceWorld {
   this.power?.setVisible(powerActive).setRotation(beat%4*Math.PI/2).setAlpha(phase<1000?.12+phase/1000*.28:phase<1550?.9:.04);
   if(powerActive&&beat!==this.powerBeat){this.powerBeat=beat;if(phase<1000&&Math.hypot(player.x-1650,player.y-930)<500)this.warn();}
   if(missions.has('pe-online')&&!this.powered){this.powered=true;this.addPowerStation();}
+  if(missions.has('pc-shelter')&&!this.housed){this.housed=true;this.addSecondHabitat();}
+  if(missions.has('pc-receive')&&!this.arrived){this.arrived=true;this.addResidents();}
+  if(missions.has('pc-home')&&!this.established){this.established=true;this.addReception();}
  }
+ private addSecondHabitat():void{
+  if(this.area!=='terraces')return;
+  const x=550,y=635,width=280,height=198;
+  const building=this.scene.add.image(x,y,'first-habitat').setDisplaySize(width,height).setOrigin(.5,1).setDepth(y-20).setName('settlement-second-habitat');trackEnvironmentOcclusion(this.scene,building);
+  for(const o of HABITAT_SOLIDS)this.obstacles.push({x:x+(o.x-HABITAT.x)*width/HABITAT.width,y:y+(o.y-HABITAT.y)*height/HABITAT.height,radius:o.radius*width/HABITAT.width});
+ }
+ private addResidents():void{
+  if(this.area!=='terraces')return;
+  for(const r of PERMANENCE_RESIDENTS){
+   this.scene.add.image(r.x,r.y,'world-shadow','ground-contact').setDisplaySize(32,9).setAlpha(.65).setDepth(r.y-2);
+   this.scene.add.image(r.x,r.y,r.key).setOrigin(.5,1).setDisplaySize(58,89).setDepth(r.y).setName('permanence-resident-'+r.name);
+   this.scene.add.text(r.x,r.y-98,r.name+' · '+r.role,{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d4dac0',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000);
+   this.obstacles.push({x:r.x,y:r.y-6,radius:14});
+  }
+ }
+ private addReception():void{
+  if(this.area!=='base')return;
+  this.scene.add.image(1120,640,'camp-supplies').setDisplaySize(90,56).setOrigin(.5,1).setDepth(638).setName('settlement-arrival-manifest');this.obstacles.push({x:1120,y:624,radius:22});
+  this.scene.add.text(1120,665,'SEGUNDA EQUIPE EM TERRA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d4dac0',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000);
+ }
+ greetingAt(position:Vec2,missions:Missions){return this.area==='terraces'&&missions.has('pc-receive')?PERMANENCE_RESIDENTS.find(r=>Math.hypot(position.x-r.x,position.y-r.y)<70):undefined;}
  private addPowerStation():void{
   if(this.area!=='base'&&this.area!=='terraces')return;
   const x=this.area==='base'?910:1770,y=this.area==='base'?900:770;
-  this.scene.add.image(x,y,'field-shelter').setDisplaySize(130,108).setOrigin(.5,1).setDepth(y-2).setName('settlement-power-station');
+  const building=this.scene.add.image(x,y,'field-shelter').setDisplaySize(130,108).setOrigin(.5,1).setDepth(y-2).setName('settlement-power-station');trackEnvironmentOcclusion(this.scene,building);
   this.obstacles.push({x,y:y-24,radius:32});
   const lamp=this.scene.add.graphics().setDepth(y+1);lamp.fillStyle(0xffd898,.12).fillCircle(x+48,y-74,20).fillStyle(0xffdeb1,.8).fillCircle(x+48,y-74,3);
   this.scene.add.text(x,y+20,'REDE ISOLADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#ebd8b6',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);

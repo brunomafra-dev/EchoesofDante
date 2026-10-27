@@ -1,5 +1,7 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**Lote da permanência · 0.1.159 · Mais duas vozes em Dante:** Baliza, manifesto, segundo alojamento e chegada de Mara e Tomás, com falas próprias. Água, alimento, transporte e energia sustentam a recepção. [Escopo, laboratório e QA](permanence/README.md). Sequência já autorizada; avaliação humana permanece separada.
+
 **Lote da permanência · 0.1.158 · Uma luz que é nossa:** Aterramento seco, descarga por setores, isolamento do circuito antigo e iluminação alimentada pela nave. Novas consequências na base e no abrigo. [Escopo, laboratório e QA](permanence/README.md). Sequência já autorizada; avaliação humana permanece separada.
 
 **Lote da permanência · 0.1.157 · O peso de permanecer:** Apoio do estrado, carga física conduzida por proximidade e descarga validada no depósito. Qualquer integrante pode conduzir; a carga respeita as rochas. [Escopo, laboratório e QA](permanence/README.md). Sequência já autorizada; avaliação humana permanece separada.

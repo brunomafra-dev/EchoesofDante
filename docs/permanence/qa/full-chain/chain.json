@@ -1,0 +1,42 @@
+{
+  "chapter": "water",
+  "method": "One temporary character: original seven reports/Warden simulated once, then all five new chapters by actual E/NPC/atlas and physical cargo movement. Positions/invulnerability isolate objective coverage; no chapter seeding or combat-balance claim.",
+  "checks": [
+    "settle-water: complete through the original journal without reseeding the character",
+    "settle-food: complete through the original journal without reseeding the character",
+    "settle-transport: complete through the original journal without reseeding the character",
+    "settle-energy: complete through the original journal without reseeding the character",
+    "settle-arrivals: complete through the original journal without reseeding the character",
+    "Five chapters contribute exactly 500 new credits once; all twelve story reports persist after reload",
+    "Real death/R charges the original 10% once; reload preserves settlement and receipts without granting chapters again"
+  ],
+  "errors": [],
+  "chapters": [
+    {
+      "id": "settle-water",
+      "credits": 80,
+      "totalEarned": 80
+    },
+    {
+      "id": "settle-food",
+      "credits": 90,
+      "totalEarned": 170
+    },
+    {
+      "id": "settle-transport",
+      "credits": 100,
+      "totalEarned": 270
+    },
+    {
+      "id": "settle-energy",
+      "credits": 110,
+      "totalEarned": 380
+    },
+    {
+      "id": "settle-arrivals",
+      "credits": 120,
+      "totalEarned": 500
+    }
+  ],
+  "passed": true
+}

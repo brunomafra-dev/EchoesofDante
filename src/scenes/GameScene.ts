@@ -797,6 +797,8 @@ export class GameScene extends Phaser.Scene {
     if(pickup&&requestedInteract&&!interactionDead)this.pickupEquipment(pickup,remoteRequest?.id);
     let interact = requestedInteract&&!pickup;
     const missionSite=this.missionSite(interactionPosition,interactionDead);
+    const resident=interactionDead?undefined:this.permanence?.greetingAt(interactionPosition,this.missions);
+    if(interact&&resident&&!missionSite){this.hud.showDiscovery(resident.name.toLocaleUpperCase('pt-BR')+'\n'+resident.text);this.sounds.discovery();interact=false;}
     if(interact&&missionSite){
       if('reject' in missionSite&&missionSite.reject){this.hud.showDiscovery(missionSite.reject);this.sounds.discovery();interact=false;}
       else {
@@ -997,8 +999,8 @@ export class GameScene extends Phaser.Scene {
         ? 'MECANISMO INATIVO\nInvestigue a fissura ao lado primeiro.'
         : 'MECANISMO INATIVO\nEncontre e investigue os 3 Ecos.');
     }
-    const canInteract = !!colonyPassage||!!missionSite||nearVolcanicBack||nearVolcanicExit||nearVolcanicRelay||nearCalderaBack||nearCalderaRelay||nearCalderaRecord|| nearIceEntry || nearIceBack || nearIceExit || nearIceRelay || nearColdPortal || nearFrostReturn || nearFrostRelay || nearSandpitDescent || nearSandpitAscent || nearColdClue || nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearChapterPortal || nearSiroccoExit || nearSiroccoSignal || nearDunesRuin || nearValleyLandmark || nearValleyFrontierSignal;
-    const interactionAction = colonyPassage?'ENTRAR':missionSite&&'action' in missionSite?missionSite.action:missionSite?missionSite.id==='shelter-built'?'INSTALAR':'ANALISAR':nearVolcanicBack||nearVolcanicExit?'ENTRAR':nearCalderaBack?'ENTRAR':nearBaseStation?'RETORNAR':this.area==='base'?(BASE.services.some(s=>distance(this.player.position,s)<100)?'CONVERSAR':'SAIR'):nearIceEntry || nearIceBack || nearIceExit ? 'ENTRAR' : nearColdPortal || nearFrostReturn ? 'ENTRAR' : nearSandpitDescent ? 'DESCER' : nearSandpitAscent ? 'SUBIR' : nearPortal || nearChapterPortal || nearSiroccoExit ? 'ENTRAR' : 'INVESTIGAR';
+    const canInteract = !!resident||!!colonyPassage||!!missionSite||nearVolcanicBack||nearVolcanicExit||nearVolcanicRelay||nearCalderaBack||nearCalderaRelay||nearCalderaRecord|| nearIceEntry || nearIceBack || nearIceExit || nearIceRelay || nearColdPortal || nearFrostReturn || nearFrostRelay || nearSandpitDescent || nearSandpitAscent || nearColdClue || nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearChapterPortal || nearSiroccoExit || nearSiroccoSignal || nearDunesRuin || nearValleyLandmark || nearValleyFrontierSignal;
+    const interactionAction = colonyPassage?'ENTRAR':resident&&!missionSite?'CONVERSAR':missionSite&&'action' in missionSite?missionSite.action:missionSite?missionSite.id==='shelter-built'?'INSTALAR':'ANALISAR':nearVolcanicBack||nearVolcanicExit?'ENTRAR':nearCalderaBack?'ENTRAR':nearBaseStation?'RETORNAR':this.area==='base'?(BASE.services.some(s=>distance(this.player.position,s)<100)?'CONVERSAR':'SAIR'):nearIceEntry || nearIceBack || nearIceExit ? 'ENTRAR' : nearColdPortal || nearFrostReturn ? 'ENTRAR' : nearSandpitDescent ? 'DESCER' : nearSandpitAscent ? 'SUBIR' : nearPortal || nearChapterPortal || nearSiroccoExit ? 'ENTRAR' : 'INVESTIGAR';
     if (interact) this.saveProgress();
     this.hud.setDiscoveryPrompt(canInteract||!!pickup||nearBaseStation||this.area==='base'&&BASE.services.some(s=>distance(this.player.position,s)<100)||this.area==='base'&&distance(this.player.position,BASE.exit)<105,pickup?'COLETAR':interactionAction);
     this.controls.setInteractAvailable(canInteract||!!pickup||nearBaseStation||this.area==='base'&&BASE.services.some(s=>distance(this.player.position,s)<100)||this.area==='base'&&distance(this.player.position,BASE.exit)<105,pickup?'COLETAR':interactionAction);
@@ -1662,7 +1664,7 @@ export class GameScene extends Phaser.Scene {
       impacts: this.impactHistory.filter(hit => this.time.now-hit.at < 650),
       impact: hit => this.impact(hit, hit.color, hit.damage, hit.angle, hit.effective, hit.resisted, false),
       prompt: (position,owner) => {
-        const site=this.missionSite(position,false);if(site)return {available:true,action:'action' in site?site.action:site.id==='shelter-built'?'INSTALAR':'ANALISAR'};if(this.colonyPassage(position))return{available:true,action:'ENTRAR'};
+        const site=this.missionSite(position,false);if(site)return {available:true,action:'action' in site?site.action:site.id==='shelter-built'?'INSTALAR':'ANALISAR'};if(this.permanence?.greetingAt(position,this.missions))return{available:true,action:'CONVERSAR'};if(this.colonyPassage(position))return{available:true,action:'ENTRAR'};
         if(this.area!=='base'&&this.canReturnBase(position,this.party?.actors.get(owner)?.player)&&distance(position,{x:this.returnStation.x-90,y:this.returnStation.y})<65)return{available:true,action:'RETORNAR'};
         if(this.area==='base')return{available:BASE.services.some(s=>distance(position,s)<100)||distance(position,BASE.exit)<105,action:'CONVERSAR'};
         if(this.loot.nearest(position,owner))return{available:true,action:(coopSession.guests.find(m=>m.id===owner)?.profile.bagFree??0)<=0?'MOCHILA CHEIA':'COLETAR'};

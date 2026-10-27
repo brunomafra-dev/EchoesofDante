@@ -5,7 +5,7 @@ import type {RegionalArt} from './regionalExpeditions';
 export const PERMANENCE_IDS=['settle-water','settle-food','settle-transport','settle-energy','settle-arrivals'] as const;
 export type PermanenceId=typeof PERMANENCE_IDS[number];
 export type PermanenceEvidence=`pw-${'intake'|'silt'|'filter'|'valve'|'online'}`|`pf-${'trace'|'control'|'sample'|'safe'|'stock'}`|`pt-${'upper'|'lower'|'anchor'|'load'|'deliver'}`|`pe-${'ground'|'return'|'cell'|'isolate'|'online'}`|`pc-${'beacon'|'manifest'|'shelter'|'receive'|'home'}`;
-export type PermanenceSite={id:PermanenceEvidence;mission:PermanenceId;area:JourneyArea;x:number;y:number;radius:number;name:string;finding:string;art:RegionalArt|'cargo';action:string;needs?:readonly MissionEvidence[];reject?:string;choice?:boolean;haul?:boolean};
+export type PermanenceSite={id:PermanenceEvidence;mission:PermanenceId;area:JourneyArea;x:number;y:number;radius:number;name:string;finding:string;art:RegionalArt|'cargo'|'site';action:string;needs?:readonly MissionEvidence[];reject?:string;choice?:boolean;haul?:boolean};
 export type PermanencePose={haul?:{x:number;y:number;kind:'cargo'}};
 export const PERMANENCE_SITES:readonly PermanenceSite[]=[
  {id:'pw-intake',mission:'settle-water',area:'springs',x:1680,y:650,radius:75,name:'Captação a montante',art:'water',action:'COLETAR',finding:'O sedimento vem da margem baixa. A captação alta mantém fluxo constante.'},
@@ -29,6 +29,11 @@ export const PERMANENCE_SITES:readonly PermanenceSite[]=[
  {id:'pe-cell',mission:'settle-energy',area:'base',x:790,y:850,radius:65,name:'Célula e regulador da nave',art:'cargo',action:'RETIRAR',needs:['pe-ground','pe-return'],finding:'Célula da nave reservada, com regulador e proteção. Nenhum material ou equipamento pessoal foi consumido.'},
  {id:'pe-isolate',mission:'settle-energy',area:'terraces',x:1580,y:1050,radius:65,name:'Isolador do circuito antigo',art:'record',action:'DESCONECTAR',needs:['pe-cell'],finding:'Circuito antigo desconectado do apoio. As frentes de descarga cessam; a rede humana permanece independente.'},
  {id:'pe-online',mission:'settle-energy',area:'terraces',x:1770,y:900,radius:75,name:'Rede isolada do abrigo',art:'cargo',action:'ENERGIZAR',needs:['pe-isolate','pe-ground'],finding:'Iluminação e instrumentos alimentados pela célula da nave. Ivo precisa registrar a verificação final.'},
+ {id:'pc-beacon',mission:'settle-arrivals',area:'springs',x:2180,y:650,radius:75,name:'Baliza de recepção',art:'record',action:'CALIBRAR',finding:'Baliza calibrada para a passagem de pessoas. A rota permanece afastada da captação e do retorno de água.'},
+ {id:'pc-manifest',mission:'settle-arrivals',area:'base',x:1120,y:610,radius:65,name:'Manifesto da segunda equipe',art:'cargo',action:'CONFERIR',finding:'Mara assume manutenção; Tomás, distribuição. A carga inclui outro módulo pronto, sem compra ou fabricação pessoal.'},
+ {id:'pc-shelter',mission:'settle-arrivals',area:'terraces',x:610,y:800,radius:75,name:'Alojamento da segunda equipe',art:'site',action:'INSTALAR',needs:['pc-beacon','pc-manifest'],finding:'Segundo módulo reservado instalado no setor oeste. O primeiro abrigo, seus moradores e os acessos continuam no lugar.'},
+ {id:'pc-receive',mission:'settle-arrivals',area:'terraces',x:490,y:950,radius:75,name:'Recepção dos novos colonos',art:'cargo',action:'RECEBER',needs:['pc-shelter'],finding:'Mara e Tomás chegaram ao alojamento. A equipe de reconhecimento agora divide a responsabilidade de manter Dante habitável.'},
+ {id:'pc-home',mission:'settle-arrivals',area:'terraces',x:610,y:820,radius:75,name:'Condições para permanecer',art:'water',action:'CONFIRMAR',needs:['pc-receive','pw-online','pf-stock','pt-deliver','pe-online'],finding:'Água, reserva identificada, depósito e iluminação conferidos com a segunda equipe. Nara aguarda o relatório de recepção.'},
 ];
 const goals=(id:PermanenceId)=>PERMANENCE_SITES.filter(s=>s.mission===id&&!s.reject).map(s=>({id:s.id,label:s.choice?'Colher o lote compatível':s.name,area:s.area}));
 export const PERMANENCE_MISSIONS:readonly MissionDefinition[]=[
@@ -45,5 +50,12 @@ export const PERMANENCE_MISSIONS:readonly MissionDefinition[]=[
  {id:'settle-energy',title:'Uma luz que é nossa',npc:'smith',requires:'settle-transport',credits:110,
   offer:['As luzes do módulo ainda dependem de cabos provisórios. O apoio antigo perto do depósito descarrega em setores diferentes; não vou ligar a nave a ele.','Verifique rocha seca e retorno úmido, retire a célula reservada na oficina e desconecte o circuito antigo antes de energizar o abrigo. Observe para onde a frente se prepara e contorne a descarga.'],
   report:['A célula da nave sustenta uma rede isolada, aterrada e separada do retorno. Temos iluminação para receber outra equipe.','Não sabemos quem construiu o circuito antigo nem por que ele reage. Ele fica desligado da nossa instalação; Nara já pode organizar a próxima chegada.'],goals:goals('settle-energy')},
+ {id:'settle-arrivals',title:'Mais duas vozes em Dante',npc:'expedition',requires:'settle-energy',credits:120,
+  offer:['O primeiro abrigo deixou de ser apenas um teste. Temos água tratada, uma reserva identificada, transporte e energia próprios.','Calibre a recepção nas Nascentes, confira o manifesto na base e instale o segundo módulo no setor oeste dos Terraços. Receba Mara e Tomás e confira as condições com eles antes de retornar. A carga já veio na nave; não é construção livre.'],
+  report:['Mara e Tomás já estão no alojamento. A manutenção e os suprimentos têm responsáveis, e os primeiros moradores continuam no abrigo original.','Ainda há muito que não entendemos sobre Dante. Mas cada relatório agora sustenta uma vida concreta, não apenas outra linha no diário. Vamos cuidar do que conquistamos antes de ampliar nossas fronteiras.'],goals:goals('settle-arrivals')},
 ];
+export const PERMANENCE_RESIDENTS=[
+ {name:'Mara',role:'Manutenção',key:'base-refugee-a',x:450,y:820,text:'O regulador está estável. Posso manter o módulo funcionando sem pedir outra carga da nave.'},
+ {name:'Tomás',role:'Suprimentos',key:'base-refugee-b',x:720,y:780,text:'Água tratada de um lado, reserva identificada do outro. Vou distribuir os lotes sem misturar o que ainda está em estudo.'},
+] as const;
 export const isPermanence=(id:MissionId):id is PermanenceId=>PERMANENCE_IDS.includes(id as PermanenceId);

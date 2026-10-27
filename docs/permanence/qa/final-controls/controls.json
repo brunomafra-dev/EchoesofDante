@@ -1,0 +1,40 @@
+{
+  "method": "Chrome mobile emulation: real CDP multitouch; DEV combat/position fixtures. Permanence arrivals lab, base input fixture and provisional house/resident evidence, actual touch/A greetings, not chapter completion, actual CDP touch and gamepad mock. Not physical iPhone/Android testing.",
+  "checks": [
+    "hunter: independent movement + eight aim directions, backwards attack, neutral deadzone and release",
+    "hunter: touch on world turns without held attack",
+    "hunter: hold/aim/release skill and visible charge percentage",
+    "hunter: pointer cancellation stops charging without a release",
+    "hunter: opening/closing a modal clears captured attacks",
+    "hunter: actual touch interaction receives the resident greeting; no mission reward fixture",
+    "warrior: independent movement + eight aim directions, backwards attack, neutral deadzone and release",
+    "warrior: touch on world turns without held attack",
+    "warrior: hold/aim/release skill and visible charge percentage",
+    "warrior: pointer cancellation stops charging without a release",
+    "warrior: opening/closing a modal clears captured attacks",
+    "warrior: actual touch interaction receives the resident greeting; no mission reward fixture",
+    "astral: independent movement + eight aim directions, backwards attack, neutral deadzone and release",
+    "astral: touch on world turns without held attack",
+    "astral: hold/aim/release skill and visible charge percentage",
+    "astral: pointer cancellation stops charging without a release",
+    "astral: opening/closing a modal clears captured attacks",
+    "Four mobile/tablet/Safari-height layouts: edge HUD stays inside viewport without overlapping",
+    "Three scene restarts retain one vitals HUD, one controller and one tracker",
+    "astral: actual touch interaction receives the resident greeting; no mission reward fixture",
+    "xenobinder: independent movement + eight aim directions, backwards attack, neutral deadzone and release",
+    "xenobinder: touch on world turns without held attack",
+    "xenobinder: hold/aim/release skill and visible charge percentage",
+    "xenobinder: pointer cancellation stops charging without a release",
+    "xenobinder: opening/closing a modal clears captured attacks",
+    "xenobinder: actual touch interaction receives the resident greeting; no mission reward fixture",
+    "Permanence arrivals: standard gamepad movement, rear aim, attack, Dash and held/released Q",
+    "Standard gamepad A receives the second resident greeting in the physical settlement"
+  ],
+  "errors": [],
+  "uiCounts": {
+    "vitals": 1,
+    "touch": 1,
+    "tracker": 1
+  },
+  "passed": true
+}

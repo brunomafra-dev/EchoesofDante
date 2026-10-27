@@ -61,7 +61,7 @@ Pose opcional do estrado segue o snapshot autenticado do anfitrião no protocolo
 - [x] [Colisão e ciclo](qa/transport-safety/safety.json): caminhada/Dash param no estrado; carga espera fora do alcance, respeita crista física, morte real/R e reload preservam objetivos e uma única carga pendente. Fixtures de posição/objetivos/invulnerabilidade explicitadas; nenhuma edição da carga.
 - [x] [Modelo](qa/transport-model/model.json) e [acesso](qa/transport-access/access.json): cadeia/save/recibos, caminhos/retornos e atlas bloqueado.
 - [x] Typecheck/build final e [Chrome compilado](qa/transport-compiled/public.json) passaram. Inspeção do ponto de descarga livre e cache estático registrada no teste de ciclo.
-- [x] Vercel da 0.1.157 publicada; [37 hashes JavaScript e SHA-256](qa/publication/0.1.157/hashes.json) conferidos. Chrome público cumulativo da entrega final também cobre o laboratório do transporte.
+- [x] Vercel da 0.1.157 publicada; [37 hashes JavaScript e SHA-256](qa/publication/0.1.157/hashes.json) conferidos. Laboratório do transporte incluído no smoke cumulativo final.
 - [ ] Playtest humano. Continuação à energia já autorizada.
 
 ## 4 — Uma luz que é nossa · 0.1.158
@@ -76,5 +76,27 @@ Frente de descarga muda por quatro setores em ciclos de 1900 ms: 1000 ms de prep
 - [x] [Compatibilidade anterior](qa/relay15-compatibility/compatibility.json): dois Chrome contra relay 15 exato de `fc0f552`, relatório regional real com E/entrega/crédito; capítulos novos bloqueados antes do aceite, laboratório novo e campanha já iniciada no capítulo recusados explicitamente. Snapshot salvo permanece intacto e atualizar a capacidade restaura a disponibilidade.
 - [x] [Dupla 16](qa/energy-coop/coop.json): convidado aceita/executa/entrega e recebe 110 créditos uma vez, inclusive após reconexão; repetida após a guarda de compatibilidade.
 - [x] Typecheck/build final e [Chrome compilado](qa/energy-compiled/public.json) passaram. Aviso violeta distingue a descarga dos avisos das criaturas; captura inspecionada. Painel do laboratório explica criação da equipe e oferece preparo explícito pelo anfitrião, com nomes portugueses das classes.
-- [ ] Publicação desta versão.
+- [x] Vercel da 0.1.158 publicada; [37 hashes e SHA-256](qa/publication/0.1.158/hashes.json) conferidos. Campanhas anteriores podem usar o relay 15; os capítulos novos continuam exigindo relay 16.
 - [ ] Playtest humano de ritmo, dificuldade e leitura; seguir às chegadas conforme autorização do lote.
+
+## 5 — Mais duas vozes em Dante · 0.1.159
+
+[Laboratório direto](https://echosofdante.vercel.app/campaign-playtest.html?permanence=arrivals&v=0.1.159). Simula também os quatro capítulos anteriores; a recepção está por aceitar/concluir, sem seus 120 créditos. Nara organiza baliza, manifesto, segundo módulo reservado, recepção de Mara/Tomás e conferência dos recursos. Continua a primeira colonização já existente: **segunda equipe**, preservando os primeiros moradores e o primeiro módulo. Não há construção livre, produção agrícola ou definição da origem das estruturas antigas.
+
+Segundo alojamento fixo no setor oeste, com os três colisores proporcionais à mesma pintura completa original. Mara/Manutenção e Tomás/Suprimentos usam figuras completas existentes, sombras e colisores pequenos, com falas individuais por E, toque ou A. Instalar reposiciona qualquer integrante que ocupe o volume novo; nada duplica ao voltar, morrer ou recarregar. Manifesto conferido também aparece na base. Verificação final exige as evidências de água, reserva, depósito e rede isolada; não substitui os relatórios anteriores nem abre regiões/bosses.
+
+- [x] [Solo](qa/arrivals/solo.json): cinco ações reais/entrega, recusa prematura, 120 créditos únicos, reload, quatro resoluções e três retornos com contagens estáveis.
+- [x] [Dupla](qa/arrivals-coop/coop.json): botão real prepara somente no anfitrião, convidado não altera a simulação; convidado instala, recebe, conversa e entrega. Aliado dentro do volume é reposicionado; moradores/falas aparecem em ambos, recompensa e reconexão sem duplicação.
+- [x] [Modelo](qa/arrivals-model/model.json) e [acessos](qa/arrivals-access/access.json): pré-requisitos/recibos/save antigo; geografia completa com duas casas, passagem original e aproximações dos moradores conectadas. Vista geral inspecionada, além dos pontos com personagem.
+- [x] [Controles finais](qa/final-controls/controls.json): quatro classes com CDP multitouch, oito direções independentes, carga/soltura/cancelamento, layouts 568×320, 844×390, 1024×768 e 1600×530; gamepad mock e falas por toque/A. Evidências provisórias de casa/moradores são fixtures de entrada, sem simular entrega ou recompensa deste capítulo.
+- [x] [Compilado cumulativo](qa/final-compiled/public.json): cinco links, aceite/reload e sentinelas reais, sem globais DEV.
+- [ ] Publicação final; hashes e Chrome públicos serão conferidos após o push.
+- [ ] Playtest humano. O lote autorizado termina aqui, sem iniciar a entrega D.
+
+## Verificação integrada e limites
+
+[Uma jornada, cinco capítulos](qa/full-chain/chain.json): somente os sete relatórios/Warden anteriores foram simulados uma vez, antes do primeiro capítulo. Os cinco capítulos novos foram aceitos, executados e entregues na mesma personagem temporária, sem nova preparação entre eles; E/NPC/atlas reais e carga conduzida por WASD real. Total de **500 créditos novos** (80+90+100+110+120), um recibo por capítulo, sem XP adicional, com 12 relatórios principais preservados após reload. Morte real/R cobra uma vez a penalidade original de 10%; segundo reload não concede os capítulos de novo. As duas pessoas e o novo módulo persistem, e os três bosses posteriores ao Warden permanecem vivos na simulação.
+
+Posicionamento/invulnerabilidade são usados para cobrir objetivos e não representam um playthrough humano nem balanceamento solo/dupla. Dupla usa dois Chrome; quatro conexões foram validadas no protocolo, sem afirmar quatro renderizações humanas ou aparelhos físicos. Não foram medidos 30 minutos/oito horas. Pinturas aprovadas, figuras completas, classes, estatísticas dos bosses, cadeia original, recibos antigos e enquadramento das Galerias preservados. Nenhum PNG/MP3 novo foi necessário; geometria estática é preparada uma vez e os efeitos mudam por transformações/eventos.
+
+Scripts principais: `qa-permanence.mjs`, `qa-permanence-coop.mjs`, `qa-permanence-chain.mjs`, `qa-permanence-access.mjs`, `qa-permanence-model.mjs`, `qa-permanence-protocol.mjs`, `qa-permanence-compatibility.mjs`, `qa-permanence-haul-safety.mjs`, `qa-permanence-final-controls.mjs`, `qa-permanence-public.mjs`, `qa-permanence-public-coop.mjs` e `verify-permanence-publication.py` em `scripts/`.
