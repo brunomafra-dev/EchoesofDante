@@ -13,10 +13,15 @@ export class PermanenceWorld {
  private jet?:Phaser.GameObjects.Rectangle;
  private installed:Phaser.GameObjects.GameObject[]=[];
  private online=false;
+ private stocked=false;
  constructor(private scene:Phaser.Scene,private area:JourneyArea,private obstacles:Obstacle[]){
   for(const site of PERMANENCE_SITES.filter(s=>s.area===area)){
-   const art=site.art==='record'?'site':site.art==='mineral'?'soil':site.art;
-   const image=addSurveyProp(scene,art,site.x,site.y).setName(site.id).setVisible(false);
+   const image=(site.art==='cargo'?scene.add.image(site.x,site.y,'item-accessory-2').setDisplaySize(34,44).setDepth(site.y-2):site.art==='mineral'||site.art==='record'?scene.add.image(site.x,site.y,site.art==='mineral'?'deep-mineral':'ancient-remnant').setDisplaySize(95,68).setDepth(site.y-2):addSurveyProp(scene,site.art,site.x,site.y)).setName(site.id).setVisible(false);
+   if(site.choice){
+    // Whole existing botanical stamps, tinted only by the observed residue.
+    scene.add.image(site.x,site.y-8,'root-growth').setDisplaySize(110,46).setTint(site.reject?0x73a9c4:0xb0bf79).setDepth(-18);
+    scene.add.image(site.x-12,site.y-17,'dante-canopy-green').setDisplaySize(82,50).setTint(site.reject?0x719fb8:0xb5c58c).setDepth(-17);
+   }
    const label=scene.add.text(site.x,site.y+48,site.name,{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#dfd6b1',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setVisible(false);
    this.sites.push({site,image,label});
   }
@@ -43,6 +48,14 @@ export class PermanenceWorld {
    this.jet?.setVisible(water&&!missions.has('pw-valve')).setAlpha(phase<1100?.12+phase/1100*.18:phase<1800?.7:.06);
   }
   if(missions.has('pw-online')&&!this.online){this.online=true;this.addWaterStation();}
+  if(missions.has('pf-stock')&&!this.stocked){this.stocked=true;this.addFoodReserve();}
+ }
+ private addFoodReserve():void{
+  if(this.area!=='base'&&this.area!=='terraces')return;
+  const x=this.area==='base'?440:2010,y=this.area==='base'?910:1100;
+  this.scene.add.image(x,y,'camp-supplies').setDisplaySize(112,70).setOrigin(.5,1).setDepth(y-2).setName('settlement-food-reserve');
+  this.obstacles.push({x,y:y-17,radius:25});
+  this.scene.add.text(x,y+20,'RESERVA IDENTIFICADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d9d5af',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
  }
  private addWaterStation():void{
   if(this.area!=='base'&&this.area!=='terraces')return;

@@ -28,7 +28,22 @@ Catálogo compartilhado reservado para cinco capítulos e 25 evidências em `src
 - [x] [Controles emulados](qa/controls/controls.json): quatro classes, CDP multitouch, mira independente, carga/cancelamento, gamepad mock, quatro resoluções e reinícios sem duplicar HUD.
 - [x] Typecheck/build finais e revisão/diff. Aviso conhecido dos chunks permanece.
 - [x] [Build compilada](qa/compiled/public.json): aceite real e reload, sem globais DEV, personagens/configurações sentinela intactos.
-- [ ] Commit/push e publicação; aguardar hashes e saúde do relay público 16.
+- [x] Commit/push da água `8e647825c96e2c53704817a09db2e194bc322244`, local/remoto conferidos; Vercel publicada, [37 hashes JavaScript](qa/publication/0.1.155/hashes.json) e [smoke público](qa/publication/0.1.155/public.json) passaram.
+- [ ] Coop público: Render ainda respondeu protocolo 15 na conferência; incompatibilidade real informada ao usuário, código 16 enviado. Não declarar dupla pública validada até saúde e browsers reais passarem.
 - [ ] Playtest humano de ritmo, leitura e diversão.
 
 Os testes de objetivos usam posição/invulnerabilidade preparadas para cobrir interações. Não medem duração humana ou descoberta da solução. Arte, terrenos, estatísticas de inimigos/bosses, quatro classes, economia pessoal e controles originais preservados. Sem garantia de 30 minutos ou oito horas.
+
+## 2 — O que pode nos alimentar · 0.1.156
+
+[Laboratório direto](https://echosofdante.vercel.app/campaign-playtest.html?permanence=food&v=0.1.156). Simula também o capítulo da água, sem conceder a recompensa do alimento. Requer entregar água no jogo real. Lia compara resíduo dos juncos com mudas de controle, orienta uma coleta seletiva pelas marcas, trata a amostra na base e reserva o lote no abrigo. Lote azul incompatível permanece intocado, sem evidência ou crédito; somente a amostra compatível pode ser tratada. Guia não entrega a escolha com uma seta. Reserva identificada aparece na base e nos Terraços com colisor, sem produção agrícola automática. 90 créditos pessoais únicos, sem XP adicional.
+
+- [x] [Solo e saves](qa/food/solo.json): rejeição do lote incompatível, bloqueio do armazenamento prematuro, tratamento, instalação/entrega, reload e três retornos estáveis; quatro resoluções.
+- [x] [Dupla](qa/food-coop/coop.json): convidado coleta/trata/entrega; 90 créditos por integrante e reconexão sem duplicação.
+- [x] [Modelo](qa/food-model/model.json): cadeia, pré-requisitos, recibos, save anterior e falha/retry de armazenamento.
+- [x] [Navegação](qa/food-access/access.json): caminhos e retornos dos dois lotes e demais locais livres; atlas preserva bloqueios.
+- [x] Typecheck/build e [build compilada](qa/food-compiled/public.json), com regressão da chegada da água, aceite/reload e sentinelas reais preservados.
+- [ ] Publicação desta versão; solo/dupla locais não declaram compatibilidade do Render ainda antigo.
+- [ ] Playtest humano. Continuação ao transporte já autorizada.
+
+Os props de cartucho/carga usam o equipamento inteiro existente; registros/minerais usam suas imagens próprias. Folhas/raízes pintadas existentes distinguem o resíduo azulado do lote seco. Capturas dos dois lotes inspecionadas; não há nova pintura de terreno ou desenho estático por frame.

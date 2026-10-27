@@ -1,0 +1,82 @@
+{
+  "chapter": "food",
+  "method": "DEV isolated chapter; actual navigation graph and walkable collision, real hazard health. Position and enemy-update fixtures isolate geometry/pressure.",
+  "checks": [
+    "Every authored objective has a clear footprint and connected approach/return in the real navigation graph",
+    "Polluted visited list cannot unlock later bosses/regions through the atlas"
+  ],
+  "errors": [],
+  "routes": [
+    {
+      "id": "pf-trace",
+      "paths": [
+        {
+          "steps": 19,
+          "gap": 23.60084744241189
+        },
+        {
+          "steps": 36,
+          "gap": 17
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pf-control",
+      "paths": [
+        {
+          "steps": 18,
+          "gap": 23.345235059857504
+        },
+        {
+          "steps": 21,
+          "gap": 23.345235059857504
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pf-sample",
+      "paths": [
+        {
+          "steps": 35,
+          "gap": 5.385164807134505
+        },
+        {
+          "steps": 38,
+          "gap": 23.345235059857504
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pf-sample",
+      "paths": [
+        {
+          "steps": 36,
+          "gap": 20.808652046684813
+        },
+        {
+          "steps": 39,
+          "gap": 23.345235059857504
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pf-stock",
+      "paths": [
+        {
+          "steps": 41,
+          "gap": 10.816653826391969
+        },
+        {
+          "steps": 44,
+          "gap": 23.345235059857504
+        }
+      ],
+      "clear": true
+    }
+  ],
+  "passed": true
+}

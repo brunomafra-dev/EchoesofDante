@@ -797,6 +797,8 @@ export class GameScene extends Phaser.Scene {
     let interact = requestedInteract&&!pickup;
     const missionSite=this.missionSite(interactionPosition,interactionDead);
     if(interact&&missionSite){
+      if('reject' in missionSite&&missionSite.reject){this.hud.showDiscovery(missionSite.reject);this.sounds.discovery();interact=false;}
+      else {
       this.missions.record(missionSite.id);
       if(missionSite.id==='shelter-built'){
         this.colony?.setSettled(true);
@@ -806,6 +808,7 @@ export class GameScene extends Phaser.Scene {
       else this.hud.showDiscovery(missionSite.id==='water'?'ÁGUA SUPERFICIAL\nLEITURA REGISTRADA':missionSite.id==='biology'?'ATIVIDADE BIOLÓGICA\nLEITURA REGISTRADA':`${missionSite.name.toLocaleUpperCase('pt-BR')}\nLEITURA REGISTRADA`);
       if(missionSite.id==='exp-dunes-3')this.dunes?.warnBelow();
       this.sounds.discovery();this.saveProgress();interact=false;
+      }
     }
     const nearbyEcho = this.echoSites.find(site => site.canInvestigate(interactionPosition, interactionDead));
     const nearDiscovery = nearbyEcho !== undefined;
@@ -2546,6 +2549,7 @@ export class GameScene extends Phaser.Scene {
     const regionalSite=this.regional?.sites.find(s=>s.mission===id&&!this.missions.has(s.id));
     if(regionalSite)return {...regionalSite,instruction:[...siroccoTrails(this.area),...borealTrails(this.area),...embersTrails(this.area)].find(t=>t.site===regionalSite.id)?.hint??'Analise o local e registre a descoberta.',interactionLabel:'ANALISAR',action:'investigate'};
     const chapterSite=PERMANENCE_SITES.find(s=>s.mission===id&&!this.missions.has(s.id)&&!s.needs?.some(e=>!this.missions.has(e)));
+    if(chapterSite?.choice)return;
     if(chapterSite?.area===this.area)return{...chapterSite,instruction:'Use o equipamento reservado e registre o resultado.',interactionLabel:chapterSite.action,action:'investigate'};
     const colonyMission=['water-source','safe-route','shelter'].includes(id)||isPermanence(id);
     if(this.area==='base')return {...BASE.exit,radius:105,name:'Saída para a Floresta',instruction:colonyMission?'Retome sua rota descoberta pelo atlas ou siga pela Floresta.':'A expedição continua na Floresta.',interactionLabel:'SAIR',action:'enter'};

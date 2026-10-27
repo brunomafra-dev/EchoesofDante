@@ -1,5 +1,7 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**Lote da permanência · 0.1.156 · O que pode nos alimentar:** Comparação de resíduos, escolha do lote compatível, descontaminação na base e reserva identificada. Sem produção agrícola automática. [Escopo, laboratório e QA](permanence/README.md). Sequência já autorizada; avaliação humana permanece separada.
+
 **27/10/2026 · Incandescente aprovado e lote da permanência autorizado:** após “Gostei muito”, o usuário pediu executar água, alimento, transporte, energia e chegada de colonos em sequência, com QA/commit/push por sprint e continuação imediata enquanto está ausente. Esta autorização substitui a espera de playtest **entre estes cinco capítulos**, sem transformar automação em aprovação humana. Manter um laboratório isolado por capítulo, preservar campanha/saves/arte e não antecipar construção livre, agricultura produtiva, novos limites de nível ou a entrega D. [Escopo e evidências](permanence/README.md).
 
 **27/10/2026 · Sequência do Vésper 0.1.153 autorizada · Incandescente 0.1.154:** usuário pediu “vamos pro próximo” e confirmou continuar. [Basalto e descarga](titan-counterplay/README.md): blocos físicos temporários, frente de pressão interrompida pelos abrigos, sombra protegida e peito exposto após absorção. Preservar HP, requisitos, recibos, pintura e protocolo 15. Esta autorização encerra a espera do Vésper; **aguardar playtest humano do Incandescente antes de outra etapa**.
