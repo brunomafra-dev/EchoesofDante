@@ -35,7 +35,7 @@ Namespace `dante-titan-combat-v1`, separado por classe e dos saves/configuraçõ
 - [x] Solo/dupla, registro com E, recibos/reload e saves antigos.
 - [x] Touch/gamepad emulados, resoluções e inspeção visual.
 - [x] Typecheck, build e diff.
-- [ ] Commit/push, sincronização e publicação.
+- [x] Commit/push, sincronização e publicação; hashes e smoke público conferidos.
 - [ ] Playtest humano; não iniciar outra etapa antes dele.
 
 [Mecânica](qa/combat/combat.json): caminho comum de dano (100 vira 18 fechado e 170 aberto), três blocos físicos após queda, Dash bloqueado pelo basalto, onda/sombra/dano real, dois contatos do golpe de piso e dois contatos de fissura separados. Dash real atravessa a frente; limiar de fase não consome abertura. Trinta e duas disposições nos cantos mantêm pedras distintas e fora de corpo/rochas. Pool permanece em **192 objetos de cena / 20 de apresentação cooperativa**, sem crescimento ao repetir ataques. Janelas de inspeção são prolongadas por fixture; não medem tempo de reação humano.
@@ -51,6 +51,8 @@ Namespace `dante-titan-combat-v1`, separado por classe e dos saves/configuraçõ
 [Controles](qa/controls/controls.json): quatro classes com CDP multitouch, oito direções independentes, ataque para trás, giro sem disparo, carga/soltura/cancelamento e modal. Layouts 568×320, 844×390, 1024×768 e 1600×530, três reconstruções sem duplicar HUD e gamepad mock. Boss vivo congelado para isolar entradas; não substitui teste em aparelho físico.
 
 [Build compilada](qa/compiled/public.json): Chrome sem globais DEV, chegada/reload, teclado até o gatilho real, arte pintada e trilha original do Incandescente, controles de audição e saves/configurações sentinela preservados. `npm run typecheck`, `npm run build` e `git diff --check` passaram. Aviso conhecido do chunk Phaser permanece.
+
+[Publicação](qa/published/hashes.json): commit de implementação `3d107ed6f89ddca5155f690c3f1bd65a58cbc7aa` enviado e sincronizado com `origin/main`; Vercel concluiu com sucesso. Referências e hashes dos JavaScript públicos, figura existente do Incandescente e quatro trilhas conferem com a build local. Relay público continua no protocolo 15, sem alteração de servidor. [Smoke público](qa/published/public.json) passou no Chrome contra a Vercel: chegada/reload isolados, gatilho real, música, audição e sentinelas de saves/configurações. [Captura pública](qa/published/encounter.png) inspecionada visualmente; aprovação humana segue pendente.
 
 Capturas inspecionadas durante a implementação: chão/basaltos físicos, anel com lacunas e personagem na sombra. Textura da pedra reaproveita a pintura inteira existente dentro dos seus limites transparentes, sem acrescentar membros ou trocar terreno. A leitura móvel e o convidado recebem inspeção separada.
 
