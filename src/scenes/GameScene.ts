@@ -712,7 +712,7 @@ export class GameScene extends Phaser.Scene {
     this.resources=new ResourceDrops(this,coopSession.role==='guest'?coopSession.id:'host');
     this.basePanel=new BasePanel(this,()=>({economy:{...this.economy,visited:this.unlockedDestinations()},equipment:this.equipment.snapshot(),area:this.area,hp:this.player.hp,maxHp:this.player.maxHp,classId:this.classId,returnAvailable:this.canReturnBase(),returnArea:this.expeditionReturn?.area,canLead:coopSession.role!=='guest',missionArea:this.missionArea(),missionTitle:this.missions.current?missionById(this.missions.current).title:undefined}),a=>this.serviceAction(a),(area,resume)=>this.baseTravel(area,resume),()=>this.usePotion(),()=>{this.serviceUnpaused=coopSession.connected;if(!this.serviceUnpaused)this.pauseForModal();else {this.controls.cancelForRecords();this.charge.stop();this.hunter?.clear();this.astral?.clear();this.xeno?.clear();}},()=>{if(!this.serviceUnpaused)this.resumeFromModal();else this.controls.cancelForRecords();this.serviceUnpaused=false});
     if(!this.qualityReference&&!this.glacierPlaytest){
-      this.permanence=new PermanenceWorld(this,this.area,this.arena.obstacles);
+      this.permanence=new PermanenceWorld(this,this.area,this.arena.obstacles,()=>this.sounds.wardenWarning('volley'));
       this.missionTick=0;this.missionWorld=new MissionWorld(this,this.area);
       this.regional=new RegionalExpeditions(this,this.area,()=>({bounds:this.movementBounds,obstacles:this.arena.obstacles}));
       this.missionUi=new MissionPanel(this,()=>({missions:this.missions,routeHint:this.missionRouteHint(),notice:coopSession.role==='guest'?coopSession.missionNotice:this.missionNotice,pending:coopSession.role==='guest'&&coopSession.missionPending}),npc=>this.canTalkNpc(npc),(action,id)=>{
@@ -742,6 +742,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   update(time: number, delta: number): void {
+    this.missions.setPermanenceAvailable(coopSession.role==='offline'||coopSession.serverProtocol===16);
     time -= this.recordsTimeOffset;
     if (this.transitioning) return;
     if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return;
@@ -2494,7 +2495,7 @@ export class GameScene extends Phaser.Scene {
   private updateMissions(now:number):void{
     if(this.qualityReference||this.glacierPlaytest||coopSession.role==='guest')return;
     if(now<this.missionTick)return;this.missionTick=now+200;
-    for(const player of [this.player,...(this.party?.players??[])])if(this.permanence?.pressureAt(player.position,this.missions,now))this.enemyStrike({position:{x:1550,y:1010}} as Enemy,{ranged:true,damage:18},player);
+    for(const player of [this.player,...(this.party?.players??[])]){const hazard=this.permanence?.hazardAt(player.position,this.missions,now);if(hazard)this.enemyStrike({position:hazard.position} as Enemy,{ranged:true,damage:hazard.damage},player);}
     const before=this.missions.version;
     if(this.soterradoDefeated)this.missions.record('after-soterrado');
     if(this.vesperDefeated)this.missions.record('after-vesper');

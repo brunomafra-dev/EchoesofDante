@@ -1,0 +1,71 @@
+{
+  "chapter": "energy",
+  "method": "DEV isolated chapter; actual navigation graph and walkable collision, real hazard health. Position and enemy-update fixtures isolate geometry/pressure.",
+  "checks": [
+    "Every authored objective has a clear footprint and connected approach/return in the real navigation graph",
+    "Real power damage follows a rotating announced sector; perpendicular/dry sides and warning phase are safe, isolation removes all four discharge directions",
+    "Polluted visited list cannot unlock later bosses/regions through the atlas"
+  ],
+  "errors": [],
+  "routes": [
+    {
+      "id": "pe-return",
+      "paths": [
+        {
+          "steps": 39,
+          "gap": 20.024984394500787
+        },
+        {
+          "steps": 14,
+          "gap": 17
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pe-ground",
+      "paths": [
+        {
+          "steps": 32,
+          "gap": 23.60084744241189
+        },
+        {
+          "steps": 35,
+          "gap": 23.345235059857504
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pe-isolate",
+      "paths": [
+        {
+          "steps": 31,
+          "gap": 11.704699910719626
+        },
+        {
+          "steps": 34,
+          "gap": 23.345235059857504
+        }
+      ],
+      "clear": true
+    },
+    {
+      "id": "pe-online",
+      "paths": [
+        {
+          "steps": 34,
+          "gap": 9.219544457292889
+        },
+        {
+          "steps": 37,
+          "gap": 23.345235059857504
+        }
+      ],
+      "clear": true
+    }
+  ],
+  "powerDamage": 25,
+  "powerIsolation": "Enemy strikes, including late regional residents, are filtered in this fixture; environmental damage uses the unchanged common strike function.",
+  "passed": true
+}

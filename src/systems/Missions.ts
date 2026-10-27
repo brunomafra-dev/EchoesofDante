@@ -1,4 +1,5 @@
 import permanenceCatalogue from '../config/permanence-catalog.json';
+import {isPermanence} from '../config/permanence';
 import {MISSIONS,MISSION_IDS,MISSION_EVIDENCE,missionById,type MissionId,type MissionEvidence,type MissionNpc} from '../config/missions';
 
 export type MissionSnapshot={schema:1;accepted:MissionId[];completed:MissionId[];evidence:MissionEvidence[]};
@@ -21,12 +22,15 @@ export class Missions{
  private state=validMissions(undefined);
  tracked?:MissionId;
  version=0;
+ permanenceAvailable=true;
+ setPermanenceAvailable(value:boolean):void{if(value!==this.permanenceAvailable){this.permanenceAvailable=value;this.version++;}}
  restore(raw:unknown):void{const next=validMissions(raw);if(JSON.stringify(next)!==JSON.stringify(this.state)){this.state=next;this.version++;}}
  snapshot():MissionSnapshot{return {schema:1,accepted:[...this.state.accepted],completed:[...this.state.completed],evidence:[...this.state.evidence]};}
  status(id:MissionId):MissionStatus{
   const d=missionById(id);
   if(!d)return 'locked';
   if(this.state.completed.includes(id))return 'completed';
+  if(isPermanence(id)&&!this.permanenceAvailable)return 'locked';
   if(d.requires&&!this.state.completed.includes(d.requires))return 'locked';
   if(d.unlock&&!this.has(d.unlock))return 'locked';
   if(!this.state.accepted.includes(id))return 'available';

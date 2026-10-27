@@ -14,6 +14,7 @@ import type { CampaignLobby } from '../systems/Campaign';
 import {validChat,CHAT_HISTORY,CHAT_DURATION,CHAT_LIMIT,type ChatMessage} from './PartyChat';
 import {MISSION_IDS,type MissionId} from '../config/missions';
 import type {MissionAction,MissionSnapshot} from '../systems/Missions';
+import {isPermanence} from '../config/permanence';
 export type MissionRequest={id:string;nonce:string;action:MissionAction;mission:MissionId};
 export type RoomCampaign = CampaignLobby & { started: boolean; running: boolean };
 export const COOP_AREAS: readonly JourneyArea[] = ['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest','cinder','obsidian','caldera','springs','terraces'];
@@ -32,6 +33,7 @@ export type ParticipantPose=PartyPose&{prompt:boolean;action:string;potionUsed:n
 export type PartyWorld={permanence?:import('../config/permanence').PermanencePose;missions?:MissionSnapshot;players:Record<string,ParticipantPose>;area:JourneyArea;time:number;progression:ProgressionSnapshot;flags:JourneyFlags;host:PartyPose;partner?:PartyPose;enemies:CreaturePose[];impacts?:ImpactPose[];boss?:BossPose;signalPortal?:boolean;loot?:LootPose[];lootAwarded?:(InventoryItem&{owner:string})[];resources?:ResourceDrop[];resourceAwarded?:ResourceDrop[];potionUsed?:number;returnStation?:{x:number;y:number};expeditionReturn?:ExpeditionReturn;visited?:JourneyArea[];message:string;prompt:boolean;action:string;shots:{x:number;y:number;rotation:number;friendly?:boolean;water?:boolean}[]};
 // One connection across scene restarts. The relay grants roles; only host worlds are accepted.
 export class CoopSession {
+ serverProtocol?:15|16;
  role:'offline'|'connecting'|'host'|'guest'='offline';
  code='';message='Equipe de até quatro pessoas, uma de cada classe.';endedMessage='';
  connected=false;peerConnected=false;travelling=false;epoch=0;personalXpGained=0;rewardSaved=true;
@@ -126,7 +128,9 @@ export class CoopSession {
    if(this.socket!==ws)return;
    let m;try{m=JSON.parse(event.data);}catch{return;}
    if(m.type==='joined'&&(m.role==='host'||m.role==='guest')){
-    if(m.protocol!==16){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização dos capítulos do assentamento. Seus personagens permanecem preservados.');reject(new Error(this.message));return;}
+    const needsPermanence=new URLSearchParams(location.search).has('permanence')||this.rewards.load()?.missions?.accepted.some(isPermanence);
+    if(![15,16].includes(m.protocol)||m.protocol===15&&needsPermanence){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização dos capítulos do assentamento. Seus personagens permanecem preservados.');reject(new Error(this.message));return;}
+    this.serverProtocol=m.protocol;
     joined=true;clearTimeout(this.timeout);this.role=m.role;this.connected=true;this.token=m.token;this.code=m.code;this.epoch=m.epoch;
     this.id=m.id;this.acknowledgedCrew='';this.setCampaign(m.campaign);this.setRoster(m.members);this.input={...NO_INPUT};this.inputAt=0;this.world=undefined;
     this.area=m.area;this.travelling=false;
@@ -231,7 +235,7 @@ export class CoopSession {
   // If storage fails, keep the visit open so the player can retry instead of losing XP silently.
   if(guest&&!this.rewardSaved){this.message='Não foi possível salvar o XP. Libere o armazenamento e tente sair novamente.';this.changed();return false;}
   if(this.socket?.readyState===WebSocket.OPEN)this.socket.send(JSON.stringify({type:'leave'}));
-  this.role='offline';this.endedMessage='';this.connected=false;this.peerConnected=false;this.campaign=undefined;this.members=[];this.states.clear();this.requests=[];this.world=undefined;this.input={...NO_INPUT};this.token='';this.travelling=false;this.pendingTravel=undefined;this.area=undefined;this.clearChat();
+  this.role='offline';this.serverProtocol=undefined;this.endedMessage='';this.connected=false;this.peerConnected=false;this.campaign=undefined;this.members=[];this.states.clear();this.requests=[];this.world=undefined;this.input={...NO_INPUT};this.token='';this.travelling=false;this.pendingTravel=undefined;this.area=undefined;this.clearChat();
   clearTimeout(this.timeout);clearTimeout(this.retryTimer);
   const socket=this.socket;this.socket=undefined;socket?.close();this.changed();if(guest&&restoreGuest)location.reload();return true;
  }

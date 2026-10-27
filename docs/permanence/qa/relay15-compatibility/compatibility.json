@@ -1,0 +1,12 @@
+{
+  "chapter": "water",
+  "method": "Two independent Chrome against exact pre-batch relay 15 (fc0f552). Original shelter fixture; real regional guest acceptance/E/delivery. New content is gated, never silently filtered.",
+  "checks": [
+    "Latest client preserves the original campaign on relay 15 and gates new chapters before accepting objectives",
+    "Real guest completes an existing three-site regional report over relay 15, with original credit rewards on both clients",
+    "New direct chapter lab rejects relay 15 clearly; it cannot begin a partially filtered campaign",
+    "Campaign with a new chapter already accepted also rejects relay 15; saved objectives cannot be silently downgraded"
+  ],
+  "errors": [],
+  "passed": true
+}

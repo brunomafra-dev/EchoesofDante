@@ -17,7 +17,10 @@ export class PermanenceWorld {
  private supplied=false;
  private haul?:{position:Vec2;solid:Obstacle;image:Phaser.GameObjects.Image};
  private lastAt=0;
- constructor(private scene:Phaser.Scene,private area:JourneyArea,private obstacles:Obstacle[]){
+ private power?:Phaser.GameObjects.Graphics;
+ private powerBeat=-1;
+ private powered=false;
+ constructor(private scene:Phaser.Scene,private area:JourneyArea,private obstacles:Obstacle[],private warn:()=>void=()=>{}){
   for(const site of PERMANENCE_SITES.filter(s=>s.area===area)){
    const image=(site.art==='cargo'?scene.add.image(site.x,site.y,'item-accessory-2').setDisplaySize(34,44).setDepth(site.y-2):site.art==='mineral'||site.art==='record'?scene.add.image(site.x,site.y,site.art==='mineral'?'deep-mineral':'ancient-remnant').setDisplaySize(95,68).setDepth(site.y-2):addSurveyProp(scene,site.art,site.x,site.y)).setName(site.id).setVisible(false);
    if(site.choice){
@@ -33,6 +36,11 @@ export class PermanenceWorld {
    g.lineStyle(10,0x595c4b,.9).beginPath().moveTo(1550,1010).lineTo(1660,1010).lineTo(1660,1070).strokePath();
    this.installed.push(g);
    this.jet=scene.add.rectangle(1550,1010,250,38,0x84d9d2,.65).setDepth(-19).setVisible(false).setName('water-pressure');
+  }
+  if(area==='terraces'){
+   this.power=scene.add.graphics().setPosition(1650,930).setDepth(-18).setVisible(false).setName('settlement-power-front');
+   this.power.fillStyle(0xb69af5,.3).lineStyle(3,0xd3c3ff,.95).beginPath().moveTo(0,0).arc(0,0,190,-.42,.42,false).closePath().fillPath().strokePath();
+   this.power.fillStyle(0xc4afff,.8).fillCircle(0,0,9).lineStyle(2,0xd3c3ff,.65).strokeCircle(0,0,19);
   }
  }
  update(missions:Missions,player:Vec2,now:number,actors:readonly {position:Vec2;isDead:boolean}[]=[],authority=true,remote?:PermanencePose):void{
@@ -54,6 +62,18 @@ export class PermanenceWorld {
   if(missions.has('pw-online')&&!this.online){this.online=true;this.addWaterStation();}
   if(missions.has('pf-stock')&&!this.stocked){this.stocked=true;this.addFoodReserve();}
   if(missions.has('pt-deliver')&&!this.supplied){this.supplied=true;this.addDepot();}
+  const powerActive=this.area==='terraces'&&missions.status('settle-energy')==='active'&&!missions.has('pe-isolate'),beat=Math.floor(now/1900),phase=now%1900;
+  this.power?.setVisible(powerActive).setRotation(beat%4*Math.PI/2).setAlpha(phase<1000?.12+phase/1000*.28:phase<1550?.9:.04);
+  if(powerActive&&beat!==this.powerBeat){this.powerBeat=beat;if(phase<1000&&Math.hypot(player.x-1650,player.y-930)<500)this.warn();}
+  if(missions.has('pe-online')&&!this.powered){this.powered=true;this.addPowerStation();}
+ }
+ private addPowerStation():void{
+  if(this.area!=='base'&&this.area!=='terraces')return;
+  const x=this.area==='base'?910:1770,y=this.area==='base'?900:770;
+  this.scene.add.image(x,y,'field-shelter').setDisplaySize(130,108).setOrigin(.5,1).setDepth(y-2).setName('settlement-power-station');
+  this.obstacles.push({x,y:y-24,radius:32});
+  const lamp=this.scene.add.graphics().setDepth(y+1);lamp.fillStyle(0xffd898,.12).fillCircle(x+48,y-74,20).fillStyle(0xffdeb1,.8).fillCircle(x+48,y-74,3);
+  this.scene.add.text(x,y+20,'REDE ISOLADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#ebd8b6',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
  }
  snapshot():PermanencePose{return this.haul?{haul:{...this.haul.position,kind:'cargo'}}:{};}
  get haulPosition():Vec2|undefined{return this.haul?.position;}
@@ -102,5 +122,11 @@ export class PermanenceWorld {
  }
  pressureAt(position:Vec2,missions:Missions,now:number):boolean{
   return this.area==='springs'&&missions.status('settle-water')==='active'&&!missions.has('pw-valve')&&now%3200>=1100&&now%3200<1800&&Math.abs(position.x-1550)<135&&Math.abs(position.y-1010)<32;
+ }
+ hazardAt(position:Vec2,missions:Missions,now:number):{position:Vec2;damage:number}|undefined{
+  if(this.pressureAt(position,missions,now))return{position:{x:1550,y:1010},damage:18};
+  if(this.area!=='terraces'||missions.status('settle-energy')!=='active'||missions.has('pe-isolate')||now%1900<1000||now%1900>=1550)return;
+  const dx=position.x-1650,dy=position.y-930,d=Math.hypot(dx,dy),angle=Math.atan2(dy,dx)-Math.floor(now/1900)%4*Math.PI/2;
+  if(d<208&&(d<18||Math.abs(Math.atan2(Math.sin(angle),Math.cos(angle)))<.42+Math.asin(Math.min(1,18/d))))return{position:{x:1650,y:930},damage:22};
  }
 }

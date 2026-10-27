@@ -16,7 +16,7 @@ O tratamento instalado aparece nos Terraços e na base, com carga pintada existe
 
 ### Cooperativo
 
-Catálogo compartilhado reservado para cinco capítulos e 25 evidências em `src/config/permanence-catalog.json`; só definições implementadas aparecem no diário. O relay anterior remove IDs desconhecidos, portanto existe incompatibilidade real: cliente/relay passam ao **protocolo 16**. Aceite/entrega continuam autenticados e validados pelo anfitrião junto ao NPC; E usa a posição real do integrante. Host resolve pressão/dano e envia o mesmo tempo de simulação usado para a apresentação remota. Atualizar o Render e verificar sua saúde/publicação antes de declarar coop público disponível.
+Catálogo compartilhado reservado para cinco capítulos e 25 evidências em `src/config/permanence-catalog.json`; só definições implementadas aparecem no diário. O relay anterior remove IDs desconhecidos, portanto os capítulos novos exigem **protocolo 16**. Aceite/entrega continuam autenticados e validados pelo anfitrião junto ao NPC; E usa a posição real do integrante. Host resolve pressão/dano e envia o mesmo tempo de simulação usado para a apresentação remota. Atualizar o Render e verificar saúde/publicação antes de declarar estes capítulos disponíveis no coop público. A partir da 0.1.158 o cliente também mantém as campanhas anteriores no relay 15: oculta o aceite de capítulos novos antes de criar objetivos, preservando os relatórios antigos. Laboratórios novos e campanhas que já possuem capítulo novo aceito recusam relay 15 explicitamente, para impedir perda ou divergência de evidências.
 
 ### QA técnico e limites
 
@@ -61,4 +61,20 @@ Pose opcional do estrado segue o snapshot autenticado do anfitrião no protocolo
 - [x] [Colisão e ciclo](qa/transport-safety/safety.json): caminhada/Dash param no estrado; carga espera fora do alcance, respeita crista física, morte real/R e reload preservam objetivos e uma única carga pendente. Fixtures de posição/objetivos/invulnerabilidade explicitadas; nenhuma edição da carga.
 - [x] [Modelo](qa/transport-model/model.json) e [acesso](qa/transport-access/access.json): cadeia/save/recibos, caminhos/retornos e atlas bloqueado.
 - [x] Typecheck/build final e [Chrome compilado](qa/transport-compiled/public.json) passaram. Inspeção do ponto de descarga livre e cache estático registrada no teste de ciclo.
-- [ ] Publicação e playtest humano. Continuação à energia já autorizada.
+- [x] Vercel da 0.1.157 publicada; [37 hashes JavaScript e SHA-256](qa/publication/0.1.157/hashes.json) conferidos. Chrome público cumulativo da entrega final também cobre o laboratório do transporte.
+- [ ] Playtest humano. Continuação à energia já autorizada.
+
+## 4 — Uma luz que é nossa · 0.1.158
+
+[Laboratório direto](https://echosofdante.vercel.app/campaign-playtest.html?permanence=energy&v=0.1.158). Simula também os três capítulos anteriores; energia está pendente. Investigar aterramento seco e retorno úmido, retirar célula/regulador reservados da nave, desligar apoio antigo e energizar rede humana isolada. Preserva o mistério das estruturas de Dante, sem conectar a nave a elas. 110 créditos pessoais únicos, sem XP adicional. Oficina iluminada passa a aparecer na base e nos Terraços, com colisor e aproximação livre.
+
+Frente de descarga muda por quatro setores em ciclos de 1900 ms: 1000 ms de preparo, 550 ms de contato e 350 ms de recomposição. Setor de 190 unidades e semiamplitude 0,42 rad; dano-base 22 usa as regras comuns. Geometria do aviso desenhada uma vez, depois somente rotação/alpha. Som de aviso existente, por evento e proximidade, sem nova música ou mudança de mixagem. Desconectar o apoio interrompe todas as direções; não há espera obrigatória ou quota de abates.
+
+- [x] [Solo](qa/energy/solo.json): ordem, instalação prematura recusada, retirada/travessia, entrega, 110 créditos, reload, quatro resoluções e retornos estáveis.
+- [x] [Navegação e descarga](qa/energy-access/access.json): acessos/retornos, dano real (25 HP no equipamento da fixture; golpes de criaturas filtrados para isolar a descarga), setores seguros, preparo sem dano e interrupção das quatro direções.
+- [x] [Modelo](qa/energy-model/model.json): cadeia, save/recibo/retry e capacidade do relay sem reescrever estado antigo.
+- [x] [Compatibilidade anterior](qa/relay15-compatibility/compatibility.json): dois Chrome contra relay 15 exato de `fc0f552`, relatório regional real com E/entrega/crédito; capítulos novos bloqueados antes do aceite, laboratório novo e campanha já iniciada no capítulo recusados explicitamente. Snapshot salvo permanece intacto e atualizar a capacidade restaura a disponibilidade.
+- [x] [Dupla 16](qa/energy-coop/coop.json): convidado aceita/executa/entrega e recebe 110 créditos uma vez, inclusive após reconexão; repetida após a guarda de compatibilidade.
+- [x] Typecheck/build final e [Chrome compilado](qa/energy-compiled/public.json) passaram. Aviso violeta distingue a descarga dos avisos das criaturas; captura inspecionada. Painel do laboratório explica criação da equipe e oferece preparo explícito pelo anfitrião, com nomes portugueses das classes.
+- [ ] Publicação desta versão.
+- [ ] Playtest humano de ritmo, dificuldade e leitura; seguir às chegadas conforme autorização do lote.
