@@ -1,11 +1,13 @@
 import '../../style.css';
+import {NPC_REVIEW_STOPS,npcReviewPeople,npcReviewSelection} from '../../config/npcReview';
 
 // Both save namespaces stay in this tab's sessionStorage, across reloads. No
 // character, setting or one-shot launch in the real game is read or modified.
 const get=Storage.prototype.getItem,set=Storage.prototype.setItem,remove=Storage.prototype.removeItem;
 const settlementMotionTest=new URLSearchParams(location.search).has('settlement-motion');
+const npcReviewTest=new URLSearchParams(location.search).has('npc-review');
 const settlementLifeTest=new URLSearchParams(location.search).has('settlement-life')||settlementMotionTest;
-const permanenceChapter=new URLSearchParams(location.search).get('permanence')??(settlementLifeTest?'water':null);
+const permanenceChapter=new URLSearchParams(location.search).get('permanence')??(settlementLifeTest||npcReviewTest?'water':null);
 const permanenceTest=!!permanenceChapter;
 const missionTest=new URLSearchParams(location.search).has('missions')||permanenceTest;
 const mobileTest=new URLSearchParams(location.search).has('mobile');
@@ -24,7 +26,7 @@ const routeArrival=routeTest&&((!siroccoTest&&!borealTest&&!embersTest&&(arrival
 const depthTest=new URLSearchParams(location.search).has('depth');
 const settlementTest=new URLSearchParams(location.search).has('settlement');
 const prefix=embersTest?`dante-embers-journey-v1.${routeArrival??'journey'}.`:borealTest?`dante-boreal-journey-v1.${routeArrival??'journey'}.`:siroccoTest?`dante-sirocco-journey-v1.${routeArrival??'journey'}.`:routeTest?`dante-early-route-v2.${routeArrival??'journey'}.`:depthTest?`dante-regional-lab.${mobileClass??'warrior'}.`:new URLSearchParams(location.search).has('journey')?'dante-journey-review-lab.':mobileTest?`dante-mobile-lab.${mobileClass??'warrior'}.`:settlementTest?'dante-settlement-lab-v2.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
-const labPrefix=settlementMotionTest?'dante-settlement-motion-v1.'+(mobileClass??'warrior')+'.':settlementLifeTest?'dante-settlement-life-v1.'+(mobileClass??'warrior')+'.':permanenceTest?'dante-permanence-v1.'+permanenceChapter+'.'+(mobileClass??'warrior')+'.':titanTest?'dante-titan-combat-v1.'+(mobileClass??'warrior')+'.':vesperTest?'dante-vesper-combat-v2.'+(mobileClass??'warrior')+'.':soterradoTest?'dante-soterrado-combat-v1.'+(mobileClass??'warrior')+'.':wardenTest?'dante-warden-combat-v2.'+ (mobileClass??'warrior')+'.':prefix;
+const labPrefix=npcReviewTest?'dante-npc-review-v1.'+(mobileClass??'warrior')+'.':settlementMotionTest?'dante-settlement-motion-v1.'+(mobileClass??'warrior')+'.':settlementLifeTest?'dante-settlement-life-v1.'+(mobileClass??'warrior')+'.':permanenceTest?'dante-permanence-v1.'+permanenceChapter+'.'+(mobileClass??'warrior')+'.':titanTest?'dante-titan-combat-v1.'+(mobileClass??'warrior')+'.':vesperTest?'dante-vesper-combat-v2.'+(mobileClass??'warrior')+'.':soterradoTest?'dante-soterrado-combat-v1.'+(mobileClass??'warrior')+'.':wardenTest?'dante-warden-combat-v2.'+ (mobileClass??'warrior')+'.':prefix;
 // An explicit trip home must survive the lab's otherwise automatic arrival.
 const labHome=permanenceTest&&get.call(sessionStorage,labPrefix+'home-once')==='1';
 if(permanenceTest){remove.call(sessionStorage,labPrefix+'home-once');window.addEventListener('dante-return-home',()=>set.call(sessionStorage,labPrefix+'home-once','1'));}
@@ -78,7 +80,40 @@ if(permanenceTest){
   if(settlementMotionTest){details.querySelector('summary')!.textContent='MOVIMENTO DOS NPCs · TESTE ISOLADO';const motion=document.createElement('p');motion.textContent='Na base, observe Lia preparar e examinar os materiais e Nara consultar e anotar as rotas, cada uma no seu ritmo. Ivo mantém o trabalho aprovado. Nos Terraços, confira a caminhada, as tarefas e a conversa de Tio Gui/Elisa. No cooperativo, as rotinas acompanham o anfitrião.';details.append(motion);}
   const map=document.createElement('button');map.textContent='ABRIR ATLAS PARA VISITAR O ACAMPAMENTO';map.onclick=()=>{details.open=false;(game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene)?.openExpedition()};details.append(map);
  }
- if(!get.call(sessionStorage,labPrefix+'arrived')&&!new URLSearchParams(location.search).has('sala')){const deadline=performance.now()+90000;const arrive=()=>{const s=game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene;if(s?.sys.isActive()&&s.seedMissionPlaytest(chapter.id)){set.call(sessionStorage,labPrefix+'arrived','1');details.open=false;}else if(performance.now()<deadline)setTimeout(arrive,150);};setTimeout(arrive,150);}
+ if(!npcReviewTest&&!get.call(sessionStorage,labPrefix+'arrived')&&!new URLSearchParams(location.search).has('sala')){const deadline=performance.now()+90000;const arrive=()=>{const s=game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene;if(s?.sys.isActive()&&s.seedMissionPlaytest(chapter.id)){set.call(sessionStorage,labPrefix+'arrived','1');details.open=false;}else if(performance.now()<deadline)setTimeout(arrive,150);};setTimeout(arrive,150);}
+}
+
+if(npcReviewTest){
+ const params=new URLSearchParams(location.search),{characterProfiles}=await import('../../systems/CharacterProfiles');
+ let selected=npcReviewSelection(params.get('npc-review'),params.get('npc'))??npcReviewSelection('base')!;
+ details.replaceChildren();details.classList.add('is-mobile-lab','npc-review-help');
+ const style=document.createElement('style');style.textContent='.npc-review-help{max-height:calc(100dvh - 116px);overflow:auto}.npc-review-help a[data-npc-review-stop]{display:inline-block;padding:8px 4px;min-height:28px}.npc-review-help p{margin:8px 0}@media(pointer:coarse){.npc-review-help:not([open]) summary::after{content:"NPCs ▾"}}';document.head.append(style);
+ const summary=document.createElement('summary');summary.textContent='NPCs · ESCOLHER MAPA OU PERSONAGEM';details.append(summary);
+ const intro=document.createElement('p');intro.textContent='Acesso direto aos dois mapas com NPCs. Escolha um grupo ou um personagem para chegar perto dele. Cada escolha prepara somente o cenário temporário desta aba; seus personagens reais ficam protegidos.';details.append(intro);
+ const note=document.createElement('p');note.dataset.npcReviewScenario='';note.textContent=selected.stop.note;details.append(note);
+ const notice=document.createElement('p');notice.dataset.npcReviewNotice='';notice.setAttribute('role','status');
+ const key=()=>selected.stop.id+':'+(selected.focus?.id??'group');
+ const visit=(stop:string,npc?:string)=>{
+  const next=npcReviewSelection(stop,npc);if(!next)return false;
+  const s=game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene;
+  if(!s?.sys.isActive()||!s.seedMissionPlaytest(next.stop.stage,next.stop.id,next.focus?.id)){notice.textContent='Feche os menus. No cooperativo, reúna a equipe original; somente o anfitrião escolhe a visita.';return false;}
+  selected=next;const url=new URL(location.href);url.searchParams.set('npc-review',next.stop.id);url.searchParams.delete('npc');if(next.focus)url.searchParams.set('npc',next.focus.id);history.replaceState(null,'',url);
+  set.call(sessionStorage,labPrefix+'npc-stop',key());set.call(sessionStorage,labPrefix+'arrived','1');note.textContent=next.stop.note;notice.textContent='Visita preparada: '+(next.focus?.name??next.stop.name);details.open=false;return true;
+ };
+ for(const stop of NPC_REVIEW_STOPS){
+  const group=document.createElement('p');const label=document.createElement('strong');label.textContent=stop.name;group.append(label,document.createElement('br'));
+  for(const person of [undefined,...npcReviewPeople(stop)]){
+   const link=document.createElement('a'),url=new URL('campaign-playtest.html',location.href);url.searchParams.set('npc-review',stop.id);if(person)url.searchParams.set('npc',person.id);if(mobileClass)url.searchParams.set('class',mobileClass);
+   link.href=url.href;link.textContent=person?person.name:'Ver grupo';link.dataset.npcReviewStop=stop.id;link.dataset.npcReviewFocus=person?.id??'group';link.onclick=e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();visit(stop.id,person?.id)};group.append(link,document.createTextNode(' · '));
+  }details.append(group);
+ }
+ const limits=document.createElement('p');limits.textContent='Soterrado, Vésper e Incandescente continuam vivos. Os encontros comuns dos Terraços ficam suprimidos aqui para observar sem ataques, sem registrar mortes ou conceder XP. Na base antes da mudança, Tio Gui/Elisa ainda aguardam o primeiro abrigo.';details.append(limits);
+ const coop=document.createElement('p');coop.textContent='Coop: Esc → início → Jogar → Cooperativo. Compartilhe o convite deste laboratório. Com a equipe original reunida, o anfitrião escolhe o mapa/NPC acima; os convidados acompanham a visita.';details.append(coop);
+ const prepare=document.createElement('button');prepare.dataset.npcReviewPrepare='';prepare.textContent='REABRIR ESTA VISITA';prepare.onclick=()=>visit(selected.stop.id,selected.focus?.id);details.append(prepare,notice);
+ const library=document.createElement('a');library.href='test-library.html';library.textContent='Biblioteca de testes';details.append(document.createElement('br'),library);
+ if(!labHome&&!params.has('sala')&&characterProfiles.active.campaign?.mode!=='coop'&&get.call(sessionStorage,labPrefix+'npc-stop')!==key()){
+  const deadline=performance.now()+90000;const arrive=()=>{if(!visit(selected.stop.id,selected.focus?.id)&&performance.now()<deadline)setTimeout(arrive,150)};setTimeout(arrive,150);
+ }
 }
 
 if(bossTest){

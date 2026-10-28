@@ -1,5 +1,10 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**28/10/2026 · Acesso de inspeção aos NPCs · 0.1.164:** usuário pediu todos os mapas com NPCs para conferir um a um. [Laboratório e limites](settlement-motion/NPC_REVIEW.md): Base/Terraços, quatro situações de ocupação e sete personagens, com aproximação individual e saves reais isolados. Reutiliza preparação de relatórios, sem alterar ritmos, serviços, campanha real ou protocolo 16. Avaliação humana das animações segue pendente; não inicia nova etapa de campanha.
+
+- [x] Typecheck/build, nove aproximações, colisões/reload e saves reais protegidos; quatro links compilados e touch em duas resoluções passaram. Dupla 16 visita as quatro situações com autoridade do anfitrião e transição normal da equipe.
+- [ ] Avaliação humana dos NPCs pelos novos acessos antes de outra etapa.
+
 **28/10/2026 · Ritmo de Lia/Nara · 0.1.163:** usuário aprovou o movimento de Ivo e apontou Lia/Nara como vídeo acelerado. Correção restrita: sequências próprias de tarefas, pausas de observação/preparo e ciclos de 10,7 s / 12,75 s; ciclo de Ivo preservado. [Escopo e QA](settlement-motion/SERVICE_PACING.md). Sem nova etapa de campanha. QA técnico e playtest humano registrados separadamente.
 
 - [x] Typecheck/build, medição na cena, serviços por E e reload; Ivo mantém o ritmo aprovado. Dupla compilada com relay 16, ciclos lentos, reentrada e viagem ao acampamento passou.

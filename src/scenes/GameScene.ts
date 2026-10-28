@@ -9,6 +9,7 @@ import { tuneEnemy,regionalThreat,deathCreditLoss } from '../config/threat';
 import { DIFFICULTIES, difficultyId, partyThreat } from '../config/difficulty';
 import { PARTY_ENCOUNTERS } from '../config/partyEncounters';
 import {BASE} from '../config/base';
+import {npcReviewLab,npcReviewSelection} from '../config/npcReview';
 import {COLONY,COLONY_BRANCH,COLONY_SITES,COLONY_ENCOUNTERS} from '../config/colonization';
 import {ColonizationArea,preloadColonization} from '../systems/ColonizationArea';
 import {preloadMissionProps,addSurveyProp,type SURVEY_ART} from '../visual/MissionProps';
@@ -2228,6 +2229,7 @@ export class GameScene extends Phaser.Scene {
   shellPlayerDead(): boolean { return this.player?.isDead ?? false; }
 
   private spawnValleyResident(habitat: typeof VALLEY_ENCOUNTERS[number] | typeof COLONY_ENCOUNTERS.springs[number]): boolean {
+    if(this.area==='terraces'&&npcReviewLab())return false;
     if (this.valleyResidents.has(habitat.id)||this.progression.hasDefeated(habitat.id)) return false;
     const readyAt = this.valleyHabitatCooldowns.get(habitat.id);
     if (readyAt !== undefined && (Date.now() < readyAt || this.explorationNear(habitat, VALLEY_RENEWAL.safeDistance))) return false;
@@ -2241,6 +2243,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private spawnPartyResidents():void {
+    if(this.area==='terraces'&&npcReviewLab())return;
     const size=characterProfiles.active.campaign?.size??1;
     if(size<2||coopSession.role!=='host')return;
     const bounds=this.movementBounds;
@@ -2258,6 +2261,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private spawnRegionalResidents(now:number):void{
+    if(this.area==='terraces'&&npcReviewLab())return;
     if(!this.regional||now<this.regionalSpawnTick||this.player.isDead||this.bossActive())return;
     this.regionalSpawnTick=now+200;
     for(const h of [...REGIONAL_RESIDENTS,...EARLY_ROUTE_RESIDENTS,...SIROCCO_TRAIL_RESIDENTS,...BOREAL_TRAIL_RESIDENTS,...EMBERS_TRAIL_RESIDENTS]){
@@ -2454,8 +2458,10 @@ export class GameScene extends Phaser.Scene {
     for(const upgrade of ['chargePower','dashDuration','chargeWidth'] as const)for(let i=0;i<3;i++)this.progression.investUpgrade(upgrade);
     this.transferHp=this.characterMaxHp;this.expeditionReturn=undefined;this.area=area;this.saveProgress();this.scene.restart();return true;
   }
-  seedMissionPlaytest(id:MissionId):boolean{
-    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!['missions','permanence','settlement-life','settlement-motion'].some(key=>new URLSearchParams(location.search).has(key))||this.inputModalOpen||this.transitioning||coopSession.role==='guest'||!this.player||this.player.isDead)return false;
+  seedMissionPlaytest(id:MissionId,reviewStop?:string,reviewNpc?:string):boolean{
+    const params=new URLSearchParams(location.search),review=reviewStop&&params.has('npc-review')?npcReviewSelection(reviewStop,reviewNpc):undefined;
+    if(reviewStop&&(!review||review.stop.stage!==id))return false;
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!['missions','permanence','settlement-life','settlement-motion','npc-review'].some(key=>params.has(key))||this.inputModalOpen||this.transitioning||coopSession.role==='guest'||!this.player||this.player.isDead)return false;
     if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return false;
     const ids=['recon','survival','signal','beyond','water-source','safe-route','shelter',...PERMANENCE_IDS] as const,index=(ids as readonly MissionId[]).indexOf(id);if(index<0)return false;
     const previous=ids.slice(0,index),evidence=previous.flatMap(mid=>missionById(mid).goals.map(g=>g.id));
@@ -2467,6 +2473,14 @@ export class GameScene extends Phaser.Scene {
     if(index>=4){this.valleyVisited=true;this.valleyCheckpointReached=true;this.economy.visited=[...new Set([...this.economy.visited,'warden','valley'] as JourneyArea[])];this.progression.restore({...this.progression.snapshot(),xp:350,bossRewards:['warden']});this.economy.credits=300;this.economy.materials=[24,20,0];this.economy.potions=5;for(const upgrade of ['chargePower','dashDuration','chargeWidth'] as const)for(let i=0;i<3;i++)this.progression.investUpgrade(upgrade);}
     if(isPermanence(id)){this.springsVisited=true;this.terracesVisited=true;this.economy.visited=[...new Set([...this.economy.visited,'springs','terraces'] as JourneyArea[])];}
     this.missions.restore({schema:1,accepted:[...previous],completed:[...previous],evidence});this.missions.tracked=id;this.missionRewards=[...previous];this.missionNotice='Etapa anterior simulada somente neste laboratório.';
+    if(review){
+      if(review.stop.id==='arrivals'){this.missions.act('accept','settle-arrivals');for(const goal of ['pc-beacon','pc-manifest','pc-shelter','pc-receive'] as const)this.missions.record(goal);}
+      const focus=review.focus?.position;
+      this.expeditionArrival=focus?{x:focus.x+(review.focus?.service?65:0),y:focus.y+65}:{x:review.stop.x,y:review.stop.y};
+      this.expeditionReturn=undefined;this.transferHp=this.characterMaxHp;
+      if(this.area!==review.stop.area)return this.transitionArea(review.stop.area);
+      this.saveProgress();this.scene.restart();return true;
+    }
     if(this.area!=='base')return this.transitionArea('base');
     const npc=BASE.services.find(s=>s.id===missionById(id).npc)!;this.player.position.x=npc.x+75;this.player.position.y=npc.y+55;
     if(index>=4){this.transferHp=this.characterMaxHp;this.expeditionArrival={...this.player.position};this.saveProgress();this.scene.restart();return true;}

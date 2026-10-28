@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+**28/10/2026 · Inspecionar os sete NPCs · 0.1.164:** acesso solicitado à Base e Terraços, com quatro situações e chegada perto de cada personagem. [Laboratório reservado](settlement-motion/NPC_REVIEW.md), separado dos saves reais, com pré-requisitos simulados explícitos e bosses posteriores vivos. Não altera animações ou expande a campanha; aguardar avaliação humana.
+
 **28/10/2026 · Lia/Nara sem ritmo acelerado · 0.1.163:** revisão autorizada após aprovação de Ivo: Lia prepara/examina/retorna amostras e Nara consulta/anota/observa, cada uma com sequência e pausas próprias. Ivo mantém o ciclo aprovado. [Entrega e limites](settlement-motion/SERVICE_PACING.md). Serviços fixos, saves e protocolo 16 preservados; aguardar playtest humano desta correção antes de outra etapa.
 
 Aplicação `b25a2ff` publicada na Vercel, com 50 hashes e QA público solo/dupla 16 conferidos. Os dois participantes receberam os ciclos lentos, preservando serviços, reconexão, recibos e bosses posteriores; precisão da medição pela rede registrada no documento. Avaliação humana de Lia/Nara continua pendente.

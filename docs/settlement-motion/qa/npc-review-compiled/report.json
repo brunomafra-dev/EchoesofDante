@@ -1,0 +1,13 @@
+{
+  "base": "http://localhost:5193",
+  "method": "Compiled build, no DEV globals; direct links and real touch panel navigation, isolated saves and reload.",
+  "checks": [
+    "Direct base link reaches base with protected saves and later bosses alive",
+    "Direct departure link reaches base with protected saves and later bosses alive",
+    "Direct camp link reaches terraces with protected saves and later bosses alive",
+    "Direct arrivals link reaches terraces with protected saves and later bosses alive",
+    "Reload preserves the visit; touch switches maps/focus at 844x390 and 568x320; real-save/settings sentinels and library links preserved"
+  ],
+  "errors": [],
+  "passed": true
+}

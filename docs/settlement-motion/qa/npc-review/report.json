@@ -1,0 +1,107 @@
+{
+  "base": "http://localhost:5185",
+  "checks": [
+    "All nine individual approaches cover seven NPCs across Base/Terraces and four occupancy presets, with clear arrivals, quiet camp and later bosses alive",
+    "Reload keeps the selected visit without preparing/rewarding it again",
+    "Actual Lia E remains available; compact visit panel works at 844x390; real-save/settings sentinels untouched",
+    "Production entry with the review query never loads the lab panel or temporary preset"
+  ],
+  "errors": [],
+  "visits": [
+    {
+      "stop": "base",
+      "focus": "ivo",
+      "area": "base",
+      "people": [
+        "lia",
+        "ivo",
+        "nara"
+      ]
+    },
+    {
+      "stop": "base",
+      "focus": "lia",
+      "area": "base",
+      "people": [
+        "lia",
+        "ivo",
+        "nara"
+      ]
+    },
+    {
+      "stop": "base",
+      "focus": "nara",
+      "area": "base",
+      "people": [
+        "lia",
+        "ivo",
+        "nara"
+      ]
+    },
+    {
+      "stop": "departure",
+      "focus": "caio",
+      "area": "base",
+      "people": [
+        "lia",
+        "ivo",
+        "nara",
+        "caio",
+        "elisa"
+      ]
+    },
+    {
+      "stop": "departure",
+      "focus": "elisa",
+      "area": "base",
+      "people": [
+        "lia",
+        "ivo",
+        "nara",
+        "caio",
+        "elisa"
+      ]
+    },
+    {
+      "stop": "camp",
+      "focus": "caio",
+      "area": "terraces",
+      "people": [
+        "caio",
+        "elisa"
+      ]
+    },
+    {
+      "stop": "camp",
+      "focus": "elisa",
+      "area": "terraces",
+      "people": [
+        "caio",
+        "elisa"
+      ]
+    },
+    {
+      "stop": "arrivals",
+      "focus": "mara",
+      "area": "terraces",
+      "people": [
+        "caio",
+        "elisa",
+        "mara",
+        "tomas"
+      ]
+    },
+    {
+      "stop": "arrivals",
+      "focus": "tomas",
+      "area": "terraces",
+      "people": [
+        "caio",
+        "elisa",
+        "mara",
+        "tomas"
+      ]
+    }
+  ],
+  "passed": true
+}
