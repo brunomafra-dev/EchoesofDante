@@ -1,0 +1,28 @@
+{
+  "checks": [
+    "All 64 complete-figure cells have transparent gutters on every side; neighboring boots cannot enter the texture sample",
+    "caio stays at a visible physical worksite, animates 2 coherent tool poses and returns after actual E conversation",
+    "mara stays at a visible physical worksite, animates 4 coherent tool poses and returns after actual E conversation",
+    "Choco retains internal tomas identity and an inventory route between two visible supply lots; later bosses remain alive"
+  ],
+  "errors": [],
+  "atlas": [
+    {
+      "file": "caio-motion-r4",
+      "contaminated": 0
+    },
+    {
+      "file": "elisa-motion-r5",
+      "contaminated": 0
+    },
+    {
+      "file": "mara-motion-r3",
+      "contaminated": 0
+    },
+    {
+      "file": "tomas-motion-r3",
+      "contaminated": 0
+    }
+  ],
+  "passed": true
+}

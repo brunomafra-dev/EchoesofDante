@@ -1,5 +1,10 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**28/10/2026 · Figuras e tarefas corrigidas · 0.1.165:** usuário encontrou botas de outra pose sobre a cabeça e pediu Tio Gui/Mara trabalhando parados em equipamento real; Tomás passa a se chamar Choco. [Correção e QA](settlement-motion/NPC_WORKSTATIONS.md): isolamento de silhuetas completas e margens transparentes, kits com colisão, Elisa preservada e lotes de Choco contextualizados. Mantém os acessos de inspeção da 0.1.164, ainda pendente de publicação quando surgiu o pedido. IDs/saves/protocolo 16 preservados; avaliação humana pendente.
+
+- [x] Typecheck/build, 64 células isoladas, tarefas fixas/conversa, nove aproximações e dupla compilada 16 com posições/poses compartilhadas passaram. Capturas ampliadas inspecionadas pelo agente.
+- [ ] Avaliação humana das figuras e tarefas desta correção antes de outra etapa.
+
 **28/10/2026 · Acesso de inspeção aos NPCs · 0.1.164:** usuário pediu todos os mapas com NPCs para conferir um a um. [Laboratório e limites](settlement-motion/NPC_REVIEW.md): Base/Terraços, quatro situações de ocupação e sete personagens, com aproximação individual e saves reais isolados. Reutiliza preparação de relatórios, sem alterar ritmos, serviços, campanha real ou protocolo 16. Avaliação humana das animações segue pendente; não inicia nova etapa de campanha.
 
 - [x] Typecheck/build, nove aproximações, colisões/reload e saves reais protegidos; quatro links compilados e touch em duas resoluções passaram. Dupla 16 visita as quatro situações com autoridade do anfitrião e transição normal da equipe.

@@ -4,8 +4,8 @@ import type {Vec2} from '../utils/math';
 
 export type NpcId='ivo'|'lia'|'nara'|'caio'|'elisa'|'mara'|'tomas';
 export type NpcPose={id:NpcId;x:number;y:number;frame:number;flip:boolean;talkUntil?:number};
-export type NpcDefinition={id:NpcId;name:string;role:string;position:Vec2;route?:readonly Vec2[];text?:string;service?:boolean};
-export const NPC_SHEETS:Record<NpcId,string>={ivo:'ivo-work-r1',lia:'lia-work-r1',nara:'nara-work-r1',caio:'caio-motion-r3',elisa:'elisa-motion-r4',mara:'mara-motion-r2',tomas:'tomas-motion-r2'};
+export type NpcDefinition={id:NpcId;name:string;role:string;position:Vec2;route?:readonly Vec2[];text?:string;service?:boolean;task?:'repair'|'inventory'};
+export const NPC_SHEETS:Record<NpcId,string>={ivo:'ivo-work-r1',lia:'lia-work-r1',nara:'nara-work-r1',caio:'caio-motion-r4',elisa:'elisa-motion-r5',mara:'mara-motion-r3',tomas:'tomas-motion-r3'};
 export const BASE_WORKERS:readonly NpcDefinition[]=BASE.services.map(s=>({id:s.id==='smith'?'ivo':s.id==='medic'?'lia':'nara',name:s.name.split(' · ')[0],role:'',position:{x:s.x,y:s.y},service:true}));
 // Durations follow the painted task, rather than sharing the smith's strike.
 // Lia prepares, examines and returns the sample; Nara consults and marks a route.
@@ -23,8 +23,8 @@ export function serviceFrameAt(id:NpcId,time:number):number{
 }
 export function firstSettlers(base:boolean):readonly NpcDefinition[]{
  return [
-  {id:'caio',name:'Tio Gui',role:'Infraestrutura',position:base?{x:380,y:500}:{x:2010,y:920},route:base?[{x:380,y:500},{x:300,y:495},{x:330,y:510}]:[{x:2010,y:920},{x:1920,y:880},{x:1900,y:815}],text:base?'Separei as ferramentas para o primeiro abrigo. Quando a rota estiver pronta, levo tudo para os Terraços.':'Estou conferindo as conexões do módulo. Água e energia ficam em circuitos separados; Ivo não abre mão disso.'},
+  {id:'caio',name:'Tio Gui',role:'Infraestrutura',position:base?{x:380,y:500}:{x:2010,y:920},task:'repair',text:base?'Estou ajustando as conexões do kit do abrigo. Quando a rota estiver pronta, levo tudo para os Terraços.':'Estou revisando as conexões deste kit do módulo. Água e energia ficam em circuitos separados; Ivo não abre mão disso.'},
   {id:'elisa',name:'Elisa',role:'Mudas da nave',position:base?{x:820,y:490}:{x:2380,y:915},route:base?[{x:820,y:490},{x:870,y:535},{x:790,y:500}]:[{x:2380,y:915},{x:2360,y:1020},{x:2300,y:1030}],text:base?'As mudas vieram da nave. Estou separando o que podemos levar para o canteiro sem misturar com as plantas de Dante.':'Estou cuidando das mudas da nave e anotando como reagem ao solo. As plantas da margem continuam separadas para a pesquisa da Lia.'},
  ];
 }
-export const SECOND_SETTLERS:readonly NpcDefinition[]=PERMANENCE_RESIDENTS.map((r,i)=>({id:i===0?'mara':'tomas',name:r.name,role:r.role,position:{x:r.x,y:r.y},text:r.text,route:i===0?[{x:450,y:820},{x:420,y:930},{x:450,y:1020}]:[{x:720,y:780},{x:830,y:850},{x:760,y:930}]}));
+export const SECOND_SETTLERS:readonly NpcDefinition[]=PERMANENCE_RESIDENTS.map((r,i)=>({id:i===0?'mara':'tomas',name:r.name,role:r.role,position:{x:r.x,y:r.y},text:r.text,task:i===0?'repair':'inventory',route:i===0?undefined:[{x:720,y:780},{x:830,y:850},{x:760,y:930}]}));

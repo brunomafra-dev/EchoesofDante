@@ -1,13 +1,13 @@
-# Visita aos mapas com NPCs — 0.1.164
+# Visita aos mapas com NPCs — 0.1.165
 
 Pedido do usuário: acesso a todos os mapas com NPCs para conferir cada um. Os sete humanos estão na Base e nos Terraços do Amanhecer. O laboratório oferece quatro situações nesses dois mapas e aproximações individuais; não cria novas regiões nem muda as animações aprovadas/em avaliação.
 
 | Visita | NPCs em foco | Preparação temporária |
 | --- | --- | --- |
-| [Base](https://echosofdante.vercel.app/campaign-playtest.html?npc-review=base&v=0.1.164) | Ivo, Dra. Lia, Nara | Warden e sete relatórios até o primeiro abrigo |
-| [Base antes da mudança](https://echosofdante.vercel.app/campaign-playtest.html?npc-review=departure&v=0.1.164) | Tio Gui e Elisa | Warden e seis relatórios; primeiro abrigo pendente |
-| [Primeiro abrigo](https://echosofdante.vercel.app/campaign-playtest.html?npc-review=camp&v=0.1.164) | Tio Gui e Elisa | Warden e sete relatórios; abrigo instalado |
-| [Segundo alojamento](https://echosofdante.vercel.app/campaign-playtest.html?npc-review=arrivals&v=0.1.164) | Mara e Tomás; Tio Gui/Elisa continuam no primeiro abrigo | Warden, sete relatórios, quatro capítulos da permanência e baliza/manifesto/alojamento/recepção; confirmação final e relatório da chegada pendentes |
+| [Base](https://echosofdante.vercel.app/campaign-playtest.html?npc-review=base&v=0.1.165) | Ivo, Dra. Lia, Nara | Warden e sete relatórios até o primeiro abrigo |
+| [Base antes da mudança](https://echosofdante.vercel.app/campaign-playtest.html?npc-review=departure&v=0.1.165) | Tio Gui e Elisa | Warden e seis relatórios; primeiro abrigo pendente |
+| [Primeiro abrigo](https://echosofdante.vercel.app/campaign-playtest.html?npc-review=camp&v=0.1.165) | Tio Gui e Elisa | Warden e sete relatórios; abrigo instalado |
+| [Segundo alojamento](https://echosofdante.vercel.app/campaign-playtest.html?npc-review=arrivals&v=0.1.165) | Mara e Choco; Tio Gui/Elisa continuam no primeiro abrigo | Warden, sete relatórios, quatro capítulos da permanência e baliza/manifesto/alojamento/recepção; confirmação final e relatório da chegada pendentes |
 
 Abra o painel **NPCs** para visitar outro grupo ou chegar perto de um personagem. Links também abrem diretamente com `npc=ivo`, `lia`, `nara`, `caio` (nome exibido Tio Gui), `elisa`, `mara` ou `tomas`, conforme o grupo. Reload mantém a visita/progresso temporário; reabrir uma visita prepara novamente somente este cenário. As bancadas mantêm seus lugares e os moradores continuam em suas rotinas normais.
 
