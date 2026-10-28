@@ -4,6 +4,7 @@
 
 - [x] Persistência solo: viagens, reload, morte/respawn, reconstrução da geometria e habitats das regiões existentes sem novo XP.
 - [x] Migração real ao instalar abrigo, rotinas com colisão, serviços fixos, quatro classes/touch e gamepad emulados; dois Chrome com anfitrião/convidado, falas, poses e reconexão.
+- [x] Aplicação `6f0cf12` publicada na Vercel; 45 hashes conferidos. Laboratório público solo preserva minimapa no reload e dupla pública 16 passa por diálogo/quadros/reentrada sem alterar recibos ou bosses posteriores. Evidências públicas no documento do sprint.
 - [ ] Aprovação humana deste sprint e decisão sobre futura colonização dos mapas limpos.
 
 **28/10/2026 · Coop público confirmado / manutenção publicada · 0.1.160:** Render 16/revisão `ae96140` e Vercel da correção `9178d37` conferidos. [Evidências e links](permanence/README.md): catálogo público preserva cinco capítulos/25 evidências; retorno ao menu e inspeção de convite corrigidos. Dois Chrome na Vercel/Render passaram por criação, preparo explícito, aceite pelo convidado, manifesto com E e reload/reentrada sem mudar créditos/recibos ou derrotar bosses. Cinco laboratórios solo públicos e 37 hashes JavaScript passaram. QA público é amostra funcional da dupla, com percurso completo dos capítulos validado localmente; aprovação humana continua pendente. Não iniciar entrega D.

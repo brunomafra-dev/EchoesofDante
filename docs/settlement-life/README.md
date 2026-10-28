@@ -39,4 +39,12 @@ Verificação de publicação e amostras compiladas/públicas são registradas s
 
 Preview compilado 5193 passou sem globals DEV: laboratório isolado, aceite por diálogo, reload e sentinelas de saves/configurações. Duas instâncias Chrome também passaram por criação da equipe, convite, preparo explícito, caminhada até Lia, aceite pelo convidado, quadros de trabalho compartilhados, reload/reentrada e encerramento normal da sala. Essa amostra compilada não representa o percurso completo dos cinco capítulos.
 
+## Publicação conferida
+
+Aplicação em [`6f0cf12`](https://github.com/brunomafra-dev/EchoesofDante/commit/6f0cf12c7894c6879827813718ff9c530ce38fc5), push para `origin/main` confirmado, local/remoto iguais. [Vercel com sucesso](https://vercel.com/brunomafra-devs-projects/echosofdante/9dxVQeTtwgjNNdmchApMd3Ms55Vz). Em 28/10/2026, 37 módulos JavaScript e oito arquivos de arte/metadados tiveram SHA-256 igual à build local; HTML do laboratório/biblioteca conferido. [Registro de hashes e relay](qa/publication/0.1.161/hashes.json).
+
+Chrome no site público passou no acesso isolado, aceite real por diálogo, reload com as células do minimapa conservadas e sentinelas de personagens/configurações reais preservadas: [resultado público solo](qa/public/public.json). A memória antiga inexistente continua sujeita à limitação acima. Aprovação humana pendente.
+
+Coop público Vercel + Render 16 passou com **dois Chrome independentes**, sem globals DEV: criação/convite da equipe, preparo explícito do anfitrião, caminhada e diálogo de Lia pelo convidado, quadros de trabalho compartilhados, reload/reentrada do personagem original, créditos/recibos conservados e três bosses posteriores vivos. Sala encerrada pelo menu normal. [Resultado e capturas](qa/public-coop/report.json). Rotinas no acampamento e derrota persistente foram verificadas na dupla local; a amostra pública cobriu os trabalhadores da base e a reentrada. Não equivale a aprovação humana do movimento/arte ou à campanha completa.
+
 Arte e proveniência: [ASSET_PROMPTS.md](ASSET_PROMPTS.md).
