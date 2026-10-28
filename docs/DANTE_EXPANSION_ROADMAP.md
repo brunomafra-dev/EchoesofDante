@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+**28/10/2026 · NPCs aprovados · 0.1.165:** usuário respondeu “Gostei” à entrega corrigida e perguntou pelo próximo passo. Aprovação humana das figuras/tarefas registrada separadamente do QA técnico. O próximo bloco formal é a entrega D, ainda a planejar; colonizar mapas conquistados é uma proposta do usuário a detalhar, sem autorização de implementação nesta pergunta. Duração e avaliação integral dos cinco capítulos da permanência continuam sem nova evidência humana.
+
 **28/10/2026 · Tarefas concretas para os moradores · 0.1.165:** correção solicitada durante a publicação da 0.1.164: recorte das figuras para remover fragmentos de poses vizinhas; Tio Gui/Mara fixos com kits de reparo, Elisa na rota das plantas e Choco (antes Tomás) nos suprimentos. [Escopo e evidências](settlement-motion/NPC_WORKSTATIONS.md). Acessos a todos os NPCs mantidos; saves/requisitos/protocolo preservados. Sem nova região ou capítulo; aguardar avaliação humana.
 
 Aplicação `261f967` publicada na Vercel: 56 arquivos conferidos por hash, quatro acessos solo/touch/reload públicos e dupla pública 16 com tarefas fixas, reconexão e visitas aos sete personagens passaram. Capturas públicas inspecionadas pelo agente; aprovação humana segue pendente.

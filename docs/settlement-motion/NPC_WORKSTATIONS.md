@@ -14,7 +14,7 @@ A renomeação de Choco preserva o ID interno `tomas`, saves, recibos e protocol
 
 [Nove aproximações](qa/npc-review/report.json) passaram novamente com as figuras/objetos novos, incluindo colisões, reload e saves reais protegidos. [Dupla compilada](qa/workstations-compiled-coop/report.json), dois Chrome/relay 16: anfitrião e convidado recebem as posições fixas e gestos de Tio Gui/Mara; convite, diálogo, reload/reentrada, quatro situações, viagem pelo atlas e encerramento passaram. Nenhuma alteração de backend.
 
-**Avaliação humana dos recortes, tarefas e objetos pendente.** Não equivale a teste em celular físico ou equipe humana de quatro.
+**Avaliação humana aprovada em 28/10/2026:** após a entrega, o usuário respondeu “Gostei”. Aprovação dos recortes, tarefas e objetos desta correção, separada do QA técnico. Não equivale a teste em celular físico, equipe humana de quatro ou avaliação integral dos capítulos da campanha.
 
 ## Publicação conferida
 

@@ -19,6 +19,8 @@ Coop: volte ao início, crie uma equipe original e compartilhe o convite do labo
 
 ## Verificação e aprovação
 
+**28/10/2026 · Aprovação humana da entrega final 0.1.165:** usuário respondeu “Gostei” após receber os acessos e as correções de figuras/tarefas. A pendência descrita no registro original abaixo é histórica; não representa aprovação automática do percurso completo dos capítulos da permanência.
+
 `npm run typecheck`, `npm run build` (254 módulos) e `git diff --check` passaram. [Solo DEV](qa/npc-review/report.json): nove aproximações individuais, sete NPCs nas quatro situações corretas, chegada fora das colisões, ausência de encontros nos Terraços, diálogo com E, reload sem novo preparo/recibo e sentinelas de saves/configurações reais intactas. A entrada de produção com o parâmetro de visita não carrega o laboratório.
 
 [Solo compilado](qa/npc-review-compiled/report.json), sem globals DEV: quatro links diretos, reload e troca por touch real do Chrome em 844×390 e 568×320. [Dupla compilada](qa/npc-review-compiled-coop/report.json): dois Chrome independentes/relay 16, convite isolado, diálogo do convidado, reload/reentrada, rejeição de preparo pelo convidado e visita às quatro situações pelo anfitrião. A troca de mapas usa a transição normal da equipe, com confirmação do relay. Viagem pelo atlas e encerramento da sala também passaram. Bosses posteriores, sentinelas e recibos do relatório final preservados na amostra.
