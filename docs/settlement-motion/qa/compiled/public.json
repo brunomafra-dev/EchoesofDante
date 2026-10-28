@@ -1,0 +1,9 @@
+{
+  "base": "http://localhost:5193",
+  "method": "Compiled Chrome, no DEV globals; isolated chapter arrival, actual NPC acceptance, reload and real-save/settings sentinels.",
+  "checks": [
+    "water: explicit isolated arrival, real acceptance, persistent minimap reload and untouched real saves/settings"
+  ],
+  "errors": [],
+  "passed": true
+}

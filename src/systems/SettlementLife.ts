@@ -3,14 +3,15 @@ import {BASE_WORKERS,NPC_SHEETS,SECOND_SETTLERS,firstSettlers,type NpcDefinition
 import type {JourneyArea} from './LocalJourney';
 import type {Missions} from './Missions';
 import type {Vec2} from '../utils/math';
-import {moveWithCollisions,type MovementBounds,type Obstacle} from './Movement';
+import type {MovementBounds,Obstacle} from './Movement';
 import {safeExpeditionPosition} from './ExpeditionReturn';
+import {ResidentMotion,ResidentPresentation} from './SettlementMotion';
 
 export function preloadSettlementLife(scene:Phaser.Scene):void{
  for(const[id,file]of Object.entries(NPC_SHEETS))if(!scene.textures.exists('life-'+id))scene.load.spritesheet('life-'+id,`${import.meta.env.BASE_URL}assets/settlement-life/${file}.webp`,{frameWidth:256,frameHeight:256});
- if(!scene.cache.json.exists('life-frames'))scene.load.json('life-frames',`${import.meta.env.BASE_URL}assets/settlement-life/frames.json`);
+ if(!scene.cache.json.exists('life-frames-r2'))scene.load.json('life-frames-r2',`${import.meta.env.BASE_URL}assets/settlement-life/frames-r2.json`);
 }
-type Person={definition:NpcDefinition;position:Vec2;image:Phaser.GameObjects.Image;shadow:Phaser.GameObjects.Image;label:Phaser.GameObjects.Text;speech:Phaser.GameObjects.Text;solid?:Obstacle;target:number;waitUntil:number;talkUntil:number;frame:number;flip:boolean};
+type Person={definition:NpcDefinition;position:Vec2;image:Phaser.GameObjects.Image;shadow:Phaser.GameObjects.Image;label:Phaser.GameObjects.Text;speech:Phaser.GameObjects.Text;solid?:Obstacle;target:number;waitUntil:number;talkUntil:number;frame:number;flip:boolean;motion:ResidentMotion;presentation:ResidentPresentation};
 type ArtMetadata={scale:number;anchors:{x:number;y:number}[]};
 
 // Whole painted animation frames. Only residents move; mission services keep
@@ -24,7 +25,7 @@ export class SettlementLife{
  }
  navigationObstacles(obstacles:readonly Obstacle[]):readonly Obstacle[]{const moving=new Set([...this.people.values()].map(p=>p.solid).filter(Boolean));return obstacles.filter(o=>!moving.has(o));}
  update(missions:Missions,viewer:Vec2,now:number,actors:readonly {position:Vec2;isDead:boolean;radius:number}[],authority:boolean,remote?:readonly NpcPose[]):void{
-  const dt=Math.min(.04,Math.max(0,(now-this.lastAt)/1000));this.lastAt=now;
+  const localNow=this.scene.time.now,dt=this.lastAt?Math.min(.05,Math.max(0,(localNow-this.lastAt)/1000)):0;this.lastAt=localNow;
   const settled=missions.has('shelter-built');
   if(this.area==='terraces'&&settled&&!this.garden){this.garden=true;
    this.scene.add.image(2330,1050,'root-growth').setDisplaySize(100,32).setDepth(-17).setTint(0xa6b28a).setName('settlement-nave-seedlings');
@@ -34,22 +35,37 @@ export class SettlementLife{
   for(const[id,p]of this.people)if(!desired.some(d=>d.id===id)){this.remove(p);this.people.delete(id);}
   for(const definition of desired)if(!this.people.has(definition.id))this.add(definition,now,authority?actors:[]);
   for(const p of this.people.values()){
-   if(!authority){const pose=remote?.find(r=>r.id===p.definition.id);if(pose&&[pose.x,pose.y].every(Number.isFinite)&&pose.x>=this.bounds.left&&pose.x<=this.bounds.right&&pose.y>=this.bounds.top&&pose.y<=this.bounds.bottom){p.position.x=pose.x;p.position.y=pose.y;p.frame=Number.isInteger(pose.frame)&&pose.frame>=0&&pose.frame<6?pose.frame:0;p.flip=pose.flip===true;p.talkUntil=Number.isFinite(pose.talkUntil)?Math.min(now+3500,pose.talkUntil!):0;}}
-   else if(p.definition.service){const beats=[1400,450,350,180,180,800];let phase=(now+BASE_WORKERS.findIndex(d=>d.id===p.definition.id)*870)%3360;p.frame=0;for(let i=0;i<beats.length;i++){if(phase<beats[i]){p.frame=i;break}phase-=beats[i];}}
-   else if(p.waitUntil>now||p.talkUntil>now){p.frame=p.talkUntil>now?0:4+Math.floor(now/650)%2;if(p.definition.id==='elisa'&&this.area==='terraces'&&p.talkUntil<=now)p.flip=p.position.x>2330;}
-   else{
-    const route=p.definition.route!,target=route[p.target],dx=target.x-p.position.x,dy=target.y-p.position.y,d=Math.hypot(dx,dy);
-    if(d<9){p.target=(p.target+1)%route.length;p.waitUntil=now+4500+(p.target%2)*1300;p.frame=4;}
-    else{
-     if(Math.abs(dx)>3)p.flip=dx<0;
-     const before={...p.position},solids=this.obstacles.filter(o=>o!==p.solid);
-     for(const a of actors)if(!a.isDead)solids.push({x:a.position.x,y:a.position.y,radius:a.radius});
-     moveWithCollisions(p.position,{x:dx/d*34,y:dy/d*34},dt,14,solids,this.bounds);
-     p.frame=Math.hypot(p.position.x-before.x,p.position.y-before.y)>.05?Math.floor(now/180)%4:4;
-    }
-   }
+   if(!authority){const pose=remote?.find(r=>r.id===p.definition.id);if(pose&&[pose.x,pose.y].every(Number.isFinite)&&pose.x>=this.bounds.left&&pose.x<=this.bounds.right&&pose.y>=this.bounds.top&&pose.y<=this.bounds.bottom){const max=p.definition.service?6:16;p.presentation.push({time:now,x:pose.x,y:pose.y,frame:Number.isInteger(pose.frame)&&pose.frame>=0&&pose.frame<max?pose.frame:0,flip:pose.flip===true},localNow);const shown=p.presentation.at(localNow);if(shown){p.position.x=shown.x;p.position.y=shown.y;p.frame=shown.frame;p.flip=shown.flip;}p.talkUntil=Number.isFinite(pose.talkUntil)?Math.min(now+3500,pose.talkUntil!):0;}}
+   else if(p.definition.service){
+    const frames=[0,1,2,5,3,4,3,5,1,0],beats=[470,210,260,120,90,100,120,160,210,380];let phase=(now+p.motion.offset)%2120;p.frame=0;
+    for(let i=0;i<beats.length;i++){if(phase<beats[i]){p.frame=frames[i];break}phase-=beats[i];}
+   }else this.moveResident(p,dt,now,actors);
    this.draw(p,viewer,now);
   }
+ }
+ private moveResident(p:Person,dt:number,now:number,actors:readonly {position:Vec2;isDead:boolean;radius:number}[]):void{
+  const m=p.motion,route=p.definition.route!,solids=this.obstacles.filter(o=>o!==p.solid);
+  for(const a of actors)if(!a.isDead)solids.push({x:a.position.x,y:a.position.y,radius:a.radius});
+  if(p.talkUntil>now){
+   m.brake(p.position,dt,solids,this.bounds);
+   if(m.mode==='work'||m.mode==='settle'){m.mode='rise';m.phase=0;}
+   if(m.mode==='rise'){m.phase=Math.min(1,m.phase+dt/1.05);if(m.phase>=1)m.mode='talk';}else m.mode='talk';
+  }else if(m.mode==='walk'){
+   const target=route[p.target],stop=p.target===0||p.target===route.length-1;
+   m.step(p.position,target,dt,stop,solids,this.bounds,now);
+   if(Math.abs(m.velocity.x)>5)p.flip=m.velocity.x<0;
+   if(Math.hypot(target.x-p.position.x,target.y-p.position.y)<(stop?3:13)){
+    p.target=(p.target+1)%route.length;
+    if(stop){m.mode='settle';m.phase=0;p.waitUntil=now+6000+m.offset%2100;}
+   }
+  }else{
+   m.brake(p.position,dt,solids,this.bounds);
+   if(m.mode==='settle'){m.phase=Math.min(1,m.phase+dt/1.05);if(m.phase>=1){m.mode='work';m.phase=0;}}
+   else if(m.mode==='work'){m.phase+=dt*(.85+(m.offset%7)*.035);if(now>=p.waitUntil){m.mode='rise';m.phase=0;}}
+   else if(m.mode==='rise'){m.phase=Math.min(1,m.phase+dt/1.05);if(m.phase>=1&&now>=p.waitUntil){m.mode='walk';m.phase=0;const dx=route[p.target].x-p.position.x;if(Math.abs(dx)>3)p.flip=dx<0;}}
+   else {m.mode='rise';m.phase=1;}
+  }
+  p.frame=m.frame;
  }
  private add(definition:NpcDefinition,now:number,actors:readonly {position:Vec2;isDead:boolean;radius:number}[]):void{
   const solids=[...this.obstacles,...actors.filter(a=>!a.isDead).map(a=>({x:a.position.x,y:a.position.y,radius:a.radius}))];
@@ -60,10 +76,11 @@ export class SettlementLife{
   const textStyle={fontFamily:'Barlow Condensed',fontSize:'14px',color:'#dddac2',stroke:'#18261c',strokeThickness:3};
   const label=this.scene.add.text(0,0,definition.name+' · '+definition.role,textStyle).setOrigin(.5).setDepth(11000);
   const speech=this.scene.add.text(0,0,definition.text??'',{...textStyle,fontSize:'15px',wordWrap:{width:255},backgroundColor:'#13221de8',padding:{x:10,y:7}}).setOrigin(.5,1).setDepth(11001).setVisible(false);
-  this.people.set(definition.id,{definition,position,image,shadow,label,speech,solid,target:1,waitUntil:now+1800,talkUntil:0,frame:0,flip:false});
+  const offset=[...definition.id].reduce((h,c)=>h*7+c.charCodeAt(0),0)%10000;
+  this.people.set(definition.id,{definition,position,image,shadow,label,speech,solid,target:1,waitUntil:now+700+offset%900,talkUntil:0,frame:definition.service?0:8,flip:false,motion:new ResidentMotion(offset),presentation:new ResidentPresentation()});
  }
  private draw(p:Person,viewer:Vec2,now:number):void{
-  const metadata=(this.scene.cache.json.get('life-frames') as Record<NpcId,ArtMetadata>|undefined)?.[p.definition.id],anchor=metadata?.anchors[p.frame]??{x:.5,y:.94};
+  const metadata=(this.scene.cache.json.get('life-frames-r2') as Record<NpcId,ArtMetadata>|undefined)?.[p.definition.id],anchor=metadata?.anchors[p.frame]??{x:.5,y:.94};
   p.image.setFrame(p.frame).setScale(metadata?.scale??.6).setOrigin(p.flip?1-anchor.x:anchor.x,anchor.y).setFlipX(p.flip).setPosition(p.position.x,p.position.y).setDepth(p.position.y+(p.definition.service?20:0));
   p.shadow.setPosition(p.position.x,p.position.y+1).setDepth(p.position.y-2);
   p.label.setPosition(p.position.x,p.position.y-116).setVisible(!p.definition.service&&Math.hypot(viewer.x-p.position.x,viewer.y-p.position.y)<270&&p.talkUntil<=now);

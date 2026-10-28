@@ -1,0 +1,55 @@
+{
+  "method": "DEV arrival preparation/evidence fixture for all four residents only. Later bosses alive; no real campaign save.",
+  "errors": [],
+  "residents": {
+    "mara": {
+      "frames": [
+        5,
+        1,
+        0,
+        2,
+        4,
+        6,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "modes": [
+        "walk",
+        "settle",
+        "work",
+        "rise"
+      ]
+    },
+    "tomas": {
+      "frames": [
+        1,
+        5,
+        4,
+        6,
+        0,
+        2,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "modes": [
+        "walk",
+        "settle",
+        "work",
+        "rise"
+      ]
+    }
+  },
+  "passed": true
+}

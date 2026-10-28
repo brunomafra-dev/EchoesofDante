@@ -1,0 +1,9 @@
+{
+  "checks": [
+    "Acceleration/braking are gradual; distance-based gait agrees at 30/60 Hz and stops with the body",
+    "Steering passes a solid without entering its footprint",
+    "100 ms network samples render continuously between packets and freeze safely when packets stop",
+    "A 400 ms packet interruption catches up without a position step on return"
+  ],
+  "passed": true
+}

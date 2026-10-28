@@ -1,5 +1,11 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**28/10/2026 · Revisão do movimento autorizada · 0.1.162:** usuário aprovou o conjunto da 0.1.161 e apontou animação robótica. [Revisão e QA](settlement-motion/README.md): partida/frenagem graduais, passada ligada ao deslocamento, preparação/retorno do trabalho com dezesseis figuras inteiras por morador, apoios das bancadas registrados e apresentação entre pacotes no convidado. Preserva âncoras de serviço, campanha, minimapa, derrotas, saves e protocolo 16. Não inicia colonização de outros mapas. **Naturalidade da 0.1.162 aguarda playtest humano**, separado dos testes técnicos.
+
+- [x] Modelo e solo: aceleração, colisões, etapas de trabalho/conversa, cache estável e reload do minimapa; cerca de 60 FPS em uma amostra desktop.
+- [x] Dois Chrome locais: poses compartilhadas, conversa do convidado, viagens, derrota permanente salva pelos dois integrantes e reconexão.
+- [ ] Playtest humano da suavidade/naturalidade desta revisão antes de nova etapa.
+
 **28/10/2026 · Manutenção do mundo autorizada · 0.1.161:** usuário pediu descoberta persistente do minimapa, inimigos comuns sem reaparecimento e NPCs integrados/animados. O senhor de cabelo escuro e bigode se chama **Tio Gui**. [Escopo e evidências](settlement-life/README.md): memória por personagem/região, migração dos registros antigos disponíveis, serviços em posições fixas com bancadas e figuras completas, moradores com trajetos/falas e transferência da base ao abrigo. Protocolo 16 mantido. Não inicia entrega D nem construção livre. QA técnico e publicação registrados no documento; avaliação visual/humana pendente antes da próxima etapa.
 
 - [x] Persistência solo: viagens, reload, morte/respawn, reconstrução da geometria e habitats das regiões existentes sem novo XP.

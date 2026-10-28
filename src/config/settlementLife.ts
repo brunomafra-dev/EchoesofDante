@@ -5,7 +5,7 @@ import type {Vec2} from '../utils/math';
 export type NpcId='ivo'|'lia'|'nara'|'caio'|'elisa'|'mara'|'tomas';
 export type NpcPose={id:NpcId;x:number;y:number;frame:number;flip:boolean;talkUntil?:number};
 export type NpcDefinition={id:NpcId;name:string;role:string;position:Vec2;route?:readonly Vec2[];text?:string;service?:boolean};
-export const NPC_SHEETS:Record<NpcId,string>={ivo:'ivo-work-r1',lia:'lia-work-r1',nara:'nara-work-r1',caio:'caio-motion-r2',elisa:'elisa-motion-r3',mara:'mara-motion-r1',tomas:'tomas-motion-r1'};
+export const NPC_SHEETS:Record<NpcId,string>={ivo:'ivo-work-r1',lia:'lia-work-r1',nara:'nara-work-r1',caio:'caio-motion-r3',elisa:'elisa-motion-r4',mara:'mara-motion-r2',tomas:'tomas-motion-r2'};
 export const BASE_WORKERS:readonly NpcDefinition[]=BASE.services.map(s=>({id:s.id==='smith'?'ivo':s.id==='medic'?'lia':'nara',name:s.name.split(' · ')[0],role:'',position:{x:s.x,y:s.y},service:true}));
 export function firstSettlers(base:boolean):readonly NpcDefinition[]{
  return [
