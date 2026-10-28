@@ -1,0 +1,56 @@
+{
+  "at": "2026-10-28T17:33:00.697Z",
+  "base": "https://echosofdante.vercel.app",
+  "method": "Compiled build; two separate Chrome instances, real relay and normal movement/UI with feedback-controlled key pulses for WAN latency. Post-Warden preparation only through reserved lab buttons; no DEV globals.",
+  "checks": [
+    "Two independent public Chrome instances join protocol 16; explicit host lab button simulates only prior reports/chapters",
+    "Actual guest NPC dialogue accepts the water chapter on https://echosofdante.vercel.app + relay 16",
+    "Compiled public world carries three stationary service workers with changing job frames on relay 16",
+    "Guest reload/rejoin retains accepted chapter and animated workers; personal credits/receipts and later living bosses remain unchanged, real-save sentinels untouched",
+    "Normal host atlas travels both players to the camp; moving Tio Gui/Elisa poses remain shared on the real relay",
+    "Temporary public room ends through the normal host menu"
+  ],
+  "errors": [],
+  "personal": [
+    {
+      "credits": 300,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter"
+      ],
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "credits": 325,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter"
+      ],
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "protocols": [
+    16,
+    16
+  ],
+  "guestJoins": 2,
+  "passed": true
+}

@@ -4,6 +4,7 @@
 
 - [x] Modelo e solo: aceleração, colisões, etapas de trabalho/conversa, cache estável e reload do minimapa; cerca de 60 FPS em uma amostra desktop.
 - [x] Dois Chrome locais: poses compartilhadas, conversa do convidado, viagens, derrota permanente salva pelos dois integrantes e reconexão.
+- [x] Aplicação `4590482` publicada na Vercel; 50 hashes conferidos. Solo público com diálogo/reload e dupla pública 16 com serviço animado, reentrada e viagem normal até Tio Gui/Elisa passaram, preservando saves reais, recibos e bosses posteriores. Evidências no documento do sprint.
 - [ ] Playtest humano da suavidade/naturalidade desta revisão antes de nova etapa.
 
 **28/10/2026 · Manutenção do mundo autorizada · 0.1.161:** usuário pediu descoberta persistente do minimapa, inimigos comuns sem reaparecimento e NPCs integrados/animados. O senhor de cabelo escuro e bigode se chama **Tio Gui**. [Escopo e evidências](settlement-life/README.md): memória por personagem/região, migração dos registros antigos disponíveis, serviços em posições fixas com bancadas e figuras completas, moradores com trajetos/falas e transferência da base ao abrigo. Protocolo 16 mantido. Não inicia entrega D nem construção livre. QA técnico e publicação registrados no documento; avaliação visual/humana pendente antes da próxima etapa.
