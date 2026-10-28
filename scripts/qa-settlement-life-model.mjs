@@ -1,0 +1,19 @@
+import assert from 'node:assert/strict';
+import {build} from 'esbuild';
+import {mkdir,writeFile} from 'node:fs/promises';
+const out='docs/settlement-life/qa/model';await mkdir(out,{recursive:true});
+const built=await build({stdin:{contents:"export * from './src/systems/ExplorationMemory';export * from './src/systems/LocalJourney';export * from './src/systems/Progression';export * from './src/config/valley';export * from './src/config/frost';export * from './src/config/colonization';export {characterProfiles} from './src/systems/CharacterProfiles';",resolveDir:process.cwd()},bundle:true,write:false,format:'esm',platform:'node',define:{'import.meta.env.DEV':'false'}});
+globalThis.localStorage={data:new Map(),getItem(k){return this.data.get(k)??null},setItem(k,v){this.data.set(k,String(v))},removeItem(k){this.data.delete(k)}};
+const {ExplorationMemory,validExploration,LocalJourney,Progression,characterProfiles,JOURNEY_FLAGS,VALLEY_ENCOUNTERS,FROST_ENCOUNTERS,COLONY_ENCOUNTERS}=await import('data:text/javascript;base64,'+Buffer.from(built.outputFiles[0].text).toString('base64'));
+const report={checks:[]};
+try{
+ const m=new ExplorationMemory(),point={x:700,y:900};m.region('base').reveal(point);m.region('base').reveal(point);assert.equal(m.revision,1);assert.ok(!m.region('forest').has(point));
+ const restored=new ExplorationMemory();restored.restore(JSON.parse(JSON.stringify(m.snapshot())));assert.ok(restored.region('base').has(point));assert.ok(!restored.region('base').has({x:1300,y:400}));assert.deepEqual(validExploration({base:[1,1,-1,1.1,1048576,'4',null],invalid:[5]}),{base:[1]});assert.deepEqual(validExploration(null),{});
+ for(let i=0;i<20000;i++)m.region('forest').reveal({x:(i%200)*48,y:Math.floor(i/200)*48});assert.equal(m.snapshot().forest.length,16384);report.checks.push('World-space exploration deduplicates, stays per region, survives JSON reload and bounds malformed/oversize data');
+ const p=characterProfiles.create('Memory','warrior','male',{mode:'solo',difficulty:'normal'});characterProfiles.select(p.id);const j=new LocalJourney();
+ const old={schema:1,updatedAt:Date.now(),area:'base',hp:120,progression:{xp:350,echoes:[],sourceLocated:false,passageOpen:false,rewardedHollows:[2,COLONY_ENCOUNTERS.springs[0].id,COLONY_ENCOUNTERS.terraces[0].id,900000],rewardedRoutes:[]},flags:Object.fromEntries(JOURNEY_FLAGS.map(k=>[k,false])),bestiary:{},valleyRoutes:[],valleyHabitats:[[VALLEY_ENCOUNTERS[0].id,1]],aridHabitats:[[FROST_ENCOUNTERS[0].id,Date.now()+1000]],economy:{credits:123,materials:[1,2,3],potions:4,visited:['base']}};
+ assert.ok(j.save(old));const legacy=j.load();assert.deepEqual(legacy.exploration,{});assert.deepEqual(new Set(legacy.progression.rewardedHollows),new Set([2,COLONY_ENCOUNTERS.springs[0].id,COLONY_ENCOUNTERS.terraces[0].id,VALLEY_ENCOUNTERS[0].id,FROST_ENCOUNTERS[0].id]));assert.equal(legacy.progression.xp,350);assert.equal(legacy.economy.credits,123);
+ const progress=new Progression();progress.restore(legacy.progression);assert.equal(progress.defeatHollow(VALLEY_ENCOUNTERS[0].id,50).awarded,false);assert.equal(progress.snapshot().xp,350);
+ legacy.exploration=m.snapshot();assert.ok(j.save(legacy));assert.deepEqual(j.load().exploration,m.snapshot());const second=characterProfiles.create('Other','hunter','female',{mode:'solo',difficulty:'normal'});characterProfiles.select(second.id);assert.equal(new LocalJourney().load(),undefined);characterProfiles.select(p.id);assert.deepEqual(new LocalJourney().load().exploration,m.snapshot());report.checks.push('Legacy habitat cooldowns become permanent defeats without XP or currency; fog and old resources persist per character');
+ report.passed=true;
+}catch(e){report.failure=String(e);throw e}finally{await writeFile(out+'/report.json',JSON.stringify(report,null,2)+'\n');console.log(report)}

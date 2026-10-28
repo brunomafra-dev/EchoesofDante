@@ -111,6 +111,8 @@ import type { MovementBounds, Obstacle } from '../systems/Movement';
 import { Hud } from '../ui/Hud';
 import { ExplorationGuide, type ExplorationTarget } from '../ui/ExplorationGuide';
 import { WorldNavigator } from '../ui/WorldNavigator';
+import {ExplorationMemory} from '../systems/ExplorationMemory';
+import {SettlementLife,preloadSettlementLife} from '../systems/SettlementLife';
 import { distance, normalized, type Vec2 } from '../utils/math';
 import { ReferenceArea } from '../experiments/quality-reference/ReferenceArea';
 import { ReferenceImpacts } from '../experiments/quality-reference/ReferenceImpacts';
@@ -295,6 +297,10 @@ export class GameScene extends Phaser.Scene {
   private hud!: Hud;
   private explorationGuide!: ExplorationGuide;
   private navigation?: WorldNavigator;
+  private exploration=new ExplorationMemory();
+  private explorationSaved=0;
+  private explorationSaveAt=0;
+  private settlementLife?:SettlementLife;
   private echoSites: EchoSite[] = [];
   private threshold?: SignalThreshold;
   private mechanism?: PassageMechanism;
@@ -322,6 +328,7 @@ export class GameScene extends Phaser.Scene {
     }
     if(this.shellLoading){const report=this.shellLoading,clear=()=>this.load.off(Phaser.Loader.Events.PROGRESS,report);this.load.on(Phaser.Loader.Events.PROGRESS,report);this.load.once(Phaser.Loader.Events.COMPLETE,clear);this.events.once(Phaser.Scenes.Events.SHUTDOWN,clear);}
     preloadColonization(this);
+    preloadSettlementLife(this);
     preloadMissionProps(this);
     preloadItemIcons(this);
     for(const key of ['landing-shuttle','field-shelter','base-medic-civilian','base-smith-civilian','base-expedition-civilian','base-refugee-a','base-refugee-b'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/base/${key}.png`);
@@ -436,7 +443,7 @@ export class GameScene extends Phaser.Scene {
     if(this.economyRoom!==coopSession.code){this.economyRoom=coopSession.code;this.resourceAwarded.clear();this.potionUsed=0;}
     this.base=undefined;this.colony=undefined;
     if(this.forestProof){this.arena=new ForestFinishArea(this,this.qualityReference==='forest-reference');this.movementBounds=this.arena.bounds;}
-    else if(this.area==='base'){this.base=new LandingBase(this,this.wardenDefeated);this.arena=this.base;this.movementBounds=this.base.bounds;}else if(this.area==='springs'||this.area==='terraces'){this.colony=new ColonizationArea(this,this.area,this.missions.has('shelter-built'));this.arena=this.colony;this.movementBounds=this.colony.bounds;}else if (this.area === 'forest') {
+    else if(this.area==='base'){this.base=new LandingBase(this);this.arena=this.base;this.movementBounds=this.base.bounds;}else if(this.area==='springs'||this.area==='terraces'){this.colony=new ColonizationArea(this,this.area,this.missions.has('shelter-built'));this.arena=this.colony;this.movementBounds=this.colony.bounds;}else if (this.area === 'forest') {
       this.arena = new Arena(this);
       this.movementBounds = this.arena.bounds;
       if (!this.progression.passageOpen) {
@@ -556,6 +563,7 @@ export class GameScene extends Phaser.Scene {
     this.sounds.setMusicFocus(1);
     const spawns = this.forestProof?FINISH_SPAWNS:this.area === 'forest' ? FOREST_SPAWNS : CAVERN_HOLLOWS;
     if (this.area === 'forest' || this.area === 'cavern') spawns.forEach((point, index) => {
+      const id=this.area==='forest'?index:FOREST_SPAWNS.length+index;if(this.progression.hasDefeated(id))return;
       const enemy = new HollowCrawler(this, point.x, point.y, this.area === 'forest'&&!this.forestProof ? FOREST_PATROLS[index] : undefined, this.qualityReference==='forest-reference'?'forest':this.qualityReference === 'reference');
       tuneEnemy(enemy,this.area,this.campaignDifficulty);this.enemies.push(enemy);
       this.enemySpecies.set(enemy, 'crawler');
@@ -595,7 +603,8 @@ export class GameScene extends Phaser.Scene {
     }
     this.hud = new Hud(this, () => this.restart(), this.classId === 'hunter',this.classId==='astral',this.classId==='xenobinder',(...state)=>this.controls.setAbilityFeedback(...state));
     if (this.qualityReference === 'reference') this.referenceImpacts = new ReferenceImpacts(this);
-    this.navigation = this.qualityReference ? undefined : new WorldNavigator(this, () => ({ bounds: this.movementBounds, obstacles: this.permanence?.navigationObstacles??this.arena.obstacles }));
+    this.settlementLife=this.area==='base'||this.area==='terraces'?new SettlementLife(this,this.area,this.arena.obstacles,this.movementBounds!,()=>this.wardenDefeated):undefined;
+    this.navigation = this.qualityReference ? undefined : new WorldNavigator(this, () => {const obstacles=this.permanence?.navigationObstacles??this.arena.obstacles;return {bounds:this.movementBounds,obstacles:this.settlementLife?.navigationObstacles(obstacles)??obstacles}},this.exploration.region(this.area));
     this.explorationGuide = new ExplorationGuide(this, this.navigation);
     if (this.area === 'warden') {
       this.signalPortal = new SignalPortal(this, { x: 1500, y: 830 }, this.wardenDefeated);
@@ -750,6 +759,7 @@ export class GameScene extends Phaser.Scene {
     if(this.area==='base'&&!this.inputModalOpen&&(BASE.services.some(s=>distance(this.player.position,s)<100)||coopSession.role!=='guest'&&distance(this.player.position,BASE.exit)<105)&&this.controls.interactPressed){const service=BASE.services.find(s=>distance(this.player.position,s)<100);if(service){if(this.missionUi)this.missionUi.openNpc(service.id);else this.basePanel.open(service.id);return;}if(coopSession.role!=='guest'&&distance(this.player.position,BASE.exit)<105){this.transitionArea('forest');return;}}
     const previousSolids=this.arena.obstacles.length;
     this.permanence?.update(this.missions,this.player.position,coopSession.role==='guest'?coopSession.world?.time??time:time,[this.player,...(this.party?.players??[])],coopSession.role!=='guest',coopSession.world?.permanence);
+    this.settlementLife?.update(this.missions,this.player.position,coopSession.role==='guest'?coopSession.world?.time??time:time,[this.player,...(this.party?.players??[])],coopSession.role!=='guest',coopSession.world?.permanence?.people);
     if(this.arena.obstacles.length!==previousSolids)for(const p of [this.player,...(this.party?.players??[])])if(this.arena.obstacles.some(o=>distance(p.position,o)<p.radius+o.radius))Object.assign(p.position,safeExpeditionPosition(p.position,p.radius,this.arena.obstacles,this.movementBounds)??p.position);
     this.missionWorld?.update(this.missions,this.player.position);
     this.regional?.update(this.missions,this.player.position,time);
@@ -797,8 +807,8 @@ export class GameScene extends Phaser.Scene {
     if(pickup&&requestedInteract&&!interactionDead)this.pickupEquipment(pickup,remoteRequest?.id);
     let interact = requestedInteract&&!pickup;
     const missionSite=this.missionSite(interactionPosition,interactionDead);
-    const resident=interactionDead?undefined:this.permanence?.greetingAt(interactionPosition,this.missions);
-    if(interact&&resident&&!missionSite){this.hud.showDiscovery(resident.name.toLocaleUpperCase('pt-BR')+'\n'+resident.text);this.sounds.discovery();interact=false;}
+    const resident=interactionDead?undefined:this.settlementLife?.greetingAt(interactionPosition);
+    if(interact&&resident&&!missionSite){this.settlementLife?.greet(resident.id,time);this.hud.showDiscovery(resident.name.toLocaleUpperCase('pt-BR')+'\n'+resident.text);this.sounds.discovery();interact=false;}
     if(interact&&missionSite){
       if('reject' in missionSite&&missionSite.reject){this.hud.showDiscovery(missionSite.reject);this.sounds.discovery();interact=false;}
       else {
@@ -1301,6 +1311,7 @@ export class GameScene extends Phaser.Scene {
       if (x >= encounter.x - 500 && !this.spawnedEncounters.has(index)) {
         this.spawnedEncounters.add(index);
         encounter.residents.forEach((resident, offset) => {
+          if(this.progression.hasDefeated(spawnId+offset))return;
           const enemy: Enemy = resident.kind === 'crawler'
             ? new HollowCrawler(this, resident.x, resident.y)
             : new DanteCreature(this, resident.kind, resident.x, resident.y);
@@ -1343,6 +1354,7 @@ export class GameScene extends Phaser.Scene {
 
   private updateExplorationGuide(): void {
     this.navigation?.update(this.player.position, this.player.rotation, this.player.isDead, this.time.now);
+    if(this.exploration.revision!==this.explorationSaved&&this.time.now>=this.explorationSaveAt){this.explorationSaveAt=this.time.now+2500;if(this.saveProgress())this.explorationSaved=this.exploration.revision;}
     const missionTarget=this.missionTarget();
     if(missionTarget&&!this.bossActive()){
       this.explorationGuide.update(this.player.position,this.player.isDead,this.controls.inputMethod,missionById(this.missions.current!).title.toLocaleUpperCase('pt-BR'),missionTarget,this.hud);return;
@@ -1563,6 +1575,7 @@ export class GameScene extends Phaser.Scene {
 
   private spawnDeepHollows(): void {
     DEEP_HOLLOWS.forEach((patrol,index) => {
+      if(this.progression.hasDefeated(FOREST_SPAWNS.length+CAVERN_HOLLOWS.length+index))return;
       const enemy = new HollowCrawler(this,patrol[0].x,patrol[0].y,patrol);
       tuneEnemy(enemy,this.area,this.campaignDifficulty);this.enemies.push(enemy);
       this.enemySpecies.set(enemy, 'crawler');
@@ -1590,7 +1603,7 @@ export class GameScene extends Phaser.Scene {
 
   private partyBridge(): PartyBridge {
     return {
-      permanence:this.permanence?.snapshot(),missions:this.missions.snapshot(),
+      permanence:{...this.permanence?.snapshot(),people:this.settlementLife?.snapshot()},missions:this.missions.snapshot(),
       area: this.area, player: this.player, controls: this.controls, enemies: this.enemies,
       obstacles: this.arena.obstacles, solidObstacles: (this.warden && !this.warden.isDead || this.soterrado?.solid || this.vesper?.solid || this.titan?.solid) ? [...this.arena.obstacles,...this.titanCoverObstacles(), { ...(this.warden ?? this.soterrado ?? this.vesper ?? this.titan)!.position, radius: (this.warden ?? this.soterrado ?? this.vesper ?? this.titan)!.radius }] : this.arena.obstacles, bounds: this.movementBounds, hud: this.hud, hunter: this.hunter,astral:this.astral,xeno:this.xeno,
       boss: this.warden ?? this.soterrado ?? this.vesper ?? this.titan,
@@ -1664,7 +1677,7 @@ export class GameScene extends Phaser.Scene {
       impacts: this.impactHistory.filter(hit => this.time.now-hit.at < 650),
       impact: hit => this.impact(hit, hit.color, hit.damage, hit.angle, hit.effective, hit.resisted, false),
       prompt: (position,owner) => {
-        const site=this.missionSite(position,false);if(site)return {available:true,action:'action' in site?site.action:site.id==='shelter-built'?'INSTALAR':'ANALISAR'};if(this.permanence?.greetingAt(position,this.missions))return{available:true,action:'CONVERSAR'};if(this.colonyPassage(position))return{available:true,action:'ENTRAR'};
+        const site=this.missionSite(position,false);if(site)return {available:true,action:'action' in site?site.action:site.id==='shelter-built'?'INSTALAR':'ANALISAR'};if(this.settlementLife?.greetingAt(position))return{available:true,action:'CONVERSAR'};if(this.colonyPassage(position))return{available:true,action:'ENTRAR'};
         if(this.area!=='base'&&this.canReturnBase(position,this.party?.actors.get(owner)?.player)&&distance(position,{x:this.returnStation.x-90,y:this.returnStation.y})<65)return{available:true,action:'RETORNAR'};
         if(this.area==='base')return{available:BASE.services.some(s=>distance(position,s)<100)||distance(position,BASE.exit)<105,action:'CONVERSAR'};
         if(this.loot.nearest(position,owner))return{available:true,action:(coopSession.guests.find(m=>m.id===owner)?.profile.bagFree??0)<=0?'MOCHILA CHEIA':'COLETAR'};
@@ -1953,15 +1966,13 @@ export class GameScene extends Phaser.Scene {
         if (spawnIndex !== undefined) {
           const isValley = (this.area === 'valley'||!!this.colony) && this.valleyResidents.get(spawnIndex) === enemy;
           const isSirocco = (this.area === 'arid' || this.area === 'dunes' || this.area === 'frost' || this.area === 'icecave'||this.area==='caldera'||this.area==='cinder'||this.area==='obsidian') && this.siroccoResidents.get(spawnIndex) === enemy;
-          const reward = isValley || isSirocco
-            ? { awarded: true, leveledUp: this.progression.defeatRenewableResident(regionalThreat(this.area,enemy.position.x).xp) }
-            : this.progression.defeatHollow(spawnIndex,regionalThreat(this.area,enemy.position.x).xp);
+          const reward=this.progression.defeatHollow(spawnIndex,regionalThreat(this.area,enemy.position.x).xp);
           if (isValley) {
             this.valleyResidents.delete(spawnIndex);
-            this.valleyHabitatCooldowns.set(spawnIndex, Date.now() + VALLEY_RENEWAL.delayMs);
+            this.valleyHabitatCooldowns.delete(spawnIndex);
           } else if (isSirocco) {
             this.siroccoResidents.delete(spawnIndex);
-            this.siroccoHabitatCooldowns.set(spawnIndex, Date.now() + SIROCCO_RENEWAL.delayMs);
+            this.siroccoHabitatCooldowns.delete(spawnIndex);
           }
           if (reward.awarded) {
             this.updateProgressHud();
@@ -2217,7 +2228,7 @@ export class GameScene extends Phaser.Scene {
   shellPlayerDead(): boolean { return this.player?.isDead ?? false; }
 
   private spawnValleyResident(habitat: typeof VALLEY_ENCOUNTERS[number] | typeof COLONY_ENCOUNTERS.springs[number]): boolean {
-    if (this.valleyResidents.has(habitat.id)) return false;
+    if (this.valleyResidents.has(habitat.id)||this.progression.hasDefeated(habitat.id)) return false;
     const readyAt = this.valleyHabitatCooldowns.get(habitat.id);
     if (readyAt !== undefined && (Date.now() < readyAt || this.explorationNear(habitat, VALLEY_RENEWAL.safeDistance))) return false;
     const enemy = new ValleyCreature(this, habitat.kind, habitat.x, habitat.y);
@@ -2234,7 +2245,7 @@ export class GameScene extends Phaser.Scene {
     if(size<2||coopSession.role!=='host')return;
     const bounds=this.movementBounds;
     for(const h of PARTY_ENCOUNTERS[this.area]??[]){
-      if(h.minParty>size||this.partyResidents.has(h.id)||!this.explorationNear(h,550))continue;
+      if(h.minParty>size||this.partyResidents.has(h.id)||this.progression.hasDefeated(h.id)||!this.explorationNear(h,550))continue;
       if(bounds&&(h.x<bounds.left+40||h.x>bounds.right-40||h.y<bounds.top+40||h.y>bounds.bottom-40))continue;
       // Never put a reserve inside a solid footprint or a safe arrival point.
       let position={x:h.x,y:h.y};
@@ -2260,7 +2271,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private spawnSiroccoResident(habitat: { id: number; kind: SiroccoKind | FrostKind | VolcanicKind | 'iceCarapace'; x: number; y: number }): boolean {
-    if (this.siroccoResidents.has(habitat.id)) return false;
+    if (this.siroccoResidents.has(habitat.id)||this.progression.hasDefeated(habitat.id)) return false;
     const readyAt = this.siroccoHabitatCooldowns.get(habitat.id);
     if (readyAt !== undefined && (Date.now() < readyAt || this.explorationNear(habitat, SIROCCO_RENEWAL.safeDistance))) return false;
     const enemy = ['emberHound','fumarole','slagback'].includes(habitat.kind)?new VolcanicCreature(this,habitat.kind as VolcanicKind,habitat.x,habitat.y):habitat.kind === 'iceCarapace' ? new ValleyCreature(this, 'iceCarapace', habitat.x, habitat.y) : new DanteCreature(this, habitat.kind as SiroccoKind|FrostKind, habitat.x, habitat.y);
@@ -2444,7 +2455,7 @@ export class GameScene extends Phaser.Scene {
     this.transferHp=this.characterMaxHp;this.expeditionReturn=undefined;this.area=area;this.saveProgress();this.scene.restart();return true;
   }
   seedMissionPlaytest(id:MissionId):boolean{
-    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!(new URLSearchParams(location.search).has('missions')||new URLSearchParams(location.search).has('permanence'))||this.inputModalOpen||this.transitioning||coopSession.role==='guest'||!this.player||this.player.isDead)return false;
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!['missions','permanence','settlement-life'].some(key=>new URLSearchParams(location.search).has(key))||this.inputModalOpen||this.transitioning||coopSession.role==='guest'||!this.player||this.player.isDead)return false;
     if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return false;
     const ids=['recon','survival','signal','beyond','water-source','safe-route','shelter',...PERMANENCE_IDS] as const,index=(ids as readonly MissionId[]).indexOf(id);if(index<0)return false;
     const previous=ids.slice(0,index),evidence=previous.flatMap(mid=>missionById(mid).goals.map(g=>g.id));
@@ -2612,6 +2623,7 @@ export class GameScene extends Phaser.Scene {
     const saved = this.journey.load();
     if (!saved) {if(!new URLSearchParams(location.search).has('qa'))this.area='base';return;}
     this.economy=validEconomy(saved.economy);
+    this.exploration.restore(saved.exploration);
     this.missions.restore(saved.missions);this.missions.tracked=saved.trackedMission;this.missionRewards=validMissionRewards(saved.missionRewards);
     if(!saved.missions&&(saved.progression.echoes.length||saved.progression.passageOpen)){this.missions.record('clearing');this.missions.record('roots');}
     const visited:JourneyArea[]=[...this.economy.visited,'base','forest',saved.area];if(saved.flags.cavernDepthSeen||saved.flags.deepCavernEntered||saved.flags.wardenGateOpen)visited.push('cavern');if(saved.flags.wardenDefeated)visited.push('warden');for(const[flag,area]of [['valleyVisited','valley'],['aridVisited','arid'],['dunesVisited','dunes'],['soterradoReached','sandpit'],['frostVisited','frost'],['icecaveVisited','icecave'],['icenestVisited','icenest'],['cinderVisited','cinder'],['obsidianVisited','obsidian'],['calderaVisited','caldera'],['springsVisited','springs'],['terracesVisited','terraces']] as const)if(saved.flags[flag])visited.push(area);this.economy.visited=[...new Set(visited)];
@@ -2634,7 +2646,7 @@ export class GameScene extends Phaser.Scene {
     const flags = Object.fromEntries(JOURNEY_FLAGS.map(key => [key, this[key]])) as JourneyFlags;
     const available = this.journey.save({ schema: 1, updatedAt: Date.now(), area: this.area,
       hp: this.player.isDead ? this.characterMaxHp : this.player.hp, progression: this.progression.snapshot(),
-      flags, bestiary: this.bestiary.snapshot(), valleyRoutes: [...this.valleyRoutes], valleyHabitats: [...this.valleyHabitatCooldowns],
+      flags,exploration:this.exploration.snapshot(), bestiary: this.bestiary.snapshot(), valleyRoutes: [...this.valleyRoutes], valleyHabitats: [...this.valleyHabitatCooldowns],
       aridHabitats: [...this.siroccoHabitatCooldowns],equipment:this.equipment.snapshot(),economy:this.economy,expeditionReturn:this.expeditionReturn,missions:this.missions.snapshot(),missionRewards:this.missionRewards,trackedMission:this.missions.tracked });
     this.records?.setSaveAvailable(available);
     return available;
@@ -2643,11 +2655,11 @@ export class GameScene extends Phaser.Scene {
   private persistGuestCampaign(world:PartyWorld):boolean {
     if(characterProfiles.active.campaign?.mode!=='coop')return false;
     const saved=this.journey.load();
-    const key=JSON.stringify([world.area,world.flags,world.progression.echoes,world.progression.sourceLocated,world.progression.passageOpen,world.visited,world.expeditionReturn,world.missions]);
+    const key=JSON.stringify([world.area,world.flags,world.progression.echoes,world.progression.sourceLocated,world.progression.passageOpen,world.progression.rewardedHollows,world.visited,world.expeditionReturn,world.missions,this.exploration.revision]);
     if(key===this.guestCheckpoint)return true;
     const progression={...world.progression,xp:saved?.progression.xp??0,abilityUpgrades:saved?.progression.abilityUpgrades,bossRewards:saved?.progression.bossRewards};
     const available=this.journey.save({schema:1,updatedAt:Date.now(),area:world.area,hp:Math.max(1,Math.round(world.players[coopSession.id]?.hp??this.player.hp)),progression,
-      flags:world.flags,bestiary:saved?.bestiary??this.bestiary.snapshot(),valleyRoutes:saved?.valleyRoutes??[],valleyHabitats:saved?.valleyHabitats??[],aridHabitats:saved?.aridHabitats??[],
+      flags:world.flags,exploration:this.exploration.snapshot(),bestiary:saved?.bestiary??this.bestiary.snapshot(),valleyRoutes:saved?.valleyRoutes??[],valleyHabitats:saved?.valleyHabitats??[],aridHabitats:saved?.aridHabitats??[],
       equipment:saved?.equipment??this.equipment.snapshot(),economy:{...validEconomy(saved?.economy),visited:[...new Set([...(saved?.economy?.visited??[]),...(world.visited??[]),world.area])]},expeditionReturn:world.expeditionReturn,coopReceipts:saved?.coopReceipts,missions:world.missions,missionRewards:saved?.missionRewards??[],trackedMission:this.missions.tracked});
     if(available)this.guestCheckpoint=key;
     return available;

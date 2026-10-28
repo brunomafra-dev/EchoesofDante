@@ -4,6 +4,7 @@ import type { MovementBounds, Obstacle } from '../systems/Movement';
 import type { Vec2 } from '../utils/math';
 import type { ExplorationTarget } from './ExplorationGuide';
 import { fitsGround } from '../systems/WalkableGround';
+import {EXPLORATION_CELL,type ExplorationRegion} from '../systems/ExplorationMemory';
 
 // Navigation only. A coarse, cached map of existing collision data; it never
 // moves actors, changes colliders or controls enemy AI.
@@ -28,11 +29,11 @@ export class WorldNavigator {
   private drawKey = '';
   private route: Vec2[] = [];
   private target?: ExplorationTarget;
-  private readonly cell = 48;
+  private readonly cell = EXPLORATION_CELL;
   private collapsed = false;
 
   constructor(scene: Phaser.Scene,
-    private readonly geometry: () => { bounds?: MovementBounds; obstacles: readonly Obstacle[] }) {
+    private readonly geometry: () => { bounds?: MovementBounds; obstacles: readonly Obstacle[] },private readonly memory?:ExplorationRegion) {
     this.element.className = 'world-minimap';
     this.map.setAttribute('viewBox', '0 0 156 112'); this.map.setAttribute('role', 'img');
     this.map.setAttribute('aria-label', 'Mapa local: seta do jogador, caminho descoberto e próximo destino');
@@ -74,7 +75,7 @@ export class WorldNavigator {
     if (start >= 0) {
       const sx = start % this.columns, sy = Math.floor(start / this.columns);
       for (let y = sy - 3; y <= sy + 3; y++) for (let x = sx - 3; x <= sx + 3; x++) {
-        if (x >= 0 && y >= 0 && x < this.columns && y < this.rows) this.explored.add(y * this.columns + x);
+        if (x >= 0 && y >= 0 && x < this.columns && y < this.rows) {const i=y*this.columns+x;this.explored.add(i);this.memory?.reveal(this.point(i));}
       }
     }
     const key = `${start}:${goal}:${this.geometryKey}`;
@@ -108,6 +109,7 @@ export class WorldNavigator {
     this.explored.clear();
     for (let i = 0; i < this.walkable.length; i++) {
       const p = this.point(i);
+      if(this.memory?.has(p))this.explored.add(i);
       this.walkable[i] = Number(p.x <= b.right - PLAYER.radius && p.y <= b.bottom - PLAYER.radius &&
         p.x >= b.left + PLAYER.radius && p.y >= b.top + PLAYER.radius &&
         (!b.walkable||fitsGround(p,PLAYER.radius+3,b.walkable,39)) &&

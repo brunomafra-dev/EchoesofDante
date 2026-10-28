@@ -1,0 +1,12 @@
+{
+  "method": "DEV lab; actual E and combat death path; positions/prerequisites are explicit test fixtures, not difficulty or human playtest.",
+  "checks": [
+    "Base has three fixed service anchors with complete job frames and actual dialogue; migrated settlers are absent",
+    "Tio Gui and Elisa walk/work and answer E; NPC movement retains cached map geometry; both regions retain fog after travel/reload",
+    "Second crew has distinct Mara/Tomás figures; four residents appear only after arrival evidence fixture",
+    "Actual enemy defeat persists after travel/reload with one XP award; untouched enemies remain",
+    "Native habitats across Vale, desert, Boreal, Galerias, coast and springs retain permanent defeats without renewed XP"
+  ],
+  "errors": [],
+  "passed": true
+}

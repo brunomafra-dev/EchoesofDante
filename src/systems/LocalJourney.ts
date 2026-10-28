@@ -17,6 +17,7 @@ import {validEconomy,type EconomySnapshot} from '../config/economy';
 import {validExpeditionReturn,type ExpeditionReturn} from './ExpeditionReturn';
 import {Missions,validMissions,validMissionRewards,type MissionSnapshot} from './Missions';
 import {MISSION_IDS,type MissionId} from '../config/missions';
+import {validExploration,type ExplorationSnapshot} from './ExplorationMemory';
 
 export const JOURNEY_KEY = 'echoes-of-dante.journey.v1';
 export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSeen', 'deepCavernEntered',
@@ -36,7 +37,7 @@ export type JourneySnapshot = {
   equipment?:EquipmentSnapshot;
   economy?:EconomySnapshot;
   expeditionReturn?:ExpeditionReturn;
-  missions?:MissionSnapshot;missionRewards?:MissionId[];trackedMission?:MissionId;
+  missions?:MissionSnapshot;missionRewards?:MissionId[];trackedMission?:MissionId;exploration?:ExplorationSnapshot;
 };
 
 const object = (value: unknown): Record<string, unknown> | undefined =>
@@ -131,13 +132,13 @@ export class LocalJourney {
       this.status = 'Progresso recuperado deste navegador.';
       return { schema: 1, updatedAt: integer(raw.updatedAt, 8_640_000_000_000_000) ? raw.updatedAt : 0, area, hp: raw.hp,
         progression: { xp: p.xp, echoes, sourceLocated: echoes.length === ECHO_COUNT && p.sourceLocated === true,
-          passageOpen, rewardedHollows: p.rewardedHollows.filter((id): id is number => integer(id, 1999)).slice(0, 2000),
+          passageOpen, rewardedHollows: [...new Set([...p.rewardedHollows.filter((id): id is number => integer(id, 1999)||COLONY_ENCOUNTERS.springs.some(h=>h.id===id)||COLONY_ENCOUNTERS.terraces.some(h=>h.id===id)),...habitats.map(([id])=>id),...aridHabitats.map(([id])=>id)])].slice(0, 2000),
           rewardedRoutes: Array.isArray(p.rewardedRoutes) ? p.rewardedRoutes.filter((id): id is string =>
             typeof id === 'string' && (VALLEY_ROUTES.some(route => route.id === id) || SIROCCO_ROUTES.some(route => route.id === id) || DUNES_ROUTES.some(route => route.id === id) || FROST_ROUTES.some(route => route.id === id) || GLACIER_ROUTES.some(route => route.id === id) || CALDERA_ROUTES.some(route => route.id === id) || VOLCANIC_ROUTES.some(route=>route.id===id))) : [],
           abilityUpgrades: object(p.abilityUpgrades) as Partial<AbilityUpgradeRanks> | undefined,
           bossRewards: [...new Set([...(Array.isArray(p.bossRewards)?p.bossRewards.filter((id):id is string=>typeof id==='string'&&['warden','soterrado','vesper','titan'].includes(id)):[]),...(flags.wardenDefeated?['warden']:[]), ...(flags.soterradoDefeated ? ['soterrado'] : []), ...(flags.vesperDefeated ? ['vesper'] : []),...(flags.titanDefeated?['titan']:[])])] },
         flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats, equipment:validEquipment(raw.equipment),economy:validEconomy(raw.economy),expeditionReturn:validExpeditionReturn(raw.expeditionReturn),
-        missions:raw.missions===undefined?undefined:validMissions(raw.missions),missionRewards:validMissionRewards(raw.missionRewards),trackedMission:MISSION_IDS.includes(raw.trackedMission as MissionId)?raw.trackedMission as MissionId:undefined,
+        missions:raw.missions===undefined?undefined:validMissions(raw.missions),missionRewards:validMissionRewards(raw.missionRewards),trackedMission:MISSION_IDS.includes(raw.trackedMission as MissionId)?raw.trackedMission as MissionId:undefined,exploration:validExploration(raw.exploration),
         coopReceipts: Array.isArray(raw.coopReceipts) ? raw.coopReceipts.filter((entry): entry is {id:string;total:number} =>
           !!entry && typeof entry.id === 'string' && /^[a-f0-9]{32}$/.test(entry.id) && integer(entry.total, 1e9)).slice(-32) : [] };
     } catch {

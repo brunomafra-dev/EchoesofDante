@@ -1,0 +1,7 @@
+{
+  "checks": [
+    "World-space exploration deduplicates, stays per region, survives JSON reload and bounds malformed/oversize data",
+    "Legacy habitat cooldowns become permanent defeats without XP or currency; fog and old resources persist per character"
+  ],
+  "passed": true
+}

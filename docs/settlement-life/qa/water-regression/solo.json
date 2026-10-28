@@ -1,0 +1,132 @@
+{
+  "chapter": "water",
+  "method": "Chrome DEV, isolated explicit prior-story fixture; real E/dialogue/atlas inputs. Objective positioning prepares coverage, not a timed human playthrough.",
+  "checks": [
+    "Explicit original shelter/Warden fixture only; tested chapter pending and later bosses alive",
+    "Final installation rejected before its preceding objectives",
+    "All authored interactions and real NPC delivery; credits once, original XP/boss flags preserved",
+    "Reload keeps evidence/receipt without touching real characters/settings",
+    "Three returns preserve object/texture/collider counts",
+    "Journal remains within four viewport sizes"
+  ],
+  "errors": [],
+  "stability": {
+    "before": {
+      "area": "terraces",
+      "evidence": [
+        "clearing",
+        "roots",
+        "water",
+        "biology",
+        "echo1",
+        "echo2",
+        "echo3",
+        "passage",
+        "first-echo",
+        "warden",
+        "spring",
+        "route-west",
+        "route-east",
+        "soil",
+        "site",
+        "shelter-built",
+        "pw-intake",
+        "pw-silt",
+        "pw-filter",
+        "pw-valve",
+        "pw-online"
+      ],
+      "completed": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water"
+      ],
+      "credits": 380,
+      "rewards": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water"
+      ],
+      "xp": 350,
+      "hp": 98,
+      "flags": {
+        "warden": true,
+        "soterrado": false,
+        "vesper": false,
+        "titan": false
+      },
+      "objects": 170,
+      "textures": 265,
+      "obstacles": 33
+    },
+    "after": {
+      "area": "terraces",
+      "evidence": [
+        "clearing",
+        "roots",
+        "water",
+        "biology",
+        "echo1",
+        "echo2",
+        "echo3",
+        "passage",
+        "first-echo",
+        "warden",
+        "spring",
+        "route-west",
+        "route-east",
+        "soil",
+        "site",
+        "shelter-built",
+        "pw-intake",
+        "pw-silt",
+        "pw-filter",
+        "pw-valve",
+        "pw-online"
+      ],
+      "completed": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water"
+      ],
+      "credits": 380,
+      "rewards": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water"
+      ],
+      "xp": 350,
+      "hp": 98,
+      "flags": {
+        "warden": true,
+        "soterrado": false,
+        "vesper": false,
+        "titan": false
+      },
+      "objects": 170,
+      "textures": 265,
+      "obstacles": 33
+    }
+  },
+  "passed": true
+}

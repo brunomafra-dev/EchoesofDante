@@ -41,7 +41,6 @@ export class ColonizationArea{
   }
   if(area==='terraces'){
    const building=scene.add.image(HABITAT.x,HABITAT.y,'first-habitat').setOrigin(.5,1).setDisplaySize(HABITAT.width,HABITAT.height).setDepth(HABITAT.y-20).setName('first-colonist-habitat');trackEnvironmentOcclusion(scene,building);this.habitat.push(building);
-   for(const[key,x,y]of [['a',2010,920],['b',2380,915]] as const){const npc=scene.add.image(x,y,'base-refugee-'+key).setOrigin(.5,1).setDisplaySize(58,89).setDepth(y);this.habitat.push(npc);const shadow=scene.add.image(x,y+1,'world-shadow','ground-contact').setDisplaySize(32,9).setAlpha(.65).setDepth(y-2);this.habitat.push(shadow);}
    this.habitat.forEach(o=>o.setVisible(false));this.setSettled(settled);
   }
  }

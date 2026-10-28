@@ -5,7 +5,7 @@ import {EnvironmentPainter,createEnvironmentGround,trackEnvironmentOcclusion} fr
 export class LandingBase{
  readonly bounds={left:70,right:1330,top:90,bottom:970};
  readonly obstacles:Obstacle[]=[{x:550,y:370,radius:112},{x:420,y:360,radius:62},{x:680,y:360,radius:62},...BASE.services.flatMap(s=>[{x:s.x,y:s.y-22,radius:20},{x:s.x,y:s.y-100,radius:55}])];
- constructor(scene:Phaser.Scene,refugees=false){
+ constructor(scene:Phaser.Scene){
   // Wide viewports can see beyond this small playable camp. Continue the
   // existing ground and bake a woodland fringe; movement bounds stay intact.
   createEnvironmentGround(scene,BASE.width+1024,'forest-ground',0xa3af91);
@@ -24,15 +24,12 @@ export class LandingBase{
   for(const s of BASE.services){
    painter.sediment(s.x,s.y-30,235,135,0x737251,.22);painter.contact(s.x,s.y-34,145,24,.55);
    const shelter=scene.add.image(s.x,s.y-98,'field-shelter').setDisplaySize(180,150).setDepth(s.y-50);trackEnvironmentOcclusion(scene,shelter);
-   painter.contact(s.x-5,s.y+1,36,9,.7);painter.contact(s.x-7,s.y,18,5,.85);
-   const npc=scene.add.image(s.x,s.y,'base-'+s.id+'-civilian').setOrigin(.5,.97);npc.setScale(96/npc.height).setDepth(s.y);
    scene.add.text(s.x,s.y-185,s.name,{fontFamily:'Barlow Condensed',fontSize:'16px',color:'#e3dfc7',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(10003);
   }
   for(const[x,y,w]of [[440,650,105],[895,625,112],[1120,420,100]]){
    painter.contact(x,y+4,w*.8,15,.5);scene.add.image(x,y,'camp-supplies').setOrigin(.5,1).setDisplaySize(w,w*319/512).setDepth(y);this.obstacles.push({x,y:y-17,radius:20});
   }
   for(const[x,y,w]of [[160,700,100],[170,950,155],[1180,530,105],[1160,945,135],[260,470,85]]){painter.stamp({key:'root-growth',x,y,width:w,height:w*.25,tint:0xa1b38b,alpha:.65});painter.stamp({key:'dante-canopy-green',x:x-18,y:y-17,width:w*.65,height:w*.35,tint:0x9bb57e,alpha:.75});}
-  if(refugees)for(const[key,x,y]of [['a',380,500],['b',820,490]] as const){painter.contact(x,y,30,8,.65);const npc=scene.add.image(x,y,'base-refugee-'+key).setOrigin(.5,.98);npc.setScale(86/npc.height).setDepth(y);}
   painter.destroy();
   scene.add.text(550,160,'DANTE-01 · BASE DE POUSO',{fontFamily:'Barlow Condensed',fontSize:'22px',color:'#d0c6aa',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(10003);
   scene.add.text(BASE.exit.x,BASE.exit.y-70,'FLORESTA →',{fontFamily:'Barlow Condensed',fontSize:'18px',color:'#b8caaa'}).setOrigin(.5).setDepth(10003);

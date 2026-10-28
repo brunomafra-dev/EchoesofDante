@@ -1,0 +1,12 @@
+{
+  "method": "Chrome touch emulation with CDP multi-touch, standard gamepad mock; DEV position fixtures. No physical phone/gamepad.",
+  "checks": [
+    "warrior: simultaneous movement/rear aim, release and actual touch greeting",
+    "Standard gamepad A interacts with Elisa",
+    "hunter: simultaneous movement/rear aim, release and actual touch greeting",
+    "astral: simultaneous movement/rear aim, release and actual touch greeting",
+    "xenobinder: simultaneous movement/rear aim, release and actual touch greeting"
+  ],
+  "errors": [],
+  "passed": true
+}

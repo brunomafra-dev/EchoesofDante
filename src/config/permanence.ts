@@ -6,7 +6,7 @@ export const PERMANENCE_IDS=['settle-water','settle-food','settle-transport','se
 export type PermanenceId=typeof PERMANENCE_IDS[number];
 export type PermanenceEvidence=`pw-${'intake'|'silt'|'filter'|'valve'|'online'}`|`pf-${'trace'|'control'|'sample'|'safe'|'stock'}`|`pt-${'upper'|'lower'|'anchor'|'load'|'deliver'}`|`pe-${'ground'|'return'|'cell'|'isolate'|'online'}`|`pc-${'beacon'|'manifest'|'shelter'|'receive'|'home'}`;
 export type PermanenceSite={id:PermanenceEvidence;mission:PermanenceId;area:JourneyArea;x:number;y:number;radius:number;name:string;finding:string;art:RegionalArt|'cargo'|'site';action:string;needs?:readonly MissionEvidence[];reject?:string;choice?:boolean;haul?:boolean};
-export type PermanencePose={haul?:{x:number;y:number;kind:'cargo'}};
+export type PermanencePose={haul?:{x:number;y:number;kind:'cargo'};people?:import('./settlementLife').NpcPose[]};
 export const PERMANENCE_SITES:readonly PermanenceSite[]=[
  {id:'pw-intake',mission:'settle-water',area:'springs',x:1680,y:650,radius:75,name:'Captação a montante',art:'water',action:'COLETAR',finding:'O sedimento vem da margem baixa. A captação alta mantém fluxo constante.'},
  {id:'pw-silt',mission:'settle-water',area:'springs',x:1510,y:1100,radius:75,name:'Sedimento da margem',art:'soil',action:'COMPARAR',finding:'O lodo obstrui o cartucho da nave; precisamos separar o retorno da captação.'},
