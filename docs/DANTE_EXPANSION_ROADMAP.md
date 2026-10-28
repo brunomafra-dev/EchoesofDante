@@ -2,6 +2,8 @@
 
 **28/10/2026 · Tarefas concretas para os moradores · 0.1.165:** correção solicitada durante a publicação da 0.1.164: recorte das figuras para remover fragmentos de poses vizinhas; Tio Gui/Mara fixos com kits de reparo, Elisa na rota das plantas e Choco (antes Tomás) nos suprimentos. [Escopo e evidências](settlement-motion/NPC_WORKSTATIONS.md). Acessos a todos os NPCs mantidos; saves/requisitos/protocolo preservados. Sem nova região ou capítulo; aguardar avaliação humana.
 
+Aplicação `261f967` publicada na Vercel: 56 arquivos conferidos por hash, quatro acessos solo/touch/reload públicos e dupla pública 16 com tarefas fixas, reconexão e visitas aos sete personagens passaram. Capturas públicas inspecionadas pelo agente; aprovação humana segue pendente.
+
 **28/10/2026 · Inspecionar os sete NPCs · 0.1.164:** acesso solicitado à Base e Terraços, com quatro situações e chegada perto de cada personagem. [Laboratório reservado](settlement-motion/NPC_REVIEW.md), separado dos saves reais, com pré-requisitos simulados explícitos e bosses posteriores vivos. Não altera animações ou expande a campanha; aguardar avaliação humana.
 
 **28/10/2026 · Lia/Nara sem ritmo acelerado · 0.1.163:** revisão autorizada após aprovação de Ivo: Lia prepara/examina/retorna amostras e Nara consulta/anota/observa, cada uma com sequência e pausas próprias. Ivo mantém o ciclo aprovado. [Entrega e limites](settlement-motion/SERVICE_PACING.md). Serviços fixos, saves e protocolo 16 preservados; aguardar playtest humano desta correção antes de outra etapa.
