@@ -1,5 +1,10 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**28/10/2026 · Ritmo de Lia/Nara · 0.1.163:** usuário aprovou o movimento de Ivo e apontou Lia/Nara como vídeo acelerado. Correção restrita: sequências próprias de tarefas, pausas de observação/preparo e ciclos de 10,7 s / 12,75 s; ciclo de Ivo preservado. [Escopo e QA](settlement-motion/SERVICE_PACING.md). Sem nova etapa de campanha. QA técnico e playtest humano registrados separadamente.
+
+- [x] Typecheck/build, medição na cena, serviços por E e reload; Ivo mantém o ritmo aprovado. Dupla compilada com relay 16, ciclos lentos, reentrada e viagem ao acampamento passou.
+- [ ] Playtest humano do ritmo de Lia/Nara antes de outra etapa.
+
 **28/10/2026 · Revisão do movimento autorizada · 0.1.162:** usuário aprovou o conjunto da 0.1.161 e apontou animação robótica. [Revisão e QA](settlement-motion/README.md): partida/frenagem graduais, passada ligada ao deslocamento, preparação/retorno do trabalho com dezesseis figuras inteiras por morador, apoios das bancadas registrados e apresentação entre pacotes no convidado. Preserva âncoras de serviço, campanha, minimapa, derrotas, saves e protocolo 16. Não inicia colonização de outros mapas. **Naturalidade da 0.1.162 aguarda playtest humano**, separado dos testes técnicos.
 
 - [x] Modelo e solo: aceleração, colisões, etapas de trabalho/conversa, cache estável e reload do minimapa; cerca de 60 FPS em uma amostra desktop.

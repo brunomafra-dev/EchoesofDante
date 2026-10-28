@@ -1,0 +1,250 @@
+{
+  "base": "http://localhost:5185",
+  "method": "Actual DEV scene clock over 32 seconds, stationary services, keyboard dialogue and isolated reload. Position fixtures only for inspecting the existing service anchors.",
+  "checks": [
+    "Ivo matches the approved 0.1.162 sequence and timing on every observed scene frame",
+    "Lia and Nara complete their own slow routines without moving their service anchors or rapidly cycling poses",
+    "Actual E still opens Lia/Nara services; isolated reload preserves exploration and later living bosses, real-save/settings sentinels untouched"
+  ],
+  "errors": [],
+  "timing": {
+    "lia": {
+      "cycleMs": 10699.899999999998,
+      "shortestCompletePoseMs": 700,
+      "segments": [
+        {
+          "frame": 1,
+          "start": 10226.1,
+          "duration": 700.1000000000004
+        },
+        {
+          "frame": 5,
+          "start": 10926.2,
+          "duration": 1000
+        },
+        {
+          "frame": 3,
+          "start": 11926.2,
+          "duration": 1100
+        },
+        {
+          "frame": 5,
+          "start": 13026.2,
+          "duration": 750
+        },
+        {
+          "frame": 0,
+          "start": 13776.2,
+          "duration": 3100
+        },
+        {
+          "frame": 1,
+          "start": 16876.2,
+          "duration": 850
+        },
+        {
+          "frame": 2,
+          "start": 17726.2,
+          "duration": 1400
+        },
+        {
+          "frame": 4,
+          "start": 19126.2,
+          "duration": 900.0999999999985
+        },
+        {
+          "frame": 2,
+          "start": 20026.3,
+          "duration": 899.7999999999993
+        },
+        {
+          "frame": 1,
+          "start": 20926.1,
+          "duration": 700.1000000000022
+        },
+        {
+          "frame": 5,
+          "start": 21626.2,
+          "duration": 1000
+        },
+        {
+          "frame": 3,
+          "start": 22626.2,
+          "duration": 1100
+        },
+        {
+          "frame": 5,
+          "start": 23726.2,
+          "duration": 750
+        },
+        {
+          "frame": 0,
+          "start": 24476.2,
+          "duration": 3099.899999999998
+        },
+        {
+          "frame": 1,
+          "start": 27576.1,
+          "duration": 850
+        },
+        {
+          "frame": 2,
+          "start": 28426.1,
+          "duration": 1400
+        },
+        {
+          "frame": 4,
+          "start": 29826.1,
+          "duration": 900.1000000000022
+        },
+        {
+          "frame": 2,
+          "start": 30726.2,
+          "duration": 900
+        },
+        {
+          "frame": 1,
+          "start": 31626.2,
+          "duration": 700
+        },
+        {
+          "frame": 5,
+          "start": 32326.2,
+          "duration": 999.7999999999993
+        },
+        {
+          "frame": 3,
+          "start": 33326,
+          "duration": 1100.0999999999985
+        },
+        {
+          "frame": 5,
+          "start": 34426.1,
+          "duration": 750
+        },
+        {
+          "frame": 0,
+          "start": 35176.1,
+          "duration": 3100
+        },
+        {
+          "frame": 1,
+          "start": 38276.1,
+          "duration": 850
+        },
+        {
+          "frame": 2,
+          "start": 39126.1,
+          "duration": 1399.9000000000015
+        },
+        {
+          "frame": 4,
+          "start": 40526,
+          "duration": 900.0999999999985
+        }
+      ]
+    },
+    "nara": {
+      "cycleMs": 12750,
+      "shortestCompletePoseMs": 850,
+      "segments": [
+        {
+          "frame": 5,
+          "start": 11376.2,
+          "duration": 1100
+        },
+        {
+          "frame": 1,
+          "start": 12476.2,
+          "duration": 1250
+        },
+        {
+          "frame": 5,
+          "start": 13726.2,
+          "duration": 850.0999999999985
+        },
+        {
+          "frame": 2,
+          "start": 14576.3,
+          "duration": 1699.800000000001
+        },
+        {
+          "frame": 3,
+          "start": 16276.1,
+          "duration": 1399.9999999999982
+        },
+        {
+          "frame": 2,
+          "start": 17676.1,
+          "duration": 1250.2000000000007
+        },
+        {
+          "frame": 4,
+          "start": 18926.3,
+          "duration": 1799.7999999999993
+        },
+        {
+          "frame": 0,
+          "start": 20726.1,
+          "duration": 3400.100000000002
+        },
+        {
+          "frame": 5,
+          "start": 24126.2,
+          "duration": 1100
+        },
+        {
+          "frame": 1,
+          "start": 25226.2,
+          "duration": 1249.8999999999978
+        },
+        {
+          "frame": 5,
+          "start": 26476.1,
+          "duration": 850.1000000000022
+        },
+        {
+          "frame": 2,
+          "start": 27326.2,
+          "duration": 1699.8999999999978
+        },
+        {
+          "frame": 3,
+          "start": 29026.1,
+          "duration": 1400
+        },
+        {
+          "frame": 2,
+          "start": 30426.1,
+          "duration": 1250.1000000000022
+        },
+        {
+          "frame": 4,
+          "start": 31676.2,
+          "duration": 1799.8999999999978
+        },
+        {
+          "frame": 0,
+          "start": 33476.1,
+          "duration": 3400
+        },
+        {
+          "frame": 5,
+          "start": 36876.1,
+          "duration": 1100
+        },
+        {
+          "frame": 1,
+          "start": 37976.1,
+          "duration": 1250
+        },
+        {
+          "frame": 5,
+          "start": 39226.1,
+          "duration": 850
+        }
+      ]
+    }
+  },
+  "passed": true
+}

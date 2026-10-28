@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+**28/10/2026 · Lia/Nara sem ritmo acelerado · 0.1.163:** revisão autorizada após aprovação de Ivo: Lia prepara/examina/retorna amostras e Nara consulta/anota/observa, cada uma com sequência e pausas próprias. Ivo mantém o ciclo aprovado. [Entrega e limites](settlement-motion/SERVICE_PACING.md). Serviços fixos, saves e protocolo 16 preservados; aguardar playtest humano desta correção antes de outra etapa.
+
 **28/10/2026 · Rotinas menos robóticas · 0.1.162:** usuário aprovou o conjunto anterior e pediu movimento mais natural/leve. [Entrega e limites](settlement-motion/README.md): aceleração/frenagem, passagem por pontos intermediários, mais etapas de corpo inteiro para iniciar/encerrar tarefas, bancadas com apoio consistente e interpolação de apresentação no coop. Mesmos personagens, regiões, serviços, requisitos, saves e protocolo 16. Não autoriza construir novas colônias ou iniciar entrega D; aguardar avaliação humana do movimento revisado.
 
 Aplicação `4590482` publicada: 50 arquivos conferidos por hash, solo público com diálogo/reload e dois Chrome públicos no relay 16 com serviço animado, reentrada e viagem pelo atlas até os moradores móveis. Saves reais, recibos e bosses posteriores preservados nessa amostra. QA técnico passou; naturalidade aguarda playtest humano.

@@ -35,6 +35,11 @@ try{
  check('Actual guest NPC dialogue accepts the water chapter on '+base+' + relay 16');
  const before=await Promise.all(pages.map(personal));
  const frames=new Set();for(let i=0;i<25;i++){const people=h.wire.world?.permanence?.people;assert.deepEqual(people.map(p=>p.id).sort(),['ivo','lia','nara']);frames.add(people.find(p=>p.id==='ivo').frame);await sleep(180)}assert.ok(frames.size>=4);check('Compiled public world carries three stationary service workers with changing job frames on relay 16');
+ if(process.env.QA_SERVICE_PACING==='1'){
+  const rows=[];for(const deadline=Date.now()+29000;Date.now()<deadline;){const w=h.wire.world;rows.push({time:w.time,people:w.permanence.people});await sleep(40)}report.servicePacing={};
+  for(const[id,period,minimum]of [['lia',10700,500],['nara',12750,650]]){const changes=[];for(const row of rows){const n=row.people.find(n=>n.id===id);assert.deepEqual([n.x,n.y],[rows[0].people.find(n=>n.id===id).x,rows[0].people.find(n=>n.id===id).y]);if(changes.at(-1)?.frame!==n.frame)changes.push({frame:n.frame,time:row.time})}assert.equal(new Set(changes.map(n=>n.frame)).size,6);const durations=changes.slice(1,-1).map((n,i)=>changes[i+2].time-n.time);assert.ok(durations.every(ms=>ms>=minimum));const starts=changes.filter((n,i)=>i>0&&n.frame===0).map(n=>n.time);assert.ok(starts.length>=2);assert.ok(Math.abs(starts[1]-starts[0]-period)<250);report.servicePacing[id]={periodMs:starts[1]-starts[0],shortestPoseMs:Math.min(...durations)};}
+  check('Real relay preserves distinct slow Lia/Nara routines and fixed service anchors across two full cycles');
+ }
  console.log('Reloading guest');const joins=g.wire.joins;delete g.wire.world;await g.reload();await click(g,'play');await click(g,'coop');await click(g,'invite');await g.locator('[name=coop-code]').fill(invite);await click(g,'coop-join');await click(g,'play-character');
  for(let i=0;i<600&&g.wire.joins===joins;i++)await sleep(100);assert.ok(g.wire.joins>joins,'Guest rejoins through saved original character');
  await waitWorld(w=>w.missions.accepted.includes('settle-water'));

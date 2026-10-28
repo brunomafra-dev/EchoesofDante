@@ -1,5 +1,7 @@
 # Movimento mais leve dos NPCs — 0.1.162
 
+Revisão posterior: [ritmo próprio de Dra. Lia e Nara — 0.1.163](SERVICE_PACING.md), após aprovação do movimento de Ivo pelo usuário.
+
 28/10/2026: usuário aprovou o conjunto da 0.1.161 e pediu movimento menos robótico, mais natural e leve. Esta revisão trata das rotinas e apresentação dos NPCs; não inicia colonização de novos mapas ou outro capítulo.
 
 - Moradores aceleram e freiam gradualmente. Curvas dos pontos intermediários conservam movimento; as paradas de trabalho ficam nos extremos da rotina. Passada acompanha a distância realmente percorrida, sem pedalar parado contra uma colisão.

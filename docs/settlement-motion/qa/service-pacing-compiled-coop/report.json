@@ -1,0 +1,67 @@
+{
+  "at": "2026-10-28T17:52:08.258Z",
+  "base": "http://localhost:5193",
+  "method": "Compiled build; two separate Chrome instances, real relay and normal movement/UI with feedback-controlled key pulses for WAN latency. Post-Warden preparation only through reserved lab buttons; no DEV globals.",
+  "checks": [
+    "Two independent public Chrome instances join protocol 16; explicit host lab button simulates only prior reports/chapters",
+    "Actual guest NPC dialogue accepts the water chapter on http://localhost:5193 + relay 16",
+    "Compiled public world carries three stationary service workers with changing job frames on relay 16",
+    "Real relay preserves distinct slow Lia/Nara routines and fixed service anchors across two full cycles",
+    "Guest reload/rejoin retains accepted chapter and animated workers; personal credits/receipts and later living bosses remain unchanged, real-save sentinels untouched",
+    "Normal host atlas travels both players to the camp; moving Tio Gui/Elisa poses remain shared on the real relay",
+    "Temporary public room ends through the normal host menu"
+  ],
+  "errors": [],
+  "servicePacing": {
+    "lia": {
+      "periodMs": 10666.700000000004,
+      "shortestPoseMs": 649.6999999999971
+    },
+    "nara": {
+      "periodMs": 12732.899999999994,
+      "shortestPoseMs": 833.5
+    }
+  },
+  "personal": [
+    {
+      "credits": 300,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter"
+      ],
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "credits": 325,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter"
+      ],
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "protocols": [
+    16,
+    16
+  ],
+  "guestJoins": 2,
+  "passed": true
+}

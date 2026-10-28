@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import {BASE_WORKERS,NPC_SHEETS,SECOND_SETTLERS,firstSettlers,type NpcDefinition,type NpcId,type NpcPose} from '../config/settlementLife';
+import {BASE_WORKERS,NPC_SHEETS,SECOND_SETTLERS,firstSettlers,serviceFrameAt,type NpcDefinition,type NpcId,type NpcPose} from '../config/settlementLife';
 import type {JourneyArea} from './LocalJourney';
 import type {Missions} from './Missions';
 import type {Vec2} from '../utils/math';
@@ -36,10 +36,8 @@ export class SettlementLife{
   for(const definition of desired)if(!this.people.has(definition.id))this.add(definition,now,authority?actors:[]);
   for(const p of this.people.values()){
    if(!authority){const pose=remote?.find(r=>r.id===p.definition.id);if(pose&&[pose.x,pose.y].every(Number.isFinite)&&pose.x>=this.bounds.left&&pose.x<=this.bounds.right&&pose.y>=this.bounds.top&&pose.y<=this.bounds.bottom){const max=p.definition.service?6:16;p.presentation.push({time:now,x:pose.x,y:pose.y,frame:Number.isInteger(pose.frame)&&pose.frame>=0&&pose.frame<max?pose.frame:0,flip:pose.flip===true},localNow);const shown=p.presentation.at(localNow);if(shown){p.position.x=shown.x;p.position.y=shown.y;p.frame=shown.frame;p.flip=shown.flip;}p.talkUntil=Number.isFinite(pose.talkUntil)?Math.min(now+3500,pose.talkUntil!):0;}}
-   else if(p.definition.service){
-    const frames=[0,1,2,5,3,4,3,5,1,0],beats=[470,210,260,120,90,100,120,160,210,380];let phase=(now+p.motion.offset)%2120;p.frame=0;
-    for(let i=0;i<beats.length;i++){if(phase<beats[i]){p.frame=frames[i];break}phase-=beats[i];}
-   }else this.moveResident(p,dt,now,actors);
+   else if(p.definition.service)p.frame=serviceFrameAt(p.definition.id,now+p.motion.offset);
+   else this.moveResident(p,dt,now,actors);
    this.draw(p,viewer,now);
   }
  }
