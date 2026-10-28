@@ -29,7 +29,8 @@ try{
   team[0].send({type:'create',area:'base',profile:profiles[0],campaign:campaigns[0]});
   const joined=await team[0].next('joined');assert.equal(joined.protocol,16);
   team[1].send({type:'join',code:joined.code,profile:profiles[1],campaign:campaigns[1]});assert.equal((await team[1].next('joined')).protocol,16);
-  team[0].send({type:'start'});for(const c of team)c.send({type:'ready',ready:true});
+  team[0].send({type:'start'});await team[0].next('roster',m=>m.campaign.started);
+  for(const c of team)c.send({type:'ready',ready:true});
   await team[0].next('roster',m=>m.campaign.running);
   report.checks.push('Vercel config, HTTP health and both actual WebSocket joins agree on protocol 16');
   team[0].send({type:'world',epoch:0,sequence:1,world:{area:'base',enemies:[],players:Object.fromEntries(ids.map(id=>[id,{potionUsed:0}])),progression:{xp:0},missions:{schema:1,accepted:[...catalogue.ids,'fake'],completed:catalogue.ids,evidence:[...catalogue.evidence,'fake']},permanence:{haul:{x:1200,y:1070,kind:'cargo'}}}});

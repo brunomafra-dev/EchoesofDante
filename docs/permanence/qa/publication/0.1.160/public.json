@@ -1,0 +1,13 @@
+{
+  "base": "https://echosofdante.vercel.app",
+  "method": "Compiled Chrome, no DEV globals; isolated chapter arrival, actual NPC acceptance, reload and real-save/settings sentinels.",
+  "checks": [
+    "water: explicit isolated arrival, real acceptance/reload and untouched real saves/settings",
+    "food: explicit isolated arrival, real acceptance/reload and untouched real saves/settings",
+    "transport: explicit isolated arrival, real acceptance/reload and untouched real saves/settings",
+    "energy: explicit isolated arrival, real acceptance/reload and untouched real saves/settings",
+    "arrivals: explicit isolated arrival, real acceptance/reload and untouched real saves/settings"
+  ],
+  "errors": [],
+  "passed": true
+}

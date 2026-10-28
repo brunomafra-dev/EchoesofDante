@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-28T12:31:57.644Z",
+  "at": "2026-10-28T13:02:31.555Z",
   "relay": "https://echoes-of-dante-rooms.onrender.com",
   "method": "Two temporary WebSocket clients on the public relay. Synthetic catalogue snapshots test transport/filtering, not gameplay completion.",
   "checks": [
