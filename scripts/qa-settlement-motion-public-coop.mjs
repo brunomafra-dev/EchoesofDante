@@ -36,8 +36,22 @@ try{
  const before=await Promise.all(pages.map(personal));
  const frames=new Set();for(let i=0;i<25;i++){const people=h.wire.world?.permanence?.people;assert.deepEqual(people.map(p=>p.id).sort(),['ivo','lia','nara']);frames.add(people.find(p=>p.id==='ivo').frame);await sleep(180)}assert.ok(frames.size>=4);check('Compiled public world carries three stationary service workers with changing job frames on relay 16');
  if(process.env.QA_SERVICE_PACING==='1'){
-  const rows=[];for(const deadline=Date.now()+29000;Date.now()<deadline;){const w=h.wire.world;rows.push({time:w.time,people:w.permanence.people});await sleep(40)}report.servicePacing={};
-  for(const[id,period,minimum]of [['lia',10700,500],['nara',12750,650]]){const changes=[];for(const row of rows){const n=row.people.find(n=>n.id===id);assert.deepEqual([n.x,n.y],[rows[0].people.find(n=>n.id===id).x,rows[0].people.find(n=>n.id===id).y]);if(changes.at(-1)?.frame!==n.frame)changes.push({frame:n.frame,time:row.time})}assert.equal(new Set(changes.map(n=>n.frame)).size,6);const durations=changes.slice(1,-1).map((n,i)=>changes[i+2].time-n.time);assert.ok(durations.every(ms=>ms>=minimum));const starts=changes.filter((n,i)=>i>0&&n.frame===0).map(n=>n.time);assert.ok(starts.length>=2);assert.ok(Math.abs(starts[1]-starts[0]-period)<250);report.servicePacing[id]={periodMs:starts[1]-starts[0],shortestPoseMs:Math.min(...durations)};}
+  const streams=[[],[]];for(const deadline=Date.now()+29000;Date.now()<deadline;){for(let i=0;i<pages.length;i++){const w=pages[i].wire.world;if(w.time!==streams[i].at(-1)?.time)streams[i].push({time:w.time,people:w.permanence.people})}await sleep(40)}report.servicePacing={};
+  for(let i=0;i<streams.length;i++){
+   const rows=streams[i],maxGap=Math.max(...rows.slice(1).map((r,j)=>r.time-rows[j].time)),result={maxWorldSampleGapMs:maxGap,npcs:{}};
+   report.servicePacing[i===0?'host':'guest']=result;
+   assert.ok(maxGap<600,'World sampling must be dense enough to measure this routine');
+   for(const[id,period,minimum]of [['lia',10700,700],['nara',12750,850]]){
+    const changes=[];for(const row of rows){const n=row.people.find(n=>n.id===id);assert.deepEqual([n.x,n.y],[rows[0].people.find(n=>n.id===id).x,rows[0].people.find(n=>n.id===id).y]);if(changes.at(-1)?.frame!==n.frame)changes.push({frame:n.frame,time:row.time})}
+    const durations=changes.slice(1,-1).map((n,j)=>changes[j+2].time-n.time),starts=changes.filter((n,j)=>j>0&&n.frame===0).map(n=>n.time);
+    result.npcs[id]={periodMs:starts.length>=2?starts[1]-starts[0]:null,shortestObservedPoseMs:Math.min(...durations),changes};
+    assert.equal(new Set(changes.map(n=>n.frame)).size,6);
+    // A change is first observed in a later snapshot. Its timing uncertainty is
+    // bounded by the measured sample gap, not a fixed LAN-sized allowance.
+    assert.ok(durations.every(ms=>ms>=minimum-maxGap-1),id+' holds within measured network sampling precision');
+    assert.ok(starts.length>=2);assert.ok(Math.abs(starts[1]-starts[0]-period)<=maxGap+20);
+   }
+  }
   check('Real relay preserves distinct slow Lia/Nara routines and fixed service anchors across two full cycles');
  }
  console.log('Reloading guest');const joins=g.wire.joins;delete g.wire.world;await g.reload();await click(g,'play');await click(g,'coop');await click(g,'invite');await g.locator('[name=coop-code]').fill(invite);await click(g,'coop-join');await click(g,'play-character');

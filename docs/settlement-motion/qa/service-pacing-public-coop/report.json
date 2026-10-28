@@ -1,0 +1,445 @@
+{
+  "at": "2026-10-28T18:11:52.247Z",
+  "base": "https://echosofdante.vercel.app",
+  "method": "Compiled build; two separate Chrome instances, real relay and normal movement/UI with feedback-controlled key pulses for WAN latency. Post-Warden preparation only through reserved lab buttons; no DEV globals.",
+  "checks": [
+    "Two independent public Chrome instances join protocol 16; explicit host lab button simulates only prior reports/chapters",
+    "Actual guest NPC dialogue accepts the water chapter on https://echosofdante.vercel.app + relay 16",
+    "Compiled public world carries three stationary service workers with changing job frames on relay 16",
+    "Real relay preserves distinct slow Lia/Nara routines and fixed service anchors across two full cycles",
+    "Guest reload/rejoin retains accepted chapter and animated workers; personal credits/receipts and later living bosses remain unchanged, real-save sentinels untouched",
+    "Normal host atlas travels both players to the camp; moving Tio Gui/Elisa poses remain shared on the real relay",
+    "Temporary public room ends through the normal host menu"
+  ],
+  "errors": [],
+  "servicePacing": {
+    "host": {
+      "maxWorldSampleGapMs": 317.5,
+      "npcs": {
+        "lia": {
+          "periodMs": 10733.300000000003,
+          "shortestObservedPoseMs": 700,
+          "changes": [
+            {
+              "frame": 0,
+              "time": 58052.3
+            },
+            {
+              "frame": 1,
+              "time": 59702.3
+            },
+            {
+              "frame": 2,
+              "time": 60535.6
+            },
+            {
+              "frame": 4,
+              "time": 61935.6
+            },
+            {
+              "frame": 2,
+              "time": 62902.4
+            },
+            {
+              "frame": 1,
+              "time": 63768.9
+            },
+            {
+              "frame": 5,
+              "time": 64485.6
+            },
+            {
+              "frame": 3,
+              "time": 65535.6
+            },
+            {
+              "frame": 5,
+              "time": 66552.4
+            },
+            {
+              "frame": 0,
+              "time": 67302.3
+            },
+            {
+              "frame": 1,
+              "time": 70485.7
+            },
+            {
+              "frame": 2,
+              "time": 71335.7
+            },
+            {
+              "frame": 4,
+              "time": 72685.6
+            },
+            {
+              "frame": 2,
+              "time": 73618.9
+            },
+            {
+              "frame": 1,
+              "time": 74435.6
+            },
+            {
+              "frame": 5,
+              "time": 75135.6
+            },
+            {
+              "frame": 3,
+              "time": 76169
+            },
+            {
+              "frame": 5,
+              "time": 77319
+            },
+            {
+              "frame": 0,
+              "time": 78035.6
+            },
+            {
+              "frame": 1,
+              "time": 81152.3
+            },
+            {
+              "frame": 2,
+              "time": 81985.6
+            },
+            {
+              "frame": 4,
+              "time": 83352.4
+            },
+            {
+              "frame": 2,
+              "time": 84319
+            },
+            {
+              "frame": 1,
+              "time": 85152.3
+            },
+            {
+              "frame": 5,
+              "time": 85885.6
+            },
+            {
+              "frame": 3,
+              "time": 86852.2
+            }
+          ]
+        },
+        "nara": {
+          "periodMs": 12783.500000000007,
+          "shortestObservedPoseMs": 800,
+          "changes": [
+            {
+              "frame": 4,
+              "time": 58052.3
+            },
+            {
+              "frame": 0,
+              "time": 58985.6
+            },
+            {
+              "frame": 5,
+              "time": 62469
+            },
+            {
+              "frame": 1,
+              "time": 63552.3
+            },
+            {
+              "frame": 5,
+              "time": 64785.6
+            },
+            {
+              "frame": 2,
+              "time": 65635.6
+            },
+            {
+              "frame": 3,
+              "time": 67302.3
+            },
+            {
+              "frame": 2,
+              "time": 68785.7
+            },
+            {
+              "frame": 4,
+              "time": 69952.3
+            },
+            {
+              "frame": 0,
+              "time": 71769.1
+            },
+            {
+              "frame": 5,
+              "time": 75135.6
+            },
+            {
+              "frame": 1,
+              "time": 76269
+            },
+            {
+              "frame": 5,
+              "time": 77535.6
+            },
+            {
+              "frame": 2,
+              "time": 78335.6
+            },
+            {
+              "frame": 3,
+              "time": 80069
+            },
+            {
+              "frame": 2,
+              "time": 81452.3
+            },
+            {
+              "frame": 4,
+              "time": 82718.9
+            },
+            {
+              "frame": 0,
+              "time": 84535.6
+            }
+          ]
+        }
+      }
+    },
+    "guest": {
+      "maxWorldSampleGapMs": 317.5,
+      "npcs": {
+        "lia": {
+          "periodMs": 10733.300000000003,
+          "shortestObservedPoseMs": 700,
+          "changes": [
+            {
+              "frame": 0,
+              "time": 57852.3
+            },
+            {
+              "frame": 1,
+              "time": 59802.3
+            },
+            {
+              "frame": 2,
+              "time": 60535.6
+            },
+            {
+              "frame": 4,
+              "time": 61935.6
+            },
+            {
+              "frame": 2,
+              "time": 62902.4
+            },
+            {
+              "frame": 1,
+              "time": 63768.9
+            },
+            {
+              "frame": 5,
+              "time": 64485.6
+            },
+            {
+              "frame": 3,
+              "time": 65535.6
+            },
+            {
+              "frame": 5,
+              "time": 66552.4
+            },
+            {
+              "frame": 0,
+              "time": 67302.3
+            },
+            {
+              "frame": 1,
+              "time": 70485.7
+            },
+            {
+              "frame": 2,
+              "time": 71335.7
+            },
+            {
+              "frame": 4,
+              "time": 72685.6
+            },
+            {
+              "frame": 2,
+              "time": 73618.9
+            },
+            {
+              "frame": 1,
+              "time": 74435.6
+            },
+            {
+              "frame": 5,
+              "time": 75135.6
+            },
+            {
+              "frame": 3,
+              "time": 76169
+            },
+            {
+              "frame": 5,
+              "time": 77319
+            },
+            {
+              "frame": 0,
+              "time": 78035.6
+            },
+            {
+              "frame": 1,
+              "time": 81152.3
+            },
+            {
+              "frame": 2,
+              "time": 81985.6
+            },
+            {
+              "frame": 4,
+              "time": 83352.4
+            },
+            {
+              "frame": 2,
+              "time": 84319
+            },
+            {
+              "frame": 1,
+              "time": 85152.3
+            },
+            {
+              "frame": 5,
+              "time": 85885.6
+            },
+            {
+              "frame": 3,
+              "time": 86852.2
+            }
+          ]
+        },
+        "nara": {
+          "periodMs": 12783.500000000007,
+          "shortestObservedPoseMs": 800,
+          "changes": [
+            {
+              "frame": 4,
+              "time": 57852.3
+            },
+            {
+              "frame": 0,
+              "time": 58985.6
+            },
+            {
+              "frame": 5,
+              "time": 62469
+            },
+            {
+              "frame": 1,
+              "time": 63552.3
+            },
+            {
+              "frame": 5,
+              "time": 64785.6
+            },
+            {
+              "frame": 2,
+              "time": 65635.6
+            },
+            {
+              "frame": 3,
+              "time": 67302.3
+            },
+            {
+              "frame": 2,
+              "time": 68885.7
+            },
+            {
+              "frame": 4,
+              "time": 69952.3
+            },
+            {
+              "frame": 0,
+              "time": 71769.1
+            },
+            {
+              "frame": 5,
+              "time": 75135.6
+            },
+            {
+              "frame": 1,
+              "time": 76269
+            },
+            {
+              "frame": 5,
+              "time": 77535.6
+            },
+            {
+              "frame": 2,
+              "time": 78335.6
+            },
+            {
+              "frame": 3,
+              "time": 80069
+            },
+            {
+              "frame": 2,
+              "time": 81452.3
+            },
+            {
+              "frame": 4,
+              "time": 82718.9
+            },
+            {
+              "frame": 0,
+              "time": 84535.6
+            }
+          ]
+        }
+      }
+    }
+  },
+  "personal": [
+    {
+      "credits": 300,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter"
+      ],
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "credits": 325,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter"
+      ],
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "protocols": [
+    16,
+    16
+  ],
+  "guestJoins": 2,
+  "passed": true
+}

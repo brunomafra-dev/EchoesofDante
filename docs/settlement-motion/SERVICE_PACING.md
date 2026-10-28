@@ -14,4 +14,12 @@ As sequências continuam sob autoridade do anfitrião e o convidado recebe as po
 
 [Dupla compilada 5193](qa/service-pacing-compiled-coop/report.json): dois Chrome independentes com relay real 16, sem globals DEV, passaram por diálogo do convidado, ciclos lentos de Lia/Nara enviados pelo relay, reload/reentrada, viagem pelo atlas e poses móveis do acampamento. Recibos, créditos, saves reais e bosses posteriores preservados nessa amostra. Nenhuma mudança de backend. Capturas e medição técnica não substituem a avaliação humana da naturalidade.
 
-Publicação será conferida após o push. **Avaliação humana de Lia/Nara pendente**. Ivo já aprovado pelo usuário; a aprovação não se estende automaticamente às outras animações. Controles não foram alterados; não houve novo teste em aparelho físico neste ajuste de ritmo.
+**Avaliação humana de Lia/Nara pendente**. Ivo já aprovado pelo usuário; a aprovação não se estende automaticamente às outras animações. Controles não foram alterados; não houve novo teste em aparelho físico neste ajuste de ritmo.
+
+## Publicação e QA público
+
+Aplicação `b25a2ffd7191a2921edde7eac3744c73501c0dc4` enviada a `origin/main`, publicada na [Vercel](https://vercel.com/brunomafra-devs-projects/echosofdante/9pBXrdCEkKbBJq9ihQfcHBeKC5vo) e confirmada com status GitHub `success`. [Conferência de 50 hashes](qa/publication/0.1.163/hashes.json): 37 JavaScript e 13 arquivos de arte/metadados correspondem à build local. Relay permanece no protocolo 16/revisão `3a5481ff25a20f4313287d2715129bc811b2fb83`.
+
+[Solo público](qa/service-pacing-public/public.json) passou por diálogo/aceite e reload com descoberta preservada. [Dupla pública](qa/service-pacing-public-coop/report.json), em dois Chrome independentes, passou por diálogo do convidado, seis poses de Lia/Nara, âncoras fixas, reload/reentrada, viagem normal ao acampamento pelo atlas e encerramento da sala pelo menu. Créditos, recibos, sentinelas de saves/configurações reais e bosses posteriores vivos preservados. Sem erros de página nessa amostra; captura pública do diário inspecionada.
+
+A coleta inicial usava uma margem fixa de 200 ms para medir poses pela rede e reprovou uma duração de Nara. O verificador passou a registrar as mudanças e o maior intervalo entre amostras, nos dois participantes, limitando a incerteza de medição por esse intervalo; nenhuma mudança adicional de código do jogo foi necessária. Na repetição, ambos receberam ciclos de 10733,3 ms / 12783,5 ms, poses observadas de pelo menos 700 ms / 800 ms e intervalo máximo de amostragem de 317,5 ms. Esses tempos recebidos não equivalem à medição local de cada quadro nem a aprovação humana de fluidez.
