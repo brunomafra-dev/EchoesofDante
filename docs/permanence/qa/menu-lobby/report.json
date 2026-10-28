@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-28T12:51:08.661Z",
+  "method": "Actual PartyLobby.ts, transpiled without changing its behavior, against real local relays 15 (fc0f552) and 16. Read-only room inspection; no gameplay or progression fixtures.",
+  "checks": [
+    "Relay 15: real room inspection preserves occupied class/team size; missing room is rejected",
+    "Relay 16: real room inspection preserves occupied class/team size; missing room is rejected"
+  ],
+  "passed": true
+}

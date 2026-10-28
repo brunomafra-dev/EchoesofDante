@@ -111,6 +111,22 @@ Scripts principais: `qa-permanence.mjs`, `qa-permanence-coop.mjs`, `qa-permanenc
 | 0.1.158 | Energia / compatibilidade anterior | `02483b1dbd7cc4123dceb26f386cd7ce479e7d33` |
 | 0.1.159 | Segunda equipe | `8e80eb1303787da4826070ab1637bf5b124ad568` |
 
-Os cinco sprints tiveram QA, commit e push próprios, sem antecipar a entrega D. Todos os laboratórios estão publicados no solo e registrados na biblioteca. **Pendência externa real:** o Render público ainda informa protocolo 15/revisão `1247c89c2150896bf9797512e354323ead7f4d7b`; foi solicitado ao usuário publicar o último commit no serviço `echoes-of-dante-rooms`. Enquanto isso, o cliente mantém as campanhas anteriores nesse relay e impede começar/perder capítulos novos. Dupla local 16 passou nos cinco capítulos; isso não é declaração de dupla pública nova aprovada. Publicar o relay 16 e conferir saúde/catálogo/fluxo público antes de encerrar essa pendência.
+Os cinco sprints tiveram QA, commit e push próprios, sem antecipar a entrega D. Todos os laboratórios foram publicados no solo e registrados na biblioteca. **Histórico de 27/10:** o Render ainda informava protocolo 15/revisão `1247c89c2150896bf9797512e354323ead7f4d7b`; o cliente preservou campanhas anteriores e bloqueou os capítulos novos nesse relay. Em 28/10 o usuário publicou `ae96140`; saúde e WebSocket passaram a informar protocolo 16. [Catálogo público](qa/public-relay-16/report.json): cinco capítulos, 25 evidências, posição opcional da carga e requisição autenticada do convidado conferidos com duas conexões temporárias. Snapshots sintéticos verificam transporte/filtro, sem representar conclusão jogável. A validação da interface pública é descrita na manutenção abaixo.
 
-A última revisão de evidências altera somente documentação/testes; mantém a versão da aplicação. Conferência final pode usar `python scripts/verify-permanence-publication.py verify 0.1.159 --read-only`, preservando o registro do commit de implementação. Aprovação humana dos cinco capítulos segue pendente.
+A revisão histórica `ae96140` alterou somente documentação/testes e manteve a versão da aplicação. Conferências com `--read-only` preservam o registro de implementação de cada versão. Aprovação humana dos cinco capítulos segue pendente.
+
+## 28/10 — Retorno ao menu e coop público · 0.1.160
+
+A automação pública encontrou um bloqueio no laboratório: depois de “Voltar à tela inicial”, a chegada automática reabria o solo e impedia alcançar Jogar → Cooperativo. O shell agora emite um evento depois de salvar/desconectar com sucesso; somente o laboratório de permanência guarda uma intenção temporária de abrir o menu na próxima carga. A chegada automática sem pedido explícito fica restrita ao personagem solo. Personagens coop usam o menu/convite para reunir sua equipe original depois de recarregar. Namespace/recibos, campanha principal, bosses e protocolo 16 não mudam.
+
+A consulta inicial do convite (`PartyLobby`) ainda aceitava apenas protocolo 15, embora `CoopSession` já aceitasse 16. Agora ambos aceitam 15/16. As guardas existentes continuam impedindo capítulos novos no relay 15; aceitar a inspeção da sala não altera essa restrição.
+
+[Laboratório direto](https://echosofdante.vercel.app/campaign-playtest.html?permanence=arrivals&v=0.1.160), registrado na biblioteca. Simula Warden/sete relatórios e os quatro capítulos anteriores, deixando recepção e seus 120 créditos pendentes. Para equipe, volte ao menu, crie/reúna os personagens e use o preparo explícito do anfitrião. Não há vitória simulada dos três bosses posteriores.
+
+- [x] Typecheck/build finais: passaram; permanece o aviso conhecido de tamanho dos chunks Phaser/GameScene.
+- [x] [Inspeção 15/16](qa/menu-lobby/report.json): função real `PartyLobby` transpilada e executada contra relays reais 15 histórico e 16 atual, incluindo classe ocupada, tamanho de equipe e recusa de sala inexistente.
+- [x] [Dupla compilada](qa/menu-coop-compiled/report.json): dois Chrome, sem globais DEV; solo → menu → criação, convite/nomes próprios, preparo explícito, aceite por diálogo e manifesto com E do convidado. Reload → menu → convite → personagem original mantém objetivo, créditos/recibos e bosses posteriores vivos. Sentinelas de personagens/configurações reais intactas. Captura do diário inspecionada.
+- [x] [Solo compilado nos cinco capítulos](qa/menu-solo-compiled/public.json): aceite/reload continuam funcionando e personagens/configurações reais permanecem intactos; biblioteca contém os cinco links. Captura da água inspecionada.
+- [x] [Relay público](qa/public-relay-16/report.json): catálogo completo e requisição autenticada. Snapshots sintéticos, sem afirmar execução jogável de cada objetivo.
+- [ ] Publicação da correção e repetição do fluxo de dupla na Vercel/Render.
+- [ ] Aprovação humana dos cinco capítulos; não iniciar entrega D. Esta manutenção não repete o percurso completo de cinco capítulos nem constitui avaliação de dificuldade/duração.

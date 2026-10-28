@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-28T12:31:57.644Z",
+  "relay": "https://echoes-of-dante-rooms.onrender.com",
+  "method": "Two temporary WebSocket clients on the public relay. Synthetic catalogue snapshots test transport/filtering, not gameplay completion.",
+  "checks": [
+    "Vercel config, HTTP health and both actual WebSocket joins agree on protocol 16",
+    "All five chapter IDs, 25 evidence IDs and optional cargo pose survive the deployed relay; unknown IDs are removed",
+    "Authenticated guest chapter request and host result travel through the public service"
+  ],
+  "health": {
+    "service": "Dante regional co-op",
+    "protocol": 16,
+    "missions": true,
+    "chat": true,
+    "capacity": 4,
+    "uniqueClasses": true,
+    "fixedCampaigns": true,
+    "revision": "ae961401a9098db4ae581bdac0ec414b3d48dee7",
+    "campaign": true,
+    "rooms": 0,
+    "players": 0
+  },
+  "passed": true
+}

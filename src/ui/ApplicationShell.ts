@@ -229,7 +229,7 @@ export class ApplicationShell {
     if (!coopSession.disconnect(false)) {this.status('Libere o armazenamento para guardar as recompensas antes de sair.');return;}
     this.attempt++; this.busy = false;
     clearInvitation(); try { sessionStorage.removeItem(LAUNCH); sessionStorage.removeItem(APPROVAL); } catch { /* No auto launch. */ }
-    this.launching = true; location.reload();
+    this.launching = true; window.dispatchEvent(new Event('dante-return-home')); location.reload();
   }
   private render(): void {
     this.selection?.destroy(); this.selection = undefined; this.content.replaceChildren();

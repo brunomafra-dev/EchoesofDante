@@ -23,6 +23,9 @@ const depthTest=new URLSearchParams(location.search).has('depth');
 const settlementTest=new URLSearchParams(location.search).has('settlement');
 const prefix=embersTest?`dante-embers-journey-v1.${routeArrival??'journey'}.`:borealTest?`dante-boreal-journey-v1.${routeArrival??'journey'}.`:siroccoTest?`dante-sirocco-journey-v1.${routeArrival??'journey'}.`:routeTest?`dante-early-route-v2.${routeArrival??'journey'}.`:depthTest?`dante-regional-lab.${mobileClass??'warrior'}.`:new URLSearchParams(location.search).has('journey')?'dante-journey-review-lab.':mobileTest?`dante-mobile-lab.${mobileClass??'warrior'}.`:settlementTest?'dante-settlement-lab-v2.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
 const labPrefix=permanenceTest?'dante-permanence-v1.'+permanenceChapter+'.'+(mobileClass??'warrior')+'.':titanTest?'dante-titan-combat-v1.'+(mobileClass??'warrior')+'.':vesperTest?'dante-vesper-combat-v2.'+(mobileClass??'warrior')+'.':soterradoTest?'dante-soterrado-combat-v1.'+(mobileClass??'warrior')+'.':wardenTest?'dante-warden-combat-v2.'+ (mobileClass??'warrior')+'.':prefix;
+// An explicit trip home must survive the lab's otherwise automatic arrival.
+const labHome=permanenceTest&&get.call(sessionStorage,labPrefix+'home-once')==='1';
+if(permanenceTest){remove.call(sessionStorage,labPrefix+'home-once');window.addEventListener('dante-return-home',()=>set.call(sessionStorage,labPrefix+'home-once','1'));}
 const isolatedKey=(storage:Storage,key:string)=>labPrefix+(storage===localStorage?'local.':'session.')+key;
 Storage.prototype.getItem=function(key){return key.startsWith('echoes-of-dante.')?get.call(sessionStorage,isolatedKey(this,key)):get.call(this,key)};
 Storage.prototype.setItem=function(key,value){if(key.startsWith('echoes-of-dante.'))set.call(sessionStorage,isolatedKey(this,key),String(value));else set.call(this,key,value)};
@@ -39,7 +42,8 @@ if(missionTest||routeTest||bossTest){
   if(!characterProfiles.list.length){const selectedClass=(mobileTest||depthTest||routeTest||bossTest||permanenceTest)&&['warrior','hunter','astral','xenobinder'].includes(mobileClass??'')?mobileClass as import('../../config/classes').PlayableClass:'warrior';const hero=characterProfiles.create('Pioneiro',selectedClass,'male',{mode:'solo',difficulty:'normal'});
    if(hero){characterProfiles.select(hero.id);characterProfiles.markIntroSeen(hero.id);sessionStorage.setItem('echoes-of-dante.launch-once',hero.id);}
   }
-  if((routeArrival||bossTest||permanenceTest)&&characterProfiles.list.length)sessionStorage.setItem('echoes-of-dante.launch-once',characterProfiles.active.id);
+  const autoSolo=permanenceTest&&!labHome&&characterProfiles.active.campaign?.mode!=='coop';
+  if((routeArrival||bossTest||autoSolo)&&characterProfiles.list.length)sessionStorage.setItem('echoes-of-dante.launch-once',characterProfiles.active.id);
  }
 }
 document.body.append(details);
