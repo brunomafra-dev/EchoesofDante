@@ -3,7 +3,8 @@
 **28/10/2026 · Primeiro posto autorizado · 0.1.166 em desenvolvimento:** usuário respondeu “vamo” à proposta de ocupar uma região conquistada. [Escopo e evidências](outpost/README.md): Bacia das Nascentes, condições de sobrevivência/apoio, carga física, fundação seca e transferência de Mara/Choco. Autorização atual permite este primeiro capítulo da entrega D, preservando requisitos, derrotas finitas, moradores/serviços existentes e saves. Não autoriza outro sprint sem playtest desta entrega; não registra aprovação integral ou duração dos cinco capítulos anteriores.
 
 - [x] 29/10: implementação e QA local do posto: modelo/saves antigos, solo/dupla completos, ameaça restante, carga por movimento real, morte/R/reload, migração exclusiva dos moradores, colisões/atlas e controles emulados. Build de 255 módulos; solo e dupla compilados locais sem globais DEV passaram. Evidências no documento do capítulo.
-- [ ] Publicação da aplicação e relay com capacidade do posto, conferidas externamente.
+- [x] Aplicação `664b039` publicada no solo: Vercel `success`, 62 hashes e Chrome público com aceite/reload nos capítulos do posto/água/chegada, preservando saves reais.
+- [ ] Coop público: WebSocket real ainda responde 16 sem capacidade do posto. Atualização do Render solicitada; conferir capacidade e dupla pública após deploy. Detalhes no documento do capítulo.
 - [ ] Avaliação humana deste capítulo antes de outra etapa.
 
 **28/10/2026 · Aprovação humana dos NPCs · 0.1.165:** após receber os acessos e as correções, o usuário respondeu “Gostei” e perguntou pela próxima etapa. Aprova as figuras/tarefas desta entrega; QA técnico e publicação permanecem registrados abaixo. Não constitui medição de duração ou playtest completo dos cinco capítulos da permanência. A entrega D permanece planejamento, sem novo sprint autorizado por esta pergunta.

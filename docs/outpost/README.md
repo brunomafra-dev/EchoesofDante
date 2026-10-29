@@ -22,7 +22,7 @@ Protocolo permanece 16: transporte, evidências e pessoas usam formatos existent
 - [x] Solo, pré-requisitos, escolha, carga, colisões, morte/reload, recompensa única e saves anteriores.
 - [x] Anfitrião/convidado, transferência dos moradores e reconexão, com dois Chrome locais.
 - [x] Touch/gamepad emulados, resoluções e inspeção visual das capturas.
-- [ ] Commit/push sincronizados e aplicação pública conferida.
+- [x] Commit de aplicação `664b039d74f04bec8dc970744b7fe35ec4aa5851` enviado e sincronizado; aplicação pública conferida.
 - [ ] Compatibilidade real do relay público conferida.
 - [ ] Playtest humano deste capítulo. Aguardar antes de outra etapa.
 
@@ -43,3 +43,9 @@ QA técnico não mede diversão, duração ou naturalidade humana. Sem teste em 
 [Relay com quatro conexões](qa/protocol/mission-protocol.json): seis capítulos, 34 IDs de evidência, filtros, autoridade e viagens reais do protocolo 16. Não representa equipe humana de quatro. [Compatibilidade com relay 16 anterior](qa/compatibility/report.json), revisão `3a5481f` e catálogo históricos: conexão do capítulo antigo/inspeção de sala preservadas; laboratório novo e save com posto aceito recusados sem perder objetivos; atualização da capacidade permite reconectar. É conferência de handshake/guardas, não repetição de todos os capítulos no relay antigo.
 
 [Solo compilado](qa/compiled-solo/public.json), sem globais DEV: aceite/reload e sentinelas reais nos capítulos do posto, água e chegada. [Dupla compilada](qa/compiled-coop/report.json), **http://localhost:5194**, com dois Chrome independentes e relay local: criação/convite/preparo pelo botão, aceite real de Nara pelo convidado, atlas para a Bacia, caminhada pela rota sul e E na linha de cheia. Reload/reentrada mantém objetivo, créditos e recibos; bosses posteriores vivos e sentinelas reais intactas. A sala foi encerrada pelo menu normal. É amostra compilada local, não QA de Vercel/Render; o percurso completo/entrega foi coberto na dupla DEV acima.
+
+### 29/10 — Publicação solo / coop público pendente
+
+[Vercel da aplicação](https://vercel.com/brunomafra-devs-projects/echosofdante/HX4TvDjsPEPZx83KTGNU8CdKWiZh) com status `success`. [62 hashes](qa/publication/hashes.json), incluindo JavaScript, folhas dos moradores e arte dos módulos, correspondem à build local. [Chrome no endereço público](qa/public-solo/public.json): posto, água e chegada passaram por aceite/reload, sem globais DEV e com sentinelas de personagens/configurações reais intactas. A biblioteca pública contém o acesso da 0.1.166. **Disponível no solo; avaliação humana pendente.**
+
+A saúde HTTP do Render excedeu os timeouts, mas a [conexão real de sala](qa/public-relay/report.json) respondeu **protocolo 16, sem `outposts:1`**. A incompatibilidade do catálogo foi confirmada no WebSocket, sem simular vitória ou objetivos. O teste criou e encerrou uma sala temporária; credenciais não foram registradas. As guardas recusam o novo capítulo nesse relay para preservar os saves; não se declara o posto disponível no coop público. Foi solicitado ao usuário executar **Deploy latest commit** no serviço `echoes-of-dante-rooms`, com o código já no GitHub. Resta repetir a capacidade e a dupla pública após essa atualização; os testes locais não substituem esse gate externo.

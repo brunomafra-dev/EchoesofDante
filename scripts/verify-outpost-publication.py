@@ -32,8 +32,12 @@ else:
         return path
     with ThreadPoolExecutor(max_workers=6) as pool:
         verified = list(pool.map(verify, manifest['assets'].items()))
-    with urllib.request.urlopen('https://echoes-of-dante-rooms.onrender.com/coop/health', timeout=40) as response:
-        relay = json.load(response)
+    try:
+        with urllib.request.urlopen('https://echoes-of-dante-rooms.onrender.com/coop/health', timeout=20) as response:
+            relay = json.load(response)
+    except Exception as error:
+        # Frontend publication and relay availability are separate gates.
+        relay = {'unavailable': str(error)}
     result = {'version': version, 'verifiedAt': datetime.now(timezone.utc).isoformat(), 'buildPublished': True, 'verifiedFiles': verified, 'sha256': manifest['assets'], 'relay': relay, 'coopCompatible': relay.get('protocol') == 16 and relay.get('outposts') == 1}
     out = Path('docs/outpost/qa/publication')
     out.mkdir(parents=True, exist_ok=True)
