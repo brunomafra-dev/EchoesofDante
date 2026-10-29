@@ -1,0 +1,11 @@
+{
+  "revision": "e968e0725a3de70f38fa0cdc48cc641d322f61d1",
+  "method": "Latest browser client against exact public pre-circuit relay 16 and its historical catalogue. Real room handshakes/capability refusal; no synthetic chapter completion.",
+  "checks": [
+    "Previous signal lab and room inspection connect on actual historical protocol 16; only the new circuit capability is unavailable",
+    "Direct circuit lab refuses incompatible relay before joining a filtered campaign",
+    "Accepted circuit in a normal campaign URL also refuses old relay without losing evidence; updated relay reconnect restores capability with identical objectives"
+  ],
+  "errors": [],
+  "passed": true
+}

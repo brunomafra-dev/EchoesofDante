@@ -25,6 +25,8 @@ export class Missions{
  permanenceAvailable=true;
  outpostAvailable=true;
  signalAvailable=true;
+ circuitAvailable=true;
+ setCircuitAvailable(value:boolean):void{if(value!==this.circuitAvailable){this.circuitAvailable=value;this.version++;}}
  setSignalAvailable(value:boolean):void{if(value!==this.signalAvailable){this.signalAvailable=value;this.version++;}}
  setOutpostAvailable(value:boolean):void{if(value!==this.outpostAvailable){this.outpostAvailable=value;this.version++;}}
  setPermanenceAvailable(value:boolean):void{if(value!==this.permanenceAvailable){this.permanenceAvailable=value;this.version++;}}
@@ -36,6 +38,7 @@ export class Missions{
   if(this.state.completed.includes(id))return 'completed';
   if(id==='settle-outpost'&&!this.outpostAvailable)return 'locked';
   if(id==='settle-signal'&&!this.signalAvailable)return 'locked';
+  if(id==='settle-echo'&&!this.circuitAvailable)return 'locked';
   if(isPermanence(id)&&!this.permanenceAvailable)return 'locked';
   if(d.requires&&!this.state.completed.includes(d.requires))return 'locked';
   if(d.unlock&&!this.has(d.unlock))return 'locked';
@@ -44,6 +47,12 @@ export class Missions{
  }
  has(id:MissionEvidence):boolean{return this.state.evidence.includes(id);}
  record(id:MissionEvidence):boolean{if(this.has(id))return false;this.state.evidence.push(id);this.version++;return true;}
+ // Only the two authored switches are reversible. Report evidence/receipts
+ // remain monotonic; turning a switch never grants completion or rewards.
+ setCircuitTurn(one:'pr-a-1'|'pr-b-1',two:'pr-a-2'|'pr-b-2',turn:number):void{
+  this.state.evidence=this.state.evidence.filter(id=>id!==one&&id!==two);
+  if(turn===1)this.state.evidence.push(one);else if(turn===2)this.state.evidence.push(two);this.version++;
+ }
  observe(facts:{echoes:number;passage:boolean;firstEcho:boolean;warden:boolean}):boolean{
   const before=this.version;
   for(const [i,id]of ['echo1','echo2','echo3'].entries())if(facts.echoes>i)this.record(id as MissionEvidence);

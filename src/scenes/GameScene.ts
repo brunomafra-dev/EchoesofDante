@@ -757,6 +757,7 @@ export class GameScene extends Phaser.Scene {
     this.missions.setPermanenceAvailable(coopSession.role==='offline'||coopSession.serverProtocol===16);
     this.missions.setOutpostAvailable(coopSession.role==='offline'||coopSession.outpostsAvailable);
     this.missions.setSignalAvailable(coopSession.role==='offline'||coopSession.signalsAvailable);
+    this.missions.setCircuitAvailable(coopSession.role==='offline'||coopSession.circuitsAvailable);
     time -= this.recordsTimeOffset;
     if (this.transitioning) return;
     if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return;
@@ -764,7 +765,9 @@ export class GameScene extends Phaser.Scene {
     if(!this.inputModalOpen&&this.canUseOutpostServices()&&(this.controls.interactPressed||this.clickedInteraction)){this.clickedInteraction=false;this.basePanel.open('outpost');return;}
     if(this.area==='base'&&!this.inputModalOpen&&(BASE.services.some(s=>distance(this.player.position,s)<100)||coopSession.role!=='guest'&&distance(this.player.position,BASE.exit)<105)&&this.controls.interactPressed){const service=BASE.services.find(s=>distance(this.player.position,s)<100);if(service){if(this.missionUi)this.missionUi.openNpc(service.id);else this.basePanel.open(service.id);return;}if(coopSession.role!=='guest'&&distance(this.player.position,BASE.exit)<105){this.transitionArea('forest');return;}}
     const previousSolids=this.arena.obstacles.length;
-    this.permanence?.update(this.missions,this.player.position,coopSession.role==='guest'?coopSession.world?.time??time:time,[this.player,...(this.party?.players??[])],coopSession.role!=='guest',coopSession.world?.permanence);
+    if(this.permanence?.update(this.missions,this.player.position,coopSession.role==='guest'?coopSession.world?.time??time:time,[this.player,...(this.party?.players??[])],coopSession.role!=='guest',coopSession.world?.permanence)){
+      this.hud.showDiscovery('LIGAÇÃO ESTABILIZADA\nO pulso chegou à superfície de retorno. Registre a leitura a leste.');this.sounds.discovery();this.saveProgress();
+    }
     this.settlementLife?.update(this.missions,this.player.position,coopSession.role==='guest'?coopSession.world?.time??time:time,[this.player,...(this.party?.players??[])],coopSession.role!=='guest',coopSession.world?.permanence?.people);
     if(this.arena.obstacles.length!==previousSolids)for(const p of [this.player,...(this.party?.players??[])])if(this.arena.obstacles.some(o=>distance(p.position,o)<p.radius+o.radius))Object.assign(p.position,safeExpeditionPosition(p.position,p.radius,this.arena.obstacles,this.movementBounds)??p.position);
     this.missionWorld?.update(this.missions,this.player.position);
@@ -816,7 +819,8 @@ export class GameScene extends Phaser.Scene {
     const resident=interactionDead?undefined:this.settlementLife?.greetingAt(interactionPosition);
     if(interact&&resident&&!missionSite){this.settlementLife?.greet(resident.id,time);this.hud.showDiscovery(resident.name.toLocaleUpperCase('pt-BR')+'\n'+resident.text);this.sounds.discovery();interact=false;}
     if(interact&&missionSite){
-      if('reject' in missionSite&&missionSite.reject){this.hud.showDiscovery(missionSite.reject);this.sounds.discovery();interact=false;}
+      if('circuit' in missionSite&&missionSite.circuit){this.hud.showDiscovery(this.permanence!.interactCircuit(missionSite.circuit,this.missions,time));this.sounds.discovery();this.saveProgress();interact=false;}
+      else if('reject' in missionSite&&missionSite.reject){this.hud.showDiscovery(missionSite.reject);this.sounds.discovery();interact=false;}
       else if('aimAt' in missionSite&&missionSite.aimAt&&!signalAligned(interactionPosition,interactionPlayer?.rotation??NaN,missionSite.aimAt)){this.hud.showDiscovery('O filtro ainda recebe a baliza humana. Oriente sua mira para a nervura luminosa a leste e confirme o alinhamento.');this.sounds.discovery();interact=false;}
       else {
       this.missions.record(missionSite.id);
@@ -1347,7 +1351,7 @@ export class GameScene extends Phaser.Scene {
       this.sounds.ancient();
     }
     const approach = this.cavern?.wardenApproach;
-    approach?.showRecord(this.player.position);
+    approach?.showRecord(this.player.position,this.missions.status('settle-echo')!=='active');
     const nearArchive = distance(this.player.position, W.echo) <= W.echo.approachRadius;
     this.sounds.setMusicFocus(approach?.responding ? 0.2 : nearArchive ? 0.55 : this.player.position.x > 5830 ? 0.45 : 1);
     if (this.fragmentSeen && approach?.approach(this.player.position)) this.sounds.signal();
@@ -2470,6 +2474,7 @@ export class GameScene extends Phaser.Scene {
     const params=new URLSearchParams(location.search),review=reviewStop&&params.has('npc-review')?npcReviewSelection(reviewStop,reviewNpc):undefined;
     if(reviewStop&&(!review||review.stop.stage!==id))return false;
     if(id==='settle-outpost'&&coopSession.role!=='offline'&&!coopSession.outpostsAvailable||id==='settle-signal'&&coopSession.role!=='offline'&&!coopSession.signalsAvailable)return false;
+    if(id==='settle-echo'&&coopSession.role!=='offline'&&!coopSession.circuitsAvailable)return false;
     if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!['missions','permanence','settlement-life','settlement-motion','npc-review','outpost-support'].some(key=>params.has(key))||this.inputModalOpen||this.transitioning||coopSession.role==='guest'||!this.player||this.player.isDead)return false;
     if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return false;
     const ids=['recon','survival','signal','beyond','water-source','safe-route','shelter',...PERMANENCE_IDS] as const,index=(ids as readonly MissionId[]).indexOf(id);if(index<0)return false;
@@ -2481,7 +2486,8 @@ export class GameScene extends Phaser.Scene {
     }
     if(index>=4){this.valleyVisited=true;this.valleyCheckpointReached=true;this.economy.visited=[...new Set([...this.economy.visited,'warden','valley'] as JourneyArea[])];this.progression.restore({...this.progression.snapshot(),xp:350,bossRewards:['warden']});this.economy.credits=300;this.economy.materials=[24,20,0];this.economy.potions=5;for(const upgrade of ['chargePower','dashDuration','chargeWidth'] as const)for(let i=0;i<3;i++)this.progression.investUpgrade(upgrade);}
     if(isPermanence(id)){this.springsVisited=true;this.terracesVisited=true;this.economy.visited=[...new Set([...this.economy.visited,'springs','terraces'] as JourneyArea[])];}
-    if(id==='settle-outpost'||id==='settle-signal'){
+    if(id==='settle-echo')this.economy.visited=[...new Set([...this.economy.visited,'cavern'] as JourneyArea[])];
+    if(id==='settle-outpost'||id==='settle-signal'||id==='settle-echo'){
       // The lab inspects occupation of an already conquered region. Preserve
       // existing XP/resources: simulated defeats confer no combat rewards.
       const defeated=[...new Set([...this.progression.snapshot().rewardedHollows,...outpostThreats(characterProfiles.active.campaign?.size??1)])];
@@ -2613,6 +2619,7 @@ export class GameScene extends Phaser.Scene {
     if(isPermanence(id)&&haul){const target=distance(this.player.position,haul)>240?{...haul,name:'Carga reservada',radius:75}:PERMANENCE_SITES.find(s=>s.mission===id&&s.haul)!;return{...target,instruction:'Conduza a carga pelo chão baixo; ela espera se a equipe se afastar.',interactionLabel:'DESCARREGAR',action:'investigate'};}
     const chapterSite=PERMANENCE_SITES.filter(s=>s.mission===id&&!this.missions.has(s.id)&&!s.needs?.some(e=>!this.missions.has(e))).sort((a,b)=>id==='settle-signal'?Number(b.area===this.area)-Number(a.area===this.area):0)[0];
     if(chapterSite?.choice)return;
+    if(id==='settle-echo'&&chapterSite?.circuit&&this.area==='cavern')return{...chapterSite,instruction:'Gire os desviadores seguindo a luz e emita o pulso no aparelho ao sul.',interactionLabel:chapterSite.action,action:'investigate'};
     if(chapterSite?.area===this.area)return{...chapterSite,instruction:chapterSite.aimAt?'Oriente a mira para a nervura luminosa e confirme o alinhamento.':'Use o equipamento reservado e registre o resultado.',interactionLabel:chapterSite.action,action:'investigate'};
     if(id==='settle-signal'&&chapterSite?.area==='valley'&&this.area==='springs')return{...COLONY.springs.back,radius:105,name:'Voltar ao Vale da Ressonância',instruction:'Compare a rocha seca do Vale com os registros da Bacia.',interactionLabel:'ENTRAR',action:'enter'};
     const colonyMission=['water-source','safe-route','shelter'].includes(id)||isPermanence(id);

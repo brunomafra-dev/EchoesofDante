@@ -1,0 +1,67 @@
+{
+  "method": "DEV explicit copy/origin/position fixture; actual WASD/Dash collision, common lethal damage/R/reload, geometric original-route navigation and stable cached returns.",
+  "checks": [
+    "Both switches/emitter/return and original entry/depth/fragment/threshold remain physically clear and connected",
+    "Actual WASD/Dash respects the visible relay footprint",
+    "Common death/R/reload keeps switch direction and partial chapter without inventing pulse completion/archive",
+    "Three returns preserve object/texture/collider counts and exactly one archive with a clear approach"
+  ],
+  "routes": [
+    {
+      "id": "source",
+      "clear": true,
+      "steps": 8,
+      "gap": 18.110770276274835
+    },
+    {
+      "id": "a",
+      "clear": true,
+      "steps": 4,
+      "gap": 11.6619037896906
+    },
+    {
+      "id": "b",
+      "clear": true,
+      "steps": 8,
+      "gap": 17.08800749063506
+    },
+    {
+      "id": "sink",
+      "clear": true,
+      "steps": 6,
+      "gap": 17.88854381999832
+    },
+    {
+      "id": "origin",
+      "clear": true,
+      "steps": 3,
+      "gap": 8.246211251235321
+    },
+    {
+      "id": "entry",
+      "clear": true,
+      "steps": 125,
+      "gap": 25.455844122715714
+    },
+    {
+      "id": "depth",
+      "clear": true,
+      "steps": 98,
+      "gap": 15.620499351813312
+    },
+    {
+      "id": "fragment",
+      "clear": true,
+      "steps": 22,
+      "gap": 8.246211251235321
+    },
+    {
+      "id": "threshold",
+      "clear": true,
+      "steps": 13,
+      "gap": 20
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

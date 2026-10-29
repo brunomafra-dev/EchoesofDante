@@ -1,12 +1,19 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**29/10/2026 · O rastro do Primeiro Eco · 0.1.170 em desenvolvimento:** usuário testou a 0.1.169, respondeu “ficou excelente” e autorizou a proposta seguinte. Um capítulo: comparar o registro antigo, conduzir um pulso por dois desviadores e arquivar o percurso com Nara. Reutiliza o corredor existente antes do limiar do Warden; preserva portais, bosses, encontros finitos, arte e sistemas do assentamento. Cinco objetivos, 150 créditos únicos; sem tradução definitiva ou origem humana confirmada. [Escopo e evidências](echo-circuit/README.md). Somente este sprint; aguardar playtest humano antes de outro.
+
+- [x] Investigação 0.1.169 aprovada pelo usuário: “Já testei ficou excelente”.
+- [x] Implementação, typecheck/build 260 módulos, nove combinações/save antigo/recibo único, solo/dupla completos, navegação/colisões/morte/reload, quatro classes touch/gamepad e circuito compilado sem globais DEV passaram. [Evidências e fixtures](echo-circuit/README.md), com capturas inspecionadas pelo agente.
+- [ ] Build, laboratório registrado, commit/push, sincronização e publicação verificada.
+- [ ] Playtest humano do circuito antes de outra etapa.
+
 **29/10/2026 · Retomada da investigação · 0.1.169 publicada:** após aprovar a barra/poção (“ficou muito bom”) e confirmar os aliados no coop, o usuário pediu voltar à implementação. [Uma frequência a mais](signal-expedition/README.md): capítulo único após o posto, comparação de sinais na Bacia/Vale, alinhamento pela mira do integrante e arquivo isolado. Ivo recebe o relatório; 130 créditos únicos, sem XP novo, novos mapas ou origem definitiva das estruturas. Campanha, criaturas finitas, arte e protocolo 16 preservados; catálogo `signals:1` confirmado no relay público. Aguardar playtest antes de outra etapa.
 
 - [x] Apresentação de vida/poção 0.1.168 aprovada pelo usuário em 29/10/2026; publicação/QA registrados abaixo.
 - [x] 0.1.169: typecheck/build 258 módulos, save 0.1.166/recibo atômico, solo/dupla completos, mira do ator correto, navegação/colisões/morte/reload, quatro classes/touch/gamepad e relay 16 anterior passaram. Alinhamento e início da dupla compilados sem globais DEV passaram. [Evidências e fixtures](signal-expedition/README.md), separadas da avaliação humana.
 - [x] Solo publicado: aplicação `e968e07`, Vercel success e 62 hashes iguais à build; aceite/reload públicos de investigação/água/posto e alinhamento por caminhada/mira/E com fixture explícita passaram, preservando saves reais. [Evidências](signal-expedition/README.md).
 - [x] Coop público: usuário publicou Render `e968e07`, protocolo 16 / `outposts:1` / `signals:1`; dois Chrome na Vercel passaram por preparo explícito, aceite/coleta pelo convidado, reload/reentrada e encerramento normal, preservando saldo/recibos/bosses. Catálogo e 62 hashes conferidos; [evidências e limites](signal-expedition/README.md).
-- [ ] Playtest humano da investigação antes de outro sprint.
+- [x] Playtest humano da investigação: usuário testou, aprovou (“ficou excelente”) e autorizou O rastro do Primeiro Eco em 29/10/2026.
 
 **29/10/2026 · Vida e poções · 0.1.168:** usuário respondeu “Boa vamos para o próximo” ao apoio e pediu confirmação visual de poção e vida mais legível sobre o personagem. [Escopo e evidências](player-vitals/README.md): barra contextual, frasco/pulso após consumo confirmado e apresentação solo/coop pelos contadores existentes. Preserva HUD, figuras completas, economia/recarga/cura, campanha, saves e protocolo 16. Esta entrega atende esse ajuste antes de outra etapa da colonização; aguardar seu playtest.
 

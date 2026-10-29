@@ -47,8 +47,8 @@ export class WardenApproach {
     return !dead && !this.recorded && distance(position, W.echo) <= W.echo.radius;
   }
 
-  showRecord(position: Vec2): void {
-    const visible = this.recorded && !this.responding && distance(position, W.echo) <= 210;
+  showRecord(position: Vec2, show = true): void {
+    const visible = show && this.recorded && !this.responding && distance(position, W.echo) <= 210;
     if (this.record.visible !== visible) this.record.setVisible(visible);
   }
 

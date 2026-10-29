@@ -1,0 +1,12 @@
+{
+  "method": "DEV explicit copy/origin, position/invulnerability fixtures; actual touch or standard gamepad A rotates and emits with all four class kits unchanged.",
+  "checks": [
+    "warrior: touch refuses broken route, rotates both switches and reaches return without firing",
+    "hunter: touch refuses broken route, rotates both switches and reaches return without firing",
+    "astral: touch refuses broken route, rotates both switches and reaches return without firing",
+    "xenobinder: touch refuses broken route, rotates both switches and reaches return without firing",
+    "Standard gamepad A completes the same circuit; touch interaction accessible in four resolutions"
+  ],
+  "errors": [],
+  "passed": true
+}

@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import {build} from 'esbuild';
+import {mkdir,readFile,writeFile} from 'node:fs/promises';
+const out='docs/echo-circuit/qa/model';await mkdir(out,{recursive:true});
+const built=await build({stdin:{contents:"export * from './src/systems/Missions';export * from './src/config/echoCircuit';export * from './src/config/missions';export * from './src/systems/LocalJourney';export {characterProfiles} from './src/systems/CharacterProfiles';",resolveDir:process.cwd()},bundle:true,write:false,format:'esm',platform:'node',define:{'import.meta.env.DEV':'false'}});
+class Storage{data=new Map();fail=false;getItem(k){return this.data.get(k)??null}setItem(k,v){if(this.fail)throw Error('quota');this.data.set(k,String(v))}removeItem(k){this.data.delete(k)}}globalThis.localStorage=new Storage();
+const {Missions,missionById,circuitPath,circuitTurn,circuitPoint,circuitLength,ECHO_CIRCUIT,LocalJourney,characterProfiles}=await import('data:text/javascript;base64,'+Buffer.from(built.outputFiles[0].text).toString('base64'));
+const fixture=JSON.parse(await readFile('docs/outpost/qa/support-legacy/fixture-0.1.166.json','utf8')),report={method:'Actual TypeScript model and 0.1.166 serialized save, in-memory storage; preceding frequency explicitly prepared for new-chapter checks.',checks:[]};
+try{
+ const m=new Missions();m.restore(fixture.journey.missions);assert.equal(m.status('settle-echo'),'locked');
+ m.act('accept','settle-signal');for(const g of missionById('settle-signal').goals)m.record(g.id);m.act('deliver','settle-signal');
+ assert.equal(m.status('settle-echo'),'available');const before=m.snapshot();m.setCircuitAvailable(false);assert.equal(m.status('settle-echo'),'locked');assert.deepEqual(m.snapshot(),before);m.setCircuitAvailable(true);
+ assert.ok(m.act('accept','settle-echo'));assert.equal(m.act('deliver','settle-echo'),false);
+ for(let a=0;a<3;a++)for(let b=0;b<3;b++){const p=circuitPath(a,b);assert.equal(p.success,a===2&&b===1);assert.deepEqual(circuitPoint(p.path,0),ECHO_CIRCUIT.source);assert.deepEqual(circuitPoint(p.path,circuitLength(p.path)+10),p.path.at(-1));assert.ok(circuitLength(p.path)>0);}
+ for(let turn=0;turn<3;turn++){m.setCircuitTurn('pr-a-1','pr-a-2',turn);assert.equal(circuitTurn('a',id=>m.has(id)),turn);const copy=new Missions();copy.restore(m.snapshot());assert.equal(circuitTurn('a',id=>copy.has(id)),turn);assert.equal(copy.has('pr-flow'),false);assert.equal(copy.act('deliver','settle-echo'),false);}
+ report.checks.push('Preceding frequency required; capability lock preserves exact save; all nine route combinations, finite geometry, reversible switch persistence and no switch-only completion');
+ for(const g of missionById('settle-echo').goals.slice(0,-1))m.record(g.id);assert.equal(m.act('deliver','settle-echo'),false);m.record('pr-store');assert.ok(m.act('deliver','settle-echo'));assert.equal(m.act('deliver','settle-echo'),false);
+ const hero=characterProfiles.create('Circuit model','warrior','male',{mode:'solo',difficulty:'normal'});characterProfiles.select(hero.id);const j=new LocalJourney();assert.ok(j.save(fixture.journey));assert.deepEqual(j.load().missions,fixture.journey.missions);const saved=j.load();saved.missions=m.snapshot();saved.missionRewards.push('settle-signal');assert.ok(j.save(saved));
+ localStorage.fail=true;assert.equal(j.claimMissionRewards(),undefined);localStorage.fail=false;assert.equal(j.load().economy.credits,fixture.journey.economy.credits);assert.equal(j.claimMissionRewards().credits,fixture.journey.economy.credits+150);assert.equal(j.claimMissionRewards().credits,fixture.journey.economy.credits+150);assert.equal(j.load().missionRewards.filter(id=>id==='settle-echo').length,1);assert.equal(j.load().progression.xp,fixture.journey.progression.xp);assert.deepEqual(j.load().economy.materials,fixture.journey.economy.materials);for(const k of ['soterradoDefeated','vesperDefeated','titanDefeated'])assert.equal(j.load().flags[k],false);
+ report.checks.push('Five objectives and real delivery required; old serializer, durable write rollback/retry and 150-credit receipt once; no extra XP/material or later boss victory');report.passed=true;
+}catch(error){report.failure=String(error);throw error}finally{await writeFile(out+'/report.json',JSON.stringify(report,null,2)+'\n');console.log(report)}

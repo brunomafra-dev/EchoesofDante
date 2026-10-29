@@ -6,7 +6,8 @@
     "settle-energy",
     "settle-arrivals",
     "settle-outpost",
-    "settle-signal"
+    "settle-signal",
+    "settle-echo"
   ],
   "evidence": [
     "pw-intake",
@@ -48,6 +49,15 @@
     "ps-water",
     "ps-ridge",
     "ps-align",
-    "ps-record"
+    "ps-record",
+    "pr-copy",
+    "pr-origin",
+    "pr-flow",
+    "pr-read",
+    "pr-store",
+    "pr-a-1",
+    "pr-a-2",
+    "pr-b-1",
+    "pr-b-2"
   ]
 }

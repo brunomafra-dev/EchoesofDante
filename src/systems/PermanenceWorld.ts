@@ -8,6 +8,8 @@ import type {JourneyArea} from './LocalJourney';
 import type {Vec2} from '../utils/math';
 import {addSurveyProp} from '../visual/MissionProps';
 import {SignalSurvey} from '../visual/SignalSurvey';
+import {EchoCircuit} from '../visual/EchoCircuit';
+import type {CircuitNode} from '../config/echoCircuit';
 import {moveWithCollisions,type Obstacle} from './Movement';
 
 // Authored chapter interactions share the journal, durable evidence and host
@@ -32,8 +34,10 @@ export class PermanenceWorld {
  private outpostDepot=false;
  private supportReady=false;
  private signal:SignalSurvey;
+ private circuit:EchoCircuit;
  constructor(private scene:Phaser.Scene,private area:JourneyArea,private obstacles:Obstacle[],private warn:()=>void=()=>{}){
   this.signal=new SignalSurvey(scene,area,obstacles);
+  this.circuit=new EchoCircuit(scene,area,obstacles);
   for(const site of PERMANENCE_SITES.filter(s=>s.area===area)){
    const image=(site.art==='cargo'?scene.add.image(site.x,site.y,'item-accessory-2').setDisplaySize(34,44).setDepth(site.y-2):site.art==='mineral'||site.art==='record'?scene.add.image(site.x,site.y,site.art==='mineral'?'deep-mineral':'ancient-remnant').setDisplaySize(95,68).setDepth(site.y-2):addSurveyProp(scene,site.art,site.x,site.y)).setName(site.id).setVisible(false);
    if(site.choice){
@@ -56,14 +60,15 @@ export class PermanenceWorld {
    this.power.fillStyle(0xc4afff,.8).fillCircle(0,0,9).lineStyle(2,0xd3c3ff,.65).strokeCircle(0,0,19);
   }
  }
- update(missions:Missions,player:Vec2,now:number,actors:readonly {position:Vec2;isDead:boolean;rotation?:number}[]=[],authority=true,remote?:PermanencePose):void{
+ update(missions:Missions,player:Vec2,now:number,actors:readonly {position:Vec2;isDead:boolean;rotation?:number}[]=[],authority=true,remote?:PermanencePose):boolean{
+  const circuitCompleted=this.circuit.update(missions,player,now,authority,remote?.circuit);
   this.signal.update(missions,player,actors[0]?.rotation??0,now);
   this.updateHaul(missions,now,actors,authority,remote);
   for(const {site,image,label}of this.sites){
    const active=['active','ready'].includes(missions.status(site.mission));
-   image.setVisible(active&&!missions.has(site.id)&&!site.aimAt);
+   image.setVisible(active&&!missions.has(site.id)&&!site.aimAt&&!site.circuit&&site.id!=='pr-origin'&&site.id!=='pr-read');
    const near=Math.hypot(player.x-site.x,player.y-site.y)<240;
-   label.setVisible(active&&near&&!missions.has(site.id));
+   label.setVisible(active&&near&&!missions.has(site.id)&&!site.circuit&&site.id!=='pr-read');
    const ready=!site.needs?.some(id=>!missions.has(id));
    label.setColor(ready?'#dfd6b1':'#a8aaa1');
   }
@@ -87,6 +92,7 @@ export class PermanenceWorld {
   if(this.area==='springs'&&!this.supportReady&&missions.status('settle-outpost')==='completed'){
    this.supportReady=true;this.scene.add.text(OUTPOST_SUPPORT.x,1190,'APOIO · CURA E COFRE',{fontFamily:'Barlow Condensed',fontSize:'15px',color:'#d4dfc4',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setName('outpost-support-sign');
   }
+  return circuitCompleted;
  }
  private addOutpostDepot():void{
   if(this.area!=='springs')return;
@@ -121,7 +127,8 @@ export class PermanenceWorld {
   const lamp=this.scene.add.graphics().setDepth(y+1);lamp.fillStyle(0xffd898,.12).fillCircle(x+48,y-74,20).fillStyle(0xffdeb1,.8).fillCircle(x+48,y-74,3);
   this.scene.add.text(x,y+20,'REDE ISOLADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#ebd8b6',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
  }
- snapshot():PermanencePose{return this.haul?{haul:{...this.haul.position,kind:'cargo'}}:{};}
+ snapshot():PermanencePose{return{...(this.haul?{haul:{...this.haul.position,kind:'cargo' as const}}:{}),circuit:this.circuit.snapshot()};}
+ interactCircuit(node:CircuitNode,missions:Missions,now:number):string{return this.circuit.interact(node,missions,now);}
  get haulPosition():Vec2|undefined{return this.haul?.position;}
  // The cached minimap describes permanent geometry. Moving cargo stays in
  // physical collision, while its travel never rebakes the static grid.
@@ -169,6 +176,7 @@ export class PermanenceWorld {
   this.scene.add.text(x,y+48,'ÁGUA TRATADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#b1d5c7',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
  }
  at(position:Vec2,missions:Missions):PermanenceSite|undefined{
+  const circuit=this.circuit.at(position,missions);if(circuit)return circuit;
   const site=this.sites.map(s=>s.site).find(s=>missions.status(s.mission)==='active'&&!missions.has(s.id)&&!s.needs?.some(id=>!missions.has(id))&&Math.hypot(position.x-s.x,position.y-s.y)<s.radius);
   if(site?.haul&&(!this.haul||Math.hypot(this.haul.position.x-site.x,this.haul.position.y-site.y)>105))return{...site,reject:'A carga ainda não chegou. Volte ao estrado e conduza-o para perto do depósito.'};
   return site;

@@ -1,0 +1,11 @@
+{
+  "base": "http://localhost:5196",
+  "method": "Compiled solo, explicit isolated old-serializer fixture: preceding signal completed, copy/origin prepared, new switches/flow/read/archive/reward pending. Real WASD/E from original First Echo checkpoint and full reload; no DEV globals, no extra defeat fixture.",
+  "checks": [
+    "Real walk from original checkpoint reaches emitter; broken route does not complete or reward",
+    "Ordinary WASD/E rotates both switches and actual pulse arrival commits flow",
+    "Full compiled reload retains switch directions/flow without inventing read/archive, credit, receipt or later boss victory; real-save/settings sentinels intact"
+  ],
+  "errors": [],
+  "passed": true
+}
