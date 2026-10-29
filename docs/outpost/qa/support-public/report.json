@@ -1,0 +1,87 @@
+{
+  "at": "2026-10-29T14:55:31.626Z",
+  "base": "https://echosofdante.vercel.app",
+  "method": "Compiled build; two separate Chrome instances, real relay and normal movement/UI with feedback-controlled key pulses for WAN latency. Post-Warden preparation only through reserved lab buttons; no DEV globals.",
+  "checks": [
+    "Compiled solo: real support heal/buy/deposit, saved UID/wallet and reload without fixture repayment or DEV globals",
+    "Real original crew with existing relay 16: two support panels, authenticated personal healing and live HP update without collective pause",
+    "Separate wallets, potion stock and chest UIDs persist through actual personal transactions; no mission/XP/boss reward is minted",
+    "Actual guest reload/rejoin restores the same original character, chest and purchases without kit reset; real save/settings sentinels remain untouched"
+  ],
+  "errors": [],
+  "personal": [
+    {
+      "credits": 36,
+      "potions": 4,
+      "stash": [
+        {
+          "uid": "support-spare-8df54455-0afe-4dc7-917b-e73bb40d818e",
+          "id": "forest-focus"
+        }
+      ],
+      "items": [],
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost"
+      ],
+      "bosses": [
+        false,
+        false,
+        false
+      ],
+      "xp": 350
+    },
+    {
+      "credits": 48,
+      "potions": 3,
+      "stash": [
+        {
+          "uid": "support-spare-20259f75-e440-41eb-8e6f-70a32fa4d263",
+          "id": "forest-focus"
+        }
+      ],
+      "items": [],
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost"
+      ],
+      "bosses": [
+        false,
+        false,
+        false
+      ],
+      "xp": 350
+    }
+  ],
+  "protocols": [
+    16,
+    16
+  ],
+  "capabilities": [
+    1,
+    1
+  ],
+  "passed": true
+}
