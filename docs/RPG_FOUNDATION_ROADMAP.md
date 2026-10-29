@@ -4,7 +4,7 @@
 
 - [x] Comentário positivo e continuação do apoio 0.1.167 recebidos; não representam medição completa da campanha.
 - [x] QA local: typecheck/build de 256 módulos, quatro classes/touch/gamepad, recusa/rollback, morte/reload, texturas/objetos estáveis, dupla com efeitos locais/remotos e reentrada. Solo/dupla compilados e captura final em 568 passaram; inspeção visual do agente separada do usuário.
-- [ ] Publicação e sincronização desta apresentação.
+- [x] Aplicação `290b17c` publicada na Vercel, `origin/main` conferido e 62 hashes verificados; solo/dupla públicos 16 com consumo individual, reload/reentrada e touch em 568 passaram. [Evidências e limitações](player-vitals/README.md). Render existente compatível, sem atualização de protocolo.
 - [ ] Avaliação humana da barra/animação antes de outra etapa.
 
 **29/10/2026 · Apoio de campo · 0.1.167:** continuação autorizada após o deploy do posto. [Escopo e evidências](outpost/SUPPORT.md): recuperação, compra de poções e cofre pessoal no depósito, só após relatório entregue, presença segura e equipe original reunida. Reutiliza economia/saves/serviços e o protocolo 16 / `outposts:1`; não adiciona missões ou recibos, não altera oficina/base, moradores, bosses ou bloqueios do atlas. Laboratório separado e avaliação humana pendente antes de outra etapa.
