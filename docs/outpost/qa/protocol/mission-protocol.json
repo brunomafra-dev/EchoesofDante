@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "Only running original team can request; relay supplies authenticated member ID and rejects floods",
+    "Host-only results; invalid mission, action and stale epoch never enter host queue",
+    "Shared mission snapshot reaches all three guests, with bounded known IDs only",
+    "Protocol 16 transmits all twelve regional reports and 36 discoveries to three guests; unknown evidence is removed",
+    "Six chapter IDs and all 34 evidence IDs survive the actual relay catalogue; unknown evidence removed",
+    "Guest can request a chapter through the authenticated mission channel",
+    "All seven missions and installation evidence reach the team; both new routes are bidirectional and disconnected travel is rejected",
+    "Missing original team freezes mission requests with the campaign"
+  ],
+  "passed": true
+}

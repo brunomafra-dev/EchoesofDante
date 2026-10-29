@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import {PERMANENCE_SITES,type PermanenceSite,type PermanencePose} from '../config/permanence';
 import {HABITAT,HABITAT_SOLIDS} from '../config/colonization';
+import {OUTPOST,OUTPOST_SOLIDS} from '../config/outpost';
 import {trackEnvironmentOcclusion} from '../visual/EnvironmentArt';
 import type {Missions} from './Missions';
 import type {JourneyArea} from './LocalJourney';
@@ -18,12 +19,16 @@ export class PermanenceWorld {
  private stocked=false;
  private supplied=false;
  private haul?:{position:Vec2;solid:Obstacle;image:Phaser.GameObjects.Image};
+ private haulLeader?:{actor:{position:Vec2;isDead:boolean};movingAt:number};
+ private haulActors=new Map<object,Vec2>();
  private lastAt=0;
  private power?:Phaser.GameObjects.Graphics;
  private powerBeat=-1;
  private powered=false;
  private housed=false;
  private established=false;
+ private outpost=false;
+ private outpostDepot=false;
  constructor(private scene:Phaser.Scene,private area:JourneyArea,private obstacles:Obstacle[],private warn:()=>void=()=>{}){
   for(const site of PERMANENCE_SITES.filter(s=>s.area===area)){
    const image=(site.art==='cargo'?scene.add.image(site.x,site.y,'item-accessory-2').setDisplaySize(34,44).setDepth(site.y-2):site.art==='mineral'||site.art==='record'?scene.add.image(site.x,site.y,site.art==='mineral'?'deep-mineral':'ancient-remnant').setDisplaySize(95,68).setDepth(site.y-2):addSurveyProp(scene,site.art,site.x,site.y)).setName(site.id).setVisible(false);
@@ -72,6 +77,22 @@ export class PermanenceWorld {
   if(missions.has('pe-online')&&!this.powered){this.powered=true;this.addPowerStation();}
   if(missions.has('pc-shelter')&&!this.housed){this.housed=true;this.addSecondHabitat();}
   if(missions.has('pc-home')&&!this.established){this.established=true;this.addReception();}
+  if(missions.has('po-deliver')&&!this.outpostDepot){this.outpostDepot=true;this.addOutpostDepot();}
+  if(missions.has('po-module')&&!this.outpost){this.outpost=true;this.addOutpost();}
+ }
+ private addOutpostDepot():void{
+  if(this.area!=='springs')return;
+  this.scene.add.image(2040,1155,'camp-supplies').setDisplaySize(116,72).setOrigin(.5,1).setDepth(1153).setName('outpost-depot');
+  this.obstacles.push({x:2040,y:1135,radius:26});
+ }
+ private addOutpost():void{
+  if(this.area!=='springs')return;
+  const building=this.scene.add.image(OUTPOST.x,OUTPOST.y,'first-habitat').setDisplaySize(OUTPOST.width,OUTPOST.height).setOrigin(.5,1).setDepth(OUTPOST.y-20).setName('outpost-habitat');trackEnvironmentOcclusion(this.scene,building);
+  this.obstacles.push(...OUTPOST_SOLIDS.map(o=>({...o})));
+  this.scene.add.text(OUTPOST.x,OUTPOST.y+30,OUTPOST.name.toLocaleUpperCase('pt-BR'),{fontFamily:'Barlow Condensed',fontSize:'16px',color:'#dfd5b5',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setName('outpost-name');
+  // The same prefab carries a sealed reservoir and canopy. Independent power
+  // is represented with the existing whole regulator asset, not ancient tech.
+  this.scene.add.image(1990,915,'item-accessory-2').setDisplaySize(32,43).setDepth(913).setName('outpost-regulator');
  }
  private addSecondHabitat():void{
   if(this.area!=='terraces')return;
@@ -99,15 +120,22 @@ export class PermanenceWorld {
  get navigationObstacles():readonly Obstacle[]{return this.haul?this.obstacles.filter(o=>o!==this.haul!.solid):this.obstacles;}
  private updateHaul(missions:Missions,now:number,actors:readonly {position:Vec2;isDead:boolean}[],authority:boolean,remote?:PermanencePose):void{
   const dt=Math.min(.04,Math.max(0,(now-this.lastAt)/1000));this.lastAt=now;
-  const active=this.area==='terraces'&&missions.has('pt-load')&&!missions.has('pt-deliver')&&missions.status('settle-transport')==='active';
-  if(!active){if(this.haul){const i=this.obstacles.indexOf(this.haul.solid);if(i>=0)this.obstacles.splice(i,1);this.haul.image.destroy();this.haul=undefined;}return;}
-  const start=remote?.haul??{x:850,y:1070};
+  const outpost=this.area==='springs',load=outpost?'po-load':'pt-load',deliver=outpost?'po-deliver':'pt-deliver',mission=outpost?'settle-outpost':'settle-transport';
+  const active=(outpost||this.area==='terraces')&&missions.has(load)&&!missions.has(deliver)&&missions.status(mission)==='active';
+  if(!active){if(this.haul){const i=this.obstacles.indexOf(this.haul.solid);if(i>=0)this.obstacles.splice(i,1);this.haul.image.destroy();this.haul=undefined;}this.haulLeader=undefined;this.haulActors.clear();return;}
+  const start=remote?.haul??(outpost?{x:480,y:1080}:{x:850,y:1070});
   if(!this.haul){const solid={x:start.x,y:start.y,radius:22};this.obstacles.push(solid);this.haul={position:{x:start.x,y:start.y},solid,image:this.scene.add.image(start.x,start.y,'camp-supplies').setDisplaySize(82,51).setOrigin(.5,.75).setName('permanence-haul')};}
   const h=this.haul;
   if(!authority){if(remote?.haul&&Number.isFinite(remote.haul.x)&&Number.isFinite(remote.haul.y))Object.assign(h.position,remote.haul);}
   else{
-   const candidates=actors.filter(p=>!p.isDead).map(p=>({p,d:Math.hypot(p.position.x-h.position.x,p.position.y-h.position.y)})).filter(v=>v.d>70&&v.d<280).sort((a,b)=>a.d-b.d),leader=candidates[0];
-   if(leader){const dx=leader.p.position.x-h.position.x,dy=leader.p.position.y-h.position.y;moveWithCollisions(h.position,{x:dx/leader.d*165,y:dy/leader.d*165},dt,22,this.obstacles.filter(o=>o!==h.solid),{left:105,right:2490,top:350,bottom:1245});}
+   // A nearby idle ally must not pull the load back from its moving guide.
+   // Keep the guide until another actor moves nearby or the leash breaks.
+   const candidates=actors.filter(p=>!p.isDead).map(p=>{const previous=this.haulActors.get(p);return{p,d:Math.hypot(p.position.x-h.position.x,p.position.y-h.position.y),moving:!!previous&&Math.hypot(p.position.x-previous.x,p.position.y-previous.y)>.1}}).filter(v=>v.d<280);
+   for(const actor of actors)this.haulActors.set(actor,{...actor.position});
+   let leader=candidates.find(c=>c.p===this.haulLeader?.actor);
+   if(leader?.moving)this.haulLeader!.movingAt=now;
+   if(!leader||now-(this.haulLeader?.movingAt??0)>350){const next=candidates.filter(c=>c.moving&&c.d>70).sort((a,b)=>a.d-b.d)[0];if(next){leader=next;this.haulLeader={actor:next.p,movingAt:now};}else if(!leader)this.haulLeader=undefined;}
+   if(leader&&leader.d>70){const dx=leader.p.position.x-h.position.x,dy=leader.p.position.y-h.position.y;moveWithCollisions(h.position,{x:dx/leader.d*165,y:dy/leader.d*165},dt,22,this.obstacles.filter(o=>o!==h.solid),{left:105,right:2490,top:350,bottom:1245});}
   }
   h.solid.x=h.position.x;h.solid.y=h.position.y;h.image.setPosition(h.position.x,h.position.y).setDepth(h.position.y);
  }

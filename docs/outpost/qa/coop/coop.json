@@ -1,0 +1,97 @@
+{
+  "chapter": "outpost",
+  "method": "Two independent Chrome + actual relay 16. DEV position/invulnerability fixtures; real guest E and authenticated dialogue, ordinary travel, durable personal credit receipts.",
+  "checks": [
+    "Actual lab button prepares the running original crew through the host; guest preparation is refused without changing objectives",
+    "Guest accepts through the actual mission request; invitation keeps the isolated chapter",
+    "Real guest movement leads physical cargo, mirrored position follows host and missing cargo cannot deliver",
+    "Capability confirmed; guest greets both transferred residents, neither remains in Terraces and exactly one post returns",
+    "Guest executes every authored E interaction; shared evidence survives both region passages",
+    "Real guest delivery grants the configured credit amount once per member, without later boss flags",
+    "Guest reconnect preserves its reward without duplicate credit"
+  ],
+  "errors": [],
+  "haul": [
+    {
+      "cargo": {
+        "x": 521.25,
+        "y": 1080
+      },
+      "player": {
+        "x": 590,
+        "y": 1080
+      }
+    },
+    {
+      "cargo": {
+        "x": 785.2500000000007,
+        "y": 1080
+      },
+      "player": {
+        "x": 965.8892500000007,
+        "y": 1080
+      }
+    },
+    {
+      "cargo": {
+        "x": 1049.250000000001,
+        "y": 1080
+      },
+      "player": {
+        "x": 1213.3672500000014,
+        "y": 1080
+      }
+    },
+    {
+      "cargo": {
+        "x": 1310.4945000000014,
+        "y": 1080
+      },
+      "player": {
+        "x": 1456.2747500000019,
+        "y": 1080
+      }
+    },
+    {
+      "cargo": {
+        "x": 1593.733500000001,
+        "y": 1080
+      },
+      "player": {
+        "x": 1754.1657500000033,
+        "y": 1080
+      }
+    },
+    {
+      "cargo": {
+        "x": 1860.5055000000013,
+        "y": 1080
+      },
+      "player": {
+        "x": 2042.9240000000034,
+        "y": 1080
+      }
+    }
+  ],
+  "receipts": [
+    {
+      "credits": 440,
+      "receipts": 1,
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "credits": 440,
+      "receipts": 1,
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "passed": true
+}

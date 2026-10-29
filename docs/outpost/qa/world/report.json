@@ -1,0 +1,85 @@
+{
+  "method": "Chrome DEV isolated post lab; explicit partial-defeat/installation fixtures, actual common hit and death/R paths, physical cargo, navigation, E greetings and reload. Full chapter delivery is covered separately.",
+  "checks": [
+    "One remaining original inhabitant keeps occupation locked; common lethal hit unlocks it, stays defeated across travel/reload and gives combat XP only once",
+    "Walking and Dash respect cargo, it waits beyond leash, navigation excludes moving footprint, real death/R/reload reset one pending load without granting delivery",
+    "Module insertion resolves occupied footprint; all objectives/residents/both original portals connected; two animated residents transfer exclusively, answer E and persist after reload; three returns keep counts stable",
+    "Post never unlocks later regions or changes living bosses, even with a polluted visited list"
+  ],
+  "errors": [],
+  "routes": [
+    {
+      "id": "po-bank",
+      "clear": true,
+      "steps": 40,
+      "gap": 19.723082923316017
+    },
+    {
+      "id": "po-water",
+      "clear": true,
+      "steps": 37,
+      "gap": 23.60084744241189
+    },
+    {
+      "id": "po-load",
+      "clear": true,
+      "steps": 5,
+      "gap": 20.518284528683193
+    },
+    {
+      "id": "po-deliver",
+      "clear": true,
+      "steps": 39,
+      "gap": 35.17101079013795
+    },
+    {
+      "id": "po-module",
+      "clear": true,
+      "steps": 28,
+      "gap": 10.816653826391969
+    },
+    {
+      "id": "po-module",
+      "clear": true,
+      "steps": 40,
+      "gap": 18.681541692269406
+    },
+    {
+      "id": "po-crew",
+      "clear": true,
+      "steps": 42,
+      "gap": 10.19803902718557
+    },
+    {
+      "id": "po-ready",
+      "clear": true,
+      "steps": 42,
+      "gap": 20.223748416156685
+    },
+    {
+      "id": "back",
+      "clear": true,
+      "steps": 4,
+      "gap": 29.73213749463701
+    },
+    {
+      "id": "exit",
+      "clear": true,
+      "steps": 50,
+      "gap": 17
+    },
+    {
+      "id": "mara",
+      "clear": true,
+      "steps": 40,
+      "gap": 30.4138126514911
+    },
+    {
+      "id": "choco",
+      "clear": true,
+      "steps": 38,
+      "gap": 6.708203932499369
+    }
+  ],
+  "passed": true
+}

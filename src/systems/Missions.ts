@@ -23,6 +23,8 @@ export class Missions{
  tracked?:MissionId;
  version=0;
  permanenceAvailable=true;
+ outpostAvailable=true;
+ setOutpostAvailable(value:boolean):void{if(value!==this.outpostAvailable){this.outpostAvailable=value;this.version++;}}
  setPermanenceAvailable(value:boolean):void{if(value!==this.permanenceAvailable){this.permanenceAvailable=value;this.version++;}}
  restore(raw:unknown):void{const next=validMissions(raw);if(JSON.stringify(next)!==JSON.stringify(this.state)){this.state=next;this.version++;}}
  snapshot():MissionSnapshot{return {schema:1,accepted:[...this.state.accepted],completed:[...this.state.completed],evidence:[...this.state.evidence]};}
@@ -30,6 +32,7 @@ export class Missions{
   const d=missionById(id);
   if(!d)return 'locked';
   if(this.state.completed.includes(id))return 'completed';
+  if(id==='settle-outpost'&&!this.outpostAvailable)return 'locked';
   if(isPermanence(id)&&!this.permanenceAvailable)return 'locked';
   if(d.requires&&!this.state.completed.includes(d.requires))return 'locked';
   if(d.unlock&&!this.has(d.unlock))return 'locked';

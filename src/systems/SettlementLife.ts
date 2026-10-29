@@ -6,6 +6,7 @@ import type {Vec2} from '../utils/math';
 import type {MovementBounds,Obstacle} from './Movement';
 import {safeExpeditionPosition} from './ExpeditionReturn';
 import {ResidentMotion,ResidentPresentation} from './SettlementMotion';
+import {OUTPOST_SETTLERS} from '../config/outpost';
 
 export function preloadSettlementLife(scene:Phaser.Scene):void{
  for(const[id,file]of Object.entries(NPC_SHEETS))if(!scene.textures.exists('life-'+id))scene.load.spritesheet('life-'+id,`${import.meta.env.BASE_URL}assets/settlement-life/${file}.webp`,{frameWidth:256,frameHeight:256});
@@ -33,7 +34,8 @@ export class SettlementLife{
    this.scene.add.image(2330,1050,'root-growth').setDisplaySize(100,32).setDepth(-17).setTint(0xa6b28a).setName('settlement-nave-seedlings');
    this.scene.add.image(2330,1034,'dante-canopy-green').setDisplaySize(72,33).setDepth(-16).setTint(0xa7bb86);
   }
-  const desired:readonly NpcDefinition[]=this.area==='base'?[...BASE_WORKERS,...(this.warden()&&!settled?firstSettlers(true):[])]:this.area==='terraces'?[...(settled?firstSettlers(false):[]),...(missions.has('pc-receive')?SECOND_SETTLERS:[])]:[];
+  const assigned=missions.has('po-crew');
+  const desired:readonly NpcDefinition[]=this.area==='base'?[...BASE_WORKERS,...(this.warden()&&!settled?firstSettlers(true):[])]:this.area==='terraces'?[...(settled?firstSettlers(false):[]),...(missions.has('pc-receive')&&!assigned?SECOND_SETTLERS:[])]:this.area==='springs'&&assigned?OUTPOST_SETTLERS:[];
   for(const[id,p]of this.people)if(!desired.some(d=>d.id===id)){this.remove(p);this.people.delete(id);}
   for(const definition of desired)if(!this.people.has(definition.id))this.add(definition,now,authority?actors:[]);
   for(const p of this.people.values()){

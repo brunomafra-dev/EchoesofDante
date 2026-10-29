@@ -1,0 +1,11 @@
+{
+  "revision": "3a5481ff25a20f4313287d2715129bc811b2fb83",
+  "method": "Latest browser client against exact public pre-post relay 16 and its historical catalogue. Real room handshakes/capability refusal; no synthetic chapter completion.",
+  "checks": [
+    "Previous water lab and room inspection connect on actual historical protocol 16; only the new post capability is unavailable",
+    "Direct post lab refuses incompatible relay before joining a filtered campaign",
+    "Accepted post in a normal campaign URL also refuses old relay without losing evidence; updated relay reconnect restores capability with identical objectives"
+  ],
+  "errors": [],
+  "passed": true
+}

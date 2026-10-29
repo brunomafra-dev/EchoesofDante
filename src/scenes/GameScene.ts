@@ -27,6 +27,7 @@ import {LandingBase} from '../systems/LandingBase';
 import {BasePanel} from '../ui/BasePanel';
 import {PermanenceWorld} from '../systems/PermanenceWorld';
 import {PERMANENCE_IDS,PERMANENCE_SITES,isPermanence} from '../config/permanence';
+import {outpostThreats} from '../config/outpost';
 import {Missions,validMissionRewards,type MissionAction} from '../systems/Missions';
 import {regionUnlocked} from '../systems/RegionAccess';
 import {RegionalExpeditions} from '../systems/RegionalExpeditions';
@@ -604,7 +605,7 @@ export class GameScene extends Phaser.Scene {
     }
     this.hud = new Hud(this, () => this.restart(), this.classId === 'hunter',this.classId==='astral',this.classId==='xenobinder',(...state)=>this.controls.setAbilityFeedback(...state));
     if (this.qualityReference === 'reference') this.referenceImpacts = new ReferenceImpacts(this);
-    this.settlementLife=this.area==='base'||this.area==='terraces'?new SettlementLife(this,this.area,this.arena.obstacles,this.movementBounds!,()=>this.wardenDefeated):undefined;
+    this.settlementLife=this.area==='base'||this.area==='terraces'||this.area==='springs'?new SettlementLife(this,this.area,this.arena.obstacles,this.movementBounds!,()=>this.wardenDefeated):undefined;
     this.navigation = this.qualityReference ? undefined : new WorldNavigator(this, () => {const obstacles=this.permanence?.navigationObstacles??this.arena.obstacles;return {bounds:this.movementBounds,obstacles:this.settlementLife?.navigationObstacles(obstacles)??obstacles}},this.exploration.region(this.area));
     this.explorationGuide = new ExplorationGuide(this, this.navigation);
     if (this.area === 'warden') {
@@ -753,6 +754,7 @@ export class GameScene extends Phaser.Scene {
 
   update(time: number, delta: number): void {
     this.missions.setPermanenceAvailable(coopSession.role==='offline'||coopSession.serverProtocol===16);
+    this.missions.setOutpostAvailable(coopSession.role==='offline'||coopSession.outpostsAvailable);
     time -= this.recordsTimeOffset;
     if (this.transitioning) return;
     if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return;
@@ -2461,6 +2463,7 @@ export class GameScene extends Phaser.Scene {
   seedMissionPlaytest(id:MissionId,reviewStop?:string,reviewNpc?:string):boolean{
     const params=new URLSearchParams(location.search),review=reviewStop&&params.has('npc-review')?npcReviewSelection(reviewStop,reviewNpc):undefined;
     if(reviewStop&&(!review||review.stop.stage!==id))return false;
+    if(id==='settle-outpost'&&coopSession.role!=='offline'&&!coopSession.outpostsAvailable)return false;
     if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!['missions','permanence','settlement-life','settlement-motion','npc-review'].some(key=>params.has(key))||this.inputModalOpen||this.transitioning||coopSession.role==='guest'||!this.player||this.player.isDead)return false;
     if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return false;
     const ids=['recon','survival','signal','beyond','water-source','safe-route','shelter',...PERMANENCE_IDS] as const,index=(ids as readonly MissionId[]).indexOf(id);if(index<0)return false;
@@ -2472,6 +2475,12 @@ export class GameScene extends Phaser.Scene {
     }
     if(index>=4){this.valleyVisited=true;this.valleyCheckpointReached=true;this.economy.visited=[...new Set([...this.economy.visited,'warden','valley'] as JourneyArea[])];this.progression.restore({...this.progression.snapshot(),xp:350,bossRewards:['warden']});this.economy.credits=300;this.economy.materials=[24,20,0];this.economy.potions=5;for(const upgrade of ['chargePower','dashDuration','chargeWidth'] as const)for(let i=0;i<3;i++)this.progression.investUpgrade(upgrade);}
     if(isPermanence(id)){this.springsVisited=true;this.terracesVisited=true;this.economy.visited=[...new Set([...this.economy.visited,'springs','terraces'] as JourneyArea[])];}
+    if(id==='settle-outpost'){
+      // The lab inspects occupation of an already conquered region. Preserve
+      // existing XP/resources: simulated defeats confer no combat rewards.
+      const defeated=[...new Set([...this.progression.snapshot().rewardedHollows,...outpostThreats(characterProfiles.active.campaign?.size??1)])];
+      this.progression.restore({...this.progression.snapshot(),rewardedHollows:defeated});evidence.push('po-secure');
+    }
     this.missions.restore({schema:1,accepted:[...previous],completed:[...previous],evidence});this.missions.tracked=id;this.missionRewards=[...previous];this.missionNotice='Etapa anterior simulada somente neste laboratório.';
     if(review){
       if(review.stop.id==='arrivals'){this.missions.act('accept','settle-arrivals');for(const goal of ['pc-beacon','pc-manifest','pc-shelter','pc-receive'] as const)this.missions.record(goal);}
@@ -2524,6 +2533,7 @@ export class GameScene extends Phaser.Scene {
     if(now<this.missionTick)return;this.missionTick=now+200;
     for(const player of [this.player,...(this.party?.players??[])]){const hazard=this.permanence?.hazardAt(player.position,this.missions,now);if(hazard)this.enemyStrike({position:hazard.position} as Enemy,{ranged:true,damage:hazard.damage},player);}
     const before=this.missions.version;
+    if(this.wardenDefeated&&outpostThreats(characterProfiles.active.campaign?.size??1).every(id=>this.progression.hasDefeated(id)))this.missions.record('po-secure');
     if(this.soterradoDefeated)this.missions.record('after-soterrado');
     if(this.vesperDefeated)this.missions.record('after-vesper');
     this.missions.observe({echoes:this.progression.echoes.size,passage:this.progression.passageOpen,firstEcho:this.firstEchoSeen,warden:this.wardenDefeated});

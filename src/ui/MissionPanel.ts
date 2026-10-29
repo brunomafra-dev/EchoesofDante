@@ -62,7 +62,13 @@ export class MissionPanel{
   const name=document.createElement('h2');name.textContent=d.title;content.append(name);
   const subtitle=document.createElement('p');subtitle.className='mission-state';subtitle.textContent=`${NPC_NAMES[d.npc]} · ${STATUS[status]}`;content.append(subtitle);
   if(status==='locked'){
-   const p=document.createElement('p');p.textContent=d.id.startsWith('settle-')&&!m.permanenceAvailable?'Os capítulos do assentamento aguardam a atualização do serviço cooperativo. A expedição anterior continua disponível.':d.requires&&m.status(d.requires)!=='completed'?`Entregue o relatório de “${missionById(d.requires).title}” para continuar.`:d.unlock==='after-soterrado'?'Investigue a bacia sob as dunas e conclua o encontro com o Soterrado.':'Conclua a travessia glacial e o encontro com Vésper para receber este relatório.';content.append(p);
+   const p=document.createElement('p');
+   if(d.id.startsWith('settle-')&&!m.permanenceAvailable)p.textContent='Os capítulos do assentamento aguardam a atualização do serviço cooperativo. A expedição anterior continua disponível.';
+   else if(d.id==='settle-outpost'&&!m.outpostAvailable)p.textContent='O servidor cooperativo aguarda o capítulo do Posto das Nascentes. Os capítulos anteriores continuam disponíveis.';
+   else if(d.requires&&m.status(d.requires)!=='completed')p.textContent=`Entregue o relatório de “${missionById(d.requires).title}” para continuar.`;
+   else if(d.unlock==='po-secure')p.textContent='A Bacia das Nascentes ainda precisa estar segura. As ameaças já eliminadas permanecem registradas; explore os caminhos e margens restantes.';
+   else p.textContent=d.unlock==='after-soterrado'?'Investigue a bacia sob as dunas e conclua o encontro com o Soterrado.':'Conclua a travessia glacial e o encontro com Vésper para receber este relatório.';
+   content.append(p);
   }else{
    for(const line of status==='completed'||isNpc&&status==='ready'?d.report:d.offer){const p=document.createElement('p');p.textContent=line;content.append(p);}
    const goals=document.createElement('ul');goals.className='mission-goals';

@@ -1,0 +1,274 @@
+{
+  "chapter": "outpost",
+  "method": "Chrome DEV, isolated explicit prior-story fixture; real E/dialogue/atlas inputs. Objective positioning prepares coverage, not a timed human playthrough.",
+  "checks": [
+    "Explicit original shelter/Warden fixture only; tested chapter pending and later bosses alive",
+    "Final installation rejected before its preceding objectives",
+    "Destination rejects missing cargo; actual WASD leads physical cargo to the depot",
+    "Incompatible sample rejected without collecting or advancing the chapter",
+    "All authored interactions and real NPC delivery; credits once, original XP/boss flags preserved",
+    "Reload keeps evidence/receipt without touching real characters/settings",
+    "Three returns preserve object/texture/collider counts",
+    "Journal remains within four viewport sizes"
+  ],
+  "errors": [],
+  "haul": [
+    {
+      "cargo": {
+        "x": 510.2444999999993,
+        "y": 1080
+      },
+      "player": {
+        "x": 590,
+        "y": 1080
+      }
+    },
+    {
+      "cargo": {
+        "x": 796.2389999999999,
+        "y": 1080
+      },
+      "player": {
+        "x": 953.4281000000001,
+        "y": 1080
+      }
+    },
+    {
+      "cargo": {
+        "x": 1051.9889999999998,
+        "y": 1080
+      },
+      "player": {
+        "x": 1226.997550000001,
+        "y": 1080
+      }
+    },
+    {
+      "cargo": {
+        "x": 1321.4835000000005,
+        "y": 1080
+      },
+      "player": {
+        "x": 1504.670750000001,
+        "y": 1080
+      }
+    },
+    {
+      "cargo": {
+        "x": 1590.9779999999998,
+        "y": 1080
+      },
+      "player": {
+        "x": 1753.7647000000006,
+        "y": 1080
+      }
+    },
+    {
+      "cargo": {
+        "x": 1887.9944999999993,
+        "y": 1080
+      },
+      "player": {
+        "x": 2039.6111000000003,
+        "y": 1080
+      }
+    }
+  ],
+  "stability": {
+    "before": {
+      "area": "terraces",
+      "evidence": [
+        "clearing",
+        "roots",
+        "water",
+        "biology",
+        "echo1",
+        "echo2",
+        "echo3",
+        "passage",
+        "first-echo",
+        "warden",
+        "spring",
+        "route-west",
+        "route-east",
+        "soil",
+        "site",
+        "shelter-built",
+        "pw-intake",
+        "pw-silt",
+        "pw-filter",
+        "pw-valve",
+        "pw-online",
+        "pf-trace",
+        "pf-control",
+        "pf-sample",
+        "pf-safe",
+        "pf-stock",
+        "pt-upper",
+        "pt-lower",
+        "pt-anchor",
+        "pt-load",
+        "pt-deliver",
+        "pe-ground",
+        "pe-return",
+        "pe-cell",
+        "pe-isolate",
+        "pe-online",
+        "pc-beacon",
+        "pc-manifest",
+        "pc-shelter",
+        "pc-receive",
+        "pc-home",
+        "po-secure",
+        "po-bank",
+        "po-water",
+        "po-kit",
+        "po-load",
+        "po-deliver",
+        "po-module",
+        "po-crew",
+        "po-ready"
+      ],
+      "completed": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost"
+      ],
+      "credits": 440,
+      "rewards": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost"
+      ],
+      "xp": 350,
+      "hp": 120,
+      "flags": {
+        "warden": true,
+        "soterrado": false,
+        "vesper": false,
+        "titan": false
+      },
+      "objects": 179,
+      "textures": 268,
+      "obstacles": 40
+    },
+    "after": {
+      "area": "terraces",
+      "evidence": [
+        "clearing",
+        "roots",
+        "water",
+        "biology",
+        "echo1",
+        "echo2",
+        "echo3",
+        "passage",
+        "first-echo",
+        "warden",
+        "spring",
+        "route-west",
+        "route-east",
+        "soil",
+        "site",
+        "shelter-built",
+        "pw-intake",
+        "pw-silt",
+        "pw-filter",
+        "pw-valve",
+        "pw-online",
+        "pf-trace",
+        "pf-control",
+        "pf-sample",
+        "pf-safe",
+        "pf-stock",
+        "pt-upper",
+        "pt-lower",
+        "pt-anchor",
+        "pt-load",
+        "pt-deliver",
+        "pe-ground",
+        "pe-return",
+        "pe-cell",
+        "pe-isolate",
+        "pe-online",
+        "pc-beacon",
+        "pc-manifest",
+        "pc-shelter",
+        "pc-receive",
+        "pc-home",
+        "po-secure",
+        "po-bank",
+        "po-water",
+        "po-kit",
+        "po-load",
+        "po-deliver",
+        "po-module",
+        "po-crew",
+        "po-ready"
+      ],
+      "completed": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost"
+      ],
+      "credits": 440,
+      "rewards": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost"
+      ],
+      "xp": 350,
+      "hp": 120,
+      "flags": {
+        "warden": true,
+        "soterrado": false,
+        "vesper": false,
+        "titan": false
+      },
+      "objects": 179,
+      "textures": 268,
+      "obstacles": 40
+    }
+  },
+  "passed": true
+}
