@@ -23,7 +23,7 @@ Protocolo permanece 16: transporte, evidências e pessoas usam formatos existent
 - [x] Anfitrião/convidado, transferência dos moradores e reconexão, com dois Chrome locais.
 - [x] Touch/gamepad emulados, resoluções e inspeção visual das capturas.
 - [x] Commit de aplicação `664b039d74f04bec8dc970744b7fe35ec4aa5851` enviado e sincronizado; aplicação pública conferida.
-- [ ] Compatibilidade real do relay público conferida.
+- [x] 29/10: Render `a49fad7`, protocolo 16 / `outposts:1`, e dupla pública conferidos após deploy do usuário.
 - [ ] Playtest humano deste capítulo. Aguardar antes de outra etapa.
 
 QA técnico não mede diversão, duração ou naturalidade humana. Sem teste em celular físico/equipe humana de quatro e sem garantia de 30 minutos/oito horas.
@@ -49,3 +49,9 @@ QA técnico não mede diversão, duração ou naturalidade humana. Sem teste em 
 [Vercel da aplicação](https://vercel.com/brunomafra-devs-projects/echosofdante/HX4TvDjsPEPZx83KTGNU8CdKWiZh) com status `success`. [62 hashes](qa/publication/hashes.json), incluindo JavaScript, folhas dos moradores e arte dos módulos, correspondem à build local. [Chrome no endereço público](qa/public-solo/public.json): posto, água e chegada passaram por aceite/reload, sem globais DEV e com sentinelas de personagens/configurações reais intactas. A biblioteca pública contém o acesso da 0.1.166. **Disponível no solo; avaliação humana pendente.**
 
 A saúde HTTP do Render excedeu os timeouts, mas a [conexão real de sala](qa/public-relay/report.json) respondeu **protocolo 16, sem `outposts:1`**. A incompatibilidade do catálogo foi confirmada no WebSocket, sem simular vitória ou objetivos. O teste criou e encerrou uma sala temporária; credenciais não foram registradas. As guardas recusam o novo capítulo nesse relay para preservar os saves; não se declara o posto disponível no coop público. Foi solicitado ao usuário executar **Deploy latest commit** no serviço `echoes-of-dante-rooms`, com o código já no GitHub. Resta repetir a capacidade e a dupla pública após essa atualização; os testes locais não substituem esse gate externo.
+
+### 29/10 — Coop público confirmado / continuação autorizada
+
+O usuário informou “já feito no Render” e pediu “vamos para o próximo passo”. A conferência seguinte encontrou revisão `a49fad7`, protocolo 16 e `outposts:1` na saúde e na conexão real de sala; os 62 hashes da aplicação continuaram correspondendo. [Dupla Vercel/Render](qa/public-coop/report.json): dois Chrome independentes, personagens originais reunidos, preparo explícito do anfitrião, aceite real pelo convidado, atlas, caminhada pelo corredor sul, E na linha de cheia e reload/reentrada com objetivo compartilhado, créditos/recibos preservados e bosses posteriores vivos. Saves/configurações reais protegidos e sala encerrada pelo menu. É amostra pública funcional; a entrega completa permanece coberta no QA local. Os registros de indisponibilidade acima são históricos.
+
+A solicitação de continuar autoriza o sprint seguinte de apoio prático no posto. Não é inferida aprovação visual expressa nem medição humana de duração/diversão deste capítulo.

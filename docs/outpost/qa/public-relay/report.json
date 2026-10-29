@@ -1,9 +1,9 @@
 {
-  "at": "2026-10-29T12:15:46.828Z",
+  "at": "2026-10-29T14:04:34.935Z",
   "url": "wss://echoes-of-dante-rooms.onrender.com/coop",
   "method": "Temporary original-campaign room handshake; no characters/saves from real users and no victory or mission snapshot. Joined credentials never recorded.",
   "connected": true,
-  "compatible": false,
+  "compatible": true,
   "protocol": 16,
-  "outposts": null
+  "outposts": 1
 }

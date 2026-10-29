@@ -1,6 +1,6 @@
 {
   "version": "0.1.166",
-  "verifiedAt": "2026-10-29T12:14:29.748720+00:00",
+  "verifiedAt": "2026-10-29T14:04:45.784631+00:00",
   "buildPublished": true,
   "verifiedFiles": [
     "/assets/appearance-DGTbGxQ5.js",
@@ -131,7 +131,18 @@
     "/assets/colonization/spring-pool.png": "366193de834b1ffcbd850ea11ed5ae40065b2fc43313e5ee8238ffa513094e4e"
   },
   "relay": {
-    "unavailable": "The read operation timed out"
+    "service": "Dante regional co-op",
+    "protocol": 16,
+    "outposts": 1,
+    "missions": true,
+    "chat": true,
+    "capacity": 4,
+    "uniqueClasses": true,
+    "fixedCampaigns": true,
+    "revision": "a49fad701b907d715deebbee49d52b383e537cff",
+    "campaign": true,
+    "rooms": 0,
+    "players": 1
   },
-  "coopCompatible": false
+  "coopCompatible": true
 }
