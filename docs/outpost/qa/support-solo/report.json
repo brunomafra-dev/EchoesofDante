@@ -1,0 +1,13 @@
+{
+  "method": "Chrome DEV isolated support lab. Real E/buttons, existing Nara services and atlas. Explicit capacity, storage-failure, pending-report and threat fixtures; not a human playthrough.",
+  "checks": [
+    "Actual support heals free, buys one potion for 12 and stores the same UID; reload never resets wallet or duplicates the lab spare",
+    "The post and Nara share one personal chest, equipped UIDs stay protected and buying stops at zero credits",
+    "Actual support transaction rolls back potion and payment when durable storage fails",
+    "Potion cap 20, chest cap 48 and full backpack block UI and underlying operations without moving items",
+    "Support panel fits five resolutions with scrolling and normal close controls",
+    "Leaving range closes the panel; pending report, nearby threat fixture, death and every workshop action refuse field services"
+  ],
+  "errors": [],
+  "passed": true
+}

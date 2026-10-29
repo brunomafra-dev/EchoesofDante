@@ -1,0 +1,82 @@
+{
+  "method": "Two independent Chrome, actual unchanged relay 16/outposts:1. Explicit isolated prior-post/personal-kit/wound fixtures; real local support UI, authenticated healing request and original-crew reconnect.",
+  "checks": [
+    "Running original crew prepares only isolated fixtures; invitation preserves the support namespace and guest cannot wound the team",
+    "Both local support menus stay independent; real guest request heals only that actor while host menu remains open, then host heals itself",
+    "Simultaneous personal purchases/chests use distinct UIDs and balances, preserve receipts/XP and never spend the other member resources",
+    "Authenticated healing packet outside depot range is refused by the host even with a completed shared post",
+    "Missing original member blocks services; rejoining the same crew preserves both personal payments/chests with no extra rewards"
+  ],
+  "errors": [],
+  "personal": [
+    {
+      "hp": 120,
+      "max": 120,
+      "credits": 36,
+      "potions": 4,
+      "bag": [],
+      "stash": [
+        {
+          "uid": "support-spare-c08462e2-067a-4c4b-84bb-90a74dc94aa5",
+          "id": "forest-focus"
+        }
+      ],
+      "xp": 350,
+      "rewards": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost"
+      ],
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "hp": 48,
+      "max": 96,
+      "credits": 48,
+      "potions": 3,
+      "bag": [],
+      "stash": [
+        {
+          "uid": "support-spare-3c19e9a0-4570-43bf-82ce-03a77f938f86",
+          "id": "forest-focus"
+        }
+      ],
+      "xp": 350,
+      "rewards": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost"
+      ],
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "passed": true
+}

@@ -4,6 +4,7 @@ import {REGIONAL_RESIDENTS} from './regionalExpeditions';
 import type {NpcDefinition} from './settlementLife';
 
 export const OUTPOST={x:2240,y:910,width:300,height:212,name:'Posto das Nascentes'} as const;
+export const OUTPOST_SUPPORT={x:2040,y:1080,radius:65} as const;
 export const OUTPOST_SOLIDS=HABITAT_SOLIDS.map(o=>({x:OUTPOST.x+(o.x-HABITAT.x)*OUTPOST.width/HABITAT.width,y:OUTPOST.y+(o.y-HABITAT.y)*OUTPOST.height/HABITAT.height,radius:o.radius*OUTPOST.width/HABITAT.width}));
 // These are the existing, finite inhabitants, including the original team's
 // reserves. A cleared region is remembered; no new wave or kill quota is added.

@@ -1,5 +1,11 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**29/10/2026 · Apoio de campo · 0.1.167:** continuação autorizada após o deploy do posto. [Escopo e evidências](outpost/SUPPORT.md): recuperação, compra de poções e cofre pessoal no depósito, só após relatório entregue, presença segura e equipe original reunida. Reutiliza economia/saves/serviços e o protocolo 16 / `outposts:1`; não adiciona missões ou recibos, não altera oficina/base, moradores, bosses ou bloqueios do atlas. Laboratório separado e avaliação humana pendente antes de outra etapa.
+
+- [x] Typecheck/build 255 módulos; solo/limites/rollback, save serializado 0.1.166, guardas de segurança, dupla com cura pessoal e reconexão, quatro classes touch e gamepad emulados passaram. Dupla compilada sem globais DEV e capturas inspecionadas pelo agente; não representam aprovação humana.
+- [ ] Publicação e teste público desta versão.
+- [ ] Playtest humano do apoio antes de outra etapa.
+
 **29/10/2026 · Coop do posto confirmado / próximo sprint autorizado:** usuário publicou o Render e pediu avançar. Revisão `a49fad7`, protocolo 16 / `outposts:1`, 62 hashes e [dupla pública](outpost/qa/public-coop/report.json) passaram: aceite do convidado, caminhada/E, reload/reentrada e saves reais preservados. Esta orientação autoriza o próximo sprint de utilidade do posto (cura, suprimentos e cofre pessoal pelos sistemas existentes); não constitui aprovação visual expressa ou medição humana da 0.1.166. Manter requisitos, economia, moradores e bosses; aguardar validação do sprint seguinte antes de outro.
 
 **28/10/2026 · Primeiro posto autorizado · 0.1.166 em desenvolvimento:** usuário respondeu “vamo” à proposta de ocupar uma região conquistada. [Escopo e evidências](outpost/README.md): Bacia das Nascentes, condições de sobrevivência/apoio, carga física, fundação seca e transferência de Mara/Choco. Autorização atual permite este primeiro capítulo da entrega D, preservando requisitos, derrotas finitas, moradores/serviços existentes e saves. Não autoriza outro sprint sem playtest desta entrega; não registra aprovação integral ou duração dos cinco capítulos anteriores.

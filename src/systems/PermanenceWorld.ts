@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import {PERMANENCE_SITES,type PermanenceSite,type PermanencePose} from '../config/permanence';
 import {HABITAT,HABITAT_SOLIDS} from '../config/colonization';
-import {OUTPOST,OUTPOST_SOLIDS} from '../config/outpost';
+import {OUTPOST,OUTPOST_SOLIDS,OUTPOST_SUPPORT} from '../config/outpost';
 import {trackEnvironmentOcclusion} from '../visual/EnvironmentArt';
 import type {Missions} from './Missions';
 import type {JourneyArea} from './LocalJourney';
@@ -29,6 +29,7 @@ export class PermanenceWorld {
  private established=false;
  private outpost=false;
  private outpostDepot=false;
+ private supportReady=false;
  constructor(private scene:Phaser.Scene,private area:JourneyArea,private obstacles:Obstacle[],private warn:()=>void=()=>{}){
   for(const site of PERMANENCE_SITES.filter(s=>s.area===area)){
    const image=(site.art==='cargo'?scene.add.image(site.x,site.y,'item-accessory-2').setDisplaySize(34,44).setDepth(site.y-2):site.art==='mineral'||site.art==='record'?scene.add.image(site.x,site.y,site.art==='mineral'?'deep-mineral':'ancient-remnant').setDisplaySize(95,68).setDepth(site.y-2):addSurveyProp(scene,site.art,site.x,site.y)).setName(site.id).setVisible(false);
@@ -79,6 +80,9 @@ export class PermanenceWorld {
   if(missions.has('pc-home')&&!this.established){this.established=true;this.addReception();}
   if(missions.has('po-deliver')&&!this.outpostDepot){this.outpostDepot=true;this.addOutpostDepot();}
   if(missions.has('po-module')&&!this.outpost){this.outpost=true;this.addOutpost();}
+  if(this.area==='springs'&&!this.supportReady&&missions.status('settle-outpost')==='completed'){
+   this.supportReady=true;this.scene.add.text(OUTPOST_SUPPORT.x,1190,'APOIO · CURA E COFRE',{fontFamily:'Barlow Condensed',fontSize:'15px',color:'#d4dfc4',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setName('outpost-support-sign');
+  }
  }
  private addOutpostDepot():void{
   if(this.area!=='springs')return;

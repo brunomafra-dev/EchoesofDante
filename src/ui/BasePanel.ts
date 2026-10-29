@@ -5,8 +5,8 @@ import {MATERIAL_NAMES,REGION_NAMES,recipe,salePrice,POTION_PRICE,type EconomySn
 import type {ServiceAction} from '../systems/BaseEconomy';
 import {itemIcon} from '../systems/EquipmentDrops';
 import {expeditionAtlas} from './ExpeditionAtlas';
-type Tab='medic'|'smith'|'expedition'|'map';
-type State={economy:EconomySnapshot;equipment:EquipmentSnapshot;area:keyof typeof REGION_NAMES;hp:number;maxHp:number;classId:string;returnAvailable:boolean;returnArea?:keyof typeof REGION_NAMES;canLead:boolean;missionArea?:keyof typeof REGION_NAMES;missionTitle?:string};
+type Tab='medic'|'smith'|'expedition'|'map'|'outpost';
+type State={economy:EconomySnapshot;equipment:EquipmentSnapshot;area:keyof typeof REGION_NAMES;hp:number;maxHp:number;classId:string;returnAvailable:boolean;returnArea?:keyof typeof REGION_NAMES;canLead:boolean;missionArea?:keyof typeof REGION_NAMES;missionTitle?:string;outpostSupport?:boolean};
 export class BasePanel{
  private dialog=document.createElement('dialog');private bar=document.createElement('div');private tab:Tab='map';private notice='';private frame=0;private previous:boolean[]=[];
  constructor(scene:Phaser.Scene,private read:()=>State,private act:(action:ServiceAction)=>boolean,private travel:(area:keyof typeof REGION_NAMES,resume?:boolean)=>boolean,private potion:()=>boolean,private opened:()=>void,private closed:()=>void){
@@ -22,17 +22,20 @@ export class BasePanel{
  private button(parent:Element,text:string,run:()=>void,disabled=false){const b=document.createElement('button');b.textContent=text;b.disabled=disabled;b.onclick=run;parent.append(b);return b;}
  private operation(a:ServiceAction){const index=Array.from(this.dialog.querySelectorAll('button')).indexOf(document.activeElement as HTMLButtonElement);this.notice=this.act(a)?'Operação concluída e salva.':'Não foi possível concluir. Confira recursos, espaço e armazenamento.';this.render();this.refreshBar();const buttons=Array.from(this.dialog.querySelectorAll<HTMLButtonElement>('button'));const target=buttons[Math.min(Math.max(index,0),buttons.length-1)];(target&&!target.disabled?target:buttons.find(b=>!b.disabled))?.focus()}
  private render(){
-  const s=this.read(),e=s.economy,base=s.area==='base',worn=new Set(Object.values(s.equipment.equipped??{})),bag=s.equipment.items!.filter(i=>!worn.has(i.uid));
+  const s=this.read(),e=s.economy,base=s.area==='base',support=this.tab==='outpost'&&s.outpostSupport===true,worn=new Set(Object.values(s.equipment.equipped??{})),bag=s.equipment.items!.filter(i=>!worn.has(i.uid));
   this.dialog.innerHTML='<header><div><small>EXPEDIÇÃO DANTE-01</small><h1></h1></div><button data-close>VOLTAR</button></header><p class="base-wallet"></p><div class="base-services"></div><p role="status" class="base-notice"></p>';
   this.dialog.querySelector('[data-close]')!.addEventListener('click',()=>this.dialog.close());
-  this.dialog.querySelector('h1')!.textContent=this.tab==='medic'?'Enfermaria e suprimentos':this.tab==='smith'?'Oficina da expedição':this.tab==='expedition'?'Expedições e cofre':'Mapa de Dante';
+  this.dialog.querySelector('h1')!.textContent=this.tab==='outpost'?'Posto das Nascentes':this.tab==='medic'?'Enfermaria e suprimentos':this.tab==='smith'?'Oficina da expedição':this.tab==='expedition'?'Expedições e cofre':'Mapa de Dante';
   this.dialog.querySelector('.base-wallet')!.textContent=`${e.credits} créditos · ${MATERIAL_NAMES.map((n,i)=>`${n}: ${e.materials[i]}`).join(' · ')} · Poções ${e.potions}/20`;
   (this.dialog.querySelector('.base-wallet') as HTMLElement).hidden=this.tab==='map';
   const content=this.dialog.querySelector('.base-services')!;
-  if(base&&this.tab==='medic'){
-   this.button(content,'RESTAURAR VIDA · GRATUITO',()=>this.operation({kind:'heal'}),s.hp>=s.maxHp);
+  if(this.tab==='outpost'){
+   const p=document.createElement('p');p.dataset.outpostLife='';p.textContent=support?`Apoio de campo · Vida ${s.hp}/${s.maxHp}`:'Entregue o relatório do posto a Nara e aproxime-se do depósito para usar o apoio.';content.append(p);
+  }
+  if(base&&this.tab==='medic'||support){
+   const heal=this.button(content,'RESTAURAR VIDA · GRATUITO',()=>this.operation({kind:'heal'}),s.hp>=s.maxHp);if(support)heal.dataset.outpostHeal='';
    this.button(content,`COMPRAR POÇÃO · ${POTION_PRICE} CRÉDITOS`,()=>this.operation({kind:'buy'}),e.credits<POTION_PRICE||e.potions>=20);
-   const p=document.createElement('p');p.textContent='Cura 35% da vida máxima. Recarga de 8 segundos. Use H, o botão de poção ou Y no controle. Não é consumida com vida cheia.';content.append(p);
+   const p=document.createElement('p');p.textContent=`Cura 35% da vida máxima. Recarga de 8 segundos. Use H, o botão de poção ou ${s.classId==='astral'?'X':'Y'} no controle. Não é consumida com vida cheia.`;content.append(p);
   }
   if(base&&this.tab==='smith'){
    const h=document.createElement('h2');h.textContent='Fabricar · resultado garantido';content.append(h);
@@ -64,7 +67,7 @@ export class BasePanel{
    content.append(expeditionAtlas(s,area=>depart(area)));
    if(base&&!s.canLead){const p2=document.createElement('p');p2.textContent='O anfitrião escolhe o destino da expedição. Seus serviços e cofre são pessoais.';content.append(p2)}
   }
-  if(base&&this.tab==='expedition'){
+  if(base&&this.tab==='expedition'||support){
    const h=document.createElement('h2');h.textContent=`Cofre pessoal · ${e.stash.length}/48`;content.append(h);
    for(const item of bag)this.button(content,`GUARDAR · ${equipmentName(item.id,s.classId)}`,()=>this.operation({kind:'deposit',uid:item.uid}),e.stash.length>=48);
    for(const item of e.stash)this.button(content,`RETIRAR · ${equipmentName(item.id,s.classId)}`,()=>this.operation({kind:'withdraw',uid:item.uid}),bag.length>=24);
@@ -73,5 +76,5 @@ export class BasePanel{
  }
  private key=(e:KeyboardEvent)=>{if(e.target instanceof HTMLInputElement||e.target instanceof HTMLTextAreaElement)return;if(this.isOpen){e.stopImmediatePropagation();if(e.key==='Escape'||e.key.toLowerCase()==='m'){e.preventDefault();this.dialog.close()}else if(e.key.startsWith('Arrow')){e.preventDefault();this.focus(e.key==='ArrowLeft'||e.key==='ArrowUp'?-1:1)}return}if(document.querySelector('dialog[open]'))return;if(e.key.toLowerCase()==='m'){e.preventDefault();e.stopImmediatePropagation();this.open('map')}else if(e.key.toLowerCase()==='h'&&!e.repeat){e.preventDefault();e.stopImmediatePropagation();this.potion();this.refreshBar()}};
  private focus(d:number){const bs=Array.from(this.dialog.querySelectorAll<HTMLButtonElement>('button:not(:disabled)'));const i=bs.indexOf(document.activeElement as HTMLButtonElement),b=bs[(i+d+bs.length)%bs.length];b?.focus();b?.scrollIntoView({block:'nearest',inline:'nearest'})}
- private poll=()=>{const pad=navigator.getGamepads?.().find(p=>p?.connected&&p.mapping==='standard'),buttons=pad?.buttons.map(b=>b.pressed||b.value>.5)??[],edge=(i:number)=>buttons[i]&&!this.previous[i];if(coopSession.chatTyping){this.previous=buttons;this.frame=requestAnimationFrame(this.poll);return;}if(this.isOpen){if(edge(12)||edge(14))this.focus(-1);else if(edge(13)||edge(15))this.focus(1);else if(edge(0))(document.activeElement as HTMLButtonElement)?.click();else if(edge(1))this.dialog.close()}else if((edge(2)||edge(3))&&!document.querySelector('dialog[open]')&&edge(this.read().classId==='astral'?2:3)){this.potion();this.refreshBar()}this.previous=buttons;this.frame=requestAnimationFrame(this.poll)};
+ private poll=()=>{const pad=navigator.getGamepads?.().find(p=>p?.connected&&p.mapping==='standard'),buttons=pad?.buttons.map(b=>b.pressed||b.value>.5)??[],edge=(i:number)=>buttons[i]&&!this.previous[i];if(coopSession.chatTyping){this.previous=buttons;this.frame=requestAnimationFrame(this.poll);return;}if(this.isOpen){if(this.tab==='outpost'){const s=this.read(),life=this.dialog.querySelector('[data-outpost-life]'),heal=this.dialog.querySelector<HTMLButtonElement>('[data-outpost-heal]'),text=`Apoio de campo · Vida ${s.hp}/${s.maxHp}`;if(!s.outpostSupport)this.dialog.close();else{if(life&&life.textContent!==text)life.textContent=text;if(heal)heal.disabled=s.hp>=s.maxHp;}}if(edge(12)||edge(14))this.focus(-1);else if(edge(13)||edge(15))this.focus(1);else if(edge(0))(document.activeElement as HTMLButtonElement)?.click();else if(edge(1))this.dialog.close()}else if((edge(2)||edge(3))&&!document.querySelector('dialog[open]')&&edge(this.read().classId==='astral'?2:3)){this.potion();this.refreshBar()}this.previous=buttons;this.frame=requestAnimationFrame(this.poll)};
 }

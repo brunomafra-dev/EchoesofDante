@@ -1,0 +1,11 @@
+{
+  "sourceVersion": "0.1.166",
+  "method": "Actual old public isolated outpost lab serializer; only completed post evidence/receipt/area are prepared for the service prerequisite. Any dummy member key is zeroed. No human save or credits awarded.",
+  "checks": [
+    "Actual 0.1.166 serializer imported by current Journey with unchanged wallet, receipts, completed post and living later bosses",
+    "Existing credits pay exactly 12 for one potion; heal works without new kit/reward/gear/XP change",
+    "Real save and settings sentinels remain untouched"
+  ],
+  "errors": [],
+  "passed": true
+}

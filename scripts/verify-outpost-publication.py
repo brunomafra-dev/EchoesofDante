@@ -7,8 +7,9 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 
-version = '0.1.166'
-manifest_path = Path('.local/outpost-build-0.1.166.json')
+versions = [value for value in sys.argv[2:] if not value.startswith('--')]
+version = versions[0] if versions else '0.1.166'
+manifest_path = Path('.local/outpost-build-' + version + '.json')
 if sys.argv[1] == 'capture':
     files = list(Path('dist/assets').glob('*.js')) + list(Path('dist/assets/settlement-life').glob('*')) + list(Path('dist/assets/colonization').glob('*'))
     manifest = {'version': version, 'html': {name: Path('dist', name).read_text(encoding='utf-8') for name in ['index.html', 'campaign-playtest.html', 'test-library.html']}, 'assets': {('/' + str(p.relative_to('dist')).replace('\\', '/')): hashlib.sha256(p.read_bytes()).hexdigest() for p in files if p.is_file()}}
@@ -25,7 +26,7 @@ else:
         for asset in re.findall(r'(?:src|href)="(/assets/[^"?]+\.js)"', local):
             assert asset in remote, (name, asset, 'publication is older')
         if name == 'test-library.html':
-            assert 'permanence=outpost' in remote and version in remote
+            assert ('outpost-support=1' if version == '0.1.167' else 'permanence=outpost') in remote and version in remote
     def verify(item):
         path, expected = item
         assert hashlib.sha256(get(path)).hexdigest() == expected, path
@@ -39,7 +40,7 @@ else:
         # Frontend publication and relay availability are separate gates.
         relay = {'unavailable': str(error)}
     result = {'version': version, 'verifiedAt': datetime.now(timezone.utc).isoformat(), 'buildPublished': True, 'verifiedFiles': verified, 'sha256': manifest['assets'], 'relay': relay, 'coopCompatible': relay.get('protocol') == 16 and relay.get('outposts') == 1}
-    out = Path('docs/outpost/qa/publication')
+    out = Path('docs/outpost/qa/publication') if version == '0.1.166' else Path('docs/outpost/qa/publication', version)
     out.mkdir(parents=True, exist_ok=True)
     if '--read-only' not in sys.argv:
         (out / 'hashes.json').write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')

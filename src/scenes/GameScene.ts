@@ -27,7 +27,7 @@ import {LandingBase} from '../systems/LandingBase';
 import {BasePanel} from '../ui/BasePanel';
 import {PermanenceWorld} from '../systems/PermanenceWorld';
 import {PERMANENCE_IDS,PERMANENCE_SITES,isPermanence} from '../config/permanence';
-import {outpostThreats} from '../config/outpost';
+import {outpostThreats,OUTPOST_SUPPORT} from '../config/outpost';
 import {Missions,validMissionRewards,type MissionAction} from '../systems/Missions';
 import {regionUnlocked} from '../systems/RegionAccess';
 import {RegionalExpeditions} from '../systems/RegionalExpeditions';
@@ -721,7 +721,7 @@ export class GameScene extends Phaser.Scene {
     this.loot=new EquipmentDrops(this,coopSession.role==='guest'?coopSession.id:'host');
     this.equipmentDialog=new EquipmentDialog(this,()=>this.equipment.snapshot(),(slot,id,uid)=>this.equipItem(slot,id,uid),()=>this.closeEquipment(),()=>this.openEquipment(),this.classId);
     this.resources=new ResourceDrops(this,coopSession.role==='guest'?coopSession.id:'host');
-    this.basePanel=new BasePanel(this,()=>({economy:{...this.economy,visited:this.unlockedDestinations()},equipment:this.equipment.snapshot(),area:this.area,hp:this.player.hp,maxHp:this.player.maxHp,classId:this.classId,returnAvailable:this.canReturnBase(),returnArea:this.expeditionReturn?.area,canLead:coopSession.role!=='guest',missionArea:this.missionArea(),missionTitle:this.missions.current?missionById(this.missions.current).title:undefined}),a=>this.serviceAction(a),(area,resume)=>this.baseTravel(area,resume),()=>this.usePotion(),()=>{this.serviceUnpaused=coopSession.connected;if(!this.serviceUnpaused)this.pauseForModal();else {this.controls.cancelForRecords();this.charge.stop();this.hunter?.clear();this.astral?.clear();this.xeno?.clear();}},()=>{if(!this.serviceUnpaused)this.resumeFromModal();else this.controls.cancelForRecords();this.serviceUnpaused=false});
+    this.basePanel=new BasePanel(this,()=>({economy:{...this.economy,visited:this.unlockedDestinations()},equipment:this.equipment.snapshot(),area:this.area,hp:this.player.hp,maxHp:this.player.maxHp,classId:this.classId,returnAvailable:this.canReturnBase(),returnArea:this.expeditionReturn?.area,canLead:coopSession.role!=='guest',missionArea:this.missionArea(),missionTitle:this.missions.current?missionById(this.missions.current).title:undefined,outpostSupport:this.canUseOutpostServices()}),a=>this.serviceAction(a),(area,resume)=>this.baseTravel(area,resume),()=>this.usePotion(),()=>{this.serviceUnpaused=coopSession.connected;if(!this.serviceUnpaused)this.pauseForModal();else {this.controls.cancelForRecords();this.charge.stop();this.hunter?.clear();this.astral?.clear();this.xeno?.clear();}},()=>{if(!this.serviceUnpaused)this.resumeFromModal();else this.controls.cancelForRecords();this.serviceUnpaused=false});
     if(!this.qualityReference&&!this.glacierPlaytest){
       this.permanence=new PermanenceWorld(this,this.area,this.arena.obstacles,()=>this.sounds.wardenWarning('volley'));
       this.missionTick=0;this.missionWorld=new MissionWorld(this,this.area);
@@ -759,6 +759,7 @@ export class GameScene extends Phaser.Scene {
     if (this.transitioning) return;
     if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return;
     if(!this.inputModalOpen)this.controls.update(this.player.position);
+    if(!this.inputModalOpen&&this.canUseOutpostServices()&&(this.controls.interactPressed||this.clickedInteraction)){this.clickedInteraction=false;this.basePanel.open('outpost');return;}
     if(this.area==='base'&&!this.inputModalOpen&&(BASE.services.some(s=>distance(this.player.position,s)<100)||coopSession.role!=='guest'&&distance(this.player.position,BASE.exit)<105)&&this.controls.interactPressed){const service=BASE.services.find(s=>distance(this.player.position,s)<100);if(service){if(this.missionUi)this.missionUi.openNpc(service.id);else this.basePanel.open(service.id);return;}if(coopSession.role!=='guest'&&distance(this.player.position,BASE.exit)<105){this.transitionArea('forest');return;}}
     const previousSolids=this.arena.obstacles.length;
     this.permanence?.update(this.missions,this.player.position,coopSession.role==='guest'?coopSession.world?.time??time:time,[this.player,...(this.party?.players??[])],coopSession.role!=='guest',coopSession.world?.permanence);
@@ -792,7 +793,7 @@ export class GameScene extends Phaser.Scene {
     this.referenceImpacts?.update(time);
     if (!this.inputModalOpen && this.controls.recordsPressed) { this.records.open(); return; }
     this.hud.setInputMethod(this.controls.inputMethod);
-    for(const request of coopSession.takeRequests()){const p=this.party?.actors.get(request.id)?.player;if(!p||p.isDead)continue;if(request.action==='potion')this.usePeerPotion(request.id);else if(request.action==='heal'&&this.area==='base')p.health.current=p.maxHp;else if(request.action==='return'&&this.canReturnBase(p.position,p)){this.baseTravel('base',false,p);return;}}
+    for(const request of coopSession.takeRequests()){const p=this.party?.actors.get(request.id)?.player;if(!p||p.isDead)continue;if(request.action==='potion')this.usePeerPotion(request.id);else if(request.action==='heal'&&(this.area==='base'||this.canUseOutpostServices(p)))p.health.current=p.maxHp;else if(request.action==='return'&&this.canReturnBase(p.position,p)){this.baseTravel('base',false,p);return;}}
     if(!this.player.isDead)this.resources.collect(this.player.position,'host',p=>this.collectResource(p));
     for(const [id,actor]of this.party?.actors??[])if(coopSession.guests.find(m=>m.id===id)?.connected&&!actor.player.isDead)this.resources.collect(actor.player.position,id,p=>{this.resourceAwarded.set(p.uid,p);if(this.resourceAwarded.size>512)this.resourceAwarded.delete(this.resourceAwarded.keys().next().value!);return true});
     const remoteRequest = this.party?.takeInteraction();
@@ -1012,11 +1013,12 @@ export class GameScene extends Phaser.Scene {
         ? 'MECANISMO INATIVO\nInvestigue a fissura ao lado primeiro.'
         : 'MECANISMO INATIVO\nEncontre e investigue os 3 Ecos.');
     }
-    const canInteract = !!resident||!!colonyPassage||!!missionSite||nearVolcanicBack||nearVolcanicExit||nearVolcanicRelay||nearCalderaBack||nearCalderaRelay||nearCalderaRecord|| nearIceEntry || nearIceBack || nearIceExit || nearIceRelay || nearColdPortal || nearFrostReturn || nearFrostRelay || nearSandpitDescent || nearSandpitAscent || nearColdClue || nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearChapterPortal || nearSiroccoExit || nearSiroccoSignal || nearDunesRuin || nearValleyLandmark || nearValleyFrontierSignal;
+    const nearOutpost=this.canUseOutpostServices();
+    const canInteract = nearOutpost||!!resident||!!colonyPassage||!!missionSite||nearVolcanicBack||nearVolcanicExit||nearVolcanicRelay||nearCalderaBack||nearCalderaRelay||nearCalderaRecord|| nearIceEntry || nearIceBack || nearIceExit || nearIceRelay || nearColdPortal || nearFrostReturn || nearFrostRelay || nearSandpitDescent || nearSandpitAscent || nearColdClue || nearDiscovery || nearThreshold || nearMechanism || nearFragment || nearFirstEcho || nearWardenGate || nearWardenExit || nearPortal || nearChapterPortal || nearSiroccoExit || nearSiroccoSignal || nearDunesRuin || nearValleyLandmark || nearValleyFrontierSignal;
     const interactionAction = colonyPassage?'ENTRAR':resident&&!missionSite?'CONVERSAR':missionSite&&'action' in missionSite?missionSite.action:missionSite?missionSite.id==='shelter-built'?'INSTALAR':'ANALISAR':nearVolcanicBack||nearVolcanicExit?'ENTRAR':nearCalderaBack?'ENTRAR':nearBaseStation?'RETORNAR':this.area==='base'?(BASE.services.some(s=>distance(this.player.position,s)<100)?'CONVERSAR':'SAIR'):nearIceEntry || nearIceBack || nearIceExit ? 'ENTRAR' : nearColdPortal || nearFrostReturn ? 'ENTRAR' : nearSandpitDescent ? 'DESCER' : nearSandpitAscent ? 'SUBIR' : nearPortal || nearChapterPortal || nearSiroccoExit ? 'ENTRAR' : 'INVESTIGAR';
     if (interact) this.saveProgress();
-    this.hud.setDiscoveryPrompt(canInteract||!!pickup||nearBaseStation||this.area==='base'&&BASE.services.some(s=>distance(this.player.position,s)<100)||this.area==='base'&&distance(this.player.position,BASE.exit)<105,pickup?'COLETAR':interactionAction);
-    this.controls.setInteractAvailable(canInteract||!!pickup||nearBaseStation||this.area==='base'&&BASE.services.some(s=>distance(this.player.position,s)<100)||this.area==='base'&&distance(this.player.position,BASE.exit)<105,pickup?'COLETAR':interactionAction);
+    this.hud.setDiscoveryPrompt(canInteract||!!pickup||nearBaseStation||this.area==='base'&&BASE.services.some(s=>distance(this.player.position,s)<100)||this.area==='base'&&distance(this.player.position,BASE.exit)<105,nearOutpost?'APOIO':pickup?'COLETAR':interactionAction);
+    this.controls.setInteractAvailable(canInteract||!!pickup||nearBaseStation||this.area==='base'&&BASE.services.some(s=>distance(this.player.position,s)<100)||this.area==='base'&&distance(this.player.position,BASE.exit)<105,nearOutpost?'APOIO':pickup?'COLETAR':interactionAction);
     const waiting=this.bossActive()&&!!this.party?.players.some(p=>!p.isDead);
     this.controls.setDead(this.player.isDead,!waiting);
     this.updateExplorationGuide();
@@ -1680,6 +1682,7 @@ export class GameScene extends Phaser.Scene {
       impacts: this.impactHistory.filter(hit => this.time.now-hit.at < 650),
       impact: hit => this.impact(hit, hit.color, hit.damage, hit.angle, hit.effective, hit.resisted, false),
       prompt: (position,owner) => {
+        const participant=owner==='host'?this.player:this.party?.actors.get(owner)?.player;if(participant&&this.canUseOutpostServices(participant))return{available:true,action:'APOIO'};
         const site=this.missionSite(position,false);if(site)return {available:true,action:'action' in site?site.action:site.id==='shelter-built'?'INSTALAR':'ANALISAR'};if(this.settlementLife?.greetingAt(position))return{available:true,action:'CONVERSAR'};if(this.colonyPassage(position))return{available:true,action:'ENTRAR'};
         if(this.area!=='base'&&this.canReturnBase(position,this.party?.actors.get(owner)?.player)&&distance(position,{x:this.returnStation.x-90,y:this.returnStation.y})<65)return{available:true,action:'RETORNAR'};
         if(this.area==='base')return{available:BASE.services.some(s=>distance(position,s)<100)||distance(position,BASE.exit)<105,action:'CONVERSAR'};
@@ -2464,7 +2467,7 @@ export class GameScene extends Phaser.Scene {
     const params=new URLSearchParams(location.search),review=reviewStop&&params.has('npc-review')?npcReviewSelection(reviewStop,reviewNpc):undefined;
     if(reviewStop&&(!review||review.stop.stage!==id))return false;
     if(id==='settle-outpost'&&coopSession.role!=='offline'&&!coopSession.outpostsAvailable)return false;
-    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!['missions','permanence','settlement-life','settlement-motion','npc-review'].some(key=>params.has(key))||this.inputModalOpen||this.transitioning||coopSession.role==='guest'||!this.player||this.player.isDead)return false;
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!['missions','permanence','settlement-life','settlement-motion','npc-review','outpost-support'].some(key=>params.has(key))||this.inputModalOpen||this.transitioning||coopSession.role==='guest'||!this.player||this.player.isDead)return false;
     if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return false;
     const ids=['recon','survival','signal','beyond','water-source','safe-route','shelter',...PERMANENCE_IDS] as const,index=(ids as readonly MissionId[]).indexOf(id);if(index<0)return false;
     const previous=ids.slice(0,index),evidence=previous.flatMap(mid=>missionById(mid).goals.map(g=>g.id));
@@ -2482,6 +2485,23 @@ export class GameScene extends Phaser.Scene {
       this.progression.restore({...this.progression.snapshot(),rewardedHollows:defeated});evidence.push('po-secure');
     }
     this.missions.restore({schema:1,accepted:[...previous],completed:[...previous],evidence});this.missions.tracked=id;this.missionRewards=[...previous];this.missionNotice='Etapa anterior simulada somente neste laboratório.';
+    if(params.has('outpost-support')&&id==='settle-outpost'){
+      this.missions.act('accept',id);for(const goal of missionById(id).goals)this.missions.record(goal.id);this.missions.act('deliver',id);this.missionRewards.push(id);
+      this.economy.credits=60;this.economy.potions=2;const uid='support-spare-'+characterProfiles.active.id;if(!this.economy.stash.some(i=>i.uid===uid))this.equipment.acquire({uid,id:'forest-focus'});
+      this.transferHp=Math.max(1,Math.round(this.characterMaxHp*.5));this.expeditionArrival={x:OUTPOST_SUPPORT.x,y:OUTPOST_SUPPORT.y};this.expeditionReturn=undefined;
+      if(this.area!=='springs'){
+        if(coopSession.role==='host'){
+          // Publish the explicitly simulated discoveries before normal travel.
+          // The relay then receives visited regions before the travel request
+          // on the same ordered socket; no campaign/route validation is skipped.
+          const sequence=coopSession.publishedWorldSequence,deadline=Date.now()+5000;
+          const arrive=()=>{if(coopSession.role!=='host'||!coopSession.campaignRunning||this.transitioning)return;if(coopSession.publishedWorldSequence>sequence){this.transitionArea('springs');return;}if(Date.now()<deadline)this.events.once(Phaser.Scenes.Events.POST_UPDATE,arrive);};
+          this.events.once(Phaser.Scenes.Events.POST_UPDATE,arrive);return true;
+        }
+        return this.transitionArea('springs');
+      }
+      this.saveProgress();this.scene.restart();return true;
+    }
     if(review){
       if(review.stop.id==='arrivals'){this.missions.act('accept','settle-arrivals');for(const goal of ['pc-beacon','pc-manifest','pc-shelter','pc-receive'] as const)this.missions.record(goal);}
       const focus=review.focus?.position;
@@ -2779,8 +2799,32 @@ export class GameScene extends Phaser.Scene {
     if(coopSession.role==='guest')return this.journey.savePersonal(this.equipment.snapshot(),{...this.economy,visited:this.journey.load()?.economy?.visited??['base','forest']});
     return this.saveProgress();
   }
+  private canUseOutpostServices(participant:Player=this.player):boolean{
+    if(!participant||participant.isDead||this.area!=='springs'||this.bossActive()||this.missions.status('settle-outpost')!=='completed'||!this.missions.has('po-ready')||distance(participant.position,OUTPOST_SUPPORT)>=OUTPOST_SUPPORT.radius)return false;
+    if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning||coopSession.role!=='offline'&&!coopSession.connected)return false;
+    return !this.enemies.some(e=>!e.isDead&&distance(e.position,OUTPOST_SUPPORT)<420);
+  }
+  arriveOutpostSupportPlaytest():boolean{
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!new URLSearchParams(location.search).has('outpost-support')||coopSession.role!=='offline'||characterProfiles.active.campaign?.mode==='coop'||this.area!=='springs'||!this.player||this.player.isDead||this.missions.status('settle-outpost')!=='completed'||this.inputModalOpen||this.transitioning)return false;
+    const point=safeExpeditionPosition(OUTPOST_SUPPORT,this.player.radius,this.arena.obstacles,this.movementBounds);if(!point)return false;
+    Object.assign(this.player.position,point);return true;
+  }
+  seedOutpostSupportKit(reset=false):boolean{
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!new URLSearchParams(location.search).has('outpost-support')||!this.canUseOutpostServices()||this.inputModalOpen)return false;
+    const old=structuredClone(this.economy),kit=this.equipment.snapshot(),uid='support-spare-'+characterProfiles.active.id;
+    if(!reset&&(kit.items!.some(i=>i.uid===uid)||this.economy.stash.some(i=>i.uid===uid)))return true;
+    if(!this.economy.stash.some(i=>i.uid===uid)&&!this.equipment.acquire({uid,id:'forest-focus'}))return false;
+    this.economy.credits=60;this.economy.potions=2;
+    if(!this.persistPersonal()){this.economy=old;this.equipment.restore(kit);return false;}
+    coopSession.updateEquipment(this.equipment.snapshot().slots,this.equipment.free,this.economy.potions);this.basePanel.refreshBar();return true;
+  }
+  woundOutpostSupportPlaytest():boolean{
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!new URLSearchParams(location.search).has('outpost-support')||coopSession.role==='guest'||!this.canUseOutpostServices()||this.inputModalOpen)return false;
+    for(const p of [this.player,...(this.party?.players??[])])if(!p.isDead)p.health.current=Math.max(1,Math.round(p.maxHp*.5));
+    this.saveProgress();return true;
+  }
   private serviceAction(action:ServiceAction):boolean{
-    if(this.area!=='base'||this.player.isDead)return false;
+    if(this.player.isDead||this.area!=='base'&&(!this.canUseOutpostServices()||!['heal','buy','deposit','withdraw'].includes(action.kind)))return false;
     const next=transact(this.economy,this.equipment.snapshot(),action);if(!next)return false;
     const old=this.economy,kit=this.equipment.snapshot(),hp=this.player.hp;this.economy=next.economy;this.equipment.restore(next.equipment);
     if(action.kind==='heal'&&coopSession.role!=='guest')this.player.health.current=this.player.maxHp;

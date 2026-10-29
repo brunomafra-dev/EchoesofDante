@@ -1,0 +1,12 @@
+{
+  "method": "Chrome touch emulation in four classes, actual CDP held attack plus second-finger support interaction, actual touch service buttons and standard gamepad mock. No physical device or human-team claim.",
+  "checks": [
+    "warrior: second-finger support clears held independent attack; real touch heals/buys/stores, closes cleanly and protects real saves",
+    "hunter: second-finger support clears held independent attack; real touch heals/buys/stores, closes cleanly and protects real saves",
+    "astral: second-finger support clears held independent attack; real touch heals/buys/stores, closes cleanly and protects real saves",
+    "xenobinder: second-finger support clears held independent attack; real touch heals/buys/stores, closes cleanly and protects real saves",
+    "Standard gamepad A opens support, D-pad/A heals/buys/stores/withdraws and B closes without mouse or keyboard"
+  ],
+  "errors": [],
+  "passed": true
+}

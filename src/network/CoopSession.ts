@@ -35,6 +35,7 @@ export type PartyWorld={permanence?:import('../config/permanence').PermanencePos
 export class CoopSession {
  serverProtocol?:15|16;
  outpostsAvailable=false;
+ get publishedWorldSequence():number{return this.sequence;}
  role:'offline'|'connecting'|'host'|'guest'='offline';
  code='';message='Equipe de até quatro pessoas, uma de cada classe.';endedMessage='';
  connected=false;peerConnected=false;travelling=false;epoch=0;personalXpGained=0;rewardSaved=true;
@@ -129,7 +130,7 @@ export class CoopSession {
    if(this.socket!==ws)return;
    let m;try{m=JSON.parse(event.data);}catch{return;}
    if(m.type==='joined'&&(m.role==='host'||m.role==='guest')){
-    const needsOutpost=new URLSearchParams(location.search).get('permanence')==='outpost'||this.rewards.load()?.missions?.accepted.includes('settle-outpost');
+    const needsOutpost=new URLSearchParams(location.search).get('permanence')==='outpost'||new URLSearchParams(location.search).has('outpost-support')||this.rewards.load()?.missions?.accepted.includes('settle-outpost');
     if(needsOutpost&&m.outposts!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda o capítulo do Posto das Nascentes. Seu progresso permanece preservado.');reject(new Error(this.message));return;}
     const needsPermanence=new URLSearchParams(location.search).has('permanence')||this.rewards.load()?.missions?.accepted.some(isPermanence);
     if(![15,16].includes(m.protocol)||m.protocol===15&&needsPermanence){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização dos capítulos do assentamento. Seus personagens permanecem preservados.');reject(new Error(this.message));return;}
