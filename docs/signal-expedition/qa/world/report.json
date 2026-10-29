@@ -1,0 +1,83 @@
+{
+  "method": "DEV isolated chapter, explicit partial-evidence/position/invulnerability fixtures; actual WASD/Dash and common damage/death/R paths, geometric navigation and cached returns.",
+  "checks": [
+    "All research sites and original Valley/Springs portals stay connected with clear physical approaches",
+    "Actual walk/Dash respects the visible receiver case footprint",
+    "Common lethal hit, R and reload retain partial research without granting alignment or victory",
+    "Three returns keep objects/textures/colliders stable; one durable archive and Mara response, with no resident migration"
+  ],
+  "routes": [
+    {
+      "area": "valley",
+      "id": "ps-ridge",
+      "clear": true,
+      "steps": 29,
+      "gap": 22.360679774997894
+    },
+    {
+      "area": "valley",
+      "id": "ps-align",
+      "clear": true,
+      "steps": 29,
+      "gap": 26.305892875931807
+    },
+    {
+      "area": "valley",
+      "id": "back",
+      "clear": true,
+      "steps": 4,
+      "gap": 11.6619037896906
+    },
+    {
+      "area": "valley",
+      "id": "branch",
+      "clear": true,
+      "steps": 36,
+      "gap": 15.620499351813312
+    },
+    {
+      "area": "valley",
+      "id": "arid",
+      "clear": true,
+      "steps": 104,
+      "gap": 19.1049731745428
+    },
+    {
+      "area": "springs",
+      "id": "ps-carrier",
+      "clear": true,
+      "steps": 36,
+      "gap": 20.518284528683193
+    },
+    {
+      "area": "springs",
+      "id": "ps-water",
+      "clear": true,
+      "steps": 27,
+      "gap": 10.816653826391969
+    },
+    {
+      "area": "springs",
+      "id": "ps-record",
+      "clear": true,
+      "steps": 36,
+      "gap": 20.518284528683193
+    },
+    {
+      "area": "springs",
+      "id": "back",
+      "clear": true,
+      "steps": 4,
+      "gap": 29.73213749463701
+    },
+    {
+      "area": "springs",
+      "id": "terraces",
+      "clear": true,
+      "steps": 50,
+      "gap": 17
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

@@ -1,0 +1,35 @@
+# Uma frequência a mais · 0.1.169
+
+O usuário aprovou a apresentação de vida/poção da 0.1.168 (“ficou muito bom”) e pediu voltar a implementar o plano em 29/10/2026. Esta continuação cobre um capítulo de investigação após o posto, sem iniciar um lote de sprints. Retoma a dúvida do Primeiro Eco e dá função ao posto na pesquisa; não estabelece a origem humana das estruturas antigas.
+
+## Capítulo
+
+Ivo oferece o relatório somente após entregar o Posto das Nascentes a Nara. Seis objetivos: retirar o receptor reservado na base, comparar a baliza no posto, escutar o reflexo da água, registrar a rocha seca no Vale, alinhar o receptor pela mira e arquivar o resultado no posto. As duas comparações da Bacia podem ocorrer em qualquer ordem. Entrega final a Ivo: **130 créditos por integrante, uma vez**, sem XP ou materiais novos. Equipamentos pessoais não são consumidos.
+
+No alinhamento, aproxime-se do receptor, aponte a mira para a nervura luminosa e confirme com E, toque ou A. Uma direção errada não grava evidência. A direção real do integrante que interage é validada pelo anfitrião; não basta orientar outro personagem. Não exige disparar, esperar, derrotar outra vez ou repetir boss.
+
+O resultado distingue os três pulsos humanos de um quarto pulso longo. Coincidir com um intervalo do arquivo antigo é uma observação, não tradução ou explicação definitiva. O receptor/arquivo permanece fisicamente separado da água e da energia do assentamento. Um estojo de registro aparece no posto e Mara comenta a gravação. Não transfere ou duplica moradores. Reutiliza figuras e objetos existentes; luzes são rasterizadas/cacheadas, com transformação simples em uso.
+
+Mantém portais, requisitos e atlas originais, pinturas, encontros finitos e saves. Não renova criaturas já derrotadas, adiciona quotas ou simula bosses posteriores na campanha. A nova pesquisa não libera fronteiras. A barra e a poção aprovadas continuam funcionando.
+
+## Laboratório e coop
+
+[Teste direto](https://echosofdante.vercel.app/campaign-playtest.html?permanence=signal&v=0.1.169), registrado na biblioteca. Namespace próprio por capítulo/classe. Simula Warden, sete relatórios originais, seis capítulos anteriores e Bacia conquistada/posto entregue, sem XP/drops da segurança simulada. A investigação e seus créditos estão pendentes. Mantém criaturas ainda não derrotadas do Vale e Soterrado/Vésper/Incandescente vivos. Saves reais são isolados em sessionStorage. No coop, só o anfitrião prepara a equipe original reunida.
+
+Mantém protocolo 16 e `outposts:1`; acrescenta capacidade **`signals:1`** e os seis IDs no catálogo. Clientes com laboratório/save da pesquisa recusam relay anterior preservando objetivos; outras campanhas continuam disponíveis e a nova missão fica bloqueada nesse relay. A disponibilidade pública do coop exige verificar saúde/WebSocket e deploy real do novo catálogo, não presumir que o Render acompanhou o GitHub.
+
+Os integrantes precisam recarregar a versão nova para compartilhar os objetivos novos. O laboratório normal mantém os seis objetivos pendentes. Fixtures de alinhamento direto e derrota do Vale descritas nos relatórios abaixo existem apenas nos scripts de QA, não são preparação oculta da campanha ou do acesso entregue ao usuário.
+
+## QA
+
+- [x] `npm run typecheck` e `npm run build` (258 módulos), revisão do diff e [modelo de missão/save](qa/model/report.json). Save serializado pela 0.1.166 preserva progressão, recibos e saldo; falha de escrita/retry concede 130 uma vez, sem XP/material adicional. Mantém aviso preexistente de chunks acima de 500 kB.
+- [x] [Solo completo](qa/signal/solo.json): objetivos por E, recusa de alinhamento errado, entrega real ao Ivo, recibo/reload, diário em quatro resoluções e contagem estável no retorno. Posicionamento e invulnerabilidade são fixtures declaradas, não playtest humano ou medição de duração.
+- [x] [Navegação e mundo](qa/world/report.json): dez aproximações/portais conectados, colisão da caixa com WASD/Dash, dano letal/R/reload conservando pesquisa parcial, três retornos sem duplicar objetos/texturas/colisores, um arquivo e fala de Mara no HUD/balão. Visitas contaminadas no atlas não liberam regiões posteriores. Capturas inspecionadas pelo agente; receptor/nervura reposicionados para ficar visíveis juntos e fora do HUD.
+- [x] [Dupla completa](qa/coop/coop.json): convidado aceita/executa/entrega, mira certa do anfitrião não valida convidado orientado para outro lado, 130 por integrante e reconexão sem repetição. [Relay 16 anterior](qa/compatibility/report.json), revisão `18f5047`: capítulo antigo conecta; laboratório/save da pesquisa recusa e preserva evidências; relay novo permite reconectar com o mesmo progresso.
+- [x] [Controles](qa/controls/report.json): quatro classes por toque, olhar para o cenário sem disparar, confirmação de direção por interação; stick direito/A no gamepad emulado. Capturas em 568×320, 844×390, 1024×768 e 1920×1080 inspecionadas; alvo e controle acessíveis.
+- [x] Build compilada local sem globais DEV: [alinhamento](qa/compiled-alignment/report.json), com fixture explícita de save anterior/quatro objetivos/segurança do Vale, caminhada desde o checkpoint, mira/E, ausência de recompensa/arquivo antes da entrega e reload; [dupla](qa/compiled-coop/report.json), `http://localhost:5195`, com criação/preparo/aceite/coleta por UI, caminhada e reload/reentrada. A dupla compilada é uma amostra do início; o percurso completo foi coberto no DEV acima.
+- [x] [Capítulos compilados](qa/compiled-chapters/public.json): investigação, água e posto por aceite/reload no endereço local 5195, mantendo sentinelas de saves reais. A navegação automatizada aguarda DOM e cena pronta; o carregamento de todos os recursos da página pode exceder o timeout quando várias instâncias rodam juntas.
+- [ ] Commit/push, sincronização, publicação solo e dupla pública.
+- [ ] Playtest humano antes de outro capítulo.
+
+QA técnico não mede diversão/duração, não substitui aparelho físico ou equipe humana de quatro e não constitui aprovação visual humana.

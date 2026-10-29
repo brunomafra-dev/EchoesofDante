@@ -1,0 +1,12 @@
+{
+  "method": "Four Chrome touch classes and standard gamepad; explicit pre-alignment evidence, position and invulnerability fixtures. Actual world look and interaction inputs, not a complete human playthrough.",
+  "checks": [
+    "warrior: touch world look refuses opposite direction, aligns and confirms without firing or touching real saves",
+    "hunter: touch world look refuses opposite direction, aligns and confirms without firing or touching real saves",
+    "astral: touch world look refuses opposite direction, aligns and confirms without firing or touching real saves",
+    "xenobinder: touch world look refuses opposite direction, aligns and confirms without firing or touching real saves",
+    "Standard gamepad right stick + A confirms the correct direction and refuses the opposite; camera/target fit four touch layouts"
+  ],
+  "errors": [],
+  "passed": true
+}

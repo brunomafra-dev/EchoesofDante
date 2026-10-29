@@ -7,6 +7,7 @@ import type {Missions} from './Missions';
 import type {JourneyArea} from './LocalJourney';
 import type {Vec2} from '../utils/math';
 import {addSurveyProp} from '../visual/MissionProps';
+import {SignalSurvey} from '../visual/SignalSurvey';
 import {moveWithCollisions,type Obstacle} from './Movement';
 
 // Authored chapter interactions share the journal, durable evidence and host
@@ -30,7 +31,9 @@ export class PermanenceWorld {
  private outpost=false;
  private outpostDepot=false;
  private supportReady=false;
+ private signal:SignalSurvey;
  constructor(private scene:Phaser.Scene,private area:JourneyArea,private obstacles:Obstacle[],private warn:()=>void=()=>{}){
+  this.signal=new SignalSurvey(scene,area,obstacles);
   for(const site of PERMANENCE_SITES.filter(s=>s.area===area)){
    const image=(site.art==='cargo'?scene.add.image(site.x,site.y,'item-accessory-2').setDisplaySize(34,44).setDepth(site.y-2):site.art==='mineral'||site.art==='record'?scene.add.image(site.x,site.y,site.art==='mineral'?'deep-mineral':'ancient-remnant').setDisplaySize(95,68).setDepth(site.y-2):addSurveyProp(scene,site.art,site.x,site.y)).setName(site.id).setVisible(false);
    if(site.choice){
@@ -53,11 +56,12 @@ export class PermanenceWorld {
    this.power.fillStyle(0xc4afff,.8).fillCircle(0,0,9).lineStyle(2,0xd3c3ff,.65).strokeCircle(0,0,19);
   }
  }
- update(missions:Missions,player:Vec2,now:number,actors:readonly {position:Vec2;isDead:boolean}[]=[],authority=true,remote?:PermanencePose):void{
+ update(missions:Missions,player:Vec2,now:number,actors:readonly {position:Vec2;isDead:boolean;rotation?:number}[]=[],authority=true,remote?:PermanencePose):void{
+  this.signal.update(missions,player,actors[0]?.rotation??0,now);
   this.updateHaul(missions,now,actors,authority,remote);
   for(const {site,image,label}of this.sites){
    const active=['active','ready'].includes(missions.status(site.mission));
-   image.setVisible(active&&!missions.has(site.id));
+   image.setVisible(active&&!missions.has(site.id)&&!site.aimAt);
    const near=Math.hypot(player.x-site.x,player.y-site.y)<240;
    label.setVisible(active&&near&&!missions.has(site.id));
    const ready=!site.needs?.some(id=>!missions.has(id));

@@ -35,6 +35,7 @@ export type PartyWorld={permanence?:import('../config/permanence').PermanencePos
 export class CoopSession {
  serverProtocol?:15|16;
  outpostsAvailable=false;
+ signalsAvailable=false;
  get publishedWorldSequence():number{return this.sequence;}
  role:'offline'|'connecting'|'host'|'guest'='offline';
  code='';message='Equipe de até quatro pessoas, uma de cada classe.';endedMessage='';
@@ -131,11 +132,14 @@ export class CoopSession {
    let m;try{m=JSON.parse(event.data);}catch{return;}
    if(m.type==='joined'&&(m.role==='host'||m.role==='guest')){
     const needsOutpost=new URLSearchParams(location.search).get('permanence')==='outpost'||new URLSearchParams(location.search).has('outpost-support')||this.rewards.load()?.missions?.accepted.includes('settle-outpost');
+    const needsSignal=new URLSearchParams(location.search).get('permanence')==='signal'||this.rewards.load()?.missions?.accepted.includes('settle-signal');
+    if(needsSignal&&m.signals!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda o catálogo da investigação de frequências. Seu progresso permanece preservado.');reject(new Error(this.message));return;}
     if(needsOutpost&&m.outposts!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda o capítulo do Posto das Nascentes. Seu progresso permanece preservado.');reject(new Error(this.message));return;}
     const needsPermanence=new URLSearchParams(location.search).has('permanence')||this.rewards.load()?.missions?.accepted.some(isPermanence);
     if(![15,16].includes(m.protocol)||m.protocol===15&&needsPermanence){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização dos capítulos do assentamento. Seus personagens permanecem preservados.');reject(new Error(this.message));return;}
     this.serverProtocol=m.protocol;
     this.outpostsAvailable=m.outposts===1;
+    this.signalsAvailable=m.signals===1;
     joined=true;clearTimeout(this.timeout);this.role=m.role;this.connected=true;this.token=m.token;this.code=m.code;this.epoch=m.epoch;
     this.id=m.id;this.acknowledgedCrew='';this.setCampaign(m.campaign);this.setRoster(m.members);this.input={...NO_INPUT};this.inputAt=0;this.world=undefined;
     this.area=m.area;this.travelling=false;
@@ -240,7 +244,7 @@ export class CoopSession {
   // If storage fails, keep the visit open so the player can retry instead of losing XP silently.
   if(guest&&!this.rewardSaved){this.message='Não foi possível salvar o XP. Libere o armazenamento e tente sair novamente.';this.changed();return false;}
   if(this.socket?.readyState===WebSocket.OPEN)this.socket.send(JSON.stringify({type:'leave'}));
-  this.role='offline';this.serverProtocol=undefined;this.outpostsAvailable=false;this.endedMessage='';this.connected=false;this.peerConnected=false;this.campaign=undefined;this.members=[];this.states.clear();this.requests=[];this.world=undefined;this.input={...NO_INPUT};this.token='';this.travelling=false;this.pendingTravel=undefined;this.area=undefined;this.clearChat();
+  this.role='offline';this.serverProtocol=undefined;this.outpostsAvailable=false;this.signalsAvailable=false;this.endedMessage='';this.connected=false;this.peerConnected=false;this.campaign=undefined;this.members=[];this.states.clear();this.requests=[];this.world=undefined;this.input={...NO_INPUT};this.token='';this.travelling=false;this.pendingTravel=undefined;this.area=undefined;this.clearChat();
   clearTimeout(this.timeout);clearTimeout(this.retryTimer);
   const socket=this.socket;this.socket=undefined;socket?.close();this.changed();if(guest&&restoreGuest)location.reload();return true;
  }

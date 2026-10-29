@@ -1,11 +1,18 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**29/10/2026 · Retomada da investigação · 0.1.169 em desenvolvimento:** após aprovar a barra/poção (“ficou muito bom”) e confirmar os aliados no coop, o usuário pediu voltar à implementação. [Uma frequência a mais](signal-expedition/README.md): capítulo único após o posto, comparação de sinais na Bacia/Vale, alinhamento pela mira do integrante e arquivo isolado. Ivo recebe o relatório; 130 créditos únicos, sem XP novo, novos mapas ou origem definitiva das estruturas. Manter campanha, criaturas finitas, arte e protocolo 16; catálogo `signals:1` exige conferência real do relay. Aguardar playtest antes de outra etapa.
+
+- [x] Apresentação de vida/poção 0.1.168 aprovada pelo usuário em 29/10/2026; publicação/QA registrados abaixo.
+- [x] 0.1.169: typecheck/build 258 módulos, save 0.1.166/recibo atômico, solo/dupla completos, mira do ator correto, navegação/colisões/morte/reload, quatro classes/touch/gamepad e relay 16 anterior passaram. Alinhamento e início da dupla compilados sem globais DEV passaram. [Evidências e fixtures](signal-expedition/README.md), separadas da avaliação humana.
+- [ ] QA técnico e publicação deste capítulo.
+- [ ] Playtest humano da investigação antes de outro sprint.
+
 **29/10/2026 · Vida e poções · 0.1.168:** usuário respondeu “Boa vamos para o próximo” ao apoio e pediu confirmação visual de poção e vida mais legível sobre o personagem. [Escopo e evidências](player-vitals/README.md): barra contextual, frasco/pulso após consumo confirmado e apresentação solo/coop pelos contadores existentes. Preserva HUD, figuras completas, economia/recarga/cura, campanha, saves e protocolo 16. Esta entrega atende esse ajuste antes de outra etapa da colonização; aguardar seu playtest.
 
 - [x] Comentário positivo e continuação do apoio 0.1.167 recebidos; não representam medição completa da campanha.
 - [x] QA local: typecheck/build de 256 módulos, quatro classes/touch/gamepad, recusa/rollback, morte/reload, texturas/objetos estáveis, dupla com efeitos locais/remotos e reentrada. Solo/dupla compilados e captura final em 568 passaram; inspeção visual do agente separada do usuário.
 - [x] Aplicação `290b17c` publicada na Vercel, `origin/main` conferido e 62 hashes verificados; solo/dupla públicos 16 com consumo individual, reload/reentrada e touch em 568 passaram. [Evidências e limitações](player-vitals/README.md). Render existente compatível, sem atualização de protocolo.
-- [ ] Avaliação humana da barra/animação antes de outra etapa.
+- [x] Avaliação humana da barra/animação: usuário respondeu “ficou muito bom”, confirmou a leitura dos aliados e pediu retomar o plano.
 
 **29/10/2026 · Apoio de campo · 0.1.167:** continuação autorizada após o deploy do posto. [Escopo e evidências](outpost/SUPPORT.md): recuperação, compra de poções e cofre pessoal no depósito, só após relatório entregue, presença segura e equipe original reunida. Reutiliza economia/saves/serviços e o protocolo 16 / `outposts:1`; não adiciona missões ou recibos, não altera oficina/base, moradores, bosses ou bloqueios do atlas. Laboratório separado e avaliação humana pendente antes de outra etapa.
 

@@ -16,6 +16,7 @@ type Person={definition:NpcDefinition;position:Vec2;image:Phaser.GameObjects.Ima
 type ArtMetadata={scale:number;anchors:{x:number;y:number}[]};
 const GUI_REPAIR={duration:5100,beats:[[12,1400],[13,900],[12,1900],[13,900]]} as const;
 const MARA_REPAIR={duration:6200,beats:[[12,1200],[13,800],[14,1100],[15,1300],[14,900],[13,900]]} as const;
+const SIGNAL_MARA_TEXT='Guardei o pulso longo no receptor independente. Ele continua desligado da energia e da água do posto; Ivo vai comparar o registro com o arquivo da fissura.';
 
 // Whole painted animation frames. Only residents move; mission services keep
 // their original interaction anchors. Dynamic footprints never rebake the map.
@@ -23,11 +24,13 @@ export class SettlementLife{
  private people=new Map<NpcId,Person>();
  private lastAt=0;
  private garden=false;
+ private signalRecorded=false;
  constructor(private scene:Phaser.Scene,private area:JourneyArea,private obstacles:Obstacle[],private bounds:MovementBounds,private warden:()=>boolean){
   if(area==='base')for(const d of BASE_WORKERS){this.obstacles.push({x:d.position.x+42,y:d.position.y+7,radius:24});this.scene.add.image(d.position.x+42,d.position.y+12,'world-shadow','ground-contact').setDisplaySize(72,17).setAlpha(.32).setDepth(d.position.y-3);}
  }
  navigationObstacles(obstacles:readonly Obstacle[]):readonly Obstacle[]{const moving=new Set([...this.people.values()].filter(p=>p.definition.route).map(p=>p.solid).filter(Boolean));return obstacles.filter(o=>!moving.has(o));}
  update(missions:Missions,viewer:Vec2,now:number,actors:readonly {position:Vec2;isDead:boolean;radius:number}[],authority:boolean,remote?:readonly NpcPose[]):void{
+  this.signalRecorded=this.area==='springs'&&missions.has('ps-record');
   const localNow=this.scene.time.now,dt=this.lastAt?Math.min(.05,Math.max(0,(localNow-this.lastAt)/1000)):0;this.lastAt=localNow;
   const settled=missions.has('shelter-built');
   if(this.area==='terraces'&&settled&&!this.garden){this.garden=true;
@@ -103,10 +106,11 @@ export class SettlementLife{
   p.image.setFrame(p.frame).setScale(metadata?.scale??.6).setOrigin(p.flip?1-anchor.x:anchor.x,anchor.y).setFlipX(p.flip).setPosition(p.position.x,p.position.y).setDepth(p.position.y+(p.definition.service?20:0));
   p.shadow.setPosition(p.position.x,p.position.y+1).setDepth(p.position.y-2);
   p.label.setPosition(p.position.x,p.position.y-116).setVisible(!p.definition.service&&Math.hypot(viewer.x-p.position.x,viewer.y-p.position.y)<270&&p.talkUntil<=now);
+  if(p.definition.id==='mara'){const text=this.signalRecorded?SIGNAL_MARA_TEXT:p.definition.text??'';if(p.speech.text!==text)p.speech.setText(text);}
   p.speech.setPosition(p.position.x,p.position.y-121).setVisible(p.talkUntil>now);
   if(p.solid){p.solid.x=p.position.x;p.solid.y=p.position.y;}
  }
- greetingAt(position:Vec2){return [...this.people.values()].filter(p=>!p.definition.service&&Math.hypot(position.x-p.position.x,position.y-p.position.y)<82).sort((a,b)=>Math.hypot(position.x-a.position.x,position.y-a.position.y)-Math.hypot(position.x-b.position.x,position.y-b.position.y))[0]?.definition;}
+ greetingAt(position:Vec2){const found=[...this.people.values()].filter(p=>!p.definition.service&&Math.hypot(position.x-p.position.x,position.y-p.position.y)<82).sort((a,b)=>Math.hypot(position.x-a.position.x,position.y-a.position.y)-Math.hypot(position.x-b.position.x,position.y-b.position.y))[0]?.definition;return found&&this.signalRecorded&&found.id==='mara'?{...found,text:SIGNAL_MARA_TEXT}:found;}
  greet(id:NpcId,now:number):void{const p=this.people.get(id);if(p){p.talkUntil=now+3000;p.waitUntil=Math.max(p.waitUntil,p.talkUntil+500);}}
  snapshot():NpcPose[]{return [...this.people.values()].map(p=>({id:p.definition.id,x:Math.round(p.position.x*10)/10,y:Math.round(p.position.y*10)/10,frame:p.frame,flip:p.flip,...(p.talkUntil?{talkUntil:p.talkUntil}:{})}));}
  private remove(p:Person):void{for(const o of [p.image,p.shadow,p.label,p.speech,...p.props.map(p=>p.image)])o.destroy();for(const solid of [p.solid,...p.props.map(p=>p.solid)])if(solid){const i=this.obstacles.indexOf(solid);if(i>=0)this.obstacles.splice(i,1);}}

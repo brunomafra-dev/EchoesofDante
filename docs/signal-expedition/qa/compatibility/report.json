@@ -1,0 +1,11 @@
+{
+  "revision": "18f5047be89f08d0759e25092c117252b7182abb",
+  "method": "Latest browser client against exact public pre-signal relay 16 and its historical catalogue. Real room handshakes/capability refusal; no synthetic chapter completion.",
+  "checks": [
+    "Previous water lab and room inspection connect on actual historical protocol 16; only the new signal capability is unavailable",
+    "Direct signal lab refuses incompatible relay before joining a filtered campaign",
+    "Accepted signal in a normal campaign URL also refuses old relay without losing evidence; updated relay reconnect restores capability with identical objectives"
+  ],
+  "errors": [],
+  "passed": true
+}
