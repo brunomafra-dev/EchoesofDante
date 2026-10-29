@@ -1,5 +1,12 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**29/10/2026 · Vida e poções · 0.1.168:** usuário respondeu “Boa vamos para o próximo” ao apoio e pediu confirmação visual de poção e vida mais legível sobre o personagem. [Escopo e evidências](player-vitals/README.md): barra contextual, frasco/pulso após consumo confirmado e apresentação solo/coop pelos contadores existentes. Preserva HUD, figuras completas, economia/recarga/cura, campanha, saves e protocolo 16. Esta entrega atende esse ajuste antes de outra etapa da colonização; aguardar seu playtest.
+
+- [x] Comentário positivo e continuação do apoio 0.1.167 recebidos; não representam medição completa da campanha.
+- [x] QA local: typecheck/build de 256 módulos, quatro classes/touch/gamepad, recusa/rollback, morte/reload, texturas/objetos estáveis, dupla com efeitos locais/remotos e reentrada. Solo/dupla compilados e captura final em 568 passaram; inspeção visual do agente separada do usuário.
+- [ ] Publicação e sincronização desta apresentação.
+- [ ] Avaliação humana da barra/animação antes de outra etapa.
+
 **29/10/2026 · Apoio de campo · 0.1.167:** continuação autorizada após o deploy do posto. [Escopo e evidências](outpost/SUPPORT.md): recuperação, compra de poções e cofre pessoal no depósito, só após relatório entregue, presença segura e equipe original reunida. Reutiliza economia/saves/serviços e o protocolo 16 / `outposts:1`; não adiciona missões ou recibos, não altera oficina/base, moradores, bosses ou bloqueios do atlas. Laboratório separado e avaliação humana pendente antes de outra etapa.
 
 - [x] Typecheck/build 255 módulos; solo/limites/rollback, save serializado 0.1.166, guardas de segurança, dupla com cura pessoal e reconexão, quatro classes touch e gamepad emulados passaram. Dupla compilada sem globais DEV e capturas inspecionadas pelo agente; não representam aprovação humana.

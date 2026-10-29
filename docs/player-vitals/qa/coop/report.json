@@ -1,0 +1,11 @@
+{
+  "method": "Two independent Chrome, actual unchanged relay 16/outposts:1. Explicit isolated post/kit/wound fixtures; actual potion keys, authoritative counters, local/remote effects, baseline and original-crew reconnect.",
+  "checks": [
+    "Host consumes one potion; its existing counter reaches the guest and plays once across repeated world/render ticks",
+    "Guest request is confirmed by host: both browsers show recovery on the correct actor, and only that player pays",
+    "Original guest reconnects without replaying old uses, charging another potion or changing XP/receipts/later bosses",
+    "Explicit repeated/decreasing counter fixture does not replay stale confirmation"
+  ],
+  "errors": [],
+  "passed": true
+}

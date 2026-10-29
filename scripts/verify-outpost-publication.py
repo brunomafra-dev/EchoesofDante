@@ -26,7 +26,7 @@ else:
         for asset in re.findall(r'(?:src|href)="(/assets/[^"?]+\.js)"', local):
             assert asset in remote, (name, asset, 'publication is older')
         if name == 'test-library.html':
-            assert ('outpost-support=1' if version == '0.1.167' else 'permanence=outpost') in remote and version in remote
+            assert ({'0.1.167': 'outpost-support=1', '0.1.168': 'vitals=1'}.get(version, 'permanence=outpost')) in remote and version in remote
     def verify(item):
         path, expected = item
         assert hashlib.sha256(get(path)).hexdigest() == expected, path

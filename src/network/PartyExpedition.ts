@@ -125,7 +125,7 @@ export class PartyExpedition {
   const players:PartyWorld['players']={};
   for(const [id,actor]of this.actors){const state=room.state(id),pose=actor.snapshot(),prompt=a.prompt(pose,id);players[id]={...pose,deathId:state.deathId||undefined,potionUsed:state.potionUsed,prompt:prompt.available,action:prompt.action};}
   const host:PartyPose={strike:a.strike,releaseProgress:a.releaseProgress,...a.player.position,aim:a.player.rotation,hp:a.player.hp,maxHp:a.player.maxHp,dead:a.player.isDead,dash:a.player.isDashing,phase:a.phase,level:a.chargeLevel,firing:a.firing,dashReady:a.player.dashProgress,dashCooldown:a.player.dashCooldown,wave:a.wave,beam:a.hunter?.beamPose(),astral:a.astral?.snapshot(),xenobinder:a.xeno?.snapshot()};
-  players.host={...host,prompt:false,action:'INVESTIGAR',potionUsed:0};
+  players.host={...host,prompt:false,action:'INVESTIGAR',potionUsed:a.potionUsed};
   const enemies:CreaturePose[]=a.enemies.filter(e=>!e.isDead).map((enemy,index)=>{
    const e=enemy as Presented;
    const body=e.body??e.view?.list.find(p=>p instanceof Phaser.GameObjects.Image&&p.visible) as Phaser.GameObjects.Image|undefined
@@ -202,6 +202,7 @@ export class PartyExpedition {
   if(!p.dead&&p.phase==='READY'&&p.velocity)moveWithCollisions(presented,p.velocity,age,a.player.radius,a.solidObstacles,a.bounds);
   const readiness=Math.min(1,(p.dashReady??1)+age/(p.dashCooldown??a.player.dashCooldown)*1000);
   a.render({...p,aim:p.phase==='RELEASE'?p.aim:input.aim,x:Phaser.Math.Linear(a.player.position.x,presented.x,t),y:Phaser.Math.Linear(a.player.position.y,presented.y,t)});
+  a.player.vitals.observePotion(p.potionUsed);
   if(freshWorld){if(p.dash&&!previousPose?.dash)a.cue('dash');if(p.phase==='CHARGING'&&previousPose?.phase!=='CHARGING')a.cue('charge');if(p.phase==='RELEASE'&&previousPose?.phase!=='RELEASE')a.cue('release');if(previousPose&&p.hp<previousPose.hp)a.cue('hurt');}
   const otherIds=new Set(room.members.filter(m=>m.id!==room.id).map(m=>m.id));
   for(const [id,mirror]of this.playerMirrors)if(!otherIds.has(id)){mirror.destroy();this.playerMirrors.delete(id);}

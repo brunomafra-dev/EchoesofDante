@@ -2837,12 +2837,13 @@ export class GameScene extends Phaser.Scene {
     if(coopSession.role==='guest'){coopSession.requestPotion();return true;}
     const old=structuredClone(this.economy),hp=this.player.hp;this.economy.potions--;this.economy.potionReadyAt=Date.now()+8000;
     this.player.health.current=Math.min(this.player.maxHp,this.player.hp+Math.round(this.player.maxHp*.35));
-    if(!this.persistPersonal()){this.economy=old;this.player.health.current=hp;this.hud.showDiscovery('Não foi possível salvar a poção.',false);return false;}this.basePanel.refreshBar();this.sounds.ancient();return true;
+    if(!this.persistPersonal()){this.economy=old;this.player.health.current=hp;this.hud.showDiscovery('Não foi possível salvar a poção.',false);return false;}this.potionUsed++;this.player.vitals.potion();this.basePanel.refreshBar();this.sounds.ancient();return true;
   }
   private usePeerPotion(id:string):void{
     const now=Date.now();
     const member=coopSession.guests.find(m=>m.id===id),state=coopSession.state(id),p=this.party?.actors.get(id)?.player;if(!member||!p||p.isDead||p.hp>=p.maxHp||(member.profile.potions??0)<=0||now<state.potionReady)return;
     state.potionReady=now+8000;state.potionUsed++;member.profile.potions!--;p.health.current=Math.min(p.maxHp,p.hp+Math.round(p.maxHp*.35));
+    p.vitals.potion();
   }
   private collectResource(p:ResourceDrop):boolean{
     const old=structuredClone(this.economy);this.economy.credits=Math.min(1e9,this.economy.credits+p.credits);this.economy.materials[p.tier-1]=Math.min(1e9,this.economy.materials[p.tier-1]+p.amount);

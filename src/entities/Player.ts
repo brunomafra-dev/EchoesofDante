@@ -18,6 +18,7 @@ import { ModularTorso } from '../visual/ModularTorso';
 import { ASTRAL,HUNTER,XENOBINDER, type PlayableClass } from '../config/classes';
 import { CompleteActorArt } from '../visual/CompleteActorArt';
 import { completeKey } from '../visual/CompleteActorFrames';
+import { PlayerVitals } from '../visual/PlayerVitals';
 
 export type PlayerAnimationState = 'IDLE' | 'WALK' | 'ATTACK_WINDUP' | 'ATTACK_SWING' | 'ATTACK_RECOVERY' | 'DASH' | 'CHARGE' | 'CHARGE_RELEASE' | 'HURT' | 'DEAD';
 
@@ -25,6 +26,7 @@ export class Player {
   readonly position: Vec2;
   readonly velocity: Vec2 = { x: 0, y: 0 };
   readonly health: Health;
+  readonly vitals: PlayerVitals;
   get movementSpeed(): number { return this.classId === 'hunter' ? HUNTER.speed : this.classId==='xenobinder'?XENOBINDER.speed:this.classId==='astral'?ASTRAL.speed:PLAYER.speed; }
   readonly attackDamage = PLAYER.attackDamage;
   readonly attackCooldown = PLAYER.attackCooldown;
@@ -105,6 +107,7 @@ export class Player {
     }
     this.ring = scene.add.circle(x, y + 39, 33).setStrokeStyle(1, 0x89d9d2, 0.28).setFillStyle(0, 0).setDepth(y - 1);
     this.setAim(0);
+    this.vitals=new PlayerVitals(scene,this);
   }
 
   setEquipmentAppearance(slots:EquipmentSnapshot['slots']):void {
@@ -312,6 +315,7 @@ export class Player {
   }
 
   destroy(): void {
+    this.vitals.destroy();
     this.weapon.destroy(); this.view.destroy(true);
     this.shadow.destroy(); this.groundContact.destroy(); this.ring.destroy();
   }

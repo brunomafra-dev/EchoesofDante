@@ -1,0 +1,12 @@
+{
+  "method": "Chrome DEV, explicit isolated wound/cooldown/quota/death fixtures; actual keyboard/touch/gamepad potion controls. Not a human or physical-device test.",
+  "checks": [
+    "Rollback refuses feedback/payment, movement follows actor, critical color/death/revive/reload are correct; shared texture and object counts stay stable",
+    "warrior: actual touch and standard gamepad potion consumes once, heals 35%, signals recovery, refuses cooldown/full life; bar hides when fully recovered and real saves stay protected",
+    "hunter: actual touch and standard gamepad potion consumes once, heals 35%, signals recovery, refuses cooldown/full life; bar hides when fully recovered and real saves stay protected",
+    "astral: actual touch and standard gamepad potion consumes once, heals 35%, signals recovery, refuses cooldown/full life; bar hides when fully recovered and real saves stay protected",
+    "xenobinder: actual touch and standard gamepad potion consumes once, heals 35%, signals recovery, refuses cooldown/full life; bar hides when fully recovered and real saves stay protected"
+  ],
+  "errors": [],
+  "passed": true
+}

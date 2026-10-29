@@ -1,0 +1,9 @@
+{
+  "base": "http://localhost:5194",
+  "method": "Compiled Astral 568 touch; real explicit wound button and potion control; no DEV globals.",
+  "checks": [
+    "Actual touch consumes one potion with no DEV globals; resized bar/vial captured for visual inspection"
+  ],
+  "errors": [],
+  "passed": true
+}

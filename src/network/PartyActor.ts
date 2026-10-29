@@ -94,9 +94,10 @@ export class PartyActor {
   this.progression.restore({xp:build?.xp??0,abilityUpgrades:build?.abilityUpgrades,bossRewards:build?.bossRewards,echoes:[],sourceLocated:false,passageOpen:false,rewardedHollows:[],rewardedRoutes:[]});
  }
  private setAppearance():void {const slots=this.profile.equipment??{},key=JSON.stringify(slots);if(key===this.appearanceKey)return;this.appearanceKey=key;this.player.setEquipmentAppearance(slots);this.art?.setEquipment(slots);this.astralArt?.setEquipment(slots);this.xenoArt?.setEquipment(slots);}
- render(pose:PartyPose,now:number,dt:number):void {
+ render(pose:PartyPose&{potionUsed?:number},now:number,dt:number):void {
   this.setAppearance();
   this.player.health.max=pose.maxHp;this.player.health.current=pose.hp;
+  this.player.vitals.observePotion(pose.potionUsed);
   const gap=Math.hypot(pose.x-this.player.position.x,pose.y-this.player.position.y),t=gap>300?1:Math.min(1,dt*18);
   const position={x:Phaser.Math.Linear(this.player.position.x,pose.x,t),y:Phaser.Math.Linear(this.player.position.y,pose.y,t)};
   this.player.renderRemote(position,pose.aim,pose.strike??{phase:pose.firing?'SWING':'READY',relativeAngle:0,worldAngle:pose.aim,swingProgress:pose.swingProgress??.5},
