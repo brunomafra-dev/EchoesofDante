@@ -45,7 +45,7 @@ try{
  for(const p of pages){assert.equal(await p.evaluate(()=>typeof window.__danteGame),'undefined');assert.equal(await p.evaluate(()=>localStorage['echoes-of-dante.characters.v1']),'public-coop-real-characters-sentinel');assert.equal(await p.evaluate(()=>localStorage['echoes-of-dante.settings.v1']),'public-coop-real-settings-sentinel');}
  for(const saved of after){assert.deepEqual(saved.bosses,[false,false,false]);assert.ok(!saved.receipts.includes('settle-signal'));}
  report.personal=after;report.protocols=pages.map(p=>p.wire.protocol);report.guestJoins=g.wire.joins;
- check('Guest reload/rejoin retains accepted chapter and bank observation; personal credits/receipts and later living bosses remain unchanged, real-save sentinels untouched');
+ check('Guest reload/rejoin retains accepted chapter and receiver collection; personal credits/receipts and later living bosses remain unchanged, real-save sentinels untouched');
  for(let i=0;i<pages.length;i++){await key(pages[i],'j');await pages[i].screenshot({path:out+`/participant-${i+1}.png`});await key(pages[i],'Escape');}
  await key(h,'Escape');await click(h,'home');await g.locator('[data-shell=coop-home]').waitFor();check('Temporary public room ends through the normal host menu');
  assert.deepEqual(report.errors,[]);report.passed=true;
