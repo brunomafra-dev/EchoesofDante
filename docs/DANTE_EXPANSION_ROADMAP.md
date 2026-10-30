@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+**30/10/2026 · 0.1.174 autorizada durante as Dunas:** usuário pediu concluir/publicar e continuar o próximo passo, incluindo persistir o minimapa já descoberto. [Registro Soterrado e memória](buried-record/README.md) acompanha confronto/registro originais, sem simular vitória na campanha ou no laboratório. Checkpoint antigo não deve apagar terreno revelado. Aprovação visual/humana e QA permanecem separados; aguardar playtest após este próximo capítulo.
+
 **30/10/2026 · Continuação nas Dunas · 0.1.173:** [Onde a areia não cede](dune-survey/README.md), capítulo de Ivo após a pesquisa do vento, já autorizado junto das correções. Aproveita o relatório regional existente e preserva ruínas/descida/Soterrado vivo. Um teste de terreno firme delimita uma parada de carga; não instala uma colônia ou permite pular regiões. QA/publicação e playtest humano registrados separadamente.
 
 Durante a implementação, usuário autorizou concluir/publicar e iniciar o próximo passo do plano, incluindo a persistência do minimapa já revelado. Essa instrução posterior substitui a espera operacional após as Dunas. Não marca avaliação visual ou duração como aprovadas. Correção 0.1.172 publicada: Vercel success/67 hashes e solo/dupla públicos conferidos, [evidências](mission-identity/README.md).

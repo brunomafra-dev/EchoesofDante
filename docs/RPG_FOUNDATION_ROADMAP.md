@@ -1,5 +1,12 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**30/10/2026 · Continuação após as Dunas / memória do minimapa · 0.1.174:** usuário pediu finalizar/publicar o processo atual e iniciar imediatamente o próximo passo, incluindo guardar o terreno já revelado. [O que a areia guardou](buried-record/README.md) acompanha a descida, a vitória/registro originais do Soterrado e uma amostra isolada, aproveitando vitórias antigas. Correção da memória protege descoberta recente contra gravação de checkpoint antigo, sem revelar regiões bloqueadas. Esta autorização substitui a espera após a 0.1.173; não registra aprovação humana antecipada.
+
+- [x] Perda de células por checkpoint antigo reproduzida; união monotônica por personagem/região passou no modelo/save antigo, com limites/reset/isolamento preservados.
+- [x] Capítulo e QA técnico: confronto inteiro por inputs normais no solo/dupla, registro/coleta/entrega/recibos, memória em oito regiões e reconexão da dupla, quatro classes touch/gamepad, modelo/save antigo/relay anterior; 266 módulos. Registro/entrega/minimapa e três capítulos compilados passaram, capturas inspecionadas pelo agente. [Fixtures, evidências e limites](buried-record/README.md).
+- [ ] Publicação/sincronização da 0.1.174 e capacidade `buried:1` no relay 16.
+- [ ] Playtest humano antes de outro capítulo após esta entrega.
+
 **30/10/2026 · Onde a areia não cede · 0.1.173 em implementação:** segundo sprint consecutivo autorizado pelo usuário após as correções da 0.1.172. Ivo aproveita as três análises do relatório `exp-dunes`, exige as ruínas originais e compara dois terrenos para uma sondagem de suporte da carga. Sem duplicar investigações regionais, abrir atalhos ou vencer Soterrado. [Escopo e evidências](dune-survey/README.md). Durante o trabalho, usuário pediu concluir/publicar e continuar imediatamente o próximo passo do plano, incluindo a persistência do minimapa revelado. Essa autorização substitui a espera operacional após as Dunas; não é aprovação humana antecipada.
 
 - [x] QA técnico e laboratório isolado: modelo/save 0.1.166, solo/dupla completos, recibos/reconexão, nove aproximações reais, portais originais, morte/R/reload e bosses vivos; quatro classes touch/gamepad emulados, 265 módulos e sondagem compilada por WASD/E. Três capítulos/dupla compilados passaram, capturas inspecionadas pelo agente. [Evidências e fixtures](dune-survey/README.md).

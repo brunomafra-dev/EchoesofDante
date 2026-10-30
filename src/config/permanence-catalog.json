@@ -9,7 +9,8 @@
     "settle-signal",
     "settle-echo",
     "settle-wind",
-    "settle-dunes"
+    "settle-dunes",
+    "settle-buried"
   ],
   "evidence": [
     "pw-intake",
@@ -70,6 +71,9 @@
     "pd-kit",
     "pd-ruins",
     "pd-test",
-    "pd-store"
+    "pd-store",
+    "pb-descent",
+    "pb-clue",
+    "pb-sample"
   ]
 }

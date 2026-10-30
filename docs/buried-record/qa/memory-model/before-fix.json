@@ -1,0 +1,5 @@
+{
+  "method": "Actual LocalJourney/ExplorationMemory and old serialized save; reproduce a later stale snapshot overwrite, schema/profile isolation/reset and bounded malformed input.",
+  "checks": [],
+  "failure": "AssertionError [ERR_ASSERTION]: A stale writer must never erase revealed terrain\n+ actual - expected\n\n+ {}\n- {\n-   dunes: [\n-     149675\n-   ],\n-   forest: [\n-     150672\n-   ]\n- }\n"
+}

@@ -19,6 +19,19 @@ export function validExploration(raw:unknown):ExplorationSnapshot{
  }
  return result;
 }
+// Discovery is monotonic for an existing character save. An older checkpoint
+// (including a legacy writer omitting fog data) cannot close revealed terrain.
+// Reserve the stored cells first, even when the global safety cap is reached.
+export function mergeExploration(stored:unknown,incoming:unknown):ExplorationSnapshot{
+ const result=validExploration(stored),next=validExploration(incoming);
+ let remaining=MAX_TOTAL-Object.values(result).reduce((n,cells)=>n+cells.length,0);
+ for(const area of AREAS){
+  const seen=new Set(result[area]??[]);
+  for(const key of next[area]??[])if(remaining>0&&seen.size<MAX_REGION&&!seen.has(key)){seen.add(key);remaining--;}
+  if(seen.size)result[area]=[...seen].sort((a,b)=>a-b);
+ }
+ return result;
+}
 // World coordinates, independent of the navigator's current grid/bounds. A
 // new house or arena boundary can rebuild geometry without erasing discovery.
 export class ExplorationMemory{

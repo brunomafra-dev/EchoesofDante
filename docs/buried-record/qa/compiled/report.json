@@ -1,0 +1,9 @@
+{
+  "base": "http://localhost:5200",
+  "method": "Compiled client; actual exported checkpoint from full live solo combat, before record/sample. Ordinary WASD/E, original record, physical sample, NPC delivery and reload. No DEV globals or runtime world/HP/position/collection changes. Fresh user lab with living boss is covered separately by chapter acceptance tests.",
+  "checks": [
+    "Actual compiled WASD/E reads native record, collects physical specimen, delivers to Nara and retains unique 180 credits, real victory, discovery and real saves through reload"
+  ],
+  "errors": [],
+  "passed": true
+}

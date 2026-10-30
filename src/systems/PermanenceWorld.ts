@@ -14,6 +14,7 @@ import {EchoCircuit} from '../visual/EchoCircuit';
 import type {CircuitNode} from '../config/echoCircuit';
 import {WindSurvey} from '../visual/WindSurvey';
 import {DUNE_SURVEY} from '../config/duneSurvey';
+import {BURIED_RECORD} from '../config/buriedRecord';
 import type {SurveyPusher} from '../config/windSurvey';
 import {moveWithCollisions,type Obstacle} from './Movement';
 
@@ -21,6 +22,8 @@ import {moveWithCollisions,type Obstacle} from './Movement';
 // authority. Static props/pipework are drawn once; pulses only change alpha.
 export class PermanenceWorld {
  private duneProbe?:Phaser.GameObjects.Image;
+ private buriedSample?:{image:Phaser.GameObjects.Image;solid:Obstacle};
+ private buriedArchived=false;
  private sites:{site:PermanenceSite;image:Phaser.GameObjects.Image;label:Phaser.GameObjects.Text}[]=[];
  private jet?:Phaser.GameObjects.Rectangle;
  private installed:Phaser.GameObjects.GameObject[]=[];
@@ -77,15 +80,21 @@ export class PermanenceWorld {
   const circuitCompleted=this.circuit.update(missions,player,now,authority,remote?.circuit);
   const windCompleted=this.wind.update(missions,now,actors,authority,remote?.wind);
   this.signal.update(missions,player,actors[0]?.rotation??0,now);
+  if(this.area==='sandpit'){
+   const show=missions.status('settle-buried')==='active'&&missions.has('after-soterrado')&&missions.has('pb-clue')&&!missions.has('pb-sample');
+   if(show&&!this.buriedSample){const p=BURIED_RECORD.sample,solid={x:p.x,y:p.y-12,radius:18};this.obstacles.push(solid);this.buriedSample={solid,image:addQuestProp(this.scene,'vitrifiedCore',p.x,p.y+30,84).setDepth(p.y-2).setName('buried-record-sample')};}
+   if(!show&&this.buriedSample){const i=this.obstacles.indexOf(this.buriedSample.solid);if(i>=0)this.obstacles.splice(i,1);this.buriedSample.image.destroy();this.buriedSample=undefined;}
+  }
+  if(this.area==='base'&&missions.status('settle-buried')==='completed'&&!this.buriedArchived){this.buriedArchived=true;const p=BURIED_RECORD.archive;addQuestProp(this.scene,'vitrifiedCore',p.x,p.y+30,76).setDepth(p.y-2).setName('buried-record-archive');this.obstacles.push({x:p.x,y:p.y-12,radius:18});}
   if(this.area==='dunes'&&missions.has('pd-test')&&!this.duneProbe){const p=DUNE_SURVEY.probe;this.duneProbe=addQuestProp(this.scene,'coreSample',p.x,p.y,86).setName('dune-survey-probe');this.obstacles.push({x:p.x,y:p.y-14,radius:18});}
   this.updateHaul(missions,now,actors,authority,remote);
   for(const {site,image,label}of this.sites){
    const active=['active','ready'].includes(missions.status(site.mission));
+   const ready=!site.needs?.some(id=>!missions.has(id));
    image.setVisible(active&&!missions.has(site.id)&&!site.aimAt&&!site.circuit&&!image.getData('world-only'));
    const near=Math.hypot(player.x-site.x,player.y-site.y)<240;
    const guided=missions.current===site.mission&&missionById(site.mission).goals.find(g=>!missions.has(g.id))?.id===site.id;
-   label.setVisible(active&&near&&!missions.has(site.id)&&!site.circuit&&(!guided||!!site.choice)&&site.id!=='pr-read'&&site.id!=='pv-read');
-   const ready=!site.needs?.some(id=>!missions.has(id));
+   label.setVisible(active&&near&&!missions.has(site.id)&&!site.circuit&&(!guided||!!site.choice)&&site.id!=='pr-read'&&site.id!=='pv-read'&&(site.mission!=='settle-buried'||ready));
    label.setColor(ready?'#dfd6b1':'#a8aaa1');
   }
   const water=missions.status('settle-water')==='active';

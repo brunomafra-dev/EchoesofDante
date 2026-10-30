@@ -1,0 +1,75 @@
+{
+  "at": "2026-10-30T20:50:00.318Z",
+  "base": "http://localhost:5200",
+  "method": "Compiled build; two separate Chrome instances, real relay and normal movement/UI with feedback-controlled key pulses for WAN latency. Explicit preceding post/reports preparation only through reserved lab buttons; no DEV globals.",
+  "checks": [
+    "Two independent public Chrome instances join protocol 16; explicit host lab button simulates only prior reports/chapters",
+    "Actual guest NPC dialogue accepts the buried record chapter on the selected compiled client/relay 16",
+    "Actual guest acceptance remains shared; original boss victory and specimen are still pending in the fresh compiled laboratory",
+    "Guest reload/rejoin retains accepted chapter and pending real boss; personal credits/receipts and later living bosses remain unchanged, real-save sentinels untouched",
+    "Temporary public room ends through the normal host menu"
+  ],
+  "errors": [],
+  "personal": [
+    {
+      "credits": 300,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost",
+        "settle-signal",
+        "settle-echo",
+        "settle-wind",
+        "settle-dunes"
+      ],
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "credits": 1575,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost",
+        "settle-signal",
+        "settle-echo",
+        "settle-wind",
+        "settle-dunes"
+      ],
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "protocols": [
+    16,
+    16
+  ],
+  "guestJoins": 2,
+  "passed": true
+}

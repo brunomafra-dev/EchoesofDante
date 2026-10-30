@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 
 // Two baked RGBA atlases; complete objects, one texture upload per sheet.
 export const QUEST_PROPS={
+ vitrifiedCore:['buried',0],
  emitter:['research',0],receiver:['research',1],archive:['research',2],routeArchive:['research',3],
  anemometer:['research',4],windSled:['research',5],windKit:['research',6],coreSample:['research',7],
  hydrophone:['research',8],decontamination:['research',9],manifest:['research',10],tools:['research',11],
@@ -13,6 +14,7 @@ export const QUEST_PROPS={
 } as const;
 export type QuestProp=keyof typeof QUEST_PROPS;
 export function preloadQuestProps(scene:Phaser.Scene):void{
+ if(!scene.textures.exists('quest-buried'))scene.load.image('quest-buried',`${import.meta.env.BASE_URL}assets/buried-record/vitrified-core-v1.png`);
  for(const sheet of ['research','survival'])if(!scene.textures.exists('quest-'+sheet))scene.load.spritesheet('quest-'+sheet,`${import.meta.env.BASE_URL}assets/mission-identity/${sheet}-v1.png`,{frameWidth:256,frameHeight:256});
 }
 export function addQuestProp(scene:Phaser.Scene,kind:QuestProp,x:number,y:number,size=78):Phaser.GameObjects.Image{
@@ -22,6 +24,7 @@ export function addQuestProp(scene:Phaser.Scene,kind:QuestProp,x:number,y:number
 // Undefined entries intentionally keep their natural formation/ground stamp.
 // null means an existing instrument/building/person is the objective itself.
 export const GOAL_PROPS:Readonly<Record<string,QuestProp|null>>={
+ 'pb-sample':null,
  'pd-kit':'coreSample','pd-test':null,'pd-store':'routeArchive',
  'pv-kit':'windKit','pv-mount':'anemometer','pv-read':null,'pv-store':null,
  'pr-copy':'emitter','pr-origin':null,'pr-flow':null,'pr-read':null,'pr-store':'routeArchive',

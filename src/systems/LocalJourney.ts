@@ -17,7 +17,7 @@ import {validEconomy,type EconomySnapshot} from '../config/economy';
 import {validExpeditionReturn,type ExpeditionReturn} from './ExpeditionReturn';
 import {Missions,validMissions,validMissionRewards,type MissionSnapshot} from './Missions';
 import {MISSION_IDS,type MissionId} from '../config/missions';
-import {validExploration,type ExplorationSnapshot} from './ExplorationMemory';
+import {validExploration,mergeExploration,type ExplorationSnapshot} from './ExplorationMemory';
 
 export const JOURNEY_KEY = 'echoes-of-dante.journey.v1';
 export const JOURNEY_FLAGS = ['cavernDepthSeen', 'deepPassageOpen', 'deepAreaSeen', 'deepCavernEntered',
@@ -152,8 +152,9 @@ export class LocalJourney {
     if (!this.hasOwner()) { this.status = 'Não foi possível salvar. Este personagem não está disponível no armazenamento local.'; return false; }
     try {
       // Ordinary solo flushes keep the receipts written while visiting a room.
-      if (!snapshot.coopReceipts) snapshot.coopReceipts = this.load()?.coopReceipts ?? [];
-      localStorage.setItem(this.storageKey(), JSON.stringify(snapshot));
+      const previous=this.load();
+      const next={...snapshot,coopReceipts:snapshot.coopReceipts??previous?.coopReceipts??[],exploration:mergeExploration(previous?.exploration,snapshot.exploration)};
+      localStorage.setItem(this.storageKey(), JSON.stringify(next));
       this.status = 'Progresso salvo neste navegador.';
       return true;
     } catch {

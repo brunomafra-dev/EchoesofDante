@@ -1,0 +1,1384 @@
+{
+  "chapter": "buried",
+  "method": "Two independent Chrome + actual relay 16. DEV approach fixtures before/after the fight; full normal AI fight with actual host warrior and supporting guest hunter inputs, no position/HP/AI/invulnerability mutation during combat; real guest E and authenticated dialogue, ordinary travel, durable personal credit receipts.",
+  "checks": [
+    "Guest accepts through the actual mission request; invitation keeps the isolated chapter",
+    "Full normal host fight defeats living Soterrado; guest then reads the native original record",
+    "Guest executes every authored E interaction, both clients receive buried:1 and host personal report selection remains unchanged",
+    "Real guest delivery grants the configured credit amount once per member, without later boss flags",
+    "Guest reconnect preserves unique reward, discovered map memory and exactly one archived specimen"
+  ],
+  "errors": [],
+  "samples": [
+    {
+      "p": {
+        "x": 430,
+        "y": 790
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1080,
+          "y": 760
+        },
+        "state": "DORMANT",
+        "attack": null,
+        "phase": 1,
+        "age": 37898.6,
+        "angle": 0,
+        "hp": 2034,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 707.2014499296512,
+        "y": 512.7985500703496
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1080,
+          "y": 760
+        },
+        "state": "INTRO",
+        "attack": null,
+        "phase": 1,
+        "age": 83.5,
+        "angle": 0,
+        "hp": 2034,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 758.1975698207277,
+        "y": 503.56841290929236
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1073.6994598439048,
+          "y": 755.0717734076715
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 1,
+        "age": 66.70000000000437,
+        "angle": 0,
+        "hp": 2034,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 766.0581709820558,
+        "y": 532.4529117479644
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1054.0364182614007,
+          "y": 738.0727096128727
+        },
+        "state": "TELEGRAPH",
+        "attack": "rush",
+        "phase": 1,
+        "age": 116.69999999999709,
+        "angle": -2.4409056500288853,
+        "hp": 2034,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 740.0927857128171,
+        "y": 554.3414970172032
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 931.4645115052763,
+          "y": 634.6877852064197
+        },
+        "state": "EXECUTE",
+        "attack": "rush",
+        "phase": 1,
+        "age": 200.09999999999854,
+        "angle": -2.4409056500288853,
+        "hp": 2034,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 748.7323224313714,
+        "y": 545.7019602986489
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 918.399536270568,
+          "y": 623.6679560077113
+        },
+        "state": "RECOVER",
+        "attack": "rush",
+        "phase": 1,
+        "age": 183.40000000000146,
+        "angle": -2.4409056500288853,
+        "hp": 2034,
+        "max": 2034,
+        "exposed": false,
+        "broken": true
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 763.1650435868307,
+        "y": 563.9571391431897
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 918.399536270568,
+          "y": 623.6679560077113
+        },
+        "state": "RECOVER",
+        "attack": "rush",
+        "phase": 1,
+        "age": 433.40000000000146,
+        "angle": -2.4409056500288853,
+        "hp": 2034,
+        "max": 2034,
+        "exposed": true,
+        "broken": true
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1107.630876306591,
+        "y": 736.3156568033038
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 918.399536270568,
+          "y": 623.6679560077113
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 1,
+        "age": 0,
+        "angle": -2.4409056500288853,
+        "hp": 1362,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1179.810073788413,
+        "y": 808.4948542851264
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 937.6513858196054,
+          "y": 651.6707852300536
+        },
+        "state": "TELEGRAPH",
+        "attack": "burrow",
+        "phase": 1,
+        "age": 116.80000000000291,
+        "angle": 0.9284817362951437,
+        "hp": 1362,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1049.2683331971177,
+        "y": 555.4727136938312
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1066.0228188623412,
+          "y": 823.2564639351594
+        },
+        "state": "EXECUTE",
+        "attack": "burrow",
+        "phase": 1,
+        "age": 50,
+        "angle": 0.9284817362951437,
+        "hp": 1362,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1156.1009601919225,
+        "y": 662.3053406886359
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1066.0228188623412,
+          "y": 823.2564639351594
+        },
+        "state": "RECOVER",
+        "attack": "burrow",
+        "phase": 1,
+        "age": 83.29999999999563,
+        "angle": 0.9284817362951437,
+        "hp": 1362,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1189.0748062654368,
+        "y": 604.5502023042031
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1077.7705327664398,
+          "y": 796.5644819017656
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 1,
+        "age": 250,
+        "angle": 0.9284817362951437,
+        "hp": 1362,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1200.5936110863047,
+        "y": 611.9848571250711
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1078.920942710358,
+          "y": 792.7353856272672
+        },
+        "state": "TELEGRAPH",
+        "attack": "sweep",
+        "phase": 1,
+        "age": 232.8000000000029,
+        "angle": -1.246467237083095,
+        "hp": 1362,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1058.4753657607973,
+        "y": 521.8077768077237
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1078.920942710358,
+          "y": 792.7353856272672
+        },
+        "state": "EXECUTE",
+        "attack": "sweep",
+        "phase": 1,
+        "age": 166.70000000000437,
+        "angle": -1.246467237083095,
+        "hp": 1362,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1016.08735294182,
+        "y": 600.9555896267017
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1078.920942710358,
+          "y": 792.7353856272672
+        },
+        "state": "RECOVER",
+        "attack": "sweep",
+        "phase": 1,
+        "age": 200,
+        "angle": -1.246467237083095,
+        "hp": 1362,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1071.851744224884,
+        "y": 577.8521483436375
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1061.3518838900702,
+          "y": 788.8933251547551
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 1,
+        "age": 183.40000000000146,
+        "angle": -1.246467237083095,
+        "hp": 1362,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1066.0724190808899,
+        "y": 533.3532853911862
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1050.015939293581,
+          "y": 784.9901557000146
+        },
+        "state": "TELEGRAPH",
+        "attack": "rush",
+        "phase": 1,
+        "age": 133.3000000000029,
+        "angle": -2.7269345810278782,
+        "hp": 1362,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1033.0968405957624,
+        "y": 504.46185690605876
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 880.6668339624679,
+          "y": 710.4459849036915
+        },
+        "state": "EXECUTE",
+        "attack": "rush",
+        "phase": 1,
+        "age": 233.40000000000146,
+        "angle": -2.7269345810278782,
+        "hp": 1362,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1041.760631076911,
+        "y": 509.04149738720787
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 839.230618743521,
+          "y": 692.2065717199307
+        },
+        "state": "RECOVER",
+        "attack": "rush",
+        "phase": 1,
+        "age": 233.20000000000437,
+        "angle": -2.7269345810278782,
+        "hp": 1362,
+        "max": 2034,
+        "exposed": false,
+        "broken": true
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1027.3331071562927,
+        "y": 552.3517877348837
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 839.230618743521,
+          "y": 692.2065717199307
+        },
+        "state": "RECOVER",
+        "attack": "rush",
+        "phase": 1,
+        "age": 483.3000000000029,
+        "angle": -2.7269345810278782,
+        "hp": 1326,
+        "max": 2034,
+        "exposed": true,
+        "broken": true
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 876.5411727441057,
+        "y": 615.438077457253
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 839.230618743521,
+          "y": 692.2065717199307
+        },
+        "state": "PHASE",
+        "attack": null,
+        "phase": 2,
+        "age": 16.700000000004366,
+        "angle": -2.7269345810278782,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 876.5411727441057,
+        "y": 615.438077457253
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 839.230618743521,
+          "y": 692.2065717199307
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 2,
+        "age": 183.3000000000029,
+        "angle": -2.7269345810278782,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 876.5411727441057,
+        "y": 615.438077457253
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 839.230618743521,
+          "y": 692.2065717199307
+        },
+        "state": "TELEGRAPH",
+        "attack": "sweep",
+        "phase": 2,
+        "age": 116.70000000000437,
+        "angle": -1.1047240959372506,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 911.4753390669081,
+        "y": 662.8007834224616
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 839.230618743521,
+          "y": 692.2065717199307
+        },
+        "state": "EXECUTE",
+        "attack": "sweep",
+        "phase": 2,
+        "age": 83.40000000000146,
+        "angle": -1.1047240959372506,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 947.2820954847692,
+        "y": 741.6184993459236
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 4,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 839.230618743521,
+          "y": 692.2065717199307
+        },
+        "state": "RECOVER",
+        "attack": "sweep",
+        "phase": 2,
+        "age": 133.40000000000146,
+        "angle": -1.1047240959372506,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 999.2527114903666,
+        "y": 689.6478833403263
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 4,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 839.230618743521,
+          "y": 692.2065717199307
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 2,
+        "age": 150,
+        "angle": -1.1047240959372506,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1040.8636442824345,
+        "y": 698.2978145285641
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 4,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 839.230618743521,
+          "y": 692.2065717199307
+        },
+        "state": "TELEGRAPH",
+        "attack": "rush",
+        "phase": 2,
+        "age": 83.29999999999563,
+        "angle": 0.041822935632827324,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1058.1825631866625,
+        "y": 532.689892704663
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 4,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 962.4585675683916,
+          "y": 697.363333305965
+        },
+        "state": "EXECUTE",
+        "attack": "rush",
+        "phase": 2,
+        "age": 150,
+        "angle": 0.041822935632827324,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1031.5908926996453,
+        "y": 542.8408722176458
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 4,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1356.8928177702467,
+          "y": 713.869356566547
+        },
+        "state": "RECOVER",
+        "attack": "rush",
+        "phase": 2,
+        "age": 49.80000000000291,
+        "angle": 0.041822935632827324,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1108.2656096406306,
+        "y": 574.6046391586312
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 4,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1348.1079347955229,
+          "y": 709.101061196338
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 2,
+        "age": 83.40000000000146,
+        "angle": 0.041822935632827324,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1099.7962432135723,
+        "y": 545.721872731573
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 4,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1327.6399981283005,
+          "y": 696.5784694718253
+        },
+        "state": "TELEGRAPH",
+        "attack": "fissure",
+        "phase": 2,
+        "age": 66.09999999999854,
+        "angle": -2.5694030656316786,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1094.0151856579646,
+        "y": 748.7948035603981
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 4,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1327.6399981283005,
+          "y": 696.5784694718253
+        },
+        "state": "EXECUTE",
+        "attack": "fissure",
+        "phase": 2,
+        "age": 299.90000000000146,
+        "angle": -2.5694030656316786,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1076.2988797061864,
+        "y": 721.6320095121752
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 4,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1327.6399981283005,
+          "y": 696.5784694718253
+        },
+        "state": "RECOVER",
+        "attack": "fissure",
+        "phase": 2,
+        "age": 33.30000000000291,
+        "angle": -2.5694030656316786,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1081.8660363264055,
+        "y": 695.6441028919558
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 4,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1325.639612584196,
+          "y": 696.5708645433555
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 2,
+        "age": 16.799999999995634,
+        "angle": -2.5694030656316786,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1140.8087324923858,
+        "y": 704.3130906079465
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 4,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1293.7221461601655,
+          "y": 694.5388794055734
+        },
+        "state": "TELEGRAPH",
+        "attack": "burrow",
+        "phase": 2,
+        "age": 50.099999999998545,
+        "angle": 3.134720376983909,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1115.568949872785,
+        "y": 1004.862149604209
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 4,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1132.1449420112367,
+          "y": 695.6493001267974
+        },
+        "state": "EXECUTE",
+        "attack": "burrow",
+        "phase": 2,
+        "age": 183.3000000000029,
+        "angle": 3.134720376983909,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1153.0860557835554,
+        "y": 898.02779019779
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 4,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1132.1449420112367,
+          "y": 695.6493001267974
+        },
+        "state": "RECOVER",
+        "attack": "burrow",
+        "phase": 2,
+        "age": 50,
+        "angle": 3.134720376983909,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1109.186701569081,
+        "y": 909.2906944122637
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 4,
+      "dead": false,
+      "dashReady": false,
+      "boss": {
+        "p": {
+          "x": 1129.5544691583038,
+          "y": 719.5084815065459
+        },
+        "state": "IDLE",
+        "attack": null,
+        "phase": 2,
+        "age": 200,
+        "angle": 3.134720376983909,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1129.2212773555736,
+        "y": 980.1332098105954
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 4,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1128.3628160553606,
+          "y": 731.4478877162347
+        },
+        "state": "TELEGRAPH",
+        "attack": "rush",
+        "phase": 2,
+        "age": 216.6999999999971,
+        "angle": 1.6634324445699409,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1110.4338502018493,
+        "y": 983.3142584548544
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 4,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1124.9394952729547,
+          "y": 768.2966126545647
+        },
+        "state": "EXECUTE",
+        "attack": "rush",
+        "phase": 2,
+        "age": 33.39999999999418,
+        "angle": 1.6634324445699409,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1128.4360191114079,
+        "y": 972.3400447647856
+      },
+      "hp": 87,
+      "maxHp": 140,
+      "potions": 4,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1113.1780344179626,
+          "y": 894.8973209919031
+        },
+        "state": "RECOVER",
+        "attack": "rush",
+        "phase": 2,
+        "age": 50,
+        "angle": 1.6634324445699409,
+        "hp": 452,
+        "max": 2034,
+        "exposed": false,
+        "broken": true
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    {
+      "p": {
+        "x": 1129.9266471458636,
+        "y": 980.3359798142286
+      },
+      "hp": 136,
+      "maxHp": 140,
+      "potions": 3,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1113.1780344179626,
+          "y": 894.8973209919031
+        },
+        "state": "RECOVER",
+        "attack": "rush",
+        "phase": 2,
+        "age": 366.6999999999971,
+        "angle": 1.6634324445699409,
+        "hp": 452,
+        "max": 2034,
+        "exposed": true,
+        "broken": true
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    }
+  ],
+  "start": {
+    "p": {
+      "x": 430,
+      "y": 790
+    },
+    "hp": 140,
+    "maxHp": 140,
+    "potions": 5,
+    "dead": false,
+    "dashReady": true,
+    "boss": {
+      "p": {
+        "x": 1080,
+        "y": 760
+      },
+      "state": "DORMANT",
+      "attack": null,
+      "phase": 1,
+      "age": 37848.6,
+      "angle": 0,
+      "hp": 2034,
+      "max": 2034,
+      "exposed": false,
+      "broken": false
+    },
+    "won": false,
+    "xp": 950,
+    "clue": false
+  },
+  "potionInputs": 2,
+  "end": {
+    "p": {
+      "x": 1129.9266471458636,
+      "y": 980.3359798142286
+    },
+    "hp": 145,
+    "maxHp": 145,
+    "potions": 3,
+    "dead": false,
+    "dashReady": true,
+    "boss": {
+      "p": {
+        "x": 1113.1780344179626,
+        "y": 894.8973209919031
+      },
+      "state": "DEATH",
+      "attack": null,
+      "phase": 2,
+      "age": 2050,
+      "angle": 1.6634324445699409,
+      "hp": 0,
+      "max": 2034,
+      "exposed": false,
+      "broken": false
+    },
+    "won": true,
+    "xp": 1130,
+    "clue": false
+  },
+  "fight": {
+    "start": {
+      "p": {
+        "x": 430,
+        "y": 790
+      },
+      "hp": 140,
+      "maxHp": 140,
+      "potions": 5,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1080,
+          "y": 760
+        },
+        "state": "DORMANT",
+        "attack": null,
+        "phase": 1,
+        "age": 37848.6,
+        "angle": 0,
+        "hp": 2034,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": false,
+      "xp": 950,
+      "clue": false
+    },
+    "end": {
+      "p": {
+        "x": 1129.9266471458636,
+        "y": 980.3359798142286
+      },
+      "hp": 145,
+      "maxHp": 145,
+      "potions": 3,
+      "dead": false,
+      "dashReady": true,
+      "boss": {
+        "p": {
+          "x": 1113.1780344179626,
+          "y": 894.8973209919031
+        },
+        "state": "DEATH",
+        "attack": null,
+        "phase": 2,
+        "age": 2050,
+        "angle": 1.6634324445699409,
+        "hp": 0,
+        "max": 2034,
+        "exposed": false,
+        "broken": false
+      },
+      "won": true,
+      "xp": 1130,
+      "clue": false
+    }
+  },
+  "receipts": [
+    {
+      "credits": 480,
+      "receipts": 1,
+      "bosses": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "credits": 480,
+      "receipts": 1,
+      "bosses": [
+        true,
+        false,
+        false
+      ]
+    }
+  ],
+  "fogCounts": [
+    {
+      "base": 119,
+      "dunes": 98,
+      "sandpit": 297
+    },
+    {
+      "base": 110,
+      "dunes": 98,
+      "sandpit": 316
+    }
+  ],
+  "passed": true
+}

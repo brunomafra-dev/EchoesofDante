@@ -1,0 +1,11 @@
+{
+  "revision": "06c058ecbf170764660b7805b4fc3fd225dfe60a",
+  "method": "Latest browser client against exact public pre-buried relay 16 and its historical catalogue. Real room handshakes/capability refusal; no synthetic chapter completion.",
+  "checks": [
+    "Previous Dunes lab and room inspection connect on actual historical protocol 16; only the new buried capability is unavailable",
+    "Direct buried lab refuses incompatible relay before joining a filtered campaign",
+    "Accepted buried in a normal campaign URL also refuses old relay without losing evidence; updated relay reconnect restores capability with identical objectives"
+  ],
+  "errors": [],
+  "passed": true
+}

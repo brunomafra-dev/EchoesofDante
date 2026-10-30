@@ -1,0 +1,11 @@
+{
+  "path": "public/assets/buried-record/vitrified-core-v1.png",
+  "sha256": "c335a0f8266e93383aa689a6b64a2aef1a72cc3cf271478cdbf60341ff623bfa",
+  "alphaBounds": [
+    50,
+    35,
+    224,
+    225
+  ],
+  "method": "Built-in image_gen new standalone RGBA prop. Deterministic alpha-bounds trim, resize and padding only; no painting or background removal."
+}

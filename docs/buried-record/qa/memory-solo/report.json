@@ -1,0 +1,43 @@
+{
+  "method": "Isolated map-memory lab, explicit prior chapter/access fixture. Actual WASD reveals cells and atlas/lifecycle/death/R/reload persists them. Objective positions prepare coverage; discovery cells are never injected. Living Soterrado and later gates preserved.",
+  "checks": [
+    "Actual movement and atlas trips preserve eight regions in the real serializer, regardless of the selected mission",
+    "Reload, common lethal damage/R, pagehide and another reload retain all discovered cells; future atlas gates and real saves stay intact"
+  ],
+  "regions": [
+    {
+      "area": "base",
+      "cells": 105
+    },
+    {
+      "area": "forest",
+      "cells": 112
+    },
+    {
+      "area": "cavern",
+      "cells": 107
+    },
+    {
+      "area": "valley",
+      "cells": 119
+    },
+    {
+      "area": "arid",
+      "cells": 112
+    },
+    {
+      "area": "dunes",
+      "cells": 112
+    },
+    {
+      "area": "springs",
+      "cells": 119
+    },
+    {
+      "area": "terraces",
+      "cells": 119
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

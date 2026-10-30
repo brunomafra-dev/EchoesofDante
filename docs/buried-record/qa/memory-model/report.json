@@ -1,0 +1,10 @@
+{
+  "method": "Actual LocalJourney/ExplorationMemory and old serialized save; reproduce a later stale snapshot overwrite, schema/profile isolation/reset and bounded malformed input.",
+  "checks": [
+    "A later stale snapshot cannot erase earlier per-region discovery",
+    "Legacy omitted exploration preserves existing cells; regions accumulate without touching credits, receipts or boss flags",
+    "Different characters remain isolated; explicit reset clears discovery rather than resurrecting deleted history",
+    "Caps and invalid-input validation preserve stored regions before adding incoming discovery; no oversize or malformed fog snapshot"
+  ],
+  "passed": true
+}

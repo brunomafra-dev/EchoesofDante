@@ -1,0 +1,12 @@
+{
+  "method": "Actual post-boss checkpoint exported by full ordinary-input solo fight, before native clue/sample. Class variants prepare coverage only. Actual touch/gamepad reads original record, moves against physical sampler and collects; no synthetic victory/collection injection.",
+  "checks": [
+    "warrior: touch reads original record, joystick respects sample collider and actual interaction collects the specimen",
+    "hunter: touch reads original record, joystick respects sample collider and actual interaction collects the specimen",
+    "astral: touch reads original record, joystick respects sample collider and actual interaction collects the specimen",
+    "xenobinder: touch reads original record, joystick respects sample collider and actual interaction collects the specimen",
+    "Standard gamepad A/left stick completes native record/collision/sample; 568x320, 844x390, 1024x768 and 1920x1080 layouts captured"
+  ],
+  "errors": [],
+  "passed": true
+}

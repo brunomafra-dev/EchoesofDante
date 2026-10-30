@@ -28,6 +28,8 @@ export class Missions{
  circuitAvailable=true;
  windAvailable=true;
  dunesAvailable=true;
+ buriedAvailable=true;
+ setBuriedAvailable(value:boolean):void{if(value!==this.buriedAvailable){this.buriedAvailable=value;this.version++;}}
  setDunesAvailable(value:boolean):void{if(value!==this.dunesAvailable){this.dunesAvailable=value;this.version++;}}
  setWindAvailable(value:boolean):void{if(value!==this.windAvailable){this.windAvailable=value;this.version++;}}
  setCircuitAvailable(value:boolean):void{if(value!==this.circuitAvailable){this.circuitAvailable=value;this.version++;}}
@@ -45,6 +47,7 @@ export class Missions{
   if(id==='settle-echo'&&!this.circuitAvailable)return 'locked';
   if(id==='settle-wind'&&!this.windAvailable)return 'locked';
   if(id==='settle-dunes'&&!this.dunesAvailable)return 'locked';
+  if(id==='settle-buried'&&!this.buriedAvailable)return 'locked';
   if(isPermanence(id)&&!this.permanenceAvailable)return 'locked';
   if(d.requires&&!this.state.completed.includes(d.requires))return 'locked';
   if(d.unlock&&!this.has(d.unlock))return 'locked';
