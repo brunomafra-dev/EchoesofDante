@@ -1,0 +1,28 @@
+# Onde a areia não cede · 0.1.173
+
+Continuação autorizada depois das correções da 0.1.172, confirmada pelo usuário: “Sim, continuar a campanha nas Dunas”. Um capítulo com Ivo após entregar a pesquisa do vento. Durante a implementação, o usuário pediu concluir/publicar este processo e continuar imediatamente o próximo passo, incluindo a persistência do minimapa já revelado. Essa autorização posterior substitui a espera operacional ao final deste capítulo; QA e aprovação humana permanecem separados.
+
+Ivo precisa distinguir suporte firme para os suprimentos, movimento da areia e o intervalo regular da estrutura enterrada. O jogador retira uma sonda, investiga as ruínas originais e aproveita as **três investigações do relatório existente** `exp-dunes`. Nenhum segundo ponto/recibo regional ou missão duplicada foi criado. Análises anteriores, inclusive relatório já entregue, continuam válidas. A sondagem e o arquivo são objetivos novos, com objetos pertinentes, sem maletas/prismas genéricos.
+
+Dois terrenos de teste fora da descida: areia escura que cede e borda clara compacta. O diário pede interpretar o solo, sem apontar a resposta no minimapa. Testar o leito solto recolhe a sonda intacta; o apoio firme produz um retorno curto e uma reação da depressão. A resposta é visual, não uma espera para preencher duração. A sonda fica no apoio como referência. Isso delimita uma parada para carga, sem alojamento, NPC novo ou viagem liberada.
+
+Sete objetivos: kit, ruínas reais, encosta existente, canal existente, apoio firme, nervuras existentes e arquivo na base. **170 créditos por integrante, uma vez**, sem XP novo ou consumo de equipamento/material pessoal. Relatório regional original mantém seus 75 créditos e recibo. Ruínas/descida/retornos/sinais/portais/bosses e pinturas aprovadas preservados. Sem novas criaturas ou reaparecimento das derrotadas.
+
+[Laboratório isolado](https://echosofdante.vercel.app/campaign-playtest.html?permanence=dunes&v=0.1.173), namespace `dante-permanence-v1.dunes.<classe>.`, separado dos personagens/settings reais e dos testes anteriores. Simula Warden, sete relatórios originais da campanha, nove capítulos anteriores, Bacia conquistada e chegada ao acesso das Dunas. **Não** simula ruínas, investigações regionais das Dunas, sondagem, arquivo, recompensa ou vitória do Soterrado. Vésper/Incandescente também vivos. Preparo da dupla depende do botão explícito no anfitrião e de servidor com `dunes:1`.
+
+Coop mantém protocolo **16** e acrescenta capacidade `dunes:1` para o catálogo novo. Relay anterior deve preservar progresso e recusar este laboratório até a atualização; capítulos já publicados continuam funcionando. Comparação real com o servidor público precede qualquer solicitação de deploy.
+
+Sprites existentes do atlas da 0.1.172 e piso estático em renderTexture; colliders correspondem apenas à sonda física. Pulsos usam elipses reaproveitadas e tweens curtos; não redesenham cenário por frame. Dimensões/enquadramentos/arte e figuras dos personagens preservados.
+
+## QA e entrega
+
+- [x] [Modelo/catálogo/save 0.1.166](qa/model/report.json), relatório regional reaproveitado e recibo único de 170, mantendo os 75 do relatório existente.
+- [x] [Solo completo](qa/solo/report.json) por E, escolha rejeitada/aceita, ruínas reais, orientação e reload. Posições/invulnerabilidade e capítulos anteriores são fixtures de cobertura, não playthrough humano cronometrado.
+- [x] Nove aproximações no grafo real claras/conectadas, collider da sonda, retorno ao Siroco/portal de ida e descida originais; Soterrado vivo, morte/R/reload e três retornos com contagens estáveis de objetos/texturas/colliders. Mesma evidência solo acima.
+- [x] [Dupla completa](qa/coop/coop.json): convidado investiga ruínas/análises existentes, rejeita/aceita terreno e entrega; anfitrião conserva relatório diferente acompanhado. Recibos únicos/reconexão; bosses posteriores vivos. [Relay histórico 16](qa/compatibility/report.json): vento anterior funciona, capítulo novo recusa catálogo incompleto antes de perder objetivos, inclusive em URL de campanha normal.
+- [x] [Quatro classes touch/gamepad emulados](qa/controls/report.json), joystick/stick e colisão real, 568×320, 844×390, 1024×768 e 1920×1080. Capturas inspecionadas pelo agente; mensagens da sondagem encurtadas após revisão para leitura no mobile.
+- [x] Typecheck/build de 265 módulos; capturas solo/dupla/controles inspecionadas pelo agente. A revisão retirou uma figura de solo sobreposta ao herói: os terrenos de teste usam apenas o piso rasterizado, e a ferramenta inteira aparece após a sondagem válida.
+- [x] [Três capítulos compilados](qa/compiled-chapters/public.json) e [dupla compilada](qa/compiled-coop/report.json), sem globais DEV: aceite/coleta/reload/reentrada, recibos/saldos/bosses e saves reais preservados. Capturas inspecionadas pelo agente; amostra do início, com a sondagem/entrega completa cobertas no DEV. Publicação pública ainda pendente abaixo.
+- [x] [Sondagem compilada por WASD/E](qa/compiled/report.json): fixture serializada 0.1.166 com acesso/kit/ruínas/duas análises e derrotas nativas preparados explicitamente; somente o novo teste de apoio é feito por movimento/interação reais. Reload preserva a sondagem sem arquivo, recibo ou vitória posterior. Captura inspecionada pelo agente.
+- [ ] Commit/push, sincronização e publicação; compatibilidade/dupla pública.
+- [ ] Playtest humano antes da próxima etapa. QA técnico não é aprovação humana, medição de duração ou teste em celular físico/equipe humana de quatro.

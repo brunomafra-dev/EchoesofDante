@@ -762,6 +762,7 @@ export class GameScene extends Phaser.Scene {
     this.missions.setSignalAvailable(coopSession.role==='offline'||coopSession.signalsAvailable);
     this.missions.setCircuitAvailable(coopSession.role==='offline'||coopSession.circuitsAvailable);
     this.missions.setWindAvailable(coopSession.role==='offline'||coopSession.windAvailable);
+    this.missions.setDunesAvailable(coopSession.role==='offline'||coopSession.dunesAvailable);
     time -= this.recordsTimeOffset;
     if (this.transitioning) return;
     if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return;
@@ -836,6 +837,7 @@ export class GameScene extends Phaser.Scene {
       }else if('finding' in missionSite)this.hud.showDiscovery(missionSite.name.toLocaleUpperCase('pt-BR')+'\n'+missionSite.finding);
       else this.hud.showDiscovery(missionSite.id==='water'?'ÁGUA SUPERFICIAL\nLEITURA REGISTRADA':missionSite.id==='biology'?'ATIVIDADE BIOLÓGICA\nLEITURA REGISTRADA':`${missionSite.name.toLocaleUpperCase('pt-BR')}\nLEITURA REGISTRADA`);
       if(missionSite.id==='exp-dunes-3')this.dunes?.warnBelow();
+      if(missionSite.id==='pd-test')this.dunes?.soundGround();
       this.sounds.discovery();this.saveProgress();interact=false;
       }
     }
@@ -1738,9 +1740,10 @@ export class GameScene extends Phaser.Scene {
 
   private syncCoopWorld(world: PartyWorld): boolean {
     this.visitingCoop = true;
-    const knewDuneTracks=this.missions.has('exp-dunes-3');
+    const knewDuneTracks=this.missions.has('exp-dunes-3'),knewDuneProbe=this.missions.has('pd-test');
     this.missions.restore(world.missions);
     if(!knewDuneTracks&&this.missions.has('exp-dunes-3'))this.dunes?.warnBelow();
+    if(!knewDuneProbe&&this.missions.has('pd-test'))this.dunes?.soundGround();
     const personal=this.journey.load();if(personal){this.economy=validEconomy(personal.economy);this.equipment.restore(personal.equipment);this.basePanel?.refreshBar();}
     if(world.visited)this.economy.visited=[...new Set([...this.economy.visited,...world.visited])];
     this.expeditionReturn=validExpeditionReturn(world.expeditionReturn);
@@ -2483,6 +2486,7 @@ export class GameScene extends Phaser.Scene {
     if(id==='settle-outpost'&&coopSession.role!=='offline'&&!coopSession.outpostsAvailable||id==='settle-signal'&&coopSession.role!=='offline'&&!coopSession.signalsAvailable)return false;
     if(id==='settle-echo'&&coopSession.role!=='offline'&&!coopSession.circuitsAvailable)return false;
     if(id==='settle-wind'&&coopSession.role!=='offline'&&!coopSession.windAvailable)return false;
+    if(id==='settle-dunes'&&coopSession.role!=='offline'&&!coopSession.dunesAvailable)return false;
     if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!['missions','permanence','settlement-life','settlement-motion','npc-review','outpost-support'].some(key=>params.has(key))||this.inputModalOpen||this.transitioning||coopSession.role==='guest'||!this.player||this.player.isDead)return false;
     if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return false;
     const ids=['recon','survival','signal','beyond','water-source','safe-route','shelter',...PERMANENCE_IDS] as const,index=(ids as readonly MissionId[]).indexOf(id);if(index<0)return false;
@@ -2495,11 +2499,15 @@ export class GameScene extends Phaser.Scene {
     if(index>=4){this.valleyVisited=true;this.valleyCheckpointReached=true;this.economy.visited=[...new Set([...this.economy.visited,'warden','valley'] as JourneyArea[])];this.progression.restore({...this.progression.snapshot(),xp:350,bossRewards:['warden']});this.economy.credits=300;this.economy.materials=[24,20,0];this.economy.potions=5;for(const upgrade of ['chargePower','dashDuration','chargeWidth'] as const)for(let i=0;i<3;i++)this.progression.investUpgrade(upgrade);}
     if(isPermanence(id)){this.springsVisited=true;this.terracesVisited=true;this.economy.visited=[...new Set([...this.economy.visited,'springs','terraces'] as JourneyArea[])];}
     if(id==='settle-echo')this.economy.visited=[...new Set([...this.economy.visited,'cavern'] as JourneyArea[])];
-    if(id==='settle-wind'){
+    if(id==='settle-wind'||id==='settle-dunes'){
       for(const flag of ['valleyLandmarkSeen','valleyEndSeen','valleyCheckpointReached','valleyFrontierReached','valleyFrontierSignalSeen','valleyFrontierEndSeen','aridVisited'] as const)this[flag]=true;
       this.economy.visited=[...new Set([...this.economy.visited,'cavern','arid'] as JourneyArea[])];
     }
-    if(id==='settle-outpost'||id==='settle-signal'||id==='settle-echo'||id==='settle-wind'){
+    if(id==='settle-dunes'){
+      this.aridSignalSeen=true;this.aridFrontierReached=true;this.aridFrontierEntered=true;this.dunesVisited=true;
+      this.economy.visited=[...new Set([...this.economy.visited,'dunes'] as JourneyArea[])];
+    }
+    if(id==='settle-outpost'||id==='settle-signal'||id==='settle-echo'||id==='settle-wind'||id==='settle-dunes'){
       // The lab inspects occupation of an already conquered region. Preserve
       // existing XP/resources: simulated defeats confer no combat rewards.
       const defeated=[...new Set([...this.progression.snapshot().rewardedHollows,...outpostThreats(characterProfiles.active.campaign?.size??1)])];
@@ -2576,6 +2584,7 @@ export class GameScene extends Phaser.Scene {
     for(const player of [this.player,...(this.party?.players??[])]){const hazard=this.permanence?.hazardAt(player.position,this.missions,now);if(hazard)this.enemyStrike({position:hazard.position} as Enemy,{ranged:true,damage:hazard.damage},player);}
     const before=this.missions.version;
     if(this.missions.status('settle-wind')==='active'&&this.missions.has('pv-kit')&&this.aridSignalSeen)this.missions.record('pv-relay');
+    if(this.missions.status('settle-dunes')==='active'&&this.missions.has('pd-kit')&&this.dunesRuinsSeen)this.missions.record('pd-ruins');
     if(this.wardenDefeated&&outpostThreats(characterProfiles.active.campaign?.size??1).every(id=>this.progression.hasDefeated(id)))this.missions.record('po-secure');
     if(this.soterradoDefeated)this.missions.record('after-soterrado');
     if(this.vesperDefeated)this.missions.record('after-vesper');
@@ -2627,14 +2636,15 @@ export class GameScene extends Phaser.Scene {
     if(status!=='active')return;
     const goal=d.goals.find(g=>!this.missions.has(g.id));if(!goal)return;
     if(goal.area!==this.area)return this.missionTransitTarget(goal.area);
-    const regionalSite=this.regional?.sites.find(s=>s.mission===id&&s.id===goal.id);
+    const regionalSite=this.regional?.sites.find(s=>s.id===goal.id&&(s.mission===id||id==='settle-dunes'));
     if(regionalSite)return {...regionalSite,instruction:[...siroccoTrails(this.area),...borealTrails(this.area),...embersTrails(this.area)].find(t=>t.site===regionalSite.id)?.hint??'Analise o local e registre a descoberta.',interactionLabel:'ANALISAR',action:'investigate'};
     if(id==='settle-wind'&&goal.id==='pv-relay')return {...SIROCCO.signal,name:'Relé original do Siroco',instruction:'Investigue o relé original; a pesquisa acompanha essa descoberta.',interactionLabel:'INVESTIGAR',action:'investigate'};
+    if(id==='settle-dunes'&&goal.id==='pd-ruins')return {...DUNES.ruin,name:'Ruínas originais das Dunas',instruction:'Investigue as inscrições originais antes da sondagem.',interactionLabel:'INVESTIGAR',action:'investigate'};
     if(id==='settle-wind'&&goal.id==='pv-dock')return {...WIND_SURVEY.dock,radius:23,name:'Posição protegida',instruction:'Caminhe contra a plataforma para empurrar. Contorne o suporte para corrigir a direção.',action:'walk'};
     const haul=this.permanence?.haulPosition;
     if((id==='settle-transport'||id==='settle-outpost')&&haul){const target=distance(this.player.position,haul)>240?{...haul,name:'Carga reservada',radius:75}:PERMANENCE_SITES.find(s=>s.mission===id&&s.haul)!;return {...target,instruction:'Conduza a carga pelo chão baixo; ela espera se a equipe se afastar.',interactionLabel:'DESCARREGAR',action:'investigate'};}
     const site=PERMANENCE_SITES.find(s=>s.mission===id&&s.id===goal.id&&!s.needs?.some(e=>!this.missions.has(e)));
-    if(site?.choice)return this.missionOffMap(goal.label,id==='settle-food'?'Compare os lotes pelas folhas e raízes antes de colher.':'Compare as marcas da cheia e o terreno antes de assentar o módulo.');
+    if(site?.choice)return this.missionOffMap(goal.label,id==='settle-food'?'Compare os lotes pelas folhas e raízes antes de colher.':id==='settle-dunes'?'Compare a borda clara e o leito escuro; procure apoio raso de rocha, fora dos rastros da depressão.':'Compare as marcas da cheia e o terreno antes de assentar o módulo.');
     if(site)return {...site,instruction:site.circuit?'Gire os desviadores seguindo a luz e emita o pulso no aparelho ao sul.':site.aimAt?'Oriente a mira para a nervura luminosa e confirme o alinhamento.':'Use o equipamento reservado e registre o resultado.',interactionLabel:site.action,action:'investigate'};
     const colony=COLONY_SITES.find(s=>s.id===goal.id&&s.area===this.area);
     if(colony)return {...colony,instruction:colony.id==='shelter-built'?'A carga foi reservada pela expedição.':'Investigue o local e registre as condições.',interactionLabel:colony.id==='shelter-built'?'INSTALAR':'ANALISAR',action:'investigate'};

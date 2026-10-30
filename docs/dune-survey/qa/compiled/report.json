@@ -1,0 +1,9 @@
+{
+  "base": "http://localhost:5199",
+  "method": "Compiled build with explicit old-save fixture: prior chapters, kit/ruins/north+south analyses and native Dunes defeats without XP/drop prepared for coverage. Ordinary WASD/E performs the new sounding; no DEV globals, position/HP/physics mutation or new evidence injection after page load.",
+  "checks": [
+    "Ordinary compiled WASD/E reaches and sounds the firm bed; reload preserves sounding without archive/receipt/later boss flags or touching real saves"
+  ],
+  "errors": [],
+  "passed": true
+}

@@ -1,0 +1,11 @@
+{
+  "revision": "0f0ed6a7c6326070bfb7fefc64cbb8e97ccc7eb7",
+  "method": "Latest browser client against exact public pre-dunes relay 16 and its historical catalogue. Real room handshakes/capability refusal; no synthetic chapter completion.",
+  "checks": [
+    "Previous wind lab and room inspection connect on actual historical protocol 16; only the new dunes capability is unavailable",
+    "Direct Dunes lab refuses incompatible relay before joining a filtered campaign",
+    "Accepted Dunes in a normal campaign URL also refuses old relay without losing evidence; updated relay reconnect restores capability with identical objectives"
+  ],
+  "errors": [],
+  "passed": true
+}

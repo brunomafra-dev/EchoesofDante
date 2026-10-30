@@ -1,10 +1,16 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**30/10/2026 · Onde a areia não cede · 0.1.173 em implementação:** segundo sprint consecutivo autorizado pelo usuário após as correções da 0.1.172. Ivo aproveita as três análises do relatório `exp-dunes`, exige as ruínas originais e compara dois terrenos para uma sondagem de suporte da carga. Sem duplicar investigações regionais, abrir atalhos ou vencer Soterrado. [Escopo e evidências](dune-survey/README.md). Durante o trabalho, usuário pediu concluir/publicar e continuar imediatamente o próximo passo do plano, incluindo a persistência do minimapa revelado. Essa autorização substitui a espera operacional após as Dunas; não é aprovação humana antecipada.
+
+- [x] QA técnico e laboratório isolado: modelo/save 0.1.166, solo/dupla completos, recibos/reconexão, nove aproximações reais, portais originais, morte/R/reload e bosses vivos; quatro classes touch/gamepad emulados, 265 módulos e sondagem compilada por WASD/E. Três capítulos/dupla compilados passaram, capturas inspecionadas pelo agente. [Evidências e fixtures](dune-survey/README.md).
+- [ ] Commit/push e publicação pública da 0.1.173; catálogo `dunes:1` necessário no relay 16.
+- [ ] Playtest humano; arte nova e duração não aprovadas por automação.
+
 **30/10/2026 · Correção de orientação e identidade · 0.1.172:** usuário jogou a 0.1.171, gostou e solicitou que o minimapa siga a missão escolhida e que os objetos deixem de repetir maletas/prismas. Autorizou corrigir ambos e continuar imediatamente a campanha nas Dunas, confirmado por “Sim, continuar a campanha nas Dunas”. Esta autorização substitui a espera operacional entre estas duas entregas, sem registrar aprovação visual da correção. [Escopo e evidências](mission-identity/README.md).
 
 - [x] Seleção/parada/reload e orientação por missão, escolhas pessoais no coop, save antigo e recibos preservados; 32 figuras próprias, três colares e estações integrados aos sistemas existentes.
 - [x] QA de modelo, percurso solo completo do vento, dupla completa, quatro classes touch/gamepad emulados; capturas inspecionadas pelo agente. Evidências e fixtures no documento da entrega.
-- [ ] Publicação compilada/pública da correção e sincronização Git conferidas.
+- [x] Correção 0.1.172: aplicação `da14d95`, auditoria `a1f1ad9`, sincronização exata conferida. Vercel success/67 hashes, três capítulos solo públicos e dupla Vercel/Render 16 com aceite/coleta/reload/reentrada passaram; capturas inspecionadas pelo agente. [Evidências](mission-identity/README.md).
 - [ ] Capítulo seguinte nas Dunas, já autorizado; preservar acessos originais e Soterrado vivo.
 - [ ] Playtest humano das duas entregas antes de outra etapa.
 
@@ -13,7 +19,7 @@
 - [x] Implementação e QA: modelo/save 0.1.166/recibo único, solo/dupla completos, relé original, empurrão físico com contato estável, colisões/navegação, morte/reload/viagem, quatro classes touch/gamepad emulados e 262 módulos. Plataforma compilada por caminhada normal e dupla compilada por aceite/coleta/reentrada passaram; capturas inspecionadas pelo agente, separadas de avaliação humana. [Evidências e limites](wind-survey/README.md).
 - [x] Laboratório registrado, aplicação `9911476` em `origin/main` sincronizado, Vercel success e 62 hashes conferidos. Solo público: aceite/reload de pesquisa/Primeiro Eco/posto e empurrão/contorno/encaixe/reload reais passaram, com pré-requisitos explicitamente preparados e saves reais preservados. Capturas inspecionadas pelo agente; [evidências](wind-survey/README.md).
 - [x] Usuário publicou Render `0f0ed6a`, protocolo 16 / `wind:1` e catálogos anteriores preservados. Dois Chrome públicos passaram por convite/preparo explícito, aceite com Lia/coleta pelo convidado, reload/reentrada original e encerramento normal; saldos/recibos/bosses posteriores e saves reais intactos. 62 hashes reconferidos, capturas inspecionadas pelo agente e gate encerrado. [Evidências e limites](wind-survey/README.md): amostra pública do início, com empurrão/entrega completos cobertos localmente.
-- [ ] Playtest humano da plataforma antes de outra etapa.
+- [x] Usuário jogou e gostou da plataforma 0.1.171, pedindo correções de orientação/identidade e autorizando continuar nas Dunas. Essa avaliação não aprova antecipadamente os novos objetos ou mede duração.
 
 **29/10/2026 · O rastro do Primeiro Eco · 0.1.170 publicada:** usuário testou a 0.1.169, respondeu “ficou excelente” e autorizou a proposta seguinte. Um capítulo: comparar o registro antigo, conduzir um pulso por dois desviadores e arquivar o percurso com Nara. Reutiliza o corredor existente antes do limiar do Warden; preserva portais, bosses, encontros finitos, arte e sistemas do assentamento. Cinco objetivos, 150 créditos únicos; sem tradução definitiva ou origem humana confirmada. [Escopo e evidências](echo-circuit/README.md). Somente este sprint; aguardar playtest humano antes de outro.
 

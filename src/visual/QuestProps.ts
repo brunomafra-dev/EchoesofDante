@@ -22,6 +22,7 @@ export function addQuestProp(scene:Phaser.Scene,kind:QuestProp,x:number,y:number
 // Undefined entries intentionally keep their natural formation/ground stamp.
 // null means an existing instrument/building/person is the objective itself.
 export const GOAL_PROPS:Readonly<Record<string,QuestProp|null>>={
+ 'pd-kit':'coreSample','pd-test':null,'pd-store':'routeArchive',
  'pv-kit':'windKit','pv-mount':'anemometer','pv-read':null,'pv-store':null,
  'pr-copy':'emitter','pr-origin':null,'pr-flow':null,'pr-read':null,'pr-store':'routeArchive',
  'ps-kit':'receiver','ps-carrier':'archive','ps-water':'hydrophone','ps-ridge':'coreSample','ps-align':null,'ps-record':'archive',

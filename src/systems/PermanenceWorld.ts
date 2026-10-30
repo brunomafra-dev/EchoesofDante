@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import {PERMANENCE_SITES,type PermanenceSite,type PermanencePose} from '../config/permanence';
 import {HABITAT,HABITAT_SOLIDS} from '../config/colonization';
 import {OUTPOST,OUTPOST_SOLIDS,OUTPOST_SUPPORT} from '../config/outpost';
-import {trackEnvironmentOcclusion} from '../visual/EnvironmentArt';
+import {EnvironmentPainter,trackEnvironmentOcclusion} from '../visual/EnvironmentArt';
 import type {Missions} from './Missions';
 import {missionById} from '../config/missions';
 import type {JourneyArea} from './LocalJourney';
@@ -13,12 +13,14 @@ import {SignalSurvey} from '../visual/SignalSurvey';
 import {EchoCircuit} from '../visual/EchoCircuit';
 import type {CircuitNode} from '../config/echoCircuit';
 import {WindSurvey} from '../visual/WindSurvey';
+import {DUNE_SURVEY} from '../config/duneSurvey';
 import type {SurveyPusher} from '../config/windSurvey';
 import {moveWithCollisions,type Obstacle} from './Movement';
 
 // Authored chapter interactions share the journal, durable evidence and host
 // authority. Static props/pipework are drawn once; pulses only change alpha.
 export class PermanenceWorld {
+ private duneProbe?:Phaser.GameObjects.Image;
  private sites:{site:PermanenceSite;image:Phaser.GameObjects.Image;label:Phaser.GameObjects.Text}[]=[];
  private jet?:Phaser.GameObjects.Rectangle;
  private installed:Phaser.GameObjects.GameObject[]=[];
@@ -47,7 +49,11 @@ export class PermanenceWorld {
   for(const site of PERMANENCE_SITES.filter(s=>s.area===area)){
    const prop=site.reject&&site.id==='pf-sample'?'contaminatedRoots':GOAL_PROPS[site.id];
    const image=(prop?addQuestProp(scene,prop,site.x,site.y+30,76):prop===null?scene.add.image(site.x,site.y,'quest-research',0).setData('world-only',true):site.art==='mineral'||site.art==='record'?scene.add.image(site.x,site.y,site.art==='mineral'?'deep-mineral':'ancient-remnant').setDisplaySize(95,68).setDepth(site.y-2):addSurveyProp(scene,site.art as Parameters<typeof addSurveyProp>[1],site.x,site.y)).setName(site.id).setVisible(false);
-   if(site.choice){
+   if(site.choice&&site.mission==='settle-dunes'){
+    const layer=scene.add.renderTexture(site.x-150,site.y-90,300,180).setOrigin(0).setDepth(-9889).setName('dune-test-bed');
+    const painter=new EnvironmentPainter(scene,layer),tint=site.reject?0x755439:0xe3cda1;
+    painter.sediment(site.x,site.y,175,105,tint,.45);painter.sediment(site.x-25,site.y+8,110,70,tint,.35);painter.destroy();
+   }else if(site.choice){
     // Whole existing botanical stamps, tinted only by the observed residue.
     scene.add.image(site.x,site.y-8,'root-growth').setDisplaySize(110,46).setTint(site.reject?0x73a9c4:0xb0bf79).setDepth(-18);
     scene.add.image(site.x-12,site.y-17,'dante-canopy-green').setDisplaySize(82,50).setTint(site.reject?0x719fb8:0xb5c58c).setDepth(-17);
@@ -71,6 +77,7 @@ export class PermanenceWorld {
   const circuitCompleted=this.circuit.update(missions,player,now,authority,remote?.circuit);
   const windCompleted=this.wind.update(missions,now,actors,authority,remote?.wind);
   this.signal.update(missions,player,actors[0]?.rotation??0,now);
+  if(this.area==='dunes'&&missions.has('pd-test')&&!this.duneProbe){const p=DUNE_SURVEY.probe;this.duneProbe=addQuestProp(this.scene,'coreSample',p.x,p.y,86).setName('dune-survey-probe');this.obstacles.push({x:p.x,y:p.y-14,radius:18});}
   this.updateHaul(missions,now,actors,authority,remote);
   for(const {site,image,label}of this.sites){
    const active=['active','ready'].includes(missions.status(site.mission));

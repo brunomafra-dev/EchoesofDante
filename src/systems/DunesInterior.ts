@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { DUNES, DUNES_ROCKS } from '../config/dunes';
+import {DUNE_SURVEY} from '../config/duneSurvey';
 import { ChapterPortal } from './ChapterPortal';
 import { EnvironmentPainter, trackEnvironmentOcclusion, type EnvironmentStamp } from '../visual/EnvironmentArt';
 import { distance, type Vec2 } from '../utils/math';
@@ -12,6 +13,7 @@ export class DunesInterior {
   private readonly ruin: Phaser.GameObjects.Image;
   private readonly response: Phaser.GameObjects.Ellipse;
   private readonly tremor: Phaser.GameObjects.Ellipse;
+  private readonly probeReturn:Phaser.GameObjects.Ellipse;
 
   constructor(private readonly scene: Phaser.Scene, recorded: boolean) {
     scene.add.image(0, 0, 'dunes-ground').setOrigin(0).setDisplaySize(DUNES.width, DUNES.height).setDepth(-10002);
@@ -23,6 +25,7 @@ export class DunesInterior {
     this.response = scene.add.ellipse(DUNES.ruin.x, DUNES.ruin.y - 34, 75, 17, 0xa98cff, recorded ? .5 : .14)
       .setDepth(DUNES.ruin.y - 43);
     this.tremor = scene.add.ellipse(DUNES.hollow.x,DUNES.hollow.y,155,48,0xc9a270,0).setDepth(-9899);
+    this.probeReturn=scene.add.ellipse(DUNE_SURVEY.compact.x,DUNE_SURVEY.compact.y,84,25,0xe2c792,0).setDepth(-9888).setName('dune-probe-return');
   }
 
   canInvestigate(position: Vec2, dead: boolean, recorded: boolean): boolean {
@@ -40,6 +43,11 @@ export class DunesInterior {
     this.scene.tweens.killTweensOf(this.tremor);
     this.tremor.setAlpha(.3).setScale(.7);
     this.scene.tweens.add({targets:this.tremor,scale:1.8,alpha:0,duration:650,repeat:2});
+  }
+  soundGround():void{
+    this.scene.tweens.killTweensOf(this.probeReturn);this.probeReturn.setScale(.4).setAlpha(.45);
+    this.scene.tweens.add({targets:this.probeReturn,scale:1.9,alpha:0,duration:480,repeat:1});
+    this.scene.time.delayedCall(320,()=>this.warnBelow());
   }
 
   private bake(): void {

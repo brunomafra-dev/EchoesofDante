@@ -1,0 +1,12 @@
+{
+  "method": "Explicit kit/real-ruins/prior north+south analysis fixtures in isolated DEV lab. Actual touch or gamepad choice interactions and movement against the real probe collider. No sounding/archive/boss victory fixture.",
+  "checks": [
+    "warrior: real touch rejects loose bed, accepts firm bed and moves into the sampler collision without crossing",
+    "hunter: real touch rejects loose bed, accepts firm bed and moves into the sampler collision without crossing",
+    "astral: real touch rejects loose bed, accepts firm bed and moves into the sampler collision without crossing",
+    "xenobinder: real touch rejects loose bed, accepts firm bed and moves into the sampler collision without crossing",
+    "Standard gamepad A/left stick validates both beds and physical collision; layouts inspected at 568x320, 844x390, 1024x768 and 1920x1080"
+  ],
+  "errors": [],
+  "passed": true
+}
