@@ -27,6 +27,7 @@ import {LandingBase} from '../systems/LandingBase';
 import {BasePanel} from '../ui/BasePanel';
 import {PermanenceWorld} from '../systems/PermanenceWorld';
 import {PERMANENCE_IDS,PERMANENCE_SITES,isPermanence} from '../config/permanence';
+import {WIND_SURVEY} from '../config/windSurvey';
 import {outpostThreats,OUTPOST_SUPPORT} from '../config/outpost';
 import {signalAligned} from '../config/signalExpedition';
 import {Missions,validMissionRewards,type MissionAction} from '../systems/Missions';
@@ -758,6 +759,7 @@ export class GameScene extends Phaser.Scene {
     this.missions.setOutpostAvailable(coopSession.role==='offline'||coopSession.outpostsAvailable);
     this.missions.setSignalAvailable(coopSession.role==='offline'||coopSession.signalsAvailable);
     this.missions.setCircuitAvailable(coopSession.role==='offline'||coopSession.circuitsAvailable);
+    this.missions.setWindAvailable(coopSession.role==='offline'||coopSession.windAvailable);
     time -= this.recordsTimeOffset;
     if (this.transitioning) return;
     if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return;
@@ -765,8 +767,9 @@ export class GameScene extends Phaser.Scene {
     if(!this.inputModalOpen&&this.canUseOutpostServices()&&(this.controls.interactPressed||this.clickedInteraction)){this.clickedInteraction=false;this.basePanel.open('outpost');return;}
     if(this.area==='base'&&!this.inputModalOpen&&(BASE.services.some(s=>distance(this.player.position,s)<100)||coopSession.role!=='guest'&&distance(this.player.position,BASE.exit)<105)&&this.controls.interactPressed){const service=BASE.services.find(s=>distance(this.player.position,s)<100);if(service){if(this.missionUi)this.missionUi.openNpc(service.id);else this.basePanel.open(service.id);return;}if(coopSession.role!=='guest'&&distance(this.player.position,BASE.exit)<105){this.transitionArea('forest');return;}}
     const previousSolids=this.arena.obstacles.length;
-    if(this.permanence?.update(this.missions,this.player.position,coopSession.role==='guest'?coopSession.world?.time??time:time,[this.player,...(this.party?.players??[])],coopSession.role!=='guest',coopSession.world?.permanence)){
-      this.hud.showDiscovery('LIGAÇÃO ESTABILIZADA\nO pulso chegou à superfície de retorno. Registre a leitura a leste.');this.sounds.discovery();this.saveProgress();
+    const chapterResult=this.permanence?.update(this.missions,this.player.position,coopSession.role==='guest'?coopSession.world?.time??time:time,[this.player,...(this.party?.players??[])],coopSession.role!=='guest',coopSession.world?.permanence);
+    if(chapterResult){
+      this.hud.showDiscovery(chapterResult==='wind'?'LEITURA PROTEGIDA\nO suporte travou na posição marcada. Registre a comparação ao lado do instrumento.':'LIGAÇÃO ESTABILIZADA\nO pulso chegou à superfície de retorno. Registre a leitura a leste.');this.sounds.discovery();this.saveProgress();
     }
     this.settlementLife?.update(this.missions,this.player.position,coopSession.role==='guest'?coopSession.world?.time??time:time,[this.player,...(this.party?.players??[])],coopSession.role!=='guest',coopSession.world?.permanence?.people);
     if(this.arena.obstacles.length!==previousSolids)for(const p of [this.player,...(this.party?.players??[])])if(this.arena.obstacles.some(o=>distance(p.position,o)<p.radius+o.radius))Object.assign(p.position,safeExpeditionPosition(p.position,p.radius,this.arena.obstacles,this.movementBounds)??p.position);
@@ -2475,6 +2478,7 @@ export class GameScene extends Phaser.Scene {
     if(reviewStop&&(!review||review.stop.stage!==id))return false;
     if(id==='settle-outpost'&&coopSession.role!=='offline'&&!coopSession.outpostsAvailable||id==='settle-signal'&&coopSession.role!=='offline'&&!coopSession.signalsAvailable)return false;
     if(id==='settle-echo'&&coopSession.role!=='offline'&&!coopSession.circuitsAvailable)return false;
+    if(id==='settle-wind'&&coopSession.role!=='offline'&&!coopSession.windAvailable)return false;
     if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!['missions','permanence','settlement-life','settlement-motion','npc-review','outpost-support'].some(key=>params.has(key))||this.inputModalOpen||this.transitioning||coopSession.role==='guest'||!this.player||this.player.isDead)return false;
     if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return false;
     const ids=['recon','survival','signal','beyond','water-source','safe-route','shelter',...PERMANENCE_IDS] as const,index=(ids as readonly MissionId[]).indexOf(id);if(index<0)return false;
@@ -2487,7 +2491,11 @@ export class GameScene extends Phaser.Scene {
     if(index>=4){this.valleyVisited=true;this.valleyCheckpointReached=true;this.economy.visited=[...new Set([...this.economy.visited,'warden','valley'] as JourneyArea[])];this.progression.restore({...this.progression.snapshot(),xp:350,bossRewards:['warden']});this.economy.credits=300;this.economy.materials=[24,20,0];this.economy.potions=5;for(const upgrade of ['chargePower','dashDuration','chargeWidth'] as const)for(let i=0;i<3;i++)this.progression.investUpgrade(upgrade);}
     if(isPermanence(id)){this.springsVisited=true;this.terracesVisited=true;this.economy.visited=[...new Set([...this.economy.visited,'springs','terraces'] as JourneyArea[])];}
     if(id==='settle-echo')this.economy.visited=[...new Set([...this.economy.visited,'cavern'] as JourneyArea[])];
-    if(id==='settle-outpost'||id==='settle-signal'||id==='settle-echo'){
+    if(id==='settle-wind'){
+      for(const flag of ['valleyLandmarkSeen','valleyEndSeen','valleyCheckpointReached','valleyFrontierReached','valleyFrontierSignalSeen','valleyFrontierEndSeen','aridVisited'] as const)this[flag]=true;
+      this.economy.visited=[...new Set([...this.economy.visited,'cavern','arid'] as JourneyArea[])];
+    }
+    if(id==='settle-outpost'||id==='settle-signal'||id==='settle-echo'||id==='settle-wind'){
       // The lab inspects occupation of an already conquered region. Preserve
       // existing XP/resources: simulated defeats confer no combat rewards.
       const defeated=[...new Set([...this.progression.snapshot().rewardedHollows,...outpostThreats(characterProfiles.active.campaign?.size??1)])];
@@ -2562,6 +2570,7 @@ export class GameScene extends Phaser.Scene {
     if(now<this.missionTick)return;this.missionTick=now+200;
     for(const player of [this.player,...(this.party?.players??[])]){const hazard=this.permanence?.hazardAt(player.position,this.missions,now);if(hazard)this.enemyStrike({position:hazard.position} as Enemy,{ranged:true,damage:hazard.damage},player);}
     const before=this.missions.version;
+    if(this.missions.status('settle-wind')==='active'&&this.missions.has('pv-kit')&&this.aridSignalSeen)this.missions.record('pv-relay');
     if(this.wardenDefeated&&outpostThreats(characterProfiles.active.campaign?.size??1).every(id=>this.progression.hasDefeated(id)))this.missions.record('po-secure');
     if(this.soterradoDefeated)this.missions.record('after-soterrado');
     if(this.vesperDefeated)this.missions.record('after-vesper');
@@ -2615,6 +2624,17 @@ export class GameScene extends Phaser.Scene {
     }
     const regionalSite=this.regional?.sites.find(s=>s.mission===id&&!this.missions.has(s.id));
     if(regionalSite)return {...regionalSite,instruction:[...siroccoTrails(this.area),...borealTrails(this.area),...embersTrails(this.area)].find(t=>t.site===regionalSite.id)?.hint??'Analise o local e registre a descoberta.',interactionLabel:'ANALISAR',action:'investigate'};
+    if(id==='settle-wind'){
+      const goal=d.goals.find(g=>!this.missions.has(g.id));
+      if(goal?.id==='pv-relay'&&this.area==='arid')return{...SIROCCO.signal,name:'Relé original do Siroco',instruction:'Investigue o relé original; a pesquisa acompanha essa descoberta.',interactionLabel:'INVESTIGAR',action:'investigate'};
+      if(goal?.id==='pv-dock'&&this.area==='arid')return{...WIND_SURVEY.dock,radius:23,name:'Posição protegida',instruction:'Caminhe contra a plataforma para empurrar. Contorne o suporte para corrigir a direção.',action:'walk'};
+      if(goal?.area==='arid'&&this.area==='valley'){
+        const target=!this.valleyLandmarkSeen?VALLEY.landmark:!this.valleyFrontierSignalSeen?VALLEY.frontier.signal:VALLEY.frontier.portal;
+        return{...target,radius:130,name:this.valleyFrontierSignalSeen?'Passagem para o Siroco':'Registro original do Vale',instruction:'Siga os registros e a passagem originais do Vale; a pesquisa não abre atalhos.',interactionLabel:this.valleyFrontierSignalSeen?'ENTRAR':'INVESTIGAR',action:this.valleyFrontierSignalSeen?'enter':'investigate'};
+      }
+      if(goal?.area==='arid'&&this.area==='springs')return{...COLONY.springs.back,radius:105,name:'Voltar ao Vale',instruction:'Retome o caminho do Vale até o Siroco.',interactionLabel:'ENTRAR',action:'enter'};
+      if(goal?.area==='springs'&&this.area==='valley')return{...COLONY_BRANCH,name:'Posto das Nascentes',instruction:'Siga a trilha norte para comparar no arquivo do posto.',action:'enter'};
+    }
     const haul=this.permanence?.haulPosition;
     if(isPermanence(id)&&haul){const target=distance(this.player.position,haul)>240?{...haul,name:'Carga reservada',radius:75}:PERMANENCE_SITES.find(s=>s.mission===id&&s.haul)!;return{...target,instruction:'Conduza a carga pelo chão baixo; ela espera se a equipe se afastar.',interactionLabel:'DESCARREGAR',action:'investigate'};}
     const chapterSite=PERMANENCE_SITES.filter(s=>s.mission===id&&!this.missions.has(s.id)&&!s.needs?.some(e=>!this.missions.has(e))).sort((a,b)=>id==='settle-signal'?Number(b.area===this.area)-Number(a.area===this.area):0)[0];
@@ -2622,6 +2642,7 @@ export class GameScene extends Phaser.Scene {
     if(id==='settle-echo'&&chapterSite?.circuit&&this.area==='cavern')return{...chapterSite,instruction:'Gire os desviadores seguindo a luz e emita o pulso no aparelho ao sul.',interactionLabel:chapterSite.action,action:'investigate'};
     if(chapterSite?.area===this.area)return{...chapterSite,instruction:chapterSite.aimAt?'Oriente a mira para a nervura luminosa e confirme o alinhamento.':'Use o equipamento reservado e registre o resultado.',interactionLabel:chapterSite.action,action:'investigate'};
     if(id==='settle-signal'&&chapterSite?.area==='valley'&&this.area==='springs')return{...COLONY.springs.back,radius:105,name:'Voltar ao Vale da Ressonância',instruction:'Compare a rocha seca do Vale com os registros da Bacia.',interactionLabel:'ENTRAR',action:'enter'};
+    if(id==='settle-wind'&&this.area!=='base')return;
     const colonyMission=['water-source','safe-route','shelter'].includes(id)||isPermanence(id);
     if(this.area==='base')return {...BASE.exit,radius:105,name:'Saída para a Floresta',instruction:colonyMission?'Retome sua rota descoberta pelo atlas ou siga pela Floresta.':'A expedição continua na Floresta.',interactionLabel:'SAIR',action:'enter'};
     if(colonyMission){

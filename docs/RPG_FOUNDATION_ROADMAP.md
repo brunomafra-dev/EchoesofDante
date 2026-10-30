@@ -1,12 +1,18 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**30/10/2026 · O que o vento encobre · 0.1.171 em desenvolvimento:** após a entrega/publicação da 0.1.170, usuário respondeu “boa vamos pro próximo passo”. Autoriza continuar com um capítulo; não é declaração de playtest completo ou duração do circuito. Lia compara vento/frequência no Siroco: relé original obrigatório, plataforma empurrada por caminhada, encaixe protegido e comparação no arquivo existente. [Escopo e QA](wind-survey/README.md). Preservar campanha, requisitos, bosses, moradores, encontros finitos e arte; aguardar validação desta entrega antes de outro sprint.
+
+- [x] Implementação e QA: modelo/save 0.1.166/recibo único, solo/dupla completos, relé original, empurrão físico com contato estável, colisões/navegação, morte/reload/viagem, quatro classes touch/gamepad emulados e 262 módulos. Plataforma compilada por caminhada normal e dupla compilada por aceite/coleta/reentrada passaram; capturas inspecionadas pelo agente, separadas de avaliação humana. [Evidências e limites](wind-survey/README.md).
+- [ ] Laboratório, versão/build, commit/push sincronizado e publicação conferida.
+- [ ] Playtest humano da plataforma antes de outra etapa.
+
 **29/10/2026 · O rastro do Primeiro Eco · 0.1.170 publicada:** usuário testou a 0.1.169, respondeu “ficou excelente” e autorizou a proposta seguinte. Um capítulo: comparar o registro antigo, conduzir um pulso por dois desviadores e arquivar o percurso com Nara. Reutiliza o corredor existente antes do limiar do Warden; preserva portais, bosses, encontros finitos, arte e sistemas do assentamento. Cinco objetivos, 150 créditos únicos; sem tradução definitiva ou origem humana confirmada. [Escopo e evidências](echo-circuit/README.md). Somente este sprint; aguardar playtest humano antes de outro.
 
 - [x] Investigação 0.1.169 aprovada pelo usuário: “Já testei ficou excelente”.
 - [x] Implementação, typecheck/build 260 módulos, nove combinações/save antigo/recibo único, solo/dupla completos, navegação/colisões/morte/reload, quatro classes touch/gamepad e circuito compilado sem globais DEV passaram. [Evidências e fixtures](echo-circuit/README.md), com capturas inspecionadas pelo agente.
 - [x] Aplicação `25b6099` em `origin/main`, sincronização conferida; laboratório registrado, Vercel success e 62 hashes iguais à build. Solo público: aceite/reload de circuito/frequência/posto e circuito com caminhada/giros/emissão/chegada/reload passaram, sem globais DEV e com saves reais preservados. Capturas públicas inspecionadas pelo agente.
 - [x] 30/10: usuário acionou deploy do Render, revisão `ffe844b`, protocolo 16 / `outposts:1` / `signals:1` / `circuits:1`. Dupla pública Vercel/Render passou por preparo explícito, aceite com Nara/coleta pelo convidado, reload/reentrada e encerramento normal; saldos/recibos/bosses posteriores e saves reais preservados. 62 hashes reconferidos. [Evidências e limites](echo-circuit/README.md); amostra pública do início, com circuito/entrega completos validados localmente.
-- [ ] Playtest humano do circuito antes de outra etapa.
+- [x] Comentário positivo e continuação autorizada em 30/10 (“boa vamos pro próximo passo”); encerra a espera operacional, sem registrar playtest integral ou medição de duração da 0.1.170.
 
 **29/10/2026 · Retomada da investigação · 0.1.169 publicada:** após aprovar a barra/poção (“ficou muito bom”) e confirmar os aliados no coop, o usuário pediu voltar à implementação. [Uma frequência a mais](signal-expedition/README.md): capítulo único após o posto, comparação de sinais na Bacia/Vale, alinhamento pela mira do integrante e arquivo isolado. Ivo recebe o relatório; 130 créditos únicos, sem XP novo, novos mapas ou origem definitiva das estruturas. Campanha, criaturas finitas, arte e protocolo 16 preservados; catálogo `signals:1` confirmado no relay público. Aguardar playtest antes de outra etapa.
 

@@ -1,0 +1,64 @@
+{
+  "method": "DEV explicit kit/previously discovered native relay/mount and position fixtures. Actual movement, common lethal damage/R, travel/reload and native navigation. No simulated docking or victory.",
+  "checks": [
+    "Old save with the real original relay already discovered automatically observes it after the kit; no repeated relay interaction",
+    "Existing native Sirocco defeats prepared without XP/drop to isolate repeated reload/death physics from unrelated combat",
+    "Native relay/platform/read/return/exit approaches remain physically clear and connected in the actual navigation geometry",
+    "Real walking/Dash cannot cross the visible platform body",
+    "Off-centre ordinary walking keeps its direction and contact pace without circling or sideways collider slip",
+    "Partly pushed support returns to start on travel, reload and common death/R; mount/native-relay evidence remains without phantom docking",
+    "Actually docked platform remains in the protected position after death/R/reload",
+    "Polluted visited list cannot unlock later frozen/volcanic regions or defeat their bosses"
+  ],
+  "routes": [
+    {
+      "id": "relay",
+      "clear": true,
+      "steps": 9,
+      "gap": 13.152946437965904
+    },
+    {
+      "id": "mount",
+      "clear": true,
+      "steps": 2,
+      "gap": 26.832815729997478
+    },
+    {
+      "id": "read",
+      "clear": true,
+      "steps": 9,
+      "gap": 18.867962264113206
+    },
+    {
+      "id": "dock approach",
+      "clear": true,
+      "steps": 10,
+      "gap": 21.840329667841555
+    },
+    {
+      "id": "return",
+      "clear": true,
+      "steps": 50,
+      "gap": 19.235384061671347
+    },
+    {
+      "id": "dunes exit",
+      "clear": true,
+      "steps": 65,
+      "gap": 24.839484696748443
+    }
+  ],
+  "errors": [],
+  "push": {
+    "before": {
+      "x": 2728.319999999998,
+      "y": 810
+    },
+    "after": {
+      "x": 2710,
+      "y": 770
+    },
+    "method": "Real D then W+A movement; only pusher approach positions prepared, no platform teleport or evidence injection"
+  },
+  "passed": true
+}

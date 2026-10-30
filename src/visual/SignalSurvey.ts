@@ -15,6 +15,8 @@ export class SignalSurvey{
  private label?:Phaser.GameObjects.Text;
  private archived=false;
  private placed=false;
+ private archiveLabel?:Phaser.GameObjects.Text;
+ private compared=false;
  constructor(private scene:Phaser.Scene,private area:JourneyArea,private obstacles:Obstacle[]){
   if(!scene.textures.exists('signal-survey-light')){const t=scene.textures.createCanvas('signal-survey-light',64,8)!;const g=t.context.createLinearGradient(0,0,0,8);g.addColorStop(0,'#b2e4db00');g.addColorStop(.5,'#b2e4db');g.addColorStop(1,'#b2e4db00');t.context.fillStyle=g;t.context.fillRect(0,0,64,8);t.refresh();}
   if(area==='valley'){
@@ -37,7 +39,8 @@ export class SignalSurvey{
    this.scene.add.image(x,y,'camp-supplies').setDisplaySize(74,44).setOrigin(.5,1).setDepth(y-2).setName('signal-archive-case');
    this.scene.add.image(x,y-37,'item-accessory-2').setDisplaySize(27,36).setDepth(y-1).setName('signal-archive-receiver');
    this.obstacles.push({x,y:y-18,radius:18});
-   this.scene.add.text(x,y+22,'REGISTRO ISOLADO',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#cde2d0',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setName('signal-archive-label');
+   this.archiveLabel=this.scene.add.text(x,y+22,'REGISTRO ISOLADO',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#cde2d0',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setName('signal-archive-label');
   }
+  if(this.archiveLabel&&m.has('pv-store')&&!this.compared){this.compared=true;this.archiveLabel.setText('FREQUÊNCIA E VENTO');}
  }
 }

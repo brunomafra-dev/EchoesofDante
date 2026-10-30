@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict';
+import {build} from 'esbuild';
+import {mkdir,readFile,writeFile} from 'node:fs/promises';
+const out='docs/wind-survey/qa/model';await mkdir(out,{recursive:true});
+const built=await build({stdin:{contents:"export * from './src/systems/Missions';export * from './src/config/windSurvey';export * from './src/config/missions';export * from './src/systems/LocalJourney';export {characterProfiles} from './src/systems/CharacterProfiles';",resolveDir:process.cwd()},bundle:true,write:false,format:'esm',platform:'node',define:{'import.meta.env.DEV':'false'}});
+class Storage{data=new Map();fail=false;getItem(k){return this.data.get(k)??null}setItem(k,v){if(this.fail)throw Error('quota');this.data.set(k,String(v))}removeItem(k){this.data.delete(k)}}globalThis.localStorage=new Storage();
+const {Missions,missionById,pushSurvey,surveyDocked,WIND_SURVEY,LocalJourney,characterProfiles}=await import('data:text/javascript;base64,'+Buffer.from(built.outputFiles[0].text).toString('base64'));
+const fixture=JSON.parse(await readFile('docs/outpost/qa/support-legacy/fixture-0.1.166.json','utf8')),report={method:'Actual TypeScript model and 0.1.166 serialized save, in-memory storage; preceding frequency/Echo explicitly prepared for new-chapter checks.',checks:[]};
+try{
+ const m=new Missions();m.restore(fixture.journey.missions);assert.equal(m.status('settle-wind'),'locked');
+ for(const id of ['settle-signal','settle-echo']){m.act('accept',id);for(const g of missionById(id).goals)m.record(g.id);m.act('deliver',id);}
+ assert.equal(m.status('settle-wind'),'available');const before=m.snapshot();m.setWindAvailable(false);assert.equal(m.status('settle-wind'),'locked');assert.deepEqual(m.snapshot(),before);m.setWindAvailable(true);assert.ok(m.act('accept','settle-wind'));
+ const start={...WIND_SURVEY.start},actor={position:{x:start.x-43,y:start.y},velocity:{x:245,y:0},isDead:false};
+ const unchanged=()=>{const p={...start};return p};
+ for(const bad of [{...actor,isDead:true},{...actor,isDashing:true},{...actor,velocity:{x:-245,y:0}},{...actor,velocity:{x:NaN,y:0}},{...actor,position:{x:0,y:0}}]){const p=unchanged();assert.equal(pushSurvey(p,[bad],.02,[]),false);assert.deepEqual(p,start);}
+ const single=unchanged(),double=unchanged(),opposed=unchanged();pushSurvey(single,[actor],.02,[]);pushSurvey(double,[actor,actor],.02,[]);assert.deepEqual(single,double);assert.ok(single.x>start.x&&single.x-start.x<=2.001);
+ assert.equal(pushSurvey(opposed,[actor,{...actor,position:{x:start.x+43,y:start.y},velocity:{x:-245,y:0}}],.02,[]),false);assert.deepEqual(opposed,start);
+ const slow=unchanged();pushSurvey(slow,[{...actor,velocity:{x:40,y:0}}],.02,[]);assert.ok(slow.x-start.x<=.801);
+ const offset=unchanged();for(let i=0;i<150;i++){pushSurvey(offset,[{...actor,position:{x:offset.x-43,y:offset.y-12}}],.02,[]);}assert.ok(offset.x>start.x+250);assert.equal(offset.y,start.y,'Off-centre contact must not amplify sideways drift during a straight push');
+ const wall={x:start.x+70,y:start.y,radius:22},blocked=unchanged();for(let i=0;i<200;i++){actor.position={x:blocked.x-43,y:blocked.y};pushSurvey(blocked,[actor],.02,[wall]);}assert.ok(Math.hypot(blocked.x-wall.x,blocked.y-wall.y)>=WIND_SURVEY.radius+wall.radius-.01);assert.ok(!surveyDocked(blocked));assert.equal(surveyDocked({x:NaN,y:0}),false);assert.ok(surveyDocked(WIND_SURVEY.dock));
+ report.checks.push('Actual Movement collision, five invalid pusher cases, no doubled speed, opposed forces cancel and analog pace stays smooth; only physical protected position qualifies');
+ for(const g of missionById('settle-wind').goals.slice(0,-1))m.record(g.id);assert.equal(m.act('deliver','settle-wind'),false);m.record('pv-store');assert.ok(m.act('deliver','settle-wind'));assert.equal(m.act('deliver','settle-wind'),false);
+ const hero=characterProfiles.create('Wind model','warrior','male',{mode:'solo',difficulty:'normal'});characterProfiles.select(hero.id);const j=new LocalJourney();assert.ok(j.save(fixture.journey));assert.deepEqual(j.load().missions,fixture.journey.missions);const saved=j.load();saved.missions=m.snapshot();saved.missionRewards.push('settle-signal','settle-echo');assert.ok(j.save(saved));
+ localStorage.fail=true;assert.equal(j.claimMissionRewards(),undefined);localStorage.fail=false;assert.equal(j.load().economy.credits,fixture.journey.economy.credits);assert.equal(j.claimMissionRewards().credits,fixture.journey.economy.credits+160);assert.equal(j.claimMissionRewards().credits,fixture.journey.economy.credits+160);assert.equal(j.load().missionRewards.filter(id=>id==='settle-wind').length,1);assert.equal(j.load().progression.xp,fixture.journey.progression.xp);assert.deepEqual(j.load().economy.materials,fixture.journey.economy.materials);for(const k of ['soterradoDefeated','vesperDefeated','titanDefeated'])assert.equal(j.load().flags[k],false);
+ report.checks.push('Previous Echo required; capability refusal preserves exact save; six goals/delivery, old serializer and durable rollback/retry pay 160 once without extra XP/material/boss victory');report.passed=true;
+} catch(error){report.failure=String(error);throw error}finally{await writeFile(out+'/report.json',JSON.stringify(report,null,2)+'\n');console.log(report)}

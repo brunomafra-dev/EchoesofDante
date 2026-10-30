@@ -10,6 +10,8 @@ import {addSurveyProp} from '../visual/MissionProps';
 import {SignalSurvey} from '../visual/SignalSurvey';
 import {EchoCircuit} from '../visual/EchoCircuit';
 import type {CircuitNode} from '../config/echoCircuit';
+import {WindSurvey} from '../visual/WindSurvey';
+import type {SurveyPusher} from '../config/windSurvey';
 import {moveWithCollisions,type Obstacle} from './Movement';
 
 // Authored chapter interactions share the journal, durable evidence and host
@@ -35,9 +37,11 @@ export class PermanenceWorld {
  private supportReady=false;
  private signal:SignalSurvey;
  private circuit:EchoCircuit;
+ private wind:WindSurvey;
  constructor(private scene:Phaser.Scene,private area:JourneyArea,private obstacles:Obstacle[],private warn:()=>void=()=>{}){
   this.signal=new SignalSurvey(scene,area,obstacles);
   this.circuit=new EchoCircuit(scene,area,obstacles);
+  this.wind=new WindSurvey(scene,area,obstacles);
   for(const site of PERMANENCE_SITES.filter(s=>s.area===area)){
    const image=(site.art==='cargo'?scene.add.image(site.x,site.y,'item-accessory-2').setDisplaySize(34,44).setDepth(site.y-2):site.art==='mineral'||site.art==='record'?scene.add.image(site.x,site.y,site.art==='mineral'?'deep-mineral':'ancient-remnant').setDisplaySize(95,68).setDepth(site.y-2):addSurveyProp(scene,site.art,site.x,site.y)).setName(site.id).setVisible(false);
    if(site.choice){
@@ -60,15 +64,16 @@ export class PermanenceWorld {
    this.power.fillStyle(0xc4afff,.8).fillCircle(0,0,9).lineStyle(2,0xd3c3ff,.65).strokeCircle(0,0,19);
   }
  }
- update(missions:Missions,player:Vec2,now:number,actors:readonly {position:Vec2;isDead:boolean;rotation?:number}[]=[],authority=true,remote?:PermanencePose):boolean{
+ update(missions:Missions,player:Vec2,now:number,actors:readonly SurveyPusher[]=[],authority=true,remote?:PermanencePose):'circuit'|'wind'|undefined{
   const circuitCompleted=this.circuit.update(missions,player,now,authority,remote?.circuit);
+  const windCompleted=this.wind.update(missions,now,actors,authority,remote?.wind);
   this.signal.update(missions,player,actors[0]?.rotation??0,now);
   this.updateHaul(missions,now,actors,authority,remote);
   for(const {site,image,label}of this.sites){
    const active=['active','ready'].includes(missions.status(site.mission));
-   image.setVisible(active&&!missions.has(site.id)&&!site.aimAt&&!site.circuit&&site.id!=='pr-origin'&&site.id!=='pr-read');
+   image.setVisible(active&&!missions.has(site.id)&&!site.aimAt&&!site.circuit&&site.id!=='pr-origin'&&site.id!=='pr-read'&&site.id!=='pv-read');
    const near=Math.hypot(player.x-site.x,player.y-site.y)<240;
-   label.setVisible(active&&near&&!missions.has(site.id)&&!site.circuit&&site.id!=='pr-read');
+   label.setVisible(active&&near&&!missions.has(site.id)&&!site.circuit&&site.id!=='pr-read'&&site.id!=='pv-read');
    const ready=!site.needs?.some(id=>!missions.has(id));
    label.setColor(ready?'#dfd6b1':'#a8aaa1');
   }
@@ -92,7 +97,7 @@ export class PermanenceWorld {
   if(this.area==='springs'&&!this.supportReady&&missions.status('settle-outpost')==='completed'){
    this.supportReady=true;this.scene.add.text(OUTPOST_SUPPORT.x,1190,'APOIO · CURA E COFRE',{fontFamily:'Barlow Condensed',fontSize:'15px',color:'#d4dfc4',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setName('outpost-support-sign');
   }
-  return circuitCompleted;
+  return windCompleted?'wind':circuitCompleted?'circuit':undefined;
  }
  private addOutpostDepot():void{
   if(this.area!=='springs')return;
@@ -127,12 +132,12 @@ export class PermanenceWorld {
   const lamp=this.scene.add.graphics().setDepth(y+1);lamp.fillStyle(0xffd898,.12).fillCircle(x+48,y-74,20).fillStyle(0xffdeb1,.8).fillCircle(x+48,y-74,3);
   this.scene.add.text(x,y+20,'REDE ISOLADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#ebd8b6',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
  }
- snapshot():PermanencePose{return{...(this.haul?{haul:{...this.haul.position,kind:'cargo' as const}}:{}),circuit:this.circuit.snapshot()};}
+ snapshot():PermanencePose{return{...(this.haul?{haul:{...this.haul.position,kind:'cargo' as const}}:{}),circuit:this.circuit.snapshot(),wind:this.wind.snapshot()};}
  interactCircuit(node:CircuitNode,missions:Missions,now:number):string{return this.circuit.interact(node,missions,now);}
  get haulPosition():Vec2|undefined{return this.haul?.position;}
  // The cached minimap describes permanent geometry. Moving cargo stays in
  // physical collision, while its travel never rebakes the static grid.
- get navigationObstacles():readonly Obstacle[]{return this.haul?this.obstacles.filter(o=>o!==this.haul!.solid):this.obstacles;}
+ get navigationObstacles():readonly Obstacle[]{const wind=this.wind.movingSolid;return this.haul||wind?this.obstacles.filter(o=>o!==this.haul?.solid&&o!==wind):this.obstacles;}
  private updateHaul(missions:Missions,now:number,actors:readonly {position:Vec2;isDead:boolean}[],authority:boolean,remote?:PermanencePose):void{
   const dt=Math.min(.04,Math.max(0,(now-this.lastAt)/1000));this.lastAt=now;
   const outpost=this.area==='springs',load=outpost?'po-load':'pt-load',deliver=outpost?'po-deliver':'pt-deliver',mission=outpost?'settle-outpost':'settle-transport';

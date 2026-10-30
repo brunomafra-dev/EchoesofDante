@@ -26,7 +26,7 @@ else:
         for asset in re.findall(r'(?:src|href)="(/assets/[^"?]+\.js)"', local):
             assert asset in remote, (name, asset, 'publication is older')
         if name == 'test-library.html':
-            assert ({'0.1.167': 'outpost-support=1', '0.1.168': 'vitals=1', '0.1.169': 'permanence=signal', '0.1.170': 'permanence=echo'}.get(version, 'permanence=outpost')) in remote and version in remote
+            assert ({'0.1.167': 'outpost-support=1', '0.1.168': 'vitals=1', '0.1.169': 'permanence=signal', '0.1.170': 'permanence=echo', '0.1.171': 'permanence=wind'}.get(version, 'permanence=outpost')) in remote and version in remote
     def verify(item):
         path, expected = item
         assert hashlib.sha256(get(path)).hexdigest() == expected, path
@@ -39,7 +39,7 @@ else:
     except Exception as error:
         # Frontend publication and relay availability are separate gates.
         relay = {'unavailable': str(error)}
-    result = {'version': version, 'verifiedAt': datetime.now(timezone.utc).isoformat(), 'buildPublished': True, 'verifiedFiles': verified, 'sha256': manifest['assets'], 'relay': relay, 'coopCompatible': relay.get('protocol') == 16 and relay.get('outposts') == 1 and (version not in ['0.1.169', '0.1.170'] or relay.get('signals') == 1) and (version != '0.1.170' or relay.get('circuits') == 1)}
+    result = {'version': version, 'verifiedAt': datetime.now(timezone.utc).isoformat(), 'buildPublished': True, 'verifiedFiles': verified, 'sha256': manifest['assets'], 'relay': relay, 'coopCompatible': relay.get('protocol') == 16 and relay.get('outposts') == 1 and (version not in ['0.1.169', '0.1.170', '0.1.171'] or relay.get('signals') == 1) and (version not in ['0.1.170', '0.1.171'] or relay.get('circuits') == 1) and (version != '0.1.171' or relay.get('wind') == 1)}
     out = Path('docs/outpost/qa/publication') if version == '0.1.166' else Path('docs/outpost/qa/publication', version)
     out.mkdir(parents=True, exist_ok=True)
     if '--read-only' not in sys.argv:

@@ -1,0 +1,11 @@
+{
+  "revision": "b167984da1590d8b218556e33332ab0b14e547da",
+  "method": "Latest browser client against exact public pre-wind relay 16 and its historical catalogue. Real room handshakes/capability refusal; no synthetic chapter completion.",
+  "checks": [
+    "Previous echo lab and room inspection connect on actual historical protocol 16; only the new wind capability is unavailable",
+    "Direct wind lab refuses incompatible relay before joining a filtered campaign",
+    "Accepted wind in a normal campaign URL also refuses old relay without losing evidence; updated relay reconnect restores capability with identical objectives"
+  ],
+  "errors": [],
+  "passed": true
+}

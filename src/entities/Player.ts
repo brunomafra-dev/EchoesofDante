@@ -25,6 +25,7 @@ export type PlayerAnimationState = 'IDLE' | 'WALK' | 'ATTACK_WINDUP' | 'ATTACK_S
 export class Player {
   readonly position: Vec2;
   readonly velocity: Vec2 = { x: 0, y: 0 };
+  walkSpeedLimit = Infinity;
   readonly health: Health;
   readonly vitals: PlayerVitals;
   get movementSpeed(): number { return this.classId === 'hunter' ? HUNTER.speed : this.classId==='xenobinder'?XENOBINDER.speed:this.classId==='astral'?ASTRAL.speed:PLAYER.speed; }
@@ -191,6 +192,8 @@ export class Player {
     const speed = this.isDashing ? PLAYER.dashSpeed : this.movementSpeed;
     this.velocity.x = heavyBusy ? 0 : direction.x * speed;
     this.velocity.y = heavyBusy ? 0 : direction.y * speed;
+    const walkingSpeed=Math.hypot(this.velocity.x,this.velocity.y);
+    if(!this.isDashing&&walkingSpeed>this.walkSpeedLimit){const ratio=this.walkSpeedLimit/walkingSpeed;this.velocity.x*=ratio;this.velocity.y*=ratio;}
     const previousX = this.position.x;
     const previousY = this.position.y;
     moveWithCollisions(this.position, this.velocity, Math.min(deltaSeconds, 0.04), this.radius, obstacles, bounds,bounds?.walkable?39:0);

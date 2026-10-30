@@ -1,0 +1,12 @@
+{
+  "method": "DEV explicit kit/native-relay/position fixtures and existing Sirocco defeats without XP/drop for clear control inspection. Actual CDP touch joystick/interaction or standard gamepad left stick/A; all four class kits.",
+  "checks": [
+    "warrior: actual touch installs, joystick pushes in two axes, protected reading registers without firing or altering real saves",
+    "hunter: actual touch installs, joystick pushes in two axes, protected reading registers without firing or altering real saves",
+    "astral: actual touch installs, joystick pushes in two axes, protected reading registers without firing or altering real saves",
+    "xenobinder: actual touch installs, joystick pushes in two axes, protected reading registers without firing or altering real saves",
+    "Standard gamepad left stick/A completes installation/push/reading; touch layout and physical docking work in four resolutions"
+  ],
+  "errors": [],
+  "passed": true
+}

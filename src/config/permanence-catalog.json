@@ -7,7 +7,8 @@
     "settle-arrivals",
     "settle-outpost",
     "settle-signal",
-    "settle-echo"
+    "settle-echo",
+    "settle-wind"
   ],
   "evidence": [
     "pw-intake",
@@ -58,6 +59,12 @@
     "pr-a-1",
     "pr-a-2",
     "pr-b-1",
-    "pr-b-2"
+    "pr-b-2",
+    "pv-kit",
+    "pv-relay",
+    "pv-mount",
+    "pv-dock",
+    "pv-read",
+    "pv-store"
   ]
 }

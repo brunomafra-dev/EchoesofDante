@@ -26,6 +26,8 @@ export class Missions{
  outpostAvailable=true;
  signalAvailable=true;
  circuitAvailable=true;
+ windAvailable=true;
+ setWindAvailable(value:boolean):void{if(value!==this.windAvailable){this.windAvailable=value;this.version++;}}
  setCircuitAvailable(value:boolean):void{if(value!==this.circuitAvailable){this.circuitAvailable=value;this.version++;}}
  setSignalAvailable(value:boolean):void{if(value!==this.signalAvailable){this.signalAvailable=value;this.version++;}}
  setOutpostAvailable(value:boolean):void{if(value!==this.outpostAvailable){this.outpostAvailable=value;this.version++;}}
@@ -39,6 +41,7 @@ export class Missions{
   if(id==='settle-outpost'&&!this.outpostAvailable)return 'locked';
   if(id==='settle-signal'&&!this.signalAvailable)return 'locked';
   if(id==='settle-echo'&&!this.circuitAvailable)return 'locked';
+  if(id==='settle-wind'&&!this.windAvailable)return 'locked';
   if(isPermanence(id)&&!this.permanenceAvailable)return 'locked';
   if(d.requires&&!this.state.completed.includes(d.requires))return 'locked';
   if(d.unlock&&!this.has(d.unlock))return 'locked';
