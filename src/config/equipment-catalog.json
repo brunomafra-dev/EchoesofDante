@@ -19,7 +19,7 @@
   "forest-focus": {
     "slot": "accessory",
     "tier": 1,
-    "name": "Fragmento sintonizado",
+    "name": "Pingente sintonizado",
     "description": "+10% ao dano de Q carregado.",
     "charge": 0.1,
     "rarity": "comum"
@@ -44,7 +44,7 @@
   "sirocco-focus": {
     "slot": "accessory",
     "tier": 2,
-    "name": "Prisma soterrado",
+    "name": "Medalhão soterrado",
     "description": "+16% ao dano de Q carregado.",
     "charge": 0.16,
     "rarity": "aprimorado"

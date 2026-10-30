@@ -4,9 +4,11 @@ import {HABITAT,HABITAT_SOLIDS} from '../config/colonization';
 import {OUTPOST,OUTPOST_SOLIDS,OUTPOST_SUPPORT} from '../config/outpost';
 import {trackEnvironmentOcclusion} from '../visual/EnvironmentArt';
 import type {Missions} from './Missions';
+import {missionById} from '../config/missions';
 import type {JourneyArea} from './LocalJourney';
 import type {Vec2} from '../utils/math';
 import {addSurveyProp} from '../visual/MissionProps';
+import {addQuestProp,GOAL_PROPS} from '../visual/QuestProps';
 import {SignalSurvey} from '../visual/SignalSurvey';
 import {EchoCircuit} from '../visual/EchoCircuit';
 import type {CircuitNode} from '../config/echoCircuit';
@@ -43,7 +45,8 @@ export class PermanenceWorld {
   this.circuit=new EchoCircuit(scene,area,obstacles);
   this.wind=new WindSurvey(scene,area,obstacles);
   for(const site of PERMANENCE_SITES.filter(s=>s.area===area)){
-   const image=(site.art==='cargo'?scene.add.image(site.x,site.y,'item-accessory-2').setDisplaySize(34,44).setDepth(site.y-2):site.art==='mineral'||site.art==='record'?scene.add.image(site.x,site.y,site.art==='mineral'?'deep-mineral':'ancient-remnant').setDisplaySize(95,68).setDepth(site.y-2):addSurveyProp(scene,site.art,site.x,site.y)).setName(site.id).setVisible(false);
+   const prop=site.reject&&site.id==='pf-sample'?'contaminatedRoots':GOAL_PROPS[site.id];
+   const image=(prop?addQuestProp(scene,prop,site.x,site.y+30,76):prop===null?scene.add.image(site.x,site.y,'quest-research',0).setData('world-only',true):site.art==='mineral'||site.art==='record'?scene.add.image(site.x,site.y,site.art==='mineral'?'deep-mineral':'ancient-remnant').setDisplaySize(95,68).setDepth(site.y-2):addSurveyProp(scene,site.art as Parameters<typeof addSurveyProp>[1],site.x,site.y)).setName(site.id).setVisible(false);
    if(site.choice){
     // Whole existing botanical stamps, tinted only by the observed residue.
     scene.add.image(site.x,site.y-8,'root-growth').setDisplaySize(110,46).setTint(site.reject?0x73a9c4:0xb0bf79).setDepth(-18);
@@ -71,9 +74,10 @@ export class PermanenceWorld {
   this.updateHaul(missions,now,actors,authority,remote);
   for(const {site,image,label}of this.sites){
    const active=['active','ready'].includes(missions.status(site.mission));
-   image.setVisible(active&&!missions.has(site.id)&&!site.aimAt&&!site.circuit&&site.id!=='pr-origin'&&site.id!=='pr-read'&&site.id!=='pv-read');
+   image.setVisible(active&&!missions.has(site.id)&&!site.aimAt&&!site.circuit&&!image.getData('world-only'));
    const near=Math.hypot(player.x-site.x,player.y-site.y)<240;
-   label.setVisible(active&&near&&!missions.has(site.id)&&!site.circuit&&site.id!=='pr-read'&&site.id!=='pv-read');
+   const guided=missions.current===site.mission&&missionById(site.mission).goals.find(g=>!missions.has(g.id))?.id===site.id;
+   label.setVisible(active&&near&&!missions.has(site.id)&&!site.circuit&&(!guided||!!site.choice)&&site.id!=='pr-read'&&site.id!=='pv-read');
    const ready=!site.needs?.some(id=>!missions.has(id));
    label.setColor(ready?'#dfd6b1':'#a8aaa1');
   }
@@ -101,7 +105,7 @@ export class PermanenceWorld {
  }
  private addOutpostDepot():void{
   if(this.area!=='springs')return;
-  this.scene.add.image(2040,1155,'camp-supplies').setDisplaySize(116,72).setOrigin(.5,1).setDepth(1153).setName('outpost-depot');
+  addQuestProp(this.scene,'supplyRack',2040,1155,100).setName('outpost-depot');
   this.obstacles.push({x:2040,y:1135,radius:26});
  }
  private addOutpost():void{
@@ -111,7 +115,7 @@ export class PermanenceWorld {
   this.scene.add.text(OUTPOST.x,OUTPOST.y+30,OUTPOST.name.toLocaleUpperCase('pt-BR'),{fontFamily:'Barlow Condensed',fontSize:'16px',color:'#dfd5b5',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setName('outpost-name');
   // The same prefab carries a sealed reservoir and canopy. Independent power
   // is represented with the existing whole regulator asset, not ancient tech.
-  this.scene.add.image(1990,915,'item-accessory-2').setDisplaySize(32,43).setDepth(913).setName('outpost-regulator');
+  addQuestProp(this.scene,'powerCell',1990,939,63).setName('outpost-regulator');
  }
  private addSecondHabitat():void{
   if(this.area!=='terraces')return;
@@ -121,13 +125,13 @@ export class PermanenceWorld {
  }
  private addReception():void{
   if(this.area!=='base')return;
-  this.scene.add.image(1120,640,'camp-supplies').setDisplaySize(90,56).setOrigin(.5,1).setDepth(638).setName('settlement-arrival-manifest');this.obstacles.push({x:1120,y:624,radius:22});
+  addQuestProp(this.scene,'manifest',1120,640,72).setName('settlement-arrival-manifest');this.obstacles.push({x:1120,y:624,radius:22});
   this.scene.add.text(1120,665,'SEGUNDA EQUIPE EM TERRA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d4dac0',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000);
  }
  private addPowerStation():void{
   if(this.area!=='base'&&this.area!=='terraces')return;
   const x=this.area==='base'?910:1770,y=this.area==='base'?900:770;
-  const building=this.scene.add.image(x,y,'field-shelter').setDisplaySize(130,108).setOrigin(.5,1).setDepth(y-2).setName('settlement-power-station');trackEnvironmentOcclusion(this.scene,building);
+  const building=addQuestProp(this.scene,'worklight',x,y,112).setName('settlement-power-station');trackEnvironmentOcclusion(this.scene,building);
   this.obstacles.push({x,y:y-24,radius:32});
   const lamp=this.scene.add.graphics().setDepth(y+1);lamp.fillStyle(0xffd898,.12).fillCircle(x+48,y-74,20).fillStyle(0xffdeb1,.8).fillCircle(x+48,y-74,3);
   this.scene.add.text(x,y+20,'REDE ISOLADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#ebd8b6',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
@@ -144,7 +148,7 @@ export class PermanenceWorld {
   const active=(outpost||this.area==='terraces')&&missions.has(load)&&!missions.has(deliver)&&missions.status(mission)==='active';
   if(!active){if(this.haul){const i=this.obstacles.indexOf(this.haul.solid);if(i>=0)this.obstacles.splice(i,1);this.haul.image.destroy();this.haul=undefined;}this.haulLeader=undefined;this.haulActors.clear();return;}
   const start=remote?.haul??(outpost?{x:480,y:1080}:{x:850,y:1070});
-  if(!this.haul){const solid={x:start.x,y:start.y,radius:22};this.obstacles.push(solid);this.haul={position:{x:start.x,y:start.y},solid,image:this.scene.add.image(start.x,start.y,'camp-supplies').setDisplaySize(82,51).setOrigin(.5,.75).setName('permanence-haul')};}
+  if(!this.haul){const solid={x:start.x,y:start.y,radius:22};this.obstacles.push(solid);this.haul={position:{x:start.x,y:start.y},solid,image:addQuestProp(this.scene,'cargoSled',start.x,start.y+25,90).setOrigin(.5,.65).setName('permanence-haul')};}
   const h=this.haul;
   if(!authority){if(remote?.haul&&Number.isFinite(remote.haul.x)&&Number.isFinite(remote.haul.y))Object.assign(h.position,remote.haul);}
   else{
@@ -162,13 +166,13 @@ export class PermanenceWorld {
  private addDepot():void{
   if(this.area!=='base'&&this.area!=='terraces')return;
   const x=this.area==='base'?650:1780,y=this.area==='base'?900:1160;
-  this.scene.add.image(x,y,'camp-supplies').setDisplaySize(140,87).setOrigin(.5,1).setDepth(y-2).setName('settlement-supply-depot');this.obstacles.push({x,y:y-22,radius:30});
+  addQuestProp(this.scene,'supplyRack',x,y,110).setName('settlement-supply-depot');this.obstacles.push({x,y:y-22,radius:30});
   this.scene.add.text(x,y+20,'DEPÓSITO DE SUPRIMENTOS',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d9d5af',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
  }
  private addFoodReserve():void{
   if(this.area!=='base'&&this.area!=='terraces')return;
   const x=this.area==='base'?440:2010,y=this.area==='base'?910:1100;
-  this.scene.add.image(x,y,'camp-supplies').setDisplaySize(112,70).setOrigin(.5,1).setDepth(y-2).setName('settlement-food-reserve');
+  addQuestProp(this.scene,'foodReserve',x,y,90).setName('settlement-food-reserve');
   this.obstacles.push({x,y:y-17,radius:25});
   this.scene.add.text(x,y+20,'RESERVA IDENTIFICADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d9d5af',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
  }
@@ -176,7 +180,7 @@ export class PermanenceWorld {
   if(this.area!=='base'&&this.area!=='terraces')return;
   const x=this.area==='base'?200:1950,y=this.area==='base'?570:990;
   this.scene.add.image(x,y,'material-water').setDisplaySize(110,79).setDepth(y-2).setName('settlement-treated-water');
-  this.scene.add.image(x+48,y-6,'camp-supplies').setOrigin(.5,1).setDisplaySize(88,55).setDepth(y-3);
+  addQuestProp(this.scene,'sealedWater',x+48,y-6,78);
   this.obstacles.push({x:x+48,y:y-18,radius:23});
   this.scene.add.text(x,y+48,'ÁGUA TRATADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#b1d5c7',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
  }

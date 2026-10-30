@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import {equipmentName,EQUIPMENT,EQUIPMENT_IDS,type EquipmentSnapshot} from '../config/equipment';
 import {MATERIAL_NAMES,REGION_NAMES,recipe,salePrice,POTION_PRICE,type EconomySnapshot} from '../config/economy';
 import type {ServiceAction} from '../systems/BaseEconomy';
-import {itemIcon} from '../systems/EquipmentDrops';
+import {itemIcon,itemIconUrl} from '../systems/EquipmentDrops';
 import {expeditionAtlas} from './ExpeditionAtlas';
 type Tab='medic'|'smith'|'expedition'|'map'|'outpost';
 type State={economy:EconomySnapshot;equipment:EquipmentSnapshot;area:keyof typeof REGION_NAMES;hp:number;maxHp:number;classId:string;returnAvailable:boolean;returnArea?:keyof typeof REGION_NAMES;canLead:boolean;missionArea?:keyof typeof REGION_NAMES;missionTitle?:string;outpostSupport?:boolean};
@@ -42,7 +42,7 @@ export class BasePanel{
    const hint=document.createElement('p');hint.className='forge-hint';hint.textContent='Cada peça exige créditos e material regional. Criaturas deixam materiais; equipamento é um achado menos frequente. Fabricar não equipa automaticamente.';content.append(hint);
    for(const id of EQUIPMENT_IDS){
     const d=EQUIPMENT[id],r=recipe(id),owned=e.materials[r.material],row=document.createElement('div');row.className='base-item base-recipe';row.dataset.recipe=id;
-    const img=document.createElement('img');img.src=`${import.meta.env.BASE_URL}assets/items/${itemIcon(id,s.classId)}.png`;img.alt='';row.append(img);
+    const img=document.createElement('img');img.src=itemIconUrl(itemIcon(id,s.classId));img.alt='';row.append(img);
     const info=document.createElement('div');info.className='recipe-info';const name=document.createElement('strong');name.textContent=equipmentName(id,s.classId);const description=document.createElement('small');description.textContent=d.description;info.append(name,description);
     const costs=document.createElement('div');costs.className='recipe-costs';
     for(const [label,needed,have] of [['créditos',r.credits,e.credits],[MATERIAL_NAMES[r.material],r.amount,owned]] as const){const cost=document.createElement('span');cost.dataset.available=String(have>=needed);cost.textContent=`${have>=needed?'✓':'×'} ${needed} ${label} · você tem ${have.toLocaleString('pt-BR')}`;costs.append(cost)}

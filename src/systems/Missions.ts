@@ -20,7 +20,7 @@ export function validMissionRewards(raw:unknown):MissionId[]{return Array.isArra
 // Story reports and regional expeditions share the existing journal/receipts.
 export class Missions{
  private state=validMissions(undefined);
- tracked?:MissionId;
+ tracked?:MissionId|null;
  version=0;
  permanenceAvailable=true;
  outpostAvailable=true;
@@ -64,10 +64,10 @@ export class Missions{
  }
  act(action:MissionAction,id:MissionId):boolean{
   if(action==='accept'&&this.status(id)==='available'){this.state.accepted.push(id);this.tracked=id;this.version++;return true;}
-  if(action==='deliver'&&this.status(id)==='ready'){this.state.completed.push(id);this.tracked=undefined;this.version++;return true;}
+  if(action==='deliver'&&this.status(id)==='ready'){if(this.current===id)this.tracked=null;this.state.completed.push(id);this.version++;return true;}
   return false;
  }
- get current():MissionId|undefined{return this.tracked&&['available','active','ready'].includes(this.status(this.tracked))?this.tracked:MISSIONS.find(d=>['active','ready'].includes(this.status(d.id)))?.id??MISSIONS.find(d=>this.status(d.id)==='available')?.id;}
+ get current():MissionId|undefined{if(this.tracked===null)return;if(this.tracked!==undefined)return ['available','active','ready'].includes(this.status(this.tracked))?this.tracked:undefined;return MISSIONS.find(d=>['active','ready'].includes(this.status(d.id)))?.id??MISSIONS.find(d=>this.status(d.id)==='available')?.id;}
  npcState(npc:MissionNpc):'available'|'ready'|undefined{const statuses=MISSIONS.filter(m=>m.npc===npc).map(m=>this.status(m.id));return statuses.includes('ready')?'ready':statuses.includes('available')?'available':undefined;}
  claimable(receipts:readonly MissionId[]):{ids:MissionId[];credits:number}{const ids=this.state.completed.filter(id=>!receipts.includes(id));return {ids,credits:ids.reduce((sum,id)=>sum+missionById(id).credits,0)};}
 }

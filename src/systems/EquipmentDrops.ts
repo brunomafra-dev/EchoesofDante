@@ -4,10 +4,11 @@ import type { Vec2 } from '../utils/math';
 export type LootPose=InventoryItem&{x:number;y:number;owner:string;classId:'warrior'|'hunter'|'astral'|'xenobinder'};
 export const PICKUP_RADIUS=64;
 export function itemIcon(id:EquipmentId,classId='warrior'):string {const d=EQUIPMENT[id];return `${d.slot==='weapon'?classId+'-weapon':d.slot}-${d.tier}`;}
+export function itemIconUrl(key:string,ground=false):string{return `${import.meta.env.BASE_URL}assets/${key.startsWith('accessory-')?'mission-identity/necklace-'+key.slice(-1)+'-v1.png':'items/'+(ground?'ground/':'')+key+'.png'}`;}
 export function preloadItemIcons(scene:Phaser.Scene):void {
  for(const tier of [1,2,3])for(const slot of ['helmet','armor','legs','boots','gloves','accessory','warrior-weapon','hunter-weapon','astral-weapon','xenobinder-weapon']){
-  const key=`${slot}-${tier}`;if(!scene.textures.exists('item-'+key))scene.load.image('item-'+key,`${import.meta.env.BASE_URL}assets/items/${key}.png`);
-  if(!scene.textures.exists('drop-'+key))scene.load.image('drop-'+key,`${import.meta.env.BASE_URL}assets/items/ground/${key}.png`);}
+  const key=`${slot}-${tier}`;if(!scene.textures.exists('item-'+key))scene.load.image('item-'+key,itemIconUrl(key));
+  if(!scene.textures.exists('drop-'+key))scene.load.image('drop-'+key,itemIconUrl(key,true));}
 }
 type Entry={pose:LootPose;image:Phaser.GameObjects.Image;label:Phaser.GameObjects.Text;active:boolean};
 // At most 24 ground items per participant/region. Views are pooled and reused.

@@ -11,6 +11,7 @@ export type ExplorationTarget = Vec2 & {
   instruction: string;
   interactionLabel?: string;
   action?: 'investigate' | 'walk' | 'blocked' | 'observe' | 'enter';
+  offMap?: boolean;
 };
 
 // A nearby environmental label and a short next step, not a quest/map framework.
@@ -31,7 +32,7 @@ export class ExplorationGuide {
   update(player: Vec2, dead: boolean, method: InputMethod, title: string, target: ExplorationTarget, hud: Hud): void {
     const gap = distance(player, target);
     const nearby = gap <= target.radius;
-    this.navigator?.setTarget(dead ? undefined : target);
+    this.navigator?.setTarget(dead || target.offMap ? undefined : target);
     const dx = target.x - player.x, dy = target.y - player.y;
     const vertical = Math.abs(dy) > Math.abs(dx) * 0.45 ? dy < 0 ? 'norte' : 'sul' : '';
     const horizontal = Math.abs(dx) > Math.abs(dy) * 0.45 ? dx < 0 ? 'oeste' : 'leste' : '';
@@ -41,8 +42,8 @@ export class ExplorationGuide {
     const verb = target.interactionLabel ?? (target.action === 'enter' ? 'ENTRAR' : 'INVESTIGAR');
     const command = method === 'gamepad' ? `[A] ${verb}` : method === 'touch' ? `Toque em ${verb}` : `[E] ${verb}`;
     const instruction = nearby && (target.action === 'investigate' || target.action === 'enter') ? command : target.instruction;
-    hud.setExplorationGuide(title, nearby ? `${target.name} está aqui.` : `${target.name} • ${direction}`, instruction, nearby);
-    const visible = !dead && gap <= target.radius + 170;
+    hud.setExplorationGuide(title, target.offMap ? target.name : nearby ? `${target.name} está aqui.` : `${target.name} • ${direction}`, target.offMap ? target.instruction : instruction, nearby&&!target.offMap);
+    const visible = !dead && !target.offMap && gap <= target.radius + 170;
     this.label.setVisible(visible);
     this.base.setVisible(visible && target.action === 'investigate');
     if (visible) {

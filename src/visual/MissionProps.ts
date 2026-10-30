@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import {preloadQuestProps} from './QuestProps';
 
 // Shared by campaign, remote views and the isolated lab; no gameplay state here.
 export const MATERIAL_ART = ['alloy','amber-shell','boreal-core'] as const;
@@ -13,6 +14,7 @@ export const SURVEY_ART = {
 } as const;
 export const materialTexture=(tier:number)=>'material-'+MATERIAL_ART[tier-1];
 export function preloadMissionProps(scene:Phaser.Scene):void {
+ preloadQuestProps(scene);
  for(const art of [...MATERIAL_ART,'water','biology','spring','route','soil','site']) {
   const key='material-'+art;
   if(!scene.textures.exists(key))scene.load.image(key,`${import.meta.env.BASE_URL}assets/mission-props/${art}-v1.png`);

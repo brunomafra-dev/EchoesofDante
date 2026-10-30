@@ -17,7 +17,7 @@ export class MissionPanel{
  private waiting?:{id:MissionId;action:MissionAction;until:number};
  private destroyed=false;
  constructor(scene:Phaser.Scene,private read:()=>State,private canTalk:(npc:MissionNpc)=>boolean,
-  private act:(action:MissionAction,id:MissionId)=>boolean,private track:(id:MissionId)=>void,
+  private act:(action:MissionAction,id:MissionId)=>boolean,private track:(id:MissionId|null)=>void,
   private services:(npc:MissionNpc)=>void,private opened:()=>void,private closed:()=>void){
   this.root.className='mission-tracker';this.root.setAttribute('aria-label','Missão acompanhada');
   this.tracker.type='button';this.tracker.setAttribute('aria-haspopup','dialog');this.tracker.onclick=()=>this.openJournal();this.root.append(this.tracker);
@@ -80,7 +80,10 @@ export class MissionPanel{
     this.button(actions,pending?'AGUARDANDO A EQUIPE…':action==='accept'?'ACEITAR MISSÃO':'ENTREGAR RELATÓRIO',()=>{
      if(this.act(action,d.id)){this.waiting={id:d.id,action,until:performance.now()+6500};this.refresh();}
     },action,pending||!this.canTalk(d.npc));
-   }else if(status!=='completed')this.button(actions,'ACOMPANHAR',()=>{this.track(d.id);this.dialog.close();},'track');
+   }else if(status!=='completed'){
+    this.button(actions,'ACOMPANHAR',()=>{this.track(d.id);this.dialog.close();},'track');
+    if(m.current===d.id)this.button(actions,'PARAR DE ACOMPANHAR',()=>{this.track(null);this.dialog.close();},'untrack');
+   }
    content.append(actions);
    if(!isNpc&&status!=='completed'){const p=document.createElement('p');p.className='mission-hint';p.textContent=`Converse com ${NPC_NAMES[d.npc]} na base para ${status==='ready'?'entregar o relatório':status==='available'?'aceitar a missão':'conferir a missão'}.`;content.append(p);}
   }

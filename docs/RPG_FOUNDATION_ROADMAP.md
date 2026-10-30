@@ -1,5 +1,13 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**30/10/2026 · Correção de orientação e identidade · 0.1.172:** usuário jogou a 0.1.171, gostou e solicitou que o minimapa siga a missão escolhida e que os objetos deixem de repetir maletas/prismas. Autorizou corrigir ambos e continuar imediatamente a campanha nas Dunas, confirmado por “Sim, continuar a campanha nas Dunas”. Esta autorização substitui a espera operacional entre estas duas entregas, sem registrar aprovação visual da correção. [Escopo e evidências](mission-identity/README.md).
+
+- [x] Seleção/parada/reload e orientação por missão, escolhas pessoais no coop, save antigo e recibos preservados; 32 figuras próprias, três colares e estações integrados aos sistemas existentes.
+- [x] QA de modelo, percurso solo completo do vento, dupla completa, quatro classes touch/gamepad emulados; capturas inspecionadas pelo agente. Evidências e fixtures no documento da entrega.
+- [ ] Publicação compilada/pública da correção e sincronização Git conferidas.
+- [ ] Capítulo seguinte nas Dunas, já autorizado; preservar acessos originais e Soterrado vivo.
+- [ ] Playtest humano das duas entregas antes de outra etapa.
+
 **30/10/2026 · O que o vento encobre · 0.1.171 publicada:** após a entrega/publicação da 0.1.170, usuário respondeu “boa vamos pro próximo passo”. Autoriza continuar com um capítulo; não é declaração de playtest completo ou duração do circuito. Lia compara vento/frequência no Siroco: relé original obrigatório, plataforma empurrada por caminhada, encaixe protegido e comparação no arquivo existente. [Escopo e QA](wind-survey/README.md). Preservar campanha, requisitos, bosses, moradores, encontros finitos e arte; aguardar validação desta entrega antes de outro sprint.
 
 - [x] Implementação e QA: modelo/save 0.1.166/recibo único, solo/dupla completos, relé original, empurrão físico com contato estável, colisões/navegação, morte/reload/viagem, quatro classes touch/gamepad emulados e 262 módulos. Plataforma compilada por caminhada normal e dupla compilada por aceite/coleta/reentrada passaram; capturas inspecionadas pelo agente, separadas de avaliação humana. [Evidências e limites](wind-survey/README.md).

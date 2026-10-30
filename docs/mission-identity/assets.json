@@ -1,0 +1,27 @@
+[
+  {
+    "path": "public/assets/mission-identity/necklace-1-v1.png",
+    "bytes": 41006,
+    "sha256": "6eba58ed78d826320120888fd4eb4e9d66f57bb11d9f17bfb74cf488a4ebd758"
+  },
+  {
+    "path": "public/assets/mission-identity/necklace-2-v1.png",
+    "bytes": 42732,
+    "sha256": "2ed81b1f6a730773d2b711c834d3002bfbc401b70419f1df5e13c747747d071c"
+  },
+  {
+    "path": "public/assets/mission-identity/necklace-3-v1.png",
+    "bytes": 36992,
+    "sha256": "9c723593df4dfd8bffb36a00c6966343109bac6ef4167b4a3b51db3c8df6152a"
+  },
+  {
+    "path": "public/assets/mission-identity/research-v1.png",
+    "bytes": 1041361,
+    "sha256": "52e396b5388208f5906c9ebd517b070f83892a9d57b851acb25c75d2d6428bc9"
+  },
+  {
+    "path": "public/assets/mission-identity/survival-v1.png",
+    "bytes": 1090820,
+    "sha256": "ebc3ead353f47549699f4fc88b481a899b2911e261a3e8cbf82dd7dbd3ae3b9e"
+  }
+]

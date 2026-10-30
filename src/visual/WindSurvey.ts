@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import {addQuestProp} from './QuestProps';
 import {WIND_SURVEY as C,pushSurvey,surveyDocked,surveyContact,type SurveyPusher} from '../config/windSurvey';
 import type {Missions} from '../systems/Missions';
 import type {Obstacle} from '../systems/Movement';
@@ -7,7 +8,7 @@ import type {Vec2} from '../utils/math';
 // Existing whole platform/equipment images. Floor rail and wind strokes are
 // baked once; movement, cable and meter only update transforms.
 export class WindSurvey{
- private board?:{image:Phaser.GameObjects.Image;probe:Phaser.GameObjects.Image;position:Vec2;solid:Obstacle};
+ private board?:{image:Phaser.GameObjects.Image;position:Vec2;solid:Obstacle};
  private dock?:Phaser.GameObjects.Image;
  private rail?:Phaser.GameObjects.Image;
  private meter?:Phaser.GameObjects.Rectangle;
@@ -34,7 +35,7 @@ export class WindSurvey{
   this.rail?.setVisible(installed);this.dock?.setVisible(installed);this.label?.setVisible(installed&&!docked&&m.current!=='settle-wind');this.meter?.setVisible(installed);
   if(!installed)return false;
   if(!this.board){const position={...(docked?C.dock:C.start)},solid={...position,radius:C.radius};this.solids.push(solid);
-   this.board={position,solid,image:this.scene.add.image(position.x,position.y+39,'camp-supplies').setOrigin(.5,1).setDisplaySize(84,52).setDepth(position.y+38).setName('wind-survey-platform'),probe:this.scene.add.image(position.x,position.y-1,'item-accessory-2').setDisplaySize(28,38).setDepth(position.y+39).setName('wind-survey-probe')};
+   this.board={position,solid,image:addQuestProp(this.scene,'windSled',position.x,position.y+39,96).setDepth(position.y+38).setName('wind-survey-platform')};
   }
   const b=this.board;let completed=false;
   if(docked)Object.assign(b.position,C.dock);
@@ -46,7 +47,7 @@ export class WindSurvey{
    pushSurvey(b.position,actors,dt,this.solids.filter(o=>o!==b.solid));
    if(surveyDocked(b.position)){Object.assign(b.position,C.dock);m.record('pv-dock');this.locked=true;completed=true;}
   }
-  Object.assign(b.solid,b.position);b.image.setPosition(b.position.x,b.position.y+39).setDepth(b.position.y+38);b.probe.setPosition(b.position.x,b.position.y-1).setDepth(b.position.y+39);
+  Object.assign(b.solid,b.position);b.image.setPosition(b.position.x,b.position.y+39).setDepth(b.position.y+38);
   this.meter?.setPosition(b.position.x-25,b.position.y-48).setScale(docked?1:.2+.45*(.5+.5*Math.sin(now*.012)),1).setFillStyle(docked?0xc7e2ab:0xe5b98b);
   for(const[i,d]of this.dust.entries())d.setVisible(!docked).setPosition(C.start.x+110-((now*.065+i*67)%350),C.start.y-50+i*23).setAlpha(.22);
   return completed;

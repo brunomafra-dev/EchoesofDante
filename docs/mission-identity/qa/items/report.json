@@ -1,0 +1,8 @@
+{
+  "method": "Isolated DEV lab. Three explicit item/drop fixtures; actual E collection, inventory equip and reload. No stats, loot tables, economy or real-save mutation.",
+  "checks": [
+    "Three distinct necklace images in inventory and actual owned ground drop; E collection, equip and reload preserve item IDs, credits, receipts and real save"
+  ],
+  "errors": [],
+  "passed": true
+}

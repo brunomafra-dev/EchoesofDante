@@ -28,6 +28,8 @@ import {BasePanel} from '../ui/BasePanel';
 import {PermanenceWorld} from '../systems/PermanenceWorld';
 import {PERMANENCE_IDS,PERMANENCE_SITES,isPermanence} from '../config/permanence';
 import {WIND_SURVEY} from '../config/windSurvey';
+import {missionJourneyTarget,missionNextRegion} from '../config/missionJourney';
+import {addQuestProp} from '../visual/QuestProps';
 import {outpostThreats,OUTPOST_SUPPORT} from '../config/outpost';
 import {signalAligned} from '../config/signalExpedition';
 import {Missions,validMissionRewards,type MissionAction} from '../systems/Missions';
@@ -729,12 +731,12 @@ export class GameScene extends Phaser.Scene {
       this.missionTick=0;this.missionWorld=new MissionWorld(this,this.area);
       this.regional=new RegionalExpeditions(this,this.area,()=>({bounds:this.movementBounds,obstacles:this.arena.obstacles}));
       this.missionUi=new MissionPanel(this,()=>({missions:this.missions,routeHint:this.missionRouteHint(),notice:coopSession.role==='guest'?coopSession.missionNotice:this.missionNotice,pending:coopSession.role==='guest'&&coopSession.missionPending}),npc=>this.canTalkNpc(npc),(action,id)=>{
-        if(coopSession.role==='guest')return coopSession.requestMission(action,id);
+        if(coopSession.role==='guest'){const requested=coopSession.requestMission(action,id);if(requested&&action==='accept'){this.missions.tracked=id;const saved=this.journey.load();if(saved){saved.trackedMission=id;this.journey.save(saved);}}return requested;}
         const result=this.missionAction('host',action,id);this.missionNotice=result.message;return result.ok;
       },id=>{this.missions.tracked=id;if(coopSession.role==='guest'){const saved=this.journey.load();if(saved){saved.trackedMission=id;this.journey.save(saved);}}else this.saveProgress();},npc=>this.basePanel.open(npc),()=>this.pauseForModal(),()=>this.resumeFromModal());
       this.updateMissions(this.time.now);
     }
-    if(this.area!=='base'&&!this.forestProof){this.add.image(this.returnStation.x-90,this.returnStation.y,'item-accessory-2').setDisplaySize(30,40).setDepth(this.returnStation.y);this.add.text(this.returnStation.x-90,this.returnStation.y-52,'BASE · MAPA',{fontFamily:'Barlow Condensed',fontSize:'13px',color:'#e0c596',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(10003);}
+    if(this.area!=='base'&&!this.forestProof){addQuestProp(this,'returnBeacon',this.returnStation.x-90,this.returnStation.y+25,55).setDepth(this.returnStation.y);this.add.text(this.returnStation.x-90,this.returnStation.y-52,'BASE · MAPA',{fontFamily:'Barlow Condensed',fontSize:'13px',color:'#e0c596',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(10003);}
     if(this.area==='base')this.saveProgress();
     if(this.colony)this.hud.setAreaName(COLONY[this.colony.area].name);
     // Reserved specimen lab only: visit an existing resident, never add an AI
@@ -1371,8 +1373,10 @@ export class GameScene extends Phaser.Scene {
     this.navigation?.update(this.player.position, this.player.rotation, this.player.isDead, this.time.now);
     if(this.exploration.revision!==this.explorationSaved&&this.time.now>=this.explorationSaveAt){this.explorationSaveAt=this.time.now+2500;if(this.saveProgress())this.explorationSaved=this.exploration.revision;}
     const missionTarget=this.missionTarget();
-    if(missionTarget&&!this.bossActive()){
-      this.explorationGuide.update(this.player.position,this.player.isDead,this.controls.inputMethod,missionById(this.missions.current!).title.toLocaleUpperCase('pt-BR'),missionTarget,this.hud);return;
+    if(this.missions.current){
+      if(missionTarget&&!this.bossActive())this.explorationGuide.update(this.player.position,this.player.isDead,this.controls.inputMethod,missionById(this.missions.current).title.toLocaleUpperCase('pt-BR'),missionTarget,this.hud);
+      else this.explorationGuide.hide();
+      return;
     }
     if(this.colony){const c=COLONY[this.colony.area],point=this.area==='springs'&&distance(this.player.position,c.back)>180?COLONY.springs.exit:c.back;this.explorationGuide.update(this.player.position,this.player.isDead,this.controls.inputMethod,COLONY[this.colony.area].name.toLocaleUpperCase('pt-BR'),{...point,radius:110,name:point===c.back?'Retornar pela trilha':'Terraços do Amanhecer',instruction:'Explore as margens e os caminhos alternativos.',action:'enter'},this.hud);return;}
     if(this.volcanic){const c=this.volcanic.config,seen=this.area==='cinder'?this.cinderSignalSeen:this.obsidianSignalSeen;const route=c.routes.find(r=>!this.progression.rewardedRoutes.has(r.id)&&distance(this.player.position,r)<250);const target:ExplorationTarget=distance(this.player.position,c.back)<160?{...c.back,radius:116,name:'Retornar',instruction:'Volte pela passagem anterior.',action:'enter'}:route?{...route,instruction:'Explore este desvio.',action:'walk'}:!seen?{...c.relay,name:'Registro vulcânico',instruction:'Investigue as inscrições no basalto.',action:'investigate'}:{...c.exit,radius:116,name:this.area==='cinder'?VOLCANIC.obsidian.name:CALDERA.name,instruction:'Atravesse a passagem revelada.',action:'enter'};this.explorationGuide.update(this.player.position,this.player.isDead,this.controls.inputMethod,c.name.toLocaleUpperCase('pt-BR'),target,this.hud);return;}
@@ -2540,6 +2544,7 @@ export class GameScene extends Phaser.Scene {
     this.missions.observe({echoes:this.progression.echoes.size,passage:this.progression.passageOpen,firstEcho:this.firstEchoSeen,warden:this.wardenDefeated});
     const before=this.missions.snapshot(),tracked=this.missions.tracked,credits=this.economy.credits,rewards=[...this.missionRewards];
     if(!this.missions.act(action,id))return {ok:false,message:'O diário já foi atualizado ou ainda faltam objetivos.'};
+    if(member!=='host')this.missions.tracked=tracked;
     const reward=this.missions.claimable(this.missionRewards);this.missionRewards.push(...reward.ids);this.economy.credits=Math.min(1e9,this.economy.credits+reward.credits);
     if(!this.saveProgress()){
       this.missions.restore(before);this.missions.tracked=tracked;this.missionRewards=rewards;this.economy.credits=credits;
@@ -2597,65 +2602,50 @@ export class GameScene extends Phaser.Scene {
 
   private missionRouteHint():string|undefined{
     const id=this.missions.current;if(!id||this.missions.status(id)!=='active')return;
-    if(this.area==='base')return 'Saia pela Floresta ou retome sua rota descoberta no atlas.';
-    const d=missionById(id);
-    if(d.regional&&this.area!==d.region){
-      const next=this.missionArea();
-      const steps:Partial<Record<JourneyArea,string>>={forest:'Investigue os Ecos e o mecanismo; continue pela fissura.',cavern:'Siga as cavernas, o Primeiro Eco e o limiar original.',warden:'Conclua o encontro com o Warden e investigue a passagem.',valley:'Explore a passagem oriental do Vale antes de continuar.',arid:'Investigue o sinal do Siroco e a passagem para as dunas.',dunes:'Investigue as ruínas e a descida da depressão.',sandpit:'Conclua o encontro com o Soterrado e investigue o registro.',frost:'Investigue o registro da geada para acessar as galerias.',icecave:'Investigue o mecanismo do degelo antes de acessar o ninho.',icenest:'Conclua o encontro com Vésper e investigue o registro térmico.',cinder:'Leia as inscrições da costa antes de entrar na garganta.',obsidian:'Investigue o registro da garganta para abrir a caldeira.'};
-      return next===d.region?`Retome sua rota para ${REGION_NAMES[d.region!]}.`:next?steps[next]:undefined;
-    }
-    if(id==='beyond'||['water-source','safe-route','shelter'].includes(id)){
-      if(!this.progression.passageOpen)return 'Investigue os 3 Ecos e abra o mecanismo da fissura.';
-      if(this.area==='forest')return 'Atravesse a fissura para continuar pelas cavernas.';
-      if(this.area==='cavern')return !this.firstEchoSeen?'Siga o sinal pelas profundezas até o Primeiro Eco.':!this.wardenGateOpen?'Investigue o limiar do guardião.':'Atravesse o limiar e enfrente o Warden.';
-      if(this.area==='warden'&&!this.wardenDefeated)return 'Derrote o Warden para liberar a travessia.';
-      if(this.area==='warden')return 'Investigue o registro e atravesse para o Vale.';
-      if(this.area==='valley'&&id!=='beyond')return 'Siga a trilha norte para descobrir a Bacia das Nascentes.';
-      if(this.area==='springs'&&id!=='water-source'&&!this.terracesVisited)return 'Siga a margem leste para descobrir os Terraços.';
-    }
+    const target=this.missionTarget();
+    return target?.offMap?target.instruction:target?.name??missionById(id).goals.find(g=>!this.missions.has(g.id))?.label;
   }
 
+  private missionOffMap(name:string,instruction:string):ExplorationTarget{
+    return {...this.player.position,radius:0,name,instruction,action:'observe',offMap:true};
+  }
+  private missionTransitTarget(destination:JourneyArea):ExplorationTarget{
+    const next=missionNextRegion(this.area,destination),known=this.economy.visited.includes(destination)&&this.unlockedRegion(destination);
+    if(this.area==='base'&&known)return this.missionOffMap(REGION_NAMES[destination],`Abra o atlas (M) e retome ${REGION_NAMES[destination]}.`);
+    if(this.area!=='base'&&(destination==='base'||known&&next!==destination||this.area==='cavern'&&next==='forest'||this.area==='warden'&&next==='cavern'))return {x:this.returnStation.x-90,y:this.returnStation.y,radius:65,name:'Retorno para a base',instruction:destination==='base'?'Retorne para continuar a missão na base.':`Retorne à base; no atlas, escolha ${REGION_NAMES[destination]}.`,interactionLabel:'RETORNAR',action:'enter'};
+    const flags=Object.fromEntries(JOURNEY_FLAGS.map(key=>[key,this[key]])) as JourneyFlags;
+    if(this.area==='warden'&&this.signalPortal?.active)return {...this.signalPortal.position,radius:105,name:'Portal para o Vale',instruction:'Atravesse a passagem original para continuar a missão.',action:'investigate'};
+    return missionJourneyTarget({area:this.area,destination,flags,passage:this.progression.passageOpen,source:this.progression.sourceLocated,echoes:this.progression.echoes,x:this.player.position.x})??this.missionOffMap(REGION_NAMES[destination],'Conclua os requisitos da passagem original para alcançar o destino da missão.');
+  }
   private missionTarget():ExplorationTarget|undefined{
     const id=this.missions.current;if(!id||!this.missionUi)return;
     const status=this.missions.status(id),d=missionById(id);
     if(status==='ready'||status==='available'){
       if(this.area==='base')return {...BASE.services.find(s=>s.id===d.npc)!,radius:100,name:NPC_NAMES[d.npc],instruction:status==='ready'?'Entregue seu relatório.':'Converse para receber a missão.',interactionLabel:'CONVERSAR',action:'investigate'};
-      return {x:this.returnStation.x-90,y:this.returnStation.y,radius:65,name:'Retorno à base',instruction:`M abre o mapa para retornar a ${NPC_NAMES[d.npc]}.`,interactionLabel:'RETORNAR',action:'enter'};
+      return this.missionTransitTarget('base');
     }
-    const regionalSite=this.regional?.sites.find(s=>s.mission===id&&!this.missions.has(s.id));
+    if(status!=='active')return;
+    const goal=d.goals.find(g=>!this.missions.has(g.id));if(!goal)return;
+    if(goal.area!==this.area)return this.missionTransitTarget(goal.area);
+    const regionalSite=this.regional?.sites.find(s=>s.mission===id&&s.id===goal.id);
     if(regionalSite)return {...regionalSite,instruction:[...siroccoTrails(this.area),...borealTrails(this.area),...embersTrails(this.area)].find(t=>t.site===regionalSite.id)?.hint??'Analise o local e registre a descoberta.',interactionLabel:'ANALISAR',action:'investigate'};
-    if(id==='settle-wind'){
-      const goal=d.goals.find(g=>!this.missions.has(g.id));
-      if(goal?.id==='pv-relay'&&this.area==='arid')return{...SIROCCO.signal,name:'Relé original do Siroco',instruction:'Investigue o relé original; a pesquisa acompanha essa descoberta.',interactionLabel:'INVESTIGAR',action:'investigate'};
-      if(goal?.id==='pv-dock'&&this.area==='arid')return{...WIND_SURVEY.dock,radius:23,name:'Posição protegida',instruction:'Caminhe contra a plataforma para empurrar. Contorne o suporte para corrigir a direção.',action:'walk'};
-      if(goal?.area==='arid'&&this.area==='valley'){
-        const target=!this.valleyLandmarkSeen?VALLEY.landmark:!this.valleyFrontierSignalSeen?VALLEY.frontier.signal:VALLEY.frontier.portal;
-        return{...target,radius:130,name:this.valleyFrontierSignalSeen?'Passagem para o Siroco':'Registro original do Vale',instruction:'Siga os registros e a passagem originais do Vale; a pesquisa não abre atalhos.',interactionLabel:this.valleyFrontierSignalSeen?'ENTRAR':'INVESTIGAR',action:this.valleyFrontierSignalSeen?'enter':'investigate'};
-      }
-      if(goal?.area==='arid'&&this.area==='springs')return{...COLONY.springs.back,radius:105,name:'Voltar ao Vale',instruction:'Retome o caminho do Vale até o Siroco.',interactionLabel:'ENTRAR',action:'enter'};
-      if(goal?.area==='springs'&&this.area==='valley')return{...COLONY_BRANCH,name:'Posto das Nascentes',instruction:'Siga a trilha norte para comparar no arquivo do posto.',action:'enter'};
-    }
+    if(id==='settle-wind'&&goal.id==='pv-relay')return {...SIROCCO.signal,name:'Relé original do Siroco',instruction:'Investigue o relé original; a pesquisa acompanha essa descoberta.',interactionLabel:'INVESTIGAR',action:'investigate'};
+    if(id==='settle-wind'&&goal.id==='pv-dock')return {...WIND_SURVEY.dock,radius:23,name:'Posição protegida',instruction:'Caminhe contra a plataforma para empurrar. Contorne o suporte para corrigir a direção.',action:'walk'};
     const haul=this.permanence?.haulPosition;
-    if(isPermanence(id)&&haul){const target=distance(this.player.position,haul)>240?{...haul,name:'Carga reservada',radius:75}:PERMANENCE_SITES.find(s=>s.mission===id&&s.haul)!;return{...target,instruction:'Conduza a carga pelo chão baixo; ela espera se a equipe se afastar.',interactionLabel:'DESCARREGAR',action:'investigate'};}
-    const chapterSite=PERMANENCE_SITES.filter(s=>s.mission===id&&!this.missions.has(s.id)&&!s.needs?.some(e=>!this.missions.has(e))).sort((a,b)=>id==='settle-signal'?Number(b.area===this.area)-Number(a.area===this.area):0)[0];
-    if(chapterSite?.choice)return;
-    if(id==='settle-echo'&&chapterSite?.circuit&&this.area==='cavern')return{...chapterSite,instruction:'Gire os desviadores seguindo a luz e emita o pulso no aparelho ao sul.',interactionLabel:chapterSite.action,action:'investigate'};
-    if(chapterSite?.area===this.area)return{...chapterSite,instruction:chapterSite.aimAt?'Oriente a mira para a nervura luminosa e confirme o alinhamento.':'Use o equipamento reservado e registre o resultado.',interactionLabel:chapterSite.action,action:'investigate'};
-    if(id==='settle-signal'&&chapterSite?.area==='valley'&&this.area==='springs')return{...COLONY.springs.back,radius:105,name:'Voltar ao Vale da Ressonância',instruction:'Compare a rocha seca do Vale com os registros da Bacia.',interactionLabel:'ENTRAR',action:'enter'};
-    if(id==='settle-wind'&&this.area!=='base')return;
-    const colonyMission=['water-source','safe-route','shelter'].includes(id)||isPermanence(id);
-    if(this.area==='base')return {...BASE.exit,radius:105,name:'Saída para a Floresta',instruction:colonyMission?'Retome sua rota descoberta pelo atlas ou siga pela Floresta.':'A expedição continua na Floresta.',interactionLabel:'SAIR',action:'enter'};
-    if(colonyMission){
-      if(this.area==='valley')return{...COLONY_BRANCH,name:'Bacia das Nascentes',instruction:'A trilha norte leva à nascente.',action:'enter'};
-      const goal=d.goals.find(g=>!this.missions.has(g.id)),site=COLONY_SITES.find(p=>p.id===goal?.id);
-      if(site&&site.area===this.area)return{...site,instruction:site.id==='shelter-built'?'A carga foi reservada pela expedição.':'Investigue o local e registre as condições.',interactionLabel:site.id==='shelter-built'?'INSTALAR':'ANALISAR',action:'investigate'};
-      if(this.area==='springs')return{...COLONY.springs.exit,radius:110,name:'Terraços do Amanhecer',instruction:'Siga a margem leste até os terraços.',action:'enter'};
+    if((id==='settle-transport'||id==='settle-outpost')&&haul){const target=distance(this.player.position,haul)>240?{...haul,name:'Carga reservada',radius:75}:PERMANENCE_SITES.find(s=>s.mission===id&&s.haul)!;return {...target,instruction:'Conduza a carga pelo chão baixo; ela espera se a equipe se afastar.',interactionLabel:'DESCARREGAR',action:'investigate'};}
+    const site=PERMANENCE_SITES.find(s=>s.mission===id&&s.id===goal.id&&!s.needs?.some(e=>!this.missions.has(e)));
+    if(site?.choice)return this.missionOffMap(goal.label,id==='settle-food'?'Compare os lotes pelas folhas e raízes antes de colher.':'Compare as marcas da cheia e o terreno antes de assentar o módulo.');
+    if(site)return {...site,instruction:site.circuit?'Gire os desviadores seguindo a luz e emita o pulso no aparelho ao sul.':site.aimAt?'Oriente a mira para a nervura luminosa e confirme o alinhamento.':'Use o equipamento reservado e registre o resultado.',interactionLabel:site.action,action:'investigate'};
+    const colony=COLONY_SITES.find(s=>s.id===goal.id&&s.area===this.area);
+    if(colony)return {...colony,instruction:colony.id==='shelter-built'?'A carga foi reservada pela expedição.':'Investigue o local e registre as condições.',interactionLabel:colony.id==='shelter-built'?'INSTALAR':'ANALISAR',action:'investigate'};
+    const survey=SURVEY_POINTS.find(p=>p.id===goal.id);
+    if(survey)return {...survey,instruction:survey.kind==='walk'?'Reconheça este trecho.':'Aproxime-se para registrar a leitura.',interactionLabel:'ANALISAR',action:survey.kind==='walk'?'walk':'investigate'};
+    if(id==='signal'||id==='beyond'){
+      if(this.area==='warden'&&this.warden)return {...this.warden.position,radius:110,name:'Guardião do limiar',instruction:'Conclua o confronto original para confirmar a segurança.',action:'observe'};
+      const flags=Object.fromEntries(JOURNEY_FLAGS.map(key=>[key,this[key]])) as JourneyFlags;
+      const target=missionJourneyTarget({area:this.area,destination:this.area==='forest'?'cavern':'warden',flags,passage:this.progression.passageOpen,source:this.progression.sourceLocated,echoes:this.progression.echoes,x:this.player.position.x});if(target)return target;
     }
-    if(this.area==='forest'&&(id==='recon'||id==='survival')){
-      const goal=d.goals.find(g=>!this.missions.has(g.id)),point=SURVEY_POINTS.find(p=>p.id===goal?.id);
-      if(point)return {...point,instruction:point.kind==='walk'?'Reconheça este trecho.':'Aproxime-se para registrar a leitura.',interactionLabel:'ANALISAR',action:point.kind==='walk'?'walk':'investigate'};
-    }
-    return;
+    return this.missionOffMap(goal.label,'Explore este trecho e registre o objetivo da missão acompanhada.');
   }
 
   private restoreJourney(): void {

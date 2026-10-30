@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import {BASE} from '../config/base';
 import type {Obstacle} from './Movement';
 import {EnvironmentPainter,createEnvironmentGround,trackEnvironmentOcclusion} from '../visual/EnvironmentArt';
+import {addQuestProp,type QuestProp} from '../visual/QuestProps';
 export class LandingBase{
  readonly bounds={left:70,right:1330,top:90,bottom:970};
  readonly obstacles:Obstacle[]=[{x:550,y:370,radius:112},{x:420,y:360,radius:62},{x:680,y:360,radius:62},...BASE.services.flatMap(s=>[{x:s.x,y:s.y-22,radius:20},{x:s.x,y:s.y-100,radius:55}])];
@@ -26,8 +27,8 @@ export class LandingBase{
    const shelter=scene.add.image(s.x,s.y-98,'field-shelter').setDisplaySize(180,150).setDepth(s.y-50);trackEnvironmentOcclusion(scene,shelter);
    scene.add.text(s.x,s.y-185,s.name,{fontFamily:'Barlow Condensed',fontSize:'16px',color:'#e3dfc7',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(10003);
   }
-  for(const[x,y,w]of [[440,650,105],[895,625,112],[1120,420,100]]){
-   painter.contact(x,y+4,w*.8,15,.5);scene.add.image(x,y,'camp-supplies').setOrigin(.5,1).setDisplaySize(w,w*319/512).setDepth(y);this.obstacles.push({x,y:y-17,radius:20});
+  for(const[x,y,w,kind]of [[440,650,105,'decontamination'],[895,625,112,'tools'],[1120,420,100,'manifest']] as [number,number,number,QuestProp][]){
+   painter.contact(x,y+4,w*.8,15,.5);addQuestProp(scene,kind,x,y,w);this.obstacles.push({x,y:y-17,radius:20});
   }
   for(const[x,y,w]of [[160,700,100],[170,950,155],[1180,530,105],[1160,945,135],[260,470,85]]){painter.stamp({key:'root-growth',x,y,width:w,height:w*.25,tint:0xa1b38b,alpha:.65});painter.stamp({key:'dante-canopy-green',x:x-18,y:y-17,width:w*.65,height:w*.35,tint:0x9bb57e,alpha:.75});}
   painter.destroy();

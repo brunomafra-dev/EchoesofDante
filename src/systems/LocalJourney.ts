@@ -37,7 +37,7 @@ export type JourneySnapshot = {
   equipment?:EquipmentSnapshot;
   economy?:EconomySnapshot;
   expeditionReturn?:ExpeditionReturn;
-  missions?:MissionSnapshot;missionRewards?:MissionId[];trackedMission?:MissionId;exploration?:ExplorationSnapshot;
+  missions?:MissionSnapshot;missionRewards?:MissionId[];trackedMission?:MissionId|null;exploration?:ExplorationSnapshot;
 };
 
 const object = (value: unknown): Record<string, unknown> | undefined =>
@@ -138,7 +138,7 @@ export class LocalJourney {
           abilityUpgrades: object(p.abilityUpgrades) as Partial<AbilityUpgradeRanks> | undefined,
           bossRewards: [...new Set([...(Array.isArray(p.bossRewards)?p.bossRewards.filter((id):id is string=>typeof id==='string'&&['warden','soterrado','vesper','titan'].includes(id)):[]),...(flags.wardenDefeated?['warden']:[]), ...(flags.soterradoDefeated ? ['soterrado'] : []), ...(flags.vesperDefeated ? ['vesper'] : []),...(flags.titanDefeated?['titan']:[])])] },
         flags, bestiary: object(raw.bestiary) as BestiarySnapshot ?? {}, valleyRoutes: [...new Set(routes)], valleyHabitats: habitats, aridHabitats, equipment:validEquipment(raw.equipment),economy:validEconomy(raw.economy),expeditionReturn:validExpeditionReturn(raw.expeditionReturn),
-        missions:raw.missions===undefined?undefined:validMissions(raw.missions),missionRewards:validMissionRewards(raw.missionRewards),trackedMission:MISSION_IDS.includes(raw.trackedMission as MissionId)?raw.trackedMission as MissionId:undefined,exploration:validExploration(raw.exploration),
+        missions:raw.missions===undefined?undefined:validMissions(raw.missions),missionRewards:validMissionRewards(raw.missionRewards),trackedMission:raw.trackedMission===null?null:MISSION_IDS.includes(raw.trackedMission as MissionId)?raw.trackedMission as MissionId:undefined,exploration:validExploration(raw.exploration),
         coopReceipts: Array.isArray(raw.coopReceipts) ? raw.coopReceipts.filter((entry): entry is {id:string;total:number} =>
           !!entry && typeof entry.id === 'string' && /^[a-f0-9]{32}$/.test(entry.id) && integer(entry.total, 1e9)).slice(-32) : [] };
     } catch {

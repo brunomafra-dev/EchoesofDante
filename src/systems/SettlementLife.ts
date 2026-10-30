@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import {addQuestProp} from '../visual/QuestProps';
 import {BASE_WORKERS,NPC_SHEETS,SECOND_SETTLERS,firstSettlers,serviceFrameAt,type NpcDefinition,type NpcId,type NpcPose} from '../config/settlementLife';
 import type {JourneyArea} from './LocalJourney';
 import type {Missions} from './Missions';
@@ -91,7 +92,7 @@ export class SettlementLife{
   const solid=definition.service?undefined:{x:position.x,y:position.y,radius:14};if(solid)this.obstacles.push(solid);
   const props:Person['props']=[];
   const sites=definition.task==='repair'?[{x:position.x+37,y:position.y+2}]:definition.task==='inventory'?[definition.route![0],definition.route!.at(-1)!].map(p=>({x:p.x-42,y:p.y+2})):[];
-  for(const site of sites){const image=this.scene.add.image(site.x,site.y,'camp-supplies').setOrigin(.5,1).setDisplaySize(57,36).setDepth(site.y-4).setName('npc-worksite-'+definition.id),footprint={x:site.x,y:site.y-9,radius:13};this.obstacles.push(footprint);props.push({image,solid:footprint});}
+  for(const site of sites){const image=addQuestProp(this.scene,definition.task==='inventory'?'foodReserve':definition.id==='mara'?'powerCell':'tools',site.x,site.y,53).setDepth(site.y-4).setName('npc-worksite-'+definition.id),footprint={x:site.x,y:site.y-9,radius:13};this.obstacles.push(footprint);props.push({image,solid:footprint});}
   const image=this.scene.add.image(position.x,position.y,'life-'+definition.id,0).setName(definition.id==='mara'||definition.id==='tomas'?'permanence-resident-'+definition.name:'living-npc-'+definition.id);
   const shadow=this.scene.add.image(position.x,position.y,'world-shadow','ground-contact').setDisplaySize(definition.service?46:35,11).setAlpha(.48);
   const textStyle={fontFamily:'Barlow Condensed',fontSize:'14px',color:'#dddac2',stroke:'#18261c',strokeThickness:3};

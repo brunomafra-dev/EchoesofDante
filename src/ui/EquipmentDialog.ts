@@ -1,7 +1,7 @@
 import {coopSession} from '../network/CoopSession';
 import Phaser from 'phaser';
 import { BAG_SIZE,equipmentName,EQUIPMENT,EQUIPMENT_SLOTS,SLOT_NAMES,RARITY_COLORS,equipmentStats,type EquipmentId,type EquipmentSlot,type EquipmentSnapshot } from '../config/equipment';
-import { itemIcon } from '../systems/EquipmentDrops';
+import { itemIcon,itemIconUrl } from '../systems/EquipmentDrops';
 export class EquipmentDialog {
  private dialog=document.createElement('dialog');private launcher=document.createElement('button');
  private frame=0;private previous:boolean[]=[];private selected='';private notice='';
@@ -14,7 +14,7 @@ export class EquipmentDialog {
  }
  get isOpen():boolean{return this.dialog.open;}
  open():void {if(this.isOpen)return;this.notice='';this.render();document.body.classList.add('inventory-open');this.dialog.showModal();this.dialog.querySelector<HTMLButtonElement>('[data-close]')?.focus();}
- private icon(id:EquipmentId):HTMLImageElement {const img=document.createElement('img');img.src=`${import.meta.env.BASE_URL}assets/items/${itemIcon(id,this.classId)}.png`;img.alt='';return img;}
+ private icon(id:EquipmentId):HTMLImageElement {const img=document.createElement('img');img.src=itemIconUrl(itemIcon(id,this.classId));img.alt='';return img;}
  private render():void {
   const data=this.read(),worn=new Set(Object.values(data.equipped??{})),bag=(data.items??[]).filter(i=>!worn.has(i.uid));
   this.dialog.innerHTML='<header><div><small>EQUIPAMENTO PESSOAL</small><h1>Mochila da expedição</h1></div><button type="button" data-close>VOLTAR</button></header><div class="inventory-layout"><section><h2>Equipado</h2><div class="inventory-equipped"></div><p class="inventory-totals"></p></section><section><h2 class="bag-title"></h2><div class="inventory-grid"></div><p>Escolha uma peça para comparar. Itens no chão: aproxime-se e use COLETAR.</p></section><aside class="inventory-details" aria-live="polite"></aside></div><p class="inventory-notice" role="status"></p>';

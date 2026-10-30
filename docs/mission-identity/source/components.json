@@ -1,0 +1,419 @@
+[
+  {
+    "sheet": "research",
+    "frame": 0,
+    "components": [
+      1
+    ],
+    "sourceBounds": [
+      39,
+      19,
+      273,
+      279
+    ]
+  },
+  {
+    "sheet": "research",
+    "frame": 1,
+    "components": [
+      3
+    ],
+    "sourceBounds": [
+      350,
+      23,
+      590,
+      287
+    ]
+  },
+  {
+    "sheet": "research",
+    "frame": 2,
+    "components": [
+      4
+    ],
+    "sourceBounds": [
+      639,
+      34,
+      923,
+      290
+    ]
+  },
+  {
+    "sheet": "research",
+    "frame": 3,
+    "components": [
+      2
+    ],
+    "sourceBounds": [
+      956,
+      18,
+      1239,
+      299
+    ]
+  },
+  {
+    "sheet": "research",
+    "frame": 4,
+    "components": [
+      5
+    ],
+    "sourceBounds": [
+      49,
+      326,
+      264,
+      607
+    ]
+  },
+  {
+    "sheet": "research",
+    "frame": 5,
+    "components": [
+      6
+    ],
+    "sourceBounds": [
+      329,
+      337,
+      616,
+      610
+    ]
+  },
+  {
+    "sheet": "research",
+    "frame": 6,
+    "components": [
+      7
+    ],
+    "sourceBounds": [
+      649,
+      337,
+      931,
+      608
+    ]
+  },
+  {
+    "sheet": "research",
+    "frame": 7,
+    "components": [
+      8,
+      9
+    ],
+    "sourceBounds": [
+      1001,
+      339,
+      1237,
+      599
+    ]
+  },
+  {
+    "sheet": "research",
+    "frame": 8,
+    "components": [
+      11
+    ],
+    "sourceBounds": [
+      45,
+      643,
+      304,
+      913
+    ]
+  },
+  {
+    "sheet": "research",
+    "frame": 9,
+    "components": [
+      10
+    ],
+    "sourceBounds": [
+      324,
+      641,
+      617,
+      915
+    ]
+  },
+  {
+    "sheet": "research",
+    "frame": 10,
+    "components": [
+      12
+    ],
+    "sourceBounds": [
+      647,
+      645,
+      923,
+      922
+    ]
+  },
+  {
+    "sheet": "research",
+    "frame": 11,
+    "components": [
+      13
+    ],
+    "sourceBounds": [
+      941,
+      657,
+      1238,
+      907
+    ]
+  },
+  {
+    "sheet": "research",
+    "frame": 12,
+    "components": [
+      17
+    ],
+    "sourceBounds": [
+      32,
+      960,
+      275,
+      1217
+    ]
+  },
+  {
+    "sheet": "research",
+    "frame": 13,
+    "components": [
+      15
+    ],
+    "sourceBounds": [
+      352,
+      950,
+      587,
+      1233
+    ]
+  },
+  {
+    "sheet": "research",
+    "frame": 14,
+    "components": [
+      16
+    ],
+    "sourceBounds": [
+      671,
+      953,
+      897,
+      1220
+    ]
+  },
+  {
+    "sheet": "research",
+    "frame": 15,
+    "components": [
+      14
+    ],
+    "sourceBounds": [
+      969,
+      938,
+      1222,
+      1227
+    ]
+  },
+  {
+    "sheet": "survival",
+    "frame": 0,
+    "components": [
+      4
+    ],
+    "sourceBounds": [
+      17,
+      51,
+      320,
+      283
+    ]
+  },
+  {
+    "sheet": "survival",
+    "frame": 1,
+    "components": [
+      2
+    ],
+    "sourceBounds": [
+      350,
+      41,
+      622,
+      279
+    ]
+  },
+  {
+    "sheet": "survival",
+    "frame": 2,
+    "components": [
+      1
+    ],
+    "sourceBounds": [
+      650,
+      16,
+      921,
+      292
+    ]
+  },
+  {
+    "sheet": "survival",
+    "frame": 3,
+    "components": [
+      3
+    ],
+    "sourceBounds": [
+      957,
+      46,
+      1237,
+      286
+    ]
+  },
+  {
+    "sheet": "survival",
+    "frame": 4,
+    "components": [
+      6
+    ],
+    "sourceBounds": [
+      20,
+      334,
+      316,
+      592
+    ]
+  },
+  {
+    "sheet": "survival",
+    "frame": 5,
+    "components": [
+      8
+    ],
+    "sourceBounds": [
+      312,
+      352,
+      669,
+      591
+    ]
+  },
+  {
+    "sheet": "survival",
+    "frame": 6,
+    "components": [
+      5
+    ],
+    "sourceBounds": [
+      678,
+      329,
+      938,
+      584
+    ]
+  },
+  {
+    "sheet": "survival",
+    "frame": 7,
+    "components": [
+      7
+    ],
+    "sourceBounds": [
+      954,
+      340,
+      1237,
+      577
+    ]
+  },
+  {
+    "sheet": "survival",
+    "frame": 8,
+    "components": [
+      10
+    ],
+    "sourceBounds": [
+      16,
+      636,
+      307,
+      894
+    ]
+  },
+  {
+    "sheet": "survival",
+    "frame": 9,
+    "components": [
+      9
+    ],
+    "sourceBounds": [
+      384,
+      610,
+      583,
+      913
+    ]
+  },
+  {
+    "sheet": "survival",
+    "frame": 10,
+    "components": [
+      12
+    ],
+    "sourceBounds": [
+      634,
+      666,
+      932,
+      862
+    ]
+  },
+  {
+    "sheet": "survival",
+    "frame": 11,
+    "components": [
+      11
+    ],
+    "sourceBounds": [
+      956,
+      644,
+      1242,
+      888
+    ]
+  },
+  {
+    "sheet": "survival",
+    "frame": 12,
+    "components": [
+      15
+    ],
+    "sourceBounds": [
+      18,
+      937,
+      312,
+      1234
+    ]
+  },
+  {
+    "sheet": "survival",
+    "frame": 13,
+    "components": [
+      16
+    ],
+    "sourceBounds": [
+      378,
+      940,
+      575,
+      1213
+    ]
+  },
+  {
+    "sheet": "survival",
+    "frame": 14,
+    "components": [
+      13
+    ],
+    "sourceBounds": [
+      681,
+      900,
+      881,
+      1238
+    ]
+  },
+  {
+    "sheet": "survival",
+    "frame": 15,
+    "components": [
+      14
+    ],
+    "sourceBounds": [
+      948,
+      911,
+      1230,
+      1225
+    ]
+  }
+]
