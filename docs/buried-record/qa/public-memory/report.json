@@ -1,0 +1,13 @@
+{
+  "base": "https://echosofdante.vercel.app",
+  "method": "Fresh compiled map-memory laboratory with its explicit prior-story arrival only. Ordinary WASD, atlas trips, automatic save and reload; discovery is never injected, no DEV globals.",
+  "checks": [
+    "Actual compiled discovery in Base/Dunes survives both atlas directions, two reloads and the isolated namespace; no boss victory/frozen-region discovery or real-save changes"
+  ],
+  "errors": [],
+  "cells": {
+    "base": 117,
+    "dunes": 91
+  },
+  "passed": true
+}
