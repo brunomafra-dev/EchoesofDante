@@ -1,0 +1,71 @@
+{
+  "at": "2026-10-30T18:07:20.736Z",
+  "base": "https://echosofdante.vercel.app",
+  "method": "Compiled build; two separate Chrome instances, real relay and normal movement/UI with feedback-controlled key pulses for WAN latency. Explicit preceding post/reports preparation only through reserved lab buttons; no DEV globals.",
+  "checks": [
+    "Two independent public Chrome instances join protocol 16; explicit host lab button simulates only prior reports/chapters",
+    "Actual guest NPC dialogue accepts the wind chapter on the selected compiled client/relay 16",
+    "Guest walks and presses E on the isolated reserved wind kit; research evidence reaches both browsers without completing or rewarding the chapter",
+    "Guest reload/rejoin retains accepted chapter and reserved wind kit collection; personal credits/receipts and later living bosses remain unchanged, real-save sentinels untouched",
+    "Temporary public room ends through the normal host menu"
+  ],
+  "errors": [],
+  "personal": [
+    {
+      "credits": 300,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost",
+        "settle-signal",
+        "settle-echo"
+      ],
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "credits": 1245,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost",
+        "settle-signal",
+        "settle-echo"
+      ],
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "protocols": [
+    16,
+    16
+  ],
+  "guestJoins": 2,
+  "passed": true
+}
