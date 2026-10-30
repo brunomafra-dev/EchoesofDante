@@ -1,6 +1,6 @@
 {
   "version": "0.1.171",
-  "verifiedAt": "2026-10-30T16:33:12.170828+00:00",
+  "verifiedAt": "2026-10-30T17:01:58.661374+00:00",
   "buildPublished": true,
   "verifiedFiles": [
     "/assets/appearance-DGTbGxQ5.js",
@@ -136,15 +136,16 @@
     "outposts": 1,
     "signals": 1,
     "circuits": 1,
+    "wind": 1,
     "missions": true,
     "chat": true,
     "capacity": 4,
     "uniqueClasses": true,
     "fixedCampaigns": true,
-    "revision": "ffe844b7b6672cb5a72242a2a05ae3075d6d5b8d",
+    "revision": "0f0ed6a7c6326070bfb7fefc64cbb8e97ccc7eb7",
     "campaign": true,
     "rooms": 0,
     "players": 0
   },
-  "coopCompatible": false
+  "coopCompatible": true
 }
