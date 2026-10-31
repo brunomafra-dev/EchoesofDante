@@ -1,0 +1,76 @@
+{
+  "at": "2026-10-31T19:06:24.862Z",
+  "base": "https://echosofdante.vercel.app",
+  "method": "Chrome touch emulation using actual menu sliders and real AudioManager; temporary namespace and real storage sentinels.",
+  "checks": [
+    "Each actual settings slider follows touch drag, updates its percentage and stores the three values in the isolated browser namespace; pre-existing save/settings sentinels remain intact",
+    "In the running campaign, music can be muted then restored, effects can be muted, and master mutes both buses; touch changes survive pause/resume and percentages update without restarting"
+  ],
+  "errors": [],
+  "runtime": {
+    "menuSettings": {
+      "values": {
+        "master": {
+          "requested": 23,
+          "displayed": 22
+        },
+        "music": {
+          "requested": 31,
+          "displayed": 30
+        },
+        "sfx": {
+          "requested": 17,
+          "displayed": 16
+        }
+      },
+      "stored": {
+        "master": 0.22,
+        "music": 0.3,
+        "sfx": 0.16
+      }
+    },
+    "liveBefore": {
+      "musicPaused": false,
+      "sfxGain": 0.03519999980926514,
+      "musicElementVolume": 1,
+      "routedMusicGain": 0.03629999980330467
+    },
+    "liveAfter": {
+      "sfxGain": 0.02800000086426735,
+      "musicElementVolume": 1,
+      "routedMusicGain": 0,
+      "stored": {
+        "master": 0.2,
+        "music": 0.28,
+        "sfx": 0.14
+      },
+      "readouts": [
+        "20%",
+        "28%",
+        "14%"
+      ]
+    },
+    "musicMuted": {
+      "music": 0,
+      "sfx": 0.03150000050663948
+    },
+    "effectsSilence": {
+      "requested": 0,
+      "displayed": 0
+    },
+    "effectsMutedGain": 0,
+    "masterSilence": {
+      "requested": 0,
+      "displayed": 0
+    },
+    "masterMuted": {
+      "sfx": 0,
+      "music": 0
+    },
+    "resumed": {
+      "musicGain": 0.030799999833106995,
+      "sfxGain": 0.02800000086426735
+    }
+  },
+  "passed": true
+}

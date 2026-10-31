@@ -3,7 +3,7 @@
 **31/10/2026 · Correção de áudio no mobile · 0.1.178:** usuário informou que Música, Efeitos e Volume geral não alteravam o som no iPhone. [Escopo e evidências](audio-settings/README.md): trilha roteada por `GainNode` Web Audio, controles touch com percentual e aplicação final no evento `change`. Personagens/settings reais e protocolo permanecem; nenhum capítulo ou boss iniciado.
 
 - [x] QA técnico: typecheck/build 270 módulos, toque emulado, sliders em zero, restauração ao retomar, buses independentes, compilado e sentinelas de saves/configuração intactas. Captura inspecionada; [evidências/limites](audio-settings/README.md).
-- [ ] Commit/push, Vercel/hashes e smoke público da 0.1.178.
+- [x] Commit `012ebb9` em `origin/main`; 73 hashes Vercel e smoke público passaram, relay 16 compatível e árvore limpa antes do registro documental. [Evidências](audio-settings/README.md).
 - [ ] Reteste humano em iPhone 13/13 Pro; emulação não substitui aparelho físico.
 
 **31/10/2026 · Revisão das Galerias, gênero e mobile · 0.1.177:** usuário pediu corrigir a coerência da poça/vegetação, aplicar o gênero às quatro prévias e investigar quedas/faixa cinza na horizontal em Chrome de iPhone 13/13 Pro. [Escopo e evidências](mobile-boreal-fixes/README.md). Manutenção autorizada, sem iniciar Ninho ou outro capítulo. IDs, recibos, requisitos, pintura principal e saves preservados. Gênero na criação não altera personagens salvos nem os aliados. Queda física ainda depende de reteste nos aparelhos; automação não a declara resolvida.
