@@ -1,0 +1,27 @@
+{
+  "verifiedAt": "2026-10-31T10:56:34.242579+00:00",
+  "relay": {
+    "service": "Dante regional co-op",
+    "protocol": 16,
+    "outposts": 1,
+    "signals": 1,
+    "circuits": 1,
+    "wind": 1,
+    "dunes": 1,
+    "buried": 1,
+    "missions": true,
+    "chat": true,
+    "capacity": 4,
+    "uniqueClasses": true,
+    "fixedCampaigns": true,
+    "revision": "dc3b7395bef54761c4f88ccc8051750d6ed3ee85",
+    "campaign": true,
+    "rooms": 1,
+    "players": 2
+  },
+  "frontendVersion": "0.1.174",
+  "matchingFrontendHashes": 68,
+  "hashVerification": "scripts/verify-outpost-publication.py verify 0.1.174 --read-only",
+  "dunesPublicQA": "docs/dune-survey/qa/public-coop/report.json",
+  "buriedPublicQA": "docs/buried-record/qa/public-coop/report.json"
+}
