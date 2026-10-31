@@ -1,0 +1,232 @@
+{
+  "errors": [],
+  "metrics": [
+    {
+      "viewport": [
+        915,
+        412
+      ],
+      "canvas": [
+        0,
+        0,
+        915,
+        412,
+        1599,
+        720
+      ],
+      "gameSize": {
+        "_width": 1599.0291262135922,
+        "_height": 720,
+        "_parent": null,
+        "aspectMode": 0,
+        "aspectRatio": 2.220873786407767,
+        "minWidth": 0,
+        "minHeight": 0,
+        "maxWidth": 1.7976931348623157e+308,
+        "maxHeight": 1.7976931348623157e+308,
+        "snapTo": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "gl": [
+        1599,
+        720,
+        0,
+        0,
+        1599,
+        720
+      ],
+      "dialogs": [],
+      "overlays": [
+        {
+          "cls": "touch-controls is-visible",
+          "bg": "rgba(0, 0, 0, 0)",
+          "box": [
+            0,
+            915
+          ]
+        },
+        {
+          "cls": "mission-tracker",
+          "bg": "rgba(0, 0, 0, 0)",
+          "box": [
+            8,
+            212
+          ]
+        }
+      ]
+    },
+    {
+      "viewport": [
+        844,
+        390
+      ],
+      "canvas": [
+        0,
+        0,
+        844,
+        390,
+        1558,
+        720
+      ],
+      "gameSize": {
+        "_width": 1558.1538461538462,
+        "_height": 720,
+        "_parent": null,
+        "aspectMode": 0,
+        "aspectRatio": 2.164102564102564,
+        "minWidth": 0,
+        "minHeight": 0,
+        "maxWidth": 1.7976931348623157e+308,
+        "maxHeight": 1.7976931348623157e+308,
+        "snapTo": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "gl": [
+        1558,
+        720,
+        0,
+        0,
+        1558,
+        720
+      ],
+      "dialogs": [],
+      "overlays": [
+        {
+          "cls": "touch-controls is-visible",
+          "bg": "rgba(0, 0, 0, 0)",
+          "box": [
+            0,
+            844
+          ]
+        },
+        {
+          "cls": "mission-tracker",
+          "bg": "rgba(0, 0, 0, 0)",
+          "box": [
+            8,
+            212
+          ]
+        }
+      ]
+    },
+    {
+      "viewport": [
+        393,
+        852
+      ],
+      "canvas": [
+        0,
+        0,
+        393,
+        852,
+        1280,
+        2774
+      ],
+      "gameSize": {
+        "_width": 1280,
+        "_height": 2774.961832061069,
+        "_parent": null,
+        "aspectMode": 0,
+        "aspectRatio": 0.4612676056338028,
+        "minWidth": 0,
+        "minHeight": 0,
+        "maxWidth": 1.7976931348623157e+308,
+        "maxHeight": 1.7976931348623157e+308,
+        "snapTo": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "gl": [
+        1280,
+        2774,
+        0,
+        0,
+        1280,
+        2774
+      ],
+      "dialogs": [
+        "mobile-display"
+      ],
+      "overlays": [
+        {
+          "cls": "mobile-display",
+          "bg": "rgb(16, 29, 23)",
+          "box": [
+            16,
+            361
+          ]
+        },
+        {
+          "cls": "touch-controls is-visible",
+          "bg": "rgba(6, 19, 22, 0.93)",
+          "box": [
+            0,
+            393
+          ]
+        }
+      ]
+    },
+    {
+      "viewport": [
+        852,
+        393
+      ],
+      "canvas": [
+        0,
+        0,
+        852,
+        393,
+        1560,
+        720
+      ],
+      "gameSize": {
+        "_width": 1560.9160305343512,
+        "_height": 720,
+        "_parent": null,
+        "aspectMode": 0,
+        "aspectRatio": 2.16793893129771,
+        "minWidth": 0,
+        "minHeight": 0,
+        "maxWidth": 1.7976931348623157e+308,
+        "maxHeight": 1.7976931348623157e+308,
+        "snapTo": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "gl": [
+        1560,
+        720,
+        0,
+        0,
+        1560,
+        720
+      ],
+      "dialogs": [],
+      "overlays": [
+        {
+          "cls": "touch-controls is-visible",
+          "bg": "rgba(0, 0, 0, 0)",
+          "box": [
+            0,
+            852
+          ]
+        },
+        {
+          "cls": "mission-tracker",
+          "bg": "rgba(0, 0, 0, 0)",
+          "box": [
+            8,
+            212
+          ]
+        }
+      ]
+    }
+  ],
+  "reloaded": true
+}

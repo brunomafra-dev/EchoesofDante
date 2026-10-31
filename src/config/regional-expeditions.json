@@ -268,7 +268,7 @@
     "title": "Água sob o gelo",
     "offer": [
       "Água circula sob as galerias. Precisamos levar recipientes e suprimentos por pedra firme, preservando os apoios antigos.",
-      "Compare a poça rasa ao sul, a coluna pela bifurcação seca e a margem do canal antes do ninho. Investigue também o mecanismo original; o relatório não abre a passagem."
+      "Compare a água aflorando na fissura da margem sul, a coluna pela bifurcação seca e o canal antes do ninho. Investigue também o mecanismo original; o relatório não abre a passagem."
     ],
     "report": [
       "A rota seca junto à coluna suporta melhor o transporte. O desvio da poça permite coletar sem atravessar os canais profundos; não vamos perfurar o piso.",
@@ -280,11 +280,11 @@
     ],
     "sites": [
       {
-        "name": "Poça lateral do degelo",
+        "name": "Poça na fissura do gelo",
         "x": 820,
         "y": 1320,
         "art": "water",
-        "finding": "A poça rasa varia sem goteira no teto. A pedra ao norte permite transportar recipientes e voltar ao salão; o canal profundo continua fora da rota."
+        "finding": "O gelo fino se rompe sobre uma fissura da pedra. A água que circula sob a crosta aflora aqui e escoa pela abertura até o canal. A faixa seca a oeste permite observar sem pisar na poça; isso não indica água potável."
       },
       {
         "name": "Coluna sob a geada",

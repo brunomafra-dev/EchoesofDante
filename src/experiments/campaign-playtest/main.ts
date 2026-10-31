@@ -14,6 +14,7 @@ const missionIdentityTest=new URLSearchParams(location.search).has('mission-iden
 const permanenceChapter=new URLSearchParams(location.search).get('permanence')??(outpostSupportTest?'outpost':settlementLifeTest||npcReviewTest?'water':null);
 const permanenceTest=!!permanenceChapter;
 const missionTest=new URLSearchParams(location.search).has('missions')||permanenceTest;
+const mobileReviewTest=new URLSearchParams(location.search).has('mobile-review');
 const mobileTest=new URLSearchParams(location.search).has('mobile');
 const mobileClass=new URLSearchParams(location.search).get('class');
 const wardenTest=new URLSearchParams(location.search).has('warden');
@@ -29,7 +30,7 @@ const arrivalParam=new URLSearchParams(location.search).get('arrival');
 const routeArrival=routeTest&&((!siroccoTest&&!borealTest&&!embersTest&&(arrivalParam==='forest'||arrivalParam==='cavern'))||(siroccoTest&&(arrivalParam==='valley'||arrivalParam==='arid'||arrivalParam==='dunes'||arrivalParam==='sandpit'))||(borealTest&&(arrivalParam==='frost'||arrivalParam==='icecave'||arrivalParam==='icenest'))||(embersTest&&(arrivalParam==='cinder'||arrivalParam==='obsidian'||arrivalParam==='caldera')))?arrivalParam:undefined;
 const depthTest=new URLSearchParams(location.search).has('depth');
 const settlementTest=new URLSearchParams(location.search).has('settlement');
-const prefix=embersTest?`dante-embers-journey-v1.${routeArrival??'journey'}.`:borealTest?`dante-boreal-journey-v1.${routeArrival??'journey'}.`:siroccoTest?`dante-sirocco-journey-v1.${routeArrival??'journey'}.`:routeTest?`dante-early-route-v2.${routeArrival??'journey'}.`:depthTest?`dante-regional-lab.${mobileClass??'warrior'}.`:new URLSearchParams(location.search).has('journey')?'dante-journey-review-lab.':mobileTest?`dante-mobile-lab.${mobileClass??'warrior'}.`:settlementTest?'dante-settlement-lab-v2.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
+const prefix=mobileReviewTest?'dante-mobile-review-v1.':embersTest?`dante-embers-journey-v1.${routeArrival??'journey'}.`:borealTest?`dante-boreal-journey-v1.${routeArrival??'journey'}.`:siroccoTest?`dante-sirocco-journey-v1.${routeArrival??'journey'}.`:routeTest?`dante-early-route-v2.${routeArrival??'journey'}.`:depthTest?`dante-regional-lab.${mobileClass??'warrior'}.`:new URLSearchParams(location.search).has('journey')?'dante-journey-review-lab.':mobileTest?`dante-mobile-lab.${mobileClass??'warrior'}.`:settlementTest?'dante-settlement-lab-v2.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
 const labPrefix=mapMemoryTest?'dante-map-memory-v1.'+(mobileClass??'warrior')+'.':missionIdentityTest?'dante-mission-identity-v1.'+permanenceChapter+'.'+(mobileClass??'warrior')+'.':vitalsTest?'dante-vitals-v1.'+(mobileClass??'warrior')+'.':outpostSupportTest?'dante-outpost-support-v1.'+(mobileClass??'warrior')+'.':npcReviewTest?'dante-npc-review-v1.'+(mobileClass??'warrior')+'.':settlementMotionTest?'dante-settlement-motion-v1.'+(mobileClass??'warrior')+'.':settlementLifeTest?'dante-settlement-life-v1.'+(mobileClass??'warrior')+'.':permanenceTest?'dante-permanence-v1.'+permanenceChapter+'.'+(mobileClass??'warrior')+'.':titanTest?'dante-titan-combat-v1.'+(mobileClass??'warrior')+'.':vesperTest?'dante-vesper-combat-v2.'+(mobileClass??'warrior')+'.':soterradoTest?'dante-soterrado-combat-v1.'+(mobileClass??'warrior')+'.':wardenTest?'dante-warden-combat-v2.'+ (mobileClass??'warrior')+'.':prefix;
 // An explicit trip home must survive the lab's otherwise automatic arrival.
 const labHome=permanenceTest&&get.call(sessionStorage,labPrefix+'home-once')==='1';
@@ -55,6 +56,13 @@ if(missionTest||routeTest||bossTest){
  }
 }
 document.body.append(details);
+if(mobileReviewTest){
+ details.classList.add('is-mobile-lab');
+ const reset=details.querySelector('button')!,summary=document.createElement('summary'),text=document.createElement('p');
+ summary.textContent='GÊNERO E MOBILE · TESTE ISOLADO';
+ text.textContent='Começa no menu, sem simular campanha, missões, vitórias ou recompensas. Gênero muda as quatro prévias; só o personagem criado recebe a escolha. Jogue solo ou crie uma equipe e compartilhe o convite deste laboratório. Confira a base na horizontal e ao girar o aparelho. Personagens/configurações reais ficam protegidos; o progresso deste teste é temporário por aba. O menu carrega apenas as prévias; o mundo começa a carregar na chegada.';
+ details.replaceChildren(summary,text,reset);
+}
 if(mobileTest){
  details.classList.add('is-mobile-lab');
  details.querySelector('summary')!.textContent='MOBILE · MIRA, HUD E SALAS · TESTE RESERVADO';
@@ -210,6 +218,7 @@ if(routeTest){
  if(borealTest){
   details.querySelector('summary')!.textContent='FRATURA BOREAL → GALERIAS → VÉSPER · TESTE RESERVADO';
   note.textContent='Explore os abrigos do vento, a bifurcação seca e as margens rasas do degelo. Lia pesquisa água e abrigo; Ivo avalia transporte e estruturas. E analisa; J acompanha os dois relatórios, aceitos e ainda por investigar/entregar. No ninho, siga os vestígios até Vésper. Chegadas diretas simulam Warden, Soterrado e somente os requisitos anteriores ao trecho: Vésper continua vivo, sem recompensa ou registro final. Sem chegada selecionada, começa do zero na base. Seus personagens reais estão protegidos. Para coop, volte ao início, crie a equipe e percorra a campanha; o convite mantém o laboratório.';
+  if(new URLSearchParams(location.search).get('focus')==='thaw')note.textContent+=' FOCO DEGELO: chegada na faixa seca ao lado da fissura. Apenas neste foco visual, criaturas comuns das Galerias são consideradas afastadas, sem XP/drop. Análises e mecanismo continuam pendentes, Vésper vivo. A campanha normal mantém os encontros.';
  }
 
  if(embersTest){

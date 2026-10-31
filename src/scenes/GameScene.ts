@@ -322,9 +322,14 @@ export class GameScene extends Phaser.Scene {
     private readonly shellLoading?:(progress:number)=>void) { super('Game'); }
 
   preload(): void {
+    const preloadArea=this.journeyLoaded?this.area:this.glacierPlaytest?.economy?'base':this.glacierPlaytest?.area??this.journey.load()?.area??(new URLSearchParams(location.search).has('qa')?'forest':'base');
+    // Boss sheets are large. Only the current arena owns them; scene shutdown
+    // has released its display objects before another area's preload runs.
+    const bossSheets={warden:['warden-motion','warden-slam-motion'],sandpit:['soterrado-motion','soterrado-crash-motion','soterrado-burrow','soterrado-burrow-lip','soterrado-dust'],icenest:['vesper-motion','vesper-reaction-motion'],caldera:['titan-motion']} as const;
+    if(!this.qualityReference)for(const [area,keys]of Object.entries(bossSheets))if(area!==preloadArea)for(const key of keys)if(this.textures.exists(key))this.textures.remove(key);
     this.data.set('route-art-previous',this.glacierPlaytest?.routeBaseline===true);
     this.data.set('creature-art-original',this.glacierPlaytest?.creatureBaseline===true);
-    if(!this.qualityReference&&!this.glacierPlaytest?.environmentBaseline)preloadCampaignEnvironment(this,this.journeyLoaded?this.area:this.glacierPlaytest?.economy?'base':this.glacierPlaytest?.area??this.journey.load()?.area??(new URLSearchParams(location.search).has('qa')?'forest':'base'));
+    if(!this.qualityReference&&!this.glacierPlaytest?.environmentBaseline)preloadCampaignEnvironment(this,preloadArea);
     if(this.forestProof){
       for(const[key,file]of [['finish-clearing','clearing-v1'],['finish-canopy','canopy-v1']])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/experiments/forest-finish/${file}.webp`);
       if(this.qualityReference==='forest-reference'&&!this.textures.exists('finish-plants'))this.load.spritesheet('finish-plants',`${import.meta.env.BASE_URL}assets/experiments/forest-finish/trail-plants-v1.webp`,{frameWidth:256,frameHeight:256});
@@ -344,10 +349,10 @@ export class GameScene extends Phaser.Scene {
     for(const key of ['cinder-ground','obsidian-ground'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/visual/environment/${key}.webp`);
     for(const s of Object.values(VOLCANIC_CREATURES))if(!this.textures.exists(s.texture))preloadCreatureSheet(this,s.texture,`${import.meta.env.BASE_URL}assets/visual/characters/${s.texture}.png`,256);
     if(!this.textures.exists('caldera-ground'))this.load.image('caldera-ground',`${import.meta.env.BASE_URL}assets/visual/environment/caldera-ground.webp`);
-    if(!this.textures.exists('titan-motion'))preloadCreatureSheet(this,'titan-motion',`${import.meta.env.BASE_URL}assets/visual/characters/titan-motion.png`,256);
+    if((preloadArea==='caldera'||this.qualityReference)&&!this.textures.exists('titan-motion'))preloadCreatureSheet(this,'titan-motion',`${import.meta.env.BASE_URL}assets/visual/characters/titan-motion.png`,256);
     if (!this.textures.exists('glacier-ground')) this.load.image('glacier-ground', `${import.meta.env.BASE_URL}assets/visual/environment/glacier-ground.webp`);
-    for (const [key, file] of [['vesper-motion', 'vesper-motion'], ['dante-iceCarapace-motion', 'ice-carapace-motion']]) if (!this.textures.exists(key)) preloadCreatureSheet(this,key, `${import.meta.env.BASE_URL}assets/visual/characters/${file}.png`,256);
-    if(!this.textures.exists('vesper-reaction-motion'))this.load.spritesheet('vesper-reaction-motion',`${import.meta.env.BASE_URL}assets/visual/creature-finish/vesper-reaction-v1.webp`,{frameWidth:512,frameHeight:512});
+    for (const [key, file] of [['vesper-motion', 'vesper-motion'], ['dante-iceCarapace-motion', 'ice-carapace-motion']]) if ((key!=='vesper-motion'||preloadArea==='icenest'||this.qualityReference)&&!this.textures.exists(key)) preloadCreatureSheet(this,key, `${import.meta.env.BASE_URL}assets/visual/characters/${file}.png`,256);
+    if((preloadArea==='icenest'||this.qualityReference)&&!this.textures.exists('vesper-reaction-motion'))this.load.spritesheet('vesper-reaction-motion',`${import.meta.env.BASE_URL}assets/visual/creature-finish/vesper-reaction-v1.webp`,{frameWidth:512,frameHeight:512});
     if (!this.textures.exists('frost-ground')) this.load.image('frost-ground', `${import.meta.env.BASE_URL}assets/visual/environment/frost-ground.webp`);
     for (const kind of ['pouncer', 'spitter']) if (!this.textures.exists(`dante-frost-${kind}-motion`)) preloadCreatureSheet(this,`dante-frost-${kind}-motion`, `${import.meta.env.BASE_URL}assets/visual/characters/frost-${kind}-motion.png`,256);
     const assetBase = `${import.meta.env.BASE_URL}assets/visual/characters/`;
@@ -371,11 +376,11 @@ export class GameScene extends Phaser.Scene {
       'dante-dune-pouncer-motion', 'dante-glass-spitter-motion']) {
       if (!this.textures.exists(key)) preloadCreatureSheet(this,key, `${assetBase}${key}.png`,256);
     }
-    if (!this.textures.exists('warden-motion')) preloadCreatureSheet(this,'warden-motion', `${assetBase}warden-motion.png`,512);
-    if (!this.textures.exists('warden-slam-motion')) this.load.spritesheet('warden-slam-motion',`${import.meta.env.BASE_URL}assets/visual/creature-finish/warden-slam-v1.webp`,{frameWidth:512,frameHeight:512});
-    if (!this.textures.exists('soterrado-motion')) preloadCreatureSheet(this,'soterrado-motion', `${assetBase}soterrado-motion.png`,384);
-    if (!this.textures.exists('soterrado-crash-motion')) this.load.spritesheet('soterrado-crash-motion',`${import.meta.env.BASE_URL}assets/visual/creature-finish/soterrado-crash-v1.webp`,{frameWidth:384,frameHeight:384});
-    for (const name of ['soterrado-burrow', 'soterrado-burrow-lip', 'soterrado-dust']) {
+    if ((preloadArea==='warden'||this.qualityReference)&&!this.textures.exists('warden-motion')) preloadCreatureSheet(this,'warden-motion', `${assetBase}warden-motion.png`,512);
+    if ((preloadArea==='warden'||this.qualityReference)&&!this.textures.exists('warden-slam-motion')) this.load.spritesheet('warden-slam-motion',`${import.meta.env.BASE_URL}assets/visual/creature-finish/warden-slam-v1.webp`,{frameWidth:512,frameHeight:512});
+    if ((preloadArea==='sandpit'||this.qualityReference)&&!this.textures.exists('soterrado-motion')) preloadCreatureSheet(this,'soterrado-motion', `${assetBase}soterrado-motion.png`,384);
+    if ((preloadArea==='sandpit'||this.qualityReference)&&!this.textures.exists('soterrado-crash-motion')) this.load.spritesheet('soterrado-crash-motion',`${import.meta.env.BASE_URL}assets/visual/creature-finish/soterrado-crash-v1.webp`,{frameWidth:384,frameHeight:384});
+    for (const name of preloadArea==='sandpit'||this.qualityReference?['soterrado-burrow', 'soterrado-burrow-lip', 'soterrado-dust']:[]) {
       if (!this.textures.exists(name)) this.load.image(name, `${import.meta.env.BASE_URL}assets/visual/environment/${name}.png`);
     }
     if (!this.textures.exists('sandpit-ground')) this.load.image('sandpit-ground', `${import.meta.env.BASE_URL}assets/visual/environment/sandpit-ground.webp`);
@@ -2371,6 +2376,12 @@ export class GameScene extends Phaser.Scene {
     this.economy.visited=['base','forest','cavern','warden','valley','arid','dunes','sandpit',...(['frost','icecave','icenest'] as const).slice(0,index+1)];
     this.economy.credits=100;this.economy.potions=5;this.transferHp=this.characterMaxHp;
     this.earlyRouteCheckpoint=undefined;this.expeditionArrival=area==='frost'?{...FROST.entry}:{...GLACIER[area].entry};
+    if(area==='icecave'&&new URLSearchParams(location.search).get('focus')==='thaw'){
+      this.expeditionArrival={x:800,y:1360};
+      // Explicit visual review only: quiet common residents, no XP/drop or boss
+      // victory. Campaign play and the other Boreal arrivals keep their threats.
+      this.progression.restore({...this.progression.snapshot(),rewardedHollows:[1300,1301,1302,1303,1304,1305,1306,1307,1936,1937,1938,1939,1940,1941,1984,1985]});
+    }
     this.expeditionReturn=undefined;this.area=area;this.saveProgress();this.scene.restart();return true;
   }
 

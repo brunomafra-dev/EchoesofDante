@@ -90,6 +90,7 @@ export class ApplicationShell {
     this.loadingProgress=Math.round(Math.max(0,Math.min(1,progress))*100);
     const label=this.content.querySelector('[data-world-loading]');if(label)label.textContent=`Carregando o mundo · ${this.loadingProgress}%`;
   }
+  get needsWorld():boolean{return this.launchOnce||this.qaAutoplay;}
   bind(scene: GameScene): void {
     this.scene = scene; this.applyVolumes();
     if(this.playing&&!coopSession.endedMessage){if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)this.scene.setPartyWaiting(true);return;}

@@ -1,0 +1,126 @@
+{
+  "method": "Chrome mobile emulation, actual menu/creation/launch/reload. Copy of real 0.1.176 save for normal-browser regression; malformed stale session flags and denied fullscreen are explicit fixtures. Boreal visual arrival prepares prior story and quiet common residents without XP/drop; analysis via E. Not a physical iPhone test.",
+  "checks": [
+    "All four actual previews share chosen gender before/after class change, rapid changes coalesce, draft/back/replay and female Hunter creation/reload preserve identity and real saves; no world requests or Game scene in menu",
+    "Persistent Chrome profile with existing save and malformed stale launch flag opens/continues/reloads without errors or clearing data; denied fullscreen and portrait/landscape remain usable; ordinary touch movement and discovery/receipts preserved",
+    "Separate persistent Chrome profile restarts with the same selected character/save; no reseeding on navigation or browser restart",
+    "Cold fissure/pocket and real channel bank replace generic forest pools; no green reactive plants in gallery; original E/evidence, three collision-clear routes, reload and living Vesper preserved"
+  ],
+  "errors": [],
+  "mobile": [
+    {
+      "viewport": [
+        915,
+        412
+      ],
+      "canvas": [
+        0,
+        0,
+        915,
+        412
+      ],
+      "world": [
+        1599.0291262135922,
+        720
+      ],
+      "woodlandWidth": 2424,
+      "bounds": {
+        "left": 70,
+        "right": 1330,
+        "top": 90,
+        "bottom": 970
+      },
+      "bosses": []
+    },
+    {
+      "viewport": [
+        844,
+        390
+      ],
+      "canvas": [
+        0,
+        0,
+        844,
+        390
+      ],
+      "world": [
+        1558.1538461538462,
+        720
+      ],
+      "woodlandWidth": 2424,
+      "bounds": {
+        "left": 70,
+        "right": 1330,
+        "top": 90,
+        "bottom": 970
+      },
+      "bosses": []
+    },
+    {
+      "viewport": [
+        393,
+        852
+      ],
+      "canvas": [
+        0,
+        0,
+        393,
+        852
+      ],
+      "world": [
+        1280,
+        2774.961832061069
+      ],
+      "woodlandWidth": 2424,
+      "bounds": {
+        "left": 70,
+        "right": 1330,
+        "top": 90,
+        "bottom": 970
+      },
+      "bosses": []
+    },
+    {
+      "viewport": [
+        852,
+        393
+      ],
+      "canvas": [
+        0,
+        0,
+        852,
+        393
+      ],
+      "world": [
+        1560.9160305343512,
+        720
+      ],
+      "woodlandWidth": 2424,
+      "bounds": {
+        "left": 70,
+        "right": 1330,
+        "top": 90,
+        "bottom": 970
+      },
+      "bosses": []
+    }
+  ],
+  "routes": [
+    {
+      "id": "exp-icecave-1",
+      "route": 18,
+      "clear": true
+    },
+    {
+      "id": "exp-icecave-2",
+      "route": 26,
+      "clear": true
+    },
+    {
+      "id": "exp-icecave-3",
+      "route": 52,
+      "clear": true
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,62 @@
+{
+  "method": "Decoded RGBA size of original seven boss sheets; not total device RAM or a measured iPhone crash cause",
+  "sheets": [
+    {
+      "path": "public/assets/visual/creature-finish/warden-v1.webp",
+      "size": [
+        2048,
+        1024
+      ],
+      "rgbaBytes": 8388608
+    },
+    {
+      "path": "public/assets/visual/creature-finish/warden-slam-v1.webp",
+      "size": [
+        2048,
+        1024
+      ],
+      "rgbaBytes": 8388608
+    },
+    {
+      "path": "public/assets/visual/creature-finish/soterrado-v1.webp",
+      "size": [
+        1536,
+        768
+      ],
+      "rgbaBytes": 4718592
+    },
+    {
+      "path": "public/assets/visual/creature-finish/soterrado-crash-v1.webp",
+      "size": [
+        1536,
+        768
+      ],
+      "rgbaBytes": 4718592
+    },
+    {
+      "path": "public/assets/visual/creature-finish/vesper-v1.webp",
+      "size": [
+        1024,
+        512
+      ],
+      "rgbaBytes": 2097152
+    },
+    {
+      "path": "public/assets/visual/creature-finish/vesper-reaction-v1.webp",
+      "size": [
+        2048,
+        1024
+      ],
+      "rgbaBytes": 8388608
+    },
+    {
+      "path": "public/assets/visual/creature-finish/titan-v1.webp",
+      "size": [
+        1024,
+        512
+      ],
+      "rgbaBytes": 2097152
+    }
+  ],
+  "totalMiB": 37.0
+}

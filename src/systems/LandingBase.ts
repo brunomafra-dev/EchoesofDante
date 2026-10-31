@@ -12,9 +12,10 @@ export class LandingBase{
   createEnvironmentGround(scene,BASE.width+1024,'forest-ground',0xa3af91);
   const fringe=scene.add.renderTexture(BASE.width-80,0,640,BASE.height).setOrigin(0).setDepth(-9999),edge=new EnvironmentPainter(scene,fringe);
   for(const[x,y,w]of [[80,220,190],[260,360,170],[65,560,180],[340,670,190],[150,850,175],[460,930,200]]){
-   edge.stamp({key:'root-growth',x,y:y+40,width:w,height:w*.3,tint:0x9bb57e,alpha:.8});
-   edge.stamp({key:'dante-canopy-green',x,y,width:w,height:w*.7,tint:0xa3af91,alpha:.95});
+   edge.stamp({key:'root-growth',x:fringe.x+x,y:y+40,width:w,height:w*.3,tint:0x9bb57e,alpha:.8});
+   edge.stamp({key:'dante-canopy-green',x:fringe.x+x,y,width:w,height:w*.7,tint:0xa3af91,alpha:.95});
   }
+  edge.destroy();
   const floor=scene.add.renderTexture(0,0,BASE.width,BASE.height).setOrigin(0).setDepth(-10000),painter=new EnvironmentPainter(scene,floor);
   painter.stamp({key:'camp-ground',x:710,y:605,width:1270,height:800,alpha:.9});
   // Worn soil is dark and low contrast. The old oversized untinted white

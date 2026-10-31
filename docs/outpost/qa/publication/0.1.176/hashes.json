@@ -1,6 +1,6 @@
 {
   "version": "0.1.176",
-  "verifiedAt": "2026-10-31T14:10:55.284244+00:00",
+  "verifiedAt": "2026-10-31T18:15:57.824932+00:00",
   "buildPublished": true,
   "verifiedFiles": [
     "/assets/appearance-DGTbGxQ5.js",
@@ -158,15 +158,16 @@
     "dunes": 1,
     "buried": 1,
     "frost": 1,
+    "icecave": 1,
     "missions": true,
     "chat": true,
     "capacity": 4,
     "uniqueClasses": true,
     "fixedCampaigns": true,
-    "revision": "a288c342dbc60109cc6100e5525b183234dcb10a",
+    "revision": "42de5a0bbd951f32efdcb8480080b3e3db32ea41",
     "campaign": true,
     "rooms": 0,
     "players": 0
   },
-  "coopCompatible": false
+  "coopCompatible": true
 }

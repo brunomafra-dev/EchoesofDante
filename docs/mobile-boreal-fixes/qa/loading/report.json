@@ -1,0 +1,11 @@
+{
+  "method": "Chrome mobile; intentionally gate one world texture across the new-character navigation, real UI and real local relay. No film/network substitution.",
+  "checks": [
+    "Solo: movie available while world load is deliberately incomplete",
+    "World becoming ready preserves film DOM; skipping enters solo without returning to title",
+    "Coop: movie available while world load is deliberately incomplete",
+    "Skipping during download shows percentage; room connects automatically once scene is ready"
+  ],
+  "errors": [],
+  "passed": true
+}

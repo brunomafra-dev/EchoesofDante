@@ -1,0 +1,163 @@
+{
+  "method": "Existing isolated boss laboratories prepare only story before the tested boss. No boss victory or new reward injected. Inspect authored motion/reaction frames, remove on base travel and reload on return; physical damage/AI are unchanged.",
+  "checks": [
+    "warden: native living boss/reaction frames loaded only in arena, released in base and restored on return",
+    "soterrado: native living boss/reaction frames loaded only in arena, released in base and restored on return",
+    "vesper: native living boss/reaction frames loaded only in arena, released in base and restored on return",
+    "titan: native living boss/reaction frames loaded only in arena, released in base and restored on return"
+  ],
+  "errors": [],
+  "arenas": [
+    {
+      "first": {
+        "area": "warden",
+        "hp": 1125,
+        "dead": false,
+        "defeated": false,
+        "textures": [
+          {
+            "key": "warden-motion",
+            "exists": true,
+            "frames": 9
+          },
+          {
+            "key": "warden-slam-motion",
+            "exists": true,
+            "frames": 9
+          }
+        ],
+        "other": []
+      },
+      "returned": {
+        "area": "warden",
+        "hp": 1125,
+        "dead": false,
+        "defeated": false,
+        "textures": [
+          {
+            "key": "warden-motion",
+            "exists": true,
+            "frames": 9
+          },
+          {
+            "key": "warden-slam-motion",
+            "exists": true,
+            "frames": 9
+          }
+        ],
+        "other": []
+      }
+    },
+    {
+      "first": {
+        "area": "sandpit",
+        "hp": 1233,
+        "dead": false,
+        "defeated": false,
+        "textures": [
+          {
+            "key": "soterrado-motion",
+            "exists": true,
+            "frames": 9
+          },
+          {
+            "key": "soterrado-crash-motion",
+            "exists": true,
+            "frames": 9
+          }
+        ],
+        "other": []
+      },
+      "returned": {
+        "area": "sandpit",
+        "hp": 1233,
+        "dead": false,
+        "defeated": false,
+        "textures": [
+          {
+            "key": "soterrado-motion",
+            "exists": true,
+            "frames": 9
+          },
+          {
+            "key": "soterrado-crash-motion",
+            "exists": true,
+            "frames": 9
+          }
+        ],
+        "other": []
+      }
+    },
+    {
+      "first": {
+        "area": "icenest",
+        "hp": 1760,
+        "dead": false,
+        "defeated": false,
+        "textures": [
+          {
+            "key": "vesper-motion",
+            "exists": true,
+            "frames": 9
+          },
+          {
+            "key": "vesper-reaction-motion",
+            "exists": true,
+            "frames": 9
+          }
+        ],
+        "other": []
+      },
+      "returned": {
+        "area": "icenest",
+        "hp": 1760,
+        "dead": false,
+        "defeated": false,
+        "textures": [
+          {
+            "key": "vesper-motion",
+            "exists": true,
+            "frames": 9
+          },
+          {
+            "key": "vesper-reaction-motion",
+            "exists": true,
+            "frames": 9
+          }
+        ],
+        "other": []
+      }
+    },
+    {
+      "first": {
+        "area": "caldera",
+        "hp": 1710,
+        "dead": false,
+        "defeated": false,
+        "textures": [
+          {
+            "key": "titan-motion",
+            "exists": true,
+            "frames": 9
+          }
+        ],
+        "other": []
+      },
+      "returned": {
+        "area": "caldera",
+        "hp": 1710,
+        "dead": false,
+        "defeated": false,
+        "textures": [
+          {
+            "key": "titan-motion",
+            "exists": true,
+            "frames": 9
+          }
+        ],
+        "other": []
+      }
+    }
+  ],
+  "passed": true
+}

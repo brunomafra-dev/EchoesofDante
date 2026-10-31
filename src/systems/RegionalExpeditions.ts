@@ -39,11 +39,24 @@ export class RegionalExpeditions {
   for(const[dx,dy,w,h]of [[-135,85,220,75],[-65,40,190,110],[0,0,230,150]])painter.sediment(site.x+dx,site.y+dy,w,h,tint,.2);
   painter.apron(site.x,site.y+6,90,tint);
   for(const[dx,dy]of [[-145,-65],[130,90]])painter.stamp({key:'world-rock',x:site.x+dx,y:site.y+dy,width:42,height:28,tint,alpha:.8});
-  if(site.art==='record')painter.stamp({key:'ancient-remnant',x:site.x,y:site.y-17,width:135,height:87,tint});
+  if(site.id==='exp-icecave-1'){
+   // A low exposed fissure feeds the pocket and drains toward the real
+   // southern channel. The analysis anchor stays on its dry western edge.
+   this.scene.add.image(site.x+50,site.y-20,'boreal-melt-pocket').setDisplaySize(190,215).setDepth(-9889).setName('boreal-melt-pocket');
+   painter.sediment(site.x+130,site.y+85,26,82,0x527888,.45);
+  }
+  else if(site.id==='exp-icecave-3'){
+   // This objective is the existing channel bank, not another forest pool.
+   const marks=this.scene.add.graphics();
+   for(let i=0;i<3;i++)marks.lineStyle(2,0xc2d3db,.55).lineBetween(site.x-24+i*13,site.y-22,site.x+4+i*13,site.y+12);
+   cache.draw(marks,-cache.x,-cache.y);marks.destroy();
+  }
+  else if(site.art==='record')painter.stamp({key:'ancient-remnant',x:site.x,y:site.y-17,width:135,height:87,tint});
   else if(site.art==='mineral')painter.stamp({key:'deep-mineral',x:site.x,y:site.y-17,width:105,height:75,tint});
   else addSurveyProp(this.scene,site.art,site.x,site.y);
   painter.destroy();
-  const text=this.scene.add.text(site.x,site.y+52,'',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#e5d2a6',stroke:'#101c18',strokeThickness:3}).setOrigin(.5).setDepth(11000).setVisible(false);
+  const labelX=site.x+(site.id==='exp-icecave-1'?-135:0),labelY=site.y+(site.id==='exp-icecave-1'?80:52);
+  const text=this.scene.add.text(labelX,labelY,'',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#e5d2a6',stroke:'#101c18',strokeThickness:3}).setOrigin(.5).setDepth(11000).setVisible(false);
   this.labels.push({site,text});
  }
  at(position:Vec2):RegionalSite|undefined{return this.sites.find(s=>Math.hypot(position.x-s.x,position.y-s.y)<s.radius);}

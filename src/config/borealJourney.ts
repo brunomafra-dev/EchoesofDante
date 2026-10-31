@@ -11,7 +11,7 @@ export const BOREAL_TRAILS:Record<'frost'|'icecave',readonly SiroccoTrail[]>={
   {name:'Encosta exposta',site:'exp-frost-3',entry:{x:2120,y:1020},exit:{x:2580,y:1080},ridge:{x:2370,y:1130,radius:58},art:'buried',hint:'Compare a encosta com a face protegida da pedra; retorne ao registro antes das galerias.'},
  ],
  icecave:[
-  {name:'Poça lateral do degelo',site:'exp-icecave-1',entry:{x:510,y:1020},exit:{x:1160,y:1040},ridge:{x:820,y:1150,radius:62},art:'shelf',hint:'A margem sul conduz à poça rasa; a pedra firme retorna ao salão sem cruzar água profunda.'},
+  {name:'Poça na fissura do gelo',site:'exp-icecave-1',entry:{x:510,y:1020},exit:{x:1160,y:1040},ridge:{x:820,y:1150,radius:62},art:'shelf',hint:'Observe a água aflorando na fissura pela faixa seca a oeste; a fenda escoa para o canal sem exigir cruzar água profunda.'},
   {name:'Coluna sob a geada',site:'exp-icecave-2',entry:{x:1240,y:830},exit:{x:1900,y:850},ridge:{x:1530,y:730,radius:58},art:'buried',hint:'A bifurcação norte segue pela pedra seca, abaixo da coluna. Compare o apoio das cargas.'},
   {name:'Margem do canal oculto',site:'exp-icecave-3',entry:{x:2240,y:1030},exit:{x:2730,y:1030},ridge:{x:2490,y:1170,radius:55},art:'shelf',hint:'Siga a borda rasa ao sul e retorne à passagem; as marcas e a vibração apontam para o ninho.'},
  ],

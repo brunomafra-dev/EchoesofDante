@@ -6,6 +6,12 @@ import { coopSession } from './network/CoopSession';
 import { ApplicationShell } from './ui/ApplicationShell';
 
 const shell = new ApplicationShell();
+// A normal title/creation screen needs no world textures or scene. The
+// explicit launch navigation loads them after the previews have been released.
+// Existing direct laboratories retain their authored scene arrival.
+const filename=location.pathname.split('/').pop()??'';
+const menuLab=filename==='campaign-playtest.html'&&new URLSearchParams(location.search).has('mobile-review');
+const worldAtBoot=shell.needsWorld||(filename!==''&&filename!=='index.html'&&!menuLab);
 
 export const game = new Phaser.Game({
   type: Phaser.AUTO,
@@ -15,7 +21,8 @@ export const game = new Phaser.Game({
   backgroundColor: '#102d2c',
   scale: { mode: Phaser.Scale.EXPAND, autoCenter: Phaser.Scale.CENTER_BOTH },
   render: { antialias: true, pixelArt: false },
-  scene: [new GameScene(false, false, scene => shell.bind(scene),undefined,progress=>shell.reportLoading(progress))],
+  scene: worldAtBoot?[new GameScene(false, false, scene => shell.bind(scene),undefined,progress=>shell.reportLoading(progress))]:[],
+  callbacks:{postBoot:game=>{if(!worldAtBoot)game.events.once(Phaser.Core.Events.POST_RENDER,()=>game.loop.sleep());}},
 });
 game.events.once(Phaser.Core.Events.DESTROY, () => { shell.destroy(); coopSession.disconnect(false); });
 

@@ -151,6 +151,8 @@ export class EnvironmentPainter {
   constructor(private scene: Phaser.Scene, private target: Phaser.GameObjects.RenderTexture) {}
 
   stamp(s: EnvironmentStamp): void {
+    // The ice gallery has exposed mineral seams, not a forest root bed.
+    if(this.scene.data.get('campaign-area')==='icecave'&&['root-growth','dante-canopy-green'].includes(s.key))return;
     if(this.scene.data.get('campaign-finish')){
       if(s.key==='camp-ground'&&this.scene.data.get('campaign-area')==='base')return;
       if(s.key==='dante-canopy-green'&&s.width<=165){addCampaignPlant(this.scene,s.x,s.y+s.height*.3,Math.max(65,s.width));return;}
@@ -200,7 +202,8 @@ export class EnvironmentPainter {
   apron(x: number, y: number, width: number, tint = 0xa5b69f): void {
     // Shallow sediment, a root and tiny rubble join the prop to the terrain.
     // Decorative marks are well below a body-sized obstacle and remain flat.
-    this.sediment(x, y, width * 1.6, width * 0.8, 0x686d52, 0.32);
+    const ice = this.scene.data.get('campaign-area') === 'icecave';
+    this.sediment(x, y, width * 1.6, width * 0.8, ice ? 0x718a99 : 0x686d52, ice ? 0.24 : 0.32);
     this.contact(x, y, width * 1.22, width * 0.32, 0.3);
     this.contact(x, y - width * 0.035, width * 0.87, width * 0.18, 0.8);
     const flip = Math.sin(x * 0.017 + y * 0.023) < 0;

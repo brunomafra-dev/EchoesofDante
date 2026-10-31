@@ -1,0 +1,11 @@
+{
+  "path": "public/assets/boreal-details/melt-pocket-v1.png",
+  "sha256": "7ab97efae36fab16b0d686966e37be498730086ad9ba7221dde70726c80bdf36",
+  "alphaBounds": [
+    34,
+    17,
+    487,
+    491
+  ],
+  "mode": "Built-in image_gen; alpha trim, resize and transparent padding only"
+}

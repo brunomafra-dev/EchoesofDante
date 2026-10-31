@@ -16,9 +16,10 @@ const DRY=new Set<JourneyArea>(['arid','dunes','sandpit']);
 const asset=(name:string)=>`${import.meta.env.BASE_URL}assets/visual/world-finish/${name}-v1.webp`;
 
 export function preloadCampaignEnvironment(scene:Phaser.Scene,area:JourneyArea):void{
+ if(area==='icecave'&&!scene.textures.exists('boreal-melt-pocket'))scene.load.image('boreal-melt-pocket',`${import.meta.env.BASE_URL}assets/boreal-details/melt-pocket-v1.png`);
  preloadEarlyJourney(scene,area);
  preloadRouteEnvironment(scene,area);
- const floors=area==='base'?['camp']:area==='forest'?['forest']:area==='cavern'?['cave','meadow']:area==='warden'?['cave']:GREEN.has(area)?['meadow']:DRY.has(area)?['arid']:[];
+ const floors=area==='base'?['camp','forest']:area==='forest'?['forest']:area==='cavern'?['cave','meadow']:area==='warden'?['cave']:GREEN.has(area)?['meadow']:DRY.has(area)?['arid']:[];
  for(const name of floors)if(!scene.textures.exists(`world-floor-${name}`))scene.load.image(`world-floor-${name}`,asset(`${name}-floor`));
  for(const[key,file]of [['world-green-plants','trail-plants-v1'],['world-regional-plants','regional-plants-v1']])if(!scene.textures.exists(key))scene.load.spritesheet(key,key==='world-green-plants'?`${import.meta.env.BASE_URL}assets/experiments/forest-finish/${file}.webp`:asset('regional-plants'),{frameWidth:256,frameHeight:256});
  if((GREEN.has(area)||area==='cavern')&&!scene.textures.exists('world-overhead'))scene.load.image('world-overhead',`${import.meta.env.BASE_URL}assets/experiments/forest-finish/canopy-v1.webp`);
@@ -69,8 +70,14 @@ export function paintCampaignGround(scene:Phaser.Scene,width:number,height=1500,
   return true;
  }
  if(area==='base'){
-  scene.add.tileSprite(0,0,512,512,'forest-ground').setOrigin(0).setDisplaySize(width,height).setTileScale(512/width,512/height).setTint(0x89977d).setDepth(-10002);
-  scene.add.image(0,0,key,'__BASE').setOrigin(0).setDisplaySize(1400,1050).setDepth(-10001.5).setName('campaign-continuous-ground');return true;
+  scene.add.image(0,0,'world-floor-forest').setOrigin(0).setDisplaySize(width,height).setDepth(-10002).setName('base-woodland-ground');
+  const edge='world-floor-camp-woodland-edge';
+  if(!scene.textures.exists(edge)){
+   const source=scene.textures.get(key).getSourceImage() as HTMLImageElement,t=scene.textures.createCanvas(edge,source.width,source.height)!,g=t.context;
+   g.drawImage(source,0,0);g.globalCompositeOperation='destination-in';
+   const fade=g.createLinearGradient(source.width*1330/1400,0,source.width,0);fade.addColorStop(0,'#000');fade.addColorStop(1,'#0000');g.fillStyle=fade;g.fillRect(0,0,source.width,source.height);t.refresh();
+  }
+  scene.add.image(0,0,edge).setOrigin(0).setDisplaySize(1400,1050).setDepth(-10001.5).setName('campaign-continuous-ground');return true;
  }
  if(!name){scene.add.image(x,y,key,'__BASE').setOrigin(0).setDisplaySize(width,height).setTint(COLD.has(area)?0xe3edf2:ASH.has(area)?0xe3d4c6:0xf0e2ca).setDepth(-10001.5).setName('campaign-continuous-ground');return true;}
  const panelWidth=Math.min(2200,width);
@@ -95,6 +102,7 @@ export function paintCampaignGround(scene:Phaser.Scene,width:number,height=1500,
 
 export function addCampaignPlant(scene:Phaser.Scene,x:number,y:number,size:number):Phaser.GameObjects.Image|undefined{
  const state=states.get(scene);if(!state||state.plants.length>=36)return;
+ if(state.area==='icecave')return;
  // Adjacent bake sections may overlap, but must not duplicate living props.
  if(state.plants.some(p=>Math.hypot(p.x-x,p.y-y)<38))return;
  const green=GREEN.has(state.area)||state.area==='cavern'&&x>4350;
