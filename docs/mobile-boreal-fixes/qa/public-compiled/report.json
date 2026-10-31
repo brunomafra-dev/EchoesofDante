@@ -1,0 +1,11 @@
+{
+  "base": "https://echosofdante.vercel.app",
+  "method": "Compiled client, no DEV globals. Fresh isolated mobile creation/launch/reload and explicit 0.1.176 saved-character copy; actual native input/analysis, no runtime world/HP/positions changed. Boreal visual lab explains its prior-story/common-resident fixtures.",
+  "checks": [
+    "Four female source sprites fetched and displayed together; fresh female Warrior creation/prologue/reload retains identity, menu requests no world assets and base requests no boss sheets",
+    "Actual previous loaded-save copy continues with unchanged money/receipts/living later boss and protected real saves; landscape/portrait/return captured without runtime modifications",
+    "Published-format cold pocket asset and original discovery label/finding load; touch analysis survives reload with native mechanism pending and Vesper alive, real saves untouched"
+  ],
+  "errors": [],
+  "passed": true
+}

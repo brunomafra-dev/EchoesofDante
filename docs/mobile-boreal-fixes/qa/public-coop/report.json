@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-31T18:26:16.834Z",
+  "base": "https://echosofdante.vercel.app",
+  "method": "Two separate Chrome mobile instances, real relay and normal movement/UI with touch joystick movement over the actual relay. Fresh original campaign, no simulated prerequisites/rewards. Real touch menus/joysticks and guest mission acceptance/rejoin; wire snapshots are observation only.",
+  "checks": [
+    "Fresh crew starts without prepared chapters; host male and guest female retain independent chosen genders",
+    "Actual mobile joystick approaches Nara and guest touch accepts original Reconhecimento for both participants",
+    "Guest reload/rejoin retains accepted first campaign mission; personal credits/receipts and later living bosses remain unchanged, real-save sentinels untouched",
+    "Temporary mobile room ends through normal host menu"
+  ],
+  "errors": [],
+  "personal": [
+    {
+      "sex": "male",
+      "credits": 0,
+      "receipts": [],
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "sex": "female",
+      "credits": 0,
+      "receipts": [],
+      "bosses": [
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "protocols": [
+    16,
+    16
+  ],
+  "guestJoins": 2,
+  "passed": true
+}
