@@ -11,7 +11,8 @@
     "settle-wind",
     "settle-dunes",
     "settle-buried",
-    "settle-frost"
+    "settle-frost",
+    "settle-icecave"
   ],
   "evidence": [
     "pw-intake",
@@ -81,6 +82,11 @@
     "pg-fill",
     "pg-treat",
     "pg-inlet-open",
-    "pg-return-closed"
+    "pg-return-closed",
+    "pi-kit",
+    "pi-load",
+    "pi-dock",
+    "pi-relay",
+    "pi-log"
   ]
 }

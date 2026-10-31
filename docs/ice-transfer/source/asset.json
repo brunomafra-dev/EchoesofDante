@@ -1,0 +1,11 @@
+{
+  "path": "public/assets/ice-transfer/sled-v1.png",
+  "sha256": "5f16f16f6137e75fb671fc3d6708069c7985bcc14d3c3c4910be2492db76bec8",
+  "alphaBounds": [
+    27,
+    18,
+    236,
+    226
+  ],
+  "mode": "Built-in image_gen new RGBA whole sled; deterministic alpha trim, resize and padding only."
+}

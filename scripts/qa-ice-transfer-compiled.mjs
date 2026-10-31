@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import {chromium} from 'playwright';
+import {mkdir,readFile,writeFile} from 'node:fs/promises';
+const base=process.env.QA_BASE??'http://localhost:5202',out=process.env.QA_OUT??'docs/ice-transfer/qa/compiled';
+const f=JSON.parse(await readFile('docs/ice-transfer/qa/solo/loaded-fixture.json','utf8'));
+// Coverage variant: only common Galleries residents are already defeated;
+// no new mission goal, XP, drop, mechanism or boss victory is prepared.
+f.journey.progression.rewardedHollows=[...new Set([...f.journey.progression.rewardedHollows,1300,1301,1302,1303,1304,1305,1306,1307,1936,1937,1938,1939,1940,1941,1984,1985])];
+await mkdir(out,{recursive:true});
+const b=await chromium.launch({channel:'chrome',args:['--disable-background-timer-throttling','--disable-renderer-backgrounding','--disable-backgrounding-occluded-windows']}),p=await b.newPage({viewport:{width:1280,height:720}});p.setDefaultTimeout(90000);
+const report={base,method:'Compiled client, no DEV globals/runtime position/HP/world changes. Real solo loaded checkpoint, common resident defeats prepared without XP/drops. Ordinary WASD moves around the load to push five legs; third analysis, native mechanism, archive/Ivo delivery and reload actual.',checks:[],errors:[]};p.on('pageerror',e=>report.errors.push(e.message));p.on('response',r=>{if(r.status()>=400)report.errors.push(r.status()+' '+r.url())});
+const saved=()=>p.evaluate(id=>JSON.parse(sessionStorage['dante-permanence-v1.icecave.warrior.local.echoes-of-dante.journey.v1.character.'+id]),f.profiles.selected);
+async function clear(){for(let i=0;i<12;i++){await p.waitForTimeout(120);await p.evaluate(()=>document.querySelector('.ability-upgrade-dialog[open] [data-upgrade]:not(:disabled)')?.click());}}
+async function move(key,ms){await p.keyboard.down(key);await p.waitForTimeout(ms);await p.keyboard.up(key);await p.waitForTimeout(200);if(process.env.QA_DEBUG)console.log(key,ms,await p.evaluate(()=>{const s=window.__danteGame.scene.getScene('Game');return{p:s.player.position,c:s.permanence.snapshot().ice}}));}
+async function e(){await p.keyboard.press('e',{delay:120});await p.waitForTimeout(300)}
+async function has(id){await p.waitForFunction(({id,hero})=>JSON.parse(sessionStorage['dante-permanence-v1.icecave.warrior.local.echoes-of-dante.journey.v1.character.'+hero]).missions.evidence.includes(id),{id,hero:f.profiles.selected},{timeout:6000});console.log('Confirmed',id);}
+try{
+ await(await p.context().newCDPSession(p)).send('Emulation.setFocusEmulationEnabled',{enabled:true});
+ await p.addInitScript(()=>{Object.defineProperty(document,'hidden',{get:()=>false});Object.defineProperty(document,'visibilityState',{get:()=>'visible'})});
+ await p.addInitScript(f=>{const prefix='dante-permanence-v1.icecave.warrior.';if(sessionStorage[prefix+'arrived'])return;localStorage['echoes-of-dante.characters.v1']='ice-compiled-real-save';localStorage['echoes-of-dante.settings.v1']='ice-compiled-real-settings';sessionStorage[prefix+'local.echoes-of-dante.characters.v1']=JSON.stringify(f.profiles);sessionStorage[prefix+'local.echoes-of-dante.journey.v1.character.'+f.profiles.selected]=JSON.stringify(f.journey);sessionStorage[prefix+'arrived']='1'},f);
+ await p.goto(base+'/campaign-playtest.html?permanence=icecave&v=0.1.176');await p.locator('.mission-tracker').waitFor();await clear();if(!process.env.QA_DEBUG)assert.equal(await p.evaluate(()=>typeof window.__danteGame),'undefined');await p.waitForTimeout(900);
+ await move('s',980);await move('d',3430);
+ await move('s',250);await move('d',170);await move('w',850);
+ await move('a',220);await move('w',170);await move('d',2450);
+ await move('w',220);await move('d',170);await move('s',1000);
+ await move('a',220);await move('s',170);await move('d',900);
+ await p.screenshot({path:out+'/actual-push.png'});await has('pi-dock');report.checks.push('Ordinary WASD approach and five push legs dock the cargo around the native rock, without runtime fixtures');
+ await move('s',570);await move('d',4170);await move('w',120);await e();await has('exp-icecave-3');
+ await move('a',3220);await move('w',2610);await e();await has('pi-relay');
+ await p.keyboard.press('m',{delay:100});await p.locator('[data-destination=base]').click();await p.locator('.mission-tracker').waitFor();await p.waitForTimeout(1000);await clear();await move('a',900);await move('s',205);await e();await has('pi-log');await move('w',510);await e();await p.locator('.mission-dialog[open]').waitFor();const select=p.locator('[data-mission-action=select-settle-icecave]');if(await select.count())await select.click();await p.locator('[data-mission-action=deliver]').click();await p.waitForFunction(()=>!document.querySelector('.mission-dialog[open]'));await p.waitForTimeout(700);
+ const before=await saved();assert.equal(before.economy.credits,f.journey.economy.credits+200);assert.equal(before.missionRewards.filter(id=>id==='settle-icecave').length,1);assert.equal(before.flags.icecaveSignalSeen,true);assert.equal(before.flags.vesperDefeated,false);assert.equal(before.flags.titanDefeated,false);await move('s',280);await p.screenshot({path:out+'/transport-record.png'});await p.reload();await p.locator('.mission-tracker').waitFor();await clear();const after=await saved();assert.equal(after.economy.credits,before.economy.credits);assert.equal(after.missionRewards.filter(id=>id==='settle-icecave').length,1);for(const[a,cells]of Object.entries(before.exploration))assert.ok(cells.every(c=>after.exploration[a]?.includes(c)));assert.equal(await p.evaluate(()=>localStorage['echoes-of-dante.characters.v1']),'ice-compiled-real-save');assert.equal(await p.evaluate(()=>localStorage['echoes-of-dante.settings.v1']),'ice-compiled-real-settings');report.checks.push('Third analysis, original mechanism, archive/NPC delivery, unique 200 credits, discovered cells and real saves survive reload; later bosses alive');assert.deepEqual(report.errors,[]);report.passed=true;
+}catch(e){report.failure=String(e);report.saved=await saved().catch(()=>{});await p.screenshot({path:out+'/failure.png'}).catch(()=>{});throw e}finally{await b.close();await writeFile(out+'/report.json',JSON.stringify(report,null,2)+'\n');console.log({passed:report.passed,failure:report.failure,checks:report.checks})}

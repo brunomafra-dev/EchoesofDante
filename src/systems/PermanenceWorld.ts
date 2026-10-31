@@ -16,6 +16,7 @@ import {WindSurvey} from '../visual/WindSurvey';
 import {DUNE_SURVEY} from '../config/duneSurvey';
 import {BURIED_RECORD} from '../config/buriedRecord';
 import {FrostWater} from '../visual/FrostWater';
+import {IceTransfer} from '../visual/IceTransfer';
 import type {ColdValve} from '../config/frostWater';
 import type {SurveyPusher} from '../config/windSurvey';
 import {moveWithCollisions,type Obstacle} from './Movement';
@@ -24,6 +25,9 @@ import {moveWithCollisions,type Obstacle} from './Movement';
 // authority. Static props/pipework are drawn once; pulses only change alpha.
 export class PermanenceWorld {
  private cold:FrostWater;
+ private ice:IceTransfer;
+ private depotLabel?:Phaser.GameObjects.Text;
+ private thermalTransport=false;
  private thermalReserve=false;
  private waterVessel?:Phaser.GameObjects.Image;
  private waterLabel?:Phaser.GameObjects.Text;
@@ -52,6 +56,7 @@ export class PermanenceWorld {
  private circuit:EchoCircuit;
  private wind:WindSurvey;
  constructor(private scene:Phaser.Scene,private area:JourneyArea,private obstacles:Obstacle[],private warn:()=>void=()=>{}){
+  this.ice=new IceTransfer(scene,area,obstacles);
   this.cold=new FrostWater(scene,area,obstacles);
   this.signal=new SignalSurvey(scene,area,obstacles);
   this.circuit=new EchoCircuit(scene,area,obstacles);
@@ -83,10 +88,11 @@ export class PermanenceWorld {
    this.power.fillStyle(0xc4afff,.8).fillCircle(0,0,9).lineStyle(2,0xd3c3ff,.65).strokeCircle(0,0,19);
   }
  }
- update(missions:Missions,player:Vec2,now:number,actors:readonly SurveyPusher[]=[],authority=true,remote?:PermanencePose):'circuit'|'wind'|undefined{
+ update(missions:Missions,player:Vec2,now:number,actors:readonly SurveyPusher[]=[],authority=true,remote?:PermanencePose):'circuit'|'wind'|'ice'|undefined{
   this.cold.update(missions,player,now);
   const circuitCompleted=this.circuit.update(missions,player,now,authority,remote?.circuit);
   const windCompleted=this.wind.update(missions,now,actors,authority,remote?.wind);
+  const iceCompleted=this.ice.update(missions,now,actors,authority,remote?.ice);
   this.signal.update(missions,player,actors[0]?.rotation??0,now);
   if(this.area==='sandpit'){
    const show=missions.status('settle-buried')==='active'&&missions.has('after-soterrado')&&missions.has('pb-clue')&&!missions.has('pb-sample');
@@ -115,6 +121,7 @@ export class PermanenceWorld {
   if(missions.status('settle-frost')==='completed'&&this.waterVessel&&!this.thermalReserve){this.thermalReserve=true;this.waterVessel.setTexture('quest-cold-reserve').setDisplaySize(85,85).setName('frost-water-reserve');this.waterLabel?.setText('RESERVA TÉRMICA');}
   if(missions.has('pf-stock')&&!this.stocked){this.stocked=true;this.addFoodReserve();}
   if(missions.has('pt-deliver')&&!this.supplied){this.supplied=true;this.addDepot();}
+  if(missions.status('settle-icecave')==='completed'&&this.depotLabel&&!this.thermalTransport){this.thermalTransport=true;this.depotLabel.setText('TRANSPORTE TÉRMICO');}
   const powerActive=this.area==='terraces'&&missions.status('settle-energy')==='active'&&!missions.has('pe-isolate'),beat=Math.floor(now/1900),phase=now%1900;
   this.power?.setVisible(powerActive).setRotation(beat%4*Math.PI/2).setAlpha(phase<1000?.12+phase/1000*.28:phase<1550?.9:.04);
   if(powerActive&&beat!==this.powerBeat){this.powerBeat=beat;if(phase<1000&&Math.hypot(player.x-1650,player.y-930)<500)this.warn();}
@@ -126,7 +133,7 @@ export class PermanenceWorld {
   if(this.area==='springs'&&!this.supportReady&&missions.status('settle-outpost')==='completed'){
    this.supportReady=true;this.scene.add.text(OUTPOST_SUPPORT.x,1190,'APOIO · CURA E COFRE',{fontFamily:'Barlow Condensed',fontSize:'15px',color:'#d4dfc4',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setName('outpost-support-sign');
   }
-  return windCompleted?'wind':circuitCompleted?'circuit':undefined;
+  return iceCompleted?'ice':windCompleted?'wind':circuitCompleted?'circuit':undefined;
  }
  private addOutpostDepot():void{
   if(this.area!=='springs')return;
@@ -161,13 +168,15 @@ export class PermanenceWorld {
   const lamp=this.scene.add.graphics().setDepth(y+1);lamp.fillStyle(0xffd898,.12).fillCircle(x+48,y-74,20).fillStyle(0xffdeb1,.8).fillCircle(x+48,y-74,3);
   this.scene.add.text(x,y+20,'REDE ISOLADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#ebd8b6',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
  }
- snapshot():PermanencePose{return{...(this.haul?{haul:{...this.haul.position,kind:'cargo' as const}}:{}),circuit:this.circuit.snapshot(),wind:this.wind.snapshot()};}
+ snapshot():PermanencePose{return{...(this.haul?{haul:{...this.haul.position,kind:'cargo' as const}}:{}),circuit:this.circuit.snapshot(),wind:this.wind.snapshot(),ice:this.ice.snapshot()};}
+ get icePosition():Vec2|undefined{return this.ice.position;}
+ recoverIce(missions:Missions):string{return this.ice.recover(missions);}
  interactColdValve(node:ColdValve,missions:Missions):string{return this.cold.interact(node,missions);}
  interactCircuit(node:CircuitNode,missions:Missions,now:number):string{return this.circuit.interact(node,missions,now);}
  get haulPosition():Vec2|undefined{return this.haul?.position;}
  // The cached minimap describes permanent geometry. Moving cargo stays in
  // physical collision, while its travel never rebakes the static grid.
- get navigationObstacles():readonly Obstacle[]{const wind=this.wind.movingSolid;return this.haul||wind?this.obstacles.filter(o=>o!==this.haul?.solid&&o!==wind):this.obstacles;}
+ get navigationObstacles():readonly Obstacle[]{const wind=this.wind.movingSolid,ice=this.ice.movingSolid;return this.haul||wind||ice?this.obstacles.filter(o=>o!==this.haul?.solid&&o!==wind&&o!==ice):this.obstacles;}
  private updateHaul(missions:Missions,now:number,actors:readonly {position:Vec2;isDead:boolean}[],authority:boolean,remote?:PermanencePose):void{
   const dt=Math.min(.04,Math.max(0,(now-this.lastAt)/1000));this.lastAt=now;
   const outpost=this.area==='springs',load=outpost?'po-load':'pt-load',deliver=outpost?'po-deliver':'pt-deliver',mission=outpost?'settle-outpost':'settle-transport';
@@ -193,7 +202,7 @@ export class PermanenceWorld {
   if(this.area!=='base'&&this.area!=='terraces')return;
   const x=this.area==='base'?650:1780,y=this.area==='base'?900:1160;
   addQuestProp(this.scene,'supplyRack',x,y,110).setName('settlement-supply-depot');this.obstacles.push({x,y:y-22,radius:30});
-  this.scene.add.text(x,y+20,'DEPÓSITO DE SUPRIMENTOS',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d9d5af',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
+  this.depotLabel=this.scene.add.text(x,y+20,'DEPÓSITO DE SUPRIMENTOS',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d9d5af',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
  }
  private addFoodReserve():void{
   if(this.area!=='base'&&this.area!=='terraces')return;
@@ -211,6 +220,7 @@ export class PermanenceWorld {
   this.waterLabel=this.scene.add.text(x,y+48,'ÁGUA TRATADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#b1d5c7',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
  }
  at(position:Vec2,missions:Missions):PermanenceSite|undefined{
+  const ice=this.ice.at(position,missions);if(ice)return ice;
   const cold=this.cold.at(position,missions);if(cold)return cold;
   const circuit=this.circuit.at(position,missions);if(circuit)return circuit;
   const site=this.sites.map(s=>s.site).find(s=>missions.status(s.mission)==='active'&&!missions.has(s.id)&&!s.needs?.some(id=>!missions.has(id))&&Math.hypot(position.x-s.x,position.y-s.y)<s.radius);

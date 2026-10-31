@@ -1,0 +1,11 @@
+{
+  "revision": "d9c0822e929d1dcd4006a1e8fa861d2c97c90dbb",
+  "method": "Latest browser client against exact public pre-icecave relay 16 and its historical catalogue. Real room handshakes/capability refusal; no synthetic chapter completion.",
+  "checks": [
+    "Previous Frost lab and room inspection connect on actual historical protocol 16; only the new icecave capability is unavailable",
+    "Direct icecave lab refuses incompatible relay before joining a filtered campaign",
+    "Accepted icecave in a normal campaign URL also refuses old relay without losing evidence; updated relay reconnect restores capability with identical objectives"
+  ],
+  "errors": [],
+  "passed": true
+}

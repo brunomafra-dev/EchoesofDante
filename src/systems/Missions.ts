@@ -28,6 +28,8 @@ export class Missions{
  circuitAvailable=true;
  windAvailable=true;
  dunesAvailable=true;
+ icecaveAvailable=true;
+ setIcecaveAvailable(value:boolean):void{if(value!==this.icecaveAvailable){this.icecaveAvailable=value;this.version++;}}
  frostAvailable=true;
  setFrostAvailable(value:boolean):void{if(value!==this.frostAvailable){this.frostAvailable=value;this.version++;}}
  buriedAvailable=true;
@@ -49,6 +51,7 @@ export class Missions{
   if(id==='settle-echo'&&!this.circuitAvailable)return 'locked';
   if(id==='settle-wind'&&!this.windAvailable)return 'locked';
   if(id==='settle-dunes'&&!this.dunesAvailable)return 'locked';
+  if(id==='settle-icecave'&&!this.icecaveAvailable)return 'locked';
   if(id==='settle-frost'&&!this.frostAvailable)return 'locked';
   if(id==='settle-buried'&&!this.buriedAvailable)return 'locked';
   if(isPermanence(id)&&!this.permanenceAvailable)return 'locked';

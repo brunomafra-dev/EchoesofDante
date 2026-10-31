@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 
 // Two baked RGBA atlases; complete objects, one texture upload per sheet.
 export const QUEST_PROPS={
+ iceSled:['ice-transfer',0],
  coldCollector:['cold-collector',0],coldReserve:['cold-reserve',0],
  vitrifiedCore:['buried',0],
  emitter:['research',0],receiver:['research',1],archive:['research',2],routeArchive:['research',3],
@@ -15,6 +16,7 @@ export const QUEST_PROPS={
 } as const;
 export type QuestProp=keyof typeof QUEST_PROPS;
 export function preloadQuestProps(scene:Phaser.Scene):void{
+ if(!scene.textures.exists('quest-ice-transfer'))scene.load.image('quest-ice-transfer',`${import.meta.env.BASE_URL}assets/ice-transfer/sled-v1.png`);
  for(const kind of ['collector','reserve'])if(!scene.textures.exists('quest-cold-'+kind))scene.load.image('quest-cold-'+kind,`${import.meta.env.BASE_URL}assets/frost-water/${kind}-v1.png`);
  if(!scene.textures.exists('quest-buried'))scene.load.image('quest-buried',`${import.meta.env.BASE_URL}assets/buried-record/vitrified-core-v1.png`);
  for(const sheet of ['research','survival'])if(!scene.textures.exists('quest-'+sheet))scene.load.spritesheet('quest-'+sheet,`${import.meta.env.BASE_URL}assets/mission-identity/${sheet}-v1.png`,{frameWidth:256,frameHeight:256});
@@ -26,6 +28,7 @@ export function addQuestProp(scene:Phaser.Scene,kind:QuestProp,x:number,y:number
 // Undefined entries intentionally keep their natural formation/ground stamp.
 // null means an existing instrument/building/person is the objective itself.
 export const GOAL_PROPS:Readonly<Record<string,QuestProp|null>>={
+ 'pi-kit':'iceSled','pi-load':null,'pi-log':'routeArchive',
  'pg-kit':'coldCollector','pg-mount':null,'pg-fill':null,'pg-treat':null,
  'pb-sample':null,
  'pd-kit':'coreSample','pd-test':null,'pd-store':'routeArchive',

@@ -1,0 +1,28 @@
+{
+  "chapter": "icecave",
+  "method": "Two independent Chrome and relay 16. Approach/invulnerability fixtures; real guest E, physical cargo pushing and actual NPC delivery; shared evidence and personal rewards. Prior story only through reserved host lab button.",
+  "checks": [
+    "Actual lab button prepares the running original crew through the host; guest preparation is refused without changing objectives",
+    "Guest accepts through the actual mission request; invitation keeps the isolated chapter",
+    "Guest performs existing analyses and five normal push legs; host authority moves one cargo around native rock and preserves exact dock across first reconnection; native mechanism activates through E",
+    "Actual guest archive/Ivo delivery grants 200 credits once to each original member; host retains separately tracked report",
+    "Second reconnect preserves receipts, full discovered-cell subsets and original living bosses; real-save sentinels intact"
+  ],
+  "errors": [],
+  "push": {
+    "before": {
+      "x": 1050,
+      "y": 1200
+    },
+    "after": {
+      "x": 1510,
+      "y": 1220
+    },
+    "method": "Five normal D/W/D/S/D push legs around the original rock; only pusher approaches prepared"
+  },
+  "credits": [
+    500,
+    500
+  ],
+  "passed": true
+}

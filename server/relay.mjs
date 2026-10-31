@@ -74,7 +74,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
     member.timer.unref();
   }
   function joined(room, member) {
-    send(member.ws, { type: 'joined', protocol:16, outposts:1, signals:1, circuits:1, wind:1, dunes:1, buried:1, frost:1, chatHistory:room.chat, campaign:campaignState(room),id:member.id, role:member===room.host?'host':'guest', code: room.code, token: member.token, epoch: room.epoch,
+    send(member.ws, { type: 'joined', protocol:16, outposts:1, signals:1, circuits:1, wind:1, dunes:1, buried:1, frost:1, icecave:1, chatHistory:room.chat, campaign:campaignState(room),id:member.id, role:member===room.host?'host':'guest', code: room.code, token: member.token, epoch: room.epoch,
       area: room.area, members:roster(room), paused: room.paused === true, receipt: member.receipt, total: member.total, bosses:[...member.bosses], items:[...member.items.values()],resources:member.resources });
     notify(room);
   }
@@ -94,7 +94,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
       if(['input','equipment','world','service-request','pause','travel'].includes(m.type))ws.messageTypes[m.type]=(ws.messageTypes[m.type]??0)+1;
       if(m.type==='inspect') {
         const room=rooms.get(String(m.code).replace(/\s/g,'').toUpperCase());
-        return send(ws,room?{type:'lobby',protocol:16,outposts:1, signals:1, circuits:1, wind:1, dunes:1, buried:1, frost:1,campaign:campaignState(room),members:roster(room),area:room.area}:{type:'error',message:'Sala não encontrada. Peça um novo convite.'});
+        return send(ws,room?{type:'lobby',protocol:16,outposts:1, signals:1, circuits:1, wind:1, dunes:1, buried:1, frost:1, icecave:1,campaign:campaignState(room),members:roster(room),area:room.area}:{type:'error',message:'Sala não encontrada. Peça um novo convite.'});
       }
       if (m.type === 'resume') {
         if (typeof m.token !== 'string' || !/^[a-f0-9]{48}$/.test(m.token)) return send(ws, { type: 'error', message: 'Credencial de reconexão inválida.' });
@@ -230,6 +230,6 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   server.once('close', close);
   return {
     close,
-    status: () => ({ service: 'Dante regional co-op', protocol: 16, outposts:1, signals:1, circuits:1, wind:1, dunes:1, buried:1, frost:1, missions:true, chat:true, capacity:4, uniqueClasses:true,fixedCampaigns:true, revision:process.env.RENDER_GIT_COMMIT??'local', campaign: true, rooms: rooms.size, players: clients.size }),
+    status: () => ({ service: 'Dante regional co-op', protocol: 16, outposts:1, signals:1, circuits:1, wind:1, dunes:1, buried:1, frost:1, icecave:1, missions:true, chat:true, capacity:4, uniqueClasses:true,fixedCampaigns:true, revision:process.env.RENDER_GIT_COMMIT??'local', campaign: true, rooms: rooms.size, players: clients.size }),
   };
 }

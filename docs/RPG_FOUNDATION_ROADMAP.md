@@ -1,5 +1,12 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**31/10/2026 · Fratura aprovada / Galerias autorizadas · 0.1.176:** usuário respondeu “boa ficou top vamos pro proxim”, aprovando a 0.1.175 e autorizando o próximo capítulo. [Entre pedra e degelo](ice-transfer/README.md): Ivo reaproveita as três análises das Galerias e conduz uma carga térmica pela pedra seca, contornando uma rocha existente. Degelo raso freia os patins; apoio confirmado fica salvo. Mecanismo e portais originais continuam obrigatórios; Vésper vivo. Somente este capítulo, com playtest humano antes do Ninho.
+
+- [x] Aprovação humana da entrega 0.1.175 registrada separadamente do QA técnico.
+- [x] QA técnico 0.1.176: modelo/save antigo, solo/dupla completos, onze aproximações/portais originais, morte/R/reload/duas reconexões, recompensa/descoberta, quatro classes touch/gamepad, relay anterior, typecheck/build 270 módulos e diff check. Travessia/entrega, três capítulos e dupla compilados passaram; capturas inspecionadas pelo agente. [Fixtures e limites](ice-transfer/README.md).
+- [ ] Publicação Vercel/Render e QA público 0.1.176.
+- [ ] Playtest humano 0.1.176. Não iniciar o capítulo do Ninho antes dessa avaliação.
+
 **31/10/2026 · Coleta protegida na Fratura autorizada · 0.1.175:** usuário respondeu “boa vamo” à proposta de Água que resiste ao frio, após a publicação/QA dos capítulos anteriores. [Escopo e evidências](frost-water/README.md): Lia reaproveita as três análises regionais, coletor com duas válvulas e fluxo observável, lote tratado e reserva térmica visível, 190 créditos únicos. Preservar terrenos, campanha, registro da Fratura/Galerias e bosses vivos. Novo catálogo `frost:1`, protocolo 16 mantido; correção de prazo de uma segunda reconexão encontrada no QA. Somente este capítulo; aguardar playtest humano antes das Galerias.
 
 - [x] QA técnico local: modelo/save antigo, solo/dupla completos, dez aproximações/portais originais, morte/R/reload, duas reconexões, recompensa/descoberta, quatro classes touch/gamepad, relay anterior e typecheck/build 268 módulos. Coleta/entrega e início de três capítulos/dupla compilados passaram, capturas inspecionadas pelo agente; [fixtures e limites](frost-water/README.md).

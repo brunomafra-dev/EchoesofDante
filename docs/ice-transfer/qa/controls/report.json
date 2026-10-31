@@ -1,0 +1,12 @@
+{
+  "method": "Actual solo loaded checkpoint, before docking. Class and pusher approach positions/invulnerability are fixtures. Full five-leg cargo route uses actual touch joystick or mocked standard gamepad, including real recovery interaction. No injected cargo pose or new evidence.",
+  "checks": [
+    "warrior-touch: actual stick pushes, interaction recovers, full dry route docks; native rock clearance measured every frame",
+    "hunter-touch: actual stick pushes, interaction recovers, full dry route docks; native rock clearance measured every frame",
+    "astral-touch: actual stick pushes, interaction recovers, full dry route docks; native rock clearance measured every frame",
+    "xenobinder-touch: actual stick pushes, interaction recovers, full dry route docks; native rock clearance measured every frame",
+    "gamepad: actual stick pushes, interaction recovers, full dry route docks; native rock clearance measured every frame"
+  ],
+  "errors": [],
+  "passed": true
+}

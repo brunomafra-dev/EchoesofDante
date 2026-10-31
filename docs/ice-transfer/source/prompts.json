@@ -1,0 +1,6 @@
+{
+  "mode": "Built-in image_gen tool; new transparent RGBA asset",
+  "prompt": "One original complete world prop sprite for an isometric painted realistic action RPG, Organic Sci-Fi R3. A low portable expedition cargo sled carrying two unequal squat water cylinders wrapped in beige quilted thermal insulation and secured with worn amber straps. Two sturdy curved bronze and olive steel skids, visible front towing loop, small mechanical cargo clamps and subtle copper fittings, rugged coherent full equipment object. The sled must have a broad low footprint and readable left/right skids, payload sits low, not a tall stack. Camera elevated 40 degrees, 3/4 front view, upper-left light, rich hand-painted material detail matching an earthy organic alien expedition. Standalone transparent RGBA background and generous transparent margins, entire sled and all cylinders/straps/skids inside image. Readable at 110 pixels in game. No ground, snow, background, cast shadow outside feet, people, UI, words, letters, generic suitcase, glowing prism or neon. Square image. New asset, not an edit.",
+  "transparent_background": true,
+  "output": "public/assets/ice-transfer/sled-v1.png"
+}

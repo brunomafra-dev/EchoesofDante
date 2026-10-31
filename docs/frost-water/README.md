@@ -1,5 +1,7 @@
 # Água que resiste ao frio · 0.1.175
 
+**31/10/2026 · Aprovação humana:** usuário respondeu “boa ficou top vamos pro proxim”, aprovando esta entrega e autorizando o capítulo das Galerias. Os gates históricos abaixo ficam encerrados por essa avaliação; [nova etapa](../ice-transfer/README.md) aguarda sua própria validação.
+
 ## Autorização e capítulo
 
 Em 31/10/2026, após o encerramento público das Dunas/Soterrado, o usuário respondeu “boa vamo” à proposta de Lia estudar coleta protegida e conservação na Fratura Boreal. Somente este capítulo, com avaliação humana antes das Galerias. Não registra aprovação humana automática da 0.1.174 nem antecipa outro sprint.
@@ -43,4 +45,4 @@ Prompt set: coletor inteiro para frio, duas válvulas de latão, mangueiras curt
 - [x] Aplicação `a288c342dbc60109cc6100e5525b183234dcb10a` enviada para `origin/main`, igualdade local/remoto e Vercel success conferidos; [70 hashes JavaScript/arte publicados](../outpost/qa/publication/0.1.175/hashes.json).
 - [x] [Três capítulos solo públicos](qa/public-chapters/public.json) e [coleta/tratamento/entrega públicos por WASD/E](qa/public-collection/report.json), sem globais DEV, com o checkpoint/derrotas comuns explicitamente preparados como no compilado acima. Válvulas/lote/recompensa/reload, saves reais e descoberta preservados; capturas públicas inspecionadas pelo agente. O script habilita foco de renderização do Chrome para evitar que abas de automação em segundo plano reduzam os deslocamentos por tempo; isso não muda o jogo.
 - [x] Usuário publicou o Render `a288c34`: protocolo 16, `frost:1` e catálogos anteriores confirmados pela saúde e pelas conexões reais. [Dupla pública](qa/public-coop/report.json) passou em dois Chrome independentes na Vercel/Render: convite/preparo anterior explícito, aceite com Lia/coleta do kit pelo convidado, sincronização, reload/reentrada original e encerramento normal. Saldos/recibos/bosses posteriores e saves reais intactos; capturas dos dois integrantes inspecionadas pelo agente. Os 70 hashes foram reconferidos com relay compatível. Gate externo encerrado; esta amostra pública cobre o início/reconexão, com válvulas/percurso/entrega completos cobertos na dupla local acima.
-- [ ] Playtest humano. Automação não substitui naturalidade visual, diversão, duração, celular físico ou equipe humana de quatro. Não iniciar Galerias antes dessa avaliação.
+- [x] Playtest humano aprovado pelo usuário em 31/10, conforme registro acima. Não equivale a medir duração, testar celular físico ou equipe humana de quatro.

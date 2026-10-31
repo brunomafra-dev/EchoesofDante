@@ -1,0 +1,9 @@
+{
+  "checks": [
+    "Prior delivery/capability required, no automatic docking, existing regional evidence reused, 200 credits unique",
+    "Original rock collision, wet-edge braking including cargo radius, dead/distant/nonfinite inputs refused, dry five-leg route reaches dock",
+    "Existing wind pushing keeps identical default geometry/movement after optional geometry reuse",
+    "Actual schema-1 0.1.166 character/economy/native flags load unchanged"
+  ],
+  "passed": true
+}

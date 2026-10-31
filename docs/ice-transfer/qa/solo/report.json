@@ -1,0 +1,119 @@
+{
+  "method": "Isolated prior-story arrival. Pusher/analysis approach positions and invulnerability are coverage fixtures; cargo moves only from normal WASD with physical collision. E/native mechanism/portals, NPC delivery and saves real. Death injected only for R/reload coverage.",
+  "checks": [
+    "Existing pool/column analyses via E, cargo prepared; normal pushing collides with original rock, wet film brakes the skids, real recovery E returns the intact load",
+    "Five real push legs reach dry dock; loose cargo resets safely on reload, dock survives death/R/reload with unique physical cargo",
+    "Eleven collision-clear connected approaches; original backward/forward portals preserve dock",
+    "Third old analysis and native mechanism interact normally; original portal reaches living Vesper, no quest victory/shortcut",
+    "Actual Ivo archive/dialogue delivery, 200 credits once, reload and three returns preserve receipts, cargo and real saves without object growth"
+  ],
+  "errors": [],
+  "push": {
+    "before": {
+      "x": 1050,
+      "y": 1200
+    },
+    "after": {
+      "x": 1510,
+      "y": 1220
+    },
+    "method": "Five normal D/W/D/S/D push legs around the original rock; only pusher approaches prepared"
+  },
+  "routes": [
+    {
+      "x": 820,
+      "y": 1320,
+      "clear": true,
+      "steps": 18,
+      "gap": 18.973665961010276
+    },
+    {
+      "x": 1510,
+      "y": 920,
+      "clear": true,
+      "steps": 26,
+      "gap": 22
+    },
+    {
+      "x": 2490,
+      "y": 1330,
+      "clear": true,
+      "steps": 52,
+      "gap": 20.39607805437114
+    },
+    {
+      "x": 390,
+      "y": 960,
+      "clear": true,
+      "steps": 1,
+      "gap": 24.08318915758459
+    },
+    {
+      "x": 990,
+      "y": 1250,
+      "clear": true,
+      "steps": 19,
+      "gap": 21.54065922853802
+    },
+    {
+      "x": 1150,
+      "y": 1110,
+      "clear": true,
+      "steps": 21,
+      "gap": 33.941125496954285
+    },
+    {
+      "x": 1420,
+      "y": 1110,
+      "clear": true,
+      "steps": 26,
+      "gap": 24.73863375370596
+    },
+    {
+      "x": 1510,
+      "y": 1290,
+      "clear": true,
+      "steps": 31,
+      "gap": 12
+    },
+    {
+      "x": 1680,
+      "y": 690,
+      "clear": true,
+      "steps": 35,
+      "gap": 25.059928172283335
+    },
+    {
+      "x": 245,
+      "y": 960,
+      "clear": true,
+      "steps": 4,
+      "gap": 24.758836806279895
+    },
+    {
+      "x": 2760,
+      "y": 980,
+      "clear": true,
+      "steps": 51,
+      "gap": 10.19803902718557
+    }
+  ],
+  "counts": [
+    {
+      "objects": 164,
+      "textures": 266,
+      "colliders": 11
+    },
+    {
+      "objects": 164,
+      "textures": 266,
+      "colliders": 11
+    },
+    {
+      "objects": 164,
+      "textures": 266,
+      "colliders": 11
+    }
+  ],
+  "passed": true
+}
