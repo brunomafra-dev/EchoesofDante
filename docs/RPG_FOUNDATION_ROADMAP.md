@@ -4,7 +4,8 @@
 
 - [x] Aprovação humana da entrega 0.1.175 registrada separadamente do QA técnico.
 - [x] QA técnico 0.1.176: modelo/save antigo, solo/dupla completos, onze aproximações/portais originais, morte/R/reload/duas reconexões, recompensa/descoberta, quatro classes touch/gamepad, relay anterior, typecheck/build 270 módulos e diff check. Travessia/entrega, três capítulos e dupla compilados passaram; capturas inspecionadas pelo agente. [Fixtures e limites](ice-transfer/README.md).
-- [ ] Publicação Vercel/Render e QA público 0.1.176.
+- [x] Aplicação `4a8e275` em `origin/main`, igualdade local/remoto conferida, Vercel success/71 hashes e três capítulos solo públicos passaram. Transporte/análise/mecanismo/arquivo/entrega/reload públicos por WASD/E passaram com fixtures explícitas e saves reais preservados; capturas inspecionadas pelo agente. [Evidências e limites da automação por duração](ice-transfer/README.md).
+- [ ] Render ainda `a288c34`, 16 / `frost:1`, sem `icecave:1`; atualização solicitada ao usuário após push. Dupla pública do capítulo aguarda essa capacidade. Não confundir dupla local/compilada aprovada no QA com publicação cooperativa confirmada.
 - [ ] Playtest humano 0.1.176. Não iniciar o capítulo do Ninho antes dessa avaliação.
 
 **31/10/2026 · Coleta protegida na Fratura autorizada · 0.1.175:** usuário respondeu “boa vamo” à proposta de Água que resiste ao frio, após a publicação/QA dos capítulos anteriores. [Escopo e evidências](frost-water/README.md): Lia reaproveita as três análises regionais, coletor com duas válvulas e fluxo observável, lote tratado e reserva térmica visível, 190 créditos únicos. Preservar terrenos, campanha, registro da Fratura/Galerias e bosses vivos. Novo catálogo `frost:1`, protocolo 16 mantido; correção de prazo de uma segunda reconexão encontrada no QA. Somente este capítulo; aguardar playtest humano antes das Galerias.
