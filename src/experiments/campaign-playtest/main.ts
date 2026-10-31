@@ -11,6 +11,7 @@ const vitalsTest=outpostSupportTest&&new URLSearchParams(location.search).has('v
 const settlementLifeTest=new URLSearchParams(location.search).has('settlement-life')||settlementMotionTest;
 const mapMemoryTest=new URLSearchParams(location.search).has('map-memory');
 const missionIdentityTest=new URLSearchParams(location.search).has('mission-identity');
+const audioReviewTest=new URLSearchParams(location.search).has('audio-review');
 const permanenceChapter=new URLSearchParams(location.search).get('permanence')??(outpostSupportTest?'outpost':settlementLifeTest||npcReviewTest?'water':null);
 const permanenceTest=!!permanenceChapter;
 const missionTest=new URLSearchParams(location.search).has('missions')||permanenceTest;
@@ -30,7 +31,7 @@ const arrivalParam=new URLSearchParams(location.search).get('arrival');
 const routeArrival=routeTest&&((!siroccoTest&&!borealTest&&!embersTest&&(arrivalParam==='forest'||arrivalParam==='cavern'))||(siroccoTest&&(arrivalParam==='valley'||arrivalParam==='arid'||arrivalParam==='dunes'||arrivalParam==='sandpit'))||(borealTest&&(arrivalParam==='frost'||arrivalParam==='icecave'||arrivalParam==='icenest'))||(embersTest&&(arrivalParam==='cinder'||arrivalParam==='obsidian'||arrivalParam==='caldera')))?arrivalParam:undefined;
 const depthTest=new URLSearchParams(location.search).has('depth');
 const settlementTest=new URLSearchParams(location.search).has('settlement');
-const prefix=mobileReviewTest?'dante-mobile-review-v1.':embersTest?`dante-embers-journey-v1.${routeArrival??'journey'}.`:borealTest?`dante-boreal-journey-v1.${routeArrival??'journey'}.`:siroccoTest?`dante-sirocco-journey-v1.${routeArrival??'journey'}.`:routeTest?`dante-early-route-v2.${routeArrival??'journey'}.`:depthTest?`dante-regional-lab.${mobileClass??'warrior'}.`:new URLSearchParams(location.search).has('journey')?'dante-journey-review-lab.':mobileTest?`dante-mobile-lab.${mobileClass??'warrior'}.`:settlementTest?'dante-settlement-lab-v2.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
+const prefix=audioReviewTest?'dante-audio-settings-review-v1.':mobileReviewTest?'dante-mobile-review-v1.':embersTest?`dante-embers-journey-v1.${routeArrival??'journey'}.`:borealTest?`dante-boreal-journey-v1.${routeArrival??'journey'}.`:siroccoTest?`dante-sirocco-journey-v1.${routeArrival??'journey'}.`:routeTest?`dante-early-route-v2.${routeArrival??'journey'}.`:depthTest?`dante-regional-lab.${mobileClass??'warrior'}.`:new URLSearchParams(location.search).has('journey')?'dante-journey-review-lab.':mobileTest?`dante-mobile-lab.${mobileClass??'warrior'}.`:settlementTest?'dante-settlement-lab-v2.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
 const labPrefix=mapMemoryTest?'dante-map-memory-v1.'+(mobileClass??'warrior')+'.':missionIdentityTest?'dante-mission-identity-v1.'+permanenceChapter+'.'+(mobileClass??'warrior')+'.':vitalsTest?'dante-vitals-v1.'+(mobileClass??'warrior')+'.':outpostSupportTest?'dante-outpost-support-v1.'+(mobileClass??'warrior')+'.':npcReviewTest?'dante-npc-review-v1.'+(mobileClass??'warrior')+'.':settlementMotionTest?'dante-settlement-motion-v1.'+(mobileClass??'warrior')+'.':settlementLifeTest?'dante-settlement-life-v1.'+(mobileClass??'warrior')+'.':permanenceTest?'dante-permanence-v1.'+permanenceChapter+'.'+(mobileClass??'warrior')+'.':titanTest?'dante-titan-combat-v1.'+(mobileClass??'warrior')+'.':vesperTest?'dante-vesper-combat-v2.'+(mobileClass??'warrior')+'.':soterradoTest?'dante-soterrado-combat-v1.'+(mobileClass??'warrior')+'.':wardenTest?'dante-warden-combat-v2.'+ (mobileClass??'warrior')+'.':prefix;
 // An explicit trip home must survive the lab's otherwise automatic arrival.
 const labHome=permanenceTest&&get.call(sessionStorage,labPrefix+'home-once')==='1';
@@ -56,6 +57,13 @@ if(missionTest||routeTest||bossTest){
  }
 }
 document.body.append(details);
+if(audioReviewTest){
+ details.classList.add('is-mobile-lab');
+ const reset=details.querySelector('button')!,summary=document.createElement('summary'),text=document.createElement('p');
+ summary.textContent='CONFIGURAÇÕES DE ÁUDIO · TESTE ISOLADO';
+ text.textContent='Crie uma campanha solo temporária para ouvir a música. No jogo, abra Esc → Configurações e arraste Música, Efeitos e Volume geral; o percentual deve acompanhar o dedo e o som deve mudar sem reiniciar. Os valores deste teste ficam isolados nesta aba. Nenhum pré-requisito, missão, vitória ou recompensa é simulado; saves e configurações reais ficam protegidos.';
+ details.replaceChildren(summary,text,reset);
+}
 if(mobileReviewTest){
  details.classList.add('is-mobile-lab');
  const reset=details.querySelector('button')!,summary=document.createElement('summary'),text=document.createElement('p');

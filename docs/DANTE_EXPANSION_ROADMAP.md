@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+**31/10/2026 · Manutenção de áudio mobile · 0.1.178:** após o usuário relatar que Música, Efeitos e Volume geral não mudavam o som no iPhone, a música da campanha passou a usar `GainNode` e os sliders mostram confirmação percentual em toque. [Escopo, QA e limites](audio-settings/README.md). Não altera o plano de capítulos; reteste humano em aparelho físico pendente.
+
 **31/10/2026 · Manutenção 0.1.177 autorizada:** crítica à poça/plantas das Galerias e solicitações de gênero/mobile interrompem a continuação do capítulo. [Revisão e limites](mobile-boreal-fixes/README.md): água aflorando na fissura com saída para o canal, sem raízes/plantas verdes nas Galerias; gênero global nas prévias, borda da base corrigida e menor sobreposição de carregamento. Não substitui terrenos, não cria missão/recibo ou libera Ninho. QA técnico seguido de reteste físico antes de iniciar outro capítulo.
 
 Aplicação `94920c7` em `origin/main`, árvore limpa e sincronização exata. Vercel publicou a 0.1.177 com 73 hashes conferidos; testes públicos compilado e coop passaram e relay 16 mantém `icecave:1`. Reteste humano da fissura e de abertura em Chrome nos iPhones 13/13 Pro continua pendente; automação desktop não confirma a causa da queda. Ninho não iniciado.

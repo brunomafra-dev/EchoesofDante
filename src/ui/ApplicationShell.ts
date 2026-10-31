@@ -329,8 +329,13 @@ export class ApplicationShell {
     } else if (this.page === 'settings') {
       this.heading('Configurações', 'Preferências deste navegador.');
       for (const [key, title] of [['master','Volume geral'],['music','Música'],['sfx','Efeitos']] as const) {
-        const label = document.createElement('label'); label.textContent = title; const input = document.createElement('input'); input.type = 'range'; input.min = '0'; input.max = '100'; input.value = String(Math.round(this.volumes[key] * 100)); input.dataset.volume = key;
-        input.oninput = () => { this.volumes[key] = Number(input.value) / 100; this.applyVolumes(); try { localStorage.setItem(SETTINGS, JSON.stringify(this.volumes)); } catch { this.status('Volume aplicado; não foi possível salvar a preferência.'); } }; label.append(input); this.content.append(label);
+        const label = document.createElement('label'); label.className = 'volume-setting';
+        const name = document.createElement('span'); name.textContent = title;
+        const output = document.createElement('output'); output.textContent = `${Math.round(this.volumes[key] * 100)}%`;
+        const input = document.createElement('input'); input.type = 'range'; input.min = '0'; input.max = '100'; input.step = '1'; input.value = String(Math.round(this.volumes[key] * 100)); input.dataset.volume = key; input.setAttribute('aria-label', title);
+        const apply = () => { this.volumes[key] = Number(input.value) / 100; output.textContent = `${input.value}%`; this.applyVolumes(); try { localStorage.setItem(SETTINGS, JSON.stringify(this.volumes)); } catch { this.status('Volume aplicado; não foi possível salvar a preferência.'); } };
+        input.addEventListener('input', apply); input.addEventListener('change', apply);
+        label.append(name, output, input); this.content.append(label);
       }
       if (!this.playing && !this.prologue) this.action('REVER A CHEGADA A DANTE','prologue-replay', () => this.showPrologue(true));
       this.action('VOLTAR','back', () => this.back());

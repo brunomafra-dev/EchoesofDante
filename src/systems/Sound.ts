@@ -8,6 +8,7 @@ export class AudioManager {
   private context?: AudioContext;
   private sfxBus?: GainNode;
   private music?: HTMLAudioElement;
+  private musicNodes = new WeakMap<HTMLAudioElement, { source: MediaElementAudioSourceNode; gain: GainNode }>();
   private area?: MusicRegion;
   private outgoing?: HTMLAudioElement;
   private currentGain = 1;
@@ -76,9 +77,9 @@ export class AudioManager {
       this.music = new Audio();
       this.music.loop = true;
       this.music.preload = 'none';
-      this.music.volume = 0;
+      this.music.volume = 1;
       this.music.src = `${import.meta.env.BASE_URL}assets/audio/${AUDIO.tracks[area]}`;
-      if (this.unlocked) this.playMusic();
+      if (this.unlocked) { this.routeMusic(this.music); this.playMusic(); }
       else this.disposeOutgoing();
     } catch { this.music = undefined; }
   }
@@ -91,6 +92,8 @@ export class AudioManager {
         this.sfxBus.connect(this.context.destination);
         this.applyVolumes();
       }
+      this.routeMusic(this.music);
+      this.routeMusic(this.outgoing);
       if (this.context?.state === 'suspended') void this.context.resume().catch(() => {});
       this.unlocked = true;
       this.playMusic();
@@ -119,8 +122,41 @@ export class AudioManager {
   private applyVolumes(): void {
     if (this.sfxBus) this.sfxBus.gain.value = this.master * this.sfxVolume;
     const volume = this.master * this.musicVolume * this.musicFocus * this.cueGain;
-    if (this.music) this.music.volume = volume * this.currentGain * this.mixFor(this.area);
-    if (this.outgoing) this.outgoing.volume = volume * this.outgoingGain * this.mixFor(this.outgoingArea);
+    if (this.music) this.applyMusicVolume(this.music, volume * this.currentGain * this.mixFor(this.area));
+    if (this.outgoing) this.applyMusicVolume(this.outgoing, volume * this.outgoingGain * this.mixFor(this.outgoingArea));
+  }
+
+  private routeMusic(media?: HTMLAudioElement): void {
+    if (!media || !this.context || this.musicNodes.has(media)) return;
+    try {
+      const source = this.context.createMediaElementSource(media);
+      const gain = this.context.createGain();
+      source.connect(gain).connect(this.context.destination);
+      media.volume = 1;
+      this.musicNodes.set(media, { source, gain });
+    } catch { /* Keep the native media-element path if Web Audio routing is unavailable. */ }
+  }
+
+  private applyMusicVolume(media: HTMLAudioElement, value: number): void {
+    const routed = this.musicNodes.get(media);
+    if (routed) {
+      media.volume = 1;
+      routed.gain.gain.value = value;
+    } else {
+      media.volume = value;
+      // On WebKit/iOS the media volume setter may not be writable; muting at
+      // least remains reliable if the Web Audio route could not be created.
+      media.muted = value === 0;
+    }
+  }
+
+  private releaseMusicRoute(media?: HTMLAudioElement): void {
+    if (!media) return;
+    const routed = this.musicNodes.get(media);
+    if (!routed) return;
+    routed.source.disconnect();
+    routed.gain.disconnect();
+    this.musicNodes.delete(media);
   }
 
   private fadeIn(): void {
@@ -146,6 +182,7 @@ export class AudioManager {
   private disposeOutgoing(): void {
     if (this.outgoing) {
       this.outgoing.pause();
+      this.releaseMusicRoute(this.outgoing);
       this.outgoing.removeAttribute('src');
       this.outgoing.load();
       this.outgoing = undefined;
@@ -157,6 +194,7 @@ export class AudioManager {
     this.stopMusic();
     if (this.duckFrame) cancelAnimationFrame(this.duckFrame);
     this.duckFrame = 0;
+    this.releaseMusicRoute(this.music);
     this.music?.removeAttribute('src');
     this.music?.load();
     this.music = undefined;
