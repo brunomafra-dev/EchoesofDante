@@ -763,6 +763,7 @@ export class GameScene extends Phaser.Scene {
     this.missions.setCircuitAvailable(coopSession.role==='offline'||coopSession.circuitsAvailable);
     this.missions.setWindAvailable(coopSession.role==='offline'||coopSession.windAvailable);
     this.missions.setDunesAvailable(coopSession.role==='offline'||coopSession.dunesAvailable);
+    this.missions.setFrostAvailable(coopSession.role==='offline'||coopSession.frostAvailable);
     this.missions.setBuriedAvailable(coopSession.role==='offline'||coopSession.buriedAvailable);
     time -= this.recordsTimeOffset;
     if (this.transitioning) return;
@@ -826,7 +827,8 @@ export class GameScene extends Phaser.Scene {
     const resident=interactionDead?undefined:this.settlementLife?.greetingAt(interactionPosition);
     if(interact&&resident&&!missionSite){this.settlementLife?.greet(resident.id,time);this.hud.showDiscovery(resident.name.toLocaleUpperCase('pt-BR')+'\n'+resident.text);this.sounds.discovery();interact=false;}
     if(interact&&missionSite){
-      if('circuit' in missionSite&&missionSite.circuit){this.hud.showDiscovery(this.permanence!.interactCircuit(missionSite.circuit,this.missions,time));this.sounds.discovery();this.saveProgress();interact=false;}
+      if('coldValve' in missionSite&&missionSite.coldValve){this.hud.showDiscovery(this.permanence!.interactColdValve(missionSite.coldValve,this.missions));this.sounds.discovery();this.saveProgress();interact=false;}
+      else if('circuit' in missionSite&&missionSite.circuit){this.hud.showDiscovery(this.permanence!.interactCircuit(missionSite.circuit,this.missions,time));this.sounds.discovery();this.saveProgress();interact=false;}
       else if('reject' in missionSite&&missionSite.reject){this.hud.showDiscovery(missionSite.reject);this.sounds.discovery();interact=false;}
       else if('aimAt' in missionSite&&missionSite.aimAt&&!signalAligned(interactionPosition,interactionPlayer?.rotation??NaN,missionSite.aimAt)){this.hud.showDiscovery('O filtro ainda recebe a baliza humana. Oriente sua mira para a nervura luminosa a leste e confirme o alinhamento.');this.sounds.discovery();interact=false;}
       else {
@@ -2488,6 +2490,7 @@ export class GameScene extends Phaser.Scene {
     if(id==='settle-echo'&&coopSession.role!=='offline'&&!coopSession.circuitsAvailable)return false;
     if(id==='settle-wind'&&coopSession.role!=='offline'&&!coopSession.windAvailable)return false;
     if(id==='settle-dunes'&&coopSession.role!=='offline'&&!coopSession.dunesAvailable)return false;
+    if(id==='settle-frost'&&coopSession.role!=='offline'&&!coopSession.frostAvailable)return false;
     if(id==='settle-buried'&&coopSession.role!=='offline'&&!coopSession.buriedAvailable)return false;
     if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!['missions','permanence','settlement-life','settlement-motion','npc-review','outpost-support'].some(key=>params.has(key))||this.inputModalOpen||this.transitioning||coopSession.role==='guest'||!this.player||this.player.isDead)return false;
     if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return false;
@@ -2501,19 +2504,24 @@ export class GameScene extends Phaser.Scene {
     if(index>=4){this.valleyVisited=true;this.valleyCheckpointReached=true;this.economy.visited=[...new Set([...this.economy.visited,'warden','valley'] as JourneyArea[])];this.progression.restore({...this.progression.snapshot(),xp:350,bossRewards:['warden']});this.economy.credits=300;this.economy.materials=[24,20,0];this.economy.potions=5;for(const upgrade of ['chargePower','dashDuration','chargeWidth'] as const)for(let i=0;i<3;i++)this.progression.investUpgrade(upgrade);}
     if(isPermanence(id)){this.springsVisited=true;this.terracesVisited=true;this.economy.visited=[...new Set([...this.economy.visited,'springs','terraces'] as JourneyArea[])];}
     if(id==='settle-echo')this.economy.visited=[...new Set([...this.economy.visited,'cavern'] as JourneyArea[])];
-    if(id==='settle-wind'||id==='settle-dunes'||id==='settle-buried'){
+    if(id==='settle-wind'||id==='settle-dunes'||id==='settle-buried'||id==='settle-frost'){
       for(const flag of ['valleyLandmarkSeen','valleyEndSeen','valleyCheckpointReached','valleyFrontierReached','valleyFrontierSignalSeen','valleyFrontierEndSeen','aridVisited'] as const)this[flag]=true;
       this.economy.visited=[...new Set([...this.economy.visited,'cavern','arid'] as JourneyArea[])];
     }
-    if(id==='settle-dunes'||id==='settle-buried'){
+    if(id==='settle-dunes'||id==='settle-buried'||id==='settle-frost'){
       this.aridSignalSeen=true;this.aridFrontierReached=true;this.aridFrontierEntered=true;this.dunesVisited=true;
       this.economy.visited=[...new Set([...this.economy.visited,'dunes'] as JourneyArea[])];
+    }
+    if(id==='settle-frost'){
+      for(const flag of ['dunesRuinsSeen','dunesDepthSeen','soterradoReached','soterradoDefeated','soterradoClueSeen','frostVisited'] as const)this[flag]=true;
+      this.economy.visited=[...new Set([...this.economy.visited,'sandpit','frost'] as JourneyArea[])];
+      this.progression.restore({...this.progression.snapshot(),xp:1200,bossRewards:['warden','soterrado']});
     }
     if(id==='settle-buried'){
       this.dunesRuinsSeen=true;this.economy.visited=[...new Set([...this.economy.visited,'dunes'] as JourneyArea[])];
       this.progression.restore({...this.progression.snapshot(),xp:950,abilityUpgrades:{}});for(const upgrade of ['chargePower','dashDuration','chargeWidth'] as const)this.progression.investUpgrade(upgrade);
     }
-    if(id==='settle-outpost'||id==='settle-signal'||id==='settle-echo'||id==='settle-wind'||id==='settle-dunes'||id==='settle-buried'){
+    if(id==='settle-outpost'||id==='settle-signal'||id==='settle-echo'||id==='settle-wind'||id==='settle-dunes'||id==='settle-buried'||id==='settle-frost'){
       // The lab inspects occupation of an already conquered region. Preserve
       // existing XP/resources: simulated defeats confer no combat rewards.
       const defeated=[...new Set([...this.progression.snapshot().rewardedHollows,...outpostThreats(characterProfiles.active.campaign?.size??1)])];
@@ -2646,10 +2654,11 @@ export class GameScene extends Phaser.Scene {
     if(status!=='active')return;
     const goal=d.goals.find(g=>!this.missions.has(g.id));if(!goal)return;
     if(goal.area!==this.area)return this.missionTransitTarget(goal.area);
-    const regionalSite=this.regional?.sites.find(s=>s.id===goal.id&&(s.mission===id||id==='settle-dunes'));
+    const regionalSite=this.regional?.sites.find(s=>s.id===goal.id&&(s.mission===id||id==='settle-dunes'||id==='settle-frost'));
     if(regionalSite)return {...regionalSite,instruction:[...siroccoTrails(this.area),...borealTrails(this.area),...embersTrails(this.area)].find(t=>t.site===regionalSite.id)?.hint??'Analise o local e registre a descoberta.',interactionLabel:'ANALISAR',action:'investigate'};
     if(id==='settle-wind'&&goal.id==='pv-relay')return {...SIROCCO.signal,name:'Relé original do Siroco',instruction:'Investigue o relé original; a pesquisa acompanha essa descoberta.',interactionLabel:'INVESTIGAR',action:'investigate'};
     if(id==='settle-dunes'&&goal.id==='pd-ruins')return {...DUNES.ruin,name:'Ruínas originais das Dunas',instruction:'Investigue as inscrições originais antes da sondagem.',interactionLabel:'INVESTIGAR',action:'investigate'};
+    if(id==='settle-frost'&&goal.id==='pg-fill')return {x:940,y:1080,radius:62,name:'Recipiente térmico',instruction:'Observe entrada, retorno e fluxo. Conduza a água ao recipiente antes de lacrar.',interactionLabel:'LACRAR LOTE',action:'investigate'};
     if(id==='settle-buried'&&goal.id==='pb-descent')return {...DUNES.hollow,radius:115,name:'Descida original para a Bacia Soterrada',instruction:'Use a descida já acessível pelas ruínas; a carga permanece na borda firme.',interactionLabel:'DESCER',action:'investigate'};
     if(id==='settle-buried'&&goal.id==='after-soterrado')return {...SANDPIT.spawn,radius:110,name:'Soterrado',instruction:'Confirme a segurança no confronto original.',action:'observe'};
     if(id==='settle-buried'&&goal.id==='pb-clue')return {...SANDPIT.clue,name:'Registro original da passagem',instruction:'Investigue o registro após o confronto.',interactionLabel:'INVESTIGAR',action:'investigate'};

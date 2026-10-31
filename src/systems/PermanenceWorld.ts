@@ -15,12 +15,18 @@ import type {CircuitNode} from '../config/echoCircuit';
 import {WindSurvey} from '../visual/WindSurvey';
 import {DUNE_SURVEY} from '../config/duneSurvey';
 import {BURIED_RECORD} from '../config/buriedRecord';
+import {FrostWater} from '../visual/FrostWater';
+import type {ColdValve} from '../config/frostWater';
 import type {SurveyPusher} from '../config/windSurvey';
 import {moveWithCollisions,type Obstacle} from './Movement';
 
 // Authored chapter interactions share the journal, durable evidence and host
 // authority. Static props/pipework are drawn once; pulses only change alpha.
 export class PermanenceWorld {
+ private cold:FrostWater;
+ private thermalReserve=false;
+ private waterVessel?:Phaser.GameObjects.Image;
+ private waterLabel?:Phaser.GameObjects.Text;
  private duneProbe?:Phaser.GameObjects.Image;
  private buriedSample?:{image:Phaser.GameObjects.Image;solid:Obstacle};
  private buriedArchived=false;
@@ -46,6 +52,7 @@ export class PermanenceWorld {
  private circuit:EchoCircuit;
  private wind:WindSurvey;
  constructor(private scene:Phaser.Scene,private area:JourneyArea,private obstacles:Obstacle[],private warn:()=>void=()=>{}){
+  this.cold=new FrostWater(scene,area,obstacles);
   this.signal=new SignalSurvey(scene,area,obstacles);
   this.circuit=new EchoCircuit(scene,area,obstacles);
   this.wind=new WindSurvey(scene,area,obstacles);
@@ -77,6 +84,7 @@ export class PermanenceWorld {
   }
  }
  update(missions:Missions,player:Vec2,now:number,actors:readonly SurveyPusher[]=[],authority=true,remote?:PermanencePose):'circuit'|'wind'|undefined{
+  this.cold.update(missions,player,now);
   const circuitCompleted=this.circuit.update(missions,player,now,authority,remote?.circuit);
   const windCompleted=this.wind.update(missions,now,actors,authority,remote?.wind);
   this.signal.update(missions,player,actors[0]?.rotation??0,now);
@@ -104,6 +112,7 @@ export class PermanenceWorld {
    this.jet?.setVisible(water&&!missions.has('pw-valve')).setAlpha(phase<1100?.12+phase/1100*.18:phase<1800?.7:.06);
   }
   if(missions.has('pw-online')&&!this.online){this.online=true;this.addWaterStation();}
+  if(missions.status('settle-frost')==='completed'&&this.waterVessel&&!this.thermalReserve){this.thermalReserve=true;this.waterVessel.setTexture('quest-cold-reserve').setDisplaySize(85,85).setName('frost-water-reserve');this.waterLabel?.setText('RESERVA TÉRMICA');}
   if(missions.has('pf-stock')&&!this.stocked){this.stocked=true;this.addFoodReserve();}
   if(missions.has('pt-deliver')&&!this.supplied){this.supplied=true;this.addDepot();}
   const powerActive=this.area==='terraces'&&missions.status('settle-energy')==='active'&&!missions.has('pe-isolate'),beat=Math.floor(now/1900),phase=now%1900;
@@ -153,6 +162,7 @@ export class PermanenceWorld {
   this.scene.add.text(x,y+20,'REDE ISOLADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#ebd8b6',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
  }
  snapshot():PermanencePose{return{...(this.haul?{haul:{...this.haul.position,kind:'cargo' as const}}:{}),circuit:this.circuit.snapshot(),wind:this.wind.snapshot()};}
+ interactColdValve(node:ColdValve,missions:Missions):string{return this.cold.interact(node,missions);}
  interactCircuit(node:CircuitNode,missions:Missions,now:number):string{return this.circuit.interact(node,missions,now);}
  get haulPosition():Vec2|undefined{return this.haul?.position;}
  // The cached minimap describes permanent geometry. Moving cargo stays in
@@ -196,11 +206,12 @@ export class PermanenceWorld {
   if(this.area!=='base'&&this.area!=='terraces')return;
   const x=this.area==='base'?200:1950,y=this.area==='base'?570:990;
   this.scene.add.image(x,y,'material-water').setDisplaySize(110,79).setDepth(y-2).setName('settlement-treated-water');
-  addQuestProp(this.scene,'sealedWater',x+48,y-6,78);
+  this.waterVessel=addQuestProp(this.scene,'sealedWater',x+48,y-6,78);
   this.obstacles.push({x:x+48,y:y-18,radius:23});
-  this.scene.add.text(x,y+48,'ÁGUA TRATADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#b1d5c7',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
+  this.waterLabel=this.scene.add.text(x,y+48,'ÁGUA TRATADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#b1d5c7',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
  }
  at(position:Vec2,missions:Missions):PermanenceSite|undefined{
+  const cold=this.cold.at(position,missions);if(cold)return cold;
   const circuit=this.circuit.at(position,missions);if(circuit)return circuit;
   const site=this.sites.map(s=>s.site).find(s=>missions.status(s.mission)==='active'&&!missions.has(s.id)&&!s.needs?.some(id=>!missions.has(id))&&Math.hypot(position.x-s.x,position.y-s.y)<s.radius);
   if(site?.haul&&(!this.haul||Math.hypot(this.haul.position.x-site.x,this.haul.position.y-site.y)>105))return{...site,reject:'A carga ainda não chegou. Volte ao estrado e conduza-o para perto do depósito.'};

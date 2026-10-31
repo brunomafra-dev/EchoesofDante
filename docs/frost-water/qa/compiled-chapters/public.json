@@ -1,0 +1,11 @@
+{
+  "base": "http://localhost:5201",
+  "method": "Compiled Chrome, no DEV globals; isolated chapter arrival, actual NPC acceptance, reload and real-save/settings sentinels.",
+  "checks": [
+    "frost: explicit isolated arrival, real acceptance/reload and untouched real saves/settings",
+    "buried: explicit isolated arrival, real acceptance/reload and untouched real saves/settings",
+    "dunes: explicit isolated arrival, real acceptance/reload and untouched real saves/settings"
+  ],
+  "errors": [],
+  "passed": true
+}

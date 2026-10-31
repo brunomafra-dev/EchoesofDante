@@ -1,0 +1,11 @@
+{
+  "revision": "8dcfc80325487ea704ff144631ef3c0c37946ce8",
+  "method": "Latest browser client against exact public pre-frost relay 16 and its historical catalogue. Real room handshakes/capability refusal; no synthetic chapter completion.",
+  "checks": [
+    "Previous Dunes lab and room inspection connect on actual historical protocol 16; only the new frost capability is unavailable",
+    "Direct frost lab refuses incompatible relay before joining a filtered campaign",
+    "Accepted frost in a normal campaign URL also refuses old relay without losing evidence; updated relay reconnect restores capability with identical objectives"
+  ],
+  "errors": [],
+  "passed": true
+}

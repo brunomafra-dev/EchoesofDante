@@ -28,6 +28,8 @@ export class Missions{
  circuitAvailable=true;
  windAvailable=true;
  dunesAvailable=true;
+ frostAvailable=true;
+ setFrostAvailable(value:boolean):void{if(value!==this.frostAvailable){this.frostAvailable=value;this.version++;}}
  buriedAvailable=true;
  setBuriedAvailable(value:boolean):void{if(value!==this.buriedAvailable){this.buriedAvailable=value;this.version++;}}
  setDunesAvailable(value:boolean):void{if(value!==this.dunesAvailable){this.dunesAvailable=value;this.version++;}}
@@ -47,6 +49,7 @@ export class Missions{
   if(id==='settle-echo'&&!this.circuitAvailable)return 'locked';
   if(id==='settle-wind'&&!this.windAvailable)return 'locked';
   if(id==='settle-dunes'&&!this.dunesAvailable)return 'locked';
+  if(id==='settle-frost'&&!this.frostAvailable)return 'locked';
   if(id==='settle-buried'&&!this.buriedAvailable)return 'locked';
   if(isPermanence(id)&&!this.permanenceAvailable)return 'locked';
   if(d.requires&&!this.state.completed.includes(d.requires))return 'locked';
@@ -56,6 +59,7 @@ export class Missions{
  }
  has(id:MissionEvidence):boolean{return this.state.evidence.includes(id);}
  record(id:MissionEvidence):boolean{if(this.has(id))return false;this.state.evidence.push(id);this.version++;return true;}
+ setColdValve(id:'pg-inlet-open'|'pg-return-closed',on:boolean):void{if(this.status('settle-frost')!=='active'||!this.has('pg-mount')||this.has('pg-fill')||this.has(id)===on)return;this.state.evidence=this.state.evidence.filter(e=>e!==id);if(on)this.state.evidence.push(id);this.version++;}
  // Only the two authored switches are reversible. Report evidence/receipts
  // remain monotonic; turning a switch never grants completion or rewards.
  setCircuitTurn(one:'pr-a-1'|'pr-b-1',two:'pr-a-2'|'pr-b-2',turn:number):void{

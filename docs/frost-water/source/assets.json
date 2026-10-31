@@ -1,0 +1,25 @@
+{
+  "mode": "Built-in image_gen, two new RGBA objects; deterministic alpha trim/resize/padding only",
+  "assets": [
+    {
+      "path": "public/assets/frost-water/collector-v1.png",
+      "sha256": "60f0447aa643807026066a8f729fdf99aefaa18387f8ba7f3c4a00a73609c688",
+      "alphaBounds": [
+        27,
+        27,
+        234,
+        230
+      ]
+    },
+    {
+      "path": "public/assets/frost-water/reserve-v1.png",
+      "sha256": "0a2f4aea17f936a0e1976c2cab40e4c3577d058b68530494755b64d594b43f04",
+      "alphaBounds": [
+        67,
+        31,
+        194,
+        222
+      ]
+    }
+  ]
+}

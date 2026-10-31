@@ -1,0 +1,12 @@
+{
+  "chapter": "frost",
+  "method": "Two independent Chrome and relay 16. Approach/invulnerability fixtures; real guest E, reversible valve states and actual NPC delivery; shared evidence and personal rewards. Prior story only through reserved host lab button.",
+  "checks": [
+    "Actual lab button prepares the running original crew through the host; guest preparation is refused without changing objectives",
+    "Guest accepts through the actual mission request; invitation keeps the isolated chapter",
+    "Guest analyzes three existing sites and mounts collector; empty/leaking attempts refused. Valve opens and closes propagate to both browsers and survive reconnection",
+    "Actual guest seals/treats/delivers the lot; each original participant receives exactly 190 credits and one thermal reserve, host keeps its separately tracked report"
+  ],
+  "errors": [],
+  "failure": "TimeoutError: page.waitForFunction: Timeout 90000ms exceeded."
+}

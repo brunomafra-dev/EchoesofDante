@@ -1,0 +1,44 @@
+# Água que resiste ao frio · 0.1.175
+
+## Autorização e capítulo
+
+Em 31/10/2026, após o encerramento público das Dunas/Soterrado, o usuário respondeu “boa vamo” à proposta de Lia estudar coleta protegida e conservação na Fratura Boreal. Somente este capítulo, com avaliação humana antes das Galerias. Não registra aprovação humana automática da 0.1.174 nem antecipa outro sprint.
+
+Lia oferece o capítulo após `settle-buried`: sete objetivos, **190 créditos uma vez por integrante**, sem XP novo. As três análises de `exp-frost` já existentes contam; não há novas cópias desses objetivos ou do recibo de 80 créditos. Não precisa refazer análises antigas, nem repetir Soterrado. Retira-se um coletor reservado, monta-se na margem protegida, ajustam-se entrada/retorno para conduzir a água até o recipiente, lacra-se e trata-se o lote na base. A entrega aplica isolamento térmico aos recipientes existentes da base/Terraços; a nascente não se liga à rede nem torna água bruta potável.
+
+## Interação / persistência
+
+Duas válvulas independentes, E/toque/A para girar: entrada fechada mantém recipiente vazio; entrada aberta/retorno aberto escoa para fora; entrada aberta/retorno fechado recebe o lote. Tentar lacrar seco ou com vazamento mostra a consequência e não gasta item. Fluxo e estado das válvulas são visíveis. Não há espera obrigatória, quota, cronômetro, consumo de equipamento pessoal ou alteração de combate. Ajustes são evidências reversíveis específicas; coleta e recompensa continuam permanentes. Salvar/recarregar, morrer/retomar ou viajar preservam os ajustes. Depois de lacrado, os controles ficam recolhidos.
+
+Condutos são rasterizados uma vez; só partículas/visibilidade/transforms mudam no update. Corpo/duas válvulas têm colisores de 25/13, com aproximações externas. Não pinta outro terreno, desloca sinal, altera encontros ou modifica dimensões. Galerias mantêm `groundY: -300`, `groundHeight: 2300`, mapa físico 3100×1800. Registro original da Fratura ainda abre a passagem; mecanismo das Galerias, Vésper e Incandescente preservados.
+
+Durante o QA foi encontrado um prazo de reconexão reutilizado depois de uma recuperação bem-sucedida. `CoopSession` agora inicia outra janela de 15 s se aquele socket já tinha conectado; tentativas que nunca conectaram mantêm o prazo original. A segunda queda deve ser testada além da primeira, sem renovar indefinidamente tentativas fracassadas. Protocolo 16 mantido; novo catálogo `frost:1` em saúde/lobby/conexão. Relay anterior é recusado para a missão nova, preservando save; capítulos antigos continuam compatíveis.
+
+## Laboratório
+
+[Testar este capítulo](https://echosofdante.vercel.app/campaign-playtest.html?permanence=frost&v=0.1.175), namespace `dante-permanence-v1.frost.<classe>.`, registrado na biblioteca. Simula **Warden/Soterrado, sete relatórios originais, onze capítulos anteriores, Bacia conquistada, acesso original à Fratura e 1200 XP de chegada**. Nenhuma recompensa nativa é recebida pela simulação. **Não simula** análises da Fratura, coletor, válvulas, lote, tratamento, 190 créditos, registro da Fratura/mecanismo das Galerias ou vitória de Vésper/Incandescente. Coop tem preparo explícito só no anfitrião.
+
+Personagens/settings reais são protegidos; laboratório temporário por aba, fechar a aba descarta apenas o teste. Campanha normal mantém saves permanentes no navegador e memória do minimapa por personagem. Posicionamentos/invulnerabilidade e classes dos ensaios automatizados são fixtures descritas nos relatórios, não uma medição humana de duração ou dificuldade.
+
+## Arte / fontes
+
+Skill imagegen, **ferramenta integrada**, duas gerações novas RGBA; sem CLI/API externa. Fontes preservadas em [collector-generated.png](source/collector-generated.png) e [reserve-generated.png](source/reserve-generated.png), originadas de:
+
+- `C:\Users\1\.codex\generated_images\01a173c1-3677-75b2-89b6-2f3640ffad61\exec-472a439d-2d7c-416e-bd80-b20615e9d49a.png`
+- `C:\Users\1\.codex\generated_images\01a173c1-3677-75b2-89b6-2f3640ffad61\exec-10dbf473-167b-44ae-a67c-a966597257e0.png`
+
+Prompt set: coletor inteiro para frio, duas válvulas de latão, mangueiras curtas, recipiente de vidro azul discreto, três pés; reserva inteira com dois cilindros desiguais, isolamento bege acolchoado/fivelas, aço oliva gasto, cobre/bronze, visor turquesa e torneira. Ambos Organic Sci-Fi R3 pintado/isométrico, câmera a 40°, luz superior esquerda, legíveis a 85–100 px, RGBA transparente/margens, sem texto/UI/chão/personagem, mala ou prisma neon. [Prompts finais](source/prompts.json).
+
+`python scripts/prepare-frost-water.py` somente recorta pelo alpha, redimensiona e empacota com margem, sem pintura ou remoção de fundo. Destinos: `public/assets/frost-water/collector-v1.png` e `reserve-v1.png`; [hashes/limites alpha](source/assets.json). PNGs preparados carregados uma vez, personagens completos e pinturas aprovadas preservados.
+
+## QA técnico / entrega
+
+- [x] [Modelo/save 0.1.166](qa/model/report.json): quatro combinações, restauração, guardas antes/depois da coleta, recibo único de 190, catálogo e economia/flags antigas.
+- [x] [Solo e navegação](qa/solo/report.json): investigações existentes por E, tentativas vazia/vazando recusadas, válvulas/instalação/coleta/tratamento/entrega, dez aproximações livres/conectadas. Ajustes e lote sobrevivem a morte/R/reload. Registro da Fratura e portal originais levam às Galerias com mecanismo/Vésper pendentes. Três retornos: 184 objetos/267 texturas/13 colisores estáveis após aquecimento; um reservatório e 190 créditos únicos após reload.
+- [x] [Dupla integral](qa/coop/coop.json): convidado analisa, gira para os dois sentidos, coleta/trata/entrega; 190 créditos pessoais uma vez, anfitrião conserva outro relatório acompanhado, duas reconexões e subconjuntos integrais da descoberta preservados. [Falha reproduzida antes da correção do prazo](qa/reconnection-before-fix.json), seguida da execução aprovada. Não é erro pendente do capítulo.
+- [x] [Quatro classes touch/gamepad emulados](qa/controls/report.json): joystick/stick avança com distância física ao corpo do coletor medida a cada update; interação real recusa lote seco, gira as duas válvulas e lacra. 568×320, 844×390, 1024×768 e 1920×1080; capturas representativas inspecionadas pelo agente. Usa [checkpoint exportado após a montagem real solo](qa/solo/installed-fixture.json), sem válvula nova ou coleta simulada.
+- [x] [Relay público histórico 0.1.174](qa/compatibility/report.json): capítulo anterior funciona; laboratório novo e URL normal com missão nova aceita recusam catálogo incompleto sem perder evidências. Conexão no relay atualizado restaura capacidade com objetivos idênticos.
+- [x] Typecheck/build de 268 módulos e diff check. [Compilado por WASD/E](qa/compiled/report.json): checkpoint instalado real, variante que prepara somente derrotas comuns da Fratura (sem XP/drop), nova coleta/válvulas/tratamento/entrega/reload reais, nenhum global DEV ou alteração de posição/HP em runtime. 190 créditos, recibos, descoberta, registros futuros e bosses preservados. [Três capítulos compilados novos/anteriores](qa/compiled-chapters/public.json) passaram por aceite/reload com saves reais intactos. Capturas compiladas inspecionadas pelo agente; mensagens de campo encurtadas após revisão para caber melhor no HUD.
+- [x] [Dupla compilada sem globais DEV](qa/compiled-coop/report.json): convite/preparo explícito, aceite/coleta do kit pelo convidado, reload/reentrada original, saldos/recibos/bosses posteriores e saves reais preservados; encerramento normal. Capturas inspecionadas pelo agente. Amostra compilada do início; o percurso/entrega completos estão no QA DEV acima. O ajuste do waypoint de Lia no script manteve margem dentro do alcance de conversa, sem alterar colisões ou alcance no jogo.
+- [ ] Commit/push, sincronização e frontend publicado; catálogo novo/dupla pública conferidos separadamente.
+- [ ] Playtest humano. Automação não substitui naturalidade visual, diversão, duração, celular físico ou equipe humana de quatro. Não iniciar Galerias antes dessa avaliação.

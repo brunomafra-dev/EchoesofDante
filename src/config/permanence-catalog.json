@@ -10,7 +10,8 @@
     "settle-echo",
     "settle-wind",
     "settle-dunes",
-    "settle-buried"
+    "settle-buried",
+    "settle-frost"
   ],
   "evidence": [
     "pw-intake",
@@ -74,6 +75,12 @@
     "pd-store",
     "pb-descent",
     "pb-clue",
-    "pb-sample"
+    "pb-sample",
+    "pg-kit",
+    "pg-mount",
+    "pg-fill",
+    "pg-treat",
+    "pg-inlet-open",
+    "pg-return-closed"
   ]
 }

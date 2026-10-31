@@ -37,6 +37,7 @@ export class CoopSession {
  outpostsAvailable=false;
  signalsAvailable=false;
  circuitsAvailable=false;
+ frostAvailable=false;
  buriedAvailable=false;
  dunesAvailable=false;
  windAvailable=false;
@@ -140,6 +141,8 @@ export class CoopSession {
     const needsCircuit=new URLSearchParams(location.search).get('permanence')==='echo'||this.rewards.load()?.missions?.accepted.includes('settle-echo');
     const needsWind=new URLSearchParams(location.search).get('permanence')==='wind'||this.rewards.load()?.missions?.accepted.includes('settle-wind');
     const needsDunes=new URLSearchParams(location.search).get('permanence')==='dunes'||this.rewards.load()?.missions?.accepted.includes('settle-dunes');
+    const needsFrost=new URLSearchParams(location.search).get('permanence')==='frost'||this.rewards.load()?.missions?.accepted.includes('settle-frost');
+    if(needsFrost&&m.frost!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda o catálogo da coleta térmica. Seu progresso permanece preservado.');reject(new Error(this.message));return;}
     const needsBuried=new URLSearchParams(location.search).get('permanence')==='buried'||this.rewards.load()?.missions?.accepted.includes('settle-buried');
     if(needsBuried&&m.buried!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda o catálogo do registro da Bacia Soterrada. Seu progresso permanece preservado.');reject(new Error(this.message));return;}
     if(needsDunes&&m.dunes!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda o catálogo da sondagem nas Dunas. Seu progresso permanece preservado.');reject(new Error(this.message));return;}
@@ -153,7 +156,7 @@ export class CoopSession {
     this.outpostsAvailable=m.outposts===1;
     this.signalsAvailable=m.signals===1;
     this.circuitsAvailable=m.circuits===1;
-    this.windAvailable=m.wind===1;this.dunesAvailable=m.dunes===1;this.buriedAvailable=m.buried===1;
+    this.windAvailable=m.wind===1;this.dunesAvailable=m.dunes===1;this.buriedAvailable=m.buried===1;this.frostAvailable=m.frost===1;
     joined=true;clearTimeout(this.timeout);this.role=m.role;this.connected=true;this.token=m.token;this.code=m.code;this.epoch=m.epoch;
     this.id=m.id;this.acknowledgedCrew='';this.setCampaign(m.campaign);this.setRoster(m.members);this.input={...NO_INPUT};this.inputAt=0;this.world=undefined;
     this.area=m.area;this.travelling=false;
@@ -205,7 +208,9 @@ export class CoopSession {
    if(this.chatPending)this.failChat('Conexão interrompida antes da confirmação. Confira o histórico ao reconectar.');
    clearTimeout(this.timeout);clearTimeout(this.missionTimer);this.missionPending=false;this.missionRequests=[];this.socket=undefined;this.connected=false;this.input={...NO_INPUT};this.inputAt=0;
    if(!this.token){this.fail('A conexão foi encerrada.');reject(new Error(this.message));return;}
-   if(!retry)this.retryAt=performance.now()+15000;
+   // A recovered socket starts a new outage window on its next disconnect.
+   // Only unsuccessful retry sockets retain the original deadline.
+   if(joined||!retry)this.retryAt=performance.now()+15000;
    this.message='Conexão interrompida · tentando recuperar a sala…';this.changed();this.retry();
   };
  }
@@ -258,7 +263,7 @@ export class CoopSession {
   // If storage fails, keep the visit open so the player can retry instead of losing XP silently.
   if(guest&&!this.rewardSaved){this.message='Não foi possível salvar o XP. Libere o armazenamento e tente sair novamente.';this.changed();return false;}
   if(this.socket?.readyState===WebSocket.OPEN)this.socket.send(JSON.stringify({type:'leave'}));
-  this.role='offline';this.serverProtocol=undefined;this.outpostsAvailable=false;this.signalsAvailable=false;this.circuitsAvailable=false;this.windAvailable=false;this.dunesAvailable=false;this.buriedAvailable=false;this.endedMessage='';this.connected=false;this.peerConnected=false;this.campaign=undefined;this.members=[];this.states.clear();this.requests=[];this.world=undefined;this.input={...NO_INPUT};this.token='';this.travelling=false;this.pendingTravel=undefined;this.area=undefined;this.clearChat();
+  this.role='offline';this.serverProtocol=undefined;this.outpostsAvailable=false;this.signalsAvailable=false;this.circuitsAvailable=false;this.windAvailable=false;this.dunesAvailable=false;this.buriedAvailable=false;this.frostAvailable=false;this.endedMessage='';this.connected=false;this.peerConnected=false;this.campaign=undefined;this.members=[];this.states.clear();this.requests=[];this.world=undefined;this.input={...NO_INPUT};this.token='';this.travelling=false;this.pendingTravel=undefined;this.area=undefined;this.clearChat();
   clearTimeout(this.timeout);clearTimeout(this.retryTimer);
   const socket=this.socket;this.socket=undefined;socket?.close();this.changed();if(guest&&restoreGuest)location.reload();return true;
  }
