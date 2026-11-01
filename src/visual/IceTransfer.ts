@@ -1,3 +1,4 @@
+import {worldLabel} from '../ui/WorldLabels';
 import Phaser from 'phaser';
 import {ICE_TRANSFER as C,cargoWet,iceDocked,pushIceTransfer} from '../config/iceTransfer';
 import {surveyContact,type SurveyPusher} from '../config/windSurvey';
@@ -28,6 +29,7 @@ export class IceTransfer{
   const w=C.wet;this.field=scene.add.image((w.left+w.right)/2,(w.top+w.bottom)/2,'ice-transfer-film').setDisplaySize(w.right-w.left,w.bottom-w.top).setDepth(-15).setVisible(false).setName('ice-transfer-film');
   this.dock=scene.add.image(C.dock.x,C.dock.y+30,'ice-transfer-dock').setDepth(-14).setVisible(false).setName('ice-transfer-dock');
   this.label=scene.add.text(C.start.x,C.start.y+70,'',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#dce2c7',stroke:'#17272d',strokeThickness:3}).setOrigin(.5).setDepth(11000).setVisible(false).setName('ice-transfer-label');
+  worldLabel(scene,this.label,{mission:'settle-icecave',priority:4});
  }
  update(m:Missions,now:number,actors:readonly SurveyPusher[],authority:boolean,remote?:Vec2):boolean{
   const dt=Math.max(0,Math.min(.04,(now-this.lastAt)/1000));this.lastAt=now;if(this.area!=='icecave')return false;

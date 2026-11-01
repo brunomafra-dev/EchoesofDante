@@ -1,3 +1,4 @@
+import {worldLabel} from '../ui/WorldLabels';
 import Phaser from 'phaser';
 import {FROST_WATER as W,coldFlow,nearColdControl,type ColdValve} from '../config/frostWater';
 import type {Missions} from '../systems/Missions';
@@ -35,6 +36,7 @@ export class FrostWater{
     this.obstacles.push({x:p.x,y:p.y-8,radius:13});
    }
    for(const p of [W.inlet,W.bypass,W.sample])this.labels.push(this.scene.add.text(p.x,p.y+42,'',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#dce7dc',stroke:'#182c30',strokeThickness:3}).setOrigin(.5).setDepth(11000));
+   for(const label of this.labels)worldLabel(this.scene,label,{mission:'settle-frost',priority:4});
    for(let i=0;i<5;i++)this.stream.push(this.scene.add.circle(0,0,3,0xb5e6e2,.85).setDepth(-14).setName('frost-water-flow'));
    this.vessel=this.scene.add.rectangle(W.body.x,W.body.y-13,7,20,0x9ddbd4,.65).setDepth(W.body.y+1).setVisible(false);
   }

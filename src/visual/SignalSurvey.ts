@@ -1,3 +1,4 @@
+import {worldLabel} from '../ui/WorldLabels';
 import Phaser from 'phaser';
 import {addQuestProp} from './QuestProps';
 import {SIGNAL_LOG,SIGNAL_RECEIVER,signalAligned} from '../config/signalExpedition';
@@ -26,6 +27,7 @@ export class SignalSurvey{
    this.ray=scene.add.image(x+50,y-10,'signal-survey-light').setOrigin(0,.5).setDisplaySize(480,5).setDepth(10999).setVisible(false).setName('signal-aim');
    this.target=scene.add.image(target.x,target.y,'deep-mineral').setDisplaySize(44,38).setTint(0xc9e6d4).setDepth(target.y+2).setVisible(false).setName('signal-target');
    this.label=scene.add.text(target.x,target.y+38,'NERVURA · PULSO LONGO',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#cde2d0',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setVisible(false);
+  worldLabel(scene,this.label,{mission:'settle-signal',priority:4});
   }
  }
  update(m:Missions,player:Vec2,aim:number,now:number):void{
@@ -40,6 +42,7 @@ export class SignalSurvey{
 
    this.obstacles.push({x,y:y-18,radius:18});
    this.archiveLabel=this.scene.add.text(x,y+22,'REGISTRO ISOLADO',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#cde2d0',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setName('signal-archive-label');
+   worldLabel(this.scene,this.archiveLabel);
   }
   if(this.archiveLabel&&m.has('pv-store')&&!this.compared){this.compared=true;this.archiveLabel.setText('FREQUÊNCIA E VENTO');}
  }

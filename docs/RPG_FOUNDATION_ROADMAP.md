@@ -1,5 +1,10 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**01/11/2026 · UX geral autorizada · 0.1.180:** usuário pediu seguir a etapa de UX **como um todo, incluindo desktop**, após a entrega de áudio. [Escopo e evidências](ux-general/README.md): configurações compactas com amostras finitas de som, diário/NPC centrados na missão e ação, histórico recolhido, rótulos contextuais legíveis e chat sem sobrepor menus. Mouse/teclado/toque/gamepad, solo/coop e laboratórios próprios. Autoriza o avanço sem inferir reteste humano da 0.1.179. Aguardar validação desta UX antes da integração visual/V05 ou de outro capítulo.
+
+- [x] QA local: typecheck/build 272 módulos, sete viewports, desktop sem toque, teclado/gamepad emulado, aceite/serviço por diálogo, crédito/recibo único após reload, leitura histórica e tracking pessoais. Rótulos inspecionados em base/posto/Galerias; dupla no compilado confirmou lobby/chat/Enter/pausa sem interceptação. Regressão de áudio medida no compilado atual passou. [Relatórios, capturas, fixtures e limites](ux-general/README.md).
+- [ ] Publicação, verificação pública e aprovação humana desta UX.
+
 **01/11/2026 · Etapa 1 da auditoria autorizada · 0.1.179:** usuário pediu começar na ordem áudio → UX mobile → integração visual. [Restauração e preferências de áudio](audio-recovery/README.md) corrige o mute residual, inclui a abertura no controle por ganho e isola leitura de flags/preferências. Laboratório sem progresso simulado e sem carregar mundo no menu. QA/publicação registrados no documento da entrega; aguardar reteste humano antes da etapa de UX. V05 permanece registrado para a etapa visual.
 
 - [x] QA técnico: typecheck/build 271 módulos, sinal medido no DEV/compilado/público, setter nativo ignorado emulado, abertura/mute manual, três controles, reload, teclado/gamepad, transições e destruição dos contextos. Dupla local e pública confirmou volume pessoal independente, convite isolado e dados reais preservados; capturas inspecionadas pelo agente.

@@ -1,3 +1,4 @@
+import {worldLabel} from '../ui/WorldLabels';
 import Phaser from 'phaser';
 import {PERMANENCE_SITES,type PermanenceSite,type PermanencePose} from '../config/permanence';
 import {HABITAT,HABITAT_SOLIDS} from '../config/colonization';
@@ -74,6 +75,7 @@ export class PermanenceWorld {
     scene.add.image(site.x-12,site.y-17,'dante-canopy-green').setDisplaySize(82,50).setTint(site.reject?0x719fb8:0xb5c58c).setDepth(-17);
    }
    const label=scene.add.text(site.x,site.y+48,site.name,{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#dfd6b1',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setVisible(false);
+   worldLabel(scene,label,{mission:site.mission});
    this.sites.push({site,image,label});
   }
   if(area==='springs'){
@@ -131,7 +133,7 @@ export class PermanenceWorld {
   if(missions.has('po-deliver')&&!this.outpostDepot){this.outpostDepot=true;this.addOutpostDepot();}
   if(missions.has('po-module')&&!this.outpost){this.outpost=true;this.addOutpost();}
   if(this.area==='springs'&&!this.supportReady&&missions.status('settle-outpost')==='completed'){
-   this.supportReady=true;this.scene.add.text(OUTPOST_SUPPORT.x,1190,'APOIO · CURA E COFRE',{fontFamily:'Barlow Condensed',fontSize:'15px',color:'#d4dfc4',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setName('outpost-support-sign');
+   this.supportReady=true;worldLabel(this.scene,this.scene.add.text(OUTPOST_SUPPORT.x,1190,'APOIO · CURA E COFRE',{fontFamily:'Barlow Condensed',fontSize:'15px',color:'#d4dfc4',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setName('outpost-support-sign'));
   }
   return iceCompleted?'ice':windCompleted?'wind':circuitCompleted?'circuit':undefined;
  }
@@ -144,7 +146,7 @@ export class PermanenceWorld {
   if(this.area!=='springs')return;
   const building=this.scene.add.image(OUTPOST.x,OUTPOST.y,'first-habitat').setDisplaySize(OUTPOST.width,OUTPOST.height).setOrigin(.5,1).setDepth(OUTPOST.y-20).setName('outpost-habitat');trackEnvironmentOcclusion(this.scene,building);
   this.obstacles.push(...OUTPOST_SOLIDS.map(o=>({...o})));
-  this.scene.add.text(OUTPOST.x,OUTPOST.y+30,OUTPOST.name.toLocaleUpperCase('pt-BR'),{fontFamily:'Barlow Condensed',fontSize:'16px',color:'#dfd5b5',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setName('outpost-name');
+  worldLabel(this.scene,this.scene.add.text(OUTPOST.x,OUTPOST.y+30,OUTPOST.name.toLocaleUpperCase('pt-BR'),{fontFamily:'Barlow Condensed',fontSize:'16px',color:'#dfd5b5',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setName('outpost-name'));
   // The same prefab carries a sealed reservoir and canopy. Independent power
   // is represented with the existing whole regulator asset, not ancient tech.
   addQuestProp(this.scene,'powerCell',1990,939,63).setName('outpost-regulator');
@@ -158,7 +160,7 @@ export class PermanenceWorld {
  private addReception():void{
   if(this.area!=='base')return;
   addQuestProp(this.scene,'manifest',1120,640,72).setName('settlement-arrival-manifest');this.obstacles.push({x:1120,y:624,radius:22});
-  this.scene.add.text(1120,665,'SEGUNDA EQUIPE EM TERRA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d4dac0',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000);
+  worldLabel(this.scene,this.scene.add.text(1120,665,'SEGUNDA EQUIPE EM TERRA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d4dac0',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000));
  }
  private addPowerStation():void{
   if(this.area!=='base'&&this.area!=='terraces')return;
@@ -166,7 +168,7 @@ export class PermanenceWorld {
   const building=addQuestProp(this.scene,'worklight',x,y,112).setName('settlement-power-station');trackEnvironmentOcclusion(this.scene,building);
   this.obstacles.push({x,y:y-24,radius:32});
   const lamp=this.scene.add.graphics().setDepth(y+1);lamp.fillStyle(0xffd898,.12).fillCircle(x+48,y-74,20).fillStyle(0xffdeb1,.8).fillCircle(x+48,y-74,3);
-  this.scene.add.text(x,y+20,'REDE ISOLADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#ebd8b6',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
+  worldLabel(this.scene,this.scene.add.text(x,y+20,'REDE ISOLADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#ebd8b6',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1));
  }
  snapshot():PermanencePose{return{...(this.haul?{haul:{...this.haul.position,kind:'cargo' as const}}:{}),circuit:this.circuit.snapshot(),wind:this.wind.snapshot(),ice:this.ice.snapshot()};}
  get icePosition():Vec2|undefined{return this.ice.position;}
@@ -203,13 +205,14 @@ export class PermanenceWorld {
   const x=this.area==='base'?650:1780,y=this.area==='base'?900:1160;
   addQuestProp(this.scene,'supplyRack',x,y,110).setName('settlement-supply-depot');this.obstacles.push({x,y:y-22,radius:30});
   this.depotLabel=this.scene.add.text(x,y+20,'DEPÓSITO DE SUPRIMENTOS',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d9d5af',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
+  worldLabel(this.scene,this.depotLabel);
  }
  private addFoodReserve():void{
   if(this.area!=='base'&&this.area!=='terraces')return;
   const x=this.area==='base'?440:2010,y=this.area==='base'?910:1100;
   addQuestProp(this.scene,'foodReserve',x,y,90).setName('settlement-food-reserve');
   this.obstacles.push({x,y:y-17,radius:25});
-  this.scene.add.text(x,y+20,'RESERVA IDENTIFICADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d9d5af',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
+  worldLabel(this.scene,this.scene.add.text(x,y+20,'RESERVA IDENTIFICADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d9d5af',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1));
  }
  private addWaterStation():void{
   if(this.area!=='base'&&this.area!=='terraces')return;
@@ -218,6 +221,7 @@ export class PermanenceWorld {
   this.waterVessel=addQuestProp(this.scene,'sealedWater',x+48,y-6,78);
   this.obstacles.push({x:x+48,y:y-18,radius:23});
   this.waterLabel=this.scene.add.text(x,y+48,'ÁGUA TRATADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#b1d5c7',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1);
+  worldLabel(this.scene,this.waterLabel);
  }
  at(position:Vec2,missions:Missions):PermanenceSite|undefined{
   const ice=this.ice.at(position,missions);if(ice)return ice;

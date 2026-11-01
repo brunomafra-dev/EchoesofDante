@@ -1,3 +1,4 @@
+import {worldLabel} from '../ui/WorldLabels';
 import Phaser from 'phaser';
 import {addQuestProp} from './QuestProps';
 import {ECHO_CIRCUIT as C,circuitFlags,circuitTurn,circuitTarget,circuitPath,circuitLength,circuitPoint,type CircuitNode,type CircuitPulse} from '../config/echoCircuit';
@@ -23,6 +24,7 @@ export class EchoCircuit{
   for(const key of ['source','a','b','sink'] as const){const p=C[key];
    const body=(key==='source'?addQuestProp(scene,'emitter',p.x,p.y+22,72):scene.add.image(p.x,p.y-20,'deep-relay').setDisplaySize(64,70).setDepth(p.y-15)).setVisible(false).setName('echo-circuit-'+key);
    const label=scene.add.text(p.x,p.y+44,key==='source'?'EMISSOR ISOLADO':key==='sink'?'RETORNO DO REGISTRO':`DESVIADOR ${key==='a'?'I':'II'}`,{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d5cbe8',stroke:'#14212a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setVisible(false);
+   worldLabel(scene,label,{mission:'settle-echo',range:530});
    const ray=key==='sink'?undefined:scene.add.image(p.x,p.y,'echo-circuit-ray').setOrigin(0,.5).setDepth(-5).setVisible(false).setName('echo-circuit-link-'+key);
    this.nodes.set(key,{body,ray,label});
   }
@@ -45,7 +47,7 @@ export class EchoCircuit{
  update(m:Missions,player:Vec2,now:number,authority:boolean,remote?:CircuitPulse):boolean{
   if(this.area==='base'&&m.has('pr-store')&&!this.archived){this.archived=true;
    addQuestProp(this.scene,'routeArchive',1250,610,75).setName('echo-route-archive');this.solids.push({x:1250,y:595,radius:17});
-   this.scene.add.text(1250,635,'MAPA DOS RETORNOS',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d5cbe8',stroke:'#14212a',strokeThickness:3}).setOrigin(.5).setDepth(11000);
+   worldLabel(this.scene,this.scene.add.text(1250,635,'MAPA DOS RETORNOS',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d5cbe8',stroke:'#14212a',strokeThickness:3}).setOrigin(.5).setDepth(11000),{mission:'settle-echo'});
   }
   if(this.area!=='cavern')return false;
   const installed=m.has('pr-origin');

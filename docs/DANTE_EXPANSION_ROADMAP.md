@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+**01/11/2026 · UX geral · 0.1.180:** autorizado seguir a auditoria cobrindo desktop e mobile. [Configurações, diário/NPC, rótulos e chat](ux-general/README.md), preservando missões, requisitos, recibos, saves, arte e física. Laboratório de menu sem simulação e laboratório avançado com pré-requisitos explícitos. QA técnico e aprovação humana separados; aguardar playtest antes da integração visual e de V05, sem iniciar novo capítulo.
+
 **01/11/2026 · Primeira etapa da auditoria · 0.1.179:** autorizada a ordem áudio → UX mobile → integração visual. [Escopo e verificações da restauração de áudio](audio-recovery/README.md): música após zero, ganho da abertura, preferências independentes de flags inválidas e laboratório leve. Aguardar escuta humana desta etapa antes da UX; integração/objetos e novo capítulo seguem pendentes.
 
 `d4c866a` publicado na Vercel: 73 hashes e regressões de áudio solo/dupla públicos passaram; contexto, sinal real, reload, controles e sentinelas conferidos. Relay 16/`icecave:1` compatível, sem deploy adicional. QA técnico e inspeção das capturas separados do reteste humano em iPhone, ainda pendente. [Registro final](audio-recovery/qa/publication.json).

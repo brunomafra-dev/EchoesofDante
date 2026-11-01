@@ -1,0 +1,199 @@
+{
+  "base": "http://127.0.0.1:5185",
+  "method": "DEV client, isolated advanced UX lab. Normal E/mission/service/atlas UI; DEV position changes only frame NPCs/objects, not objectives/rewards/bosses. Previous chapter prerequisites are explicit in the laboratory.",
+  "errors": [],
+  "checks": [
+    "Ivo offer/action fit 568x320, actual acceptance closes dialogue and preserves credits/receipts; visible service button opens workshop normally",
+    "Base/post/gallery context labels capped at two without overlap; screen font remains readable at sampled camera zooms; Vesper/Titan alive and no rewards fabricated"
+  ],
+  "scenes": [
+    {
+      "area": "base",
+      "x": 650,
+      "y": 750,
+      "viewport": [
+        844,
+        390
+      ],
+      "labels": [
+        {
+          "text": "Registro do transporte térmico",
+          "bounds": {
+            "type": 5,
+            "x": 661.8241758241759,
+            "y": 879.010989010989,
+            "width": 256.35164835164835,
+            "height": 37.97802197802196
+          },
+          "screenFont": 12
+        }
+      ]
+    },
+    {
+      "area": "base",
+      "x": 650,
+      "y": 750,
+      "viewport": [
+        1920,
+        1080
+      ],
+      "labels": [
+        {
+          "text": "Registro do transporte térmico",
+          "bounds": {
+            "type": 5,
+            "x": 709,
+            "y": 886,
+            "width": 162,
+            "height": 24
+          },
+          "screenFont": 21
+        }
+      ]
+    },
+    {
+      "area": "base",
+      "x": 650,
+      "y": 860,
+      "viewport": [
+        844,
+        390
+      ],
+      "labels": [
+        {
+          "text": "DEPÓSITO DE SUPRIMENTOS",
+          "bounds": {
+            "type": 5,
+            "x": 536.8571428571429,
+            "y": 901.010989010989,
+            "width": 226.28571428571433,
+            "height": 37.97802197802196
+          },
+          "screenFont": 12
+        }
+      ]
+    },
+    {
+      "area": "base",
+      "x": 650,
+      "y": 860,
+      "viewport": [
+        1920,
+        1080
+      ],
+      "labels": [
+        {
+          "text": "DEPÓSITO DE SUPRIMENTOS",
+          "bounds": {
+            "type": 5,
+            "x": 578.5,
+            "y": 908,
+            "width": 143,
+            "height": 24
+          },
+          "screenFont": 21
+        }
+      ]
+    },
+    {
+      "area": "springs",
+      "x": 2020,
+      "y": 1050,
+      "viewport": [
+        844,
+        390
+      ],
+      "labels": [
+        {
+          "text": "APOIO · CURA E COFRE",
+          "bounds": {
+            "type": 5,
+            "x": 1948.4307692307693,
+            "y": 1172.2769230769231,
+            "width": 183.13846153846134,
+            "height": 35.44615384615395
+          },
+          "screenFont": 11.999999999999998
+        }
+      ]
+    },
+    {
+      "area": "springs",
+      "x": 2020,
+      "y": 1050,
+      "viewport": [
+        1920,
+        1080
+      ],
+      "labels": [
+        {
+          "text": "FREQUÊNCIA E VENTO",
+          "bounds": {
+            "type": 5,
+            "x": 1843,
+            "y": 1145,
+            "width": 114,
+            "height": 24
+          },
+          "screenFont": 21
+        },
+        {
+          "text": "APOIO · CURA E COFRE",
+          "bounds": {
+            "type": 5,
+            "x": 1978,
+            "y": 1178,
+            "width": 124,
+            "height": 24
+          },
+          "screenFont": 22.5
+        }
+      ]
+    },
+    {
+      "area": "icecave",
+      "x": 1100,
+      "y": 1180,
+      "viewport": [
+        844,
+        390
+      ],
+      "labels": [
+        {
+          "text": "Carga no apoio de pedra",
+          "bounds": {
+            "type": 5,
+            "x": 947.1428571428571,
+            "y": 1229.010989010989,
+            "width": 205.71428571428578,
+            "height": 37.97802197802207
+          },
+          "screenFont": 12
+        }
+      ]
+    },
+    {
+      "area": "icecave",
+      "x": 1100,
+      "y": 1180,
+      "viewport": [
+        1920,
+        1080
+      ],
+      "labels": [
+        {
+          "text": "Carga no apoio de pedra",
+          "bounds": {
+            "type": 5,
+            "x": 985,
+            "y": 1236,
+            "width": 130,
+            "height": 24
+          },
+          "screenFont": 21
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

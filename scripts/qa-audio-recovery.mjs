@@ -165,6 +165,9 @@ try {
   await page.waitForTimeout(160);
   await page.evaluate(() => { window.__audioPad.buttons[15] = { pressed: false, value: 0 }; });
   assert.equal(await page.locator('[data-volume=master]').inputValue(), '84', 'gamepad range adjustment');
+  // Use a full touch movement after switching input methods: a four-point
+  // movement on the compact native range can stay inside Chrome's touch slop.
+  await drag('master', 0);
   await drag('master', 80);
   report.realStorage = await page.evaluate(() => ({ characters: window.__audioRecovery.rawGet.call(localStorage, 'echoes-of-dante.characters.v1'), settings: window.__audioRecovery.rawGet.call(localStorage, 'echoes-of-dante.settings.v1') }));
   assert.deepEqual(report.realStorage, { characters: 'audio-recovery-real-characters', settings: 'audio-recovery-real-settings' });

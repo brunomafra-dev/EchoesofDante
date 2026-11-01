@@ -4,6 +4,7 @@ import type { Vec2 } from '../utils/math';
 import { distance } from '../utils/math';
 import type { Hud } from './Hud';
 import type { WorldNavigator } from './WorldNavigator';
+import {worldLabel} from './WorldLabels';
 
 export type ExplorationTarget = Vec2 & {
   name: string;
@@ -25,6 +26,7 @@ export class ExplorationGuide {
       fontFamily: 'Barlow Condensed, sans-serif', fontSize: '15px', fontStyle: 'bold',
       color: '#d8cfe6', stroke: '#080e0c', strokeThickness: 2, align: 'center',
     }).setOrigin(0.5, 0).setDepth(11000).setVisible(false);
+    worldLabel(scene,this.label,{range:Infinity,priority:5});
   }
 
   hide(): void { this.label.setVisible(false); this.base.setVisible(false); this.navigator?.setTarget(); }

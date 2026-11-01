@@ -1,0 +1,206 @@
+{
+  "at": "2026-11-01T18:06:16.939Z",
+  "base": "http://127.0.0.1:5193",
+  "lockedMediaVolume": true,
+  "method": "Actual isolated client, normal creation, touch sliders; analyser taps observe output after actual gains. Malformed invitation fixture and real-storage sentinels; no DEV globals or boss/progress simulation. Optional ignored native volume setter is a compatibility simulation, not a physical iPhone.",
+  "checks": [
+    "Malformed invitation does not discard valid persisted zero volume",
+    "Film and music start at zero, restore measured output, and keep native media unmuted after routing; film manual mute survives settings, pause/resume and SFX changes",
+    "Music, SFX and master independently silence actual output; repeated restore and reload retain settings and sound; real save/settings sentinels unchanged"
+  ],
+  "errors": [],
+  "samples": {
+    "filmStartsAtZero": {
+      "gain": 0,
+      "peak": 0,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 5.098667,
+      "context": "running"
+    },
+    "filmRestores": {
+      "gain": 0.3840000033378601,
+      "peak": 0.1365356743335724,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 6.978667,
+      "context": "running"
+    },
+    "filmMusicMutes": {
+      "gain": 0,
+      "peak": 0,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 8.757333,
+      "context": "running"
+    },
+    "filmMusicRestores": {
+      "gain": 0.3840000033378601,
+      "peak": 0.0669867992401123,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 10.528,
+      "context": "running"
+    },
+    "filmManualMute": {
+      "gain": 0,
+      "peak": 0,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 12.309333,
+      "context": "running"
+    },
+    "filmManualMuteSurvivesSettings": {
+      "gain": 0,
+      "peak": 0,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 14.096057,
+      "context": "running"
+    },
+    "filmManualRestore": {
+      "gain": 0.31200000643730164,
+      "peak": 0.05810324847698212,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 15.877333,
+      "context": "running"
+    },
+    "filmUnaffectedBySfx": {
+      "gain": 0.31200000643730164,
+      "peak": 0.03264874219894409,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 17.658667,
+      "context": "running"
+    },
+    "filmPauseResume": {
+      "gain": 0.31200000643730164,
+      "peak": 0.1104038804769516,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 19.458667,
+      "context": "running"
+    },
+    "filmMasterMutes": {
+      "gain": 0,
+      "peak": 0,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 21.28,
+      "context": "running"
+    },
+    "musicStartsAtZero": {
+      "gain": 0,
+      "peak": 0,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 2.023039,
+      "context": "running"
+    },
+    "musicRestoresFromZero": {
+      "gain": 0.21119999885559082,
+      "peak": 0.042558446526527405,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 4.493061,
+      "context": "running"
+    },
+    "musicOnlyMute": {
+      "gain": 0,
+      "peak": 0,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 7.000816,
+      "context": "running"
+    },
+    "sfxWithMusicZero": {
+      "gain": 0.7200000286102295,
+      "peak": 0.03662807494401932,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 8.70196,
+      "context": "running"
+    },
+    "musicWithSfxZero": {
+      "gain": 0.21119999885559082,
+      "peak": 0.03795923292636871,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 12.634558,
+      "context": "running"
+    },
+    "sfxOnlyMute": {
+      "gain": 0,
+      "peak": 0,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 14.315102,
+      "context": "running"
+    },
+    "masterMutesMusic": {
+      "gain": 0,
+      "peak": 0,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 17.840161,
+      "context": "running"
+    },
+    "masterMutesSfx": {
+      "gain": 0,
+      "peak": 0,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 19.554104,
+      "context": "running"
+    },
+    "musicFinalRestore": {
+      "gain": 0.21119999885559082,
+      "peak": 0.044589534401893616,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 23.533424,
+      "context": "running"
+    },
+    "musicAfterReload": {
+      "gain": 0.21119999885559082,
+      "peak": 0.05005016177892685,
+      "muted": false,
+      "volume": 1,
+      "paused": false,
+      "currentTime": 1.833643,
+      "context": "running"
+    }
+  },
+  "worldAtMenu": [],
+  "filmContextAfterSkip": "closed",
+  "reloadSettings": {
+    "master": "80",
+    "music": "48",
+    "sfx": "90"
+  },
+  "realStorage": {
+    "characters": "audio-recovery-real-characters",
+    "settings": "audio-recovery-real-settings"
+  },
+  "passed": true
+}

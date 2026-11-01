@@ -4,6 +4,8 @@
 
 **Seguimento:** [0.1.179 · correção dos caminhos de áudio A01–A03](../audio-recovery/README.md), autorizada como primeira etapa. O parecer e as evidências abaixo descrevem a 0.1.178; QA/publicação e reteste humano da correção são registrados separadamente. UX e integração visual permanecem pendentes.
 
+**Etapa de UX autorizada em 01/11:** [0.1.180 · UX geral, incluindo desktop](../ux-general/README.md) trata U01–U05 e a sobreposição do chat com menus encontrada no seguimento de áudio. Evidências/limites e aprovação humana são registrados no documento da entrega. V01–V05 continuam para a etapa visual.
+
 ## Parecer
 
 A 0.1.178 melhorou a confirmação dos sliders e passou a controlar a trilha por Web Audio, mas **não deve ser considerada encerrada como correção completa do áudio**. Há um defeito reproduzido na campanha pública: começar com volume zero e depois restaurá-lo pode deixar a música permanentemente muda naquela voz. O ganho sobe, mas o elemento continua `muted` e o sinal permanece zero.

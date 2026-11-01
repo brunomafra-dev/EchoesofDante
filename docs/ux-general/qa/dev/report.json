@@ -1,0 +1,603 @@
+{
+  "base": "http://127.0.0.1:5185",
+  "at": "2026-11-01T17:36:21.867Z",
+  "method": "Actual mouse/keyboard/touch/gamepad emulation on isolated UX labs. Advanced lab explicitly prepares previous chapters (Warden/Soterrado); Vesper/Titan and the current Galerias chapter remain pending. No DEV globals are used by this script. Real-storage sentinels preserved.",
+  "errors": [],
+  "checks": [
+    "All three sliders, preview actions and Back fit seven desktop/tablet/mobile viewport sizes without horizontal overflow; minimum 44px interactive height",
+    "Music preview produces measured signal, keyboard volume zero silences actual output and restoration works; Stop, leaving settings and the 15s bound release its context; effect sample control works",
+    "Advanced journal opens the tracked chapter, current objective/action fit short screens; historical reading changes no progress, tracking/untracking is explicit and survives reload"
+  ],
+  "layouts": [
+    {
+      "touch": false,
+      "size": [
+        1920,
+        1080
+      ],
+      "overflow": false,
+      "sliders": [
+        {
+          "x": 580,
+          "y": 487.953125,
+          "width": 240,
+          "height": 44,
+          "top": 487.953125,
+          "right": 820,
+          "bottom": 531.953125,
+          "left": 580
+        },
+        {
+          "x": 840,
+          "y": 487.953125,
+          "width": 240,
+          "height": 44,
+          "top": 487.953125,
+          "right": 1080,
+          "bottom": 531.953125,
+          "left": 840
+        },
+        {
+          "x": 1100,
+          "y": 487.953125,
+          "width": 240,
+          "height": 44,
+          "top": 487.953125,
+          "right": 1340,
+          "bottom": 531.953125,
+          "left": 1100
+        }
+      ],
+      "buttons": [
+        {
+          "x": 580,
+          "y": 594.546875,
+          "width": 376,
+          "height": 44,
+          "top": 594.546875,
+          "right": 956,
+          "bottom": 638.546875,
+          "left": 580
+        },
+        {
+          "x": 964,
+          "y": 594.546875,
+          "width": 376,
+          "height": 44,
+          "top": 594.546875,
+          "right": 1340,
+          "bottom": 638.546875,
+          "left": 964
+        },
+        {
+          "x": 580,
+          "y": 646.546875,
+          "width": 376,
+          "height": 44,
+          "top": 646.546875,
+          "right": 956,
+          "bottom": 690.546875,
+          "left": 580
+        },
+        {
+          "x": 964,
+          "y": 646.546875,
+          "width": 376,
+          "height": 44,
+          "top": 646.546875,
+          "right": 1340,
+          "bottom": 690.546875,
+          "left": 964
+        }
+      ]
+    },
+    {
+      "touch": false,
+      "size": [
+        1024,
+        768
+      ],
+      "overflow": false,
+      "sliders": [
+        {
+          "x": 132,
+          "y": 331.953125,
+          "width": 240,
+          "height": 44,
+          "top": 331.953125,
+          "right": 372,
+          "bottom": 375.953125,
+          "left": 132
+        },
+        {
+          "x": 392,
+          "y": 331.953125,
+          "width": 240,
+          "height": 44,
+          "top": 331.953125,
+          "right": 632,
+          "bottom": 375.953125,
+          "left": 392
+        },
+        {
+          "x": 652,
+          "y": 331.953125,
+          "width": 240,
+          "height": 44,
+          "top": 331.953125,
+          "right": 892,
+          "bottom": 375.953125,
+          "left": 652
+        }
+      ],
+      "buttons": [
+        {
+          "x": 132,
+          "y": 438.546875,
+          "width": 376,
+          "height": 44,
+          "top": 438.546875,
+          "right": 508,
+          "bottom": 482.546875,
+          "left": 132
+        },
+        {
+          "x": 516,
+          "y": 438.546875,
+          "width": 376,
+          "height": 44,
+          "top": 438.546875,
+          "right": 892,
+          "bottom": 482.546875,
+          "left": 516
+        },
+        {
+          "x": 132,
+          "y": 490.546875,
+          "width": 376,
+          "height": 44,
+          "top": 490.546875,
+          "right": 508,
+          "bottom": 534.546875,
+          "left": 132
+        },
+        {
+          "x": 516,
+          "y": 490.546875,
+          "width": 376,
+          "height": 44,
+          "top": 490.546875,
+          "right": 892,
+          "bottom": 534.546875,
+          "left": 516
+        }
+      ]
+    },
+    {
+      "touch": true,
+      "size": [
+        568,
+        320
+      ],
+      "overflow": false,
+      "sliders": [
+        {
+          "x": 24,
+          "y": 110.75,
+          "width": 164,
+          "height": 44,
+          "top": 110.75,
+          "right": 188,
+          "bottom": 154.75,
+          "left": 24
+        },
+        {
+          "x": 202,
+          "y": 110.75,
+          "width": 164,
+          "height": 44,
+          "top": 110.75,
+          "right": 366,
+          "bottom": 154.75,
+          "left": 202
+        },
+        {
+          "x": 380,
+          "y": 110.75,
+          "width": 164,
+          "height": 44,
+          "top": 110.75,
+          "right": 544,
+          "bottom": 154.75,
+          "left": 380
+        }
+      ],
+      "buttons": [
+        {
+          "x": 24,
+          "y": 197.75,
+          "width": 256,
+          "height": 44,
+          "top": 197.75,
+          "right": 280,
+          "bottom": 241.75,
+          "left": 24
+        },
+        {
+          "x": 288,
+          "y": 197.75,
+          "width": 256,
+          "height": 44,
+          "top": 197.75,
+          "right": 544,
+          "bottom": 241.75,
+          "left": 288
+        },
+        {
+          "x": 24,
+          "y": 249.75,
+          "width": 256,
+          "height": 44,
+          "top": 249.75,
+          "right": 280,
+          "bottom": 293.75,
+          "left": 24
+        },
+        {
+          "x": 288,
+          "y": 249.75,
+          "width": 256,
+          "height": 44,
+          "top": 249.75,
+          "right": 544,
+          "bottom": 293.75,
+          "left": 288
+        }
+      ]
+    },
+    {
+      "touch": true,
+      "size": [
+        844,
+        390
+      ],
+      "overflow": false,
+      "sliders": [
+        {
+          "x": 42,
+          "y": 145.75,
+          "width": 244,
+          "height": 44,
+          "top": 145.75,
+          "right": 286,
+          "bottom": 189.75,
+          "left": 42
+        },
+        {
+          "x": 300,
+          "y": 145.75,
+          "width": 244,
+          "height": 44,
+          "top": 145.75,
+          "right": 544,
+          "bottom": 189.75,
+          "left": 300
+        },
+        {
+          "x": 558,
+          "y": 145.75,
+          "width": 244,
+          "height": 44,
+          "top": 145.75,
+          "right": 802,
+          "bottom": 189.75,
+          "left": 558
+        }
+      ],
+      "buttons": [
+        {
+          "x": 42,
+          "y": 232.75,
+          "width": 376,
+          "height": 44,
+          "top": 232.75,
+          "right": 418,
+          "bottom": 276.75,
+          "left": 42
+        },
+        {
+          "x": 426,
+          "y": 232.75,
+          "width": 376,
+          "height": 44,
+          "top": 232.75,
+          "right": 802,
+          "bottom": 276.75,
+          "left": 426
+        },
+        {
+          "x": 42,
+          "y": 284.75,
+          "width": 376,
+          "height": 44,
+          "top": 284.75,
+          "right": 418,
+          "bottom": 328.75,
+          "left": 42
+        },
+        {
+          "x": 426,
+          "y": 284.75,
+          "width": 376,
+          "height": 44,
+          "top": 284.75,
+          "right": 802,
+          "bottom": 328.75,
+          "left": 426
+        }
+      ]
+    },
+    {
+      "touch": true,
+      "size": [
+        852,
+        393
+      ],
+      "overflow": false,
+      "sliders": [
+        {
+          "x": 46,
+          "y": 147.25,
+          "width": 244,
+          "height": 44,
+          "top": 147.25,
+          "right": 290,
+          "bottom": 191.25,
+          "left": 46
+        },
+        {
+          "x": 304,
+          "y": 147.25,
+          "width": 244,
+          "height": 44,
+          "top": 147.25,
+          "right": 548,
+          "bottom": 191.25,
+          "left": 304
+        },
+        {
+          "x": 562,
+          "y": 147.25,
+          "width": 244,
+          "height": 44,
+          "top": 147.25,
+          "right": 806,
+          "bottom": 191.25,
+          "left": 562
+        }
+      ],
+      "buttons": [
+        {
+          "x": 46,
+          "y": 234.25,
+          "width": 376,
+          "height": 44,
+          "top": 234.25,
+          "right": 422,
+          "bottom": 278.25,
+          "left": 46
+        },
+        {
+          "x": 430,
+          "y": 234.25,
+          "width": 376,
+          "height": 44,
+          "top": 234.25,
+          "right": 806,
+          "bottom": 278.25,
+          "left": 430
+        },
+        {
+          "x": 46,
+          "y": 286.25,
+          "width": 376,
+          "height": 44,
+          "top": 286.25,
+          "right": 422,
+          "bottom": 330.25,
+          "left": 46
+        },
+        {
+          "x": 430,
+          "y": 286.25,
+          "width": 376,
+          "height": 44,
+          "top": 286.25,
+          "right": 806,
+          "bottom": 330.25,
+          "left": 430
+        }
+      ]
+    },
+    {
+      "touch": true,
+      "size": [
+        915,
+        412
+      ],
+      "overflow": false,
+      "sliders": [
+        {
+          "x": 77.5,
+          "y": 156.75,
+          "width": 244,
+          "height": 44,
+          "top": 156.75,
+          "right": 321.5,
+          "bottom": 200.75,
+          "left": 77.5
+        },
+        {
+          "x": 335.5,
+          "y": 156.75,
+          "width": 244,
+          "height": 44,
+          "top": 156.75,
+          "right": 579.5,
+          "bottom": 200.75,
+          "left": 335.5
+        },
+        {
+          "x": 593.5,
+          "y": 156.75,
+          "width": 244,
+          "height": 44,
+          "top": 156.75,
+          "right": 837.5,
+          "bottom": 200.75,
+          "left": 593.5
+        }
+      ],
+      "buttons": [
+        {
+          "x": 77.5,
+          "y": 243.75,
+          "width": 376,
+          "height": 44,
+          "top": 243.75,
+          "right": 453.5,
+          "bottom": 287.75,
+          "left": 77.5
+        },
+        {
+          "x": 461.5,
+          "y": 243.75,
+          "width": 376,
+          "height": 44,
+          "top": 243.75,
+          "right": 837.5,
+          "bottom": 287.75,
+          "left": 461.5
+        },
+        {
+          "x": 77.5,
+          "y": 295.75,
+          "width": 376,
+          "height": 44,
+          "top": 295.75,
+          "right": 453.5,
+          "bottom": 339.75,
+          "left": 77.5
+        },
+        {
+          "x": 461.5,
+          "y": 295.75,
+          "width": 376,
+          "height": 44,
+          "top": 295.75,
+          "right": 837.5,
+          "bottom": 339.75,
+          "left": 461.5
+        }
+      ]
+    },
+    {
+      "touch": true,
+      "size": [
+        393,
+        852
+      ],
+      "overflow": false,
+      "sliders": [
+        {
+          "x": 20,
+          "y": 292.75,
+          "width": 353,
+          "height": 44,
+          "top": 292.75,
+          "right": 373,
+          "bottom": 336.75,
+          "left": 20
+        },
+        {
+          "x": 20,
+          "y": 372.75,
+          "width": 353,
+          "height": 44,
+          "top": 372.75,
+          "right": 373,
+          "bottom": 416.75,
+          "left": 20
+        },
+        {
+          "x": 20,
+          "y": 452.75,
+          "width": 353,
+          "height": 44,
+          "top": 452.75,
+          "right": 373,
+          "bottom": 496.75,
+          "left": 20
+        }
+      ],
+      "buttons": [
+        {
+          "x": 20,
+          "y": 561.75,
+          "width": 172.5,
+          "height": 44,
+          "top": 561.75,
+          "right": 192.5,
+          "bottom": 605.75,
+          "left": 20
+        },
+        {
+          "x": 200.5,
+          "y": 561.75,
+          "width": 172.5,
+          "height": 44,
+          "top": 561.75,
+          "right": 373,
+          "bottom": 605.75,
+          "left": 200.5
+        },
+        {
+          "x": 20,
+          "y": 613.75,
+          "width": 172.5,
+          "height": 44,
+          "top": 613.75,
+          "right": 192.5,
+          "bottom": 657.75,
+          "left": 20
+        },
+        {
+          "x": 200.5,
+          "y": 613.75,
+          "width": 172.5,
+          "height": 44,
+          "top": 613.75,
+          "right": 373,
+          "bottom": 657.75,
+          "left": 200.5
+        }
+      ]
+    }
+  ],
+  "previewPlaying": {
+    "peak": 0.022787200286984444,
+    "gain": 0.15855839848518372,
+    "context": "running"
+  },
+  "previewMuted": {
+    "peak": 0,
+    "gain": 0,
+    "context": "running"
+  },
+  "previewRestored": {
+    "peak": 0.08299565315246582,
+    "gain": 0.4399999976158142,
+    "context": "running"
+  },
+  "passed": true
+}

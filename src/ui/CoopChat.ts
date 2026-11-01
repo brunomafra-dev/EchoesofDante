@@ -15,6 +15,7 @@ export class CoopChat{
  private readonly count=document.createElement('small');
  private expanded=false;private editing=false;private previousFocus?:HTMLElement;
  private awaitingDelivery?:number;
+ private allowed=true;
  get typing():boolean{return this.editing;}
  constructor(private readonly block:(typing:boolean)=>void){
   this.root.className='coop-chat';this.root.hidden=true;this.root.setAttribute('aria-label','Chat da equipe');
@@ -34,7 +35,8 @@ export class CoopChat{
   window.addEventListener('dante-chat',this.refresh);window.addEventListener('dante-coop',this.session);
   document.body.append(this.root);this.refresh();this.layout();
  }
- private available():boolean{return (room.role==='host'||room.role==='guest')&&!room.endedMessage;}
+ private available():boolean{return this.allowed&&(room.role==='host'||room.role==='guest')&&!room.endedMessage;}
+ setAllowed(value:boolean):void{this.allowed=value;if(!value){this.close(false);this.expanded=false;this.layout();}this.root.hidden=!this.available();}
  private counter():void{this.count.textContent=Array.from(this.input.value).length+'/200';}
  private layout():void{this.root.classList.toggle('is-writing',this.editing);this.root.classList.toggle('is-expanded',this.expanded);this.form.hidden=!this.editing;this.toggle.hidden=this.editing;this.log.hidden=!this.expanded;this.historyButton.setAttribute('aria-expanded',String(this.expanded));this.counter();}
  private session=():void=>{this.root.hidden=!this.available();if(this.root.hidden)this.close(false);this.refresh();};
@@ -61,11 +63,12 @@ export class CoopChat{
    else if(e.code==='Enter'||e.code==='NumpadEnter'){e.preventDefault();if(!e.repeat)this.submit();}
    return;
   }
-  if((e.code==='Enter'||e.code==='NumpadEnter')&&!e.repeat&&!(e.target instanceof HTMLElement&&e.target.closest('input,textarea,select,[contenteditable="true"]'))&&!document.querySelector('dialog[open]:not(.application-shell)')){e.preventDefault();e.stopImmediatePropagation();this.open();}
+  if((e.code==='Enter'||e.code==='NumpadEnter')&&!e.repeat&&!(e.target instanceof HTMLElement&&e.target.closest('button,a,summary,input,textarea,select,[contenteditable="true"]'))&&!document.querySelector('dialog[open]:not(.application-shell)')){e.preventDefault();e.stopImmediatePropagation();this.open();}
  };
  private keyUp=(e:KeyboardEvent):void=>{if(this.editing)e.stopImmediatePropagation();};
  // Called by the existing shell gamepad loop, even while a lobby pauses Phaser.
- frame(parent:HTMLElement,down:boolean[],previous:boolean[]):boolean{
+ frame(parent:HTMLElement,down:boolean[],previous:boolean[],allowed=true):boolean{
+  if(this.allowed!==allowed)this.setAllowed(allowed);
   if(this.root.parentElement!==parent){parent.append(this.root);if(this.editing)this.input.focus({preventScroll:true});}
   this.root.hidden=!this.available();if(this.root.hidden){this.close(false);return false;}
   const height=this.editing?Math.max(80,(window.visualViewport?.height??window.innerHeight)-(matchMedia('(pointer: coarse)').matches?64:16))+'px':'';if(this.root.style.maxHeight!==height)this.root.style.maxHeight=height;

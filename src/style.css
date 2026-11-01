@@ -80,6 +80,22 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
 .shell-content label.volume-setting { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 12px; margin: 16px 0; }
 .shell-content .volume-setting output { min-width: 3.5em; color: #e6d6ad; font-variant-numeric: tabular-nums; text-align: right; }
 .shell-content .volume-setting input[type="range"] { grid-column: 1 / -1; min-height: 38px; margin: 0; touch-action: none; cursor: pointer; }
+.is-settings-page .shell-brand{display:none}
+.is-settings-page .shell-layout{grid-template-columns:1fr;max-width:760px;gap:0;min-height:100%;align-content:center}
+.is-settings-page .shell-content{min-width:0}
+.is-settings-page .shell-content>p{margin:6px 0}
+.settings-volumes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.shell-content .settings-volumes .volume-setting{margin:8px 0}
+.shell-content .settings-volumes input[type=range]{min-height:44px}
+.settings-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px;position:sticky;bottom:0;background:#061512;padding:5px 0}
+.settings-actions>button{min-height:44px;border:1px solid #73866f88;border-radius:5px;padding:8px 12px;background:#172a21;color:#e2e8d8;font:600 16px 'Barlow Condensed',sans-serif;cursor:pointer;touch-action:manipulation}
+.settings-actions>button:focus-visible{outline:2px solid #ffbd54;outline-offset:2px}.settings-actions>button:disabled{opacity:.5;cursor:default}
+.settings-actions [aria-pressed=true]{border-color:#d4b37e;background:#37432e}
+.shell-content .settings-audio-hint{min-height:2.8em;font-size:12px}
+@media(max-width:519px){.settings-volumes{grid-template-columns:1fr;gap:0}.is-settings-page.application-shell{padding-left:20px;padding-right:20px}}
+@media(max-height:500px){.is-settings-page.application-shell{padding-top:max(10px,env(safe-area-inset-top));padding-bottom:max(10px,env(safe-area-inset-bottom))}.is-settings-page .shell-content h2{font-size:25px}.settings-actions{margin-top:4px}.shell-content .settings-audio-hint{min-height:0}.settings-volumes{gap:14px}}
+.is-coop-page .shell-content>.coop-chat{position:static;transform:none;width:100%;max-width:100%;box-sizing:border-box;margin-top:14px;top:auto;right:auto;bottom:auto;left:auto;z-index:auto}
+@media(pointer:coarse){.campaign-lab-help.is-mobile-lab.is-ux-lab:not([open]) summary::after{content:'LAB UX ▾'}}
 .shell-content input[name="coop-invite"] { font-size: 12px; user-select: text; -webkit-user-select: text; }
 .shell-class-card { padding: 16px; border-left: 2px solid #e0863f; background: #172a21b3; }
 .shell-class-card small { color: #aebba6; }

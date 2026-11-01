@@ -1,3 +1,4 @@
+import {layoutWorldLabels} from '../ui/WorldLabels';
 import { FOREST_SIZE, CAVERN_SIZE, EARLY_PREVIEW_ENTRY } from '../config/earlyJourney';
 import {EarlyJourneyLandmarks} from '../visual/EarlyJourneyLandmarks';
 import {addRouteFootprints} from '../visual/RouteEnvironment';
@@ -1383,6 +1384,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private updateExplorationGuide(): void {
+    layoutWorldLabels(this,this.player.position,this.missions.current,this.time.now);
     this.navigation?.update(this.player.position, this.player.rotation, this.player.isDead, this.time.now);
     if(this.exploration.revision!==this.explorationSaved&&this.time.now>=this.explorationSaveAt){this.explorationSaveAt=this.time.now+2500;if(this.saveProgress())this.explorationSaved=this.exploration.revision;}
     const missionTarget=this.missionTarget();

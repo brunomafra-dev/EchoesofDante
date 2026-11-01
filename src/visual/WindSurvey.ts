@@ -1,3 +1,4 @@
+import {worldLabel} from '../ui/WorldLabels';
 import Phaser from 'phaser';
 import {addQuestProp} from './QuestProps';
 import {WIND_SURVEY as C,pushSurvey,surveyDocked,surveyContact,type SurveyPusher} from '../config/windSurvey';
@@ -24,6 +25,7 @@ export class WindSurvey{
   this.rail=scene.add.image(2565,795,'wind-survey-floor').setDepth(-16).setAlpha(.35).setVisible(false).setName('wind-survey-field');
   this.dock=scene.add.image(C.dock.x,C.dock.y+32,'wind-survey-dock').setDepth(-15).setVisible(false).setName('wind-survey-dock');
   this.label=scene.add.text(C.dock.x,C.dock.y+73,'POSIÇÃO PROTEGIDA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#e2d8b5',stroke:'#261f15',strokeThickness:3}).setOrigin(.5).setDepth(11000).setVisible(false);
+  worldLabel(scene,this.label,{mission:'settle-wind',priority:4});
   this.meter=scene.add.rectangle(C.start.x,C.start.y-50,50,4,0xf1c28c).setOrigin(0,.5).setDepth(11000).setVisible(false).setName('wind-survey-meter');
   for(let i=0;i<4;i++)this.dust.push(scene.add.image(C.start.x,C.start.y,'wind-survey-dust').setDepth(-14).setVisible(false));
  }

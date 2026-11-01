@@ -1,0 +1,94 @@
+{
+  "method": "Isolated advanced DEV lab. Explicit QA fixture adds only the three analyses of exp-cavern to stage a ready regional report beside the available icecave chapter. Actual NPC dialogue delivery/ledger/reload tested. No Vesper/Titan victory or real save changes.",
+  "errors": [],
+  "fixture": {
+    "report": "exp-cavern",
+    "analyses": [
+      "exp-cavern-1",
+      "exp-cavern-2",
+      "exp-cavern-3"
+    ],
+    "credits": 60
+  },
+  "before": {
+    "credits": 300,
+    "receipts": [
+      "recon",
+      "survival",
+      "signal",
+      "beyond",
+      "water-source",
+      "safe-route",
+      "shelter",
+      "settle-water",
+      "settle-food",
+      "settle-transport",
+      "settle-energy",
+      "settle-arrivals",
+      "settle-outpost",
+      "settle-signal",
+      "settle-echo",
+      "settle-wind",
+      "settle-dunes",
+      "settle-buried",
+      "settle-frost"
+    ],
+    "vesper": false,
+    "titan": false
+  },
+  "after": {
+    "credits": 360,
+    "receipts": [
+      "recon",
+      "survival",
+      "signal",
+      "beyond",
+      "water-source",
+      "safe-route",
+      "shelter",
+      "settle-water",
+      "settle-food",
+      "settle-transport",
+      "settle-energy",
+      "settle-arrivals",
+      "settle-outpost",
+      "settle-signal",
+      "settle-echo",
+      "settle-wind",
+      "settle-dunes",
+      "settle-buried",
+      "settle-frost",
+      "exp-cavern"
+    ],
+    "vesper": false,
+    "titan": false
+  },
+  "reloaded": {
+    "credits": 360,
+    "receipts": [
+      "recon",
+      "survival",
+      "signal",
+      "beyond",
+      "water-source",
+      "safe-route",
+      "shelter",
+      "settle-water",
+      "settle-food",
+      "settle-transport",
+      "settle-energy",
+      "settle-arrivals",
+      "settle-outpost",
+      "settle-signal",
+      "settle-echo",
+      "settle-wind",
+      "settle-dunes",
+      "settle-buried",
+      "settle-frost",
+      "exp-cavern"
+    ],
+    "vesper": false,
+    "titan": false
+  },
+  "passed": true
+}

@@ -4,6 +4,7 @@ import {SURVEY_POINTS,missionById,type MissionNpc} from '../config/missions';
 import type {Missions} from '../systems/Missions';
 import type {Vec2} from '../utils/math';
 import {addSurveyProp} from '../visual/MissionProps';
+import {worldLabel} from './WorldLabels';
 
 // Fixed, bounded world markers. Each investigation depicts its real subject.
 export class MissionWorld{
@@ -16,7 +17,7 @@ export class MissionWorld{
   if(area==='forest')for(const p of SURVEY_POINTS)if(p.kind==='scan'){
    const image=addSurveyProp(scene,p.id,p.x,p.y);
    const label=scene.add.text(p.x,p.y+28,'◇ '+p.name,{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#f2d7a3',stroke:'#091610',strokeThickness:3}).setOrigin(.5).setDepth(11000).setVisible(false);
-   this.sites.push({id:p.id,image,label});
+   worldLabel(scene,label,{mission:'survival'});this.sites.push({id:p.id,image,label});
   }
  }
  update(missions:Missions,position:Vec2):void{

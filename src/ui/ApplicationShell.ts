@@ -10,6 +10,7 @@ import { DIFFICULTIES, type DifficultyId } from '../config/difficulty';
 import { CharacterSelection, type CharacterDraft } from './CharacterSelection';
 import { Prologue } from './Prologue';
 import { AUDIO } from '../config/audio';
+import { AudioManager } from '../systems/Sound';
 import type { CharacterClass } from '../systems/CharacterProfiles';
 import type { CharacterSex } from '../config/appearance';
 import { LocalJourney } from '../systems/LocalJourney';
@@ -49,6 +50,9 @@ export class ApplicationShell {
   private padFrame = 0;
   private readonly qaAutoplay = import.meta.env.DEV && new URLSearchParams(location.search).get('qa') === 'play';
   private volumes = { master: AUDIO.master as number, music: AUDIO.music as number, sfx: AUDIO.sfx as number };
+  private preview?: AudioManager;
+  private previewPlaying = false;
+  private previewTimer = 0;
 
   constructor() {
     const hero = characterProfiles.active;
@@ -238,10 +242,13 @@ export class ApplicationShell {
     this.launching = true; window.dispatchEvent(new Event('dante-return-home')); location.reload();
   }
   private render(): void {
+    if (this.page !== 'settings') this.stopPreview();
+    if (this.page !== 'coop') this.chat.setAllowed(false);
     this.selection?.destroy(); this.selection = undefined; this.content.replaceChildren();
     const characters = ['characters','coop-characters','create'].includes(this.page);
     this.dialog.classList.toggle('is-character-page', characters); this.dialog.classList.toggle('is-prologue', this.page === 'prologue');
     this.dialog.classList.toggle('is-coop-page',this.page==='coop');
+    this.dialog.classList.toggle('is-settings-page',this.page==='settings');
     if(this.page==='launching'){this.heading('Iniciando expedição', 'Preparando sua chegada a Dante…');const progress=document.createElement('p');progress.dataset.worldLoading='';progress.textContent=`Carregando o mundo · ${this.loadingProgress}%`;progress.setAttribute('role','status');this.content.append(progress);return;}
     if (this.page === 'prologue' && this.prologue) { this.content.append(this.prologue.view); return; }
     if (this.page === 'home') {
@@ -332,18 +339,24 @@ export class ApplicationShell {
     } else if (this.page === 'coop-ended') {
       this.heading('Expedição interrompida', coopSession.endedMessage); this.status('Seu personagem continua vinculado à equipe. Reúna os mesmos exploradores para continuar.'); this.action('VOLTAR À TELA INICIAL','coop-home', () => this.returnHome());
     } else if (this.page === 'settings') {
-      this.heading('Configurações', 'Preferências deste navegador.');
+      this.heading('Configurações', 'Áudio deste navegador · salvo automaticamente.');
+      const controls = document.createElement('div'); controls.className = 'settings-volumes'; this.content.append(controls);
       for (const [key, title] of [['master','Volume geral'],['music','Música'],['sfx','Efeitos']] as const) {
         const label = document.createElement('label'); label.className = 'volume-setting';
         const name = document.createElement('span'); name.textContent = title;
         const output = document.createElement('output'); output.textContent = `${Math.round(this.volumes[key] * 100)}%`;
         const input = document.createElement('input'); input.type = 'range'; input.min = '0'; input.max = '100'; input.step = '1'; input.value = String(Math.round(this.volumes[key] * 100)); input.dataset.volume = key; input.setAttribute('aria-label', title);
-        const apply = () => { this.volumes[key] = Number(input.value) / 100; output.textContent = `${input.value}%`; this.applyVolumes(); try { localStorage.setItem(SETTINGS, JSON.stringify(this.volumes)); } catch { this.status('Volume aplicado; não foi possível salvar a preferência.'); } };
+        const apply = () => { this.volumes[key] = Number(input.value) / 100; output.textContent = `${input.value}%`; this.applyVolumes(); this.refreshPreview(); try { localStorage.setItem(SETTINGS, JSON.stringify(this.volumes)); } catch { this.status('Volume aplicado; não foi possível salvar a preferência.'); } };
         input.addEventListener('input', apply); input.addEventListener('change', apply);
-        label.append(name, output, input); this.content.append(label);
+        label.append(name, output, input); controls.append(label);
       }
-      if (!this.playing && !this.prologue) this.action('REVER A CHEGADA A DANTE','prologue-replay', () => this.showPrologue(true));
-      this.action('VOLTAR','back', () => this.back());
+      const hint = document.createElement('p'); hint.className='settings-audio-hint'; hint.dataset.audioHint=''; hint.setAttribute('role','status'); this.content.append(hint);
+      const actions=document.createElement('div'); actions.className='settings-actions';
+      const music=this.action('OUVIR MÚSICA','preview-music',()=>this.previewMusic());
+      const effects=this.action('TESTAR EFEITOS','preview-sfx',()=>{this.previewAudio().discovery();});
+      actions.append(music,effects);
+      if (!this.playing && !this.prologue) actions.append(this.action('REVER ABERTURA','prologue-replay', () => this.showPrologue(true)));
+      actions.append(this.action('VOLTAR','back', () => this.back()));this.content.append(actions);this.refreshPreview();
     }
     if (this.page !== 'settings') this.action('CONFIGURAÇÕES','settings', () => this.settings());
   }
@@ -365,13 +378,32 @@ export class ApplicationShell {
     }
     this.content.append(roster);
   }
-  private applyVolumes(): void { this.scene?.setShellVolumes(this.volumes.master,this.volumes.music,this.volumes.sfx); this.prologue?.volumes(this.volumes.master,this.volumes.music,this.volumes.sfx); }
+  private applyVolumes(): void { this.scene?.setShellVolumes(this.volumes.master,this.volumes.music,this.volumes.sfx); this.prologue?.volumes(this.volumes.master,this.volumes.music,this.volumes.sfx); this.preview?.setVolumes(this.volumes.master,this.volumes.music,this.volumes.sfx); }
+  private previewAudio():AudioManager {
+    this.preview ??= new AudioManager();this.preview.setVolumes(this.volumes.master,this.volumes.music,this.volumes.sfx);this.preview.unlock();return this.preview;
+  }
+  private previewMusic():void {
+    if(this.previewPlaying){this.stopPreview();this.refreshPreview();return;}
+    const audio=this.previewAudio();audio.setArea('base');this.previewPlaying=true;
+    this.previewTimer=window.setTimeout(()=>{this.stopPreview();this.refreshPreview();},15000);this.refreshPreview();
+  }
+  private stopPreview():void {window.clearTimeout(this.previewTimer);this.previewTimer=0;this.preview?.destroy();this.preview=undefined;this.previewPlaying=false;}
+  private refreshPreview():void {
+    const music=this.content.querySelector<HTMLButtonElement>('[data-shell=preview-music]'),sfx=this.content.querySelector<HTMLButtonElement>('[data-shell=preview-sfx]'),hint=this.content.querySelector<HTMLElement>('[data-audio-hint]');
+    if(music){music.textContent=this.previewPlaying?'PARAR MÚSICA':'OUVIR MÚSICA';music.setAttribute('aria-pressed',String(this.previewPlaying));music.disabled=!this.previewPlaying&&this.volumes.master*this.volumes.music===0;}
+    if(sfx)sfx.disabled=this.volumes.master*this.volumes.sfx===0;
+    const muted=[this.volumes.music===0?'Música em zero.':'',this.volumes.sfx===0?'Efeitos em zero.':''].filter(Boolean).join(' ');
+    const message=this.volumes.master===0?'Volume geral em zero. Aumente para ouvir as amostras.':(this.previewPlaying?'Amostra de música · até 15 s. Ajuste enquanto ouve.':'Ouça amostras sem retomar a partida.')+(muted?' '+muted:' Geral afeta música e efeitos.');
+    if(hint&&hint.textContent!==message)hint.textContent=message;
+  }
   private pollPad = (): void => {
     const pad = Array.from(navigator.getGamepads?.() ?? []).find(p => p?.connected && p.mapping === 'standard'), down = pad ? pad.buttons.map(b => b.pressed || b.value > .5):[];
-    if(this.chat.frame(document.querySelector<HTMLElement>('dialog[open]:not(.application-shell)')??(this.dialog.open?this.dialog:document.body),down,this.padPrevious)){this.padPrevious=down;this.padFrame=requestAnimationFrame(this.pollPad);return;}
+    const modal=document.querySelector<HTMLElement>('dialog[open]:not(.application-shell)');
+    const chatAllowed=!modal&&(!this.dialog.open||this.page==='coop');
+    if(this.chat.frame(this.dialog.open&&this.page==='coop'?this.content:document.body,down,this.padPrevious,chatAllowed)){this.padPrevious=down;this.padFrame=requestAnimationFrame(this.pollPad);return;}
     if (down[9] && !this.padPrevious[9] && !document.querySelector('dialog[open]:not(.application-shell)')) { if (this.dialog.open) this.back(); else this.openPause(); }
     if (this.dialog.open) {
-      const buttons = Array.from((this.content.querySelector('.character-delete-dialog[open]') ?? this.content).querySelectorAll<HTMLElement>('button:not(:disabled),select:not(:disabled),input:not(:disabled)'));
+      const buttons = Array.from((this.content.querySelector('.character-delete-dialog[open]') ?? this.content).querySelectorAll<HTMLElement>('button:not(:disabled),select:not(:disabled),input:not(:disabled)')).filter(element=>element.getClientRects().length>0);
       const index = Math.max(0, buttons.indexOf(document.activeElement as HTMLButtonElement));
       const horizontal=(down[15]&&!this.padPrevious[15]?1:0)-(down[14]&&!this.padPrevious[14]?1:0),focused=document.activeElement;
       if(horizontal&&focused instanceof HTMLSelectElement){focused.selectedIndex=Math.max(0,Math.min(focused.options.length-1,focused.selectedIndex+horizontal));focused.dispatchEvent(new Event('change'));}
@@ -384,5 +416,5 @@ export class ApplicationShell {
     }
     this.padPrevious = down; this.padFrame = requestAnimationFrame(this.pollPad);
   };
-  destroy(): void { this.mobileDisplay.destroy();this.chat.destroy();this.selection?.destroy(); this.prologue?.destroy(); cancelAnimationFrame(this.padFrame); window.removeEventListener('keydown',this.keyDown,true); window.removeEventListener('keyup',this.editableKey); window.removeEventListener('keydown',this.editableKey); window.removeEventListener('dante-coop',this.coopChanged); this.dialog.remove(); this.menuButton.remove(); }
+  destroy(): void { this.stopPreview();this.mobileDisplay.destroy();this.chat.destroy();this.selection?.destroy(); this.prologue?.destroy(); cancelAnimationFrame(this.padFrame); window.removeEventListener('keydown',this.keyDown,true); window.removeEventListener('keyup',this.editableKey); window.removeEventListener('keydown',this.editableKey); window.removeEventListener('dante-coop',this.coopChanged); this.dialog.remove(); this.menuButton.remove(); }
 }

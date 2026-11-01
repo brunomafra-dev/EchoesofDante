@@ -1,3 +1,4 @@
+import {worldLabel} from '../ui/WorldLabels';
 import Phaser from 'phaser';
 import {REGIONAL_SITES,type RegionalSite} from '../config/regionalExpeditions';
 import type {JourneyArea} from './LocalJourney';
@@ -57,6 +58,7 @@ export class RegionalExpeditions {
   painter.destroy();
   const labelX=site.x+(site.id==='exp-icecave-1'?-135:0),labelY=site.y+(site.id==='exp-icecave-1'?80:52);
   const text=this.scene.add.text(labelX,labelY,'',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#e5d2a6',stroke:'#101c18',strokeThickness:3}).setOrigin(.5).setDepth(11000).setVisible(false);
+  worldLabel(this.scene,text,{mission:site.mission});
   this.labels.push({site,text});
  }
  at(position:Vec2):RegionalSite|undefined{return this.sites.find(s=>Math.hypot(position.x-s.x,position.y-s.y)<s.radius);}
