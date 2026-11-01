@@ -135,6 +135,16 @@ O retorno de água aparece como um **L cinza de espessura uniforme**, com cantos
 
 **Recomendação:** manter o percurso funcional e aplicar segmentos/juntas com volume/sombra, parcialmente assentados no solo. Rasterizar uma vez. Distinguir visualmente essa tubulação física das marcações intencionais de encaixe de carga, que podem continuar sendo sinais gráficos. Aceite: ler como infraestrutura do acampamento, mantendo fluxo e função reconhecíveis. Avaliação do agente.
 
+### V05 · P2 · Preservar os objetos quando encobrem o herói
+
+**Adendo solicitado pelo usuário em 01/11:** remover a transparência automática dos objetos na aproximação/sobreposição com o herói. Preservar a aparência do objeto, permitindo que ele encubra o personagem conforme sua profundidade. O usuário relata preferência contrária ao efeito atual na avaliação da esposa e ainda tem dúvida pessoal; isso define a mudança desejada, sem registrar aprovação antecipada do resultado.
+
+**Confirmado por revisão de código:** [EnvironmentArt.ts](../../src/visual/EnvironmentArt.ts), `updateEnvironmentOcclusion`, reduz a opacidade dos objetos registrados a **28% da opacidade original** quando detecta que cobrem o herói. Existe também uma redução por proximidade nas copas em [CampaignEnvironment.ts](../../src/visual/CampaignEnvironment.ts), até **40% da opacidade original**. Não significa que todo objeto do jogo participa desses sistemas. Este adendo não acrescenta reprodução visual ou capturas às evidências anteriores.
+
+**Alteração prevista:** retirar a redução de opacidade motivada por proximidade/ocultação do personagem nos objetos ambientais, incluindo as copas abrangidas por esse comportamento. Manter opacidade própria do material, animações ambientais e efeitos intencionais de abertura/desaparecimento; não forçar opacidade total em partículas, água ou outros materiais translúcidos. Manter ordenação de profundidade e colisões coerentes, sem elevar artificialmente o herói acima dos objetos.
+
+**Aceite:** aproximar, passar atrás, sair e retornar nos dois sentidos; o objeto mantém sua aparência e pode encobrir o herói. Conferir abordagem e interação nos pontos de missão, navegação junto de paredes/portais e leitura do combate, inclusive no convidado e no mobile. Corrigir posicionamento/colisão quando necessário para permitir interação legível, sem reintroduzir a transparência automática nem liberar passagem por sólidos. Avaliação visual humana pendente. **Item registrado para correção; comportamento ainda não alterado nesta auditoria.**
+
 ## O que se sustenta na amostra
 
 - Percentuais acompanham os três sliders; áreas de input são semanticamente nomeadas; não houve overflow horizontal nas sete larguras.
@@ -148,7 +158,7 @@ O retorno de água aparece como um **L cinza de espessura uniforme**, com cantos
 
 1. **Áudio:** A01, A02, A03. Medir saída real após mute/unmute, carregar preferências de forma independente e retestar no iPhone. Uma barra de ganho positiva não basta como prova de som.
 2. **UX mobile:** U01–U05. Configurações compactas com confirmação audível, diário/conversas centrados na tarefa e rótulos com prioridade. Conferir pausa, convidado, reload, teclado, touch e gamepad.
-3. **Piloto de integração visual:** fissura + coletor, para calibrar borda, detalhe, sombra e assentamento mantendo R3/referência D. Depois aplicar o mesmo critério aos pequenos objetos da base/posto e às tubulações. Avaliar dentro da campanha, não só em fundo transparente.
+3. **Piloto de integração visual:** fissura + coletor, para calibrar borda, detalhe, sombra e assentamento mantendo R3/referência D. Incluir V05: preservar objetos sem transparência automática ao encobrir o herói, verificando profundidade, colisões e interação. Depois aplicar o mesmo critério aos pequenos objetos da base/posto e às tubulações. Avaliar dentro da campanha, não só em fundo transparente.
 4. **Gate humano:** iPhones 13/13 Pro; escuta e percepção de integração. Só depois retomar o capítulo seguinte. Esta auditoria não inicia esse trabalho nem registra aprovação antecipada.
 
 ## Reprodução e verificação da auditoria

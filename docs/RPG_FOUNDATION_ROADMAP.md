@@ -1,5 +1,7 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**01/11/2026 · Adendo à auditoria:** usuário pediu incluir a retirada da transparência automática dos objetos quando encobrem o herói. [V05: requisito, código atual e critérios de aceite](frontend-ux-audit-178/README.md#v05--p2--preservar-os-objetos-quando-encobrem-o-herói). Preservar aparência, profundidade e colisão; permitir sobreposição sobre o herói. Registrado para correção, sem alterar o comportamento nesta entrega documental ou antecipar aprovação visual.
+
 **01/11/2026 · Auditoria solicitada de front-end/UX e integração visual da 0.1.178:** [relatório completo e evidências](frontend-ux-audit-178/README.md). Reproduzido no cliente público: iniciar salvo em zero e restaurar volume deixa música muda apesar do ganho positivo. Nova leitura de sinal expõe lacuna do QA anterior. Abertura/settings resilientes, layouts, diário/conversas e integração de fissura/coletor/props/tubulações possuem pendências classificadas. A auditoria é documental; nenhuma arte, gameplay ou capítulo novo implementado, sem aprovação humana inferida.
 
 **31/10/2026 · Correção de áudio no mobile · 0.1.178:** usuário informou que Música, Efeitos e Volume geral não alteravam o som no iPhone. [Escopo e evidências](audio-settings/README.md): trilha roteada por `GainNode` Web Audio, controles touch com percentual e aplicação final no evento `change`. Personagens/settings reais e protocolo permanecem; nenhum capítulo ou boss iniciado.
