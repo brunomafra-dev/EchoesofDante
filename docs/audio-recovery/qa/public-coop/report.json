@@ -1,0 +1,64 @@
+{
+  "at": "2026-11-01T14:47:47.621Z",
+  "base": "https://echosofdante.vercel.app",
+  "method": "Two separate Chrome mobile browsers; normal original crew creation and actual touch settings. Output sampled after actual music gains, wire observation only. No prerequisites, bosses, missions or rewards simulated.",
+  "checks": [
+    "Host begins in zero, guest remains audible; restoring host and muting/restoring guest do not change the other participant output",
+    "Original two-person crew stays synchronized with no accepted missions or real data modified; room ends through host menu"
+  ],
+  "errors": [],
+  "initial": {
+    "host": {
+      "gain": 0,
+      "peak": 0,
+      "muted": false,
+      "context": "running"
+    },
+    "guest": {
+      "gain": 0.17159999907016754,
+      "peak": 0.03457873687148094,
+      "muted": false,
+      "context": "running"
+    }
+  },
+  "chatDismissals": 3,
+  "restoredHost": {
+    "host": {
+      "gain": 0.21119999885559082,
+      "peak": 0.05519183725118637,
+      "muted": false,
+      "context": "running"
+    },
+    "guest": {
+      "gain": 0.17159999907016754,
+      "peak": 0.03412184864282608,
+      "muted": false,
+      "context": "running"
+    }
+  },
+  "mutedGuest": {
+    "host": {
+      "gain": 0.21119999885559082,
+      "peak": 0.03794924542307854,
+      "muted": false,
+      "context": "running"
+    },
+    "guest": {
+      "gain": 0,
+      "peak": 0,
+      "muted": false,
+      "context": "running"
+    }
+  },
+  "restoredGuest": {
+    "gain": 0.17159999907016754,
+    "peak": 0.041256122291088104,
+    "muted": false,
+    "context": "running"
+  },
+  "protocols": [
+    16,
+    16
+  ],
+  "passed": true
+}

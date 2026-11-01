@@ -56,6 +56,10 @@ async function sample(name, kind, expected) {
 
 async function gameSettings() { await page.locator('.main-menu-button').tap(); await tap('settings'); }
 async function resumeGame() { await tap('back'); await tap('continue'); }
+async function attackSignal(name, expected) {
+  const firing = async () => { for (let i = 0; i < 10; i++) { await page.locator('[data-action=attack]').tap(); await page.waitForTimeout(180); } };
+  await Promise.all([firing(), sample(name, 'sfx', expected)]);
+}
 
 try {
   if (lockedMediaVolume) await page.addInitScript(() => Object.defineProperty(HTMLMediaElement.prototype, 'volume', { configurable: true, get: () => 1, set: () => {} }));
@@ -132,14 +136,12 @@ try {
   await gameSettings(); await drag('music', 0); await resumeGame();
   await sample('musicOnlyMute', 'audio', 'silent');
   // Repeated actual attacks produce SFX while the music bus remains silent.
-  await page.locator('[data-action=attack]').tap();
-  const attackTimer = setInterval(() => page.locator('[data-action=attack]').tap().catch(() => {}), 220);
-  try { await sample('sfxWithMusicZero', 'sfx', 'audible'); } finally { clearInterval(attackTimer); }
+  await attackSignal('sfxWithMusicZero', 'audible');
   await gameSettings(); await drag('music', 48); await drag('sfx', 0); await resumeGame();
   await sample('musicWithSfxZero', 'audio', 'audible');
-  await page.locator('[data-action=attack]').tap(); await sample('sfxOnlyMute', 'sfx', 'silent');
+  await attackSignal('sfxOnlyMute', 'silent');
   await gameSettings(); await drag('master', 0); await resumeGame();
-  await sample('masterMutesMusic', 'audio', 'silent'); await sample('masterMutesSfx', 'sfx', 'silent');
+  await sample('masterMutesMusic', 'audio', 'silent'); await attackSignal('masterMutesSfx', 'silent');
   await gameSettings(); await drag('master', 80); await drag('sfx', 90);
   await page.screenshot({ path: `${out}/settings-touch.jpg`, type: 'jpeg', quality: 85 }); await resumeGame();
   await sample('musicFinalRestore', 'audio', 'audible');

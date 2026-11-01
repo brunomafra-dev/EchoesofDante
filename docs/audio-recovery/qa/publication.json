@@ -1,0 +1,32 @@
+{
+  "verifiedAt": "2026-11-01T14:49:49.262886+00:00",
+  "version": "0.1.179",
+  "sourceCommit": "d4c866a974e0337180585c591aec02d4a26f22ae",
+  "vercelStatus": "success",
+  "matchingHashes": 73,
+  "publicSoloPassed": true,
+  "publicCoopPassed": true,
+  "relayRecheck": {
+    "service": "Dante regional co-op",
+    "protocol": 16,
+    "outposts": 1,
+    "signals": 1,
+    "circuits": 1,
+    "wind": 1,
+    "dunes": 1,
+    "buried": 1,
+    "frost": 1,
+    "icecave": 1,
+    "missions": true,
+    "chat": true,
+    "capacity": 4,
+    "uniqueClasses": true,
+    "fixedCampaigns": true,
+    "revision": "42de5a0bbd951f32efdcb8480080b3e3db32ea41",
+    "campaign": true,
+    "rooms": 0,
+    "players": 0
+  },
+  "coopCompatibleOnRecheck": true,
+  "note": "Initial hash-check relay health timed out. Actual public two-browser audio QA subsequently passed on protocol 16; this final health check responded successfully. No relay deploy required."
+}
