@@ -1,0 +1,64 @@
+{
+  "at": "2026-11-01T14:40:10.254Z",
+  "base": "http://127.0.0.1:5193",
+  "method": "Two separate Chrome mobile browsers; normal original crew creation and actual touch settings. Output sampled after actual music gains, wire observation only. No prerequisites, bosses, missions or rewards simulated.",
+  "checks": [
+    "Host begins in zero, guest remains audible; restoring host and muting/restoring guest do not change the other participant output",
+    "Original two-person crew stays synchronized with no accepted missions or real data modified; room ends through host menu"
+  ],
+  "errors": [],
+  "initial": {
+    "host": {
+      "gain": 0,
+      "peak": 0,
+      "muted": false,
+      "context": "running"
+    },
+    "guest": {
+      "gain": 0.17159999907016754,
+      "peak": 0.03564077243208885,
+      "muted": false,
+      "context": "running"
+    }
+  },
+  "restoredHost": {
+    "host": {
+      "gain": 0.21119999885559082,
+      "peak": 0.05520901829004288,
+      "muted": false,
+      "context": "running"
+    },
+    "guest": {
+      "gain": 0.17159999907016754,
+      "peak": 0.033050909638404846,
+      "muted": false,
+      "context": "running"
+    }
+  },
+  "mutedGuest": {
+    "host": {
+      "gain": 0.21119999885559082,
+      "peak": 0.03503727167844772,
+      "muted": false,
+      "context": "running"
+    },
+    "guest": {
+      "gain": 0,
+      "peak": 0,
+      "muted": false,
+      "context": "running"
+    }
+  },
+  "chatDismissals": 1,
+  "restoredGuest": {
+    "gain": 0.17159999907016754,
+    "peak": 0.041605595499277115,
+    "muted": false,
+    "context": "running"
+  },
+  "protocols": [
+    16,
+    16
+  ],
+  "passed": true
+}

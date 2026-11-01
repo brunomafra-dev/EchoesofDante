@@ -2,6 +2,8 @@
 
 **Data:** 01/11/2026. **Base auditada:** aplicação `012ebb9`, documentação `a81b26b`. **Solicitação:** auditar a última implementação, incluindo se os objetos adicionados pertencem visualmente ao terreno ou parecem colados sobre ele.
 
+**Seguimento:** [0.1.179 · correção dos caminhos de áudio A01–A03](../audio-recovery/README.md), autorizada como primeira etapa. O parecer e as evidências abaixo descrevem a 0.1.178; QA/publicação e reteste humano da correção são registrados separadamente. UX e integração visual permanecem pendentes.
+
 ## Parecer
 
 A 0.1.178 melhorou a confirmação dos sliders e passou a controlar a trilha por Web Audio, mas **não deve ser considerada encerrada como correção completa do áudio**. Há um defeito reproduzido na campanha pública: começar com volume zero e depois restaurá-lo pode deixar a música permanentemente muda naquela voz. O ganho sobe, mas o elemento continua `muted` e o sinal permanece zero.

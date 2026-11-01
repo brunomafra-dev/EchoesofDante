@@ -1,9 +1,13 @@
 import { CinematicPlayback, type PlaybackState } from './CinematicPlayback';
+import { CinematicAudio } from './CinematicAudio';
 // One whole-scene animated film with its own original mixed audio.
 // Sources and production are documented in docs/cinematic-opening.
 export class Prologue {
   readonly view = document.createElement('section');
   readonly video = document.createElement('video');
+  private readonly audio = new CinematicAudio(this.video);
+  private volume = 1;
+  private muted = false;
   private readonly progress = document.createElement('span');
   private readonly error = document.createElement('p');
   private readonly message = document.createElement('span');
@@ -25,7 +29,7 @@ export class Prologue {
     const track = document.createElement('div'); track.className = 'prologue-progress'; track.append(this.progress);
     const controls = document.createElement('nav'); controls.className = 'prologue-controls'; controls.setAttribute('aria-label', 'Controles da cinemática');
     this.soundButton.type='button';this.soundButton.dataset.shell='prologue-sound';
-    this.soundButton.onclick=()=>{this.video.muted=!this.video.muted;this.updateSound();};
+    this.soundButton.onclick=()=>{this.muted=!this.muted;this.applySound();this.audio.unlock();};
     this.pauseButton.type='button';this.pauseButton.dataset.shell='prologue-pause';this.pauseButton.textContent='PAUSAR';
     this.pauseButton.onclick=()=>{if(this.active)this.pause();else this.resume();};
     this.updateSound();controls.append(this.soundButton,this.pauseButton);
@@ -46,13 +50,23 @@ export class Prologue {
     this.playback = new CinematicPlayback(this.video, this.playbackState);
   }
 
-  volumes(master: number, music: number, _sfx: number): void { this.video.volume=Math.max(0,Math.min(1,master*music)); }
+  volumes(master: number, music: number, _sfx: number): void {
+    this.volume=Math.max(0,Math.min(1,master*music));this.applySound();
+  }
 
-  private updateSound():void {this.soundButton.textContent=this.video.muted?'ATIVAR SOM':'SOM ATIVO';this.soundButton.setAttribute('aria-pressed',String(!this.video.muted));}
+  private applySound():void {this.audio.setVolume(this.muted?0:this.volume);this.updateSound();}
+
+  private updateSound():void {
+    this.soundButton.textContent=this.volume===0?'VOLUME EM ZERO':this.muted?'ATIVAR SOM':'SOM ATIVO';
+    this.soundButton.disabled=this.volume===0;
+    this.soundButton.title=this.volume===0?'Aumente Geral e Música nas configurações.':'';
+    this.soundButton.setAttribute('aria-pressed',String(!this.muted&&this.volume>0));
+  }
 
   resume(): void {
     if (this.finished) return;
     this.active = true;this.pauseButton.textContent='PAUSAR';
+    this.audio.unlock();
     this.playback.resume();
     cancelAnimationFrame(this.frame); this.frame = requestAnimationFrame(this.tick);
   }
@@ -82,6 +96,6 @@ export class Prologue {
 
   destroy(): void {
     this.finished = true; this.pause(); this.video.removeEventListener('ended', this.finish);
-    this.playback.destroy();this.view.remove();
+    this.playback.destroy();this.audio.destroy();this.view.remove();
   }
 }

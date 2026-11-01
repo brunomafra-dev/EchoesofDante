@@ -1,5 +1,7 @@
 # Configurações de áudio no mobile · 0.1.178
 
+**Seguimento 0.1.179:** [restauração, ganho da abertura e preferências resilientes](../audio-recovery/README.md) trata A01–A03 encontrados na auditoria. Evidências e reteste humano dessa correção são registrados separadamente; o histórico abaixo descreve a 0.1.178.
+
 **Auditoria de 01/11/2026:** a correção permanece incompleta. Começar com Geral 0 e depois restaurar 80 no cliente público mantém `media.muted=true`, ganho positivo e sinal zero. O QA abaixo cobria o caminho com volume inicial positivo e não detectou esse estado. A abertura também mantém seu caminho nativo de volume. [Achados, capturas e reprodução](../frontend-ux-audit-178/README.md). Nenhuma correção aplicada pela auditoria; reteste humano continua pendente.
 
 ## Escopo

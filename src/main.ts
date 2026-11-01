@@ -10,7 +10,7 @@ const shell = new ApplicationShell();
 // explicit launch navigation loads them after the previews have been released.
 // Existing direct laboratories retain their authored scene arrival.
 const filename=location.pathname.split('/').pop()??'';
-const menuLab=filename==='campaign-playtest.html'&&new URLSearchParams(location.search).has('mobile-review');
+const menuLab=filename==='campaign-playtest.html'&&['mobile-review','audio-review'].some(key=>new URLSearchParams(location.search).has(key));
 const worldAtBoot=shell.needsWorld||(filename!==''&&filename!=='index.html'&&!menuLab);
 
 export const game = new Phaser.Game({

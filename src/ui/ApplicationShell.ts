@@ -61,8 +61,13 @@ export class ApplicationShell {
     if(requested!==null){url.searchParams.delete('iniciar');history.replaceState(history.state,'',url);}
     try {
       this.launchOnce ||= sessionStorage.getItem(LAUNCH) === hero.id; sessionStorage.removeItem(LAUNCH);
-      const approved = JSON.parse(sessionStorage.getItem(APPROVAL) ?? 'null'); sessionStorage.removeItem(APPROVAL);
+    } catch { /* Launch flags are optional and independent of audio preferences. */ }
+    try {
+      const raw = sessionStorage.getItem(APPROVAL); sessionStorage.removeItem(APPROVAL);
+      const approved = JSON.parse(raw ?? 'null');
       if (this.pendingInvite && approved?.code === this.code && approved?.id === hero.id) this.entry = 'join';
+    } catch { /* A stale invitation must not discard valid persisted settings. */ }
+    try {
       const saved = JSON.parse(localStorage.getItem(SETTINGS) ?? 'null');
       for (const k of ['master','music','sfx'] as const) if (typeof saved?.[k] === 'number' && Number.isFinite(saved[k])) this.volumes[k] = Math.max(0, Math.min(1, saved[k]));
     } catch { /* A menu remains available when browser storage is blocked. */ }

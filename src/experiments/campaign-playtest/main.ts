@@ -61,7 +61,7 @@ if(audioReviewTest){
  details.classList.add('is-mobile-lab');
  const reset=details.querySelector('button')!,summary=document.createElement('summary'),text=document.createElement('p');
  summary.textContent='CONFIGURAÇÕES DE ÁUDIO · TESTE ISOLADO';
- text.textContent='Crie uma campanha solo temporária para ouvir a música. No jogo, abra Esc → Configurações e arraste Música, Efeitos e Volume geral; o percentual deve acompanhar o dedo e o som deve mudar sem reiniciar. Os valores deste teste ficam isolados nesta aba. Nenhum pré-requisito, missão, vitória ou recompensa é simulado; saves e configurações reais ficam protegidos.';
+ text.textContent='Antes de criar, abra Configurações e deixe Geral em zero. Crie uma campanha temporária: a abertura deve ficar muda e indicar VOLUME EM ZERO. Nas configurações da abertura, restaure Geral; o som deve voltar. No jogo, abra Esc → Configurações e teste Geral, Música e Efeitos em zero; retome para ouvir. Recarregue e continue o mesmo personagem para conferir as preferências. Funciona também em equipe pelo convite deste laboratório. Os valores ficam isolados nesta aba. Nenhum pré-requisito, missão, vitória ou recompensa é simulado; saves e configurações reais ficam protegidos.';
  details.replaceChildren(summary,text,reset);
 }
 if(mobileReviewTest){

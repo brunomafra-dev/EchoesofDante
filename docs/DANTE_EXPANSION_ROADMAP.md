@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+**01/11/2026 · Primeira etapa da auditoria · 0.1.179:** autorizada a ordem áudio → UX mobile → integração visual. [Escopo e verificações da restauração de áudio](audio-recovery/README.md): música após zero, ganho da abertura, preferências independentes de flags inválidas e laboratório leve. Aguardar escuta humana desta etapa antes da UX; integração/objetos e novo capítulo seguem pendentes.
+
 **01/11/2026 · Auditoria antes da continuação:** usuário pediu revisar a última implementação e se os objetos parecem integrados ao terreno. [Auditoria de front-end/UX/arte](frontend-ux-audit-178/README.md): defeito de mute reproduzido no cliente público, hierarquia mobile e integração visual parcial. Propostas de correção registradas; versão de aplicação permanece 0.1.178. Nenhum novo capítulo iniciado ou aprovação humana registrada.
 
 **31/10/2026 · Manutenção de áudio mobile · 0.1.178:** após o usuário relatar que Música, Efeitos e Volume geral não mudavam o som no iPhone, a música da campanha passou a usar `GainNode` e os sliders mostram confirmação percentual em toque. [Escopo, QA e limites](audio-settings/README.md). Não altera o plano de capítulos; reteste humano em aparelho físico pendente.

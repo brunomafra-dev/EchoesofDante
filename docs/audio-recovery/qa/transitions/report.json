@@ -1,0 +1,125 @@
+{
+  "method": "Real AudioManager imported from DEV in a blank isolated page; public audio methods drive zero/focus/crossfade/suspend/stop/destroy states. This is an audio subsystem fixture, not campaign gameplay.",
+  "errors": [],
+  "scenarios": [
+    {
+      "initial": "zero",
+      "before": {
+        "peak": 0,
+        "muted": false,
+        "gain": 0,
+        "context": "running",
+        "outgoing": false
+      },
+      "restored": {
+        "peak": 0.03983791172504425,
+        "muted": false,
+        "gain": 0.21119999885559082,
+        "context": "running",
+        "outgoing": false
+      },
+      "resumed": {
+        "peak": 0.03598291054368019,
+        "muted": false,
+        "gain": 0.21119999885559082,
+        "context": "running",
+        "outgoing": false
+      },
+      "boss": {
+        "peak": 0.030025828629732132,
+        "muted": false,
+        "gain": 0.16128000617027283,
+        "context": "running",
+        "outgoing": false
+      },
+      "restarted": {
+        "peak": 0.03983791172504425,
+        "muted": false,
+        "gain": 0.21119999885559082,
+        "context": "running",
+        "outgoing": false
+      },
+      "destroyed": true
+    },
+    {
+      "initial": "focus-zero",
+      "before": {
+        "peak": 0,
+        "muted": false,
+        "gain": 0,
+        "context": "running",
+        "outgoing": false
+      },
+      "restored": {
+        "peak": 0.03983791172504425,
+        "muted": false,
+        "gain": 0.21119999885559082,
+        "context": "running",
+        "outgoing": false
+      },
+      "resumed": {
+        "peak": 0.03522694855928421,
+        "muted": false,
+        "gain": 0.21119999885559082,
+        "context": "running",
+        "outgoing": false
+      },
+      "boss": {
+        "peak": 0.030025828629732132,
+        "muted": false,
+        "gain": 0.16128000617027283,
+        "context": "running",
+        "outgoing": false
+      },
+      "restarted": {
+        "peak": 0.03983791172504425,
+        "muted": false,
+        "gain": 0.21119999885559082,
+        "context": "running",
+        "outgoing": false
+      },
+      "destroyed": true
+    },
+    {
+      "initial": "normal",
+      "before": {
+        "peak": 0.05005016177892685,
+        "muted": false,
+        "gain": 0.21119999885559082,
+        "context": "running",
+        "outgoing": false
+      },
+      "restored": {
+        "peak": 0.038357630372047424,
+        "muted": false,
+        "gain": 0.21119999885559082,
+        "context": "running",
+        "outgoing": false
+      },
+      "resumed": {
+        "peak": 0.03598291054368019,
+        "muted": false,
+        "gain": 0.21119999885559082,
+        "context": "running",
+        "outgoing": false
+      },
+      "boss": {
+        "peak": 0.030025828629732132,
+        "muted": false,
+        "gain": 0.16128000617027283,
+        "context": "running",
+        "outgoing": false
+      },
+      "restarted": {
+        "peak": 0.03983791172504425,
+        "muted": false,
+        "gain": 0.21119999885559082,
+        "context": "running",
+        "outgoing": false
+      },
+      "destroyed": true
+    }
+  ],
+  "nativeFallback": "Zero mutes, restoring clears native mute; intermediate-volume output not certified on iOS fallback",
+  "passed": true
+}

@@ -131,17 +131,20 @@ export class AudioManager {
     try {
       const source = this.context.createMediaElementSource(media);
       const gain = this.context.createGain();
+      // Establish the requested silence before clearing any native fallback mute.
+      gain.gain.value = 0;
       source.connect(gain).connect(this.context.destination);
-      media.volume = 1;
       this.musicNodes.set(media, { source, gain });
+      this.applyVolumes();
     } catch { /* Keep the native media-element path if Web Audio routing is unavailable. */ }
   }
 
   private applyMusicVolume(media: HTMLAudioElement, value: number): void {
     const routed = this.musicNodes.get(media);
     if (routed) {
-      media.volume = 1;
       routed.gain.gain.value = value;
+      media.volume = 1;
+      media.muted = false;
     } else {
       media.volume = value;
       // On WebKit/iOS the media volume setter may not be writable; muting at
