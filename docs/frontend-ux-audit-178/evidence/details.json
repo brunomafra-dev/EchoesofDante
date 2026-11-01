@@ -1,0 +1,73 @@
+{
+  "publicBase": "https://echosofdante.vercel.app",
+  "errors": [],
+  "checks": [
+    "A malformed one-shot session flag prevents reading otherwise valid persisted muted settings: fixture only, not a claim about ordinary storage",
+    "Inventory, NPC approach and base object labels captured in mobile from an isolated previous chapter fixture; no real campaign or boss outcome changed"
+  ],
+  "malformedSession": {
+    "displayed": [
+      {
+        "key": "master",
+        "value": "80"
+      },
+      {
+        "key": "music",
+        "value": "48"
+      },
+      {
+        "key": "sfx",
+        "value": "90"
+      }
+    ],
+    "saved": {
+      "master": 0,
+      "music": 0,
+      "sfx": 0
+    }
+  },
+  "layerInventory": [
+    {
+      "class": "application-shell",
+      "open": false,
+      "scrollHeight": 0,
+      "clientHeight": 0
+    },
+    {
+      "class": "mobile-display",
+      "open": false,
+      "scrollHeight": 0,
+      "clientHeight": 0
+    },
+    {
+      "class": "records-dialog",
+      "open": false,
+      "scrollHeight": 0,
+      "clientHeight": 0
+    },
+    {
+      "class": "records-dialog ability-upgrade-dialog",
+      "open": false,
+      "scrollHeight": 0,
+      "clientHeight": 0
+    },
+    {
+      "class": "records-dialog equipment-dialog",
+      "open": false,
+      "scrollHeight": 0,
+      "clientHeight": 0
+    },
+    {
+      "class": "records-dialog base-dialog",
+      "open": false,
+      "scrollHeight": 0,
+      "clientHeight": 0
+    },
+    {
+      "class": "records-dialog mission-dialog",
+      "open": false,
+      "scrollHeight": 0,
+      "clientHeight": 0
+    }
+  ]
+}

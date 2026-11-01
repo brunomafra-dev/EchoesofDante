@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+**01/11/2026 · Auditoria antes da continuação:** usuário pediu revisar a última implementação e se os objetos parecem integrados ao terreno. [Auditoria de front-end/UX/arte](frontend-ux-audit-178/README.md): defeito de mute reproduzido no cliente público, hierarquia mobile e integração visual parcial. Propostas de correção registradas; versão de aplicação permanece 0.1.178. Nenhum novo capítulo iniciado ou aprovação humana registrada.
+
 **31/10/2026 · Manutenção de áudio mobile · 0.1.178:** após o usuário relatar que Música, Efeitos e Volume geral não mudavam o som no iPhone, a música da campanha passou a usar `GainNode` e os sliders mostram confirmação percentual em toque. [Escopo, QA e limites](audio-settings/README.md). Não altera o plano de capítulos; reteste humano em aparelho físico pendente.
 
 Commit `012ebb9` publicado em `origin/main`; Vercel 0.1.178 entregou os 73 hashes e o roteiro de toque da campanha compilada passou em endpoint público. O relay permanece protocolo 16 e `icecave:1`. Capturas/reports registrados; aguardar o usuário retestar no iPhone antes de avançar a etapa visual pendente ou um novo capítulo.

@@ -1,0 +1,4662 @@
+{
+  "date": "2026-11-01",
+  "release": "0.1.178",
+  "publicBase": "https://echosofdante.vercel.app",
+  "local": "http://127.0.0.1:5185",
+  "errors": [],
+  "layouts": [
+    {
+      "viewport": [
+        844,
+        390
+      ],
+      "body": [
+        844,
+        844
+      ],
+      "dialog": {
+        "scroll": 0,
+        "height": 390,
+        "total": 427
+      },
+      "controls": [
+        {
+          "key": "master",
+          "label": "Volume geral",
+          "width": 440,
+          "height": 38,
+          "top": 115,
+          "bottom": 153,
+          "visible": true
+        },
+        {
+          "key": "music",
+          "label": "Música",
+          "width": 440,
+          "height": 38,
+          "top": 189,
+          "bottom": 227,
+          "visible": true
+        },
+        {
+          "key": "sfx",
+          "label": "Efeitos",
+          "width": 440,
+          "height": 38,
+          "top": 263,
+          "bottom": 301,
+          "visible": true
+        },
+        {
+          "key": "prologue-replay",
+          "label": "REVER A CHEGADA A DANTE",
+          "width": 440,
+          "height": 44,
+          "top": 317,
+          "bottom": 361,
+          "visible": true
+        },
+        {
+          "key": "back",
+          "label": "VOLTAR",
+          "width": 440,
+          "height": 44,
+          "top": 367,
+          "bottom": 411,
+          "visible": true
+        }
+      ],
+      "fonts": "loaded",
+      "afterScroll": {
+        "viewport": [
+          844,
+          390
+        ],
+        "body": [
+          844,
+          844
+        ],
+        "dialog": {
+          "scroll": 21,
+          "height": 390,
+          "total": 427
+        },
+        "controls": [
+          {
+            "key": "master",
+            "label": "Volume geral",
+            "width": 440,
+            "height": 38,
+            "top": 94,
+            "bottom": 132,
+            "visible": true
+          },
+          {
+            "key": "music",
+            "label": "Música",
+            "width": 440,
+            "height": 38,
+            "top": 168,
+            "bottom": 206,
+            "visible": true
+          },
+          {
+            "key": "sfx",
+            "label": "Efeitos",
+            "width": 440,
+            "height": 38,
+            "top": 242,
+            "bottom": 280,
+            "visible": true
+          },
+          {
+            "key": "prologue-replay",
+            "label": "REVER A CHEGADA A DANTE",
+            "width": 440,
+            "height": 44,
+            "top": 296,
+            "bottom": 340,
+            "visible": true
+          },
+          {
+            "key": "back",
+            "label": "VOLTAR",
+            "width": 440,
+            "height": 44,
+            "top": 346,
+            "bottom": 390,
+            "visible": true
+          }
+        ],
+        "fonts": "loaded"
+      }
+    },
+    {
+      "viewport": [
+        852,
+        393
+      ],
+      "body": [
+        852,
+        852
+      ],
+      "dialog": {
+        "scroll": 0,
+        "height": 393,
+        "total": 427
+      },
+      "controls": [
+        {
+          "key": "master",
+          "label": "Volume geral",
+          "width": 440,
+          "height": 38,
+          "top": 115,
+          "bottom": 153,
+          "visible": true
+        },
+        {
+          "key": "music",
+          "label": "Música",
+          "width": 440,
+          "height": 38,
+          "top": 189,
+          "bottom": 227,
+          "visible": true
+        },
+        {
+          "key": "sfx",
+          "label": "Efeitos",
+          "width": 440,
+          "height": 38,
+          "top": 263,
+          "bottom": 301,
+          "visible": true
+        },
+        {
+          "key": "prologue-replay",
+          "label": "REVER A CHEGADA A DANTE",
+          "width": 440,
+          "height": 44,
+          "top": 317,
+          "bottom": 361,
+          "visible": true
+        },
+        {
+          "key": "back",
+          "label": "VOLTAR",
+          "width": 440,
+          "height": 44,
+          "top": 367,
+          "bottom": 411,
+          "visible": true
+        }
+      ],
+      "fonts": "loaded",
+      "afterScroll": {
+        "viewport": [
+          852,
+          393
+        ],
+        "body": [
+          852,
+          852
+        ],
+        "dialog": {
+          "scroll": 18,
+          "height": 393,
+          "total": 427
+        },
+        "controls": [
+          {
+            "key": "master",
+            "label": "Volume geral",
+            "width": 440,
+            "height": 38,
+            "top": 97,
+            "bottom": 135,
+            "visible": true
+          },
+          {
+            "key": "music",
+            "label": "Música",
+            "width": 440,
+            "height": 38,
+            "top": 171,
+            "bottom": 209,
+            "visible": true
+          },
+          {
+            "key": "sfx",
+            "label": "Efeitos",
+            "width": 440,
+            "height": 38,
+            "top": 245,
+            "bottom": 283,
+            "visible": true
+          },
+          {
+            "key": "prologue-replay",
+            "label": "REVER A CHEGADA A DANTE",
+            "width": 440,
+            "height": 44,
+            "top": 299,
+            "bottom": 343,
+            "visible": true
+          },
+          {
+            "key": "back",
+            "label": "VOLTAR",
+            "width": 440,
+            "height": 44,
+            "top": 349,
+            "bottom": 393,
+            "visible": true
+          }
+        ],
+        "fonts": "loaded"
+      }
+    },
+    {
+      "viewport": [
+        915,
+        412
+      ],
+      "body": [
+        915,
+        915
+      ],
+      "dialog": {
+        "scroll": 0,
+        "height": 412,
+        "total": 427
+      },
+      "controls": [
+        {
+          "key": "master",
+          "label": "Volume geral",
+          "width": 440,
+          "height": 38,
+          "top": 115,
+          "bottom": 153,
+          "visible": true
+        },
+        {
+          "key": "music",
+          "label": "Música",
+          "width": 440,
+          "height": 38,
+          "top": 189,
+          "bottom": 227,
+          "visible": true
+        },
+        {
+          "key": "sfx",
+          "label": "Efeitos",
+          "width": 440,
+          "height": 38,
+          "top": 263,
+          "bottom": 301,
+          "visible": true
+        },
+        {
+          "key": "prologue-replay",
+          "label": "REVER A CHEGADA A DANTE",
+          "width": 440,
+          "height": 44,
+          "top": 317,
+          "bottom": 361,
+          "visible": true
+        },
+        {
+          "key": "back",
+          "label": "VOLTAR",
+          "width": 440,
+          "height": 44,
+          "top": 367,
+          "bottom": 411,
+          "visible": true
+        }
+      ],
+      "fonts": "loaded",
+      "afterScroll": {
+        "viewport": [
+          915,
+          412
+        ],
+        "body": [
+          915,
+          915
+        ],
+        "dialog": {
+          "scroll": 0,
+          "height": 412,
+          "total": 427
+        },
+        "controls": [
+          {
+            "key": "master",
+            "label": "Volume geral",
+            "width": 440,
+            "height": 38,
+            "top": 115,
+            "bottom": 153,
+            "visible": true
+          },
+          {
+            "key": "music",
+            "label": "Música",
+            "width": 440,
+            "height": 38,
+            "top": 189,
+            "bottom": 227,
+            "visible": true
+          },
+          {
+            "key": "sfx",
+            "label": "Efeitos",
+            "width": 440,
+            "height": 38,
+            "top": 263,
+            "bottom": 301,
+            "visible": true
+          },
+          {
+            "key": "prologue-replay",
+            "label": "REVER A CHEGADA A DANTE",
+            "width": 440,
+            "height": 44,
+            "top": 317,
+            "bottom": 361,
+            "visible": true
+          },
+          {
+            "key": "back",
+            "label": "VOLTAR",
+            "width": 440,
+            "height": 44,
+            "top": 367,
+            "bottom": 411,
+            "visible": true
+          }
+        ],
+        "fonts": "loaded"
+      }
+    },
+    {
+      "viewport": [
+        568,
+        320
+      ],
+      "body": [
+        568,
+        568
+      ],
+      "dialog": {
+        "scroll": 0,
+        "height": 320,
+        "total": 579
+      },
+      "controls": [
+        {
+          "key": "master",
+          "label": "Volume geral",
+          "width": 520,
+          "height": 38,
+          "top": 267,
+          "bottom": 305,
+          "visible": true
+        },
+        {
+          "key": "music",
+          "label": "Música",
+          "width": 520,
+          "height": 38,
+          "top": 341,
+          "bottom": 379,
+          "visible": false
+        },
+        {
+          "key": "sfx",
+          "label": "Efeitos",
+          "width": 520,
+          "height": 38,
+          "top": 415,
+          "bottom": 453,
+          "visible": false
+        },
+        {
+          "key": "prologue-replay",
+          "label": "REVER A CHEGADA A DANTE",
+          "width": 520,
+          "height": 44,
+          "top": 469,
+          "bottom": 513,
+          "visible": false
+        },
+        {
+          "key": "back",
+          "label": "VOLTAR",
+          "width": 520,
+          "height": 44,
+          "top": 519,
+          "bottom": 563,
+          "visible": false
+        }
+      ],
+      "fonts": "loading",
+      "afterScroll": {
+        "viewport": [
+          568,
+          320
+        ],
+        "body": [
+          568,
+          568
+        ],
+        "dialog": {
+          "scroll": 243,
+          "height": 320,
+          "total": 579
+        },
+        "controls": [
+          {
+            "key": "master",
+            "label": "Volume geral",
+            "width": 520,
+            "height": 38,
+            "top": 24,
+            "bottom": 62,
+            "visible": true
+          },
+          {
+            "key": "music",
+            "label": "Música",
+            "width": 520,
+            "height": 38,
+            "top": 98,
+            "bottom": 136,
+            "visible": true
+          },
+          {
+            "key": "sfx",
+            "label": "Efeitos",
+            "width": 520,
+            "height": 38,
+            "top": 172,
+            "bottom": 210,
+            "visible": true
+          },
+          {
+            "key": "prologue-replay",
+            "label": "REVER A CHEGADA A DANTE",
+            "width": 520,
+            "height": 44,
+            "top": 226,
+            "bottom": 270,
+            "visible": true
+          },
+          {
+            "key": "back",
+            "label": "VOLTAR",
+            "width": 520,
+            "height": 44,
+            "top": 276,
+            "bottom": 320,
+            "visible": true
+          }
+        ],
+        "fonts": "loaded"
+      }
+    },
+    {
+      "viewport": [
+        393,
+        852
+      ],
+      "body": [
+        393,
+        393
+      ],
+      "dialog": {
+        "scroll": 0,
+        "height": 852,
+        "total": 852
+      },
+      "controls": [
+        {
+          "key": "master",
+          "label": "Volume geral",
+          "width": 345,
+          "height": 38,
+          "top": 459,
+          "bottom": 497,
+          "visible": true
+        },
+        {
+          "key": "music",
+          "label": "Música",
+          "width": 345,
+          "height": 38,
+          "top": 533,
+          "bottom": 571,
+          "visible": true
+        },
+        {
+          "key": "sfx",
+          "label": "Efeitos",
+          "width": 345,
+          "height": 38,
+          "top": 607,
+          "bottom": 645,
+          "visible": true
+        },
+        {
+          "key": "prologue-replay",
+          "label": "REVER A CHEGADA A DANTE",
+          "width": 345,
+          "height": 50,
+          "top": 661,
+          "bottom": 711,
+          "visible": true
+        },
+        {
+          "key": "back",
+          "label": "VOLTAR",
+          "width": 345,
+          "height": 50,
+          "top": 721,
+          "bottom": 771,
+          "visible": true
+        }
+      ],
+      "fonts": "loaded",
+      "afterScroll": {
+        "viewport": [
+          393,
+          852
+        ],
+        "body": [
+          393,
+          393
+        ],
+        "dialog": {
+          "scroll": 0,
+          "height": 852,
+          "total": 852
+        },
+        "controls": [
+          {
+            "key": "master",
+            "label": "Volume geral",
+            "width": 345,
+            "height": 38,
+            "top": 459,
+            "bottom": 497,
+            "visible": true
+          },
+          {
+            "key": "music",
+            "label": "Música",
+            "width": 345,
+            "height": 38,
+            "top": 533,
+            "bottom": 571,
+            "visible": true
+          },
+          {
+            "key": "sfx",
+            "label": "Efeitos",
+            "width": 345,
+            "height": 38,
+            "top": 607,
+            "bottom": 645,
+            "visible": true
+          },
+          {
+            "key": "prologue-replay",
+            "label": "REVER A CHEGADA A DANTE",
+            "width": 345,
+            "height": 50,
+            "top": 661,
+            "bottom": 711,
+            "visible": true
+          },
+          {
+            "key": "back",
+            "label": "VOLTAR",
+            "width": 345,
+            "height": 50,
+            "top": 721,
+            "bottom": 771,
+            "visible": true
+          }
+        ],
+        "fonts": "loaded"
+      }
+    },
+    {
+      "viewport": [
+        1024,
+        768
+      ],
+      "body": [
+        1024,
+        1024
+      ],
+      "dialog": {
+        "scroll": 0,
+        "height": 768,
+        "total": 768
+      },
+      "controls": [
+        {
+          "key": "master",
+          "label": "Volume geral",
+          "width": 440,
+          "height": 38,
+          "top": 284,
+          "bottom": 322,
+          "visible": true
+        },
+        {
+          "key": "music",
+          "label": "Música",
+          "width": 440,
+          "height": 38,
+          "top": 358,
+          "bottom": 396,
+          "visible": true
+        },
+        {
+          "key": "sfx",
+          "label": "Efeitos",
+          "width": 440,
+          "height": 38,
+          "top": 432,
+          "bottom": 470,
+          "visible": true
+        },
+        {
+          "key": "prologue-replay",
+          "label": "REVER A CHEGADA A DANTE",
+          "width": 440,
+          "height": 50,
+          "top": 486,
+          "bottom": 536,
+          "visible": true
+        },
+        {
+          "key": "back",
+          "label": "VOLTAR",
+          "width": 440,
+          "height": 50,
+          "top": 546,
+          "bottom": 596,
+          "visible": true
+        }
+      ],
+      "fonts": "loaded",
+      "afterScroll": {
+        "viewport": [
+          1024,
+          768
+        ],
+        "body": [
+          1024,
+          1024
+        ],
+        "dialog": {
+          "scroll": 0,
+          "height": 768,
+          "total": 768
+        },
+        "controls": [
+          {
+            "key": "master",
+            "label": "Volume geral",
+            "width": 440,
+            "height": 38,
+            "top": 284,
+            "bottom": 322,
+            "visible": true
+          },
+          {
+            "key": "music",
+            "label": "Música",
+            "width": 440,
+            "height": 38,
+            "top": 358,
+            "bottom": 396,
+            "visible": true
+          },
+          {
+            "key": "sfx",
+            "label": "Efeitos",
+            "width": 440,
+            "height": 38,
+            "top": 432,
+            "bottom": 470,
+            "visible": true
+          },
+          {
+            "key": "prologue-replay",
+            "label": "REVER A CHEGADA A DANTE",
+            "width": 440,
+            "height": 50,
+            "top": 486,
+            "bottom": 536,
+            "visible": true
+          },
+          {
+            "key": "back",
+            "label": "VOLTAR",
+            "width": 440,
+            "height": 50,
+            "top": 546,
+            "bottom": 596,
+            "visible": true
+          }
+        ],
+        "fonts": "loaded"
+      }
+    },
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "body": [
+        1920,
+        1920
+      ],
+      "dialog": {
+        "scroll": 0,
+        "height": 1080,
+        "total": 1080
+      },
+      "controls": [
+        {
+          "key": "master",
+          "label": "Volume geral",
+          "width": 440,
+          "height": 38,
+          "top": 440,
+          "bottom": 478,
+          "visible": true
+        },
+        {
+          "key": "music",
+          "label": "Música",
+          "width": 440,
+          "height": 38,
+          "top": 514,
+          "bottom": 552,
+          "visible": true
+        },
+        {
+          "key": "sfx",
+          "label": "Efeitos",
+          "width": 440,
+          "height": 38,
+          "top": 588,
+          "bottom": 626,
+          "visible": true
+        },
+        {
+          "key": "prologue-replay",
+          "label": "REVER A CHEGADA A DANTE",
+          "width": 440,
+          "height": 50,
+          "top": 642,
+          "bottom": 692,
+          "visible": true
+        },
+        {
+          "key": "back",
+          "label": "VOLTAR",
+          "width": 440,
+          "height": 50,
+          "top": 702,
+          "bottom": 752,
+          "visible": true
+        }
+      ],
+      "fonts": "loaded",
+      "afterScroll": {
+        "viewport": [
+          1920,
+          1080
+        ],
+        "body": [
+          1920,
+          1920
+        ],
+        "dialog": {
+          "scroll": 0,
+          "height": 1080,
+          "total": 1080
+        },
+        "controls": [
+          {
+            "key": "master",
+            "label": "Volume geral",
+            "width": 440,
+            "height": 38,
+            "top": 440,
+            "bottom": 478,
+            "visible": true
+          },
+          {
+            "key": "music",
+            "label": "Música",
+            "width": 440,
+            "height": 38,
+            "top": 514,
+            "bottom": 552,
+            "visible": true
+          },
+          {
+            "key": "sfx",
+            "label": "Efeitos",
+            "width": 440,
+            "height": 38,
+            "top": 588,
+            "bottom": 626,
+            "visible": true
+          },
+          {
+            "key": "prologue-replay",
+            "label": "REVER A CHEGADA A DANTE",
+            "width": 440,
+            "height": 50,
+            "top": 642,
+            "bottom": 692,
+            "visible": true
+          },
+          {
+            "key": "back",
+            "label": "VOLTAR",
+            "width": 440,
+            "height": 50,
+            "top": 702,
+            "bottom": 752,
+            "visible": true
+          }
+        ],
+        "fonts": "loaded"
+      }
+    }
+  ],
+  "scenes": [
+    {
+      "name": "gallery-cargo",
+      "area": "icecave",
+      "player": {
+        "x": 1100,
+        "y": 1180
+      },
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "boreal-melt-pocket",
+          "x": 870,
+          "y": 1300,
+          "width": 190,
+          "height": 215,
+          "depth": -9889,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "ice-transfer-film",
+          "x": 1277.5,
+          "y": 1342.5,
+          "width": 235,
+          "height": 115,
+          "depth": -15,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "ice-transfer-dock",
+          "x": 1510,
+          "y": 1250,
+          "width": 100,
+          "height": 70,
+          "depth": -14,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "",
+          "kind": "returnBeacon",
+          "x": 300,
+          "y": 985,
+          "width": 55,
+          "height": 55,
+          "depth": 960,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "ice-transfer-cargo",
+          "kind": "iceSled",
+          "x": 1050,
+          "y": 1236,
+          "width": 112,
+          "height": 112,
+          "depth": 1203,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "ice-transfer-label",
+          "x": 1050,
+          "y": 1265,
+          "width": 197,
+          "height": 19,
+          "depth": 11000,
+          "visible": true,
+          "alpha": 1
+        }
+      ],
+      "solids": [
+        {
+          "x": 860,
+          "y": 890,
+          "radius": 70
+        },
+        {
+          "x": 980,
+          "y": 900,
+          "radius": 58
+        },
+        {
+          "x": 1260,
+          "y": 1230,
+          "radius": 65
+        },
+        {
+          "x": 1680,
+          "y": 610,
+          "radius": 45
+        },
+        {
+          "x": 1960,
+          "y": 800,
+          "radius": 68
+        },
+        {
+          "x": 2190,
+          "y": 1190,
+          "radius": 70
+        },
+        {
+          "x": 2390,
+          "y": 720,
+          "radius": 56
+        },
+        {
+          "x": 820,
+          "y": 1150,
+          "radius": 62
+        },
+        {
+          "x": 1530,
+          "y": 730,
+          "radius": 58
+        },
+        {
+          "x": 2490,
+          "y": 1170,
+          "radius": 55
+        },
+        {
+          "x": 1050,
+          "y": 1200,
+          "radius": 24
+        }
+      ]
+    },
+    {
+      "name": "gallery-fissure",
+      "area": "icecave",
+      "player": {
+        "x": 940,
+        "y": 1010
+      },
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "boreal-melt-pocket",
+          "x": 870,
+          "y": 1300,
+          "width": 190,
+          "height": 215,
+          "depth": -9889,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "ice-transfer-film",
+          "x": 1277.5,
+          "y": 1342.5,
+          "width": 235,
+          "height": 115,
+          "depth": -15,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "ice-transfer-dock",
+          "x": 1510,
+          "y": 1250,
+          "width": 100,
+          "height": 70,
+          "depth": -14,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "",
+          "kind": "returnBeacon",
+          "x": 300,
+          "y": 985,
+          "width": 55,
+          "height": 55,
+          "depth": 960,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "ice-transfer-cargo",
+          "kind": "iceSled",
+          "x": 1050,
+          "y": 1236,
+          "width": 112,
+          "height": 112,
+          "depth": 1203,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "ice-transfer-label",
+          "x": 1050,
+          "y": 1265,
+          "width": 197,
+          "height": 19,
+          "depth": 11000,
+          "visible": true,
+          "alpha": 1
+        }
+      ],
+      "solids": [
+        {
+          "x": 860,
+          "y": 890,
+          "radius": 70
+        },
+        {
+          "x": 980,
+          "y": 900,
+          "radius": 58
+        },
+        {
+          "x": 1260,
+          "y": 1230,
+          "radius": 65
+        },
+        {
+          "x": 1680,
+          "y": 610,
+          "radius": 45
+        },
+        {
+          "x": 1960,
+          "y": 800,
+          "radius": 68
+        },
+        {
+          "x": 2190,
+          "y": 1190,
+          "radius": 70
+        },
+        {
+          "x": 2390,
+          "y": 720,
+          "radius": 56
+        },
+        {
+          "x": 820,
+          "y": 1150,
+          "radius": 62
+        },
+        {
+          "x": 1530,
+          "y": 730,
+          "radius": 58
+        },
+        {
+          "x": 2490,
+          "y": 1170,
+          "radius": 55
+        },
+        {
+          "x": 1050,
+          "y": 1200,
+          "radius": 24
+        }
+      ]
+    },
+    {
+      "name": "base-cluster",
+      "area": "base",
+      "player": {
+        "x": 650,
+        "y": 750
+      },
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "",
+          "kind": "manifest",
+          "x": 1120,
+          "y": 420,
+          "width": 100,
+          "height": 100,
+          "depth": 418,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "frost-water-reserve",
+          "kind": "sealedWater",
+          "x": 248,
+          "y": 564,
+          "width": 85,
+          "height": 85,
+          "depth": 562,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "echo-route-archive",
+          "kind": "routeArchive",
+          "x": 1250,
+          "y": 610,
+          "width": 75,
+          "height": 75,
+          "depth": 608,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "",
+          "kind": "tools",
+          "x": 895,
+          "y": 625,
+          "width": 112,
+          "height": 112,
+          "depth": 623,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pc-manifest",
+          "kind": "manifest",
+          "x": 1120,
+          "y": 640,
+          "width": 76,
+          "height": 76,
+          "depth": 638,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "settlement-arrival-manifest",
+          "kind": "manifest",
+          "x": 1120,
+          "y": 640,
+          "width": 72,
+          "height": 72,
+          "depth": 638,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "",
+          "kind": "decontamination",
+          "x": 440,
+          "y": 650,
+          "width": 105,
+          "height": 105,
+          "depth": 648,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pg-kit",
+          "kind": "coldCollector",
+          "x": 520,
+          "y": 650,
+          "width": 76,
+          "height": 76,
+          "depth": 648,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "buried-record-archive",
+          "kind": "vitrifiedCore",
+          "x": 520,
+          "y": 790,
+          "width": 76,
+          "height": 76,
+          "depth": 758,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pi-kit",
+          "kind": "iceSled",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pi-log",
+          "kind": "routeArchive",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pd-kit",
+          "kind": "coreSample",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pd-store",
+          "kind": "routeArchive",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pv-kit",
+          "kind": "windKit",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pr-copy",
+          "kind": "emitter",
+          "x": 1120,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pr-store",
+          "kind": "routeArchive",
+          "x": 1120,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "ps-kit",
+          "kind": "receiver",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pe-cell",
+          "kind": "powerCell",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "po-kit",
+          "kind": "supplyRack",
+          "x": 1120,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "settlement-supply-depot",
+          "kind": "supplyRack",
+          "x": 650,
+          "y": 900,
+          "width": 110,
+          "height": 110,
+          "depth": 898,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "settlement-power-station",
+          "kind": "worklight",
+          "x": 910,
+          "y": 900,
+          "width": 112,
+          "height": 112,
+          "depth": 898,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "settlement-food-reserve",
+          "kind": "foodReserve",
+          "x": 440,
+          "y": 910,
+          "width": 90,
+          "height": 90,
+          "depth": 908,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pf-safe",
+          "kind": "decontamination",
+          "x": 240,
+          "y": 920,
+          "width": 76,
+          "height": 76,
+          "depth": 918,
+          "visible": false,
+          "alpha": 1
+        }
+      ],
+      "solids": [
+        {
+          "x": 550,
+          "y": 370,
+          "radius": 112
+        },
+        {
+          "x": 420,
+          "y": 360,
+          "radius": 62
+        },
+        {
+          "x": 680,
+          "y": 360,
+          "radius": 62
+        },
+        {
+          "x": 320,
+          "y": 678,
+          "radius": 20
+        },
+        {
+          "x": 320,
+          "y": 600,
+          "radius": 55
+        },
+        {
+          "x": 760,
+          "y": 668,
+          "radius": 20
+        },
+        {
+          "x": 760,
+          "y": 590,
+          "radius": 55
+        },
+        {
+          "x": 1000,
+          "y": 443,
+          "radius": 20
+        },
+        {
+          "x": 1000,
+          "y": 365,
+          "radius": 55
+        },
+        {
+          "x": 440,
+          "y": 633,
+          "radius": 20
+        },
+        {
+          "x": 895,
+          "y": 608,
+          "radius": 20
+        },
+        {
+          "x": 1120,
+          "y": 403,
+          "radius": 20
+        },
+        {
+          "x": 362,
+          "y": 707,
+          "radius": 24
+        },
+        {
+          "x": 802,
+          "y": 697,
+          "radius": 24
+        },
+        {
+          "x": 1042,
+          "y": 472,
+          "radius": 24
+        },
+        {
+          "x": 1250,
+          "y": 595,
+          "radius": 17
+        },
+        {
+          "x": 520,
+          "y": 748,
+          "radius": 18
+        },
+        {
+          "x": 248,
+          "y": 552,
+          "radius": 23
+        },
+        {
+          "x": 440,
+          "y": 893,
+          "radius": 25
+        },
+        {
+          "x": 650,
+          "y": 878,
+          "radius": 30
+        },
+        {
+          "x": 910,
+          "y": 876,
+          "radius": 32
+        },
+        {
+          "x": 1120,
+          "y": 624,
+          "radius": 22
+        }
+      ]
+    },
+    {
+      "name": "base-supply",
+      "area": "base",
+      "player": {
+        "x": 830,
+        "y": 952
+      },
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "",
+          "kind": "manifest",
+          "x": 1120,
+          "y": 420,
+          "width": 100,
+          "height": 100,
+          "depth": 418,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "frost-water-reserve",
+          "kind": "sealedWater",
+          "x": 248,
+          "y": 564,
+          "width": 85,
+          "height": 85,
+          "depth": 562,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "echo-route-archive",
+          "kind": "routeArchive",
+          "x": 1250,
+          "y": 610,
+          "width": 75,
+          "height": 75,
+          "depth": 608,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "",
+          "kind": "tools",
+          "x": 895,
+          "y": 625,
+          "width": 112,
+          "height": 112,
+          "depth": 623,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pc-manifest",
+          "kind": "manifest",
+          "x": 1120,
+          "y": 640,
+          "width": 76,
+          "height": 76,
+          "depth": 638,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "settlement-arrival-manifest",
+          "kind": "manifest",
+          "x": 1120,
+          "y": 640,
+          "width": 72,
+          "height": 72,
+          "depth": 638,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "",
+          "kind": "decontamination",
+          "x": 440,
+          "y": 650,
+          "width": 105,
+          "height": 105,
+          "depth": 648,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pg-kit",
+          "kind": "coldCollector",
+          "x": 520,
+          "y": 650,
+          "width": 76,
+          "height": 76,
+          "depth": 648,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "buried-record-archive",
+          "kind": "vitrifiedCore",
+          "x": 520,
+          "y": 790,
+          "width": 76,
+          "height": 76,
+          "depth": 758,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pi-kit",
+          "kind": "iceSled",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pi-log",
+          "kind": "routeArchive",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pd-kit",
+          "kind": "coreSample",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pd-store",
+          "kind": "routeArchive",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pv-kit",
+          "kind": "windKit",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pr-copy",
+          "kind": "emitter",
+          "x": 1120,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pr-store",
+          "kind": "routeArchive",
+          "x": 1120,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "ps-kit",
+          "kind": "receiver",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pe-cell",
+          "kind": "powerCell",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "po-kit",
+          "kind": "supplyRack",
+          "x": 1120,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "depth": 878,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "settlement-supply-depot",
+          "kind": "supplyRack",
+          "x": 650,
+          "y": 900,
+          "width": 110,
+          "height": 110,
+          "depth": 898,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "settlement-power-station",
+          "kind": "worklight",
+          "x": 910,
+          "y": 900,
+          "width": 112,
+          "height": 112,
+          "depth": 898,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "settlement-food-reserve",
+          "kind": "foodReserve",
+          "x": 440,
+          "y": 910,
+          "width": 90,
+          "height": 90,
+          "depth": 908,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pf-safe",
+          "kind": "decontamination",
+          "x": 240,
+          "y": 920,
+          "width": 76,
+          "height": 76,
+          "depth": 918,
+          "visible": false,
+          "alpha": 1
+        }
+      ],
+      "solids": [
+        {
+          "x": 550,
+          "y": 370,
+          "radius": 112
+        },
+        {
+          "x": 420,
+          "y": 360,
+          "radius": 62
+        },
+        {
+          "x": 680,
+          "y": 360,
+          "radius": 62
+        },
+        {
+          "x": 320,
+          "y": 678,
+          "radius": 20
+        },
+        {
+          "x": 320,
+          "y": 600,
+          "radius": 55
+        },
+        {
+          "x": 760,
+          "y": 668,
+          "radius": 20
+        },
+        {
+          "x": 760,
+          "y": 590,
+          "radius": 55
+        },
+        {
+          "x": 1000,
+          "y": 443,
+          "radius": 20
+        },
+        {
+          "x": 1000,
+          "y": 365,
+          "radius": 55
+        },
+        {
+          "x": 440,
+          "y": 633,
+          "radius": 20
+        },
+        {
+          "x": 895,
+          "y": 608,
+          "radius": 20
+        },
+        {
+          "x": 1120,
+          "y": 403,
+          "radius": 20
+        },
+        {
+          "x": 362,
+          "y": 707,
+          "radius": 24
+        },
+        {
+          "x": 802,
+          "y": 697,
+          "radius": 24
+        },
+        {
+          "x": 1042,
+          "y": 472,
+          "radius": 24
+        },
+        {
+          "x": 1250,
+          "y": 595,
+          "radius": 17
+        },
+        {
+          "x": 520,
+          "y": 748,
+          "radius": 18
+        },
+        {
+          "x": 248,
+          "y": 552,
+          "radius": 23
+        },
+        {
+          "x": 440,
+          "y": 893,
+          "radius": 25
+        },
+        {
+          "x": 650,
+          "y": 878,
+          "radius": 30
+        },
+        {
+          "x": 910,
+          "y": 876,
+          "radius": 32
+        },
+        {
+          "x": 1120,
+          "y": 624,
+          "radius": 22
+        }
+      ]
+    },
+    {
+      "name": "post-archive",
+      "area": "springs",
+      "player": {
+        "x": 1860,
+        "y": 1060
+      },
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "survey-biology",
+          "x": 1390,
+          "y": 440,
+          "width": 80,
+          "height": 75,
+          "depth": 438,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pf-trace",
+          "kind": "contaminatedRoots",
+          "x": 820,
+          "y": 610,
+          "width": 76,
+          "height": 76,
+          "depth": 608,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "survey-spring",
+          "x": 1820,
+          "y": 650,
+          "width": 112,
+          "height": 98,
+          "depth": 648,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pw-intake",
+          "kind": "intake",
+          "x": 1680,
+          "y": 680,
+          "width": 76,
+          "height": 76,
+          "depth": 678,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pc-beacon",
+          "kind": "returnBeacon",
+          "x": 2180,
+          "y": 680,
+          "width": 76,
+          "height": 76,
+          "depth": 678,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "po-bank",
+          "kind": "floodStake",
+          "x": 1970,
+          "y": 730,
+          "width": 76,
+          "height": 76,
+          "depth": 728,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "npc-worksite-tomas",
+          "kind": "foodReserve",
+          "x": 1908,
+          "y": 862,
+          "width": 53,
+          "height": 53,
+          "depth": 858,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "outpost-regulator",
+          "kind": "powerCell",
+          "x": 1990,
+          "y": 939,
+          "width": 63,
+          "height": 63,
+          "depth": 937,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "npc-worksite-mara",
+          "kind": "powerCell",
+          "x": 2107,
+          "y": 962,
+          "width": 53,
+          "height": 53,
+          "depth": 958,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "npc-worksite-tomas",
+          "kind": "foodReserve",
+          "x": 1898,
+          "y": 1002,
+          "width": 53,
+          "height": 53,
+          "depth": 998,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "ps-carrier",
+          "kind": "archive",
+          "x": 1890,
+          "y": 1090,
+          "width": 76,
+          "height": 76,
+          "depth": 1088,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "ps-record",
+          "kind": "archive",
+          "x": 1890,
+          "y": 1090,
+          "width": 76,
+          "height": 76,
+          "depth": 1088,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "po-water",
+          "kind": "surveyor",
+          "x": 2020,
+          "y": 1110,
+          "width": 76,
+          "height": 76,
+          "depth": 1108,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "po-load",
+          "kind": "cargoSled",
+          "x": 480,
+          "y": 1110,
+          "width": 76,
+          "height": 76,
+          "depth": 1108,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "po-deliver",
+          "kind": "supplyRack",
+          "x": 2040,
+          "y": 1110,
+          "width": 76,
+          "height": 76,
+          "depth": 1108,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "ps-water",
+          "kind": "hydrophone",
+          "x": 1530,
+          "y": 1130,
+          "width": 76,
+          "height": 76,
+          "depth": 1128,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pw-valve",
+          "kind": "valve",
+          "x": 1660,
+          "y": 1130,
+          "width": 76,
+          "height": 76,
+          "depth": 1128,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "signal-archive-case",
+          "kind": "archive",
+          "x": 1900,
+          "y": 1135,
+          "width": 78,
+          "height": 78,
+          "depth": 1133,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "",
+          "kind": "returnBeacon",
+          "x": 340,
+          "y": 1165,
+          "width": 55,
+          "height": 55,
+          "depth": 1140,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "outpost-depot",
+          "kind": "supplyRack",
+          "x": 2040,
+          "y": 1155,
+          "width": 100,
+          "height": 100,
+          "depth": 1153,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "survey-water",
+          "x": 2229.5641450403614,
+          "y": 1177.245869835683,
+          "width": 100,
+          "height": 72,
+          "depth": 1175.245869835683,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "survey-water",
+          "x": 670,
+          "y": 1190,
+          "width": 100,
+          "height": 72,
+          "depth": 1188,
+          "visible": true,
+          "alpha": 1
+        }
+      ],
+      "solids": [
+        {
+          "x": 720,
+          "y": 700,
+          "radius": 44
+        },
+        {
+          "x": 950,
+          "y": 890,
+          "radius": 35
+        },
+        {
+          "x": 1660,
+          "y": 980,
+          "radius": 48
+        },
+        {
+          "x": 2200,
+          "y": 1120,
+          "radius": 38
+        },
+        {
+          "x": 1140,
+          "y": 760,
+          "radius": 100
+        },
+        {
+          "x": 1270,
+          "y": 760,
+          "radius": 113
+        },
+        {
+          "x": 1400,
+          "y": 760,
+          "radius": 100
+        },
+        {
+          "x": 1760,
+          "y": 505,
+          "radius": 60
+        },
+        {
+          "x": 1850,
+          "y": 505,
+          "radius": 60
+        },
+        {
+          "x": 130,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 365,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 600,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 835,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 1070,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 1305,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 1540,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 1775,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 2010,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 2245,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 2480,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 130,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 365,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 600,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 835,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 1070,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1305,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 1540,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1775,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 2010,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 2245,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 2480,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1900,
+          "y": 1117,
+          "radius": 18
+        },
+        {
+          "x": 2040,
+          "y": 1135,
+          "radius": 26
+        },
+        {
+          "x": 2190,
+          "y": 831.0196078431372,
+          "radius": 56.666666666666664
+        },
+        {
+          "x": 2306.6666666666665,
+          "y": 835.1764705882352,
+          "radius": 39.166666666666664
+        },
+        {
+          "x": 2273.3333333333335,
+          "y": 890.0470588235294,
+          "radius": 24.166666666666668
+        },
+        {
+          "x": 2070,
+          "y": 960,
+          "radius": 14
+        },
+        {
+          "x": 2107,
+          "y": 953,
+          "radius": 13
+        },
+        {
+          "x": 1936.9356217521106,
+          "y": 899.6509668955634,
+          "radius": 14
+        },
+        {
+          "x": 1908,
+          "y": 853,
+          "radius": 13
+        },
+        {
+          "x": 1898,
+          "y": 993,
+          "radius": 13
+        }
+      ]
+    },
+    {
+      "name": "post-building",
+      "area": "springs",
+      "player": {
+        "x": 2020,
+        "y": 1050
+      },
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "survey-biology",
+          "x": 1390,
+          "y": 440,
+          "width": 80,
+          "height": 75,
+          "depth": 438,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pf-trace",
+          "kind": "contaminatedRoots",
+          "x": 820,
+          "y": 610,
+          "width": 76,
+          "height": 76,
+          "depth": 608,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "survey-spring",
+          "x": 1820,
+          "y": 650,
+          "width": 112,
+          "height": 98,
+          "depth": 648,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pw-intake",
+          "kind": "intake",
+          "x": 1680,
+          "y": 680,
+          "width": 76,
+          "height": 76,
+          "depth": 678,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pc-beacon",
+          "kind": "returnBeacon",
+          "x": 2180,
+          "y": 680,
+          "width": 76,
+          "height": 76,
+          "depth": 678,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "po-bank",
+          "kind": "floodStake",
+          "x": 1970,
+          "y": 730,
+          "width": 76,
+          "height": 76,
+          "depth": 728,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "npc-worksite-tomas",
+          "kind": "foodReserve",
+          "x": 1908,
+          "y": 862,
+          "width": 53,
+          "height": 53,
+          "depth": 858,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "outpost-regulator",
+          "kind": "powerCell",
+          "x": 1990,
+          "y": 939,
+          "width": 63,
+          "height": 63,
+          "depth": 937,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "npc-worksite-mara",
+          "kind": "powerCell",
+          "x": 2107,
+          "y": 962,
+          "width": 53,
+          "height": 53,
+          "depth": 958,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "npc-worksite-tomas",
+          "kind": "foodReserve",
+          "x": 1898,
+          "y": 1002,
+          "width": 53,
+          "height": 53,
+          "depth": 998,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "ps-carrier",
+          "kind": "archive",
+          "x": 1890,
+          "y": 1090,
+          "width": 76,
+          "height": 76,
+          "depth": 1088,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "ps-record",
+          "kind": "archive",
+          "x": 1890,
+          "y": 1090,
+          "width": 76,
+          "height": 76,
+          "depth": 1088,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "po-water",
+          "kind": "surveyor",
+          "x": 2020,
+          "y": 1110,
+          "width": 76,
+          "height": 76,
+          "depth": 1108,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "po-load",
+          "kind": "cargoSled",
+          "x": 480,
+          "y": 1110,
+          "width": 76,
+          "height": 76,
+          "depth": 1108,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "po-deliver",
+          "kind": "supplyRack",
+          "x": 2040,
+          "y": 1110,
+          "width": 76,
+          "height": 76,
+          "depth": 1108,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "ps-water",
+          "kind": "hydrophone",
+          "x": 1530,
+          "y": 1130,
+          "width": 76,
+          "height": 76,
+          "depth": 1128,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pw-valve",
+          "kind": "valve",
+          "x": 1660,
+          "y": 1130,
+          "width": 76,
+          "height": 76,
+          "depth": 1128,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "signal-archive-case",
+          "kind": "archive",
+          "x": 1900,
+          "y": 1135,
+          "width": 78,
+          "height": 78,
+          "depth": 1133,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "",
+          "kind": "returnBeacon",
+          "x": 340,
+          "y": 1165,
+          "width": 55,
+          "height": 55,
+          "depth": 1140,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "outpost-depot",
+          "kind": "supplyRack",
+          "x": 2040,
+          "y": 1155,
+          "width": 100,
+          "height": 100,
+          "depth": 1153,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "survey-water",
+          "x": 2229.5641450403614,
+          "y": 1177.245869835683,
+          "width": 100,
+          "height": 72,
+          "depth": 1175.245869835683,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "survey-water",
+          "x": 670,
+          "y": 1190,
+          "width": 100,
+          "height": 72,
+          "depth": 1188,
+          "visible": true,
+          "alpha": 1
+        }
+      ],
+      "solids": [
+        {
+          "x": 720,
+          "y": 700,
+          "radius": 44
+        },
+        {
+          "x": 950,
+          "y": 890,
+          "radius": 35
+        },
+        {
+          "x": 1660,
+          "y": 980,
+          "radius": 48
+        },
+        {
+          "x": 2200,
+          "y": 1120,
+          "radius": 38
+        },
+        {
+          "x": 1140,
+          "y": 760,
+          "radius": 100
+        },
+        {
+          "x": 1270,
+          "y": 760,
+          "radius": 113
+        },
+        {
+          "x": 1400,
+          "y": 760,
+          "radius": 100
+        },
+        {
+          "x": 1760,
+          "y": 505,
+          "radius": 60
+        },
+        {
+          "x": 1850,
+          "y": 505,
+          "radius": 60
+        },
+        {
+          "x": 130,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 365,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 600,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 835,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 1070,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 1305,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 1540,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 1775,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 2010,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 2245,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 2480,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 130,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 365,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 600,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 835,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 1070,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1305,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 1540,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1775,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 2010,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 2245,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 2480,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1900,
+          "y": 1117,
+          "radius": 18
+        },
+        {
+          "x": 2040,
+          "y": 1135,
+          "radius": 26
+        },
+        {
+          "x": 2190,
+          "y": 831.0196078431372,
+          "radius": 56.666666666666664
+        },
+        {
+          "x": 2306.6666666666665,
+          "y": 835.1764705882352,
+          "radius": 39.166666666666664
+        },
+        {
+          "x": 2273.3333333333335,
+          "y": 890.0470588235294,
+          "radius": 24.166666666666668
+        },
+        {
+          "x": 2070,
+          "y": 960,
+          "radius": 14
+        },
+        {
+          "x": 2107,
+          "y": 953,
+          "radius": 13
+        },
+        {
+          "x": 1926.4159588706723,
+          "y": 918.5024505735375,
+          "radius": 14
+        },
+        {
+          "x": 1908,
+          "y": 853,
+          "radius": 13
+        },
+        {
+          "x": 1898,
+          "y": 993,
+          "radius": 13
+        }
+      ]
+    },
+    {
+      "name": "terrace-camp",
+      "area": "terraces",
+      "player": {
+        "x": 1150,
+        "y": 1100
+      },
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "survey-soil",
+          "x": 700,
+          "y": 440,
+          "width": 78,
+          "height": 60.99999999999999,
+          "depth": 438,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "survey-biology",
+          "x": 2230,
+          "y": 470,
+          "width": 80,
+          "height": 75,
+          "depth": 468,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "survey-route-west",
+          "x": 850,
+          "y": 590,
+          "width": 45,
+          "height": 63,
+          "depth": 588,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pe-ground",
+          "kind": "groundRod",
+          "x": 1540,
+          "y": 610,
+          "width": 76,
+          "height": 76,
+          "depth": 608,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pt-upper",
+          "kind": "surveyor",
+          "x": 810,
+          "y": 620,
+          "width": 76,
+          "height": 76,
+          "depth": 618,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "settlement-power-station",
+          "kind": "worklight",
+          "x": 1770,
+          "y": 770,
+          "width": 112,
+          "height": 112,
+          "depth": 768,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "npc-worksite-caio",
+          "kind": "tools",
+          "x": 2047,
+          "y": 922,
+          "width": 53,
+          "height": 53,
+          "depth": 918,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pe-online",
+          "kind": "worklight",
+          "x": 1770,
+          "y": 930,
+          "width": 76,
+          "height": 76,
+          "depth": 928,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "frost-water-reserve",
+          "kind": "sealedWater",
+          "x": 1998,
+          "y": 984,
+          "width": 85,
+          "height": 85,
+          "depth": 982,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "survey-site",
+          "x": 2210,
+          "y": 1010,
+          "width": 108,
+          "height": 82,
+          "depth": 1008,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "survey-route-east",
+          "x": 1630,
+          "y": 1040,
+          "width": 45,
+          "height": 63,
+          "depth": 1038,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pf-sample",
+          "kind": "cleanSample",
+          "x": 1840,
+          "y": 1040,
+          "width": 76,
+          "height": 76,
+          "depth": 1038,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pt-anchor",
+          "kind": "tools",
+          "x": 1150,
+          "y": 1060,
+          "width": 76,
+          "height": 76,
+          "depth": 1058,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pw-online",
+          "kind": "sealedWater",
+          "x": 1990,
+          "y": 1070,
+          "width": 76,
+          "height": 76,
+          "depth": 1068,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "survey-soil",
+          "x": 1880,
+          "y": 1080,
+          "width": 78,
+          "height": 60.99999999999999,
+          "depth": 1078,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pe-isolate",
+          "kind": "isolator",
+          "x": 1580,
+          "y": 1080,
+          "width": 76,
+          "height": 76,
+          "depth": 1078,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pw-filter",
+          "kind": "filter",
+          "x": 590,
+          "y": 1100,
+          "width": 76,
+          "height": 76,
+          "depth": 1098,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pt-load",
+          "kind": "cargoSled",
+          "x": 850,
+          "y": 1100,
+          "width": 76,
+          "height": 76,
+          "depth": 1098,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "settlement-food-reserve",
+          "kind": "foodReserve",
+          "x": 2010,
+          "y": 1100,
+          "width": 90,
+          "height": 90,
+          "depth": 1098,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pt-deliver",
+          "kind": "supplyRack",
+          "x": 1900,
+          "y": 1110,
+          "width": 76,
+          "height": 76,
+          "depth": 1108,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pf-control",
+          "kind": "seedlings",
+          "x": 920,
+          "y": 1120,
+          "width": 76,
+          "height": 76,
+          "depth": 1118,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pf-stock",
+          "kind": "foodReserve",
+          "x": 2010,
+          "y": 1130,
+          "width": 76,
+          "height": 76,
+          "depth": 1128,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pt-lower",
+          "kind": "coreSample",
+          "x": 1370,
+          "y": 1130,
+          "width": 76,
+          "height": 76,
+          "depth": 1128,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "",
+          "kind": "returnBeacon",
+          "x": 340,
+          "y": 1165,
+          "width": 55,
+          "height": 55,
+          "depth": 1140,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "settlement-supply-depot",
+          "kind": "supplyRack",
+          "x": 1780,
+          "y": 1160,
+          "width": 110,
+          "height": 110,
+          "depth": 1158,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "survey-soil",
+          "x": 1410,
+          "y": 1165,
+          "width": 78,
+          "height": 60.99999999999999,
+          "depth": 1163,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pf-sample",
+          "kind": "contaminatedRoots",
+          "x": 1660,
+          "y": 1170,
+          "width": 76,
+          "height": 76,
+          "depth": 1168,
+          "visible": false,
+          "alpha": 1
+        }
+      ],
+      "solids": [
+        {
+          "x": 720,
+          "y": 690,
+          "radius": 38
+        },
+        {
+          "x": 1100,
+          "y": 815,
+          "radius": 68
+        },
+        {
+          "x": 1270,
+          "y": 815,
+          "radius": 67
+        },
+        {
+          "x": 1440,
+          "y": 815,
+          "radius": 60
+        },
+        {
+          "x": 1800,
+          "y": 600,
+          "radius": 40
+        },
+        {
+          "x": 130,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 365,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 600,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 835,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 1070,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 1305,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 1540,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 1775,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 2010,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 2245,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 2480,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 130,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 365,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 600,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 835,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 1070,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1305,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 1540,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1775,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 2010,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 2245,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 2480,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 2120,
+          "y": 795,
+          "radius": 68
+        },
+        {
+          "x": 2260,
+          "y": 800,
+          "radius": 47
+        },
+        {
+          "x": 2220,
+          "y": 866,
+          "radius": 29
+        },
+        {
+          "x": 1998,
+          "y": 972,
+          "radius": 23
+        },
+        {
+          "x": 2010,
+          "y": 1083,
+          "radius": 25
+        },
+        {
+          "x": 1780,
+          "y": 1138,
+          "radius": 30
+        },
+        {
+          "x": 1770,
+          "y": 746,
+          "radius": 32
+        },
+        {
+          "x": 503.3333333333333,
+          "y": 561.2352941176471,
+          "radius": 52.888888888888886
+        },
+        {
+          "x": 612.2222222222222,
+          "y": 565.1176470588235,
+          "radius": 36.55555555555556
+        },
+        {
+          "x": 581.1111111111111,
+          "y": 616.364705882353,
+          "radius": 22.555555555555557
+        },
+        {
+          "x": 2010,
+          "y": 920,
+          "radius": 14
+        },
+        {
+          "x": 2047,
+          "y": 913,
+          "radius": 13
+        },
+        {
+          "x": 2373.1316061977545,
+          "y": 947.8296612084541,
+          "radius": 14
+        }
+      ]
+    },
+    {
+      "name": "terrace-habitat",
+      "area": "terraces",
+      "player": {
+        "x": 1890,
+        "y": 1227
+      },
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "survey-soil",
+          "x": 700,
+          "y": 440,
+          "width": 78,
+          "height": 60.99999999999999,
+          "depth": 438,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "survey-biology",
+          "x": 2230,
+          "y": 470,
+          "width": 80,
+          "height": 75,
+          "depth": 468,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "survey-route-west",
+          "x": 850,
+          "y": 590,
+          "width": 45,
+          "height": 63,
+          "depth": 588,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pe-ground",
+          "kind": "groundRod",
+          "x": 1540,
+          "y": 610,
+          "width": 76,
+          "height": 76,
+          "depth": 608,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pt-upper",
+          "kind": "surveyor",
+          "x": 810,
+          "y": 620,
+          "width": 76,
+          "height": 76,
+          "depth": 618,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "settlement-power-station",
+          "kind": "worklight",
+          "x": 1770,
+          "y": 770,
+          "width": 112,
+          "height": 112,
+          "depth": 768,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "npc-worksite-caio",
+          "kind": "tools",
+          "x": 2047,
+          "y": 922,
+          "width": 53,
+          "height": 53,
+          "depth": 918,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pe-online",
+          "kind": "worklight",
+          "x": 1770,
+          "y": 930,
+          "width": 76,
+          "height": 76,
+          "depth": 928,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "frost-water-reserve",
+          "kind": "sealedWater",
+          "x": 1998,
+          "y": 984,
+          "width": 85,
+          "height": 85,
+          "depth": 982,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "survey-site",
+          "x": 2210,
+          "y": 1010,
+          "width": 108,
+          "height": 82,
+          "depth": 1008,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "survey-route-east",
+          "x": 1630,
+          "y": 1040,
+          "width": 45,
+          "height": 63,
+          "depth": 1038,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pf-sample",
+          "kind": "cleanSample",
+          "x": 1840,
+          "y": 1040,
+          "width": 76,
+          "height": 76,
+          "depth": 1038,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pt-anchor",
+          "kind": "tools",
+          "x": 1150,
+          "y": 1060,
+          "width": 76,
+          "height": 76,
+          "depth": 1058,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pw-online",
+          "kind": "sealedWater",
+          "x": 1990,
+          "y": 1070,
+          "width": 76,
+          "height": 76,
+          "depth": 1068,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "survey-soil",
+          "x": 1880,
+          "y": 1080,
+          "width": 78,
+          "height": 60.99999999999999,
+          "depth": 1078,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pe-isolate",
+          "kind": "isolator",
+          "x": 1580,
+          "y": 1080,
+          "width": 76,
+          "height": 76,
+          "depth": 1078,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pw-filter",
+          "kind": "filter",
+          "x": 590,
+          "y": 1100,
+          "width": 76,
+          "height": 76,
+          "depth": 1098,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pt-load",
+          "kind": "cargoSled",
+          "x": 850,
+          "y": 1100,
+          "width": 76,
+          "height": 76,
+          "depth": 1098,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "settlement-food-reserve",
+          "kind": "foodReserve",
+          "x": 2010,
+          "y": 1100,
+          "width": 90,
+          "height": 90,
+          "depth": 1098,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pt-deliver",
+          "kind": "supplyRack",
+          "x": 1900,
+          "y": 1110,
+          "width": 76,
+          "height": 76,
+          "depth": 1108,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pf-control",
+          "kind": "seedlings",
+          "x": 920,
+          "y": 1120,
+          "width": 76,
+          "height": 76,
+          "depth": 1118,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pf-stock",
+          "kind": "foodReserve",
+          "x": 2010,
+          "y": 1130,
+          "width": 76,
+          "height": 76,
+          "depth": 1128,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "pt-lower",
+          "kind": "coreSample",
+          "x": 1370,
+          "y": 1130,
+          "width": 76,
+          "height": 76,
+          "depth": 1128,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "",
+          "kind": "returnBeacon",
+          "x": 340,
+          "y": 1165,
+          "width": 55,
+          "height": 55,
+          "depth": 1140,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "settlement-supply-depot",
+          "kind": "supplyRack",
+          "x": 1780,
+          "y": 1160,
+          "width": 110,
+          "height": 110,
+          "depth": 1158,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "survey-soil",
+          "x": 1410,
+          "y": 1165,
+          "width": 78,
+          "height": 60.99999999999999,
+          "depth": 1163,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pf-sample",
+          "kind": "contaminatedRoots",
+          "x": 1660,
+          "y": 1170,
+          "width": 76,
+          "height": 76,
+          "depth": 1168,
+          "visible": false,
+          "alpha": 1
+        }
+      ],
+      "solids": [
+        {
+          "x": 720,
+          "y": 690,
+          "radius": 38
+        },
+        {
+          "x": 1100,
+          "y": 815,
+          "radius": 68
+        },
+        {
+          "x": 1270,
+          "y": 815,
+          "radius": 67
+        },
+        {
+          "x": 1440,
+          "y": 815,
+          "radius": 60
+        },
+        {
+          "x": 1800,
+          "y": 600,
+          "radius": 40
+        },
+        {
+          "x": 130,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 365,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 600,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 835,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 1070,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 1305,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 1540,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 1775,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 2010,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 2245,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 2480,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 130,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 365,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 600,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 835,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 1070,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1305,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 1540,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1775,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 2010,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 2245,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 2480,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 2120,
+          "y": 795,
+          "radius": 68
+        },
+        {
+          "x": 2260,
+          "y": 800,
+          "radius": 47
+        },
+        {
+          "x": 2220,
+          "y": 866,
+          "radius": 29
+        },
+        {
+          "x": 1998,
+          "y": 972,
+          "radius": 23
+        },
+        {
+          "x": 2010,
+          "y": 1083,
+          "radius": 25
+        },
+        {
+          "x": 1780,
+          "y": 1138,
+          "radius": 30
+        },
+        {
+          "x": 1770,
+          "y": 746,
+          "radius": 32
+        },
+        {
+          "x": 503.3333333333333,
+          "y": 561.2352941176471,
+          "radius": 52.888888888888886
+        },
+        {
+          "x": 612.2222222222222,
+          "y": 565.1176470588235,
+          "radius": 36.55555555555556
+        },
+        {
+          "x": 581.1111111111111,
+          "y": 616.364705882353,
+          "radius": 22.555555555555557
+        },
+        {
+          "x": 2010,
+          "y": 920,
+          "radius": 14
+        },
+        {
+          "x": 2047,
+          "y": 913,
+          "radius": 13
+        },
+        {
+          "x": 2363.878759477748,
+          "y": 998.682624091513,
+          "radius": 14
+        }
+      ]
+    },
+    {
+      "name": "wind-platform",
+      "area": "arid",
+      "player": {
+        "x": 2550,
+        "y": 795
+      },
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "wind-survey-field",
+          "x": 2565,
+          "y": 795,
+          "width": 420,
+          "height": 190,
+          "depth": -16,
+          "visible": true,
+          "alpha": 0.35
+        },
+        {
+          "name": "wind-survey-dock",
+          "x": 2710,
+          "y": 802,
+          "width": 96,
+          "height": 72,
+          "depth": -15,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "",
+          "kind": "returnBeacon",
+          "x": 3000,
+          "y": 830,
+          "width": 55,
+          "height": 55,
+          "depth": 805,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "wind-survey-platform",
+          "kind": "windSled",
+          "x": 2710,
+          "y": 809,
+          "width": 96,
+          "height": 96,
+          "depth": 808,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "pv-mount",
+          "kind": "anemometer",
+          "x": 2420,
+          "y": 840,
+          "width": 76,
+          "height": 76,
+          "depth": 838,
+          "visible": false,
+          "alpha": 1
+        },
+        {
+          "name": "survey-biology",
+          "x": 1330,
+          "y": 885,
+          "width": 80,
+          "height": 75,
+          "depth": 883,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "survey-soil",
+          "x": 4440,
+          "y": 915,
+          "width": 78,
+          "height": 60.99999999999999,
+          "depth": 913,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "wind-survey-meter",
+          "x": 2685,
+          "y": 722,
+          "width": 50,
+          "height": 4,
+          "depth": 11000,
+          "visible": true,
+          "alpha": 1
+        }
+      ],
+      "solids": [
+        {
+          "x": 690,
+          "y": 480,
+          "radius": 48
+        },
+        {
+          "x": 1010,
+          "y": 970,
+          "radius": 55
+        },
+        {
+          "x": 1190,
+          "y": 735,
+          "radius": 47
+        },
+        {
+          "x": 1510,
+          "y": 510,
+          "radius": 62
+        },
+        {
+          "x": 1730,
+          "y": 1020,
+          "radius": 60
+        },
+        {
+          "x": 1900,
+          "y": 535,
+          "radius": 48
+        },
+        {
+          "x": 2150,
+          "y": 945,
+          "radius": 55
+        },
+        {
+          "x": 2240,
+          "y": 786,
+          "radius": 34
+        },
+        {
+          "x": 2460,
+          "y": 1000,
+          "radius": 70
+        },
+        {
+          "x": 2610,
+          "y": 550,
+          "radius": 50
+        },
+        {
+          "x": 3190,
+          "y": 795,
+          "radius": 56
+        },
+        {
+          "x": 3420,
+          "y": 900,
+          "radius": 62
+        },
+        {
+          "x": 3570,
+          "y": 720,
+          "radius": 48
+        },
+        {
+          "x": 3890,
+          "y": 970,
+          "radius": 72
+        },
+        {
+          "x": 4050,
+          "y": 625,
+          "radius": 54
+        },
+        {
+          "x": 4310,
+          "y": 930,
+          "radius": 65
+        },
+        {
+          "x": 4540,
+          "y": 770,
+          "radius": 56
+        },
+        {
+          "x": 4760,
+          "y": 555,
+          "radius": 62
+        },
+        {
+          "x": 4750,
+          "y": 1060,
+          "radius": 66
+        },
+        {
+          "x": 440,
+          "y": 370,
+          "radius": 58
+        },
+        {
+          "x": 760,
+          "y": 383,
+          "radius": 58
+        },
+        {
+          "x": 1090,
+          "y": 396,
+          "radius": 58
+        },
+        {
+          "x": 1410,
+          "y": 370,
+          "radius": 58
+        },
+        {
+          "x": 1730,
+          "y": 383,
+          "radius": 58
+        },
+        {
+          "x": 2060,
+          "y": 396,
+          "radius": 58
+        },
+        {
+          "x": 2400,
+          "y": 370,
+          "radius": 58
+        },
+        {
+          "x": 2710,
+          "y": 383,
+          "radius": 58
+        },
+        {
+          "x": 3040,
+          "y": 396,
+          "radius": 58
+        },
+        {
+          "x": 3370,
+          "y": 370,
+          "radius": 58
+        },
+        {
+          "x": 3720,
+          "y": 383,
+          "radius": 58
+        },
+        {
+          "x": 4080,
+          "y": 396,
+          "radius": 58
+        },
+        {
+          "x": 4450,
+          "y": 370,
+          "radius": 58
+        },
+        {
+          "x": 4820,
+          "y": 383,
+          "radius": 58
+        },
+        {
+          "x": 460,
+          "y": 1155,
+          "radius": 64
+        },
+        {
+          "x": 820,
+          "y": 1139,
+          "radius": 64
+        },
+        {
+          "x": 1180,
+          "y": 1155,
+          "radius": 64
+        },
+        {
+          "x": 1520,
+          "y": 1139,
+          "radius": 64
+        },
+        {
+          "x": 1870,
+          "y": 1155,
+          "radius": 64
+        },
+        {
+          "x": 2220,
+          "y": 1139,
+          "radius": 64
+        },
+        {
+          "x": 2570,
+          "y": 1155,
+          "radius": 64
+        },
+        {
+          "x": 3050,
+          "y": 1139,
+          "radius": 64
+        },
+        {
+          "x": 3430,
+          "y": 1155,
+          "radius": 64
+        },
+        {
+          "x": 3820,
+          "y": 1139,
+          "radius": 64
+        },
+        {
+          "x": 4210,
+          "y": 1155,
+          "radius": 64
+        },
+        {
+          "x": 4610,
+          "y": 1139,
+          "radius": 64
+        },
+        {
+          "x": 4890,
+          "y": 1155,
+          "radius": 64
+        },
+        {
+          "x": 5160,
+          "y": 535,
+          "radius": 78
+        },
+        {
+          "x": 5160,
+          "y": 1070,
+          "radius": 78
+        },
+        {
+          "x": 2240,
+          "y": 776,
+          "radius": 32
+        },
+        {
+          "x": 1250,
+          "y": 780,
+          "radius": 68
+        },
+        {
+          "x": 2850,
+          "y": 740,
+          "radius": 70
+        },
+        {
+          "x": 4350,
+          "y": 800,
+          "radius": 64
+        },
+        {
+          "x": 2710,
+          "y": 770,
+          "radius": 24
+        }
+      ]
+    },
+    {
+      "name": "dune-probe",
+      "area": "dunes",
+      "player": {
+        "x": 2060,
+        "y": 1000
+      },
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "survey-soil",
+          "x": 1070,
+          "y": 540,
+          "width": 78,
+          "height": 60.99999999999999,
+          "depth": 538,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "dune-survey-probe",
+          "kind": "coreSample",
+          "x": 2130,
+          "y": 865,
+          "width": 86,
+          "height": 86,
+          "depth": 863,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "",
+          "kind": "returnBeacon",
+          "x": 1850,
+          "y": 1045,
+          "width": 55,
+          "height": 55,
+          "depth": 1020,
+          "visible": true,
+          "alpha": 1
+        }
+      ],
+      "solids": [
+        {
+          "x": 780,
+          "y": 740,
+          "radius": 47
+        },
+        {
+          "x": 1010,
+          "y": 1120,
+          "radius": 55
+        },
+        {
+          "x": 1290,
+          "y": 1160,
+          "radius": 66
+        },
+        {
+          "x": 1490,
+          "y": 1200,
+          "radius": 58
+        },
+        {
+          "x": 1760,
+          "y": 1160,
+          "radius": 61
+        },
+        {
+          "x": 1900,
+          "y": 1330,
+          "radius": 48
+        },
+        {
+          "x": 1830,
+          "y": 785,
+          "radius": 40
+        },
+        {
+          "x": 2270,
+          "y": 630,
+          "radius": 53
+        },
+        {
+          "x": 2060,
+          "y": 1710,
+          "radius": 62
+        },
+        {
+          "x": 2850,
+          "y": 1660,
+          "radius": 59
+        },
+        {
+          "x": 1220,
+          "y": 1130,
+          "radius": 70
+        },
+        {
+          "x": 1450,
+          "y": 1160,
+          "radius": 80
+        },
+        {
+          "x": 1680,
+          "y": 1170,
+          "radius": 70
+        },
+        {
+          "x": 1100,
+          "y": 800,
+          "radius": 70
+        },
+        {
+          "x": 1460,
+          "y": 1490,
+          "radius": 75
+        },
+        {
+          "x": 2490,
+          "y": 1410,
+          "radius": 52
+        },
+        {
+          "x": 2130,
+          "y": 851,
+          "radius": 18
+        }
+      ]
+    },
+    {
+      "name": "cold-collector",
+      "area": "frost",
+      "player": {
+        "x": 940,
+        "y": 1050
+      },
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "survey-water",
+          "x": 790,
+          "y": 880,
+          "width": 100,
+          "height": 72,
+          "depth": 878,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "",
+          "kind": "returnBeacon",
+          "x": 1540,
+          "y": 925,
+          "width": 55,
+          "height": 55,
+          "depth": 900,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "frost-water-collector",
+          "kind": "coldCollector",
+          "x": 940,
+          "y": 1016,
+          "width": 132,
+          "height": 132,
+          "depth": 978,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "frost-water-valve-0",
+          "kind": "valve",
+          "x": 840,
+          "y": 1042,
+          "width": 58,
+          "height": 58,
+          "depth": 1040,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "frost-water-valve-1",
+          "kind": "valve",
+          "x": 1040,
+          "y": 1042,
+          "width": 58,
+          "height": 58,
+          "depth": 1040,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "survey-biology",
+          "x": 1500,
+          "y": 1300,
+          "width": 80,
+          "height": 75,
+          "depth": 1298,
+          "visible": true,
+          "alpha": 1
+        },
+        {
+          "name": "survey-soil",
+          "x": 2390,
+          "y": 1320,
+          "width": 78,
+          "height": 60.99999999999999,
+          "depth": 1318,
+          "visible": true,
+          "alpha": 1
+        }
+      ],
+      "solids": [
+        {
+          "x": 810,
+          "y": 730,
+          "radius": 65
+        },
+        {
+          "x": 920,
+          "y": 735,
+          "radius": 54
+        },
+        {
+          "x": 1290,
+          "y": 1160,
+          "radius": 55
+        },
+        {
+          "x": 1430,
+          "y": 1190,
+          "radius": 57
+        },
+        {
+          "x": 2160,
+          "y": 730,
+          "radius": 57
+        },
+        {
+          "x": 2300,
+          "y": 680,
+          "radius": 63
+        },
+        {
+          "x": 1730,
+          "y": 575,
+          "radius": 43
+        },
+        {
+          "x": 790,
+          "y": 690,
+          "radius": 65
+        },
+        {
+          "x": 1500,
+          "y": 1130,
+          "radius": 60
+        },
+        {
+          "x": 2370,
+          "y": 1130,
+          "radius": 58
+        },
+        {
+          "x": 940,
+          "y": 973,
+          "radius": 25
+        },
+        {
+          "x": 840,
+          "y": 1012,
+          "radius": 13
+        },
+        {
+          "x": 1040,
+          "y": 1012,
+          "radius": 13
+        }
+      ]
+    }
+  ],
+  "audio": [
+    {
+      "scenario": "normal",
+      "muted": false,
+      "paused": false,
+      "currentTime": 2.382948,
+      "mediaVolume": 1,
+      "gain": 0.21119999885559082,
+      "peak": 0.03983791172504425,
+      "context": "running"
+    },
+    {
+      "scenario": "unlock-while-muted",
+      "muted": true,
+      "paused": false,
+      "currentTime": 2.297155,
+      "mediaVolume": 1,
+      "gain": 0.21119999885559082,
+      "peak": 0,
+      "context": "running"
+    },
+    {
+      "scenario": "unlock-while-paused",
+      "muted": true,
+      "paused": false,
+      "currentTime": 2.298403,
+      "mediaVolume": 1,
+      "gain": 0.21119999885559082,
+      "peak": 0,
+      "context": "running"
+    }
+  ],
+  "creation": {
+    "viewport": [
+      844,
+      390
+    ],
+    "body": [
+      844,
+      844
+    ],
+    "dialog": {
+      "scroll": 0,
+      "height": 390,
+      "total": 416
+    },
+    "controls": [
+      {
+        "key": "back",
+        "label": "← VOLTAR",
+        "width": 45,
+        "height": 44,
+        "top": 26,
+        "bottom": 70,
+        "visible": true
+      },
+      {
+        "key": "choose-warrior",
+        "label": "Selecionar Guerreiro Galáctico",
+        "width": 190,
+        "height": 165,
+        "top": 96,
+        "bottom": 260,
+        "visible": true
+      },
+      {
+        "key": "choose-hunter",
+        "label": "Selecionar Caçador estelar",
+        "width": 190,
+        "height": 165,
+        "top": 96,
+        "bottom": 260,
+        "visible": true
+      },
+      {
+        "key": "choose-astral",
+        "label": "Selecionar Manipulador Astral",
+        "width": 190,
+        "height": 165,
+        "top": 96,
+        "bottom": 260,
+        "visible": true
+      },
+      {
+        "key": "choose-xenobinder",
+        "label": "Selecionar Domador de feras",
+        "width": 190,
+        "height": 165,
+        "top": 96,
+        "bottom": 260,
+        "visible": true
+      },
+      {
+        "key": "replay",
+        "label": "↻ VER EM AÇÃO",
+        "width": 55,
+        "height": 32,
+        "top": 324,
+        "bottom": 356,
+        "visible": true
+      },
+      {
+        "key": "character-sex",
+        "label": "MasculinoFeminino",
+        "width": 108,
+        "height": 44,
+        "top": 308,
+        "bottom": 352,
+        "visible": true
+      },
+      {
+        "key": "change-sex",
+        "label": "Alternar gênero das quatro prévias",
+        "width": 65,
+        "height": 44,
+        "top": 308,
+        "bottom": 352,
+        "visible": true
+      },
+      {
+        "key": "character-name",
+        "label": "",
+        "width": 122,
+        "height": 44,
+        "top": 308,
+        "bottom": 352,
+        "visible": true
+      },
+      {
+        "key": "create",
+        "label": "CONTINUAR →",
+        "width": 101,
+        "height": 44,
+        "top": 308,
+        "bottom": 352,
+        "visible": true
+      },
+      {
+        "key": "settings",
+        "label": "CONFIGURAÇÕES",
+        "width": 796,
+        "height": 44,
+        "top": 362,
+        "bottom": 406,
+        "visible": true
+      }
+    ],
+    "fonts": "loaded"
+  },
+  "prologue": {
+    "volume": 0,
+    "muted": false,
+    "paused": false,
+    "button": "SOM ATIVO",
+    "sources": [
+      "https://echosofdante.vercel.app/assets/cinematic-opening/arrival-compatible-v1.mp4"
+    ]
+  },
+  "realStorage": {
+    "characters": "audit-real-character-sentinel",
+    "settings": "audit-real-settings-sentinel"
+  },
+  "completed": true
+}

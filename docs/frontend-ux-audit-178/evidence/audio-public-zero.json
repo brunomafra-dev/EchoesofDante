@@ -1,0 +1,38 @@
+{
+  "base": "https://echosofdante.vercel.app",
+  "method": "Published client with normal creation, actual touch sliders, stored zero before first unlock. AudioNodes observed through browser instrumentation; output peak measured after the actual music gain. No DEV globals or game state mutation.",
+  "errors": [],
+  "storedBeforeLaunch": {
+    "master": 0,
+    "music": 48,
+    "sfx": 90
+  },
+  "initial": {
+    "mediaMuted": true,
+    "mediaVolume": 1,
+    "paused": false,
+    "time": 1.312167,
+    "gain": 0,
+    "peak": 0,
+    "context": "running"
+  },
+  "restored": {
+    "master": 80,
+    "music": 48,
+    "sfx": 90
+  },
+  "afterRestore": {
+    "mediaMuted": true,
+    "mediaVolume": 1,
+    "paused": false,
+    "time": 4.980891,
+    "gain": 0.21119999885559082,
+    "peak": 0,
+    "context": "running"
+  },
+  "realStorage": {
+    "characters": "audit-public-real-character",
+    "settings": "audit-public-real-settings"
+  },
+  "reproduced": true
+}

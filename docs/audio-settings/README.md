@@ -1,5 +1,7 @@
 # Configurações de áudio no mobile · 0.1.178
 
+**Auditoria de 01/11/2026:** a correção permanece incompleta. Começar com Geral 0 e depois restaurar 80 no cliente público mantém `media.muted=true`, ganho positivo e sinal zero. O QA abaixo cobria o caminho com volume inicial positivo e não detectou esse estado. A abertura também mantém seu caminho nativo de volume. [Achados, capturas e reprodução](../frontend-ux-audit-178/README.md). Nenhuma correção aplicada pela auditoria; reteste humano continua pendente.
+
 ## Escopo
 
 Em 31/10/2026, o usuário relatou que, jogando no iPhone, reduzir Efeitos, Música e Volume geral não mudava o som. A música da campanha usava `HTMLAudioElement.volume`, uma limitação de controle registrada pelo WebKit para iOS; o áudio da trilha agora passa por um `GainNode` do Web Audio. Os efeitos continuam em seu bus Web Audio próprio. A configuração geral atua em ambos.
