@@ -1,0 +1,64 @@
+{
+  "version": "0.1.181",
+  "verifiedAt": "2026-11-01T20:12:18.837242+00:00",
+  "applicationCommit": "46be666d28308e12459db58038ae201941025792",
+  "vercel": {
+    "state": "success",
+    "url": "https://vercel.com/brunomafra-devs-projects/echosofdante/EE8fzv1bUWRWAYTWA7Bhj7uJ677s",
+    "matchingHashes": 86,
+    "evidence": "../../outpost/qa/publication/0.1.181/hashes.json"
+  },
+  "publicSolo": {
+    "passed": true,
+    "report": "public/report.json",
+    "visits": 9,
+    "viewports": 7,
+    "nativeTouchEmulation": true
+  },
+  "publicCoop": {
+    "passed": true,
+    "report": "public-coop/report.json",
+    "visits": 5,
+    "protocols": [
+      16,
+      16
+    ],
+    "reloadRejoinChatAndRoomEnd": true
+  },
+  "relay": {
+    "service": "Dante regional co-op",
+    "protocol": 16,
+    "outposts": 1,
+    "signals": 1,
+    "circuits": 1,
+    "wind": 1,
+    "dunes": 1,
+    "buried": 1,
+    "frost": 1,
+    "icecave": 1,
+    "missions": true,
+    "chat": true,
+    "capacity": 4,
+    "uniqueClasses": true,
+    "fixedCampaigns": true,
+    "revision": "42de5a0bbd951f32efdcb8480080b3e3db32ea41",
+    "campaign": true,
+    "rooms": 0,
+    "players": 0
+  },
+  "newRelayDeployRequired": false,
+  "initialHealthTimeout": "Initial publication check timed out; subsequent health/hash verification and actual public two-client room passed. No incompatibility inferred from timeout.",
+  "visualInspection": [
+    "public/gallery-mobile.jpg",
+    "public/collector-mobile.jpg",
+    "public/post-desktop.jpg",
+    "public/selector-568.jpg",
+    "public-coop/collector-guest.jpg",
+    "public-coop/gallery-host.jpg"
+  ],
+  "humanVisualApproval": false,
+  "physicalIPhoneTest": false,
+  "physicalGamepadTest": false,
+  "limits": "Advanced isolated fixture; common encounters suspended only in visual lab. Current Galerias analyses/delivery/reward and Vesper/Titan victories not simulated. Full current chapter/navigation/rewards and four-class controls exercised locally. Public coop samples five visits, reload/rejoin/chat and normal room end, not the full campaign or a human four-player group.",
+  "nextChapter": "Wait for human visual playtest; Ninho not started."
+}

@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "passingReports": 8,
-  "localLinks": 31,
+  "passingReports": 10,
+  "localLinks": 35,
   "baseline": "8749631281ac4804821509049649e816c740a80a",
   "canonicalGitText": true,
   "preservedFiles": [

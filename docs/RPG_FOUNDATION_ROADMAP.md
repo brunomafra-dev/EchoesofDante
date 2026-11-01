@@ -4,7 +4,8 @@
 
 - [x] Revisão e comparação inicial em sete mapas; regressão integral das Galerias e coletor com quatro classes touch/gamepad passaram.
 - [x] QA local: build/typecheck 276 módulos, nove visitas em oito mapas, 32 corpos/copas (19 coberturas reais), aproximações, Galerias completas e recompensa única, coletor nas quatro classes touch/gamepad, dupla com reentrada e sete layouts compilados. [Evidências e limites](visual-integration/README.md).
-- [ ] Publicação/sincronização e aprovação visual humana registradas separadamente no documento da entrega.
+- [x] Aplicação `46be666` publicada: Vercel success/86 hashes, nove visitas solo em sete viewports e dupla pública em cinco áreas com reload/reentrada/chat passaram; relay 16/`icecave:1` compatível sem novo deploy. [Publicação e limites](visual-integration/qa/publication.json).
+- [ ] Aprovação visual humana e reteste físico em iPhone 13/13 Pro; aguardar antes do Ninho.
 
 **01/11/2026 · UX geral autorizada · 0.1.180:** usuário pediu seguir a etapa de UX **como um todo, incluindo desktop**, após a entrega de áudio. [Escopo e evidências](ux-general/README.md): configurações compactas com amostras finitas de som, diário/NPC centrados na missão e ação, histórico recolhido, rótulos contextuais legíveis e chat sem sobrepor menus. Mouse/teclado/toque/gamepad, solo/coop e laboratórios próprios. Autoriza o avanço sem inferir reteste humano da 0.1.179. Aguardar validação desta UX antes da integração visual/V05 ou de outro capítulo.
 

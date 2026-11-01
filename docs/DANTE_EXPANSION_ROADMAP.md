@@ -2,6 +2,8 @@
 
 **01/11/2026 · UX aprovada / integração visual · 0.1.181:** “perfeito tudo certo” aprova a UX geral; “audite isso de forma superprofissional e já corrija” autoriza [V01–V05](visual-integration/README.md). Corrigir fissura/neve, apoio dos objetos por bioma, tubulações e opacidade sem alterar terrenos, requisitos, colliders ou bosses. Laboratório próprio com pré-requisitos explícitos e opção de encontros. QA/publicação e avaliação humana separados; aguardar playtest antes de novo capítulo.
 
+Aplicação `46be666` publicada na Vercel, success/86 hashes JS/CSS/arte; nove visitas solo em sete viewports e dupla pública em cinco áreas com reload/reentrada/chat passaram. Relay 16/`icecave:1` saudável, sem novo deploy. [Registro final e limites](visual-integration/qa/publication.json). **Aprovação visual humana e reteste físico pendentes; Ninho não iniciado.**
+
 **01/11/2026 · UX geral · 0.1.180:** autorizado seguir a auditoria cobrindo desktop e mobile. [Configurações, diário/NPC, rótulos e chat](ux-general/README.md), preservando missões, requisitos, recibos, saves, arte e física. Laboratório de menu sem simulação e laboratório avançado com pré-requisitos explícitos. QA técnico e aprovação humana separados; aguardar playtest antes da integração visual e de V05, sem iniciar novo capítulo.
 
 Aplicação `84f0b43` publicada na Vercel, status success e 82 hashes incluindo CSS; solo público em sete viewports, desktop sem toque e coop em dois Chrome passaram. Relay 16/`icecave:1` saudável, sem novo deploy. [Evidências e limites](ux-general/qa/publication.json). Reteste físico e aprovação humana continuam pendentes.
