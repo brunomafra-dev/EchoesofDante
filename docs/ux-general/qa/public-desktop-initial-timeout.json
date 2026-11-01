@@ -1,0 +1,7 @@
+{
+  "base": "https://echosofdante.vercel.app",
+  "method": "Native desktop context, mouse/keyboard, isolated advanced lab; no DEV globals. Existing fixture only, Vesper/Titan remain pending.",
+  "checks": [],
+  "errors": [],
+  "failure": "TimeoutError: locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.mission-dialog[open]') to be visible\u001b[22m\n"
+}

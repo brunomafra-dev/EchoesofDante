@@ -1,0 +1,38 @@
+{
+  "version": "0.1.180",
+  "verifiedAt": "2026-11-01T18:19:02Z",
+  "sourceCommit": "84f0b43d4a3475847d6864ddead95f6f9f876e2f",
+  "vercel": {
+    "state": "success",
+    "target": "https://vercel.com/brunomafra-devs-projects/echosofdante/63oFiUSaTqwKNJFHkie5t4jzYPLG",
+    "matchingHashes": 82,
+    "hashEvidence": "../../outpost/qa/publication/0.1.180/hashes.json",
+    "includes": ["JavaScript", "CSS", "existing art assets"],
+    "libraryLinksPublished": true
+  },
+  "publicSolo": {"passed": true, "evidence": "public/report.json", "viewports": 7},
+  "publicDesktop": {"passed": true, "evidence": "public-desktop/report.json", "nativeTouch": false},
+  "publicCoop": {"passed": true, "evidence": "public-coop/report.json", "separateBrowsers": 2},
+  "relay": {
+    "revision": "42de5a0bbd951f32efdcb8480080b3e3db32ea41",
+    "protocol": 16,
+    "icecave": 1,
+    "healthy": true,
+    "newDeployRequired": false
+  },
+  "git": {
+    "sourceLocalRemoteEqual": true,
+    "sourceTreeCleanBeforeEvidence": true,
+    "finalEvidenceCommit": "Follow-up documentation and test evidence only; verify exact main synchronization after push."
+  },
+  "visualInspection": ["public settings 568x320 and 393x852", "public journal 568x320 and native desktop", "public native desktop inventory"],
+  "humanApproval": false,
+  "physicalIPhoneRetest": false,
+  "physicalGamepadRetest": false,
+  "limitations": [
+    "No new performance, RAM, battery or campaign duration measurements.",
+    "Advanced solo fixture explicitly simulates earlier Warden/Soterrado progression; Vesper/Titan and current chapter remain pending.",
+    "Public co-op uses normal crew creation without simulated progression; real save/settings sentinels remain unchanged.",
+    "Initial desktop script sent an immediate game key after a modal transition; recorded timeout and corrected key duration are documented, with no application source change."
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "base": "https://echosofdante.vercel.app",
+  "method": "Native desktop context, mouse/keyboard, isolated advanced lab; no DEV globals. Existing fixture only, Vesper/Titan remain pending.",
+  "checks": [
+    "Native desktop sidebar/detail and live window resize work; mouse reaches workshop, keyboard reaches atlas with Vesper still gated, pause menu reaches inventory"
+  ],
+  "errors": [],
+  "vesperLocked": true,
+  "passed": true
+}
