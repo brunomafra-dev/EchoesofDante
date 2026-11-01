@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { SIROCCO, SIROCCO_BORDERS, SIROCCO_ROCKS } from '../config/sirocco';
 import { ChapterPortal } from './ChapterPortal';
-import { EnvironmentPainter, trackEnvironmentOcclusion } from '../visual/EnvironmentArt';
+import { EnvironmentPainter, markEnvironmentBody } from '../visual/EnvironmentArt';
 import type { MovementBounds, Obstacle } from './Movement';
 import { distance, type Vec2 } from '../utils/math';
 
@@ -29,7 +29,7 @@ export class SiroccoBasin {
     scene.add.ellipse(x, y + 44, 215, 53, 0x291c15, 0.42).setDepth(y - 3);
     this.relay = scene.add.image(x, y + 30, 'deep-relay').setOrigin(0.5, 0.91).setDisplaySize(268, 242)
       .setTint(0xcbb08c).setDepth(y + 30);
-    trackEnvironmentOcclusion(scene, this.relay);
+    markEnvironmentBody(scene, this.relay);
     this.obstacles.push({ x, y: y + 36, radius: 32 });
     this.signal = scene.add.ellipse(x, y + 42, 76, 18, 0xa98cff, recorded ? 0.52 : 0.13).setDepth(y + 38);
     if (!recorded) scene.tweens.add({ targets: this.signal, alpha: { from: 0.28, to: 0.8 }, scaleX: { from: 0.85, to: 1.16 },

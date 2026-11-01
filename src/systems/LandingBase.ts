@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import {BASE} from '../config/base';
 import type {Obstacle} from './Movement';
-import {EnvironmentPainter,createEnvironmentGround,trackEnvironmentOcclusion} from '../visual/EnvironmentArt';
+import {EnvironmentPainter,createEnvironmentGround,markEnvironmentBody} from '../visual/EnvironmentArt';
 import {addQuestProp,type QuestProp} from '../visual/QuestProps';
 export class LandingBase{
  readonly bounds={left:70,right:1330,top:90,bottom:970};
@@ -25,7 +25,7 @@ export class LandingBase{
   scene.add.image(550,360,'landing-shuttle').setDisplaySize(490,330).setDepth(430);
   for(const s of BASE.services){
    painter.sediment(s.x,s.y-30,235,135,0x737251,.22);painter.contact(s.x,s.y-34,145,24,.55);
-   const shelter=scene.add.image(s.x,s.y-98,'field-shelter').setDisplaySize(180,150).setDepth(s.y-50);trackEnvironmentOcclusion(scene,shelter);
+   const shelter=scene.add.image(s.x,s.y-98,'field-shelter').setDisplaySize(180,150).setDepth(s.y-50);markEnvironmentBody(scene,shelter);
    scene.add.text(s.x,s.y-185,s.name,{fontFamily:'Barlow Condensed',fontSize:'16px',color:'#e3dfc7',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(10003);
   }
   for(const[x,y,w,kind]of [[440,650,105,'decontamination'],[895,625,112,'tools'],[1120,420,100,'manifest']] as [number,number,number,QuestProp][]){

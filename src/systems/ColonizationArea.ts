@@ -1,7 +1,7 @@
 import {preloadCreatureSheet} from '../visual/CreatureArt';
 import Phaser from 'phaser';
 import {COLONY,COLONY_ROCKS,COLONY_SITES,HABITAT,HABITAT_SOLIDS,type ColonyArea} from '../config/colonization';
-import {EnvironmentPainter,createEnvironmentGround,trackEnvironmentOcclusion} from '../visual/EnvironmentArt';
+import {EnvironmentPainter,createEnvironmentGround,markEnvironmentBody} from '../visual/EnvironmentArt';
 import type {MovementBounds,Obstacle} from './Movement';
 import {addSurveyProp} from '../visual/MissionProps';
 
@@ -40,7 +40,7 @@ export class ColonizationArea{
    addSurveyProp(scene,site.id,site.x,site.y);
   }
   if(area==='terraces'){
-   const building=scene.add.image(HABITAT.x,HABITAT.y,'first-habitat').setOrigin(.5,1).setDisplaySize(HABITAT.width,HABITAT.height).setDepth(HABITAT.y-20).setName('first-colonist-habitat');trackEnvironmentOcclusion(scene,building);this.habitat.push(building);
+   const building=scene.add.image(HABITAT.x,HABITAT.y,'first-habitat').setOrigin(.5,1).setDisplaySize(HABITAT.width,HABITAT.height).setDepth(HABITAT.y-20).setName('first-colonist-habitat');markEnvironmentBody(scene,building);this.habitat.push(building);
    this.habitat.forEach(o=>o.setVisible(false));this.setSettled(settled);
   }
  }

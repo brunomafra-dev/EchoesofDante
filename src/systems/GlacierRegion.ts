@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { GLACIER, type GlacierAreaId } from '../config/glacier';
 import { ChapterPortal } from './ChapterPortal';
 import type { Obstacle } from './Movement';
-import { EnvironmentPainter, trackEnvironmentOcclusion } from '../visual/EnvironmentArt';
+import { EnvironmentPainter, markEnvironmentBody } from '../visual/EnvironmentArt';
 
 // Painted terrain + existing raster masses, baked once. Raised bases retain foot sorting.
 export class GlacierRegion {
@@ -45,14 +45,14 @@ export class GlacierRegion {
     }
     const relay = scene.add.image(c.relay.x, c.relay.y - 18, 'deep-relay').setOrigin(.5, .94)
       .setDisplaySize(175, 160).setTint(0xb9cbd9).setDepth(c.relay.y - 35);
-    trackEnvironmentOcclusion(scene, relay);
+    markEnvironmentBody(scene, relay);
     this.signal = scene.add.ellipse(c.relay.x, c.relay.y - 35, 62, 13, 0xa98cff, recorded ? .6 : .15).setDepth(c.relay.y - 33);
     this.back = new ChapterPortal(scene, c.back, true);
     if (id === 'icecave') this.onward = new ChapterPortal(scene, c.exit, recorded);
     else {
       this.onward = new ChapterPortal(scene, c.exit, clueSeen);
       this.gate = scene.add.image(805, 990, 'open-threshold').setOrigin(.5, .94).setDisplaySize(190, 170).setTint(0xa8bfcb).setDepth(955);
-      trackEnvironmentOcclusion(scene, this.gate);
+      markEnvironmentBody(scene, this.gate);
       if (defeated) this.resolve();
     }
   }

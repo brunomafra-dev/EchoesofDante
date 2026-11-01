@@ -3,7 +3,7 @@ import { EXPANSION, EXPANSION_ROCKS, EXPANSION_WALLS } from '../config/expansion
 import type { Obstacle } from './Movement';
 import type { Vec2 } from '../utils/math';
 import { distance } from '../utils/math';
-import { EnvironmentPainter, groundContour, trackEnvironmentOcclusion } from '../visual/EnvironmentArt';
+import { EnvironmentPainter, groundContour, markEnvironmentBody } from '../visual/EnvironmentArt';
 
 // Small authored continuation, captured once in three bounded cache tiles.
 export class CavernContinuation {
@@ -18,7 +18,7 @@ export class CavernContinuation {
     // Keep the broad stone base; its crown no longer towers over the gameplay.
     const arch = scene.add.image(5310, 930, 'guardian-lintel-open').setOrigin(0.5, 0.95)
       .setDisplaySize(390, 175).setDepth(925).setTint(0xa6b69e);
-    trackEnvironmentOcclusion(scene, arch);
+    markEnvironmentBody(scene, arch);
     const glows = [[2875, 510, 0xffbd54], [3455, 992, 0xffbd54], [3780, 535, 0xa98cff], [4160, 530, 0xa98cff]];
     const lights = glows.map(([x,y,color]) => scene.add.ellipse(x,y,65,20,color,0.13).setDepth(y));
     this.fragmentLight = scene.add.ellipse(EXPANSION.fragment.x, 580, 62, 30, 0xa98cff, fragmentSeen ? 0.3 : 0.1).setDepth(600);

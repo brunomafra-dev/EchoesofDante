@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { DUNES, DUNES_ROCKS } from '../config/dunes';
 import {DUNE_SURVEY} from '../config/duneSurvey';
 import { ChapterPortal } from './ChapterPortal';
-import { EnvironmentPainter, trackEnvironmentOcclusion, type EnvironmentStamp } from '../visual/EnvironmentArt';
+import { EnvironmentPainter, markEnvironmentBody, type EnvironmentStamp } from '../visual/EnvironmentArt';
 import { distance, type Vec2 } from '../utils/math';
 
 // One authored backplate and four static depth bands. No terrain update loop.
@@ -21,7 +21,7 @@ export class DunesInterior {
     this.returnPortal = new ChapterPortal(scene, DUNES.returnPortal, true);
     this.ruin = scene.add.image(DUNES.ruin.x, DUNES.ruin.y - 20, 'deep-relay')
       .setOrigin(.5, .94).setDisplaySize(230, 210).setTint(0xc8af88).setDepth(DUNES.ruin.y - 45);
-    trackEnvironmentOcclusion(scene, this.ruin);
+    markEnvironmentBody(scene, this.ruin);
     this.response = scene.add.ellipse(DUNES.ruin.x, DUNES.ruin.y - 34, 75, 17, 0xa98cff, recorded ? .5 : .14)
       .setDepth(DUNES.ruin.y - 43);
     this.tremor = scene.add.ellipse(DUNES.hollow.x,DUNES.hollow.y,155,48,0xc9a270,0).setDepth(-9899);

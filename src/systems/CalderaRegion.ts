@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { CALDERA as C, CALDERA_WALL } from '../config/caldera';
 import { ChapterPortal } from './ChapterPortal';
 import type { Obstacle } from './Movement';
-import { EnvironmentPainter, trackEnvironmentOcclusion } from '../visual/EnvironmentArt';
+import { EnvironmentPainter, markEnvironmentBody } from '../visual/EnvironmentArt';
 
 export class CalderaRegion {
  readonly bounds={...C.bounds};
@@ -29,10 +29,10 @@ export class CalderaRegion {
    p.destroy();
   }
   const relay=scene.add.image(C.relay.x,C.relay.y-16,'deep-relay').setOrigin(.5,.94).setDisplaySize(150,140).setTint(0xb6a28d).setDepth(C.relay.y-28);
-  trackEnvironmentOcclusion(scene,relay);
+  markEnvironmentBody(scene,relay);
   this.pulse=scene.add.ellipse(C.relay.x,C.relay.y-37,50,12,0xa98cff,recorded?.65:.15).setDepth(C.relay.y-25);
   this.gate=scene.add.image(C.gate.x,C.gate.y+10,'sealed-threshold').setOrigin(.5,.94).setDisplaySize(200,165).setTint(0xbba28a).setDepth(C.gate.y-20);
-  trackEnvironmentOcclusion(scene,this.gate);
+  markEnvironmentBody(scene,this.gate);
   this.back=new ChapterPortal(scene,C.back,true);
   scene.add.image(C.record.x,C.record.y-10,'ancient-remnant').setOrigin(.5,.94).setDisplaySize(145,110).setTint(0xbca393).setDepth(C.record.y-28);
   this.setEncounterActive(false);

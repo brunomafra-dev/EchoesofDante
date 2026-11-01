@@ -1,0 +1,83 @@
+{
+  "passed": true,
+  "passingReports": 8,
+  "localLinks": 31,
+  "baseline": "8749631281ac4804821509049649e816c740a80a",
+  "canonicalGitText": true,
+  "preservedFiles": [
+    "public/assets/visual/route-identity/arid-v1.webp",
+    "public/assets/visual/route-identity/caldera-v1.webp",
+    "public/assets/visual/route-identity/cinder-v1.webp",
+    "public/assets/visual/route-identity/dunes-v1.webp",
+    "public/assets/visual/route-identity/frost-v1.webp",
+    "public/assets/visual/route-identity/icecave-v1.webp",
+    "public/assets/visual/route-identity/icenest-v1.webp",
+    "public/assets/visual/route-identity/obsidian-v1.webp",
+    "public/assets/visual/route-identity/sandpit-v1.webp",
+    "public/assets/visual/route-identity/valley-v1.webp",
+    "public/assets/visual/world-finish/arid-floor-v1.webp",
+    "public/assets/visual/world-finish/camp-floor-v1.webp",
+    "public/assets/visual/world-finish/cave-floor-v1.webp",
+    "public/assets/visual/world-finish/forest-floor-v1.webp",
+    "public/assets/visual/world-finish/meadow-floor-v1.webp",
+    "public/assets/visual/world-finish/regional-plants-v1.webp",
+    "src/config/regional-expeditions.json",
+    "src/config/routeIdentity.ts"
+  ],
+  "geometry": [
+    {
+      "stop": "gallery",
+      "staticCollidersUnchanged": true,
+      "total": 11,
+      "walkingWorkers": 0
+    },
+    {
+      "stop": "collector",
+      "staticCollidersUnchanged": true,
+      "total": 13,
+      "walkingWorkers": 0
+    },
+    {
+      "stop": "base",
+      "staticCollidersUnchanged": true,
+      "total": 22,
+      "walkingWorkers": 0
+    },
+    {
+      "stop": "post",
+      "staticCollidersUnchanged": true,
+      "total": 41,
+      "walkingWorkers": 2
+    },
+    {
+      "stop": "pipes",
+      "staticCollidersUnchanged": true,
+      "total": 41,
+      "walkingWorkers": 2
+    },
+    {
+      "stop": "camp",
+      "staticCollidersUnchanged": true,
+      "total": 40,
+      "walkingWorkers": 2
+    },
+    {
+      "stop": "wind",
+      "staticCollidersUnchanged": true,
+      "total": 53,
+      "walkingWorkers": 0
+    },
+    {
+      "stop": "dunes",
+      "staticCollidersUnchanged": true,
+      "total": 17,
+      "walkingWorkers": 0
+    }
+  ],
+  "newArt": {
+    "width": 1254,
+    "height": 1254,
+    "rgba": true,
+    "sha256": "bd9fa5ee0d14c22e5965d3868dcbb159c8b98b055ea4f388f1e3f8a075723f06"
+  }
+}

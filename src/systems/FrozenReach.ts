@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { FROST, FROST_ROCKS } from '../config/frost';
 import { ChapterPortal } from './ChapterPortal';
-import { EnvironmentPainter, trackEnvironmentOcclusion } from '../visual/EnvironmentArt';
+import { EnvironmentPainter, markEnvironmentBody } from '../visual/EnvironmentArt';
 import { distance, type Vec2 } from '../utils/math';
 
 export class FrozenReach {
@@ -32,7 +32,7 @@ export class FrozenReach {
     this.returnPortal = new ChapterPortal(scene, FROST.returnPortal, true);
     const relay = scene.add.image(FROST.relay.x, FROST.relay.y - 20, 'deep-relay')
       .setOrigin(.5, .94).setDisplaySize(230, 210).setTint(0xc0ced0).setDepth(FROST.relay.y - 45);
-    trackEnvironmentOcclusion(scene, relay);
+    markEnvironmentBody(scene, relay);
     this.response = scene.add.ellipse(FROST.relay.x, FROST.relay.y - 34, 75, 17, 0xa98cff, recorded ? .5 : .12)
       .setDepth(FROST.relay.y - 43);
     scene.add.image(FROST.frontier.x + 100, FROST.frontier.y - 15, 'ancient-remnant')

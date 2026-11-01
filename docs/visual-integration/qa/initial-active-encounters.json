@@ -1,0 +1,2003 @@
+{
+  "base": "http://127.0.0.1:5185",
+  "inspect": true,
+  "at": "2026-11-01T19:21:17.713Z",
+  "method": "Actual isolated visual lab buttons. Explicit advanced fixture and prepared current cargo only. No DEV globals unless inspect=true; inspection positions never defeat enemies or bosses. Native UI, real saves/settings sentinels.",
+  "errors": [],
+  "visits": [
+    {
+      "id": "base",
+      "area": "base",
+      "flags": {
+        "cavernDepthSeen": true,
+        "deepPassageOpen": true,
+        "deepAreaSeen": true,
+        "deepCavernEntered": true,
+        "deepEndSeen": true,
+        "deeperEntered": true,
+        "exteriorEntered": true,
+        "fragmentSeen": true,
+        "approachSeen": true,
+        "firstEchoSeen": true,
+        "wardenReached": true,
+        "wardenGateOpen": true,
+        "wardenDefeated": true,
+        "wardenEndingSeen": true,
+        "valleyVisited": true,
+        "valleyLandmarkSeen": true,
+        "valleyEndSeen": true,
+        "valleyCheckpointReached": true,
+        "valleyFrontierReached": true,
+        "valleyFrontierSignalSeen": true,
+        "valleyFrontierEndSeen": true,
+        "aridVisited": true,
+        "aridSignalSeen": true,
+        "aridFrontierEntered": true,
+        "aridFrontierReached": true,
+        "dunesVisited": true,
+        "dunesRuinsSeen": true,
+        "dunesDepthSeen": true,
+        "soterradoReached": true,
+        "soterradoDefeated": true,
+        "soterradoClueSeen": true,
+        "frostVisited": true,
+        "frostSignalSeen": true,
+        "frostEndSeen": true,
+        "icecaveVisited": true,
+        "icecaveSignalSeen": false,
+        "icenestVisited": false,
+        "vesperReached": false,
+        "vesperDefeated": false,
+        "vesperClueSeen": false,
+        "calderaVisited": false,
+        "calderaRelaySeen": false,
+        "calderaCheckpointReached": false,
+        "titanReached": false,
+        "titanDefeated": false,
+        "titanClueSeen": false,
+        "cinderVisited": false,
+        "cinderSignalSeen": false,
+        "obsidianVisited": false,
+        "obsidianSignalSeen": false,
+        "springsVisited": true,
+        "terracesVisited": true
+      },
+      "credits": 300,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost",
+        "settle-signal",
+        "settle-echo",
+        "settle-wind",
+        "settle-dunes",
+        "settle-buried",
+        "settle-frost"
+      ]
+    },
+    {
+      "id": "post",
+      "area": "springs",
+      "flags": {
+        "cavernDepthSeen": true,
+        "deepPassageOpen": true,
+        "deepAreaSeen": true,
+        "deepCavernEntered": true,
+        "deepEndSeen": true,
+        "deeperEntered": true,
+        "exteriorEntered": true,
+        "fragmentSeen": true,
+        "approachSeen": true,
+        "firstEchoSeen": true,
+        "wardenReached": true,
+        "wardenGateOpen": true,
+        "wardenDefeated": true,
+        "wardenEndingSeen": true,
+        "valleyVisited": true,
+        "valleyLandmarkSeen": true,
+        "valleyEndSeen": true,
+        "valleyCheckpointReached": true,
+        "valleyFrontierReached": true,
+        "valleyFrontierSignalSeen": true,
+        "valleyFrontierEndSeen": true,
+        "aridVisited": true,
+        "aridSignalSeen": true,
+        "aridFrontierEntered": true,
+        "aridFrontierReached": true,
+        "dunesVisited": true,
+        "dunesRuinsSeen": true,
+        "dunesDepthSeen": true,
+        "soterradoReached": true,
+        "soterradoDefeated": true,
+        "soterradoClueSeen": true,
+        "frostVisited": true,
+        "frostSignalSeen": true,
+        "frostEndSeen": true,
+        "icecaveVisited": true,
+        "icecaveSignalSeen": false,
+        "icenestVisited": false,
+        "vesperReached": false,
+        "vesperDefeated": false,
+        "vesperClueSeen": false,
+        "calderaVisited": false,
+        "calderaRelaySeen": false,
+        "calderaCheckpointReached": false,
+        "titanReached": false,
+        "titanDefeated": false,
+        "titanClueSeen": false,
+        "cinderVisited": false,
+        "cinderSignalSeen": false,
+        "obsidianVisited": false,
+        "obsidianSignalSeen": false,
+        "springsVisited": true,
+        "terracesVisited": true
+      },
+      "credits": 300,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost",
+        "settle-signal",
+        "settle-echo",
+        "settle-wind",
+        "settle-dunes",
+        "settle-buried",
+        "settle-frost"
+      ]
+    },
+    {
+      "id": "pipes",
+      "area": "springs",
+      "flags": {
+        "cavernDepthSeen": true,
+        "deepPassageOpen": true,
+        "deepAreaSeen": true,
+        "deepCavernEntered": true,
+        "deepEndSeen": true,
+        "deeperEntered": true,
+        "exteriorEntered": true,
+        "fragmentSeen": true,
+        "approachSeen": true,
+        "firstEchoSeen": true,
+        "wardenReached": true,
+        "wardenGateOpen": true,
+        "wardenDefeated": true,
+        "wardenEndingSeen": true,
+        "valleyVisited": true,
+        "valleyLandmarkSeen": true,
+        "valleyEndSeen": true,
+        "valleyCheckpointReached": true,
+        "valleyFrontierReached": true,
+        "valleyFrontierSignalSeen": true,
+        "valleyFrontierEndSeen": true,
+        "aridVisited": true,
+        "aridSignalSeen": true,
+        "aridFrontierEntered": true,
+        "aridFrontierReached": true,
+        "dunesVisited": true,
+        "dunesRuinsSeen": true,
+        "dunesDepthSeen": true,
+        "soterradoReached": true,
+        "soterradoDefeated": true,
+        "soterradoClueSeen": true,
+        "frostVisited": true,
+        "frostSignalSeen": true,
+        "frostEndSeen": true,
+        "icecaveVisited": true,
+        "icecaveSignalSeen": false,
+        "icenestVisited": false,
+        "vesperReached": false,
+        "vesperDefeated": false,
+        "vesperClueSeen": false,
+        "calderaVisited": false,
+        "calderaRelaySeen": false,
+        "calderaCheckpointReached": false,
+        "titanReached": false,
+        "titanDefeated": false,
+        "titanClueSeen": false,
+        "cinderVisited": false,
+        "cinderSignalSeen": false,
+        "obsidianVisited": false,
+        "obsidianSignalSeen": false,
+        "springsVisited": true,
+        "terracesVisited": true
+      },
+      "credits": 300,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost",
+        "settle-signal",
+        "settle-echo",
+        "settle-wind",
+        "settle-dunes",
+        "settle-buried",
+        "settle-frost"
+      ]
+    },
+    {
+      "id": "camp",
+      "area": "terraces",
+      "flags": {
+        "cavernDepthSeen": true,
+        "deepPassageOpen": true,
+        "deepAreaSeen": true,
+        "deepCavernEntered": true,
+        "deepEndSeen": true,
+        "deeperEntered": true,
+        "exteriorEntered": true,
+        "fragmentSeen": true,
+        "approachSeen": true,
+        "firstEchoSeen": true,
+        "wardenReached": true,
+        "wardenGateOpen": true,
+        "wardenDefeated": true,
+        "wardenEndingSeen": true,
+        "valleyVisited": true,
+        "valleyLandmarkSeen": true,
+        "valleyEndSeen": true,
+        "valleyCheckpointReached": true,
+        "valleyFrontierReached": true,
+        "valleyFrontierSignalSeen": true,
+        "valleyFrontierEndSeen": true,
+        "aridVisited": true,
+        "aridSignalSeen": true,
+        "aridFrontierEntered": true,
+        "aridFrontierReached": true,
+        "dunesVisited": true,
+        "dunesRuinsSeen": true,
+        "dunesDepthSeen": true,
+        "soterradoReached": true,
+        "soterradoDefeated": true,
+        "soterradoClueSeen": true,
+        "frostVisited": true,
+        "frostSignalSeen": true,
+        "frostEndSeen": true,
+        "icecaveVisited": true,
+        "icecaveSignalSeen": false,
+        "icenestVisited": false,
+        "vesperReached": false,
+        "vesperDefeated": false,
+        "vesperClueSeen": false,
+        "calderaVisited": false,
+        "calderaRelaySeen": false,
+        "calderaCheckpointReached": false,
+        "titanReached": false,
+        "titanDefeated": false,
+        "titanClueSeen": false,
+        "cinderVisited": false,
+        "cinderSignalSeen": false,
+        "obsidianVisited": false,
+        "obsidianSignalSeen": false,
+        "springsVisited": true,
+        "terracesVisited": true
+      },
+      "credits": 300,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost",
+        "settle-signal",
+        "settle-echo",
+        "settle-wind",
+        "settle-dunes",
+        "settle-buried",
+        "settle-frost"
+      ]
+    },
+    {
+      "id": "collector",
+      "area": "frost",
+      "flags": {
+        "cavernDepthSeen": true,
+        "deepPassageOpen": true,
+        "deepAreaSeen": true,
+        "deepCavernEntered": true,
+        "deepEndSeen": true,
+        "deeperEntered": true,
+        "exteriorEntered": true,
+        "fragmentSeen": true,
+        "approachSeen": true,
+        "firstEchoSeen": true,
+        "wardenReached": true,
+        "wardenGateOpen": true,
+        "wardenDefeated": true,
+        "wardenEndingSeen": true,
+        "valleyVisited": true,
+        "valleyLandmarkSeen": true,
+        "valleyEndSeen": true,
+        "valleyCheckpointReached": true,
+        "valleyFrontierReached": true,
+        "valleyFrontierSignalSeen": true,
+        "valleyFrontierEndSeen": true,
+        "aridVisited": true,
+        "aridSignalSeen": true,
+        "aridFrontierEntered": true,
+        "aridFrontierReached": true,
+        "dunesVisited": true,
+        "dunesRuinsSeen": true,
+        "dunesDepthSeen": true,
+        "soterradoReached": true,
+        "soterradoDefeated": true,
+        "soterradoClueSeen": true,
+        "frostVisited": true,
+        "frostSignalSeen": true,
+        "frostEndSeen": true,
+        "icecaveVisited": true,
+        "icecaveSignalSeen": false,
+        "icenestVisited": false,
+        "vesperReached": false,
+        "vesperDefeated": false,
+        "vesperClueSeen": false,
+        "calderaVisited": false,
+        "calderaRelaySeen": false,
+        "calderaCheckpointReached": false,
+        "titanReached": false,
+        "titanDefeated": false,
+        "titanClueSeen": false,
+        "cinderVisited": false,
+        "cinderSignalSeen": false,
+        "obsidianVisited": false,
+        "obsidianSignalSeen": false,
+        "springsVisited": true,
+        "terracesVisited": true
+      },
+      "credits": 300,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost",
+        "settle-signal",
+        "settle-echo",
+        "settle-wind",
+        "settle-dunes",
+        "settle-buried",
+        "settle-frost"
+      ]
+    },
+    {
+      "id": "gallery",
+      "area": "icecave",
+      "flags": {
+        "cavernDepthSeen": true,
+        "deepPassageOpen": true,
+        "deepAreaSeen": true,
+        "deepCavernEntered": true,
+        "deepEndSeen": true,
+        "deeperEntered": true,
+        "exteriorEntered": true,
+        "fragmentSeen": true,
+        "approachSeen": true,
+        "firstEchoSeen": true,
+        "wardenReached": true,
+        "wardenGateOpen": true,
+        "wardenDefeated": true,
+        "wardenEndingSeen": true,
+        "valleyVisited": true,
+        "valleyLandmarkSeen": true,
+        "valleyEndSeen": true,
+        "valleyCheckpointReached": true,
+        "valleyFrontierReached": true,
+        "valleyFrontierSignalSeen": true,
+        "valleyFrontierEndSeen": true,
+        "aridVisited": true,
+        "aridSignalSeen": true,
+        "aridFrontierEntered": true,
+        "aridFrontierReached": true,
+        "dunesVisited": true,
+        "dunesRuinsSeen": true,
+        "dunesDepthSeen": true,
+        "soterradoReached": true,
+        "soterradoDefeated": true,
+        "soterradoClueSeen": true,
+        "frostVisited": true,
+        "frostSignalSeen": true,
+        "frostEndSeen": true,
+        "icecaveVisited": true,
+        "icecaveSignalSeen": false,
+        "icenestVisited": false,
+        "vesperReached": false,
+        "vesperDefeated": false,
+        "vesperClueSeen": false,
+        "calderaVisited": false,
+        "calderaRelaySeen": false,
+        "calderaCheckpointReached": false,
+        "titanReached": false,
+        "titanDefeated": false,
+        "titanClueSeen": false,
+        "cinderVisited": false,
+        "cinderSignalSeen": false,
+        "obsidianVisited": false,
+        "obsidianSignalSeen": false,
+        "springsVisited": true,
+        "terracesVisited": true
+      },
+      "credits": 300,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost",
+        "settle-signal",
+        "settle-echo",
+        "settle-wind",
+        "settle-dunes",
+        "settle-buried",
+        "settle-frost"
+      ]
+    },
+    {
+      "id": "wind",
+      "area": "arid",
+      "flags": {
+        "cavernDepthSeen": true,
+        "deepPassageOpen": true,
+        "deepAreaSeen": true,
+        "deepCavernEntered": true,
+        "deepEndSeen": true,
+        "deeperEntered": true,
+        "exteriorEntered": true,
+        "fragmentSeen": true,
+        "approachSeen": true,
+        "firstEchoSeen": true,
+        "wardenReached": true,
+        "wardenGateOpen": true,
+        "wardenDefeated": true,
+        "wardenEndingSeen": true,
+        "valleyVisited": true,
+        "valleyLandmarkSeen": true,
+        "valleyEndSeen": true,
+        "valleyCheckpointReached": true,
+        "valleyFrontierReached": true,
+        "valleyFrontierSignalSeen": true,
+        "valleyFrontierEndSeen": true,
+        "aridVisited": true,
+        "aridSignalSeen": true,
+        "aridFrontierEntered": true,
+        "aridFrontierReached": true,
+        "dunesVisited": true,
+        "dunesRuinsSeen": true,
+        "dunesDepthSeen": true,
+        "soterradoReached": true,
+        "soterradoDefeated": true,
+        "soterradoClueSeen": true,
+        "frostVisited": true,
+        "frostSignalSeen": true,
+        "frostEndSeen": true,
+        "icecaveVisited": true,
+        "icecaveSignalSeen": false,
+        "icenestVisited": false,
+        "vesperReached": false,
+        "vesperDefeated": false,
+        "vesperClueSeen": false,
+        "calderaVisited": false,
+        "calderaRelaySeen": false,
+        "calderaCheckpointReached": false,
+        "titanReached": false,
+        "titanDefeated": false,
+        "titanClueSeen": false,
+        "cinderVisited": false,
+        "cinderSignalSeen": false,
+        "obsidianVisited": false,
+        "obsidianSignalSeen": false,
+        "springsVisited": true,
+        "terracesVisited": true
+      },
+      "credits": 300,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost",
+        "settle-signal",
+        "settle-echo",
+        "settle-wind",
+        "settle-dunes",
+        "settle-buried",
+        "settle-frost"
+      ]
+    },
+    {
+      "id": "dunes",
+      "area": "dunes",
+      "flags": {
+        "cavernDepthSeen": true,
+        "deepPassageOpen": true,
+        "deepAreaSeen": true,
+        "deepCavernEntered": true,
+        "deepEndSeen": true,
+        "deeperEntered": true,
+        "exteriorEntered": true,
+        "fragmentSeen": true,
+        "approachSeen": true,
+        "firstEchoSeen": true,
+        "wardenReached": true,
+        "wardenGateOpen": true,
+        "wardenDefeated": true,
+        "wardenEndingSeen": true,
+        "valleyVisited": true,
+        "valleyLandmarkSeen": true,
+        "valleyEndSeen": true,
+        "valleyCheckpointReached": true,
+        "valleyFrontierReached": true,
+        "valleyFrontierSignalSeen": true,
+        "valleyFrontierEndSeen": true,
+        "aridVisited": true,
+        "aridSignalSeen": true,
+        "aridFrontierEntered": true,
+        "aridFrontierReached": true,
+        "dunesVisited": true,
+        "dunesRuinsSeen": true,
+        "dunesDepthSeen": true,
+        "soterradoReached": true,
+        "soterradoDefeated": true,
+        "soterradoClueSeen": true,
+        "frostVisited": true,
+        "frostSignalSeen": true,
+        "frostEndSeen": true,
+        "icecaveVisited": true,
+        "icecaveSignalSeen": false,
+        "icenestVisited": false,
+        "vesperReached": false,
+        "vesperDefeated": false,
+        "vesperClueSeen": false,
+        "calderaVisited": false,
+        "calderaRelaySeen": false,
+        "calderaCheckpointReached": false,
+        "titanReached": false,
+        "titanDefeated": false,
+        "titanClueSeen": false,
+        "cinderVisited": false,
+        "cinderSignalSeen": false,
+        "obsidianVisited": false,
+        "obsidianSignalSeen": false,
+        "springsVisited": true,
+        "terracesVisited": true
+      },
+      "credits": 300,
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "water-source",
+        "safe-route",
+        "shelter",
+        "settle-water",
+        "settle-food",
+        "settle-transport",
+        "settle-energy",
+        "settle-arrivals",
+        "settle-outpost",
+        "settle-signal",
+        "settle-echo",
+        "settle-wind",
+        "settle-dunes",
+        "settle-buried",
+        "settle-frost"
+      ]
+    }
+  ],
+  "opacity": [
+    {
+      "id": "base",
+      "tests": [
+        {
+          "texture": "field-shelter",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "field-shelter",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "field-shelter",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "world-overhead",
+          "name": "",
+          "alpha": 0.12,
+          "samples": [
+            0.12,
+            0.12,
+            0.12,
+            0.12
+          ]
+        },
+        {
+          "texture": "world-overhead",
+          "name": "",
+          "alpha": 0.12,
+          "samples": [
+            0.12,
+            0.12,
+            0.12,
+            0.12
+          ]
+        }
+      ],
+      "routes": [
+        {
+          "q": {
+            "x": 395,
+            "y": 755
+          },
+          "steps": 11,
+          "gap": 33.61547262794323
+        },
+        {
+          "q": {
+            "x": 835,
+            "y": 745
+          },
+          "steps": 6,
+          "gap": 27.892651361962706
+        },
+        {
+          "q": {
+            "x": 1200,
+            "y": 740
+          },
+          "steps": 13,
+          "gap": 2.8284271247461903
+        }
+      ],
+      "companions": [
+        {
+          "kind": "manifest",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "sealedWater",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "routeArchive",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "tools",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "manifest",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "manifest",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "decontamination",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "coldCollector",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "vitrifiedCore",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "iceSled",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "routeArchive",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "coreSample",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "routeArchive",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "windKit",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "emitter",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "routeArchive",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "receiver",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "powerCell",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "supplyRack",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "supplyRack",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "worklight",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "foodReserve",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "decontamination",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        }
+      ],
+      "solids": 22,
+      "textures": 2,
+      "bosses": [
+        false,
+        false
+      ]
+    },
+    {
+      "id": "post",
+      "tests": [
+        {
+          "texture": "world-rock",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "first-habitat",
+          "name": "outpost-habitat",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "world-rock",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "world-overhead",
+          "name": "",
+          "alpha": 0.12,
+          "samples": [
+            0.12,
+            0.12,
+            0.12,
+            0.12
+          ]
+        },
+        {
+          "texture": "world-overhead",
+          "name": "",
+          "alpha": 0.12,
+          "samples": [
+            0.12,
+            0.12,
+            0.12,
+            0.12
+          ]
+        }
+      ],
+      "routes": [],
+      "companions": [
+        {
+          "kind": "contaminatedRoots",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "intake",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "returnBeacon",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "floodStake",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "foodReserve",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "powerCell",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "powerCell",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "foodReserve",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "archive",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "archive",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "surveyor",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "cargoSled",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "supplyRack",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "hydrophone",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "valve",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "archive",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "returnBeacon",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "supplyRack",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        }
+      ],
+      "solids": 41,
+      "textures": 4,
+      "bosses": [
+        false,
+        false
+      ]
+    },
+    {
+      "id": "pipes",
+      "tests": [
+        {
+          "texture": "world-rock",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "first-habitat",
+          "name": "outpost-habitat",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "world-rock",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "world-overhead",
+          "name": "",
+          "alpha": 0.12,
+          "samples": [
+            0.12,
+            0.12,
+            0.12,
+            0.12
+          ]
+        },
+        {
+          "texture": "world-overhead",
+          "name": "",
+          "alpha": 0.12,
+          "samples": [
+            0.12,
+            0.12,
+            0.12,
+            0.12
+          ]
+        }
+      ],
+      "routes": [],
+      "companions": [
+        {
+          "kind": "contaminatedRoots",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "intake",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "returnBeacon",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "floodStake",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "foodReserve",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "powerCell",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "powerCell",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "foodReserve",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "archive",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "archive",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "surveyor",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "cargoSled",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "supplyRack",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "hydrophone",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "valve",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "archive",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "returnBeacon",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "supplyRack",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        }
+      ],
+      "solids": 41,
+      "textures": 4,
+      "bosses": [
+        false,
+        false
+      ]
+    },
+    {
+      "id": "camp",
+      "tests": [
+        {
+          "texture": "first-habitat",
+          "name": "settlement-second-habitat",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "world-rock",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "world-rock",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "world-overhead",
+          "name": "",
+          "alpha": 0.12,
+          "samples": [
+            0.12,
+            0.12,
+            0.12,
+            0.12
+          ]
+        },
+        {
+          "texture": "world-overhead",
+          "name": "",
+          "alpha": 0.12,
+          "samples": [
+            0.12,
+            0.12,
+            0.12,
+            0.12
+          ]
+        }
+      ],
+      "routes": [],
+      "companions": [
+        {
+          "kind": "groundRod",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "surveyor",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "worklight",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "tools",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "worklight",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "sealedWater",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "cleanSample",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "tools",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "sealedWater",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "isolator",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "filter",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "cargoSled",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "foodReserve",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "supplyRack",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "seedlings",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "foodReserve",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "coreSample",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "returnBeacon",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "supplyRack",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-earth-meadow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "contaminatedRoots",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-earth-meadow-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        }
+      ],
+      "solids": 40,
+      "textures": 4,
+      "bosses": [
+        false,
+        false
+      ]
+    },
+    {
+      "id": "collector",
+      "tests": [
+        {
+          "texture": "deep-relay",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "world-rock",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "world-rock",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "routes": [
+        {
+          "q": {
+            "x": 840,
+            "y": 1070
+          },
+          "steps": 4,
+          "gap": 22.360679774997894
+        },
+        {
+          "q": {
+            "x": 1040,
+            "y": 1070
+          },
+          "steps": 3,
+          "gap": 18.439088914585778
+        },
+        {
+          "q": {
+            "x": 940,
+            "y": 1110
+          },
+          "steps": 2,
+          "gap": 25.059928172283335
+        },
+        {
+          "q": {
+            "x": 2640,
+            "y": 930
+          },
+          "steps": 39,
+          "gap": 2
+        }
+      ],
+      "companions": [
+        {
+          "kind": "returnBeacon",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-snow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "coldCollector",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-snow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "valve",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-snow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "valve",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-snow-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        }
+      ],
+      "solids": 13,
+      "textures": 5,
+      "bosses": [
+        false,
+        false
+      ]
+    },
+    {
+      "id": "gallery",
+      "tests": [
+        {
+          "texture": "deep-relay",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "world-rock",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "world-rock",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "routes": [
+        {
+          "q": {
+            "x": 820,
+            "y": 1320
+          },
+          "steps": 5,
+          "gap": 18.973665961010276
+        },
+        {
+          "q": {
+            "x": 1510,
+            "y": 920
+          },
+          "steps": 19,
+          "gap": 22
+        },
+        {
+          "q": {
+            "x": 2490,
+            "y": 1330
+          },
+          "steps": 35,
+          "gap": 20.39607805437114
+        },
+        {
+          "q": {
+            "x": 245,
+            "y": 960
+          },
+          "steps": 21,
+          "gap": 24.758836806279895
+        },
+        {
+          "q": {
+            "x": 2760,
+            "y": 980
+          },
+          "steps": 44,
+          "gap": 10.19803902718557
+        }
+      ],
+      "companions": [
+        {
+          "kind": "returnBeacon",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-stone-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "iceSled",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-stone-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        }
+      ],
+      "solids": 11,
+      "textures": 7,
+      "bosses": [
+        false,
+        false
+      ]
+    },
+    {
+      "id": "wind",
+      "tests": [
+        {
+          "texture": "deep-relay",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "routes": [],
+      "companions": [
+        {
+          "kind": "returnBeacon",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-sand-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "windSled",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-sand-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "anemometer",
+          "visible": false,
+          "groundVisible": false,
+          "ground": "prop-footing-r2-sand-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        }
+      ],
+      "solids": 53,
+      "textures": 9,
+      "bosses": [
+        false,
+        false
+      ]
+    },
+    {
+      "id": "dunes",
+      "tests": [
+        {
+          "texture": "world-rock",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "world-rock",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "texture": "deep-relay",
+          "name": "",
+          "alpha": 1,
+          "samples": [
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "routes": [],
+      "companions": [
+        {
+          "kind": "coreSample",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-sand-contact",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        },
+        {
+          "kind": "returnBeacon",
+          "visible": true,
+          "groundVisible": true,
+          "ground": "prop-footing-r2-sand-installed",
+          "alpha": 1,
+          "groundAlpha": 1,
+          "offset": 0
+        }
+      ],
+      "solids": 17,
+      "textures": 9,
+      "bosses": [
+        false,
+        false
+      ]
+    }
+  ],
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n270 !== 300\n"
+}

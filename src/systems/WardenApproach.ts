@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { WARDEN_PREPARATION as W, WARDEN_FOOTPRINTS } from '../config/wardenPreparation';
-import { EnvironmentPainter, trackEnvironmentOcclusion } from '../visual/EnvironmentArt';
+import { EnvironmentPainter, markEnvironmentBody } from '../visual/EnvironmentArt';
 import { distance, type Vec2 } from '../utils/math';
 
 // Local scenery/response only: no quest framework, reward, boss or gameplay lock.
@@ -24,11 +24,11 @@ export class WardenApproach {
     this.bake();
     this.archive = scene.add.image(5530, 705, 'first-echo-archive').setOrigin(0.5, 0.94)
       .setDisplaySize(250, 190).setDepth(720).setTint(recorded ? 0xffffff : 0xb9c2b0);
-    trackEnvironmentOcclusion(scene, this.archive);
+    markEnvironmentBody(scene, this.archive);
     this.archiveLight = scene.add.ellipse(5530, 681, 38, 13, 0xa98cff, recorded ? 0.4 : 0.08).setDepth(725);
     this.gate = scene.add.image(6340, 815, gateOpen ? 'guardian-lintel-open' : 'guardian-lintel-closed').setOrigin(0.5, 0.5)
       .setDisplaySize(600, 190).setDepth(910).setTint(recorded ? 0xcbd1bf : 0xa9b6a4);
-    trackEnvironmentOcclusion(scene, this.gate);
+    markEnvironmentBody(scene, this.gate);
     this.record = scene.add.text(5530, 790, 'PRIMEIRO ECO\nASSINATURA HUMANA REGISTRADA\nDATA: ILEGÍVEL', {
       fontFamily: 'Barlow Condensed, sans-serif', fontSize: '16px', color: '#e4dcff',
       stroke: '#071b24', strokeThickness: 4, align: 'center',
@@ -97,7 +97,7 @@ export class WardenApproach {
       this.scene.tweens.add({ targets: this.gate, alpha: 0, duration: 550, onComplete: () => {
         this.opening = false;
         this.gateOpen = true;
-        trackEnvironmentOcclusion(this.scene, opening);
+        markEnvironmentBody(this.scene, opening);
         onOpen();
       } });
     });

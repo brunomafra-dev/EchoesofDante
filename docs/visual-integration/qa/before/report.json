@@ -1,0 +1,2666 @@
+{
+  "base": "http://127.0.0.1:5185",
+  "phase": "before",
+  "at": "2026-11-01T19:12:16.364Z",
+  "method": "DEV inspection using the existing isolated Galerias loaded fixture. Earlier chapters/Warden/Soterrado and current cargo loading are staged explicitly; Vesper/Titan remain alive. DEV travel and positions only frame scenery. No real save is read or changed.",
+  "errors": [],
+  "scenes": [
+    {
+      "name": "gallery",
+      "area": "icecave",
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "boreal-melt-pocket",
+          "texture": "boreal-melt-pocket",
+          "x": 870,
+          "y": 1300,
+          "width": 190,
+          "height": 215,
+          "alpha": 1,
+          "visible": true,
+          "depth": -9889
+        },
+        {
+          "name": "",
+          "kind": "returnBeacon",
+          "texture": "quest-research",
+          "x": 300,
+          "y": 985,
+          "width": 55,
+          "height": 55,
+          "alpha": 1,
+          "visible": true,
+          "depth": 960
+        },
+        {
+          "name": "ice-transfer-cargo",
+          "kind": "iceSled",
+          "texture": "quest-ice-transfer",
+          "x": 1050,
+          "y": 1236,
+          "width": 112,
+          "height": 112,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1203
+        }
+      ],
+      "solids": [
+        {
+          "x": 860,
+          "y": 890,
+          "radius": 70
+        },
+        {
+          "x": 980,
+          "y": 900,
+          "radius": 58
+        },
+        {
+          "x": 1260,
+          "y": 1230,
+          "radius": 65
+        },
+        {
+          "x": 1680,
+          "y": 610,
+          "radius": 45
+        },
+        {
+          "x": 1960,
+          "y": 800,
+          "radius": 68
+        },
+        {
+          "x": 2190,
+          "y": 1190,
+          "radius": 70
+        },
+        {
+          "x": 2390,
+          "y": 720,
+          "radius": 56
+        },
+        {
+          "x": 820,
+          "y": 1150,
+          "radius": 62
+        },
+        {
+          "x": 1530,
+          "y": 730,
+          "radius": 58
+        },
+        {
+          "x": 2490,
+          "y": 1170,
+          "radius": 55
+        },
+        {
+          "x": 1050,
+          "y": 1200,
+          "radius": 24
+        }
+      ]
+    },
+    {
+      "name": "collector",
+      "area": "frost",
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "survey-water",
+          "texture": "material-water",
+          "x": 790,
+          "y": 880,
+          "width": 100,
+          "height": 72,
+          "alpha": 1,
+          "visible": true,
+          "depth": 878
+        },
+        {
+          "name": "",
+          "kind": "returnBeacon",
+          "texture": "quest-research",
+          "x": 1540,
+          "y": 925,
+          "width": 55,
+          "height": 55,
+          "alpha": 1,
+          "visible": true,
+          "depth": 900
+        },
+        {
+          "name": "frost-water-collector",
+          "kind": "coldCollector",
+          "texture": "quest-cold-collector",
+          "x": 940,
+          "y": 1016,
+          "width": 132,
+          "height": 132,
+          "alpha": 1,
+          "visible": true,
+          "depth": 978
+        },
+        {
+          "name": "frost-water-valve-0",
+          "kind": "valve",
+          "texture": "quest-survival",
+          "x": 840,
+          "y": 1042,
+          "width": 58,
+          "height": 58,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1040
+        },
+        {
+          "name": "frost-water-valve-1",
+          "kind": "valve",
+          "texture": "quest-survival",
+          "x": 1040,
+          "y": 1042,
+          "width": 58,
+          "height": 58,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1040
+        },
+        {
+          "name": "survey-biology",
+          "texture": "material-biology",
+          "x": 1500,
+          "y": 1300,
+          "width": 80,
+          "height": 75,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1298
+        },
+        {
+          "name": "survey-soil",
+          "texture": "material-soil",
+          "x": 2390,
+          "y": 1320,
+          "width": 78,
+          "height": 60.99999999999999,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1318
+        }
+      ],
+      "solids": [
+        {
+          "x": 810,
+          "y": 730,
+          "radius": 65
+        },
+        {
+          "x": 920,
+          "y": 735,
+          "radius": 54
+        },
+        {
+          "x": 1290,
+          "y": 1160,
+          "radius": 55
+        },
+        {
+          "x": 1430,
+          "y": 1190,
+          "radius": 57
+        },
+        {
+          "x": 2160,
+          "y": 730,
+          "radius": 57
+        },
+        {
+          "x": 2300,
+          "y": 680,
+          "radius": 63
+        },
+        {
+          "x": 1730,
+          "y": 575,
+          "radius": 43
+        },
+        {
+          "x": 790,
+          "y": 690,
+          "radius": 65
+        },
+        {
+          "x": 1500,
+          "y": 1130,
+          "radius": 60
+        },
+        {
+          "x": 2370,
+          "y": 1130,
+          "radius": 58
+        },
+        {
+          "x": 940,
+          "y": 973,
+          "radius": 25
+        },
+        {
+          "x": 840,
+          "y": 1012,
+          "radius": 13
+        },
+        {
+          "x": 1040,
+          "y": 1012,
+          "radius": 13
+        }
+      ]
+    },
+    {
+      "name": "base",
+      "area": "base",
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "",
+          "kind": "manifest",
+          "texture": "quest-research",
+          "x": 1120,
+          "y": 420,
+          "width": 100,
+          "height": 100,
+          "alpha": 1,
+          "visible": true,
+          "depth": 418
+        },
+        {
+          "name": "frost-water-reserve",
+          "kind": "sealedWater",
+          "texture": "quest-cold-reserve",
+          "x": 248,
+          "y": 564,
+          "width": 85,
+          "height": 85,
+          "alpha": 1,
+          "visible": true,
+          "depth": 562
+        },
+        {
+          "name": "echo-route-archive",
+          "kind": "routeArchive",
+          "texture": "quest-research",
+          "x": 1250,
+          "y": 610,
+          "width": 75,
+          "height": 75,
+          "alpha": 1,
+          "visible": true,
+          "depth": 608
+        },
+        {
+          "name": "",
+          "kind": "tools",
+          "texture": "quest-research",
+          "x": 895,
+          "y": 625,
+          "width": 112,
+          "height": 112,
+          "alpha": 1,
+          "visible": true,
+          "depth": 623
+        },
+        {
+          "name": "pc-manifest",
+          "kind": "manifest",
+          "texture": "quest-research",
+          "x": 1120,
+          "y": 640,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 638
+        },
+        {
+          "name": "settlement-arrival-manifest",
+          "kind": "manifest",
+          "texture": "quest-research",
+          "x": 1120,
+          "y": 640,
+          "width": 72,
+          "height": 72,
+          "alpha": 1,
+          "visible": true,
+          "depth": 638
+        },
+        {
+          "name": "",
+          "kind": "decontamination",
+          "texture": "quest-research",
+          "x": 440,
+          "y": 650,
+          "width": 105,
+          "height": 105,
+          "alpha": 1,
+          "visible": true,
+          "depth": 648
+        },
+        {
+          "name": "pg-kit",
+          "kind": "coldCollector",
+          "texture": "quest-cold-collector",
+          "x": 520,
+          "y": 650,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 648
+        },
+        {
+          "name": "buried-record-archive",
+          "kind": "vitrifiedCore",
+          "texture": "quest-buried",
+          "x": 520,
+          "y": 790,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": true,
+          "depth": 758
+        },
+        {
+          "name": "pi-kit",
+          "kind": "iceSled",
+          "texture": "quest-ice-transfer",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 878
+        },
+        {
+          "name": "pi-log",
+          "kind": "routeArchive",
+          "texture": "quest-research",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": true,
+          "depth": 878
+        },
+        {
+          "name": "pd-kit",
+          "kind": "coreSample",
+          "texture": "quest-research",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 878
+        },
+        {
+          "name": "pd-store",
+          "kind": "routeArchive",
+          "texture": "quest-research",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 878
+        },
+        {
+          "name": "pv-kit",
+          "kind": "windKit",
+          "texture": "quest-research",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 878
+        },
+        {
+          "name": "pr-copy",
+          "kind": "emitter",
+          "texture": "quest-research",
+          "x": 1120,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 878
+        },
+        {
+          "name": "pr-store",
+          "kind": "routeArchive",
+          "texture": "quest-research",
+          "x": 1120,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 878
+        },
+        {
+          "name": "ps-kit",
+          "kind": "receiver",
+          "texture": "quest-research",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 878
+        },
+        {
+          "name": "pe-cell",
+          "kind": "powerCell",
+          "texture": "quest-survival",
+          "x": 790,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 878
+        },
+        {
+          "name": "po-kit",
+          "kind": "supplyRack",
+          "texture": "quest-survival",
+          "x": 1120,
+          "y": 880,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 878
+        },
+        {
+          "name": "settlement-supply-depot",
+          "kind": "supplyRack",
+          "texture": "quest-survival",
+          "x": 650,
+          "y": 900,
+          "width": 110,
+          "height": 110,
+          "alpha": 1,
+          "visible": true,
+          "depth": 898
+        },
+        {
+          "name": "settlement-power-station",
+          "kind": "worklight",
+          "texture": "quest-survival",
+          "x": 910,
+          "y": 900,
+          "width": 112,
+          "height": 112,
+          "alpha": 1,
+          "visible": true,
+          "depth": 898
+        },
+        {
+          "name": "settlement-food-reserve",
+          "kind": "foodReserve",
+          "texture": "quest-survival",
+          "x": 440,
+          "y": 910,
+          "width": 90,
+          "height": 90,
+          "alpha": 1,
+          "visible": true,
+          "depth": 908
+        },
+        {
+          "name": "pf-safe",
+          "kind": "decontamination",
+          "texture": "quest-research",
+          "x": 240,
+          "y": 920,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 918
+        }
+      ],
+      "solids": [
+        {
+          "x": 550,
+          "y": 370,
+          "radius": 112
+        },
+        {
+          "x": 420,
+          "y": 360,
+          "radius": 62
+        },
+        {
+          "x": 680,
+          "y": 360,
+          "radius": 62
+        },
+        {
+          "x": 320,
+          "y": 678,
+          "radius": 20
+        },
+        {
+          "x": 320,
+          "y": 600,
+          "radius": 55
+        },
+        {
+          "x": 760,
+          "y": 668,
+          "radius": 20
+        },
+        {
+          "x": 760,
+          "y": 590,
+          "radius": 55
+        },
+        {
+          "x": 1000,
+          "y": 443,
+          "radius": 20
+        },
+        {
+          "x": 1000,
+          "y": 365,
+          "radius": 55
+        },
+        {
+          "x": 440,
+          "y": 633,
+          "radius": 20
+        },
+        {
+          "x": 895,
+          "y": 608,
+          "radius": 20
+        },
+        {
+          "x": 1120,
+          "y": 403,
+          "radius": 20
+        },
+        {
+          "x": 362,
+          "y": 707,
+          "radius": 24
+        },
+        {
+          "x": 802,
+          "y": 697,
+          "radius": 24
+        },
+        {
+          "x": 1042,
+          "y": 472,
+          "radius": 24
+        },
+        {
+          "x": 1250,
+          "y": 595,
+          "radius": 17
+        },
+        {
+          "x": 520,
+          "y": 748,
+          "radius": 18
+        },
+        {
+          "x": 248,
+          "y": 552,
+          "radius": 23
+        },
+        {
+          "x": 440,
+          "y": 893,
+          "radius": 25
+        },
+        {
+          "x": 650,
+          "y": 878,
+          "radius": 30
+        },
+        {
+          "x": 910,
+          "y": 876,
+          "radius": 32
+        },
+        {
+          "x": 1120,
+          "y": 624,
+          "radius": 22
+        }
+      ]
+    },
+    {
+      "name": "post",
+      "area": "springs",
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "water-return-pipe",
+          "x": 0,
+          "y": 0,
+          "alpha": 1,
+          "visible": true,
+          "depth": -20
+        },
+        {
+          "name": "survey-biology",
+          "texture": "material-biology",
+          "x": 1390,
+          "y": 440,
+          "width": 80,
+          "height": 75,
+          "alpha": 1,
+          "visible": true,
+          "depth": 438
+        },
+        {
+          "name": "pf-trace",
+          "kind": "contaminatedRoots",
+          "texture": "quest-survival",
+          "x": 820,
+          "y": 610,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 608
+        },
+        {
+          "name": "survey-spring",
+          "texture": "material-spring",
+          "x": 1820,
+          "y": 650,
+          "width": 112,
+          "height": 98,
+          "alpha": 1,
+          "visible": true,
+          "depth": 648
+        },
+        {
+          "name": "pw-intake",
+          "kind": "intake",
+          "texture": "quest-survival",
+          "x": 1680,
+          "y": 680,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 678
+        },
+        {
+          "name": "pc-beacon",
+          "kind": "returnBeacon",
+          "texture": "quest-research",
+          "x": 2180,
+          "y": 680,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 678
+        },
+        {
+          "name": "po-bank",
+          "kind": "floodStake",
+          "texture": "quest-survival",
+          "x": 1970,
+          "y": 730,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 728
+        },
+        {
+          "name": "npc-worksite-tomas",
+          "kind": "foodReserve",
+          "texture": "quest-survival",
+          "x": 1908,
+          "y": 862,
+          "width": 53,
+          "height": 53,
+          "alpha": 1,
+          "visible": true,
+          "depth": 858
+        },
+        {
+          "name": "outpost-regulator",
+          "kind": "powerCell",
+          "texture": "quest-survival",
+          "x": 1990,
+          "y": 939,
+          "width": 63,
+          "height": 63,
+          "alpha": 1,
+          "visible": true,
+          "depth": 937
+        },
+        {
+          "name": "npc-worksite-mara",
+          "kind": "powerCell",
+          "texture": "quest-survival",
+          "x": 2107,
+          "y": 962,
+          "width": 53,
+          "height": 53,
+          "alpha": 1,
+          "visible": true,
+          "depth": 958
+        },
+        {
+          "name": "npc-worksite-tomas",
+          "kind": "foodReserve",
+          "texture": "quest-survival",
+          "x": 1898,
+          "y": 1002,
+          "width": 53,
+          "height": 53,
+          "alpha": 1,
+          "visible": true,
+          "depth": 998
+        },
+        {
+          "name": "ps-carrier",
+          "kind": "archive",
+          "texture": "quest-research",
+          "x": 1890,
+          "y": 1090,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1088
+        },
+        {
+          "name": "ps-record",
+          "kind": "archive",
+          "texture": "quest-research",
+          "x": 1890,
+          "y": 1090,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1088
+        },
+        {
+          "name": "po-water",
+          "kind": "surveyor",
+          "texture": "quest-survival",
+          "x": 2020,
+          "y": 1110,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1108
+        },
+        {
+          "name": "po-load",
+          "kind": "cargoSled",
+          "texture": "quest-survival",
+          "x": 480,
+          "y": 1110,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1108
+        },
+        {
+          "name": "po-deliver",
+          "kind": "supplyRack",
+          "texture": "quest-survival",
+          "x": 2040,
+          "y": 1110,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1108
+        },
+        {
+          "name": "ps-water",
+          "kind": "hydrophone",
+          "texture": "quest-research",
+          "x": 1530,
+          "y": 1130,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1128
+        },
+        {
+          "name": "pw-valve",
+          "kind": "valve",
+          "texture": "quest-survival",
+          "x": 1660,
+          "y": 1130,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1128
+        },
+        {
+          "name": "signal-archive-case",
+          "kind": "archive",
+          "texture": "quest-research",
+          "x": 1900,
+          "y": 1135,
+          "width": 78,
+          "height": 78,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1133
+        },
+        {
+          "name": "",
+          "kind": "returnBeacon",
+          "texture": "quest-research",
+          "x": 340,
+          "y": 1165,
+          "width": 55,
+          "height": 55,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1140
+        },
+        {
+          "name": "outpost-depot",
+          "kind": "supplyRack",
+          "texture": "quest-survival",
+          "x": 2040,
+          "y": 1155,
+          "width": 100,
+          "height": 100,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1153
+        },
+        {
+          "name": "survey-water",
+          "texture": "material-water",
+          "x": 2229.5641450403614,
+          "y": 1177.245869835683,
+          "width": 100,
+          "height": 72,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1175.245869835683
+        },
+        {
+          "name": "survey-water",
+          "texture": "material-water",
+          "x": 670,
+          "y": 1190,
+          "width": 100,
+          "height": 72,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1188
+        }
+      ],
+      "solids": [
+        {
+          "x": 720,
+          "y": 700,
+          "radius": 44
+        },
+        {
+          "x": 950,
+          "y": 890,
+          "radius": 35
+        },
+        {
+          "x": 1660,
+          "y": 980,
+          "radius": 48
+        },
+        {
+          "x": 2200,
+          "y": 1120,
+          "radius": 38
+        },
+        {
+          "x": 1140,
+          "y": 760,
+          "radius": 100
+        },
+        {
+          "x": 1270,
+          "y": 760,
+          "radius": 113
+        },
+        {
+          "x": 1400,
+          "y": 760,
+          "radius": 100
+        },
+        {
+          "x": 1760,
+          "y": 505,
+          "radius": 60
+        },
+        {
+          "x": 1850,
+          "y": 505,
+          "radius": 60
+        },
+        {
+          "x": 130,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 365,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 600,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 835,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 1070,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 1305,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 1540,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 1775,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 2010,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 2245,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 2480,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 130,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 365,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 600,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 835,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 1070,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1305,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 1540,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1775,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 2010,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 2245,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 2480,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1900,
+          "y": 1117,
+          "radius": 18
+        },
+        {
+          "x": 2040,
+          "y": 1135,
+          "radius": 26
+        },
+        {
+          "x": 2190,
+          "y": 831.0196078431372,
+          "radius": 56.666666666666664
+        },
+        {
+          "x": 2306.6666666666665,
+          "y": 835.1764705882352,
+          "radius": 39.166666666666664
+        },
+        {
+          "x": 2273.3333333333335,
+          "y": 890.0470588235294,
+          "radius": 24.166666666666668
+        },
+        {
+          "x": 2070,
+          "y": 960,
+          "radius": 14
+        },
+        {
+          "x": 2107,
+          "y": 953,
+          "radius": 13
+        },
+        {
+          "x": 1926.9870822071257,
+          "y": 917.4783612747266,
+          "radius": 14
+        },
+        {
+          "x": 1908,
+          "y": 853,
+          "radius": 13
+        },
+        {
+          "x": 1898,
+          "y": 993,
+          "radius": 13
+        }
+      ]
+    },
+    {
+      "name": "pipes",
+      "area": "springs",
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "water-return-pipe",
+          "x": 0,
+          "y": 0,
+          "alpha": 1,
+          "visible": true,
+          "depth": -20
+        },
+        {
+          "name": "survey-biology",
+          "texture": "material-biology",
+          "x": 1390,
+          "y": 440,
+          "width": 80,
+          "height": 75,
+          "alpha": 1,
+          "visible": true,
+          "depth": 438
+        },
+        {
+          "name": "pf-trace",
+          "kind": "contaminatedRoots",
+          "texture": "quest-survival",
+          "x": 820,
+          "y": 610,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 608
+        },
+        {
+          "name": "survey-spring",
+          "texture": "material-spring",
+          "x": 1820,
+          "y": 650,
+          "width": 112,
+          "height": 98,
+          "alpha": 1,
+          "visible": true,
+          "depth": 648
+        },
+        {
+          "name": "pw-intake",
+          "kind": "intake",
+          "texture": "quest-survival",
+          "x": 1680,
+          "y": 680,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 678
+        },
+        {
+          "name": "pc-beacon",
+          "kind": "returnBeacon",
+          "texture": "quest-research",
+          "x": 2180,
+          "y": 680,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 678
+        },
+        {
+          "name": "po-bank",
+          "kind": "floodStake",
+          "texture": "quest-survival",
+          "x": 1970,
+          "y": 730,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 728
+        },
+        {
+          "name": "npc-worksite-tomas",
+          "kind": "foodReserve",
+          "texture": "quest-survival",
+          "x": 1908,
+          "y": 862,
+          "width": 53,
+          "height": 53,
+          "alpha": 1,
+          "visible": true,
+          "depth": 858
+        },
+        {
+          "name": "outpost-regulator",
+          "kind": "powerCell",
+          "texture": "quest-survival",
+          "x": 1990,
+          "y": 939,
+          "width": 63,
+          "height": 63,
+          "alpha": 1,
+          "visible": true,
+          "depth": 937
+        },
+        {
+          "name": "npc-worksite-mara",
+          "kind": "powerCell",
+          "texture": "quest-survival",
+          "x": 2107,
+          "y": 962,
+          "width": 53,
+          "height": 53,
+          "alpha": 1,
+          "visible": true,
+          "depth": 958
+        },
+        {
+          "name": "npc-worksite-tomas",
+          "kind": "foodReserve",
+          "texture": "quest-survival",
+          "x": 1898,
+          "y": 1002,
+          "width": 53,
+          "height": 53,
+          "alpha": 1,
+          "visible": true,
+          "depth": 998
+        },
+        {
+          "name": "ps-carrier",
+          "kind": "archive",
+          "texture": "quest-research",
+          "x": 1890,
+          "y": 1090,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1088
+        },
+        {
+          "name": "ps-record",
+          "kind": "archive",
+          "texture": "quest-research",
+          "x": 1890,
+          "y": 1090,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1088
+        },
+        {
+          "name": "po-water",
+          "kind": "surveyor",
+          "texture": "quest-survival",
+          "x": 2020,
+          "y": 1110,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1108
+        },
+        {
+          "name": "po-load",
+          "kind": "cargoSled",
+          "texture": "quest-survival",
+          "x": 480,
+          "y": 1110,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1108
+        },
+        {
+          "name": "po-deliver",
+          "kind": "supplyRack",
+          "texture": "quest-survival",
+          "x": 2040,
+          "y": 1110,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1108
+        },
+        {
+          "name": "ps-water",
+          "kind": "hydrophone",
+          "texture": "quest-research",
+          "x": 1530,
+          "y": 1130,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1128
+        },
+        {
+          "name": "pw-valve",
+          "kind": "valve",
+          "texture": "quest-survival",
+          "x": 1660,
+          "y": 1130,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1128
+        },
+        {
+          "name": "signal-archive-case",
+          "kind": "archive",
+          "texture": "quest-research",
+          "x": 1900,
+          "y": 1135,
+          "width": 78,
+          "height": 78,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1133
+        },
+        {
+          "name": "",
+          "kind": "returnBeacon",
+          "texture": "quest-research",
+          "x": 340,
+          "y": 1165,
+          "width": 55,
+          "height": 55,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1140
+        },
+        {
+          "name": "outpost-depot",
+          "kind": "supplyRack",
+          "texture": "quest-survival",
+          "x": 2040,
+          "y": 1155,
+          "width": 100,
+          "height": 100,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1153
+        },
+        {
+          "name": "survey-water",
+          "texture": "material-water",
+          "x": 2229.5641450403614,
+          "y": 1177.245869835683,
+          "width": 100,
+          "height": 72,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1175.245869835683
+        },
+        {
+          "name": "survey-water",
+          "texture": "material-water",
+          "x": 670,
+          "y": 1190,
+          "width": 100,
+          "height": 72,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1188
+        }
+      ],
+      "solids": [
+        {
+          "x": 720,
+          "y": 700,
+          "radius": 44
+        },
+        {
+          "x": 950,
+          "y": 890,
+          "radius": 35
+        },
+        {
+          "x": 1660,
+          "y": 980,
+          "radius": 48
+        },
+        {
+          "x": 2200,
+          "y": 1120,
+          "radius": 38
+        },
+        {
+          "x": 1140,
+          "y": 760,
+          "radius": 100
+        },
+        {
+          "x": 1270,
+          "y": 760,
+          "radius": 113
+        },
+        {
+          "x": 1400,
+          "y": 760,
+          "radius": 100
+        },
+        {
+          "x": 1760,
+          "y": 505,
+          "radius": 60
+        },
+        {
+          "x": 1850,
+          "y": 505,
+          "radius": 60
+        },
+        {
+          "x": 130,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 365,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 600,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 835,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 1070,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 1305,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 1540,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 1775,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 2010,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 2245,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 2480,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 130,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 365,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 600,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 835,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 1070,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1305,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 1540,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1775,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 2010,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 2245,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 2480,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1900,
+          "y": 1117,
+          "radius": 18
+        },
+        {
+          "x": 2040,
+          "y": 1135,
+          "radius": 26
+        },
+        {
+          "x": 2190,
+          "y": 831.0196078431372,
+          "radius": 56.666666666666664
+        },
+        {
+          "x": 2306.6666666666665,
+          "y": 835.1764705882352,
+          "radius": 39.166666666666664
+        },
+        {
+          "x": 2273.3333333333335,
+          "y": 890.0470588235294,
+          "radius": 24.166666666666668
+        },
+        {
+          "x": 2070,
+          "y": 960,
+          "radius": 14
+        },
+        {
+          "x": 2107,
+          "y": 953,
+          "radius": 13
+        },
+        {
+          "x": 1936.4723638068488,
+          "y": 964.7266225357693,
+          "radius": 14
+        },
+        {
+          "x": 1908,
+          "y": 853,
+          "radius": 13
+        },
+        {
+          "x": 1898,
+          "y": 993,
+          "radius": 13
+        }
+      ]
+    },
+    {
+      "name": "camp",
+      "area": "terraces",
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "survey-soil",
+          "texture": "material-soil",
+          "x": 700,
+          "y": 440,
+          "width": 78,
+          "height": 60.99999999999999,
+          "alpha": 1,
+          "visible": true,
+          "depth": 438
+        },
+        {
+          "name": "survey-biology",
+          "texture": "material-biology",
+          "x": 2230,
+          "y": 470,
+          "width": 80,
+          "height": 75,
+          "alpha": 1,
+          "visible": true,
+          "depth": 468
+        },
+        {
+          "name": "survey-route-west",
+          "texture": "material-route",
+          "x": 850,
+          "y": 590,
+          "width": 45,
+          "height": 63,
+          "alpha": 1,
+          "visible": true,
+          "depth": 588
+        },
+        {
+          "name": "pe-ground",
+          "kind": "groundRod",
+          "texture": "quest-survival",
+          "x": 1540,
+          "y": 610,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 608
+        },
+        {
+          "name": "pt-upper",
+          "kind": "surveyor",
+          "texture": "quest-survival",
+          "x": 810,
+          "y": 620,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 618
+        },
+        {
+          "name": "settlement-power-station",
+          "kind": "worklight",
+          "texture": "quest-survival",
+          "x": 1770,
+          "y": 770,
+          "width": 112,
+          "height": 112,
+          "alpha": 1,
+          "visible": true,
+          "depth": 768
+        },
+        {
+          "name": "npc-worksite-caio",
+          "kind": "tools",
+          "texture": "quest-research",
+          "x": 2047,
+          "y": 922,
+          "width": 53,
+          "height": 53,
+          "alpha": 1,
+          "visible": true,
+          "depth": 918
+        },
+        {
+          "name": "pe-online",
+          "kind": "worklight",
+          "texture": "quest-survival",
+          "x": 1770,
+          "y": 930,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 928
+        },
+        {
+          "name": "frost-water-reserve",
+          "kind": "sealedWater",
+          "texture": "quest-cold-reserve",
+          "x": 1998,
+          "y": 984,
+          "width": 85,
+          "height": 85,
+          "alpha": 1,
+          "visible": true,
+          "depth": 982
+        },
+        {
+          "name": "survey-site",
+          "texture": "material-site",
+          "x": 2210,
+          "y": 1010,
+          "width": 108,
+          "height": 82,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1008
+        },
+        {
+          "name": "survey-route-east",
+          "texture": "material-route",
+          "x": 1630,
+          "y": 1040,
+          "width": 45,
+          "height": 63,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1038
+        },
+        {
+          "name": "pf-sample",
+          "kind": "cleanSample",
+          "texture": "quest-survival",
+          "x": 1840,
+          "y": 1040,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1038
+        },
+        {
+          "name": "pt-anchor",
+          "kind": "tools",
+          "texture": "quest-research",
+          "x": 1150,
+          "y": 1060,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1058
+        },
+        {
+          "name": "pw-online",
+          "kind": "sealedWater",
+          "texture": "quest-survival",
+          "x": 1990,
+          "y": 1070,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1068
+        },
+        {
+          "name": "survey-soil",
+          "texture": "material-soil",
+          "x": 1880,
+          "y": 1080,
+          "width": 78,
+          "height": 60.99999999999999,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1078
+        },
+        {
+          "name": "pe-isolate",
+          "kind": "isolator",
+          "texture": "quest-survival",
+          "x": 1580,
+          "y": 1080,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1078
+        },
+        {
+          "name": "pw-filter",
+          "kind": "filter",
+          "texture": "quest-survival",
+          "x": 590,
+          "y": 1100,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1098
+        },
+        {
+          "name": "pt-load",
+          "kind": "cargoSled",
+          "texture": "quest-survival",
+          "x": 850,
+          "y": 1100,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1098
+        },
+        {
+          "name": "settlement-food-reserve",
+          "kind": "foodReserve",
+          "texture": "quest-survival",
+          "x": 2010,
+          "y": 1100,
+          "width": 90,
+          "height": 90,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1098
+        },
+        {
+          "name": "pt-deliver",
+          "kind": "supplyRack",
+          "texture": "quest-survival",
+          "x": 1900,
+          "y": 1110,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1108
+        },
+        {
+          "name": "pf-control",
+          "kind": "seedlings",
+          "texture": "quest-survival",
+          "x": 920,
+          "y": 1120,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1118
+        },
+        {
+          "name": "pf-stock",
+          "kind": "foodReserve",
+          "texture": "quest-survival",
+          "x": 2010,
+          "y": 1130,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1128
+        },
+        {
+          "name": "pt-lower",
+          "kind": "coreSample",
+          "texture": "quest-research",
+          "x": 1370,
+          "y": 1130,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1128
+        },
+        {
+          "name": "",
+          "kind": "returnBeacon",
+          "texture": "quest-research",
+          "x": 340,
+          "y": 1165,
+          "width": 55,
+          "height": 55,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1140
+        },
+        {
+          "name": "settlement-supply-depot",
+          "kind": "supplyRack",
+          "texture": "quest-survival",
+          "x": 1780,
+          "y": 1160,
+          "width": 110,
+          "height": 110,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1158
+        },
+        {
+          "name": "survey-soil",
+          "texture": "material-soil",
+          "x": 1410,
+          "y": 1165,
+          "width": 78,
+          "height": 60.99999999999999,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1163
+        },
+        {
+          "name": "pf-sample",
+          "kind": "contaminatedRoots",
+          "texture": "quest-survival",
+          "x": 1660,
+          "y": 1170,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 1168
+        }
+      ],
+      "solids": [
+        {
+          "x": 720,
+          "y": 690,
+          "radius": 38
+        },
+        {
+          "x": 1100,
+          "y": 815,
+          "radius": 68
+        },
+        {
+          "x": 1270,
+          "y": 815,
+          "radius": 67
+        },
+        {
+          "x": 1440,
+          "y": 815,
+          "radius": 60
+        },
+        {
+          "x": 1800,
+          "y": 600,
+          "radius": 40
+        },
+        {
+          "x": 130,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 365,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 600,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 835,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 1070,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 1305,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 1540,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 1775,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 2010,
+          "y": 356,
+          "radius": 63
+        },
+        {
+          "x": 2245,
+          "y": 340,
+          "radius": 63
+        },
+        {
+          "x": 2480,
+          "y": 348,
+          "radius": 63
+        },
+        {
+          "x": 130,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 365,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 600,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 835,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 1070,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1305,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 1540,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 1775,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 2010,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 2245,
+          "y": 1268,
+          "radius": 64
+        },
+        {
+          "x": 2480,
+          "y": 1280,
+          "radius": 64
+        },
+        {
+          "x": 2120,
+          "y": 795,
+          "radius": 68
+        },
+        {
+          "x": 2260,
+          "y": 800,
+          "radius": 47
+        },
+        {
+          "x": 2220,
+          "y": 866,
+          "radius": 29
+        },
+        {
+          "x": 1998,
+          "y": 972,
+          "radius": 23
+        },
+        {
+          "x": 2010,
+          "y": 1083,
+          "radius": 25
+        },
+        {
+          "x": 1780,
+          "y": 1138,
+          "radius": 30
+        },
+        {
+          "x": 1770,
+          "y": 746,
+          "radius": 32
+        },
+        {
+          "x": 503.3333333333333,
+          "y": 561.2352941176471,
+          "radius": 52.888888888888886
+        },
+        {
+          "x": 612.2222222222222,
+          "y": 565.1176470588235,
+          "radius": 36.55555555555556
+        },
+        {
+          "x": 581.1111111111111,
+          "y": 616.364705882353,
+          "radius": 22.555555555555557
+        },
+        {
+          "x": 2010,
+          "y": 920,
+          "radius": 14
+        },
+        {
+          "x": 2047,
+          "y": 913,
+          "radius": 13
+        },
+        {
+          "x": 2370.078317206196,
+          "y": 964.6119490752279,
+          "radius": 14
+        }
+      ]
+    },
+    {
+      "name": "wind",
+      "area": "arid",
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "wind-survey-field",
+          "texture": "wind-survey-floor",
+          "x": 2565,
+          "y": 795,
+          "width": 420,
+          "height": 190,
+          "alpha": 0.35,
+          "visible": true,
+          "depth": -16
+        },
+        {
+          "name": "wind-survey-dock",
+          "texture": "wind-survey-dock",
+          "x": 2710,
+          "y": 802,
+          "width": 96,
+          "height": 72,
+          "alpha": 1,
+          "visible": true,
+          "depth": -15
+        },
+        {
+          "name": "",
+          "kind": "returnBeacon",
+          "texture": "quest-research",
+          "x": 3000,
+          "y": 830,
+          "width": 55,
+          "height": 55,
+          "alpha": 1,
+          "visible": true,
+          "depth": 805
+        },
+        {
+          "name": "wind-survey-platform",
+          "kind": "windSled",
+          "texture": "quest-research",
+          "x": 2710,
+          "y": 809,
+          "width": 96,
+          "height": 96,
+          "alpha": 1,
+          "visible": true,
+          "depth": 808
+        },
+        {
+          "name": "pv-mount",
+          "kind": "anemometer",
+          "texture": "quest-research",
+          "x": 2420,
+          "y": 840,
+          "width": 76,
+          "height": 76,
+          "alpha": 1,
+          "visible": false,
+          "depth": 838
+        },
+        {
+          "name": "survey-biology",
+          "texture": "material-biology",
+          "x": 1330,
+          "y": 885,
+          "width": 80,
+          "height": 75,
+          "alpha": 1,
+          "visible": true,
+          "depth": 883
+        },
+        {
+          "name": "survey-soil",
+          "texture": "material-soil",
+          "x": 4440,
+          "y": 915,
+          "width": 78,
+          "height": 60.99999999999999,
+          "alpha": 1,
+          "visible": true,
+          "depth": 913
+        },
+        {
+          "name": "wind-survey-meter",
+          "x": 2685,
+          "y": 722,
+          "width": 50,
+          "height": 4,
+          "alpha": 1,
+          "visible": true,
+          "depth": 11000
+        }
+      ],
+      "solids": [
+        {
+          "x": 690,
+          "y": 480,
+          "radius": 48
+        },
+        {
+          "x": 1010,
+          "y": 970,
+          "radius": 55
+        },
+        {
+          "x": 1190,
+          "y": 735,
+          "radius": 47
+        },
+        {
+          "x": 1510,
+          "y": 510,
+          "radius": 62
+        },
+        {
+          "x": 1730,
+          "y": 1020,
+          "radius": 60
+        },
+        {
+          "x": 1900,
+          "y": 535,
+          "radius": 48
+        },
+        {
+          "x": 2150,
+          "y": 945,
+          "radius": 55
+        },
+        {
+          "x": 2240,
+          "y": 786,
+          "radius": 34
+        },
+        {
+          "x": 2460,
+          "y": 1000,
+          "radius": 70
+        },
+        {
+          "x": 2610,
+          "y": 550,
+          "radius": 50
+        },
+        {
+          "x": 3190,
+          "y": 795,
+          "radius": 56
+        },
+        {
+          "x": 3420,
+          "y": 900,
+          "radius": 62
+        },
+        {
+          "x": 3570,
+          "y": 720,
+          "radius": 48
+        },
+        {
+          "x": 3890,
+          "y": 970,
+          "radius": 72
+        },
+        {
+          "x": 4050,
+          "y": 625,
+          "radius": 54
+        },
+        {
+          "x": 4310,
+          "y": 930,
+          "radius": 65
+        },
+        {
+          "x": 4540,
+          "y": 770,
+          "radius": 56
+        },
+        {
+          "x": 4760,
+          "y": 555,
+          "radius": 62
+        },
+        {
+          "x": 4750,
+          "y": 1060,
+          "radius": 66
+        },
+        {
+          "x": 440,
+          "y": 370,
+          "radius": 58
+        },
+        {
+          "x": 760,
+          "y": 383,
+          "radius": 58
+        },
+        {
+          "x": 1090,
+          "y": 396,
+          "radius": 58
+        },
+        {
+          "x": 1410,
+          "y": 370,
+          "radius": 58
+        },
+        {
+          "x": 1730,
+          "y": 383,
+          "radius": 58
+        },
+        {
+          "x": 2060,
+          "y": 396,
+          "radius": 58
+        },
+        {
+          "x": 2400,
+          "y": 370,
+          "radius": 58
+        },
+        {
+          "x": 2710,
+          "y": 383,
+          "radius": 58
+        },
+        {
+          "x": 3040,
+          "y": 396,
+          "radius": 58
+        },
+        {
+          "x": 3370,
+          "y": 370,
+          "radius": 58
+        },
+        {
+          "x": 3720,
+          "y": 383,
+          "radius": 58
+        },
+        {
+          "x": 4080,
+          "y": 396,
+          "radius": 58
+        },
+        {
+          "x": 4450,
+          "y": 370,
+          "radius": 58
+        },
+        {
+          "x": 4820,
+          "y": 383,
+          "radius": 58
+        },
+        {
+          "x": 460,
+          "y": 1155,
+          "radius": 64
+        },
+        {
+          "x": 820,
+          "y": 1139,
+          "radius": 64
+        },
+        {
+          "x": 1180,
+          "y": 1155,
+          "radius": 64
+        },
+        {
+          "x": 1520,
+          "y": 1139,
+          "radius": 64
+        },
+        {
+          "x": 1870,
+          "y": 1155,
+          "radius": 64
+        },
+        {
+          "x": 2220,
+          "y": 1139,
+          "radius": 64
+        },
+        {
+          "x": 2570,
+          "y": 1155,
+          "radius": 64
+        },
+        {
+          "x": 3050,
+          "y": 1139,
+          "radius": 64
+        },
+        {
+          "x": 3430,
+          "y": 1155,
+          "radius": 64
+        },
+        {
+          "x": 3820,
+          "y": 1139,
+          "radius": 64
+        },
+        {
+          "x": 4210,
+          "y": 1155,
+          "radius": 64
+        },
+        {
+          "x": 4610,
+          "y": 1139,
+          "radius": 64
+        },
+        {
+          "x": 4890,
+          "y": 1155,
+          "radius": 64
+        },
+        {
+          "x": 5160,
+          "y": 535,
+          "radius": 78
+        },
+        {
+          "x": 5160,
+          "y": 1070,
+          "radius": 78
+        },
+        {
+          "x": 2240,
+          "y": 776,
+          "radius": 32
+        },
+        {
+          "x": 1250,
+          "y": 780,
+          "radius": 68
+        },
+        {
+          "x": 2850,
+          "y": 740,
+          "radius": 70
+        },
+        {
+          "x": 4350,
+          "y": 800,
+          "radius": 64
+        },
+        {
+          "x": 2710,
+          "y": 770,
+          "radius": 24
+        }
+      ]
+    },
+    {
+      "name": "dunes",
+      "area": "dunes",
+      "bosses": {
+        "vesper": false,
+        "titan": false
+      },
+      "objects": [
+        {
+          "name": "survey-soil",
+          "texture": "material-soil",
+          "x": 1070,
+          "y": 540,
+          "width": 78,
+          "height": 60.99999999999999,
+          "alpha": 1,
+          "visible": true,
+          "depth": 538
+        },
+        {
+          "name": "dune-survey-probe",
+          "kind": "coreSample",
+          "texture": "quest-research",
+          "x": 2130,
+          "y": 865,
+          "width": 86,
+          "height": 86,
+          "alpha": 1,
+          "visible": true,
+          "depth": 863
+        },
+        {
+          "name": "",
+          "kind": "returnBeacon",
+          "texture": "quest-research",
+          "x": 1850,
+          "y": 1045,
+          "width": 55,
+          "height": 55,
+          "alpha": 1,
+          "visible": true,
+          "depth": 1020
+        }
+      ],
+      "solids": [
+        {
+          "x": 780,
+          "y": 740,
+          "radius": 47
+        },
+        {
+          "x": 1010,
+          "y": 1120,
+          "radius": 55
+        },
+        {
+          "x": 1290,
+          "y": 1160,
+          "radius": 66
+        },
+        {
+          "x": 1490,
+          "y": 1200,
+          "radius": 58
+        },
+        {
+          "x": 1760,
+          "y": 1160,
+          "radius": 61
+        },
+        {
+          "x": 1900,
+          "y": 1330,
+          "radius": 48
+        },
+        {
+          "x": 1830,
+          "y": 785,
+          "radius": 40
+        },
+        {
+          "x": 2270,
+          "y": 630,
+          "radius": 53
+        },
+        {
+          "x": 2060,
+          "y": 1710,
+          "radius": 62
+        },
+        {
+          "x": 2850,
+          "y": 1660,
+          "radius": 59
+        },
+        {
+          "x": 1220,
+          "y": 1130,
+          "radius": 70
+        },
+        {
+          "x": 1450,
+          "y": 1160,
+          "radius": 80
+        },
+        {
+          "x": 1680,
+          "y": 1170,
+          "radius": 70
+        },
+        {
+          "x": 1100,
+          "y": 800,
+          "radius": 70
+        },
+        {
+          "x": 1460,
+          "y": 1490,
+          "radius": 75
+        },
+        {
+          "x": 2490,
+          "y": 1410,
+          "radius": 52
+        },
+        {
+          "x": 2130,
+          "y": 851,
+          "radius": 18
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

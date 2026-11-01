@@ -1,0 +1,25 @@
+{
+  "base": "http://127.0.0.1:5185",
+  "method": "Existing isolated water-chapter arrival. Acceptance staged explicitly by Missions API solely to inspect the active pressure surface. DEV travel/approach only; warning and damage run on normal game clock, final entry uses W. No real saves/bosses/receipts changed.",
+  "errors": [],
+  "before": {
+    "hp": 120,
+    "x": 1550,
+    "y": 1120,
+    "texture": "water-pressure-r1",
+    "alpha": 0.7,
+    "width": 270,
+    "height": 64
+  },
+  "after": {
+    "hp": 89,
+    "x": 1550,
+    "y": 1005.6634000000007,
+    "completed": false,
+    "bosses": [
+      false,
+      false
+    ]
+  },
+  "passed": true
+}

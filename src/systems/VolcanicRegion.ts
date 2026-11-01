@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { VOLCANIC,type VolcanicArea } from '../config/volcanic';
 import { ChapterPortal } from './ChapterPortal';
 import type { Obstacle } from './Movement';
-import { EnvironmentPainter,trackEnvironmentOcclusion } from '../visual/EnvironmentArt';
+import { EnvironmentPainter,markEnvironmentBody } from '../visual/EnvironmentArt';
 
 export class VolcanicRegion {
  readonly config;readonly bounds;readonly obstacles:Obstacle[];
@@ -22,7 +22,7 @@ export class VolcanicRegion {
    painter.destroy();
   }
   const relay=scene.add.image(c.relay.x,c.relay.y-12,'deep-relay').setOrigin(.5,.94).setDisplaySize(140,125).setTint(id==='cinder'?0xc4ac8a:0xa399af).setDepth(c.relay.y-28);
-  trackEnvironmentOcclusion(scene,relay);
+  markEnvironmentBody(scene,relay);
   this.pulse=scene.add.ellipse(c.relay.x,c.relay.y-35,46,12,0xa98cff,recorded?.6:.12).setDepth(c.relay.y-25);
   this.back=new ChapterPortal(scene,c.back,true);this.onward=new ChapterPortal(scene,c.exit,recorded);
  }

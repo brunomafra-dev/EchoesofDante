@@ -96,6 +96,8 @@ canvas { display: block; box-shadow: 0 24px 90px #0008; }
 @media(max-height:500px){.is-settings-page.application-shell{padding-top:max(10px,env(safe-area-inset-top));padding-bottom:max(10px,env(safe-area-inset-bottom))}.is-settings-page .shell-content h2{font-size:25px}.settings-actions{margin-top:4px}.shell-content .settings-audio-hint{min-height:0}.settings-volumes{gap:14px}}
 .is-coop-page .shell-content>.coop-chat{position:static;transform:none;width:100%;max-width:100%;box-sizing:border-box;margin-top:14px;top:auto;right:auto;bottom:auto;left:auto;z-index:auto}
 @media(pointer:coarse){.campaign-lab-help.is-mobile-lab.is-ux-lab:not([open]) summary::after{content:'LAB UX ▾'}}
+@media(pointer:coarse){.campaign-lab-help.is-mobile-lab.is-visual-lab:not([open]) summary::after{content:'LAB VISUAL ▾'}}
+.campaign-lab-help.is-visual-lab{max-height:calc(100dvh - 120px);overflow:auto;box-sizing:border-box}.campaign-lab-help.is-visual-lab .mission-lab-stages{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.campaign-lab-help.is-visual-lab button{min-height:44px;max-width:100%;padding:6px 9px;white-space:normal;background:#203b34;color:#eee8cf;border:1px solid #6d8170;border-radius:4px;font:12px/1.3 system-ui}.campaign-lab-help.is-visual-lab button:focus-visible{outline:2px solid #e3c893;outline-offset:2px}.campaign-lab-help.is-visual-lab button:disabled{opacity:.5}
 .shell-content input[name="coop-invite"] { font-size: 12px; user-select: text; -webkit-user-select: text; }
 .shell-class-card { padding: 16px; border-left: 2px solid #e0863f; background: #172a21b3; }
 .shell-class-card small { color: #aebba6; }

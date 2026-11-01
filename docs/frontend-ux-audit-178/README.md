@@ -6,6 +6,8 @@
 
 **Etapa de UX autorizada em 01/11:** [0.1.180 · UX geral, incluindo desktop](../ux-general/README.md) trata U01–U05 e a sobreposição do chat com menus encontrada no seguimento de áudio. Evidências/limites e aprovação humana são registrados no documento da entrega. V01–V05 continuam para a etapa visual.
 
+**UX aprovada / etapa visual autorizada em 01/11:** usuário aprovou a 0.1.180 e pediu auditar/corrigir a integração profissionalmente. [0.1.181 · seguimento V01–V05](../visual-integration/README.md) registra as correções, novas evidências e limites. O parecer abaixo continua histórico; não implica aprovação humana antecipada da nova arte.
+
 ## Parecer
 
 A 0.1.178 melhorou a confirmação dos sliders e passou a controlar a trilha por Web Audio, mas **não deve ser considerada encerrada como correção completa do áudio**. Há um defeito reproduzido na campanha pública: começar com volume zero e depois restaurá-lo pode deixar a música permanentemente muda naquela voz. O ganho sobe, mas o elemento continua `muted` e o sinal permanece zero.

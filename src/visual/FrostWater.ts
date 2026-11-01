@@ -7,6 +7,7 @@ import type {Obstacle} from '../systems/Movement';
 import type {Vec2} from '../utils/math';
 import type {PermanenceSite} from '../config/permanence';
 import {addQuestProp} from './QuestProps';
+import {pipeTexture} from './GroundPipe';
 
 // Pipes are baked on installation. Flow/handles only change transforms or
 // visibility. All state is existing durable, replicated mission evidence.
@@ -24,10 +25,8 @@ export class FrostWater{
   if(this.area!=='frost'||!m.has('pg-mount'))return;
   if(!this.installed){
    this.installed=true;
-   const g=this.scene.make.graphics({x:0,y:0});
    const hoses=[new Phaser.Curves.Path(30,10).cubicBezierTo(80,150,5,80,25,125),new Phaser.Curves.Path(80,150).cubicBezierTo(180,110,105,135,150,155),new Phaser.Curves.Path(180,110).cubicBezierTo(330,180,220,180,300,130)];
-   for(const hose of hoses){const points=hose.getPoints(40);g.lineStyle(7,0x393f36,.7).strokePoints(points,false);g.lineStyle(4,0x81745a,.95).strokePoints(points,false);g.lineStyle(1,0xb2a383,.6).strokePoints(points,false);}
-   const key='frost-water-pipe';if(!this.scene.textures.exists(key))g.generateTexture(key,360,200);g.destroy();
+   const key=pipeTexture(this.scene,'frost-water-pipe-r2',360,200,hoses.map(h=>h.getPoints(40)));
    this.scene.add.image(760,870,key).setOrigin(0).setDepth(-15).setName('frost-water-pipe');
    addQuestProp(this.scene,'coldCollector',W.body.x,W.body.y+36,132).setDepth(W.body.y-2).setName('frost-water-collector');
    this.obstacles.push({x:W.body.x,y:W.body.y-7,radius:25});

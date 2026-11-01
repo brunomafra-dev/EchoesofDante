@@ -4,6 +4,7 @@ import {NPC_REVIEW_STOPS,npcReviewPeople,npcReviewSelection} from '../../config/
 // Both save namespaces stay in this tab's sessionStorage, across reloads. No
 // character, setting or one-shot launch in the real game is read or modified.
 const get=Storage.prototype.getItem,set=Storage.prototype.setItem,remove=Storage.prototype.removeItem;
+const visualReviewTest=new URLSearchParams(location.search).has('visual-review');
 const uxReviewTest=new URLSearchParams(location.search).has('ux-review');
 const settlementMotionTest=new URLSearchParams(location.search).has('settlement-motion');
 const npcReviewTest=new URLSearchParams(location.search).has('npc-review');
@@ -13,7 +14,7 @@ const settlementLifeTest=new URLSearchParams(location.search).has('settlement-li
 const mapMemoryTest=new URLSearchParams(location.search).has('map-memory');
 const missionIdentityTest=new URLSearchParams(location.search).has('mission-identity');
 const audioReviewTest=new URLSearchParams(location.search).has('audio-review');
-const permanenceChapter=new URLSearchParams(location.search).get('permanence')??(outpostSupportTest?'outpost':settlementLifeTest||npcReviewTest?'water':null);
+const permanenceChapter=new URLSearchParams(location.search).get('permanence')??(visualReviewTest?'icecave':outpostSupportTest?'outpost':settlementLifeTest||npcReviewTest?'water':null);
 const permanenceTest=!!permanenceChapter;
 const missionTest=new URLSearchParams(location.search).has('missions')||permanenceTest;
 const mobileReviewTest=new URLSearchParams(location.search).has('mobile-review');
@@ -32,8 +33,8 @@ const arrivalParam=new URLSearchParams(location.search).get('arrival');
 const routeArrival=routeTest&&((!siroccoTest&&!borealTest&&!embersTest&&(arrivalParam==='forest'||arrivalParam==='cavern'))||(siroccoTest&&(arrivalParam==='valley'||arrivalParam==='arid'||arrivalParam==='dunes'||arrivalParam==='sandpit'))||(borealTest&&(arrivalParam==='frost'||arrivalParam==='icecave'||arrivalParam==='icenest'))||(embersTest&&(arrivalParam==='cinder'||arrivalParam==='obsidian'||arrivalParam==='caldera')))?arrivalParam:undefined;
 const depthTest=new URLSearchParams(location.search).has('depth');
 const settlementTest=new URLSearchParams(location.search).has('settlement');
-const prefix=uxReviewTest?'dante-ux-review-v1.'+(permanenceChapter??'menu')+'.':audioReviewTest?'dante-audio-settings-review-v1.':mobileReviewTest?'dante-mobile-review-v1.':embersTest?`dante-embers-journey-v1.${routeArrival??'journey'}.`:borealTest?`dante-boreal-journey-v1.${routeArrival??'journey'}.`:siroccoTest?`dante-sirocco-journey-v1.${routeArrival??'journey'}.`:routeTest?`dante-early-route-v2.${routeArrival??'journey'}.`:depthTest?`dante-regional-lab.${mobileClass??'warrior'}.`:new URLSearchParams(location.search).has('journey')?'dante-journey-review-lab.':mobileTest?`dante-mobile-lab.${mobileClass??'warrior'}.`:settlementTest?'dante-settlement-lab-v2.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
-const labPrefix=uxReviewTest?prefix:mapMemoryTest?'dante-map-memory-v1.'+(mobileClass??'warrior')+'.':missionIdentityTest?'dante-mission-identity-v1.'+permanenceChapter+'.'+(mobileClass??'warrior')+'.':vitalsTest?'dante-vitals-v1.'+(mobileClass??'warrior')+'.':outpostSupportTest?'dante-outpost-support-v1.'+(mobileClass??'warrior')+'.':npcReviewTest?'dante-npc-review-v1.'+(mobileClass??'warrior')+'.':settlementMotionTest?'dante-settlement-motion-v1.'+(mobileClass??'warrior')+'.':settlementLifeTest?'dante-settlement-life-v1.'+(mobileClass??'warrior')+'.':permanenceTest?'dante-permanence-v1.'+permanenceChapter+'.'+(mobileClass??'warrior')+'.':titanTest?'dante-titan-combat-v1.'+(mobileClass??'warrior')+'.':vesperTest?'dante-vesper-combat-v2.'+(mobileClass??'warrior')+'.':soterradoTest?'dante-soterrado-combat-v1.'+(mobileClass??'warrior')+'.':wardenTest?'dante-warden-combat-v2.'+ (mobileClass??'warrior')+'.':prefix;
+const prefix=visualReviewTest?'dante-visual-integration-v1.'+(mobileClass??'warrior')+'.':uxReviewTest?'dante-ux-review-v1.'+(permanenceChapter??'menu')+'.':audioReviewTest?'dante-audio-settings-review-v1.':mobileReviewTest?'dante-mobile-review-v1.':embersTest?`dante-embers-journey-v1.${routeArrival??'journey'}.`:borealTest?`dante-boreal-journey-v1.${routeArrival??'journey'}.`:siroccoTest?`dante-sirocco-journey-v1.${routeArrival??'journey'}.`:routeTest?`dante-early-route-v2.${routeArrival??'journey'}.`:depthTest?`dante-regional-lab.${mobileClass??'warrior'}.`:new URLSearchParams(location.search).has('journey')?'dante-journey-review-lab.':mobileTest?`dante-mobile-lab.${mobileClass??'warrior'}.`:settlementTest?'dante-settlement-lab-v2.':missionTest?'dante-missions-lab.':'dante-campaign-lab.';
+const labPrefix=visualReviewTest||uxReviewTest?prefix:mapMemoryTest?'dante-map-memory-v1.'+(mobileClass??'warrior')+'.':missionIdentityTest?'dante-mission-identity-v1.'+permanenceChapter+'.'+(mobileClass??'warrior')+'.':vitalsTest?'dante-vitals-v1.'+(mobileClass??'warrior')+'.':outpostSupportTest?'dante-outpost-support-v1.'+(mobileClass??'warrior')+'.':npcReviewTest?'dante-npc-review-v1.'+(mobileClass??'warrior')+'.':settlementMotionTest?'dante-settlement-motion-v1.'+(mobileClass??'warrior')+'.':settlementLifeTest?'dante-settlement-life-v1.'+(mobileClass??'warrior')+'.':permanenceTest?'dante-permanence-v1.'+permanenceChapter+'.'+(mobileClass??'warrior')+'.':titanTest?'dante-titan-combat-v1.'+(mobileClass??'warrior')+'.':vesperTest?'dante-vesper-combat-v2.'+(mobileClass??'warrior')+'.':soterradoTest?'dante-soterrado-combat-v1.'+(mobileClass??'warrior')+'.':wardenTest?'dante-warden-combat-v2.'+ (mobileClass??'warrior')+'.':prefix;
 // An explicit trip home must survive the lab's otherwise automatic arrival.
 const labHome=permanenceTest&&get.call(sessionStorage,labPrefix+'home-once')==='1';
 if(permanenceTest){remove.call(sessionStorage,labPrefix+'home-once');window.addEventListener('dante-return-home',()=>set.call(sessionStorage,labPrefix+'home-once','1'));}
@@ -144,9 +145,51 @@ if(permanenceTest){
   if(settlementMotionTest){details.querySelector('summary')!.textContent='MOVIMENTO DOS NPCs · TESTE ISOLADO';const motion=document.createElement('p');motion.textContent='Na base, observe Lia preparar e examinar os materiais e Nara consultar e anotar as rotas, cada uma no seu ritmo. Ivo mantém o trabalho aprovado. Nos Terraços, confira a caminhada, as tarefas e a conversa de Tio Gui/Elisa. No cooperativo, as rotinas acompanham o anfitrião.';details.append(motion);}
   const map=document.createElement('button');map.textContent='ABRIR ATLAS PARA VISITAR O ACAMPAMENTO';map.onclick=()=>{details.open=false;(game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene)?.openExpedition()};details.append(map);
  }
- if(!npcReviewTest&&!get.call(sessionStorage,labPrefix+'arrived')&&!new URLSearchParams(location.search).has('sala')){const deadline=performance.now()+90000;const arrive=()=>{const s=game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene;if(s?.sys.isActive()&&s.seedMissionPlaytest(chapter.id)){set.call(sessionStorage,labPrefix+'arrived','1');details.open=false;}else if(performance.now()<deadline)setTimeout(arrive,150);};setTimeout(arrive,150);}
+ if(!npcReviewTest&&!visualReviewTest&&!get.call(sessionStorage,labPrefix+'arrived')&&!new URLSearchParams(location.search).has('sala')){const deadline=performance.now()+90000;const arrive=()=>{const s=game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene;if(s?.sys.isActive()&&s.seedMissionPlaytest(chapter.id)){set.call(sessionStorage,labPrefix+'arrived','1');details.open=false;}else if(performance.now()<deadline)setTimeout(arrive,150);};setTimeout(arrive,150);}
 }
 
+if(visualReviewTest){
+ const {VISUAL_REVIEW_STOPS}=await import('../../config/visualReview');
+ const {characterProfiles}=await import('../../systems/CharacterProfiles');
+ const {coopSession}=await import('../../network/CoopSession');
+ const reset=details.querySelector<HTMLButtonElement>('[data-reset]')??details.querySelector<HTMLButtonElement>('button')!;
+ details.classList.add('is-mobile-lab','is-visual-lab');
+ const summary=document.createElement('summary');summary.textContent='OBJETOS E TERRENOS · INSPEÇÃO ISOLADA';
+ const note=document.createElement('p');note.textContent='Cada visita prepara uma cópia avançada: Warden/Soterrado, sete relatórios originais, doze capítulos anteriores e acessos até as Galerias simulados. Coletor instalado e carga das Galerias retirada/preparada para inspeção. Análises das Galerias, chegada da carga, mecanismo, arquivo, recompensa atual e Vésper/Incandescente NÃO são simulados. A escolha reinicia somente este cenário temporário. Nenhum personagem, configuração ou save real é alterado.';
+ const combat=new URLSearchParams(location.search).has('combat');
+ const help=document.createElement('p');help.textContent='Compare contato com o chão, sombras, neve/vegetação e tubulações. Ande ao redor e atrás dos objetos: eles conservam a opacidade e podem encobrir o herói. E, toque ou A interage; J abre o diário e M o atlas, que mantém os requisitos originais. '+(combat?'Encontros comuns ativos.':'Encontros comuns suspensos somente neste laboratório, sem registrar mortes, XP ou drops; bosses não são suprimidos.')+' No coop, volte ao início, crie a equipe e compartilhe o convite; só o anfitrião prepara as visitas com todos reunidos.';
+ const nav=document.createElement('p');nav.className='mission-lab-stages';
+ const notice=document.createElement('p');notice.dataset.visualNotice='';notice.setAttribute('role','status');
+ let preparing=false;
+ const visit=async(id:string)=>{
+  const stop=VISUAL_REVIEW_STOPS.find(s=>s.id===id);if(!stop||preparing)return false;preparing=true;nav.querySelectorAll('button').forEach(b=>b.disabled=true);
+  const prepare=(target:string)=>{const s=game.scene.getScene('Game') as import('../../scenes/GameScene').GameScene;return !!s?.sys.isActive()&&s.seedMissionPlaytest('settle-icecave',target);};
+  let ready=false;
+  try{
+   // Keep the relay's original adjacency rules. A distant lab visit returns
+   // through base before using an already simulated/discovered destination.
+   const from=coopSession.area;
+   if(coopSession.role==='host'&&from&&from!==stop.area&&!coopSession.canTravel(from,stop.area)){
+    if(!prepare('base'))return false;notice.textContent='Retornando pela base para preparar a visita da equipe…';
+    const deadline=performance.now()+15000;
+    while(performance.now()<deadline&&coopSession.role==='host'){
+     if(coopSession.area==='base'&&prepare(id)){ready=true;break;}
+     await new Promise(resolve=>setTimeout(resolve,150));
+    }
+   }else ready=prepare(id);
+   if(!ready)return false;
+   set.call(sessionStorage,labPrefix+'visual-arrived','1');set.call(sessionStorage,labPrefix+'visual-stop',id);notice.textContent='Visita preparada: '+stop.name;details.open=false;return true;
+  }finally{preparing=false;nav.querySelectorAll('button').forEach(b=>b.disabled=false);if(!ready)notice.textContent='Feche os menus, reúna a equipe e confira a conexão; apenas o anfitrião prepara a visita.';}
+ };
+ for(const stop of VISUAL_REVIEW_STOPS){const b=document.createElement('button');b.type='button';b.dataset.visualStop=stop.id;b.textContent=stop.name;b.onclick=()=>visit(stop.id);nav.append(b,document.createTextNode(' '));}
+ const library=document.createElement('a');library.href='test-library.html';library.textContent='Biblioteca de testes';
+ const encounter=document.createElement('a'),url=new URL(location.href);if(combat)url.searchParams.delete('combat');else url.searchParams.set('combat','1');encounter.href=url.href;encounter.textContent=combat?'Inspecionar sem encontros comuns':'Rever com encontros comuns ativos';
+ const brief=document.createElement('p');brief.textContent='Cópia avançada: Warden/Soterrado e capítulos anteriores simulados. Vésper/Incandescente vivos. Saves reais protegidos.';
+ const instructions=document.createElement('div');instructions.id='visual-review-instructions';instructions.hidden=true;instructions.append(note,help);
+ const explain=document.createElement('button');explain.type='button';explain.textContent='SIMULAÇÕES E INSTRUÇÕES';explain.setAttribute('aria-expanded','false');explain.setAttribute('aria-controls',instructions.id);explain.onclick=()=>{instructions.hidden=!instructions.hidden;explain.setAttribute('aria-expanded',String(!instructions.hidden));};
+ details.replaceChildren(summary,brief,nav,notice,explain,instructions,reset,document.createTextNode(' · '),encounter,document.createTextNode(' · '),library);
+ if(!labHome&&!new URLSearchParams(location.search).has('sala')&&characterProfiles.active.campaign?.mode!=='coop'&&!get.call(sessionStorage,labPrefix+'visual-arrived')){const deadline=performance.now()+90000;const arrive=async()=>{if(!await visit('base')&&performance.now()<deadline)setTimeout(arrive,150);};setTimeout(arrive,150);}
+}
 if(npcReviewTest){
  const params=new URLSearchParams(location.search),{characterProfiles}=await import('../../systems/CharacterProfiles');
  let selected=npcReviewSelection(params.get('npc-review'),params.get('npc'))??npcReviewSelection('base')!;

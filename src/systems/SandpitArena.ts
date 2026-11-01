@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { SANDPIT } from '../config/soterrado';
-import { EnvironmentPainter, trackEnvironmentOcclusion } from '../visual/EnvironmentArt';
+import { EnvironmentPainter, markEnvironmentBody } from '../visual/EnvironmentArt';
 
 export class SandpitArena {
   readonly bounds = { ...SANDPIT.bounds };
@@ -26,7 +26,7 @@ export class SandpitArena {
     painter.destroy();
     this.clue = scene.add.image(SANDPIT.clue.x, SANDPIT.clue.y - 22, defeated?'open-threshold':'sealed-threshold')
       .setOrigin(.5,.94).setDisplaySize(220,175).setTint(0xbba887).setDepth(705);
-    trackEnvironmentOcclusion(scene,this.clue);
+    markEnvironmentBody(scene,this.clue);
     if(!defeated)this.clue.setData('environmentFadeDisabled',true).setAlpha(.45);
     this.light=scene.add.ellipse(SANDPIT.clue.x,SANDPIT.clue.y-30,70,14,0xa98cff,defeated?.5:0).setDepth(706);
   }

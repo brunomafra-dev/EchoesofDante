@@ -16,7 +16,7 @@ const DRY=new Set<JourneyArea>(['arid','dunes','sandpit']);
 const asset=(name:string)=>`${import.meta.env.BASE_URL}assets/visual/world-finish/${name}-v1.webp`;
 
 export function preloadCampaignEnvironment(scene:Phaser.Scene,area:JourneyArea):void{
- if(area==='icecave'&&!scene.textures.exists('boreal-melt-pocket'))scene.load.image('boreal-melt-pocket',`${import.meta.env.BASE_URL}assets/boreal-details/melt-pocket-v1.png`);
+ if(['icecave','frost'].includes(area)&&!scene.textures.exists('boreal-melt-pocket')&&!scene.textures.exists('boreal-melt-pocket-source'))scene.load.image('boreal-melt-pocket-source',`${import.meta.env.BASE_URL}assets/boreal-details/melt-pocket-v2.png`);
  preloadEarlyJourney(scene,area);
  preloadRouteEnvironment(scene,area);
  const floors=area==='base'?['camp','forest']:area==='forest'?['forest']:area==='cavern'?['cave','meadow']:area==='warden'?['cave']:GREEN.has(area)?['meadow']:DRY.has(area)?['arid']:[];
@@ -137,7 +137,7 @@ export class CampaignEnvironment{
  private lastStep?:Vec2;
  private leafIndex=0;
  private readonly leaves:{image:Phaser.GameObjects.Image;x:number;y:number;born:number;angle:number}[]=[];
- private readonly canopy:{image:Phaser.GameObjects.Image;shadow?:Phaser.GameObjects.Image;x:number;y:number;angle:number;phase:number;alpha:number}[]=[];
+ private readonly canopy:{image:Phaser.GameObjects.Image;shadow?:Phaser.GameObjects.Image;x:number;y:number;angle:number;phase:number}[]=[];
  private readonly dust:{image:Phaser.GameObjects.Arc;x:number;y:number;phase:number}[]=[];
  private readonly glints:Phaser.GameObjects.Ellipse[]=[];
  private readonly still=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -154,14 +154,14 @@ export class CampaignEnvironment{
   }
   for(const object of scene.children.list){
    if(!(object instanceof Phaser.GameObjects.Image)||!['dante-canopy-green','dante-canopy-blue'].includes(object.texture.key))continue;
-   scene.tweens.killTweensOf(object);this.canopy.push({image:object,x:object.x,y:object.y,angle:object.angle,phase:object.x*.007,alpha:object.alpha});
+   scene.tweens.killTweensOf(object);this.canopy.push({image:object,x:object.x,y:object.y,angle:object.angle,phase:object.x*.007});
   }
   // A few real alpha boughs frame open spaces; no forest foliage in arid/ice/lava.
   const boughs:readonly number[][]=area==='base'?[[110,220,500],[1290,1010,500]]:area==='forest'?[[130,850,590],[2040,400,550]]:area==='valley'?[[230,400,540],[3120,320,500],[5100,1170,500]]:area==='springs'||area==='terraces'?[[160,310,500],[2460,1190,520]]:area==='cavern'?[[4580,280,540],[6140,1190,500]]:[];
   if(scene.textures.exists('world-overhead'))for(const[x,y,w]of boughs){
    const image=scene.add.image(x,y,'world-overhead').setDisplaySize(w,w*2/3).setDepth(14000).setAlpha(.85).setName('campaign-overhead');
    const shadow=scene.add.image(x+35,y+75,'world-overhead').setDisplaySize(w,w*.45).setTintFill(0x12201a).setAlpha(.12).setDepth(-9997);
-   this.canopy.push({image,shadow,x,y,angle:0,phase:x*.007,alpha:image.alpha});
+   this.canopy.push({image,shadow,x,y,angle:0,phase:x*.007});
   }
   for(let i=0;i<6;i++)this.leaves.push({image:scene.add.image(0,0,'world-green-plants',3).setDisplaySize(18,18).setVisible(false).setName('campaign-step-leaf'),x:0,y:0,born:-Infinity,angle:i});
   const color=COLD.has(area)?0xd6e6ee:ASH.has(area)?0xcbb3a0:DRY.has(area)?0xcbb78b:area==='cavern'||area==='warden'?0xa9a7c8:0xe5d5a6;
@@ -193,7 +193,6 @@ export class CampaignEnvironment{
    if(!c.image.active||!view.contains(c.x,c.y)&&Math.hypot(c.x-view.centerX,c.y-view.centerY)>Math.max(view.width,view.height))continue;
    c.image.setAngle(c.angle+Math.sin(time*.52+c.phase)*.8).setY(c.y+Math.sin(time*.65+c.phase)*1.5);
    if(c.shadow)c.shadow.setPosition(c.x+35+Math.sin(time*.52+c.phase)*3,c.y+75+Math.sin(time*.65+c.phase));
-   const gap=Math.hypot((player.position.x-c.x)/(c.image.displayWidth*.45),(player.position.y-c.y)/(c.image.displayHeight*.4));c.image.setAlpha(c.alpha*(.4+.6*Phaser.Math.Clamp((gap-.5)/.5,0,1)));
   }
   for(const m of this.dust)m.image.setVisible(!this.still).setPosition(view.x+(m.x+time*8*draft)%Math.max(1,view.width),view.y+(m.y+Math.sin(time*.35+m.phase)*14)%Math.max(1,view.height)).setAlpha(.07+(.5+.5*Math.sin(time*.6+m.phase))*.08);
   for(let i=0;i<this.glints.length;i++){const phase=(time*.13+i/3)%1;this.glints[i].setScale(.7+phase*.6).setAlpha(Math.sin(phase*Math.PI)*.3);}

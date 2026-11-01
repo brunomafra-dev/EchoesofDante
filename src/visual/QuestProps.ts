@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import {groundProp} from './PropGround';
 
 // Two baked RGBA atlases; complete objects, one texture upload per sheet.
 export const QUEST_PROPS={
@@ -21,9 +22,12 @@ export function preloadQuestProps(scene:Phaser.Scene):void{
  if(!scene.textures.exists('quest-buried'))scene.load.image('quest-buried',`${import.meta.env.BASE_URL}assets/buried-record/vitrified-core-v1.png`);
  for(const sheet of ['research','survival'])if(!scene.textures.exists('quest-'+sheet))scene.load.spritesheet('quest-'+sheet,`${import.meta.env.BASE_URL}assets/mission-identity/${sheet}-v1.png`,{frameWidth:256,frameHeight:256});
 }
-export function addQuestProp(scene:Phaser.Scene,kind:QuestProp,x:number,y:number,size=78):Phaser.GameObjects.Image{
+export function addQuestProp(scene:Phaser.Scene,kind:QuestProp,x:number,y:number,size=78,options:{fixed?:boolean}={}):Phaser.GameObjects.Image{
  const[sheet,frame]=QUEST_PROPS[kind];
- return scene.add.image(x,y,'quest-'+sheet,frame).setDisplaySize(size,size).setOrigin(.5,232/256).setDepth(y-2).setData('quest-prop',kind);
+ const image=scene.add.image(x,y,'quest-'+sheet,frame).setDisplaySize(size,size).setOrigin(.5,232/256).setDepth(y-2).setData('quest-prop',kind);
+ const temporary=['iceSled','windSled','cargoSled','windKit','necklace1','necklace2','necklace3','coreSample','cleanSample','contaminatedRoots','seedlings','vitrifiedCore','tools','manifest'].includes(kind);
+ const fixed=options.fixed??!temporary;groundProp(scene,image,{fixed,width:fixed?1.25:1});
+ return image;
 }
 // Undefined entries intentionally keep their natural formation/ground stamp.
 // null means an existing instrument/building/person is the objective itself.

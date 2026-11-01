@@ -1,10 +1,16 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**01/11/2026 · Integração visual autorizada · 0.1.181:** usuário aprovou a UX geral (“perfeito tudo certo”) e pediu auditar profissionalmente e corrigir a relação dos objetos com o terreno. [V01–V05, escopo, fixtures e evidências](visual-integration/README.md): fissura rasa e nascente fria, assentamento por material, tubos rasterizados com juntas, opacidade ambiental preservada e visitas próprias. Pinturas completas, enquadramento −300/2300 das Galerias, física, requisitos, recompensas e bosses posteriores preservados. Só esta etapa; aguardar playtest humano antes de retomar o Ninho.
+
+- [x] Revisão e comparação inicial em sete mapas; regressão integral das Galerias e coletor com quatro classes touch/gamepad passaram.
+- [x] QA local: build/typecheck 276 módulos, nove visitas em oito mapas, 32 corpos/copas (19 coberturas reais), aproximações, Galerias completas e recompensa única, coletor nas quatro classes touch/gamepad, dupla com reentrada e sete layouts compilados. [Evidências e limites](visual-integration/README.md).
+- [ ] Publicação/sincronização e aprovação visual humana registradas separadamente no documento da entrega.
+
 **01/11/2026 · UX geral autorizada · 0.1.180:** usuário pediu seguir a etapa de UX **como um todo, incluindo desktop**, após a entrega de áudio. [Escopo e evidências](ux-general/README.md): configurações compactas com amostras finitas de som, diário/NPC centrados na missão e ação, histórico recolhido, rótulos contextuais legíveis e chat sem sobrepor menus. Mouse/teclado/toque/gamepad, solo/coop e laboratórios próprios. Autoriza o avanço sem inferir reteste humano da 0.1.179. Aguardar validação desta UX antes da integração visual/V05 ou de outro capítulo.
 
 - [x] QA local: typecheck/build 272 módulos, sete viewports, desktop sem toque, teclado/gamepad emulado, aceite/serviço por diálogo, crédito/recibo único após reload, leitura histórica e tracking pessoais. Rótulos inspecionados em base/posto/Galerias; dupla no compilado confirmou lobby/chat/Enter/pausa sem interceptação. Regressão de áudio medida no compilado atual passou. [Relatórios, capturas, fixtures e limites](ux-general/README.md).
 - [x] Aplicação `84f0b43` em `origin/main`, Vercel success/82 hashes incluindo CSS; solo em sete viewports, desktop sem toque e dupla públicos passaram. Relay 16/`icecave:1` saudável, sem deploy adicional. [Publicação, evidências e limites](ux-general/qa/publication.json).
-- [ ] Aprovação humana desta UX e reteste em iPhone 13/13 Pro; aguardar antes da integração visual/V05.
+- [x] Aprovação humana desta UX registrada em 01/11; integração visual/V05 autorizada. Reteste físico em iPhone 13/13 Pro não é inferido dessa mensagem.
 
 **01/11/2026 · Etapa 1 da auditoria autorizada · 0.1.179:** usuário pediu começar na ordem áudio → UX mobile → integração visual. [Restauração e preferências de áudio](audio-recovery/README.md) corrige o mute residual, inclui a abertura no controle por ganho e isola leitura de flags/preferências. Laboratório sem progresso simulado e sem carregar mundo no menu. QA/publicação registrados no documento da entrega; aguardar reteste humano antes da etapa de UX. V05 permanece registrado para a etapa visual.
 

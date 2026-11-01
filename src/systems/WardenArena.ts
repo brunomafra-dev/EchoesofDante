@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { WARDEN_ARENA, WARDEN_ARENA_FOOTPRINTS, WARDEN_ARENA_MINERAL_BASES } from '../config/wardenArena';
-import { EnvironmentPainter, groundContour, createEnvironmentGround, trackEnvironmentOcclusion } from '../visual/EnvironmentArt';
+import { EnvironmentPainter, groundContour, createEnvironmentGround, markEnvironmentBody } from '../visual/EnvironmentArt';
 import type { MovementBounds, Obstacle } from './Movement';
 
 // Painted custodial basin behind the guardian threshold. Static material is
@@ -22,7 +22,7 @@ export class WardenArena {
     this.bake();
     const entrance = scene.add.image(520, 890, 'guardian-lintel-open').setOrigin(0.5, 0.95)
       .setDisplaySize(260, 145).setDepth(890).setTint(0xabb9a8);
-    trackEnvironmentOcclusion(scene, entrance);
+    markEnvironmentBody(scene, entrance);
     this.seal = scene.add.image(530, 795, 'guardian-lintel-closed').setDisplaySize(225, 110)
       .setDepth(895).setTint(0x9da9a1).setAlpha(0);
 

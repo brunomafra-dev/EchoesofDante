@@ -11,71 +11,11 @@ const PAINTINGS = [
 ] as const;
 export type EnvironmentPainting = typeof PAINTINGS[number] | 'spring-pool' | 'camp-supplies' | 'first-habitat' | 'camp-ground';
 
-type Occluder = { image: Phaser.GameObjects.Image; alpha: number; width: number; height: number; coverage: Uint8ClampedArray };
-const occluders = new WeakMap<Phaser.Scene, Occluder[]>();
-const coverageCache = new WeakMap<Phaser.Textures.Texture, Uint8ClampedArray>();
-const actorSamples = [[-12,-72],[0,-72],[12,-72],[-12,-42],[0,-42],[12,-42],[-12,-12],[0,-12],[12,-12]];
-
-function textureCoverage(image: Phaser.GameObjects.Image): Uint8ClampedArray {
-  const cached = coverageCache.get(image.texture);
-  if (cached) return cached;
-  // Read a 32-square visual occupancy grid once per shared texture. This is not
-  // physics, a GPU texture or per-frame pixel reading. Empty gate throats stay
-  // fully visible instead of fading the entire monument through its rectangle.
-  const canvas = document.createElement('canvas');
-  canvas.width = canvas.height = 32;
-  const context = canvas.getContext('2d', { willReadFrequently: true })!;
-  context.drawImage(image.texture.getSourceImage() as HTMLImageElement, 0, 0, 32, 32);
-  const pixels = context.getImageData(0, 0, 32, 32).data;
-  const coverage = new Uint8ClampedArray(1024);
-  for (let i = 0; i < coverage.length; i++) coverage[i] = pixels[i * 4 + 3];
-  coverageCache.set(image.texture, coverage);
-  return coverage;
-}
-
-export function resetEnvironmentOcclusion(scene: Phaser.Scene): void {
-  occluders.set(scene, []);
-}
-
-// Only raised environmental bodies participate. No gameplay state, listeners,
-// masks or tweens: this bounded list is rebuilt on the existing scene restart.
-export function trackEnvironmentOcclusion(scene: Phaser.Scene, image: Phaser.GameObjects.Image): void {
-  const list = occluders.get(scene) ?? [];
-  if (list.some(entry => entry.image === image)) return;
-  list.push({ image, alpha: image.alpha, width: image.texture.key === 'world-rock' ? 0.46 : 0.86,
-    height: image.texture.key === 'world-rock' ? 0.4 : 0.86, coverage: textureCoverage(image) });
-  occluders.set(scene, list);
-}
-
-export function updateEnvironmentOcclusion(scene: Phaser.Scene, feet: { x: number; y: number }, dt: number): void {
-  for (const entry of occluders.get(scene) ?? []) {
-    const image = entry.image;
-    // Opening/fading a gate owns its alpha until that finite transition ends.
-    if (!image.active || !image.visible || image.getData('environmentFadeDisabled')) continue;
-    const centerX = image.x + (0.5 - image.originX) * image.displayWidth;
-    const centerY = image.y + (0.5 - image.originY) * image.displayHeight;
-    const halfWidth = image.displayWidth * entry.width * 0.5;
-    const halfHeight = image.displayHeight * entry.height * 0.5;
-    const overlap = image.depth > feet.y && feet.x + 18 > centerX - halfWidth && feet.x - 18 < centerX + halfWidth
-      && feet.y + 6 > centerY - halfHeight && feet.y - 90 < centerY + halfHeight;
-    let covering = false;
-    if (overlap) {
-      const cos = Math.cos(image.rotation), sin = Math.sin(image.rotation);
-      for (const [ox, oy] of actorSamples) {
-        const dx = feet.x + ox - image.x, dy = feet.y + oy - image.y;
-        let u = (cos * dx + sin * dy) / image.displayWidth + image.originX;
-        let v = (-sin * dx + cos * dy) / image.displayHeight + image.originY;
-        if (image.flipX) u = 1 - u;
-        if (image.flipY) v = 1 - v;
-        if (u >= 0 && u < 1 && v >= 0 && v < 1 && entry.coverage[Math.floor(v * 32) * 32 + Math.floor(u * 32)] > 96) {
-          covering = true;
-          break;
-        }
-      }
-    }
-    const target = entry.alpha * (covering ? 0.28 : 1);
-    image.setAlpha(Phaser.Math.Linear(image.alpha, target, Math.min(1, dt * 12)));
-  }
+// Raised objects retain their authored opacity. Marker is used by scenery
+// inspection; proximity no longer owns alpha. Gate/material transitions keep
+// their existing explicit tweens and translucent effects.
+export function markEnvironmentBody(_scene: Phaser.Scene, image: Phaser.GameObjects.Image): void {
+  image.setData('environment-body', true);
 }
 
 // One stationary textured quad under every cache, including cache margins.
@@ -185,7 +125,7 @@ export class EnvironmentPainter {
     const image = this.scene.add.image(s.x, s.y, s.key).setDisplaySize(s.width, s.height)
       .setDepth(s.depth ?? s.y).setAngle(s.angle ?? 0).setFlipX(s.flipX ?? false)
       .setTint(s.tint ?? 0xffffff).setAlpha(s.alpha ?? 1);
-    trackEnvironmentOcclusion(this.scene, image);
+    markEnvironmentBody(this.scene, image);
   }
 
   contact(x: number, y: number, width: number, height: number, alpha = 0.8): void {

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';import{chromium}from'playwright';import{mkdir,readFile,writeFile}from'node:fs/promises';
-const out='docs/frost-water/qa/controls',base=process.env.QA_BASE??'http://localhost:5188',fixture=JSON.parse(await readFile('docs/frost-water/qa/solo/installed-fixture.json','utf8'));await mkdir(out,{recursive:true});
+const out=process.env.QA_OUT??'docs/frost-water/qa/controls',base=process.env.QA_BASE??'http://localhost:5188',fixture=JSON.parse(await readFile('docs/frost-water/qa/solo/installed-fixture.json','utf8'));await mkdir(out,{recursive:true});
 assert.ok(fixture.journey.missions.evidence.includes('pg-mount'));assert.ok(!fixture.journey.missions.evidence.includes('pg-fill'));
 const b=await chromium.launch({channel:'chrome'}),report={method:'Actual installed checkpoint exported by solo E tests, before any valve/collection; class variants and approach positions are coverage fixtures. Real touch/gamepad movement and E-equivalent interactions, no injected new evidence.',checks:[],errors:[]};let current;
 async function ready(p){await p.waitForFunction(()=>window.__danteGame?.scene.getScene('Game')?.missionUi);for(let i=0;i<12;i++){await p.waitForTimeout(120);await p.evaluate(()=>document.querySelector('.ability-upgrade-dialog[open] [data-upgrade]:not(:disabled)')?.click());}}

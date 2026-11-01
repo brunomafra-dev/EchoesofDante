@@ -3,13 +3,14 @@ import Phaser from 'phaser';
 import {PERMANENCE_SITES,type PermanenceSite,type PermanencePose} from '../config/permanence';
 import {HABITAT,HABITAT_SOLIDS} from '../config/colonization';
 import {OUTPOST,OUTPOST_SOLIDS,OUTPOST_SUPPORT} from '../config/outpost';
-import {EnvironmentPainter,trackEnvironmentOcclusion} from '../visual/EnvironmentArt';
+import {EnvironmentPainter,markEnvironmentBody} from '../visual/EnvironmentArt';
 import type {Missions} from './Missions';
 import {missionById} from '../config/missions';
 import type {JourneyArea} from './LocalJourney';
 import type {Vec2} from '../utils/math';
 import {addSurveyProp} from '../visual/MissionProps';
 import {addQuestProp,GOAL_PROPS} from '../visual/QuestProps';
+import {pipeTexture,pressureTexture} from '../visual/GroundPipe';
 import {SignalSurvey} from '../visual/SignalSurvey';
 import {EchoCircuit} from '../visual/EchoCircuit';
 import type {CircuitNode} from '../config/echoCircuit';
@@ -36,7 +37,7 @@ export class PermanenceWorld {
  private buriedSample?:{image:Phaser.GameObjects.Image;solid:Obstacle};
  private buriedArchived=false;
  private sites:{site:PermanenceSite;image:Phaser.GameObjects.Image;label:Phaser.GameObjects.Text}[]=[];
- private jet?:Phaser.GameObjects.Rectangle;
+ private jet?:Phaser.GameObjects.Image;
  private installed:Phaser.GameObjects.GameObject[]=[];
  private online=false;
  private stocked=false;
@@ -64,7 +65,7 @@ export class PermanenceWorld {
   this.wind=new WindSurvey(scene,area,obstacles);
   for(const site of PERMANENCE_SITES.filter(s=>s.area===area)){
    const prop=site.reject&&site.id==='pf-sample'?'contaminatedRoots':GOAL_PROPS[site.id];
-   const image=(prop?addQuestProp(scene,prop,site.x,site.y+30,76):prop===null?scene.add.image(site.x,site.y,'quest-research',0).setData('world-only',true):site.art==='mineral'||site.art==='record'?scene.add.image(site.x,site.y,site.art==='mineral'?'deep-mineral':'ancient-remnant').setDisplaySize(95,68).setDepth(site.y-2):addSurveyProp(scene,site.art as Parameters<typeof addSurveyProp>[1],site.x,site.y)).setName(site.id).setVisible(false);
+   const image=(prop?addQuestProp(scene,prop,site.x,site.y+30,76,{fixed:['pg-kit','ps-kit','pw-filter','po-kit'].includes(site.id)?false:undefined}):prop===null?scene.add.image(site.x,site.y,'quest-research',0).setData('world-only',true):site.art==='mineral'||site.art==='record'?scene.add.image(site.x,site.y,site.art==='mineral'?'deep-mineral':'ancient-remnant').setDisplaySize(95,68).setDepth(site.y-2):addSurveyProp(scene,site.art as Parameters<typeof addSurveyProp>[1],site.x,site.y)).setName(site.id).setVisible(false);
    if(site.choice&&site.mission==='settle-dunes'){
     const layer=scene.add.renderTexture(site.x-150,site.y-90,300,180).setOrigin(0).setDepth(-9889).setName('dune-test-bed');
     const painter=new EnvironmentPainter(scene,layer),tint=site.reject?0x755439:0xe3cda1;
@@ -79,10 +80,11 @@ export class PermanenceWorld {
    this.sites.push({site,image,label});
   }
   if(area==='springs'){
-   const g=scene.add.graphics().setDepth(-20).setVisible(false).setName('water-return-pipe');
-   g.lineStyle(10,0x595c4b,.9).beginPath().moveTo(1550,1010).lineTo(1660,1010).lineTo(1660,1070).strokePath();
+   const elbow=Array.from({length:9},(_,i)=>({x:118+16*Math.sin(i*Math.PI/16),y:22-16*Math.cos(i*Math.PI/16)}));
+   const key=pipeTexture(scene,'water-return-pipe-r2',160,130,[[{x:24,y:6},...elbow,{x:134,y:116}]]);
+   const g=scene.add.image(1526,1004,key).setOrigin(0).setDepth(-20).setVisible(false).setName('water-return-pipe');
    this.installed.push(g);
-   this.jet=scene.add.rectangle(1550,1010,250,38,0x84d9d2,.65).setDepth(-19).setVisible(false).setName('water-pressure');
+   this.jet=scene.add.image(1550,1010,pressureTexture(scene)).setDisplaySize(270,64).setDepth(-19).setVisible(false).setName('water-pressure');
   }
   if(area==='terraces'){
    this.power=scene.add.graphics().setPosition(1650,930).setDepth(-18).setVisible(false).setName('settlement-power-front');
@@ -115,7 +117,7 @@ export class PermanenceWorld {
   }
   const water=missions.status('settle-water')==='active';
   if(this.area==='springs'){
-   this.installed.forEach(o=>(o as Phaser.GameObjects.Graphics).setVisible(water||missions.has('pw-valve')));
+   this.installed.forEach(o=>(o as Phaser.GameObjects.Image).setVisible(water||missions.has('pw-valve')));
    const phase=now%3200;
    this.jet?.setVisible(water&&!missions.has('pw-valve')).setAlpha(phase<1100?.12+phase/1100*.18:phase<1800?.7:.06);
   }
@@ -144,7 +146,7 @@ export class PermanenceWorld {
  }
  private addOutpost():void{
   if(this.area!=='springs')return;
-  const building=this.scene.add.image(OUTPOST.x,OUTPOST.y,'first-habitat').setDisplaySize(OUTPOST.width,OUTPOST.height).setOrigin(.5,1).setDepth(OUTPOST.y-20).setName('outpost-habitat');trackEnvironmentOcclusion(this.scene,building);
+  const building=this.scene.add.image(OUTPOST.x,OUTPOST.y,'first-habitat').setDisplaySize(OUTPOST.width,OUTPOST.height).setOrigin(.5,1).setDepth(OUTPOST.y-20).setName('outpost-habitat');markEnvironmentBody(this.scene,building);
   this.obstacles.push(...OUTPOST_SOLIDS.map(o=>({...o})));
   worldLabel(this.scene,this.scene.add.text(OUTPOST.x,OUTPOST.y+30,OUTPOST.name.toLocaleUpperCase('pt-BR'),{fontFamily:'Barlow Condensed',fontSize:'16px',color:'#dfd5b5',stroke:'#14251a',strokeThickness:3}).setOrigin(.5).setDepth(11000).setName('outpost-name'));
   // The same prefab carries a sealed reservoir and canopy. Independent power
@@ -154,7 +156,7 @@ export class PermanenceWorld {
  private addSecondHabitat():void{
   if(this.area!=='terraces')return;
   const x=550,y=635,width=280,height=198;
-  const building=this.scene.add.image(x,y,'first-habitat').setDisplaySize(width,height).setOrigin(.5,1).setDepth(y-20).setName('settlement-second-habitat');trackEnvironmentOcclusion(this.scene,building);
+  const building=this.scene.add.image(x,y,'first-habitat').setDisplaySize(width,height).setOrigin(.5,1).setDepth(y-20).setName('settlement-second-habitat');markEnvironmentBody(this.scene,building);
   for(const o of HABITAT_SOLIDS)this.obstacles.push({x:x+(o.x-HABITAT.x)*width/HABITAT.width,y:y+(o.y-HABITAT.y)*height/HABITAT.height,radius:o.radius*width/HABITAT.width});
  }
  private addReception():void{
@@ -165,7 +167,7 @@ export class PermanenceWorld {
  private addPowerStation():void{
   if(this.area!=='base'&&this.area!=='terraces')return;
   const x=this.area==='base'?910:1770,y=this.area==='base'?900:770;
-  const building=addQuestProp(this.scene,'worklight',x,y,112).setName('settlement-power-station');trackEnvironmentOcclusion(this.scene,building);
+  const building=addQuestProp(this.scene,'worklight',x,y,112).setName('settlement-power-station');markEnvironmentBody(this.scene,building);
   this.obstacles.push({x,y:y-24,radius:32});
   const lamp=this.scene.add.graphics().setDepth(y+1);lamp.fillStyle(0xffd898,.12).fillCircle(x+48,y-74,20).fillStyle(0xffdeb1,.8).fillCircle(x+48,y-74,3);
   worldLabel(this.scene,this.scene.add.text(x,y+20,'REDE ISOLADA',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#ebd8b6',stroke:'#122123',strokeThickness:3}).setOrigin(.5).setDepth(y+1));

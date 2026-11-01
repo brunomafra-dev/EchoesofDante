@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
 import {preloadQuestProps} from './QuestProps';
+import {groundProp} from './PropGround';
+import {meltPocketTexture} from './MeltPocket';
 
 // Shared by campaign, remote views and the isolated lab; no gameplay state here.
 export const MATERIAL_ART = ['alloy','amber-shell','boreal-core'] as const;
@@ -22,5 +24,12 @@ export function preloadMissionProps(scene:Phaser.Scene):void {
 }
 export function addSurveyProp(scene:Phaser.Scene,id:keyof typeof SURVEY_ART,x:number,y:number):Phaser.GameObjects.Image {
  const p=SURVEY_ART[id];
- return scene.add.image(x,y,'material-'+p.art).setDisplaySize(p.width,p.height).setDepth(y-2).setName('survey-'+id);
+ const cold=['frost','icecave','icenest'].includes(scene.data.get('campaign-area'));
+ // Warm fissures in frozen rock have thin mineral/ice banks, never the roots
+ // and green moss authored into the forest spring asset.
+ const melt=cold&&['water','spring'].includes(p.art)?meltPocketTexture(scene):undefined;
+ if(melt)return scene.add.image(x,y,melt).setDisplaySize(p.width*1.15,p.height*1.1).setDepth(-9889).setName('survey-'+id);
+ const image=scene.add.image(x,y,'material-'+p.art).setDisplaySize(p.width,p.height).setDepth(y-2).setName('survey-'+id);
+ if(['route-west','route-east','site'].includes(id))groundProp(scene,image,{fixed:true,width:1.05,foot:.72});
+ return image;
 }

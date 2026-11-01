@@ -8,6 +8,7 @@ import type {Vec2} from '../utils/math';
 import {safeExpeditionPosition} from './ExpeditionReturn';
 import {EnvironmentPainter} from '../visual/EnvironmentArt';
 import {addSurveyProp} from '../visual/MissionProps';
+import {meltPocketTexture} from '../visual/MeltPocket';
 
 // Three authored pockets per region, baked once on first access. No generated
 // map, waves, dynamic shadows or additional player/combat framework.
@@ -43,7 +44,7 @@ export class RegionalExpeditions {
   if(site.id==='exp-icecave-1'){
    // A low exposed fissure feeds the pocket and drains toward the real
    // southern channel. The analysis anchor stays on its dry western edge.
-   this.scene.add.image(site.x+50,site.y-20,'boreal-melt-pocket').setDisplaySize(190,215).setDepth(-9889).setName('boreal-melt-pocket');
+   this.scene.add.image(site.x+50,site.y-20,meltPocketTexture(this.scene)!).setDisplaySize(190,215).setDepth(-9889).setName('boreal-melt-pocket');
    painter.sediment(site.x+130,site.y+85,26,82,0x527888,.45);
   }
   else if(site.id==='exp-icecave-3'){

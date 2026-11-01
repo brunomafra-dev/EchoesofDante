@@ -1,3 +1,4 @@
+import {VISUAL_REVIEW_STOPS,visualReviewQuiet} from '../config/visualReview';
 import {layoutWorldLabels} from '../ui/WorldLabels';
 import { FOREST_SIZE, CAVERN_SIZE, EARLY_PREVIEW_ENTRY } from '../config/earlyJourney';
 import {EarlyJourneyLandmarks} from '../visual/EarlyJourneyLandmarks';
@@ -106,7 +107,7 @@ import { ChapterPortal } from '../systems/ChapterPortal';
 import { SiroccoBasin } from '../systems/SiroccoBasin';
 import { Controls } from '../input/Controls';
 import { Arena } from '../systems/Arena';
-import { preloadEnvironment, resetEnvironmentOcclusion, updateEnvironmentOcclusion } from '../visual/EnvironmentArt';
+import { preloadEnvironment } from '../visual/EnvironmentArt';
 import { CavernArea } from '../systems/CavernArea';
 import { MineralPulse } from '../systems/MineralPulse';
 import { AudioManager, type MusicRegion } from '../systems/Sound';
@@ -130,6 +131,7 @@ import { EquipmentDialog } from '../ui/EquipmentDialog';
 import { EQUIPMENT, EQUIPMENT_IDS, equipmentStats, type EquipmentId, type EquipmentSnapshot, type EquipmentSlot } from '../config/equipment';
 
 export class GameScene extends Phaser.Scene {
+  private readonly quietVisualReview=visualReviewQuiet();
   private clickedInteraction=false;
   private coopModal=false;
   private dropOwnersKey='';
@@ -414,7 +416,6 @@ export class GameScene extends Phaser.Scene {
     this.events.on(Phaser.Scenes.Events.UPDATE, syncCombatClock);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.events.off(Phaser.Scenes.Events.UPDATE, syncCombatClock));
     if (!this.journeyLoaded) { this.journeyLoaded = true; this.restoreJourney(); }
-    resetEnvironmentOcclusion(this);
     beginCampaignEnvironment(this,this.qualityReference||this.glacierPlaytest?.environmentBaseline?undefined:this.area);this.data.set('campaign-area',this.area);this.campaignEnvironment=undefined;
     this.classId = this.glacierPlaytest?.classId ?? (this.qualityReference&&!this.forestProof ? 'warrior' : characterProfiles.active.classId);
     this.hunter = undefined; this.hunterArt = undefined;this.astral=undefined;this.astralArt=undefined;this.astralPanel=undefined;this.xeno=undefined;this.xenoArt=undefined;this.xenoPanel=undefined;
@@ -575,7 +576,7 @@ export class GameScene extends Phaser.Scene {
     this.updateMusicRegion(true);
     this.sounds.setMusicFocus(1);
     const spawns = this.forestProof?FINISH_SPAWNS:this.area === 'forest' ? FOREST_SPAWNS : CAVERN_HOLLOWS;
-    if (this.area === 'forest' || this.area === 'cavern') spawns.forEach((point, index) => {
+    if (!this.quietVisualReview&&(this.area === 'forest' || this.area === 'cavern')) spawns.forEach((point, index) => {
       const id=this.area==='forest'?index:FOREST_SPAWNS.length+index;if(this.progression.hasDefeated(id))return;
       const enemy = new HollowCrawler(this, point.x, point.y, this.area === 'forest'&&!this.forestProof ? FOREST_PATROLS[index] : undefined, this.qualityReference==='forest-reference'?'forest':this.qualityReference === 'reference');
       tuneEnemy(enemy,this.area,this.campaignDifficulty);this.enemies.push(enemy);
@@ -800,7 +801,6 @@ export class GameScene extends Phaser.Scene {
       this.campaignEnvironment?.update(time,this.player,this.party?.environmentActors??[]);
       this.earlyLandmarks?.update(time,this.player.position,message=>{if(!this.inputModalOpen)this.hud.showDiscovery(message);});
       this.hud.setInputMethod(this.controls.inputMethod);
-      updateEnvironmentOcclusion(this, this.player.position, Math.min(delta / 1000, .04));
       this.updateMusicRegion(); this.updateExplorationGuide();
       return;
     }
@@ -1099,7 +1099,6 @@ export class GameScene extends Phaser.Scene {
     this.hunterArt?.update(this.player.position.x, this.player.position.y, facing, time < (this.hunter?.firedUntil ?? 0), this.player.isDashing, heavy);
     this.astralArt?.update(this.player.position.x,this.player.position.y,facing,time<(this.astral?.firedUntil??0),this.player.isDashing,heavy,this.astral!.element);
     this.xenoArt?.update(this.player.position.x,this.player.position.y,facing,time<(this.xeno?.firedUntil??0),this.player.isDashing,heavy,'energy');
-    updateEnvironmentOcclusion(this, this.player.position, dt);
     if (wasDashing && !this.player.isDashing) this.dashEnd();
     if (this.player.isDashing && time - this.lastDashTrail > 30) {
       this.lastDashTrail = time;
@@ -1339,7 +1338,7 @@ export class GameScene extends Phaser.Scene {
     // Spawn habitats shortly before arrival, never clamp distant residents into closed bounds.
     let spawnId = FOREST_SPAWNS.length + CAVERN_HOLLOWS.length + DEEP_HOLLOWS.length;
     EXPANSION_ENCOUNTERS.forEach((encounter, index) => {
-      if (x >= encounter.x - 500 && !this.spawnedEncounters.has(index)) {
+      if (!this.quietVisualReview&&x >= encounter.x - 500 && !this.spawnedEncounters.has(index)) {
         this.spawnedEncounters.add(index);
         encounter.residents.forEach((resident, offset) => {
           if(this.progression.hasDefeated(spawnId+offset))return;
@@ -1608,6 +1607,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private spawnDeepHollows(): void {
+    if(this.quietVisualReview)return;
     DEEP_HOLLOWS.forEach((patrol,index) => {
       if(this.progression.hasDefeated(FOREST_SPAWNS.length+CAVERN_HOLLOWS.length+index))return;
       const enemy = new HollowCrawler(this,patrol[0].x,patrol[0].y,patrol);
@@ -2264,6 +2264,7 @@ export class GameScene extends Phaser.Scene {
   shellPlayerDead(): boolean { return this.player?.isDead ?? false; }
 
   private spawnValleyResident(habitat: typeof VALLEY_ENCOUNTERS[number] | typeof COLONY_ENCOUNTERS.springs[number]): boolean {
+    if(this.quietVisualReview)return false;
     if(this.area==='terraces'&&npcReviewLab())return false;
     if (this.valleyResidents.has(habitat.id)||this.progression.hasDefeated(habitat.id)) return false;
     const readyAt = this.valleyHabitatCooldowns.get(habitat.id);
@@ -2278,6 +2279,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private spawnPartyResidents():void {
+    if(this.quietVisualReview)return;
     if(this.area==='terraces'&&npcReviewLab())return;
     const size=characterProfiles.active.campaign?.size??1;
     if(size<2||coopSession.role!=='host')return;
@@ -2296,6 +2298,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private spawnRegionalResidents(now:number):void{
+    if(this.quietVisualReview)return;
     if(this.area==='terraces'&&npcReviewLab())return;
     if(!this.regional||now<this.regionalSpawnTick||this.player.isDead||this.bossActive())return;
     this.regionalSpawnTick=now+200;
@@ -2310,6 +2313,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private spawnSiroccoResident(habitat: { id: number; kind: SiroccoKind | FrostKind | VolcanicKind | 'iceCarapace'; x: number; y: number }): boolean {
+    if(this.quietVisualReview)return false;
     if (this.siroccoResidents.has(habitat.id)||this.progression.hasDefeated(habitat.id)) return false;
     const readyAt = this.siroccoHabitatCooldowns.get(habitat.id);
     if (readyAt !== undefined && (Date.now() < readyAt || this.explorationNear(habitat, SIROCCO_RENEWAL.safeDistance))) return false;
@@ -2500,7 +2504,8 @@ export class GameScene extends Phaser.Scene {
     this.transferHp=this.characterMaxHp;this.expeditionReturn=undefined;this.area=area;this.saveProgress();this.scene.restart();return true;
   }
   seedMissionPlaytest(id:MissionId,reviewStop?:string,reviewNpc?:string):boolean{
-    const params=new URLSearchParams(location.search),review=reviewStop&&params.has('npc-review')?npcReviewSelection(reviewStop,reviewNpc):undefined;
+    const params=new URLSearchParams(location.search),visualStop=params.has('visual-review')?VISUAL_REVIEW_STOPS.find(s=>s.id===reviewStop):undefined;
+    const review=reviewStop&&params.has('npc-review')?npcReviewSelection(reviewStop,reviewNpc):visualStop?{stop:{...visualStop,stage:'settle-icecave' as const},focus:undefined}:undefined;
     if(reviewStop&&(!review||review.stop.stage!==id))return false;
     if(id==='settle-outpost'&&coopSession.role!=='offline'&&!coopSession.outpostsAvailable||id==='settle-signal'&&coopSession.role!=='offline'&&!coopSession.signalsAvailable)return false;
     if(id==='settle-echo'&&coopSession.role!=='offline'&&!coopSession.circuitsAvailable)return false;
@@ -2509,7 +2514,7 @@ export class GameScene extends Phaser.Scene {
     if(id==='settle-icecave'&&coopSession.role!=='offline'&&!coopSession.icecaveAvailable)return false;
     if(id==='settle-frost'&&coopSession.role!=='offline'&&!coopSession.frostAvailable)return false;
     if(id==='settle-buried'&&coopSession.role!=='offline'&&!coopSession.buriedAvailable)return false;
-    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!['missions','permanence','settlement-life','settlement-motion','npc-review','outpost-support'].some(key=>params.has(key))||this.inputModalOpen||this.transitioning||coopSession.role==='guest'||!this.player||this.player.isDead)return false;
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!['missions','permanence','settlement-life','settlement-motion','npc-review','outpost-support','visual-review'].some(key=>params.has(key))||this.inputModalOpen||this.transitioning||coopSession.role==='guest'||!this.player||this.player.isDead)return false;
     if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return false;
     const ids=['recon','survival','signal','beyond','water-source','safe-route','shelter',...PERMANENCE_IDS] as const,index=(ids as readonly MissionId[]).indexOf(id);if(index<0)return false;
     const previous=ids.slice(0,index),evidence=previous.flatMap(mid=>missionById(mid).goals.map(g=>g.id));
@@ -2568,6 +2573,9 @@ export class GameScene extends Phaser.Scene {
       this.saveProgress();this.scene.restart();return true;
     }
     if(review){
+      // Explicit visual fixture only: show the current cargo without granting
+      // analyses, docking, mechanism, archive, rewards or later boss victories.
+      if(visualStop){this.missions.act('accept','settle-icecave');this.missions.record('pi-kit');this.missions.record('pi-load');}
       if(review.stop.id==='arrivals'){this.missions.act('accept','settle-arrivals');for(const goal of ['pc-beacon','pc-manifest','pc-shelter','pc-receive'] as const)this.missions.record(goal);}
       const focus=review.focus?.position;
       this.expeditionArrival=focus?{x:focus.x+(review.focus?.service?65:0),y:focus.y+65}:{x:review.stop.x,y:review.stop.y};

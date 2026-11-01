@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { distance, type Vec2 } from '../utils/math';
-import { trackEnvironmentOcclusion } from '../visual/EnvironmentArt';
+import { markEnvironmentBody } from '../visual/EnvironmentArt';
 
 // A local traversal affordance; reuses the scene's INTERACT action and transfer.
 export class SignalPortal {
@@ -11,7 +11,7 @@ export class SignalPortal {
     const { x, y } = position;
     this.stone = scene.add.image(x, y + 8, 'guardian-lintel-open').setOrigin(0.5, 0.96)
       .setDisplaySize(205, 103).setDepth(y + 5).setTint(0xb7c3ad).setVisible(false);
-    trackEnvironmentOcclusion(scene, this.stone);
+    markEnvironmentBody(scene, this.stone);
     this.seam = scene.add.graphics().setPosition(x, y - 35).setDepth(y - 1).setVisible(false);
     this.seam.lineStyle(14, 0xa98cff, 0.14).lineBetween(-5, -32, 2, -15).lineBetween(2, -15, -2, 9).lineBetween(-2, 9, 8, 26);
     this.seam.lineStyle(3, 0xa98cff, 0.9).lineBetween(-5, -32, 2, -15).lineBetween(2, -15, -2, 9).lineBetween(-2, 9, 8, 26);
