@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-11-01T14:01:16.711641+00:00",
+  "library": "https://echosofdante.vercel.app/test-library.html",
+  "auditEntryPublished": true,
+  "sourceCommit": "20cc941",
+  "applicationVersion": "0.1.178",
+  "applicationChanges": false,
+  "matchingPublicHashes": 73,
+  "relayFinalCheck": {
+    "status": "unavailable",
+    "reason": "The read operation timed out",
+    "coopCompatibilityConfirmedInFinalCheck": false
+  }
+}

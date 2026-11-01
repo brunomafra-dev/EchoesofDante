@@ -29,6 +29,7 @@ As pranchas apenas recortam/redimensionam capturas. Não alteram cor, sombra ou 
 - Fixtures explícitas: cópia isolada do checkpoint de QA das Galerias para observar a campanha avançada; viagens/posições e invulnerabilidade apenas para enquadramento. Os capítulos anteriores já estão considerados concluídos nessa cópia. Vésper/Incandescente não são derrotados pela auditoria. Herói semitransparente em algumas capturas resulta da invulnerabilidade de cobertura e não é registrado como defeito visual do jogo.
 - Dados reais: perfis Chrome novos e laboratórios com namespace temporário; sentinelas de personagens/settings reais preservadas nos ensaios públicos. O caso de sessão corrompida injeta um dado inválido deliberadamente e está identificado como teste de resiliência.
 - Não mediu FPS, RAM, bateria, latência humana ou dificuldade. Não repetiu a campanha cooperativa inteira; o protocolo/health e a evidência de publicação são conferidos separadamente. Não substitui teste em iPhone, leitor de tela ou equipe humana.
+- Limitação do laboratório novo de áudio: em [main.ts](../../src/main.ts), somente `mobile-review` é excluído do carregamento imediato do mundo em `menuLab`; `audio-review` inicializa a cena atrás do menu e, portanto, não representa o mesmo perfil de carregamento da entrada oficial. Rever essa equivalência antes de usar o laboratório para concluir algo sobre memória/inicialização no iPhone. A reprodução pública A01 usa `mobile-review` e não depende dessa diferença.
 
 ## Problemas por prioridade
 
@@ -159,6 +160,7 @@ Com Vite local em 5185: `node scripts/audit-frontend-178.mjs`. Os outros dois ro
 - [x] Revisão de código e capturas, casos de áudio com sinal medido, layouts e relato de limitações.
 - [x] `node --check` nos roteiros, JSONs válidos, links locais, montagem das pranchas e `git diff --check`.
 - [x] `npm run typecheck` e `npm run build` em 01/11; 270 módulos, aviso existente de chunks grandes. Build passar não invalida os defeitos de UX/áudio reproduzidos.
-- [ ] Registro documental enviado/sincronizado e entrada da biblioteca publicada.
+- [x] Auditoria `20cc941` enviada a `origin/main`, igualdade local/remota conferida e entrada da biblioteca pública verificada em 01/11. [Registro da publicação](evidence/publication.json). Versão de aplicação mantida em 0.1.178; alterações desta entrega são auditoria/documentação/roteiros.
 - [ ] Correções dos problemas encontrados (fora do escopo desta auditoria).
+- [ ] Confirmação final do relay: os 73 hashes públicos da aplicação conferem, mas a consulta ao servidor cooperativo expirou. Esta auditoria não certifica disponibilidade ou compatibilidade do coop nessa consulta.
 - [ ] Aprovação/reteste humano.
