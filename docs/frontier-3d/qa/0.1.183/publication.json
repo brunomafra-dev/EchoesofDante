@@ -1,0 +1,20 @@
+{
+  "version": "0.1.183",
+  "at": "2026-11-03T16:21:25.978099+00:00",
+  "sourceCommit": "0425caf761d859d6fb4cef7ed73c0274fc78f7fe",
+  "sourceLocalRemoteEqual": true,
+  "vercel": {
+    "state": "success",
+    "url": "https://vercel.com/brunomafra-devs-projects/echosofdante/FMKkUd96gDxZMuMLM2tiFyHBrcQD"
+  },
+  "publishedMatchingFiles": 23,
+  "unchangedCampaignBuildHashes": 86,
+  "protocolChanged": false,
+  "newRelayDeploymentRequired": false,
+  "publicReports": [
+    "public/report.json",
+    "public-jump/report.json"
+  ],
+  "humanApproval": "Pending playtest of 0.1.183; no physical iPhone or gamepad test inferred",
+  "scope": "Solo 3D trial only; no campaign migration or prerequisites/boss victory simulated"
+}
