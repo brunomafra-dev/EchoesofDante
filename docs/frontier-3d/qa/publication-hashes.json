@@ -1,13 +1,13 @@
 {
   "version": "0.1.182",
-  "at": "2026-11-03T13:53:30.635007+00:00",
+  "at": "2026-11-03T14:11:14.799139+00:00",
   "base": "https://echosofdante.vercel.app",
   "published": true,
   "matchingHashes": 21,
   "verifiedFiles": [
-    "/assets/frontier3d-B3N_SSRj.js",
+    "/assets/frontier3d-dsKVPx0F.js",
     "/assets/modulepreload-polyfill-B5Qt9EMX.js",
-    "/assets/frontier3d-CQRMhwyO.css",
+    "/assets/frontier3d-H6QiQB27.css",
     "/frontier-3d.html",
     "/test-library.html",
     "/assets/frontier-3d/alien.glb",
@@ -28,10 +28,10 @@
     "/assets/frontier-3d/sources.json"
   ],
   "sha256": {
-    "/assets/frontier3d-B3N_SSRj.js": "cee798860391fbd8ac1ebd284617996c5439b59edd5f2e45e962e2c0ef0dde98",
+    "/assets/frontier3d-dsKVPx0F.js": "dda13765bfddfdf9638657dbeb6aa370803ff8a27cf15df4bd5b1202c712674b",
     "/assets/modulepreload-polyfill-B5Qt9EMX.js": "d2a32840421496e872ade591618d2fa5c33797605d1aec04301717e5a90757d0",
-    "/assets/frontier3d-CQRMhwyO.css": "0f48aa6b6cf5c8e2a4e38a5179b40041329d7ebc7c729660a419e7cf63f95251",
-    "/frontier-3d.html": "0b6ea5b686e2ee551068c1dad987208bf9637fe359d54fddee506a6d0cd60a9e",
+    "/assets/frontier3d-H6QiQB27.css": "b8c8521950cf6fab2c7a71f049c1e5945936cb515f18e18fb30b9bb0e693cc16",
+    "/frontier-3d.html": "73e8fcee0caae5bdb7a57f8b9305f4d6db80b18b0e804f32f140136a50068ccd",
     "/test-library.html": "39014c836c3c2e8a8bf984b839573d381706b2714345f4bb11e3eab702b48dd5",
     "/assets/frontier-3d/alien.glb": "f55d091cd3914977724f4a7887e1866e73c2f2045df391e83c787b6736552ddb",
     "/assets/frontier-3d/barlow-condensed.ttf": "262bd143292ce479ee0cd09a42b47ab173fca8e9c6eb5ed0b5c8a845bc371d17",

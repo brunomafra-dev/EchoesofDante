@@ -1,0 +1,56 @@
+{
+  "version": "0.1.182",
+  "at": "2026-11-03T14:12:38.331316+00:00",
+  "initialApplicationCommit": "97ef79d32f7f14a79afa9109ff484199f89ab9c8",
+  "fullPublicJourneyCommit": "d131500376d1a2a87b82c377848f069df7b577cf",
+  "finalApplicationCommit": "84503a914ed4e29a472d7769413d7933d857c98c",
+  "vercel": {
+    "state": "success",
+    "url": "https://vercel.com/brunomafra-devs-projects/echosofdante/5vNtJNyVy4hYc2kHuMNac1yAjut8",
+    "matchingHashes": 21,
+    "hashes": "publication-hashes.json",
+    "textCanonicalLF": [
+      ".html",
+      ".json",
+      ".md",
+      ".txt"
+    ]
+  },
+  "technicalQA": {
+    "publicFullJourney": "public/report.json",
+    "publicResilience": "public-resilience/report.json",
+    "compiledFinalLayout": "context/report.json",
+    "publicFinalLayout": "public-context/report.json",
+    "fullJourneyThenUIRefinement": "Full journey, controls and resilience tested on d131500. Final code changes only contextual UI position/orientation hint expiry and narrow header; targeted normal-input public/compiled tests cover those changes."
+  },
+  "campaignPreservation": {
+    "unchangedPublishedAssets": 86,
+    "baseline": "7bbae56c72ffa08281feb7f02db4d1deeb238393",
+    "sourceAndRelayUnchanged": true,
+    "new3DTrialIsSolo": true,
+    "newRelayDeploymentRequired": false
+  },
+  "relay": {
+    "unavailable": "The read operation timed out",
+    "lastSuccessfulObservation": "2026-11-03T13:55:25Z",
+    "lastObservedProtocol": 16,
+    "lastObservedRevision": "42de5a0bbd951f32efdcb8480080b3e3db32ea41"
+  },
+  "newTrialDependsOnRelay": false,
+  "matrix": {
+    "repositoryConfirmedByUser": "https://github.com/SkyworkAI/Matrix-Game",
+    "reviewedVersion": "4.0",
+    "analysis": "../MATRIX_GAME_EVALUATION.md",
+    "cleanReference": "../matrix-input/clean-reference.webm",
+    "nativeDecodeVerified": true,
+    "neuralRenderingExecuted": false,
+    "localGpuObserved": "Intel UHD",
+    "externalCompatibleGpuNotProvided": true,
+    "newComputePurchased": false
+  },
+  "visualInspection": "Agent inspected desktop, touch landscape, narrow contextual UI, dialogue, telegraph and clean recorded frame. Models are licensed reference assets, not approved final Dante art.",
+  "humanApproval": false,
+  "physicalIPhone13Or13ProTest": false,
+  "physicalGamepadTest": false,
+  "nextStep": "Human playtest before expanding or migrating campaign. No Ninho or new chapter started."
+}
