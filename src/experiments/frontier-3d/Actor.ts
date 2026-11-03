@@ -1,5 +1,6 @@
 import * as T from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {jumpLift} from './jumpLift';
 
 export class Actor {
  readonly root=new T.Group();
@@ -14,7 +15,12 @@ export class Actor {
   const bounds=new T.Box3().setFromObject(this.model),size=bounds.getSize(new T.Vector3());this.model.scale.setScalar(height/size.y);this.model.position.y=-bounds.min.y*height/size.y;
   this.model.traverse(o=>{if(o instanceof T.Mesh){o.castShadow=true;o.receiveShadow=true;const materials=(Array.isArray(o.material)?o.material:[o.material]) as T.MeshStandardMaterial[];for(const m of materials){m.roughness=.8;m.metalness=.05;if(m.name==='Skin')m.color.set(palette?'#b98b68':'#caa78a');if(palette&&m.name==='Main')m.color.set('#a18d66');if(palette&&m.name==='DarkGreen')m.color.set('#647458');if(!palette&&m.name==='Grey')m.color.set('#767f79');if(!palette&&m.name==='Helmet')m.color.set('#526e73');}}});
   this.mixer=new T.AnimationMixer(this.model);
-  for(const clip of gltf.animations){const name=clip.name.split('|').pop()!.replace(/^Alien_/,'');this.actions.set(name,this.mixer.clipAction(clip));}
+  for(const source of gltf.animations){const name=source.name.split('|').pop()!.replace(/^Alien_/,'');let clip=source;
+   if(palette&&name==='Jump'){
+    clip=source.clone();clip.tracks.push(new T.NumberKeyframeTrack('.position[y]',jumpLift.map(p=>p[0]),jumpLift.map(p=>this.model.position.y-p[1]*height)));
+   }
+   this.actions.set(name,this.mixer.clipAction(clip));
+  }
   this.play('Idle');
  }
  static async load(file:string,height=1.9,palette=false){return new Actor(await new GLTFLoader().loadAsync('/assets/frontier-3d/'+file),height,palette);}

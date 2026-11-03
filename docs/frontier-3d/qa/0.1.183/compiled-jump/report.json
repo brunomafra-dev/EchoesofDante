@@ -1,9 +1,11 @@
 {
   "base": "http://127.0.0.1:5193",
-  "at": "2026-11-03T15:55:43.415Z",
+  "at": "2026-11-03T16:05:17.928Z",
   "errors": [],
   "checks": [
     "Ceiling contact caps height and removes upward velocity, then gravity lands the explorer at 25/60/120 Hz.",
+    "Full skinned geometry sampled offline: animation foot drift below 2.5cm after cancelling authored lift; physics is the sole world elevation.",
+    "Immediate S + Space dodges in the newly pressed direction.",
     "Campaign Space rolls instead of attacking; F has takeoff/apex/landing, no double jump, pause freezes flight and returns to idle.",
     "Moving jump travels horizontally and lands. Held left mouse repeats attacks without moving the camera.",
     "Reload during flight starts safely grounded, keeping temporary trial data.",
@@ -190,5 +192,9 @@
     }
   ],
   "method": "Real keyboard/mouse, native emulated touch and standard gamepad mock. Read-only diagnostics. Fresh temporary trial, campaign localStorage sentinel; no position/progression setters.",
+  "animation": {
+    "maxFootDriftMeters": 0.009129763791506623,
+    "sampledPoses": 62
+  },
   "passed": true
 }

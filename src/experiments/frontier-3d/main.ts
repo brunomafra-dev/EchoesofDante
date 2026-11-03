@@ -66,7 +66,16 @@ function attack(){if(isPaused()||attackCD>0||dodging>0||hop.airborne)return;atta
  if(trial.enemyHp>0&&enemy.root.position.distanceTo(player.root.position)<3){facing.subVectors(enemy.root.position,player.root.position);facing.y=0;player.face(facing,1);}
  player.play('Punch',true,.62);tone(150,.12);
 }
-function dodge(){if(isPaused()||dodgeCD>0||hop.airborne)return;dodgeCD=1.7;dodging=.38;invulnerable=.43;dodgeDirection.copy(velocity);if(dodgeDirection.lengthSq()<.1)dodgeDirection.set(0,0,1).applyQuaternion(player.root.quaternion);dodgeDirection.normalize();player.play('Roll',true,.65);tone(220,.16);}
+function dodge(){if(isPaused()||dodgeCD>0||hop.airborne)return;dodgeCD=1.7;dodging=.38;invulnerable=.43;
+ // Use the direction being pressed now, including a turn on the same frame as dodge.
+ const pad=navigator.getGamepads?.().find(p=>p?.connected&&p.mapping==='standard');
+ const x=moveInput.x+Number(keys.has('KeyD')||keys.has('ArrowRight'))-Number(keys.has('KeyA')||keys.has('ArrowLeft'))+(Math.abs(pad?.axes[0]??0)>.15?pad!.axes[0]:0);
+ const z=moveInput.y+Number(keys.has('KeyW')||keys.has('ArrowUp'))-Number(keys.has('KeyS')||keys.has('ArrowDown'))-(Math.abs(pad?.axes[1]??0)>.15?pad!.axes[1]:0);
+ const forward=new T.Vector3().subVectors(controls.target,camera.position).setY(0).normalize();
+ dodgeDirection.copy(forward).multiplyScalar(z).addScaledVector(new T.Vector3(-forward.z,0,forward.x),x);
+ if(dodgeDirection.lengthSq()<.01)dodgeDirection.set(0,0,1).applyQuaternion(player.root.quaternion);
+ dodgeDirection.normalize();player.face(dodgeDirection,1);player.play('Roll',true,.65);tone(220,.16);
+}
 function jump(){if(isPaused()||dodging>0||attackTime>0)return;if(hop.start()){player.play('Jump',true);tone(320,.1);}}
 function potion(){if(isPaused()||trial.hp>=100||trial.potions<=0)return;trial.potions--;trial.hp=Math.min(100,trial.hp+45);healTime=1.15;save();tone(620,.3);notify('Poção usada · +45 de vida');}
 function hurt(damage:number){if(invulnerable>0||trial.hp<=0)return;trial.hp=Math.max(0,trial.hp-damage);invulnerable=.35;save();tone(85,.16);el('view').classList.add('hurt');setTimeout(()=>el('view').classList.remove('hurt'),220);if(trial.hp===0){stopInput();hop.reset();player.root.position.y=world.floorHeight(player.root.position.x,player.root.position.z);player.play('Death',true,999);el<HTMLDialogElement>('defeat').showModal();}else player.play('RecieveHit',true,.25);}

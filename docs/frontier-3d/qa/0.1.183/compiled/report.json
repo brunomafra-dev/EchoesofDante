@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-03T15:37:14.974Z",
+  "at": "2026-11-03T16:07:35.388Z",
   "base": "http://127.0.0.1:5193",
   "method": "Read-only inspect snapshot. Real keyboard, pointer and touch controls, no game-state setters. Campaign localStorage sentinels; temporary trial only. Separate explicit fixtures for death/context-loss paths.",
   "errors": [],
@@ -34,42 +34,42 @@
   ],
   "performance": [
     {
-      "fps": 51.14586407003046,
+      "fps": 46.22799252483524,
       "calls": 59,
       "triangles": 273579,
       "textures": 25,
       "geometries": 33
     },
     {
-      "fps": 54.09658699714761,
+      "fps": 48.1951411429135,
       "calls": 59,
       "triangles": 273579,
       "textures": 25,
       "geometries": 33
     },
     {
-      "fps": 50.162289760991435,
+      "fps": 49.15454187966968,
       "calls": 59,
       "triangles": 273579,
       "textures": 25,
       "geometries": 33
     },
     {
-      "fps": 47.216210899075435,
+      "fps": 50.19191024505453,
       "calls": 59,
       "triangles": 273579,
       "textures": 25,
       "geometries": 33
     },
     {
-      "fps": 49.17871545195238,
+      "fps": 53.97840863654552,
       "calls": 59,
       "triangles": 273579,
       "textures": 25,
       "geometries": 33
     },
     {
-      "fps": 49.183553019870246,
+      "fps": 52.27998838222475,
       "calls": 59,
       "triangles": 273579,
       "textures": 25,
