@@ -18,9 +18,14 @@ try {
  const p=await make();await enter(p);await screen(p,'arrival-desktop');
  assert.deepEqual((await state(p)).trial,{stage:0,hp:100,enemyHp:96,potions:2});
  await go(p,[0,4]);await go(p,[-5,1.9]);await press(p,'KeyE');await p.locator('#dialog[open]').waitFor();assert.equal((await state(p)).trial.stage,1);await screen(p,'ivo-dialogue');await p.locator('#dialog-close').click();
+ // Passive observations start before approaching: slower frames/screenshots may
+ // allow more than one committed attack before the potion command is sent.
+ await p.evaluate(()=>{window.__qaDamage=[];window.__qaDamageActive=true;let last=window.__frontier3d().trial.hp;const observe=()=>{if(!window.__qaDamageActive)return;const s=window.__frontier3d();if(s.trial.hp<last)window.__qaDamage.push({from:last,to:s.trial.hp,phase:s.enemyPhase,at:performance.now()});last=s.trial.hp;requestAnimationFrame(observe);};observe();});
  await go(p,[-1,2]);await go(p,[3,2]);
  await p.waitForFunction(()=>window.__frontier3d().enemyPhase==='windup');await screen(p,'enemy-warning');
- await p.waitForFunction(()=>window.__frontier3d().trial.hp<100);assert.equal((await state(p)).trial.hp,73);await press(p,'KeyH',40);await wait(200);assert.equal((await state(p)).trial.hp,100);assert.equal((await state(p)).trial.potions,1);await screen(p,'potion-feedback');
+ await p.waitForFunction(()=>window.__qaDamage.length>0);const damage=await p.evaluate(()=>{window.__qaDamageActive=false;return window.__qaDamage.slice();});assert.ok(damage.every(hit=>hit.from-hit.to===27),'Every observed attack deals exactly 27 damage');
+ await p.evaluate(()=>{const before=e=>{if(e.code==='KeyH')window.__qaPotion={before:window.__frontier3d().trial};};const after=e=>{if(e.code==='KeyH'){window.__qaPotion.after=window.__frontier3d().trial;window.removeEventListener('keydown',before,true);window.removeEventListener('keydown',after);}};window.addEventListener('keydown',before,true);window.addEventListener('keydown',after);});
+ await press(p,'KeyH',40);const potion=await p.evaluate(()=>window.__qaPotion);assert.ok(potion.before.hp>0);assert.equal(potion.after.hp,Math.min(100,potion.before.hp+45));assert.equal(potion.after.potions,potion.before.potions-1);report.combat={damage,potion};await wait(200);await screen(p,'potion-feedback');
  await p.waitForFunction(()=>window.__frontier3d().enemyPhase==='windup');const hp=(await state(p)).trial.hp;await p.keyboard.down('KeyS');await press(p,'Space',50);await wait(430);await p.keyboard.up('KeyS');await wait(700);assert.equal((await state(p)).trial.hp,hp,'Dodge should avoid locked attack');report.checks.push('Telegraph, 27 damage, real potion +45/charge, directional dodge avoids the committed attack.');
  // Close on the creature during recovery and strike with independent presses.
  for(let i=0;i<100;i++){

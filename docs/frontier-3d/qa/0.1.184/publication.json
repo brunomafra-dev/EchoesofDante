@@ -1,0 +1,31 @@
+{
+  "version": "0.1.184",
+  "at": "2026-11-03T18:40:29.453755+00:00",
+  "sourceCommit": "9ba98febac6e7f060013ba4f505783a310f4bc36",
+  "vercelStatus": "success",
+  "vercelUrl": "https://vercel.com/brunomafra-devs-projects/echosofdante/HGNNMMEtUUvyz4j6Nh6EHqM55AQd",
+  "published": true,
+  "matchingPublishedHashes": 35,
+  "unchangedCampaignHashes": 86,
+  "reports": [
+    "compiled/report.json",
+    "compiled-jump/report.json",
+    "compiled-context/report.json",
+    "compiled-resilience/report.json",
+    "compiled-visual/report.json",
+    "crew/report.json",
+    "public/report.json",
+    "public-jump/report.json"
+  ],
+  "runtimeDiffFromSourceCommit": false,
+  "networkOrRelayChanged": false,
+  "humanVisualApproval": "pending",
+  "physicalIphoneTest": "pending",
+  "limits": [
+    "Solo isolated trial; no classes/co-op migration.",
+    "Reference intruder retained, recoloured.",
+    "Crossed foliage impostors have angle and close-view limitations.",
+    "Measured Intel UHD desktop approximately 35–41 FPS; no mobile performance guarantee."
+  ],
+  "qaObservation": "First public script expected hp 73 after an approach that allowed two 27-damage hits. Retained in observations/public-first-run.json. Revised passive damage observations and capture/bubble around native KeyH verify damage and potion without game-state setters or gameplay changes."
+}

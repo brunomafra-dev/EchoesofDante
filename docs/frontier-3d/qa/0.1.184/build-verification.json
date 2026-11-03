@@ -10,7 +10,9 @@
     "docs\\frontier-3d\\qa\\0.1.184\\compiled-jump\\report.json",
     "docs\\frontier-3d\\qa\\0.1.184\\compiled-resilience\\report.json",
     "docs\\frontier-3d\\qa\\0.1.184\\compiled-visual\\report.json",
-    "docs\\frontier-3d\\qa\\0.1.184\\crew\\report.json"
+    "docs\\frontier-3d\\qa\\0.1.184\\crew\\report.json",
+    "docs\\frontier-3d\\qa\\0.1.184\\public\\report.json",
+    "docs\\frontier-3d\\qa\\0.1.184\\public-jump\\report.json"
   ],
   "campaignSourceAndRelayChanged": false
 }

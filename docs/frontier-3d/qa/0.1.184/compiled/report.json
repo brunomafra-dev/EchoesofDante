@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-03T18:17:44.007Z",
+  "at": "2026-11-03T18:34:51.495Z",
   "base": "http://127.0.0.1:5193",
   "method": "Read-only inspect snapshot. Real keyboard, pointer and touch controls, no game-state setters. Campaign localStorage sentinels; temporary trial only. Separate explicit fixtures for death/context-loss paths.",
   "errors": [],
@@ -34,47 +34,71 @@
   ],
   "performance": [
     {
-      "fps": 38,
+      "fps": 41.31012097963999,
       "calls": 72,
       "triangles": 336512,
       "textures": 58,
       "geometries": 46
     },
     {
-      "fps": 39.3468424158962,
+      "fps": 38.36317135549878,
       "calls": 72,
       "triangles": 336512,
       "textures": 58,
       "geometries": 46
     },
     {
-      "fps": 36.775379850962835,
+      "fps": 37.99620037996193,
       "calls": 72,
       "triangles": 336512,
       "textures": 58,
       "geometries": 46
     },
     {
-      "fps": 37.99240151969619,
+      "fps": 30.971738288811423,
       "calls": 72,
       "triangles": 336512,
       "textures": 58,
       "geometries": 46
     },
     {
-      "fps": 38.36317135549865,
+      "fps": 33.44152650732773,
       "calls": 72,
       "triangles": 336512,
       "textures": 58,
       "geometries": 46
     },
     {
-      "fps": 40.306724341329115,
+      "fps": 27.977617905675377,
       "calls": 72,
       "triangles": 336512,
       "textures": 58,
       "geometries": 46
     }
   ],
+  "combat": {
+    "damage": [
+      {
+        "from": 100,
+        "to": 73,
+        "phase": "strike",
+        "at": 13737.699999999255
+      }
+    ],
+    "potion": {
+      "before": {
+        "stage": 1,
+        "hp": 73,
+        "enemyHp": 96,
+        "potions": 2
+      },
+      "after": {
+        "stage": 1,
+        "hp": 100,
+        "enemyHp": 96,
+        "potions": 1
+      }
+    }
+  },
   "passed": true
 }

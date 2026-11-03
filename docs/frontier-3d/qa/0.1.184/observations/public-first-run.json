@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-03T18:32:49.940Z",
+  "base": "https://echosofdante.vercel.app",
+  "method": "Read-only inspect snapshot. Real keyboard, pointer and touch controls, no game-state setters. Campaign localStorage sentinels; temporary trial only. Separate explicit fixtures for death/context-loss paths.",
+  "errors": [],
+  "checks": [],
+  "screens": [
+    "arrival-desktop",
+    "ivo-dialogue",
+    "enemy-warning"
+  ],
+  "performance": [],
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n46 !== 73\n"
+}
