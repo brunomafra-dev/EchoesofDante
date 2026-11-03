@@ -112,11 +112,11 @@ function updateEnemy(dt:number){
 function label(id:string,pos:T.Vector3,show=true){const v=pos.clone().project(camera),node=el(id);node.hidden=!show||v.z>1||v.z<0||Math.abs(v.x)>1||Math.abs(v.y)>1;if(!node.hidden)node.style.transform=`translate(-50%,-100%) translate(${(v.x*.5+.5)*innerWidth}px,${(-v.y*.5+.5)*innerHeight}px)`;}
 let frames=0,sample=0,fps=0,lastRender=0;
 function ui(){
- el('portrait-note').hidden=isPaused();
  const angle=Math.atan2(controls.target.x-camera.position.x,camera.position.z-controls.target.z);el('heading').textContent=['N','NE','L','SE','S','SO','O','NO'][(Math.round(angle/(Math.PI/4))+8)%8];
  el<HTMLMeterElement>('health').value=trial.hp;el('hp-text').textContent=`${Math.round(trial.hp)} / 100`;el('potions').textContent=String(trial.potions);el<HTMLButtonElement>('potion').disabled=trial.potions<=0||trial.hp>=100;el<HTMLButtonElement>('dodge').disabled=dodgeCD>0;el<HTMLButtonElement>('attack').disabled=attackCD>0;el('dodge-ready').style.width=`${(1-dodgeCD/1.7)*100}%`;
  el<HTMLMeterElement>('enemy-health').value=trial.enemyHp;
  const nearIvo=player.root.position.distanceTo(IVO)<2.8,nearBeacon=player.root.position.distanceTo(BEACON)<2.6&&trial.stage===1;
+ el('portrait-note').hidden=isPaused()||nearIvo||nearBeacon||time>8;
  el('context').hidden=isPaused()||!nearIvo&&!nearBeacon;el('context-text').textContent=nearIvo?'Ivo · Oficina de campo':'Baliza de pesquisa';el('interact').innerHTML=nearIvo?'CONVERSAR <kbd>E</kbd>':'ANALISAR <kbd>E</kbd>';
  label('ivo-label',IVO.clone().add(new T.Vector3(0,2.6,0)),player.root.position.distanceTo(IVO)<16);
  label('enemy-label',enemy.root.position.clone().add(new T.Vector3(0,2.8,0)),trial.enemyHp>0&&player.root.position.distanceTo(enemy.root.position)<14);

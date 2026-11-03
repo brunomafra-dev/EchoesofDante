@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "width": 1280,
+  "height": 720,
+  "readyState": 4,
+  "tracks": false,
+  "method": "Native Chrome WebM decode and seek at 2.5 seconds; no neural model executed."
+}

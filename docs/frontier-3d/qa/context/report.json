@@ -1,0 +1,156 @@
+{
+  "base": "http://127.0.0.1:5193",
+  "at": "2026-11-03T14:03:32.183Z",
+  "errors": [],
+  "layouts": [
+    {
+      "viewport": [
+        568,
+        320
+      ],
+      "context": {
+        "x": 411.765625,
+        "y": 131,
+        "right": 548,
+        "bottom": 198,
+        "width": 136.234375,
+        "height": 67
+      },
+      "controls": [
+        {
+          "x": 30,
+          "y": 197,
+          "right": 126,
+          "bottom": 293,
+          "width": 96,
+          "height": 96
+        },
+        {
+          "x": 470,
+          "y": 215,
+          "right": 548,
+          "bottom": 293,
+          "width": 78,
+          "height": 78
+        },
+        {
+          "x": 402,
+          "y": 228,
+          "right": 462,
+          "bottom": 293,
+          "width": 60,
+          "height": 65
+        },
+        {
+          "x": 334,
+          "y": 228,
+          "right": 394,
+          "bottom": 293,
+          "width": 60,
+          "height": 65
+        }
+      ],
+      "portraitHidden": true
+    },
+    {
+      "viewport": [
+        844,
+        390
+      ],
+      "context": {
+        "x": 353.8828125,
+        "y": 296,
+        "right": 490.1171875,
+        "bottom": 363,
+        "width": 136.234375,
+        "height": 67
+      },
+      "controls": [
+        {
+          "x": 30,
+          "y": 267,
+          "right": 126,
+          "bottom": 363,
+          "width": 96,
+          "height": 96
+        },
+        {
+          "x": 746,
+          "y": 285,
+          "right": 824,
+          "bottom": 363,
+          "width": 78,
+          "height": 78
+        },
+        {
+          "x": 678,
+          "y": 298,
+          "right": 738,
+          "bottom": 363,
+          "width": 60,
+          "height": 65
+        },
+        {
+          "x": 610,
+          "y": 298,
+          "right": 670,
+          "bottom": 363,
+          "width": 60,
+          "height": 65
+        }
+      ],
+      "portraitHidden": true
+    },
+    {
+      "viewport": [
+        393,
+        852
+      ],
+      "context": {
+        "x": 128.3828125,
+        "y": 620,
+        "right": 264.6171875,
+        "bottom": 687,
+        "width": 136.234375,
+        "height": 67
+      },
+      "controls": [
+        {
+          "x": 18,
+          "y": 708,
+          "right": 114,
+          "bottom": 804,
+          "width": 96,
+          "height": 96
+        },
+        {
+          "x": 307,
+          "y": 732,
+          "right": 373,
+          "bottom": 807,
+          "width": 66,
+          "height": 75
+        },
+        {
+          "x": 250,
+          "y": 747,
+          "right": 301,
+          "bottom": 807,
+          "width": 51,
+          "height": 60
+        },
+        {
+          "x": 193,
+          "y": 747,
+          "right": 244,
+          "bottom": 807,
+          "width": 51,
+          "height": 60
+        }
+      ],
+      "portraitHidden": true
+    }
+  ],
+  "method": "Fresh isolated trial, normal WASD to Ivo, native tap opens dialogue. Read-only diagnostics; no position or progression injection.",
+  "passed": true
+}

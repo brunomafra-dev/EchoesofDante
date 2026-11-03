@@ -14,6 +14,8 @@ Aqui a consulta ao Windows identificou **Intel UHD**, sem NVIDIA detectada. A ce
 
 O [roteiro de captura](../../scripts/capture-frontier-matrix-input.mjs) grava **somente o canvas 3D**, 1280×720, solicitando 24 FPS, por `captureStream`/MediaRecorder. Movimento e órbita são inputs reais. O HUD DOM permanece fora da gravação. [Vídeo limpo](matrix-input/clean-reference.webm), [metadados](matrix-input/capture.json), [tela original com HUD](matrix-input/source-with-hud.jpg).
 
+[Decodificação e dimensões verificadas no Chrome](matrix-input/decode.json), [frame sem HUD](matrix-input/clean-frame.jpg). Isso valida o arquivo gravado, sem demonstrar compatibilidade ou resultado de inferência.
+
 O fluxo offline oficial trabalha com imagem sem interface e compõe o HUD posteriormente. [Gravação/renderização offline](https://github.com/SkyworkAI/Matrix-Game/blob/main/Matrix-Game-4/docs/offline.md). Nosso vídeo é um **candidato de entrada**; não foi processado nem validado pelo modelo. A captura é em tempo real: 24 FPS solicitado não é garantia de cadência efetiva. Não é um filme de IA, uma captura de outro jogo ou evidência de renderização neural.
 
 ## Experimento proposto

@@ -6,7 +6,10 @@
   "referenceAssetsVerified": true,
   "reports": [
     "docs\\frontier-3d\\qa\\compiled\\report.json",
+    "docs\\frontier-3d\\qa\\context\\report.json",
     "docs\\frontier-3d\\qa\\local\\report.json",
+    "docs\\frontier-3d\\qa\\public\\report.json",
+    "docs\\frontier-3d\\qa\\public-resilience\\report.json",
     "docs\\frontier-3d\\qa\\resilience\\report.json"
   ],
   "campaignSourceAndRelayChanged": false
