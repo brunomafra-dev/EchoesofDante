@@ -1,10 +1,26 @@
-# Primeira fronteira · ensaio 3D · 0.1.183
+# Primeira fronteira · ensaio 3D · 0.1.184
 
 Em 03/11/2026, depois de conhecer Keldurn e Last Havens, o usuário autorizou explicitamente a proposta de **um pequeno protótipo separado: trecho da base, personagem, NPC e inimigo** (“FAÇA ISSO PQ EU ACHO QUE ECHOES MERECE”). Essa autorização permite este experimento antes do próximo capítulo. Não declara a revisão visual 0.1.181 aprovada e não autoriza migrar toda a campanha.
 
-[Abrir o ensaio](https://echosofdante.vercel.app/frontier-3d.html?v=0.1.183), registrado na biblioteca. Three.js 0.187.0/WebGL2 em uma entrada própria do Vite, sem carregar Phaser nem os sistemas/saves/relay da campanha. A campanha continua em Phaser, com as pinturas aprovadas. Protocolo cooperativo 16 preservado.
+[Abrir o ensaio](https://echosofdante.vercel.app/frontier-3d.html?v=0.1.184), registrado na biblioteca. Three.js 0.187.0/WebGL2 em uma entrada própria do Vite, sem carregar Phaser nem os sistemas/saves/relay da campanha. A campanha continua em Phaser, com as pinturas aprovadas. Protocolo cooperativo 16 preservado.
 
-![Ensaio compilado com controles de toque](qa/0.1.183/compiled/touch-landscape.jpg)
+![Revisão visual compilada](qa/0.1.184/compiled/arrival-desktop.jpg)
+
+## Revisão visual solicitada · 0.1.184
+
+O usuário gostou da jogabilidade, considerou os gráficos insuficientes e pediu continuar essa revisão. Trabalho restrito ao mesmo trecho solo; não autoriza migração completa ou outro capítulo.
+
+- Explorador e Ivo adultos, com roupa, cabelo, rosto e rig completo compatível. Derivados dos arquivos Standard oficiais de Quaternius: traje inteiro de trabalho, cabeça/cabelo sobre o mesmo esqueleto e oito animações in-place. Preservados os materiais PBR; cores distintas, mochila, tiras e instrumento de campo presos ao torso. O personagem da campanha e o Ivo já aprovado não foram substituídos. O intruso continua sendo o modelo de referência anterior.
+- Árvores/plantas Poly Haven CC0: troncos e galhos 3D com materiais próprios, duas vistas da árvore completa preparadas offline para as copas, quatro variantes de samambaias e rochas naturais também no perímetro. **As copas usam planos cruzados com recorte alpha, não milhões de folhas geométricas.** Funcionam como vegetação de média/distante visão; aproximações e ângulos rasantes podem revelar essa simplificação e precisam de avaliação humana. A floresta exterior é cenário, não mapas adicionais.
+- Abrigo com casco chanfrado, nervuras, painéis, janelas e ferragens; pintura com desgaste preparada uma vez, iluminação indireta sobre os materiais e paleta menos saturada no solo. Rochas periféricas parcialmente enterradas; plantas fora das aproximações de missão. Câmara inicial mais próxima e baixa; órbita/zoom continuam livres. Portas fechadas, bancada, toldo e degrau mantêm o volume físico do ensaio.
+- Preparação offline e fontes em [asset-tools](../../scripts/asset-tools/README.md), [pesquisa](ASSET_RESEARCH.md) e [manifesto](../../public/assets/frontier-3d/visual184.json). Sem biblioteca de preparação no bundle do jogo, chamadas a API ou renderização neural no navegador. Arquivos humanos aproximadamente 1,3 MB cada. Objetos estáticos continuam reunidos por material; equipamento também é reunido por material antes de prender ao osso.
+- Mesmas teclas, salto/gravidade, combate, circuito, interface e sessão temporária. Os clipes humanos novos já são in-place; a compensação de altura do antigo explorador fica restrita ao modelo antigo. **Pré-requisitos simulados: nenhum.** QA de morte/armazenamento bloqueado usa fixtures explícitas apenas da sessão deste ensaio.
+
+**QA técnico local:** typecheck/build (291 módulos), circuito completo no compilado, combate/poção/esquiva, entrega/reload/reinício, colisões, salto sob o toldo e retorno ao degrau passaram. Toque/gamepad emulados, sete resoluções, interação em telas pequenas, morte/retorno, JSON inválido, armazenamento bloqueado, falhas de GLB/copa e perda deliberada do contexto gráfico passaram. Verificação dos dois rigs amostrou 976 poses: geometria íntegra, rosto/cabelo acompanhando o corpo caído e sem segundo voo vertical na animação. Capturas de chegada, conversa, combate, toldo, pouso e toque inspecionadas pelo agente. Relatórios em `qa/0.1.184/`; a primeira execução DEV foi interrompida por HMR durante uma edição, não é tratada como aprovação e foi substituída pela bateria do compilado.
+
+**Desempenho medido:** Intel UHD, Chrome headless, 1440×900/DPR 1, cena estacionária: aproximadamente 35–38 FPS em Equilibrada e 36–41 em Mais leve. Contadores em torno de 350 mil triângulos com os passes de sombra, 87–90 chamadas e 58–60 texturas, conforme a cena. É uma revisão visual mais custosa que a referência anterior; não promete 60 FPS, desempenho idêntico à campanha ou resultado em iPhone. [Amostras por qualidade/dispositivo](qa/0.1.184/compiled-visual/report.json). A opção leve elimina as sombras, mas não troca os modelos.
+
+Publicação será registrada após confirmação. **Aprovação estética e testes em iPhone físico permanecem pendentes.** Emulação de toque/gamepad e inspeção de capturas pelo agente não são aprovação humana.
 
 ## Revisão solicitada pelo playtest · 0.1.183
 

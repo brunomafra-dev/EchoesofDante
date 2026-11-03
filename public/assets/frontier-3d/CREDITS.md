@@ -2,6 +2,24 @@
 
 The camp construction, procedural vegetation, scene layout and code are authored for this repository. Imported character and rock geometry is credited below. Existing campaign art and actors are unchanged.
 
+## Adult crew and natural environment (0.1.184)
+
+Quaternius — actual downloaded Standard archives include CC0-1.0:
+
+- Universal Base Characters: https://quaternius.itch.io/universal-base-characters
+- Universal Animation Library: https://quaternius.itch.io/universal-animation-library
+- Modular Character Outfits — Fantasy: https://quaternius.itch.io/modular-character-outfits-fantasy
+- Included archive licenses are redistributed as `Quaternius-UBC-CC0.txt`, `Quaternius-UAL-CC0.txt`, `Quaternius-Outfits-CC0.txt`. Exact archive hashes and derived files: `visual184.json`.
+- Whole work-clothing rig, adult head/hair and compatible in-place animations; offline cleanup, head selection, geometry reduction, texture resizing and field-clothing tint. Eight clips retained. Full figures remain skinned, with runtime field equipment attached to the torso. This does not imply all current Quaternius products use the same license.
+
+Powered by Poly Haven — CC0-1.0:
+
+- Tree Small 02, Rico Cilliers: https://polyhaven.com/a/tree_small_02
+- Fern 02, Rob Tuytel (scanning), Rico Cilliers (modeling): https://polyhaven.com/a/fern_02
+- Optimized trunk/branch geometry and PBR maps; two crossed canopy impostors baked offline from the complete tree. Fern variants simplified; Rock Moss Set 02 distant geometry reduced. Original MD5/URLs and processing steps in `scripts/asset-tools/`. No API requests in the game.
+
+The habitat pressure hull, panels, surface wear and field equipment are authored for Dante. Surface wear is baked once; static geometry and equipment are grouped by material. The original alien remains a reference actor. The older two human GLBs remain available for historical tests, but this version no longer loads them.
+
 ## Photogrammetric rocks (0.1.183)
 
 Powered by Poly Haven. Rock Moss Set 02 by Kless Gyzen, CC0-1.0.

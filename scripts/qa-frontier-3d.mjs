@@ -1,13 +1,13 @@
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {mkdir,writeFile} from 'node:fs/promises';
-const base=process.env.QA_BASE??'http://127.0.0.1:5185',out=process.env.QA_OUT??'docs/frontier-3d/qa/0.1.183/local';await mkdir(out,{recursive:true});
+const base=process.env.QA_BASE??'http://127.0.0.1:5185',out=process.env.QA_OUT??'docs/frontier-3d/qa/0.1.184/local';await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',args:['--disable-background-timer-throttling','--disable-renderer-backgrounding']});
 const report={at:new Date().toISOString(),base,method:'Read-only inspect snapshot. Real keyboard, pointer and touch controls, no game-state setters. Campaign localStorage sentinels; temporary trial only. Separate explicit fixtures for death/context-loss paths.',errors:[],checks:[],screens:[],performance:[]};
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 async function make(touch=false,width=1440,height=900){const p=await browser.newPage({viewport:{width,height},isMobile:touch,hasTouch:touch});p.setDefaultTimeout(60000);p.on('pageerror',e=>report.errors.push(e.message));await p.addInitScript(()=>{localStorage['echoes-of-dante.characters.v1']='frontier-real-character';localStorage['echoes-of-dante.settings.v1']='frontier-real-settings';localStorage['frontier-untouched']='sentinel';});return p;}
 const state=p=>p.evaluate(()=>window.__frontier3d());
-async function enter(p){await p.goto(base+'/frontier-3d.html?inspect=1&v=0.1.183');await p.locator('#start:enabled').waitFor();await p.locator('#start').click();await wait(500);}
+async function enter(p){await p.goto(base+'/frontier-3d.html?inspect=1&v=0.1.184');await p.locator('#start:enabled').waitFor();await p.locator('#start').click();await wait(500);}
 async function screen(p,name){await p.screenshot({path:`${out}/${name}.jpg`,type:'jpeg',quality:88});report.screens.push(name);}
 async function press(p,key,ms=100){await p.keyboard.down(key);await wait(ms);await p.keyboard.up(key);}
 const held=new Set();async function release(p){for(const k of held)await p.keyboard.up(k);held.clear();}

@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "campaignBaseline": "7bbae56c72ffa08281feb7f02db4d1deeb238393",
+  "unchangedCampaignHashes": 86,
+  "newPublishedHashCount": 35,
+  "referenceAssetsVerified": true,
+  "reports": [
+    "docs\\frontier-3d\\qa\\0.1.184\\compiled\\report.json",
+    "docs\\frontier-3d\\qa\\0.1.184\\compiled-context\\report.json",
+    "docs\\frontier-3d\\qa\\0.1.184\\compiled-jump\\report.json",
+    "docs\\frontier-3d\\qa\\0.1.184\\compiled-resilience\\report.json",
+    "docs\\frontier-3d\\qa\\0.1.184\\compiled-visual\\report.json",
+    "docs\\frontier-3d\\qa\\0.1.184\\crew\\report.json"
+  ],
+  "campaignSourceAndRelayChanged": false
+}

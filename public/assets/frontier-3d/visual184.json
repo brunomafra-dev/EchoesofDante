@@ -1,0 +1,95 @@
+{
+  "version": "0.1.184",
+  "sources": [
+    {
+      "archive": "ubc.zip",
+      "sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+      "officialPage": "https://quaternius.itch.io/universal-base-characters",
+      "edition": "free Standard",
+      "license": "CC0-1.0 as included in the verified archive"
+    },
+    {
+      "archive": "ual.zip",
+      "sha256": "cc73fc4e495b82958207316596317a3f40b9fa38065bde1027937452da537724",
+      "officialPage": "https://quaternius.itch.io/universal-animation-library",
+      "edition": "free Standard",
+      "license": "CC0-1.0 as included in the verified archive"
+    },
+    {
+      "archive": "outfits.zip",
+      "sha256": "c3468b18871cc8c8f05ab14df7712baf22cb9f389cbd870babf130e595187f70",
+      "officialPage": "https://quaternius.itch.io/modular-character-outfits-fantasy",
+      "edition": "free Standard",
+      "license": "CC0-1.0 as included in the verified archive"
+    }
+  ],
+  "natureSourceManifest": "scripts/asset-tools/frontier184-sources.json",
+  "derivation": "Complete clothing rig plus head/hair on shared bones and eight in-place clips. PBR maps preserved at 512. Natural trunk/branches simplified offline; crossed canopy impostors baked from the complete tree at 768x1024. Fern geometry simplified; distant rock LOD. No external runtime API.",
+  "treeBake": {
+    "height": 4.556740965694189,
+    "center": [
+      0.14935654401779175,
+      2.2542666364461184,
+      0.7636117935180664
+    ],
+    "width": 4.101066869124771,
+    "planeHeight": 5.468089158833027
+  },
+  "files": [
+    {
+      "file": "crew-explorer.glb",
+      "bytes": 1312828,
+      "sha256": "ddada443fb4d5e65cf58da9020ad14d120f5348c30704fa644ddc5c7b1748e16"
+    },
+    {
+      "file": "crew-ivo.glb",
+      "bytes": 1364864,
+      "sha256": "f1b412fd2226edb3d12c668162df39435ebd56ffdd65267fe75804a2b66dbb81"
+    },
+    {
+      "file": "tree_small_02.glb",
+      "bytes": 1213960,
+      "sha256": "54d45e43b40268d66b6324e8135279a8b8fdd78d2bba6ec1a3c413740b39e28d"
+    },
+    {
+      "file": "tree_small_02_far.glb",
+      "bytes": 362604,
+      "sha256": "87d07400fc5104802fb31814477a55dedc52e62f64f98acb16f2a5a91d0b17a4"
+    },
+    {
+      "file": "fern_02.glb",
+      "bytes": 268916,
+      "sha256": "58b20964c2e0a9e3bc0034ebea18b41436e91579d6fbedf2379e2047f386e7ba"
+    },
+    {
+      "file": "rock-moss-far.glb",
+      "bytes": 740460,
+      "sha256": "b7a7f03f351cedbc848ac64f58bda61ec51263d755691459ca83ac2d48f79ff6"
+    },
+    {
+      "file": "tree-canopy-0.webp",
+      "bytes": 132352,
+      "sha256": "d3dc954060e782af31e8375e35f4041cad0be43028636e7c8123b7e0df0d2dcc"
+    },
+    {
+      "file": "tree-canopy-1.webp",
+      "bytes": 175216,
+      "sha256": "e36df106ea4dfa144166760680d3b76b686ba456cd86a507cb9df38772cb5a40"
+    },
+    {
+      "file": "Quaternius-UBC-CC0.txt",
+      "bytes": 782,
+      "sha256": "c232257c8a2545520aa120cda96acb23d00a355d2e3339cba20b7ebf56f28a09"
+    },
+    {
+      "file": "Quaternius-UAL-CC0.txt",
+      "bytes": 318,
+      "sha256": "67e65a88def1ce573211f5cac3f514014abeface8fe48309c010491186b3a89a"
+    },
+    {
+      "file": "Quaternius-Outfits-CC0.txt",
+      "bytes": 705,
+      "sha256": "cd887d30d81e7dcc8e5dce981c1433b2edc92bf775b487db32c202ac2fbe1d05"
+    }
+  ]
+}

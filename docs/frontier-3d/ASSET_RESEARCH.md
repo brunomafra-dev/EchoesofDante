@@ -1,5 +1,15 @@
 # Fontes visuais para o ensaio 3D · 03/11/2026
 
+## Adoção na revisão 0.1.184
+
+Após a nova rejeição dos gráficos, foram baixados os arquivos **Standard gratuitos oficiais** de Universal Base Characters, Universal Animation Library e Modular Character Outfits — Fantasy. Os três ZIPs efetivamente baixados incluem **CC0 1.0**. SHA256 dos arquivos completos, páginas oficiais e licenças extraídas estão no [manifesto](../../public/assets/frontier-3d/visual184.json). Esse registro resolve a verificação pendente da tabela histórica abaixo **para estes arquivos específicos**; não afirma que todos os novos produtos/licenças do autor são CC0.
+
+Traje Male_Peasant inteiro, com cabeça de Superhero_Male_FullBody, cabelos e animações do mesmo rig. Roupa neutra de trabalho recebe equipamento de expedição autoral, sem importar capuz/armadura medieval. Não há reconstrução por sprites de membros. Corrigidos somente dois nomes de URI de normal maps inexistentes no export do autor (`_png.png` → `.png`, arquivo presente no ZIP). Malhas/ossos de modelos auxiliares e animações não usadas removidos antes de distribuir os derivados.
+
+[Tree Small 02](https://polyhaven.com/a/tree_small_02), de Rico Cilliers, e [Fern 02](https://polyhaven.com/a/fern_02), escaneada por Rob Tuytel/modelada por Rico Cilliers, são a base natural. Reduzir os dois milhões de triângulos da árvore diretamente eliminava a copa. A solução usa tronco/galhos simplificados e copas em planos cruzados, com duas imagens recortadas preparadas da árvore original completa. É uma troca explícita entre volume e desempenho; não é equivalente a uma copa geométrica próxima. Rochas periféricas usam uma versão mais leve de Rock Moss Set 02, preservando o detalhe das quatro rochas de aproximação.
+
+[glTF Transform](https://github.com/donmccurdy/glTF-Transform) e [meshoptimizer](https://github.com/zeux/meshoptimizer) são ferramentas locais de preparação: limpeza de malhas, simplificação, conservação do rig, remoção de canais não utilizados e conversão de texturas. Não entram no runtime. Nenhuma arte do Godot TPS Demo foi incorporada; nenhuma inferência Matrix-Game foi executada. A direção e os assets da campanha Phaser continuam intactos.
+
 O usuário pediu procurar um repositório para melhorar as imagens, além de corrigir comandos e acrescentar salto. A avaliação é específica ao ensaio: a direção Organic Sci-Fi R3 da campanha permanece aprovada. Um repositório de motor, por si só, não melhora modelos, materiais ou composição.
 
 | Fonte primária | Utilidade para Dante | Licença e decisão |

@@ -1,0 +1,137 @@
+{
+  "base": "http://127.0.0.1:5193",
+  "at": "2026-11-03T18:22:17.940Z",
+  "errors": [],
+  "quality": [
+    {
+      "quality": "balanced",
+      "samples": [
+        {
+          "fps": 37.36847280951915,
+          "drawCalls": 90,
+          "triangles": 355384,
+          "textures": 59,
+          "geometries": 50
+        },
+        {
+          "fps": 34.84657825960701,
+          "drawCalls": 90,
+          "triangles": 355384,
+          "textures": 59,
+          "geometries": 50
+        },
+        {
+          "fps": 37,
+          "drawCalls": 90,
+          "triangles": 355384,
+          "textures": 59,
+          "geometries": 50
+        },
+        {
+          "fps": 37,
+          "drawCalls": 90,
+          "triangles": 355384,
+          "textures": 59,
+          "geometries": 50
+        },
+        {
+          "fps": 37.74315300493566,
+          "drawCalls": 90,
+          "triangles": 355384,
+          "textures": 59,
+          "geometries": 50
+        }
+      ]
+    },
+    {
+      "quality": "low",
+      "samples": [
+        {
+          "fps": 35.99999999999999,
+          "drawCalls": 46,
+          "triangles": 204429,
+          "textures": 58,
+          "geometries": 50
+        },
+        {
+          "fps": 40.975414751149295,
+          "drawCalls": 46,
+          "triangles": 204429,
+          "textures": 58,
+          "geometries": 50
+        },
+        {
+          "fps": 37.51993246412155,
+          "drawCalls": 46,
+          "triangles": 204429,
+          "textures": 58,
+          "geometries": 50
+        },
+        {
+          "fps": 37.51993246412155,
+          "drawCalls": 46,
+          "triangles": 204429,
+          "textures": 58,
+          "geometries": 50
+        },
+        {
+          "fps": 38.7071801819237,
+          "drawCalls": 46,
+          "triangles": 204429,
+          "textures": 58,
+          "geometries": 50
+        }
+      ]
+    },
+    {
+      "quality": "high",
+      "samples": [
+        {
+          "fps": 38.71092615890839,
+          "drawCalls": 90,
+          "triangles": 355384,
+          "textures": 60,
+          "geometries": 50
+        },
+        {
+          "fps": 35.99640035996407,
+          "drawCalls": 90,
+          "triangles": 355384,
+          "textures": 60,
+          "geometries": 50
+        },
+        {
+          "fps": 37.37582374348381,
+          "drawCalls": 90,
+          "triangles": 355384,
+          "textures": 60,
+          "geometries": 50
+        },
+        {
+          "fps": 37.37582374348381,
+          "drawCalls": 90,
+          "triangles": 355384,
+          "textures": 60,
+          "geometries": 50
+        },
+        {
+          "fps": 36,
+          "drawCalls": 90,
+          "triangles": 355384,
+          "textures": 60,
+          "geometries": 50
+        }
+      ]
+    }
+  ],
+  "method": "Native options controls, read-only runtime counters. Stationary trial scene; not a physical phone benchmark or a human visual approval.",
+  "device": {
+    "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1
+  },
+  "passed": true
+}

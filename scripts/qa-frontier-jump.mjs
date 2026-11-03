@@ -4,7 +4,7 @@ import {mkdir,writeFile,readFile} from 'node:fs/promises';
 import ts from 'typescript';
 import * as T from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-const base=process.env.QA_BASE??'http://127.0.0.1:5185',out=process.env.QA_OUT??'docs/frontier-3d/qa/0.1.183/jump';await mkdir(out,{recursive:true});
+const base=process.env.QA_BASE??'http://127.0.0.1:5185',out=process.env.QA_OUT??'docs/frontier-3d/qa/0.1.184/jump';await mkdir(out,{recursive:true});
 const r={base,at:new Date().toISOString(),errors:[],checks:[],physics:[],layouts:[],method:'Real keyboard/mouse, native emulated touch and standard gamepad mock. Read-only diagnostics. Fresh temporary trial, campaign localStorage sentinel; no position/progression setters.'};
 const code=ts.transpileModule(await readFile('src/experiments/frontier-3d/Jump.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText;
 const {Jump}=await import('data:text/javascript;base64,'+Buffer.from(code).toString('base64'));
@@ -20,7 +20,7 @@ for(let i=0;i<62;i++){mixer.update(1/60);model.updateMatrixWorld(true);const pos
 assert.ok(maxFootDrift<.025,'Jump animation must not add its own vertical flight '+maxFootDrift);r.animation={maxFootDriftMeters:maxFootDrift,sampledPoses:62};r.checks.push('Full skinned geometry sampled offline: animation foot drift below 2.5cm after cancelling authored lift; physics is the sole world elevation.');
 const b=await chromium.launch({channel:'chrome',args:['--disable-background-timer-throttling','--disable-renderer-backgrounding']}),wait=ms=>new Promise(res=>setTimeout(res,ms));
 const state=p=>p.evaluate(()=>window.__frontier3d());
-async function make(touch=false,width=1440,height=900){const p=await b.newPage({viewport:{width,height},isMobile:touch,hasTouch:touch});p.setDefaultTimeout(60000);p.on('pageerror',e=>r.errors.push(e.message));await p.addInitScript(()=>localStorage['frontier-jump-real-save']='untouched');await p.goto(base+'/frontier-3d.html?inspect=1&v=0.1.183');await p.locator('#start:enabled').waitFor();await p.locator('#start').click();return p;}
+async function make(touch=false,width=1440,height=900){const p=await b.newPage({viewport:{width,height},isMobile:touch,hasTouch:touch});p.setDefaultTimeout(60000);p.on('pageerror',e=>r.errors.push(e.message));await p.addInitScript(()=>localStorage['frontier-jump-real-save']='untouched');await p.goto(base+'/frontier-3d.html?inspect=1&v=0.1.184');await p.locator('#start:enabled').waitFor();await p.locator('#start').click();return p;}
 async function press(p,key){await p.keyboard.down(key);await wait(30);await p.keyboard.up(key);}
 async function walk(p,target,tolerance=.4){const held=new Set();for(let i=0;i<160;i++){const s=await state(p),dx=target[0]-s.position[0],dz=target[1]-s.position[2],len=Math.hypot(dx,dz);if(len<tolerance){for(const k of held)await p.keyboard.up(k);await wait(200);return;}const fx=s.target[0]-s.camera[0],fz=s.target[2]-s.camera[2],fl=Math.hypot(fx,fz),f=(dx*fx+dz*fz)/len/fl,x=(dx*-fz+dz*fx)/len/fl,next=new Set([...(f>.32?['KeyW']:f<-.32?['KeyS']:[]),...(x>.32?['KeyD']:x<-.32?['KeyA']:[])]);for(const k of held)if(!next.has(k))await p.keyboard.up(k);for(const k of next)if(!held.has(k))await p.keyboard.down(k);held.clear();next.forEach(k=>held.add(k));await wait(120);}throw Error('Threshold approach blocked '+JSON.stringify(await state(p)));}
 async function landed(p){await p.waitForFunction(()=>!window.__frontier3d().jump.airborne);assert.equal((await state(p)).jump.height,0);}
