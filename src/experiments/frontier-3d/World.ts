@@ -125,6 +125,10 @@ export class FrontierWorld {
   return this.solids.some(o=>o.radius>0&&Math.hypot(x-o.x,z-o.z)<o.radius+radius);
  }
  floorHeight(x:number,z:number){return Math.max(elevation(x,z),Math.abs(x+8.8)<1.05&&Math.abs(z+1.5)<.85?.24:0);}
+ ceilingHeight(x:number,z:number){
+  // Match the awning plane's tilt and allow room for the explorer's head radius.
+  return Math.abs(x+8.7)<3.5&&Math.abs(z+.8)<1.85?2.65-Math.tan(.08)*(x+8.7+.35)-.05:Infinity;
+ }
  move(p:T.Vector3,dx:number,dz:number,radius=.35){if(!this.blocked(p.x+dx,p.z,radius))p.x+=dx;if(!this.blocked(p.x,p.z+dz,radius))p.z+=dz;p.y=this.floorHeight(p.x,p.z);}
  async loadScenery(){
   const gltf=await new GLTFLoader().loadAsync('/assets/frontier-3d/rock-moss.glb');

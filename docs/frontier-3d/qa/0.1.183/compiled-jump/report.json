@@ -1,12 +1,14 @@
 {
   "base": "http://127.0.0.1:5193",
-  "at": "2026-11-03T15:36:25.403Z",
+  "at": "2026-11-03T15:55:43.415Z",
   "errors": [],
   "checks": [
+    "Ceiling contact caps height and removes upward velocity, then gravity lands the explorer at 25/60/120 Hz.",
     "Campaign Space rolls instead of attacking; F has takeoff/apex/landing, no double jump, pause freezes flight and returns to idle.",
     "Moving jump travels horizontally and lands. Held left mouse repeats attacks without moving the camera.",
     "Reload during flight starts safely grounded, keeping temporary trial data.",
     "Standard gamepad mock: X jumps, RB rolls; existing A/RT/Y/Menu remain available.",
+    "Normal walk onto the visible 24cm threshold, jump below the low awning without crossing it, and land back at its actual height; no teleport or platform fixture.",
     "Holding the native touch attack repeats; release stops, without a stuck attack after the disabled cooldown state.",
     "Native touch jump at 568x320, 844x390 and 393x852; all five movement/combat controls visible, >=44px, no overlap. Campaign sentinel preserved."
   ],

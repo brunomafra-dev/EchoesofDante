@@ -11,6 +11,8 @@
     "docs\\frontier-3d\\qa\\0.1.183\\context\\report.json",
     "docs\\frontier-3d\\qa\\0.1.183\\jump\\report.json",
     "docs\\frontier-3d\\qa\\0.1.183\\local\\report.json",
+    "docs\\frontier-3d\\qa\\0.1.183\\public\\report.json",
+    "docs\\frontier-3d\\qa\\0.1.183\\public-jump\\report.json",
     "docs\\frontier-3d\\qa\\0.1.183\\resilience\\report.json"
   ],
   "campaignSourceAndRelayChanged": false
