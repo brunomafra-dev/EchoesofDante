@@ -34,7 +34,7 @@ Diagnóstico `?inspect=1` é opt-in e **somente leitura**: estado temporário, c
 
 ## QA e gates
 
-- [x] Typecheck/build: 288 módulos, aviso de chunks grandes (Phaser existente e novo bundle 3D separado). Diff revisado. Modelos, fontes e seis texturas totalizam 6.908.933 bytes com manifestos/licenças; não é RAM/VRAM total nem transferência HTTP comprimida.
+- [x] Typecheck/build: 288 módulos, aviso de chunks grandes (Phaser existente e novo bundle 3D separado). Diff revisado. Modelos, fontes e seis texturas totalizam 6.908.931 bytes com manifestos/licenças; não é RAM/VRAM total nem transferência HTTP comprimida.
 - [x] Circuito completo com teclado, aviso/dano/esquiva/poção, rocha/habitat, reload/criatura finita, pausa/qualidade/som, mouse, toque emulado e gamepad mock. [Roteiro](../../scripts/qa-frontier-3d.mjs), [DEV](qa/local/report.json), [compilado](qa/compiled/report.json). Compilado também confere câmera por gesto de toque e reinício explícito sem afetar saves reais.
 - [x] Layouts 568×320, 844×390, 852×393, 915×412, 393×852, 1024×768 e 1920×1080; capturas inspecionadas pelo agente. Opções rolam dentro do diálogo, botões ≥44 px, sem overflow horizontal. Amostras de seis segundos em desktop: aproximadamente 59–60 FPS; 50–57 chamadas de desenho nas posições amostradas. Não é benchmark de celular, duração longa ou pior caso.
 - [x] Compilado: [resiliência](qa/resilience/report.json). Fixtures explícitas de morte, JSON inválido, armazenamento bloqueado, download abortado e perda deliberada de contexto; mensagem de recuperação/reload e dados reais preservados. Todos os recursos observados são do próprio domínio; não carrega Phaser, campanha, API ou relay.
