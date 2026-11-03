@@ -1,0 +1,28 @@
+{
+  "base": "http://127.0.0.1:5193",
+  "started": "2026-11-03T13:43:14.406Z",
+  "finished": "2026-11-03T13:43:20.707Z",
+  "width": 1280,
+  "height": 720,
+  "requestedCaptureFps": 24,
+  "actualPresentationFpsNotGuaranteed": true,
+  "bytes": 919925,
+  "mimeType": "video/webm;codecs=vp9",
+  "source": "Only renderer canvas captured. DOM HUD/dialog/labels excluded by canvas.captureStream; no generated/edited video.",
+  "inputs": "650 ms W, then 270 px right-button camera orbit. Fresh trial, no game-state injection.",
+  "before": {
+    "stage": 0,
+    "hp": 100,
+    "enemyHp": 96,
+    "potions": 2
+  },
+  "after": {
+    "stage": 0,
+    "hp": 100,
+    "enemyHp": 96,
+    "potions": 2
+  },
+  "errors": [],
+  "neuralRenderingExecuted": false,
+  "requiresGpuComparison": true
+}

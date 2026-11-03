@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "campaignBaseline": "7bbae56c72ffa08281feb7f02db4d1deeb238393",
+  "unchangedCampaignHashes": 86,
+  "newPublishedHashCount": 21,
+  "referenceAssetsVerified": true,
+  "reports": [
+    "docs\\frontier-3d\\qa\\compiled\\report.json",
+    "docs\\frontier-3d\\qa\\local\\report.json",
+    "docs\\frontier-3d\\qa\\resilience\\report.json"
+  ],
+  "campaignSourceAndRelayChanged": false
+}

@@ -1,0 +1,83 @@
+[
+  {
+    "file": "explorer.glb",
+    "sourceFile": "soldier-quaternius-male.glb",
+    "mirror": "https://raw.githubusercontent.com/agustindiazcano/zombie-horde-survivors/3bd666f61d2c0468d382d6378c63c5e56bf039b5/public/models/soldier-quaternius-male.glb",
+    "author": "Quaternius",
+    "license": "CC0-1.0",
+    "sha256": "89283fadc00d6e198c74dfcf1c38b329131f95aeed16edde898d28bb59f6ef80",
+    "bytes": 1587008,
+    "clips": [
+      "Death",
+      "Defeat",
+      "Idle",
+      "Jump",
+      "PickUp",
+      "Punch",
+      "RecieveHit",
+      "Roll",
+      "Run",
+      "Run_Carry",
+      "Shoot_OneHanded",
+      "SitDown",
+      "StandUp",
+      "SwordSlash",
+      "Victory",
+      "Walk",
+      "Walk_Carry"
+    ]
+  },
+  {
+    "file": "engineer.glb",
+    "sourceFile": "soldier-quaternius-bluemale.glb",
+    "mirror": "https://raw.githubusercontent.com/agustindiazcano/zombie-horde-survivors/3bd666f61d2c0468d382d6378c63c5e56bf039b5/public/models/soldier-quaternius-bluemale.glb",
+    "author": "Quaternius",
+    "license": "CC0-1.0",
+    "sha256": "446051abb81795a7b2d843b7f340403bd1ff50559534e6b8d9fa293cf8a62ae0",
+    "bytes": 1587212,
+    "clips": [
+      "Death",
+      "Defeat",
+      "Idle",
+      "Jump",
+      "PickUp",
+      "Punch",
+      "RecieveHit",
+      "Roll",
+      "Run",
+      "Run_Carry",
+      "Shoot_OneHanded",
+      "SitDown",
+      "StandUp",
+      "SwordSlash",
+      "Victory",
+      "Walk",
+      "Walk_Carry"
+    ]
+  },
+  {
+    "file": "alien.glb",
+    "sourceFile": "enemy-alien.glb",
+    "mirror": "https://raw.githubusercontent.com/agustindiazcano/zombie-horde-survivors/3bd666f61d2c0468d382d6378c63c5e56bf039b5/public/models/enemy-alien.glb",
+    "author": "Quaternius",
+    "license": "CC0-1.0",
+    "sha256": "f55d091cd3914977724f4a7887e1866e73c2f2045df391e83c787b6736552ddb",
+    "bytes": 751172,
+    "clips": [
+      "AlienArmature|Alien_Clapping",
+      "AlienArmature|Alien_Death",
+      "AlienArmature|Alien_Idle",
+      "AlienArmature|Alien_IdleHold",
+      "AlienArmature|Alien_Jump",
+      "AlienArmature|Alien_Punch",
+      "AlienArmature|Alien_Run",
+      "AlienArmature|Alien_RunHold",
+      "AlienArmature|Alien_RunningJump",
+      "AlienArmature|Alien_Sitting",
+      "AlienArmature|Alien_Standing",
+      "AlienArmature|Alien_Swimming",
+      "AlienArmature|Alien_SwordSlash",
+      "AlienArmature|Alien_Walk"
+    ]
+  }
+]

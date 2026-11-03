@@ -1,5 +1,7 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**03/11/2026 · Protótipo 3D separado autorizado · 0.1.182:** depois de Keldurn/Last Havens, o usuário aprovou explicitamente um ensaio separado com trecho da base, personagem, NPC e inimigo (“FAÇA ISSO PQ EU ACHO QUE ECHOES MERECE”). [Primeira fronteira](frontier-3d/README.md): perspectiva/câmera, personagem completo com rig, Ivo, criatura finita, baliza, controles e materiais 3D. Cena solo autônoma, sem simular requisitos ou tocar saves/campanha/relay. A autorização permite este experimento antes do próximo capítulo; não aprova a estética da 0.1.181 nem uma migração integral. QA/publicação e playtest humano serão registrados separadamente; aguardar antes de ampliar o 3D ou retomar o Ninho.
+
 **01/11/2026 · Integração visual autorizada · 0.1.181:** usuário aprovou a UX geral (“perfeito tudo certo”) e pediu auditar profissionalmente e corrigir a relação dos objetos com o terreno. [V01–V05, escopo, fixtures e evidências](visual-integration/README.md): fissura rasa e nascente fria, assentamento por material, tubos rasterizados com juntas, opacidade ambiental preservada e visitas próprias. Pinturas completas, enquadramento −300/2300 das Galerias, física, requisitos, recompensas e bosses posteriores preservados. Só esta etapa; aguardar playtest humano antes de retomar o Ninho.
 
 - [x] Revisão e comparação inicial em sete mapas; regressão integral das Galerias e coletor com quatro classes touch/gamepad passaram.

@@ -1,0 +1,84 @@
+{
+  "author": "ambientCG",
+  "license": "CC0-1.0",
+  "source": [
+    "https://ambientcg.com/view?id=Ground037",
+    "https://ambientcg.com/view?id=Rock035"
+  ],
+  "rockArchiveSha256": "c5e4dbd7d5555734498834c1e09b799ef3d1f00c61fe08c0d953b93a8fb1bb95",
+  "groundArchiveSha256": "4e69db2b7251b1736fa70fe6fe4ab80d64bd220117dd5dd4c7caaead51c2574e",
+  "files": [
+    {
+      "original": "Ground037_1K-JPG_Color.jpg",
+      "originalSha256": "d92bec8a35b9cb16ec79b421ca0f572a7400286eae109beafa266629ef49a6cf",
+      "file": "Ground037_1K-JPG_Color.webp",
+      "sha256": "46de7a62d21108a4e02850e3ca70561715b8df7cce7611361a0cd23b31b25b4c",
+      "bytes": 603578,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "processing": "Same dimensions, WebP quality 90, metadata omitted; no repaint or color grading."
+    },
+    {
+      "original": "Ground037_1K-JPG_NormalGL.jpg",
+      "originalSha256": "ea59dbdcfa5bf2f28bdd4aa896d4e5f96c4cce5939100dcc6db4bbbcdebfe38d",
+      "file": "Ground037_1K-JPG_NormalGL.webp",
+      "sha256": "bb226319351b5ea5438a068bd8cc104d2398048c0e3f8bbd0344e60d5846dce8",
+      "bytes": 607514,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "processing": "Same dimensions, WebP quality 90, metadata omitted; no repaint or color grading."
+    },
+    {
+      "original": "Ground037_1K-JPG_Roughness.jpg",
+      "originalSha256": "3786b088e981aae562f06b6477972d379cffd09a5cc542ab42f9ffd94f9bcb0e",
+      "file": "Ground037_1K-JPG_Roughness.webp",
+      "sha256": "efc5a42c955554274f4d7e83b754942a7d969e2392e1e28e41eba700160db79f",
+      "bytes": 308484,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "processing": "Same dimensions, WebP quality 90, metadata omitted; no repaint or color grading."
+    },
+    {
+      "original": "Rock035_1K-JPG_Color.jpg",
+      "originalSha256": "7d387e01cad601ce49c35d9d9161f7f8f097de0e32e60f8f2108ae1787854ccf",
+      "file": "Rock035_1K-JPG_Color.webp",
+      "sha256": "dfd56ab09ef50b58ea2175766d5e82b43c002db0ea84c9c6be36c4f23ce08447",
+      "bytes": 318140,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "processing": "Same dimensions, WebP quality 90, metadata omitted; no repaint or color grading."
+    },
+    {
+      "original": "Rock035_1K-JPG_NormalGL.jpg",
+      "originalSha256": "003dcaa856ce97d2673379a26a444cc0637f0cdd46d7f5de5c3dd263dfbf3f76",
+      "file": "Rock035_1K-JPG_NormalGL.webp",
+      "sha256": "bb6fbc14b828760612d496db7ad0f72faa8eb652797efc8a251fd1813f94b0e4",
+      "bytes": 624262,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "processing": "Same dimensions, WebP quality 90, metadata omitted; no repaint or color grading."
+    },
+    {
+      "original": "Rock035_1K-JPG_Roughness.jpg",
+      "originalSha256": "1b3834e6d15be99c06653688ed6c43b492163f6eaacfa56bd7397cf59165e8d6",
+      "file": "Rock035_1K-JPG_Roughness.webp",
+      "sha256": "0060b8c42451ffe8a2ef16ee1e6a5e82d2d8cdbb036b73c17a77ef51fcdabb12",
+      "bytes": 237482,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "processing": "Same dimensions, WebP quality 90, metadata omitted; no repaint or color grading."
+    }
+  ]
+}
