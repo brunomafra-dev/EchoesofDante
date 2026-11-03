@@ -1,0 +1,721 @@
+{
+  "scale": 40,
+  "sources": {
+    "base": "edd5b10536abc3d08545ec5ace9f2e273e44ce8ecafdf768b2afc84031c36285",
+    "forest": "2952cc55ad1f513f07beded1cca5f01f027410da54d2132732d96c77bc2567fc",
+    "earlyJourney": "3b665bd6a9178788816e71c14586abbab0b93c919d3d08607b5d26cec59c947e",
+    "discovery": "ce5cef891355d863eb031c3263d1eb261613755040d557efec61fe3ea9b00075",
+    "classes": "ed385225985e2373e60fe1037669bc395a0890c5a76a99e0a6d499156c580263",
+    "game": "d41e719930b1314eb5075c0829717e1a9b11c0c55957401fe099c7c07bb32700"
+  },
+  "base": {
+    "width": 1400,
+    "height": 1050,
+    "entry": {
+      "x": 1040,
+      "y": 800
+    },
+    "exit": {
+      "x": 1240,
+      "y": 800
+    },
+    "services": [
+      {
+        "id": "medic",
+        "name": "Dra. Lia · Enfermaria",
+        "x": 320,
+        "y": 700
+      },
+      {
+        "id": "smith",
+        "name": "Ivo · Oficina",
+        "x": 760,
+        "y": 690
+      },
+      {
+        "id": "expedition",
+        "name": "Nara · Expedições e cofre",
+        "x": 1000,
+        "y": 465
+      }
+    ]
+  },
+  "forest": {
+    "size": {
+      "width": 3100,
+      "height": 1950
+    },
+    "contour": [
+      {
+        "x": 56,
+        "y": 56
+      },
+      {
+        "x": 2144,
+        "y": 56
+      },
+      {
+        "x": 2144,
+        "y": 800
+      },
+      {
+        "x": 2350,
+        "y": 800
+      },
+      {
+        "x": 2550,
+        "y": 650
+      },
+      {
+        "x": 2920,
+        "y": 720
+      },
+      {
+        "x": 3044,
+        "y": 920
+      },
+      {
+        "x": 3020,
+        "y": 1420
+      },
+      {
+        "x": 2830,
+        "y": 1480
+      },
+      {
+        "x": 2730,
+        "y": 1780
+      },
+      {
+        "x": 2440,
+        "y": 1844
+      },
+      {
+        "x": 2110,
+        "y": 1810
+      },
+      {
+        "x": 2020,
+        "y": 1600
+      },
+      {
+        "x": 1450,
+        "y": 1650
+      },
+      {
+        "x": 1240,
+        "y": 1810
+      },
+      {
+        "x": 890,
+        "y": 1844
+      },
+      {
+        "x": 720,
+        "y": 1700
+      },
+      {
+        "x": 740,
+        "y": 1500
+      },
+      {
+        "x": 56,
+        "y": 1444
+      }
+    ],
+    "entry": {
+      "x": 400,
+      "y": 1230
+    },
+    "paths": [
+      {
+        "width": 230,
+        "points": [
+          {
+            "x": 400,
+            "y": 1230
+          },
+          {
+            "x": 500,
+            "y": 1070
+          },
+          {
+            "x": 760,
+            "y": 930
+          },
+          {
+            "x": 1100,
+            "y": 760
+          },
+          {
+            "x": 1300,
+            "y": 590
+          },
+          {
+            "x": 1500,
+            "y": 470
+          },
+          {
+            "x": 1760,
+            "y": 280
+          }
+        ]
+      },
+      {
+        "width": 170,
+        "points": [
+          {
+            "x": 760,
+            "y": 930
+          },
+          {
+            "x": 550,
+            "y": 740
+          },
+          {
+            "x": 460,
+            "y": 530
+          }
+        ]
+      },
+      {
+        "width": 190,
+        "points": [
+          {
+            "x": 1100,
+            "y": 760
+          },
+          {
+            "x": 1410,
+            "y": 880
+          },
+          {
+            "x": 1770,
+            "y": 1010
+          }
+        ]
+      },
+      {
+        "width": 140,
+        "points": [
+          {
+            "x": 550,
+            "y": 740
+          },
+          {
+            "x": 405,
+            "y": 550
+          },
+          {
+            "x": 380,
+            "y": 340
+          }
+        ]
+      },
+      {
+        "width": 150,
+        "points": [
+          {
+            "x": 760,
+            "y": 930
+          },
+          {
+            "x": 875,
+            "y": 1195
+          },
+          {
+            "x": 1120,
+            "y": 1250
+          },
+          {
+            "x": 1520,
+            "y": 1320
+          },
+          {
+            "x": 1900,
+            "y": 1310
+          },
+          {
+            "x": 1770,
+            "y": 1010
+          }
+        ]
+      },
+      {
+        "width": 180,
+        "points": [
+          {
+            "x": 1770,
+            "y": 1010
+          },
+          {
+            "x": 2100,
+            "y": 1050
+          },
+          {
+            "x": 2300,
+            "y": 1120
+          },
+          {
+            "x": 2510,
+            "y": 1260
+          },
+          {
+            "x": 2630,
+            "y": 1300
+          }
+        ]
+      },
+      {
+        "width": 165,
+        "points": [
+          {
+            "x": 2630,
+            "y": 1300
+          },
+          {
+            "x": 2590,
+            "y": 1580
+          },
+          {
+            "x": 2350,
+            "y": 1650
+          },
+          {
+            "x": 1960,
+            "y": 1450
+          },
+          {
+            "x": 1520,
+            "y": 1460
+          },
+          {
+            "x": 1140,
+            "y": 1640
+          },
+          {
+            "x": 1120,
+            "y": 1250
+          }
+        ]
+      }
+    ],
+    "clearings": [
+      {
+        "x": 400,
+        "y": 1210,
+        "rx": 220,
+        "ry": 150
+      },
+      {
+        "x": 790,
+        "y": 920,
+        "rx": 240,
+        "ry": 200
+      },
+      {
+        "x": 470,
+        "y": 530,
+        "rx": 210,
+        "ry": 180
+      },
+      {
+        "x": 1500,
+        "y": 470,
+        "rx": 240,
+        "ry": 190
+      },
+      {
+        "x": 1760,
+        "y": 1010,
+        "rx": 230,
+        "ry": 180
+      },
+      {
+        "x": 1760,
+        "y": 280,
+        "rx": 170,
+        "ry": 125
+      },
+      {
+        "x": 380,
+        "y": 340,
+        "rx": 165,
+        "ry": 115
+      },
+      {
+        "x": 1120,
+        "y": 1250,
+        "rx": 175,
+        "ry": 110
+      },
+      {
+        "x": 1900,
+        "y": 1310,
+        "rx": 170,
+        "ry": 105
+      },
+      {
+        "x": 2430,
+        "y": 1030,
+        "rx": 210,
+        "ry": 165
+      },
+      {
+        "x": 2740,
+        "y": 1240,
+        "rx": 180,
+        "ry": 170
+      },
+      {
+        "x": 2500,
+        "y": 1610,
+        "rx": 200,
+        "ry": 130
+      },
+      {
+        "x": 1140,
+        "y": 1640,
+        "rx": 165,
+        "ry": 125
+      }
+    ],
+    "rocks": [
+      [
+        290,
+        1060,
+        48
+      ],
+      [
+        650,
+        1190,
+        58
+      ],
+      [
+        680,
+        700,
+        65
+      ],
+      [
+        920,
+        1100,
+        55
+      ],
+      [
+        990,
+        610,
+        68
+      ],
+      [
+        1190,
+        940,
+        60
+      ],
+      [
+        1260,
+        390,
+        55
+      ],
+      [
+        1450,
+        720,
+        62
+      ],
+      [
+        1680,
+        710,
+        70
+      ],
+      [
+        1560,
+        1170,
+        60
+      ],
+      [
+        1920,
+        850,
+        55
+      ],
+      [
+        1850,
+        1200,
+        45
+      ],
+      [
+        300,
+        700,
+        65
+      ],
+      [
+        650,
+        360,
+        54
+      ],
+      [
+        1880,
+        440,
+        58
+      ]
+    ],
+    "spawns": [
+      {
+        "x": 800,
+        "y": 900
+      },
+      {
+        "x": 870,
+        "y": 830
+      },
+      {
+        "x": 430,
+        "y": 540
+      },
+      {
+        "x": 540,
+        "y": 490
+      },
+      {
+        "x": 1440,
+        "y": 500
+      },
+      {
+        "x": 1580,
+        "y": 450
+      },
+      {
+        "x": 1770,
+        "y": 980
+      },
+      {
+        "x": 1830,
+        "y": 1050
+      }
+    ],
+    "landmarks": [
+      {
+        "x": 2770,
+        "y": 1090,
+        "radius": 140
+      },
+      {
+        "x": 2870,
+        "y": 1080,
+        "radius": 98
+      },
+      {
+        "x": 2310,
+        "y": 1531,
+        "radius": 48
+      }
+    ]
+  },
+  "discovery": {
+    "ECHO_COUNT": 3,
+    "FOREST_ECHOES": {
+      "mineral": {
+        "id": "mineral-signal",
+        "x": 1870,
+        "y": 995,
+        "radius": 145,
+        "message": "SINAL MINERAL\nPADRÃO: NÃO NATURAL"
+      },
+      "trace": {
+        "id": "unknown-trace",
+        "x": 560,
+        "y": 620,
+        "radius": 115,
+        "message": "VESTÍGIO DETECTADO\nIDADE: DESCONHECIDA"
+      }
+    },
+    "NORTHERN_DISCOVERY": {
+      "x": 1500,
+      "y": 285,
+      "radius": 150,
+      "messageDuration": 4200
+    },
+    "SIGNAL_THRESHOLD": {
+      "x": 1870,
+      "y": 245,
+      "radius": 128,
+      "obstacleRadius": 62,
+      "synchronizedMessage": "SINAL SINCRONIZADO\nORIGEM: ENCOSTA AO NORTE",
+      "thresholdMessage": "FONTE DO SINAL: ABAIXO\nPASSAGEM SELADA",
+      "mechanismX": 1670,
+      "mechanismY": 230,
+      "mechanismRadius": 85,
+      "openingMessage": "DANTE RESPONDE\nA PASSAGEM ESTÁ SE ABRINDO",
+      "openedMessage": "PASSAGEM ABERTA\nCAMINHE PARA DENTRO DA FISSURA"
+    }
+  },
+  "classes": {
+    "ASTRAL": {
+      "speed": 250,
+      "hpRatio": 0.85,
+      "dashCooldown": 1650,
+      "dashDuration": 185,
+      "energyMax": 100,
+      "energyPerHit": 10,
+      "energyRegen": 3,
+      "castCost": 30,
+      "shotCooldown": 420,
+      "shotDamage": 18,
+      "shotSpeed": 680,
+      "shotRange": 480,
+      "muzzleDistance": 42,
+      "castRange": 140,
+      "chargedRange": 240,
+      "radius": 52,
+      "chargedRadius": 24,
+      "earthPush": 420,
+      "earthRise": 0.16
+    },
+    "ASTRAL_ELEMENTS": [
+      "energy",
+      "fire",
+      "water",
+      "earth"
+    ],
+    "CLASS_NAMES": {
+      "warrior": "Guerreiro Galáctico",
+      "hunter": "Caçador estelar",
+      "astral": "Manipulador Astral",
+      "xenobinder": "Domador de feras"
+    },
+    "CLASS_REGISTRY": {
+      "warrior": {
+        "name": "Guerreiro Galáctico",
+        "playable": true,
+        "role": "CORPO A CORPO · RESISTÊNCIA"
+      },
+      "hunter": {
+        "name": "Caçador estelar",
+        "playable": true,
+        "role": "DISTÂNCIA · PRECISÃO"
+      },
+      "astral": {
+        "name": "Manipulador Astral",
+        "playable": true,
+        "role": "MÉDIO ALCANCE · CONTROLE ELEMENTAL"
+      },
+      "xenobinder": {
+        "name": "Domador de feras",
+        "playable": true,
+        "role": "COMPANHEIRO · SIMBIOSE"
+      }
+    },
+    "ELEMENT_COLORS": {
+      "energy": 6285016,
+      "fire": 16738890,
+      "water": 8637656,
+      "earth": 16760148
+    },
+    "ELEMENT_NAMES": {
+      "energy": "Energia",
+      "fire": "Fogo",
+      "water": "Água",
+      "earth": "Terra"
+    },
+    "HUNTER": {
+      "speed": 275,
+      "hpRatio": 0.8,
+      "dashCooldown": 1450,
+      "dashDuration": 240,
+      "shotCooldown": 340,
+      "shotDamage": 22,
+      "shotSpeed": 950,
+      "shotRange": 700,
+      "precisionRange": 980,
+      "beamHalfWidth": 18,
+      "beamDamageMultiplier": 1.8,
+      "beamDuration": 0.34,
+      "momentumMax": 100,
+      "momentumPerSecond": 24,
+      "momentumDecay": 12
+    },
+    "PLAYABLE_CLASSES": [
+      "warrior",
+      "hunter",
+      "astral",
+      "xenobinder"
+    ],
+    "XENOBINDER": {
+      "speed": 250,
+      "hpRatio": 0.9,
+      "dashCooldown": 1750,
+      "dashDuration": 175,
+      "bondMax": 100,
+      "bondInitial": 35,
+      "bondPerHit": 8,
+      "bondPerAssist": 10,
+      "commandCost": 35,
+      "commandCooldown": 6000,
+      "shotDamage": 16,
+      "shotCooldown": 460,
+      "shotRange": 420,
+      "shotSpeed": 720,
+      "muzzleDistance": 42,
+      "markDuration": 2200,
+      "companionRadius": 14,
+      "companionSize": 94,
+      "followDistance": 70,
+      "followSpeed": 230,
+      "biteDamage": 20,
+      "biteCooldown": 850,
+      "biteRange": 45,
+      "commandSpeed": 540,
+      "commandRange": 150,
+      "chargedRange": 230,
+      "commandWidth": 24,
+      "commandDamage": 60,
+      "chargedDamage": 40,
+      "pulseRadius": 112,
+      "healBase": 0.08,
+      "healCharged": 0.06,
+      "color": 7058532
+    }
+  },
+  "combat": {
+    "CRAWLER": {
+      "maxHp": 68,
+      "speed": 115,
+      "radius": 18,
+      "detectionRange": 350,
+      "attackRange": 42,
+      "attackDamage": 14,
+      "attackCooldown": 1050,
+      "windup": 330
+    },
+    "KINETIC_CHARGE": {
+      "minCharge": 80,
+      "maxCharge": 800,
+      "releaseDuration": 200,
+      "hitDelay": 80,
+      "cooldown": 3200,
+      "minDamage": 50,
+      "maxDamage": 76,
+      "waveStart": 55,
+      "waveTravel": 133,
+      "waveDuration": 320,
+      "waveHalfWidth": 60,
+      "waveThickness": 20,
+      "knockback": 500
+    },
+    "PLAYER": {
+      "maxHp": 100,
+      "speed": 245,
+      "radius": 18,
+      "attackDamage": 34,
+      "attackRange": 106,
+      "attackHalfAngle": 1.1623892818282235,
+      "attackCooldown": 340,
+      "dashCooldown": 1700,
+      "dashDuration": 175,
+      "dashSpeed": 760,
+      "hurtCooldown": 650
+    },
+    "VIEW_HEIGHT": 720,
+    "VIEW_WIDTH": 1280,
+    "WORLD_HEIGHT": 1500,
+    "WORLD_WIDTH": 2200
+  }
+}

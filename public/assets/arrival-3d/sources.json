@@ -1,0 +1,39 @@
+{
+  "version": "0.1.185",
+  "archives": [
+    {
+      "archive": "ubc.zip",
+      "sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+      "officialPage": "https://quaternius.itch.io/universal-base-characters",
+      "edition": "free Standard",
+      "license": "CC0-1.0 as included in the verified archive"
+    },
+    {
+      "archive": "ual.zip",
+      "sha256": "cc73fc4e495b82958207316596317a3f40b9fa38065bde1027937452da537724",
+      "officialPage": "https://quaternius.itch.io/universal-animation-library",
+      "edition": "free Standard",
+      "license": "CC0-1.0 as included in the verified archive"
+    },
+    {
+      "archive": "outfits.zip",
+      "sha256": "c3468b18871cc8c8f05ab14df7712baf22cb9f389cbd870babf130e595187f70",
+      "officialPage": "https://quaternius.itch.io/modular-character-outfits-fantasy",
+      "edition": "free Standard",
+      "license": "CC0-1.0 as included in the verified archive"
+    }
+  ],
+  "processing": "Complete male/female work-clothing rigs; shared adult head and selectable tagged hair meshes. Rebind to one skeleton, merge compatible outfit primitives, twelve in-place animation clips, mesh reduction and embedded 512px WebP. Runtime colors and class gear. No limb sprites. Reproduction: stage-arrival185.py then prepare-arrival185.mjs after frontier184 staging.",
+  "files": [
+    {
+      "file": "crew-female.glb",
+      "bytes": 1736808,
+      "sha256": "6d6a14fd2864b755be838167863e6714951c69630c74921df3f5d543989f4aab"
+    },
+    {
+      "file": "crew-male.glb",
+      "bytes": 1724720,
+      "sha256": "afafa70d1e060f732f7c1047d9622c4f015e6be5b3e1f5da706907690018fa6e"
+    }
+  ]
+}

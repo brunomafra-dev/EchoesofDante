@@ -1,5 +1,7 @@
 # Primeira fronteira · ensaio 3D · 0.1.184
 
+**Próxima avaliação autorizada · 0.1.185:** [acampamento de pouso + Floresta de Dante, criação de personagem e quatro kits iniciais](ARRIVAL.md). Entrada nova e isolada; o laboratório abaixo continua disponível. A aprovação da iluminação/vegetação anterior não se estende ao mob, ao novo editor ou à reconstrução. Siroco aguarda este playtest.
+
 Em 03/11/2026, depois de conhecer Keldurn e Last Havens, o usuário autorizou explicitamente a proposta de **um pequeno protótipo separado: trecho da base, personagem, NPC e inimigo** (“FAÇA ISSO PQ EU ACHO QUE ECHOES MERECE”). Essa autorização permite este experimento antes do próximo capítulo. Não declara a revisão visual 0.1.181 aprovada e não autoriza migrar toda a campanha.
 
 [Abrir o ensaio](https://echosofdante.vercel.app/frontier-3d.html?v=0.1.184), registrado na biblioteca. Three.js 0.187.0/WebGL2 em uma entrada própria do Vite, sem carregar Phaser nem os sistemas/saves/relay da campanha. A campanha continua em Phaser, com as pinturas aprovadas. Protocolo cooperativo 16 preservado.

@@ -1,5 +1,7 @@
 # Frontier 0.1.184 — offline visual preparation
 
+Arrival 0.1.185 reuses these verified archives and scenery. After the staging below, run `python scripts/asset-tools/stage-arrival185.py`, `node scripts/asset-tools/prepare-arrival185.mjs`, `python scripts/asset-tools/record-arrival185.py` and `node scripts/inspect-arrival-crew.mjs`. Outputs go to the separate `public/assets/arrival-3d/` directory. Both full work-clothing rigs share a skeleton with selectable tagged hairstyles; compatible outfit primitives are merged. Twelve clips include walking and distinct sword, shot and spell actions. Runtime appearance colors do not modify the older trial assets. `node scripts/prepare-arrival-layout.mjs` refreshes the canonical layout snapshot offline, without importing campaign modules into the new entry.
+
 Run from repository root. These are authoring dependencies, separate from the browser app:
 
 ```

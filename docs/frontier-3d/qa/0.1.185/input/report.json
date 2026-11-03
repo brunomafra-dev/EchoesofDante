@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "at": "2026-11-03T20:18:48.907Z",
+  "base": "http://127.0.0.1:5193",
+  "checks": [
+    "Touch warrior: creation, movement, jump, portal, aimed held power and release.",
+    "Touch hunter: creation, movement, jump, portal, aimed held power and release.",
+    "Touch astral: creation, movement, jump, portal, aimed held power and release.",
+    "Touch xenobinder: creation, movement, jump, portal, aimed held power and release.",
+    "Standard gamepad: movement, portal A, jump X, independent right-stick aim, element Up, LT charge, Menu cancels without cost, B closes, LT releases.",
+    "Death/respawn/reload retain finite kills, research and potion reserve; pad cannot open another modal over defeat.",
+    "Native H heals +45 with max cap, consumes one charge per press, visible feedback and no consumption at full health.",
+    "Previous frontier entry still loads the shared Three chunk and jumps through native F.",
+    "Untrusted lab state sanitized, unsupported progression gates rejected."
+  ],
+  "errors": [],
+  "fixtures": [
+    "Death: zero HP, one potion, two prior kills and one echo only in temporary lab storage.",
+    "Potion: hunter at 25 HP, three charges, only in trial session.",
+    "Malformed lab state with invalid health, duplicate/out-of-range kills, unknown echoes and prematurely true gates."
+  ]
+}

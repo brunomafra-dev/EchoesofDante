@@ -1,0 +1,73 @@
+{
+  "passed": true,
+  "at": "2026-11-03T20:14:02.909Z",
+  "base": "http://127.0.0.1:5193",
+  "method": "Separate scenes, native start, eight-second warm-up, then three two-second idle samples at 1440x900/DPR1; forest-entry-only lab fixture with every resident alive. No benchmark workload in parallel. Not a physical mobile test or guarantee.",
+  "scenes": [
+    {
+      "zone": "base",
+      "samples": [
+        {
+          "fps": 45.1165096678235,
+          "calls": 115,
+          "triangles": 269122,
+          "textures": 94,
+          "geometries": 51,
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "fps": 44.63621484898082,
+          "calls": 115,
+          "triangles": 269122,
+          "textures": 94,
+          "geometries": 51,
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "fps": 45.1254586928493,
+          "calls": 115,
+          "triangles": 269122,
+          "textures": 94,
+          "geometries": 51,
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        }
+      ]
+    },
+    {
+      "zone": "forest",
+      "samples": [
+        {
+          "fps": 46.72207741110512,
+          "calls": 64,
+          "triangles": 306537,
+          "textures": 52,
+          "geometries": 43,
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "fps": 46.60848869496233,
+          "calls": 64,
+          "triangles": 306537,
+          "textures": 52,
+          "geometries": 43,
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "fps": 48.10076366160864,
+          "calls": 64,
+          "triangles": 306537,
+          "textures": 52,
+          "geometries": 43,
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        }
+      ]
+    }
+  ],
+  "errors": []
+}
