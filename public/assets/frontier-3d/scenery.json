@@ -1,0 +1,44 @@
+{
+  "asset": "rock_moss_set_02",
+  "creator": "Kless Gyzen / Poly Haven",
+  "license": "CC0-1.0",
+  "licenseUrl": "https://polyhaven.com/license",
+  "source": "https://polyhaven.com/a/rock_moss_set_02",
+  "repository": "https://github.com/Poly-Haven/Public-API",
+  "api": "https://api.polyhaven.com/files/rock_moss_set_02",
+  "processing": "Original 1K JPEGs and geometry unchanged; external glTF buffer/images embedded in GLB. Runtime centers four variants and fits each to the existing horizontal collider.",
+  "downloads": [
+    {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/rock_moss_set_02/rock_moss_set_02_1k.gltf",
+      "sha256": "c3b992a7622e94f7d8da97a47277a2a5177a513af0312a127ec908d4056c97db",
+      "bytes": 11608
+    },
+    {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/rock_moss_set_02/rock_moss_set_02.bin",
+      "sha256": "2df9d8eaaca4207529b0f613d4886d3962d0b9ffc0cdfd2bc4bf35dbcd391cb5",
+      "bytes": 1316572
+    },
+    {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/rock_moss_set_02/rock_moss_set_02_nor_gl_1k.jpg",
+      "sha256": "dd2503789089fb72ef469efd14364d393e769c0de8781a251475cac7e0b6f51d",
+      "bytes": 273527
+    },
+    {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/rock_moss_set_02/rock_moss_set_02_diff_1k.jpg",
+      "sha256": "91dd2cc77d5198b067d77e5bdb3fa8ee7b8950aeff5aec2c1ccaddb76dcca481",
+      "bytes": 194307
+    },
+    {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/rock_moss_set_02/rock_moss_set_02_rough_1k.jpg",
+      "sha256": "12252219a98a560940359973e83af831abdcfab0ead3f0a2a7b135a0143105f1",
+      "bytes": 146226
+    }
+  ],
+  "files": [
+    {
+      "file": "rock-moss.glb",
+      "sha256": "d9fc80dfa3d613a4071bebce75980c4ce2f6987d7dbc14aadd33617dd41ffca6",
+      "bytes": 1937540
+    }
+  ]
+}

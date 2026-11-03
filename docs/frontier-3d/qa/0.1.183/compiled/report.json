@@ -1,0 +1,80 @@
+{
+  "at": "2026-11-03T15:37:14.974Z",
+  "base": "http://127.0.0.1:5193",
+  "method": "Read-only inspect snapshot. Real keyboard, pointer and touch controls, no game-state setters. Campaign localStorage sentinels; temporary trial only. Separate explicit fixtures for death/context-loss paths.",
+  "errors": [],
+  "checks": [
+    "Telegraph, 27 damage, real potion +45/charge, directional dodge avoids the committed attack.",
+    "Full trial: dialogue, encounter, beacon, return, reload; finite creature and trial progress persist. Real campaign/settings unchanged.",
+    "Rock and cabin block walking and jumping; courtyard remains reachable.",
+    "Pause suppresses movement; low/balanced quality and sound toggle work.",
+    "Native emulated touch drag moves the hero, action buttons, seven viewport options without horizontal overflow; real saves/settings preserved.",
+    "Emulated standard gamepad: menu/pause, B resume, stick movement, RT strike.",
+    "Explicit restart resets only the trial; campaign sentinels remain unchanged."
+  ],
+  "screens": [
+    "arrival-desktop",
+    "ivo-dialogue",
+    "enemy-warning",
+    "potion-feedback",
+    "encounter-complete",
+    "research-delivered",
+    "rock-collision",
+    "camera-orbit",
+    "touch-landscape",
+    "touch-actions",
+    "options-568",
+    "options-844",
+    "options-852",
+    "options-915",
+    "options-393",
+    "options-1024",
+    "options-1920",
+    "gamepad"
+  ],
+  "performance": [
+    {
+      "fps": 51.14586407003046,
+      "calls": 59,
+      "triangles": 273579,
+      "textures": 25,
+      "geometries": 33
+    },
+    {
+      "fps": 54.09658699714761,
+      "calls": 59,
+      "triangles": 273579,
+      "textures": 25,
+      "geometries": 33
+    },
+    {
+      "fps": 50.162289760991435,
+      "calls": 59,
+      "triangles": 273579,
+      "textures": 25,
+      "geometries": 33
+    },
+    {
+      "fps": 47.216210899075435,
+      "calls": 59,
+      "triangles": 273579,
+      "textures": 25,
+      "geometries": 33
+    },
+    {
+      "fps": 49.17871545195238,
+      "calls": 59,
+      "triangles": 273579,
+      "textures": 25,
+      "geometries": 33
+    },
+    {
+      "fps": 49.183553019870246,
+      "calls": 59,
+      "triangles": 273579,
+      "textures": 25,
+      "geometries": 33
+    }
+  ],
+  "passed": true
+}

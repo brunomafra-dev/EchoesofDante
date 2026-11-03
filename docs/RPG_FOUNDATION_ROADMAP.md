@@ -1,5 +1,8 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**03/11/2026 · Revisão do ensaio 3D autorizada · 0.1.183:** usuário gostou da experiência e pediu ajustar comandos, pular e pesquisar repositórios visuais. [Revisão e evidências](frontier-3d/README.md), [seleção visual](frontier-3d/ASSET_RESEARCH.md). Mouse/Espaço/H/E e RB alinhados à campanha; salto F/X/toque com gravidade e colisões preservadas. Quatro rochas naturais Poly Haven CC0, texturas 1K e lote estático. Personagens definitivos, migração completa e próximo capítulo não estão aprovados. QA técnico/publicação registrados separadamente; aguardar playtest humano desta revisão.
+
+
 **03/11/2026 · Protótipo 3D separado autorizado · 0.1.182:** depois de Keldurn/Last Havens, o usuário aprovou explicitamente um ensaio separado com trecho da base, personagem, NPC e inimigo (“FAÇA ISSO PQ EU ACHO QUE ECHOES MERECE”). [Primeira fronteira](frontier-3d/README.md): perspectiva/câmera, personagem completo com rig, Ivo, criatura finita, baliza, controles e materiais 3D. Cena solo autônoma, sem simular requisitos ou tocar saves/campanha/relay. A autorização permite este experimento antes do próximo capítulo; não aprova a estética da 0.1.181 nem uma migração integral. QA/publicação e playtest humano serão registrados separadamente; aguardar antes de ampliar o 3D ou retomar o Ninho.
 
 - [x] QA 3D: typecheck/build 288 módulos, percurso solo/compilado/público, toque, gamepad mock, sete viewports, colisões, recuperação e saves preservados. Revisão final de interação em telas estreitas passou no compilado/público. Aplicação `84503a9`, Vercel success/21 hashes; 86 assets publicados da campanha anterior idênticos, fonte/rede/relay preservados. [Publicação e limites](frontier-3d/qa/publication.json).

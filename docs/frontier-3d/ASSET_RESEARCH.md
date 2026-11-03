@@ -1,0 +1,20 @@
+# Fontes visuais para o ensaio 3D · 03/11/2026
+
+O usuário pediu procurar um repositório para melhorar as imagens, além de corrigir comandos e acrescentar salto. A avaliação é específica ao ensaio: a direção Organic Sci-Fi R3 da campanha permanece aprovada. Um repositório de motor, por si só, não melhora modelos, materiais ou composição.
+
+| Fonte primária | Utilidade para Dante | Licença e decisão |
+|---|---|---|
+| [Poly-Haven/Public-API](https://github.com/Poly-Haven/Public-API), [biblioteca de modelos](https://polyhaven.com/models) | Rochas com silhueta irregular, troncos, vegetação, materiais PBR e iluminação de referência. É a escolha mais direta para o ambiente natural. | [Assets CC0](https://polyhaven.com/license); o código da API é AGPL, uma licença diferente. Não copiamos esse código nem fazemos chamadas à API durante o jogo. A consulta de preparação usa identificação e o crédito Powered by Poly Haven consta nos créditos e opções. |
+| [godotengine/tps-demo](https://github.com/godotengine/tps-demo) | Referência concreta de volumes, materiais, luz e personagem em terceira pessoa. Candidato a estudo de anatomia/rig; não precisa trocar o motor atual para estudar os assets. | [Arte CC-BY 3.0, código MIT](https://github.com/godotengine/tps-demo/blob/master/LICENSE.md). Exige crédito da arte e conversão/seleção por arquivo. Repositório grande; nenhuma importação feita nesta entrega. Não é um pacote pronto de Dante. |
+| [Quaternius Universal Base Characters](https://quaternius.com/packs/universalbasecharacters.html) e [Universal Animation Library](https://quaternius.com/packs/universalanimationlibrary.html) | Corpos completos com proporções humanas e rig compatível, alternativa visual aos personagens pequenos de referência. | A página do pacote ainda indica CC0, enquanto a [licença geral QAL v1.0, datada de 28/08/2026](https://quaternius.com/license.html), restringe redistribuição dos assets isolados. Registrar a licença efetivamente incluída no download antes de nova adoção; não tratar os termos como idênticos. Nenhum novo personagem desse pacote foi distribuído nesta revisão. Os modelos antigos, fontes e hashes da 0.1.182 permanecem registrados separadamente. |
+| [KhronosGroup/glTF-Sample-Assets](https://github.com/KhronosGroup/glTF-Sample-Assets) | Validar carregamento, materiais e animação no navegador. Útil tecnicamente, com modelos de vários autores. | Licenças por modelo; não é um conjunto artístico coerente. Não escolhido como biblioteca visual da campanha. |
+
+## Aplicação concreta nesta entrega
+
+Quatro rochas de aproximação usam [Rock Moss Set 02, de Kless Gyzen / Poly Haven](https://polyhaven.com/a/rock_moss_set_02), em lugar das formas arredondadas genéricas desses quatro pontos. São quatro variantes do conjunto original com geometria e JPEGs 1K preservados. A transformação de posição/escala é feita uma vez e encaixa cada silhueta no raio físico existente. Base discretamente enterrada, iluminação/sombra e materiais do próprio modelo; sem um sprite colado sobre o chão.
+
+`scripts/prepare-frontier-rocks.py` registra os downloads oficiais, verifica MD5 e tamanho da API, incorpora os buffers/imagens sem alteração em um GLB e grava SHA256 em `public/assets/frontier-3d/scenery.json`. GLB de **1.937.540 bytes**, três mapas 1K compartilhados; quatro meshes reunidas em um lote estático. Os materiais não são clonados por instância. As rochas periféricas leves, terreno e demais construções permanecem para limitar esta revisão. Não alegar substituição completa do cenário nem personagens definitivos.
+
+## Critérios para a próxima seleção visual
+
+Priorizar personagem adulto completo vestido para exploração, animações de corrida/salto/esquiva com pés e mãos coerentes e um abrigo de sobrevivência com desgaste/material próprio. Escolher poucos elementos coerentes com Dante, comparar capturas da mesma câmera e medir draw calls, triângulos, texturas e carga em iPhone físico. Uma demonstração de desktop não prova esse orçamento no celular. A escolha estética final continua dependendo do playtest humano; este documento não autoriza migração completa ou próxima etapa.

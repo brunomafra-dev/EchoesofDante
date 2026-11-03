@@ -23,7 +23,7 @@ export class Actor {
   const next=this.actions.get(name)??this.actions.get('Idle');if(!next||this.actionName===name&&!once)return;
   next.reset().setLoop(once?T.LoopOnce:T.LoopRepeat,once?1:Infinity);next.clampWhenFinished=once;next.enabled=true;next.setEffectiveTimeScale(1);next.setEffectiveWeight(1);next.fadeIn(.18).play();this.current?.fadeOut(.18);this.current=next;this.actionName=name;this.lock=lock;
  }
- update(dt:number,moving=false){this.lock=Math.max(0,this.lock-dt);if(this.lock===0)this.play(moving?'Run':'Idle');this.mixer.update(dt);}
+ update(dt:number,moving=false,airborne=false){this.lock=Math.max(0,this.lock-dt);if(this.lock===0&&!airborne)this.play(moving?'Run':'Idle');this.mixer.update(dt);}
  face(direction:T.Vector3,dt:number){if(direction.lengthSq()<.001)return;const q=new T.Quaternion().setFromAxisAngle(new T.Vector3(0,1,0),Math.atan2(direction.x,direction.z));this.root.quaternion.slerp(q,1-Math.exp(-dt*14));}
  dispose(){this.mixer.stopAllAction();this.mixer.uncacheRoot(this.model);}
  get animation(){return this.actionName;}

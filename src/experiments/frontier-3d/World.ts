@@ -1,6 +1,7 @@
 import * as T from 'three';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 
 export type Solid={x:number;z:number;radius:number;tag:string};
 export const SPAWN=new T.Vector3(0,0,9);
@@ -81,7 +82,7 @@ export class FrontierWorld {
    add(rock,i%3?stone:stone2,x,elevation(x,z)+sz*.38,z,sz*1.5,sz*.8,sz,this.random()*6);
    if(r<29)this.solid(x,z,sz*1.55,'rocha');
   }
-  for(const [x,z,r] of [[-3,6,1.1],[11,4,1.2],[-16,7,2],[5,-12,1.5]]) {add(rock,stone,x,r*.45,z,r*1.2,r*.75,r);this.solid(x,z,r*1.25,'rocha');}
+  for(const [x,z,r] of [[-3,6,1.1],[11,4,1.2],[-16,7,2],[5,-12,1.5]])this.solid(x,z,r*1.25,'rocha');
   const leaves=mat(0x526b41),leaves2=mat(0x7d8750),leafGeo=new T.SphereGeometry(1,12,8);
   for(let i=0;i<20;i++){
    const a=i*2.399,r=21+this.random()*14,x=Math.cos(a)*r,z=Math.sin(a)*r,h=5+this.random()*6,y=elevation(x,z);
@@ -123,7 +124,24 @@ export class FrontierWorld {
   if(x>-13-radius&&x<-5+radius&&z>-7.5-radius&&z<-2.5+radius)return true;
   return this.solids.some(o=>o.radius>0&&Math.hypot(x-o.x,z-o.z)<o.radius+radius);
  }
- move(p:T.Vector3,dx:number,dz:number,radius=.35){if(!this.blocked(p.x+dx,p.z,radius))p.x+=dx;if(!this.blocked(p.x,p.z+dz,radius))p.z+=dz;p.y=elevation(p.x,p.z);}
+ floorHeight(x:number,z:number){return Math.max(elevation(x,z),Math.abs(x+8.8)<1.05&&Math.abs(z+1.5)<.85?.24:0);}
+ move(p:T.Vector3,dx:number,dz:number,radius=.35){if(!this.blocked(p.x+dx,p.z,radius))p.x+=dx;if(!this.blocked(p.x,p.z+dz,radius))p.z+=dz;p.y=this.floorHeight(p.x,p.z);}
+ async loadScenery(){
+  const gltf=await new GLTFLoader().loadAsync('/assets/frontier-3d/rock-moss.glb');
+  const rocks:T.Mesh[]=[];gltf.scene.traverse(o=>{if(o instanceof T.Mesh)rocks.push(o);});
+  if(rocks.length<4)throw Error('Conjunto de rochas incompleto');
+  for(const [i,[x,z,r]] of [[-3,6,1.1],[11,4,1.2],[-16,7,2],[5,-12,1.5]].entries()){
+   const source=rocks[i],geo=source.geometry.clone();geo.computeBoundingBox();
+   const b=geo.boundingBox!,center=b.getCenter(new T.Vector3());geo.translate(-center.x,-b.min.y,-center.z);
+   let radius=0;const p=geo.attributes.position;for(let j=0;j<p.count;j++)radius=Math.max(radius,Math.hypot(p.getX(j),p.getZ(j)));
+   const scale=r*1.25/radius;
+   this.static(geo,source.material as T.Material,new T.Vector3(x,elevation(x,z)-.035,z),new T.Vector3(scale,scale,scale),i*.9);
+   geo.dispose();
+  }
+  this.flush();
+  // The detached source is never rendered. Its shared materials/textures now belong to the batches.
+  rocks.forEach(o=>o.geometry.dispose());
+ }
  update(time:number,active:boolean){this.wind.value=time;this.dust.rotation.y=time*.006;this.beaconRing.rotation.z=time*.15;this.beaconLight.scale.setScalar(active?1.2:1+.12*Math.sin(time*2));}
  dispose(){const geometries=new Set<T.BufferGeometry>(),materials=new Set<T.Material>(),textures=new Set<T.Texture>();this.scene.traverse(o=>{if(o instanceof T.Mesh||o instanceof T.Points){geometries.add(o.geometry);for(const m of Array.isArray(o.material)?o.material:[o.material]){materials.add(m);for(const v of Object.values(m))if(v instanceof T.Texture)textures.add(v);}}});geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());textures.forEach(t=>t.dispose());this.sun.shadow.map?.dispose();}
 }

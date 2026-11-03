@@ -2,7 +2,7 @@ import hashlib,json,urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime,timezone
 from pathlib import Path
-manifest=json.loads(Path('.local/frontier-build-0.1.182.json').read_text(encoding='utf-8'))
+manifest=json.loads(Path('.local/frontier-build-0.1.183.json').read_text(encoding='utf-8'))
 base='https://echosofdante.vercel.app'
 def verify(item):
  path,expected=item
@@ -11,5 +11,5 @@ def verify(item):
  assert hashlib.sha256(data).hexdigest()==expected,path+' not published'
  return path
 with ThreadPoolExecutor(max_workers=4) as pool:verified=list(pool.map(verify,manifest['hashes'].items()))
-result={'version':'0.1.182','at':datetime.now(timezone.utc).isoformat(),'base':base,'published':True,'matchingHashes':len(verified),'verifiedFiles':verified,'sha256':manifest['hashes'],'textCanonicalLF':manifest['textCanonicalLF']}
-out=Path('docs/frontier-3d/qa/publication-hashes.json');out.write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8');print('Published:',len(verified),'matching JS/CSS/HTML/models/materials/fonts/license hashes')
+result={'version':'0.1.183','at':datetime.now(timezone.utc).isoformat(),'base':base,'published':True,'matchingHashes':len(verified),'verifiedFiles':verified,'sha256':manifest['hashes'],'textCanonicalLF':manifest['textCanonicalLF']}
+out=Path('docs/frontier-3d/qa/0.1.183/publication-hashes.json');out.write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8');print('Published:',len(verified),'matching JS/CSS/HTML/models/materials/fonts/license hashes')

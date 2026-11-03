@@ -1,13 +1,13 @@
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {mkdir,writeFile} from 'node:fs/promises';
-const base=process.env.QA_BASE??'http://127.0.0.1:5185',out=process.env.QA_OUT??'docs/frontier-3d/qa/local';await mkdir(out,{recursive:true});
+const base=process.env.QA_BASE??'http://127.0.0.1:5185',out=process.env.QA_OUT??'docs/frontier-3d/qa/0.1.183/local';await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',args:['--disable-background-timer-throttling','--disable-renderer-backgrounding']});
 const report={at:new Date().toISOString(),base,method:'Read-only inspect snapshot. Real keyboard, pointer and touch controls, no game-state setters. Campaign localStorage sentinels; temporary trial only. Separate explicit fixtures for death/context-loss paths.',errors:[],checks:[],screens:[],performance:[]};
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 async function make(touch=false,width=1440,height=900){const p=await browser.newPage({viewport:{width,height},isMobile:touch,hasTouch:touch});p.setDefaultTimeout(60000);p.on('pageerror',e=>report.errors.push(e.message));await p.addInitScript(()=>{localStorage['echoes-of-dante.characters.v1']='frontier-real-character';localStorage['echoes-of-dante.settings.v1']='frontier-real-settings';localStorage['frontier-untouched']='sentinel';});return p;}
 const state=p=>p.evaluate(()=>window.__frontier3d());
-async function enter(p){await p.goto(base+'/frontier-3d.html?inspect=1&v=0.1.182');await p.locator('#start:enabled').waitFor();await p.locator('#start').click();await wait(500);}
+async function enter(p){await p.goto(base+'/frontier-3d.html?inspect=1&v=0.1.183');await p.locator('#start:enabled').waitFor();await p.locator('#start').click();await wait(500);}
 async function screen(p,name){await p.screenshot({path:`${out}/${name}.jpg`,type:'jpeg',quality:88});report.screens.push(name);}
 async function press(p,key,ms=100){await p.keyboard.down(key);await wait(ms);await p.keyboard.up(key);}
 const held=new Set();async function release(p){for(const k of held)await p.keyboard.up(k);held.clear();}
@@ -20,21 +20,21 @@ try {
  await go(p,[0,4]);await go(p,[-5,1.9]);await press(p,'KeyE');await p.locator('#dialog[open]').waitFor();assert.equal((await state(p)).trial.stage,1);await screen(p,'ivo-dialogue');await p.locator('#dialog-close').click();
  await go(p,[-1,2]);await go(p,[3,2]);
  await p.waitForFunction(()=>window.__frontier3d().enemyPhase==='windup');await screen(p,'enemy-warning');
- await p.waitForFunction(()=>window.__frontier3d().trial.hp<100);assert.equal((await state(p)).trial.hp,73);await press(p,'KeyR',40);await wait(200);assert.equal((await state(p)).trial.hp,100);assert.equal((await state(p)).trial.potions,1);await screen(p,'potion-feedback');
- await p.waitForFunction(()=>window.__frontier3d().enemyPhase==='windup');const hp=(await state(p)).trial.hp;await p.keyboard.down('KeyS');await press(p,'ShiftLeft',50);await wait(430);await p.keyboard.up('KeyS');await wait(700);assert.equal((await state(p)).trial.hp,hp,'Dodge should avoid locked attack');report.checks.push('Telegraph, 27 damage, real potion +45/charge, directional dodge avoids the committed attack.');
+ await p.waitForFunction(()=>window.__frontier3d().trial.hp<100);assert.equal((await state(p)).trial.hp,73);await press(p,'KeyH',40);await wait(200);assert.equal((await state(p)).trial.hp,100);assert.equal((await state(p)).trial.potions,1);await screen(p,'potion-feedback');
+ await p.waitForFunction(()=>window.__frontier3d().enemyPhase==='windup');const hp=(await state(p)).trial.hp;await p.keyboard.down('KeyS');await press(p,'Space',50);await wait(430);await p.keyboard.up('KeyS');await wait(700);assert.equal((await state(p)).trial.hp,hp,'Dodge should avoid locked attack');report.checks.push('Telegraph, 27 damage, real potion +45/charge, directional dodge avoids the committed attack.');
  // Close on the creature during recovery and strike with independent presses.
  for(let i=0;i<100;i++){
   const s=await state(p);if(s.trial.enemyHp===0)break;
   if(s.trial.hp<=0){await p.locator('#respawn').click();continue;}
   const target=[s.enemyPosition[0],s.enemyPosition[2]],distance=Math.hypot(s.position[0]-target[0],s.position[2]-target[1]);
-  if(distance>2.3)await steer(p,target,180);else{await release(p);await press(p,'Space',35);await wait(370);if((await state(p)).enemyPhase==='windup'){await p.keyboard.down('KeyS');await press(p,'ShiftLeft',50);await p.keyboard.up('KeyS');}}
+  if(distance>2.3)await steer(p,target,180);else{await release(p);await p.locator('#attack').click();await wait(370);if((await state(p)).enemyPhase==='windup'){await p.keyboard.down('KeyS');await press(p,'Space',50);await p.keyboard.up('KeyS');}}
  }
  await release(p);assert.equal((await state(p)).trial.enemyHp,0);await screen(p,'encounter-complete');
  await go(p,[6,-5]);await go(p,[8,-5.3]);await press(p,'KeyE');assert.equal((await state(p)).trial.stage,2);await go(p,[0,-.2]);await go(p,[-3,1.9]);await go(p,[-5,1.9]);await press(p,'KeyE');assert.equal((await state(p)).trial.stage,3);await p.locator('#dialog-close').click();await screen(p,'research-delivered');
  const completed=(await state(p)).trial;await p.reload();await p.locator('#start:enabled').waitFor();await p.locator('#start').click();assert.deepEqual((await state(p)).trial,completed);await unchanged(p);report.checks.push('Full trial: dialogue, encounter, beacon, return, reload; finite creature and trial progress persist. Real campaign/settings unchanged.');
  // Two approaches to real solids using normal inputs, never teleporting through geometry.
- await go(p,[0,4]);await go(p,[1,8]);await go(p,[-3,8.2]);for(let i=0;i<18;i++)await steer(p,[-3,6],90);await release(p);let s=await state(p);assert.ok(Math.hypot(s.position[0]+3,s.position[2]-6)>=1.375+.34);await screen(p,'rock-collision');
- await go(p,[1,8]);await go(p,[1,3]);await go(p,[-3,-1]);for(let i=0;i<18;i++)await steer(p,[-9,-5],90);await release(p);s=await state(p);assert.ok(!(s.position[0]>-13.35&&s.position[0]<-4.65&&s.position[2]>-7.85&&s.position[2]<-2.15));report.checks.push('Rock and cabin block walking; courtyard remains reachable.');
+ await go(p,[0,4]);await go(p,[1,8]);await go(p,[-3,8.2]);await press(p,'KeyF',30);for(let i=0;i<18;i++){await steer(p,[-3,6],90);const q=await state(p);assert.ok(Math.hypot(q.position[0]+3,q.position[2]-6)>=1.375+.34,'Jump must not cross the rock collider');}await release(p);let s=await state(p);assert.ok(Math.hypot(s.position[0]+3,s.position[2]-6)>=1.375+.34);await screen(p,'rock-collision');
+ await go(p,[1,8]);await go(p,[1,3]);await go(p,[-3,-1]);await press(p,'KeyF',30);for(let i=0;i<18;i++){await steer(p,[-9,-5],90);const q=await state(p);assert.ok(!(q.position[0]>-13.35&&q.position[0]<-4.65&&q.position[2]>-7.85&&q.position[2]<-2.15),'Jump must not cross cabin walls');}await release(p);s=await state(p);assert.ok(!(s.position[0]>-13.35&&s.position[0]<-4.65&&s.position[2]>-7.85&&s.position[2]<-2.15));report.checks.push('Rock and cabin block walking and jumping; courtyard remains reachable.');
  await p.locator('#menu').click();const pausePosition=(await state(p)).position;await press(p,'KeyW',250);assert.deepEqual((await state(p)).position,pausePosition);await p.locator('#quality').selectOption('low');await p.locator('#quality').selectOption('balanced');await p.locator('#sound').click();assert.equal(await p.locator('#sound').getAttribute('aria-pressed'),'true');await p.locator('#sound').click();assert.equal(await p.locator('#sound').getAttribute('aria-pressed'),'false');await p.locator('#resume').click();report.checks.push('Pause suppresses movement; low/balanced quality and sound toggle work.');
  // Orbit with actual pointer input and verify it does not move the actor.
  const before=await state(p);await p.mouse.move(740,400);await p.mouse.down({button:'right'});await p.mouse.move(1040,430,{steps:15});await p.mouse.up({button:'right'});await wait(450);const after=await state(p);assert.ok(Math.hypot(after.camera[0]-before.camera[0],after.camera[2]-before.camera[2])>1);assert.ok(Math.hypot(after.position[0]-before.position[0],after.position[2]-before.position[2])<.1);await screen(p,'camera-orbit');
