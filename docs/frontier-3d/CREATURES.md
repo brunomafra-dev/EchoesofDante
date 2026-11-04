@@ -24,7 +24,7 @@ A oficina não carrega ou escreve personagens/progresso. A entrada jogável usa 
 - [x] Poses completas, ataque/derrota, limites do skin, cadáver, reload e companheira.
 - [x] Percurso, quatro classes, touch/gamepad emulados, oficina e layouts.
 - [x] Desempenho isolado e inspeção visual das capturas.
-- [ ] Commit/push, sincronização e publicação dos arquivos/acessos.
+- [x] Aplicação `4ff9d28` em `origin/main`, Vercel success/50 hashes e QA público de input/criaturas passaram; capturas públicas inspecionadas. [Publicação e limites](qa/0.1.187/publication.json).
 - [ ] Playtest e aprovação estética humana. iPhone físico e coop 3D não validados.
 
 Evidências em `qa/0.1.187/`. **QA técnico não aprova a estética por conta do usuário.** Aguardar avaliação antes de Siroco ou ampliação do mundo 3D.

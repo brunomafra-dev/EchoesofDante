@@ -1,0 +1,38 @@
+{
+  "version": "0.1.187",
+  "at": "2026-11-04T15:18:51.573513+00:00",
+  "sourceCommit": "4ff9d28b4649e4cfd94440a37e60d9ac31e5012c",
+  "vercelStatus": "success",
+  "vercelUrl": "https://vercel.com/brunomafra-devs-projects/echosofdante/BDHefXsJLT5mqzTYTa8nmMgL5BNB",
+  "published": true,
+  "matchingPublishedHashes": 50,
+  "unchangedCampaignHashes": 86,
+  "compiledReports": [
+    "route",
+    "classes",
+    "input",
+    "elements",
+    "workshop",
+    "camp-life",
+    "performance",
+    "crew",
+    "identity",
+    "creatures"
+  ],
+  "publicReports": [
+    "public/input/report.json",
+    "public/creatures/report.json"
+  ],
+  "publicScreenshotsInspected": true,
+  "runtimeDiffFromSourceCommit": false,
+  "networkOrRelayChanged": false,
+  "humanVisualApproval": "pending",
+  "physicalIphoneTest": "pending",
+  "limits": [
+    "Solo experimental camp/forest; no full campaign or cooperative 3D migration.",
+    "Flare art imports only: antlion CC BY 3.0; earth wyvern CC BY-SA 3.0, derivative licenses and attribution preserved.",
+    "Workshop never reads or writes real characters/progress; no campaign requirements or boss victories simulated in normal arrival play.",
+    "Desktop warmed samples are not physical mobile, continuous combat or a whole-game FPS guarantee.",
+    "Await human visual playtest before Sirocco or expanding the 3D world."
+  ]
+}
