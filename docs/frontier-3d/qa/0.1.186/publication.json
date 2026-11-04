@@ -1,0 +1,36 @@
+{
+  "version": "0.1.186",
+  "at": "2026-11-04T14:50:06.369329+00:00",
+  "sourceCommit": "fb50df0dacfc5babcfb3bc889ef2ec929037031c",
+  "vercelStatus": "success",
+  "vercelUrl": "https://vercel.com/brunomafra-devs-projects/echosofdante/DWtpJsWV7nwqGmcGD2M6GKWKKRLF",
+  "published": true,
+  "matchingPublishedHashes": 47,
+  "unchangedCampaignHashes": 86,
+  "localReports": [
+    "route",
+    "classes",
+    "input",
+    "elements",
+    "workshop",
+    "camp-life",
+    "performance",
+    "crew",
+    "identity"
+  ],
+  "publicReports": [
+    "public/input/report.json",
+    "public/workshop/report.json"
+  ],
+  "publicScreenshotsInspected": true,
+  "runtimeDiffFromSourceCommit": false,
+  "networkOrRelayChanged": false,
+  "humanVisualApproval": "pending; user requested imported creatures in a new correction",
+  "physicalIphoneTest": "pending",
+  "limits": [
+    "Solo experimental camp and forest; no full campaign or cooperative 3D migration.",
+    "Workshop does not read or write real progress. Normal arrival play simulates no prerequisites or boss victories.",
+    "Desktop warmed samples: base 37.9–39.8 FPS, forest 45.6–47.1 FPS; not a physical mobile guarantee.",
+    "Sirocco and later regions await human playtest."
+  ]
+}

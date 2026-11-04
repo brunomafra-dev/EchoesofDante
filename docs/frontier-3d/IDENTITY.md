@@ -34,7 +34,7 @@ Natureza, iluminação geral, enquadramentos, contorno, trilhas, três ecos e oi
 - [x] Circuito compilado: NPCs, rampa acessível, colisões, portais, três ecos, origem/mecanismo, combate, retorno/reentrada/reload e mortes finitas.
 - [x] Quatro classes por toque emulado, gamepad padrão emulado, cancelamento de carga, poção/derrota/reload e entrada anterior.
 - [x] Inspeção visual das capturas e amostras comparáveis de custo/desempenho; sem garantia de 60 FPS ou iPhone físico por emulação.
-- [ ] Commit/push, sincronização e publicação dos dois acessos conferidos.
+- [x] Aplicação `fb50df0` em `origin/main`, Vercel success, 47 hashes e QA público de input/oficina passaram. Capturas públicas inspecionadas. [Publicação e limites](qa/0.1.186/publication.json).
 - [ ] Aprovação estética humana desta revisão. Os elogios da 0.1.185 aos elementos preservados não aprovam automaticamente os novos assets.
 
 Evidências desta entrega em `qa/0.1.186/`: [nove relatórios e comparação de build](qa/0.1.186/build-verification.json), [observações e correções](qa/0.1.186/OBSERVATIONS.md). Typecheck/build final de 306 módulos passaram. 86 hashes da campanha anterior permanecem idênticos, com 47 hashes preparados para conferir a publicação. A observação nativa confirmou Elisa nos dois canteiros e trabalho nos quatro postos fixos. A correção final de origem dos disparos foi reconferida em classes/layouts, input, elementos e oficina; a trajetória lógica continua separada da posição visual. Fixtures de região/estado usadas em testes são declaradas em cada relatório e não fazem parte das entradas normais. A oficina não simula uma campanha ou combate com resultado persistido.
