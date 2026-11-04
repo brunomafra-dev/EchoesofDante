@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-04T14:23:26.500Z",
+  "base": "http://127.0.0.1:5193",
+  "method": "Native keyboard/pointer/touch/gamepad-emulated controls; read-only diagnostics. No progress or position setters in normal circuit. Separate storage/death fixtures are explicit.",
+  "errors": [],
+  "checks": [],
+  "screens": [
+    "creator-warrior"
+  ],
+  "classes": [],
+  "performance": [],
+  "status": "failed",
+  "failure": "AssertionError [ERR_ASSERTION]: Stuck {\"target\":[30,20],\"q\":[28,20],\"position\":[28.056026957024773,0,23.828118498019695]}\n    at go (file:///C:/Users/1/Desktop/Bruno%20Mafra/Echoes%20of%20Dante/scripts/qa-arrival3d.mjs:16:810)\n    at async file:///C:/Users/1/Desktop/Bruno%20Mafra/Echoes%20of%20Dante/scripts/qa-arrival3d.mjs:36:315"
+}

@@ -1,0 +1,14 @@
+{
+  "tool": "Blender 4.5.15 LTS Windows portable",
+  "source": "https://download.blender.org/release/Blender4.5/blender-4.5.15-windows-x64.zip",
+  "checksumSource": "https://download.blender.org/release/Blender4.5/blender-4.5.15.sha256",
+  "expectedSha256": "52dd02fd74877fa08e74b67d7854cf32468a232c02aaa19b6844c91285574f8d",
+  "actualSha256": "52dd02fd74877fa08e74b67d7854cf32468a232c02aaa19b6844c91285574f8d",
+  "verified": true,
+  "globalInstallation": false,
+  "blenderBuild": "5afeabba6097",
+  "sourceCanonicalSha256": {
+    "scripts/asset-tools/author-arrival186.py": "9041fcffdeb6ccc3c1e4b64f02320989201650ef3bdd3d4285c5be29117c9ec0",
+    "scripts/asset-tools/prepare-arrival186.mjs": "01a713c77e35d2d90b151e81865d673636966daea9cf3205323b21984cc620ac"
+  }
+}

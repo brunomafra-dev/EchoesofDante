@@ -1,7 +1,8 @@
 import * as T from 'three';
 import {GLTFLoader}from'three/addons/loaders/GLTFLoader.js';
 import {RoomEnvironment}from'three/addons/environments/RoomEnvironment.js';
-import {Batches,box,tube,sphere,material,paintedMetal,hullGeometry,mineralSurface}from'./Art';
+import {Batches,box,sphere,material,paintedMetal,mineralSurface}from'./Art';
+import {loadIdentity,batchIdentity}from'./Identity';
 import {layout,distanceToSegment,inPolygon,type Zone}from'./model';
 export const v=(x:number,y:number)=>new T.Vector3(x/40,0,y/40);
 export const ENTRY={base:v(1040,800),forest:v(400,1230)};
@@ -25,8 +26,9 @@ export class ArrivalWorld{
  readonly bodies={base:[] as T.Object3D[],forest:[] as T.Object3D[]};readonly sun:T.DirectionalLight;
  zone:Zone='base';private environment:T.WebGLRenderTarget;private randomState=319;private wind={value:0};
  private trees={base:[] as Tree[],forest:[] as Tree[]};private rocks={base:[] as {x:number;z:number;radius:number}[],forest:[] as {x:number;z:number;radius:number}[]};
+ private authored:{name:string;x:number;z:number}[]=[];
  private batches={base:new Batches(),forest:new Batches()};private materials:T.Material[]=[];
- private steel=material('#a9aca0',.28,.72);private dark=material('#3f4b48',.35,.7);private amber=material('#b0743b',.3,.64);private glass=material('#243f45',.65,.22);private canvas=material('#aaa187');private wood=material('#68674c');private leaf=material('#6c8654');private glow=material('#72cfc0',.2,.3);
+ private steel=material('#a9aca0',.28,.72);private dark=material('#3f4b48',.35,.7);private amber=material('#b0743b',.3,.64);private glass=material('#243f45',.65,.22);private canvas=material('#aaa187');private wood=material('#68674c');private glow=material('#72cfc0',.2,.3);
  private rand(){this.randomState=(1664525*this.randomState+1013904223)>>>0;return this.randomState/4294967296;}
  constructor(readonly renderer:T.WebGLRenderer){
   const s=this.scene;s.background=new T.Color('#a6b4ae');s.fog=new T.FogExp2('#a6b4ae',.012);
@@ -49,31 +51,22 @@ export class ArrivalWorld{
  }
  onPath(zone:Zone,x:number,z:number){if(zone==='base'){const lines=[[[13.75,12.7],[26,20]],[[8,17.5],[19,17.25]],[[19,17.25],[25,11.6]],[[26,20],[31,20]]];return Math.max(...lines.map(([a,b])=>Math.exp(-Math.pow(distanceToSegment(x,z,{x:a[0],y:a[1]},{x:b[0],y:b[1]})/1.8,2))));}let best=0;for(const path of forestPaths)for(let i=1;i<path.points.length;i++)best=Math.max(best,Math.exp(-Math.pow(distanceToSegment(x,z,path.points[i-1],path.points[i])/(path.width*.45),4)));return best;}
  private camp(){
-  const zone='base',b=this.batches.base,cx=13.75,cz=9;const a=(g:T.BufferGeometry,m:T.Material,x:number,y:number,z:number,sx=1,sy=1,sz=1,yaw=0)=>this.add(zone,g,m,x,y,z,sx,sy,sz,yaw);
-  // The original DANTE-01 silhouette: long pressure hull, sloped cockpit,
-  // paired engine nacelles, four landing legs and a side boarding ramp.
-  a(hullGeometry(),this.steel,cx,0,cz);this.solid(zone,cx,cz,0,'nave',5.95,2.15);
-  for(const x of[-4.2,-2,0,2]){a(box,this.dark,cx+x,2.15,cz,.05,2.13,3.9);a(box,this.amber,cx+x+.08,3.25,cz,.14,.10,3.15);}
+  const zone='base',cx=13.75,cz=9;
+  this.authored.push({name:'shuttle',x:cx,z:cz});this.solid(zone,cx,cz,0,'nave',5.95,2.15);
   for(const side of[-1,1]){
-   const z=cz+side*2.85;a(new T.CylinderGeometry(.8,.82,5,14).rotateZ(Math.PI/2),this.steel,cx-1.2,2.1,z);
-   for(const x of[-3.7,1.3]){a(new T.CylinderGeometry(.85,.85,.18,14).rotateZ(Math.PI/2),this.amber,cx+x,2.1,z);a(new T.CylinderGeometry(.64,.64,.2,14).rotateZ(Math.PI/2),this.dark,cx+x+(x>0?.12:-.12),2.1,z);}
-   a(box,this.dark,cx-1.2,2.15,cz+side*2.1,4,.3,.9);this.solid(zone,cx-1.2,z,0,'motor da nave',2.65,.85);
-   for(const x of[-3.7,3.2]){b.segment(new T.Vector3(cx+x,1.3,cz+side*1.6),new T.Vector3(cx+x-.3,.3,cz+side*2.05),.16,this.dark);a(box,this.steel,cx+x-.3,.16,cz+side*2.05,1.1,.22,.85);this.solid(zone,cx+x-.3,cz+side*2.05,.58,'apoio da nave');}
+   this.solid(zone,cx-1.2,cz+side*2.85,0,'motor da nave',2.65,.85);
+   for(const x of[-3.7,4.4])this.solid(zone,cx+x-.3,cz+side*2.05,.58,'apoio da nave');
   }
-  const windshield=new T.BufferGeometry();windshield.setAttribute('position',new T.Float32BufferAttribute([2.05,3.30,-1.34,2.05,3.30,1.34,4.98,2.62,.70,4.98,2.62,-.70],3));windshield.setIndex([0,1,2,0,2,3]);windshield.computeVertexNormals();a(windshield,this.glass,cx,.22,cz);for(const z of[-1,0,1])b.segment(new T.Vector3(cx+2.05,3.56,cz+z*1.34),new T.Vector3(cx+4.98,2.88,cz+z*.70),.045,this.dark);
-  a(box,this.dark,cx+1,1.75,cz+1.92,1.35,1.8,.12);a(box,this.amber,cx+1,2.72,cz+2.02,1.55,.12,.2);a(box,this.glow,cx+1.56,1.9,cz+2.03,.035,.5,.04);
-  const ramp=new T.BoxGeometry(1.4,.12,2.8);ramp.rotateX(.32);a(ramp,this.dark,cx+1,.55,cz+3.5);for(let i=0;i<8;i++)a(box,this.steel,cx+1,.95-i*.108,cz+2.3+i*.34,1.25,.04,.08);
-  for(const x of[-2.8,-1.8,-.8])a(box,this.dark,cx+x,3.33,cz, .65,.1,.8);
-  for(const npc of NPCS.slice(0,3)){const x=npc.x/40,z=npc.y/40-2.45;this.shelter(x,z,npc.id);this.solid(zone,x,z,0,'abrigo '+npc.id,2.2,1.35);this.bench(x,npc.y/40-.85,npc.id);}
-  this.bench(9.5,13.35,'repair');this.bed(21.75,13.5);this.bed(19.1,12.1);
-  for(const [x,z]of[[11,16.25],[22.4,15.625],[28,10.5]]){a(box,this.dark,x,.37,z,1.3,.74,.8);a(box,this.amber,x,.7,z,1.35,.08,.85);this.solid(zone,x,z,.78,'suprimentos');}
+  for(const npc of NPCS.slice(0,3)){const x=npc.x/40,z=npc.y/40-2.45;this.shelter(x,z,npc.id);this.solid(zone,x,z,0,'abrigo '+npc.id,2.2,1.35);this.bench(x,npc.y/40-.68,npc.id);}
+  this.bench(9.5,13.18,'repair');this.bed(21.75,13.5);this.bed(19.1,12.1);
+  for(const [x,z]of[[11,16.25],[22.4,15.625],[28,10.5]]){this.authored.push({name:'supply-case',x,z});this.solid(zone,x,z,.78,'suprimentos');}
   for(const [x,z,r]of[[3.25,6.5,1.5],[30,7.5,1.75],[5,21.5,1.2],[29.5,23.25,1.2]]){this.rocks.base.push({x,z,radius:r});this.solid(zone,x,z,r,'rocha');}
   for(let i=0;i<80;i++){const x=-8+this.rand()*51,z=-8+this.rand()*43;if(x>1&&x<34&&z>1&&z<25)continue;this.trees.base.push({x,z,height:5+this.rand()*4,angle:this.rand()*6.28});if(x>1.75&&x<33.25&&z>2.25&&z<24.25)this.solid(zone,x,z,.38,'tronco');}
   this.portal('base',PORTALS.base,'Floresta de Dante');
  }
- private shelter(x:number,z:number,role:string){const add=(g:T.BufferGeometry,m:T.Material,dx:number,y:number,dz:number,sx=1,sy=1,sz=1)=>this.add('base',g,m,x+dx,y,z+dz,sx,sy,sz);add(box,this.dark,0,.15,0,4.5,.3,2.8);add(box,this.steel,0,1.35,-.25,4.35,2.5,2.2);add(box,this.dark,0,1.25,1,1.8,2.2,.12);for(const side of[-1,1]){add(box,this.amber,side*1.95,1.4,0,.12,2.6,2.8);add(box,this.amber,side*1.95,2.75,0,.12,.12,3.15);add(box,this.steel,side*1.0,1.3,1.1,.75,1.8,.1);}add(new T.PlaneGeometry(4.6,2.6).rotateX(-Math.PI/2),this.canvas,0,2.45,1.1);for(const side of[-1,1]){add(tube,this.amber,side*2.05,1.2,2.25,.04,2.4,.04);this.solid('base',x+side*2.05,z+2.25,.08,'apoio do toldo');}add(box,this.glow,0,2.2,1.15,1.3,.06,.05);if(role==='lia')add(box,material('#a6bfae'),-.95,1.5,1.16,.35,.35,.03);}
- private bench(x:number,z:number,role:string){const b=this.batches.base,a=(g:T.BufferGeometry,m:T.Material,dx:number,y:number,dz:number,sx=1,sy=1,sz=1)=>b.add(g,m,x+dx,y,z+dz,sx,sy,sz);a(box,this.dark,0,.86,0,1.8,.14,.75);for(const dx of[-.7,.7])a(box,this.steel,dx,.42,0,.08,.84,.55);this.solid('base',x,z,0,'bancada '+role,.95,.42);if(role==='lia'){for(let i=0;i<5;i++){a(tube,i%2?this.glass:this.glow,-.5+i*.2,1.03,0,.065,.22,.065);a(tube,this.steel,-.5+i*.2,1.17,0,.07,.04,.07);}a(box,this.steel,.55,1,0,.3,.12,.35);}else if(role==='ivo'){a(box,this.steel,0,.99,0,.16,.08,.7);a(box,this.amber,.35,1.0,0,.12,.1,.12);a(box,this.dark,-.5,.99,0,.2,.12,.25);}else if(role==='nara'){a(box,this.glass,0,.98,0,.8,.06,.5);for(let i=0;i<4;i++)a(box,this.glow,-.25+i*.15,1.02,0,.015,.01,.32);}else{a(box,this.steel,0,1,0,.6,.22,.4);a(new T.TorusGeometry(.2,.035,6,18),this.dark,.42,1,0);}}
- private bed(x:number,z:number){this.add('base',box,this.steel,x,.35,z,1.45,.6,.7);this.add('base',box,this.wood,x,.66,z,1.32,.05,.58);for(let i=0;i<7;i++)this.add('base',sphere,this.leaf,x-.55+i*.18,.78,z,.12,.16,.18,0,false,false);this.solid('base',x,z,0,'canteiro',.75,.4);}
+ private shelter(x:number,z:number,role:string){this.authored.push({name:'station-'+role,x,z});for(const side of[-1,1])this.solid('base',x+side*2.05,z+2.25,.08,'apoio do toldo');}
+ private bench(x:number,z:number,role:string){this.authored.push({name:'bench-'+role,x,z});this.solid('base',x,z,0,'bancada '+role,.95,.42);}
+ private bed(x:number,z:number){this.authored.push({name:'planter',x,z});this.solid('base',x,z,0,'canteiro',.75,.4);}
  private forest(){
   const b=this.batches.forest;
   for(const [x,y,r]of layout.forest.rocks){const site={x:x/40,z:y/40,radius:r/40};this.rocks.forest.push(site);this.solid('forest',site.x,site.z,site.radius,'rocha');}
@@ -82,7 +75,7 @@ export class ArrivalWorld{
   const source=layout.discovery.SIGNAL_THRESHOLD,x=source.x/40,z=source.y/40;
   b.add(new T.CircleGeometry(1.5,40).rotateX(-Math.PI/2),this.dark,x,.025,z,1,1,1,0,false,false);
   for(let i=0;i<10;i++){const a=i/10*Math.PI*2,rx=x+Math.cos(a)*1.6,rz=z+Math.sin(a)*1.25;this.rocks.forest.push({x:rx,z:rz,radius:.45});}
-  this.solid('forest',x,z,1.55,'fissura selada');b.add(box,this.wood,source.mechanismX/40,.65,source.mechanismY/40,1,1.3,.65);b.add(box,this.glow,source.mechanismX/40,.9,source.mechanismY/40+.34,.25,.45,.04);this.solid('forest',source.mechanismX/40,source.mechanismY/40,.55,'mecanismo');
+  this.solid('forest',x,z,1.55,'fissura selada');this.solid('forest',source.mechanismX/40,source.mechanismY/40,.55,'mecanismo');
   const px=69.25,pz=27.25;b.add(new T.CircleGeometry(3.0,48).rotateX(-Math.PI/2),material('#45675e',.35,.25),px,.02,pz,1,1,.72,0,false,false);this.solid('forest',px,pz,3.0,'nascente profunda');
   for(let i=0;i<11;i++){const a=i/11*Math.PI*2;this.rocks.forest.push({x:px+Math.cos(a)*3.1,z:pz+Math.sin(a)*2.25,radius:.45+this.rand()*.2});}
   // The solid native pods that were missing collision in the first trial.
@@ -95,13 +88,14 @@ export class ArrivalWorld{
  private inApproachView(x:number,z:number){const source=layout.discovery.SIGNAL_THRESHOLD,sites=[...DISCOVERIES.map(d=>({x:d.x/40,y:d.y/40+2})),{x:source.x/40,y:source.y/40+2.5},{x:source.mechanismX/40,y:source.mechanismY/40+2},{x:ENTRY.forest.x,y:ENTRY.forest.z}];return sites.some(a=>distanceToSegment(x,z,{x:a.x-1,y:a.y-1},{x:a.x+7,y:a.y+9})<4);}
  private inClearing(x:number,z:number){return layout.forest.clearings.some(c=>Math.pow((x-c.x/40)/(c.rx/40+1),2)+Math.pow((z-c.y/40)/(c.ry/40+1),2)<1)||DISCOVERIES.some(d=>Math.hypot(x-d.x/40,z-d.y/40)<3)||Math.hypot(x-46.75,z-6.125)<5;}
  blocked(zone:Zone,x:number,z:number,r=.35){if(zone==='base'){if(x<1.75+r||x>33.25-r||z<2.25+r||z>24.25-r)return true;}else if(!inPolygon(x,z,contour)||contour.some((a,i)=>distanceToSegment(x,z,a,contour[(i+1)%contour.length])<r))return true;return this.solids.some(o=>o.zone===zone&&(o.halfX?Math.abs(x-o.x)<o.halfX+r&&Math.abs(z-o.z)<o.halfZ!+r:Math.hypot(x-o.x,z-o.z)<o.radius+r));}
- floorHeight(zone:Zone,x:number,z:number){return zone==='base'&&Math.abs(x-14.75)<.7&&z>11.4&&z<13.9?Math.max(0,(13.9-z)*.32):0;}
+ floorHeight(zone:Zone,x:number,z:number){return zone==='base'&&Math.abs(x-16.55)<.7&&z>11.25&&z<14.05?.095+(14.05-z)*(.895/2.8):0;}
  move(zone:Zone,p:T.Vector3,dx:number,dz:number,r=.35){if(!this.blocked(zone,p.x+dx,p.z,r))p.x+=dx;if(!this.blocked(zone,p.x,p.z+dz,r))p.z+=dz;p.y=this.floorHeight(zone,p.x,p.z);}
  lineOfSight(zone:Zone,a:T.Vector3,b:T.Vector3){const dist=a.distanceTo(b);for(let i=1;i<Math.ceil(dist/.3);i++){const t=i/Math.ceil(dist/.3);if(this.blocked(zone,T.MathUtils.lerp(a.x,b.x,t),T.MathUtils.lerp(a.z,b.z,t),.05))return false;}return true;}
  ceilingHeight(zone:Zone,x:number,z:number){if(zone!=='base')return Infinity;for(const n of NPCS.slice(0,3))if(Math.abs(x-n.x/40)<2.5&&z>n.y/40-2.5&&z<n.y/40+.2)return 2.4;return Infinity;}
  setZone(zone:Zone){this.zone=zone;this.groups.base.visible=zone==='base';this.groups.forest.visible=zone==='forest';}
  updateFocus(p:T.Vector3){this.sun.position.set(p.x-18,30,p.z+8);this.sun.target.position.set(p.x,0,p.z);}
  async load(){
+  await loadIdentity();batchIdentity(this.batches.forest,'mechanism',layout.discovery.SIGNAL_THRESHOLD.mechanismX/40,0,layout.discovery.SIGNAL_THRESHOLD.mechanismY/40);for(const item of this.authored)batchIdentity(this.batches.base,item.name,item.x,0,item.z);
   const loader=new GLTFLoader(),[rocks,tree,ferns,farTree]=await Promise.all(['rock-moss-far.glb','tree_small_02.glb','fern_02.glb','tree_small_02_far.glb'].map(f=>loader.loadAsync('/assets/frontier-3d/'+f)));
   for(const asset of[rocks,tree,ferns,farTree])asset.scene.updateMatrixWorld(true);const shared=new Map<string,T.Material>();for(const asset of[tree,farTree])asset.scene.traverse(o=>{if(o instanceof T.Mesh){const m=o.material as T.Material;if(shared.has(m.name)){o.material=shared.get(m.name)!;for(const value of Object.values(m))if(value instanceof T.Texture)value.dispose();m.dispose();}else shared.set(m.name,m);}});
   const rockMeshes:T.Mesh[]=[],fernMeshes:T.Mesh[]=[];rocks.scene.traverse(o=>{if(o instanceof T.Mesh)rockMeshes.push(o);});ferns.scene.traverse(o=>{if(o instanceof T.Mesh)fernMeshes.push(o);});

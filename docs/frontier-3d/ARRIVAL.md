@@ -1,5 +1,7 @@
 # Chegada a Dante em 3D · 0.1.185
 
+**Acabamento posterior · 0.1.186:** [modelos, efeitos e profissões](IDENTITY.md) no mesmo trecho e namespace temporário, após a avaliação parcial descrita abaixo.
+
 ## Autorização e limite
 
 O usuário pediu reproduzir o começo de Dante no novo mundo e confirmou **acampamento de pouso com nave, NPCs e floresta**. Pediu introduzir criação/edição de personagem e classes/poderes nesta avaliação. Siroco e regiões seguintes dependem de este trecho dar certo; não foram iniciados. O pedido anterior de interromper a correção isolada da formação nativa foi respeitado; a colisão está incluída nesta nova cena autorizada.

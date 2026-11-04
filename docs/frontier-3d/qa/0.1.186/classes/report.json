@@ -1,0 +1,949 @@
+{
+  "at": "2026-11-04T14:30:59.890Z",
+  "base": "http://127.0.0.1:5193",
+  "method": "Browser-timed DOM keyboard pulses for navigation, native keyboard E/H/Q/R/F and pointer actions; read-only diagnostics. Pulses avoid holding movement through delayed CDP state reads. No progress or position setters. Separate native CDP touch and standard gamepad mocks are covered by the input report.",
+  "errors": [],
+  "checks": [
+    "Seven responsive viewports: visible action controls >=44px, no horizontal overflow."
+  ],
+  "screens": [
+    "creator-warrior",
+    "combat-warrior",
+    "creator-hunter",
+    "combat-hunter",
+    "creator-astral",
+    "combat-astral",
+    "creator-xenobinder",
+    "combat-xenobinder",
+    "layout-1440x900",
+    "layout-1280x720",
+    "layout-1024x768",
+    "layout-844x390",
+    "layout-667x375",
+    "layout-568x320",
+    "layout-393x852"
+  ],
+  "classes": [
+    {
+      "id": "warrior",
+      "before": {
+        "resource": 100,
+        "element": 0,
+        "charge": -1,
+        "cooldown": 0,
+        "petState": "FOLLOW",
+        "petPosition": [
+          9,
+          0,
+          29.75
+        ],
+        "enemies": [
+          {
+            "id": 0,
+            "position": [
+              16.872587297676922,
+              0,
+              24.998859386773432
+            ],
+            "hp": 0,
+            "wind": 0.11349999999999999,
+            "slow": 0
+          },
+          {
+            "id": 1,
+            "position": [
+              18.57986245117673,
+              0,
+              23.496925595114735
+            ],
+            "hp": 0,
+            "wind": 0.030299999999999258,
+            "slow": 0
+          },
+          {
+            "id": 2,
+            "position": [
+              10.75,
+              0,
+              13.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 3,
+            "position": [
+              13.5,
+              0,
+              12.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 4,
+            "position": [
+              36,
+              0,
+              12.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 5,
+            "position": [
+              39.5,
+              0,
+              11.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 6,
+            "position": [
+              44.25,
+              0,
+              24.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 7,
+            "position": [
+              45.75,
+              0,
+              26.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          }
+        ]
+      },
+      "after": {
+        "resource": 100,
+        "element": 0,
+        "charge": -1,
+        "cooldown": 2.643100000000002,
+        "petState": "FOLLOW",
+        "petPosition": [
+          9,
+          0,
+          29.75
+        ],
+        "enemies": [
+          {
+            "id": 0,
+            "position": [
+              16.872587297676922,
+              0,
+              24.998859386773432
+            ],
+            "hp": 0,
+            "wind": 0.11349999999999999,
+            "slow": 0
+          },
+          {
+            "id": 1,
+            "position": [
+              18.57986245117673,
+              0,
+              23.496925595114735
+            ],
+            "hp": 0,
+            "wind": 0.030299999999999258,
+            "slow": 0
+          },
+          {
+            "id": 2,
+            "position": [
+              10.75,
+              0,
+              13.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 3,
+            "position": [
+              13.5,
+              0,
+              12.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 4,
+            "position": [
+              36,
+              0,
+              12.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 5,
+            "position": [
+              39.5,
+              0,
+              11.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 6,
+            "position": [
+              44.25,
+              0,
+              24.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 7,
+            "position": [
+              45.75,
+              0,
+              26.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          }
+        ]
+      },
+      "trial": {
+        "hero": {
+          "name": "Explorador",
+          "gender": "male",
+          "classId": "warrior",
+          "hair": 1,
+          "beard": false,
+          "skin": "#c69776",
+          "hairColor": "#30251f",
+          "cloth": "#74806b"
+        },
+        "zone": "forest",
+        "hp": 100,
+        "potions": 3,
+        "defeated": [
+          0,
+          1
+        ],
+        "echoes": [],
+        "source": false,
+        "mechanism": false
+      }
+    },
+    {
+      "id": "hunter",
+      "before": {
+        "resource": 0,
+        "element": 0,
+        "charge": -1,
+        "cooldown": 0,
+        "petState": "FOLLOW",
+        "petPosition": [
+          9,
+          0,
+          29.75
+        ],
+        "enemies": [
+          {
+            "id": 0,
+            "position": [
+              20,
+              0,
+              22.5
+            ],
+            "hp": 0,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 1,
+            "position": [
+              21.75,
+              0,
+              20.75
+            ],
+            "hp": 0,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 2,
+            "position": [
+              10.75,
+              0,
+              13.5
+            ],
+            "hp": 0,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 3,
+            "position": [
+              13.5,
+              0,
+              12.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 4,
+            "position": [
+              36,
+              0,
+              12.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 5,
+            "position": [
+              39.5,
+              0,
+              11.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 6,
+            "position": [
+              44.25,
+              0,
+              24.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 7,
+            "position": [
+              45.75,
+              0,
+              26.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          }
+        ]
+      },
+      "after": {
+        "resource": 0,
+        "element": 0,
+        "charge": -1,
+        "cooldown": 2.576700000000001,
+        "petState": "FOLLOW",
+        "petPosition": [
+          9,
+          0,
+          29.75
+        ],
+        "enemies": [
+          {
+            "id": 0,
+            "position": [
+              20,
+              0,
+              22.5
+            ],
+            "hp": 0,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 1,
+            "position": [
+              21.75,
+              0,
+              20.75
+            ],
+            "hp": 0,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 2,
+            "position": [
+              10.75,
+              0,
+              13.5
+            ],
+            "hp": 0,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 3,
+            "position": [
+              13.5,
+              0,
+              12.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 4,
+            "position": [
+              36,
+              0,
+              12.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 5,
+            "position": [
+              39.5,
+              0,
+              11.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 6,
+            "position": [
+              44.25,
+              0,
+              24.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 7,
+            "position": [
+              45.75,
+              0,
+              26.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          }
+        ]
+      },
+      "trial": {
+        "hero": {
+          "name": "Explorador",
+          "gender": "female",
+          "classId": "hunter",
+          "hair": 1,
+          "beard": false,
+          "skin": "#c69776",
+          "hairColor": "#30251f",
+          "cloth": "#74806b"
+        },
+        "zone": "forest",
+        "hp": 80,
+        "potions": 3,
+        "defeated": [
+          0,
+          1,
+          2
+        ],
+        "echoes": [],
+        "source": false,
+        "mechanism": false
+      }
+    },
+    {
+      "id": "astral",
+      "before": {
+        "resource": 100,
+        "element": 0,
+        "charge": -1,
+        "cooldown": 0,
+        "petState": "FOLLOW",
+        "petPosition": [
+          9,
+          0,
+          29.75
+        ],
+        "enemies": [
+          {
+            "id": 0,
+            "position": [
+              20,
+              0,
+              22.5
+            ],
+            "hp": 0,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 1,
+            "position": [
+              21.75,
+              0,
+              20.75
+            ],
+            "hp": 0,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 2,
+            "position": [
+              10.75,
+              0,
+              13.5
+            ],
+            "hp": 0,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 3,
+            "position": [
+              13.5,
+              0,
+              12.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 4,
+            "position": [
+              36,
+              0,
+              12.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 5,
+            "position": [
+              39.5,
+              0,
+              11.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 6,
+            "position": [
+              44.25,
+              0,
+              24.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 7,
+            "position": [
+              45.75,
+              0,
+              26.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          }
+        ]
+      },
+      "after": {
+        "resource": 71.76939999999995,
+        "element": 0,
+        "charge": -1,
+        "cooldown": 2.6102000000000003,
+        "petState": "FOLLOW",
+        "petPosition": [
+          9,
+          0,
+          29.75
+        ],
+        "enemies": [
+          {
+            "id": 0,
+            "position": [
+              20,
+              0,
+              22.5
+            ],
+            "hp": 0,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 1,
+            "position": [
+              21.75,
+              0,
+              20.75
+            ],
+            "hp": 0,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 2,
+            "position": [
+              10.75,
+              0,
+              13.5
+            ],
+            "hp": 0,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 3,
+            "position": [
+              13.5,
+              0,
+              12.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 4,
+            "position": [
+              36,
+              0,
+              12.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 5,
+            "position": [
+              39.5,
+              0,
+              11.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 6,
+            "position": [
+              44.25,
+              0,
+              24.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 7,
+            "position": [
+              45.75,
+              0,
+              26.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          }
+        ]
+      },
+      "trial": {
+        "hero": {
+          "name": "Explorador",
+          "gender": "male",
+          "classId": "astral",
+          "hair": 1,
+          "beard": false,
+          "skin": "#c69776",
+          "hairColor": "#30251f",
+          "cloth": "#74806b"
+        },
+        "zone": "forest",
+        "hp": 85,
+        "potions": 3,
+        "defeated": [
+          0,
+          1,
+          2
+        ],
+        "echoes": [],
+        "source": false,
+        "mechanism": false
+      }
+    },
+    {
+      "id": "xenobinder",
+      "before": {
+        "resource": 100,
+        "element": 0,
+        "charge": -1,
+        "cooldown": 0,
+        "petState": "FOLLOW",
+        "petPosition": [
+          17.979755124048342,
+          0,
+          24.066603815622738
+        ],
+        "enemies": [
+          {
+            "id": 0,
+            "position": [
+              20,
+              0,
+              22.5
+            ],
+            "hp": 0,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 1,
+            "position": [
+              20.639959288138446,
+              0,
+              21.737165790868275
+            ],
+            "hp": 0,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 2,
+            "position": [
+              10.75,
+              0,
+              13.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 3,
+            "position": [
+              13.5,
+              0,
+              12.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 4,
+            "position": [
+              36,
+              0,
+              12.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 5,
+            "position": [
+              39.5,
+              0,
+              11.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 6,
+            "position": [
+              44.25,
+              0,
+              24.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 7,
+            "position": [
+              45.75,
+              0,
+              26.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          }
+        ]
+      },
+      "after": {
+        "resource": 65,
+        "element": 0,
+        "charge": -1,
+        "cooldown": 5.213599999999999,
+        "petState": "FOLLOW",
+        "petPosition": [
+          12.882975075674475,
+          0,
+          16.821638062021215
+        ],
+        "enemies": [
+          {
+            "id": 0,
+            "position": [
+              20,
+              0,
+              22.5
+            ],
+            "hp": 0,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 1,
+            "position": [
+              20.639959288138446,
+              0,
+              21.737165790868275
+            ],
+            "hp": 0,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 2,
+            "position": [
+              10.75,
+              0,
+              13.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 3,
+            "position": [
+              13.5,
+              0,
+              12.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 4,
+            "position": [
+              36,
+              0,
+              12.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 5,
+            "position": [
+              39.5,
+              0,
+              11.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 6,
+            "position": [
+              44.25,
+              0,
+              24.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 7,
+            "position": [
+              45.75,
+              0,
+              26.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          }
+        ]
+      },
+      "trial": {
+        "hero": {
+          "name": "Explorador",
+          "gender": "female",
+          "classId": "xenobinder",
+          "hair": 1,
+          "beard": false,
+          "skin": "#c69776",
+          "hairColor": "#30251f",
+          "cloth": "#74806b"
+        },
+        "zone": "forest",
+        "hp": 90,
+        "potions": 3,
+        "defeated": [
+          0,
+          1
+        ],
+        "echoes": [],
+        "source": false,
+        "mechanism": false
+      }
+    }
+  ],
+  "performance": [],
+  "status": "passed",
+  "passed": true
+}

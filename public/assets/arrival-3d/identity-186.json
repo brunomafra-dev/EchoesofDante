@@ -1,0 +1,65 @@
+{
+  "version": "0.1.186",
+  "author": "Echoes of Dante project, authored offline via Blender Python",
+  "blender": "4.5.15 LTS",
+  "generator": "scripts/asset-tools/author-arrival186.py",
+  "assets": [
+    "weapon-warrior",
+    "weapon-hunter",
+    "weapon-astral",
+    "weapon-xenobinder",
+    "uniform-lia",
+    "tool-lia",
+    "uniform-ivo",
+    "tool-ivo",
+    "uniform-nara",
+    "tool-nara",
+    "uniform-gui",
+    "tool-gui",
+    "uniform-elisa",
+    "tool-elisa",
+    "shuttle",
+    "station-lia",
+    "station-ivo",
+    "station-nara",
+    "bench-lia",
+    "bench-ivo",
+    "bench-nara",
+    "bench-repair",
+    "planter",
+    "supply-case",
+    "mechanism",
+    "hollow-body",
+    "hollow-upper",
+    "hollow-lower",
+    "hollow-foot",
+    "pet-body",
+    "pet-upper",
+    "pet-lower",
+    "pet-foot"
+  ],
+  "textures": [
+    {
+      "name": "Dante186-surface",
+      "size": [
+        256,
+        256
+      ],
+      "mime": "image/webp"
+    },
+    {
+      "name": "Dante186-roughness",
+      "size": [
+        256,
+        256
+      ],
+      "mime": "image/webp"
+    }
+  ],
+  "thirdPartyArtwork": false,
+  "file": "identity-186.glb",
+  "bytes": 2421168,
+  "sha256": "e2505de0dbae640a50c9e962d4300a2beecb6a7a96e61aae43e704492f63c7bc",
+  "meshes": 98,
+  "materials": 22
+}

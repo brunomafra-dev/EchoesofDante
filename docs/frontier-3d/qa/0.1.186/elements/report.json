@@ -1,0 +1,847 @@
+{
+  "passed": true,
+  "at": "2026-11-04T14:34:39.240Z",
+  "base": "http://127.0.0.1:5193",
+  "fixture": "Astral at the safe forest entry in the isolated lab, full normal health/resource, all eight residents alive, no research/quest/boss/rewards simulated. Placement by native D movement and powers by native R/Q. No state setters after startup.",
+  "checks": [
+    "Energy field hits and spends energy",
+    "Fire initial hit and later tick",
+    "Water hit and slow",
+    "Earth hit and physical knockback"
+  ],
+  "errors": [],
+  "elements": [
+    {
+      "element": 0,
+      "holdMs": 243.85226562490735,
+      "before": {
+        "resource": 100,
+        "element": 0,
+        "charge": -1,
+        "cooldown": 0,
+        "petState": "FOLLOW",
+        "petPosition": [
+          9,
+          0,
+          29.75
+        ],
+        "enemies": [
+          {
+            "id": 0,
+            "position": [
+              19.352714227087414,
+              0,
+              23.07000149920866
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 1,
+            "position": [
+              21.75,
+              0,
+              20.75
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 2,
+            "position": [
+              10.75,
+              0,
+              13.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 3,
+            "position": [
+              13.5,
+              0,
+              12.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 4,
+            "position": [
+              36,
+              0,
+              12.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 5,
+            "position": [
+              39.5,
+              0,
+              11.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 6,
+            "position": [
+              44.25,
+              0,
+              24.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 7,
+            "position": [
+              45.75,
+              0,
+              26.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          }
+        ]
+      },
+      "after": {
+        "resource": 70.37020000000001,
+        "element": 0,
+        "charge": -1,
+        "cooldown": 3.076600000000001,
+        "petState": "FOLLOW",
+        "petPosition": [
+          9,
+          0,
+          29.75
+        ],
+        "enemies": [
+          {
+            "id": 0,
+            "position": [
+              18.68265237647029,
+              0,
+              23.671952627003773
+            ],
+            "hp": 5.512499999999932,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 1,
+            "position": [
+              21.75,
+              0,
+              20.75
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 2,
+            "position": [
+              10.75,
+              0,
+              13.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 3,
+            "position": [
+              13.5,
+              0,
+              12.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 4,
+            "position": [
+              36,
+              0,
+              12.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 5,
+            "position": [
+              39.5,
+              0,
+              11.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 6,
+            "position": [
+              44.25,
+              0,
+              24.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 7,
+            "position": [
+              45.75,
+              0,
+              26.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          }
+        ]
+      }
+    },
+    {
+      "element": 1,
+      "holdMs": 272.5981525325993,
+      "before": {
+        "resource": 100,
+        "element": 1,
+        "charge": -1,
+        "cooldown": 0,
+        "petState": "FOLLOW",
+        "petPosition": [
+          9,
+          0,
+          29.75
+        ],
+        "enemies": [
+          {
+            "id": 0,
+            "position": [
+              19.422576759442496,
+              0,
+              23.007090588882576
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 1,
+            "position": [
+              21.75,
+              0,
+              20.75
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 2,
+            "position": [
+              10.75,
+              0,
+              13.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 3,
+            "position": [
+              13.5,
+              0,
+              12.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 4,
+            "position": [
+              36,
+              0,
+              12.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 5,
+            "position": [
+              39.5,
+              0,
+              11.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 6,
+            "position": [
+              44.25,
+              0,
+              24.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 7,
+            "position": [
+              45.75,
+              0,
+              26.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          }
+        ]
+      },
+      "after": {
+        "resource": 70.3207,
+        "element": 1,
+        "charge": -1,
+        "cooldown": 3.0930999999999997,
+        "petState": "FOLLOW",
+        "petPosition": [
+          9,
+          0,
+          29.75
+        ],
+        "enemies": [
+          {
+            "id": 0,
+            "position": [
+              18.515804988719545,
+              0,
+              23.817044774146293
+            ],
+            "hp": 44.333999999999996,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 1,
+            "position": [
+              21.75,
+              0,
+              20.75
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 2,
+            "position": [
+              10.75,
+              0,
+              13.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 3,
+            "position": [
+              13.5,
+              0,
+              12.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 4,
+            "position": [
+              36,
+              0,
+              12.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 5,
+            "position": [
+              39.5,
+              0,
+              11.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 6,
+            "position": [
+              44.25,
+              0,
+              24.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 7,
+            "position": [
+              45.75,
+              0,
+              26.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          }
+        ]
+      }
+    },
+    {
+      "element": 2,
+      "holdMs": 272.54687946391175,
+      "before": {
+        "resource": 100,
+        "element": 2,
+        "charge": -1,
+        "cooldown": 0,
+        "petState": "FOLLOW",
+        "petPosition": [
+          9,
+          0,
+          29.75
+        ],
+        "enemies": [
+          {
+            "id": 0,
+            "position": [
+              19.387532833943766,
+              0,
+              23.03689516505494
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 1,
+            "position": [
+              21.75,
+              0,
+              20.75
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 2,
+            "position": [
+              10.75,
+              0,
+              13.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 3,
+            "position": [
+              13.5,
+              0,
+              12.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 4,
+            "position": [
+              36,
+              0,
+              12.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 5,
+            "position": [
+              39.5,
+              0,
+              11.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 6,
+            "position": [
+              44.25,
+              0,
+              24.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 7,
+            "position": [
+              45.75,
+              0,
+              26.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          }
+        ]
+      },
+      "after": {
+        "resource": 70.46979999999999,
+        "element": 2,
+        "charge": -1,
+        "cooldown": 3.0434000000000005,
+        "petState": "FOLLOW",
+        "petPosition": [
+          9,
+          0,
+          29.75
+        ],
+        "enemies": [
+          {
+            "id": 0,
+            "position": [
+              18.523241047120937,
+              0,
+              23.808222133204417
+            ],
+            "hp": 30.20375,
+            "wind": 0,
+            "slow": 0.13330000000000017
+          },
+          {
+            "id": 1,
+            "position": [
+              21.75,
+              0,
+              20.75
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 2,
+            "position": [
+              10.75,
+              0,
+              13.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 3,
+            "position": [
+              13.5,
+              0,
+              12.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 4,
+            "position": [
+              36,
+              0,
+              12.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 5,
+            "position": [
+              39.5,
+              0,
+              11.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 6,
+            "position": [
+              44.25,
+              0,
+              24.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 7,
+            "position": [
+              45.75,
+              0,
+              26.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          }
+        ]
+      }
+    },
+    {
+      "element": 3,
+      "holdMs": 291.886197019051,
+      "before": {
+        "resource": 100,
+        "element": 3,
+        "charge": -1,
+        "cooldown": 0,
+        "petState": "FOLLOW",
+        "petPosition": [
+          9,
+          0,
+          29.75
+        ],
+        "enemies": [
+          {
+            "id": 0,
+            "position": [
+              19.459686341292297,
+              0,
+              22.97353905227721
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 1,
+            "position": [
+              21.75,
+              0,
+              20.75
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 2,
+            "position": [
+              10.75,
+              0,
+              13.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 3,
+            "position": [
+              13.5,
+              0,
+              12.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 4,
+            "position": [
+              36,
+              0,
+              12.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 5,
+            "position": [
+              39.5,
+              0,
+              11.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 6,
+            "position": [
+              44.25,
+              0,
+              24.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 7,
+            "position": [
+              45.75,
+              0,
+              26.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          }
+        ]
+      },
+      "after": {
+        "resource": 70.0999,
+        "element": 3,
+        "charge": -1,
+        "cooldown": 3.1667,
+        "petState": "FOLLOW",
+        "petPosition": [
+          9,
+          0,
+          29.75
+        ],
+        "enemies": [
+          {
+            "id": 0,
+            "position": [
+              26.698522856538872,
+              0,
+              16.53262188791399
+            ],
+            "hp": 18.789499999999983,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 1,
+            "position": [
+              21.75,
+              0,
+              20.75
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 2,
+            "position": [
+              10.75,
+              0,
+              13.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 3,
+            "position": [
+              13.5,
+              0,
+              12.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 4,
+            "position": [
+              36,
+              0,
+              12.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 5,
+            "position": [
+              39.5,
+              0,
+              11.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 6,
+            "position": [
+              44.25,
+              0,
+              24.5
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          },
+          {
+            "id": 7,
+            "position": [
+              45.75,
+              0,
+              26.25
+            ],
+            "hp": 68,
+            "wind": 0,
+            "slow": 0
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -48,3 +48,7 @@ Proposta de produção para revisão do mesmo trecho, ainda sem implementação:
 - [ ] Typecheck/build e regressão aplicável; laboratório direto registrado e QA técnico separado da aprovação visual humana antes de Siroco.
 
 Não há novo asset, mudança de motor, revisão visual concluída ou nova versão de jogo nesta pesquisa. [Publicação técnica da 0.1.185](qa/0.1.185/publication.json).
+
+## Execução autorizada
+
+Em 04/11, o usuário respondeu “Então mete bala” à proposta. A implementação e suas evidências estão em [Identidade visual · 0.1.186](IDENTITY.md). Os critérios acima continuam dependentes de inspeção técnica e avaliação humana; a pesquisa histórica não constitui aprovação dos novos assets.
