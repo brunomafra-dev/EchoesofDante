@@ -1,5 +1,11 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**04/11/2026 · Correção das empunhaduras · 0.1.189 LOCAL:** playtest rejeitou o encaixe da 0.1.188 e pediu uma manopla Astral. [Escopo e evidências](frontier-3d/GRIPS.md). Corrigir pegadas das quatro classes e separar braçadeira/placa da mão Astral para respeitar a articulação. Editor/oficina/mundo compartilham os recursos; preservar NPCs, humanos, cenário, Hollow, balanceamento e saves. Proibição de push/deploy continua vigente. QA técnico e aprovação estética humana separados; aguardar este playtest antes do próximo ponto.
+
+- [x] Implementação local: dedos/polegar e sockets medidos nos dois rigs, apoio do rifle com transição, manopla com emissão de palma e braçadeira independente, oficina com detalhes e comparação 0.1.188.
+- [x] QA técnico 0.1.189: typecheck/build 308 módulos, sete relatórios compilados, quatro classes/dois gêneros/poses/A-B, contato real no apoio do rifle, quatro elementos, touch/gamepad, NPCs/oficina, percurso/reload, recursos em trocas e desempenho. Capturas representativas inspecionadas. 86 assets da campanha idênticos; nenhum push/deploy. [Evidências e limites](frontier-3d/GRIPS.md).
+- [ ] Aprovação estética humana desta correção. Próximo ponto não iniciado.
+
 **04/11/2026 · Evolução integrada de Hollow/armas · 0.1.188 LOCAL:** usuário autorizou implementar aranha animada, quatro instrumentos, efeitos leves e oficina A/B, com **proibição de push/deploy/compras** nesta entrega. [Escopo, fontes, integração e QA](frontier-3d/COMBAT_VISUALS.md). Download oficial Easyforge obtido e licença incluída inspecionada; originais/derivado de aranha fora de `public/` e Git, incorporados apenas no módulo do jogo. Antlion anterior preservado como comparação/fallback identificado. Armas autorais exportadas sem render offline; mesma configuração para criação/oficina/mundo. Cenário, humanos, classes, balanceamento, progressão e coop original preservados. QA local concluído: typecheck/build 307 módulos, onze relatórios compilados, fallback real, quatro armas A/B nos dois gêneros, movimentos, emissores/limpeza e recursos em trocas repetidas, percurso/reload, touch/gamepad e desempenho. Capturas inspecionadas; aprovação humana/iPhone físico pendentes. Sem push/deploy; Siroco/migração geral não iniciados.
 
 

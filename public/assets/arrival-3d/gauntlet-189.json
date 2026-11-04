@@ -1,0 +1,69 @@
+{
+  "version": "0.1.189",
+  "author": "Echoes of Dante original equipment; Blender script, no external weapon asset",
+  "file": "gauntlet-189.glb",
+  "bytes": 200352,
+  "sha256": "3ab5278770cce27bdc45e96ef12e7816c33b941ee3435126fba8f57923c2572b",
+  "models": [
+    {
+      "name": "weapon-hunter",
+      "materials": 3,
+      "triangles": 3264,
+      "anchors": [
+        {
+          "name": "emitter",
+          "translation": [
+            0,
+            0.15000000596046448,
+            0.875
+          ]
+        },
+        {
+          "name": "support",
+          "translation": [
+            0,
+            0.014999999664723873,
+            0.14000000059604645
+          ]
+        }
+      ]
+    },
+    {
+      "name": "astral-bracer",
+      "materials": 3,
+      "triangles": 2184,
+      "anchors": []
+    },
+    {
+      "name": "weapon-astral",
+      "materials": 3,
+      "triangles": 1224,
+      "anchors": [
+        {
+          "name": "emitter",
+          "translation": [
+            -0.04500000178813934,
+            0.06800000369548798,
+            0.004000000189989805
+          ]
+        },
+        {
+          "name": "palm",
+          "translation": [
+            -0.02500000037252903,
+            0.06499999761581421,
+            0.004000000189989805
+          ]
+        },
+        {
+          "name": "wrist",
+          "translation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}

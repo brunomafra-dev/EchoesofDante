@@ -1,0 +1,15 @@
+{
+  "cpu": "Intel(R) Celeron(R) N5105 @ 2.00GHz",
+  "gpu": "Intel(R) UHD Graphics (0x00004E61)",
+  "renderer": "Chrome, ANGLE Direct3D11 vs_5_0 ps_5_0",
+  "viewport": [
+    1440,
+    900
+  ],
+  "devicePixelRatio": 1,
+  "performanceConditions": "Eight live animated spider residents in forest; five working NPCs in base. Eight-second warm-up, three two-second idle samples per scene, sequential runs. No concurrent Blender, build, or second QA browser.",
+  "physicalPhoneTest": false,
+  "humanVisualApproval": "pending: grips and gauntlet correction requested after 0.1.188",
+  "published": false,
+  "version": "0.1.189"
+}

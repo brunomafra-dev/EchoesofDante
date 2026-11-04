@@ -3,14 +3,16 @@ import {GLTFLoader,type GLTF}from'three/addons/loaders/GLTFLoader.js';
 import {clone}from'three/addons/utils/SkeletonUtils.js';
 import {Batches,box,material}from'./Art';
 import {identity,loadIdentity}from'./Identity';
+import {HandGrip}from'./HandGrip';
 import type{Appearance,ClassId,Gender}from'./model';
 const cache=new Map<Gender,Promise<GLTF>>();
 export class Avatar{
  readonly root=new T.Group();readonly model:T.Group;readonly mixer:T.AnimationMixer;
  private actions=new Map<string,T.AnimationAction>();private current?:T.AnimationAction;private name='';private lock=0;private gear=new T.Group();
  private role='';private taskTool?:T.Object3D;private toolRest=new T.Quaternion();private instrument?:T.Object3D;private energy:T.MeshStandardMaterial[]=[];private element=-1;
+ private grip:HandGrip;private supportActive=false;private aimWeight=0;private relaxWeight=1;private bracer?:T.Object3D;
  private constructor(asset:GLTF,readonly appearance:Appearance,private readonly npc=false,readonly equipment:'current'|'previous'='current'){
-  this.model=clone(asset.scene) as T.Group;this.root.add(this.model);const bounds=new T.Box3().setFromObject(this.model),scale=1.9/(bounds.max.y-bounds.min.y);this.model.scale.setScalar(scale);this.model.position.y=-bounds.min.y*scale;
+  this.model=clone(asset.scene) as T.Group;this.grip=new HandGrip(this.model);this.root.add(this.model);const bounds=new T.Box3().setFromObject(this.model),scale=1.9/(bounds.max.y-bounds.min.y);this.model.scale.setScalar(scale);this.model.position.y=-bounds.min.y*scale;
   const hairs=appearance.gender==='male'?['Hair_Buzzed','Hair_SimpleParted','Hair_Long']:['Hair_BuzzedFemale','Hair_Buns','Hair_Long'];
   this.model.traverse(o=>{const hair=o.userData.arrivalHair;if(hair){o.visible=hair==='Hair_Beard'?appearance.gender==='male'&&appearance.beard:appearance.hair>0&&hair===hairs[appearance.hair-1];}if(o instanceof T.Mesh){o.castShadow=true;o.receiveShadow=true;const apply=(source:T.Material)=>{const m=source.clone() as T.MeshStandardMaterial;if(/Peasant/.test(m.name))m.color.set(appearance.cloth);if(/Regular|Superhero/i.test(m.name))m.color.set(appearance.skin);if(/Hair/.test(m.name))m.color.set(appearance.hairColor);if(m.map)m.map.anisotropy=4;return m;};o.material=Array.isArray(o.material)?o.material.map(apply):apply(o.material);if(/Eyes|Eyebrow/i.test(o.name))o.castShadow=false;}});
   this.mixer=new T.AnimationMixer(this.model);for(const clip of asset.animations){const action=this.mixer.clipAction(clip);if(npc)action.timeScale=clip.name==='Walk'?.5:clip.name==='PickUp'?.7:1;this.actions.set(clip.name,action);if(npc&&clip.name==='Idle'){const work=clip.clone();work.name='Work';const a=this.mixer.clipAction(work);a.timeScale=work.duration/4.1;this.actions.set('Work',a);}}this.play('Idle');this.mixer.update(.01);
@@ -20,8 +22,22 @@ export class Avatar{
  private equip(id:ClassId){
   const fabric=material('#3e4d45'),trim=material('#a77d43',.35,.55),light=material(id==='astral'?'#64cdbf':id==='xenobinder'?'#83b964':'#9bcbd1',.3,.35);light.emissive.copy(light.color);light.emissiveIntensity=.4;
   const batch=new Batches();batch.add(box,fabric,0,1.32,-.20,.33,.42,.18);for(const x of[-.14,.14])batch.add(box,fabric,x,1.33,.14,.045,.46,.035);batch.add(box,trim,.07,1.42,.18,.17,.11,.04);batch.add(box,light,.07,1.43,.21,.11,.05,.01);batch.flush(this.gear,[]);this.gear.traverse(o=>o.userData.arrivalOwned=true);this.root.add(this.gear);this.root.updateMatrixWorld(true);this.model.getObjectByName('spine_03')?.attach(this.gear);
-  const weapon=identity((this.equipment==='previous'?'previous-':'')+'weapon-'+id);weapon.position.set(0,.03,.015);weapon.rotation.x=id==='hunter'?-Math.PI/2-.4:0;weapon.scale.setScalar(id==='warrior'?.88:.9);this.model.getObjectByName('hand_r')?.add(weapon);this.instrument=weapon;
-  if(this.equipment==='current')weapon.traverse(o=>{if(o instanceof T.Mesh&&o.material instanceof T.MeshStandardMaterial&&o.material.name.endsWith('energy')){const m=o.material.clone();m.vertexColors=false;m.color.set(id==='hunter'?'#d2a46c':id==='xenobinder'?'#a8bd72':'#88d2df');m.emissive.copy(m.color);m.emissiveIntensity=.5;o.material=m;this.energy.push(m);}});
+  const weapon=identity((this.equipment==='previous'?'previous-':'')+'weapon-'+id);
+  if(this.equipment==='previous'){weapon.position.set(0,.03,.015);weapon.rotation.x=id==='hunter'?-Math.PI/2-.4:0;weapon.scale.setScalar(id==='warrior'?.88:.9);}
+  else if(id==='astral'){
+   // The casting clip leads with the left palm. The armor is authored in the
+   // right-hand bind basis and mirrored onto that hand, with a shorter shell
+   // for the female rig. No handheld focus remains inside the palm.
+   weapon.scale.set(-1,this.appearance.gender==='female'?.78:1,1);
+   const bracer=identity('astral-bracer'),hand=this.model.getObjectByName('hand_l')!;
+   bracer.scale.copy(weapon.scale);bracer.position.copy(hand.position);hand.parent!.add(bracer);this.bracer=bracer;
+  }else{
+   weapon.position.copy(this.grip.center('r'));
+   if(id==='hunter'){weapon.quaternion.set(0,Math.SQRT1_2,Math.SQRT1_2,0);weapon.scale.set(.72,.9,.78);}
+   else weapon.scale.set(.7,.7,id==='warrior'?.88:.9);
+  }
+  this.model.getObjectByName(id==='astral'&&this.equipment==='current'?'hand_l':'hand_r')?.add(weapon);this.instrument=weapon;
+  if(this.equipment==='current')for(const part of [weapon,this.bracer])part?.traverse(o=>{if(o instanceof T.Mesh&&o.material instanceof T.MeshStandardMaterial&&o.material.name.endsWith('energy')){const m=o.material.clone();m.vertexColors=false;m.color.set(id==='hunter'?'#d2a46c':id==='xenobinder'?'#a8bd72':'#88d2df');m.emissive.copy(m.color);m.emissiveIntensity=.5;o.material=m;this.energy.push(m);}});
  }
  dressForRole(role:string){
   this.role=role;
@@ -34,7 +50,30 @@ export class Avatar{
  weaponOrigin(){this.root.updateMatrixWorld(true);return this.instrument?.getObjectByName('emitter')?.getWorldPosition(new T.Vector3())??(this.instrument?this.instrument.localToWorld(new T.Vector3(0,0,this.appearance.classId==='hunter'?.77:.22)):this.root.position.clone().add(new T.Vector3(0,1,0)));}
  bladeFrame(){this.root.updateMatrixWorld(true);const point=(name:string,z:number)=>this.instrument?.getObjectByName(name)?.getWorldPosition(new T.Vector3())??this.instrument!.localToWorld(new T.Vector3(0,0,z));return{base:point('blade-base',.15),tip:point('blade-tip',1.01)};}
  setElement(element:number){if(this.element===element)return;this.element=element;if(this.appearance.classId==='astral')for(const m of this.energy){m.color.set(['#79dce2','#ef9d43','#8bcbd8','#b3a280'][element]);m.emissive.copy(m.color);}}
- update(dt:number,moving=false,airborne=false){this.lock=Math.max(0,this.lock-dt);if(!this.lock&&!airborne)this.play(moving?(this.npc?'Walk':'Run'):'Idle');this.mixer.update(dt);if(this.role)this.workPose(moving);if(!this.npc&&this.appearance.classId==='hunter'&&this.equipment==='current'&&this.instrument){this.instrument.rotation.set(-Math.PI/2-.4,0,0);if(this.name==='Idle'||this.name==='Shoot'&&this.lock>0){this.root.updateMatrixWorld(true);const hand=this.instrument.parent!;this.instrument.quaternion.copy(hand.getWorldQuaternion(new T.Quaternion()).invert().multiply(this.root.getWorldQuaternion(new T.Quaternion())));this.root.updateMatrixWorld(true);const support=this.instrument.getObjectByName('support')?.getWorldPosition(new T.Vector3());if(support)this.arm('l',this.root.worldToLocal(support),.9);}}}
+ update(dt:number,moving=false,airborne=false){
+  this.lock=Math.max(0,this.lock-dt);if(!this.lock&&!airborne)this.play(moving?(this.npc?'Walk':'Run'):'Idle');this.mixer.update(dt);if(this.role)this.workPose(moving);
+  this.supportActive=false;
+  if(!this.npc&&this.equipment==='current'&&this.instrument){
+   if(this.bracer)this.bracer.position.copy(this.model.getObjectByName('hand_l')!.position);
+   const id=this.appearance.classId;
+   this.aimWeight=T.MathUtils.damp(this.aimWeight,id==='hunter'&&(this.name==='Idle'||this.name==='Shoot'&&this.lock>0)?1:0,18,dt);
+   if(id==='hunter'&&this.aimWeight>.01){
+    this.arm('r',new T.Vector3(-.20,1.25,.10),this.aimWeight);
+    this.orientHand('r',new T.Quaternion(0,Math.SQRT1_2,Math.SQRT1_2,0),this.aimWeight);
+    this.root.updateMatrixWorld(true);
+    const support=this.instrument.getObjectByName('support')!.getWorldPosition(new T.Vector3());
+    const q=new T.Quaternion().setFromAxisAngle(new T.Vector3(0,0,1),Math.PI/2),offset=this.grip.center('l').multiplyScalar(this.model.scale.x).applyQuaternion(q).applyQuaternion(this.root.quaternion);
+    this.arm('l',this.root.worldToLocal(support.sub(offset)),this.aimWeight);this.orientHand('l',q,this.aimWeight);this.grip.close('l',true);this.supportActive=true;
+   }
+   if(id!=='astral')this.grip.close('r',false,id==='hunter');
+   else{this.relaxWeight=T.MathUtils.damp(this.relaxWeight,this.name==='Cast'?0:1,18,dt);this.grip.relax('l',this.relaxWeight);}
+  }
+ }
+ private orientHand(side:string,orientation:T.Quaternion,weight=1){
+  const hand=this.model.getObjectByName('hand_'+side)!;
+  hand.quaternion.slerp(hand.parent!.getWorldQuaternion(new T.Quaternion()).invert().multiply(this.root.getWorldQuaternion(new T.Quaternion())).multiply(orientation),weight);
+  hand.updateMatrixWorld(true);
+ }
  private arm(side:string,target:T.Vector3,weight:number){
   const upper=this.model.getObjectByName('upperarm_'+side),lower=this.model.getObjectByName('lowerarm_'+side),hand=this.model.getObjectByName('hand_'+side);if(!upper||!lower||!hand||weight<=0)return;
   this.root.updateMatrixWorld(true);target=this.root.localToWorld(target.clone());
@@ -58,6 +97,9 @@ export class Avatar{
  }
  face(dir:T.Vector3,dt:number){if(dir.lengthSq()<.0001)return;const target=new T.Quaternion().setFromAxisAngle(new T.Vector3(0,1,0),Math.atan2(dir.x,dir.z));this.root.quaternion.slerp(target,1-Math.exp(-dt*14));}
  get animation(){return this.name;}
- inspectArt(){return{role:this.role,animation:this.name,equipment:this.equipment,hasEmitter:!!this.instrument?.getObjectByName('emitter'),emitterLocal:this.instrument?.getObjectByName('emitter')?.position.toArray(),grip:this.instrument?.getWorldPosition(new T.Vector3()).toArray(),blade:this.instrument&&this.appearance.classId==='warrior'?{base:this.bladeFrame().base.toArray(),tip:this.bladeFrame().tip.toArray()}:undefined,emitter:this.weaponOrigin().toArray(),taskActive:this.name==='Work'&&this.lock>0,hands:['r','l'].map(side=>({side,position:this.model.getObjectByName('hand_'+side)?.getWorldPosition(new T.Vector3()).toArray(),armFound:!!this.model.getObjectByName('upperarm_'+side)})),tool:this.taskTool?.getWorldPosition(new T.Vector3()).toArray()};}
+ inspectArt(){
+  this.root.updateMatrixWorld(true);const support=this.instrument?.getObjectByName('support'),left=this.model.getObjectByName('hand_l');
+  const supportError=support&&left?left.localToWorld(this.grip.center('l')).distanceTo(support.getWorldPosition(new T.Vector3())):undefined;
+  return{role:this.role,animation:this.name,equipment:this.equipment,hand:this.instrument?.parent?.name,bracer:this.bracer?.parent?.name,socket:this.instrument?.position.toArray(),grasp:!this.npc&&this.equipment==='current'?{kind:this.appearance.classId==='astral'?'worn-gauntlet':'closed-grip',right:this.grip.inspect('r'),left:this.grip.inspect('l'),support:this.supportActive,aimWeight:this.aimWeight,supportError}:undefined,hasEmitter:!!this.instrument?.getObjectByName('emitter'),emitterLocal:this.instrument?.getObjectByName('emitter')?.position.toArray(),grip:this.instrument?.getWorldPosition(new T.Vector3()).toArray(),blade:this.instrument&&this.appearance.classId==='warrior'?{base:this.bladeFrame().base.toArray(),tip:this.bladeFrame().tip.toArray()}:undefined,emitter:this.weaponOrigin().toArray(),taskActive:this.name==='Work'&&this.lock>0,hands:['r','l'].map(side=>({side,position:this.model.getObjectByName('hand_'+side)?.getWorldPosition(new T.Vector3()).toArray(),armFound:!!this.model.getObjectByName('upperarm_'+side)})),tool:this.taskTool?.getWorldPosition(new T.Vector3()).toArray()};}
  dispose(){const skeletons=new Set<T.Skeleton>();this.root.traverse(o=>{if(o instanceof T.SkinnedMesh)skeletons.add(o.skeleton);});skeletons.forEach(s=>s.dispose());this.energy.forEach(m=>m.dispose());this.mixer.stopAllAction();this.mixer.uncacheRoot(this.model);this.root.traverse(o=>{if(o instanceof T.Mesh&&!o.userData.arrivalSharedIdentity){if(o.userData.arrivalOwned)o.geometry.dispose();for(const m of Array.isArray(o.material)?o.material:[o.material])m.dispose();}});}
 }

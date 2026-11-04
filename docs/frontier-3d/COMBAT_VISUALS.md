@@ -1,5 +1,7 @@
 # Evolução integrada de monstros e armas · 0.1.188 local
 
+**Revisão posterior:** o playtest apontou empunhaduras inadequadas e rejeitou o foco de mão Astral. [Correção 0.1.189: pegadas e manopla](GRIPS.md). Este documento registra a entrega anterior; seus checks de distância ao punho não substituem a avaliação visual de dedos segurando o cabo.
+
 Autorização de 04/11/2026: inspecionar, implementar e validar a aranha Hollow, os quatro instrumentos existentes, efeitos e oficina; **sem push, deploy ou compra**. Esta instrução prevalece sobre o fluxo histórico de publicação. Não ampliar mundo, engine, personagens, progressão ou coop 3D. Base inicial `2ef0691`, árvore limpa.
 
 ## Inventário e integração

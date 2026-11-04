@@ -13,22 +13,25 @@ for record in manifest['files']:assert hashlib.sha256(Path('public/assets/arriva
 pkg=json.loads(Path('package.json').read_text());lock=json.loads(Path('package-lock.json').read_text());assert pkg['version']==lock['version']==lock['packages']['']['version']==version
 assert f'arrival-3d.html?v={version}' in Path('test-library.html').read_text(encoding='utf-8')
 html=Path('dist/arrival-3d.html').read_text(encoding='utf-8');assert 'phaser-' not in html and 'GameScene-' not in html
-extra=Path('dist/arrival-workshop.html').read_text(encoding='utf-8') if version in ['0.1.186','0.1.187','0.1.188'] else ''
+extra=Path('dist/arrival-workshop.html').read_text(encoding='utf-8') if version in ['0.1.186','0.1.187','0.1.188','0.1.189'] else ''
 files=set(re.findall(r'(?:src|href)="(/assets/[^"?]+\.(?:js|css))"',html+extra));files.update(['/arrival-3d.html','/test-library.html'])
 if extra:files.add('/arrival-workshop.html')
-if version in ['0.1.186','0.1.187','0.1.188']:
+if version in ['0.1.186','0.1.187','0.1.188','0.1.189']:
  identity=json.loads(Path('public/assets/arrival-3d/identity-186.json').read_text(encoding='utf-8'));assert hashlib.sha256(Path('public/assets/arrival-3d',identity['file']).read_bytes()).hexdigest()==identity['sha256']
  assert hashlib.sha256(Path('dist/assets/arrival-3d',identity['file']).read_bytes()).hexdigest()==identity['sha256']
 if version=='0.1.187':
  creatures=json.loads(Path('public/assets/arrival-3d/creatures-187.json').read_text(encoding='utf-8'))
  for record in creatures['files']:
   for directory in ['public','dist']:assert hashlib.sha256(Path(directory,'assets/arrival-3d',record['file']).read_bytes()).hexdigest()==record['sha256']
-if version=='0.1.188':
+if version in ['0.1.188','0.1.189']:
  weapons=json.loads(Path('public/assets/arrival-3d/weapons-188.json').read_text(encoding='utf-8'))
  for directory in ['public','dist']:
   assert hashlib.sha256(Path(directory,'assets/arrival-3d',weapons['file']).read_bytes()).hexdigest()==weapons['sha256']
   assert not any('squinty' in p.name.lower() or 'spider' in p.name.lower() for p in Path(directory,'assets/arrival-3d').iterdir()),'Licensed model must not be a standalone public file'
  assert len(list(Path('dist/assets').glob('*arrival-hollow*.js')))==1,'Prepared art must be incorporated in a game module'
+if version=='0.1.189':
+ equipment=json.loads(Path('public/assets/arrival-3d/gauntlet-189.json').read_text(encoding='utf-8'))
+ for directory in ['public','dist']:assert hashlib.sha256(Path(directory,'assets/arrival-3d',equipment['file']).read_bytes()).hexdigest()==equipment['sha256']
 # Walk ESM imports as well as HTML preloads, including the shared Three.js chunk.
 queue=list(files)
 while queue:
@@ -53,6 +56,8 @@ if version in ['0.1.186','0.1.187','0.1.188']:
 if version=='0.1.187':assert (root/'creatures/report.json').is_file(),'imported creature report missing'
 if version=='0.1.188':
  for name in ['visual','assets']:assert (root/name/'report.json').is_file(),name+' report missing'
+if version=='0.1.189':
+ for name in ['grips','route','classes','input','elements','workshop','performance']:assert (root/name/'report.json').is_file(),name+' report missing'
 for path in root.rglob('report.json'):
  if 'public' in path.parts or 'observations' in path.parts:continue
  data=json.loads(path.read_text(encoding='utf-8'));assert data.get('passed') and not data.get('errors'),str(path);reports.append(path.as_posix())

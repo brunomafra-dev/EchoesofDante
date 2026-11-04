@@ -26,6 +26,8 @@ In 0.1.186, `identity-186.glb` contains the new authored weapons, role clothing/
 
 ## 0.1.188 local — Squinty e instrumentos autorais
 
+Revisão local 0.1.189: rifle e manopla articulada originais Echoes of Dante, sem novo asset externo. `gauntlet-189.glb/json`, produzidos por `scripts/asset-tools/author-arrival189.py` e `prepare-arrival189-gauntlet.mjs`; modelagem/exportação no Blender, sem render offline. Sabre e ressonador reaproveitam as malhas 0.1.188 com encaixes corrigidos. Humanos, animações, fauna e respectivas licenças permanecem os mesmos.
+
 **Squinty, Giant Monster Spiders Free Sample**, Easyforge / Easy Forge, copyright 2026. Origem oficial: https://easyforge.itch.io/giant-monster-spiders-free-sample . **Giant Monster Spiders Asset Licence 1.0**, incluída no ZIP. Uso/modificação em jogos permitido; não redistribuir modelo/ZIP/FBX/GLB como asset separado. Incorporado somente no módulo do jogo; fontes/intermediários ignorados fora da pasta pública. Não é CC0 nem arte autoral do Dante.
 
 Modificações: LOD1 3.826 triângulos, sete clipes de gameplay, translação XZ de Body removida, mapas reduzidos para 1024 WebP, emissão 0,25, escala visual 0,44 e ajuste conservador de cor do material preservando mapas. Rig original de 107 joints mantido; sem luz dinâmica ou novas mecânicas de escalada/headshot. Hollow anterior Flare continua com suas licenças próprias acima.
