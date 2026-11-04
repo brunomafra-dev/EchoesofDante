@@ -1,0 +1,15 @@
+Backpack by Quaternius — CC0 1.0 Universal (Public Domain Dedication)
+Author-published source: https://poly.pizza/m/2g9Jm7kvIU
+Author: https://quaternius.com/
+License: https://creativecommons.org/publicdomain/zero/1.0/
+Legal text: https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+The source publisher identifies this model as "Public Domain (CC0)" /
+"CC0 1.0", uploaded October 3, 2021. This notice records that declaration;
+it is not a claim that the author supplied this particular text file.
+
+Echoes of Dante adaptations: orientation, scale and origin, subdued field
+palette, canvas roughness, fastener metalness, material merging, and original
+fabric harness geometry fitted to both existing character models.
+Source and derived GLB hashes and geometry counts: backpack-190.json.
+No textures, audio, rig or other characters from an external game are included.

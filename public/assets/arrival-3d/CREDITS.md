@@ -26,6 +26,8 @@ In 0.1.186, `identity-186.glb` contains the new authored weapons, role clothing/
 
 ## 0.1.188 local — Squinty e instrumentos autorais
 
+**Mochila de expedição 0.1.190:** [Backpack por Quaternius](https://poly.pizza/m/2g9Jm7kvIU), publicado pelo autor no Poly Pizza em 03/10/2021 como CC0 1.0. Escala/orientação, materiais, paleta e integração adaptados por Echoes of Dante; alças de tecido próprias ajustadas aos dois corpos existentes. [Licença e origem](backpack-190-LICENSE.txt); hashes/contagens/modificações em `backpack-190.json`. Sem novas texturas, áudio ou cópia de franquias.
+
 Revisão local 0.1.189: rifle e manopla articulada originais Echoes of Dante, sem novo asset externo. `gauntlet-189.glb/json`, produzidos por `scripts/asset-tools/author-arrival189.py` e `prepare-arrival189-gauntlet.mjs`; modelagem/exportação no Blender, sem render offline. Sabre e ressonador reaproveitam as malhas 0.1.188 com encaixes corrigidos. Humanos, animações, fauna e respectivas licenças permanecem os mesmos.
 
 **Squinty, Giant Monster Spiders Free Sample**, Easyforge / Easy Forge, copyright 2026. Origem oficial: https://easyforge.itch.io/giant-monster-spiders-free-sample . **Giant Monster Spiders Asset Licence 1.0**, incluída no ZIP. Uso/modificação em jogos permitido; não redistribuir modelo/ZIP/FBX/GLB como asset separado. Incorporado somente no módulo do jogo; fontes/intermediários ignorados fora da pasta pública. Não é CC0 nem arte autoral do Dante.

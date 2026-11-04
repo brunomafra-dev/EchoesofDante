@@ -1,5 +1,11 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**04/11/2026 · Mochila e alças · 0.1.190 LOCAL:** usuário pediu substituir mochila em caixa e duas barras do torso. [Modelo Quaternius CC0, adaptação e QA](frontier-3d/BACKPACK.md). Mochila de expedição com bolsos/rolo/fivelas e alças de tecido, sem dispositivo no peito; mesma integração no editor/oficina/mundo. Preservar armas/manopla, humanos, NPCs, combate, cenário e saves. Sem push/deploy conforme restrição vigente.
+
+- [x] Modelo do próprio autor obtido e licença verificada; materiais/escala adaptados, alças medidas nos dois corpos, comparação independente das armas na oficina.
+- [x] QA técnico 0.1.190: typecheck/build 308 módulos, cinco relatórios compilados, quatro classes/dois corpos, comparação de mochila independente, ataque/corrida/esquiva/salto, touch/gamepad, NPCs, recuperação/reload, recursos em trocas e desempenho. Capturas representativas inspecionadas; [evidências e limites](frontier-3d/BACKPACK.md). Sem push/deploy.
+- [ ] Aprovação estética humana. Aguardar antes do próximo ponto.
+
 **04/11/2026 · Correção das empunhaduras · 0.1.189 LOCAL:** playtest rejeitou o encaixe da 0.1.188 e pediu uma manopla Astral. [Escopo e evidências](frontier-3d/GRIPS.md). Corrigir pegadas das quatro classes e separar braçadeira/placa da mão Astral para respeitar a articulação. Editor/oficina/mundo compartilham os recursos; preservar NPCs, humanos, cenário, Hollow, balanceamento e saves. Proibição de push/deploy continua vigente. QA técnico e aprovação estética humana separados; aguardar este playtest antes do próximo ponto.
 
 - [x] Implementação local: dedos/polegar e sockets medidos nos dois rigs, apoio do rifle com transição, manopla com emissão de palma e braçadeira independente, oficina com detalhes e comparação 0.1.188.

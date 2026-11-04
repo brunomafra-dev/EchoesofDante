@@ -1,0 +1,35 @@
+{
+  "version": "0.1.190",
+  "file": "backpack-190.glb",
+  "author": "Quaternius; adaptation and fabric harness by Echoes of Dante",
+  "source": "https://poly.pizza/m/2g9Jm7kvIU",
+  "sourceFileURL": "https://static.poly.pizza/0d29cdc2-0baf-4bf7-835f-075b34c70b61.glb.br",
+  "license": "CC0-1.0",
+  "sourceSHA256": "315a559dc389f0a3a98395222d56c2db45b4bd505c93db282c7e34011f6e5c0f",
+  "sha256": "176dba284fa70b72410e104c3dbe8f33e422532095ad88486d536df8600e2c2d",
+  "bytes": 216024,
+  "changes": [
+    "Centered, rotated and normalized to 0.50 m height",
+    "Canvas/bedroll/strap palette and physically appropriate roughness; metallic only on fasteners",
+    "Four source materials merged to two with vertex colors",
+    "Original, thin contoured fabric harness for both existing human rigs"
+  ],
+  "models": [
+    {
+      "name": "field-backpack",
+      "triangles": 1748,
+      "materials": 2
+    },
+    {
+      "name": "field-harness-male",
+      "triangles": 1176,
+      "materials": 1
+    },
+    {
+      "name": "field-harness-female",
+      "triangles": 1176,
+      "materials": 1
+    }
+  ],
+  "textures": 0
+}
