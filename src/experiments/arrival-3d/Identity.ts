@@ -1,12 +1,13 @@
 import * as T from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {Batches} from './Art';
+import {loadCreatures}from'./Creatures';
 
 let ready:Promise<void>|undefined;
 const roots=new Map<string,T.Object3D>();
 /** One offline GLB, shared mesh/material storage, no authoring in the frame loop. */
 export function loadIdentity(){
- return ready??=new GLTFLoader().loadAsync('/assets/arrival-3d/identity-186.glb').then(gltf=>{
+ return ready??=Promise.all([new GLTFLoader().loadAsync('/assets/arrival-3d/identity-186.glb'),loadCreatures()]).then(([gltf])=>{
   for(const root of gltf.scene.children){roots.set(root.name,root);root.traverse(o=>{if(o instanceof T.Mesh){o.castShadow=true;o.receiveShadow=true;for(const m of Array.isArray(o.material)?o.material:[o.material])for(const value of Object.values(m))if(value instanceof T.Texture)value.anisotropy=4;}});}
  });
 }

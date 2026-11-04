@@ -1,0 +1,26 @@
+{
+  "repository": "flareteam/flare-game-art-src",
+  "revision": "8830c68b420b631e09a459e5b0bf87c0e068a558",
+  "files": [
+    {
+      "path": "art_src_hd/characters/antlion/antlion.blend",
+      "sha256": "4c010555a7ffc870934a581cdd2db0bdb6c9f3febb4b7eacd396a8df374c9d28",
+      "bytes": 1535587
+    },
+    {
+      "path": "art_src_hd/characters/wyvern/wyvern.blend",
+      "sha256": "ebf8eb69fea258f142f4a9e1735918daa3b69f79c34f6bb1b6be579001f22708",
+      "bytes": 3137981
+    },
+    {
+      "path": "art_src_hd/characters/wyvern/textures/wyvern_diffuse_earth.png",
+      "sha256": "ddada201db1739f8699659d9b869771dba575d4e2de9782dbe9b251f57c967c8",
+      "bytes": 3283833
+    },
+    {
+      "path": "CREDITS.txt",
+      "sha256": "bd5438f5d4b49dde45532bef532ad33d1e04464ec3a4b4ba1dbd7c5a1b2b991c",
+      "bytes": 13541
+    }
+  ]
+}

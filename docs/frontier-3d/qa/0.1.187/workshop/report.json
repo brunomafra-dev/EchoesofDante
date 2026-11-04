@@ -1,0 +1,597 @@
+{
+  "passed": true,
+  "at": "2026-11-04T15:10:03.848Z",
+  "base": "http://127.0.0.1:5193",
+  "method": "Native specimen/gender/element selectors and action button. No campaign/world state loaded or modified. Read-only arm diagnostics; screenshots require agent and human visual review.",
+  "errors": [],
+  "specimens": [
+    {
+      "version": "0.1.187",
+      "selection": "warrior",
+      "action": true,
+      "actor": {
+        "role": "",
+        "animation": "Sword",
+        "taskActive": false,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.370678972918146,
+              0.9671860261340803,
+              -0.3723544179377937
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              0.41099647848177817,
+              0.9032988506526867,
+              0.19113983273747598
+            ],
+            "armFound": true
+          }
+        ]
+      },
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 33,
+        "triangles": 27378
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.187",
+      "selection": "hunter",
+      "action": true,
+      "actor": {
+        "role": "",
+        "animation": "Shoot",
+        "taskActive": false,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.38701634054078266,
+              1.2552401284507289,
+              0.29175082694767696
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              0.04732009137805723,
+              1.2030751196379261,
+              0.38495793227891206
+            ],
+            "armFound": true
+          }
+        ]
+      },
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 34,
+        "triangles": 28122
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.187",
+      "selection": "astral",
+      "action": true,
+      "actor": {
+        "role": "",
+        "animation": "Idle",
+        "taskActive": false,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.2873726311753761,
+              0.9432305199269048,
+              -0.16904912947242726
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              0.3495281133947188,
+              0.9195871262887446,
+              0.024004060459916265
+            ],
+            "armFound": true
+          }
+        ]
+      },
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 35,
+        "triangles": 27738
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.187",
+      "selection": "xenobinder",
+      "action": true,
+      "actor": {
+        "role": "",
+        "animation": "Cast",
+        "taskActive": false,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.2858151386159164,
+              0.9445696839969117,
+              -0.30090904606314606
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              0.4497229259393607,
+              1.1317365120914133,
+              0.4120058950771853
+            ],
+            "armFound": true
+          }
+        ]
+      },
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 30,
+        "triangles": 27258
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.187",
+      "selection": "lia",
+      "action": true,
+      "actor": {
+        "role": "lia",
+        "animation": "Work",
+        "taskActive": true,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.16388761921701525,
+              1.192944218826767,
+              0.3379881888322356
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              0.16118849013515907,
+              1.187563305304729,
+              0.46817074364709405
+            ],
+            "armFound": true
+          }
+        ],
+        "tool": [
+          0.1461938653217987,
+          1.1766260043076846,
+          0.4941447192799197
+        ]
+      },
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 26,
+        "triangles": 25414
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.187",
+      "selection": "ivo",
+      "action": true,
+      "actor": {
+        "role": "ivo",
+        "animation": "Work",
+        "taskActive": true,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.1616943115879111,
+              1.2803040604623386,
+              0.3887672657582028
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              0.16493435847596177,
+              1.1043593896078268,
+              0.4234007062301136
+            ],
+            "armFound": true
+          }
+        ],
+        "tool": [
+          -0.14904076899593566,
+          1.2778788579239027,
+          0.4168858652130058
+        ]
+      },
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 24,
+        "triangles": 24106
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.187",
+      "selection": "nara",
+      "action": true,
+      "actor": {
+        "role": "nara",
+        "animation": "Work",
+        "taskActive": true,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.16388763415342433,
+              1.192943426928409,
+              0.33798942637552465
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              0.1664805691314343,
+              1.1171033495925138,
+              0.4154977534794823
+            ],
+            "armFound": true
+          }
+        ],
+        "tool": [
+          0.15185246303371508,
+          1.1021033183991524,
+          0.43958360638624394
+        ]
+      },
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 28,
+        "triangles": 26140
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.187",
+      "selection": "gui",
+      "action": true,
+      "actor": {
+        "role": "gui",
+        "animation": "Work",
+        "taskActive": true,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.16169431628818534,
+              1.2803035784458492,
+              0.388768573272961
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              0.16493422341520292,
+              1.1043584624134555,
+              0.4234018614083801
+            ],
+            "armFound": true
+          }
+        ],
+        "tool": [
+          -0.1490407861981971,
+          1.2778784110285484,
+          0.41688718138303055
+        ]
+      },
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 26,
+        "triangles": 25762
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.187",
+      "selection": "elisa",
+      "action": true,
+      "actor": {
+        "role": "elisa",
+        "animation": "Work",
+        "taskActive": true,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.16446823577366765,
+              1.1627106714175526,
+              0.3167808204952677
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              0.16648056913143428,
+              1.1171033495925138,
+              0.41549775347948226
+            ],
+            "armFound": true
+          }
+        ],
+        "tool": [
+          -0.15188542874285085,
+          1.1510403701654437,
+          0.3436989839972637
+        ]
+      },
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 24,
+        "triangles": 23012
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.187",
+      "selection": "hollow",
+      "action": true,
+      "creatures": [
+        {
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.7035002020201842,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 43.00960264263252,
+          "bounds": {
+            "min": [
+              -0.7044730195513413,
+              -0.005349762233667565,
+              -0.7730926808096568
+            ],
+            "max": [
+              0.953275602151411,
+              0.9273812858618269,
+              0.7077109218403558
+            ]
+          }
+        }
+      ],
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 4,
+        "triangles": 1092
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.187",
+      "selection": "pet",
+      "action": true,
+      "creatures": [
+        {
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.6334000238418587,
+          "meshes": 1,
+          "bones": 51,
+          "pose": 697.4761536541379,
+          "bounds": {
+            "min": [
+              -0.5376317164201813,
+              0.38358996150398633,
+              -0.7918183197600169
+            ],
+            "max": [
+              0.5351044799939477,
+              1.3377511753968099,
+              0.5768102752743807
+            ]
+          }
+        }
+      ],
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 4,
+        "triangles": 2936
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.187",
+      "selection": "shuttle",
+      "action": false,
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 14,
+        "triangles": 42376
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "width": 844,
+      "scroll": 844,
+      "controls": [
+        {
+          "id": "subject",
+          "x": 629,
+          "y": 58,
+          "width": 188,
+          "height": 44
+        },
+        {
+          "id": "gender",
+          "x": 629,
+          "y": 133,
+          "width": 188,
+          "height": 44
+        },
+        {
+          "id": "element",
+          "x": 629,
+          "y": 208,
+          "width": 188,
+          "height": 44
+        },
+        {
+          "id": "motion",
+          "x": 629,
+          "y": 262,
+          "width": 188,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "width": 393,
+      "scroll": 393,
+      "controls": [
+        {
+          "id": "subject",
+          "x": 163,
+          "y": 523,
+          "width": 203,
+          "height": 44
+        },
+        {
+          "id": "gender",
+          "x": 163,
+          "y": 598,
+          "width": 203,
+          "height": 44
+        },
+        {
+          "id": "element",
+          "x": 163,
+          "y": 673,
+          "width": 203,
+          "height": 44
+        },
+        {
+          "id": "motion",
+          "x": 163,
+          "y": 727,
+          "width": 203,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "width": 568,
+      "scroll": 568,
+      "controls": [
+        {
+          "id": "subject",
+          "x": 353,
+          "y": 48,
+          "width": 188,
+          "height": 44
+        },
+        {
+          "id": "gender",
+          "x": 353,
+          "y": 123,
+          "width": 188,
+          "height": 44
+        },
+        {
+          "id": "element",
+          "x": 353,
+          "y": 198,
+          "width": 188,
+          "height": 44
+        },
+        {
+          "id": "motion",
+          "x": 353,
+          "y": 252,
+          "width": 188,
+          "height": 44
+        }
+      ]
+    }
+  ]
+}

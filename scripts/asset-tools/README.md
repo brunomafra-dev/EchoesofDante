@@ -29,3 +29,16 @@ Humans keep one complete clothing rig and share the original bone names/inverse 
 Nature geometry is simplified offline. Tree geometry retains the original height/base in scene extras before removing the leaf primitives. The four nearby rocks retain their 0.1.183 detail, while perimeter rocks use a separate reduced GLB. Source archives, intermediate binaries, dependencies and full models remain ignored. Derived files, actual licenses, hashes and scripts are committed.
 
 Code tools: [glTF Transform](https://github.com/donmccurdy/glTF-Transform) (MIT), [meshoptimizer](https://github.com/zeux/meshoptimizer) (MIT), [sharp](https://github.com/lovell/sharp) (Apache-2.0). Their transitive licenses stay in authoring node_modules; none are added to the app bundle. Browser runtime remains Three.js/MIT.
+
+
+## Flare creatures · 0.1.187
+
+From the project root:
+
+```powershell
+python scripts/asset-tools/fetch-arrival187.py
+& '<blender-4.5-LTS.exe>' --background --factory-startup --python scripts/asset-tools/import-arrival187.py
+node scripts/asset-tools/prepare-arrival187.mjs
+```
+
+The downloader pins the upstream commit and verifies SHA256 of every input, including the per-file credits. Antlion (Clint Bellanger) remains CC BY 3.0; earth wyvern (Clint Bellanger, texture Justin Nichol) and its derivative remain CC BY-SA 3.0. See shipped `public/assets/arrival-3d/CREDITS.md` and `creatures-187.json`. Only art is imported: no Flare engine/game source code. Conversion removes stale channels targeting absent ankle bones, makes the legacy armature parent explicit without changing bind pose, bakes antlion procedural color offline without its unavailable stone normal, applies a brown chitin tint/smooth normals, and resizes the original painted earth skin to 512 WebP. Original geometry, rigs, weights and animation keys are retained. Runtime uses complete cloned skeletons, cached shared geometry/materials and AnimationMixer; no limb assembly or baking per frame.

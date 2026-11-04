@@ -1,0 +1,47 @@
+{
+  "at": "2026-11-04T15:04:26.509Z",
+  "base": "http://127.0.0.1:5193",
+  "method": "Browser-timed DOM keyboard pulses for navigation, native keyboard E/H/Q/R/F and pointer actions; read-only diagnostics. Pulses avoid holding movement through delayed CDP state reads. No progress or position setters. Separate native CDP touch and standard gamepad mocks are covered by the input report.",
+  "errors": [],
+  "checks": [
+    "All five crew members approached by normal movement and interacted.",
+    "Appearance editing preserves class and all progress.",
+    "Three echoes, gated source and mechanism, return/reentry/reload preserve finite kills and research; real data untouched."
+  ],
+  "screens": [
+    "creator-male",
+    "creator-female",
+    "camp-arrival",
+    "approach-lia",
+    "npc-lia",
+    "approach-ivo",
+    "npc-ivo",
+    "approach-nara",
+    "npc-nara",
+    "approach-gui",
+    "npc-gui",
+    "approach-elisa",
+    "npc-elisa",
+    "ship-ramp",
+    "forest-entry",
+    "native-pod",
+    "hollow-encounter",
+    "northern-ruin",
+    "mineral",
+    "mechanism-approach",
+    "mechanism-complete"
+  ],
+  "classes": [],
+  "performance": [
+    {
+      "scene": "forest",
+      "calls": 67,
+      "triangles": 276253,
+      "textures": 107,
+      "geometries": 81,
+      "fps": 20.75156764568301
+    }
+  ],
+  "status": "passed",
+  "passed": true
+}

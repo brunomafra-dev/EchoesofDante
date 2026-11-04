@@ -1,49 +1,48 @@
 import * as T from 'three';
-import {sphere,material}from'./Art';
-import {identityMeshes}from'./Identity';
+import {GLTFLoader,type GLTF}from'three/addons/loaders/GLTFLoader.js';
+import {clone}from'three/addons/utils/SkeletonUtils.js';
 export type CreaturePose={position:T.Vector3;yaw:number;step:number;wind:number;dead:boolean};
-
-/** Offline body/scute/limb meshes, shared materials, articulated instance matrices. */
+type Motion='Idle'|'Walk'|'Attack'|'Death';
+type Actor={root:T.Group;mixer:T.AnimationMixer;actions:Record<Motion,T.AnimationAction>;state:Motion;step:number;seen:boolean};
+const sources=new Map<string,GLTF>();let loading:Promise<void>|undefined;
+/** Whole, rigged Flare models. Cached buffers/materials, independent skeletons. */
+export function loadCreatures(){return loading??=Promise.all(['antlion','wyvern'].map(async name=>{
+ const gltf=await new GLTFLoader().loadAsync('/assets/arrival-3d/creature-'+name+'-187.glb');
+ gltf.scene.traverse(o=>{if(o instanceof T.Mesh){o.castShadow=true;o.receiveShadow=true;for(const m of Array.isArray(o.material)?o.material:[o.material]){m.userData.arrivalSharedCreature=true;for(const value of Object.values(m))if(value instanceof T.Texture)value.anisotropy=4;}}});sources.set(name,gltf);
+})).then(()=>{});}
 export class Creatures{
- readonly root=new T.Group();
- private body:T.InstancedMesh[]=[];private upper:T.InstancedMesh[]=[];private lower:T.InstancedMesh[]=[];private feet:T.InstancedMesh[]=[];
- private eyes?:T.InstancedMesh;private pupils?:T.InstancedMesh;
- private matrix=new T.Matrix4();private node=new T.Object3D();private up=new T.Vector3(0,1,0);
+ readonly root=new T.Group();private actors:Actor[]=[];
  constructor(readonly capacity:number,readonly companion=false){
-  const name=companion?'pet':'hollow',legs=companion?4:6;
-  for(const [part,list,count]of[['body',this.body,capacity],['upper',this.upper,capacity*legs],['lower',this.lower,capacity*legs],['foot',this.feet,capacity*legs]]as const){
-   for(const source of identityMeshes(name+'-'+part)){
-    const mesh=new T.InstancedMesh(source.geometry,source.material,count);mesh.castShadow=true;mesh.receiveShadow=true;mesh.instanceMatrix.setUsage(T.DynamicDrawUsage);mesh.frustumCulled=false;list.push(mesh);this.root.add(mesh);
-   }
-  }
-  if(!companion){const eye=material('#c39541',.25,.3);eye.emissive.set('#805719');eye.emissiveIntensity=.3;
-   this.eyes=new T.InstancedMesh(sphere,eye,capacity);this.pupils=new T.InstancedMesh(sphere,new T.MeshBasicMaterial({color:'#151d15'}),capacity);
-   for(const m of[this.eyes,this.pupils]){m.frustumCulled=false;m.instanceMatrix.setUsage(T.DynamicDrawUsage);this.root.add(m);}
+  const source=sources.get(companion?'wyvern':'antlion');if(!source)throw Error('Criaturas ainda não carregadas');
+  const original=source.animations[0],clips:Record<Motion,T.AnimationClip>=companion?{
+   Idle:source.animations.find(a=>a.name==='Hover')!,Walk:source.animations.find(a=>a.name==='Fly')!,Attack:source.animations.find(a=>a.name==='Sting')!,Death:source.animations.find(a=>a.name==='Die')!
+  }:{Idle:T.AnimationUtils.subclip(original,'Idle',0,4,8),Walk:T.AnimationUtils.subclip(original,'Walk',4,12,8),Attack:T.AnimationUtils.subclip(original,'Attack',12,16,8),Death:T.AnimationUtils.subclip(original,'Death',18,24,8)};
+  for(let i=0;i<capacity;i++){
+   const root=new T.Group(),model=clone(source.scene);model.scale.setScalar(companion?.66:1);root.add(model);this.root.add(root);
+   const mixer=new T.AnimationMixer(model),actions=Object.fromEntries(Object.entries(clips).map(([name,clip])=>[name,mixer.clipAction(clip)]))as Record<Motion,T.AnimationAction>;
+   for(const name of['Attack','Death']as const){actions[name].setLoop(T.LoopOnce,1);actions[name].clampWhenFinished=true;}
+   if(!companion)actions.Idle.setLoop(T.LoopPingPong,Infinity);
+   actions.Attack.setDuration(companion?.5:.33);actions.Death.setDuration(.8);
+   actions.Idle.play();actions.Idle.time=i*.073;this.actors.push({root,mixer,actions,state:'Idle',step:0,seen:false});
   }
  }
- private set(list:T.InstancedMesh[],index:number){this.node.updateMatrix();this.node.matrix.premultiply(this.matrix);for(const mesh of list)mesh.setMatrixAt(index,this.node.matrix);}
- private segment(list:T.InstancedMesh[],index:number,a:T.Vector3,b:T.Vector3){this.node.position.copy(a).add(b).multiplyScalar(.5);this.node.quaternion.setFromUnitVectors(this.up,b.clone().sub(a).normalize());this.node.scale.set(.8,a.distanceTo(b),.8);this.set(list,index);}
- update(poses:CreaturePose[]){
-  for(const m of this.body)m.count=poses.length;
-  if(this.eyes&&this.pupils)this.eyes.count=this.pupils.count=poses.length;
-  let leg=0;const pairs=this.companion?2:3;
-  poses.forEach((p,index)=>{
-   this.node.position.copy(p.position);this.node.position.y+=p.dead?-.03:-p.wind*.10+(p.step?Math.sin(p.step*2)*.012:0);this.node.rotation.set(0,p.yaw,0);this.node.scale.set(1,p.dead?.45:1,1);this.node.updateMatrix();this.matrix.copy(this.node.matrix);
-   for(const mesh of this.body)mesh.setMatrixAt(index,this.matrix);
-   if(this.eyes&&this.pupils){
-    this.node.position.set(0,.49,.871);this.node.rotation.set(0,0,0);this.node.scale.set(.11,.10,.026);this.set([this.eyes],index);
-    this.node.position.set(0,.49,.896);this.node.scale.set(.026,.073,.009);this.set([this.pupils],index);
+ update(poses:CreaturePose[],dt=1/60){
+  for(let i=0;i<this.actors.length;i++){
+   const a=this.actors[i],p=poses[i];a.root.visible=!!p;if(!p)continue;
+   a.root.position.copy(p.position);a.root.rotation.y=p.yaw;
+   const distance=Math.abs(p.step-a.step)/9,moving=a.seen&&distance>.0001;
+   const state:Motion=p.dead?'Death':p.wind>0?'Attack':moving?'Walk':'Idle';
+   if(state!==a.state){const next=a.actions[state];next.reset().play();a.actions[a.state].fadeOut(state==='Death'?.04:.09);next.fadeIn(state==='Death'?.04:.09);a.state=state;
+    // Entering an already cleared map must keep saved corpses down.
+    if(p.dead&&!a.seen)next.time=next.getClip().duration;
    }
-   for(let i=0;i<pairs;i++)for(const side of[-1,1]){
-    const phase=p.dead?0:Math.sin(p.step+i*Math.PI+(side>0?Math.PI:0)),lift=Math.max(0,phase),z=(i-(pairs-1)*.5)*(this.companion?.75:.44);
-    const hip=new T.Vector3(side*(this.companion?.23:.38),this.companion?.57:.49,z),knee=new T.Vector3(side*(this.companion?.33:.73),p.dead?.10:(this.companion?.28:.35)+lift*.07,z+(this.companion?-.08:.07));
-    const foot=new T.Vector3(side*(this.companion?.36:.94),p.dead?.025:.015+lift*.13,z+phase*.15);
-    this.segment(this.upper,leg,hip,knee);this.segment(this.lower,leg,knee,foot);
-    this.node.position.copy(foot);this.node.rotation.set(0,side*.3,0);this.node.scale.setScalar(this.companion?.85:.8);this.set(this.feet,leg++);
-   }
-  });
-  for(const m of[...this.upper,...this.lower,...this.feet])m.count=leg;
-  for(const m of[...this.body,...this.upper,...this.lower,...this.feet,...(this.eyes&&this.pupils?[this.eyes,this.pupils]:[])])m.instanceMatrix.needsUpdate=true;
+   if(state==='Walk')a.actions.Walk.setEffectiveTimeScale(this.companion?1:Math.min(2.8,Math.max(.25,distance/Math.max(dt,.001)/1.65)));
+   a.mixer.update(dt);a.step=p.step;a.seen=true;
+  }
  }
- dispose(){for(const m of[...this.body,...this.upper,...this.lower,...this.feet])m.geometry.dispose();if(this.eyes&&this.pupils){(this.eyes.material as T.Material).dispose();(this.pupils.material as T.Material).dispose();}}
+ inspect(){return this.actors.map(a=>{a.root.updateMatrixWorld(true);const bounds=new T.Box3(),point=new T.Vector3();let bones=0,pose=0,meshes=0;
+  a.root.traverse(o=>{if(o instanceof T.SkinnedMesh){meshes++;o.computeBoundingBox();bounds.union(o.boundingBox!.clone().applyMatrix4(o.matrixWorld));for(let i=0;i<o.skeleton.bones.length;i++){o.skeleton.bones[i].getWorldPosition(point);pose+=(i+1)*(point.x+point.y*.7+point.z*.3);bones++;}}});
+  return{state:a.state,visible:a.root.visible,position:a.root.position.toArray(),time:a.actions[a.state].time,meshes,bones,pose,bounds:{min:bounds.min.toArray(),max:bounds.max.toArray()}};
+ });}
+ dispose(){for(const a of this.actors){a.mixer.stopAllAction();a.mixer.uncacheRoot(a.mixer.getRoot());a.root.traverse(o=>{if(o instanceof T.SkinnedMesh)o.skeleton.dispose();});}this.root.clear();this.actors=[];}
 }

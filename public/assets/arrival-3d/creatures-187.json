@@ -1,0 +1,87 @@
+{
+  "version": "0.1.187",
+  "sourceRepository": "https://github.com/flareteam/flare-game-art-src",
+  "sourceCommit": "8830c68b420b631e09a459e5b0bf87c0e068a558",
+  "changes": "Blender to glTF conversion; antlion procedural color baked without external normal; one material atlas; painted earth wyvern texture resized to 512px WebP; original meshes, weights and authored poses retained.",
+  "files": [
+    {
+      "file": "creature-antlion-187.glb",
+      "bytes": 73948,
+      "sha256": "3b0980bc41fefe60cca7f2524ace119c42c06cf5c1623916fd68e5401de6f391",
+      "meshes": 1,
+      "materials": 1,
+      "textures": [
+        {
+          "name": "antlion-color",
+          "size": [
+            512,
+            512
+          ]
+        }
+      ],
+      "animations": [
+        {
+          "name": "Animation",
+          "channels": 54
+        }
+      ],
+      "source": "art_src_hd/characters/antlion/antlion.blend",
+      "license": "CC-BY-3.0",
+      "authors": [
+        "Clint Bellanger"
+      ]
+    },
+    {
+      "file": "creature-wyvern-187.glb",
+      "bytes": 348620,
+      "sha256": "9532ff166c9ea405bbe677c9f225b964940d34cf62b7afdf9b25c76195f6e7c4",
+      "meshes": 1,
+      "materials": 1,
+      "textures": [
+        {
+          "name": "wyvern_diffuse_earth",
+          "size": [
+            512,
+            512
+          ]
+        }
+      ],
+      "animations": [
+        {
+          "name": "Breathe",
+          "channels": 153
+        },
+        {
+          "name": "Die",
+          "channels": 153
+        },
+        {
+          "name": "Fly",
+          "channels": 153
+        },
+        {
+          "name": "Hit",
+          "channels": 153
+        },
+        {
+          "name": "Hover",
+          "channels": 153
+        },
+        {
+          "name": "Ram",
+          "channels": 153
+        },
+        {
+          "name": "Sting",
+          "channels": 153
+        }
+      ],
+      "source": "art_src_hd/characters/wyvern/wyvern.blend",
+      "license": "CC-BY-SA-3.0",
+      "authors": [
+        "Clint Bellanger",
+        "Justin Nichol"
+      ]
+    }
+  ]
+}
