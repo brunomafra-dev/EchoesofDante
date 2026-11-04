@@ -1,0 +1,6617 @@
+{
+  "passed": true,
+  "base": "http://127.0.0.1:5193",
+  "at": "2026-11-04T17:39:05.846Z",
+  "method": "Native workshop A/B and motion selectors; four classes × two genders × two equipment sets. Real skin/attachment bounds, held corpse and negative chunk-load fallback. Separate isolated forest-entry fixture for dry attack/trail reset and eight independent skeletons; no boss/quest progress injected.",
+  "weapons": [
+    {
+      "id": "warrior",
+      "gender": "male",
+      "equipment": "current",
+      "samples": [
+        {
+          "pose": "attack",
+          "actor": {
+            "role": "",
+            "animation": "Sword",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0,
+              0.23999999463558197
+            ],
+            "grip": [
+              -0.45920443163615776,
+              1.0580105790601109,
+              -0.5012853948966208
+            ],
+            "blade": {
+              "base": [
+                -0.5578073044756953,
+                1.1609740758386449,
+                -0.32486971042337426
+              ],
+              "tip": [
+                -0.9127776372945275,
+                1.531642654422003,
+                0.31022673685600266
+              ]
+            },
+            "emitter": [
+              -0.5538631874463257,
+              1.1568555337581465,
+              -0.331926341587774
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.4262648267930549,
+                  1.0663937620129647,
+                  -0.5076506957792181
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.3954352053727435,
+                  0.9128158575974504,
+                  0.2823596382400145
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 36,
+            "bladeSegments": 7
+          }
+        },
+        {
+          "pose": "run",
+          "actor": {
+            "role": "",
+            "animation": "Run",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0,
+              0.23999999463558197
+            ],
+            "grip": [
+              -0.4486741726130692,
+              1.1704440942808532,
+              0.04193799753193442
+            ],
+            "blade": {
+              "base": [
+                -0.3025312886612286,
+                1.3020685312191291,
+                0.15491476074380361
+              ],
+              "tip": [
+                0.22358307962812596,
+                1.7759164916442383,
+                0.5616310975322288
+              ]
+            },
+            "emitter": [
+              -0.30837700715518834,
+              1.296803550917244,
+              0.1503956877911105
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.4511475923776437,
+                  1.175788697895282,
+                  0.007862653689599985
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.32396410079266835,
+                  0.9863622834886392,
+                  0.2818745438103249
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "roll",
+          "actor": {
+            "role": "",
+            "animation": "Roll",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0,
+              0.23999999463558197
+            ],
+            "grip": [
+              -0.3660227754602711,
+              1.0849784035184236,
+              0.6273175133788177
+            ],
+            "blade": {
+              "base": [
+                -0.2627638557940954,
+                1.2866247168889193,
+                0.6162345924322521
+              ],
+              "tip": [
+                0.1089682451565992,
+                2.012551425792213,
+                0.5763360780815654
+              ]
+            },
+            "emitter": [
+              -0.2668942147964385,
+              1.278558860027239,
+              0.6166779095079283
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.3752958399239565,
+                  1.0706778468405438,
+                  0.5972290462629886
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.12685653325645369,
+                  1.3255650579367293,
+                  0.9381588144356663
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "jump",
+          "actor": {
+            "role": "",
+            "animation": "Jump",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0,
+              0.23999999463558197
+            ],
+            "grip": [
+              -0.7232690230146562,
+              1.3554762565582288,
+              -0.34348111641366086
+            ],
+            "blade": {
+              "base": [
+                -0.6903607668031163,
+                1.3122303827379536,
+                -0.12326901536146129
+              ],
+              "tip": [
+                -0.5718910475799484,
+                1.1565452411092103,
+                0.6694945274253947
+              ]
+            },
+            "emitter": [
+              -0.6916770977577125,
+              1.3139602186187203,
+              -0.13207750412878833
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.6977207406097896,
+                  1.3719152468653912,
+                  -0.3599995060596657
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.6624782749999029,
+                  1.2920975481117971,
+                  0.09172589585973362
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "warrior",
+      "gender": "male",
+      "equipment": "previous",
+      "samples": [
+        {
+          "pose": "attack",
+          "actor": {
+            "role": "",
+            "animation": "Sword",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.45904601878594703,
+              1.057589621748371,
+              -0.5008768569210298
+            ],
+            "blade": {
+              "base": [
+                -0.5182124568918197,
+                1.1193450275837813,
+                -0.39501684021078715
+              ],
+              "tip": [
+                -0.8574333686988234,
+                1.4734093543734679,
+                0.2119139222612706
+              ]
+            },
+            "emitter": [
+              -0.5458234613412271,
+              1.1481642169736395,
+              -0.3456154990793406
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.42612019990762084,
+                  1.0660082588119413,
+                  -0.5072666440499185
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.39557465470668474,
+                  0.9127723648288573,
+                  0.28200641175144925
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 36,
+            "bladeSegments": 7
+          }
+        },
+        {
+          "pose": "run",
+          "actor": {
+            "role": "",
+            "animation": "Run",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.4418802629918028,
+              1.1966605711775598,
+              0.00376187899840362
+            ],
+            "blade": {
+              "base": [
+                -0.36018573776540996,
+                1.2718268367829422,
+                0.08248145077369905
+              ],
+              "tip": [
+                0.10819620686590875,
+                1.7027800929204675,
+                0.5338069956187261
+              ]
+            },
+            "emitter": [
+              -0.32206162599309335,
+              1.306904427398787,
+              0.11921725093550357
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.44215275676984,
+                  1.2042808971667478,
+                  -0.029967455518310954
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.3029426563775125,
+                  1.0065114304831178,
+                  0.309442892944558
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "roll",
+          "actor": {
+            "role": "",
+            "animation": "Roll",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.36930644226653203,
+              1.032626595839752,
+              0.5792567759897083
+            ],
+            "blade": {
+              "base": [
+                -0.3037276862520914,
+                1.151475138076893,
+                0.5890128795082229
+              ],
+              "tip": [
+                0.07225718156403504,
+                1.832873446903168,
+                0.6449478730143737
+              ]
+            },
+            "emitter": [
+              -0.27312426677868573,
+              1.2069377911208923,
+              0.5935657278168631
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.3782630914659818,
+                  1.0224722608911319,
+                  0.5474372918913373
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.13365315427280833,
+                  1.2713635074965455,
+                  0.9532275853316843
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "jump",
+          "actor": {
+            "role": "",
+            "animation": "Jump",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.7232662010492021,
+              1.3554919767432743,
+              -0.3434872581903437
+            ],
+            "blade": {
+              "base": [
+                -0.7035261183150907,
+                1.329540861908685,
+                -0.21135997490194752
+              ],
+              "tip": [
+                -0.5903496439728521,
+                1.1807544701903727,
+                0.5461697826181906
+              ]
+            },
+            "emitter": [
+              -0.6943140797058388,
+              1.3174303416525432,
+              -0.1497005760340293
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.697716935180035,
+                  1.3719306206893607,
+                  -0.36000447137560143
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.6624783889875997,
+                  1.292085834329209,
+                  0.09172929632964302
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "warrior",
+      "gender": "female",
+      "equipment": "current",
+      "samples": [
+        {
+          "pose": "attack",
+          "actor": {
+            "role": "",
+            "animation": "Sword",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0,
+              0.23999999463558197
+            ],
+            "grip": [
+              -0.47381677140279643,
+              1.0944758784934927,
+              -0.5165151686712492
+            ],
+            "blade": {
+              "base": [
+                -0.575524063983877,
+                1.2009374999852436,
+                -0.33450672282395755
+              ],
+              "tip": [
+                -0.9416703075762041,
+                1.5841993272025752,
+                0.3207236648686146
+              ]
+            },
+            "emitter": [
+              -0.5714557700982321,
+              1.196679032841155,
+              -0.34178706456332675
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.4398365081361397,
+                  1.1031587320683607,
+                  -0.5231362414124493
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.4079572139865562,
+                  0.9454310462902625,
+                  0.29143478326975697
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 36,
+            "bladeSegments": 7
+          }
+        },
+        {
+          "pose": "run",
+          "actor": {
+            "role": "",
+            "animation": "Run",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0,
+              0.23999999463558197
+            ],
+            "grip": [
+              -0.4630579709602938,
+              1.2116130663961127,
+              0.043048043575161954
+            ],
+            "blade": {
+              "base": [
+                -0.3122764687082895,
+                1.3474302795058122,
+                0.15977048653445042
+              ],
+              "tip": [
+                0.23053692501928125,
+                1.8363722337481918,
+                0.5799712700563693
+              ]
+            },
+            "emitter": [
+              -0.3183077320337897,
+              1.341997588067103,
+              0.15510158631148696
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.46559720998732956,
+                  1.2171435571311924,
+                  0.007879108354749476
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.33425131897943544,
+                  1.0215886518829909,
+                  0.2911082690719472
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "roll",
+          "actor": {
+            "role": "",
+            "animation": "Roll",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0,
+              0.23999999463558197
+            ],
+            "grip": [
+              -0.3811721205053505,
+              1.0692117414912472,
+              0.5978680801396334
+            ],
+            "blade": {
+              "base": [
+                -0.26836249219814057,
+                1.2736569107724898,
+                0.6146506859488678
+              ],
+              "tip": [
+                0.13775215894945064,
+                2.009659500687553,
+                0.6750680652615975
+              ]
+            },
+            "emitter": [
+              -0.27287487975106095,
+              1.2654790996143228,
+              0.6139793813563827
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.3904165435027508,
+                  1.058731151548292,
+                  0.5650262478858409
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.13794738026700262,
+                  1.315619181070768,
+                  0.9838544320947546
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "jump",
+          "actor": {
+            "role": "",
+            "animation": "Jump",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0,
+              0.23999999463558197
+            ],
+            "grip": [
+              -0.7462599635063635,
+              1.4037962862626807,
+              -0.35504455789521683
+            ],
+            "blade": {
+              "base": [
+                -0.7129958802194152,
+                1.3586447587690678,
+                -0.12775533212036097
+              ],
+              "tip": [
+                -0.5932451835587113,
+                1.1960992640980461,
+                0.6904858589931304
+              ]
+            },
+            "emitter": [
+              -0.7143264442646629,
+              1.360450820837659,
+              -0.1368469060284529
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.7198060046287931,
+                  1.420733213383511,
+                  -0.3719920452445462
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.6837713455466735,
+                  1.3360041350646035,
+                  0.09496691390050188
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "warrior",
+      "gender": "female",
+      "equipment": "previous",
+      "samples": [
+        {
+          "pose": "attack",
+          "actor": {
+            "role": "",
+            "animation": "Sword",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.4741217220900769,
+              1.0958435721849427,
+              -0.5178106069974845
+            ],
+            "blade": {
+              "base": [
+                -0.5351790563092769,
+                1.1596308332693839,
+                -0.4085715290735551
+              ],
+              "tip": [
+                -0.8852411058326897,
+                1.5253444634868467,
+                0.21773251769030666
+              ]
+            },
+            "emitter": [
+              -0.5636724789449035,
+              1.1893982217754564,
+              -0.3575932927090547
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.4401096214245942,
+                  1.1044594130038135,
+                  -0.5243553101145533
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.40799391753296027,
+                  0.9455960934670739,
+                  0.29179878845063584
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 36,
+            "bladeSegments": 7
+          }
+        },
+        {
+          "pose": "run",
+          "actor": {
+            "role": "",
+            "animation": "Run",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.46312172067401847,
+              1.2113015561060696,
+              0.043522897536695235
+            ],
+            "blade": {
+              "base": [
+                -0.3725845768089575,
+                1.2928353869495308,
+                0.11341741839354816
+              ],
+              "tip": [
+                0.146495048017392,
+                1.7602960171187092,
+                0.5141460046395049
+              ]
+            },
+            "emitter": [
+              -0.33033390967192905,
+              1.3308845080098128,
+              0.14603486146007952
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.4656882616689605,
+                  1.2168037143179922,
+                  0.008351497074028075
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.3344944722251903,
+                  1.0213332464964986,
+                  0.2907538254184314
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "roll",
+          "actor": {
+            "role": "",
+            "animation": "Roll",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.3811984962800886,
+              1.0686067679080273,
+              0.5972141523098036
+            ],
+            "blade": {
+              "base": [
+                -0.3134743726001407,
+                1.1912358054906553,
+                0.6074874466104063
+              ],
+              "tip": [
+                0.07481060316489396,
+                1.8943089542977232,
+                0.6663876672671958
+              ]
+            },
+            "emitter": [
+              -0.2818697815494984,
+              1.248462689695882,
+              0.6122816506173543
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.39043779525657357,
+                  1.0581790788630248,
+                  0.5643540438714534
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.13803643853692643,
+                  1.3149339979769064,
+                  0.9840066771242046
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "jump",
+          "actor": {
+            "role": "",
+            "animation": "Jump",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.7465059307238884,
+              1.4024425540000718,
+              -0.3545202061372281
+            ],
+            "blade": {
+              "base": [
+                -0.7261290927268198,
+                1.375659492448343,
+                -0.21814773418579914
+              ],
+              "tip": [
+                -0.6093018882102934,
+                1.2221032728850978,
+                0.5637211050023938
+              ]
+            },
+            "emitter": [
+              -0.7166199016615211,
+              1.3631607303908695,
+              -0.15450724727513224
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.7201362839987122,
+                  1.419409544198702,
+                  -0.37156871835369343
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.6837635137679166,
+                  1.3370133535952102,
+                  0.09467476957572535
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "hunter",
+      "gender": "male",
+      "equipment": "current",
+      "samples": [
+        {
+          "pose": "attack",
+          "actor": {
+            "role": "",
+            "animation": "Shoot",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0.15000000596046448,
+              0.875
+            ],
+            "grip": [
+              -0.20883911020327178,
+              1.4646738005791489,
+              0.3974436118818796
+            ],
+            "emitter": [
+              -0.20883912535540666,
+              1.6038576498564225,
+              1.2093498359087076
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.20890821787840003,
+                  1.4374270415387616,
+                  0.37614991996390246
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  -0.07936116019873989,
+                  1.5353353897454804,
+                  0.4338213247549094
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 1,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "run",
+          "actor": {
+            "role": "",
+            "animation": "Run",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0.15000000596046448,
+              0.875
+            ],
+            "grip": [
+              -0.44198096297384676,
+              1.196334607295038,
+              0.0042154879823944474
+            ],
+            "emitter": [
+              -0.9106686269989688,
+              0.588781640410296,
+              0.30383969206079775
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.44227967487889375,
+                  1.203927909236003,
+                  -0.029519718621160235
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.3032098515354469,
+                  1.0062760033299074,
+                  0.30912637445281377
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "roll",
+          "actor": {
+            "role": "",
+            "animation": "Roll",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0.15000000596046448,
+              0.875
+            ],
+            "grip": [
+              -0.3660227754602719,
+              1.0849784035184113,
+              0.6273175133788086
+            ],
+            "emitter": [
+              -0.5182521908735153,
+              0.7023032218319606,
+              1.3407243353224088
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.3752958399239572,
+                  1.0706778468405325,
+                  0.597229046262979
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.12685653325645493,
+                  1.3255650579367175,
+                  0.938158814435671
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "jump",
+          "actor": {
+            "role": "",
+            "animation": "Jump",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0.15000000596046448,
+              0.875
+            ],
+            "grip": [
+              -0.7232690230146562,
+              1.3554762565582288,
+              -0.3434811164136607
+            ],
+            "emitter": [
+              -1.4109900407423566,
+              1.1376721371984755,
+              -0.7411805404868501
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.6977207406097896,
+                  1.3719152468653912,
+                  -0.3599995060596655
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.662478274999903,
+                  1.2920975481117971,
+                  0.09172589585973363
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "hunter",
+      "gender": "male",
+      "equipment": "previous",
+      "samples": [
+        {
+          "pose": "attack",
+          "actor": {
+            "role": "",
+            "animation": "Shoot",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.3972268460924153,
+              1.27238021350185,
+              0.3161855510534687
+            ],
+            "emitter": [
+              -0.6062342371620817,
+              1.0529488280226342,
+              0.9632123434161692
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.3953049202918013,
+                  1.2552705123874,
+                  0.2861959464607682
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.05379700612175703,
+                  1.1999600333411236,
+                  0.38124202767313997
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 1,
+            "particles": 3,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "run",
+          "actor": {
+            "role": "",
+            "animation": "Run",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.44193067143626363,
+              1.1964975529295547,
+              0.003988670227527011
+            ],
+            "emitter": [
+              -0.8005663078851423,
+              0.6991325081183465,
+              0.3707122372274991
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.44221627370791716,
+                  1.2041043676940797,
+                  -0.02974360553836608
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.3030762990835139,
+                  1.0063937341466358,
+                  0.3092846765430711
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "roll",
+          "actor": {
+            "role": "",
+            "animation": "Roll",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.3660227754602719,
+              1.0849784035184113,
+              0.6273175133788086
+            ],
+            "emitter": [
+              -0.4451834528922598,
+              0.849368818327967,
+              1.2971677883588377
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.3752958399239572,
+                  1.0706778468405325,
+                  0.597229046262979
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.12685653325645493,
+                  1.3255650579367175,
+                  0.938158814435671
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "jump",
+          "actor": {
+            "role": "",
+            "animation": "Jump",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.7230308225209993,
+              1.3567894282011719,
+              -0.34399351773425685
+            ],
+            "emitter": [
+              -1.3546428249163363,
+              1.1247639106361353,
+              -0.5842190141786656
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.6974005494741524,
+                  1.373199246249623,
+                  -0.36041360554842655
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.6624858860898463,
+                  1.2911197424053924,
+                  0.09200895654556417
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "hunter",
+      "gender": "female",
+      "equipment": "current",
+      "samples": [
+        {
+          "pose": "attack",
+          "actor": {
+            "role": "",
+            "animation": "Shoot",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0.15000000596046448,
+              0.875
+            ],
+            "grip": [
+              -0.40971762187671135,
+              1.3170837355621907,
+              0.3266406300579588
+            ],
+            "emitter": [
+              -0.4097175640970212,
+              1.4607394945181331,
+              1.1646329782400124
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.40774152330370417,
+                  1.2993963189364697,
+                  0.2957029697661162
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  -0.17556527003130684,
+                  1.461831693874537,
+                  0.38469414230883403
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 1,
+            "particles": 2,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "run",
+          "actor": {
+            "role": "",
+            "animation": "Run",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0.15000000596046448,
+              0.875
+            ],
+            "grip": [
+              -0.4630899064237794,
+              1.2114572647513708,
+              0.04328544974977343
+            ],
+            "emitter": [
+              -0.9319865812570007,
+              0.613874288196049,
+              0.42525191343305974
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.46564279624280475,
+                  1.2169735884863955,
+                  0.00811527781987903
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.33437294651261285,
+                  1.0214609740408698,
+                  0.29093106776382033
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "roll",
+          "actor": {
+            "role": "",
+            "animation": "Roll",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0.15000000596046448,
+              0.875
+            ],
+            "grip": [
+              -0.3811721205053505,
+              1.0692117414912472,
+              0.5978680801396336
+            ],
+            "emitter": [
+              -0.5673581043092621,
+              0.5911091969797957,
+              1.2758213679961616
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.39041654350275085,
+                  1.058731151548292,
+                  0.565026247885841
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.13794738026700243,
+                  1.3156191810707683,
+                  0.9838544320947544
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "jump",
+          "actor": {
+            "role": "",
+            "animation": "Jump",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0.15000000596046448,
+              0.875
+            ],
+            "grip": [
+              -0.7462615331582937,
+              1.4037898047437893,
+              -0.3550459011495675
+            ],
+            "emitter": [
+              -1.4555328217726538,
+              1.1814571286070503,
+              -0.7678055853419504
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.7198077689985367,
+                  1.4207268641252793,
+                  -0.3719935602605181
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.683771310502853,
+                  1.3360101764381662,
+                  0.09496517000005683
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "hunter",
+      "gender": "female",
+      "equipment": "previous",
+      "samples": [
+        {
+          "pose": "attack",
+          "actor": {
+            "role": "",
+            "animation": "Shoot",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.35623665931351706,
+              1.3868259481767342,
+              0.36947190758427473
+            ],
+            "emitter": [
+              -0.505564558646137,
+              1.253477372481263,
+              1.0792093239150036
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.3553910130486918,
+                  1.3647805511970517,
+                  0.3414152893827418
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  -0.005774738056184059,
+                  1.3034511798611013,
+                  0.394614217039432
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 1,
+            "particles": 3,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "run",
+          "actor": {
+            "role": "",
+            "animation": "Run",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.4630899064237794,
+              1.2114572647513708,
+              0.04328544974977343
+            ],
+            "emitter": [
+              -0.8126188315807719,
+              0.7303633516151085,
+              0.47938837574834414
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.46564279624280475,
+                  1.2169735884863955,
+                  0.00811527781987903
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.33437294651261285,
+                  1.0214609740408698,
+                  0.29093106776382033
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "roll",
+          "actor": {
+            "role": "",
+            "animation": "Roll",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.3811721205053505,
+              1.0692117414912472,
+              0.5978680801396334
+            ],
+            "emitter": [
+              -0.48651267158212996,
+              0.7448331141845748,
+              1.2516948959647385
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.3904165435027508,
+                  1.058731151548292,
+                  0.5650262478858409
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.13794738026700262,
+                  1.315619181070768,
+                  0.9838544320947546
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "jump",
+          "actor": {
+            "role": "",
+            "animation": "Jump",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.7465059307238884,
+              1.4024425540000718,
+              -0.3545202061372281
+            ],
+            "emitter": [
+              -1.3984861220560054,
+              1.1609564534048757,
+              -0.6003129104909981
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.7201362839987122,
+                  1.419409544198702,
+                  -0.37156871835369343
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.6837635137679166,
+                  1.3370133535952102,
+                  0.09467476957572535
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "astral",
+      "gender": "male",
+      "equipment": "current",
+      "samples": [
+        {
+          "pose": "attack",
+          "actor": {
+            "role": "",
+            "animation": "Cast",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0,
+              0.47999998927116394
+            ],
+            "grip": [
+              -0.285904446937784,
+              0.9307626849973416,
+              -0.34360352010258355
+            ],
+            "emitter": [
+              -0.2959397021696067,
+              1.0647739769143099,
+              0.08102706610586058
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.2720840760083363,
+                  0.9527500978250171,
+                  -0.36643689449815287
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.38821652510025856,
+                  1.2643153270802308,
+                  0.5265394802285823
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 1,
+            "particles": 6,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "run",
+          "actor": {
+            "role": "",
+            "animation": "Run",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0,
+              0.47999998927116394
+            ],
+            "grip": [
+              -0.44875015554398306,
+              1.1700759319759886,
+              0.042464544379153445
+            ],
+            "emitter": [
+              -0.16155642255981467,
+              1.428717348357719,
+              0.2638132024726643
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.45125369980797836,
+                  1.175389284573259,
+                  0.00838651028373455
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.32423929796504897,
+                  0.986128530436855,
+                  0.28152183569613337
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "roll",
+          "actor": {
+            "role": "",
+            "animation": "Roll",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0,
+              0.47999998927116394
+            ],
+            "grip": [
+              -0.3660139445967039,
+              1.0856159808573507,
+              0.6278493102246221
+            ],
+            "emitter": [
+              -0.16333914467128105,
+              1.4815847043830768,
+              0.6054333057605144
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.3752941572755491,
+                  1.0712690737924235,
+                  0.5977851220550059
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.1268366141753686,
+                  1.3260154591502356,
+                  0.9379347215706632
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "jump",
+          "actor": {
+            "role": "",
+            "animation": "Jump",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0,
+              0.47999998927116394
+            ],
+            "grip": [
+              -0.723269023014656,
+              1.3554762565582292,
+              -0.34348111641366086
+            ],
+            "emitter": [
+              -0.6586491758981805,
+              1.270557088045598,
+              0.08893536325994195
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.6977207406097894,
+                  1.3719152468653917,
+                  -0.3599995060596657
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.6624782749999027,
+                  1.2920975481117967,
+                  0.09172589585973387
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "astral",
+      "gender": "male",
+      "equipment": "previous",
+      "samples": [
+        {
+          "pose": "attack",
+          "actor": {
+            "role": "",
+            "animation": "Cast",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.2858123291318703,
+              0.9307738769274015,
+              -0.34391347055211874
+            ],
+            "emitter": [
+              -0.2904352475056735,
+              0.9921088983385888,
+              -0.14926428977168943
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.2719817401333706,
+                  0.9527680722755492,
+                  -0.36673412218045415
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.3876022892516481,
+                  1.2651184328752416,
+                  0.5271487257247043
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 1,
+            "particles": 6,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "run",
+          "actor": {
+            "role": "",
+            "animation": "Run",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.4486741726130692,
+              1.1704440942808532,
+              0.04193799753193442
+            ],
+            "emitter": [
+              -0.31714557705641266,
+              1.2889060875253016,
+              0.14361708442261667
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.4511475923776437,
+                  1.175788697895282,
+                  0.007862653689599985
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.32396410079266835,
+                  0.9863622834886392,
+                  0.2818745438103249
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "roll",
+          "actor": {
+            "role": "",
+            "animation": "Roll",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.3693192653245337,
+              1.032333371338588,
+              0.5789401336182174
+            ],
+            "emitter": [
+              -0.2709232362024234,
+              1.2105785737017727,
+              0.5937223392511467
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.37827343559417553,
+                  1.0222046610048126,
+                  0.5471117859605429
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.13369628592085014,
+                  1.2710315973152584,
+                  0.9533014436729308
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "jump",
+          "actor": {
+            "role": "",
+            "animation": "Jump",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.7230308225209993,
+              1.356789428201172,
+              -0.343993517734257
+            ],
+            "emitter": [
+              -0.6940242806014358,
+              1.3174196222007024,
+              -0.14580086871746264
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.6974005494741524,
+                  1.3731992462496232,
+                  -0.3604136055484267
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.6624858860898464,
+                  1.291119742405392,
+                  0.09200895654556428
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "astral",
+      "gender": "female",
+      "equipment": "current",
+      "samples": [
+        {
+          "pose": "attack",
+          "actor": {
+            "role": "",
+            "animation": "Cast",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0,
+              0.47999998927116394
+            ],
+            "grip": [
+              -0.29504305223414845,
+              0.9640799043187857,
+              -0.3548012853990917
+            ],
+            "emitter": [
+              -0.30542642658323055,
+              1.1023009349247215,
+              0.0835021990864166
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.280773391450136,
+                  0.9867771666703578,
+                  -0.3783618342334341
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.4003726014022471,
+                  1.3087592191344952,
+                  0.5437718212947
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 1,
+            "particles": 6,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "run",
+          "actor": {
+            "role": "",
+            "animation": "Run",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0,
+              0.47999998927116394
+            ],
+            "grip": [
+              -0.4560255623157192,
+              1.2386843981790856,
+              0.0036486962879377915
+            ],
+            "emitter": [
+              -0.18020196567844204,
+              1.4925041105848886,
+              0.2697683431314341
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.45629328273434017,
+                  1.2465635060811435,
+                  -0.03116130267067274
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.31253806124239036,
+                  1.0423789479226369,
+                  0.31954838901232807
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "roll",
+          "actor": {
+            "role": "",
+            "animation": "Roll",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0,
+              0.47999998927116394
+            ],
+            "grip": [
+              -0.38119849628008895,
+              1.0686067679080158,
+              0.5972141523097912
+            ],
+            "emitter": [
+              -0.15955591464526409,
+              1.4699381546625223,
+              0.6308358419966367
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.3904377952565738,
+                  1.0581790788630143,
+                  0.5643540438714407
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.13803643853692807,
+                  1.3149339979768933,
+                  0.9840066771242073
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "jump",
+          "actor": {
+            "role": "",
+            "animation": "Jump",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0,
+              0.47999998927116394
+            ],
+            "grip": [
+              -0.746507386944963,
+              1.4024344413857703,
+              -0.35451703656566613
+            ],
+            "emitter": [
+              -0.6798113282438205,
+              1.314786851663656,
+              0.09179282330861727
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.7201382477559306,
+                  1.4194016103197629,
+                  -0.37156615590964215
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.6837634548714284,
+                  1.3370193986771963,
+                  0.09467301467997202
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "astral",
+      "gender": "female",
+      "equipment": "previous",
+      "samples": [
+        {
+          "pose": "attack",
+          "actor": {
+            "role": "",
+            "animation": "Cast",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.2950906916055914,
+              0.9640732866591247,
+              -0.35463926334913265
+            ],
+            "emitter": [
+              -0.29983731875148106,
+              1.0274701975866471,
+              -0.15376425504332494
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.2808263375479616,
+                  0.9867669513631365,
+                  -0.3782064902569345
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.40068893898178,
+                  1.3083450225588997,
+                  0.5434572993059098
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 1,
+            "particles": 6,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "run",
+          "actor": {
+            "role": "",
+            "animation": "Run",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.4631217206740186,
+              1.2113015561060698,
+              0.043522897536695235
+            ],
+            "emitter": [
+              -0.3273160048764271,
+              1.3336023023712618,
+              0.14836467882197463
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.4656882616689606,
+                  1.2168037143179924,
+                  0.008351497074028075
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.33449447222519024,
+                  1.0213332464964984,
+                  0.2907538254184314
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "roll",
+          "actor": {
+            "role": "",
+            "animation": "Roll",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.3777556342446302,
+              1.1235962763974339,
+              0.6477459278933391
+            ],
+            "emitter": [
+              -0.2818759103615224,
+              1.3109204045716703,
+              0.6372961372339659
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.3873280300197092,
+                  1.1088109165271056,
+                  0.6167032109057395
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.13089193375369498,
+                  1.3718970533742112,
+                  0.968189281234964
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "jump",
+          "actor": {
+            "role": "",
+            "animation": "Jump",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.7467450348964947,
+              1.4010964143722286,
+              -0.35399360027801735
+            ],
+            "emitter": [
+              -0.7155546732828749,
+              1.3613844399737431,
+              -0.149438917638457
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.7204597708728893,
+                  1.4180928169076834,
+                  -0.3711428273855413
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.6837517793793637,
+                  1.3380171347236045,
+                  0.09438255686628885
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "xenobinder",
+      "gender": "male",
+      "equipment": "current",
+      "samples": [
+        {
+          "pose": "attack",
+          "actor": {
+            "role": "",
+            "animation": "Cast",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0.019999999552965164,
+              0.4399999976158142
+            ],
+            "grip": [
+              -0.2858587625288154,
+              0.9307658152104488,
+              -0.34375253167952546
+            ],
+            "emitter": [
+              -0.3031649908480116,
+              1.0375430124595113,
+              0.050366938632377234
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.27203336711416787,
+                  0.9527563350529331,
+                  -0.36657987143827864
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.3879072340689257,
+                  1.2647176990992184,
+                  0.5268453111197531
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 5,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "run",
+          "actor": {
+            "role": "",
+            "animation": "Run",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0.019999999552965164,
+              0.4399999976158142
+            ],
+            "grip": [
+              -0.44875015554398306,
+              1.1700759319759886,
+              0.042464544379153445
+            ],
+            "emitter": [
+              -0.18997030542967663,
+              1.3985875266788275,
+              0.2612028740239364
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.45125369980797836,
+                  1.175389284573259,
+                  0.00838651028373455
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.32423929796504897,
+                  0.986128530436855,
+                  0.28152183569613337
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "roll",
+          "actor": {
+            "role": "",
+            "animation": "Roll",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0.019999999552965164,
+              0.4399999976158142
+            ],
+            "grip": [
+              -0.36930644226653303,
+              1.032626595839731,
+              0.5792567759896854
+            ],
+            "emitter": [
+              -0.17166746460891694,
+              1.3871615119352978,
+              0.6269515875575535
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.37826309146598264,
+                  1.0224722608911125,
+                  0.5474372918913137
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.13365315427281177,
+                  1.2713635074965213,
+                  0.95322758533169
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "jump",
+          "actor": {
+            "role": "",
+            "animation": "Jump",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0.019999999552965164,
+              0.4399999976158142
+            ],
+            "grip": [
+              -0.7232690230146561,
+              1.3554762565582281,
+              -0.3434811164136606
+            ],
+            "emitter": [
+              -0.6807093780700716,
+              1.2695394394837105,
+              0.05380302023867001
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.6977207406097896,
+                  1.3719152468653906,
+                  -0.35999950605966546
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.6624782749999027,
+                  1.2920975481117971,
+                  0.0917258958597337
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "xenobinder",
+      "gender": "male",
+      "equipment": "previous",
+      "samples": [
+        {
+          "pose": "attack",
+          "actor": {
+            "role": "",
+            "animation": "Cast",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.28589749702474654,
+              0.9304958813959294,
+              -0.3430965984655548
+            ],
+            "emitter": [
+              -0.290404791618049,
+              0.9921329293318236,
+              -0.14854013266482824
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.27208171250933105,
+                  0.952455186879696,
+                  -0.36595977763282
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.3875757028639557,
+                  1.264822651927853,
+                  0.5269818567920062
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 5,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "run",
+          "actor": {
+            "role": "",
+            "animation": "Run",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.4487049965032148,
+              1.1702932327599482,
+              0.04216805369998722
+            ],
+            "emitter": [
+              -0.3171268378640806,
+              1.2887868241324207,
+              0.14374616805950519
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.451191642490116,
+                  1.1756241118162096,
+                  0.008091519568428823
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.3240818434767247,
+                  0.9862385320323984,
+                  0.2817028189215587
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "roll",
+          "actor": {
+            "role": "",
+            "animation": "Roll",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.36930644226653303,
+              1.032626595839731,
+              0.5792567759896854
+            ],
+            "emitter": [
+              -0.2709383082448701,
+              1.2108994091954406,
+              0.5938909312674683
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.37826309146598264,
+                  1.0224722608911125,
+                  0.5474372918913137
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.13365315427281177,
+                  1.2713635074965213,
+                  0.95322758533169
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "jump",
+          "actor": {
+            "role": "",
+            "animation": "Jump",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.7234992731163051,
+              1.3541798815889032,
+              -0.3429739744094434
+            ],
+            "emitter": [
+              -0.6932798502863741,
+              1.3157041190881191,
+              -0.14478696641310393
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.6980322548891473,
+                  1.3706471954716104,
+                  -0.35958935551943605
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.6624669629594774,
+                  1.2930642251844318,
+                  0.09144447983786481
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "xenobinder",
+      "gender": "female",
+      "equipment": "current",
+      "samples": [
+        {
+          "pose": "attack",
+          "actor": {
+            "role": "",
+            "animation": "Cast",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0.019999999552965164,
+              0.4399999976158142
+            ],
+            "grip": [
+              -0.29509068073848993,
+              0.9640732881418843,
+              -0.35463929749572903
+            ],
+            "emitter": [
+              -0.31292680313299176,
+              1.0743692152868234,
+              0.052120375090160875
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.28082632513085504,
+                  0.9867669534800793,
+                  -0.37820652285469525
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.40068887450787277,
+                  1.3083451066095666,
+                  0.5434573661146371
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 5,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "run",
+          "actor": {
+            "role": "",
+            "animation": "Run",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0.019999999552965164,
+              0.4399999976158142
+            ],
+            "grip": [
+              -0.45618164645541043,
+              1.2381796302915589,
+              0.0043509300388757804
+            ],
+            "emitter": [
+              -0.20855399232222516,
+              1.4610798150498365,
+              0.2630646021621763
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.45648995586254615,
+                  1.2460169021915883,
+                  -0.03046817616962777
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.3129518709680764,
+                  1.0420145142728339,
+                  0.31905848955993876
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "roll",
+          "actor": {
+            "role": "",
+            "animation": "Roll",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0.019999999552965164,
+              0.4399999976158142
+            ],
+            "grip": [
+              -0.38199008429877246,
+              1.0233007249824688,
+              0.539487382347906
+            ],
+            "emitter": [
+              -0.17061122622533165,
+              1.3745924244952437,
+              0.6387337934861526
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.39071367934492895,
+                  1.0172915957840556,
+                  0.5054039894334974
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.14569385844402008,
+                  1.258041008484861,
+                  0.9935662654788532
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "jump",
+          "actor": {
+            "role": "",
+            "animation": "Jump",
+            "equipment": "current",
+            "hasEmitter": true,
+            "emitterLocal": [
+              0,
+              0.019999999552965164,
+              0.4399999976158142
+            ],
+            "grip": [
+              -0.7465059307238884,
+              1.4024425540000713,
+              -0.3545202061372281
+            ],
+            "emitter": [
+              -0.7025865345777685,
+              1.3137392936808876,
+              0.055528191721686326
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.7201362839987122,
+                  1.4194095441987016,
+                  -0.37156871835369343
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.6837635137679166,
+                  1.33701335359521,
+                  0.09467476957572563
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "xenobinder",
+      "gender": "female",
+      "equipment": "previous",
+      "samples": [
+        {
+          "pose": "attack",
+          "actor": {
+            "role": "",
+            "animation": "Cast",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.29513103623840975,
+              0.9637908638412587,
+              -0.3539527412100558
+            ],
+            "emitter": [
+              -0.2997699102007764,
+              1.0274559806740897,
+              -0.15316005841086228
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.28087675098871345,
+                  0.9864518542583578,
+                  -0.37755747087852864
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.4003418983693686,
+                  1.3084546539163648,
+                  0.5436007392820199
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 5,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "run",
+          "actor": {
+            "role": "",
+            "animation": "Run",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.46312172067401824,
+              1.2113015561060698,
+              0.04352289753669494
+            ],
+            "emitter": [
+              -0.32731600487642687,
+              1.3336023023712618,
+              0.14836467882197446
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.46568826166896027,
+                  1.2168037143179924,
+                  0.008351497074027797
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.3344944722251901,
+                  1.0213332464964986,
+                  0.2907538254184315
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "roll",
+          "actor": {
+            "role": "",
+            "animation": "Roll",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.37775563424463016,
+              1.1235962763974343,
+              0.6477459278933385
+            ],
+            "emitter": [
+              -0.2818759103615224,
+              1.3109204045716707,
+              0.6372961372339654
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.38732803001970917,
+                  1.108810916527106,
+                  0.616703210905739
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.13089193375369487,
+                  1.3718970533742112,
+                  0.9681892812349633
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        },
+        {
+          "pose": "jump",
+          "actor": {
+            "role": "",
+            "animation": "Jump",
+            "equipment": "previous",
+            "hasEmitter": false,
+            "grip": [
+              -0.7465102988111108,
+              1.4024182162775691,
+              -0.35451069732220775
+            ],
+            "emitter": [
+              -0.7159337302162695,
+              1.3622519626399343,
+              -0.14995204237507279
+            ],
+            "taskActive": false,
+            "hands": [
+              {
+                "side": "r",
+                "position": [
+                  -0.7201421747233014,
+                  1.4193857426258738,
+                  -0.3715610309062917
+                ],
+                "armFound": true
+              },
+              {
+                "side": "l",
+                "position": [
+                  0.68376333664976,
+                  1.337031488906908,
+                  0.09466950469116683
+                ],
+                "armFound": true
+              }
+            ]
+          },
+          "effects": {
+            "effects": 0,
+            "particles": 0,
+            "bladeVertices": 0,
+            "bladeSegments": 0
+          }
+        }
+      ]
+    }
+  ],
+  "creatures": [
+    {
+      "id": "hollow",
+      "motion": "Walk",
+      "samples": [
+        {
+          "visual": "spider",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.11660000000000037,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1102.4314821340827,
+          "bounds": {
+            "min": [
+              -1.0622395380886693,
+              -0.0000053827136614814294,
+              -1.0469090822828504
+            ],
+            "max": [
+              1.0629003539691928,
+              0.7913195219945395,
+              1.1448819370028331
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.23320000000000032,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1124.6407738572814,
+          "bounds": {
+            "min": [
+              -1.0619986114360145,
+              -0.000014956705944577096,
+              -1.1277622361899486
+            ],
+            "max": [
+              1.062012764266972,
+              0.7684132170945693,
+              1.1333802771998118
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.34990000000000004,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1125.5205527474577,
+          "bounds": {
+            "min": [
+              -1.0621694826340538,
+              -0.00001086224238599706,
+              -1.2241055361509978
+            ],
+            "max": [
+              1.0622482006406126,
+              0.7806182174897476,
+              1.2556475419824802
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.4667000000000003,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1095.8005909977032,
+          "bounds": {
+            "min": [
+              -1.061999197398691,
+              4.047742508100221e-8,
+              -1.0174269905241142
+            ],
+            "max": [
+              1.062007859636077,
+              0.782507110433382,
+              1.1261764637562297
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.5833000000000003,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1129.4983721705255,
+          "bounds": {
+            "min": [
+              -1.0628802405390714,
+              -0.00005412347377686983,
+              -1.1465551099194498
+            ],
+            "max": [
+              1.0621833451557336,
+              0.765660884140153,
+              1.169764069762029
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.03343331346511898,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1128.4050686393052,
+          "bounds": {
+            "min": [
+              -1.0620067440150276,
+              0.000009093788668989437,
+              -1.2118467830058706
+            ],
+            "max": [
+              1.0620164908866352,
+              0.7911512396969103,
+              1.2366576195844894
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.1332333134651187,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1097.8048553168421,
+          "bounds": {
+            "min": [
+              -1.061998387599311,
+              -6.188665561956962e-8,
+              -1.0172769153567107
+            ],
+            "max": [
+              1.0620177326131766,
+              0.7868766546803931,
+              1.1263295815330334
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.26663331346511887,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1135.7603923647869,
+          "bounds": {
+            "min": [
+              -1.0619772157629088,
+              -0.000008723239084551178,
+              -1.1647252758569309
+            ],
+            "max": [
+              1.0620105671347884,
+              0.7648227236694515,
+              1.2044395026676984
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "hollow",
+      "motion": "Run",
+      "samples": [
+        {
+          "visual": "spider",
+          "state": "Run",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.13319999999999985,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 978.4853563998736,
+          "bounds": {
+            "min": [
+              -1.0620082246394438,
+              -0.000022147792609811253,
+              -1.252023115593547
+            ],
+            "max": [
+              1.0620311214092901,
+              0.756773831439847,
+              1.2414622943234486
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Run",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.25000000000000006,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 965.1714872730322,
+          "bounds": {
+            "min": [
+              -1.0619955745436618,
+              -5.001843286778218e-9,
+              -1.0353792985512535
+            ],
+            "max": [
+              1.0620070177931793,
+              0.7295386033155895,
+              1.133916640682356
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Run",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.3665999999999995,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1041.0380841479482,
+          "bounds": {
+            "min": [
+              -1.062001984473213,
+              -3.344978088404282e-7,
+              -1.222148278195922
+            ],
+            "max": [
+              1.0620112137349083,
+              0.7808003129175234,
+              1.350921030722378
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Run",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.1165333253860472,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 957.4193512377544,
+          "bounds": {
+            "min": [
+              -1.0619610288751056,
+              -0.000010622405160073956,
+              -1.1977475856858733
+            ],
+            "max": [
+              1.0620336518278164,
+              0.7477369419634847,
+              1.1709808090242617
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Run",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.2333333253860474,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 993.9463945308564,
+          "bounds": {
+            "min": [
+              -1.0619955721110668,
+              -0.000010886173141669286,
+              -1.0068823104274645
+            ],
+            "max": [
+              1.0620070141953826,
+              0.7518807492440948,
+              1.1881689579700458
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Run",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.3499333253860469,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1027.3453540535381,
+          "bounds": {
+            "min": [
+              -1.0620018063240557,
+              -0.0000010398463364084953,
+              -1.266583238751779
+            ],
+            "max": [
+              1.06201314225778,
+              0.7698542827789782,
+              1.3369385046187572
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Run",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.10006665077209445,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 944.4393418432265,
+          "bounds": {
+            "min": [
+              -1.0619613609529763,
+              -0.000007428525685790332,
+              -1.1441263907981878
+            ],
+            "max": [
+              1.0620210220600512,
+              0.7379551637124985,
+              1.0934111678271028
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Run",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.21656665077209447,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1023.0078575158554,
+          "bounds": {
+            "min": [
+              -1.0620112909275743,
+              -4.825750310431808e-7,
+              -1.087228167322727
+            ],
+            "max": [
+              1.06201975921306,
+              0.7701068269518156,
+              1.2427981494587328
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "hollow",
+      "motion": "Hit",
+      "samples": [
+        {
+          "visual": "spider",
+          "state": "Hit",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.13339999999999966,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 984.4177992426728,
+          "bounds": {
+            "min": [
+              -1.061995439850742,
+              -0.000003965265619715329,
+              -1.0043700091083638
+            ],
+            "max": [
+              1.0620076945454806,
+              0.7095558418026372,
+              1.0725696923105592
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Hit",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.2501000000000004,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1118.7676369031255,
+          "bounds": {
+            "min": [
+              -1.0619954440660404,
+              -0.000020714817691239173,
+              -1.030209365369135
+            ],
+            "max": [
+              1.0620074251343112,
+              0.7322905391199824,
+              1.0469004416227674
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Hit",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.367,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1079.8019476992174,
+          "bounds": {
+            "min": [
+              -1.0619461012231861,
+              -0.00005457865524603495,
+              -1.022788906093642
+            ],
+            "max": [
+              1.0620160061921509,
+              0.7263312312605413,
+              1.0544915029464021
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Hit",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.4836000000000004,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1087.2036737011022,
+          "bounds": {
+            "min": [
+              -1.061974782726194,
+              -0.00019108330417867602,
+              -1.0240191292383531
+            ],
+            "max": [
+              1.0620091098177713,
+              0.7275411539491169,
+              1.05297840486558
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Hit",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.5333333611488342,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1089.6944140366381,
+          "bounds": {
+            "min": [
+              -1.0619955675234172,
+              -9.471352604428774e-9,
+              -1.0244085633570357
+            ],
+            "max": [
+              1.0620070167951694,
+              0.7279433292944658,
+              1.0525280071036016
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Hit",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.5333333611488342,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1089.6944140366381,
+          "bounds": {
+            "min": [
+              -1.0619955675234172,
+              -9.471352604428774e-9,
+              -1.0244085633570357
+            ],
+            "max": [
+              1.0620070167951694,
+              0.7279433292944658,
+              1.0525280071036016
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Hit",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.5333333611488342,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1089.6944140366381,
+          "bounds": {
+            "min": [
+              -1.0619955675234172,
+              -9.471352604428774e-9,
+              -1.0244085633570357
+            ],
+            "max": [
+              1.0620070167951694,
+              0.7279433292944658,
+              1.0525280071036016
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Hit",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.5333333611488342,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1089.6944140366381,
+          "bounds": {
+            "min": [
+              -1.0619955675234172,
+              -9.471352604428774e-9,
+              -1.0244085633570357
+            ],
+            "max": [
+              1.0620070167951694,
+              0.7279433292944658,
+              1.0525280071036016
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "hollow",
+      "motion": "Death",
+      "samples": [
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.11680000000000018,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1889.9770434643917,
+          "bounds": {
+            "min": [
+              -1.0619955675234172,
+              -0.0003589185023187557,
+              -0.9420801083866476
+            ],
+            "max": [
+              1.0620070167951694,
+              0.9905218825488786,
+              1.0950946126097618
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.23340000000000055,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 2276.81135710356,
+          "bounds": {
+            "min": [
+              -1.0155548110030757,
+              0.004060643582287138,
+              -0.884172251929689
+            ],
+            "max": [
+              1.0155958199980144,
+              1.09808262536951,
+              1.0680498640087632
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.3501999999999998,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 3020.8463136480814,
+          "bounds": {
+            "min": [
+              -0.7085786037404412,
+              0.020819882194468287,
+              -0.7334875548134838
+            ],
+            "max": [
+              0.8722530573959811,
+              1.263148528823027,
+              0.8696946124340741
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.46669999999999984,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 4045.5544564198995,
+          "bounds": {
+            "min": [
+              -0.549885046613067,
+              0.04795273231530173,
+              -0.5605747170501575
+            ],
+            "max": [
+              0.9386215528289011,
+              1.4953057566039218,
+              0.6709906071984554
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.5834000000000007,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 3483.542067880976,
+          "bounds": {
+            "min": [
+              -0.2519054297535583,
+              0.029812498369340853,
+              -0.43514031824818616
+            ],
+            "max": [
+              0.8447570563135712,
+              1.3528192330295725,
+              0.6003590746629086
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.7001000000000005,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 3151.0682478382423,
+          "bounds": {
+            "min": [
+              -0.17253122002204488,
+              0.052564688720932666,
+              -0.4350283216962325
+            ],
+            "max": [
+              0.7282801847883696,
+              1.3283501536472608,
+              0.5983664829400179
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.8167000000000001,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 2185.0255468869914,
+          "bounds": {
+            "min": [
+              -0.46559971329771715,
+              0.039505636932117394,
+              -0.43462004868656917
+            ],
+            "max": [
+              0.7525741796373959,
+              1.1401025538621774,
+              0.5842978696526983
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.9335000000000002,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1501.6380898305636,
+          "bounds": {
+            "min": [
+              -0.6075066940967123,
+              0.043556063147918926,
+              -0.4344868842760841
+            ],
+            "max": [
+              0.644400023572702,
+              0.9025894898577628,
+              0.5785961119831974
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.05,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1207.929166310943,
+          "bounds": {
+            "min": [
+              -0.6286810562729394,
+              -0.0068236833878980154,
+              -0.43461079459625046
+            ],
+            "max": [
+              0.6348077625838767,
+              0.8189777121257825,
+              0.5782026880850074
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.1666999999999996,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1245.589313368539,
+          "bounds": {
+            "min": [
+              -0.623707963985204,
+              -0.0018023057315744717,
+              -0.4348409854031407
+            ],
+            "max": [
+              0.6413542178499747,
+              0.8346284134326275,
+              0.5780331497476213
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.2833,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1228.1471125543765,
+          "bounds": {
+            "min": [
+              -0.6257991704648894,
+              -0.003934809545942497,
+              -0.4348277656817682
+            ],
+            "max": [
+              0.6395219688099582,
+              0.8281800042803226,
+              0.5777650352490759
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.3999999999999997,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1198.8810819085072,
+          "bounds": {
+            "min": [
+              -0.6291457560445675,
+              -0.006730707983303662,
+              -0.434880692204954
+            ],
+            "max": [
+              0.6341140671631267,
+              0.8153391864442369,
+              0.5774407388173483
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.5166999999999993,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.0935614464793,
+          "bounds": {
+            "min": [
+              -0.6291441408799956,
+              -0.006358867784663157,
+              -0.43500183657448815
+            ],
+            "max": [
+              0.6341125082258817,
+              0.8151195858349859,
+              0.5771473589742026
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.6334,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.2768634920412,
+          "bounds": {
+            "min": [
+              -0.629142525692178,
+              -0.005985788984135486,
+              -0.4351202744894706
+            ],
+            "max": [
+              0.6341109492720918,
+              0.8148984903422861,
+              0.5768525524883401
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.750099999999999,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.4279749845982,
+          "bounds": {
+            "min": [
+              -0.6291409104811175,
+              -0.005650970821669265,
+              -0.43522586892776577
+            ],
+            "max": [
+              0.6341093903017588,
+              0.8146759007941815,
+              0.5765563204137566
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.8666999999999996,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.5099362115557,
+          "bounds": {
+            "min": [
+              -0.6291392966309179,
+              -0.005469401301877064,
+              -0.4352830058599841
+            ],
+            "max": [
+              0.6341078326507861,
+              0.8145366523210402,
+              0.5763772007283182
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.9333332777023315,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.5258700863321,
+          "bounds": {
+            "min": [
+              -0.6291384011923145,
+              -0.005426098267346635,
+              -0.43529698206864714
+            ],
+            "max": [
+              0.6341069704280289,
+              0.8144930712555855,
+              0.5763251886193534
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.9333332777023315,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.5258700863321,
+          "bounds": {
+            "min": [
+              -0.6291384011923145,
+              -0.005426098267346635,
+              -0.43529698206864714
+            ],
+            "max": [
+              0.6341069704280289,
+              0.8144930712555855,
+              0.5763251886193534
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.9333332777023315,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.5258700863321,
+          "bounds": {
+            "min": [
+              -0.6291384011923145,
+              -0.005426098267346635,
+              -0.43529698206864714
+            ],
+            "max": [
+              0.6341069704280289,
+              0.8144930712555855,
+              0.5763251886193534
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.9333332777023315,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.5258700863321,
+          "bounds": {
+            "min": [
+              -0.6291384011923145,
+              -0.005426098267346635,
+              -0.43529698206864714
+            ],
+            "max": [
+              0.6341069704280289,
+              0.8144930712555855,
+              0.5763251886193534
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.9333332777023315,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.5258700863321,
+          "bounds": {
+            "min": [
+              -0.6291384011923145,
+              -0.005426098267346635,
+              -0.43529698206864714
+            ],
+            "max": [
+              0.6341069704280289,
+              0.8144930712555855,
+              0.5763251886193534
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.9333332777023315,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.5258700863321,
+          "bounds": {
+            "min": [
+              -0.6291384011923145,
+              -0.005426098267346635,
+              -0.43529698206864714
+            ],
+            "max": [
+              0.6341069704280289,
+              0.8144930712555855,
+              0.5763251886193534
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.9333332777023315,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.5258700863321,
+          "bounds": {
+            "min": [
+              -0.6291384011923145,
+              -0.005426098267346635,
+              -0.43529698206864714
+            ],
+            "max": [
+              0.6341069704280289,
+              0.8144930712555855,
+              0.5763251886193534
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.9333332777023315,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.5258700863321,
+          "bounds": {
+            "min": [
+              -0.6291384011923145,
+              -0.005426098267346635,
+              -0.43529698206864714
+            ],
+            "max": [
+              0.6341069704280289,
+              0.8144930712555855,
+              0.5763251886193534
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.9333332777023315,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.5258700863321,
+          "bounds": {
+            "min": [
+              -0.6291384011923145,
+              -0.005426098267346635,
+              -0.43529698206864714
+            ],
+            "max": [
+              0.6341069704280289,
+              0.8144930712555855,
+              0.5763251886193534
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.9333332777023315,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.5258700863321,
+          "bounds": {
+            "min": [
+              -0.6291384011923145,
+              -0.005426098267346635,
+              -0.43529698206864714
+            ],
+            "max": [
+              0.6341069704280289,
+              0.8144930712555855,
+              0.5763251886193534
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.9333332777023315,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.5258700863321,
+          "bounds": {
+            "min": [
+              -0.6291384011923145,
+              -0.005426098267346635,
+              -0.43529698206864714
+            ],
+            "max": [
+              0.6341069704280289,
+              0.8144930712555855,
+              0.5763251886193534
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.9333332777023315,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.5258700863321,
+          "bounds": {
+            "min": [
+              -0.6291384011923145,
+              -0.005426098267346635,
+              -0.43529698206864714
+            ],
+            "max": [
+              0.6341069704280289,
+              0.8144930712555855,
+              0.5763251886193534
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.9333332777023315,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.5258700863321,
+          "bounds": {
+            "min": [
+              -0.6291384011923145,
+              -0.005426098267346635,
+              -0.43529698206864714
+            ],
+            "max": [
+              0.6341069704280289,
+              0.8144930712555855,
+              0.5763251886193534
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 1.9333332777023315,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1199.5258700863321,
+          "bounds": {
+            "min": [
+              -0.6291384011923145,
+              -0.005426098267346635,
+              -0.43529698206864714
+            ],
+            "max": [
+              0.6341069704280289,
+              0.8144930712555855,
+              0.5763251886193534
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "hollow",
+      "motion": "Attack",
+      "samples": [
+        {
+          "visual": "spider",
+          "state": "Attack",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.1453090909090917,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1183.8957168247869,
+          "bounds": {
+            "min": [
+              -1.0620860449769132,
+              -0.00007324203164273123,
+              -0.9978228816760277
+            ],
+            "max": [
+              1.0620974956707447,
+              0.7793187471076316,
+              1.0794068069806888
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Attack",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.1273090909090897,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1167.00824230599,
+          "bounds": {
+            "min": [
+              -1.0621061112397423,
+              -0.00018718377851206777,
+              -1.0025664014922002
+            ],
+            "max": [
+              1.0621175641225153,
+              0.7704803646227588,
+              1.0744714541824805
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Attack",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.2547272727272727,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1264.7896074519238,
+          "bounds": {
+            "min": [
+              -1.0618901442928816,
+              -0.00009865539577880166,
+              -0.9739788009900217
+            ],
+            "max": [
+              1.0619012527397194,
+              0.819912553745933,
+              1.1032973659052487
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Attack",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.3819272727272711,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1116.9216304618703,
+          "bounds": {
+            "min": [
+              -1.0622149349698808,
+              -0.00022413228514142622,
+              -1.0509389548499832
+            ],
+            "max": [
+              1.0622263895122277,
+              0.7339294649843471,
+              1.190053523092271
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Attack",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.5091272727272715,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 866.749655642258,
+          "bounds": {
+            "min": [
+              -1.0620610483730832,
+              -0.0000045789903767023965,
+              -1.1510570217291594
+            ],
+            "max": [
+              1.0620726841548755,
+              0.6317855369570821,
+              1.2566814207635577
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Attack",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.6364363636363631,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 873.237123853227,
+          "bounds": {
+            "min": [
+              -1.0621943723101375,
+              0.000004438499033587728,
+              -1.1484353382822339
+            ],
+            "max": [
+              1.062206257811149,
+              0.6328539468651333,
+              1.252258399155085
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Attack",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.7455272727272722,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 942.9338541103092,
+          "bounds": {
+            "min": [
+              -1.0619295746978494,
+              -0.00003844145937745291,
+              -1.117474685629563
+            ],
+            "max": [
+              1.0619410508844354,
+              0.6490248264855119,
+              1.2026726680834725
+            ]
+          }
+        },
+        {
+          "visual": "spider",
+          "state": "Attack",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.9091636363636357,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1059.3093322743914,
+          "bounds": {
+            "min": [
+              -1.0622005939305375,
+              -0.00001532837634151546,
+              -1.0497297725229109
+            ],
+            "max": [
+              1.062211919751557,
+              0.7239045864515155,
+              1.0933518453716966
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "hollow-old",
+      "motion": "Walk",
+      "samples": [
+        {
+          "visual": "antlion",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.11659999999999855,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 42.649314162254846,
+          "bounds": {
+            "min": [
+              -0.8949755415506666,
+              -0.004492857848460985,
+              -0.8097556127729413
+            ],
+            "max": [
+              0.6493848193822346,
+              0.9056949353833852,
+              0.7416715342302551
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.2333999999999996,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 44.838817595194236,
+          "bounds": {
+            "min": [
+              -0.9901739849025479,
+              -0.004550903348121582,
+              -0.7464714678903083
+            ],
+            "max": [
+              0.779340875314696,
+              0.9299679189769624,
+              0.7083423817193921
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.40009999999999857,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 48.32192540547802,
+          "bounds": {
+            "min": [
+              -1.0321653919269498,
+              -0.01038763153758665,
+              -0.7309694662151034
+            ],
+            "max": [
+              1.0620807661806775,
+              0.9707091277267876,
+              0.7103591573351328
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.5166999999999989,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 44.081935377046925,
+          "bounds": {
+            "min": [
+              -0.8191658541228858,
+              -0.03336628022360072,
+              -0.7296782345428762
+            ],
+            "max": [
+              0.9921238656316187,
+              0.9383355108955748,
+              0.7083413043890037
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.6333999999999997,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 40.26162420728781,
+          "bounds": {
+            "min": [
+              -0.6372851385769562,
+              -0.007454380021295892,
+              -0.8135809525956836
+            ],
+            "max": [
+              0.8821804252861483,
+              0.9058214459770272,
+              0.7413155584958361
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.7500000000000002,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 44.82813062870739,
+          "bounds": {
+            "min": [
+              -0.7852821725494041,
+              -0.004073801386661247,
+              -0.7336887329486756
+            ],
+            "max": [
+              0.9923694899387031,
+              0.948343867024003,
+              0.7084943604302699
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.8666999999999992,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 49.605722146567544,
+          "bounds": {
+            "min": [
+              -1.0521456852651663,
+              -0.003345468776713212,
+              -0.7310108566796992
+            ],
+            "max": [
+              1.0647863674900122,
+              0.9791792065839433,
+              0.710423890606408
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.1082999999999996,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 42.531699543856355,
+          "bounds": {
+            "min": [
+              -0.9095241133796548,
+              -0.0024277970158299023,
+              -0.8015955316188401
+            ],
+            "max": [
+              0.6693846723662601,
+              0.9059378273674304,
+              0.736354603983499
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "hollow-old",
+      "motion": "Attack",
+      "samples": [
+        {
+          "visual": "antlion",
+          "state": "Attack",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.1514772727272719,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 93.54213819221555,
+          "bounds": {
+            "min": [
+              -0.9317976136692055,
+              -0.014743841423053405,
+              -0.8584226657351057
+            ],
+            "max": [
+              0.9569019598710404,
+              1.2076617475340357,
+              0.8497836131409006
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Attack",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.28409090909090906,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 108.83890695857255,
+          "bounds": {
+            "min": [
+              -0.8006708669482008,
+              -0.02684208578332803,
+              -0.738073677089901
+            ],
+            "max": [
+              0.8156906256677756,
+              1.8687563530142843,
+              0.5855638919863018
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Attack",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.375,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 102.05624845665359,
+          "bounds": {
+            "min": [
+              -0.6589082258740402,
+              0.012141097081888208,
+              -0.5789318229901014
+            ],
+            "max": [
+              0.6234779222706546,
+              1.6469151382048872,
+              1.0166673970290694
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Attack",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.375,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 102.05624845665359,
+          "bounds": {
+            "min": [
+              -0.6589082258740402,
+              0.012141097081888208,
+              -0.5789318229901014
+            ],
+            "max": [
+              0.6234779222706546,
+              1.6469151382048872,
+              1.0166673970290694
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Attack",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.375,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 102.05624845665359,
+          "bounds": {
+            "min": [
+              -0.6589082258740402,
+              0.012141097081888208,
+              -0.5789318229901014
+            ],
+            "max": [
+              0.6234779222706546,
+              1.6469151382048872,
+              1.0166673970290694
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Attack",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.375,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 102.05624845665359,
+          "bounds": {
+            "min": [
+              -0.6589082258740402,
+              0.012141097081888208,
+              -0.5789318229901014
+            ],
+            "max": [
+              0.6234779222706546,
+              1.6469151382048872,
+              1.0166673970290694
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Attack",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.375,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 102.05624845665359,
+          "bounds": {
+            "min": [
+              -0.6589082258740402,
+              0.012141097081888208,
+              -0.5789318229901014
+            ],
+            "max": [
+              0.6234779222706546,
+              1.6469151382048872,
+              1.0166673970290694
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Attack",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.375,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 102.05624845665359,
+          "bounds": {
+            "min": [
+              -0.6589082258740402,
+              0.012141097081888208,
+              -0.5789318229901014
+            ],
+            "max": [
+              0.6234779222706546,
+              1.6469151382048872,
+              1.0166673970290694
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "hollow-old",
+      "motion": "Death",
+      "samples": [
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.1171875,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 70.14022187870411,
+          "bounds": {
+            "min": [
+              -0.6570695596347248,
+              -0.06278383583550667,
+              -0.9364671773769904
+            ],
+            "max": [
+              0.7319740105891465,
+              1.1739573890464836,
+              0.6454799474608791
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.22132812499999943,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 65.06388186627062,
+          "bounds": {
+            "min": [
+              -0.5094355554202575,
+              -0.09008184301150834,
+              -1.1192942920281355
+            ],
+            "max": [
+              0.6545404865153835,
+              1.2066186861129888,
+              0.5594542046321376
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.3125,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 72.7213502505872,
+          "bounds": {
+            "min": [
+              -0.4796769275426761,
+              -0.2318092328579615,
+              -1.0010912405565155
+            ],
+            "max": [
+              0.6431579043337586,
+              1.3622446107730255,
+              0.5055913590261142
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.4036718749999991,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 83.76467967253295,
+          "bounds": {
+            "min": [
+              -0.4799065305973233,
+              -0.29278274761643774,
+              -0.5203546177511245
+            ],
+            "max": [
+              0.643164189560427,
+              1.4737923014984833,
+              0.46186444481125144
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.4948437499999997,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 75.17764862003642,
+          "bounds": {
+            "min": [
+              -0.47921055103988475,
+              -0.14467169002785352,
+              -0.71712186944966
+            ],
+            "max": [
+              0.6431497518161713,
+              1.4396014282517544,
+              0.593606216098663
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.5859375,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 66.8099496200327,
+          "bounds": {
+            "min": [
+              -0.4721554207758565,
+              0.07065262094283742,
+              -0.8706923029053333
+            ],
+            "max": [
+              0.6388653861158755,
+              1.2589032160333185,
+              0.7007393086998484
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        },
+        {
+          "visual": "antlion",
+          "state": "Death",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.625,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 57.994579206389986,
+          "bounds": {
+            "min": [
+              -0.4788470875152602,
+              0.05141189536379598,
+              -0.8958140341569458
+            ],
+            "max": [
+              0.6343302891938002,
+              1.2534620080995678,
+              0.6510374761288293
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "width": 844,
+      "scroll": 844,
+      "canvas": {
+        "x": 0,
+        "y": 90,
+        "width": 608,
+        "height": 300,
+        "top": 90,
+        "right": 608,
+        "bottom": 390,
+        "left": 0
+      }
+    },
+    {
+      "width": 568,
+      "scroll": 568,
+      "canvas": {
+        "x": 0,
+        "y": 90,
+        "width": 332,
+        "height": 230,
+        "top": 90,
+        "right": 332,
+        "bottom": 320,
+        "left": 0
+      }
+    },
+    {
+      "width": 393,
+      "scroll": 393,
+      "canvas": {
+        "x": 0,
+        "y": 197,
+        "width": 393,
+        "height": 224,
+        "top": 197,
+        "right": 393,
+        "bottom": 421,
+        "left": 0
+      }
+    }
+  ],
+  "errors": [],
+  "resourceSwitches": {
+    "before": {
+      "calls": 30,
+      "triangles": 28276,
+      "textures": 40,
+      "geometries": 58
+    },
+    "after": {
+      "calls": 30,
+      "triangles": 28276,
+      "textures": 40,
+      "geometries": 58
+    },
+    "extraSwitches": 12
+  },
+  "world": {
+    "hollow": {
+      "active": "spider",
+      "reason": ""
+    },
+    "creatures": [
+      {
+        "visual": "spider",
+        "state": "Idle",
+        "visible": true,
+        "position": [
+          20,
+          0,
+          22.5
+        ],
+        "time": 1.3200999999999998,
+        "meshes": 1,
+        "bones": 107,
+        "pose": 155612.16862868634,
+        "bounds": {
+          "min": [
+            18.930433908089626,
+            -0.0005196784212737147,
+            21.480356054542945
+          ],
+          "max": [
+            21.054673953269155,
+            0.7148616355826339,
+            23.55951606565508
+          ]
+        }
+      },
+      {
+        "visual": "spider",
+        "state": "Idle",
+        "visible": true,
+        "position": [
+          21.75,
+          0,
+          20.75
+        ],
+        "time": 1.4571000000000003,
+        "meshes": 1,
+        "bones": 107,
+        "pose": 162682.23977817092,
+        "bounds": {
+          "min": [
+            20.681602388010358,
+            -0.0006523774919254022,
+            19.731781283957623
+          ],
+          "max": [
+            22.805644828948232,
+            0.7132639049683825,
+            21.8081418516382
+          ]
+        }
+      },
+      {
+        "visual": "spider",
+        "state": "Idle",
+        "visible": true,
+        "position": [
+          10.75,
+          0,
+          13.5
+        ],
+        "time": 1.5940999999999999,
+        "meshes": 1,
+        "bones": 107,
+        "pose": 86559.65186788615,
+        "bounds": {
+          "min": [
+            9.683190241667244,
+            -0.0007737811890864628,
+            12.483188564727383
+          ],
+          "max": [
+            11.806731165742434,
+            0.7140670896866452,
+            14.559352238259892
+          ]
+        }
+      },
+      {
+        "visual": "spider",
+        "state": "Idle",
+        "visible": true,
+        "position": [
+          13.5,
+          0,
+          12.25
+        ],
+        "time": 1.7311000000000003,
+        "meshes": 1,
+        "bones": 107,
+        "pose": 100294.71659568624,
+        "bounds": {
+          "min": [
+            12.435038501451658,
+            -0.001134633775877056,
+            11.23417637699083
+          ],
+          "max": [
+            14.558048555913157,
+            0.7168693680811516,
+            13.31065011552987
+          ]
+        }
+      },
+      {
+        "visual": "spider",
+        "state": "Idle",
+        "visible": true,
+        "position": [
+          36,
+          0,
+          12.5
+        ],
+        "time": 1.8681000000000003,
+        "meshes": 1,
+        "bones": 107,
+        "pose": 230753.504957304,
+        "bounds": {
+          "min": [
+            34.936350032201375,
+            -0.0010377481252803402,
+            11.484624621916327
+          ],
+          "max": [
+            37.059829531576824,
+            0.7215076588777888,
+            13.561209906546564
+          ]
+        }
+      },
+      {
+        "visual": "spider",
+        "state": "Idle",
+        "visible": true,
+        "position": [
+          39.5,
+          0,
+          11.25
+        ],
+        "time": 2.0051,
+        "meshes": 1,
+        "bones": 107,
+        "pose": 248834.16127626557,
+        "bounds": {
+          "min": [
+            38.4378715082052,
+            -0.0008065255540173737,
+            10.235283668395116
+          ],
+          "max": [
+            40.56191759885439,
+            0.7269919424349088,
+            12.312248126541853
+          ]
+        }
+      },
+      {
+        "visual": "spider",
+        "state": "Idle",
+        "visible": true,
+        "position": [
+          44.25,
+          0,
+          24.5
+        ],
+        "time": 2.1421000000000006,
+        "meshes": 1,
+        "bones": 107,
+        "pose": 299271.39649364166,
+        "bounds": {
+          "min": [
+            43.18973880294505,
+            -0.00037660261512337945,
+            23.485778106320172
+          ],
+          "max": [
+            45.31392578330913,
+            0.7323960684154988,
+            25.563246986748133
+          ]
+        }
+      },
+      {
+        "visual": "spider",
+        "state": "Idle",
+        "visible": true,
+        "position": [
+          45.75,
+          0,
+          26.25
+        ],
+        "time": 2.2791000000000006,
+        "meshes": 1,
+        "bones": 107,
+        "pose": 310991.3525958008,
+        "bounds": {
+          "min": [
+            44.691448241350955,
+            -0.0001880478152915671,
+            25.236300509365208
+          ],
+          "max": [
+            46.81556945035142,
+            0.7369808600941834,
+            27.313463689117548
+          ]
+        }
+      }
+    ],
+    "effects": {
+      "effects": 0,
+      "particles": 0,
+      "bladeVertices": 0,
+      "bladeSegments": 0
+    }
+  },
+  "fallback": {
+    "state": {
+      "version": "0.1.188",
+      "selection": "hollow",
+      "action": false,
+      "creatures": [
+        {
+          "visual": "antlion",
+          "state": "Idle",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.07319999999999993,
+          "meshes": 1,
+          "bones": 18,
+          "pose": 53.5835478067213,
+          "bounds": {
+            "min": [
+              -0.9212856245402714,
+              0.006924946137197463,
+              -0.7310164514760676
+            ],
+            "max": [
+              0.9224801487346244,
+              0.9326876609305297,
+              0.72168659495445
+            ]
+          }
+        }
+      ],
+      "hollow": {
+        "active": "antlion",
+        "reason": "A aranha não carregou; Hollow anterior em uso."
+      },
+      "effects": {
+        "effects": 0,
+        "particles": 0,
+        "bladeVertices": 0,
+        "bladeSegments": 0
+      },
+      "equipment": "current",
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 6,
+        "triangles": 1092,
+        "textures": 6,
+        "geometries": 4
+      },
+      "canvas": [
+        1280,
+        720
+      ]
+    },
+    "expectedFailures": [
+      "http://127.0.0.1:5193/assets/_arrival-hollow--6LKanvv.js"
+    ]
+  }
+}

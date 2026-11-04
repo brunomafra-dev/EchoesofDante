@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import type { PreviewServer, ViteDevServer } from 'vite';
 import { attachCoop } from './server/relay.mjs';
 import { coopConfig } from './server/coop-config.mjs';
+import {arrivalHollow}from'./scripts/arrival-hollow-plugin';
 
 // Use the same URL for the game, rooms and LAN devices in dev and preview.
 function rooms(server: ViteDevServer | PreviewServer) {
@@ -17,7 +18,7 @@ function rooms(server: ViteDevServer | PreviewServer) {
 }
 
 export default defineConfig({
-  plugins: [{ name: 'dante-rooms', configureServer: rooms, configurePreviewServer: rooms }],
+  plugins: [arrivalHollow(),{ name: 'dante-rooms', configureServer: rooms, configurePreviewServer: rooms }],
   build: {
     rollupOptions: {
       input: { arrivalWorkshop:'arrival-workshop.html',arrival3d:'arrival-3d.html',frontier3d:'frontier-3d.html',soundtrack:'soundtrack-playtest.html', creatureFinish:'creature-finish.html',worldFinish:'world-finish-playtest.html',forestFinish:'forest-finish.html',cinematicCompatibility:'cinematic-compatibility.html',cinematicReview:'cinematic-review.html',cinematicWorkprint:'cinematic-workprint.html',wholeBody:'whole-body-playtest.html',cinematicOpening:'cinematic-opening.html',cinematicBridge:'cinematic-bridge-pilot.html',cinematicMotion:'cinematic-motion-test.html',cinematicPilot:'cinematic-pilot.html',characterCohesion:'character-cohesion.html',campaignPlaytest:'campaign-playtest.html',partyPlaytest:'party-playtest.html',xenobinderPlaytest:'xenobinder-playtest.html',calderaPlaytest:'caldera-playtest.html',astralPlaytest:'astral-playtest.html',threatPlaytest:'threat-playtest.html',game: 'index.html',basePlaytest:'base-playtest.html', inventoryPlaytest:'inventory-playtest.html', testLibrary: 'test-library.html', characterPlaytest: 'character-playtest.html', renderingLab: 'rendering-lab.html', qualityReference: 'quality-reference.html', glacierPlaytest: 'glacier-playtest.html' },

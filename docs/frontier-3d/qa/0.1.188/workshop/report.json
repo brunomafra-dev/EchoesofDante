@@ -1,0 +1,912 @@
+{
+  "passed": true,
+  "at": "2026-11-04T17:38:32.877Z",
+  "base": "http://127.0.0.1:5193",
+  "method": "Native specimen/gender/element selectors and action button. No campaign/world state loaded or modified. Read-only arm diagnostics; screenshots require agent and human visual review.",
+  "errors": [],
+  "specimens": [
+    {
+      "version": "0.1.188",
+      "selection": "warrior",
+      "action": true,
+      "actor": {
+        "role": "",
+        "animation": "Sword",
+        "equipment": "current",
+        "hasEmitter": true,
+        "emitterLocal": [
+          0,
+          0,
+          0.23999999463558197
+        ],
+        "grip": [
+          -0.4278266615409918,
+          0.9902586254371364,
+          -0.4231261501853588
+        ],
+        "blade": {
+          "base": [
+            -0.5248242962746614,
+            1.0894896174629185,
+            -0.24370718477382794
+          ],
+          "tip": [
+            -0.8740157720654567,
+            1.4467211792923291,
+            0.40220107359695734
+          ]
+        },
+        "emitter": [
+          -0.5209443888039712,
+          1.085520375652621,
+          -0.25088394724020247
+        ],
+        "taskActive": false,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.39796424131496033,
+              1.0038501978647791,
+              -0.4340493962930334
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              0.4057764257819328,
+              0.9018622882744417,
+              0.2284573863463295
+            ],
+            "armFound": true
+          }
+        ]
+      },
+      "hollow": {
+        "active": "spider",
+        "reason": ""
+      },
+      "effects": {
+        "effects": 0,
+        "particles": 0,
+        "bladeVertices": 30,
+        "bladeSegments": 6
+      },
+      "equipment": "current",
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 28,
+        "triangles": 27430,
+        "textures": 24,
+        "geometries": 16
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.188",
+      "selection": "hunter",
+      "action": true,
+      "actor": {
+        "role": "",
+        "animation": "Shoot",
+        "equipment": "current",
+        "hasEmitter": true,
+        "emitterLocal": [
+          0,
+          0.15000000596046448,
+          0.875
+        ],
+        "grip": [
+          -0.44469794310914135,
+          1.140354310208332,
+          0.20904304780669292
+        ],
+        "emitter": [
+          -0.4446979419097882,
+          1.279538189304708,
+          1.0209491201660938
+        ],
+        "taskActive": false,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.44004524674284223,
+              1.1328481575498965,
+              0.17560919901454014
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              -0.19914163573675311,
+              1.3244392241217182,
+              0.32329382421930786
+            ],
+            "armFound": true
+          }
+        ]
+      },
+      "hollow": {
+        "active": "spider",
+        "reason": ""
+      },
+      "effects": {
+        "effects": 1,
+        "particles": 4,
+        "bladeVertices": 0,
+        "bladeSegments": 0
+      },
+      "equipment": "current",
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 30,
+        "triangles": 28330,
+        "textures": 24,
+        "geometries": 20
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.188",
+      "selection": "astral",
+      "action": true,
+      "actor": {
+        "role": "",
+        "animation": "Idle",
+        "equipment": "current",
+        "hasEmitter": true,
+        "emitterLocal": [
+          0,
+          0,
+          0.47999998927116394
+        ],
+        "grip": [
+          -0.29039001697391853,
+          0.9252323791824774,
+          -0.13966205217200725
+        ],
+        "emitter": [
+          -0.26204491936476,
+          1.1569199937941566,
+          0.23966391166498804
+        ],
+        "taskActive": false,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.2873702855939131,
+              0.9432271592365147,
+              -0.16903688972769682
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              0.34952594868274944,
+              0.919584139196211,
+              0.02401267721329664
+            ],
+            "armFound": true
+          }
+        ]
+      },
+      "hollow": {
+        "active": "spider",
+        "reason": ""
+      },
+      "effects": {
+        "effects": 1,
+        "particles": 7,
+        "bladeVertices": 0,
+        "bladeSegments": 0
+      },
+      "equipment": "current",
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 31,
+        "triangles": 28682,
+        "textures": 24,
+        "geometries": 24
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.188",
+      "selection": "xenobinder",
+      "action": true,
+      "actor": {
+        "role": "",
+        "animation": "Cast",
+        "equipment": "current",
+        "hasEmitter": true,
+        "emitterLocal": [
+          0,
+          0.019999999552965164,
+          0.4399999976158142
+        ],
+        "grip": [
+          -0.29220523639027224,
+          0.9245573871894562,
+          -0.3044194845982558
+        ],
+        "emitter": [
+          -0.30481806171761383,
+          1.0545715978907766,
+          0.08283785038583558
+        ],
+        "taskActive": false,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.27935481166512255,
+              0.945444703517476,
+              -0.32879977400272464
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              0.41982764808125184,
+              1.1947025066041375,
+              0.4763108684731999
+            ],
+            "armFound": true
+          }
+        ]
+      },
+      "hollow": {
+        "active": "spider",
+        "reason": ""
+      },
+      "effects": {
+        "effects": 0,
+        "particles": 5,
+        "bladeVertices": 0,
+        "bladeSegments": 0
+      },
+      "equipment": "current",
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 28,
+        "triangles": 27458,
+        "textures": 24,
+        "geometries": 27
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.188",
+      "selection": "lia",
+      "action": true,
+      "actor": {
+        "role": "lia",
+        "animation": "Work",
+        "equipment": "current",
+        "hasEmitter": false,
+        "emitter": [
+          0,
+          1,
+          0
+        ],
+        "taskActive": true,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.16388761921701522,
+              1.192944218826767,
+              0.33798818883223514
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              0.16118849013515907,
+              1.1875633053047288,
+              0.468170743647094
+            ],
+            "armFound": true
+          }
+        ],
+        "tool": [
+          0.1461938653217987,
+          1.1766260043076844,
+          0.49414471927991965
+        ]
+      },
+      "hollow": {
+        "active": "spider",
+        "reason": ""
+      },
+      "effects": {
+        "effects": 0,
+        "particles": 0,
+        "bladeVertices": 0,
+        "bladeSegments": 0
+      },
+      "equipment": "current",
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 28,
+        "triangles": 25414,
+        "textures": 35,
+        "geometries": 37
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.188",
+      "selection": "ivo",
+      "action": true,
+      "actor": {
+        "role": "ivo",
+        "animation": "Work",
+        "equipment": "current",
+        "hasEmitter": false,
+        "emitter": [
+          0,
+          1,
+          0
+        ],
+        "taskActive": true,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.16169431158791098,
+              1.2803040604623386,
+              0.38876726575820286
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              0.16493435847596188,
+              1.104359389607827,
+              0.4234007062301135
+            ],
+            "armFound": true
+          }
+        ],
+        "tool": [
+          -0.14904076899593555,
+          1.2778788579239027,
+          0.41688586521300586
+        ]
+      },
+      "hollow": {
+        "active": "spider",
+        "reason": ""
+      },
+      "effects": {
+        "effects": 0,
+        "particles": 0,
+        "bladeVertices": 0,
+        "bladeSegments": 0
+      },
+      "equipment": "current",
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 26,
+        "triangles": 24106,
+        "textures": 36,
+        "geometries": 42
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.188",
+      "selection": "nara",
+      "action": true,
+      "actor": {
+        "role": "nara",
+        "animation": "Work",
+        "equipment": "current",
+        "hasEmitter": false,
+        "emitter": [
+          0,
+          1,
+          0
+        ],
+        "taskActive": true,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.16388763415342428,
+              1.192943426928409,
+              0.33798942637552537
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              0.1664805691314345,
+              1.1171033495925136,
+              0.4154977534794819
+            ],
+            "armFound": true
+          }
+        ],
+        "tool": [
+          0.1518524630337153,
+          1.1021033183991522,
+          0.43958360638624355
+        ]
+      },
+      "hollow": {
+        "active": "spider",
+        "reason": ""
+      },
+      "effects": {
+        "effects": 0,
+        "particles": 0,
+        "bladeVertices": 0,
+        "bladeSegments": 0
+      },
+      "equipment": "current",
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 30,
+        "triangles": 26140,
+        "textures": 35,
+        "geometries": 51
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.188",
+      "selection": "gui",
+      "action": true,
+      "actor": {
+        "role": "gui",
+        "animation": "Work",
+        "equipment": "current",
+        "hasEmitter": false,
+        "emitter": [
+          0,
+          1,
+          0
+        ],
+        "taskActive": true,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.16168887511118246,
+              1.2807870075550127,
+              0.38745680209413164
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              0.16507016877005606,
+              1.105288589108775,
+              0.4222423789342249
+            ],
+            "armFound": true
+          }
+        ],
+        "tool": [
+          -0.1490232022426093,
+          1.2783270581700894,
+          0.4155669204450212
+        ]
+      },
+      "hollow": {
+        "active": "spider",
+        "reason": ""
+      },
+      "effects": {
+        "effects": 0,
+        "particles": 0,
+        "bladeVertices": 0,
+        "bladeSegments": 0
+      },
+      "equipment": "current",
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 28,
+        "triangles": 25762,
+        "textures": 37,
+        "geometries": 57
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.188",
+      "selection": "elisa",
+      "action": true,
+      "actor": {
+        "role": "elisa",
+        "animation": "Work",
+        "equipment": "current",
+        "hasEmitter": false,
+        "emitter": [
+          0,
+          1,
+          0
+        ],
+        "taskActive": true,
+        "hands": [
+          {
+            "side": "r",
+            "position": [
+              -0.1644682357736676,
+              1.1627106714175526,
+              0.31678082049526757
+            ],
+            "armFound": true
+          },
+          {
+            "side": "l",
+            "position": [
+              0.16648056913143439,
+              1.1171033495925136,
+              0.4154977534794818
+            ],
+            "armFound": true
+          }
+        ],
+        "tool": [
+          -0.1518854287428508,
+          1.1510403701654437,
+          0.34369898399726356
+        ]
+      },
+      "hollow": {
+        "active": "spider",
+        "reason": ""
+      },
+      "effects": {
+        "effects": 0,
+        "particles": 0,
+        "bladeVertices": 0,
+        "bladeSegments": 0
+      },
+      "equipment": "current",
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 26,
+        "triangles": 23012,
+        "textures": 37,
+        "geometries": 64
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.188",
+      "selection": "hollow",
+      "action": true,
+      "creatures": [
+        {
+          "visual": "spider",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.1999666269302357,
+          "meshes": 1,
+          "bones": 107,
+          "pose": 1108.1585200514032,
+          "bounds": {
+            "min": [
+              -1.0619963525865077,
+              -0.00002769780861990815,
+              -1.0910390160746148
+            ],
+            "max": [
+              1.062010883569514,
+              0.7597921515428959,
+              1.0525433996702407
+            ]
+          }
+        }
+      ],
+      "hollow": {
+        "active": "spider",
+        "reason": ""
+      },
+      "effects": {
+        "effects": 0,
+        "particles": 0,
+        "bladeVertices": 0,
+        "bladeSegments": 0
+      },
+      "equipment": "current",
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 6,
+        "triangles": 7716,
+        "textures": 36,
+        "geometries": 65
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.188",
+      "selection": "pet",
+      "action": true,
+      "creatures": [
+        {
+          "visual": "wyvern",
+          "state": "Walk",
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "time": 0.6333000238418599,
+          "meshes": 1,
+          "bones": 51,
+          "pose": 697.4598290368048,
+          "bounds": {
+            "min": [
+              -0.5374720752931594,
+              0.3834813439216904,
+              -0.7918547590468464
+            ],
+            "max": [
+              0.5349520557976492,
+              1.337802167401457,
+              0.5768189332741478
+            ]
+          }
+        }
+      ],
+      "hollow": {
+        "active": "spider",
+        "reason": ""
+      },
+      "effects": {
+        "effects": 0,
+        "particles": 0,
+        "bladeVertices": 0,
+        "bladeSegments": 0
+      },
+      "equipment": "current",
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 6,
+        "triangles": 2936,
+        "textures": 37,
+        "geometries": 66
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    },
+    {
+      "version": "0.1.188",
+      "selection": "shuttle",
+      "action": false,
+      "hollow": {
+        "active": "spider",
+        "reason": ""
+      },
+      "effects": {
+        "effects": 0,
+        "particles": 0,
+        "bladeVertices": 0,
+        "bladeSegments": 0
+      },
+      "equipment": "current",
+      "failures": [],
+      "ready": true,
+      "renderer": {
+        "calls": 16,
+        "triangles": 42376,
+        "textures": 36,
+        "geometries": 72
+      },
+      "canvas": [
+        1440,
+        900
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "width": 844,
+      "scroll": 844,
+      "controls": [
+        {
+          "id": "subject",
+          "x": 629,
+          "y": 48,
+          "width": 188,
+          "height": 44
+        },
+        {
+          "id": "equipment",
+          "x": 629,
+          "y": 123,
+          "width": 188,
+          "height": 44
+        },
+        {
+          "id": "pose",
+          "x": 629,
+          "y": 198,
+          "width": 188,
+          "height": 44
+        },
+        {
+          "id": "gender",
+          "x": 629,
+          "y": 273,
+          "width": 188,
+          "height": 44
+        },
+        {
+          "id": "element",
+          "x": 629,
+          "y": 348,
+          "width": 188,
+          "height": 44
+        },
+        {
+          "id": "motion",
+          "x": 629,
+          "y": 402,
+          "width": 188,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "width": 393,
+      "scroll": 393,
+      "controls": [
+        {
+          "id": "subject",
+          "x": 163,
+          "y": 459.046875,
+          "width": 203,
+          "height": 44
+        },
+        {
+          "id": "equipment",
+          "x": 163,
+          "y": 534.046875,
+          "width": 203,
+          "height": 44
+        },
+        {
+          "id": "pose",
+          "x": 163,
+          "y": 609.046875,
+          "width": 203,
+          "height": 44
+        },
+        {
+          "id": "gender",
+          "x": 163,
+          "y": 684.046875,
+          "width": 203,
+          "height": 44
+        },
+        {
+          "id": "element",
+          "x": 163,
+          "y": 759.046875,
+          "width": 203,
+          "height": 44
+        },
+        {
+          "id": "motion",
+          "x": 163,
+          "y": 813.046875,
+          "width": 203,
+          "height": 44
+        }
+      ]
+    },
+    {
+      "width": 568,
+      "scroll": 568,
+      "controls": [
+        {
+          "id": "subject",
+          "x": 353,
+          "y": 48,
+          "width": 188,
+          "height": 44
+        },
+        {
+          "id": "equipment",
+          "x": 353,
+          "y": 123,
+          "width": 188,
+          "height": 44
+        },
+        {
+          "id": "pose",
+          "x": 353,
+          "y": 198,
+          "width": 188,
+          "height": 44
+        },
+        {
+          "id": "gender",
+          "x": 353,
+          "y": 273,
+          "width": 188,
+          "height": 44
+        },
+        {
+          "id": "element",
+          "x": 353,
+          "y": 348,
+          "width": 188,
+          "height": 44
+        },
+        {
+          "id": "motion",
+          "x": 353,
+          "y": 402,
+          "width": 188,
+          "height": 44
+        }
+      ]
+    }
+  ]
+}

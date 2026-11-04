@@ -22,3 +22,12 @@ In 0.1.186, `identity-186.glb` contains the new authored weapons, role clothing/
 - Arquivos convertidos do [Flare HD Art Sources, revisão 8830c68](https://github.com/flareteam/flare-game-art-src/tree/8830c68b420b631e09a459e5b0bf87c0e068a558). [Créditos por arquivo](https://github.com/flareteam/flare-game-art-src/blob/8830c68b420b631e09a459e5b0bf87c0e068a558/CREDITS.txt). Atualizações HD de Justin Jacobs também reconhecidas.
 - Adaptação Echoes of Dante: conversão Blender → glTF, atlas de cor do antlion com bake offline sem a normal externa, textura earth redimensionada para 512 px/WebP, escala e ligação dos clipes ao combate. A malha, o rig, os pesos e as poses vêm dos artistas acima. Não são extrações de WoW, Diablo ou Path of Exile e não há endosso desses jogos.
 - **Os GLB derivados mantêm suas licenças acima**, incluindo CC BY-SA 3.0 na wyvern; licença não substituída pela do código do projeto. Modelos distribuídos completos em `creature-antlion-187.glb` e `creature-wyvern-187.glb`. Manifesto `creatures-187.json`; conversores reproduzíveis em `scripts/asset-tools/` no repositório público do Dante.
+
+
+## 0.1.188 local — Squinty e instrumentos autorais
+
+**Squinty, Giant Monster Spiders Free Sample**, Easyforge / Easy Forge, copyright 2026. Origem oficial: https://easyforge.itch.io/giant-monster-spiders-free-sample . **Giant Monster Spiders Asset Licence 1.0**, incluída no ZIP. Uso/modificação em jogos permitido; não redistribuir modelo/ZIP/FBX/GLB como asset separado. Incorporado somente no módulo do jogo; fontes/intermediários ignorados fora da pasta pública. Não é CC0 nem arte autoral do Dante.
+
+Modificações: LOD1 3.826 triângulos, sete clipes de gameplay, translação XZ de Body removida, mapas reduzidos para 1024 WebP, emissão 0,25, escala visual 0,44 e ajuste conservador de cor do material preservando mapas. Rig original de 107 joints mantido; sem luz dinâmica ou novas mecânicas de escalada/headshot. Hollow anterior Flare continua com suas licenças próprias acima.
+
+**Quatro instrumentos 0.1.188**: geometria original Echoes of Dante por script Blender, sem modelo externo ou marca/franquia copiada. Fonte editável reproduzível em `scripts/asset-tools/author-arrival188.py`; manifesto de geometria e materiais em `weapons-188.json`. Não houve render offline ou novo arquivo de áudio.

@@ -42,3 +42,14 @@ node scripts/asset-tools/prepare-arrival187.mjs
 ```
 
 The downloader pins the upstream commit and verifies SHA256 of every input, including the per-file credits. Antlion (Clint Bellanger) remains CC BY 3.0; earth wyvern (Clint Bellanger, texture Justin Nichol) and its derivative remain CC BY-SA 3.0. See shipped `public/assets/arrival-3d/CREDITS.md` and `creatures-187.json`. Only art is imported: no Flare engine/game source code. Conversion removes stale channels targeting absent ankle bones, makes the legacy armature parent explicit without changing bind pose, bakes antlion procedural color offline without its unavailable stone normal, applies a brown chitin tint/smooth normals, and resizes the original painted earth skin to 512 WebP. Original geometry, rigs, weights and animation keys are retained. Runtime uses complete cloned skeletons, cached shared geometry/materials and AnimationMixer; no limb assembly or baking per frame.
+
+
+## Integrated combat visuals · 0.1.188 local
+
+See `docs/frontier-3d/COMBAT_VISUALS.md` for scope, licence and actual QA. No push/deploy authorized for this iteration.
+
+Official free sample: https://easyforge.itch.io/giant-monster-spiders-free-sample . Put `giant-monster-spiders-free-sample-sample.zip` in ignored `.local/combat188/`, then run `python scripts/asset-tools/stage-arrival188-spider.py` and `node scripts/asset-tools/prepare-arrival188-spider.mjs`. ZIP and source GLB hashes are pinned; a revised archive needs inspection before updating pins. No account/payment required. Keep originals and derived GLB outside public/Git: the Easy Forge Asset Licence 1.0 permits incorporated game builds and restricts standalone redistribution. `scripts/arrival-hollow-plugin.ts` incorporates the prepared payload in a game module; no GLB download URL. This is packaging, not DRM. Restart Vite after preparing. A checkout without prepared art builds with the previous Hollow and identifies fallback explicitly.
+
+Original equipment: run Blender 4.5 LTS background with `scripts/asset-tools/author-arrival188.py`, then `node scripts/asset-tools/prepare-arrival188-weapons.mjs`. Mesh-only production, closed thickness/end caps, beveled edges, three material groups per instrument, named attachment/emission anchors. `.blend` stays editable in `.local/combat188/Dante-equipment-188.blend`; script sources and own derived weapons are versionable. Geometry helpers are reused from the original authoring prefix; the previous asset generation pass is not executed.
+
+`node scripts/qa-arrival188.mjs` reproduces existing regression plus current visual and asset checks sequentially against preview 5193 (override QA_BASE/QA_ROOT). Do not run browser QAs or Blender/build alongside performance measurements. Models' full source/ZIPs are excluded; rendered game QA images and numerical reports are retained.

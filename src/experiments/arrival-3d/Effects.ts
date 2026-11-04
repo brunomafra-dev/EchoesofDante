@@ -15,7 +15,21 @@ export class ArrivalEffects{
  private ring=new T.TorusGeometry(1,.018,4,40).rotateX(-Math.PI/2);
  private spike=stoneShard();private line=new T.CylinderGeometry(1,1,1,6).rotateX(Math.PI/2);private flame=new T.PlaneGeometry(1,1,2,6).translate(0,.5,0);
  private resources:T.BufferGeometry[]=[];
+ private blade?:()=>{base:T.Vector3;tip:T.Vector3};private bladeLeft=0;private bladeSamples:{base:T.Vector3;tip:T.Vector3;life:number}[]=[];
+ private bladeGeometry=new T.BufferGeometry();private bladePositions=new Float32Array(16*6*3);private bladeColors=new Float32Array(16*6*4);private bladeMaterial=new T.MeshBasicMaterial({vertexColors:true,transparent:true,opacity:.55,depthWrite:false,side:T.DoubleSide});private bladeMesh=new T.Mesh(this.bladeGeometry,this.bladeMaterial);
+ bindBlade(sample:()=>{base:T.Vector3;tip:T.Vector3}){this.blade=sample;}
+ beginBladeTrail(seconds=.24){this.resetTrail();this.bladeLeft=seconds;}
+ resetTrail(){this.bladeSamples=[];this.bladeLeft=0;this.bladeGeometry.setDrawRange(0,0);}
+ channel(p:T.Vector3,id:string,element=0){const color=id==='astral'?PALETTE[element]:id==='xenobinder'?'#a8bd72':'#d8b477';for(let i=0;i<5;i++){const a=i/5*Math.PI*2;this.mote(p,color,.07,.16,new T.Vector3(Math.cos(a)*.6,.15,Math.sin(a)*.6));}}
+ private updateBlade(dt:number){
+  for(const s of this.bladeSamples)s.life-=dt;this.bladeSamples=this.bladeSamples.filter(s=>s.life>0);
+  if(this.blade&&this.bladeLeft>0){this.bladeLeft-=dt;const sample=this.blade(),previous=this.bladeSamples.at(-1);if(previous&&previous.base.distanceTo(sample.base)>2)this.resetTrail();else{this.bladeSamples.push({...sample,life:.11});if(this.bladeSamples.length>17)this.bladeSamples.shift();}}
+  let vertex=0;for(let i=1;i<this.bladeSamples.length;i++){const a=this.bladeSamples[i-1],b=this.bladeSamples[i];for(const [p,life]of[[a.base,a.life],[a.tip,a.life],[b.tip,b.life],[a.base,a.life],[b.tip,b.life],[b.base,b.life]]as const){p.toArray(this.bladePositions,vertex*3);this.bladeColors.set([.43,.79,.87,Math.max(0,life/.11)],vertex*4);vertex++;}}
+  this.bladeGeometry.setDrawRange(0,vertex);this.bladeGeometry.attributes.position.needsUpdate=true;this.bladeGeometry.attributes.color.needsUpdate=true;
+ }
+ inspect(){return{effects:this.effects.length,particles:this.particles.filter(p=>p.age<p.life).length,bladeVertices:this.bladeGeometry.drawRange.count,bladeSegments:this.bladeSamples.length};}
  constructor(){
+  this.bladeGeometry.setAttribute('position',new T.BufferAttribute(this.bladePositions,3).setUsage(T.DynamicDrawUsage));this.bladeGeometry.setAttribute('color',new T.BufferAttribute(this.bladeColors,4).setUsage(T.DynamicDrawUsage));this.bladeGeometry.setDrawRange(0,0);this.bladeMesh.frustumCulled=false;this.root.add(this.bladeMesh);
   this.geometry.setAttribute('position',new T.BufferAttribute(this.positions,3).setUsage(T.DynamicDrawUsage));this.geometry.setAttribute('color',new T.BufferAttribute(this.colors,3).setUsage(T.DynamicDrawUsage));this.geometry.setAttribute('pointSize',new T.BufferAttribute(this.sizes,1).setUsage(T.DynamicDrawUsage));
   const points=new T.Points(this.geometry,this.pointsMaterial);points.frustumCulled=false;this.root.add(points);this.resources=[this.geometry,this.arc,this.ring,this.spike,this.line,this.flame];
   for(let i=0;i<192;i++)this.particles.push({p:new T.Vector3(),v:new T.Vector3(),age:1,life:0,size:0,color:new T.Color(),gravity:0});
@@ -52,7 +66,7 @@ export class ArrivalEffects{
  }
  trail(p:T.Vector3,id:string){if(this.rand()>.42)return;this.mote(p,id==='hunter'?'#e8c884':id==='astral'?'#8ddadf':'#b1c87e',id==='hunter'?.06:.11,.12+this.rand()*.12,new T.Vector3(0,.03,0));}
  update(dt:number){
-  this.time+=dt;
+  this.time+=dt;this.updateBlade(dt);
   for(const e of [...this.effects]){
    if(e.kind==='beam')this.alignBeam(e);
    e.age+=dt;const t=e.age/e.life,fade=Math.min(1,(1-t)*4);e.root.traverse(o=>{if(o instanceof T.Mesh){if(o.material instanceof T.MeshBasicMaterial)o.material.opacity=fade*.55;if(o.material instanceof T.ShaderMaterial){o.material.uniforms.time.value=this.time;o.material.uniforms.opacity.value=fade;}}});
@@ -72,6 +86,6 @@ export class ArrivalEffects{
   for(let i=0;i<this.particles.length;i++){const p=this.particles[i];p.age+=dt;if(p.age<p.life){p.v.y+=p.gravity*dt;p.p.addScaledVector(p.v,dt);p.p.toArray(this.positions,i*3);p.color.toArray(this.colors,i*3);this.sizes[i]=p.size*Math.min(1,(1-p.age/p.life)*2);}else this.sizes[i]=0;}
   for(const a of Object.values(this.geometry.attributes))a.needsUpdate=true;
  }
- clear(){for(const e of this.effects){e.root.removeFromParent();const mats=new Set<T.Material>();e.root.traverse(o=>{if(o instanceof T.Mesh)mats.add(o.material as T.Material);});mats.forEach(m=>m.dispose());}this.effects=[];for(const p of this.particles)p.life=0;this.sizes.fill(0);this.geometry.attributes.pointSize.needsUpdate=true;}
- dispose(){this.clear();this.resources.forEach(g=>g.dispose());this.pointsMaterial.dispose();this.root.removeFromParent();}
+ clear(){this.resetTrail();for(const e of this.effects){e.root.removeFromParent();const mats=new Set<T.Material>();e.root.traverse(o=>{if(o instanceof T.Mesh)mats.add(o.material as T.Material);});mats.forEach(m=>m.dispose());}this.effects=[];for(const p of this.particles)p.life=0;this.sizes.fill(0);this.geometry.attributes.pointSize.needsUpdate=true;}
+ dispose(){this.clear();this.resources.forEach(g=>g.dispose());this.pointsMaterial.dispose();this.bladeGeometry.dispose();this.bladeMaterial.dispose();this.root.removeFromParent();}
 }

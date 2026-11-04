@@ -1,0 +1,1819 @@
+{
+  "passed": true,
+  "at": "2026-11-04T17:30:32.527Z",
+  "base": "http://127.0.0.1:5193",
+  "method": "Fresh normal character, native Start, no world/progress/position fixture. Observe real camp routines for up to 65 seconds, retaining the actual solids. Quest NPCs must remain at their posts; Elisa must work beside both physical planters.",
+  "errors": [],
+  "samples": [
+    {
+      "second": 1,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.5,
+            0,
+            12.25
+          ],
+          "animation": "Idle"
+        }
+      ]
+    },
+    {
+      "second": 2,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.5,
+            0,
+            12.25
+          ],
+          "animation": "Idle"
+        }
+      ]
+    },
+    {
+      "second": 3,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.5,
+            0,
+            12.25
+          ],
+          "animation": "Idle"
+        }
+      ]
+    },
+    {
+      "second": 4,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.5,
+            0,
+            12.25
+          ],
+          "animation": "Idle"
+        }
+      ]
+    },
+    {
+      "second": 5,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.13448313073598,
+            0,
+            11.988916521954287
+          ],
+          "animation": "Walk"
+        }
+      ]
+    },
+    {
+      "second": 6,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.07486901663537,
+            0,
+            11.700966507722539
+          ],
+          "animation": "Walk"
+        }
+      ]
+    },
+    {
+      "second": 7,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.07486901663537,
+            0,
+            11.502558602317944
+          ],
+          "animation": "Walk"
+        }
+      ]
+    },
+    {
+      "second": 8,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.602190035934335,
+            0,
+            11.372381696445757
+          ],
+          "animation": "Walk"
+        }
+      ]
+    },
+    {
+      "second": 9,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.144234290542958,
+            0,
+            11.370233037226672
+          ],
+          "animation": "Work"
+        }
+      ]
+    },
+    {
+      "second": 10,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.144234290542958,
+            0,
+            11.370233037226672
+          ],
+          "animation": "Work"
+        }
+      ]
+    },
+    {
+      "second": 11,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.144234290542958,
+            0,
+            11.370233037226672
+          ],
+          "animation": "Work"
+        }
+      ]
+    },
+    {
+      "second": 12,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.144234290542958,
+            0,
+            11.370233037226672
+          ],
+          "animation": "Work"
+        }
+      ]
+    },
+    {
+      "second": 13,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.144234290542958,
+            0,
+            11.370233037226672
+          ],
+          "animation": "Idle"
+        }
+      ]
+    },
+    {
+      "second": 14,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.144234290542958,
+            0,
+            11.370233037226672
+          ],
+          "animation": "Idle"
+        }
+      ]
+    },
+    {
+      "second": 15,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.144234290542958,
+            0,
+            11.370233037226672
+          ],
+          "animation": "Idle"
+        }
+      ]
+    },
+    {
+      "second": 16,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.493265586513463,
+            0,
+            11.475019279773017
+          ],
+          "animation": "Walk"
+        }
+      ]
+    },
+    {
+      "second": 17,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.911978234715054,
+            0,
+            11.475019279773017
+          ],
+          "animation": "Walk"
+        }
+      ]
+    },
+    {
+      "second": 18,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.21091296938613,
+            0,
+            11.731236878987332
+          ],
+          "animation": "Walk"
+        }
+      ]
+    },
+    {
+      "second": 19,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.440277180975055,
+            0,
+            12.142828135778824
+          ],
+          "animation": "Idle"
+        }
+      ]
+    },
+    {
+      "second": 20,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.440277180975055,
+            0,
+            12.142828135778824
+          ],
+          "animation": "Idle"
+        }
+      ]
+    },
+    {
+      "second": 21,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.440277180975055,
+            0,
+            12.142828135778824
+          ],
+          "animation": "Idle"
+        }
+      ]
+    },
+    {
+      "second": 22,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.440277180975055,
+            0,
+            12.142828135778824
+          ],
+          "animation": "Idle"
+        }
+      ]
+    },
+    {
+      "second": 23,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.440277180975055,
+            0,
+            12.142828135778824
+          ],
+          "animation": "Idle"
+        }
+      ]
+    },
+    {
+      "second": 24,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.440277180975055,
+            0,
+            12.142828135778824
+          ],
+          "animation": "Idle"
+        }
+      ]
+    },
+    {
+      "second": 25,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.440277180975055,
+            0,
+            12.142828135778824
+          ],
+          "animation": "Idle"
+        }
+      ]
+    },
+    {
+      "second": 26,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.790938984027303,
+            0,
+            12.278617020099837
+          ],
+          "animation": "Walk"
+        }
+      ]
+    },
+    {
+      "second": 27,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            21.324137770707306,
+            0,
+            12.485090801202839
+          ],
+          "animation": "Walk"
+        }
+      ]
+    },
+    {
+      "second": 28,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            21.640436050570287,
+            0,
+            12.607572891243453
+          ],
+          "animation": "Work"
+        }
+      ]
+    },
+    {
+      "second": 29,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            21.640436050570287,
+            0,
+            12.607572891243453
+          ],
+          "animation": "Work"
+        }
+      ]
+    },
+    {
+      "second": 30,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            21.640436050570287,
+            0,
+            12.607572891243453
+          ],
+          "animation": "Work"
+        }
+      ]
+    },
+    {
+      "second": 31,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            21.640436050570287,
+            0,
+            12.607572891243453
+          ],
+          "animation": "Work"
+        }
+      ]
+    },
+    {
+      "second": 32,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            21.640436050570287,
+            0,
+            12.607572891243453
+          ],
+          "animation": "Idle"
+        }
+      ]
+    },
+    {
+      "second": 33,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            21.640436050570287,
+            0,
+            12.607572891243453
+          ],
+          "animation": "Idle"
+        }
+      ]
+    },
+    {
+      "second": 34,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            21.579190923221727,
+            0,
+            12.588370063299136
+          ],
+          "animation": "Walk"
+        }
+      ]
+    },
+    {
+      "second": 35,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            21.019430401970887,
+            0,
+            12.412862468736943
+          ],
+          "animation": "Walk"
+        }
+      ]
+    },
+    {
+      "second": 36,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work"
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle"
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.608348069047786,
+            0,
+            12.283971507907602
+          ],
+          "animation": "Idle"
+        }
+      ]
+    }
+  ],
+  "bedsWorked": [
+    0,
+    1
+  ],
+  "stationTasks": [
+    "lia",
+    "ivo",
+    "nara",
+    "gui"
+  ]
+}

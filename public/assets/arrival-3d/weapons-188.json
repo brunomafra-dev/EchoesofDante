@@ -1,0 +1,93 @@
+{
+  "version": "0.1.188",
+  "author": "Echoes of Dante original equipment; Blender script, no external weapon asset",
+  "file": "weapons-188.glb",
+  "bytes": 346104,
+  "sha256": "5cbdbb31f1a8603bb8518929c02cd23aa0453ef5b7b19a20e0972fbf562ef4e3",
+  "models": [
+    {
+      "name": "weapon-warrior",
+      "materials": 3,
+      "triangles": 2640,
+      "anchors": [
+        {
+          "name": "blade-base",
+          "translation": [
+            0,
+            0,
+            0.25
+          ]
+        },
+        {
+          "name": "blade-tip",
+          "translation": [
+            0,
+            0,
+            1.149999976158142
+          ]
+        },
+        {
+          "name": "emitter",
+          "translation": [
+            0,
+            0,
+            0.23999999463558197
+          ]
+        }
+      ]
+    },
+    {
+      "name": "weapon-hunter",
+      "materials": 3,
+      "triangles": 3076,
+      "anchors": [
+        {
+          "name": "emitter",
+          "translation": [
+            0,
+            0.15000000596046448,
+            0.875
+          ]
+        },
+        {
+          "name": "support",
+          "translation": [
+            0,
+            0.10000000149011612,
+            0.3400000035762787
+          ]
+        }
+      ]
+    },
+    {
+      "name": "weapon-astral",
+      "materials": 3,
+      "triangles": 2676,
+      "anchors": [
+        {
+          "name": "emitter",
+          "translation": [
+            0,
+            0,
+            0.47999998927116394
+          ]
+        }
+      ]
+    },
+    {
+      "name": "weapon-xenobinder",
+      "materials": 3,
+      "triangles": 2664,
+      "anchors": [
+        {
+          "name": "emitter",
+          "translation": [
+            0,
+            0.019999999552965164,
+            0.4399999976158142
+          ]
+        }
+      ]
+    }
+  ]
+}

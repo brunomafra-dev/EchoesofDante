@@ -7,8 +7,9 @@ let ready:Promise<void>|undefined;
 const roots=new Map<string,T.Object3D>();
 /** One offline GLB, shared mesh/material storage, no authoring in the frame loop. */
 export function loadIdentity(){
- return ready??=Promise.all([new GLTFLoader().loadAsync('/assets/arrival-3d/identity-186.glb'),loadCreatures()]).then(([gltf])=>{
+ return ready??=Promise.all([new GLTFLoader().loadAsync('/assets/arrival-3d/identity-186.glb'),new GLTFLoader().loadAsync('/assets/arrival-3d/weapons-188.glb'),loadCreatures()]).then(([gltf,weapons])=>{
   for(const root of gltf.scene.children){roots.set(root.name,root);root.traverse(o=>{if(o instanceof T.Mesh){o.castShadow=true;o.receiveShadow=true;for(const m of Array.isArray(o.material)?o.material:[o.material])for(const value of Object.values(m))if(value instanceof T.Texture)value.anisotropy=4;}});}
+  for(const root of weapons.scene.children){roots.set('previous-'+root.name,roots.get(root.name)!);roots.set(root.name,root);root.traverse(o=>{if(/^emitter(?:_\d+)?$/.test(o.name))o.name='emitter';if(o instanceof T.Mesh){o.castShadow=true;o.receiveShadow=true;}});}
  });
 }
 export function identity(name:string){

@@ -1,0 +1,206 @@
+{
+  "passed": true,
+  "at": "2026-11-04T17:40:58.050Z",
+  "weapons": {
+    "bytes": 346104,
+    "models": [
+      {
+        "name": "weapon-warrior",
+        "triangles": 2640,
+        "materials": 3
+      },
+      {
+        "name": "weapon-hunter",
+        "triangles": 3076,
+        "materials": 3
+      },
+      {
+        "name": "weapon-astral",
+        "triangles": 2676,
+        "materials": 3
+      },
+      {
+        "name": "weapon-xenobinder",
+        "triangles": 2664,
+        "materials": 3
+      }
+    ]
+  },
+  "spider": {
+    "author": "Easyforge / Easy Forge",
+    "source": "https://easyforge.itch.io/giant-monster-spiders-free-sample",
+    "license": "Giant Monster Spiders Asset Licence 1.0; incorporated game build only; not standalone redistribution",
+    "inputSha256": "29f3d3bff81de211226bdb6329c2c7a8e304b39682a29231aa1e412412049871",
+    "sha256": "bbbe0229e925138953c55e3eeba15cc14719fe3263a6ab87097584dc7c3009f8",
+    "inputBytes": 9408128,
+    "bytes": 4346140,
+    "triangles": 3826,
+    "joints": 107,
+    "materials": 1,
+    "originalClips": [
+      "Idle",
+      "Walk",
+      "Run",
+      "TurnLeft",
+      "TurnRight",
+      "Attack",
+      "Jump",
+      "Hit",
+      "Death",
+      "Bite",
+      "SwipeLeft",
+      "SwipeRight",
+      "Pounce",
+      "Threat",
+      "HitLeft",
+      "HitRight",
+      "DeathCollapse",
+      "DeathHeadshot",
+      "WallWalk",
+      "CeilingWalk",
+      "ClimbUpWall",
+      "ClimbToCeiling",
+      "ClimbOverLedge",
+      "ClimbDownLedge"
+    ],
+    "clips": [
+      "Idle",
+      "Walk",
+      "Run",
+      "Attack",
+      "Bite",
+      "Hit",
+      "Death"
+    ],
+    "textures": [
+      {
+        "name": "",
+        "size": [
+          1024,
+          1024
+        ],
+        "mime": "image/webp"
+      },
+      {
+        "name": "",
+        "size": [
+          1024,
+          1024
+        ],
+        "mime": "image/webp"
+      },
+      {
+        "name": "",
+        "size": [
+          1024,
+          1024
+        ],
+        "mime": "image/webp"
+      },
+      {
+        "name": "",
+        "size": [
+          1024,
+          1024
+        ],
+        "mime": "image/webp"
+      }
+    ],
+    "rootMotion": [
+      {
+        "clip": "Idle",
+        "first": [
+          0,
+          0.7390199899673462,
+          0.011274028569459915
+        ],
+        "last": [
+          -4.922345443740236e-18,
+          0.7390199899673462,
+          0.011274028569459915
+        ]
+      },
+      {
+        "clip": "Walk",
+        "first": [
+          0,
+          0.7741897702217102,
+          0
+        ],
+        "last": [
+          0,
+          0.7741897702217102,
+          0
+        ]
+      },
+      {
+        "clip": "Run",
+        "first": [
+          0,
+          0.7078696489334106,
+          0
+        ],
+        "last": [
+          0,
+          0.7078696489334106,
+          0
+        ]
+      },
+      {
+        "clip": "Attack",
+        "first": [
+          0,
+          0.7390199899673462,
+          0
+        ],
+        "last": [
+          0,
+          0.7390199899673462,
+          0
+        ]
+      },
+      {
+        "clip": "Hit",
+        "first": [
+          0,
+          0.7390199899673462,
+          0
+        ],
+        "last": [
+          0,
+          0.7390199899673462,
+          0
+        ]
+      },
+      {
+        "clip": "Death",
+        "first": [
+          0,
+          0.7390199899673462,
+          0
+        ],
+        "last": [
+          0,
+          0.38895440101623535,
+          0
+        ]
+      },
+      {
+        "clip": "Bite",
+        "first": [
+          0,
+          0.7390199899673462,
+          0
+        ],
+        "last": [
+          0,
+          0.7390199899673462,
+          0
+        ]
+      }
+    ],
+    "changes": "LOD1; seven gameplay clips; XZ Body root motion removed; four maps resized to 1024 WebP, emissive strength 0.25. Original textures and skin retained. Runtime scale/grounding separate from gameplay collision."
+  },
+  "estimatedSharedTextureVRAMBytes": 22369621.333333332,
+  "notes": "Texture VRAM estimate assumes RGBA8+mipmaps for four shared maps; driver allocation not measured. No raw Easyforge model is placed in public or tracked source."
+}

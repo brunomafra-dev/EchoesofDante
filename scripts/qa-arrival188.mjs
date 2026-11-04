@@ -1,0 +1,2 @@
+import{spawn}from'node:child_process';process.env.QA_ROOT??='docs/frontier-3d/qa/0.1.188';await import('./qa-arrival186.mjs');
+for(const[name,file]of[['visual','scripts/qa-arrival-visual188.mjs'],['assets','scripts/asset-tools/inspect-arrival188.mjs']]){if(process.exitCode)break;const code=await new Promise(resolve=>{const p=spawn(process.execPath,[file],{stdio:'inherit',env:{...process.env,QA_BASE:process.env.QA_BASE??'http://127.0.0.1:5193',QA_OUT:process.env.QA_ROOT+'/'+name}});p.on('exit',resolve);p.on('error',()=>resolve(1));});if(code!==0)process.exitCode=1;}
