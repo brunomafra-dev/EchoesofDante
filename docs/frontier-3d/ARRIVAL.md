@@ -45,7 +45,7 @@ Casco, motores, apoios, abrigos, bancadas, canteiros, pedras, troncos, fissura, 
 
 Modelos completos Quaternius Standard/CC0, cabelos selecionáveis no mesmo esqueleto e doze clipes. Cabeça e roupa são malhas 3D reatadas ao rig completo, sem montagem de sprites por membros. Redução e WebP 512px offline; manifesto, hashes, licenças e autoria em `public/assets/arrival-3d/`. Reutiliza natureza Poly Haven, mapas ambientCG e copas previamente assadas. Nave, equipamentos, criaturas e efeitos foram modelados em código para Dante.
 
-Árvores secundárias usam a geometria reduzida já disponível (144 triângulos; a detalhada tem 935), com as mesmas copas preparadas; materiais compartilhados. Terreno/estruturas agrupados por material e região; grama e membros das criaturas instanciados, vento no shader. Ambas as regiões são preparadas uma vez, com visibilidade por região; não há desenho estático por frame ou geração de assets em serviço externo durante o jogo. CPU atualiza matrizes, esqueleto, estado e efeitos transitórios. Esta estratégia ainda necessita avaliação em aparelhos reais; não presume 60 FPS ou estabilidade em iPhone a partir da emulação.
+Árvores secundárias usam a geometria reduzida já disponível (144 triângulos; a detalhada tem 935), com as mesmas copas preparadas; materiais compartilhados. Terreno/estruturas agrupados por material e região; grama e membros das criaturas instanciados, vento no shader. Ambas as regiões são preparadas uma vez, com visibilidade por região; não há reconstrução de geometria estática por frame ou geração de assets em serviço externo durante o jogo. CPU atualiza matrizes, esqueleto, estado e efeitos transitórios. Esta estratégia ainda necessita avaliação em aparelhos reais; não presume 60 FPS ou estabilidade em iPhone a partir da emulação.
 
 Amostra isolada em Chrome/ANGLE Intel UHD, 1440×900 e DPR 1, após oito segundos de aquecimento: base aproximadamente 44,6–45,1 FPS; floresta aproximadamente 46,6–48,1 FPS, em três janelas de dois segundos por cena. [Amostras completas](qa/0.1.185/performance/report.json). O roteiro de percurso também registra uma amostra que inclui a fase de entrada/reload; ela não deve ser confundida com o benchmark aquecido. Não é medição contínua de todos os combates ou garantia para celular.
 
@@ -55,8 +55,9 @@ Evidências técnicas em `qa/0.1.185/`: inspeção geométrica dos dois rigs/ani
 
 - [x] Rigs masculino/feminino: doze animações amostradas, sem geometria explodida, cabeça acompanha o corpo caído e salto não soma uma segunda trajetória física.
 - [x] Typecheck/build (301 módulos), circuito compilado completo, quatro kits e quatro elementos, toque nas quatro classes, gamepad Astral, sete layouts, derrota/poção/reload e isolamento. Seis relatórios finais passaram; capturas inspecionadas pelo agente. [Comparação de build e hashes](qa/0.1.185/build-verification.json).
-- [ ] Publicação e QA no endereço público.
-- [ ] Aprovação humana do acampamento, floresta, editor, criaturas, câmera e poderes.
+- [x] Aplicação `b62bc83` publicada: Vercel success, 40 hashes conferidos e QA público de toque nas quatro classes, gamepad, transições base/floresta, derrota, poção, reload, isolamento e ensaio anterior passaram. [Publicação e limites](qa/0.1.185/publication.json). Capturas públicas inspecionadas pelo agente.
+- [x] Playtest humano recebido em 04/11: árvores, personagens humanos, pedras e terreno elogiados. Publicação confirmada pelo usuário.
+- [ ] Aprovação estética integral: armas, poderes, criaturas, identidade profissional dos NPCs e nave/estações precisam de acabamento. [Diagnóstico e proposta de produção](ASSET_IDENTITY_PLAN.md). Editor completo, câmera e desempenho físico não são considerados aprovados por inferência.
 - [ ] iPhone 13/13 Pro físico; coop 3D e migração da campanha continuam fora do escopo.
 
-O próximo arco não começa antes da validação deste trecho. QA técnico e inspeção pelo agente não aprovam estética, naturalidade, diversão ou desempenho em hardware não testado.
+O playtest foi realizado, com aceitação visual parcial e pendências de acabamento. O próximo arco aguarda a revisão dessas pendências e sua validação pelo usuário. QA técnico e inspeção pelo agente não aprovam estética, naturalidade, diversão ou desempenho em hardware não testado.

@@ -1,0 +1,52 @@
+{
+  "version": "0.1.185",
+  "at": "2026-11-04T12:49:40.839699+00:00",
+  "sourceCommit": "b62bc835c83f852660b4ff7eb9a184375586f0ce",
+  "vercelStatus": "success",
+  "vercelUrl": "https://vercel.com/brunomafra-devs-projects/echosofdante/9Ha7P9M2SAMeBTQraxqUPNRBVTtF",
+  "published": true,
+  "matchingPublishedHashes": 40,
+  "unchangedCampaignHashes": 86,
+  "compiledReports": [
+    "local/report.json",
+    "classes/report.json",
+    "input/report.json",
+    "elements/report.json",
+    "crew/report.json",
+    "performance/report.json"
+  ],
+  "publicReports": [
+    "public/report.json"
+  ],
+  "runtimeDiffFromSourceCommit": false,
+  "networkOrRelayChanged": false,
+  "humanVisualApproval": "partial; asset identity revision required",
+  "physicalIphoneTest": "pending",
+  "limits": [
+    "Solo isolated base/forest reconstruction and initial appearance editor/four kits, not a full campaign/co-op migration.",
+    "No prerequisites or boss victories simulated in normal play. Explicit storage fixtures only in named QA reports.",
+    "Temporary tab-local trial progress; no permanent campaign character/inventory/economy.",
+    "Crossed canopy impostors retain close-view and angle limitations; objects remain opaque.",
+    "Intel UHD warmed idle desktop samples approximately 45–48 FPS; not a whole-game/mobile guarantee.",
+    "User tested the arrival; asset identity needs revision before Sirocco or later regions."
+  ],
+  "humanFeedback": {
+    "at": "2026-11-04",
+    "publicationConfirmedByUser": true,
+    "positivelyReceived": [
+      "trees",
+      "human character models",
+      "rocks",
+      "terrain"
+    ],
+    "revisionRequested": [
+      "weapons",
+      "powers",
+      "creatures",
+      "NPC role identity",
+      "shuttle and structure materials/shapes"
+    ],
+    "nextRegionApproved": false,
+    "productionResearch": "../../ASSET_IDENTITY_PLAN.md"
+  }
+}

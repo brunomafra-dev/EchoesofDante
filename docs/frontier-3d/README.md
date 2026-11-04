@@ -1,6 +1,6 @@
 # Primeira fronteira · ensaio 3D · 0.1.184
 
-**Próxima avaliação autorizada · 0.1.185:** [acampamento de pouso + Floresta de Dante, criação de personagem e quatro kits iniciais](ARRIVAL.md). Entrada nova e isolada; o laboratório abaixo continua disponível. A aprovação da iluminação/vegetação anterior não se estende ao mob, ao novo editor ou à reconstrução. Siroco aguarda este playtest.
+**Próxima avaliação autorizada · 0.1.185:** [acampamento de pouso + Floresta de Dante, criação de personagem e quatro kits iniciais](ARRIVAL.md). Entrada nova e isolada; o laboratório abaixo continua disponível. A aprovação da iluminação/vegetação anterior não se estende ao mob, ao novo editor ou à reconstrução. Playtest recebido em 04/11: natureza e figuras humanas elogiadas; equipamentos, poderes, criaturas, NPCs e estruturas aguardam [revisão de identidade](ASSET_IDENTITY_PLAN.md). Siroco aguarda essa revisão e validação.
 
 Em 03/11/2026, depois de conhecer Keldurn e Last Havens, o usuário autorizou explicitamente a proposta de **um pequeno protótipo separado: trecho da base, personagem, NPC e inimigo** (“FAÇA ISSO PQ EU ACHO QUE ECHOES MERECE”). Essa autorização permite este experimento antes do próximo capítulo. Não declara a revisão visual 0.1.181 aprovada e não autoriza migrar toda a campanha.
 
