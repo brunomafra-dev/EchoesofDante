@@ -1,0 +1,24 @@
+{
+  "version": "0.1.195",
+  "verifiedAt": "2026-11-05T19:51:07.073820+00:00",
+  "published": true,
+  "runtimeCommit": "003323b76319bad56d6bf5dc6dde49fdc4c70cb1",
+  "vercelStatus": "success",
+  "vercelDeployment": "https://vercel.com/brunomafra-devs-projects/echosofdante/3Q2NT1aG9ZYfReVGEagPZWravzFL",
+  "matchingPublicHashes": 104,
+  "localReports": 9,
+  "publicReports": {
+    "crew": true,
+    "camp-life": true,
+    "input": true,
+    "entry": true
+  },
+  "humanVisualApproval": "pending",
+  "physicalPhoneTest": false,
+  "prerequisitesOrBossVictorySimulated": false,
+  "agentPublicCapturesInspected": [
+    "public/crew/ivo-0.5--1.5.jpg",
+    "public/crew/nara-0.5--1.5.jpg"
+  ],
+  "scope": "Five existing camp NPC work uniforms, held tools, fitted apron/goggles, surface maps and coverage beneath tied hair. No new territory or progression/combat change."
+}

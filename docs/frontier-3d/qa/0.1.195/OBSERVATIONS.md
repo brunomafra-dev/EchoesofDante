@@ -1,5 +1,7 @@
 # Inspeção visual e limites — 0.1.195
 
+Publicação conferida da aplicação `003323b`: Vercel success, 104 hashes públicos iguais ao build e quatro suítes públicas aprovadas (roupa/empunhadura, rotina do acampamento, input, entrada). As capturas públicas de Ivo e Nara foram inspecionadas diretamente. [Registro](publication.json). Nenhum resultado técnico substitui a aprovação estética humana, que permanece pendente.
+
 Referências anteriores em `observations/before-*.jpg`. A revisão da 0.1.194 mostrou o avental afastado na vista lateral, pele por cima de mangas e ferramentas no pulso com os dedos sem empunhadura. Asserções da entrega anterior não bastaram para a avaliação visual. Esta correção acrescenta capturas laterais, amostragem das fases e observação do ciclo real por frame.
 
 Foram descartados rascunhos com novas camadas sobre a roupa antiga: mesmo próximos no repouso, seus pesos/interseções deixavam retalhos visíveis durante a tarefa. O resultado entregue usa uniformes completos sobre o mesmo skeleton, conservando os pesos originais. A superfície anterior fica oculta. A aba inferior do avental é uma peça curta, apoiada na cintura; não há simulação física de tecido.

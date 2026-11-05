@@ -1,0 +1,6139 @@
+{
+  "passed": true,
+  "at": "2026-11-05T19:45:56.325Z",
+  "base": "https://echosofdante.vercel.app",
+  "method": "Fresh normal character, native Start, no world/progress/position fixture. Observe real camp routines for up to 65 seconds, retaining the actual solids. Quest NPCs must remain at their posts; Elisa must work beside both physical planters.",
+  "errors": [],
+  "samples": [
+    {
+      "second": 1,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.018987287169242,
+              1.6301396964421784,
+              17.489159388197322
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.018396223374022,
+              1.5760931723987321,
+              17.23949685047392
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.018987287169246,
+              1.6301396964421784,
+              11.614159388197319
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.481603776625978,
+              1.5760931723987321,
+              12.510503149526077
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.5,
+            0,
+            12.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              20.481012712830754,
+              1.6301396964421784,
+              12.260840611802681
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 2,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.019889300458711,
+              1.629291495387006,
+              17.48533688939021
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.01927015748643,
+              1.5752713753753897,
+              17.235793343950018
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.01988930045871,
+              1.629291495387006,
+              11.610336889390211
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.480729842513565,
+              1.5752713753753897,
+              12.514206656049982
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.5,
+            0,
+            12.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              20.48011069954129,
+              1.629291495387006,
+              12.264663110609789
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 3,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.021369340349407,
+              1.6278257269084064,
+              17.47905919733678
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.020704124550242,
+              1.5738512354624805,
+              17.22971107299373
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.021369340349413,
+              1.6278257269084064,
+              11.604059197336781
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.479295875449758,
+              1.5738512354624805,
+              12.520288927006275
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.5,
+            0,
+            12.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              20.478630659650587,
+              1.6278257269084064,
+              12.270940802663219
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 4,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.020258966530792,
+              1.6289373677445673,
+              17.48376894673547
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.01962831605723,
+              1.5749282715314783,
+              17.23427421048681
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.02025896653079,
+              1.6289373677445673,
+              11.60876894673547
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.480371683942773,
+              1.5749282715314783,
+              12.515725789513187
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.5,
+            0,
+            12.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              20.47974103346921,
+              1.6289373677445673,
+              12.26623105326453
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 5,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.018528266532636,
+              1.6291441690239048,
+              17.48180766523315
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.018093644915343,
+              1.5763709798647207,
+              17.240778661458005
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.018674986977548,
+              1.6304264297584266,
+              11.615482383290212
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.481906355084654,
+              1.5763709798647207,
+              12.50922133854199
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.07492033361527,
+            0,
+            11.935775484641837
+          ],
+          "animation": "Walk",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.985464041830674,
+              1.654953196470892,
+              11.895614938977646
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 6,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.01971498169081,
+              1.6184379345343374,
+              17.432166993206742
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.01865027003309,
+              1.519395775226969,
+              17.066976316318286
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.018674277167854,
+              1.619831251766341,
+              11.561461930649044
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.48235883628245,
+              1.5216730725130487,
+              12.67929002744147
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.07492033361527,
+            0,
+            11.652271642983944
+          ],
+          "animation": "Walk",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.99055355295072,
+              1.6613190051684545,
+              11.582229926362198
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 7,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.017773258945747,
+              1.6209851165279925,
+              17.44018373000745
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.01768728582169,
+              1.521572874387552,
+              17.070531073190548
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.018849920281532,
+              1.619597238256263,
+              11.560735722642928
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.481271354007209,
+              1.5192194756547657,
+              12.683318390203947
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.039101246812397,
+            0,
+            11.470705900067347
+          ],
+          "animation": "Walk",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.925499915863938,
+              1.6382023844138303,
+              11.480129933316132
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 8,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.02055455746558,
+              1.6172701671565914,
+              17.42870405771418
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.019464720684468,
+              1.5175270527699019,
+              17.06396319411394
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.019516141344052,
+              1.6187046495119284,
+              11.557985251608828
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.48154223443337,
+              1.5198400653704918,
+              12.682325314999153
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.46590985320142,
+            0,
+            11.371311473718414
+          ],
+          "animation": "Walk",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.378542349471715,
+              1.6125334728446739,
+              11.316171201127522
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 9,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.016788541051307,
+              1.632016571902549,
+              17.498479578108736
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.016530538134713,
+              1.57770145535657,
+              17.247405058044095
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.018042571108502,
+              1.6309790460945115,
+              11.618163900505772
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.481870898399066,
+              1.576326640957856,
+              12.50936930848752
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.145424227851542,
+            0,
+            11.371311473718414
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.1628043890506,
+              1.6267761794646614,
+              11.33787209946767
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 10,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.018353940371506,
+              1.630698432191531,
+              17.49184538745832
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.017039945364722,
+              1.577268176312069,
+              17.245247553323043
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.016819517961853,
+              1.631976539331017,
+              11.623350195549735
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.483287774694306,
+              1.5775400337333638,
+              12.503363406202062
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.145424227851542,
+            0,
+            11.371311473718414
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.165796045015558,
+              1.6175283792166608,
+              11.300770183446613
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 11,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.01714501014753,
+              1.6317305037972145,
+              17.496968446738165
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.016173978374937,
+              1.5779848331826647,
+              17.248916641447313
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.017486378139097,
+              1.6314530749769895,
+              11.620521115831258
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.4822914022224,
+              1.5767150511679668,
+              12.507589315668115
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.145424227851542,
+            0,
+            11.371311473718414
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.16369539874527,
+              1.6203486667628888,
+              11.309436865909278
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 12,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.017146148198465,
+              1.6317164582866397,
+              17.496965354402256
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.01737966221104,
+              1.5769854916604942,
+              17.243806884009512
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.01872841065871,
+              1.6303724781759024,
+              11.615256995130421
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.481090459245031,
+              1.5756205818728721,
+              12.512679592268029
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.145424227851542,
+            0,
+            11.371311473718414
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.164894584632773,
+              1.627452970919102,
+              11.344788652071811
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 13,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.018439863670388,
+              1.6289811616078875,
+              17.480639948679187
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.01868197097542,
+              1.5758222152815544,
+              17.238287260061192
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.020109049671536,
+              1.6290807320292002,
+              11.609405134675807
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.47971775320018,
+              1.5742777456765462,
+              12.518498072135106
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.145424227851542,
+            0,
+            11.371311473718414
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.166721438828947,
+              1.627900459824846,
+              11.350676492349903
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 14,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.019947962910015,
+              1.618118099221942,
+              17.43120625975277
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.01730731691508,
+              1.5637195510230617,
+              17.178377751982108
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.021321938946162,
+              1.627874817674984,
+              11.604260196500816
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.47997993400942,
+              1.5745482034764067,
+              12.517388624592083
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.145424227851542,
+            0,
+            11.371311473718414
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.165866745789682,
+              1.6287573971277667,
+              11.35430221384665
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 15,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.01777084591647,
+              1.6209881570476983,
+              17.44019370574603
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.01955482333705,
+              1.517309322724563,
+              17.06364529458872
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.017542430114492,
+              1.6271898163537983,
+              11.593987570891953
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.481174958535606,
+              1.5756939796877625,
+              12.512320199177324
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.214591347154965,
+            0,
+            11.416178918845882
+          ],
+          "animation": "Walk",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.303709256667258,
+              1.6122525037938487,
+              11.423059946707102
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 16,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.020557806340811,
+              1.6172655883238531,
+              17.428690672031536
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.01690611550221,
+              1.5233007331576593,
+              17.07343186819918
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.02056616436632,
+              1.6172553291859746,
+              11.553658382257927
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.483316748999645,
+              1.5524773873331035,
+              12.608594903631975
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            19.686254663389153,
+            0,
+            11.47801757237046
+          ],
+          "animation": "Walk",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.752527750973346,
+              1.6277025357375323,
+              11.53997941643502
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 17,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.017172655033782,
+              1.6317080390507352,
+              17.496851254624403
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.020382484099386,
+              1.515372594348508,
+              17.06059666848436
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.016872704682616,
+              1.6220982086392595,
+              11.568908826086743
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.479608151774517,
+              1.5153403595405035,
+              12.689423653840125
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.06364349107599,
+            0,
+            11.47801757237046
+          ],
+          "animation": "Walk",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              20.100692246340493,
+              1.653667939239563,
+              11.568253603654302
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 18,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.017330007827828,
+              1.6315672128513652,
+              17.49618586220672
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.017183059147687,
+              1.5771613465552479,
+              17.244638971770165
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.021371808143318,
+              1.616479821588894,
+              11.551745160763796
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.483838143725047,
+              1.524917219383793,
+              12.673794080475082
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.351361131567888,
+            0,
+            11.987034759088917
+          ],
+          "animation": "Walk",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              20.432253817723442,
+              1.6616876248656125,
+              12.062771838182728
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 19,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.018304440645007,
+              1.6307581547438208,
+              17.492052914989465
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.0165185327919,
+              1.577695085730876,
+              17.247457930968448
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.01875683882056,
+              1.6303531611603004,
+              11.615135376034347
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.47967354499865,
+              1.5346342717973371,
+              12.6507247854161
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.443378813598983,
+            0,
+            12.149828328352648
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              20.43375896178659,
+              1.6289216862267442,
+              12.17402815222763
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 20,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.019829725647016,
+              1.6293569104305268,
+              17.485587463553493
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.017245778908915,
+              1.577111779090442,
+              17.244372830456857
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.01748768142214,
+              1.6314352783064245,
+              11.620517728227092
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.481576652206938,
+              1.5760735782477875,
+              12.510619106399435
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.443378813598983,
+            0,
+            12.149828328352648
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              20.43222160199646,
+              1.6301058357284024,
+              12.168739903251872
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 21,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.020993218605621,
+              1.6282059091608259,
+              17.48065609892835
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.018401574285374,
+              1.5760883224173508,
+              17.23947416309516
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.017011709195106,
+              1.6318397757424123,
+              11.622533436280367
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.482490538430316,
+              1.5768710706308602,
+              12.506742864575996
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.443378813598983,
+            0,
+            12.149828328352648
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              20.430502776058518,
+              1.631352305902231,
+              12.162823765566989
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 22,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.018286424869174,
+              1.62033580106857,
+              17.43806400783034
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.019672648689046,
+              1.5748831835957318,
+              17.234086741197117
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.01838638914739,
+              1.630674448164508,
+              11.61670710945291
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.483929050500173,
+              1.5780654079726457,
+              12.500646586762084
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.443378813598983,
+            0,
+            12.149828328352648
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              20.42952900041694,
+              1.6319896994176668,
+              12.159474392750882
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 23,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.019331832210913,
+              1.618955750870025,
+              17.433746770330867
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.01976154317345,
+              1.572161484830871,
+              17.218461805894645
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.019532948863937,
+              1.6296276593394194,
+              11.611847831253035
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.48272306486355,
+              1.5770724548454944,
+              12.505757582289917
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.443378813598983,
+            0,
+            12.149828328352648
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              20.431100652063957,
+              1.630938875148337,
+              12.16488083678466
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 24,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.019126772020305,
+              1.6192276725587653,
+              17.434591990856212
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.01895024648092,
+              1.5187085885802931,
+              17.065869991303618
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.02090872718468,
+              1.628297520484657,
+              11.606012332368259
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.481636572346556,
+              1.5761124086071148,
+              12.51036213964637
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.443378813598983,
+            0,
+            12.149828328352648
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              20.432608476424615,
+              1.6298197802538976,
+              12.17007019778047
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 25,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.018311413229029,
+              1.6307430527644609,
+              17.49202467871156
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.017190528539054,
+              1.5226753539923024,
+              17.07237443078477
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.01694519733659,
+              1.6256123084453244,
+              11.585068705971103
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.480709021887158,
+              1.5752597931810464,
+              12.514296900605123
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.609442586409028,
+            0,
+            12.213397169659475
+          ],
+          "animation": "Walk",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              20.717674935797152,
+              1.6190199667175769,
+              12.218621613323059
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 26,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.019433577801024,
+              1.6297298308088572,
+              17.487267139149303
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.01994438298391,
+              1.516406574730008,
+              17.062201766890922
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.021139691665603,
+              1.6164365114712158,
+              11.55129641306407
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.479398639322984,
+              1.5739523716656536,
+              12.519851203758765
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            21.160848278062556,
+            0,
+            12.424474036788707
+          ],
+          "animation": "Walk",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              21.241913345506806,
+              1.6112576216416068,
+              12.473577921276203
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 27,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.020849865776244,
+              1.6283506715363596,
+              17.481263950259308
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.016390259661602,
+              1.577812587475322,
+              17.24799982674993
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.01677488045057,
+              1.6222162207150124,
+              11.569313687116374
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.483416416811215,
+              1.5240032475031606,
+              12.67535723009199
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            21.62986414862505,
+            0,
+            12.604012264432585
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              21.613273908970935,
+              1.6298261422683498,
+              12.636196195226056
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 28,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.018885494439264,
+              1.6302316628154676,
+              17.48959097918258
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.018522318840276,
+              1.5759732758932996,
+              17.238963204719397
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.018982191671448,
+              1.6294258083069753,
+              11.609506878299682
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.482045211543095,
+              1.5209738094441314,
+              12.680459685787135
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            21.62986414862505,
+            0,
+            12.604012264432585
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              21.609091969604247,
+              1.6169631301504452,
+              12.676202794838913
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 29,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.019505649723977,
+              1.6296531259246445,
+              17.48696357953166
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.017600399696743,
+              1.5768047449166822,
+              17.242869728314897
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.019883246020157,
+              1.629305869958673,
+              11.610360533869269
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.480418675010306,
+              1.5172557805534759,
+              12.68646539236928
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            21.62986414862505,
+            0,
+            12.604012264432585
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              21.61182796572248,
+              1.6206497611179473,
+              12.664915776535047
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 30,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.01901653143389,
+              1.6193793951914206,
+              17.435048845932666
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.016392731250207,
+              1.5777958721387748,
+              17.247991223227636
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.021371891658138,
+              1.6278180484892548,
+              11.604050414123675
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.483597757124423,
+              1.5778042282904265,
+              12.502051050214451
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            21.62986414862505,
+            0,
+            12.604012264432585
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              21.609973296920945,
+              1.6255682765657,
+              12.640011057865804
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 31,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.018187119129575,
+              1.6204590102936607,
+              17.438473233850612
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.016472925483484,
+              1.5777477195293073,
+              17.247649300050426
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.020748503262876,
+              1.6284597152718854,
+              11.606691455018202
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.483016061709261,
+              1.5773172659515098,
+              12.50451536901077
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            21.62986414862505,
+            0,
+            12.604012264432585
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              21.60873267520036,
+              1.6280708322018362,
+              12.623944435932877
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 32,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.020003194803472,
+              1.6180390206549822,
+              17.430976523398098
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.01629212779423,
+              1.5440848591221494,
+              17.118709107330982
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.01938482728085,
+              1.629769569296419,
+              11.61247497394905
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.481545875106615,
+              1.5760303632900385,
+              12.510746687409194
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            21.62986414862505,
+            0,
+            12.604012264432585
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              21.609616609696666,
+              1.6289485123020193,
+              12.620194868050506
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 33,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.01706245095194,
+              1.6317990150214237,
+              17.497318322571545
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.020672763292996,
+              1.5146712599164274,
+              17.059549275647502
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.017919916916675,
+              1.6310855138491893,
+              11.618683416537278
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.480184876785637,
+              1.5747505968933015,
+              12.516519338311339
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            21.542425656639015,
+            0,
+            12.576615786206228
+          ],
+          "animation": "Walk",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              21.44469862250146,
+              1.6102216993600125,
+              12.591423613777302
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 34,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.018171383737123,
+              1.6308610334719829,
+              17.49261868620035
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.016644858892178,
+              1.5238716570062603,
+              17.074403264613903
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.017057717107757,
+              1.631786278131638,
+              11.622340434201579
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.479253886975465,
+              1.573802929169315,
+              12.520465028732692
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.96147927741125,
+            0,
+            12.39459200620169
+          ],
+          "animation": "Walk",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              20.876699518624143,
+              1.6224136115569918,
+              12.362151279314357
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 35,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.019720677484635,
+              1.6294514307465762,
+              17.486051858851642
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.020246150306974,
+              1.536861327467539,
+              17.104254022639264
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.0183639327796,
+              1.6202356092614052,
+              11.562743788914739
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.481029787607833,
+              1.5755670678745135,
+              12.512937568005821
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.616868750172166,
+            0,
+            12.286617650838995
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              20.618995620491628,
+              1.6317074144756036,
+              12.269287388713895
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "second": 36,
+      "npcs": [
+        {
+          "id": "lia",
+          "position": [
+            8,
+            0,
+            17.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 6,
+            "beard": false,
+            "skin": "#946748",
+            "hairColor": "#322b26",
+            "cloth": "#d2d0be",
+            "age": "Madura · cabelo curto cacheado e jaleco",
+            "reference": "lia-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              8.021085211440237,
+              1.6281181387171604,
+              17.48026399246606
+            ],
+            "id": 6,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-6"
+            ]
+          }
+        },
+        {
+          "id": "ivo",
+          "position": [
+            19,
+            0,
+            17.25
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 0,
+            "beard": true,
+            "skin": "#bc9778",
+            "hairColor": "#88847b",
+            "beardColor": "#aaa69b",
+            "cloth": "#747363",
+            "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+            "reference": "ivo-work-r1"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              19.018742392761936,
+              1.5757800846081886,
+              17.238028291771748
+            ],
+            "id": 0,
+            "gender": "male",
+            "beard": true,
+            "visible": []
+          }
+        },
+        {
+          "id": "nara",
+          "position": [
+            25,
+            0,
+            11.625
+          ],
+          "animation": "Work",
+          "look": {
+            "gender": "female",
+            "hair": 10,
+            "beard": false,
+            "skin": "#c6a17f",
+            "hairColor": "#282522",
+            "cloth": "#797966",
+            "age": "Adulta · coque alto e lenço laranja",
+            "reference": "nara-work-r1"
+          },
+          "hair": {
+            "baseCoverage": true,
+            "anchor": [
+              25.019251557811945,
+              1.6190634801624473,
+              11.559077994896773
+            ],
+            "id": 10,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-10"
+            ]
+          }
+        },
+        {
+          "id": "gui",
+          "position": [
+            9.5,
+            0,
+            12.5
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "male",
+            "hair": 11,
+            "beard": true,
+            "skin": "#bf9572",
+            "hairColor": "#696158",
+            "beardColor": "#a09a8d",
+            "cloth": "#706a58",
+            "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+            "reference": "caio-motion-r4"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              9.481986734356596,
+              1.5764315448656996,
+              12.508878681109282
+            ],
+            "id": 11,
+            "gender": "male",
+            "beard": true,
+            "visible": [
+              "hair-male-11"
+            ]
+          }
+        },
+        {
+          "id": "elisa",
+          "position": [
+            20.616868750172166,
+            0,
+            12.286617650838995
+          ],
+          "animation": "Idle",
+          "look": {
+            "gender": "female",
+            "hair": 7,
+            "beard": false,
+            "skin": "#e0bd9b",
+            "hairColor": "#a94c28",
+            "cloth": "#c9c4b0",
+            "age": "Adulta · ruiva ondulada, camisa clara e colete",
+            "reference": "elisa-motion-r5"
+          },
+          "hair": {
+            "baseCoverage": false,
+            "anchor": [
+              20.619212311377833,
+              1.6317407368831314,
+              12.26941543163663
+            ],
+            "id": 7,
+            "gender": "female",
+            "beard": false,
+            "visible": [
+              "hair-female-7"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bedsWorked": [
+    0,
+    1
+  ],
+  "stationTasks": [
+    "lia",
+    "ivo",
+    "nara",
+    "gui"
+  ]
+}

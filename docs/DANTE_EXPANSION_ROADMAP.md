@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+0.1.195 publicada e conferida: aplicação `003323b`, Vercel success/104 hashes, nove relatórios locais e quatro públicos passaram. [Registro](frontier-3d/qa/0.1.195/publication.json). Permanecem o mesmo acampamento/floresta e a espera pela aprovação visual humana.
+
 **05/11/2026 · 0.1.195 · Ajuste dos NPCs existentes:** corrigir avental/roupas afastadas, pele atravessando mangas, ferramentas no pulso e acabamento. [Entrega e limites](frontier-3d/CREW_FIT.md). Cinco moradores do acampamento, sem territórios adicionais ou alterações de progressão. Aguardar playtest desta correção.
 
 Revisão 0.1.194 publicada: aplicação `679a0db`, Vercel success, 102 hashes públicos iguais, nove relatórios locais e três públicos passaram. [Evidências](frontier-3d/qa/0.1.194/publication.json). Nenhum avanço de território; aprovação visual humana pendente.
