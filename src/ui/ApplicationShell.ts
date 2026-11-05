@@ -253,6 +253,8 @@ export class ApplicationShell {
     if (this.page === 'prologue' && this.prologue) { this.content.append(this.prologue.view); return; }
     if (this.page === 'home') {
       this.heading('Sua próxima descoberta', 'Uma expedição. Um planeta ainda desconhecido.'); this.action('JOGAR','play', () => this.show('play'));
+      this.action('Experiência 3D','experience-3d', () => location.assign('arrival-3d.html?v=0.1.191'));
+      const note=document.createElement('p');note.textContent='Acampamento e floresta em 3D · experiência solo com personagem próprio. Sua campanha permanece guardada.';this.content.append(note);
     } else if (this.page === 'play') {
       this.heading('Jogar', 'Cada personagem guarda sua própria jornada neste navegador.');
       this.action('NOVO JOGO','new-game', () => this.beginNew('solo'));

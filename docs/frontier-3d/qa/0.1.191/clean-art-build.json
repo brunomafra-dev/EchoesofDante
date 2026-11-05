@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "source": "https://easyforge.itch.io/giant-monster-spiders-free-sample",
+  "method": "Normal public author Download flow into a separate initially empty ignored directory; pinned ZIP and GLB checked; existing conversion; output byte-identical to the previously validated local model. No browser account or payment.",
+  "preparedBytes": 4346140,
+  "preparedSHA256": "bbbe0229e925138953c55e3eeba15cc14719fe3263a6ab87097584dc7c3009f8",
+  "matchesPriorValidatedBuild": true,
+  "originalAssetFilesCommitted": false,
+  "cloudDeploymentValidation": "pending actual Vercel build and public hashes"
+}

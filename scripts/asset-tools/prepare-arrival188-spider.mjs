@@ -1,5 +1,5 @@
 import{NodeIO}from'@gltf-transform/core';import{ALL_EXTENSIONS}from'@gltf-transform/extensions';import{prune,dedup,resample,textureCompress}from'@gltf-transform/functions';import sharp from'sharp';import{readFile,writeFile}from'node:fs/promises';import{createHash}from'node:crypto';
-const dir='.local/combat188/',io=new NodeIO().registerExtensions(ALL_EXTENSIONS),input=await readFile(dir+'squinty_LOD1.glb'),doc=await io.readBinary(input);
+const dir=(process.env.DANTE_ARRIVAL_ART_DIR??'.local/combat188')+'/',io=new NodeIO().registerExtensions(ALL_EXTENSIONS),input=await readFile(dir+'squinty_LOD1.glb'),doc=await io.readBinary(input);
 if(createHash('sha256').update(input).digest('hex')!=='29f3d3bff81de211226bdb6329c2c7a8e304b39682a29231aa1e412412049871')throw Error('Unreviewed Squinty revision; stage the pinned official ZIP before conversion.');
 const originals=doc.getRoot().listAnimations().map(a=>a.getName()),wanted=['Idle','Walk','Run','Attack','Bite','Hit','Death'];
 for(const name of wanted)if(!originals.includes(name))throw Error('Missing original clip '+name);
