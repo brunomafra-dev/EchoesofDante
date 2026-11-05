@@ -1,0 +1,63 @@
+{
+  "passed": true,
+  "base": "https://echosofdante.vercel.app",
+  "at": "2026-11-05T17:18:48.976Z",
+  "method": "Normal main-menu navigation into 3D and return in the same tab; native mouse/keyboard/touch and mocked standard gamepad. Isolated browser profiles only. No campaign requirement or boss completion injected.",
+  "fixtures": [
+    "Valid campaign character registry and an opaque journey marker used only to check byte preservation, never loaded as campaign gameplay."
+  ],
+  "checks": [
+    {
+      "name": "mouse",
+      "viewport": [
+        1440,
+        900
+      ],
+      "campaignBytesPreserved": true,
+      "sameTab": true,
+      "returnFrom": "gameplay pause"
+    },
+    {
+      "name": "keyboard",
+      "viewport": [
+        1280,
+        720
+      ],
+      "campaignBytesPreserved": true,
+      "sameTab": true,
+      "returnFrom": "creator"
+    },
+    {
+      "name": "touch-landscape",
+      "viewport": [
+        844,
+        390
+      ],
+      "campaignBytesPreserved": true,
+      "sameTab": true,
+      "returnFrom": "creator"
+    },
+    "Portrait: dismissed the existing orientation prompt using Continue in browser.",
+    {
+      "name": "touch-portrait",
+      "viewport": [
+        393,
+        852
+      ],
+      "campaignBytesPreserved": true,
+      "sameTab": true,
+      "returnFrom": "creator"
+    },
+    {
+      "name": "gamepad",
+      "viewport": [
+        1280,
+        720
+      ],
+      "campaignBytesPreserved": true,
+      "sameTab": true,
+      "returnFrom": "creator"
+    }
+  ],
+  "errors": []
+}

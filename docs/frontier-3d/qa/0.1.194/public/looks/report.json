@@ -1,0 +1,670 @@
+{
+  "passed": true,
+  "base": "https://echosofdante.vercel.app",
+  "hair": [
+    {
+      "gender": "male",
+      "hair": 0,
+      "actor": {
+        "anchor": [
+          -0.002471371806872101,
+          1.6220987145382493,
+          0.0012106059251299657
+        ],
+        "id": 0,
+        "gender": "male",
+        "beard": false,
+        "visible": []
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 1,
+      "actor": {
+        "anchor": [
+          -0.004915704191662361,
+          1.612798460965985,
+          0.0038831174581592694
+        ],
+        "id": 1,
+        "gender": "male",
+        "beard": false,
+        "visible": []
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 2,
+      "actor": {
+        "anchor": [
+          -0.0049322882132391,
+          1.6127406949498757,
+          0.003896384714839083
+        ],
+        "id": 2,
+        "gender": "male",
+        "beard": false,
+        "visible": []
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 3,
+      "actor": {
+        "anchor": [
+          -0.00496552310686307,
+          1.6126250927218664,
+          0.00392281836857606
+        ],
+        "id": 3,
+        "gender": "male",
+        "beard": false,
+        "visible": []
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 4,
+      "actor": {
+        "anchor": [
+          -0.007968389229072404,
+          1.6028807732781682,
+          0.005614190864116016
+        ],
+        "id": 4,
+        "gender": "male",
+        "beard": false,
+        "visible": [
+          "hair-male-4"
+        ]
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 5,
+      "actor": {
+        "anchor": [
+          -0.004948894993025648,
+          1.6126829039197577,
+          0.0039096187829669
+        ],
+        "id": 5,
+        "gender": "male",
+        "beard": false,
+        "visible": [
+          "hair-male-5"
+        ]
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 6,
+      "actor": {
+        "anchor": [
+          -0.011559561720226836,
+          1.5923939827400693,
+          0.006346387950744704
+        ],
+        "id": 6,
+        "gender": "male",
+        "beard": false,
+        "visible": [
+          "hair-male-6"
+        ]
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 7,
+      "actor": {
+        "anchor": [
+          -0.0024841840616264344,
+          1.6220444706937884,
+          0.0012294540898221441
+        ],
+        "id": 7,
+        "gender": "male",
+        "beard": false,
+        "visible": [
+          "hair-male-7"
+        ]
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 8,
+      "actor": {
+        "anchor": [
+          -0.004948894993025648,
+          1.6126829039197577,
+          0.0039096187829669
+        ],
+        "id": 8,
+        "gender": "male",
+        "beard": false,
+        "visible": [
+          "hair-male-8"
+        ]
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 9,
+      "actor": {
+        "anchor": [
+          -0.0024713718068721004,
+          1.6220987145382488,
+          0.0012106059251300004
+        ],
+        "id": 9,
+        "gender": "male",
+        "beard": false,
+        "visible": [
+          "hair-male-9"
+        ]
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 10,
+      "actor": {
+        "anchor": [
+          -0.004932288213239105,
+          1.6127406949498755,
+          0.00389638471483909
+        ],
+        "id": 10,
+        "gender": "male",
+        "beard": false,
+        "visible": [
+          "hair-male-10"
+        ]
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 11,
+      "actor": {
+        "anchor": [
+          -0.007988303893735338,
+          1.6028198053752118,
+          0.005621579369907547
+        ],
+        "id": 11,
+        "gender": "male",
+        "beard": false,
+        "visible": [
+          "hair-male-11"
+        ]
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 0,
+      "actor": {
+        "anchor": [
+          -0.00913351988565383,
+          1.64182770382028,
+          0.006063857525423103
+        ],
+        "id": 0,
+        "gender": "female",
+        "beard": false,
+        "visible": []
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 1,
+      "actor": {
+        "anchor": [
+          -0.009133519885653817,
+          1.6418277038202798,
+          0.00606385752542302
+        ],
+        "id": 1,
+        "gender": "female",
+        "beard": false,
+        "visible": []
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 2,
+      "actor": {
+        "anchor": [
+          -0.009133519885653817,
+          1.6418277038202798,
+          0.00606385752542302
+        ],
+        "id": 2,
+        "gender": "female",
+        "beard": false,
+        "visible": []
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 3,
+      "actor": {
+        "anchor": [
+          -0.006207508164215444,
+          1.6455106728734108,
+          0.004814969437769549
+        ],
+        "id": 3,
+        "gender": "female",
+        "beard": false,
+        "visible": []
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 4,
+      "actor": {
+        "anchor": [
+          -0.006223615910497095,
+          1.6454900655747084,
+          0.004824709348546428
+        ],
+        "id": 4,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-4"
+        ]
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 5,
+      "actor": {
+        "anchor": [
+          -0.006223615910497098,
+          1.6454900655747087,
+          0.004824709348546417
+        ],
+        "id": 5,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-5"
+        ]
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 6,
+      "actor": {
+        "anchor": [
+          -0.006207508164215444,
+          1.6455106728734108,
+          0.004814969437769549
+        ],
+        "id": 6,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-6"
+        ]
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 7,
+      "actor": {
+        "anchor": [
+          -0.01732240568731071,
+          1.631588027276861,
+          0.003783731888831854
+        ],
+        "id": 7,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-7"
+        ]
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 8,
+      "actor": {
+        "anchor": [
+          -0.009133519885653817,
+          1.6418277038202798,
+          0.00606385752542302
+        ],
+        "id": 8,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-8"
+        ]
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 9,
+      "actor": {
+        "anchor": [
+          -0.006223615910497098,
+          1.6454900655747087,
+          0.004824709348546417
+        ],
+        "id": 9,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-9"
+        ]
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 10,
+      "actor": {
+        "anchor": [
+          -0.009114641386309333,
+          1.641851170261989,
+          0.006058676962932948
+        ],
+        "id": 10,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-10"
+        ]
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 11,
+      "actor": {
+        "anchor": [
+          -0.006255884508349462,
+          1.6454487974283072,
+          0.004844108807597888
+        ],
+        "id": 11,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-11"
+        ]
+      }
+    }
+  ],
+  "npcs": [
+    {
+      "id": "gui",
+      "identity": {
+        "gender": "male",
+        "hair": 11,
+        "beard": true,
+        "skin": "#bf9572",
+        "hairColor": "#696158",
+        "beardColor": "#a09a8d",
+        "cloth": "#706a58",
+        "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+        "reference": "caio-motion-r4"
+      },
+      "hair": {
+        "anchor": [
+          -0.002691896679743222,
+          1.6210666589704543,
+          0.0013071866370219232
+        ],
+        "id": 11,
+        "gender": "male",
+        "beard": true,
+        "visible": [
+          "hair-male-11"
+        ]
+      },
+      "wardrobe": [
+        {
+          "name": "dress-gui__Gui_worn_brown_coat",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.25756202353424457,
+              0.714027711477317,
+              -0.2502449523281691
+            ],
+            "max": [
+              0.22369555203328084,
+              1.566585782043673,
+              0.2087666616612618
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ivo",
+      "identity": {
+        "gender": "male",
+        "hair": 0,
+        "beard": true,
+        "skin": "#bc9778",
+        "hairColor": "#88847b",
+        "beardColor": "#aaa69b",
+        "cloth": "#747363",
+        "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+        "reference": "ivo-work-r1"
+      },
+      "hair": {
+        "anchor": [
+          -0.004725693037025472,
+          1.6133151769303777,
+          0.0034009737609241655
+        ],
+        "id": 0,
+        "gender": "male",
+        "beard": true,
+        "visible": []
+      },
+      "wardrobe": [
+        {
+          "name": "dress-ivo__Worn_leather_apron",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.313163528995945,
+              0.7231115712001865,
+              -0.19037423407206178
+            ],
+            "max": [
+              0.2197853178186152,
+              1.4815119953275295,
+              0.2689076537504457
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "lia",
+      "identity": {
+        "gender": "female",
+        "hair": 6,
+        "beard": false,
+        "skin": "#946748",
+        "hairColor": "#322b26",
+        "cloth": "#d2d0be",
+        "age": "Madura · cabelo curto cacheado e jaleco",
+        "reference": "lia-work-r1"
+      },
+      "hair": {
+        "anchor": [
+          -0.006018846945836307,
+          1.6457208491803792,
+          0.004363301118138076
+        ],
+        "id": 6,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-6"
+        ]
+      },
+      "wardrobe": [
+        {
+          "name": "dress-lia__Medical_canvas",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.24156864113759308,
+              0.7663073958753199,
+              -0.24886601725586188
+            ],
+            "max": [
+              0.2583399124735091,
+              1.6111220296435742,
+              0.21080718056522998
+            ]
+          }
+        },
+        {
+          "name": "dress-lia__Nara_amber_neckcloth",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.2480361544073132,
+              1.3066617253342436,
+              0.07090171696640682
+            ],
+            "max": [
+              -0.15737457976931404,
+              1.3937009402562839,
+              0.14625019409389023
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "nara",
+      "identity": {
+        "gender": "female",
+        "hair": 10,
+        "beard": false,
+        "skin": "#c6a17f",
+        "hairColor": "#282522",
+        "cloth": "#797966",
+        "age": "Adulta · coque alto e lenço laranja",
+        "reference": "nara-work-r1"
+      },
+      "hair": {
+        "anchor": [
+          -0.004009775313480251,
+          1.6483574213538736,
+          0.002841154568263185
+        ],
+        "id": 10,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-10"
+        ]
+      },
+      "wardrobe": [
+        {
+          "name": "dress-nara__Field_olive_canvas",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.2363889456870937,
+              1.0186971724273526,
+              -0.24868114476793388
+            ],
+            "max": [
+              0.25688837658896696,
+              1.6109989377954317,
+              0.18035935683267948
+            ]
+          }
+        },
+        {
+          "name": "dress-nara__Nara_amber_neckcloth",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.12470396148218216,
+              1.357710776981873,
+              -0.094598783599042
+            ],
+            "max": [
+              0.08923565672385593,
+              1.6215488985086126,
+              0.18577576362613135
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "elisa",
+      "identity": {
+        "gender": "female",
+        "hair": 7,
+        "beard": false,
+        "skin": "#e0bd9b",
+        "hairColor": "#a94c28",
+        "cloth": "#c9c4b0",
+        "age": "Adulta · ruiva ondulada, camisa clara e colete",
+        "reference": "elisa-motion-r5"
+      },
+      "hair": {
+        "anchor": [
+          -0.015057425136337293,
+          1.634470682183597,
+          0.005481968298509606
+        ],
+        "id": 7,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-7"
+        ]
+      },
+      "wardrobe": [
+        {
+          "name": "dress-elisa__Field_olive_canvas",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.23638898288245633,
+              1.0186979760542811,
+              -0.2486680390231795
+            ],
+            "max": [
+              0.25688857109151947,
+              1.6110002095636877,
+              0.18035840001784822
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "checks": [
+    "24 hair/gender combinations, rear view, four class rigs with run/roll/jump, five skinned NPC work outfits and 2D references, repeated resource disposal, world/workshop parity, edit/close-tab persistence and legacy saves. No gates, boss victory or quest prerequisites simulated."
+  ],
+  "resources": {
+    "before": {
+      "calls": 26,
+      "triangles": 30254,
+      "textures": 42,
+      "geometries": 94
+    },
+    "after": {
+      "calls": 26,
+      "triangles": 30254,
+      "textures": 42,
+      "geometries": 94
+    }
+  }
+}

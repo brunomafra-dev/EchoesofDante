@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+Revisão 0.1.194 publicada: aplicação `679a0db`, Vercel success, 102 hashes públicos iguais, nove relatórios locais e três públicos passaram. [Evidências](frontier-3d/qa/0.1.194/publication.json). Nenhum avanço de território; aprovação visual humana pendente.
+
 **05/11/2026 · Aparência da tripulação · 0.1.194:** após aprovação da 0.1.193, o usuário pediu cabelos adicionais e NPCs próximos aos retratos 2D. [Escopo/QA](frontier-3d/HAIR_AND_CREW.md). Acampamento e floresta preservados; nenhuma Cavernas/Siroco nova nesta revisão. Aguardar playtest dos penteados, NPCs e roupas antes do próximo sprint de território.
 
 **05/11/2026 · Revisão 3D após playtest · 0.1.193:** corrigir a câmera que encurtava junto às árvores, plasma básico, Energia/Fogo e rostos. [Entrega e plano de convergência](frontier-3d/VISUAL_193.md). Primeiro vínculo com identidade canônica e persistência própria, sem sobrescrever missões/recibos/inventário. Ordem da próxima migração: Cavernas → profundezas/Primeiro Eco → Warden → Vale → Siroco; não pular diretamente da floresta para as Dunas. Cavernas e paridade completa ainda não implementadas. Aguardar playtest visual desta revisão antes do próximo sprint de território.

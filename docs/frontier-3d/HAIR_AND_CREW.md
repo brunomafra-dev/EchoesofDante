@@ -41,4 +41,6 @@ Rostos recebem alterações conservadoras de rest-shape no Blender para Gui, Ivo
 - [Trança por trás](https://echosofdante.vercel.app/arrival-workshop.html?v=0.1.194&subject=warrior&gender=female&view=hair-back&hair=8).
 - [Criação, edição e acampamento](https://echosofdante.vercel.app/arrival-3d.html?v=0.1.194).
 
-Sem simular pré-requisitos ou derrotas de boss. A oficina não lê saves. O jogo preserva os namespaces da campanha e do ensaio, inclusive personagens com penteados antigos. QA técnico em `qa/0.1.194/`; publicação será conferida antes de declarar disponível. Nenhum teste em celular físico ou aprovação estética é presumido.
+Sem simular pré-requisitos ou derrotas de boss. A oficina não lê saves. O jogo preserva os namespaces da campanha e do ensaio, inclusive personagens com penteados antigos. QA técnico em `qa/0.1.194/`. Nenhum teste em celular físico ou aprovação estética é presumido.
+
+Publicação confirmada: aplicação `679a0db` em `origin/main`, Vercel success, 102 hashes públicos iguais ao build. Nove relatórios locais e três suítes públicas (aparência, input e entrada pelo menu) passaram. A referência 2D foi conferida também após decodificação da imagem pública. [Registro da publicação](qa/0.1.194/publication.json). Aprovação visual humana desta revisão permanece pendente; aguardar playtest antes de avançar territórios.

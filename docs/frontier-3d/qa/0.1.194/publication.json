@@ -1,0 +1,19 @@
+{
+  "version": "0.1.194",
+  "verifiedAt": "2026-11-05T17:23:45.854129+00:00",
+  "runtimeCommit": "679a0db05af4091e68ccc2b94e57d149bac02537",
+  "vercelStatus": "success",
+  "vercelDeployment": "https://vercel.com/brunomafra-devs-projects/echosofdante/28mWRzJzB2piT7ELRuqntdR5hrR9",
+  "matchingPublicHashes": 102,
+  "localReports": 9,
+  "publicReports": {
+    "looks": true,
+    "input": true,
+    "entry": true
+  },
+  "humanVisualApproval": "pending",
+  "physicalPhoneTest": false,
+  "questOrBossPrerequisitesSimulated": false,
+  "scope": "Eight new hair options for both bodies; five existing camp NPC identities and skinned garments. Combat, progression, saves and territories preserved.",
+  "referenceCapture": "public/looks/gui-reference-loaded.jpg; public sprite decoded before capture and visually inspected."
+}

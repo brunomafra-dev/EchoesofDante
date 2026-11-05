@@ -1,5 +1,7 @@
 # Revisão visual — 0.1.194
 
+Publicação confirmada da aplicação `679a0db`: Vercel success e 102 hashes públicos iguais. Suítes públicas de aparência, input e entrada passaram sem erros registrados. `public/looks/gui-reference-loaded.jpg` foi inspecionada após `Image.decode()` da referência oficial: o sprite 2D aparece ao lado do modelo. A primeira captura de retrato foi feita antes de o background terminar de carregar; não foi tomada como evidência suficiente dessa referência. Aprovação estética humana e teste em telefone físico continuam pendentes.
+
 Capturas inspecionadas diretamente; asserções de QA não representam aprovação humana.
 
 - `looks/gui-portrait.jpg`: cabelo repartido/recuado e grisalho, bigode/barba cinza, camisa azul acinzentada e casaco marrom distinguem Tio Gui. Aparência permanece estilizada. O retrato 2D tem sobretudo bigode; a barba e idade mais evidente atendem ao pedido atual do usuário.
