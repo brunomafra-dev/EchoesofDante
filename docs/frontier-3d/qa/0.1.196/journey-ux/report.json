@@ -1,0 +1,619 @@
+{
+  "passed": true,
+  "base": "http://127.0.0.1:5193",
+  "checks": [
+    "Seven layouts, accessible 44px controls, journal selection/untracking, remote target via original return, live boss and lab storage isolation across reload; gamepad journal opens/closes."
+  ],
+  "layouts": [
+    {
+      "w": 1440,
+      "h": 900,
+      "width": 1440,
+      "scroll": 1440,
+      "controls": [
+        {
+          "id": "menu",
+          "x": 1384,
+          "y": 14,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "power",
+          "x": 1076.328125,
+          "y": 835,
+          "width": 58,
+          "height": 51
+        },
+        {
+          "id": "attack",
+          "x": 1141.328125,
+          "y": 835,
+          "width": 68.125,
+          "height": 51
+        },
+        {
+          "id": "dodge",
+          "x": 1216.453125,
+          "y": 835,
+          "width": 69.84375,
+          "height": 51
+        },
+        {
+          "id": "jump",
+          "x": 1293.296875,
+          "y": 835,
+          "width": 58,
+          "height": 51
+        },
+        {
+          "id": "potion",
+          "x": 1358.296875,
+          "y": 835,
+          "width": 66.703125,
+          "height": 51
+        },
+        {
+          "id": "quests",
+          "x": 1364,
+          "y": 65,
+          "width": 64,
+          "height": 44
+        }
+      ],
+      "goalRect": {
+        "x": 1102,
+        "y": 14,
+        "width": 250,
+        "height": 80.59375
+      },
+      "questsRect": {
+        "x": 1364,
+        "y": 65,
+        "width": 64,
+        "height": 44
+      },
+      "navigationRect": {
+        "x": 654.2109375,
+        "y": 831,
+        "width": 131.578125,
+        "height": 44
+      },
+      "actionsRect": {
+        "x": 1076.328125,
+        "y": 835,
+        "width": 348.671875,
+        "height": 51
+      },
+      "boss": {
+        "x": 555,
+        "y": 115,
+        "width": 330,
+        "height": 31
+      }
+    },
+    {
+      "w": 1280,
+      "h": 720,
+      "width": 1280,
+      "scroll": 1280,
+      "controls": [
+        {
+          "id": "menu",
+          "x": 1224,
+          "y": 14,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "power",
+          "x": 916.328125,
+          "y": 655,
+          "width": 58,
+          "height": 51
+        },
+        {
+          "id": "attack",
+          "x": 981.328125,
+          "y": 655,
+          "width": 68.125,
+          "height": 51
+        },
+        {
+          "id": "dodge",
+          "x": 1056.453125,
+          "y": 655,
+          "width": 69.84375,
+          "height": 51
+        },
+        {
+          "id": "jump",
+          "x": 1133.296875,
+          "y": 655,
+          "width": 58,
+          "height": 51
+        },
+        {
+          "id": "potion",
+          "x": 1198.296875,
+          "y": 655,
+          "width": 66.703125,
+          "height": 51
+        },
+        {
+          "id": "quests",
+          "x": 1204,
+          "y": 65,
+          "width": 64,
+          "height": 44
+        }
+      ],
+      "goalRect": {
+        "x": 942,
+        "y": 14,
+        "width": 250,
+        "height": 80.59375
+      },
+      "questsRect": {
+        "x": 1204,
+        "y": 65,
+        "width": 64,
+        "height": 44
+      },
+      "navigationRect": {
+        "x": 574.2109375,
+        "y": 651,
+        "width": 131.578125,
+        "height": 44
+      },
+      "actionsRect": {
+        "x": 916.328125,
+        "y": 655,
+        "width": 348.671875,
+        "height": 51
+      },
+      "boss": {
+        "x": 475,
+        "y": 115,
+        "width": 330,
+        "height": 31
+      }
+    },
+    {
+      "w": 1024,
+      "h": 768,
+      "width": 1024,
+      "scroll": 1024,
+      "controls": [
+        {
+          "id": "menu",
+          "x": 968,
+          "y": 14,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "power",
+          "x": 660.328125,
+          "y": 703,
+          "width": 58,
+          "height": 51
+        },
+        {
+          "id": "attack",
+          "x": 725.328125,
+          "y": 703,
+          "width": 68.125,
+          "height": 51
+        },
+        {
+          "id": "dodge",
+          "x": 800.453125,
+          "y": 703,
+          "width": 69.84375,
+          "height": 51
+        },
+        {
+          "id": "jump",
+          "x": 877.296875,
+          "y": 703,
+          "width": 58,
+          "height": 51
+        },
+        {
+          "id": "potion",
+          "x": 942.296875,
+          "y": 703,
+          "width": 66.703125,
+          "height": 51
+        },
+        {
+          "id": "quests",
+          "x": 948,
+          "y": 65,
+          "width": 64,
+          "height": 44
+        }
+      ],
+      "goalRect": {
+        "x": 686,
+        "y": 14,
+        "width": 250,
+        "height": 80.59375
+      },
+      "questsRect": {
+        "x": 948,
+        "y": 65,
+        "width": 64,
+        "height": 44
+      },
+      "navigationRect": {
+        "x": 446.2109375,
+        "y": 699,
+        "width": 131.578125,
+        "height": 44
+      },
+      "actionsRect": {
+        "x": 660.328125,
+        "y": 703,
+        "width": 348.671875,
+        "height": 51
+      },
+      "boss": {
+        "x": 347,
+        "y": 115,
+        "width": 330,
+        "height": 31
+      }
+    },
+    {
+      "w": 844,
+      "h": 390,
+      "width": 844,
+      "scroll": 844,
+      "controls": [
+        {
+          "id": "menu",
+          "x": 788,
+          "y": 8,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "power",
+          "x": 714,
+          "y": 277,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "attack",
+          "x": 775,
+          "y": 277,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "dodge",
+          "x": 653,
+          "y": 332,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "jump",
+          "x": 714,
+          "y": 332,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "potion",
+          "x": 775,
+          "y": 332,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "quests",
+          "x": 776,
+          "y": 57,
+          "width": 56,
+          "height": 44
+        }
+      ],
+      "goalRect": {
+        "x": 563,
+        "y": 8,
+        "width": 205,
+        "height": 91.390625
+      },
+      "questsRect": {
+        "x": 776,
+        "y": 57,
+        "width": 56,
+        "height": 44
+      },
+      "navigationRect": {
+        "x": 367.6484375,
+        "y": 340,
+        "width": 108.703125,
+        "height": 40
+      },
+      "actionsRect": {
+        "x": 653,
+        "y": 277,
+        "width": 176,
+        "height": 103
+      },
+      "boss": {
+        "x": 292,
+        "y": 127,
+        "width": 260,
+        "height": 29
+      }
+    },
+    {
+      "w": 667,
+      "h": 375,
+      "width": 667,
+      "scroll": 667,
+      "controls": [
+        {
+          "id": "menu",
+          "x": 611,
+          "y": 8,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "power",
+          "x": 537,
+          "y": 262,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "attack",
+          "x": 598,
+          "y": 262,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "dodge",
+          "x": 476,
+          "y": 317,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "jump",
+          "x": 537,
+          "y": 317,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "potion",
+          "x": 598,
+          "y": 317,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "quests",
+          "x": 599,
+          "y": 57,
+          "width": 56,
+          "height": 44
+        }
+      ],
+      "goalRect": {
+        "x": 386,
+        "y": 8,
+        "width": 205,
+        "height": 84.171875
+      },
+      "questsRect": {
+        "x": 599,
+        "y": 57,
+        "width": 56,
+        "height": 44
+      },
+      "navigationRect": {
+        "x": 279.1484375,
+        "y": 325,
+        "width": 108.703125,
+        "height": 40
+      },
+      "actionsRect": {
+        "x": 476,
+        "y": 262,
+        "width": 176,
+        "height": 103
+      },
+      "boss": {
+        "x": 203.5,
+        "y": 127,
+        "width": 260,
+        "height": 29
+      }
+    },
+    {
+      "w": 568,
+      "h": 320,
+      "width": 568,
+      "scroll": 568,
+      "controls": [
+        {
+          "id": "menu",
+          "x": 512,
+          "y": 8,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "power",
+          "x": 438,
+          "y": 207,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "attack",
+          "x": 499,
+          "y": 207,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "dodge",
+          "x": 377,
+          "y": 262,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "jump",
+          "x": 438,
+          "y": 262,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "potion",
+          "x": 499,
+          "y": 262,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "quests",
+          "x": 500,
+          "y": 57,
+          "width": 56,
+          "height": 44
+        }
+      ],
+      "goalRect": {
+        "x": 287,
+        "y": 8,
+        "width": 205,
+        "height": 84.171875
+      },
+      "questsRect": {
+        "x": 500,
+        "y": 57,
+        "width": 56,
+        "height": 44
+      },
+      "navigationRect": {
+        "x": 229.6484375,
+        "y": 270,
+        "width": 108.703125,
+        "height": 40
+      },
+      "actionsRect": {
+        "x": 377,
+        "y": 207,
+        "width": 176,
+        "height": 103
+      },
+      "boss": {
+        "x": 156.203125,
+        "y": 127,
+        "width": 255.59375,
+        "height": 29
+      }
+    },
+    {
+      "w": 393,
+      "h": 852,
+      "width": 393,
+      "scroll": 393,
+      "controls": [
+        {
+          "id": "menu",
+          "x": 337,
+          "y": 14,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "id": "power",
+          "x": 263,
+          "y": 735,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "attack",
+          "x": 324,
+          "y": 735,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "dodge",
+          "x": 202,
+          "y": 790,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "jump",
+          "x": 263,
+          "y": 790,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "potion",
+          "x": 324,
+          "y": 790,
+          "width": 54,
+          "height": 48
+        },
+        {
+          "id": "quests",
+          "x": 317,
+          "y": 63,
+          "width": 64,
+          "height": 44
+        }
+      ],
+      "goalRect": {
+        "x": 15,
+        "y": 110,
+        "width": 200,
+        "height": 90.171875
+      },
+      "questsRect": {
+        "x": 317,
+        "y": 63,
+        "width": 64,
+        "height": 44
+      },
+      "navigationRect": {
+        "x": 142.1484375,
+        "y": 653,
+        "width": 108.703125,
+        "height": 40
+      },
+      "actionsRect": {
+        "x": 202,
+        "y": 735,
+        "width": 176,
+        "height": 103
+      },
+      "boss": {
+        "x": 88.4296875,
+        "y": 235,
+        "width": 216.140625,
+        "height": 31
+      }
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,107 @@
+{
+  "passed": true,
+  "base": "http://127.0.0.1:5193",
+  "checks": [
+    "Eight reached analysis approaches reload on physical walkable floor and expose the correct E interaction; screenshots captured before opening dialogue for visual review of hero/props."
+  ],
+  "errors": [],
+  "views": [
+    {
+      "name": "condensation",
+      "point": [
+        30,
+        34.5
+      ],
+      "context": {
+        "kind": "regional",
+        "id": 3,
+        "name": "Rever condensação da primeira câmara"
+      }
+    },
+    {
+      "name": "depth",
+      "point": [
+        40.3,
+        12.6
+      ],
+      "context": {
+        "kind": "depth",
+        "id": 0,
+        "name": "Investigar a abertura às profundezas"
+      }
+    },
+    {
+      "name": "deep-signal",
+      "point": [
+        53.1,
+        15.1
+      ],
+      "context": {
+        "kind": "deepSignal",
+        "id": 0,
+        "name": "Analisar o sinal sob a pedra"
+      }
+    },
+    {
+      "name": "petrified-roots",
+      "point": [
+        52.25,
+        36.8
+      ],
+      "context": {
+        "kind": "regional",
+        "id": 4,
+        "name": "Rever raízes na bacia mineral"
+      }
+    },
+    {
+      "name": "buried-conduit",
+      "point": [
+        93.75,
+        34.8
+      ],
+      "context": {
+        "kind": "regional",
+        "id": 5,
+        "name": "Rever conduto das profundezas"
+      }
+    },
+    {
+      "name": "fragment",
+      "point": [
+        121.75,
+        16.7
+      ],
+      "context": {
+        "kind": "fragment",
+        "id": 0,
+        "name": "Examinar o fragmento exterior"
+      }
+    },
+    {
+      "name": "first-echo",
+      "point": [
+        138.25,
+        19.4
+      ],
+      "context": {
+        "kind": "firstEcho",
+        "id": 0,
+        "name": "Investigar o Primeiro Eco"
+      }
+    },
+    {
+      "name": "threshold",
+      "point": [
+        152.2,
+        18.5
+      ],
+      "context": {
+        "kind": "threshold",
+        "id": 0,
+        "name": "Investigar o limiar do Guardião"
+      }
+    }
+  ],
+  "fixture": "Isolated visual inspection, gates earned by the native campaign then reused as a local fixture at each reached analysis approach. No victory simulated. Captures before dialogue, so the hero is visible."
+}

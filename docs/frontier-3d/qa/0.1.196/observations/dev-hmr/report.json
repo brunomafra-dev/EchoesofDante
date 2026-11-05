@@ -1,0 +1,13 @@
+{
+  "passed": false,
+  "base": "http://127.0.0.1:5193",
+  "at": "2026-11-05T20:29:01.265Z",
+  "checks": [],
+  "errors": [],
+  "fixtures": [],
+  "screens": [
+    "arrival",
+    "failure"
+  ],
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nundefined !== 'npc'\n\n    at interact (file:///C:/Users/1/Desktop/Bruno%20Mafra/Echoes%20of%20Dante/scripts/qa-arrival196-support.mjs:17:71)\n    at async talk (file:///C:/Users/1/Desktop/Bruno%20Mafra/Echoes%20of%20Dante/scripts/qa-arrival196-campaign.mjs:5:183)\n    at async file:///C:/Users/1/Desktop/Bruno%20Mafra/Echoes%20of%20Dante/scripts/qa-arrival196-campaign.mjs:12:170"
+}

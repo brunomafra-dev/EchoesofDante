@@ -1,0 +1,18 @@
+{
+  "version": "0.1.196",
+  "file": "warden-196.glb",
+  "author": "Echoes of Dante",
+  "license": "CC0-1.0",
+  "source": "scripts/asset-tools/author-arrival196.py",
+  "bytes": 1020752,
+  "sha256": "d166eedb6b662fa9b29b734b15505ac0bfa9167f8728590d9a56fcfaef5b87d1",
+  "triangles": 6004,
+  "bones": 9,
+  "materials": 5,
+  "textures": 3,
+  "textureResolution": [
+    128,
+    128
+  ],
+  "animation": "Independent skeletal poses driven by canonical Warden encounter events; no imported clips or root motion."
+}

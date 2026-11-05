@@ -1,0 +1,13 @@
+{
+  "file": "cavern-stone-196.webp",
+  "bytes": 91652,
+  "sha256": "f10359c6e30519bdd544915396269079d4f64c58225088b47db619583055b3ac",
+  "source": "public/assets/frontier-3d/Rock035_1K-JPG_Color.webp",
+  "sourceSha256": "dfd56ab09ef50b58ea2175766d5e82b43c002db0ea84c9c6be36c4f23ce08447",
+  "author": "ambientCG; palette/dust adaptation by Echoes of Dante",
+  "license": "CC0-1.0",
+  "resolution": [
+    512,
+    512
+  ]
+}

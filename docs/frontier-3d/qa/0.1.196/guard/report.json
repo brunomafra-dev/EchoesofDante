@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "base": "http://127.0.0.1:5193",
+  "checks": [
+    "Holding auto attack without reacting loses the encounter; no boss flag/reward granted. Native death returns to safe cavern checkpoint and resets live boss to 900 HP."
+  ],
+  "errors": [],
+  "fixture": "Isolated Warden lab, original gates simulated; no boss victory or damage injected.",
+  "stationaryAuto": {
+    "hp": 0,
+    "boss": 900,
+    "won": false,
+    "seconds": 8.00840000000298,
+    "minGap": 2.2971655977845247,
+    "phases": [
+      1
+    ]
+  }
+}

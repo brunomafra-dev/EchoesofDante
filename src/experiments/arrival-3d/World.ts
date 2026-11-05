@@ -1,3 +1,6 @@
+import {CaveArt,caveContour}from'./Caves';
+import {SITES}from'./Journey';
+import type{Trial}from'./model';
 import{NPC_LOOKS}from'./looks';
 import * as T from 'three';
 import {FoliageVisibility}from'./FoliageVisibility';
@@ -7,8 +10,8 @@ import {Batches,box,sphere,material,paintedMetal,mineralSurface}from'./Art';
 import {loadIdentity,batchIdentity}from'./Identity';
 import {layout,distanceToSegment,inPolygon,type Zone}from'./model';
 export const v=(x:number,y:number)=>new T.Vector3(x/40,0,y/40);
-export const ENTRY={base:v(1040,800),forest:v(400,1230)};
-export const PORTALS={base:v(1240,800),forest:v(400,1285)};
+export const ENTRY={base:v(1040,800),forest:v(400,1230),cavern:v(630,950),warden:v(650,760)};
+export const PORTALS={base:v(1240,800),forest:v(400,1285),cavern:v(630,950),warden:v(540,760)};
 const NPCS_BASE=[
  {id:'lia',name:'Dra. Lia',role:'Enfermaria',x:320,y:700,gender:'female',hair:3,cloth:'#b9c2b3',yaw:Math.PI,text:'Antes de levarmos alguém para a floresta, precisamos entender a água, o solo e as criaturas. Observe os sinais e volte inteiro. As amostras ficam separadas das nossas mudas.'},
  {id:'ivo',name:'Ivo',role:'Oficina',x:760,y:690,gender:'male',hair:2,cloth:'#6d7c7e',yaw:Math.PI,text:'Ainda estamos vivendo do que trouxemos na nave. Estou ajustando as ferramentas e os instrumentos de campo. Teste seu equipamento na trilha e preste atenção ao movimento das criaturas.'},
@@ -25,11 +28,12 @@ type Tree={x:number;z:number;height:number;angle:number};
 const contour=layout.forest.contour.map(p=>({x:p.x/40,y:p.y/40}));
 const forestPaths=layout.forest.paths.map(p=>({width:p.width/40,points:p.points.map(a=>({x:a.x/40,y:a.y/40}))}));
 export class ArrivalWorld{
- readonly foliage=new FoliageVisibility();readonly scene=new T.Scene();readonly groups={base:new T.Group(),forest:new T.Group()};readonly solids:Solid[]=[];
+ readonly foliage=new FoliageVisibility();readonly scene=new T.Scene();readonly groups={base:new T.Group(),forest:new T.Group(),cavern:new T.Group(),warden:new T.Group()};readonly solids:Solid[]=[];
  readonly bodies={base:[] as T.Object3D[],forest:[] as T.Object3D[]};readonly sun:T.DirectionalLight;
- zone:Zone='base';private environment:T.WebGLRenderTarget;private randomState=319;private wind={value:0};
+ bossBody?:T.Vector3;zone:Zone='base';private environment:T.WebGLRenderTarget;private randomState=319;private wind={value:0};
  private trees={base:[] as Tree[],forest:[] as Tree[]};private rocks={base:[] as {x:number;z:number;radius:number}[],forest:[] as {x:number;z:number;radius:number}[]};
- readonly cameraObstacles={base:[] as T.Sphere[],forest:[] as T.Sphere[]};
+ readonly cameraObstacles:Record<Zone,T.Sphere[]>={base:[],forest:[],cavern:[],warden:[]};
+ private caves:CaveArt;private progress?:Trial;private sky:T.Mesh;
  private authored:{name:string;x:number;z:number}[]=[];
  private batches={base:new Batches(),forest:new Batches()};private materials:T.Material[]=[];
  private steel=material('#a9aca0',.28,.72);private dark=material('#3f4b48',.35,.7);private amber=material('#b0743b',.3,.64);private glass=material('#243f45',.65,.22);private canvas=material('#aaa187');private wood=material('#68674c');private glow=material('#72cfc0',.2,.3);
@@ -38,16 +42,16 @@ export class ArrivalWorld{
   const s=this.scene;s.background=new T.Color('#a6b4ae');s.fog=new T.FogExp2('#a6b4ae',.012);
   const pmrem=new T.PMREMGenerator(renderer),room=new RoomEnvironment();this.environment=pmrem.fromScene(room,.04);s.environment=this.environment.texture;s.environmentIntensity=.3;room.dispose();pmrem.dispose();
   s.add(new T.HemisphereLight('#c3dae4','#4a4435',1.45),new T.AmbientLight('#c4d2c5',.18));this.sun=new T.DirectionalLight('#ffe0b4',3.6);this.sun.position.set(-18,30,8);this.sun.castShadow=true;this.sun.shadow.mapSize.set(1536,1536);Object.assign(this.sun.shadow.camera,{left:-25,right:25,top:25,bottom:-25,near:1,far:90});this.sun.shadow.normalBias=.035;s.add(this.sun,this.sun.target);
-  const sky=new T.Mesh(new T.SphereGeometry(180,24,16),new T.ShaderMaterial({side:T.BackSide,depthWrite:false,uniforms:{top:{value:new T.Color('#547b88')},bottom:{value:new T.Color('#b9bfaa')}},vertexShader:'varying vec3 direction;void main(){direction=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',fragmentShader:'varying vec3 direction;uniform vec3 top;uniform vec3 bottom;void main(){gl_FragColor=vec4(mix(bottom,top,smoothstep(-.05,.8,normalize(direction).y)),1.);}'}));s.add(sky);
-  s.add(this.groups.base,this.groups.forest);this.groups.forest.visible=false;
+  const sky=this.sky=new T.Mesh(new T.SphereGeometry(180,24,16),new T.ShaderMaterial({side:T.BackSide,depthWrite:false,uniforms:{top:{value:new T.Color('#547b88')},bottom:{value:new T.Color('#b9bfaa')}},vertexShader:'varying vec3 direction;void main(){direction=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',fragmentShader:'varying vec3 direction;uniform vec3 top;uniform vec3 bottom;void main(){gl_FragColor=vec4(mix(bottom,top,smoothstep(-.05,.8,normalize(direction).y)),1.);}'}));s.add(sky);
+  s.add(...Object.values(this.groups));for(const zone of['forest','cavern','warden']as const)this.groups[zone].visible=false;
   const paint=paintedMetal();for(const m of[this.steel,this.dark,this.amber])m.map=paint;this.glow.emissive.set('#458b7a');this.glow.emissiveIntensity=.5;
   this.materials.push(this.steel,this.dark,this.amber,this.glass,this.canvas,this.wood,this.glow);
-  this.ground('base');this.ground('forest');this.camp();this.forest();this.grass('base');this.grass('forest');
+  this.ground('base');this.ground('forest');this.camp();this.forest();this.grass('base');this.grass('forest');this.caves=new CaveArt(this);
   for(const zone of['base','forest']as const){for(const tree of this.trees[zone]){this.cameraObstacles[zone].push(new T.Sphere(new T.Vector3(tree.x,tree.height*.72,tree.z),tree.height*.36));for(const y of[.8,1.8,2.8])if(y<tree.height*.5)this.cameraObstacles[zone].push(new T.Sphere(new T.Vector3(tree.x,y,tree.z),.24));}for(const rock of this.rocks[zone])this.cameraObstacles[zone].push(new T.Sphere(new T.Vector3(rock.x,rock.radius*.7,rock.z),rock.radius*.85));}
  }
- private add(zone:Zone,g:T.BufferGeometry,m:T.Material,x:number,y:number,z:number,sx=1,sy=1,sz=1,yaw=0,solid=true,shadow=true){this.batches[zone].add(g,m,x,y,z,sx,sy,sz,yaw,solid,shadow);}
+ private add(zone:Zone,g:T.BufferGeometry,m:T.Material,x:number,y:number,z:number,sx=1,sy=1,sz=1,yaw=0,solid=true,shadow=true){this.batches[zone as 'base'|'forest'].add(g,m,x,y,z,sx,sy,sz,yaw,solid,shadow);}
  private solid(zone:Zone,x:number,z:number,radius:number,tag:string,halfX?:number,halfZ?:number){this.solids.push({zone,x,z,radius,tag,halfX,halfZ});}
- private ground(zone:Zone){
+ private ground(zone:'base'|'forest'){
   const width=zone==='base'?70:100,depth=zone==='base'?60:75,cx=zone==='base'?17.5:38.75,cz=zone==='base'?13.125:24.375,g=new T.PlaneGeometry(width,depth,110,85);g.rotateX(-Math.PI/2);g.translate(cx,0,cz);
   const loader=new T.TextureLoader(),m=material('#cecdbd');m.vertexColors=true;
   const tex=(suffix:string,color=false)=>{const t=loader.load('/assets/frontier-3d/Ground037_1K-JPG_'+suffix+'.webp');t.wrapS=t.wrapT=T.RepeatWrapping;t.repeat.set(width/4,depth/4);t.anisotropy=4;if(color)t.colorSpace=T.SRGBColorSpace;return t;};m.map=tex('Color',true);m.normalMap=tex('NormalGL');m.normalScale.set(.65,.65);m.roughnessMap=tex('Roughness');
@@ -75,7 +79,7 @@ export class ArrivalWorld{
  private forest(){
   const b=this.batches.forest;
   for(const [x,y,r]of layout.forest.rocks){const site={x:x/40,z:y/40,radius:r/40};this.rocks.forest.push(site);this.solid('forest',site.x,site.z,site.radius,'rocha');}
-  for(let i=0;i<190;i++){const x=-4+this.rand()*87,z=-4+this.rand()*58;if(this.onPath('forest',x,z)>.035||this.inClearing(x,z)||this.inApproachView(x,z)||this.blocked('forest',x,z,.7)&&inPolygon(x,z,contour))continue;const height=5+this.rand()*5;this.trees.forest.push({x,z,height,angle:this.rand()*6.28});if(inPolygon(x,z,contour))this.solid('forest',x,z,.36,'tronco');}
+  for(let i=0;i<190;i++){const x=-4+this.rand()*87,z=-4+this.rand()*58;if(this.onPath('forest',x,z)>.035||this.inClearing(x,z)||SITES.some(s=>s.area==='forest'&&Math.hypot(x-s.x/40,z-s.y/40)<3.3)||this.inApproachView(x,z)||this.blocked('forest',x,z,.7)&&inPolygon(x,z,contour))continue;const height=5+this.rand()*5;this.trees.forest.push({x,z,height,angle:this.rand()*6.28});if(inPolygon(x,z,contour))this.solid('forest',x,z,.36,'tronco');}
   for(const discovery of DISCOVERIES){const x=discovery.x/40,z=discovery.y/40;if(discovery.id==='northern-ruin'){for(const dx of[-1.2,0,1.2]){b.add(box,this.wood,x+dx,.9,z,.7,1.8,.55);b.add(box,this.glow,x+dx,1,z+.29,.045,.65,.03);}b.add(box,this.wood,x,1.95,z,3.3,.3,.65);this.solid('forest',x,z,0,'ruína',1.7,.4);}else if(discovery.id==='unknown-trace'){for(let i=0;i<3;i++){const dz=(i-1)*.28;b.segment(new T.Vector3(x-.65,.08,z+dz),new T.Vector3(x+.65,.06,z+dz-.25),.04,this.dark);}const curve=new T.CatmullRomCurve3([new T.Vector3(x-.7,0,z+.5),new T.Vector3(x-.45,.32,z+.3),new T.Vector3(x+.3,.2,z+.2),new T.Vector3(x+.6,0,z-.2)]);b.add(new T.TubeGeometry(curve,12,.13,7),this.wood,0,0,0);this.solid('forest',x,z,.85,discovery.id);}else{const m=material(discovery.color,.25,.35);m.emissive.set(discovery.color);m.emissiveIntensity=.25;this.materials.push(m);for(let i=0;i<5;i++){const geo=new T.ConeGeometry(.2,.6+this.rand()*.4,5);b.add(geo,m,x+(i-2)*.22,.4,z+Math.sin(i)*.2,1,1,1,i*.5);}this.solid('forest',x,z,.65,discovery.id);}}
   const source=layout.discovery.SIGNAL_THRESHOLD,x=source.x/40,z=source.y/40;
   b.add(new T.CircleGeometry(1.5,40).rotateX(-Math.PI/2),this.dark,x,.025,z,1,1,1,0,false,false);
@@ -88,16 +92,17 @@ export class ArrivalWorld{
   this.portal('forest',PORTALS.forest,'Acampamento de pouso');
  }
  private portal(zone:Zone,p:T.Vector3,_label:string){for(const side of[-1,1]){const x=p.x+(zone==='forest'?side*.95:0),z=p.z+(zone==='base'?side*.95:0);this.add(zone,box,this.steel,x,.85,z,.24,1.7,.35);this.add(zone,box,this.glow,x,.95,z+.19,.05,.9,.03);this.solid(zone,x,z,.2,'marco de trilha');}}
- private grass(zone:Zone){const blade=new T.BufferGeometry();blade.setAttribute('position',new T.Float32BufferAttribute([-.07,0,0,.07,0,0,-.035,.45,.03,.035,.45,.03,0,.8,.12],3));blade.setIndex([0,1,2,1,3,2,2,3,4]);blade.computeVertexNormals();const m=material('#788260');m.side=T.DoubleSide;m.onBeforeCompile=shader=>{shader.uniforms.windTime=this.wind;shader.vertexShader='uniform float windTime;\n'+shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\ntransformed.x+=sin(windTime*1.2+instanceMatrix[3].x*.7+instanceMatrix[3].z*.4)*position.y*position.y*.1;');};const mesh=new T.InstancedMesh(blade,m,zone==='base'?6500:16000),dummy=new T.Object3D();let n=0;for(let i=0;i<mesh.instanceMatrix.count*3&&n<mesh.instanceMatrix.count;i++){const x=this.rand()*(zone==='base'?46:84)-4,z=this.rand()*(zone==='base'?37:57)-4;if(this.onPath(zone,x,z)>.35||this.blocked(zone,x,z,.14))continue;dummy.position.set(x,-.015,z);dummy.rotation.y=this.rand()*6.28;dummy.scale.setScalar(.22+this.rand()*.45);dummy.updateMatrix();mesh.setMatrixAt(n,dummy.matrix);mesh.setColorAt(n++,new T.Color().setHSL(.18+this.rand()*.07,.14+this.rand()*.1,.45+this.rand()*.2));}mesh.count=n;mesh.receiveShadow=true;this.groups[zone].add(mesh);}
+ private grass(zone:'base'|'forest'){const blade=new T.BufferGeometry();blade.setAttribute('position',new T.Float32BufferAttribute([-.07,0,0,.07,0,0,-.035,.45,.03,.035,.45,.03,0,.8,.12],3));blade.setIndex([0,1,2,1,3,2,2,3,4]);blade.computeVertexNormals();const m=material('#788260');m.side=T.DoubleSide;m.onBeforeCompile=shader=>{shader.uniforms.windTime=this.wind;shader.vertexShader='uniform float windTime;\n'+shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\ntransformed.x+=sin(windTime*1.2+instanceMatrix[3].x*.7+instanceMatrix[3].z*.4)*position.y*position.y*.1;');};const mesh=new T.InstancedMesh(blade,m,zone==='base'?6500:16000),dummy=new T.Object3D();let n=0;for(let i=0;i<mesh.instanceMatrix.count*3&&n<mesh.instanceMatrix.count;i++){const x=this.rand()*(zone==='base'?46:84)-4,z=this.rand()*(zone==='base'?37:57)-4;if(this.onPath(zone,x,z)>.35||this.blocked(zone,x,z,.14))continue;dummy.position.set(x,-.015,z);dummy.rotation.y=this.rand()*6.28;dummy.scale.setScalar(.22+this.rand()*.45);dummy.updateMatrix();mesh.setMatrixAt(n,dummy.matrix);mesh.setColorAt(n++,new T.Color().setHSL(.18+this.rand()*.07,.14+this.rand()*.1,.45+this.rand()*.2));}mesh.count=n;mesh.receiveShadow=true;this.groups[zone].add(mesh);}
  update(time:number){this.wind.value=time;}
  private inApproachView(x:number,z:number){const source=layout.discovery.SIGNAL_THRESHOLD,sites=[...DISCOVERIES.map(d=>({x:d.x/40,y:d.y/40+2})),{x:source.x/40,y:source.y/40+2.5},{x:source.mechanismX/40,y:source.mechanismY/40+2},{x:ENTRY.forest.x,y:ENTRY.forest.z}];return sites.some(a=>distanceToSegment(x,z,{x:a.x-1,y:a.y-1},{x:a.x+7,y:a.y+9})<4);}
  private inClearing(x:number,z:number){return layout.forest.clearings.some(c=>Math.pow((x-c.x/40)/(c.rx/40+1),2)+Math.pow((z-c.y/40)/(c.ry/40+1),2)<1)||DISCOVERIES.some(d=>Math.hypot(x-d.x/40,z-d.y/40)<3)||Math.hypot(x-46.75,z-6.125)<5;}
- blocked(zone:Zone,x:number,z:number,r=.35){if(zone==='base'){if(x<1.75+r||x>33.25-r||z<2.25+r||z>24.25-r)return true;}else if(!inPolygon(x,z,contour)||contour.some((a,i)=>distanceToSegment(x,z,a,contour[(i+1)%contour.length])<r))return true;return this.solids.some(o=>o.zone===zone&&(o.halfX?Math.abs(x-o.x)<o.halfX+r&&Math.abs(z-o.z)<o.halfZ!+r:Math.hypot(x-o.x,z-o.z)<o.radius+r));}
+ blocked(zone:Zone,x:number,z:number,r=.35){if(zone==='base'){if(x<1.75+r||x>33.25-r||z<2.25+r||z>24.25-r)return true;}else{const poly=zone==='forest'?contour:zone==='cavern'?caveContour:[{x:12,y:9.5},{x:42,y:9.5},{x:42,y:28},{x:12,y:28}];if(!inPolygon(x,z,poly)||poly.some((a,i)=>distanceToSegment(x,z,a,poly[(i+1)%poly.length])<r))return true;if(zone==='cavern'&&this.progress){const j=this.progress.journey,max=!j.depth?42:!j.deepSignal?61.75:!j.fragment?133.75:!j.firstEcho?154.5:!j.gate?157:161.5;if(x>max-r)return true;}}return this.solids.some(o=>o.zone===zone&&(o.halfX?Math.abs(x-o.x)<o.halfX+r&&Math.abs(z-o.z)<o.halfZ!+r:Math.hypot(x-o.x,z-o.z)<o.radius+r));}
  floorHeight(zone:Zone,x:number,z:number){return zone==='base'&&Math.abs(x-16.55)<.7&&z>11.25&&z<14.05?.095+(14.05-z)*(.895/2.8):0;}
- move(zone:Zone,p:T.Vector3,dx:number,dz:number,r=.35){if(!this.blocked(zone,p.x+dx,p.z,r))p.x+=dx;if(!this.blocked(zone,p.x,p.z+dz,r))p.z+=dz;p.y=this.floorHeight(zone,p.x,p.z);}
+ move(zone:Zone,p:T.Vector3,dx:number,dz:number,r=.35){if(zone==='warden'&&this.bossBody&&r<1){const b=this.bossBody,min=1.55+r,old=Math.hypot(p.x-b.x,p.z-b.z),limit=Math.min(min,old);if(Math.hypot(p.x+dx-b.x,p.z-b.z)<limit-.00001)dx=0;const horizontal=Math.hypot(p.x+dx-b.x,p.z-b.z);if(Math.hypot(p.x+dx-b.x,p.z+dz-b.z)<Math.min(min,horizontal)-.00001)dz=0;}if(!this.blocked(zone,p.x+dx,p.z,r))p.x+=dx;if(!this.blocked(zone,p.x,p.z+dz,r))p.z+=dz;p.y=this.floorHeight(zone,p.x,p.z);}
  lineOfSight(zone:Zone,a:T.Vector3,b:T.Vector3){const dist=a.distanceTo(b);for(let i=1;i<Math.ceil(dist/.3);i++){const t=i/Math.ceil(dist/.3);if(this.blocked(zone,T.MathUtils.lerp(a.x,b.x,t),T.MathUtils.lerp(a.z,b.z,t),.05))return false;}return true;}
  ceilingHeight(zone:Zone,x:number,z:number){if(zone!=='base')return Infinity;for(const n of NPCS.slice(0,3))if(Math.abs(x-n.x/40)<2.5&&z>n.y/40-2.5&&z<n.y/40+.2)return 2.4;return Infinity;}
- setZone(zone:Zone){this.zone=zone;this.groups.base.visible=zone==='base';this.groups.forest.visible=zone==='forest';}
+ setProgress(trial:Trial){this.progress=trial;this.caves.update(trial);}
+ setZone(zone:Zone){this.zone=zone;for(const [id,g]of Object.entries(this.groups))g.visible=id===zone;const cave=zone==='cavern'||zone==='warden';this.sky.visible=!cave;this.sun.intensity=cave?1.7:3.6;this.sun.color.set(cave?'#b4b4d3':'#ffe0b4');this.scene.background=new T.Color(cave?'#252a30':'#a6b4ae');this.scene.fog=new T.FogExp2(cave?'#252a30':'#a6b4ae',cave?.026:.012);}
  updateFocus(p:T.Vector3){this.sun.position.set(p.x-18,30,p.z+8);this.sun.target.position.set(p.x,0,p.z);}
  async load(){
   await loadIdentity();batchIdentity(this.batches.forest,'mechanism',layout.discovery.SIGNAL_THRESHOLD.mechanismX/40,0,layout.discovery.SIGNAL_THRESHOLD.mechanismY/40);for(const item of this.authored)batchIdentity(this.batches.base,item.name,item.x,0,item.z);

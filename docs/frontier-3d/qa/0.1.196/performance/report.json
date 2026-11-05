@@ -1,0 +1,173 @@
+{
+  "passed": true,
+  "at": "2026-11-05T21:15:40.160Z",
+  "base": "http://127.0.0.1:5193",
+  "method": "Sequential 1440x900/DPR1 idle samples: base five NPCs; all sixteen forest residents alive; isolated first-cavern and dormant-Warden lab entries with live residents/boss and explicitly simulated access prerequisites. Eight-second warm-up, three two-second samples, no concurrent workload. Visible rig counts recorded. Not a physical phone test, combat benchmark or FPS guarantee.",
+  "scenes": [
+    {
+      "zone": "base",
+      "samples": [
+        {
+          "fps": 39.16902176607666,
+          "calls": 223,
+          "triangles": 318549,
+          "textures": 92,
+          "geometries": 94,
+          "residents": 16,
+          "visibleResidents": 0,
+          "bossState": "DORMANT",
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "fps": 39.17290623295489,
+          "calls": 223,
+          "triangles": 318549,
+          "textures": 92,
+          "geometries": 94,
+          "residents": 16,
+          "visibleResidents": 0,
+          "bossState": "DORMANT",
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "fps": 39.174848755330714,
+          "calls": 223,
+          "triangles": 318549,
+          "textures": 92,
+          "geometries": 94,
+          "residents": 16,
+          "visibleResidents": 0,
+          "bossState": "DORMANT",
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        }
+      ]
+    },
+    {
+      "zone": "forest",
+      "samples": [
+        {
+          "fps": 54.497275136243175,
+          "calls": 71,
+          "triangles": 314605,
+          "textures": 63,
+          "geometries": 38,
+          "residents": 16,
+          "visibleResidents": 7,
+          "bossState": "DORMANT",
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "fps": 55.043141922047,
+          "calls": 71,
+          "triangles": 314605,
+          "textures": 63,
+          "geometries": 38,
+          "residents": 16,
+          "visibleResidents": 7,
+          "bossState": "DORMANT",
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "fps": 54.53373655247637,
+          "calls": 71,
+          "triangles": 314605,
+          "textures": 63,
+          "geometries": 38,
+          "residents": 16,
+          "visibleResidents": 7,
+          "bossState": "DORMANT",
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        }
+      ]
+    },
+    {
+      "zone": "cavern",
+      "samples": [
+        {
+          "fps": 59.99700014999249,
+          "calls": 43,
+          "triangles": 78092,
+          "textures": 41,
+          "geometries": 24,
+          "residents": 27,
+          "visibleResidents": 4,
+          "bossState": "DORMANT",
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "fps": 59.50609937518595,
+          "calls": 43,
+          "triangles": 78092,
+          "textures": 41,
+          "geometries": 24,
+          "residents": 27,
+          "visibleResidents": 4,
+          "bossState": "DORMANT",
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "fps": 60.00198353664588,
+          "calls": 43,
+          "triangles": 78092,
+          "textures": 41,
+          "geometries": 24,
+          "residents": 27,
+          "visibleResidents": 4,
+          "bossState": "DORMANT",
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        }
+      ]
+    },
+    {
+      "zone": "warden",
+      "samples": [
+        {
+          "fps": 60.00198353664583,
+          "calls": 51,
+          "triangles": 66184,
+          "textures": 42,
+          "geometries": 29,
+          "residents": 1,
+          "visibleResidents": 0,
+          "bossState": "DORMANT",
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "fps": 59.49702514874255,
+          "calls": 51,
+          "triangles": 66184,
+          "textures": 42,
+          "geometries": 29,
+          "residents": 1,
+          "visibleResidents": 0,
+          "bossState": "DORMANT",
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "fps": 59.50609937518595,
+          "calls": 51,
+          "triangles": 66184,
+          "textures": 42,
+          "geometries": 29,
+          "residents": 1,
+          "visibleResidents": 0,
+          "bossState": "DORMANT",
+          "failures": [],
+          "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

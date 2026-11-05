@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "base": "http://127.0.0.1:5193",
+  "at": "2026-11-05T20:50:48.816Z",
+  "checks": [
+    "Native creation, three reports accepted/observed/scanned/delivered, unique credits 20+30+40, tracker selection, original three-echo/source/mechanism gates.",
+    "Both regional surveys, full cave/chambers/fragment/First Echo/threshold, original coordinates and earned gates, finite deaths and checkpoint/reload, live 900HP Warden.",
+    "Gamepad View opens journal; B closes; 2D registry, journey and settings remain byte-identical."
+  ],
+  "errors": [],
+  "fixtures": [],
+  "screens": [
+    "arrival",
+    "survey-15.5-27",
+    "survey-12-19.8",
+    "mechanism-41.75-7.7",
+    "source-46.75-8.6",
+    "echo-14-17.5",
+    "echo-37.5-9.1",
+    "echo-46.75-27",
+    "source-46.75-8.6",
+    "mechanism-41.75-7.7",
+    "regional-9.5-8.8",
+    "regional-65.75-33.4",
+    "regional-28.5-41.6",
+    "cave-entry",
+    "regional-30-34.5",
+    "depth-40.3-12.6",
+    "deepSignal-53.1-15.1",
+    "regional-52.25-36.8",
+    "regional-93.75-34.8",
+    "fragment-121.75-16.7",
+    "firstEcho-138.25-19.4",
+    "threshold-152.2-18.5",
+    "warden-alive",
+    "journal-gamepad"
+  ]
+}

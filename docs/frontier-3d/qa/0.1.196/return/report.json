@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "base": "http://127.0.0.1:5193",
+  "checks": [
+    "Ivo accepts the three earned cave readings and pays the original 60-credit receipt once.",
+    "Actual victory save returns through arena → cave → forest → base using native controls; Nara reports and pays +60 once; receipt/defeated Warden persist after reload; Lia restores HP; original 2D journey byte-identical."
+  ],
+  "errors": [],
+  "fixture": "Resumes the exact save produced by the native warrior boss victory; initial forest/cave laboratory prerequisites are identified in boss/report.json."
+}

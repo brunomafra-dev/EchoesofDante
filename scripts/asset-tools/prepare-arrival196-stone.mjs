@@ -1,0 +1,6 @@
+import sharp from'sharp';import{writeFile,readFile}from'node:fs/promises';import{createHash}from'node:crypto';
+// Existing ambientCG Rock035 CC0; CPU-only palette/dust adaptation.
+const source='public/assets/frontier-3d/Rock035_1K-JPG_Color.webp',{data,info}=await sharp(source).resize(512,512).removeAlpha().raw().toBuffer({resolveWithObject:true});let seed=196;
+for(let y=0;y<512;y++)for(let x=0;x<512;x++){const k=(y*512+x)*info.channels,l=(data[k]*.2126+data[k+1]*.7152+data[k+2]*.0722)/255;seed=(seed*1664525+1013904223)>>>0;const dust=(seed/4294967296-.5)*.025,t=Math.pow(Math.max(0,Math.min(1,(l-.012)/.30)),.65),v=Math.max(0,Math.min(255,(.19+.39*t+dust)*255));data[k]=v*1.04;data[k+1]=v;data[k+2]=v*.95;}
+const output='public/assets/arrival-3d/cavern-stone-196.webp';await sharp(data,{raw:{width:512,height:512,channels:info.channels}}).webp({quality:88}).toFile(output);
+await writeFile('public/assets/arrival-3d/cavern-stone-196.json',JSON.stringify({file:'cavern-stone-196.webp',bytes:(await readFile(output)).length,sha256:createHash('sha256').update(await readFile(output)).digest('hex'),source,sourceSha256:createHash('sha256').update(await readFile(source)).digest('hex'),author:'ambientCG; palette/dust adaptation by Echoes of Dante',license:'CC0-1.0',resolution:[512,512]},null,2)+'\n');

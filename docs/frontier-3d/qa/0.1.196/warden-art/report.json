@@ -1,0 +1,283 @@
+{
+  "passed": true,
+  "base": "http://127.0.0.1:5193",
+  "checks": [
+    "Real model is rendered (6004 triangles), nine-bone poses change through all five attacks; death holds; repeated model swaps retain stable geometry/texture counts; no console error."
+  ],
+  "errors": [],
+  "poses": [
+    {
+      "motion": "sweep",
+      "wind": {
+        "hp": 900,
+        "maxHp": 900,
+        "state": "TELEGRAPH",
+        "phase": 1,
+        "attack": "sweep",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 0.43340000000000006,
+        "active": 0.43340000000000006,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 25.41526554799963
+      },
+      "strike": {
+        "hp": 900,
+        "maxHp": 900,
+        "state": "EXECUTE",
+        "phase": 1,
+        "attack": "sweep",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 1.2166999999999997,
+        "active": 0.4166999999999996,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 23.456858930297205
+      }
+    },
+    {
+      "motion": "slam",
+      "wind": {
+        "hp": 900,
+        "maxHp": 900,
+        "state": "TELEGRAPH",
+        "phase": 1,
+        "attack": "slam",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 0.4166000000000005,
+        "active": 0.4166000000000005,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 26.247368339510558
+      },
+      "strike": {
+        "hp": 900,
+        "maxHp": 900,
+        "state": "EXECUTE",
+        "phase": 1,
+        "attack": "slam",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 1.1833000000000002,
+        "active": 0.3833000000000002,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 25.91459315237165
+      }
+    },
+    {
+      "motion": "rush",
+      "wind": {
+        "hp": 900,
+        "maxHp": 900,
+        "state": "TELEGRAPH",
+        "phase": 1,
+        "attack": "rush",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 0.41669999999999996,
+        "active": 0.41669999999999996,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 25.590218603904326
+      },
+      "strike": {
+        "hp": 900,
+        "maxHp": 900,
+        "state": "EXECUTE",
+        "phase": 1,
+        "attack": "rush",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 1.1833000000000002,
+        "active": 0.3833000000000002,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 25.461053662379754
+      }
+    },
+    {
+      "motion": "signal",
+      "wind": {
+        "hp": 900,
+        "maxHp": 900,
+        "state": "TELEGRAPH",
+        "phase": 1,
+        "attack": "signal",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 0.43330000000000035,
+        "active": 0.43330000000000035,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 26.29877982526034
+      },
+      "strike": {
+        "hp": 900,
+        "maxHp": 900,
+        "state": "EXECUTE",
+        "phase": 1,
+        "attack": "signal",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 1.1833000000000011,
+        "active": 0.3833000000000011,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 26.284021987706943
+      }
+    },
+    {
+      "motion": "echoes",
+      "wind": {
+        "hp": 900,
+        "maxHp": 900,
+        "state": "TELEGRAPH",
+        "phase": 1,
+        "attack": "echoes",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 0.4332999999999994,
+        "active": 0.4332999999999994,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 26.313164866691963
+      },
+      "strike": {
+        "hp": 900,
+        "maxHp": 900,
+        "state": "EXECUTE",
+        "phase": 1,
+        "attack": "echoes",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 1.1833999999999996,
+        "active": 0.3833999999999995,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 26.28401697973547
+      }
+    }
+  ],
+  "resources": [
+    {
+      "calls": 14,
+      "triangles": 12072,
+      "textures": 25,
+      "geometries": 21
+    },
+    {
+      "calls": 14,
+      "triangles": 12072,
+      "textures": 25,
+      "geometries": 21
+    },
+    {
+      "calls": 14,
+      "triangles": 12072,
+      "textures": 25,
+      "geometries": 21
+    },
+    {
+      "calls": 14,
+      "triangles": 12072,
+      "textures": 25,
+      "geometries": 21
+    },
+    {
+      "calls": 14,
+      "triangles": 12072,
+      "textures": 25,
+      "geometries": 21
+    },
+    {
+      "calls": 14,
+      "triangles": 12072,
+      "textures": 25,
+      "geometries": 21
+    }
+  ]
+}
