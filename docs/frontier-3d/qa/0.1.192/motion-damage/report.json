@@ -1,0 +1,3875 @@
+{
+  "passed": true,
+  "base": "http://127.0.0.1:5193",
+  "at": "2026-11-05T14:02:41.603Z",
+  "method": "Native movement/Space/attack, per-animation-frame read-only samples. Valid isolated forest/base trial fixtures, all residents alive, no research/boss/reward state injected. Confirmed HP deltas matched against displayed damage events. Real campaign sentinels protected.",
+  "motion": [
+    {
+      "id": "warrior",
+      "samples": [
+        {
+          "position": [
+            26.734999999999996,
+            0,
+            19.448749999999997
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.15000000000000002,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999993,
+            "allowed": 7.302357741015515,
+            "distance": 7.302357741015515,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            27.24267999999999,
+            0,
+            19.06799
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.09797333545684708,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 0.742222249507904,
+            "lock": 0.46660000000000035
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.14160000000000034,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 7.396427716193716,
+            "distance": 7.3219694396492,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            27.750359999999997,
+            0,
+            18.687229999999996
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.19594667091369683,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.4331999999999998
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.1081999999999998,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 7.883700726721287,
+            "distance": 7.439079119909035,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            28.256519999999988,
+            0,
+            18.307610000000004
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.29362667303085166,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.39990000000000053
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.07490000000000052,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 9.017213892186444,
+            "distance": 7.767213799083429,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            28.76267999999999,
+            0,
+            17.92799
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.3913066751480092,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.36660000000000037
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.04160000000000034,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 10.197969346208668,
+            "distance": 8.272630196731328,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            29.016519999999986,
+            0,
+            17.737610000000004
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.44029334287643274,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.34990000000000054
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.02490000000000052,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 8.739018337624104,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            29.524199999999993,
+            0,
+            17.356849999999998
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.5382666783332825,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.3165
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 9.523107403126739,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            29.606519999999993,
+            0,
+            17.295109999999998
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.5875466794013983,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.2996999999999998
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 9.853388867348661,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            29.76919999999999,
+            0,
+            17.173099999999998
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.6849333481788635,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.26649999999999996
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 10.4022192426116,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            29.850539999999988,
+            0,
+            17.112095
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.7336266825675949,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.2499000000000005
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 10.632351778635146,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.01419999999999,
+            0,
+            16.989349999999998
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.8316000180244446,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.21649999999999997
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 11.021718885427294,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.177369999999993,
+            0,
+            16.8669725
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.9292800201416022,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.18319999999999978
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 11.329091429129553,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.25870999999999,
+            0,
+            16.8059675
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.9779733545303335,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.16660000000000033
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 11.45754344105552,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.422369999999994,
+            0,
+            16.6832225
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.0759466899871832,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.1331999999999998
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000009,
+            "allowed": 12.500000000000009,
+            "distance": 11.674874675958039,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.50468999999999,
+            0,
+            16.621482500000003
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.1252266910552964,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.11640000000000052
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000009,
+            "allowed": 12.500000000000009,
+            "distance": 11.766421008693522,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.666879999999992,
+            0,
+            16.499840000000003
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.033100000000000365,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.2364286631345749,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000009,
+            "allowed": 12.500000000000009,
+            "distance": 11.91813684994051,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.748709999999992,
+            0,
+            16.4384675
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.049800000000000184,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.355714350938797,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.50000000000001,
+            "allowed": 12.50000000000001,
+            "distance": 11.982331392987213,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.912369999999996,
+            0,
+            16.3157225
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.08320000000000073,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.5942856669425964,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000009,
+            "allowed": 12.500000000000009,
+            "distance": 12.090254890294641,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.993709999999997,
+            0,
+            16.254717499999998
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.0998000000000011,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.7128570675849915,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.135205098216815,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.07553999999999,
+            0,
+            16.193345
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.1165,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.8321427702903748,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.175451403595225,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.239199999999986,
+            0,
+            16.070600000000002
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.14989999999999964,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.243113261192388,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.32102999999999,
+            0,
+            16.0092275
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.16660000000000036,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.271454507430146,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.483709999999995,
+            0,
+            15.887217499999998
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.1998000000000011,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.318848212876444,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.565539999999988,
+            0,
+            15.825845000000003
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.2165,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000004,
+            "allowed": 12.500000000000004,
+            "distance": 12.338833936659263,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.729199999999985,
+            0,
+            15.703100000000004
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.24989999999999962,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.372433820769242,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.81151999999999,
+            0,
+            15.64136
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.2667000000000007,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.386587083975911,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.974199999999986,
+            0,
+            15.519350000000005
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.2998999999999996,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.410105632845163,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.055539999999986,
+            0,
+            15.458345000000003
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.3165,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.419967301475078,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.218709999999994,
+            0,
+            15.335967499999999
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.3498000000000011,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.436608151366523,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.30102999999999,
+            0,
+            15.274227500000002
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.36660000000000037,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.443641375409738,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.464199999999984,
+            0,
+            15.151850000000005
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.39989999999999964,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.45535977837728,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.54602999999999,
+            0,
+            15.090477500000002
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.41660000000000036,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.460284748498315,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.70870999999999,
+            0,
+            14.9684675
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.4498000000000011,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.468520539588448,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.790539999999986,
+            0,
+            14.907095000000004
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.4665,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.4719935376229,
+            "obstructed": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "hunter",
+      "samples": [
+        {
+          "position": [
+            26.824999999999992,
+            0,
+            19.381249999999998
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.15000000000000002,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 7.29797648561878,
+            "distance": 7.29797648561878,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            27.332679999999986,
+            0,
+            19.000490000000003
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.09797333545684708,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 0.7422224283218384,
+            "lock": 0.46660000000000035
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.20660000000000034,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 7.446033733624361,
+            "distance": 7.32884344527214,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            27.83883999999999,
+            0,
+            18.62087
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.1956533375740046,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.4333000000000002
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.17330000000000015,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 8.059646979097943,
+            "distance": 7.480796236202277,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            28.346519999999984,
+            0,
+            18.240110000000005
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.29362667303085166,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.39990000000000053
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.13990000000000052,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 9.141636152031335,
+            "distance": 7.827047968982381,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            28.597319999999986,
+            0,
+            18.052010000000006
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.3420266740798934,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.3834000000000005
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.12340000000000052,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 9.615671562175049,
+            "distance": 8.0221500070111,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            29.104999999999993,
+            0,
+            17.67125
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.4400000095367431,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.35
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.08999999999999997,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 8.955691707463224,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            29.611159999999998,
+            0,
+            17.291629999999998
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.5376800116539007,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.3166999999999998
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.056699999999999785,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 9.692644270005385,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            29.864999999999995,
+            0,
+            17.10125
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.5866666793823242,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.3
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.039999999999999966,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 10.002368159958067,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.37267999999999,
+            0,
+            16.720490000000005
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.6846400148391713,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.26660000000000034
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.006600000000000328,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 10.523074185998864,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.624999999999993,
+            0,
+            16.53125
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.7333333492279053,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.24999999999999997
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 10.739948589820216,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.80869999999999,
+            0,
+            16.393475000000002
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.8313066846847523,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.21660000000000035
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 11.106883924615927,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.89999999999999,
+            0,
+            16.325
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.8800000190734864,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.19999999999999998
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 12.500000000000002,
+            "distance": 11.25971273395368,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.08369999999999,
+            0,
+            16.187225
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.9779733545303334,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.16660000000000036
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 11.518287694081167,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.175549999999987,
+            0,
+            16.118337500000003
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.026960022258757,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.14990000000000053
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 12.500000000000002,
+            "distance": 11.626595932668437,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.266849999999987,
+            0,
+            16.0498625
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.0756533566474908,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.13330000000000017
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 12.500000000000002,
+            "distance": 11.722410851496528,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.44999999999999,
+            0,
+            15.9125
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.1733333587646484,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.09999999999999998
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 11.884091571201772,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.541849999999986,
+            0,
+            15.8436125
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.01669999999999982,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.11928584426641464,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 11.952042188355087,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.725549999999984,
+            0,
+            15.705837500000003
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.05009999999999946,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.35785719752311707,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 12.066280375891502,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.817949999999986,
+            0,
+            15.636537500000003
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.06689999999999964,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.47785717248916626,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 12.500000000000002,
+            "distance": 12.114400873306423,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.00054999999998,
+            0,
+            15.499587500000004
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.10009999999999947,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.7149999141693115,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 12.194362946613463,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.09184999999999,
+            0,
+            15.431112500000003
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.11669999999999983,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.8335713148117065,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 12.500000000000002,
+            "distance": 12.227892203639435,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.274999999999984,
+            0,
+            15.293750000000003
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.15000000000000002,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 12.284470390767758,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.36739999999998,
+            0,
+            15.224450000000003
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.1668000000000002,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 12.308383055603288,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.45869999999998,
+            0,
+            15.155975000000005
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.18339999999999965,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 12.329403981266653,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.64239999999998,
+            0,
+            15.018200000000004
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.2168000000000002,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 12.364969821495345,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.73369999999998,
+            0,
+            14.949725000000006
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.23339999999999964,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 12.379783017445181,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.73369999999998,
+            0,
+            14.812362500000006
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.2666999999999998,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 12.404779210225987,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.82499999999998,
+            0,
+            14.743887500000005
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.2833000000000002,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 12.41522520261851,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.82499999999998,
+            0,
+            14.675000000000006
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.30000000000000004,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 12.424578053678463,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.82499999999998,
+            0,
+            14.536812500000007
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.3335,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 12.440343787165295,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.82499999999998,
+            0,
+            14.468750000000007
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.35000000000000003,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 12.446851052723808,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.82499999999998,
+            0,
+            14.399862500000008
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.36669999999999986,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 12.452714755182813,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.82499999999998,
+            0,
+            14.262500000000008
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.4,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 12.462546569873378,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.82499999999998,
+            0,
+            14.19361250000001
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.41669999999999985,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 12.466678651157894,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.82499999999998,
+            0,
+            14.12472500000001
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.4333999999999997,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 12.500000000000002,
+            "distance": 12.47035485708776,
+            "obstructed": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "astral",
+      "samples": [
+        {
+          "position": [
+            26.666999999999994,
+            0,
+            19.499750000000002
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.13339999999999963,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.9528571963310242,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000004,
+            "allowed": 7.3115665470439115,
+            "distance": 7.3115665470439115,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            27.274999999999995,
+            0,
+            19.043750000000003
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.11733333587646484,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 0.8888891339302063,
+            "lock": 0.46
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.13499999999999998,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 7.412924133150932,
+            "distance": 7.336319717498047,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            27.781159999999996,
+            0,
+            18.66413
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.21501333799362238,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.42669999999999986
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.10169999999999979,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 7.938760026585227,
+            "distance": 7.461582503045046,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            28.287319999999998,
+            0,
+            18.284509999999997
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.31269334011077987,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.3933999999999997
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.0683999999999996,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 9.057885296542755,
+            "distance": 7.793494779620557,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            28.79348,
+            0,
+            17.904889999999995
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.4103733422279374,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.36009999999999953
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.035099999999999416,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 10.42636393404666,
+            "distance": 8.34093577798918,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            29.301159999999992,
+            0,
+            17.52413
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.5083466776847845,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.3266999999999999
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.001699999999999778,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 9.208017054089245,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            29.558040000000002,
+            0,
+            17.331469999999992
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.5579200120925925,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.30979999999999935
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 9.575305290731688,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            29.72354,
+            0,
+            17.207344999999993
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.6550133475303656,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.2766999999999999
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 10.180178826459569,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            29.89004,
+            0,
+            17.082469999999994
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.7526933496475231,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.2433999999999997
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 10.662529123717873,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.05654,
+            0,
+            16.957594999999994
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.8503733517646807,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.2100999999999995
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 11.0445864277408,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.223539999999996,
+            0,
+            16.832344999999997
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.9483466872215277,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.17669999999999986
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.50000000000001,
+            "allowed": 12.50000000000001,
+            "distance": 11.348010897795685,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.390039999999996,
+            0,
+            16.707469999999997
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.0460266893386851,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.14339999999999967
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 11.587538966693575,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.473539999999993,
+            0,
+            16.644844999999997
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.0950133570671088,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.12669999999999984
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 11.688207000190868,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.640039999999992,
+            0,
+            16.519969999999997
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.1926933591842663,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.09339999999999965
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000004,
+            "allowed": 12.500000000000004,
+            "distance": 11.856999577496534,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.80703999999999,
+            0,
+            16.39472
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.03339999999999964,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.23857124149799347,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 11.991052238652038,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.890039999999992,
+            0,
+            16.332469999999997
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.05,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.35714268684387207,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000004,
+            "allowed": 12.500000000000004,
+            "distance": 12.04688526057771,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.05703999999999,
+            0,
+            16.20722
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.08339999999999964,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.5957141518592834,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.141350574289092,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.22353999999999,
+            0,
+            16.082345
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.11669999999999983,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.8335713148117065,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.215922984902605,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.30803999999999,
+            0,
+            16.01897
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.13360000000000039,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.9542856216430664,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.247617604121512,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.47353999999999,
+            0,
+            15.894845000000002
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.16669999999999985,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.299814310898025,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.64003999999999,
+            0,
+            15.76997
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.20000000000000004,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 12.500000000000002,
+            "distance": 12.341438047997482,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.723539999999986,
+            0,
+            15.707345000000002
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.21669999999999986,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.358931529157708,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.890539999999987,
+            0,
+            15.582094999999999
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.25010000000000043,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.388341469275508,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.973539999999986,
+            0,
+            15.519845
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.2666999999999999,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.400590728762605,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.140039999999985,
+            0,
+            15.394969999999999
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.30000000000000004,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.421260464895072,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.306539999999984,
+            0,
+            15.270094999999998
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.3333000000000002,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.437632432957543,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.39053999999999,
+            0,
+            15.207094999999997
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.3501000000000004,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.444552014599278,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.556539999999984,
+            0,
+            15.082594999999998
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.38330000000000025,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.456050318320449,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.640039999999985,
+            0,
+            15.019969999999999
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.4000000000000001,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.460899104039528,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.807039999999986,
+            0,
+            14.89472
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.43339999999999973,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.469050854759473,
+            "obstructed": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "xenobinder",
+      "samples": [
+        {
+          "position": [
+            26.666500000000003,
+            0,
+            19.500124999999997
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.1333000000000002,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.9521428346633911,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 7.31165329463675,
+            "distance": 7.31165329463675,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            27.174179999999996,
+            0,
+            19.119365000000002
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.09797333545684708,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 0.7422223091125488,
+            "lock": 0.46660000000000035
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.14160000000000034,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 7.366059488370634,
+            "distance": 7.32299589224341,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            27.68185999999999,
+            0,
+            18.738605000000007
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.19594667091369417,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.4332000000000007
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.1082000000000007,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 7.778031536459228,
+            "distance": 7.417861675986202,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            28.186500000000002,
+            0,
+            18.360125
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.29333333969116215,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.39999999999999997
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.07499999999999997,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999996,
+            "allowed": 8.931271773513817,
+            "distance": 7.73169902878262,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            28.44185999999999,
+            0,
+            18.16860500000001
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.34261334075927524,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.3832000000000007
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.058200000000000696,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999995,
+            "allowed": 9.294844014546207,
+            "distance": 7.905127460574681,
+            "obstructed": true
+          }
+        },
+        {
+          "position": [
+            28.946500000000004,
+            0,
+            17.790125000000003
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.44000000953674323,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.35
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.024999999999999967,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999996,
+            "allowed": 12.499999999999996,
+            "distance": 8.857970735881214,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            29.452659999999995,
+            0,
+            17.41050500000001
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.5376800116538981,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.3167000000000007
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999996,
+            "allowed": 12.499999999999996,
+            "distance": 9.615241993773054,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            29.536659999999994,
+            0,
+            17.347505000000012
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.5869600127220139,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.2999000000000005
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 9.935301272775357,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            29.703159999999993,
+            0,
+            17.222630000000013
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.6846400148391715,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.26660000000000034
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 10.468567891584081,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            29.869659999999996,
+            0,
+            17.097755000000014
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.782320016956329,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.23330000000000015
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999996,
+            "allowed": 12.499999999999996,
+            "distance": 10.890954708520942,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            29.953159999999997,
+            0,
+            17.035130000000013
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.8313066846847526,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.21660000000000032
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999995,
+            "allowed": 12.499999999999995,
+            "distance": 11.068473988127128,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.120159999999995,
+            0,
+            16.909880000000015
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.9292800201415996,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.1832000000000007
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999996,
+            "allowed": 12.499999999999996,
+            "distance": 11.366918382079055,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.203159999999997,
+            0,
+            16.847630000000013
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.9779733545303336,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.16660000000000033
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999995,
+            "allowed": 12.499999999999995,
+            "distance": 11.491220669310655,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.36966,
+            0,
+            16.722755000000014
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.075653356647491,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.13330000000000014
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 11.700971755116733,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.45316,
+            0,
+            16.660130000000013
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.1246400243759147,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.11660000000000031
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 11.789125220508803,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.619660000000003,
+            0,
+            16.535255000000014
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.033300000000000184,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.23785725235939026,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 11.936934312481913,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.703160000000004,
+            0,
+            16.472630000000013
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.05,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.35714292526245117,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 11.999055009611135,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.869660000000007,
+            0,
+            16.347755000000014
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.08330000000000018,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.5950000286102295,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 12.103214316276725,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            30.953160000000008,
+            0,
+            16.285130000000013
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.1,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.714285671710968,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 12.146990031668711,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.03616000000001,
+            0,
+            16.22288000000001
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.11660000000000037,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.832857072353363,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999993,
+            "allowed": 12.499999999999993,
+            "distance": 12.185716232663523,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.203160000000008,
+            0,
+            16.097630000000013
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.15000000000000002,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999993,
+            "allowed": 12.499999999999993,
+            "distance": 12.251238079764958,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.287160000000007,
+            0,
+            16.034630000000014
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.1668000000000002,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999995,
+            "allowed": 12.499999999999995,
+            "distance": 12.278837816263406,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.453160000000008,
+            0,
+            15.910130000000015
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.2,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999993,
+            "allowed": 12.499999999999993,
+            "distance": 12.324700437634807,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.53816000000001,
+            0,
+            15.846380000000014
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.21700000000000003,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999993,
+            "allowed": 12.499999999999993,
+            "distance": 12.344367681062025,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.703160000000008,
+            0,
+            15.722630000000015
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.25,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999993,
+            "allowed": 12.499999999999993,
+            "distance": 12.376468486268344,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.78666000000001,
+            0,
+            15.660005000000016
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.2666999999999998,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999995,
+            "allowed": 12.499999999999995,
+            "distance": 12.390097204765228,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            31.87016000000001,
+            0,
+            15.597380000000017
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.28339999999999965,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999993,
+            "allowed": 12.499999999999993,
+            "distance": 12.402222323393087,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.03616000000001,
+            0,
+            15.472880000000014
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.3166000000000004,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999995,
+            "allowed": 12.499999999999995,
+            "distance": 12.42249857715869,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.11966000000001,
+            0,
+            15.410255000000015
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.3333000000000002,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999995,
+            "allowed": 12.499999999999995,
+            "distance": 12.431048987034721,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.28616000000001,
+            0,
+            15.285380000000014
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.36660000000000037,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999993,
+            "allowed": 12.499999999999993,
+            "distance": 12.445385670387473,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.370160000000006,
+            0,
+            15.222380000000017
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.38339999999999963,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999995,
+            "allowed": 12.499999999999995,
+            "distance": 12.451445042758134,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.453160000000004,
+            0,
+            15.160130000000017
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.4,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999996,
+            "allowed": 12.499999999999996,
+            "distance": 12.456771660140447,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.61966,
+            0,
+            15.035255000000015
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.4333000000000002,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999995,
+            "allowed": 12.499999999999995,
+            "distance": 12.46575994027991,
+            "obstructed": false
+          }
+        },
+        {
+          "position": [
+            32.703160000000004,
+            0,
+            14.972630000000017
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.45,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999995,
+            "allowed": 12.499999999999995,
+            "distance": 12.469537503762659,
+            "obstructed": false
+          }
+        }
+      ]
+    }
+  ],
+  "combat": {
+    "before": [
+      {
+        "id": 0,
+        "position": [
+          17.15728350647601,
+          0,
+          25.210278785888516
+        ],
+        "hp": 68,
+        "wind": -0.003300000000000164,
+        "slow": 0
+      },
+      {
+        "id": 1,
+        "position": [
+          18.45300336780171,
+          0,
+          23.95770525187764
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 2,
+        "position": [
+          10.75,
+          0,
+          13.5
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 3,
+        "position": [
+          13.5,
+          0,
+          12.25
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 4,
+        "position": [
+          36,
+          0,
+          12.5
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 5,
+        "position": [
+          39.5,
+          0,
+          11.25
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 6,
+        "position": [
+          44.25,
+          0,
+          24.5
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 7,
+        "position": [
+          45.75,
+          0,
+          26.25
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      }
+    ],
+    "after": [
+      {
+        "id": 0,
+        "position": [
+          17.15728350647601,
+          0,
+          25.210278785888516
+        ],
+        "hp": 0,
+        "wind": -0.003300000000000164,
+        "slow": 0
+      },
+      {
+        "id": 1,
+        "position": [
+          17.38992247390384,
+          0,
+          24.99530170555583
+        ],
+        "hp": 0,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 2,
+        "position": [
+          10.75,
+          0,
+          13.5
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 3,
+        "position": [
+          13.5,
+          0,
+          12.25
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 4,
+        "position": [
+          36,
+          0,
+          12.5
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 5,
+        "position": [
+          39.5,
+          0,
+          11.25
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 6,
+        "position": [
+          44.25,
+          0,
+          24.5
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 7,
+        "position": [
+          45.75,
+          0,
+          26.25
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      }
+    ],
+    "hpDelta": 136,
+    "displayedEnemyDamage": 136,
+    "heroEvents": [
+      {
+        "amount": 14,
+        "target": "hero"
+      }
+    ],
+    "capacity": 28,
+    "camera": [
+      {
+        "position": [
+          17.104509999999983,
+          0,
+          25.421617499999964
+        ],
+        "boom": {
+          "desired": 12.499999999999954,
+          "allowed": 6.830946231239288,
+          "distance": 6.418999522803148,
+          "obstructed": true
+        }
+      },
+      {
+        "position": [
+          18.16633999999998,
+          0,
+          24.625244999999953
+        ],
+        "boom": {
+          "desired": 12.499999999999952,
+          "allowed": 12.499999999999952,
+          "distance": 9.234757046962958,
+          "obstructed": false
+        }
+      },
+      {
+        "position": [
+          19.227679999999975,
+          0,
+          23.829239999999942
+        ],
+        "boom": {
+          "desired": 12.499999999999954,
+          "allowed": 12.499999999999954,
+          "distance": 11.783133629400973,
+          "obstructed": false
+        }
+      },
+      {
+        "position": [
+          20.289509999999964,
+          0,
+          23.032867499999945
+        ],
+        "boom": {
+          "desired": 12.49999999999995,
+          "allowed": 12.49999999999995,
+          "distance": 12.342726008942623,
+          "obstructed": false
+        }
+      },
+      {
+        "position": [
+          21.43267999999997,
+          0,
+          22.175489999999936
+        ],
+        "boom": {
+          "desired": 12.49999999999995,
+          "allowed": 12.49999999999995,
+          "distance": 12.46928075134033,
+          "obstructed": false
+        }
+      },
+      {
+        "position": [
+          21.412467499999973,
+          0,
+          21.297164999999936
+        ],
+        "boom": {
+          "desired": 12.49999999999995,
+          "allowed": 12.49999999999995,
+          "distance": 12.493260474982279,
+          "obstructed": false
+        }
+      },
+      {
+        "position": [
+          20.677467499999974,
+          0,
+          20.317164999999942
+        ],
+        "boom": {
+          "desired": 12.49999999999995,
+          "allowed": 12.49999999999995,
+          "distance": 12.498338053592184,
+          "obstructed": false
+        }
+      },
+      {
+        "position": [
+          19.75871749999997,
+          0,
+          19.092164999999948
+        ],
+        "boom": {
+          "desired": 12.49999999999995,
+          "allowed": 12.49999999999995,
+          "distance": 12.49971119701887,
+          "obstructed": false
+        }
+      },
+      {
+        "position": [
+          18.962344999999964,
+          0,
+          17.785334999999947
+        ],
+        "boom": {
+          "desired": 12.49999999999995,
+          "allowed": 12.49999999999995,
+          "distance": 12.499960248613123,
+          "obstructed": false
+        }
+      },
+      {
+        "position": [
+          18.962344999999964,
+          0,
+          17.785334999999947
+        ],
+        "boom": {
+          "desired": 12.49999999999995,
+          "allowed": 12.49999999999995,
+          "distance": 12.499996948159826,
+          "obstructed": false
+        }
+      },
+      {
+        "position": [
+          18.881004999999963,
+          0,
+          18.275579999999948
+        ],
+        "boom": {
+          "desired": 12.49999999999995,
+          "allowed": 12.49999999999995,
+          "distance": 12.499999626282511,
+          "obstructed": false
+        }
+      },
+      {
+        "position": [
+          18.06466499999996,
+          0,
+          19.25570249999997
+        ],
+        "boom": {
+          "desired": 12.49999999999995,
+          "allowed": 12.49999999999995,
+          "distance": 12.499999942222418,
+          "obstructed": false
+        }
+      },
+      {
+        "position": [
+          16.839174999999965,
+          0,
+          20.174819999999972
+        ],
+        "boom": {
+          "desired": 12.49999999999995,
+          "allowed": 12.49999999999995,
+          "distance": 12.499999989966748,
+          "obstructed": false
+        }
+      },
+      {
+        "position": [
+          15.451494999999964,
+          0,
+          21.215579999999967
+        ],
+        "boom": {
+          "desired": 12.499999999999948,
+          "allowed": 12.499999999999948,
+          "distance": 12.499999998617994,
+          "obstructed": false
+        }
+      },
+      {
+        "position": [
+          13.49198499999996,
+          0,
+          22.685212499999956
+        ],
+        "boom": {
+          "desired": 12.499999999999945,
+          "allowed": 10.65545464763725,
+          "distance": 10.65545464763725,
+          "obstructed": true
+        }
+      }
+    ]
+  },
+  "errors": []
+}

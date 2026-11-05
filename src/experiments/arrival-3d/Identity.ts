@@ -7,11 +7,12 @@ let ready:Promise<void>|undefined;
 const roots=new Map<string,T.Object3D>();
 /** One offline GLB, shared mesh/material storage, no authoring in the frame loop. */
 export function loadIdentity(){
- return ready??=Promise.all([new GLTFLoader().loadAsync('/assets/arrival-3d/identity-186.glb'),new GLTFLoader().loadAsync('/assets/arrival-3d/weapons-188.glb'),new GLTFLoader().loadAsync('/assets/arrival-3d/gauntlet-189.glb'),new GLTFLoader().loadAsync('/assets/arrival-3d/backpack-190.glb'),loadCreatures()]).then(([gltf,weapons,gauntlet,backpack])=>{
+ return ready??=Promise.all([new GLTFLoader().loadAsync('/assets/arrival-3d/identity-186.glb'),new GLTFLoader().loadAsync('/assets/arrival-3d/weapons-188.glb'),new GLTFLoader().loadAsync('/assets/arrival-3d/gauntlet-189.glb'),new GLTFLoader().loadAsync('/assets/arrival-3d/backpack-190.glb'),new GLTFLoader().loadAsync('/assets/arrival-3d/combat-fx-192.glb'),loadCreatures()]).then(([gltf,weapons,gauntlet,backpack,fx])=>{
   for(const root of gltf.scene.children){roots.set(root.name,root);root.traverse(o=>{if(o instanceof T.Mesh){o.castShadow=true;o.receiveShadow=true;for(const m of Array.isArray(o.material)?o.material:[o.material])for(const value of Object.values(m))if(value instanceof T.Texture)value.anisotropy=4;}});}
   for(const root of weapons.scene.children){roots.set('previous-'+root.name,root);roots.set(root.name,root);root.traverse(o=>{if(/^emitter(?:_\d+)?$/.test(o.name))o.name='emitter';if(o instanceof T.Mesh){o.castShadow=true;o.receiveShadow=true;}});}
   for(const root of gauntlet.scene.children){roots.set(root.name,root);root.traverse(o=>{if(/^emitter(?:_\d+)?$/.test(o.name))o.name='emitter';if(o instanceof T.Mesh){o.castShadow=true;o.receiveShadow=true;}});}
   for(const root of backpack.scene.children){roots.set(root.name,root);root.traverse(o=>{if(o instanceof T.Mesh){o.castShadow=true;o.receiveShadow=true;}});}
+  const fxMaterials=new Map<T.Material,T.Material>();for(const root of fx.scene.children){roots.set(root.name,root);root.traverse(o=>{if(o instanceof T.Mesh){o.castShadow=false;o.receiveShadow=false;const use=(source:T.Material)=>{let m=fxMaterials.get(source);if(!m){const p=source as T.MeshStandardMaterial;m=/core|energy|plasma|strand|foam|edge|ember|flame/i.test(p.name)?new T.MeshBasicMaterial({name:p.name,color:p.color,toneMapped:false}):p;fxMaterials.set(source,m);}return m;};o.material=Array.isArray(o.material)?o.material.map(use):use(o.material);}});}
  });
 }
 export function identity(name:string){

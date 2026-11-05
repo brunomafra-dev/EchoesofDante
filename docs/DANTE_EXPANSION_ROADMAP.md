@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+**05/11/2026 · Refinamento do combate 3D · 0.1.192:** usuário pediu identidade dos disparos/poderes, Q do Caçador como feixe de plasma, cambalhota natural, Guerreiro legível, Água/Energia diferentes, câmera fora das copas e dano flutuante. [Escopo e evidências](frontier-3d/COMBAT_REFINEMENT.md). Só acampamento/floresta existentes; nenhum Siroco ou coop 3D. QA técnico e aprovação humana separados.
+
 **05/11/2026 · Experiência 3D pelo menu · 0.1.191:** usuário autorizou publicar os três commits locais e criar acesso ao protótipo dentro do jogo. [Escopo e QA/publicação](frontier-3d/ACCESS.md). Mesmo acampamento/floresta solo, com revisões de Hollow, empunhaduras/manopla e mochila; não autoriza Siroco, coop 3D ou migração integral. Restrição anterior de push/deploy substituída por esta autorização explícita; aprovação visual humana permanece pendente.
 
 Aplicação `89c5cce` publicada: Vercel success, 86 arquivos conferidos e três suítes públicas passaram; Hollow `spider` ativo, navegação/retorno e dados da campanha preservados. [Evidências e limites](frontier-3d/qa/0.1.191/publication.json). Aguardar playtest humano.

@@ -26,6 +26,7 @@ export class ArrivalWorld{
  readonly bodies={base:[] as T.Object3D[],forest:[] as T.Object3D[]};readonly sun:T.DirectionalLight;
  zone:Zone='base';private environment:T.WebGLRenderTarget;private randomState=319;private wind={value:0};
  private trees={base:[] as Tree[],forest:[] as Tree[]};private rocks={base:[] as {x:number;z:number;radius:number}[],forest:[] as {x:number;z:number;radius:number}[]};
+ readonly cameraObstacles={base:[] as T.Sphere[],forest:[] as T.Sphere[]};
  private authored:{name:string;x:number;z:number}[]=[];
  private batches={base:new Batches(),forest:new Batches()};private materials:T.Material[]=[];
  private steel=material('#a9aca0',.28,.72);private dark=material('#3f4b48',.35,.7);private amber=material('#b0743b',.3,.64);private glass=material('#243f45',.65,.22);private canvas=material('#aaa187');private wood=material('#68674c');private glow=material('#72cfc0',.2,.3);
@@ -39,6 +40,7 @@ export class ArrivalWorld{
   const paint=paintedMetal();for(const m of[this.steel,this.dark,this.amber])m.map=paint;this.glow.emissive.set('#458b7a');this.glow.emissiveIntensity=.5;
   this.materials.push(this.steel,this.dark,this.amber,this.glass,this.canvas,this.wood,this.glow);
   this.ground('base');this.ground('forest');this.camp();this.forest();this.grass('base');this.grass('forest');
+  for(const zone of['base','forest']as const){for(const tree of this.trees[zone]){this.cameraObstacles[zone].push(new T.Sphere(new T.Vector3(tree.x,tree.height*.72,tree.z),tree.height*.36));for(const y of[.8,1.8,2.8])if(y<tree.height*.5)this.cameraObstacles[zone].push(new T.Sphere(new T.Vector3(tree.x,y,tree.z),.24));}for(const rock of this.rocks[zone])this.cameraObstacles[zone].push(new T.Sphere(new T.Vector3(rock.x,rock.radius*.7,rock.z),rock.radius*.85));}
  }
  private add(zone:Zone,g:T.BufferGeometry,m:T.Material,x:number,y:number,z:number,sx=1,sy=1,sz=1,yaw=0,solid=true,shadow=true){this.batches[zone].add(g,m,x,y,z,sx,sy,sz,yaw,solid,shadow);}
  private solid(zone:Zone,x:number,z:number,radius:number,tag:string,halfX?:number,halfZ?:number){this.solids.push({zone,x,z,radius,tag,halfX,halfZ});}

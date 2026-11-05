@@ -1,0 +1,15 @@
+{
+  "cpu": "Intel(R) Celeron(R) N5105 @ 2.00GHz",
+  "gpu": "Intel(R) UHD Graphics (0x00004E61)",
+  "renderer": "Chrome, ANGLE Direct3D11 vs_5_0 ps_5_0",
+  "viewport": [
+    1440,
+    900
+  ],
+  "devicePixelRatio": 1,
+  "performanceConditions": "Warrior idle; base five NPCs, forest eight live spiders; 1440x900/DPR1; eight-second warm-up, three two-second samples; sequential with no concurrent build/Blender/second QA.",
+  "physicalPhoneTest": false,
+  "humanVisualApproval": "pending: combat effects, roll, damage numbers and camera refinement",
+  "published": false,
+  "version": "0.1.192"
+}

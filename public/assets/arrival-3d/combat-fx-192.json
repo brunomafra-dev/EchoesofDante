@@ -1,0 +1,51 @@
+{
+  "version": "0.1.192",
+  "file": "combat-fx-192.glb",
+  "author": "Echoes of Dante original Blender geometry; no external artwork or render",
+  "generator": "scripts/asset-tools/author-arrival192.py",
+  "sha256": "08768dc3a8a13505dae98d643e72df93d209369f9e9c91f22e4ba4120c1717f1",
+  "bytes": 115444,
+  "textures": 0,
+  "models": [
+    {
+      "name": "fx-plasma",
+      "triangles": 316
+    },
+    {
+      "name": "fx-energy",
+      "triangles": 436
+    },
+    {
+      "name": "fx-water",
+      "triangles": 272
+    },
+    {
+      "name": "fx-fire",
+      "triangles": 158
+    },
+    {
+      "name": "fx-earth",
+      "triangles": 56
+    },
+    {
+      "name": "fx-bond",
+      "triangles": 132
+    },
+    {
+      "name": "fx-plasma-beam",
+      "triangles": 596
+    },
+    {
+      "name": "fx-blade-sweep",
+      "triangles": 456
+    },
+    {
+      "name": "fx-water-vortex",
+      "triangles": 1756
+    },
+    {
+      "name": "fx-energy-cage",
+      "triangles": 816
+    }
+  ]
+}

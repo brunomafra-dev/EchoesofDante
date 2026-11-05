@@ -1,5 +1,12 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**05/11/2026 · Leitura do combate 3D · 0.1.192:** após avaliar a experiência como “legal”, o usuário pediu refinar disparos, Q do Caçador como feixe concentrado, cambalhota após Space, golpe visível do Guerreiro, distinção Água/Energia, câmera entre árvores e números de dano sobre herói/criaturas. [Escopo, autoria Blender e QA](frontier-3d/COMBAT_REFINEMENT.md). Mesmo protótipo solo; não ampliar regiões/coop. Preservar cenário opaco, humanos completos, armas/manopla/mochila, saves reais e progressão. Autorização de publicação permanece vigente; aprovação estética destas mudanças depende do playtest.
+
+- [x] Implementação e capturas inspecionadas: dez modelos originais Blender, projéteis/campos por classe/elemento, feixe de plasma, Sword/Roll completos, números confirmados e braço de câmera sem transparência ambiental.
+- [x] QA local: typecheck/build 310 módulos e oito relatórios; 28 casos de efeitos/dois corpos, 133 amostras de movimento nas quatro classes, 136 HP perdidos = 136 somados nos números, miss sem dano flutuante, percurso/reload, touch/gamepad, elementos/NPCs/oficina/menu, recursos e desempenho. 83 hashes da campanha preservados; três bundles do menu recompilados. [Evidências e limites](frontier-3d/COMBAT_REFINEMENT.md).
+- [ ] Push sincronizado, Vercel e QA público.
+- [ ] Aprovação visual humana desta revisão. Aguardar antes da etapa seguinte.
+
 **05/11/2026 · Publicação e acesso no jogo · 0.1.191:** usuário autorizou explicitamente push/deploy das revisões locais e pediu “Experiência 3D” dentro do Echoes. Esta autorização substitui a restrição de publicação anterior; não significa aprovação estética nem expansão do protótipo. Botão no menu inicial, retorno à campanha no editor/pausa 3D, build limpo com obtenção do pacote oficial Easyforge e incorporação no módulo do jogo (fontes fora do Git/public). Campanha, saves, progressão e relay preservados. [Escopo e evidências](frontier-3d/ACCESS.md).
 
 - [x] QA local: cinco percursos de acesso/retorno, isolamento, preparação oficial em diretório vazio, modelos/oficina/NPCs, touch nas quatro classes, gamepad e recuperação/reload. Typecheck/build 308 módulos; 83 hashes da campanha preservados e três bundles recompilados pelo novo botão do menu, sem alteração de cenas/sistemas/relay. Capturas representativas inspecionadas; [evidências e limites](frontier-3d/ACCESS.md).
