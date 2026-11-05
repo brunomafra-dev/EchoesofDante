@@ -1,0 +1,148 @@
+{
+  "version": "0.1.194",
+  "file": "looks-194.glb",
+  "bytes": 1509188,
+  "sha256": "758485e44c9ddbf859e8ed69be283af476646efcd3d3108c091f944dcdc036c7",
+  "author": "Quaternius Universal Base Characters CC0 hair surfaces adapted in Blender; new tails, braid, garments and goggles by Echoes of Dante. Existing credited CC0 textures.",
+  "textures": 4,
+  "materials": 10,
+  "models": [
+    {
+      "name": "hair-male-4",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 1641
+    },
+    {
+      "name": "hair-male-5",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 2675
+    },
+    {
+      "name": "hair-male-6",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 6912
+    },
+    {
+      "name": "hair-male-7",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 2377
+    },
+    {
+      "name": "hair-male-8",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 3003
+    },
+    {
+      "name": "hair-male-9",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 1277
+    },
+    {
+      "name": "hair-male-10",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 2101
+    },
+    {
+      "name": "hair-male-11",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 1186
+    },
+    {
+      "name": "hair-female-4",
+      "gender": "female",
+      "anchor": "Head",
+      "triangles": 1625
+    },
+    {
+      "name": "hair-female-5",
+      "gender": "female",
+      "anchor": "Head",
+      "triangles": 2675
+    },
+    {
+      "name": "hair-female-6",
+      "gender": "female",
+      "anchor": "Head",
+      "triangles": 6768
+    },
+    {
+      "name": "hair-female-7",
+      "gender": "female",
+      "anchor": "Head",
+      "triangles": 2377
+    },
+    {
+      "name": "hair-female-8",
+      "gender": "female",
+      "anchor": "Head",
+      "triangles": 3003
+    },
+    {
+      "name": "hair-female-9",
+      "gender": "female",
+      "anchor": "Head",
+      "triangles": 1261
+    },
+    {
+      "name": "hair-female-10",
+      "gender": "female",
+      "anchor": "Head",
+      "triangles": 2101
+    },
+    {
+      "name": "hair-female-11",
+      "gender": "female",
+      "anchor": "Head",
+      "triangles": 1186
+    },
+    {
+      "name": "dress-ivo",
+      "gender": "male",
+      "anchor": "skin",
+      "triangles": 1036
+    },
+    {
+      "name": "dress-lia",
+      "gender": "female",
+      "anchor": "skin",
+      "triangles": 4212
+    },
+    {
+      "name": "dress-nara",
+      "gender": "female",
+      "anchor": "skin",
+      "triangles": 5268
+    },
+    {
+      "name": "dress-gui",
+      "gender": "male",
+      "anchor": "skin",
+      "triangles": 4032
+    },
+    {
+      "name": "dress-elisa",
+      "gender": "female",
+      "anchor": "skin",
+      "triangles": 4032
+    },
+    {
+      "name": "head-ivo",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 1172
+    }
+  ],
+  "ageShapes": {
+    "gui": 1041,
+    "ivo": 1036,
+    "lia": 460
+  }
+}

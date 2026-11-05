@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "canonicalLayoutSourceHashes": {
+    "base": "edd5b10536abc3d08545ec5ace9f2e273e44ce8ecafdf768b2afc84031c36285",
+    "forest": "2952cc55ad1f513f07beded1cca5f01f027410da54d2132732d96c77bc2567fc",
+    "earlyJourney": "3b665bd6a9178788816e71c14586abbab0b93c919d3d08607b5d26cec59c947e",
+    "discovery": "ce5cef891355d863eb031c3263d1eb261613755040d557efec61fe3ea9b00075",
+    "classes": "ed385225985e2373e60fe1037669bc395a0890c5a76a99e0a6d499156c580263",
+    "game": "d41e719930b1314eb5075c0829717e1a9b11c0c55957401fe099c7c07bb32700"
+  },
+  "unchangedCampaignHashes": 72,
+  "rebuiltCampaignMenuBundles": [
+    "/assets/CoopSession-CMZ8Z9Sh.js",
+    "/assets/GameScene-CTRoUD6_.js",
+    "/assets/LocalJourney-Duxx5BnI.js",
+    "/assets/basePlaytest-C6SHsimq.js",
+    "/assets/campaignPlaytest-CQrrblsb.js",
+    "/assets/creatureFinish-wMp2Gneg.js",
+    "/assets/forestFinish-BQfjl3nz.js",
+    "/assets/glacierPlaytest-wZdYXW2s.js",
+    "/assets/inventoryPlaytest-D2Si5ung.js",
+    "/assets/main-B5MNrPJQ.js",
+    "/assets/main-C5ZCoIy6.js",
+    "/assets/main-DBS7t0Q3.js",
+    "/assets/qualityReference-C4yP8nt9.js",
+    "/assets/worldFinish-Cp221cpy.js"
+  ],
+  "publicationHashes": 102,
+  "referenceModelHashesVerified": true,
+  "runtimeCampaignConfigImports": true,
+  "campaignSourceAndRelayChanged": false,
+  "reports": [
+    "docs/frontier-3d/qa/0.1.194/assets/report.json",
+    "docs/frontier-3d/qa/0.1.194/entry/report.json",
+    "docs/frontier-3d/qa/0.1.194/identity-bridge/report.json",
+    "docs/frontier-3d/qa/0.1.194/input/report.json",
+    "docs/frontier-3d/qa/0.1.194/looks/report.json",
+    "docs/frontier-3d/qa/0.1.194/motion-damage/report.json",
+    "docs/frontier-3d/qa/0.1.194/performance/report.json",
+    "docs/frontier-3d/qa/0.1.194/visual/report.json",
+    "docs/frontier-3d/qa/0.1.194/workshop/report.json"
+  ]
+}

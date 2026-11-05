@@ -1,3 +1,4 @@
+import{validHair}from'./looks';
 import layout from './layout.json';
 import type{PlayableClass}from'../../config/classes';
 export type Zone='base'|'forest';
@@ -15,7 +16,7 @@ export const fresh=():Trial=>({hero:null,zone:'base',hp:100,potions:3,defeated:[
 export function maxHp(id:ClassId){return id==='hunter'?80:id==='astral'?85:id==='xenobinder'?90:100;}
 export function parseTrial(raw:string|null):Trial{
  if(!raw)return fresh();try{const d=JSON.parse(raw);if(!d||typeof d!=='object'||!['base','forest'].includes(d.zone))return fresh();
- const h=d.hero;if(!h||!['male','female'].includes(h.gender)||!['warrior','hunter','astral','xenobinder'].includes(h.classId)||!Number.isInteger(h.hair)||h.hair<0||h.hair>3||![h.skin,h.hairColor,h.cloth].every(c=>typeof c==='string'&&/^#[0-9a-f]{6}$/i.test(c)))return fresh();
+ const h=d.hero;if(!h||!['male','female'].includes(h.gender)||!['warrior','hunter','astral','xenobinder'].includes(h.classId)||!validHair(h.hair)||![h.skin,h.hairColor,h.cloth].every(c=>typeof c==='string'&&/^#[0-9a-f]{6}$/i.test(c)))return fresh();
  const hero:Appearance={name:String(h.name??'Explorador').replace(/[\x00-\x1f<>]/g,'').slice(0,24).trim()||'Explorador',gender:h.gender,classId:h.classId,hair:h.hair,beard:h.beard===true,skin:h.skin,hairColor:h.hairColor,cloth:h.cloth};
  const echoIds=['northern-ruin','mineral-signal','unknown-trace'];const echoes=Array.isArray(d.echoes)?[...new Set<string>(d.echoes.filter((e:unknown)=>typeof e==='string'&&echoIds.includes(e)))]:[];
  return{hero,zone:d.zone,hp:Number.isFinite(d.hp)?Math.max(0,Math.min(maxHp(hero.classId),d.hp)):maxHp(hero.classId),potions:Number.isInteger(d.potions)?Math.max(0,Math.min(3,d.potions)):3,defeated:Array.isArray(d.defeated)?[...new Set<number>(d.defeated.filter((n:unknown)=>Number.isInteger(n)&&Number(n)>=0&&Number(n)<8))]:[],echoes,source:echoes.length===3&&d.source===true,mechanism:echoes.length===3&&d.source===true&&d.mechanism===true,...(typeof d.profileId==='string'&&/^[-a-zA-Z0-9]{1,64}$/.test(d.profileId)?{profileId:d.profileId}:{})};

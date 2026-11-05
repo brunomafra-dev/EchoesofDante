@@ -2,3 +2,5 @@
 :root{--specimen-panel:210px}@media(max-height:440px) and (orientation:landscape){header{top:8px;left:8px;width:calc(100% - var(--specimen-panel) - 48px);max-width:420px;padding:8px}header h1{display:none}header nav{gap:8px;flex-wrap:nowrap}header a{font-size:12px}#stage{inset:90px calc(var(--specimen-panel) + 26px) 0 0}#panel{width:var(--specimen-panel)}}
 
 #panel{max-height:calc(100dvh - 32px);overflow:auto}@media(max-width:700px) and (orientation:portrait){#panel{max-height:48dvh}}
+/* The same shipped 2D sprite is a reference, never a replacement for the 3D actor. */
+#reference-2d{border-top:1px solid #63715c;margin-top:12px;padding-top:12px}#reference-image{width:160px;height:160px;background-repeat:no-repeat;background-position:0 0;margin:8px auto}#reference-caption{font-size:12px;line-height:1.45}

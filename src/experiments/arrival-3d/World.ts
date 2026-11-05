@@ -1,3 +1,4 @@
+import{NPC_LOOKS}from'./looks';
 import * as T from 'three';
 import {FoliageVisibility}from'./FoliageVisibility';
 import {GLTFLoader}from'three/addons/loaders/GLTFLoader.js';
@@ -8,13 +9,14 @@ import {layout,distanceToSegment,inPolygon,type Zone}from'./model';
 export const v=(x:number,y:number)=>new T.Vector3(x/40,0,y/40);
 export const ENTRY={base:v(1040,800),forest:v(400,1230)};
 export const PORTALS={base:v(1240,800),forest:v(400,1285)};
-export const NPCS=[
+const NPCS_BASE=[
  {id:'lia',name:'Dra. Lia',role:'Enfermaria',x:320,y:700,gender:'female',hair:3,cloth:'#b9c2b3',yaw:Math.PI,text:'Antes de levarmos alguém para a floresta, precisamos entender a água, o solo e as criaturas. Observe os sinais e volte inteiro. As amostras ficam separadas das nossas mudas.'},
  {id:'ivo',name:'Ivo',role:'Oficina',x:760,y:690,gender:'male',hair:2,cloth:'#6d7c7e',yaw:Math.PI,text:'Ainda estamos vivendo do que trouxemos na nave. Estou ajustando as ferramentas e os instrumentos de campo. Teste seu equipamento na trilha e preste atenção ao movimento das criaturas.'},
  {id:'nara',name:'Nara',role:'Expedições',x:1000,y:465,gender:'female',hair:2,cloth:'#8d785a',yaw:Math.PI,text:'A saída fica a leste do acampamento. Na floresta, a trilha se divide: as ruínas estão ao norte, o mineral fica a leste e há um vestígio entre as raízes a oeste. Observe os três antes de procurar a origem do sinal.'},
  {id:'gui',name:'Tio Gui',role:'Infraestrutura',x:380,y:500,gender:'male',hair:2,cloth:'#79705c',yaw:0,text:'Estou ajustando as conexões do kit do abrigo. Água e energia ficam em circuitos separados; Ivo não abre mão disso.'},
  {id:'elisa',name:'Elisa',role:'Mudas da nave',x:820,y:490,gender:'female',hair:1,cloth:'#728569',yaw:0,text:'As mudas vieram da nave. Estou separando o que podemos levar para o canteiro sem misturar com as plantas de Dante.'},
 ] as const;
+export const NPCS=NPCS_BASE.map(n=>({...n,...NPC_LOOKS[n.id]}));
 export const DISCOVERIES=[{id:'northern-ruin',name:'Ruína do norte',...layout.discovery.NORTHERN_DISCOVERY,color:'#95dbd3'},
  {name:'Sinal mineral',...layout.discovery.FOREST_ECHOES.mineral,color:'#e4bd65'},
  {name:'Vestígio desconhecido',...layout.discovery.FOREST_ECHOES.trace,color:'#b79ae2'}];

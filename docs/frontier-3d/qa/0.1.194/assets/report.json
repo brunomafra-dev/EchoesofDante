@@ -1,0 +1,164 @@
+{
+  "passed": true,
+  "errors": [],
+  "bytes": 1509188,
+  "sha256": "758485e44c9ddbf859e8ed69be283af476646efcd3d3108c091f944dcdc036c7",
+  "textures": 4,
+  "models": [
+    {
+      "name": "hair-male-4",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 1641,
+      "finite": true
+    },
+    {
+      "name": "hair-male-5",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 2675,
+      "finite": true
+    },
+    {
+      "name": "hair-male-6",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 6912,
+      "finite": true
+    },
+    {
+      "name": "hair-male-7",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 2377,
+      "finite": true
+    },
+    {
+      "name": "hair-male-8",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 3003,
+      "finite": true
+    },
+    {
+      "name": "hair-male-9",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 1277,
+      "finite": true
+    },
+    {
+      "name": "hair-male-10",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 2101,
+      "finite": true
+    },
+    {
+      "name": "hair-male-11",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 1186,
+      "finite": true
+    },
+    {
+      "name": "hair-female-4",
+      "gender": "female",
+      "anchor": "Head",
+      "triangles": 1625,
+      "finite": true
+    },
+    {
+      "name": "hair-female-5",
+      "gender": "female",
+      "anchor": "Head",
+      "triangles": 2675,
+      "finite": true
+    },
+    {
+      "name": "hair-female-6",
+      "gender": "female",
+      "anchor": "Head",
+      "triangles": 6768,
+      "finite": true
+    },
+    {
+      "name": "hair-female-7",
+      "gender": "female",
+      "anchor": "Head",
+      "triangles": 2377,
+      "finite": true
+    },
+    {
+      "name": "hair-female-8",
+      "gender": "female",
+      "anchor": "Head",
+      "triangles": 3003,
+      "finite": true
+    },
+    {
+      "name": "hair-female-9",
+      "gender": "female",
+      "anchor": "Head",
+      "triangles": 1261,
+      "finite": true
+    },
+    {
+      "name": "hair-female-10",
+      "gender": "female",
+      "anchor": "Head",
+      "triangles": 2101,
+      "finite": true
+    },
+    {
+      "name": "hair-female-11",
+      "gender": "female",
+      "anchor": "Head",
+      "triangles": 1186,
+      "finite": true
+    },
+    {
+      "name": "dress-ivo",
+      "gender": "male",
+      "anchor": "skin",
+      "triangles": 1036,
+      "finite": true
+    },
+    {
+      "name": "dress-lia",
+      "gender": "female",
+      "anchor": "skin",
+      "triangles": 4212,
+      "finite": true
+    },
+    {
+      "name": "dress-nara",
+      "gender": "female",
+      "anchor": "skin",
+      "triangles": 5268,
+      "finite": true
+    },
+    {
+      "name": "dress-gui",
+      "gender": "male",
+      "anchor": "skin",
+      "triangles": 4032,
+      "finite": true
+    },
+    {
+      "name": "dress-elisa",
+      "gender": "female",
+      "anchor": "skin",
+      "triangles": 4032,
+      "finite": true
+    },
+    {
+      "name": "head-ivo",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 1172,
+      "finite": true
+    }
+  ],
+  "originalHumanFilesUnchanged": true
+}
