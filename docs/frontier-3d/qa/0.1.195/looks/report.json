@@ -1,0 +1,1227 @@
+{
+  "passed": true,
+  "base": "http://127.0.0.1:5193",
+  "hair": [
+    {
+      "gender": "male",
+      "hair": 0,
+      "actor": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.0049322882132391,
+          1.6127406949498757,
+          0.003896384714839083
+        ],
+        "id": 0,
+        "gender": "male",
+        "beard": false,
+        "visible": []
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 1,
+      "actor": {
+        "baseCoverage": true,
+        "anchor": [
+          -0.017041776285927675,
+          1.577282862910454,
+          0.004762301318331448
+        ],
+        "id": 1,
+        "gender": "male",
+        "beard": false,
+        "visible": []
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 2,
+      "actor": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.0024713718068721004,
+          1.6220987145382488,
+          0.0012106059251300004
+        ],
+        "id": 2,
+        "gender": "male",
+        "beard": false,
+        "visible": []
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 3,
+      "actor": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.0024841840616264352,
+          1.6220444706937884,
+          0.001229454089822432
+        ],
+        "id": 3,
+        "gender": "male",
+        "beard": false,
+        "visible": []
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 4,
+      "actor": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.007988303893735338,
+          1.6028198053752118,
+          0.005621579369907547
+        ],
+        "id": 4,
+        "gender": "male",
+        "beard": false,
+        "visible": [
+          "hair-male-4"
+        ]
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 5,
+      "actor": {
+        "baseCoverage": true,
+        "anchor": [
+          -0.004899140128499307,
+          1.6128562116246352,
+          0.003869814456360813
+        ],
+        "id": 5,
+        "gender": "male",
+        "beard": false,
+        "visible": [
+          "hair-male-5"
+        ]
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 6,
+      "actor": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.00800823534373329,
+          1.6027588244831603,
+          0.005628931156870503
+        ],
+        "id": 6,
+        "gender": "male",
+        "beard": false,
+        "visible": [
+          "hair-male-6"
+        ]
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 7,
+      "actor": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.0049322882132391,
+          1.6127406949498757,
+          0.003896384714839083
+        ],
+        "id": 7,
+        "gender": "male",
+        "beard": false,
+        "visible": [
+          "hair-male-7"
+        ]
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 8,
+      "actor": {
+        "baseCoverage": true,
+        "anchor": [
+          -0.0024970203749022342,
+          1.621990204571482,
+          0.0012482695390086743
+        ],
+        "id": 8,
+        "gender": "male",
+        "beard": false,
+        "visible": [
+          "hair-male-8"
+        ]
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 9,
+      "actor": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.004948894993025626,
+          1.6126829039197572,
+          0.00390961878296666
+        ],
+        "id": 9,
+        "gender": "male",
+        "beard": false,
+        "visible": [
+          "hair-male-9"
+        ]
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 10,
+      "actor": {
+        "baseCoverage": true,
+        "anchor": [
+          -0.004998841852960909,
+          1.6125094147153256,
+          0.003949112783099076
+        ],
+        "id": 10,
+        "gender": "male",
+        "beard": false,
+        "visible": [
+          "hair-male-10"
+        ]
+      }
+    },
+    {
+      "gender": "male",
+      "hair": 11,
+      "actor": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.004882597449737224,
+          1.6129139420778515,
+          0.0038564770007496266
+        ],
+        "id": 11,
+        "gender": "male",
+        "beard": false,
+        "visible": [
+          "hair-male-11"
+        ]
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 0,
+      "actor": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.00623974136256358,
+          1.6454694404237926,
+          0.004834422474727262
+        ],
+        "id": 0,
+        "gender": "female",
+        "beard": false,
+        "visible": []
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 1,
+      "actor": {
+        "baseCoverage": true,
+        "anchor": [
+          -0.003775324015799384,
+          1.6486955353962292,
+          0.002819889725995315
+        ],
+        "id": 1,
+        "gender": "female",
+        "beard": false,
+        "visible": []
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 2,
+      "actor": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.006207508164215444,
+          1.6455106728734108,
+          0.004814969437769549
+        ],
+        "id": 2,
+        "gender": "female",
+        "beard": false,
+        "visible": []
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 3,
+      "actor": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.006223615910497079,
+          1.6454900655747087,
+          0.004824709348546348
+        ],
+        "id": 3,
+        "gender": "female",
+        "beard": false,
+        "visible": []
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 4,
+      "actor": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.003775324015799384,
+          1.6486955353962292,
+          0.002819889725995315
+        ],
+        "id": 4,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-4"
+        ]
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 5,
+      "actor": {
+        "baseCoverage": true,
+        "anchor": [
+          -0.006175347201706222,
+          1.6455518321518547,
+          0.0047954102900134715
+        ],
+        "id": 5,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-5"
+        ]
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 6,
+      "actor": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.00623974136256358,
+          1.6454694404237926,
+          0.004834422474727262
+        ],
+        "id": 6,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-6"
+        ]
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 7,
+      "actor": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.006223615910497098,
+          1.6454900655747087,
+          0.004824709348546417
+        ],
+        "id": 7,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-7"
+        ]
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 8,
+      "actor": {
+        "baseCoverage": true,
+        "anchor": [
+          -0.006191419501776563,
+          1.645531260578973,
+          0.004805203741777047
+        ],
+        "id": 8,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-8"
+        ]
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 9,
+      "actor": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.006191419501776563,
+          1.645531260578973,
+          0.004805203741777047
+        ],
+        "id": 9,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-9"
+        ]
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 10,
+      "actor": {
+        "baseCoverage": true,
+        "anchor": [
+          -0.006223615910497095,
+          1.6454900655747084,
+          0.004824709348546428
+        ],
+        "id": 10,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-10"
+        ]
+      }
+    },
+    {
+      "gender": "female",
+      "hair": 11,
+      "actor": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.0038013132481086037,
+          1.6486604808421117,
+          0.0028480316094883877
+        ],
+        "id": 11,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-11"
+        ]
+      }
+    }
+  ],
+  "npcs": [
+    {
+      "id": "gui",
+      "identity": {
+        "gender": "male",
+        "hair": 11,
+        "beard": true,
+        "skin": "#bf9572",
+        "hairColor": "#696158",
+        "beardColor": "#a09a8d",
+        "cloth": "#706a58",
+        "age": "Mais velho · entradas, bigode/barba grisalha e casaco",
+        "reference": "caio-motion-r4"
+      },
+      "hair": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.00988833927784201,
+          1.5969103214951017,
+          0.005536821420722881
+        ],
+        "id": 11,
+        "gender": "male",
+        "beard": true,
+        "visible": [
+          "hair-male-11"
+        ]
+      },
+      "wardrobe": [
+        {
+          "name": "Integrated_work_outfit_gui",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.23576233264817917,
+              1.3043672579246983,
+              -0.031946335962697386
+            ],
+            "max": [
+              0.29986413057122396,
+              1.4951418753075931,
+              0.1985608675709401
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_gui_1",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.23576233264817917,
+              1.1508867551256214,
+              0.009141248215149987
+            ],
+            "max": [
+              0.4326913562065517,
+              1.4937924400953007,
+              0.3801415637658152
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_gui_2",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.2002745777822898,
+              1.0249569811535244,
+              0.27082019478755215
+            ],
+            "max": [
+              0.3883356511090615,
+              1.4102665450441125,
+              0.5938789846699953
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_gui_3",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.274546053325294,
+              0.17564186792511896,
+              -0.27444992574131555
+            ],
+            "max": [
+              0.2685999676310156,
+              1.1018387945460084,
+              0.24352448808241786
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_gui_4",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.2536330927846625,
+              0.8824139266716451,
+              -0.22960033867191615
+            ],
+            "max": [
+              0.33386160773034046,
+              1.5440796338179752,
+              0.2459922346220511
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_gui_5",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.26557348757007004,
+              0.9670189245902377,
+              -0.034501606015015826
+            ],
+            "max": [
+              0.3723081022897568,
+              1.5047414241583041,
+              0.28726796480192046
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_gui_6",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.36600402677948896,
+              0.003616705723467556,
+              -0.3210930385998211
+            ],
+            "max": [
+              0.26208616943456053,
+              0.44538244960352097,
+              0.4091531224359263
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ivo",
+      "identity": {
+        "gender": "male",
+        "hair": 0,
+        "beard": true,
+        "skin": "#bc9778",
+        "hairColor": "#88847b",
+        "beardColor": "#aaa69b",
+        "cloth": "#747363",
+        "age": "Maduro · calvo, barba grisalha e óculos de oficina",
+        "reference": "ivo-work-r1"
+      },
+      "hair": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.0027244135220712965,
+          1.6209317786508786,
+          0.0013503368752291744
+        ],
+        "id": 0,
+        "gender": "male",
+        "beard": true,
+        "visible": []
+      },
+      "wardrobe": [
+        {
+          "name": "apron-hem__195_worn_smith_leather",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.2197200098690415,
+              0.7886047624075865,
+              -0.06988738960009179
+            ],
+            "max": [
+              0.15879489891165635,
+              1.114636660872847,
+              0.16197957452696407
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_ivo",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.22506796088323514,
+              1.150886127660849,
+              -0.0363151735154853
+            ],
+            "max": [
+              0.4326919583479436,
+              1.4951408960245358,
+              0.3801417818936668
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_ivo_1",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.09611362189981029,
+              1.024957390407267,
+              0.232364153372149
+            ],
+            "max": [
+              0.38833614407181916,
+              1.372208911508224,
+              0.5820651126890393
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_ivo_2",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.274549292072817,
+              0.17564246353396895,
+              -0.27444729628296016
+            ],
+            "max": [
+              0.2685995054816756,
+              1.101838841326236,
+              0.24352819264662226
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_ivo_3",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.23849446850298708,
+              0.8824147958266617,
+              -0.2296003724794216
+            ],
+            "max": [
+              0.3723081518448367,
+              1.544078931301196,
+              0.2872685109484417
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_ivo_4",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.16499938518637655,
+              1.0263978360438153,
+              -0.08926443464682025
+            ],
+            "max": [
+              0.1531826511299013,
+              1.351164944103526,
+              0.2089683172428266
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_ivo_5",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.3660039376305191,
+              0.0036170575753893194,
+              -0.32109123000408835
+            ],
+            "max": [
+              0.2620852085230053,
+              0.4453835767580454,
+              0.40915483802360775
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "lia",
+      "identity": {
+        "gender": "female",
+        "hair": 6,
+        "beard": false,
+        "skin": "#946748",
+        "hairColor": "#322b26",
+        "cloth": "#d2d0be",
+        "age": "Madura · cabelo curto cacheado e jaleco",
+        "reference": "lia-work-r1"
+      },
+      "hair": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.005992907543085809,
+          1.645754249836097,
+          0.004348247250462012
+        ],
+        "id": 6,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-6"
+        ]
+      },
+      "wardrobe": [
+        {
+          "name": "Integrated_work_outfit_lia",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.2810227897333881,
+              1.0263630858498503,
+              -0.091902327270104
+            ],
+            "max": [
+              0.3234387010236576,
+              1.5198422630256785,
+              0.4297819625612417
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_lia_1",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.23753749329816023,
+              0.9978552175268972,
+              -0.1616612041225556
+            ],
+            "max": [
+              0.29278904299339814,
+              1.5393584759080667,
+              0.17859335059254572
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_lia_2",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.21557350710848996,
+              1.0814881903030846,
+              0.3111533625399931
+            ],
+            "max": [
+              0.1907729312061548,
+              1.2441015410613454,
+              0.5243858754524662
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_lia_3",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.23435226094957237,
+              0.4427669770334581,
+              -0.245494488346584
+            ],
+            "max": [
+              0.2314589572977265,
+              1.0688367190007961,
+              0.18728652338342272
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_lia_4",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.20043387677295377,
+              1.0202006635930065,
+              -0.21706450705091598
+            ],
+            "max": [
+              0.2122901502376075,
+              1.5988885441728735,
+              0.15170316439593282
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_lia_5",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.09881794936722821,
+              1.0120004912824825,
+              0.03262068599887209
+            ],
+            "max": [
+              0.03673377287974668,
+              1.5563702049071335,
+              0.1408173586195729
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_lia_6",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.25306971244199017,
+              0.20152463573677284,
+              -0.29354193894705916
+            ],
+            "max": [
+              0.2655625328501336,
+              1.0812726358936104,
+              0.20371730741101826
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_lia_7",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.16507497234164065,
+              1.3210511078096994,
+              0.001951153441936791
+            ],
+            "max": [
+              -0.1063843546512951,
+              1.4492899263551593,
+              0.1095034232045846
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_lia_8",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.382359958879075,
+              0.004381280353735682,
+              -0.34683259635942687
+            ],
+            "max": [
+              0.27956360784791384,
+              0.4900550361758467,
+              0.4257110301058512
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "nara",
+      "identity": {
+        "gender": "female",
+        "hair": 10,
+        "beard": false,
+        "skin": "#c6a17f",
+        "hairColor": "#282522",
+        "cloth": "#797966",
+        "age": "Adulta · coque alto e lenço laranja",
+        "reference": "nara-work-r1"
+      },
+      "hair": {
+        "baseCoverage": true,
+        "anchor": [
+          -0.006005870671310056,
+          1.6457375563042453,
+          0.004355783067489689
+        ],
+        "id": 10,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-10"
+        ]
+      },
+      "wardrobe": [
+        {
+          "name": "Integrated_work_outfit_nara",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.22826770624431872,
+              1.0263630858498505,
+              -0.07915603225032732
+            ],
+            "max": [
+              0.25172522555500376,
+              1.5336297251616158,
+              0.46805477290596614
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_nara_1",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.226976091306576,
+              0.9978552175268974,
+              -0.16166120412255564
+            ],
+            "max": [
+              0.254220276041543,
+              1.5419476217851702,
+              0.17312777116245404
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_nara_2",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.11738953798583984,
+              1.0560952836440864,
+              0.3423580844770776
+            ],
+            "max": [
+              0.20076149426244405,
+              1.3497762701446734,
+              0.5615332187697466
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_nara_3",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.23435226094957237,
+              0.4427669770334581,
+              -0.24549448834658394
+            ],
+            "max": [
+              0.23145895729772648,
+              1.0688367190007961,
+              0.18728652338342267
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_nara_4",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.2006694116147182,
+              1.0202006635930068,
+              -0.21706450705091598
+            ],
+            "max": [
+              0.20790040298241924,
+              1.5974939937109223,
+              0.15170316439593273
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_nara_5",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.09881794936722817,
+              1.0120004912824825,
+              0.032620685998872065
+            ],
+            "max": [
+              0.03673377287974672,
+              1.556370204907134,
+              0.14081735861957276
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_nara_6",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.2530697124419902,
+              0.20152463573677282,
+              -0.2935419389470591
+            ],
+            "max": [
+              0.26556253285013354,
+              1.0812726358936107,
+              0.20371730741101826
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_nara_7",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.10638435465129503,
+              1.3966952014059921,
+              0.0990007363396152
+            ],
+            "max": [
+              0.023236427835205537,
+              1.5165755302081578,
+              0.14369486911198223
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_nara_8",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.382359958879075,
+              0.004381280353735421,
+              -0.3468325963594267
+            ],
+            "max": [
+              0.2795636078479138,
+              0.49005503617584667,
+              0.4257110301058512
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "elisa",
+      "identity": {
+        "gender": "female",
+        "hair": 7,
+        "beard": false,
+        "skin": "#e0bd9b",
+        "hairColor": "#a94c28",
+        "cloth": "#c9c4b0",
+        "age": "Adulta · ruiva ondulada, camisa clara e colete",
+        "reference": "elisa-motion-r5"
+      },
+      "hair": {
+        "baseCoverage": false,
+        "anchor": [
+          -0.004009775313480251,
+          1.6483574213538736,
+          0.002841154568263185
+        ],
+        "id": 7,
+        "gender": "female",
+        "beard": false,
+        "visible": [
+          "hair-female-7"
+        ]
+      },
+      "wardrobe": [
+        {
+          "name": "Integrated_work_outfit_elisa",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.2481104738982128,
+              1.0263630858498503,
+              -0.1023218601036766
+            ],
+            "max": [
+              0.2921308442879711,
+              1.5040529564721838,
+              0.4183928074336164
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_elisa_1",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.229467584991837,
+              0.9978552175268972,
+              -0.1616612041225556
+            ],
+            "max": [
+              0.2666690191295931,
+              1.536060264276173,
+              0.17559973854622113
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_elisa_2",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.19170703776385692,
+              0.9276143757513788,
+              0.2275666180806523
+            ],
+            "max": [
+              0.2244417720128919,
+              1.2171552803341952,
+              0.5275857806838916
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_elisa_3",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.23435226094957234,
+              0.442766977033458,
+              -0.245494488346584
+            ],
+            "max": [
+              0.23145895729772648,
+              1.0688367190007961,
+              0.18728652338342275
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_elisa_4",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.20105223538950348,
+              1.0202006635930065,
+              -0.21706450705091598
+            ],
+            "max": [
+              0.21008466211934576,
+              1.5989966900380772,
+              0.15170316439593287
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_elisa_5",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.09881794936722818,
+              1.0120004912824825,
+              0.03262068599887209
+            ],
+            "max": [
+              0.03673377287974669,
+              1.5563702049071335,
+              0.14081735861957287
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_elisa_6",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.25306971244199017,
+              0.20152463573677284,
+              -0.29354193894705916
+            ],
+            "max": [
+              0.26556253285013354,
+              1.0812726358936104,
+              0.2037173074110183
+            ]
+          }
+        },
+        {
+          "name": "Integrated_work_outfit_elisa_7",
+          "skinned": true,
+          "bounds": {
+            "min": [
+              -0.38235995887907487,
+              0.004381280353735714,
+              -0.34683259635942687
+            ],
+            "max": [
+              0.27956360784791384,
+              0.49005503617584656,
+              0.4257110301058512
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "checks": [
+    "24 hair/gender combinations, rear view, four class rigs with run/roll/jump, five skinned NPC work outfits and 2D references, repeated resource disposal, world/workshop parity, edit/close-tab persistence and legacy saves. No gates, boss victory or quest prerequisites simulated."
+  ],
+  "resources": {
+    "before": {
+      "calls": 28,
+      "triangles": 31758,
+      "textures": 48,
+      "geometries": 119
+    },
+    "after": {
+      "calls": 28,
+      "triangles": 31758,
+      "textures": 48,
+      "geometries": 119
+    }
+  }
+}

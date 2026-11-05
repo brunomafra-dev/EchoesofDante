@@ -1,0 +1,77 @@
+{
+  "version": "0.1.195",
+  "file": "crew-work-195.glb",
+  "bytes": 1181068,
+  "sha256": "4e4f805f8df12662e7a4cd7679fb52bcec67a20c3df1d4ef0d936c4bccfe8e6a",
+  "author": "Echoes of Dante original tools/textures; integrated work uniforms adapted from Quaternius UBC CC0 outfit surfaces with unchanged source skin weights.",
+  "textures": 5,
+  "materials": 32,
+  "models": [
+    {
+      "name": "head-ivo",
+      "gender": "male",
+      "anchor": "Head",
+      "triangles": 2252
+    },
+    {
+      "name": "tool-ivo",
+      "gender": "male",
+      "anchor": "grip",
+      "triangles": 432
+    },
+    {
+      "name": "tool-gui",
+      "gender": "male",
+      "anchor": "grip",
+      "triangles": 432
+    },
+    {
+      "name": "tool-lia",
+      "gender": "female",
+      "anchor": "grip",
+      "triangles": 576
+    },
+    {
+      "name": "tool-nara",
+      "gender": "female",
+      "anchor": "grip",
+      "triangles": 684
+    },
+    {
+      "name": "tool-elisa",
+      "gender": "female",
+      "anchor": "grip",
+      "triangles": 252
+    },
+    {
+      "name": "dress-ivo",
+      "gender": "male",
+      "anchor": "skin",
+      "triangles": 6380
+    },
+    {
+      "name": "dress-lia",
+      "gender": "female",
+      "anchor": "skin",
+      "triangles": 5441
+    },
+    {
+      "name": "dress-nara",
+      "gender": "female",
+      "anchor": "skin",
+      "triangles": 5441
+    },
+    {
+      "name": "dress-gui",
+      "gender": "male",
+      "anchor": "skin",
+      "triangles": 5500
+    },
+    {
+      "name": "dress-elisa",
+      "gender": "female",
+      "anchor": "skin",
+      "triangles": 5441
+    }
+  ]
+}

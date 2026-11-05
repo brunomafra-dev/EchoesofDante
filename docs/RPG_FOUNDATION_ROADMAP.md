@@ -1,5 +1,7 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**05/11/2026 · Correção de roupas/ferramentas dos NPCs · 0.1.195:** usuário apontou peças flutuando, martelo no braço e falta de texturas na 0.1.194. [Correção estrutural, autoria e QA](frontier-3d/CREW_FIT.md). [x] Uniformes completos e pesos originais, sem camadas sobrepostas; [x] empunhaduras e ferramentas texturizadas, alcance da bancada; [x] cinco moradores compartilhados por mundo/oficina; [ ] aprovação visual humana. Nenhum avanço de território autorizado por esta correção.
+
 Publicação da revisão 0.1.194 confirmada: aplicação `679a0db`, Vercel success, 102 hashes públicos conferidos, nove relatórios locais e três públicos passaram. [Evidências e limitações](frontier-3d/qa/0.1.194/publication.json). Aprovação visual humana pendente; aguardar o playtest desta revisão antes de avançar territórios.
 
 **05/11/2026 · Cabelos e tripulação 3D · 0.1.194:** usuário aprovou a 0.1.193 e pediu mais penteados e aproximação dos NPCs às identidades 2D. [Implementação e fontes](frontier-3d/HAIR_AND_CREW.md). [x] Oito cortes novos por corpo, IDs antigos preservados; [x] cinco identidades compartilhadas por mundo/oficina, com referência 2D visível; [x] roupas ajustadas e pesadas no rig original, sem trocar tarefas/combate/saves; [ ] aprovação humana desta revisão. Esta etapa não avança territórios. Evidências e limites em `frontier-3d/qa/0.1.194/`.

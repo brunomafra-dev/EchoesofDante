@@ -4,14 +4,14 @@ import {clone}from'three/addons/utils/SkeletonUtils.js';
 import {Batches,box,material}from'./Art';
 import {identity,loadIdentity}from'./Identity';
 import {HandGrip}from'./HandGrip';
-import{loadCrewLooks,attachHair,dressNpc}from'./CrewLooks';
+import{loadCrewLooks,attachHair,dressNpc,crewTool}from'./CrewLooks';
 import{NPC_LOOKS,type ArrivalNpcId}from'./looks';
 import type{Appearance,ClassId}from'./model';
 const cache=new Map<string,Promise<GLTF>>();
 export class Avatar{
  readonly root=new T.Group();readonly model:T.Group;readonly mixer:T.AnimationMixer;
  private actions=new Map<string,T.AnimationAction>();private current?:T.AnimationAction;private name='';private lock=0;private gear=new T.Group();
- private role='';private taskTool?:T.Object3D;private toolRest=new T.Quaternion();private instrument?:T.Object3D;private energy:T.MeshStandardMaterial[]=[];private element=-1;
+ private role='';private taskTool?:T.Object3D;private toolSide='r';private instrument?:T.Object3D;private energy:T.MeshStandardMaterial[]=[];private element=-1;
  private grip:HandGrip;private supportActive=false;private aimWeight=0;private relaxWeight=1;private bracer?:T.Object3D;
  private constructor(asset:GLTF,readonly appearance:Appearance,private readonly npc=false,readonly equipment:'current'|'previous'='current',readonly backpack:'current'|'previous'='current',readonly figure:'current'|'previous'='current'){
   this.model=clone(asset.scene) as T.Group;this.grip=new HandGrip(this.model);this.root.add(this.model);const bounds=new T.Box3().setFromObject(this.model),scale=1.9/(bounds.max.y-bounds.min.y);this.model.scale.setScalar(scale);this.model.position.y=-bounds.min.y*scale;
@@ -51,7 +51,7 @@ export class Avatar{
  dressForRole(role:string){
   this.role=role;
   dressNpc(this.model,this.appearance,role as ArrivalNpcId);
-  const tool=identity('tool-'+role);tool.position.set(0,.03,0);tool.rotation.x=-Math.PI/2;this.model.getObjectByName(role==='nara'||role==='lia'?'hand_l':'hand_r')?.add(tool);this.taskTool=tool;this.toolRest.copy(tool.quaternion);
+  const tool=crewTool(role as ArrivalNpcId,this.appearance);this.toolSide=role==='nara'||role==='lia'?'l':'r';tool.position.copy(this.grip.center(this.toolSide));this.model.getObjectByName('hand_'+this.toolSide)!.add(tool);this.taskTool=tool;this.workPose(false);
  }
  play(name:string,once=false,lock=0){if(this.lock>0&&!once)return;const next=this.actions.get(name)??this.actions.get('Idle');if(!next||this.name===name&&!once)return;const fade=this.npc?.17:once?.045:.14;if(this.current&&this.current!==next)this.current.fadeOut(fade);next.reset().setEffectiveWeight(1).setLoop(once?T.LoopOnce:T.LoopRepeat,once?1:Infinity);if(!this.npc)next.setEffectiveTimeScale(once&&lock>0?next.getClip().duration/lock:1);next.clampWhenFinished=once;next.enabled=true;next.fadeIn(fade).play();this.current=next;this.name=name;this.lock=lock;}
  strike(lock=.28){this.play(this.appearance.classId==='warrior'?'Sword':this.appearance.classId==='hunter'?'Shoot':'Cast',true,lock);}
@@ -95,15 +95,24 @@ export class Avatar{
   rotate(upper,lower,elbow);rotate(lower,hand,end);
  }
  private workPose(moving:boolean){
-  if(this.taskTool)this.taskTool.quaternion.copy(this.toolRest);if(moving)return;
-  // Torso idle stays on its original complete rig; only the arms follow actual
-  // task positions. Smooth ramps and long rests replace the sped-up pickup loop.
+  if(!this.taskTool)return;
+  // Tools are authored around a real handle. Rotate the hand, not the tool
+  // through its fingers; the same closed grasp is kept at rest and at work.
+  const rest=this.role==='ivo'||this.role==='gui'?new T.Quaternion().setFromEuler(new T.Euler(.95,0,Math.PI/2)):this.role==='lia'?new T.Quaternion().setFromAxisAngle(new T.Vector3(1,0,0),.75):new T.Quaternion().setFromAxisAngle(new T.Vector3(0,1,0),this.role==='elisa'?-.5:0);
+  this.orientHand(this.toolSide,rest);this.grip.close(this.toolSide,this.role==='nara');if(moving)return;
+  // Idle and the task pose share the original complete rig. Smooth ramps and
+  // long rests replace the sped-up pickup loop.
   const active=this.name==='Work'&&this.lock>0,phase=active?1-this.lock/4.1:0,weight=active?Math.min(1,phase*7,(1-phase)*7):0;
   if(weight<=0)return;
-  const tapping=this.role==='ivo'||this.role==='gui',stroke=tapping?Math.pow(Math.max(0,Math.sin(phase*Math.PI*4)),3)*.15:Math.sin(phase*Math.PI)*.025;
-  this.arm('r',new T.Vector3(-.16,tapping?1.25+stroke:this.role==='elisa'?1.04:1.10,.48),weight);
-  this.arm('l',new T.Vector3(.16,this.role==='lia'?1.18:1.06,.48),weight);
-  if(this.taskTool){const hand=this.taskTool.parent!,q=hand.getWorldQuaternion(new T.Quaternion()).invert(),axis=new T.Vector3(0,this.role==='nara'?0:-1,this.role==='nara'?1:.25).normalize(),orientation=new T.Quaternion().setFromUnitVectors(new T.Vector3(0,0,1),axis);orientation.premultiply(this.root.quaternion);this.taskTool.quaternion.slerp(q.multiply(orientation),weight);}
+  const tapping=this.role==='ivo'||this.role==='gui',stroke=tapping?Math.pow(Math.max(0,Math.sin(phase*Math.PI*4)),3)*.14:Math.sin(phase*Math.PI)*.015;
+  // Lean from the waist before solving the arms. An upright wrist cannot
+  // physically reach the anvil; stretching its target alone leaves air hits.
+  const spine=this.model.getObjectByName('spine_01')!;this.root.updateMatrixWorld(true);const lean=new T.Quaternion().setFromAxisAngle(new T.Vector3(1,0,0).applyQuaternion(this.root.quaternion),(tapping?.34:.10)*weight);spine.quaternion.copy(spine.parent!.getWorldQuaternion(new T.Quaternion()).invert().multiply(lean.multiply(spine.getWorldQuaternion(new T.Quaternion()))));spine.updateMatrixWorld(true);
+  const taskHand=(side:string,target:T.Vector3,q:T.Quaternion)=>{const offset=this.grip.center(side).multiplyScalar(this.model.scale.x).applyQuaternion(q);this.arm(side,target.sub(offset),weight);this.orientHand(side,q,weight);};
+  if(tapping){taskHand('r',new T.Vector3(this.role==='ivo'?0:-.16,(this.role==='ivo'?1.20:1.28)+stroke,.525),new T.Quaternion().setFromAxisAngle(new T.Vector3(0,0,1),Math.PI/2));this.arm('l',new T.Vector3(.20,1.14,.48),weight);this.grip.relax('l',1);}
+  else if(this.role==='lia'){taskHand('l',new T.Vector3(.15,1.17+stroke,.49),new T.Quaternion().setFromAxisAngle(new T.Vector3(1,0,0),1.27));this.arm('r',new T.Vector3(-.18,1.10,.50),weight);this.grip.relax('r',1);}
+  else if(this.role==='nara'){taskHand('l',new T.Vector3(.13,1.08,.46),new T.Quaternion());this.arm('r',new T.Vector3(-.055,1.22+stroke,.53),weight);this.grip.relax('r',1);}
+  else{taskHand('r',new T.Vector3(-.12,1.02+stroke,.44),new T.Quaternion().setFromEuler(new T.Euler(.16,-.5,-.10)));this.arm('l',new T.Vector3(.18,1.04,.44),weight);this.grip.relax('l',1);}
   this.root.updateMatrixWorld(true);
  }
  face(dir:T.Vector3,dt:number){if(dir.lengthSq()<.0001)return;const target=new T.Quaternion().setFromAxisAngle(new T.Vector3(0,1,0),Math.atan2(dir.x,dir.z));this.root.quaternion.slerp(target,1-Math.exp(-dt*14));}
@@ -111,7 +120,7 @@ export class Avatar{
  inspectArt(){
   this.root.updateMatrixWorld(true);const support=this.instrument?.getObjectByName('support'),left=this.model.getObjectByName('hand_l');
   const supportError=support&&left?left.localToWorld(this.grip.center('l')).distanceTo(support.getWorldPosition(new T.Vector3())):undefined;
-  const back=new T.Box3().setFromObject(this.gear);
-  return{action:this.current?{time:this.current.time,duration:this.current.getClip().duration,timeScale:this.current.getEffectiveTimeScale(),weight:this.current.getEffectiveWeight(),lock:this.lock}:undefined,evading:this.evading,backpack:this.npc?undefined:{style:this.backpack,anchor:this.gear.parent?.name,bounds:{min:back.min.toArray(),max:back.max.toArray()},parts:this.gear.children.map(c=>c.name)},wardrobe:this.role?this.model.getObjectByName('dress-'+this.role)?.children.map(c=>({name:c.name,skinned:c instanceof T.SkinnedMesh,bounds:(()=>{const b=new T.Box3().setFromObject(c,true);return{min:b.min.toArray(),max:b.max.toArray()};})()})):undefined,hair:{anchor:this.model.getObjectByName('Head')?.getWorldPosition(new T.Vector3()).toArray(),id:this.appearance.hair,gender:this.appearance.gender,beard:this.appearance.beard,visible:this.model.getObjectByName('Head')?.children.filter(c=>c.name.startsWith('hair-')).map(c=>c.name)},identity:this.role?NPC_LOOKS[this.role as ArrivalNpcId]:undefined,figure:this.figure,role:this.role,animation:this.name,equipment:this.equipment,hand:this.instrument?.parent?.name,bracer:this.bracer?.parent?.name,socket:this.instrument?.position.toArray(),grasp:!this.npc&&this.equipment==='current'?{kind:this.appearance.classId==='astral'?'worn-gauntlet':'closed-grip',right:this.grip.inspect('r'),left:this.grip.inspect('l'),support:this.supportActive,aimWeight:this.aimWeight,supportError}:undefined,hasEmitter:!!this.instrument?.getObjectByName('emitter'),emitterLocal:this.instrument?.getObjectByName('emitter')?.position.toArray(),grip:this.instrument?.getWorldPosition(new T.Vector3()).toArray(),blade:this.instrument&&this.appearance.classId==='warrior'?{base:this.bladeFrame().base.toArray(),tip:this.bladeFrame().tip.toArray()}:undefined,emitter:this.weaponOrigin().toArray(),taskActive:this.name==='Work'&&this.lock>0,hands:['r','l'].map(side=>({side,position:this.model.getObjectByName('hand_'+side)?.getWorldPosition(new T.Vector3()).toArray(),armFound:!!this.model.getObjectByName('upperarm_'+side)})),tool:this.taskTool?.getWorldPosition(new T.Vector3()).toArray()};}
+  const back=new T.Box3().setFromObject(this.gear);let hairBase=false;this.model.traverse(o=>{if(o.userData.arrivalHair===(this.appearance.gender==='female'?'Hair_BuzzedFemale':'Hair_Buzzed')&&o.visible)hairBase=true;});
+  return{action:this.current?{time:this.current.time,duration:this.current.getClip().duration,timeScale:this.current.getEffectiveTimeScale(),weight:this.current.getEffectiveWeight(),lock:this.lock}:undefined,evading:this.evading,backpack:this.npc?undefined:{style:this.backpack,anchor:this.gear.parent?.name,bounds:{min:back.min.toArray(),max:back.max.toArray()},parts:this.gear.children.map(c=>c.name)},wardrobe:this.role?(()=>{const parts:{name:string;skinned:boolean;bounds:{min:number[];max:number[]}}[]=[];this.model.getObjectByName('dress-'+this.role)?.traverse(c=>{if(c instanceof T.SkinnedMesh){const b=new T.Box3().setFromObject(c,true);parts.push({name:c.name,skinned:true,bounds:{min:b.min.toArray(),max:b.max.toArray()}});}});return parts;})():undefined,hair:{baseCoverage:hairBase,anchor:this.model.getObjectByName('Head')?.getWorldPosition(new T.Vector3()).toArray(),id:this.appearance.hair,gender:this.appearance.gender,beard:this.appearance.beard,visible:this.model.getObjectByName('Head')?.children.filter(c=>c.name.startsWith('hair-')).map(c=>c.name)},identity:this.role?NPC_LOOKS[this.role as ArrivalNpcId]:undefined,figure:this.figure,role:this.role,animation:this.name,equipment:this.equipment,hand:this.instrument?.parent?.name,bracer:this.bracer?.parent?.name,socket:this.instrument?.position.toArray(),grasp:!this.npc&&this.equipment==='current'?{kind:this.appearance.classId==='astral'?'worn-gauntlet':'closed-grip',right:this.grip.inspect('r'),left:this.grip.inspect('l'),support:this.supportActive,aimWeight:this.aimWeight,supportError}:undefined,hasEmitter:!!this.instrument?.getObjectByName('emitter'),emitterLocal:this.instrument?.getObjectByName('emitter')?.position.toArray(),grip:this.instrument?.getWorldPosition(new T.Vector3()).toArray(),blade:this.instrument&&this.appearance.classId==='warrior'?{base:this.bladeFrame().base.toArray(),tip:this.bladeFrame().tip.toArray()}:undefined,emitter:this.weaponOrigin().toArray(),taskActive:this.name==='Work'&&this.lock>0,hands:['r','l'].map(side=>({side,position:this.model.getObjectByName('hand_'+side)?.getWorldPosition(new T.Vector3()).toArray(),armFound:!!this.model.getObjectByName('upperarm_'+side)})),tool:this.taskTool?.getWorldPosition(new T.Vector3()).toArray(),taskGrip:this.taskTool?{side:this.toolSide,error:this.taskTool.getWorldPosition(new T.Vector3()).distanceTo(this.model.getObjectByName('hand_'+this.toolSide)!.localToWorld(this.grip.center(this.toolSide))),forearm:(()=>{const a=this.model.getObjectByName('lowerarm_'+this.toolSide)!.getWorldPosition(new T.Vector3()),b=this.model.getObjectByName('hand_'+this.toolSide)!.getWorldPosition(new T.Vector3());let end:T.Object3D|undefined;this.taskTool!.traverse(o=>{if(o.name.startsWith('shaft-end'))end=o;});const p=end?.getWorldPosition(new T.Vector3());return p?{shaftEnd:p.toArray(),clearance:new T.Line3(a,b).closestPointToPoint(p,true,new T.Vector3()).distanceTo(p)}:undefined;})(),tip:(()=>{let tip:T.Object3D|undefined;this.taskTool!.traverse(o=>{if(o.name.startsWith('working-tip'))tip=o;});return tip?.getWorldPosition(new T.Vector3()).toArray();})()}:undefined};}
  dispose(){const skeletons=new Set<T.Skeleton>();this.root.traverse(o=>{if(o instanceof T.SkinnedMesh)skeletons.add(o.skeleton);});skeletons.forEach(s=>s.dispose());this.energy.forEach(m=>m.dispose());this.mixer.stopAllAction();this.mixer.uncacheRoot(this.model);this.root.traverse(o=>{if(o instanceof T.Mesh&&!o.userData.arrivalSharedIdentity){if(o.userData.arrivalOwned)o.geometry.dispose();for(const m of Array.isArray(o.material)?o.material:[o.material])m.dispose();}});}
 }

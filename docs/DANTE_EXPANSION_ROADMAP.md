@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+**05/11/2026 · 0.1.195 · Ajuste dos NPCs existentes:** corrigir avental/roupas afastadas, pele atravessando mangas, ferramentas no pulso e acabamento. [Entrega e limites](frontier-3d/CREW_FIT.md). Cinco moradores do acampamento, sem territórios adicionais ou alterações de progressão. Aguardar playtest desta correção.
+
 Revisão 0.1.194 publicada: aplicação `679a0db`, Vercel success, 102 hashes públicos iguais, nove relatórios locais e três públicos passaram. [Evidências](frontier-3d/qa/0.1.194/publication.json). Nenhum avanço de território; aprovação visual humana pendente.
 
 **05/11/2026 · Aparência da tripulação · 0.1.194:** após aprovação da 0.1.193, o usuário pediu cabelos adicionais e NPCs próximos aos retratos 2D. [Escopo/QA](frontier-3d/HAIR_AND_CREW.md). Acampamento e floresta preservados; nenhuma Cavernas/Siroco nova nesta revisão. Aguardar playtest dos penteados, NPCs e roupas antes do próximo sprint de território.
