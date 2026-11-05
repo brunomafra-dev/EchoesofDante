@@ -1,0 +1,3483 @@
+{
+  "passed": true,
+  "base": "https://echosofdante.vercel.app",
+  "at": "2026-11-05T15:21:32.318Z",
+  "method": "Native movement/Space/attack, per-animation-frame read-only samples. Valid isolated forest/base trial fixtures, all residents alive, no research/boss/reward state injected. Confirmed HP deltas matched against displayed damage events. Real campaign sentinels protected.",
+  "motion": [
+    {
+      "id": "warrior",
+      "samples": [
+        {
+          "position": [
+            26.817320000000006,
+            0,
+            19.387009999999997
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.1668000000000011,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 7.298005785167925,
+            "distance": 12.500000000000005,
+            "obstructed": true,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            27.425320000000006,
+            0,
+            18.931009999999997
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.11733333587646484,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 0.8888886570930481,
+            "lock": 0.46
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.13499999999999998,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 7.509928148544493,
+            "distance": 12.500000000000005,
+            "obstructed": true,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            27.931479999999993,
+            0,
+            18.551390000000005
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.2150133379936197,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.42670000000000075
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.1017000000000007,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 8.349782059271002,
+            "distance": 12.500000000000005,
+            "obstructed": true,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            28.439160000000015,
+            0,
+            18.17062999999999
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.31298667345047215,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.3932999999999993
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.06829999999999925,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 9.290142148744021,
+            "distance": 12.500000000000005,
+            "obstructed": true,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            28.945320000000002,
+            0,
+            17.791009999999996
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.41066667556762704,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.36000000000000004
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.034999999999999976,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            29.553320000000003,
+            0,
+            17.335009999999997
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.5280000114440919,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.32000000000000006
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            29.636620000000004,
+            0,
+            17.272534999999998
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.5778666791915895,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.30300000000000005
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            29.79783,
+            0,
+            17.1516275
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.6743733479499808,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.2701000000000004
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000004,
+            "allowed": 12.500000000000004,
+            "distance": 12.500000000000004,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            29.993830000000003,
+            0,
+            17.0046275
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.7917066838264457,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.2301000000000004
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.15749,
+            0,
+            16.881882500000003
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.8896800192832928,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.19670000000000076
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.320170000000005,
+            0,
+            16.7598725
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.9870666880607607,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.16350000000000003
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.401999999999997,
+            0,
+            16.698500000000003
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.0360533557891816,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.14680000000000112
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.565660000000005,
+            0,
+            16.575754999999997
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.134026691246034,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.11339999999999967
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000004,
+            "allowed": 12.500000000000004,
+            "distance": 12.500000000000004,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.647,
+            0,
+            16.514750000000003
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.1827200256347625,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.09680000000000112
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000004,
+            "allowed": 12.500000000000004,
+            "distance": 12.500000000000004,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.810660000000006,
+            0,
+            16.392004999999997
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.033400000000001456,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.23857147991657257,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.973830000000003,
+            0,
+            16.2696275
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.06670000000000073,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.47642865777015686,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.13749,
+            0,
+            16.1468825
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.10010000000000037,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.7150000929832458,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.500000000000007,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.300660000000004,
+            0,
+            16.024504999999998
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.13340000000000146,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.952857255935669,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.500000000000007,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.381999999999998,
+            0,
+            15.963500000000003
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.15000000000000002,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000009,
+            "allowed": 12.500000000000009,
+            "distance": 12.500000000000009,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.545660000000005,
+            0,
+            15.840754999999998
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.18340000000000148,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.500000000000007,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.627,
+            0,
+            15.779750000000003
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.2,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000009,
+            "allowed": 12.500000000000009,
+            "distance": 12.500000000000009,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.790170000000003,
+            0,
+            15.6573725
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.23330000000000112,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.500000000000007,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.98617,
+            0,
+            15.510372499999999
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.2733000000000011,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000009,
+            "allowed": 12.500000000000009,
+            "distance": 12.500000000000009,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.14983,
+            0,
+            15.3876275
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.30670000000000075,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.500000000000007,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.31349,
+            0,
+            15.264882500000002
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.3401000000000004,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.500000000000007,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.47666000000001,
+            0,
+            15.142504999999998
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.3734000000000015,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.500000000000007,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.558,
+            0,
+            15.081500000000004
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.39000000000000007,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.500000000000007,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hunter",
+      "samples": [
+        {
+          "position": [
+            26.77,
+            0,
+            19.4225
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.14,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 7.299603339703406,
+            "distance": 12.5,
+            "obstructed": true,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            27.378,
+            0,
+            18.9665
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.11733333587646484,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 0.888888955116272,
+            "lock": 0.46
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.19999999999999998,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 7.475553096527582,
+            "distance": 12.500000000000005,
+            "obstructed": true,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            27.986,
+            0,
+            18.5105
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.23466667175292968,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.42000000000000004
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.15999999999999998,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000004,
+            "allowed": 8.726541595205493,
+            "distance": 12.500000000000004,
+            "obstructed": true,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            28.594,
+            0,
+            18.0545
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.35200000762939454,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.38000000000000006
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.11999999999999997,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000004,
+            "allowed": 9.60749535333244,
+            "distance": 12.500000000000004,
+            "obstructed": true,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            29.10168000000001,
+            0,
+            17.673739999999995
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.44997334308624426,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.3465999999999995
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.08659999999999943,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000004,
+            "allowed": 12.500000000000004,
+            "distance": 12.500000000000004,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            29.60784000000001,
+            0,
+            17.294119999999992
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.5476533452034018,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.31329999999999936
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.053299999999999244,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 12.500000000000007,
+            "distance": 12.500000000000007,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.114,
+            0,
+            16.9145
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.6453333473205567,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.2800000000000001
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.01999999999999997,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.50000000000001,
+            "allowed": 12.50000000000001,
+            "distance": 12.50000000000001,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.36784000000001,
+            0,
+            16.724119999999992
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.6943200150489829,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.26329999999999937
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.003299999999999241,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000009,
+            "allowed": 12.500000000000009,
+            "distance": 12.500000000000009,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.874000000000002,
+            0,
+            16.3445
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.7920000171661378,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.2300000000000001
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000009,
+            "allowed": 12.500000000000009,
+            "distance": 12.500000000000009,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.057700000000004,
+            0,
+            16.206725
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.8899733526229875,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.19659999999999955
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.50000000000001,
+            "allowed": 12.50000000000001,
+            "distance": 12.50000000000001,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.240850000000005,
+            0,
+            16.069362499999997
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.987653354740145,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.16329999999999936
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000014,
+            "allowed": 12.500000000000014,
+            "distance": 12.500000000000014,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.334350000000004,
+            0,
+            15.999237499999996
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.0375200224876426,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.14629999999999937
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000014,
+            "allowed": 12.500000000000014,
+            "distance": 12.500000000000014,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.515850000000004,
+            0,
+            15.863112499999996
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.1343200245857261,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.11329999999999937
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000014,
+            "allowed": 12.500000000000014,
+            "distance": 12.500000000000014,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.698999999999998,
+            0,
+            15.72575
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.033299999999999275,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.2378571778535843,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000014,
+            "allowed": 12.500000000000014,
+            "distance": 12.500000000000014,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.790850000000002,
+            0,
+            15.656862499999997
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.05,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.3571428656578064,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000018,
+            "allowed": 12.500000000000018,
+            "distance": 12.500000000000018,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.973999999999997,
+            0,
+            15.5195
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.08329999999999928,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.5949999094009399,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000021,
+            "allowed": 12.500000000000021,
+            "distance": 12.500000000000021,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.06585,
+            0,
+            15.450612499999998
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.1,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.7142856121063232,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000023,
+            "allowed": 12.500000000000023,
+            "distance": 12.500000000000023,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.248999999999995,
+            0,
+            15.31325
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.13329999999999928,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.9521426558494568,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000023,
+            "allowed": 12.500000000000023,
+            "distance": 12.500000000000023,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.4327,
+            0,
+            15.175474999999997
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.16669999999999982,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000021,
+            "allowed": 12.500000000000021,
+            "distance": 12.500000000000021,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.523999999999994,
+            0,
+            15.107
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.18329999999999927,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000021,
+            "allowed": 12.500000000000021,
+            "distance": 12.500000000000021,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.61639999999999,
+            0,
+            15.0377
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.20009999999999944,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000021,
+            "allowed": 12.500000000000021,
+            "distance": 12.500000000000021,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.79954999999999,
+            0,
+            14.900337499999997
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.23339999999999964,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000021,
+            "allowed": 12.500000000000021,
+            "distance": 12.500000000000021,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.79954999999999,
+            0,
+            14.762974999999996
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.2666999999999998,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000021,
+            "allowed": 12.500000000000021,
+            "distance": 12.500000000000021,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.890849999999986,
+            0,
+            14.694499999999998
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.2832999999999993,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000021,
+            "allowed": 12.500000000000021,
+            "distance": 12.500000000000021,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.890849999999986,
+            0,
+            14.557137499999996
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.31659999999999944,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000021,
+            "allowed": 12.500000000000021,
+            "distance": 12.500000000000021,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.890849999999986,
+            0,
+            14.487837499999996
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.33339999999999964,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000023,
+            "allowed": 12.500000000000023,
+            "distance": 12.500000000000023,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.890849999999986,
+            0,
+            14.350887499999995
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.3665999999999995,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000023,
+            "allowed": 12.500000000000023,
+            "distance": 12.500000000000023,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.890849999999986,
+            0,
+            14.281999999999996
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.3832999999999993,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000023,
+            "allowed": 12.500000000000023,
+            "distance": 12.500000000000023,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.890849999999986,
+            0,
+            14.144224999999993
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.41669999999999985,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000025,
+            "allowed": 12.500000000000025,
+            "distance": 12.500000000000025,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        }
+      ]
+    },
+    {
+      "id": "astral",
+      "samples": [
+        {
+          "position": [
+            26.753,
+            0,
+            19.43525
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.15059999999999946,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000004,
+            "allowed": 7.300773697337131,
+            "distance": 12.500000000000004,
+            "obstructed": true,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            27.361,
+            0,
+            18.97925
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.11733333587646484,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 0.8888888955116272,
+            "lock": 0.46
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.13499999999999998,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000004,
+            "allowed": 7.4641033556614085,
+            "distance": 12.500000000000004,
+            "obstructed": true,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            27.867160000000002,
+            0,
+            18.599629999999998
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.21501333799362238,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.42669999999999986
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.10169999999999979,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 8.130911242832946,
+            "distance": 12.500000000000005,
+            "obstructed": true,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            28.373320000000003,
+            0,
+            18.220009999999995
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.31269334011077987,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.3933999999999997
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.0683999999999996,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 9.182222170869837,
+            "distance": 12.500000000000005,
+            "obstructed": true,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            28.880999999999997,
+            0,
+            17.83925
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.4106666755676269,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.36000000000000004
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.03499999999999996,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            29.13332,
+            0,
+            17.650009999999995
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.4593600099563609,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.3433999999999997
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.018399999999999597,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            29.640999999999995,
+            0,
+            17.26925
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.557333345413208,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.31000000000000005
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            29.807999999999996,
+            0,
+            17.144
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.6553066808700577,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.2765999999999995
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            29.974499999999995,
+            0,
+            17.019125
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.7529866829872153,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.24329999999999932
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 12.500000000000002,
+            "distance": 12.500000000000002,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.141499999999994,
+            0,
+            16.893875
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.8509600184440623,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.2098999999999997
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 12.499999999999998,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.307999999999993,
+            0,
+            16.769000000000002
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.9486400205612199,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.1765999999999995
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 12.499999999999998,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.47499999999999,
+            0,
+            16.643750000000004
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.046613356018067,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.14319999999999988
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 12.499999999999998,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.55749999999999,
+            0,
+            16.581875000000004
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.0950133570671088,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.12669999999999987
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999996,
+            "allowed": 12.499999999999996,
+            "distance": 12.499999999999996,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.724499999999992,
+            0,
+            16.456625000000003
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.1929866925239585,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.09329999999999933
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999995,
+            "allowed": 12.499999999999995,
+            "distance": 12.499999999999995,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.890999999999988,
+            0,
+            16.331750000000007
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.033299999999999275,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.2378571629524231,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999995,
+            "allowed": 12.499999999999995,
+            "distance": 12.499999999999995,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.97549999999999,
+            0,
+            16.268375000000006
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.05019999999999982,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.35857146978378296,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999995,
+            "allowed": 12.499999999999995,
+            "distance": 12.499999999999995,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.140999999999988,
+            0,
+            16.144250000000007
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.08329999999999928,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.5950000286102295,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 12.499999999999998,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.30749999999999,
+            0,
+            16.019375000000007
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.11659999999999945,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.8328571915626526,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 12.499999999999998,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.39149999999999,
+            0,
+            15.956375000000007
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.13339999999999963,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.952857255935669,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 12.5,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.557999999999993,
+            0,
+            15.831500000000005
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.16669999999999982,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 12.499999999999998,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.723999999999993,
+            0,
+            15.707000000000006
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.19989999999999963,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 12.499999999999998,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.891499999999994,
+            0,
+            15.581375000000007
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.23339999999999964,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 12.499999999999998,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.974499999999995,
+            0,
+            15.519125000000006
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.25,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 12.499999999999998,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.14099999999999,
+            0,
+            15.394250000000008
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.2832999999999993,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 12.500000000000002,
+            "distance": 12.500000000000002,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.22399999999999,
+            0,
+            15.332000000000008
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.2998999999999996,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 12.500000000000002,
+            "distance": 12.500000000000002,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.39099999999999,
+            0,
+            15.20675000000001
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.33329999999999926,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 12.500000000000002,
+            "distance": 12.500000000000002,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.55799999999999,
+            0,
+            15.081500000000009
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.3666999999999998,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000004,
+            "allowed": 12.500000000000004,
+            "distance": 12.500000000000004,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.64149999999999,
+            0,
+            15.01887500000001
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.38339999999999963,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.80749999999999,
+            0,
+            14.89437500000001
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.41659999999999947,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        }
+      ]
+    },
+    {
+      "id": "xenobinder",
+      "samples": [
+        {
+          "position": [
+            26.9165,
+            0,
+            19.312625
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.18330000000000019,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 7.30257257278459,
+            "distance": 12.500000000000007,
+            "obstructed": true,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            27.42266,
+            0,
+            18.933004999999998
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.09768000211715752,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 0.7400001287460327,
+            "lock": 0.46669999999999984
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.1416999999999998,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000007,
+            "allowed": 7.507894543675153,
+            "distance": 12.500000000000007,
+            "obstructed": true,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            28.03066,
+            0,
+            18.477005
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.21501333799362238,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.42669999999999986
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.10169999999999979,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000004,
+            "allowed": 8.767490642283057,
+            "distance": 12.500000000000004,
+            "obstructed": true,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            28.28297999999999,
+            0,
+            18.287765000000004
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.2637066723823537,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.4101000000000004
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.08510000000000034,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 9.052040376845193,
+            "distance": 12.500000000000005,
+            "obstructed": true,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            28.890979999999992,
+            0,
+            17.831765000000004
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.3810400082588185,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.37010000000000043
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.04510000000000034,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            29.498979999999992,
+            0,
+            17.375765000000005
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.49837334413528334,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.33010000000000045
+          },
+          "dodge": {
+            "active": true,
+            "remaining": 0.00510000000000034,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.005139999999994,
+            0,
+            16.996145000000002
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.5960533462524409,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.2968000000000003
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.171639999999993,
+            0,
+            16.871270000000003
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.6937333483695984,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.2635000000000001
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000004,
+            "allowed": 12.500000000000004,
+            "distance": 12.500000000000004,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.338139999999992,
+            0,
+            16.746395000000003
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.791413350486756,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.23019999999999993
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.50513999999999,
+            0,
+            16.621145000000006
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.889386685943603,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.1968000000000003
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.67163999999999,
+            0,
+            16.496270000000006
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 0.9870666880607606,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.16350000000000012
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.838639999999987,
+            0,
+            16.37102000000001
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.0850400235176076,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.1301000000000005
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            30.92363999999999,
+            0,
+            16.30727000000001
+          ],
+          "animation": "Roll",
+          "action": {
+            "time": 1.1349066912651051,
+            "duration": 1.4666666984558105,
+            "timeScale": 2.933333396911621,
+            "weight": 1,
+            "lock": 0.11310000000000049
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": true
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.09163999999999,
+            0,
+            16.18127000000001
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.033600000000000366,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.2399999350309372,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.25513999999999,
+            0,
+            16.05864500000001
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.06630000000000019,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.47357138991355896,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000005,
+            "allowed": 12.500000000000005,
+            "distance": 12.500000000000005,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.42163999999999,
+            0,
+            15.933770000000008
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.09960000000000038,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.7114285826683044,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 12.500000000000002,
+            "distance": 12.500000000000002,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.50513999999999,
+            0,
+            15.87114500000001
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.11630000000000021,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.8307142853736877,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 12.5,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.588139999999992,
+            0,
+            15.808895000000009
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.13290000000000057,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 0.9492857456207275,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 12.5,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.75513999999999,
+            0,
+            15.68364500000001
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.16630000000000023,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 12.500000000000002,
+            "distance": 12.500000000000002,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            31.838139999999992,
+            0,
+            15.621395000000009
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.1829000000000006,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 12.500000000000002,
+            "distance": 12.500000000000002,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.00613999999999,
+            0,
+            15.495395000000011
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.21650000000000005,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 12.500000000000002,
+            "distance": 12.500000000000002,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.172139999999985,
+            0,
+            15.370895000000012
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.24969999999999987,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 12.500000000000002,
+            "distance": 12.500000000000002,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.338639999999984,
+            0,
+            15.24602000000001
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.28300000000000003,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 12.5,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.422139999999985,
+            0,
+            15.183395000000012
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.29969999999999986,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.500000000000002,
+            "allowed": 12.500000000000002,
+            "distance": 12.500000000000002,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.588639999999984,
+            0,
+            15.05852000000001
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.333,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.5,
+            "allowed": 12.5,
+            "distance": 12.5,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.75513999999998,
+            0,
+            14.93364500000001
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.3663000000000002,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999998,
+            "allowed": 12.499999999999998,
+            "distance": 12.499999999999998,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.839139999999986,
+            0,
+            14.870645000000009
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.3831000000000004,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999996,
+            "allowed": 12.499999999999996,
+            "distance": 12.499999999999996,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        },
+        {
+          "position": [
+            32.839139999999986,
+            0,
+            14.74614500000001
+          ],
+          "animation": "Run",
+          "action": {
+            "time": 0.4163000000000002,
+            "duration": 0.9333333373069763,
+            "timeScale": 1,
+            "weight": 1,
+            "lock": 0
+          },
+          "dodge": {
+            "active": false,
+            "remaining": 0,
+            "visual": false
+          },
+          "cameraBoom": {
+            "desired": 12.499999999999996,
+            "allowed": 12.499999999999996,
+            "distance": 12.499999999999996,
+            "obstructed": false,
+            "mode": "foliage-cutout"
+          }
+        }
+      ]
+    }
+  ],
+  "combat": {
+    "before": [
+      {
+        "id": 0,
+        "position": [
+          17.108830693742924,
+          0,
+          25.258599556329308
+        ],
+        "hp": 68,
+        "wind": -0.003299999999999234,
+        "slow": 0
+      },
+      {
+        "id": 1,
+        "position": [
+          17.910741019358483,
+          0,
+          24.48712792385986
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 2,
+        "position": [
+          10.75,
+          0,
+          13.5
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 3,
+        "position": [
+          13.5,
+          0,
+          12.25
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 4,
+        "position": [
+          36,
+          0,
+          12.5
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 5,
+        "position": [
+          39.5,
+          0,
+          11.25
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 6,
+        "position": [
+          44.25,
+          0,
+          24.5
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 7,
+        "position": [
+          45.75,
+          0,
+          26.25
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      }
+    ],
+    "after": [
+      {
+        "id": 0,
+        "position": [
+          17.108830693742924,
+          0,
+          25.258599556329308
+        ],
+        "hp": 0,
+        "wind": 0.21339999999999962,
+        "slow": 0
+      },
+      {
+        "id": 1,
+        "position": [
+          17.2108137005568,
+          0,
+          25.17030612463918
+        ],
+        "hp": 0,
+        "wind": 0.06330000000000115,
+        "slow": 0
+      },
+      {
+        "id": 2,
+        "position": [
+          10.75,
+          0,
+          13.5
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 3,
+        "position": [
+          13.5,
+          0,
+          12.25
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 4,
+        "position": [
+          36,
+          0,
+          12.5
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 5,
+        "position": [
+          39.5,
+          0,
+          11.25
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 6,
+        "position": [
+          44.25,
+          0,
+          24.5
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      },
+      {
+        "id": 7,
+        "position": [
+          45.75,
+          0,
+          26.25
+        ],
+        "hp": 68,
+        "wind": 0,
+        "slow": 0
+      }
+    ],
+    "hpDelta": 136,
+    "displayedEnemyDamage": 136,
+    "heroEvents": [
+      {
+        "amount": 14,
+        "target": "hero"
+      }
+    ],
+    "capacity": 28,
+    "camera": [
+      {
+        "position": [
+          17.02365999999998,
+          0,
+          25.482254999999952
+        ],
+        "boom": {
+          "desired": 12.499999999999986,
+          "allowed": 6.728917052303007,
+          "distance": 12.499999999999986,
+          "obstructed": true,
+          "mode": "foliage-cutout"
+        }
+      },
+      {
+        "position": [
+          18.771489999999982,
+          0,
+          24.171382499999943
+        ],
+        "boom": {
+          "desired": 12.499999999999982,
+          "allowed": 12.499999999999982,
+          "distance": 12.499999999999982,
+          "obstructed": false,
+          "mode": "foliage-cutout"
+        }
+      },
+      {
+        "position": [
+          19.99648999999997,
+          0,
+          23.252632499999926
+        ],
+        "boom": {
+          "desired": 12.499999999999984,
+          "allowed": 12.499999999999984,
+          "distance": 12.499999999999984,
+          "obstructed": false,
+          "mode": "foliage-cutout"
+        }
+      },
+      {
+        "position": [
+          21.547829999999966,
+          0,
+          22.089127499999922
+        ],
+        "boom": {
+          "desired": 12.499999999999984,
+          "allowed": 12.499999999999984,
+          "distance": 12.499999999999984,
+          "obstructed": false,
+          "mode": "foliage-cutout"
+        }
+      },
+      {
+        "position": [
+          22.772829999999953,
+          0,
+          21.17037749999991
+        ],
+        "boom": {
+          "desired": 12.499999999999984,
+          "allowed": 7.05441858161781,
+          "distance": 12.499999999999984,
+          "obstructed": true,
+          "mode": "foliage-cutout"
+        }
+      },
+      {
+        "position": [
+          22.888714999999944,
+          0,
+          20.06211999999991
+        ],
+        "boom": {
+          "desired": 12.499999999999984,
+          "allowed": 7.256454658446884,
+          "distance": 12.499999999999984,
+          "obstructed": true,
+          "mode": "foliage-cutout"
+        }
+      },
+      {
+        "position": [
+          22.007817499999934,
+          0,
+          18.887589999999907
+        ],
+        "boom": {
+          "desired": 12.499999999999984,
+          "allowed": 10.547506549376532,
+          "distance": 12.499999999999984,
+          "obstructed": true,
+          "mode": "foliage-cutout"
+        }
+      },
+      {
+        "position": [
+          21.08980249999993,
+          0,
+          17.66356999999991
+        ],
+        "boom": {
+          "desired": 12.499999999999984,
+          "allowed": 12.499999999999984,
+          "distance": 12.499999999999984,
+          "obstructed": false,
+          "mode": "foliage-cutout"
+        }
+      },
+      {
+        "position": [
+          19.190929999999913,
+          0,
+          15.131739999999922
+        ],
+        "boom": {
+          "desired": 12.499999999999986,
+          "allowed": 12.499999999999986,
+          "distance": 12.499999999999986,
+          "obstructed": false,
+          "mode": "foliage-cutout"
+        }
+      },
+      {
+        "position": [
+          17.904679999999914,
+          0,
+          13.416739999999926
+        ],
+        "boom": {
+          "desired": 12.499999999999995,
+          "allowed": 12.499999999999995,
+          "distance": 12.499999999999995,
+          "obstructed": false,
+          "mode": "foliage-cutout"
+        }
+      },
+      {
+        "position": [
+          16.903977499999918,
+          0,
+          13.273782499999932
+        ],
+        "boom": {
+          "desired": 12.499999999999998,
+          "allowed": 12.499999999999998,
+          "distance": 12.499999999999998,
+          "obstructed": false,
+          "mode": "foliage-cutout"
+        }
+      },
+      {
+        "position": [
+          15.597147499999926,
+          0,
+          14.253904999999927
+        ],
+        "boom": {
+          "desired": 12.499999999999998,
+          "allowed": 12.499999999999998,
+          "distance": 12.499999999999998,
+          "obstructed": false,
+          "mode": "foliage-cutout"
+        }
+      },
+      {
+        "position": [
+          14.911637499999916,
+          0,
+          14.707032499999931
+        ],
+        "boom": {
+          "desired": 12.499999999999995,
+          "allowed": 12.499999999999995,
+          "distance": 12.499999999999995,
+          "obstructed": false,
+          "mode": "foliage-cutout"
+        }
+      },
+      {
+        "position": [
+          14.911637499999916,
+          0,
+          14.707032499999931
+        ],
+        "boom": {
+          "desired": 12.499999999999995,
+          "allowed": 12.499999999999995,
+          "distance": 12.499999999999995,
+          "obstructed": false,
+          "mode": "foliage-cutout"
+        }
+      },
+      {
+        "position": [
+          14.911637499999916,
+          0,
+          14.707032499999931
+        ],
+        "boom": {
+          "desired": 12.499999999999995,
+          "allowed": 12.499999999999995,
+          "distance": 12.499999999999995,
+          "obstructed": false,
+          "mode": "foliage-cutout"
+        }
+      }
+    ]
+  },
+  "errors": []
+}

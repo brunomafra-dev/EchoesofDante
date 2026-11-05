@@ -43,4 +43,6 @@ O pedido atual autoriza preparar a convergência 2D/3D e substitui as antigas li
 - [Fogo Q](https://echosofdante.vercel.app/arrival-workshop.html?v=0.1.193&subject=astral&view=combat&effect=power&element=1).
 - [Rosto feminino e comparação](https://echosofdante.vercel.app/arrival-workshop.html?v=0.1.193&subject=astral&gender=female&view=portrait).
 
-Nenhum pré-requisito é simulado nesses acessos. A oficina não carrega saves. A seleção de identidade no jogo é opcional e somente lê a campanha. Relatórios em `qa/0.1.193/`; publicação só será confirmada após hash público e QA.
+Nenhum pré-requisito é simulado nesses acessos. A oficina não carrega saves. A seleção de identidade no jogo é opcional e somente lê a campanha. Relatórios em `qa/0.1.193/`.
+
+**Publicação confirmada:** aplicação `b4ac658`, Vercel success e 94 hashes públicos iguais ao build local. Dez relatórios locais e quatro suítes públicas passaram: identidade/persistência, 28 casos visuais, movimento/dano/câmera e acesso pelo menu com teclado/mouse/touch/gamepad emulados. Evidências em [publication.json](qa/0.1.193/publication.json) e [observações/limites](qa/0.1.193/OBSERVATIONS.md). Aprovação humana pendente; Cavernas e paridade completa ainda não entregues.

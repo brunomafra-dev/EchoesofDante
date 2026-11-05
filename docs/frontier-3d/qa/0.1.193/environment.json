@@ -10,6 +10,6 @@
   "performanceConditions": "Warrior idle; base five NPCs, forest eight live spiders; 1440x900/DPR1; eight-second warm-up, three two-second samples; sequential with no concurrent build/Blender/second QA.",
   "physicalPhoneTest": false,
   "humanVisualApproval": "pending: tree visibility, plasma, lightning/fire, face refinement and identity bridge",
-  "published": false,
+  "published": true,
   "version": "0.1.193"
 }

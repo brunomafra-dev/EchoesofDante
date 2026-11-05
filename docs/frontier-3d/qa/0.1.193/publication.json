@@ -1,0 +1,19 @@
+{
+  "version": "0.1.193",
+  "at": "2026-11-05T15:23:53.030798+00:00",
+  "runtimeCommit": "b4ac65826600a270d78930407cb8c7721e409b33",
+  "vercelStatus": "success",
+  "vercelDeployment": "https://vercel.com/brunomafra-devs-projects/echosofdante/GQU4hM4hX8eL14TQfMVY7qXxuYKo",
+  "matchingPublicHashes": 94,
+  "localReports": 10,
+  "publicReports": {
+    "identity-bridge": true,
+    "visual": true,
+    "motion-damage": true,
+    "entry": true
+  },
+  "humanVisualApproval": "pending",
+  "campaignWriteback": false,
+  "newPlayableTerritories": false,
+  "physicalPhoneTest": false
+}
