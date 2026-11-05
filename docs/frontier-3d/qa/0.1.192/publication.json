@@ -1,0 +1,43 @@
+{
+  "version": "0.1.192",
+  "at": "2026-11-05T14:23:33.380723+00:00",
+  "sourceCommit": "12897e8ea25bf9c1e678b65955d3eba544ca73fd",
+  "vercelStatus": "success",
+  "vercelUrl": "https://vercel.com/brunomafra-devs-projects/echosofdante/ABEiBxWJu6stmXbA5g197dMASnd8",
+  "published": true,
+  "matchingPublishedHashes": 88,
+  "unchangedCampaignHashes": 83,
+  "rebuiltCampaignMenuBundles": 3,
+  "compiledReports": [
+    "visual",
+    "motion-damage",
+    "route",
+    "input",
+    "elements",
+    "workshop",
+    "entry",
+    "performance"
+  ],
+  "publicReports": [
+    "public/visual/report.json",
+    "public/motion-damage/report.json",
+    "public/input/report.json",
+    "public/entry/report.json"
+  ],
+  "publicScreenshotsInspected": true,
+  "runtimeDiffFromSourceCommit": false,
+  "networkOrRelayChanged": false,
+  "humanVisualApproval": "pending",
+  "physicalIphoneTest": "pending",
+  "limits": [
+    "Same isolated solo camp/forest experience, no new region or full cooperative 3D migration.",
+    "Original Blender geometry exports only; no offline render, new external artwork/audio or per-effect dynamic lights/bloom.",
+    "Damage numbers use confirmed HP loss; displayed integer rounding is distinct from internal float damage. No critical hits invented.",
+    "Camera obstacles are conservative canopy/trunk/rock proxies; other angles require human playtest, no absolute occlusion guarantee.",
+    "Visual roll recovery lasts about 0.5 seconds; original dash displacement and invulnerability windows remain, attacks/powers/jump wait for the visual finish.",
+    "Performance figures are warmed stationary samples on Intel UHD, not sustained combat or a physical iPhone/FPS guarantee.",
+    "Campaign saves, finite kills, research requirements and boss gates preserved; named test fixtures are isolated browser profiles only.",
+    "Text canonicalizes CRLF/LF; index.html also ignores blank lines as documented in 0.1.191; JS/CSS/binary model hashes remain exact.",
+    "Await user playtest before the next stage."
+  ]
+}

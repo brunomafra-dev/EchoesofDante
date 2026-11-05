@@ -4,7 +4,7 @@
 
 - [x] Implementação e capturas inspecionadas: dez modelos originais Blender, projéteis/campos por classe/elemento, feixe de plasma, Sword/Roll completos, números confirmados e braço de câmera sem transparência ambiental.
 - [x] QA local: typecheck/build 310 módulos e oito relatórios; 28 casos de efeitos/dois corpos, 133 amostras de movimento nas quatro classes, 136 HP perdidos = 136 somados nos números, miss sem dano flutuante, percurso/reload, touch/gamepad, elementos/NPCs/oficina/menu, recursos e desempenho. 83 hashes da campanha preservados; três bundles do menu recompilados. [Evidências e limites](frontier-3d/COMBAT_REFINEMENT.md).
-- [ ] Push sincronizado, Vercel e QA público.
+- [x] Aplicação `12897e8` em `origin/main`, Vercel success, 88 arquivos públicos conferidos e quatro suítes públicas passaram (efeitos, movimento/dano/câmera, input e entrada/retorno). Capturas públicas inspecionadas; [evidências e limites](frontier-3d/qa/0.1.192/publication.json). Commits posteriores de documentação não alteram o runtime.
 - [ ] Aprovação visual humana desta revisão. Aguardar antes da etapa seguinte.
 
 **05/11/2026 · Publicação e acesso no jogo · 0.1.191:** usuário autorizou explicitamente push/deploy das revisões locais e pediu “Experiência 3D” dentro do Echoes. Esta autorização substitui a restrição de publicação anterior; não significa aprovação estética nem expansão do protótipo. Botão no menu inicial, retorno à campanha no editor/pausa 3D, build limpo com obtenção do pacote oficial Easyforge e incorporação no módulo do jogo (fontes fora do Git/public). Campanha, saves, progressão e relay preservados. [Escopo e evidências](frontier-3d/ACCESS.md).
