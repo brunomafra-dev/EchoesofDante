@@ -2,6 +2,8 @@
 
 **05/11/2026 · Experiência 3D pelo menu · 0.1.191:** usuário autorizou publicar os três commits locais e criar acesso ao protótipo dentro do jogo. [Escopo e QA/publicação](frontier-3d/ACCESS.md). Mesmo acampamento/floresta solo, com revisões de Hollow, empunhaduras/manopla e mochila; não autoriza Siroco, coop 3D ou migração integral. Restrição anterior de push/deploy substituída por esta autorização explícita; aprovação visual humana permanece pendente.
 
+Aplicação `89c5cce` publicada: Vercel success, 86 arquivos conferidos e três suítes públicas passaram; Hollow `spider` ativo, navegação/retorno e dados da campanha preservados. [Evidências e limites](frontier-3d/qa/0.1.191/publication.json). Aguardar playtest humano.
+
 **04/11/2026 · Mochila de expedição · 0.1.190 LOCAL:** revisão visual solicitada para mochila e barras do torso. [Modelo Quaternius CC0, integração e evidências](frontier-3d/BACKPACK.md). Mochila com bolsos/rolo/fivelas, tecido fosco e alças ajustadas aos dois corpos; comparação sem trocar armas. Mesmo protótipo acampamento/floresta, sem expansão, alteração de progressão ou push/deploy. QA técnico e aprovação humana separados; aguardar playtest desta revisão.
 
 **04/11/2026 · Empunhaduras e manopla · 0.1.189 LOCAL:** correção solicitada no playtest da 0.1.188: dedos envolvendo cabos das quatro classes e Astral usando manopla em vez de foco de mão. [Implementação, recursos e QA](frontier-3d/GRIPS.md). Mesmo trecho acampamento/floresta, sem expansão ou alterações de progressão. Comparação com a 0.1.188 na oficina e enquadramentos próximos. Sem push/deploy conforme restrição vigente. QA técnico final registrado separadamente da aprovação humana; aguardar avaliação antes do próximo ponto.

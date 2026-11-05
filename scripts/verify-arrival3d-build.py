@@ -58,8 +58,9 @@ for directory in ['arrival-3d','frontier-3d']:
 def digest(file):
  data=Path('dist'+file).read_bytes()
  if Path(file).suffix in ['.html','.json','.md','.txt']:data=data.replace(b'\r\n',b'\n')
+ if version=='0.1.191' and file=='/index.html':data=b'\n'.join(line for line in data.splitlines() if line.strip())+b'\n'
  return hashlib.sha256(data).hexdigest()
-publication={'version':version,'htmlEntries':['/arrival-3d.html','/test-library.html']+(['/arrival-workshop.html'] if extra else [])+(['/index.html'] if version=='0.1.191' else []),'hashes':{f:digest(f) for f in sorted(files)},'textCanonicalLF':['.html','.json','.md','.txt'],'unchangedCampaignHashes':preservedCampaignHashes,'rebuiltCampaignMenuBundles':sorted(rebuiltMenuBundles)}
+publication={'version':version,'htmlEntries':['/arrival-3d.html','/test-library.html']+(['/arrival-workshop.html'] if extra else [])+(['/index.html'] if version=='0.1.191' else []),'hashes':{f:digest(f) for f in sorted(files)},'textCanonicalLF':['.html','.json','.md','.txt'],'htmlWhitespaceOnlyLines':['/index.html'] if version=='0.1.191' else [],'unchangedCampaignHashes':preservedCampaignHashes,'rebuiltCampaignMenuBundles':sorted(rebuiltMenuBundles)}
 Path(f'.local/arrival-build-{version}.json').write_text(json.dumps(publication,indent=2)+'\n',encoding='utf-8')
 changed=subprocess.check_output(['git','diff','--name-only','8e9a6db'],text=True).splitlines();assert not any(p.startswith(('src/scenes/','src/systems/','src/network/','server/')) for p in changed)
 reports=[]

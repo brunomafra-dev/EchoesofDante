@@ -7,3 +7,5 @@ Desktop 1440x900 and touch landscape 844x390 screenshots show the new Experience
 The portrait route uses the existing Continue in browser orientation action. The creator scrolls normally; the new return link remains reachable. Native navigation stays in the same tab. No campaign requirements or boss completions are simulated.
 
 The 0.1.190 visual assets are unchanged in this access update; prior backpack/grips and performance observations still apply. No new FPS claim.
+
+Public inspection: main-menu mouse screenshot, Hollow workshop motion and touch Astral forest captures match the compiled presentation. All three public suites passed. The workshop diagnostic explicitly reports the new spider active; the public module and model hashes match. Text hashing normalizes CRLF; index.html alone also normalizes empty lines after inspection of the one empty line left by Vite's Windows entry-script removal. No JS/model tolerance was added.

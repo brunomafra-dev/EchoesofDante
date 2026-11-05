@@ -6,5 +6,5 @@
   "preparedSHA256": "bbbe0229e925138953c55e3eeba15cc14719fe3263a6ab87097584dc7c3009f8",
   "matchesPriorValidatedBuild": true,
   "originalAssetFilesCommitted": false,
-  "cloudDeploymentValidation": "pending actual Vercel build and public hashes"
+  "cloudDeploymentValidation": "Vercel success; public incorporated module byte hash matches compiled local input; workshop confirms spider active"
 }

@@ -1,0 +1,35 @@
+{
+  "version": "0.1.191",
+  "at": "2026-11-05T13:06:50.276899+00:00",
+  "sourceCommit": "89c5cce2a0a758430b82e20d8e5bc9ba854479e4",
+  "vercelStatus": "success",
+  "vercelUrl": "https://vercel.com/brunomafra-devs-projects/echosofdante/6gtnkBG4dqQ3bHZb1pWA5kDHTDz2",
+  "published": true,
+  "matchingPublishedHashes": 86,
+  "unchangedCampaignHashes": 83,
+  "rebuiltCampaignMenuBundles": 3,
+  "compiledReports": [
+    "entry",
+    "input",
+    "workshop"
+  ],
+  "publicReports": [
+    "public/entry/report.json",
+    "public/input/report.json",
+    "public/workshop/report.json"
+  ],
+  "publicScreenshotsInspected": true,
+  "runtimeDiffFromSourceCommit": false,
+  "networkOrRelayChanged": false,
+  "hollowActive": "spider",
+  "humanVisualApproval": "pending",
+  "physicalIphoneTest": "pending",
+  "limits": [
+    "Same isolated solo camp/forest trial; not a full campaign/co-op 3D migration.",
+    "No campaign requirements or boss victories simulated in normal play. QA character registry/journey markers use isolated temporary browser contexts.",
+    "Licensed spider source and derived GLBs stay outside Git/public; only incorporated game module published.",
+    "Text canonicalizes CRLF/LF; index.html also ignores empty lines after inspected Windows/Linux Vite entry-script difference. JS/CSS/binary model hashes are otherwise exact.",
+    "Prior grip/backpack visual and performance limitations still apply. No new FPS or physical mobile claim.",
+    "Await user playtest before the next visual point or region."
+  ]
+}
