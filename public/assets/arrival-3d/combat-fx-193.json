@@ -1,0 +1,75 @@
+{
+  "version": "0.1.193",
+  "file": "combat-fx-193.glb",
+  "author": "Echoes of Dante original Blender geometry; no external artwork or render",
+  "generator": "scripts/asset-tools/author-arrival193.py",
+  "sha256": "d27ff8dcec6c499e3cc82e8c03d95696fc7dc2f8747c5935a2c7b7477a96fe01",
+  "bytes": 141616,
+  "textures": 0,
+  "models": [
+    {
+      "name": "fx-plasma",
+      "triangles": 172
+    },
+    {
+      "name": "fx-energy",
+      "triangles": 436
+    },
+    {
+      "name": "fx-water",
+      "triangles": 272
+    },
+    {
+      "name": "fx-fire",
+      "triangles": 158
+    },
+    {
+      "name": "fx-earth",
+      "triangles": 56
+    },
+    {
+      "name": "fx-bond",
+      "triangles": 132
+    },
+    {
+      "name": "fx-plasma-beam",
+      "triangles": 596
+    },
+    {
+      "name": "fx-blade-sweep",
+      "triangles": 456
+    },
+    {
+      "name": "fx-water-vortex",
+      "triangles": 1756
+    },
+    {
+      "name": "fx-lightning-0",
+      "triangles": 160
+    },
+    {
+      "name": "fx-lightning-1",
+      "triangles": 160
+    },
+    {
+      "name": "fx-lightning-2",
+      "triangles": 160
+    },
+    {
+      "name": "fx-lightning-3",
+      "triangles": 160
+    },
+    {
+      "name": "fx-lightning-4",
+      "triangles": 160
+    },
+    {
+      "name": "fx-lightning-5",
+      "triangles": 160
+    },
+    {
+      "name": "fx-fire-plume",
+      "triangles": 630
+    }
+  ]
+}

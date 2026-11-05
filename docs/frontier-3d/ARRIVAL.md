@@ -1,5 +1,7 @@
 # Chegada a Dante em 3D · 0.1.185
 
+**Revisão atual · 0.1.193:** [visibilidade das árvores, plasma/raios/fogo, rostos e ponte de identidade](VISUAL_193.md). O ensaio agora persiste no navegador e pode representar uma identidade existente, com leitura da campanha sem escrita nela. Registros abaixo descrevem a autorização histórica; o novo pedido permite preparar a migração dos territórios na ordem original, ainda sem Cavernas jogáveis ou paridade de inventário/coop.
+
 **Acabamento posterior · 0.1.186:** [modelos, efeitos e profissões](IDENTITY.md) no mesmo trecho e namespace temporário, após a avaliação parcial descrita abaixo.
 
 ## Autorização e limite

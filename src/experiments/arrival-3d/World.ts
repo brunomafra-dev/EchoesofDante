@@ -1,4 +1,5 @@
 import * as T from 'three';
+import {FoliageVisibility}from'./FoliageVisibility';
 import {GLTFLoader}from'three/addons/loaders/GLTFLoader.js';
 import {RoomEnvironment}from'three/addons/environments/RoomEnvironment.js';
 import {Batches,box,sphere,material,paintedMetal,mineralSurface}from'./Art';
@@ -22,7 +23,7 @@ type Tree={x:number;z:number;height:number;angle:number};
 const contour=layout.forest.contour.map(p=>({x:p.x/40,y:p.y/40}));
 const forestPaths=layout.forest.paths.map(p=>({width:p.width/40,points:p.points.map(a=>({x:a.x/40,y:a.y/40}))}));
 export class ArrivalWorld{
- readonly scene=new T.Scene();readonly groups={base:new T.Group(),forest:new T.Group()};readonly solids:Solid[]=[];
+ readonly foliage=new FoliageVisibility();readonly scene=new T.Scene();readonly groups={base:new T.Group(),forest:new T.Group()};readonly solids:Solid[]=[];
  readonly bodies={base:[] as T.Object3D[],forest:[] as T.Object3D[]};readonly sun:T.DirectionalLight;
  zone:Zone='base';private environment:T.WebGLRenderTarget;private randomState=319;private wind={value:0};
  private trees={base:[] as Tree[],forest:[] as Tree[]};private rocks={base:[] as {x:number;z:number;radius:number}[],forest:[] as {x:number;z:number;radius:number}[]};
@@ -102,6 +103,7 @@ export class ArrivalWorld{
   for(const asset of[rocks,tree,ferns,farTree])asset.scene.updateMatrixWorld(true);const shared=new Map<string,T.Material>();for(const asset of[tree,farTree])asset.scene.traverse(o=>{if(o instanceof T.Mesh){const m=o.material as T.Material;if(shared.has(m.name)){o.material=shared.get(m.name)!;for(const value of Object.values(m))if(value instanceof T.Texture)value.dispose();m.dispose();}else shared.set(m.name,m);}});
   const rockMeshes:T.Mesh[]=[],fernMeshes:T.Mesh[]=[];rocks.scene.traverse(o=>{if(o instanceof T.Mesh)rockMeshes.push(o);});ferns.scene.traverse(o=>{if(o instanceof T.Mesh)fernMeshes.push(o);});
   const canopy=await Promise.all([0,1].map(i=>new T.TextureLoader().loadAsync('/assets/frontier-3d/tree-canopy-'+i+'.webp'))),canopyMats=canopy.map(map=>{map.colorSpace=T.SRGBColorSpace;return new T.MeshBasicMaterial({map,alphaTest:.38,side:T.DoubleSide,toneMapped:false});});
+  const foliageMaterials=new Set<T.Material>(canopyMats);for(const source of[tree,farTree])source.scene.traverse(o=>{if(o instanceof T.Mesh)for(const m of Array.isArray(o.material)?o.material:[o.material])foliageMaterials.add(m);});for(const m of foliageMaterials)this.foliage.apply(m);
   for(const zone of['base','forest']as const){const batch=this.batches[zone];
    for(const [i,site]of this.rocks[zone].entries()){const m=rockMeshes[i%rockMeshes.length],g=m.geometry.clone();g.computeBoundingBox();const bounds=g.boundingBox!,center=bounds.getCenter(new T.Vector3());g.translate(-center.x,-bounds.min.y,-center.z);let radius=0;const p=g.attributes.position;for(let j=0;j<p.count;j++)radius=Math.max(radius,Math.hypot(p.getX(j),p.getZ(j)));const scale=site.radius/radius;batch.add(g,m.material as T.Material,site.x,-.06,site.z,scale,scale,scale,i*.9);g.dispose();}
    for(const [index,site]of this.trees[zone].entries()){const source=index%8===0?tree.scene:farTree.scene,scale=site.height/source.userData.frontierHeight;source.traverse(o=>{if(o instanceof T.Mesh){const g=o.geometry.clone().applyMatrix4(o.matrixWorld);g.translate(0,-source.userData.frontierBase,0);batch.add(g,o.material as T.Material,site.x,-.03,site.z,scale,scale,scale,site.angle);g.dispose();}});for(let i=0;i<2;i++)batch.add(new T.PlaneGeometry(4.101067,5.468089),canopyMats[i],site.x,site.height*.5,site.z,site.height/4.556741,site.height/4.556741,site.height/4.556741,site.angle+i*Math.PI/2,false,true);}

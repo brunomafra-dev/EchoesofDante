@@ -1,0 +1,6 @@
+import{ALL_EXTENSIONS}from'@gltf-transform/extensions';
+import{NodeIO}from'@gltf-transform/core';import{dedup,prune,weld}from'@gltf-transform/functions';import{readFile,writeFile}from'node:fs/promises';import{createHash}from'node:crypto';
+const io=new NodeIO().registerExtensions(ALL_EXTENSIONS),doc=await io.read('.local/combat193/combat-fx-raw.glb');await doc.transform(dedup(),prune(),weld());
+const file='combat-fx-193.glb';await io.write('public/assets/arrival-3d/'+file,doc);const bytes=await readFile('public/assets/arrival-3d/'+file);
+const meta={version:'0.1.193',file,author:'Echoes of Dante original Blender geometry; no external artwork or render',generator:'scripts/asset-tools/author-arrival193.py',sha256:createHash('sha256').update(bytes).digest('hex'),bytes:bytes.length,textures:doc.getRoot().listTextures().length,models:doc.getRoot().getDefaultScene().listChildren().map(n=>({name:n.getName(),triangles:n.getMesh()?n.getMesh().listPrimitives().reduce((s,p)=>s+p.getIndices().getCount()/3,0):n.listChildren().reduce((s,c)=>s+(c.getMesh()?.listPrimitives().reduce((s,p)=>s+p.getIndices().getCount()/3,0)??0),0)}))};
+await writeFile('public/assets/arrival-3d/combat-fx-193.json',JSON.stringify(meta,null,2)+'\n');console.log(JSON.stringify(meta,null,2));

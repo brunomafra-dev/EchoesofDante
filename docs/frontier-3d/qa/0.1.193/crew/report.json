@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "errors": [],
+  "models": [
+    {
+      "gender": "male",
+      "changedComponents": 2537,
+      "jointsAndInverseBindsIdentical": true,
+      "animationsIdentical": true,
+      "weightsAndIndicesIdentical": true,
+      "texturesIdentical": true
+    },
+    {
+      "gender": "female",
+      "changedComponents": 1686,
+      "jointsAndInverseBindsIdentical": true,
+      "animationsIdentical": true,
+      "weightsAndIndicesIdentical": true,
+      "texturesIdentical": true
+    }
+  ]
+}

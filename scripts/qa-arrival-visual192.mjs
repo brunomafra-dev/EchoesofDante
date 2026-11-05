@@ -5,7 +5,7 @@ p.on('pageerror',e=>report.errors.push(e.message));p.on('response',r=>{if(r.stat
 const ready=()=>p.waitForFunction(()=>window.__arrivalWorkshop?.().ready,{},{timeout:120000}),state=()=>p.evaluate(()=>window.__arrivalWorkshop());
 try{
  await p.addInitScript(()=>{localStorage['echoes-of-dante.characters.v1']='protected-character-registry';sessionStorage['other-lab']='protected-progress';});
- await p.goto(base+'/arrival-workshop.html?inspect=1&view=combat');await ready();assert.equal((await state()).version,'0.1.192');
+ await p.goto(base+'/arrival-workshop.html?inspect=1&view=combat');await ready();assert.equal((await state()).version,process.env.QA_VERSION??'0.1.192');
  for(const gender of['male','female'])for(const id of['warrior','hunter','astral','xenobinder']){
   await p.locator('#subject').selectOption(id);await ready();await p.locator('#gender').selectOption(gender);await ready();
   for(const element of(id==='astral'?[0,1,2,3]:[0]))for(const kind of['basic','power']){

@@ -1,0 +1,74 @@
+{
+  "version": "0.1.193",
+  "author": "Quaternius, CC0-1.0; conservative Blender face/brow rest-shape modifications by Echoes of Dante",
+  "source": "https://quaternius.com/packs/universalbasecharacters.html",
+  "generator": "scripts/asset-tools/author-arrival193-crew.py",
+  "rig": "Original joints, weights, animations and bind matrices retained; no bone edits.",
+  "models": [
+    {
+      "gender": "male",
+      "file": "crew-male-193.glb",
+      "source": "crew-male.glb",
+      "changedVertices": 965,
+      "triangles": 14079,
+      "bytes": 1724720,
+      "sha256": "f13fa4d7c53afcc1ad0f8137bf86102a506c70312378e9045461c89bd1c55950",
+      "joints": [
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "clips": [
+        "Death",
+        "RecieveHit",
+        "Idle",
+        "Run",
+        "Jump",
+        "PickUp",
+        "Shoot",
+        "Punch",
+        "Roll",
+        "Cast",
+        "Sword",
+        "Walk"
+      ],
+      "materials": 7,
+      "textures": 15
+    },
+    {
+      "gender": "female",
+      "file": "crew-female-193.glb",
+      "source": "crew-female.glb",
+      "changedVertices": 711,
+      "triangles": 13880,
+      "bytes": 1736808,
+      "sha256": "b320ab70589565c54b2b562104daaad2d9bde0bce858380627d63ca116ec8d43",
+      "joints": [
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "clips": [
+        "Death",
+        "RecieveHit",
+        "Idle",
+        "Run",
+        "Jump",
+        "PickUp",
+        "Shoot",
+        "Punch",
+        "Roll",
+        "Cast",
+        "Sword",
+        "Walk"
+      ],
+      "materials": 6,
+      "textures": 12
+    }
+  ]
+}

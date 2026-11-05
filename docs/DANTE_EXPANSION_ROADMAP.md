@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+**05/11/2026 · Revisão 3D após playtest · 0.1.193:** corrigir a câmera que encurtava junto às árvores, plasma básico, Energia/Fogo e rostos. [Entrega e plano de convergência](frontier-3d/VISUAL_193.md). Primeiro vínculo com identidade canônica e persistência própria, sem sobrescrever missões/recibos/inventário. Ordem da próxima migração: Cavernas → profundezas/Primeiro Eco → Warden → Vale → Siroco; não pular diretamente da floresta para as Dunas. Cavernas e paridade completa ainda não implementadas. Aguardar playtest visual desta revisão antes do próximo sprint de território.
+
 **05/11/2026 · Refinamento do combate 3D · 0.1.192:** usuário pediu identidade dos disparos/poderes, Q do Caçador como feixe de plasma, cambalhota natural, Guerreiro legível, Água/Energia diferentes, câmera fora das copas e dano flutuante. [Escopo e evidências](frontier-3d/COMBAT_REFINEMENT.md). Só acampamento/floresta existentes; nenhum Siroco ou coop 3D. QA técnico e aprovação humana separados.
 
 Aplicação `12897e8` publicada: Vercel success, 88 arquivos conferidos, oito relatórios compilados e quatro públicos passaram. Capturas inspecionadas; [publicação e limites](frontier-3d/qa/0.1.192/publication.json). Aguardar playtest humano dos efeitos, movimento e câmera antes da próxima etapa.

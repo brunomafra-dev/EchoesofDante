@@ -1,5 +1,7 @@
 # Arrival in Dante · 0.1.185
 
+**0.1.193 — rostos e efeitos:** humanos derivados das mesmas fontes Quaternius CC0 abaixo, com escultura conservadora de mandíbula/perfil e sobrancelhas no Blender. Rig, pesos, animações e texturas anteriores preservados; normais adaptadas. `crew-193.json` registra contagens e hashes; fontes reprodutíveis `author-arrival193-crew.py` e `prepare-arrival193-crew.mjs`. As figuras anteriores continuam para comparação. Nenhum asset de MakeHuman ou franquias foi incluído. Efeitos `combat-fx-193.glb/json` originais Echoes of Dante: plasma axial, variantes de raios ramificados e línguas de fogo volumétricas; demais elementos derivados da autoria 0.1.192. Sem áudio ou textura nova de terceiros, render offline ou ferramenta paga.
+
 Complete adult male and female character geometry and twelve animations are derived from Quaternius free Standard archives, whose included licenses are CC0-1.0:
 
 - Universal Base Characters: https://quaternius.itch.io/universal-base-characters
