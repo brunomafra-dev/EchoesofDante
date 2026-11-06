@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "base": "https://echosofdante.vercel.app",
+  "checks": [
+    "Published normal start, Nara offer/acceptance, native reconnaissance walk, tracker ready, return/delivery +20 once, reload and protected original journey. No simulated progression."
+  ],
+  "errors": [],
+  "fixture": "Fresh isolated browser. No mission, gate, death or boss victory injected."
+}

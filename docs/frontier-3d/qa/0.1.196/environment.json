@@ -10,6 +10,6 @@
   "performanceConditions": "1440x900/DPR1, native solo warrior, five base NPCs; all 16 forest residents alive; separate cavern and dormant-Warden labs with explicit access fixtures. Eight-second warm-up, three two-second samples per scene, no concurrent workload. See performance/report.json.",
   "physicalPhoneTest": false,
   "humanVisualApproval": "pending: first campaign missions/caverns and original 3D Warden",
-  "published": false,
+  "published": true,
   "version": "0.1.196"
 }

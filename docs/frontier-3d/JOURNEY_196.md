@@ -1,6 +1,6 @@
 # Jornada inicial 3D · 0.1.196
 
-Autorização atual: após aprovar a correção das roupas/ferramentas 0.1.195, o usuário pediu missões claras no primeiro mapa, continuação pelas cavernas até o primeiro boss, commit/push e desligamento somente depois de finalizar e verificar tudo. Este sprint termina no Warden e no relatório a Nara; não autoriza iniciar o Vale/Siroco antes do playtest.
+Autorização atual: após aprovar a correção das roupas/ferramentas 0.1.195, o usuário pediu missões claras no primeiro mapa, continuação pelas cavernas até o primeiro boss e commit/push depois de finalizar e verificar tudo. Em 06/11, pediu a conclusão e revogou o desligamento anteriormente solicitado: manter o computador ligado. Este sprint termina no Warden e no relatório a Nara; não autoriza iniciar o Vale/Siroco antes do playtest.
 
 ## Conteúdo e requisitos
 
@@ -33,7 +33,7 @@ Os dois laboratórios usam `dante.arrival3d.review196.<trecho>`, sem substituir 
 
 ## Validação
 
-Evidências em `qa/0.1.196/`. Quinze relatórios locais passaram; publicação e aprovação humana são gates separados:
+Evidências em `qa/0.1.196/`. Quinze relatórios locais e seis públicos passaram; a aprovação humana permanece separada do QA técnico:
 
 - [x] Migração, validação de gates, recibos e saldo/gastos: `state/report.json`.
 - [x] Typecheck e build finais; `git diff --check`.
@@ -42,7 +42,7 @@ Evidências em `qa/0.1.196/`. Quinze relatórios locais passaram; publicação e
 - [x] Touch/gamepad emulados, layouts e navegação por teclado.
 - [x] Criação/edição, identidades e roupas/ferramentas sem regressão.
 - [x] Inspeção visual de capturas e amostra de desempenho isolada.
-- [ ] Commit/push sincronizados e publicação pública verificada.
+- [x] Aplicação `30bb7c3` sincronizada em `origin/main`; Vercel success, 110 hashes e seis relatórios públicos conferidos.
 - [ ] Playtest e aprovação humana desta etapa.
 
 QA técnico não representa aprovação estética humana, teste em iPhone físico ou equipe cooperativa 3D.

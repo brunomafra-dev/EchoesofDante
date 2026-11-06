@@ -1,0 +1,57 @@
+{
+  "version": "0.1.196",
+  "published": true,
+  "verifiedAtUTC": "2026-11-06T11:20:49.883638+00:00",
+  "applicationCommit": "30bb7c359d60adce61ab8b6fb9a71aee10f32927",
+  "commitMessage": "feat: bring the opening campaign and Warden into 3D",
+  "vercel": {
+    "state": "success",
+    "url": "https://vercel.com/brunomafra-devs-projects/echosofdante/GQpV6sFCJfis39sJyMrYmuKukPZz"
+  },
+  "base": "https://echosofdante.vercel.app",
+  "matchingPublicHashes": 110,
+  "localReports": [
+    "docs/frontier-3d/qa/0.1.196/approaches/report.json",
+    "docs/frontier-3d/qa/0.1.196/boss/report.json",
+    "docs/frontier-3d/qa/0.1.196/campaign/report.json",
+    "docs/frontier-3d/qa/0.1.196/crew/report.json",
+    "docs/frontier-3d/qa/0.1.196/entry/report.json",
+    "docs/frontier-3d/qa/0.1.196/guard/report.json",
+    "docs/frontier-3d/qa/0.1.196/identity-bridge/report.json",
+    "docs/frontier-3d/qa/0.1.196/input/report.json",
+    "docs/frontier-3d/qa/0.1.196/journey-ux/report.json",
+    "docs/frontier-3d/qa/0.1.196/performance/report.json",
+    "docs/frontier-3d/qa/0.1.196/residents/report.json",
+    "docs/frontier-3d/qa/0.1.196/return/report.json",
+    "docs/frontier-3d/qa/0.1.196/state/report.json",
+    "docs/frontier-3d/qa/0.1.196/warden-art/report.json",
+    "docs/frontier-3d/qa/0.1.196/workshop/report.json"
+  ],
+  "publicReports": [
+    "docs/frontier-3d/qa/0.1.196/public/opening/report.json",
+    "docs/frontier-3d/qa/0.1.196/public/boss/report.json",
+    "docs/frontier-3d/qa/0.1.196/public/journey-ux/report.json",
+    "docs/frontier-3d/qa/0.1.196/public/warden-art/report.json",
+    "docs/frontier-3d/qa/0.1.196/public/input/report.json",
+    "docs/frontier-3d/qa/0.1.196/public/entry/report.json"
+  ],
+  "nativePublicBossClasses": [
+    "warrior",
+    "hunter",
+    "astral",
+    "xenobinder"
+  ],
+  "scope": "Normal first-map missions and original cavern/First Echo gates through a live Warden; original mission receipts and 3D per-character persistence.",
+  "laboratories": {
+    "cavern": "Three forest echoes, initial reports and open fissure simulated; cave research and Warden pending.",
+    "warden": "Also simulates depth/fragment/First Echo/threshold; begins with a live Warden. Explicit independent save.",
+    "workshop": "No character or progression reads/writes."
+  },
+  "humanApproval": "pending: 0.1.196 journey and Warden",
+  "limits": [
+    "Solo 3D. No 2D inventory/XP/equipment writeback or 3D co-op.",
+    "Touch and gamepad emulated; no physical iPhone test.",
+    "Performance samples are isolated desktop idle scenes, not a mobile or combat FPS guarantee.",
+    "Wait for human playtest before the next territory."
+  ]
+}
