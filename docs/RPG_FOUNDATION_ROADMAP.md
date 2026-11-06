@@ -1,5 +1,7 @@
 # Echoes of Dante — Fundação do RPG e da expedição cooperativa
 
+**06/11/2026 · Revisão visual do Warden / teste Tripo:** usuário rejeitou o acabamento 3D e pediu testar Tripo; informou que ainda não tem conta. [Referência e estado real do teste](frontier-3d/warden-tripo/README.md). Imagem preparada a partir da identidade 2D; geração Tripo e GLB pendentes de acesso. Não substituir o boss por uma referência raster nem declarar integração concluída. Runtime permanece 0.1.196; combate, progresso e saves preservados. Não iniciar outro território.
+
 **06/11/2026 · Orientação atual:** finalizar a entrega 0.1.196 e manter o computador ligado. O usuário revogou o desligamento solicitado anteriormente. Nenhum desligamento foi agendado.
 
 **05/11/2026 · Autorização de continuidade da jornada 3D · 0.1.196:** usuário aprovou a 0.1.195 com “Top” e pediu missões no primeiro mapa, cavernas até o primeiro boss, tracker claro, commit/push e desligamento somente após finalizar/verificar a entrega. [Implementação, acessos isolados e limites](frontier-3d/JOURNEY_196.md). Escopo: os quatro relatórios iniciais, duas pesquisas opcionais, gates originais, Primeiro Eco e O Warden vivo até o combate. [x] Código e modelo original do boss; [x] migração aditiva e recibos; [x] quinze relatórios locais e seis públicos; [x] aplicação `30bb7c3` em `origin/main`, Vercel success e 110 hashes; [ ] playtest humano. Não iniciar Vale/Siroco após este sprint sem validação. Coop/inventário 3D ainda não são sincronizados com o save 2D.

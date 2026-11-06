@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "scope": "Static reference and library only. No Tripo generation or gameplay integration tested.",
+  "checks": [
+    "Production build (includes tsc --noEmit) passed; 319 modules; existing chunk-size warning.",
+    "Library reference link opens the actual complete PNG in Chromium.",
+    "PNG response matches inspected image SHA256 and dimensions.",
+    "Returning to library preserves isolated storage marker; no real character/save loaded.",
+    "No browser page errors.",
+    "108 previous runtime/model/style/page files match the verified 0.1.196 baseline; only credits and library metadata changed."
+  ],
+  "runtimeVersion": "0.1.196",
+  "tripoGenerated": false,
+  "humanApproval": "pending",
+  "unchangedPreviousBuildFiles": 108,
+  "changedPublicMetadata": [
+    "/assets/arrival-3d/CREDITS.md",
+    "/test-library.html"
+  ]
+}

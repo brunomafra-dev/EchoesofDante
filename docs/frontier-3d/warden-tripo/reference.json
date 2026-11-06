@@ -1,0 +1,18 @@
+{
+  "format": "PNG",
+  "width": 1312,
+  "height": 1199,
+  "mode": "RGB",
+  "file": "public/assets/arrival-3d/warden-tripo-reference-v1.png",
+  "bytes": 2334596,
+  "sha256": "424ef2f258a86ebd2da0a404beb5c5436077644fbc771e49f8b1cb6bee3fadf5",
+  "generator": "Built-in image generation; not Tripo",
+  "inputReference": "public/assets/visual/creature-finish/warden-v1.webp",
+  "tripoGenerationAttempted": false,
+  "tripoModelAvailable": false,
+  "accessBlocker": "User confirmed no Tripo account; no configured API key or connected 3D generation plugin.",
+  "visualInspection": "Full body and both claws visible; hollow crown, layered shell, dark joints and restrained violet core preserved. Single subject and plain backdrop. Back of creature not specified by this image.",
+  "humanApproval": "pending",
+  "runtimeVersion": "0.1.196",
+  "runtimeChanges": false
+}
