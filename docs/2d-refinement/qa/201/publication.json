@@ -1,0 +1,62 @@
+{
+  "version": "0.1.201",
+  "runtimeCommit": "65a26811635a62ae6bc49513bb7527f76a37421c",
+  "initialCorrectionCommit": "f1049006c145d0f62b20ab6e3c7cc30337266d35",
+  "vercel": {
+    "state": "success",
+    "statuses": [
+      {
+        "state": "success",
+        "description": "Deployment has completed",
+        "target_url": "https://vercel.com/brunomafra-devs-projects/echosofdante/8QAGeMJvzRVpqfkGJNExjyG4PAYS"
+      }
+    ]
+  },
+  "publicTechnicalQA": {
+    "passed": true,
+    "reports": [
+      "public-selection/report.json",
+      "public-impact/report.json",
+      "public-formation/report.json"
+    ],
+    "scope": "Original pairs, independent selection prototype, automatic/explicit profession demos, legacy metadata/reload, isolated damage fixtures, native two-player creation/invitation/world and original presentations.",
+    "screenshotsReviewed": true
+  },
+  "publicGuardianCommand": {
+    "passed": false,
+    "status": "Awaiting relay deployment of bondImpact:1; formation test uses original Symbiont only. Local compiled Guardian co-op passed.",
+    "observedHealth": {
+      "service": "Dante regional co-op",
+      "protocol": 16,
+      "presentation": 1,
+      "bonds": 1,
+      "outposts": 1,
+      "signals": 1,
+      "circuits": 1,
+      "wind": 1,
+      "dunes": 1,
+      "buried": 1,
+      "frost": 1,
+      "icecave": 1,
+      "missions": true,
+      "chat": true,
+      "capacity": 4,
+      "uniqueClasses": true,
+      "fixedCampaigns": true,
+      "revision": "512a38fb008491785287ac2a4a9fdc04512d74d1",
+      "campaign": true,
+      "rooms": 0,
+      "players": 0
+    }
+  },
+  "humanApproval": "pending",
+  "fullIndependentSelectionDelivered": false,
+  "missingFullPosePairs": 12,
+  "mainGame": "Four original body/profession pairs remain; one preview and no face/hair/skin editor.",
+  "limits": [
+    "No physical mobile or gamepad validation.",
+    "The prototype blocks missing-pose pairs and does not replace the chosen body for another profession.",
+    "No new levels, maps or colonization.",
+    "Original untracked QA/199 files preserved and excluded."
+  ]
+}

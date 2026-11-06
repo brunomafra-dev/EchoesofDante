@@ -1,0 +1,208 @@
+{
+  "passed": true,
+  "base": "https://echosofdante.vercel.app",
+  "checks": [
+    "Live bound selector: one complete preview follows profession; legacy editor URLs expose no cosmetic controls.",
+    "Matching profession auto-demonstrates basic and Q; unsupported pair stops it. Reduced motion remains idle until explicit replay.",
+    "One preview and ordered controls; no face/hair/skin editor or atlas downloads.",
+    "All 32 body/profession/gender selections preserve the selected complete body. Eight existing pairs playable; 24 missing-pose pairs explicitly blocked.",
+    "Eight original profession demonstrations, draft/back, original profile creation and reload.",
+    "Old appearance metadata retained without applying it to the painted body; canonical saves isolated."
+  ],
+  "matrix": [
+    {
+      "sex": "male",
+      "preset": "warrior",
+      "profession": "warrior",
+      "playable": true
+    },
+    {
+      "sex": "male",
+      "preset": "warrior",
+      "profession": "hunter",
+      "playable": false
+    },
+    {
+      "sex": "male",
+      "preset": "warrior",
+      "profession": "astral",
+      "playable": false
+    },
+    {
+      "sex": "male",
+      "preset": "warrior",
+      "profession": "xenobinder",
+      "playable": false
+    },
+    {
+      "sex": "male",
+      "preset": "hunter",
+      "profession": "warrior",
+      "playable": false
+    },
+    {
+      "sex": "male",
+      "preset": "hunter",
+      "profession": "hunter",
+      "playable": true
+    },
+    {
+      "sex": "male",
+      "preset": "hunter",
+      "profession": "astral",
+      "playable": false
+    },
+    {
+      "sex": "male",
+      "preset": "hunter",
+      "profession": "xenobinder",
+      "playable": false
+    },
+    {
+      "sex": "male",
+      "preset": "astral",
+      "profession": "warrior",
+      "playable": false
+    },
+    {
+      "sex": "male",
+      "preset": "astral",
+      "profession": "hunter",
+      "playable": false
+    },
+    {
+      "sex": "male",
+      "preset": "astral",
+      "profession": "astral",
+      "playable": true
+    },
+    {
+      "sex": "male",
+      "preset": "astral",
+      "profession": "xenobinder",
+      "playable": false
+    },
+    {
+      "sex": "male",
+      "preset": "xenobinder",
+      "profession": "warrior",
+      "playable": false
+    },
+    {
+      "sex": "male",
+      "preset": "xenobinder",
+      "profession": "hunter",
+      "playable": false
+    },
+    {
+      "sex": "male",
+      "preset": "xenobinder",
+      "profession": "astral",
+      "playable": false
+    },
+    {
+      "sex": "male",
+      "preset": "xenobinder",
+      "profession": "xenobinder",
+      "playable": true
+    },
+    {
+      "sex": "female",
+      "preset": "warrior",
+      "profession": "warrior",
+      "playable": true
+    },
+    {
+      "sex": "female",
+      "preset": "warrior",
+      "profession": "hunter",
+      "playable": false
+    },
+    {
+      "sex": "female",
+      "preset": "warrior",
+      "profession": "astral",
+      "playable": false
+    },
+    {
+      "sex": "female",
+      "preset": "warrior",
+      "profession": "xenobinder",
+      "playable": false
+    },
+    {
+      "sex": "female",
+      "preset": "hunter",
+      "profession": "warrior",
+      "playable": false
+    },
+    {
+      "sex": "female",
+      "preset": "hunter",
+      "profession": "hunter",
+      "playable": true
+    },
+    {
+      "sex": "female",
+      "preset": "hunter",
+      "profession": "astral",
+      "playable": false
+    },
+    {
+      "sex": "female",
+      "preset": "hunter",
+      "profession": "xenobinder",
+      "playable": false
+    },
+    {
+      "sex": "female",
+      "preset": "astral",
+      "profession": "warrior",
+      "playable": false
+    },
+    {
+      "sex": "female",
+      "preset": "astral",
+      "profession": "hunter",
+      "playable": false
+    },
+    {
+      "sex": "female",
+      "preset": "astral",
+      "profession": "astral",
+      "playable": true
+    },
+    {
+      "sex": "female",
+      "preset": "astral",
+      "profession": "xenobinder",
+      "playable": false
+    },
+    {
+      "sex": "female",
+      "preset": "xenobinder",
+      "profession": "warrior",
+      "playable": false
+    },
+    {
+      "sex": "female",
+      "preset": "xenobinder",
+      "profession": "hunter",
+      "playable": false
+    },
+    {
+      "sex": "female",
+      "preset": "xenobinder",
+      "profession": "astral",
+      "playable": false
+    },
+    {
+      "sex": "female",
+      "preset": "xenobinder",
+      "profession": "xenobinder",
+      "playable": true
+    }
+  ],
+  "errors": [],
+  "retiredAssetRequests": []
+}

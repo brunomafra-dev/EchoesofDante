@@ -1,0 +1,69 @@
+{
+  "passed": true,
+  "base": "https://echosofdante.vercel.app",
+  "checks": [
+    "Native custom characters form their original two-player campaign."
+  ],
+  "errors": [],
+  "relay": [
+    {
+      "role": "host",
+      "protocol": 16,
+      "presentation": 1,
+      "bonds": 1
+    },
+    {
+      "role": "guest",
+      "protocol": 16,
+      "presentation": 1,
+      "bonds": 1
+    }
+  ],
+  "fixture": "Native team formation, original appearances, invitation and world only; no boss fixtures or Guardian command.",
+  "scope": "Native team formation, original appearances, invitation and world only; no boss fixtures or Guardian command.",
+  "world": [
+    {
+      "classId": "xenobinder",
+      "sex": "male",
+      "peers": [
+        {
+          "classId": "astral",
+          "sex": "female",
+          "guard": {
+            "remaining": 0,
+            "reduction": 0
+          },
+          "appearance": {
+            "skin": "original",
+            "hair": "original",
+            "head": "original"
+          }
+        }
+      ]
+    },
+    {
+      "classId": "astral",
+      "sex": "female",
+      "peers": [
+        {
+          "classId": "xenobinder",
+          "sex": "male",
+          "guard": {
+            "remaining": 0,
+            "reduction": 0
+          },
+          "appearance": {
+            "skin": "original",
+            "hair": "original",
+            "head": "original"
+          },
+          "companion": {
+            "species": "symbiont",
+            "texture": "dante-symbiont-motion",
+            "frame": 0
+          }
+        }
+      ]
+    }
+  ]
+}
