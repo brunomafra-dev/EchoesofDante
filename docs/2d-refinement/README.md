@@ -1,4 +1,8 @@
-# Retorno ao 2D — revisão 0.1.199
+# Retorno ao 2D — revisão 0.1.200
+
+Após o playtest da 0.1.199, correções de impacto das feras, rascunhos independentes por classe, dois cortes novos e passada/ação do Guerreiro. [Escopo, limites, fontes e QA](REVISION_200.md); [continuação solicitada de níveis e civilização](NEXT_2D_CAMPAIGN.md). Os acessos isolados estão na biblioteca. Aprovação humana da nova revisão permanece pendente.
+
+## Revisão 0.1.199
 
 **Continuação da 0.1.198, baseada em `9c6f54a`.** A Vercel falhou ao acessar o site de assets 3D da Easyforge. Esta revisão torna o preparo de build resiliente a esse bloqueio de rede, destaca o editor, corrige a sensação de marcha e dá comandos distintos às feras do Domador. O escopo, fontes e evidências estão em [REVISION_199.md](REVISION_199.md); QA em [qa/199](qa/199/). Estado desta entrega: typecheck/build local aprovados; editor, catálogos e comandos solo aprovados; caminhada completa em QA; coop com as duas feras em validação; deploy público pendente. Aguardar avaliação humana antes de avançar.
 

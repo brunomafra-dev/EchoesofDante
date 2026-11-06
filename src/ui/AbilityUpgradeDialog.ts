@@ -29,8 +29,8 @@ const XENOBINDER_LIST=UPGRADE_LIST.map(upgrade=>({...upgrade,...({
  saberReach:{ability:'CONDUTOR',title:'Foco simbiótico',description:'Cada grau acrescenta 40 unidades ao alcance básico.'},
  dashCooldown:{ability:'ESQUIVA',title:'Recarga evasiva',description:'Cada grau reduz a recarga da esquiva em 120 ms.'},
  dashDuration:{ability:'ESQUIVA',title:'Passo prolongado',description:'Cada grau prolonga a esquiva em 20 ms.'},
- chargeWidth:{ability:'COMANDO',title:'Investida ampla',description:'Cada grau amplia a faixa da investida em 6 unidades.'},
- chargePower:{ability:'COMANDO',title:'Ressonância compartilhada',description:'Cada grau acrescenta 8 ao dano da investida. A recuperação permanece igual.'},
+ chargeWidth:{ability:'COMANDO',title:'Impacto amplo',description:'Cada grau amplia a faixa do salto e o raio do gelo em 6 unidades. O Abalo mantém o raio de 140.'},
+ chargePower:{ability:'COMANDO',title:'Ressonância compartilhada',description:'Cada grau acrescenta 8 ao dano do salto e gelo, ou 6 ao Abalo Guardião. A recuperação permanece igual.'},
 }[upgrade.id])}));
 export class AbilityUpgradeDialog {
   private get upgrades() { return this.xenobinder ? XENOBINDER_LIST : this.astral ? ASTRAL_LIST : this.hunter ? HUNTER_LIST : UPGRADE_LIST; }

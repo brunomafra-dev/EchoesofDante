@@ -1,0 +1,123 @@
+{
+  "passed": true,
+  "base": "http://localhost:5194",
+  "checks": [
+    "warrior: actual touch joystick/dash and standard gamepad movement/dash with complete female actor.",
+    "hunter: actual touch joystick/dash and standard gamepad movement/dash with complete female actor.",
+    "astral: actual touch joystick/dash and standard gamepad movement/dash with complete female actor.",
+    "xenobinder: actual touch joystick/dash and standard gamepad movement/dash with complete female actor.",
+    "Gamepad A opens appearance accordion; D-pad changes hair and skips a disabled option in an explicit navigation fixture."
+  ],
+  "layouts": [
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "metrics": {
+        "width": 844,
+        "overflow": 844,
+        "controls": [
+          {
+            "width": 246,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "width": 246,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "width": 246,
+            "height": 44,
+            "font": "16px"
+          }
+        ]
+      }
+    },
+    {
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "metrics": {
+        "width": 393,
+        "overflow": 393,
+        "controls": [
+          {
+            "width": 311,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "width": 311,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "width": 311,
+            "height": 44,
+            "font": "16px"
+          }
+        ]
+      }
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "metrics": {
+        "width": 1024,
+        "overflow": 1024,
+        "controls": [
+          {
+            "width": 295.328125,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "width": 295.328125,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "width": 295.34375,
+            "height": 44,
+            "font": "16px"
+          }
+        ]
+      }
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "metrics": {
+        "width": 1920,
+        "overflow": 1920,
+        "controls": [
+          {
+            "width": 374,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "width": 374,
+            "height": 44,
+            "font": "16px"
+          },
+          {
+            "width": 374,
+            "height": 44,
+            "font": "16px"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "method": "Chrome touch via CDP and standard Gamepad API mock. Native selectOption events and explicit focus fixtures. No physical iPhone/controller claim."
+}

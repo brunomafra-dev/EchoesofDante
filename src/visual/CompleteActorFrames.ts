@@ -5,9 +5,10 @@ import warriorRegistration from './warriorWalkRegistration.json';
 
 export const COMPLETE_FRAME=192, COMPLETE_FEET=183, COMPLETE_DISPLAY=128, COMPLETE_COLUMNS=8;
 const previousGait=location.pathname.endsWith('/character-cohesion.html')&&new URLSearchParams(location.search).get('refinement')==='199'&&new URLSearchParams(location.search).get('gait')==='198';
+const gait199=location.pathname.endsWith('/character-cohesion.html')&&new URLSearchParams(location.search).get('refinement')==='200'&&new URLSearchParams(location.search).get('gait')==='199';
 export const COMPLETE_STYLES=['none','basic','reinforced'] as const;
 export function completeFrameCount(classId:PlayableClass):number{return classId==='warrior'?72:64;}
-export function completeAsset(classId:PlayableClass,sex:string,style:ProtectionStyle):string{return `${import.meta.env.BASE_URL}assets/visual/complete-actors/${classId}-${sex}-${style}-motion-v${previousGait?'3':'4'}.png`;}
+export function completeAsset(classId:PlayableClass,sex:string,style:ProtectionStyle):string{return `${import.meta.env.BASE_URL}assets/visual/complete-actors/${classId}-${sex}-${style}-motion-v${previousGait?'3':classId==='warrior'&&!gait199?'5':'4'}.png`;}
 export function completeDirection(aim:number):number {return ((Math.round((Math.PI/2-aim)/(Math.PI/4))%8)+8)%8;}
 export function stableCompleteDirection(aim:number,previous:number|undefined):number {
  if(previous===undefined)return completeDirection(aim);
@@ -15,14 +16,16 @@ export function stableCompleteDirection(aim:number,previous:number|undefined):nu
  const gap=Math.atan2(Math.sin(aim-center),Math.cos(aim-center));
  return Math.abs(gap)<=Math.PI/8+.075?previous:completeDirection(aim);
 }
-export function completeStride(classId?:PlayableClass):number{return previousGait?(classId==='warrior'?144:classId==='hunter'?152:104):classId==='warrior'?120:classId==='hunter'?128:116;}
+export function completeStride(classId?:PlayableClass):number{return previousGait?(classId==='warrior'?144:classId==='hunter'?152:104):classId==='warrior'?(gait199?120:104):classId==='hunter'?128:116;}
 export function completeFrame(aim:number,travel:number,walking:boolean,action:boolean,classId?:PlayableClass):number {
  const phase=((travel/completeStride(classId))%1+1)%1;
  // These two classes have authored opposite contact poses. The wide idle
  // stance is not a passing step: inserting it between contacts caused a hop.
  const grounded=classId==='warrior'||classId==='hunter';
  const row=completeDirection(aim);
- if(walking&&(!action||classId!=='warrior')){const base=classId==='warrior'?40:32;return previousGait?[row*4+1,base+row*4,base+row*4+1,row*4+2,base+row*4+2,base+row*4+3][Math.floor(phase*6)]:[row*4+1,base+row*4,row*4+2,base+row*4+2][Math.floor(phase*4)];}
+ if(walking&&(!action||classId!=='warrior')){const base=classId==='warrior'?40:32;
+  if(classId==='warrior'&&!previousGait&&!gait199&&(row===2||row===6))return base+row*4+Math.floor(phase*4);
+  return previousGait?[row*4+1,base+row*4,base+row*4+1,row*4+2,base+row*4+2,base+row*4+3][Math.floor(phase*6)]:[row*4+1,base+row*4,row*4+2,base+row*4+2][Math.floor(phase*4)];}
  const column=action?3:walking?grounded?(phase<.5?1:2):[0,1,0,2][Math.floor(phase*4)]:0;
  return row*4+column;
 }
@@ -35,7 +38,7 @@ export function completeViewScale(_classId:PlayableClass,_sex:CharacterSex,_row:
 // Optical anchors in the authored action poses. Simulation still starts on the
 // original ground-plane ray; these coordinates only place the visible emission.
 const EMITTERS:Record<PlayableClass,readonly (readonly [number,number])[]>={
- warrior:[[102,104],[158,100],[174,75],[163,46],[131,44],[28,68],[22,85],[31,106]],
+ warrior:[[116,122],[142,107],[150,116],[140,67],[142,124],[42,115],[42,112],[43,126]],
  hunter:[[99,78],[168,76],[171,74],[155,51],[122,45],[30,61],[29,77],[30,90]],
  astral:[[122,86],[160,81],[172,81],[153,63],[121,53],[32,72],[24,83],[42,96]],
  xenobinder:[[130,69],[164,71],[173,68],[158,51],[125,43],[29,65],[25,75],[36,98]],
@@ -51,7 +54,7 @@ function authoredRegistration(classId:PlayableClass,sex:CharacterSex,style:Prote
 }
 export function completeMuzzle(classId:PlayableClass,aim:number,sex:CharacterSex='male',style:ProtectionStyle='none'):{x:number;y:number}{
  const [x,y]=EMITTERS[classId][completeDirection(aim)];
- const p=authoredRegistration(classId,sex,style,completeDirection(aim)*4+3);
+ const p=classId==='warrior'&&!previousGait&&!gait199?{scale:1,x:0,y:0}:authoredRegistration(classId,sex,style,completeDirection(aim)*4+3);
  const view=completeViewScale(classId,sex,completeDirection(aim));
  return{x:(x*p.scale+p.x-96)*view*COMPLETE_DISPLAY/COMPLETE_FRAME,y:39+(y*p.scale+p.y-COMPLETE_FEET)*view*COMPLETE_DISPLAY/COMPLETE_FRAME};
 }
@@ -116,7 +119,7 @@ export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record
   // an unhelmeted action painting replace the equipped helmet.
   // A uniform Warrior outfit is already a complete authored human. Keep its
   // head connected to its neck instead of pasting an old idle head onto a step.
-  if(classId==='warrior'&&look.helmet===look.torso){
+  if(classId==='warrior'&&look.helmet===look.torso&&look.helmet!=='reinforced'){
    ctx.restore();atlas.drawImage(tile,f%COMPLETE_COLUMNS*size,Math.floor(f/COMPLETE_COLUMNS)*size);continue;
   }
   const rowHead=row*4;
@@ -129,7 +132,7 @@ export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record
   // unarmored sheet painted a different face, especially for the female Hunter.
   const hunterOpenFace=classId==='hunter'&&look.helmet==='none';
   const headStyle=hunterOpenFace?'basic':classId==='hunter'&&look.helmet==='basic'?'reinforced':look.helmet;
-  const headFrame=classId==='warrior'?f:classId==='xenobinder'&&headStyle==='reinforced'&&rowHead===16?12:rowHead+((classId==='hunter'&&!hunterOpenFace&&headStyle!=='none')?1:0);
+  const headFrame=classId==='warrior'?(look.helmet==='reinforced'?rowHead:f):classId==='xenobinder'&&headStyle==='reinforced'&&rowHead===16?12:rowHead+((classId==='hunter'&&!hunterOpenFace&&headStyle!=='none')?1:0);
   ctx.save();ctx.beginPath();
   if(classId==='warrior'){
    // A wider skull cap protects the hair silhouette. Taper before the neck

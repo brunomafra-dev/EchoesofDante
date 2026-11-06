@@ -1,0 +1,246 @@
+{
+  "passed": true,
+  "base": "http://localhost:5186",
+  "fixture": "DEV lab: real combat/Health objects and authoritative ticks, bounded CPU target fixtures; no saved campaign or boss progress.",
+  "errors": [],
+  "results": [
+    {
+      "species": "bulwark",
+      "wall": false,
+      "charged": 0,
+      "accepted": true,
+      "hits": [
+        {
+          "id": 0,
+          "amount": 45
+        },
+        {
+          "id": 1,
+          "amount": 45
+        },
+        {
+          "id": 2,
+          "amount": 45
+        }
+      ],
+      "hp": [
+        455,
+        455,
+        455,
+        500
+      ],
+      "protectedDamage": 13,
+      "expiredDamage": 20,
+      "burstRadius": 0,
+      "afterClear": {
+        "blast": false,
+        "burst": false,
+        "pulse": false
+      },
+      "healed": false
+    },
+    {
+      "species": "bulwark",
+      "wall": false,
+      "charged": 1,
+      "accepted": true,
+      "hits": [
+        {
+          "id": 0,
+          "amount": 70
+        },
+        {
+          "id": 1,
+          "amount": 70
+        },
+        {
+          "id": 2,
+          "amount": 70
+        }
+      ],
+      "hp": [
+        430,
+        430,
+        430,
+        500
+      ],
+      "protectedDamage": 11,
+      "expiredDamage": 20,
+      "burstRadius": 0,
+      "afterClear": {
+        "blast": false,
+        "burst": false,
+        "pulse": false
+      },
+      "healed": false
+    },
+    {
+      "species": "bulwark",
+      "wall": true,
+      "charged": 0,
+      "accepted": true,
+      "hits": [
+        {
+          "id": 1,
+          "amount": 45
+        }
+      ],
+      "hp": [
+        500,
+        455,
+        500,
+        500
+      ],
+      "protectedDamage": 13,
+      "expiredDamage": 20,
+      "burstRadius": 0,
+      "afterClear": {
+        "blast": false,
+        "burst": false,
+        "pulse": false
+      },
+      "healed": false
+    },
+    {
+      "species": "bulwark",
+      "wall": true,
+      "charged": 1,
+      "accepted": true,
+      "hits": [
+        {
+          "id": 1,
+          "amount": 70
+        }
+      ],
+      "hp": [
+        500,
+        430,
+        500,
+        500
+      ],
+      "protectedDamage": 11,
+      "expiredDamage": 20,
+      "burstRadius": 0,
+      "afterClear": {
+        "blast": false,
+        "burst": false,
+        "pulse": false
+      },
+      "healed": false
+    },
+    {
+      "species": "frostling",
+      "wall": false,
+      "charged": 0,
+      "accepted": true,
+      "hits": [
+        {
+          "id": 0,
+          "amount": 60
+        },
+        {
+          "id": 1,
+          "amount": 60
+        },
+        {
+          "id": 2,
+          "amount": 60
+        }
+      ],
+      "hp": [
+        440,
+        440,
+        440,
+        500
+      ],
+      "protectedDamage": 20,
+      "expiredDamage": 20,
+      "burstRadius": 100,
+      "afterClear": {
+        "blast": false,
+        "burst": false,
+        "pulse": false
+      },
+      "healed": false
+    },
+    {
+      "species": "frostling",
+      "wall": false,
+      "charged": 1,
+      "accepted": true,
+      "hits": [
+        {
+          "id": 0,
+          "amount": 100
+        },
+        {
+          "id": 1,
+          "amount": 100
+        },
+        {
+          "id": 2,
+          "amount": 100
+        }
+      ],
+      "hp": [
+        400,
+        400,
+        400,
+        500
+      ],
+      "protectedDamage": 20,
+      "expiredDamage": 20,
+      "burstRadius": 132,
+      "afterClear": {
+        "blast": false,
+        "burst": false,
+        "pulse": false
+      },
+      "healed": false
+    },
+    {
+      "species": "frostling",
+      "wall": true,
+      "charged": 0,
+      "accepted": true,
+      "hits": [],
+      "hp": [
+        500,
+        500,
+        500,
+        500
+      ],
+      "protectedDamage": 20,
+      "expiredDamage": 20,
+      "burstRadius": 100,
+      "afterClear": {
+        "blast": false,
+        "burst": false,
+        "pulse": false
+      },
+      "healed": false
+    },
+    {
+      "species": "frostling",
+      "wall": true,
+      "charged": 1,
+      "accepted": true,
+      "hits": [],
+      "hp": [
+        500,
+        500,
+        500,
+        500
+      ],
+      "protectedDamage": 20,
+      "expiredDamage": 20,
+      "burstRadius": 132,
+      "afterClear": {
+        "blast": false,
+        "burst": false,
+        "pulse": false
+      },
+      "healed": false
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "method": "Complete generated side-walk paintings, alpha trim and uniform registration; two original eight-view haircuts per body; old sources unchanged.",
+  "assets": [
+    {
+      "file": "public/assets/visual/customization/heads-warrior-male-v2.png",
+      "bytes": 290855,
+      "sha256": "cd16f9954f3d0abb0c3137242431a510e57b8e0ff862d3474e4523eeb6238dc9"
+    },
+    {
+      "file": "public/assets/visual/customization/masks-warrior-male-v2.png",
+      "bytes": 68310,
+      "sha256": "0a418d5b17c28dcb7b4687d91f24a718cf871506b098824e3cf17bf97571474e"
+    },
+    {
+      "file": "public/assets/visual/customization/heads-hunter-male-v2.png",
+      "bytes": 238036,
+      "sha256": "2e21193995d016993cfba0e153e2fe3debe794ffba9947c690da6bb951685af4"
+    },
+    {
+      "file": "public/assets/visual/customization/masks-hunter-male-v2.png",
+      "bytes": 58597,
+      "sha256": "1fa9185ce2ff3bf9826651cf2b977fd3c1767ea2fb73b1407dc2c92ad0878747"
+    },
+    {
+      "file": "public/assets/visual/customization/heads-astral-male-v2.png",
+      "bytes": 193377,
+      "sha256": "47a1089ab9cb5255b2b76c4f305c4ca5e2e55198649aaae37a064496390a79ad"
+    },
+    {
+      "file": "public/assets/visual/customization/masks-astral-male-v2.png",
+      "bytes": 51584,
+      "sha256": "e911a036def8c9e091e4ebf353e766a0db008f6d45304a5646e830c13e10b90d"
+    },
+    {
+      "file": "public/assets/visual/customization/heads-xenobinder-male-v2.png",
+      "bytes": 203229,
+      "sha256": "d17a20d10a754a0b1c6281c77f201bbd04fda632d0ff966f3ced0ef28e0b7f9c"
+    },
+    {
+      "file": "public/assets/visual/customization/masks-xenobinder-male-v2.png",
+      "bytes": 53208,
+      "sha256": "e2c9841fa415299a5fb18c33090cb22bcae6f54ffbf8c13af96e1a9e7a66472d"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/warrior-male-none-motion-v5.png",
+      "bytes": 1941501,
+      "sha256": "d206b6fe82d27a8093a4bf33797c07c911115a839a0b1132215576260eb66faf"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/warrior-male-basic-motion-v5.png",
+      "bytes": 2267033,
+      "sha256": "d5eb5a6e0dc7cec0b6323466fa539b7a28bf3447e7989a10e8b96067800ee4f9"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/warrior-male-reinforced-motion-v5.png",
+      "bytes": 2345395,
+      "sha256": "dc0d87464b59a10d1ca0f40283978fe9642f1b359eacd4b24fef0ff71906aa5a"
+    },
+    {
+      "file": "public/assets/visual/customization/heads-warrior-female-v2.png",
+      "bytes": 295153,
+      "sha256": "5c77483ef317e7e68966c73fb8c0e53659d06666db1bec26351e0ff1afd6e183"
+    },
+    {
+      "file": "public/assets/visual/customization/masks-warrior-female-v2.png",
+      "bytes": 71270,
+      "sha256": "81204dcdc34e92cbffc8153831641303b345c06f7bc26a48bd445bcd5fcee192"
+    },
+    {
+      "file": "public/assets/visual/customization/heads-hunter-female-v2.png",
+      "bytes": 239868,
+      "sha256": "d5ec36c2f0929c1f0fc8cf4ed832a5d73375ab7f684d495aa3bb534a46d4ff5b"
+    },
+    {
+      "file": "public/assets/visual/customization/masks-hunter-female-v2.png",
+      "bytes": 59547,
+      "sha256": "71312b8efe8c66709f4204a25e30bf14f5918f6ea2dc79c95eef95fc4bb86623"
+    },
+    {
+      "file": "public/assets/visual/customization/heads-astral-female-v2.png",
+      "bytes": 190999,
+      "sha256": "6358f36703f7764c12fe9d3fafb721e011f3293c0d2afd9a43c61b6525143c17"
+    },
+    {
+      "file": "public/assets/visual/customization/masks-astral-female-v2.png",
+      "bytes": 52642,
+      "sha256": "19fec7f8b3f38fecec48641d24d294edb734a10c0fa050fdd6c835c03761e16b"
+    },
+    {
+      "file": "public/assets/visual/customization/heads-xenobinder-female-v2.png",
+      "bytes": 204310,
+      "sha256": "9f21bbdc94cc19033cb0dfd3bbec4c8e3de0f7aa0184b171e9d394ea092cad1e"
+    },
+    {
+      "file": "public/assets/visual/customization/masks-xenobinder-female-v2.png",
+      "bytes": 54771,
+      "sha256": "2e0386838412b2bd1e1fb84966f9b202b71c15dcb34c3c75f7ae45718dabc3ef"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/warrior-female-none-motion-v5.png",
+      "bytes": 1910694,
+      "sha256": "50764d5ef4bae62b2954bd91948e889ad332e783321377f8f63c6b51ccbf3fc5"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/warrior-female-basic-motion-v5.png",
+      "bytes": 2229104,
+      "sha256": "628e7371c9a03cc0a709d174a71eabeff9c24093a38787dee181f978ea51ca6e"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/warrior-female-reinforced-motion-v5.png",
+      "bytes": 2240883,
+      "sha256": "1034ef64d53f2fb648a6919b166e6c0dcb9e61bd78c7fe08c962a81c904d3cfe"
+    }
+  ]
+}

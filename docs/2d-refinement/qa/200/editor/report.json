@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "base": "http://localhost:5186",
+  "checks": [
+    "Hair/cut draft is per class; selecting another class and returning preserves both independently.",
+    "Global gender updates all four presentations and retains independent appearance.",
+    "Back/difficulty navigation, save/cancel and actual reload retain new haircuts; canonical saves untouched."
+  ],
+  "errors": []
+}

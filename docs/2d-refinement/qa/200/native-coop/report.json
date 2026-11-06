@@ -1,0 +1,103 @@
+{
+  "passed": true,
+  "base": "http://localhost:5194",
+  "checks": [
+    "Native custom characters form their original two-player campaign.",
+    "Original team resumes with Guardian; native host Q protects the guest too. Timed armor was sampled before asynchronous screenshot capture."
+  ],
+  "errors": [],
+  "relay": [
+    {
+      "role": "host",
+      "protocol": 16,
+      "presentation": 1,
+      "bonds": 1,
+      "bondImpact": 1,
+      "cuts": 1
+    },
+    {
+      "role": "guest",
+      "protocol": 16,
+      "presentation": 1,
+      "bonds": 1,
+      "bondImpact": 1,
+      "cuts": 1
+    },
+    {
+      "role": "host",
+      "protocol": 16,
+      "presentation": 1,
+      "bonds": 1,
+      "bondImpact": 1,
+      "cuts": 1
+    },
+    {
+      "role": "guest",
+      "protocol": 16,
+      "presentation": 1,
+      "bonds": 1,
+      "bondImpact": 1,
+      "cuts": 1
+    }
+  ],
+  "fixture": "Native creation, invitations, companion editing and Q. An explicitly recorded isolated old-save fixture supplies prior Warden/Soterrado/Vesper victory flags only, after leaving the world. It does not claim a story playthrough or write canonical saves. No DEV combat commands.",
+  "unlockFixture": {
+    "characterId": "017687b7-20c4-4dee-b694-c10a2d42595b",
+    "flags": [
+      "wardenDefeated",
+      "soterradoDefeated",
+      "vesperDefeated"
+    ],
+    "purpose": "Explicit isolated old-save unlock fixture; no battle or canonical save is claimed."
+  },
+  "guard": [
+    {
+      "guard": {
+        "remaining": 4.883359999999999,
+        "reduction": 0.4199166666666663
+      },
+      "peers": [
+        {
+          "classId": "astral",
+          "sex": "female",
+          "guard": {
+            "remaining": 4.883359999999999,
+            "reduction": 0.4199166666666663
+          },
+          "appearance": {
+            "skin": "deep",
+            "hair": "silver",
+            "head": "tied"
+          }
+        }
+      ],
+      "companion": "bulwark"
+    },
+    {
+      "guard": {
+        "remaining": 4.816729999999999,
+        "reduction": 0.4199166666666663
+      },
+      "peers": [
+        {
+          "classId": "xenobinder",
+          "sex": "male",
+          "guard": {
+            "remaining": 4.833399999999999,
+            "reduction": 0.4199166666666663
+          },
+          "appearance": {
+            "skin": "warm",
+            "hair": "copper",
+            "head": "curly"
+          },
+          "companion": {
+            "species": "bulwark",
+            "texture": "companion-bulwark",
+            "frame": 0
+          }
+        }
+      ]
+    }
+  ]
+}

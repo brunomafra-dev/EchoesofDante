@@ -5,7 +5,7 @@ import {NPC_REVIEW_STOPS,npcReviewPeople,npcReviewSelection} from '../../config/
 // character, setting or one-shot launch in the real game is read or modified.
 const get=Storage.prototype.getItem,set=Storage.prototype.setItem,remove=Storage.prototype.removeItem;
 const refinementVersion=new URLSearchParams(location.search).get('refinement');
-const refinementTest=['198','199'].includes(refinementVersion??'');
+const refinementTest=['198','199','200'].includes(refinementVersion??'');
 const visualReviewTest=new URLSearchParams(location.search).has('visual-review');
 const uxReviewTest=new URLSearchParams(location.search).has('ux-review');
 const settlementMotionTest=new URLSearchParams(location.search).has('settlement-motion');

@@ -13,7 +13,7 @@ export class Hud {
   private momentum = 0;
   private bond:number=XENOBINDER.bondInitial;
   private xenoCommand='SALTO';
-  setXenobinderBond(value:number,species?:string):void{this.bond=value;this.xenoCommand=species==='bulwark'?'COURAÇA':species==='frostling'?'SOPRO':'SALTO';}
+  setXenobinderBond(value:number,species?:string):void{this.bond=value;this.xenoCommand=species==='bulwark'?'ABALO':species==='frostling'?'SOPRO':'SALTO';}
   setHunterMomentum(value: number): void { this.momentum = Math.round(value); }
   private hpFill: Phaser.GameObjects.Rectangle;
   private hpText: Phaser.GameObjects.Text;

@@ -10,6 +10,7 @@ function textures(scene:Phaser.Scene):void{
  bake('vitals-ring',96,48,c=>{c.strokeStyle='#bddc9c';c.lineWidth=2;c.beginPath();c.ellipse(48,24,44,19,0,0,Math.PI*2);c.stroke();});
  bake('vitals-mote',16,16,c=>{const g=c.createRadialGradient(8,8,0,8,8,8);g.addColorStop(0,'#e4f5c7');g.addColorStop(.3,'#b5db94');g.addColorStop(1,'#b5db9400');c.fillStyle=g;c.fillRect(0,0,16,16);});
  bake('vitals-vial',24,32,c=>{c.fillStyle='#172d24';c.fillRect(5,9,14,20);c.strokeStyle='#b8cfb0';c.lineWidth=2;c.strokeRect(5,9,14,20);c.fillStyle='#8cbf75';c.fillRect(8,17,8,9);c.fillStyle='#c59c60';c.fillRect(8,3,8,7);c.fillStyle='#e7ecce';c.fillRect(9,12,2,9);});
+ bake('vitals-guard',28,34,c=>{c.beginPath();c.moveTo(14,3);c.lineTo(25,8);c.lineTo(23,22);c.quadraticCurveTo(21,28,14,32);c.quadraticCurveTo(7,28,5,22);c.lineTo(3,8);c.closePath();c.fillStyle='#28382b';c.fill();c.lineWidth=2;c.strokeStyle='#e8cc8c';c.stroke();c.beginPath();c.moveTo(14,8);c.lineTo(14,25);c.stroke();});
 }
 
 export class PlayerVitals{
@@ -18,6 +19,7 @@ export class PlayerVitals{
  readonly recovery:Phaser.GameObjects.Container;
  private readonly ring:Phaser.GameObjects.Image;
  private readonly guard:Phaser.GameObjects.Image;
+ private readonly guardBadge:Phaser.GameObjects.Image;
  private readonly vial:Phaser.GameObjects.Image;
  private readonly motes:Phaser.GameObjects.Image[];
  private readonly label:Phaser.GameObjects.Text;
@@ -35,6 +37,7 @@ export class PlayerVitals{
   this.bar=scene.add.container(0,0,[track,this.fill]).setName('player-vitals').setDepth(22998).setVisible(false);
   this.ring=scene.add.image(0,0,'vitals-ring').setVisible(false);
   this.guard=scene.add.image(0,0,'vitals-ring').setTint(0xdbba78).setName('symbiotic-guard').setVisible(false);
+  this.guardBadge=scene.add.image(0,0,'vitals-guard').setName('guardian-armor-status').setDepth(22997).setDisplaySize(19,23).setVisible(false);
   this.vial=scene.add.image(0,0,'vitals-vial');
   this.motes=Array.from({length:4},()=>scene.add.image(0,0,'vitals-mote'));
   this.label=scene.add.text(0,0,'POÇÃO',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#d2e9b4',stroke:'#102219',strokeThickness:3}).setOrigin(.5);
@@ -55,6 +58,7 @@ export class PlayerVitals{
   if(p.hp!==this.lastHp||p.maxHp!==this.lastMax){this.shownUntil=now+3200;this.lastHp=p.hp;this.lastMax=p.maxHp;}
   const alive=!p.isDead&&p.hp>0,target=Phaser.Math.Clamp(p.hp/Math.max(1,p.maxHp),0,1);
   this.guard.setVisible(alive&&p.health.guardRemaining>0).setPosition(p.position.x,p.position.y+36).setDepth(p.position.y-1).setAlpha(Math.min(.8,p.health.guardRemaining*.8));
+  this.guardBadge.setVisible(alive&&p.health.guardRemaining>0).setPosition(p.position.x+29,p.position.y-67).setAlpha(Math.min(1,p.health.guardRemaining));
   this.ratio+=(target-this.ratio)*Math.min(1,this.scene.game.loop.delta/130);
   this.fill.setDisplaySize(Math.max(.001,54*this.ratio),4).setTint(target<=.3?0xe88871:target<=.6?0xd4b57a:0xa9cc9a);
   const visible=alive&&(target<1||now<this.shownUntil);
@@ -70,5 +74,5 @@ export class PlayerVitals{
   this.label.setPosition(48,-48-ease*21).setScale(legibility);
   for(let i=0;i<this.motes.length;i++){const phase=(t+i*.16)%1;this.motes[i].setPosition(Math.sin(i*2.4+t*2)*24,24-phase*78).setScale(.4+Math.sin(phase*Math.PI)*.35).setAlpha(Math.sin(phase*Math.PI));}
  };
- destroy=():void=>{if(this.disposed)return;this.disposed=true;this.scene.events.off(Phaser.Scenes.Events.POST_UPDATE,this.update);this.scene.events.off(Phaser.Scenes.Events.SHUTDOWN,this.destroy);this.bar.destroy(true);this.recovery.destroy(true);this.ring.destroy();this.guard.destroy();};
+ destroy=():void=>{if(this.disposed)return;this.disposed=true;this.scene.events.off(Phaser.Scenes.Events.POST_UPDATE,this.update);this.scene.events.off(Phaser.Scenes.Events.SHUTDOWN,this.destroy);this.bar.destroy(true);this.recovery.destroy(true);this.ring.destroy();this.guard.destroy();this.guardBadge.destroy();};
 }

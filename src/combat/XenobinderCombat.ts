@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import {companion,type CompanionSpecies}from'../config/characterPresentation';
-import{companionInfo,companionFrames}from'../config/companions';
+import{companionInfo,companionFrames,GUARDIAN_RADIUS,glacialRadius}from'../config/companions';
 import{companionCrystal}from'../visual/CompanionArt';
 import{pixelEffect}from'../visual/PixelFX';
 import { XENOBINDER as X } from '../config/classes';
@@ -13,7 +13,7 @@ export type LinkedAlly={position:Vec2;health:{current:number;max:number;guardRem
 type Hit=(enemy:Enemy,damage:number,angle:number,origin:Vec2,heavy:boolean,color?:number)=>void;
 type State='FOLLOW'|'ASSIST'|'COMMAND'|'RETURN';
 export type XenobinderPose={species?:CompanionSpecies;bond:number;active:boolean;state:State;owner:Vec2;pet:Vec2&{frame:number;flip:boolean;lift?:number};
- blast?:Vec2&{angle:number;travel?:number};burst?:Vec2&{age:number};
+ blast?:Vec2&{angle:number;travel?:number};burst?:Vec2&{age:number;radius?:number};
  shots:{x:number;y:number;angle:number}[];mark?:Vec2;pulse?:Vec2&{radius:number;alpha:number};heals:{x:number;y:number;amount:number}[];linked:boolean};
 
 // One original companion and fixed presentation pools per actor. Visitors render snapshots.
@@ -27,7 +27,7 @@ export class XenobinderCombat {
  private pulse?:Vec2;private pulseRemaining=0;private heals:{x:number;y:number;amount:number}[]=[];
  private commandLength=1;private guardPending=false;
  private blast?:Vec2&{angle:number;travel:number;damage:number;range:number};
- private burst?:Vec2;private burstRemaining=0;
+ private burst?:Vec2;private burstRemaining=0;private burstRadius=100;
  private readonly blastView:Phaser.GameObjects.Image;private readonly burstView:Phaser.GameObjects.Image;
  private rendered:Vec2;
  private shots=Array.from({length:6},()=>({x:0,y:0,angle:0,travel:0,active:false,offset:{x:0,y:0}}));
@@ -83,7 +83,10 @@ export class XenobinderCombat {
   this.pulseRemaining=Math.max(0,this.pulseRemaining-dt);if(!this.pulseRemaining){this.pulse=undefined;this.heals=[];}
   this.burstRemaining=Math.max(0,this.burstRemaining-dt);if(!this.burstRemaining)this.burst=undefined;
   if(this.guardPending){this.guardPending=false;this.pulse={...owner};this.pulseRemaining=.65;
-   for(const ally of allies)if(!ally.isDead&&ally.health.current>0&&distance(owner,ally.position)<=140&&!this.blocked(owner,ally.position,obstacles)){
+   for(const e of targets)if(!e.isDead&&distance(owner,e.position)<=GUARDIAN_RADIUS+e.radius&&!this.blocked(owner,e.position,obstacles)){
+    hit(e,Math.round(45+25*this.commandLevel+this.rank('chargePower')*6),Math.atan2(e.position.y-owner.y,e.position.x-owner.x),owner,true,companionInfo('bulwark').color);
+   }
+   for(const ally of allies)if(!ally.isDead&&ally.health.current>0&&distance(owner,ally.position)<=GUARDIAN_RADIUS&&!this.blocked(owner,ally.position,obstacles)){
     ally.health.guardRemaining=Math.max(ally.health.guardRemaining??0,5);ally.health.guardReduction=Math.max(ally.health.guardReduction??0,.35+.1*this.commandLevel);
    }
   }
@@ -92,8 +95,8 @@ export class XenobinderCombat {
    for(const e of targets)if(!e.isDead)first=Math.min(first,this.entry(b,b.angle,e.position,e.radius+9));
    const travelled=Math.max(0,Math.min(step,first-1));b.x+=Math.cos(b.angle)*travelled;b.y+=Math.sin(b.angle)*travelled;b.travel+=travelled;
    if(first<=step||b.travel>=b.range-.5||bounds&&(b.x<bounds.left||b.x>bounds.right||b.y<bounds.top||b.y>bounds.bottom)){
-    this.burst={x:b.x,y:b.y};this.burstRemaining=.65;
-    for(const e of targets)if(!e.isDead&&distance(b,e.position)<=68+e.radius&&!this.blocked(b,e.position,obstacles))hit(e,b.damage,b.angle,b,true,companionInfo('frostling').color);
+    this.burst={x:b.x,y:b.y};this.burstRemaining=.65;this.burstRadius=glacialRadius(this.commandLevel,this.rank('chargeWidth'));this.pulse={...this.burst};this.pulseRemaining=.65;
+    for(const e of targets)if(!e.isDead&&distance(b,e.position)<=this.burstRadius+e.radius&&!this.blocked(b,e.position,obstacles))hit(e,b.damage,b.angle,b,true,companionInfo('frostling').color);
     this.blast=undefined;
    }
   }
@@ -149,10 +152,10 @@ export class XenobinderCombat {
   moveWithCollisions(this.position,{x:Math.cos(best)*speed,y:Math.sin(best)*speed},Math.min(dt,length/speed),X.companionRadius,obstacles,bounds);
  }
  snapshot():XenobinderPose{return{species:this.species,bond:this.bond,active:this.active,state:this.state,owner:{...this.owner},pet:{...this.position,frame:this.frame,flip:this.flip,lift:this.species==='symbiont'&&this.state==='COMMAND'?Math.sin(Math.PI*Math.min(1,this.travelled/this.commandLength))*30:0},
-  blast:this.blast?{x:this.blast.x,y:this.blast.y,angle:this.blast.angle,travel:this.blast.travel}:undefined,burst:this.burst?{...this.burst,age:.65-this.burstRemaining}:undefined,
+  blast:this.blast?{x:this.blast.x,y:this.blast.y,angle:this.blast.angle,travel:this.blast.travel}:undefined,burst:this.burst?{...this.burst,age:.65-this.burstRemaining,radius:this.burstRadius}:undefined,
   linked:this.charging||this.state==='COMMAND',mark:this.marked&&!this.marked.isDead?{...this.marked.position}:undefined,
   shots:this.shots.filter(s=>s.active&&s.travel>=X.muzzleDistance).map(s=>({x:s.x+s.offset.x,y:s.y+s.offset.y,angle:s.angle})),
-  pulse:this.pulse?{...this.pulse,radius:this.species==='bulwark'?140:X.pulseRadius,alpha:this.pulseRemaining/.65}:undefined,heals:this.heals.slice(0,4)};}
+  pulse:this.pulse?{...this.pulse,radius:this.species==='bulwark'?GUARDIAN_RADIUS:this.species==='frostling'?this.burstRadius:X.pulseRadius,alpha:this.pulseRemaining/.65}:undefined,heals:this.heals.slice(0,4)};}
  render(pose?:XenobinderPose,dt=.016):void{
   if(pose?.species&&pose.species!==this.species)this.setSpecies(pose.species);
   const active=!!pose?.active;this.body.setVisible(active);this.shadow.setVisible(active);
@@ -160,7 +163,10 @@ export class XenobinderCombat {
    const lift=Math.max(0,Math.min(30,pose.pet.lift??0));this.body.setPosition(x,y+10-lift).setFrame(companionFrames(this.species,pose.pet.frame)).setFlipX(pose.pet.flip).setRotation(0).setDepth(y+1);this.shadow.setPosition(x,y+8).setDepth(y-2).setScale(1-lift/140);
   }
   this.blastView.setVisible(active&&!!pose?.blast);if(pose?.blast){const muzzle=1-Math.min(1,(pose.blast.travel??80)/80);this.blastView.setPosition(pose.blast.x+Math.cos(pose.blast.angle)*24*muzzle,pose.blast.y-9-15*muzzle+Math.sin(pose.blast.angle)*10*muzzle).setRotation(pose.blast.angle).setDisplaySize(64,26).setDepth(pose.blast.y+1);}
-  this.burstView.setVisible(active&&!!pose?.burst);if(pose?.burst){pixelEffect(this.burstView,'frost-shatter',pose.burst.age,140,.65);this.burstView.setPosition(pose.burst.x,pose.burst.y).setDepth(pose.burst.y+2);}
+  const guardianImpact=this.species==='bulwark'&&pose?.pulse;
+  this.burstView.setVisible(active&&(!!pose?.burst||!!guardianImpact));
+  if(pose?.burst){pixelEffect(this.burstView,'frost-shatter',pose.burst.age,(pose.burst.radius??100)*2,.65);this.burstView.clearTint().setPosition(pose.burst.x,pose.burst.y).setDepth(pose.burst.y+2);}
+  else if(guardianImpact){pixelEffect(this.burstView,'ground-impact',(1-guardianImpact.alpha)*.65,guardianImpact.radius*2,.65);this.burstView.setTint(companionInfo('bulwark').color).setPosition(guardianImpact.x,guardianImpact.y).setDepth(guardianImpact.y+2);}
   this.shotViews.forEach((v,i)=>{const s=pose?.shots[i];v.setVisible(active&&!!s);if(s)v.setPosition(s.x,s.y).setRotation(s.angle).setDisplaySize(47,19).setDepth(s.y+5)});
   this.linkView.setVisible(active&&!!pose?.linked);if(pose?.linked){const angle=Math.atan2(pose.pet.y-pose.owner.y,pose.pet.x-pose.owner.x);this.linkView.setPosition(pose.owner.x,pose.owner.y).setDisplaySize(distance(pose.owner,pose.pet),8).setRotation(angle).setAlpha(.45).setDepth(Math.max(pose.pet.y,pose.owner.y)+1);}
   this.markView.setVisible(active&&!!pose?.mark);if(pose?.mark)this.markView.setPosition(pose.mark.x,pose.mark.y+8).setDepth(pose.mark.y-2);

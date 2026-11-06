@@ -16,7 +16,7 @@ const identity = {
   xenobinder:{role:'DOMADOR · SIMBIOSE',fantasy:'Lute em simbiose. Oriente uma criatura de Dante e proteja sua expedição.',kit:'Condutor simbiótico · Companheiro permanente · Investida e recuperação'},
 };
 type Actions = { back: () => void; create: (name: string, classId: CharacterClass, sex: CharacterSex,look:CharacterAppearance) => void; play: (id: string) => void; remove: (id: string) => void; newCharacter: () => void };
-export type CharacterDraft = { name: string; classId: CharacterClass; sex: CharacterSex;appearance?:CharacterAppearance };
+export type CharacterDraft = { name: string; classId: CharacterClass; sex: CharacterSex;appearance?:CharacterAppearance;appearances?:Partial<Record<CharacterClass,CharacterAppearance>> };
 function button(text: string, id: string, action: () => void): HTMLButtonElement {
   const el = document.createElement('button'); el.type = 'button'; el.textContent = text; el.dataset.shell = id;
   el.addEventListener('click', action); return el;
@@ -55,7 +55,9 @@ export class CharacterSelection {
     this.previews.push(preview); return { stage, preview };
   }
   private creation(actions: Actions): void {
-    let look=appearance(this.context.draft?.appearance);
+    const looks:Record<CharacterClass,CharacterAppearance>={warrior:appearance(),hunter:appearance(),astral:appearance(),xenobinder:appearance(),...this.context.draft?.appearances};
+    if(this.context.draft)looks[this.context.draft.classId]=appearance(this.context.draft.appearance);
+    let look=appearance();
     const gallery = element('div', 'class-gallery'); gallery.setAttribute('role', 'group'); gallery.setAttribute('aria-label', 'Classes disponíveis');
     const selectedTitle = element('h3', '', 'Uma identidade. Uma nova jornada.');
     const description = element('p', '', 'Quatro classes disponíveis. Escolha a sua para começar.');
@@ -80,13 +82,13 @@ export class CharacterSelection {
           if(old.sex===sexSelect.value)continue;
           const card=gallery.querySelector<HTMLElement>(`[data-class="${old.classId}"]`)!;
           old.destroy();this.previews.splice(this.previews.indexOf(old),1);
-          const next=this.stage(old.classId,sexSelect.value as CharacterSex,look);
+          const next=this.stage(old.classId,sexSelect.value as CharacterSex,looks[old.classId]);
           card.querySelector('.character-stage')!.replaceWith(next.stage);
           if(old.classId===selected)next.preview.play();
         }
       });
     };
-    const remember=()=>{if(selected)this.context.onDraft?.({name:input.value,classId:selected,sex:sexSelect.value as CharacterSex,appearance:look});};
+    const remember=()=>{if(selected)this.context.onDraft?.({name:input.value,classId:selected,sex:sexSelect.value as CharacterSex,appearance:look,appearances:{...looks}});};
     sexSelect.addEventListener('change',()=>{remember();refreshPreviews();});
     const create = button(this.joiningRoom ? 'CRIAR E ENTRAR NA SALA →' : 'CONTINUAR →', 'create', () => { if (selected) actions.create(input.value, selected, sexSelect.value as CharacterSex,look); });
     create.className = 'selection-primary'; create.disabled = true;
@@ -95,6 +97,8 @@ export class CharacterSelection {
     for (const classId of ['warrior', 'hunter','astral','xenobinder'] as const) {
       const card = button('', `choose-${classId}`, () => {
         selected = classId;
+        look=looks[classId];
+        refreshAppearanceControls();
         for (const b of Array.from(gallery.querySelectorAll<HTMLButtonElement>('[data-class]'))) b.setAttribute('aria-pressed', String(b.dataset.class === classId));
         for (const p of this.previews) p.stop();
         selectedTitle.textContent = CLASS_NAMES[classId]; description.textContent = identity[classId].fantasy; kit.textContent = identity[classId].kit;
@@ -107,7 +111,7 @@ export class CharacterSelection {
       card.disabled=this.occupied.includes(classId);
       if(card.disabled)card.title='Classe ocupada nesta equipe (inclui vaga em reconexão).';
       card.setAttribute('aria-label', `Selecionar ${CLASS_NAMES[classId]}`);
-      card.append(this.stage(classId,sexSelect.value as CharacterSex,look).stage, element('strong', 'class-name', CLASS_NAMES[classId]), element('small', 'class-role', identity[classId].role)); gallery.append(card);
+      card.append(this.stage(classId,sexSelect.value as CharacterSex,looks[classId]).stage, element('strong', 'class-name', CLASS_NAMES[classId]), element('small', 'class-role', identity[classId].role)); gallery.append(card);
     }
     for (const {name,role:subtitle} of Object.values(CLASS_REGISTRY).filter(c=>!c.playable)) {
       const card = button('', 'future-class', () => {}); card.className = 'class-display class-future'; card.disabled = true;
@@ -116,7 +120,14 @@ export class CharacterSelection {
     }
     const footer = element('div', 'creation-footer'), controls = element('div', 'selection-controls'); controls.append(sexLabel,label, create);
     const detail = element('div', 'selection-detail'); detail.append(info, replay);
-    const customize=document.createElement('details');customize.className='creation-customization';customize.open=true;const summary=document.createElement('summary');summary.textContent='EDITAR APARÊNCIA';customize.append(summary,appearanceControls(look,next=>{look=next;for(const p of this.previews){p.stop();p.setAppearance(look);}remember();}));
+    const customize=document.createElement('details');customize.className='creation-customization';customize.open=true;
+    const summary=document.createElement('summary');customize.append(summary);
+    const refreshAppearanceControls=()=>{
+      summary.textContent=selected?'APARÊNCIA · '+CLASS_NAMES[selected]:'ESCOLHA UMA CLASSE PARA PERSONALIZAR';
+      customize.querySelector('fieldset')?.remove();
+      const controls=appearanceControls(look,next=>{if(!selected)return;look=next;looks[selected]=next;const p=this.previews.find(p=>p.classId===selected);p?.stop();p?.setAppearance(next);remember();});
+      controls.disabled=!selected;customize.append(controls);
+    };refreshAppearanceControls();
     const edit=button('PERSONALIZAR PERSONAGEM','customize-character',()=>{customize.open=true;customize.scrollIntoView({behavior:'smooth',block:'center'});customize.querySelector('select')?.focus({preventScroll:true});});edit.className='selection-primary creation-editor-launch';this.root.querySelector('.selection-header>div:last-child')?.append(edit);footer.append(detail, controls); this.root.append(gallery,customize,footer);
     const draft=this.context.draft;
     if(draft&&!this.occupied.includes(draft.classId)){

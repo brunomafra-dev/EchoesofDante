@@ -568,7 +568,7 @@ export class GameScene extends Phaser.Scene {
       this.hunterArt = new CompleteActorArt(this, this.player.view, entry.x, entry.y,this.player.sex,'hunter');
     }
     if(this.classId==='astral'){this.astral=new AstralCombat(this,id=>this.progression.upgradeRank(id));this.astralArt=new CompleteActorArt(this,this.player.view,entry.x,entry.y,this.player.sex,'astral');this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.astral?.destroy());}
-    if(this.classId==='xenobinder'){this.xeno=new XenobinderCombat(this,id=>this.progression.upgradeRank(id),entry);this.xenoArt=new CompleteActorArt(this,this.player.view,entry.x,entry.y,this.player.sex,'xenobinder');const combat=this.xeno;this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>combat.destroy());}
+    if(this.classId==='xenobinder'){this.xeno=new XenobinderCombat(this,id=>this.progression.upgradeRank(id),entry);this.xenoArt=new CompleteActorArt(this,this.player.view,entry.x,entry.y,this.player.sex,'xenobinder',()=>this.progression.upgradeRank('chargeWidth'));const combat=this.xeno;this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>combat.destroy());}
     this.updateEquipmentAppearance();
     const presentation=this.glacierPlaytest??characterProfiles.active;
     this.player.setCharacterAppearance(presentation.appearance);this.hunterArt?.setAppearance(presentation.appearance);this.astralArt?.setAppearance(presentation.appearance);this.xenoArt?.setAppearance(presentation.appearance);
@@ -2361,7 +2361,7 @@ export class GameScene extends Phaser.Scene {
 
   // Explicit isolated post-Vesper preview. No Titan victory or arena shortcut.
   seedEmbersRoutePlaytest(area:'cinder'|'obsidian'|'caldera'):boolean{
-    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||(!new URLSearchParams(location.search).has('embers')&&new URLSearchParams(location.search).get('refinement')!=='199')||coopSession.role!=='offline'||this.transitioning||this.inputModalOpen)return false;
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||(!new URLSearchParams(location.search).has('embers')&&!['199','200'].includes(new URLSearchParams(location.search).get('refinement')??''))||coopSession.role!=='offline'||this.transitioning||this.inputModalOpen)return false;
     for(const flag of JOURNEY_FLAGS)this[flag]=false;
     for(const flag of ['cavernDepthSeen','deepPassageOpen','deepAreaSeen','deepCavernEntered','deepEndSeen','deeperEntered','exteriorEntered','fragmentSeen','approachSeen','firstEchoSeen','wardenReached','wardenGateOpen','wardenDefeated','wardenEndingSeen','valleyVisited','valleyLandmarkSeen','valleyEndSeen','valleyCheckpointReached','valleyFrontierReached','valleyFrontierSignalSeen','valleyFrontierEndSeen','aridVisited','aridSignalSeen','aridFrontierEntered','aridFrontierReached','dunesVisited','dunesRuinsSeen','dunesDepthSeen','soterradoReached','soterradoDefeated','soterradoClueSeen','frostVisited','frostSignalSeen','frostEndSeen','icecaveVisited','icecaveSignalSeen','icenestVisited','vesperReached','vesperDefeated','vesperClueSeen','cinderVisited'] as const)this[flag]=true;
     const index=['cinder','obsidian','caldera'].indexOf(area);
@@ -2518,6 +2518,25 @@ export class GameScene extends Phaser.Scene {
   inspectCharacterPresentation(){
     const actor=this.player?.view.active?this.player.view.getData('completeActor') as CompleteActorArt|undefined:undefined;
     return{ready:!!this.player?.view.active,bosses:Object.entries({warden:this.warden,soterrado:this.soterrado,vesper:this.vesper,titan:this.titan}).flatMap(([id,b])=>b?[{id,state:b.state,hp:b.health.current,dead:b.isDead}]:[]),peers:this.party?.inspectPresentation()??[],guard:{remaining:this.player?.health.guardRemaining,reduction:this.player?.health.guardReduction},area:this.area,position:this.player?{...this.player.position}:undefined,actor:actor?{identity:actor.identity,sex:actor.sex,frame:actor.body.frame.name,bakes:actor.bakeCount,contact:actor.contactPoint(0),width:actor.body.displayWidth,height:actor.body.displayHeight}:null,sources:completeSourceStats(this),companionVisual:this.xeno?.body.active?{texture:this.xeno.body.texture.key,frame:this.xeno.body.frame.name,flip:this.xeno.body.flipX}:undefined,companion:this.xeno?.snapshot(),effects:this.children.list.filter(v=>v instanceof Phaser.GameObjects.Image&&v.visible&&v.texture.key.startsWith('pixelfx-')).map(v=>{const image=v as Phaser.GameObjects.Image;return{key:image.texture.key,frame:image.frame.name,x:image.x,y:image.y};})};
+  }
+  private impactReviewTargets:HollowCrawler[]=[];
+  inspectCompanionImpactReview(){return this.impactReviewTargets.map(t=>({x:t.position.x,y:t.position.y,hp:t.health.current,maxHp:t.health.max,dead:t.isDead}));}
+  prepareCompanionImpactReview():boolean{
+    const params=new URLSearchParams(location.search);
+    if(!location.pathname.endsWith('/character-playtest.html')||params.get('refinement')!=='200'||params.get('targets')!=='1'||this.classId!=='xenobinder'||!this.player?.view.active)return false;
+    for(const target of this.impactReviewTargets)if(!target.isDead)target.die();
+    this.enemies=this.enemies.filter(e=>!this.impactReviewTargets.includes(e as HollowCrawler));this.impactReviewTargets=[];
+    const owner=this.player.position;
+    for(const dy of [-58,0,58]){
+      const target=new HollowCrawler(this,owner.x+88,owner.y+dy,undefined,'forest');target.health.max=target.health.current=500;
+      const update=target.update.bind(target);
+      // Stationary practice specimens: original art, hurt and hit detection;
+      // their 500 HP and passive behavior are explicit laboratory fixtures.
+      target.update=(now,dt,_player,_dead,obstacles,onAttack,bounds)=>update(now,dt,target.position,true,obstacles,onAttack,bounds);
+      this.impactReviewTargets.push(target);this.enemies.push(target);
+    }
+    if(this.xeno){this.xeno.clear();this.xeno.bond=100;}
+    return true;
   }
   seedMissionPlaytest(id:MissionId,reviewStop?:string,reviewNpc?:string):boolean{
     const params=new URLSearchParams(location.search),visualStop=params.has('visual-review')?VISUAL_REVIEW_STOPS.find(s=>s.id===reviewStop):undefined;

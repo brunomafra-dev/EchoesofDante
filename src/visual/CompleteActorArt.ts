@@ -7,7 +7,7 @@ import {preloadPixelFX}from'./PixelFX';
 import{preloadCompanionArt}from'./CompanionArt';
 import {preloadCharacterAppearance,applyCharacterAppearance}from'./CharacterAppearance';
 import {appearance,companion,type CharacterAppearance,type CompanionSpecies}from'../config/characterPresentation';
-import{companionInfo}from'../config/companions';
+import{companionInfo,GUARDIAN_RADIUS,glacialRadius}from'../config/companions';
 import {preloadCompleteSource,completeSource}from'./CompleteActorSources';
 import { COMPLETE_DISPLAY,COMPLETE_FEET,COMPLETE_FRAME,COMPLETE_COLUMNS,COMPLETE_STYLES,completeAsset,completeFrameCount,completeFrame,completeKey,completeMuzzle,composeCompleteAtlas,stableCompleteDirection } from './CompleteActorFrames';
 
@@ -45,7 +45,7 @@ export class CompleteActorArt {
  private readonly guide:Phaser.GameObjects.Graphics;
  private guideVisible=false;private hurtUntil=0;
  bakeCount=0;
- constructor(private scene:Phaser.Scene,private view:Phaser.GameObjects.Container,x:number,y:number,sex:CharacterSex,identity:PlayableClass){
+ constructor(private scene:Phaser.Scene,private view:Phaser.GameObjects.Container,x:number,y:number,sex:CharacterSex,identity:PlayableClass,private readonly commandWidthRank:()=>number=()=>0){
   this.identity=identity;this.sex=sex;this.previous={x,y};
   view.list.forEach(part=>(part as unknown as Phaser.GameObjects.Components.Visible).setVisible(false));
   const key=`complete-dressed-${identity}-${sex}-${++serial}`;
@@ -102,7 +102,7 @@ export class CompleteActorArt {
    this.guide.clear().setVisible(true).lineStyle(2,color,.7).beginPath().arc(0,0,44,-Math.PI/2,-Math.PI/2+Math.PI*2*heavy.level,false).strokePath();
    const guardian=this.identity==='xenobinder'&&this.species==='bulwark',reach=guardian?0:this.identity==='xenobinder'&&this.species==='frostling'?240+240*heavy.level:distance;
    if(!guardian)this.guide.lineStyle(1,color,.4).lineBetween(0,0,c*reach,s*reach);
-   if(this.identity!=='hunter')this.guide.strokeCircle(c*reach,s*reach,guardian?140:this.identity==='xenobinder'?this.species==='frostling'?68:XENOBINDER.pulseRadius:52+24*heavy.level);
+   if(this.identity!=='hunter')this.guide.strokeCircle(c*reach,s*reach,guardian?GUARDIAN_RADIUS:this.identity==='xenobinder'?this.species==='frostling'?glacialRadius(heavy.level,this.commandWidthRank()):XENOBINDER.pulseRadius:52+24*heavy.level);
    this.guideVisible=true;
   }else if(this.guideVisible){this.guide.clear().setVisible(false);this.guideVisible=false;}
  }

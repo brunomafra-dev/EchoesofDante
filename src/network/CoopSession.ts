@@ -38,6 +38,7 @@ export class CoopSession {
  presentationAvailable=false;
  private needsPresentation=false;
  private needsBonds=false;
+ private needsCuts=false;
  outpostsAvailable=false;
  signalsAvailable=false;
  circuitsAvailable=false;
@@ -132,6 +133,7 @@ export class CoopSession {
   const inventory=validEquipment(this.rewards.load()?.equipment);
   profile={...profile,characterId:hero.id,appearance:hero.appearance,companion:characterProfiles.canChooseCompanion(hero.id,hero.companion??'symbiont')?hero.companion:'symbiont',build:this.rewards.load()?.progression,potions:this.rewards.load()?.economy?.potions??0,equipment:inventory.slots,bagFree:24-(inventory.items!.length-Object.keys(inventory.equipped!).length)};
   this.needsBonds=profile.companion==='bulwark'||profile.companion==='frostling';
+  this.needsCuts=profile.appearance?.head==='curly'||profile.appearance?.head==='tied';
   this.needsPresentation=Object.values(profile.appearance??{}).some(v=>v!=='original')||profile.companion!=='symbiont';
   return new Promise((resolve,reject)=>this.open({type:mode,profile,area,code,campaign},false,resolve,reject));
  }
@@ -163,6 +165,7 @@ export class CoopSession {
     if(![15,16].includes(m.protocol)||m.protocol===15&&needsPermanence){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização dos capítulos do assentamento. Seus personagens permanecem preservados.');reject(new Error(this.message));return;}
     if(this.needsPresentation&&m.presentation!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização de aparência e vínculos. Seu personagem e progresso estão preservados.');reject(new Error(this.message));return;}
     if(this.needsBonds&&m.bonds!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda os novos companheiros e comandos. Seu personagem e progresso estão preservados.');reject(new Error(this.message));return;}
+    if((this.needsBonds&&m.bondImpact!==1)||(this.needsCuts&&m.cuts!==1)){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a revisão de impactos e novos cabelos. Seu personagem e progresso estão preservados.');reject(new Error(this.message));return;}
     this.serverProtocol=m.protocol;
     this.presentationAvailable=m.presentation===1;
     this.outpostsAvailable=m.outposts===1;
