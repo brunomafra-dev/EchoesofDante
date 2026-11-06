@@ -3,17 +3,42 @@
   "application": "e5afbc39f8d5aff4a344550451384604b9390361",
   "bossLabCorrection": "c4537c0bf0a1ea57a5c4114dfed5b6bed1386d77",
   "githubMainSynced": true,
-  "firstVercel": {"state":"success","url":"https://vercel.com/brunomafra-devs-projects/echosofdante/EGgRv8mNppzR7dWfVzpK8TMbN4xM"},
-  "correctionVercel": {"state":"failure","url":"https://vercel.com/brunomafra-devs-projects/echosofdante/CcdsRok9AuSRRDX6yGTWNiDXAdJ9","reason":"Private build logs not accessible; requested from owner. No root cause asserted."},
-  "publicSoloReportsPassed": ["public/menu/report.json","public/effects/report.json","public/companion/report.json"],
-  "correctedBuildHashesPending": 188,
+  "firstVercel": {
+    "state": "success",
+    "url": "https://vercel.com/brunomafra-devs-projects/echosofdante/EGgRv8mNppzR7dWfVzpK8TMbN4xM"
+  },
+  "correctionVercel": {
+    "state": "failure",
+    "url": "https://vercel.com/brunomafra-devs-projects/echosofdante/CcdsRok9AuSRRDX6yGTWNiDXAdJ9",
+    "reason": "Private build logs not accessible; requested from owner. No root cause asserted."
+  },
+  "publicSoloReportsPassed": [
+    "public/menu/report.json",
+    "public/effects/report.json",
+    "public/companion/report.json",
+    "public/boss-labs/report.json"
+  ],
   "localTechnicalReportsPassed": 15,
-  "relayPublic": {"protocol":16,"revision":"42de5a0bbd951f32efdcb8480080b3e3db32ea41","presentation":false,"manualLatestDeployRequested":true},
+  "relayPublic": {
+    "protocol": 16,
+    "revision": "42de5a0bbd951f32efdcb8480080b3e3db32ea41",
+    "presentation": false,
+    "manualLatestDeployRequested": true
+  },
   "nativeCoopLocalPassed": true,
   "nativeCoopPublicPassed": false,
   "nativeCoopPublicState": "Awaiting updated Render presentation:1 and public retest",
   "realSaveSentinelsPreserved": true,
   "humanApproval": "pending",
   "physicalPhoneTest": false,
-  "nextSprint": "Wait for this delivery playtest"
+  "nextSprint": "Wait for this delivery playtest",
+  "publishedRuntimeCommit": "572697dd0a302a1938b8035486ba7efe0bfa31bd",
+  "vercel": {
+    "state": "success",
+    "url": "https://vercel.com/brunomafra-devs-projects/echosofdante/FA6amr5sxAkxk8qQ5d5Zb6fqq1ZE"
+  },
+  "correctedBuildPublished": true,
+  "matchingPublicHashes": 188,
+  "previousCorrectionDeploymentRecovered": true,
+  "subsequentEvidenceCommitsDoNotChangeRuntime": true
 }

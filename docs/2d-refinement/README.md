@@ -54,9 +54,9 @@ Relatórios e capturas em [qa](qa/), scripts `scripts/qa-2d-refinement198-*.mjs`
 
 As capturas foram inspecionadas pelo agente. [Falhas encontradas e correções](qa/OBSERVATIONS.md). Testes com fixtures têm seus pré-requisitos explícitos nos próprios relatórios. QA técnico não substitui playtest humano, controle físico ou celular físico.
 
-### Publicação em conferência
+### Publicação
 
-Aplicação `e5afbc3` sincronizada em main e publicada pela Vercel (success). Criação/edição/reload, quatro campos e escolha/desbloqueio/cancelamento/reload do Hollow passaram no endereço público em `qa/public/{menu,effects,companion}`. Correção posterior dos links de boss `c4537c0` passou no compilado, mas seu primeiro deploy Vercel falhou; logs privados solicitados, sem atribuir causa não demonstrada. O manifesto de 188 hashes representa essa build corrigida, cuja publicação integral ainda precisa ser confirmada.
+Aplicação `e5afbc3` e correção dos links `c4537c0` sincronizadas em main. A Vercel publicou o runtime corrigido no commit de evidências `572697d` (success); **188 arquivos publicados conferidos por hash**. Criação/edição/reload, quatro campos, escolha/desbloqueio/cancelamento/reload do Hollow e quatro chegadas/trocas de classe nos bosses passaram no endereço público em `qa/public/{menu,effects,companion,boss-labs}`. O primeiro deploy da correção havia falhado; uma publicação posterior passou com o mesmo runtime, sem atribuir causa não demonstrada ao erro anterior. [Publicação e limites](qa/publication.json), [hashes públicos](qa/publication-hashes.json). Commits posteriores de evidências não alteram o runtime.
 
 Relay público respondeu protocolo 16, revisão `42de5a0`, sem `presentation:1` (`qa/relay-before-publication.json`). Atualização manual solicitada após o push. Coop personalizado e Hollow passaram com dois navegadores no relay local atualizado; **coop personalizado público pendente da atualização do Render e do reteste**, sem declarar compatibilidade pública já entregue. Uma revisão de documentação não exige outra versão do protocolo.
 
@@ -69,5 +69,6 @@ Relay público respondeu protocolo 16, revisão `42de5a0`, sem `presentation:1` 
 - [x] Espécies e troca do Domador.
 - [x] Laboratório específico e biblioteca.
 - [x] Typecheck/build, QA, capturas e revisão. Build 327 módulos; aviso preexistente de chunks grandes mantido.
-- [ ] Commit/push, sincronização e publicação.
+- [x] Commit/push, sincronização e publicação frontend, 188 hashes e quatro relatórios públicos.
+- [ ] Atualização manual do Render para `presentation:1` e reteste público do coop personalizado/Hollow. Coop local de dois navegadores passou; protocolo 16 mantido.
 - [ ] Playtest humano; aguardar antes de outro sprint.
