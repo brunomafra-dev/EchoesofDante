@@ -1,0 +1,21 @@
+{
+  "service": "Dante regional co-op",
+  "protocol": 16,
+  "outposts": 1,
+  "signals": 1,
+  "circuits": 1,
+  "wind": 1,
+  "dunes": 1,
+  "buried": 1,
+  "frost": 1,
+  "icecave": 1,
+  "missions": true,
+  "chat": true,
+  "capacity": 4,
+  "uniqueClasses": true,
+  "fixedCampaigns": true,
+  "revision": "42de5a0bbd951f32efdcb8480080b3e3db32ea41",
+  "campaign": true,
+  "rooms": 0,
+  "players": 0
+}

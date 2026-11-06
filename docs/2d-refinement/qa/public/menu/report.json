@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "base": "https://echosofdante.vercel.app",
+  "checks": [
+    "Female previews, independent appearance controls, draft navigation and real creation preserve selected appearance.",
+    "World and reload retain the created appearance in the isolated profile."
+  ],
+  "errors": [],
+  "warnings": []
+}

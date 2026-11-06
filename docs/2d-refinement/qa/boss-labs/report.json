@@ -1,0 +1,67 @@
+{
+  "passed": true,
+  "base": "http://localhost:5193",
+  "checks": [
+    "Vesper and Soterrado direct links arrive with living bosses and correct classes; native class navigation keeps the new isolated review and independent class fixture."
+  ],
+  "cases": [
+    {
+      "boss": "soterrado",
+      "classId": "astral",
+      "area": "sandpit",
+      "bosses": [
+        {
+          "id": "soterrado",
+          "state": "DORMANT",
+          "hp": 1233,
+          "dead": false
+        }
+      ],
+      "namespace": "dante-2d-refinement198.soterrado.astral."
+    },
+    {
+      "boss": "soterrado",
+      "classId": "hunter",
+      "area": "sandpit",
+      "bosses": [
+        {
+          "id": "soterrado",
+          "state": "DORMANT",
+          "hp": 1233,
+          "dead": false
+        }
+      ],
+      "namespace": "dante-2d-refinement198.soterrado.hunter."
+    },
+    {
+      "boss": "vesper",
+      "classId": "astral",
+      "area": "icenest",
+      "bosses": [
+        {
+          "id": "vesper",
+          "state": "DORMANT",
+          "hp": 1760,
+          "dead": false
+        }
+      ],
+      "namespace": "dante-2d-refinement198.vesper.astral."
+    },
+    {
+      "boss": "vesper",
+      "classId": "hunter",
+      "area": "icenest",
+      "bosses": [
+        {
+          "id": "vesper",
+          "state": "DORMANT",
+          "hp": 1760,
+          "dead": false
+        }
+      ],
+      "namespace": "dante-2d-refinement198.vesper.hunter."
+    }
+  ],
+  "errors": [],
+  "method": "Compiled/native boss laboratory arrival and class links; explicit previous campaign fixture. Boss HP inspected read-only. No victory, combat commands, invulnerability or damage simulation."
+}

@@ -1,5 +1,5 @@
 """Scoped preservation/build manifest and optional verification of the public build."""
-import argparse, hashlib, json, subprocess, urllib.request
+import argparse, hashlib, json, re, subprocess, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
@@ -20,6 +20,9 @@ def canonical(path, data):
     # Vercel removes blank-only HTML lines.
     if Path(path).suffix == '.html':
         data = b'\n'.join(line for line in data.splitlines() if line.strip())+b'\n'
+        # Vite's Windows/Linux HTML serializers can join a tag-boundary line.
+        # Keep all text, tags, attributes and scripts; normalize only that newline.
+        data = re.sub(rb'>[ \t]*\n[ \t]*<', b'><', data)
     return data
 def digest(path, data): return hashlib.sha256(canonical(path, data)).hexdigest()
 if not args.public:
@@ -64,7 +67,8 @@ if not args.public:
                       'Astral and companion combat methods byte-identical after line-ending normalization.',
                       'Prepared motion and effect asset hashes match manifests; no raw PixelFX inputs in public.',
                       'All prior 3D art/model hashes match the 0.1.197 publication manifest.'],
-            'textCanonicalLF':sorted(text_extensions),'htmlWhitespaceOnlyLines':True}
+            'textCanonicalLF':sorted(text_extensions),'htmlWhitespaceOnlyLines':True,
+            'htmlTagBoundaryNewlines':'Normalized; text, tags, attributes and scripts unchanged.'}
     manifest_path.parent.mkdir(parents=True,exist_ok=True)
     manifest_path.write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
     target=root/(args.out or 'docs/2d-refinement/qa/build-verification.json')

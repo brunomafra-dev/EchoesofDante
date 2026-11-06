@@ -49,6 +49,7 @@ Relatórios e capturas em [qa](qa/), scripts `scripts/qa-2d-refinement198-*.mjs`
 - `lifecycle`: doze trocas rápidas de gênero com rede atrasada e três retornos ao seletor; sem erro de loader destruído.
 - `compiled-companion`, `native-coop`: versão compilada, sem comandos DEV; criação/convites, retorno da equipe original, edição/reentrada do Domador e Hollow realmente renderizado no convidado; Q nativo visível nas duas telas. Pesquisa simulada pelo botão explícito, sem boss vencido.
 - `vesper-controls`, `soterrado-controls`: suítes existentes, toque nas quatro classes, mira independente em oito ângulos, Q/cancelamento, menus, gamepad, quatro viewports e três reinícios sem duplicar HUD. Boss vivo congelado por fixture DEV para isolar controles; não constitui avaliação de dificuldade ou vitória.
+- `boss-labs`: quatro chegadas compiladas, Astral/Caçador em Soterrado/Vésper; HP real do boss positivo, sem morte/vitória, personagem correto e troca nativa de classe preservando o laboratório. Cada classe de arena tem sessão própria.
 - `build-verification`: hashes de assets/efeitos, métodos de combate preservados, missões/colisão/progressão e fontes/arte 3D sem alteração. Modelos 3D não foram retrabalhados; bundles compartilhados recompilam normalmente.
 
 As capturas foram inspecionadas pelo agente. [Falhas encontradas e correções](qa/OBSERVATIONS.md). Testes com fixtures têm seus pré-requisitos explícitos nos próprios relatórios. QA técnico não substitui playtest humano, controle físico ou celular físico.
