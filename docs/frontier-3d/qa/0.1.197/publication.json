@@ -1,15 +1,14 @@
 {
   "version": "0.1.197",
-  "published": false,
-  "verifiedAtUTC": "2026-11-06T14:20:58.776719+00:00",
+  "published": true,
+  "verifiedAtUTC": "2026-11-06T14:30:09.779658+00:00",
   "applicationCommit": "738d8158f990d076db0b3d222ba7a3c0509814a0",
   "vercel": {
-    "state": "failure",
-    "url": "https://vercel.com/brunomafra-devs-projects/echosofdante/5AZMx2Gc9CeSSkDEAaBiCxykXgZj",
-    "details": "GitHub status exposes no build error; private logs requested. CLI requires login and was stopped."
+    "state": "success",
+    "url": "https://vercel.com/brunomafra-devs-projects/echosofdante/GFgmseQfKt3a5YEUuHnhKcCHhHb5"
   },
   "base": "https://echosofdante.vercel.app",
-  "matchingPublicHashes": null,
+  "matchingPublicHashes": 138,
   "expectedPublicHashes": 138,
   "localReports": [
     "docs/frontier-3d/qa/0.1.197/art/report.json",
@@ -20,7 +19,11 @@
     "docs/frontier-3d/qa/0.1.197/scene/report.json",
     "docs/frontier-3d/qa/0.1.197/state/report.json"
   ],
-  "publicReports": [],
+  "publicReports": [
+    "docs/frontier-3d/qa/0.1.197/public/scene/report.json",
+    "docs/frontier-3d/qa/0.1.197/public/art/report.json",
+    "docs/frontier-3d/qa/0.1.197/public/boss/report.json"
+  ],
   "cleanAssetPreparationPassed": true,
   "humanApproval": "pending",
   "limits": [
@@ -30,5 +33,18 @@
     "Touch and gamepad emulated; no physical phone test.",
     "Idle desktop FPS measurement is not a combat or mobile guarantee.",
     "Computer remains on."
-  ]
+  ],
+  "deployedCommit": "8cf8b511c99db0dd6ddfcb6b9b69d25b2c5c13f2",
+  "nativePublicBossClasses": [
+    "warrior",
+    "hunter",
+    "astral",
+    "xenobinder"
+  ],
+  "previousDeployment": {
+    "state": "failure",
+    "url": "https://vercel.com/brunomafra-devs-projects/echosofdante/5AZMx2Gc9CeSSkDEAaBiCxykXgZj",
+    "details": "GitHub status exposes no build error; private logs requested. CLI requires login and was stopped.",
+    "resolution": "Next evidence commit deployed successfully without runtime/build changes; initial root cause unavailable."
+  }
 }

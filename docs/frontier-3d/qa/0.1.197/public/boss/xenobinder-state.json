@@ -1,0 +1,1509 @@
+{
+  "version": "0.1.197",
+  "review": {
+    "loaded": true,
+    "message": "",
+    "materials": 4,
+    "meshes": 10,
+    "additionalDirectionalLights": 1,
+    "additionalShadowCastingLights": 0
+  },
+  "ready": true,
+  "started": true,
+  "paused": false,
+  "trial": {
+    "hero": {
+      "name": "Aurora",
+      "gender": "female",
+      "classId": "xenobinder",
+      "hair": 1,
+      "beard": false,
+      "skin": "#c69776",
+      "hairColor": "#30251f",
+      "cloth": "#74806b"
+    },
+    "zone": "warden",
+    "hp": 76.151125,
+    "potions": 3,
+    "defeated": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      1900,
+      1901,
+      1972,
+      1902,
+      1903,
+      1905,
+      1904,
+      8,
+      1906,
+      1907,
+      9,
+      10,
+      1909,
+      1974,
+      11,
+      13,
+      16,
+      1975,
+      1911,
+      15,
+      22,
+      23,
+      20,
+      24
+    ],
+    "echoes": [
+      "unknown-trace",
+      "northern-ruin",
+      "mineral-signal"
+    ],
+    "source": true,
+    "mechanism": true,
+    "journey": {
+      "schema": 1,
+      "missions": {
+        "schema": 1,
+        "accepted": [
+          "recon",
+          "survival",
+          "signal",
+          "beyond",
+          "exp-forest",
+          "exp-cavern"
+        ],
+        "completed": [
+          "recon",
+          "survival",
+          "signal",
+          "exp-forest"
+        ],
+        "evidence": [
+          "clearing",
+          "roots",
+          "water",
+          "biology",
+          "echo1",
+          "echo2",
+          "echo3",
+          "passage",
+          "exp-forest-1",
+          "exp-forest-2",
+          "exp-forest-3",
+          "exp-cavern-1",
+          "exp-cavern-2",
+          "exp-cavern-3",
+          "first-echo",
+          "warden"
+        ]
+      },
+      "receipts": [
+        "recon",
+        "survival",
+        "signal",
+        "exp-forest"
+      ],
+      "credits": 135,
+      "spent": 0,
+      "depth": true,
+      "deepSignal": true,
+      "fragment": true,
+      "firstEcho": true,
+      "gate": true,
+      "warden": true,
+      "checkpoint": "echo",
+      "tracked": "exp-cavern"
+    },
+    "location": [
+      35.65621901350788,
+      13.490901644377653
+    ]
+  },
+  "position": [
+    35.65621901350788,
+    0,
+    13.490901644377653
+  ],
+  "camera": [
+    33.65621901350794,
+    11,
+    24.490901644377857
+  ],
+  "target": [
+    39.65621901350803,
+    0.9999999999999998,
+    13.49090164437771
+  ],
+  "context": null,
+  "journey": {
+    "current": "exp-cavern",
+    "target": {
+      "zone": "base",
+      "x": 760,
+      "y": 690,
+      "name": "Ivo",
+      "instruction": "Converse para entregar o relatório."
+    },
+    "route": {
+      "zone": "warden",
+      "x": 540,
+      "y": 760,
+      "name": "Retorno às cavernas",
+      "instruction": "Volte pelas cavernas até o acampamento."
+    },
+    "quests": [
+      {
+        "id": "recon",
+        "status": "completed",
+        "goals": [
+          {
+            "id": "clearing",
+            "done": true
+          },
+          {
+            "id": "roots",
+            "done": true
+          }
+        ]
+      },
+      {
+        "id": "survival",
+        "status": "completed",
+        "goals": [
+          {
+            "id": "water",
+            "done": true
+          },
+          {
+            "id": "biology",
+            "done": true
+          }
+        ]
+      },
+      {
+        "id": "signal",
+        "status": "completed",
+        "goals": [
+          {
+            "id": "echo1",
+            "done": true
+          },
+          {
+            "id": "echo2",
+            "done": true
+          },
+          {
+            "id": "echo3",
+            "done": true
+          },
+          {
+            "id": "passage",
+            "done": true
+          }
+        ]
+      },
+      {
+        "id": "beyond",
+        "status": "ready",
+        "goals": [
+          {
+            "id": "first-echo",
+            "done": true
+          },
+          {
+            "id": "warden",
+            "done": true
+          }
+        ]
+      },
+      {
+        "id": "exp-forest",
+        "status": "completed",
+        "goals": [
+          {
+            "id": "exp-forest-1",
+            "done": true
+          },
+          {
+            "id": "exp-forest-2",
+            "done": true
+          },
+          {
+            "id": "exp-forest-3",
+            "done": true
+          }
+        ]
+      },
+      {
+        "id": "exp-cavern",
+        "status": "ready",
+        "goals": [
+          {
+            "id": "exp-cavern-1",
+            "done": true
+          },
+          {
+            "id": "exp-cavern-2",
+            "done": true
+          },
+          {
+            "id": "exp-cavern-3",
+            "done": true
+          }
+        ]
+      }
+    ],
+    "snapshot": {
+      "schema": 1,
+      "accepted": [
+        "recon",
+        "survival",
+        "signal",
+        "beyond",
+        "exp-forest",
+        "exp-cavern"
+      ],
+      "completed": [
+        "recon",
+        "survival",
+        "signal",
+        "exp-forest"
+      ],
+      "evidence": [
+        "clearing",
+        "roots",
+        "water",
+        "biology",
+        "echo1",
+        "echo2",
+        "echo3",
+        "passage",
+        "exp-forest-1",
+        "exp-forest-2",
+        "exp-forest-3",
+        "exp-cavern-1",
+        "exp-cavern-2",
+        "exp-cavern-3",
+        "first-echo",
+        "warden"
+      ]
+    }
+  },
+  "boss": {
+    "art": {
+      "requested": "proposal",
+      "active": "proposal",
+      "message": "",
+      "geometry": {
+        "triangles": 10938,
+        "meshes": 6,
+        "materials": 6
+      }
+    },
+    "hp": 0,
+    "maxHp": 900,
+    "state": "DEATH",
+    "phase": 3,
+    "attack": "rush",
+    "exposed": false,
+    "connected": false,
+    "yaw": 1.6214614450951277,
+    "position": [
+      33.46073643006669,
+      0,
+      12.83167966150298
+    ],
+    "elapsed": 28.969799999999754,
+    "active": 0.2334000000000015,
+    "until": 31.13639999999976,
+    "marks": [],
+    "bolts": [],
+    "bones": 9,
+    "pose": 25.690584363572704
+  },
+  "combat": {
+    "visibleEnemies": [],
+    "resource": 100,
+    "charge": -1,
+    "cooldown": 0,
+    "enemies": [
+      {
+        "id": 10000,
+        "hp": 0,
+        "maxHp": 900,
+        "kind": "warden",
+        "position": [
+          33.46073643006669,
+          0,
+          12.83167966150298
+        ]
+      }
+    ]
+  },
+  "walkable": [
+    {
+      "x": 12,
+      "y": 9.5
+    },
+    {
+      "x": 42,
+      "y": 9.5
+    },
+    {
+      "x": 42,
+      "y": 28
+    },
+    {
+      "x": 12,
+      "y": 28
+    }
+  ],
+  "solids": [
+    {
+      "zone": "base",
+      "x": 13.75,
+      "z": 9,
+      "radius": 0,
+      "tag": "nave",
+      "halfX": 5.95,
+      "halfZ": 2.15
+    },
+    {
+      "zone": "base",
+      "x": 12.55,
+      "z": 6.15,
+      "radius": 0,
+      "tag": "motor da nave",
+      "halfX": 2.65,
+      "halfZ": 0.85
+    },
+    {
+      "zone": "base",
+      "x": 9.75,
+      "z": 6.95,
+      "radius": 0.58,
+      "tag": "apoio da nave"
+    },
+    {
+      "zone": "base",
+      "x": 17.849999999999998,
+      "z": 6.95,
+      "radius": 0.58,
+      "tag": "apoio da nave"
+    },
+    {
+      "zone": "base",
+      "x": 12.55,
+      "z": 11.85,
+      "radius": 0,
+      "tag": "motor da nave",
+      "halfX": 2.65,
+      "halfZ": 0.85
+    },
+    {
+      "zone": "base",
+      "x": 9.75,
+      "z": 11.05,
+      "radius": 0.58,
+      "tag": "apoio da nave"
+    },
+    {
+      "zone": "base",
+      "x": 17.849999999999998,
+      "z": 11.05,
+      "radius": 0.58,
+      "tag": "apoio da nave"
+    },
+    {
+      "zone": "base",
+      "x": 5.95,
+      "z": 17.3,
+      "radius": 0.08,
+      "tag": "apoio do toldo"
+    },
+    {
+      "zone": "base",
+      "x": 10.05,
+      "z": 17.3,
+      "radius": 0.08,
+      "tag": "apoio do toldo"
+    },
+    {
+      "zone": "base",
+      "x": 8,
+      "z": 15.05,
+      "radius": 0,
+      "tag": "abrigo lia",
+      "halfX": 2.2,
+      "halfZ": 1.35
+    },
+    {
+      "zone": "base",
+      "x": 8,
+      "z": 16.82,
+      "radius": 0,
+      "tag": "bancada lia",
+      "halfX": 0.95,
+      "halfZ": 0.42
+    },
+    {
+      "zone": "base",
+      "x": 16.95,
+      "z": 17.05,
+      "radius": 0.08,
+      "tag": "apoio do toldo"
+    },
+    {
+      "zone": "base",
+      "x": 21.05,
+      "z": 17.05,
+      "radius": 0.08,
+      "tag": "apoio do toldo"
+    },
+    {
+      "zone": "base",
+      "x": 19,
+      "z": 14.8,
+      "radius": 0,
+      "tag": "abrigo ivo",
+      "halfX": 2.2,
+      "halfZ": 1.35
+    },
+    {
+      "zone": "base",
+      "x": 19,
+      "z": 16.57,
+      "radius": 0,
+      "tag": "bancada ivo",
+      "halfX": 0.95,
+      "halfZ": 0.42
+    },
+    {
+      "zone": "base",
+      "x": 22.95,
+      "z": 11.425,
+      "radius": 0.08,
+      "tag": "apoio do toldo"
+    },
+    {
+      "zone": "base",
+      "x": 27.05,
+      "z": 11.425,
+      "radius": 0.08,
+      "tag": "apoio do toldo"
+    },
+    {
+      "zone": "base",
+      "x": 25,
+      "z": 9.175,
+      "radius": 0,
+      "tag": "abrigo nara",
+      "halfX": 2.2,
+      "halfZ": 1.35
+    },
+    {
+      "zone": "base",
+      "x": 25,
+      "z": 10.945,
+      "radius": 0,
+      "tag": "bancada nara",
+      "halfX": 0.95,
+      "halfZ": 0.42
+    },
+    {
+      "zone": "base",
+      "x": 9.5,
+      "z": 13.18,
+      "radius": 0,
+      "tag": "bancada repair",
+      "halfX": 0.95,
+      "halfZ": 0.42
+    },
+    {
+      "zone": "base",
+      "x": 21.75,
+      "z": 13.5,
+      "radius": 0,
+      "tag": "canteiro",
+      "halfX": 0.75,
+      "halfZ": 0.4
+    },
+    {
+      "zone": "base",
+      "x": 19.1,
+      "z": 12.1,
+      "radius": 0,
+      "tag": "canteiro",
+      "halfX": 0.75,
+      "halfZ": 0.4
+    },
+    {
+      "zone": "base",
+      "x": 11,
+      "z": 16.25,
+      "radius": 0.78,
+      "tag": "suprimentos"
+    },
+    {
+      "zone": "base",
+      "x": 22.4,
+      "z": 15.625,
+      "radius": 0.78,
+      "tag": "suprimentos"
+    },
+    {
+      "zone": "base",
+      "x": 28,
+      "z": 10.5,
+      "radius": 0.78,
+      "tag": "suprimentos"
+    },
+    {
+      "zone": "base",
+      "x": 3.25,
+      "z": 6.5,
+      "radius": 1.5,
+      "tag": "rocha"
+    },
+    {
+      "zone": "base",
+      "x": 30,
+      "z": 7.5,
+      "radius": 1.75,
+      "tag": "rocha"
+    },
+    {
+      "zone": "base",
+      "x": 5,
+      "z": 21.5,
+      "radius": 1.2,
+      "tag": "rocha"
+    },
+    {
+      "zone": "base",
+      "x": 29.5,
+      "z": 23.25,
+      "radius": 1.2,
+      "tag": "rocha"
+    },
+    {
+      "zone": "base",
+      "x": 31,
+      "z": 19.05,
+      "radius": 0.2,
+      "tag": "marco de trilha"
+    },
+    {
+      "zone": "base",
+      "x": 31,
+      "z": 20.95,
+      "radius": 0.2,
+      "tag": "marco de trilha"
+    },
+    {
+      "zone": "forest",
+      "x": 7.25,
+      "z": 26.5,
+      "radius": 1.2,
+      "tag": "rocha"
+    },
+    {
+      "zone": "forest",
+      "x": 16.25,
+      "z": 29.75,
+      "radius": 1.45,
+      "tag": "rocha"
+    },
+    {
+      "zone": "forest",
+      "x": 17,
+      "z": 17.5,
+      "radius": 1.625,
+      "tag": "rocha"
+    },
+    {
+      "zone": "forest",
+      "x": 23,
+      "z": 27.5,
+      "radius": 1.375,
+      "tag": "rocha"
+    },
+    {
+      "zone": "forest",
+      "x": 24.75,
+      "z": 15.25,
+      "radius": 1.7,
+      "tag": "rocha"
+    },
+    {
+      "zone": "forest",
+      "x": 29.75,
+      "z": 23.5,
+      "radius": 1.5,
+      "tag": "rocha"
+    },
+    {
+      "zone": "forest",
+      "x": 31.5,
+      "z": 9.75,
+      "radius": 1.375,
+      "tag": "rocha"
+    },
+    {
+      "zone": "forest",
+      "x": 36.25,
+      "z": 18,
+      "radius": 1.55,
+      "tag": "rocha"
+    },
+    {
+      "zone": "forest",
+      "x": 42,
+      "z": 17.75,
+      "radius": 1.75,
+      "tag": "rocha"
+    },
+    {
+      "zone": "forest",
+      "x": 39,
+      "z": 29.25,
+      "radius": 1.5,
+      "tag": "rocha"
+    },
+    {
+      "zone": "forest",
+      "x": 48,
+      "z": 21.25,
+      "radius": 1.375,
+      "tag": "rocha"
+    },
+    {
+      "zone": "forest",
+      "x": 46.25,
+      "z": 30,
+      "radius": 1.125,
+      "tag": "rocha"
+    },
+    {
+      "zone": "forest",
+      "x": 7.5,
+      "z": 17.5,
+      "radius": 1.625,
+      "tag": "rocha"
+    },
+    {
+      "zone": "forest",
+      "x": 16.25,
+      "z": 9,
+      "radius": 1.35,
+      "tag": "rocha"
+    },
+    {
+      "zone": "forest",
+      "x": 47,
+      "z": 11,
+      "radius": 1.45,
+      "tag": "rocha"
+    },
+    {
+      "zone": "forest",
+      "x": 10.896307956427336,
+      "z": 20.35939056565985,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 20.947172132320702,
+      "z": 12.820976502727717,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 53.75047037843615,
+      "z": 22.16305337799713,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 61.04368596058339,
+      "z": 35.94096913514659,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 51.61059969430789,
+      "z": 21.329387655947357,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 32.461954180616885,
+      "z": 26.54693663911894,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 34.95123005844653,
+      "z": 26.50063289469108,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 20.766117413528264,
+      "z": 11.417111180257052,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 29.866575819440186,
+      "z": 26.435844875406474,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 15.404076177161187,
+      "z": 5.62446857476607,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 8.784384599421173,
+      "z": 2.20884344400838,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 28.793948480393738,
+      "z": 25.754827348981053,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 30.940299184527248,
+      "z": 25.35869257012382,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 17.8215340715833,
+      "z": 2.3589438875205815,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 47.573552335612476,
+      "z": 39.159565995913,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 69.23791265115142,
+      "z": 24.729047635104507,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 7.651809529867023,
+      "z": 4.530410362873226,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 22.004879070445895,
+      "z": 44.58176506077871,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 19.018252754583955,
+      "z": 13.136158329900354,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 4.517668698914349,
+      "z": 12.685982696246356,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 30.134898421354592,
+      "z": 7.555145926307887,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 21.651830665767193,
+      "z": 4.651233182754368,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 9.406693511642516,
+      "z": 20.036920263897628,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 19.54935738351196,
+      "z": 33.091135922353715,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 24.06720167864114,
+      "z": 5.608035854529589,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 12.550496014300734,
+      "z": 3.277411710936576,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 51.79827630799264,
+      "z": 4.939650054555386,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 73.68298132764176,
+      "z": 33.35487102018669,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 28.459005936514586,
+      "z": 9.596260386053473,
+      "radius": 0.36,
+      "tag": "tronco"
+    },
+    {
+      "zone": "forest",
+      "x": 37.5,
+      "z": 7.125,
+      "radius": 0,
+      "tag": "ruína",
+      "halfX": 1.7,
+      "halfZ": 0.4
+    },
+    {
+      "zone": "forest",
+      "x": 46.75,
+      "z": 24.875,
+      "radius": 0.65,
+      "tag": "mineral-signal"
+    },
+    {
+      "zone": "forest",
+      "x": 14,
+      "z": 15.5,
+      "radius": 0.85,
+      "tag": "unknown-trace"
+    },
+    {
+      "zone": "forest",
+      "x": 46.75,
+      "z": 6.125,
+      "radius": 1.55,
+      "tag": "fissura selada"
+    },
+    {
+      "zone": "forest",
+      "x": 41.75,
+      "z": 5.75,
+      "radius": 0.55,
+      "tag": "mecanismo"
+    },
+    {
+      "zone": "forest",
+      "x": 69.25,
+      "z": 27.25,
+      "radius": 3,
+      "tag": "nascente profunda"
+    },
+    {
+      "zone": "forest",
+      "x": 8.8,
+      "z": 23,
+      "radius": 0.58,
+      "tag": "formação nativa"
+    },
+    {
+      "zone": "forest",
+      "x": 32.9,
+      "z": 33,
+      "radius": 0.58,
+      "tag": "formação nativa"
+    },
+    {
+      "zone": "forest",
+      "x": 60.5,
+      "z": 40.5,
+      "radius": 0.58,
+      "tag": "formação nativa"
+    },
+    {
+      "zone": "forest",
+      "x": 9.05,
+      "z": 32.125,
+      "radius": 0.2,
+      "tag": "marco de trilha"
+    },
+    {
+      "zone": "forest",
+      "x": 10.95,
+      "z": 32.125,
+      "radius": 0.2,
+      "tag": "marco de trilha"
+    },
+    {
+      "zone": "cavern",
+      "x": 44,
+      "z": 19.375,
+      "radius": 2.4,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 46.875,
+      "z": 25.875,
+      "radius": 2.25,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 49,
+      "z": 30.25,
+      "radius": 1.45,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 55.5,
+      "z": 16.3,
+      "radius": 1.8,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 58.75,
+      "z": 25.375,
+      "radius": 2.2,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 54.5,
+      "z": 8.875,
+      "radius": 2.325,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 61.75,
+      "z": 9.475,
+      "radius": 2.05,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 49.875,
+      "z": 18.5,
+      "radius": 0.95,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 50.25,
+      "z": 25.625,
+      "radius": 1,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 62.5,
+      "z": 15,
+      "radius": 0.9,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 60.5,
+      "z": 27.875,
+      "radius": 1,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 68.75,
+      "z": 19.25,
+      "radius": 0.95,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 76.75,
+      "z": 17.5,
+      "radius": 1.1,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 86,
+      "z": 19.375,
+      "radius": 1.45,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 86.25,
+      "z": 25.5,
+      "radius": 0.825,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 95.25,
+      "z": 14.25,
+      "radius": 1.25,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 91,
+      "z": 16.5,
+      "radius": 1.05,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 99.25,
+      "z": 18.375,
+      "radius": 1.075,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 107.75,
+      "z": 22,
+      "radius": 1.05,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 115.5,
+      "z": 12.75,
+      "radius": 1.2,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 117.75,
+      "z": 24,
+      "radius": 1.2,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 125.5,
+      "z": 11.5,
+      "radius": 1.55,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 127.5,
+      "z": 24.5,
+      "radius": 1.55,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 121.75,
+      "z": 14.875,
+      "radius": 0.95,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 113.875,
+      "z": 12.75,
+      "radius": 0.95,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 117.125,
+      "z": 12.75,
+      "radius": 0.95,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 116.25,
+      "z": 24,
+      "radius": 0.875,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 119.25,
+      "z": 24,
+      "radius": 0.875,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 123.75,
+      "z": 11.5,
+      "radius": 1.2,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 127.25,
+      "z": 11.5,
+      "radius": 1.2,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 125.75,
+      "z": 24.5,
+      "radius": 1.2,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 129.25,
+      "z": 24.5,
+      "radius": 1.2,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 130,
+      "z": 20.5,
+      "radius": 1.375,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 134.625,
+      "z": 22.875,
+      "radius": 1.45,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 134,
+      "z": 18.5,
+      "radius": 1.05,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 136.5,
+      "z": 11.375,
+      "radius": 1.5,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 137.5,
+      "z": 25,
+      "radius": 1.75,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 138.25,
+      "z": 17.125,
+      "radius": 1.125,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 143,
+      "z": 12.375,
+      "radius": 1.75,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 144.25,
+      "z": 25.5,
+      "radius": 2,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 147.5,
+      "z": 11.875,
+      "radius": 2,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 148.25,
+      "z": 26,
+      "radius": 2,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "cavern",
+      "x": 72,
+      "z": 11.5,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "cavern",
+      "x": 72,
+      "z": 26,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "cavern",
+      "x": 76.2,
+      "z": 11.5,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "cavern",
+      "x": 76.2,
+      "z": 26,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "cavern",
+      "x": 80.4,
+      "z": 11.5,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "cavern",
+      "x": 80.4,
+      "z": 26,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "cavern",
+      "x": 84.60000000000001,
+      "z": 11.5,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "cavern",
+      "x": 84.60000000000001,
+      "z": 26,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "cavern",
+      "x": 88.80000000000001,
+      "z": 11.5,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "cavern",
+      "x": 88.80000000000001,
+      "z": 26,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "cavern",
+      "x": 93.00000000000001,
+      "z": 11.5,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "cavern",
+      "x": 93.00000000000001,
+      "z": 26,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "cavern",
+      "x": 97.20000000000002,
+      "z": 11.5,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "cavern",
+      "x": 97.20000000000002,
+      "z": 26,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "cavern",
+      "x": 101.40000000000002,
+      "z": 11.5,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "cavern",
+      "x": 101.40000000000002,
+      "z": 26,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "cavern",
+      "x": 105.60000000000002,
+      "z": 11.5,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "cavern",
+      "x": 105.60000000000002,
+      "z": 26,
+      "radius": 0.45,
+      "tag": "mineral rib"
+    },
+    {
+      "zone": "warden",
+      "x": 14,
+      "z": 10.15,
+      "radius": 1.375,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "warden",
+      "x": 20.125,
+      "z": 10.45,
+      "radius": 1.375,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "warden",
+      "x": 28,
+      "z": 10.3,
+      "radius": 1.3,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "warden",
+      "x": 35.5,
+      "z": 10.475,
+      "radius": 1.55,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "warden",
+      "x": 41.25,
+      "z": 11.6,
+      "radius": 1.55,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "warden",
+      "x": 42,
+      "z": 17.875,
+      "radius": 1.2,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "warden",
+      "x": 41.5,
+      "z": 23.5,
+      "radius": 1.3,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "warden",
+      "x": 40,
+      "z": 26.75,
+      "radius": 1.6,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "warden",
+      "x": 33,
+      "z": 27.2,
+      "radius": 1.45,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "warden",
+      "x": 23.5,
+      "z": 27.5,
+      "radius": 1.5,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "warden",
+      "x": 15.5,
+      "z": 27,
+      "radius": 1.625,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "warden",
+      "x": 12.25,
+      "z": 14,
+      "radius": 1.2,
+      "tag": "rocha subterrânea"
+    },
+    {
+      "zone": "warden",
+      "x": 12.25,
+      "z": 24.5,
+      "radius": 1.2,
+      "tag": "rocha subterrânea"
+    }
+  ],
+  "failures": []
+}

@@ -14,5 +14,5 @@
   "production": "Blender 4.5.15 LTS CPU mesh/texture export, no offline render or cloud 3D generation",
   "physicalPhoneTest": false,
   "humanApproval": "pending",
-  "published": false
+  "published": true
 }

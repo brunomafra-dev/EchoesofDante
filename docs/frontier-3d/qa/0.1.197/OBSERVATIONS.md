@@ -31,3 +31,5 @@ Fontes canônicas de gameplay/rede 2D, métodos de colisão/movimento do mundo e
 ## Publication gate
 
 Application `738d815` is synchronized with `origin/main`. The first Vercel deployment failed; GitHub exposes no underlying build error, and Vercel CLI requires unavailable login. Private build logs were requested. A clean official Hollow input download/preparation passed independently. Public hash comparison correctly rejected the still-previous `/arrival-3d.html`; no publication or public QA is claimed. Local scene QA was repeated against the final production preview, including the 44 px comparison controls and orientation changes, and passed.
+
+The next evidence commit `8cf8b51` deployed successfully without runtime/build edits. All 138 public hashes match the local build. Public scene, art and boss reports passed, including all four real class victories and reload. Public screenshots of the proposal and portrait orientation were inspected. The original failure remains unexplained; no speculative workaround was introduced. The private-log request is no longer needed. Technical QA is complete; visual approval remains pending.

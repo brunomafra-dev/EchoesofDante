@@ -1,0 +1,216 @@
+{
+  "passed": true,
+  "base": "https://echosofdante.vercel.app",
+  "checks": [
+    "Proposal and original actor in the same authored scene/light; native comparison navigation, independent save and live 900 HP boss.",
+    "Desktop and emulated touch landscape/portrait: scene, live actor, native jump, scrollable comparison controls and protected storage.",
+    "Deliberately failed actor/arena loads retain functional original art, explicit messages and live combat.",
+    "Normal creator loads only the original actor, never requests review assets, and performs no save writes.",
+    "Eight native original/proposal swaps retain stable geometry/texture counts and correct active-model labels."
+  ],
+  "layouts": [
+    {
+      "viewport": [
+        1280,
+        720
+      ],
+      "framing": {
+        "feet": [
+          -0.2671799661857313,
+          -0.2673330371357176,
+          0.981623816519177
+        ],
+        "head": [
+          -0.29114229499162647,
+          -0.060903412657603746,
+          0.9798475137346978
+        ]
+      }
+    },
+    {
+      "viewport": [
+        844,
+        390
+      ],
+      "framing": {
+        "feet": [
+          -0.21948433241165924,
+          -0.2673330371357176,
+          0.981623816519177
+        ],
+        "head": [
+          -0.2391690259014941,
+          -0.060903412657603746,
+          0.9798475137346978
+        ]
+      }
+    },
+    {
+      "viewport": [
+        844,
+        390
+      ],
+      "touchJump": true,
+      "before": [
+        16.25,
+        0,
+        19
+      ]
+    },
+    {
+      "viewport": [
+        667,
+        375
+      ],
+      "framing": {
+        "feet": [
+          -0.2670464429642491,
+          -0.2673330371357176,
+          0.981623816519177
+        ],
+        "head": [
+          -0.2909967965933298,
+          -0.060903412657603746,
+          0.9798475137346978
+        ]
+      }
+    },
+    {
+      "viewport": [
+        667,
+        375
+      ],
+      "touchJump": true,
+      "before": [
+        16.25,
+        0,
+        19
+      ]
+    },
+    {
+      "viewport": [
+        393,
+        852
+      ],
+      "framing": {
+        "feet": [
+          -0.14805023053743102,
+          -0.25839933054665243,
+          0.9820967869975186
+        ],
+        "head": [
+          -0.16398388763562988,
+          -0.0942288500450846,
+          0.9800161263085213
+        ]
+      }
+    },
+    {
+      "viewport": [
+        393,
+        852
+      ],
+      "touchJump": true,
+      "before": [
+        16.25,
+        0,
+        19
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "calls": 14,
+      "triangles": 12072,
+      "textures": 15,
+      "geometries": 14
+    },
+    {
+      "calls": 16,
+      "triangles": 21940,
+      "textures": 16,
+      "geometries": 14
+    },
+    {
+      "calls": 14,
+      "triangles": 12072,
+      "textures": 15,
+      "geometries": 14
+    },
+    {
+      "calls": 16,
+      "triangles": 21940,
+      "textures": 16,
+      "geometries": 14
+    },
+    {
+      "calls": 14,
+      "triangles": 12072,
+      "textures": 15,
+      "geometries": 14
+    },
+    {
+      "calls": 16,
+      "triangles": 21940,
+      "textures": 16,
+      "geometries": 14
+    },
+    {
+      "calls": 14,
+      "triangles": 12072,
+      "textures": 15,
+      "geometries": 14
+    },
+    {
+      "calls": 16,
+      "triangles": 21940,
+      "textures": 16,
+      "geometries": 14
+    }
+  ],
+  "fallbacks": [
+    {
+      "target": "warden-197.glb",
+      "boss": {
+        "requested": "proposal",
+        "active": "original",
+        "message": "A proposta não carregou; Warden 0.1.196 ativo.",
+        "geometry": {
+          "triangles": 6004,
+          "meshes": 5,
+          "materials": 5
+        }
+      },
+      "scene": {
+        "loaded": true,
+        "message": "",
+        "materials": 4,
+        "meshes": 10,
+        "additionalDirectionalLights": 1,
+        "additionalShadowCastingLights": 0
+      }
+    },
+    {
+      "target": "warden-arena-197.glb",
+      "boss": {
+        "requested": "proposal",
+        "active": "proposal",
+        "message": "",
+        "geometry": {
+          "triangles": 10938,
+          "meshes": 6,
+          "materials": 6
+        }
+      },
+      "scene": {
+        "loaded": false,
+        "message": "A arena proposta não carregou. Arena original ativa.",
+        "materials": 0,
+        "meshes": 0,
+        "additionalDirectionalLights": 1,
+        "additionalShadowCastingLights": 0
+      }
+    }
+  ],
+  "errors": []
+}
