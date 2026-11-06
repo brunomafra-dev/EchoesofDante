@@ -35,12 +35,13 @@ Protocolo 16 e `presentation:1`/`bonds:1` mantidos. Capacidades aditivas `cuts:1
 - [x] Coop compilado, dois navegadores: aparência e cabelos espelhados, Broto protege os dois integrantes, expiração e saves reais isolados (`qa/200/native-coop`). A leitura do estado precede as capturas, que podem demorar mais que os cinco segundos de proteção. Dano em área do Filhote foi verificado solo e no combate autoritativo; não houve playtest humano dessa habilidade em dupla.
 - [x] Touch e gamepad emulados nas quatro classes, Q Astral por touch, editor em 844×390, 393×852, 1024×768 e 1920×1080 (`qa/200/input`).
 - [x] Typecheck, build final de 329 módulos e `git diff --check`. Permanecem avisos de bundles acima de 500 kB, sem nova dependência.
-- [ ] Commit/push e publicação confirmada.
+- [x] Aplicação `5b66c2c` enviada a `origin/main`, local/remoto iguais e Vercel success. Os 22 atlas públicos conferem por SHA-256; editor e comandos passaram no site publicado. [Publicação e limites](qa/200/publication/summary.json).
+- [ ] Coop público desta revisão: saúde consultada pelo navegador ainda informa `512a38f`, sem `cuts:1`/`bondImpact:1`. Foi solicitado Deploy latest commit no Render; o teste local de dupla passou, mas não substitui esta validação pública.
 - [ ] Aprovação humana de naturalidade, identidade e equilíbrio. Não substituída por automação.
 
 Sem alegação de teste físico em iPhone, gamepad ou equipe humana de quatro. Os recursos adicionados não têm render offline pesado, luz dinâmica ou partículas permanentes. As fontes de arte em `source200` são de produção; só os atlas em `public` são servidos pelo jogo.
 
-Os 22 atlas novos somam **15.260.366 bytes**: seis folhas do Guerreiro e dezesseis folhas de cabeças/máscaras, carregadas conforme classe/corpo. As pinturas dos corpos nos quadros verificados medem 158–170 pixels de altura, com apoio entre 178–184 no quadro de 192 pixels; o tamanho de exibição é constante. Isso verifica registro e custo de download, não garante naturalidade nem FPS no dispositivo do usuário. As capturas de editor mobile, Broto/Filhote, movimento e dupla foram inspecionadas. A naturalidade final e o equilíbrio dependem do playtest do usuário.
+Os 22 atlas novos somam **15.260.366 bytes**: seis folhas do Guerreiro e dezesseis folhas de cabeças/máscaras, carregadas conforme classe/corpo. As pinturas dos corpos nos quadros verificados medem 161–164 pixels de altura, com apoio entre 181–182 no quadro de 192 pixels; o tamanho de exibição é constante. Isso verifica registro e custo de download, não garante naturalidade nem FPS no dispositivo do usuário. As capturas de editor mobile, Broto/Filhote, movimento e dupla foram inspecionadas. A naturalidade final e o equilíbrio dependem do playtest do usuário.
 
 ## Continuação pedida
 

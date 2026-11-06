@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "base": "https://echosofdante.vercel.app",
+  "fixture": "Explicit isolated lab of three passive 500HP targets, 100 bond. Native Q; no boss wins/campaign prerequisites.",
+  "cases": [
+    {
+      "pet": "bulwark",
+      "damages": [
+        69,
+        69,
+        69
+      ],
+      "guard": {
+        "remaining": 4.966670000000001,
+        "reduction": 0.4453750000000001
+      }
+    },
+    {
+      "pet": "frostling",
+      "damages": [
+        96,
+        96,
+        96
+      ],
+      "guard": {
+        "remaining": 0,
+        "reduction": 0
+      }
+    }
+  ],
+  "errors": []
+}

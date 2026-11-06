@@ -1,0 +1,84 @@
+{
+  "runtimeCommit": "5b66c2c1ad05f69505962b23e8dcc55f48979d59",
+  "version": "0.1.200",
+  "vercel": {
+    "state": "success",
+    "statuses": [
+      {
+        "state": "success",
+        "description": "Deployment has completed",
+        "target_url": "https://vercel.com/brunomafra-devs-projects/echosofdante/6nrqUkudrbAV5NDx744Cq5CMaApV"
+      }
+    ]
+  },
+  "publicAssets": {
+    "passed": true,
+    "count": 22,
+    "report": "publication/assets.json"
+  },
+  "publicSolo": {
+    "passed": true,
+    "reports": [
+      "public-editor/report.json",
+      "public-impact/report.json"
+    ],
+    "screenshotsReviewed": true
+  },
+  "localTechnicalQA": {
+    "passed": true,
+    "suites": [
+      "asset-geometry",
+      "editor",
+      "motion",
+      "powers",
+      "impact-lab",
+      "input",
+      "native-coop"
+    ],
+    "typecheck": true,
+    "build": true,
+    "diffCheck": true
+  },
+  "publicCoop": {
+    "passed": false,
+    "status": "awaiting external relay deployment",
+    "required": {
+      "protocol": 16,
+      "bondImpact": 1,
+      "cuts": 1
+    },
+    "observedHealth": {
+      "checkedAt": "2026-11-06T22:26:49.379Z",
+      "status": 200,
+      "service": "Dante regional co-op",
+      "protocol": 16,
+      "presentation": 1,
+      "bonds": 1,
+      "outposts": 1,
+      "signals": 1,
+      "circuits": 1,
+      "wind": 1,
+      "dunes": 1,
+      "buried": 1,
+      "frost": 1,
+      "icecave": 1,
+      "missions": true,
+      "chat": true,
+      "capacity": 4,
+      "uniqueClasses": true,
+      "fixedCampaigns": true,
+      "revision": "512a38fb008491785287ac2a4a9fdc04512d74d1",
+      "campaign": true,
+      "rooms": 0,
+      "players": 0
+    },
+    "manualDeployRequested": true
+  },
+  "humanApproval": "pending",
+  "limits": [
+    "No physical mobile or gamepad test.",
+    "No level cap, region or colonization expansion in this revision.",
+    "Public solo charge values vary with actual native hold duration; captured hits were 69 Guardian and 96 Frostling per target; maximum-charge compiled fixture reached 70 and 100.",
+    "Local co-op validates Guardian protection and haircuts, not human group combat."
+  ]
+}

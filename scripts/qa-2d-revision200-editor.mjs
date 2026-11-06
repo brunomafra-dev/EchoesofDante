@@ -8,7 +8,7 @@ p.setDefaultTimeout(90000);const report={passed:false,base,checks:[],errors:[]};
 p.on('pageerror',e=>report.errors.push(e.message));p.on('response',r=>{if(r.status()>=400)report.errors.push(r.status()+' '+r.url());});
 const click=id=>p.locator('[data-shell="'+id+'"]').click();
 const read=()=>p.locator('.class-gallery [data-class] canvas').evaluateAll(es=>es.map(e=>e.__previewRead?.()));
-const ready=()=>p.waitForFunction(()=>document.querySelectorAll('.class-gallery canvas').length===4&&[...document.querySelectorAll('.class-gallery canvas')].every(e=>e.__previewRead?.().ready));
+const ready=()=>p.waitForFunction(()=>{const sex=document.querySelector('[name=character-sex]')?.value;return document.querySelectorAll('.class-gallery canvas').length===4&&[...document.querySelectorAll('.class-gallery canvas')].every(e=>{const s=e.__previewRead?.();return s?.ready&&s.sex===sex;});});
 try{
  await p.addInitScript(()=>{localStorage['echoes-of-dante.characters.v1']='untouched-real-profiles';localStorage['echoes-of-dante.journey.v1']='untouched-real-journey';});
  await p.goto(base+'/campaign-playtest.html?refinement=200&editor=1');await ready();
