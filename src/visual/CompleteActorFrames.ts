@@ -3,10 +3,10 @@ import type { PlayableClass } from '../config/classes';
 import registration from './actorRegistration.json';
 import warriorRegistration from './warriorWalkRegistration.json';
 
-export const COMPLETE_FRAME=192, COMPLETE_FEET=183, COMPLETE_DISPLAY=128;
+export const COMPLETE_FRAME=192, COMPLETE_FEET=183, COMPLETE_DISPLAY=128, COMPLETE_COLUMNS=8;
 export const COMPLETE_STYLES=['none','basic','reinforced'] as const;
-export function completeFrameCount(classId:PlayableClass):number{return classId==='warrior'?40:32;}
-export function completeAsset(classId:PlayableClass,sex:string,style:ProtectionStyle):string{return `${import.meta.env.BASE_URL}assets/visual/complete-actors/${classId}-${sex}-${style}${classId==='warrior'?'-walk-v2':''}.png`;}
+export function completeFrameCount(classId:PlayableClass):number{return classId==='warrior'?72:64;}
+export function completeAsset(classId:PlayableClass,sex:string,style:ProtectionStyle):string{return `${import.meta.env.BASE_URL}assets/visual/complete-actors/${classId}-${sex}-${style}-motion-v3.png`;}
 export function completeDirection(aim:number):number {return ((Math.round((Math.PI/2-aim)/(Math.PI/4))%8)+8)%8;}
 export function stableCompleteDirection(aim:number,previous:number|undefined):number {
  if(previous===undefined)return completeDirection(aim);
@@ -21,7 +21,7 @@ export function completeFrame(aim:number,travel:number,walking:boolean,action:bo
  // stance is not a passing step: inserting it between contacts caused a hop.
  const grounded=classId==='warrior'||classId==='hunter';
  const row=completeDirection(aim);
- if(classId==='warrior'&&walking&&!action)return [row*4+1,32+row,row*4+2,32+row][Math.floor(phase*4)];
+ if(walking&&(!action||classId!=='warrior')){const base=classId==='warrior'?40:32;return [row*4+1,base+row*4,base+row*4+1,row*4+2,base+row*4+2,base+row*4+3][Math.floor(phase*6)];}
  const column=action?3:walking?grounded?(phase<.5?1:2):[0,1,0,2][Math.floor(phase*4)]:0;
  return row*4+column;
 }
@@ -39,7 +39,10 @@ const EMITTERS:Record<PlayableClass,readonly (readonly [number,number])[]>={
  astral:[[122,86],[160,81],[172,81],[153,63],[121,53],[32,72],[24,83],[42,96]],
  xenobinder:[[130,69],[164,71],[173,68],[158,51],[125,43],[29,65],[25,75],[36,98]],
 };
-export function completeRegistration(classId:PlayableClass,sex:CharacterSex,style:ProtectionStyle,frame:number):{scale:number;x:number;y:number}{
+export function completeRegistration(_classId:PlayableClass,_sex:CharacterSex,_style:ProtectionStyle,_frame:number):{scale:number;x:number;y:number}{
+ return {scale:1,x:0,y:0};
+}
+function authoredRegistration(classId:PlayableClass,sex:CharacterSex,style:ProtectionStyle,frame:number):{scale:number;x:number;y:number}{
  const table=classId==='warrior'?warriorRegistration[`warrior-${sex}`]:registration[`${classId}-${sex}`];
  const [cx,neck]=table[style][frame];
  const scale=(COMPLETE_FEET-55)/(COMPLETE_FEET-neck);
@@ -47,7 +50,7 @@ export function completeRegistration(classId:PlayableClass,sex:CharacterSex,styl
 }
 export function completeMuzzle(classId:PlayableClass,aim:number,sex:CharacterSex='male',style:ProtectionStyle='none'):{x:number;y:number}{
  const [x,y]=EMITTERS[classId][completeDirection(aim)];
- const p=completeRegistration(classId,sex,style,completeDirection(aim)*4+3);
+ const p=authoredRegistration(classId,sex,style,completeDirection(aim)*4+3);
  const view=completeViewScale(classId,sex,completeDirection(aim));
  return{x:(x*p.scale+p.x-96)*view*COMPLETE_DISPLAY/COMPLETE_FRAME,y:39+(y*p.scale+p.y-COMPLETE_FEET)*view*COMPLETE_DISPLAY/COMPLETE_FRAME};
 }
@@ -57,25 +60,29 @@ export function completeMuzzle(classId:PlayableClass,aim:number,sex:CharacterSex
 export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record<ProtectionStyle,CanvasImageSource>,look:EquipmentLook,weapon:WeaponStyle,classId:PlayableClass,sex:CharacterSex='male'):void {
  const size=COMPLETE_FRAME;
  const weaponTier:ProtectionStyle=weapon==='starter'?'none':weapon==='current'?'basic':'reinforced';
- ctx.clearRect(0,0,size*4,size*Math.ceil(completeFrameCount(classId)/4));
+ ctx.clearRect(0,0,size*COMPLETE_COLUMNS,size*Math.ceil(completeFrameCount(classId)/COMPLETE_COLUMNS));
  const atlas=ctx,tile=document.createElement('canvas');tile.width=size;tile.height=size;
  ctx=tile.getContext('2d')!;
  for(let f=0;f<completeFrameCount(classId);f++){
   // Identical local coordinates avoid subpixel rounding changing the head
   // between atlas columns after uniform view calibration.
   const x=0,y=0;ctx.clearRect(0,0,size,size);
-  const row=f<32?Math.floor(f/4):f-32;
+  const base=classId==='warrior'?40:32;
+  const row=f<32?Math.floor(f/4):f<base?f-32:Math.floor((f-base)/4);
   const view=completeViewScale(classId,sex,row);
   ctx.save();ctx.translate(x+96*(1-view),y+COMPLETE_FEET*(1-view));ctx.scale(view,view);ctx.translate(-x,-y);
   const draw=(style:ProtectionStyle,sourceFrame=f)=>{
    const p=completeRegistration(classId,sex,style,sourceFrame);
    ctx.save();ctx.beginPath();ctx.rect(x,y,size,size);ctx.clip();
    ctx.translate(x+p.x,y+p.y);ctx.scale(p.scale,p.scale);
-   ctx.drawImage(sources[style],sourceFrame%4*size,Math.floor(sourceFrame/4)*size,size,size,0,0,size,size);ctx.restore();
+   ctx.drawImage(sources[style],sourceFrame%COMPLETE_COLUMNS*size,Math.floor(sourceFrame/COMPLETE_COLUMNS)*size,size,size,0,0,size,size);ctx.restore();
   };
   draw(look.torso);
   const replace=(style:ProtectionStyle,rx:number,ry:number,w:number,h:number)=>{
-   ctx.save();ctx.beginPath();ctx.rect(x+rx,y+ry,w,h);ctx.clip();ctx.clearRect(x+rx,y+ry,w,h);draw(style);ctx.restore();
+   // All wardrobes are complete paintings. A different boot/leg painting can
+   // have a different knee contour; erasing the base introduced a gap in mixed
+   // Astral clothing. Repaint material inside the complete torso silhouette.
+   ctx.save();ctx.beginPath();ctx.rect(x+rx,y+ry,w,h);ctx.clip();ctx.globalCompositeOperation='source-atop';draw(style);ctx.restore();
   };
   const material=(style:ProtectionStyle,rx:number,ry:number,w:number,h:number)=>{
    // A different glove/tool painting must never erase a finger, introduce a
@@ -109,7 +116,7 @@ export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record
   // A uniform Warrior outfit is already a complete authored human. Keep its
   // head connected to its neck instead of pasting an old idle head onto a step.
   if(classId==='warrior'&&look.helmet===look.torso){
-   ctx.restore();atlas.drawImage(tile,f%4*size,Math.floor(f/4)*size);continue;
+   ctx.restore();atlas.drawImage(tile,f%COMPLETE_COLUMNS*size,Math.floor(f/COMPLETE_COLUMNS)*size);continue;
   }
   const rowHead=row*4;
   if(classId==='hunter'){
@@ -137,6 +144,6 @@ export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record
   }
   ctx.clip();if(classId!=='warrior')ctx.clearRect(x+65,y,62,55);
   draw(headStyle,headFrame);ctx.restore();ctx.restore();
-  atlas.drawImage(tile,f%4*size,Math.floor(f/4)*size);
+  atlas.drawImage(tile,f%COMPLETE_COLUMNS*size,Math.floor(f/COMPLETE_COLUMNS)*size);
  }
 }

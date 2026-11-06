@@ -1,0 +1,215 @@
+{
+  "passed": true,
+  "base": "http://localhost:5193",
+  "checks": [
+    "All four elemental fields use distinct live raster animations; current complete Hollow is upright in the same native combat preview."
+  ],
+  "elements": [
+    {
+      "element": "energy",
+      "first": {
+        "ready": true,
+        "running": true,
+        "identity": "astral",
+        "sex": "male",
+        "frame": 8,
+        "bakes": 1,
+        "hollow": {
+          "texture": "finish-hollow",
+          "frame": 0,
+          "rotation": 0
+        },
+        "effects": [
+          {
+            "key": "pixelfx-energy-ground",
+            "frame": 3,
+            "x": 535,
+            "y": 412
+          },
+          {
+            "key": "pixelfx-energy-field",
+            "frame": 3,
+            "x": 535,
+            "y": 412
+          }
+        ]
+      },
+      "second": {
+        "ready": true,
+        "running": true,
+        "identity": "astral",
+        "sex": "male",
+        "frame": 8,
+        "bakes": 1,
+        "hollow": {
+          "texture": "finish-hollow",
+          "frame": 0,
+          "rotation": 0
+        },
+        "effects": [
+          {
+            "key": "pixelfx-energy-ground",
+            "frame": 7,
+            "x": 535,
+            "y": 412
+          },
+          {
+            "key": "pixelfx-energy-field",
+            "frame": 7,
+            "x": 535,
+            "y": 412
+          }
+        ]
+      }
+    },
+    {
+      "element": "fire",
+      "first": {
+        "ready": true,
+        "running": true,
+        "identity": "astral",
+        "sex": "male",
+        "frame": 8,
+        "bakes": 1,
+        "hollow": {
+          "texture": "finish-hollow",
+          "frame": 0,
+          "rotation": 0
+        },
+        "effects": [
+          {
+            "key": "pixelfx-fire-field",
+            "frame": 1,
+            "x": 535,
+            "y": 412
+          }
+        ]
+      },
+      "second": {
+        "ready": true,
+        "running": true,
+        "identity": "astral",
+        "sex": "male",
+        "frame": 8,
+        "bakes": 1,
+        "hollow": {
+          "texture": "finish-hollow",
+          "frame": 0,
+          "rotation": 0
+        },
+        "effects": [
+          {
+            "key": "pixelfx-fire-field",
+            "frame": 3,
+            "x": 535,
+            "y": 412
+          }
+        ]
+      }
+    },
+    {
+      "element": "water",
+      "first": {
+        "ready": true,
+        "running": true,
+        "identity": "astral",
+        "sex": "male",
+        "frame": 8,
+        "bakes": 1,
+        "hollow": {
+          "texture": "finish-hollow",
+          "frame": 0,
+          "rotation": 0
+        },
+        "effects": [
+          {
+            "key": "pixelfx-water-ground",
+            "frame": 2,
+            "x": 535,
+            "y": 412
+          },
+          {
+            "key": "pixelfx-water-field",
+            "frame": 4,
+            "x": 535,
+            "y": 412
+          }
+        ]
+      },
+      "second": {
+        "ready": true,
+        "running": true,
+        "identity": "astral",
+        "sex": "male",
+        "frame": 8,
+        "bakes": 1,
+        "hollow": {
+          "texture": "finish-hollow",
+          "frame": 0,
+          "rotation": 0
+        },
+        "effects": [
+          {
+            "key": "pixelfx-water-ground",
+            "frame": 4,
+            "x": 535,
+            "y": 412
+          },
+          {
+            "key": "pixelfx-water-field",
+            "frame": 8,
+            "x": 535,
+            "y": 412
+          }
+        ]
+      }
+    },
+    {
+      "element": "earth",
+      "first": {
+        "ready": true,
+        "running": true,
+        "identity": "astral",
+        "sex": "male",
+        "frame": 8,
+        "bakes": 1,
+        "hollow": {
+          "texture": "finish-hollow",
+          "frame": 0,
+          "rotation": 0
+        },
+        "effects": [
+          {
+            "key": "pixelfx-earth-field",
+            "frame": 5,
+            "x": 535,
+            "y": 412
+          }
+        ]
+      },
+      "second": {
+        "ready": true,
+        "running": true,
+        "identity": "astral",
+        "sex": "male",
+        "frame": 8,
+        "bakes": 1,
+        "hollow": {
+          "texture": "finish-hollow",
+          "frame": 0,
+          "rotation": 0
+        },
+        "effects": [
+          {
+            "key": "pixelfx-earth-field",
+            "frame": 11,
+            "x": 535,
+            "y": 412
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "method": "Native selector replay uses actual class combat. Preview read hook exists only in the isolated refinement laboratory; no damage/progression controls."
+}

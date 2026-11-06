@@ -1,8 +1,9 @@
 import { characterSex, type CharacterSex } from '../config/appearance';
 import type { PlayableClass } from '../config/classes';
+import {appearance,companion,hollowBondAvailable,type CharacterAppearance,type CompanionSpecies}from'../config/characterPresentation';
 import { createCampaign, validCampaign, type Campaign, type CampaignCreation, type CrewMember } from './Campaign';
 export type CharacterClass = PlayableClass;
-export type CharacterProfile = { id: string; name: string; classId: CharacterClass; sex?: CharacterSex; createdAt: number; campaign?: Campaign };
+export type CharacterProfile = { id: string; name: string; classId: CharacterClass; sex?: CharacterSex; createdAt: number; campaign?: Campaign;appearance?:CharacterAppearance;companion?:CompanionSpecies };
 const KEY = 'echoes-of-dante.characters.v1';
 const LEGACY = 'echoes-of-dante.journey.v1';
 // Boot the scene behind an empty menu without creating a saved character.
@@ -24,7 +25,7 @@ export class CharacterProfiles {
         this.characters = raw.characters.filter((p: CharacterProfile) => p && typeof p.id === 'string' &&
           /^[a-zA-Z0-9-]{1,64}$/.test(p.id) && typeof p.name === 'string' && p.name.length <= 24 &&
           (['warrior','hunter','astral','xenobinder'].includes(p.classId)) && Number.isFinite(p.createdAt)).slice(0, 6)
-          .map((p:CharacterProfile) => ({ ...p, sex: characterSex(p.classId, p.sex), campaign: validCampaign(p.campaign, p.id) }));
+          .map((p:CharacterProfile) => ({ ...p, sex: characterSex(p.classId, p.sex), campaign: validCampaign(p.campaign, p.id),appearance:appearance(p.appearance),companion:p.classId==='xenobinder'?companion(p.companion):'symbiont' }));
         if (this.characters.some(p => p.id === raw.selected)) this.selected = raw.selected;
       }
     } catch { /* Local play remains available when storage is blocked. */ }
@@ -55,17 +56,26 @@ export class CharacterProfiles {
     const before = this.selected; this.selected = id;
     if (this.persist()) return true; this.selected = before; return false;
   }
-  create(name: string, classId: CharacterClass, sex?: CharacterSex, campaign?: CampaignCreation): CharacterProfile | undefined {
+  create(name: string, classId: CharacterClass, sex?: CharacterSex, campaign?: CampaignCreation,look?:CharacterAppearance): CharacterProfile | undefined {
     this.initialize(); const clean = name.trim().replace(/\s+/g, ' ').slice(0, 24);
     if (!clean || this.characters.length >= 6 || !['warrior','hunter','astral','xenobinder'].includes(classId)) return undefined;
     const profile: CharacterProfile = { id: crypto.randomUUID?.() ?? `hero-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-      name: clean, classId, sex: characterSex(classId, sex), createdAt: Date.now() };
+      name: clean, classId, sex: characterSex(classId, sex), createdAt: Date.now(),appearance:appearance(look),companion:'symbiont' };
     if (campaign) profile.campaign = createCampaign(profile.id, campaign);
     this.characters.push(profile);
     if (this.persist()) return profile; this.characters.pop(); return undefined;
   }
   markIntroSeen(id: string): boolean {
     return this.updateCampaign(id, c => ({ ...c, introSeen: true }));
+  }
+  canChooseHollow(id:string):boolean{
+    this.initialize();if(!this.characters.some(p=>p.id===id&&p.classId==='xenobinder'))return false;
+    try{return hollowBondAvailable(JSON.parse(localStorage.getItem(this.keyFor(id))??'null'));}catch{return false;}
+  }
+  updatePresentation(id:string,look:unknown,species:CompanionSpecies='symbiont'):boolean{
+    this.initialize();const p=this.characters.find(hero=>hero.id===id);if(!p)return false;if(p.classId!=='xenobinder')species='symbiont';if(species==='hollow'&&!this.canChooseHollow(id))return false;
+    const before={appearance:p.appearance,companion:p.companion};p.appearance=appearance(look);p.companion=p.classId==='xenobinder'?companion(species):'symbiont';
+    if(this.persist())return true;Object.assign(p,before);return false;
   }
   sealCrew(crew: CrewMember[]): boolean {
     const c = this.active.campaign;

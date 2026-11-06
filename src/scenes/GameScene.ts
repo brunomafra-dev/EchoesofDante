@@ -17,6 +17,8 @@ import {ColonizationArea,preloadColonization} from '../systems/ColonizationArea'
 import {preloadMissionProps,addSurveyProp,type SURVEY_ART} from '../visual/MissionProps';
 import { XenobinderCombat } from '../combat/XenobinderCombat';
 import { CompleteActorArt,preloadCompleteActors } from '../visual/CompleteActorArt';
+import {PixelImpacts}from'../visual/PixelFX';
+import {completeSourceStats}from'../visual/CompleteActorSources';
 import { XenobinderPanel } from '../ui/XenobinderPanel';
 import { XENOBINDER } from '../config/classes';
 import { VOLCANIC,VOLCANIC_ENCOUNTERS,VOLCANIC_CREATURES,type VolcanicKind } from '../config/volcanic';
@@ -190,6 +192,7 @@ export class GameScene extends Phaser.Scene {
   private controls!: Controls;
   private arena!: LandingBase | Arena | CavernArea | WardenArena | ResonanceValley | SiroccoBasin | ReferenceArea | ForestFinishArea;
   private referenceImpacts?: ReferenceImpacts;
+  private pixelImpacts?:PixelImpacts;
   private impactHistory: ImpactPose[] = [];
   private impactSequence = 0;
   private valley?: ResonanceValley;
@@ -321,7 +324,7 @@ export class GameScene extends Phaser.Scene {
   private get forestProof():boolean{return this.qualityReference==='forest-reference'||this.qualityReference==='forest-current';}
   constructor(private readonly qualityReference: false | 'baseline' | 'reference' | 'forest-reference' | 'forest-current' = false,
     private readonly originalWarrior = false, private readonly shellReady?: (scene: GameScene) => void,
-    private readonly glacierPlaytest?: { area: JourneyArea; classId: PlayableClass; sex?:CharacterSex; pilot?:boolean; inventory?:boolean; economy?:boolean; environment?:boolean; environmentBaseline?:boolean; routeBaseline?:boolean; environmentEntry?:{x:number;y:number}; creatureBaseline?:boolean; specimen?:string; look?:import('../config/appearance').EquipmentLook; weaponLook?:import('../config/appearance').WeaponStyle },
+    private readonly glacierPlaytest?: { area: JourneyArea; classId: PlayableClass; sex?:CharacterSex; appearance?:import('../config/characterPresentation').CharacterAppearance;companion?:import('../config/characterPresentation').CompanionSpecies;pilot?:boolean; inventory?:boolean; economy?:boolean; environment?:boolean; environmentBaseline?:boolean; routeBaseline?:boolean; environmentEntry?:{x:number;y:number}; creatureBaseline?:boolean; specimen?:string; look?:import('../config/appearance').EquipmentLook; weaponLook?:import('../config/appearance').WeaponStyle },
     private readonly shellLoading?:(progress:number)=>void) { super('Game'); }
 
   preload(): void {
@@ -347,7 +350,9 @@ export class GameScene extends Phaser.Scene {
     preloadMissionProps(this);
     preloadItemIcons(this);
     for(const key of ['landing-shuttle','field-shelter','base-medic-civilian','base-smith-civilian','base-expedition-civilian','base-refugee-a','base-refugee-b'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/base/${key}.png`);
-    preloadCompleteActors(this);
+    const actorClass=this.glacierPlaytest?.classId??(this.qualityReference&&!this.forestProof?'warrior':characterProfiles.active.classId);
+    const actorSex=characterSex(actorClass,this.glacierPlaytest?this.glacierPlaytest.sex:this.qualityReference&&!this.forestProof?undefined:characterProfiles.active.sex);
+    preloadCompleteActors(this,!this.glacierPlaytest&&characterProfiles.active.campaign?.mode==='coop'?undefined:[{classId:actorClass,sex:actorSex},...coopSession.members.map(m=>({classId:m.profile.classId,sex:characterSex(m.profile.classId,m.profile.sex)}))]);
     for(const key of ['warrior-starter-weapon','warrior-pilot-weapon','warrior-saber-painted'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/visual/characters/${key}.png`);
     for(const key of ['cinder-ground','obsidian-ground'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/visual/environment/${key}.webp`);
     for(const s of Object.values(VOLCANIC_CREATURES))if(!this.textures.exists(s.texture))preloadCreatureSheet(this,s.texture,`${import.meta.env.BASE_URL}assets/visual/characters/${s.texture}.png`,256);
@@ -452,6 +457,7 @@ export class GameScene extends Phaser.Scene {
     this.threshold = undefined;
     this.mechanism = undefined;
     this.referenceImpacts = undefined;
+    this.pixelImpacts=this.textures.exists('pixelfx-hit-spark')?new PixelImpacts(this):undefined;
     this.impactHistory = []; // Sequence stays monotonic across same-region retries.
     this.echoSites = [];
     if(this.economyRoom!==coopSession.code){this.economyRoom=coopSession.code;this.resourceAwarded.clear();this.potionUsed=0;}
@@ -564,6 +570,9 @@ export class GameScene extends Phaser.Scene {
     if(this.classId==='astral'){this.astral=new AstralCombat(this,id=>this.progression.upgradeRank(id));this.astralArt=new CompleteActorArt(this,this.player.view,entry.x,entry.y,this.player.sex,'astral');this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.astral?.destroy());}
     if(this.classId==='xenobinder'){this.xeno=new XenobinderCombat(this,id=>this.progression.upgradeRank(id),entry);this.xenoArt=new CompleteActorArt(this,this.player.view,entry.x,entry.y,this.player.sex,'xenobinder');const combat=this.xeno;this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>combat.destroy());}
     this.updateEquipmentAppearance();
+    const presentation=this.glacierPlaytest??characterProfiles.active;
+    this.player.setCharacterAppearance(presentation.appearance);this.hunterArt?.setAppearance(presentation.appearance);this.astralArt?.setAppearance(presentation.appearance);this.xenoArt?.setAppearance(presentation.appearance);
+    this.xeno?.setSpecies(this.glacierPlaytest?this.glacierPlaytest.companion:characterProfiles.canChooseHollow(characterProfiles.active.id)?characterProfiles.active.companion:'symbiont');
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
     this.transferHp = undefined;
     this.kineticWave = this.add.graphics().setDepth(14999);
@@ -2083,6 +2092,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private impact(position: Vec2, color: number, damage: number, saberAngle?: number, effective = false, resisted = false, broadcast = true): void {
+    if(damage>0)this.pixelImpacts?.hit(position,color);
     if (broadcast && coopSession.role === 'host') {
       this.impactHistory.push({id: ++this.impactSequence, at: this.time.now, ...position, color, damage, angle: saberAngle, effective, resisted});
       if (this.impactHistory.length > 24) this.impactHistory.shift();
@@ -2099,6 +2109,7 @@ export class GameScene extends Phaser.Scene {
       return;
     }
     const saberHit = saberAngle !== undefined;
+    if(!this.pixelImpacts){
     const burst = this.add.ellipse(position.x, position.y, saberHit ? 34 : 20, saberHit ? 9 : 20, color, 0.85).setDepth(15001);
     if (saberHit) burst.setRotation(saberAngle + Math.PI / 2);
     this.tweens.add({ targets: burst, scaleX: saberHit ? 1.25 : 2.6, scaleY: saberHit ? 0.55 : 2.6, alpha: 0, duration: saberHit ? 140 : 170, onComplete: () => burst.destroy() });
@@ -2106,6 +2117,7 @@ export class GameScene extends Phaser.Scene {
       const angle = i * Math.PI / 2 + Math.PI / 4;
       const spark = this.add.ellipse(position.x, position.y, 11, 3, color, 0.9).setRotation(angle).setDepth(15002);
       this.tweens.add({ targets: spark, x: position.x + Math.cos(angle) * 28, y: position.y + Math.sin(angle) * 28, alpha: 0, scaleX: 0.35, duration: 180, onComplete: () => spark.destroy() });
+    }
     }
     const label = this.add.text(position.x, position.y - 31, damageText(damage, effective, resisted), { fontFamily: 'Barlow Condensed, sans-serif', fontSize: '24px', fontStyle: 'bold', color: damageTextColor(color, '#d4ffe9'), stroke: '#14312d', strokeThickness: 4 }).setOrigin(0.5).setDepth(15002);
     this.tweens.add({ targets: label, y: label.y - 32, alpha: 0, duration: 520, onComplete: () => label.destroy() });
@@ -2503,6 +2515,10 @@ export class GameScene extends Phaser.Scene {
     for(const upgrade of ['chargePower','dashDuration','chargeWidth'] as const)for(let i=0;i<3;i++)this.progression.investUpgrade(upgrade);
     this.transferHp=this.characterMaxHp;this.expeditionReturn=undefined;this.area=area;this.saveProgress();this.scene.restart();return true;
   }
+  inspectCharacterPresentation(){
+    const actor=this.player?.view.active?this.player.view.getData('completeActor') as CompleteActorArt|undefined:undefined;
+    return{ready:!!this.player?.view.active,peers:this.party?.inspectPresentation()??[],area:this.area,position:this.player?{...this.player.position}:undefined,actor:actor?{identity:actor.identity,sex:actor.sex,frame:actor.body.frame.name,bakes:actor.bakeCount,width:actor.body.displayWidth,height:actor.body.displayHeight}:null,sources:completeSourceStats(this),companion:this.xeno?.snapshot(),effects:this.children.list.filter(v=>v instanceof Phaser.GameObjects.Image&&v.visible&&v.texture.key.startsWith('pixelfx-')).map(v=>{const image=v as Phaser.GameObjects.Image;return{key:image.texture.key,frame:image.frame.name,x:image.x,y:image.y};})};
+  }
   seedMissionPlaytest(id:MissionId,reviewStop?:string,reviewNpc?:string):boolean{
     const params=new URLSearchParams(location.search),visualStop=params.has('visual-review')?VISUAL_REVIEW_STOPS.find(s=>s.id===reviewStop):undefined;
     const review=reviewStop&&params.has('npc-review')?npcReviewSelection(reviewStop,reviewNpc):visualStop?{stop:{...visualStop,stage:'settle-icecave' as const},focus:undefined}:undefined;
@@ -2514,7 +2530,7 @@ export class GameScene extends Phaser.Scene {
     if(id==='settle-icecave'&&coopSession.role!=='offline'&&!coopSession.icecaveAvailable)return false;
     if(id==='settle-frost'&&coopSession.role!=='offline'&&!coopSession.frostAvailable)return false;
     if(id==='settle-buried'&&coopSession.role!=='offline'&&!coopSession.buriedAvailable)return false;
-    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!['missions','permanence','settlement-life','settlement-motion','npc-review','outpost-support','visual-review'].some(key=>params.has(key))||this.inputModalOpen||this.transitioning||coopSession.role==='guest'||!this.player||this.player.isDead)return false;
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!['missions','permanence','settlement-life','settlement-motion','npc-review','outpost-support','visual-review','refinement'].some(key=>params.has(key))||this.inputModalOpen||this.transitioning||coopSession.role==='guest'||!this.player||this.player.isDead)return false;
     if(characterProfiles.active.campaign?.mode==='coop'&&!coopSession.campaignRunning)return false;
     const ids=['recon','survival','signal','beyond','water-source','safe-route','shelter',...PERMANENCE_IDS] as const,index=(ids as readonly MissionId[]).indexOf(id);if(index<0)return false;
     const previous=ids.slice(0,index),evidence=previous.flatMap(mid=>missionById(mid).goals.map(g=>g.id));

@@ -10,6 +10,7 @@ import type {ResourceDrop} from '../systems/ResourceDrops';
 import type { LootPose } from '../systems/EquipmentDrops';
 import type { ExpeditionReturn } from '../systems/ExpeditionReturn';
 import { characterProfiles } from '../systems/CharacterProfiles';
+import type{CharacterAppearance,CompanionSpecies}from'../config/characterPresentation';
 import type { CampaignLobby } from '../systems/Campaign';
 import {validChat,CHAT_HISTORY,CHAT_DURATION,CHAT_LIMIT,type ChatMessage} from './PartyChat';
 import {MISSION_IDS,type MissionId} from '../config/missions';
@@ -19,7 +20,7 @@ export type MissionRequest={id:string;nonce:string;action:MissionAction;mission:
 export type RoomCampaign = CampaignLobby & { started: boolean; running: boolean };
 export const COOP_AREAS: readonly JourneyArea[] = ['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest','cinder','obsidian','caldera','springs','terraces'];
 const CONNECTIONS: Partial<Record<JourneyArea, readonly JourneyArea[]>> = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid','springs'], springs:['valley','terraces'],terraces:['springs'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave','cinder'], cinder:['icenest','obsidian'], obsidian:['cinder','caldera'], caldera: ['obsidian'] };
-export type PartyProfile = {characterId?:string;name: string; classId: PlayableClass;sex?:import('../config/appearance').CharacterSex;bagFree?:number;potions?:number;equipment?:EquipmentSnapshot['slots'];build?:Pick<ProgressionSnapshot,'xp'|'abilityUpgrades'|'bossRewards'>};
+export type PartyProfile = {characterId?:string;name: string; classId: PlayableClass;sex?:import('../config/appearance').CharacterSex;appearance?:CharacterAppearance;companion?:CompanionSpecies;bagFree?:number;potions?:number;equipment?:EquipmentSnapshot['slots'];build?:Pick<ProgressionSnapshot,'xp'|'abilityUpgrades'|'bossRewards'>};
 export type PartyMember={id:string;profile:PartyProfile;connected:boolean};
 export type MemberState={input:PartyInput;attackTap:boolean;inputAt:number;deathId:string;potionUsed:number;potionReady:number;travelHp?:number};
 export type PartyInput = {x:number;y:number;aim:number;attack:boolean;dash:boolean;charge:boolean;held:boolean;release:boolean;cancel:boolean;interact:boolean;restart:boolean;element?:boolean};
@@ -34,6 +35,8 @@ export type PartyWorld={permanence?:import('../config/permanence').PermanencePos
 // One connection across scene restarts. The relay grants roles; only host worlds are accepted.
 export class CoopSession {
  serverProtocol?:15|16;
+ presentationAvailable=false;
+ private needsPresentation=false;
  outpostsAvailable=false;
  signalsAvailable=false;
  circuitsAvailable=false;
@@ -126,7 +129,8 @@ export class CoopSession {
   this.clearChat();this.url=target.href;this.role='connecting';this.endedMessage='';this.message='Conectando à expedição…';this.personalXpGained=0;this.sequence=0;this.epoch=0;this.rewards=new LocalJourney();this.changed();
   this.campaign=undefined;this.campaignSaved=true;this.members=[];this.states.clear();this.requests=[];this.peerDeathId='';this.earnedBosses=[];this.lootAwarded.clear();this.resourceAwarded.clear();this.personalItems=[];this.receipt='';this.rewardTotal=0;this.rewardSaved=true;this.rewardResources={credits:0,materials:[0,0,0],used:0};
   const inventory=validEquipment(this.rewards.load()?.equipment);
-  profile={...profile,characterId:hero.id,build:this.rewards.load()?.progression,potions:this.rewards.load()?.economy?.potions??0,equipment:inventory.slots,bagFree:24-(inventory.items!.length-Object.keys(inventory.equipped!).length)};
+  profile={...profile,characterId:hero.id,appearance:hero.appearance,companion:characterProfiles.canChooseHollow(hero.id)?hero.companion:'symbiont',build:this.rewards.load()?.progression,potions:this.rewards.load()?.economy?.potions??0,equipment:inventory.slots,bagFree:24-(inventory.items!.length-Object.keys(inventory.equipped!).length)};
+  this.needsPresentation=Object.values(profile.appearance??{}).some(v=>v!=='original')||profile.companion==='hollow';
   return new Promise((resolve,reject)=>this.open({type:mode,profile,area,code,campaign},false,resolve,reject));
  }
  private open(request:object,retry:boolean,resolve:()=>void=()=>{},reject:(reason:Error)=>void=()=>{}):void {
@@ -155,7 +159,9 @@ export class CoopSession {
     if(needsOutpost&&m.outposts!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda o capítulo do Posto das Nascentes. Seu progresso permanece preservado.');reject(new Error(this.message));return;}
     const needsPermanence=new URLSearchParams(location.search).has('permanence')||this.rewards.load()?.missions?.accepted.some(isPermanence);
     if(![15,16].includes(m.protocol)||m.protocol===15&&needsPermanence){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização dos capítulos do assentamento. Seus personagens permanecem preservados.');reject(new Error(this.message));return;}
+    if(this.needsPresentation&&m.presentation!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização de aparência e vínculos. Seu personagem e progresso estão preservados.');reject(new Error(this.message));return;}
     this.serverProtocol=m.protocol;
+    this.presentationAvailable=m.presentation===1;
     this.outpostsAvailable=m.outposts===1;
     this.signalsAvailable=m.signals===1;
     this.circuitsAvailable=m.circuits===1;

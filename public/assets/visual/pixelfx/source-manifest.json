@@ -1,0 +1,143 @@
+{
+  "source": "https://github.com/patch-gg/pixelfx",
+  "commit": "a84159688af3ca37a4be05a0d422b94451b2e24e",
+  "license": "MIT; LICENSE.txt and NOTICE.md included. Gallery fonts excluded.",
+  "modifications": "16 sampled transparent frames, no actor/backdrop; timing and palette preserved/adapted to existing Dante combat. Packed/resized offline by prepare-pixelfx198.py.",
+  "effects": [
+    {
+      "name": "energy-field",
+      "id": "lightning/lightning-strike",
+      "frameWidth": 240,
+      "frameHeight": 264,
+      "origin": [
+        120,
+        228
+      ],
+      "duration": 1.35,
+      "frames": 16,
+      "columns": 4,
+      "sourceCommit": "a84159688af3ca37a4be05a0d422b94451b2e24e",
+      "sourceSha256": "a40ec64f956e6153695f55dfef46773e59797dda812b90e0ba316a0e137a0642"
+    },
+    {
+      "name": "energy-ground",
+      "id": "lightning/thunderclap",
+      "frameWidth": 288,
+      "frameHeight": 156,
+      "origin": [
+        144,
+        124
+      ],
+      "duration": 1.35,
+      "frames": 16,
+      "columns": 4,
+      "sourceCommit": "a84159688af3ca37a4be05a0d422b94451b2e24e",
+      "sourceSha256": "a63b083433a4e1f522a26bf09f766868ee31ced5a49c61f898c62f1413b3fa9e"
+    },
+    {
+      "name": "fire-field",
+      "id": "fire/fire-ring",
+      "frameWidth": 224,
+      "frameHeight": 128,
+      "origin": [
+        112,
+        92
+      ],
+      "duration": 3,
+      "frames": 16,
+      "columns": 4,
+      "sourceCommit": "a84159688af3ca37a4be05a0d422b94451b2e24e",
+      "sourceSha256": "152e38c3a2d8485a4c37aca2ded3f8e13eecc2da5877ab0b029753d978e01fce"
+    },
+    {
+      "name": "water-ground",
+      "id": "water/whirlpool",
+      "frameWidth": 128,
+      "frameHeight": 84,
+      "origin": [
+        64,
+        42
+      ],
+      "duration": 2.5,
+      "frames": 16,
+      "columns": 4,
+      "sourceCommit": "a84159688af3ca37a4be05a0d422b94451b2e24e",
+      "sourceSha256": "c4aa53737f132b3526120a2dc81691258b0094bf3e514243b26a1969cac1fb4a"
+    },
+    {
+      "name": "water-field",
+      "id": "water/splash",
+      "frameWidth": 176,
+      "frameHeight": 100,
+      "origin": [
+        88,
+        78
+      ],
+      "duration": 1.15,
+      "frames": 16,
+      "columns": 4,
+      "sourceCommit": "a84159688af3ca37a4be05a0d422b94451b2e24e",
+      "sourceSha256": "be3aa8702ce718b66a576dce6a9e70c5ee7bec80a5a7057771336aa98b0b617d"
+    },
+    {
+      "name": "earth-field",
+      "id": "nature/earth-spike",
+      "frameWidth": 272,
+      "frameHeight": 150,
+      "origin": [
+        136,
+        132
+      ],
+      "duration": 0.85,
+      "frames": 16,
+      "columns": 4,
+      "sourceCommit": "a84159688af3ca37a4be05a0d422b94451b2e24e",
+      "sourceSha256": "b6adf594b7bcf4ee341b3429dcb62ca25a176be452ba9297cf29f17284b6cac9"
+    },
+    {
+      "name": "frost-shatter",
+      "id": "ice/ice-shatter",
+      "frameWidth": 224,
+      "frameHeight": 112,
+      "origin": [
+        68,
+        90
+      ],
+      "duration": 0.65,
+      "frames": 16,
+      "columns": 4,
+      "sourceCommit": "a84159688af3ca37a4be05a0d422b94451b2e24e",
+      "sourceSha256": "6a3a856f3791191cc0dfb208380717da79ac961ee20009d35042ffcf35061b41"
+    },
+    {
+      "name": "ground-impact",
+      "id": "impacts/ground-slam",
+      "frameWidth": 288,
+      "frameHeight": 208,
+      "origin": [
+        144,
+        164
+      ],
+      "duration": 0.65,
+      "frames": 16,
+      "columns": 4,
+      "sourceCommit": "a84159688af3ca37a4be05a0d422b94451b2e24e",
+      "sourceSha256": "0425502ca5d812672520ac7f1d283d8b6219164be1fd1d2c2078d09c2b356da9"
+    },
+    {
+      "name": "hit-spark",
+      "id": "impacts/hit-spark",
+      "frameWidth": 136,
+      "frameHeight": 80,
+      "origin": [
+        44,
+        64
+      ],
+      "duration": 0.18,
+      "frames": 16,
+      "columns": 4,
+      "sourceCommit": "a84159688af3ca37a4be05a0d422b94451b2e24e",
+      "sourceSha256": "b4abff89a55d5e73136c42649fdafb2852fe27228a1d0db0998e2ecd45a8e3df"
+    }
+  ]
+}

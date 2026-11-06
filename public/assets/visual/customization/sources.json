@@ -1,0 +1,226 @@
+[
+  {
+    "sex": "male",
+    "destination": "warrior",
+    "neck": 68,
+    "choice": "original",
+    "source": "public/assets/visual/complete-actors/warrior-male-none-motion-v3.png"
+  },
+  {
+    "sex": "male",
+    "destination": "warrior",
+    "neck": 68,
+    "choice": "practical",
+    "source": "public/assets/visual/complete-actors/warrior-male-none-motion-v3.png"
+  },
+  {
+    "sex": "male",
+    "destination": "warrior",
+    "neck": 68,
+    "choice": "astral",
+    "source": "public/assets/visual/complete-actors/astral-male-none-motion-v3.png"
+  },
+  {
+    "sex": "male",
+    "destination": "warrior",
+    "neck": 68,
+    "choice": "stellar",
+    "source": "public/assets/visual/complete-actors/hunter-male-basic-motion-v3.png"
+  },
+  {
+    "sex": "male",
+    "destination": "astral",
+    "neck": 57,
+    "choice": "original",
+    "source": "public/assets/visual/complete-actors/astral-male-none-motion-v3.png"
+  },
+  {
+    "sex": "male",
+    "destination": "astral",
+    "neck": 57,
+    "choice": "practical",
+    "source": "public/assets/visual/complete-actors/warrior-male-none-motion-v3.png"
+  },
+  {
+    "sex": "male",
+    "destination": "astral",
+    "neck": 57,
+    "choice": "astral",
+    "source": "public/assets/visual/complete-actors/astral-male-none-motion-v3.png"
+  },
+  {
+    "sex": "male",
+    "destination": "astral",
+    "neck": 57,
+    "choice": "stellar",
+    "source": "public/assets/visual/complete-actors/hunter-male-basic-motion-v3.png"
+  },
+  {
+    "sex": "male",
+    "destination": "hunter",
+    "neck": 62,
+    "choice": "original",
+    "source": "public/assets/visual/complete-actors/hunter-male-basic-motion-v3.png"
+  },
+  {
+    "sex": "male",
+    "destination": "hunter",
+    "neck": 62,
+    "choice": "practical",
+    "source": "public/assets/visual/complete-actors/warrior-male-none-motion-v3.png"
+  },
+  {
+    "sex": "male",
+    "destination": "hunter",
+    "neck": 62,
+    "choice": "astral",
+    "source": "public/assets/visual/complete-actors/astral-male-none-motion-v3.png"
+  },
+  {
+    "sex": "male",
+    "destination": "hunter",
+    "neck": 62,
+    "choice": "stellar",
+    "source": "public/assets/visual/complete-actors/hunter-male-basic-motion-v3.png"
+  },
+  {
+    "sex": "male",
+    "destination": "xenobinder",
+    "neck": 58,
+    "choice": "original",
+    "source": "public/assets/visual/complete-actors/xenobinder-male-none-motion-v3.png"
+  },
+  {
+    "sex": "male",
+    "destination": "xenobinder",
+    "neck": 58,
+    "choice": "practical",
+    "source": "public/assets/visual/complete-actors/warrior-male-none-motion-v3.png"
+  },
+  {
+    "sex": "male",
+    "destination": "xenobinder",
+    "neck": 58,
+    "choice": "astral",
+    "source": "public/assets/visual/complete-actors/astral-male-none-motion-v3.png"
+  },
+  {
+    "sex": "male",
+    "destination": "xenobinder",
+    "neck": 58,
+    "choice": "stellar",
+    "source": "public/assets/visual/complete-actors/hunter-male-basic-motion-v3.png"
+  },
+  {
+    "sex": "female",
+    "destination": "warrior",
+    "neck": 68,
+    "choice": "original",
+    "source": "public/assets/visual/complete-actors/warrior-female-none-motion-v3.png"
+  },
+  {
+    "sex": "female",
+    "destination": "warrior",
+    "neck": 68,
+    "choice": "practical",
+    "source": "public/assets/visual/complete-actors/warrior-female-none-motion-v3.png"
+  },
+  {
+    "sex": "female",
+    "destination": "warrior",
+    "neck": 68,
+    "choice": "astral",
+    "source": "public/assets/visual/complete-actors/astral-female-none-motion-v3.png"
+  },
+  {
+    "sex": "female",
+    "destination": "warrior",
+    "neck": 68,
+    "choice": "stellar",
+    "source": "public/assets/visual/complete-actors/hunter-female-basic-motion-v3.png"
+  },
+  {
+    "sex": "female",
+    "destination": "astral",
+    "neck": 57,
+    "choice": "original",
+    "source": "public/assets/visual/complete-actors/astral-female-none-motion-v3.png"
+  },
+  {
+    "sex": "female",
+    "destination": "astral",
+    "neck": 57,
+    "choice": "practical",
+    "source": "public/assets/visual/complete-actors/warrior-female-none-motion-v3.png"
+  },
+  {
+    "sex": "female",
+    "destination": "astral",
+    "neck": 57,
+    "choice": "astral",
+    "source": "public/assets/visual/complete-actors/astral-female-none-motion-v3.png"
+  },
+  {
+    "sex": "female",
+    "destination": "astral",
+    "neck": 57,
+    "choice": "stellar",
+    "source": "public/assets/visual/complete-actors/hunter-female-basic-motion-v3.png"
+  },
+  {
+    "sex": "female",
+    "destination": "hunter",
+    "neck": 62,
+    "choice": "original",
+    "source": "public/assets/visual/complete-actors/hunter-female-basic-motion-v3.png"
+  },
+  {
+    "sex": "female",
+    "destination": "hunter",
+    "neck": 62,
+    "choice": "practical",
+    "source": "public/assets/visual/complete-actors/warrior-female-none-motion-v3.png"
+  },
+  {
+    "sex": "female",
+    "destination": "hunter",
+    "neck": 62,
+    "choice": "astral",
+    "source": "public/assets/visual/complete-actors/astral-female-none-motion-v3.png"
+  },
+  {
+    "sex": "female",
+    "destination": "hunter",
+    "neck": 62,
+    "choice": "stellar",
+    "source": "public/assets/visual/complete-actors/hunter-female-basic-motion-v3.png"
+  },
+  {
+    "sex": "female",
+    "destination": "xenobinder",
+    "neck": 58,
+    "choice": "original",
+    "source": "public/assets/visual/complete-actors/xenobinder-female-none-motion-v3.png"
+  },
+  {
+    "sex": "female",
+    "destination": "xenobinder",
+    "neck": 58,
+    "choice": "practical",
+    "source": "public/assets/visual/complete-actors/warrior-female-none-motion-v3.png"
+  },
+  {
+    "sex": "female",
+    "destination": "xenobinder",
+    "neck": 58,
+    "choice": "astral",
+    "source": "public/assets/visual/complete-actors/astral-female-none-motion-v3.png"
+  },
+  {
+    "sex": "female",
+    "destination": "xenobinder",
+    "neck": 58,
+    "choice": "stellar",
+    "source": "public/assets/visual/complete-actors/hunter-female-basic-motion-v3.png"
+  }
+]

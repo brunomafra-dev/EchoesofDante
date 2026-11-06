@@ -1,0 +1,18 @@
+{
+  "version": "0.1.198",
+  "date": "2026-11-06",
+  "cpu": "Intel Celeron N5105 @ 2.00 GHz",
+  "gpu": "Intel UHD Graphics 0x4E61, ANGLE D3D11",
+  "browser": "Headless installed Chrome 156 / Playwright",
+  "viewports": [[844,390],[393,852],[1024,768],[1280,720],[1280,800],[1920,1080]],
+  "input": "Native keyboard/mouse and CDP touch; standard Gamepad API mock",
+  "typecheck": "passed",
+  "build": "passed, Vite 7.3.6, 327 modules, existing large-chunk warning",
+  "runtime": "Phaser 3.90; Three.js sources/art preserved, shared bundles recompiled",
+  "production": "CPU Python/Pillow/numpy/OpenCV and official MIT PixelFX raster preparation; no paid generation or cloud GPU",
+  "fpsBenchmarkPerformed": false,
+  "memory": "RGBA estimates from image dimensions only; physical RAM/VRAM peak not measured",
+  "physicalPhoneTest": false,
+  "physicalControllerTest": false,
+  "humanApproval": "pending"
+}

@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import {pixelEffect}from'./PixelFX';
 import { VESPER as B } from '../config/glacier';
 import { PLAYER } from '../config/game';
 import { inMeleeArc } from '../combat/HitDetection';
@@ -47,8 +48,9 @@ export class VesperFrost {
         .setPosition(patch.x,patch.y).setRotation((patch.x*.017+patch.y*.013)%6.28).setDepth(shards?patch.y+2:-8500)
         .setDisplaySize(B.frost.radius*2*(shards?1+age/900:1),B.frost.radius*2*(shards?1+age/900:1))
         .setAlpha(shards?1-age/650:Math.min(.84,Math.max(0,(patch.until-now)/600)));
+      if(shards){pixelEffect(patch.image,'frost-shatter',age/1000,B.frost.radius*2,.65);patch.image.setRotation(0);}
     }
-    for(const impact of this.impacts){const t=(now-impact.at)/480;impact.image.setVisible(t>=0&&t<1).setDisplaySize(impact.size,impact.size).setAlpha(Math.max(0,1-t));}
+    for(const [i,impact] of this.impacts.entries()){const t=(now-impact.at)/480;impact.image.setVisible(t>=0&&t<1).setDisplaySize(impact.size,impact.size).setAlpha(Math.max(0,1-t));if(i>0&&t>=0&&t<1)pixelEffect(impact.image,'frost-shatter',t*.65,impact.size,.65);}
   }
   clear():void {for(const p of this.patches){p.active=false;p.until=0;p.brokenAt=-Infinity;p.image.setVisible(false);}for(const p of this.impacts){p.at=-Infinity;p.image.setVisible(false);}}
   private bake(scene:Phaser.Scene):void {

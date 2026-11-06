@@ -4,6 +4,8 @@ import { CLASS_NAMES, CLASS_REGISTRY } from '../config/classes';
 import { characterSex, SEX_NAMES, type CharacterSex } from '../config/appearance';
 import { PROGRESSION } from '../config/progression';
 import { CharacterShowcase } from './CharacterShowcase';
+import {appearance,PRESENTATION,type CharacterAppearance,type CompanionSpecies}from'../config/characterPresentation';
+import{appearanceControls}from'./AppearanceControls';
 import './character-selection.css';
 
 const identity = {
@@ -12,8 +14,8 @@ const identity = {
   astral: { role: 'MÉDIO ALCANCE · CONTROLE', fantasy: 'Controle o campo. Conduza as forças de Dante pela manopla.', kit: 'Manopla astral · Energia, fogo, água e terra · Campos direcionais' },
   xenobinder:{role:'DOMADOR · SIMBIOSE',fantasy:'Lute em simbiose. Oriente uma criatura de Dante e proteja sua expedição.',kit:'Condutor simbiótico · Companheiro permanente · Investida e recuperação'},
 };
-type Actions = { back: () => void; create: (name: string, classId: CharacterClass, sex: CharacterSex) => void; play: (id: string) => void; remove: (id: string) => void; newCharacter: () => void };
-export type CharacterDraft = { name: string; classId: CharacterClass; sex: CharacterSex };
+type Actions = { back: () => void; create: (name: string, classId: CharacterClass, sex: CharacterSex,look:CharacterAppearance) => void; play: (id: string) => void; remove: (id: string) => void; newCharacter: () => void };
+export type CharacterDraft = { name: string; classId: CharacterClass; sex: CharacterSex;appearance?:CharacterAppearance };
 function button(text: string, id: string, action: () => void): HTMLButtonElement {
   const el = document.createElement('button'); el.type = 'button'; el.textContent = text; el.dataset.shell = id;
   el.addEventListener('click', action); return el;
@@ -27,6 +29,8 @@ export class CharacterSelection {
   private readonly previews: CharacterShowcase[] = [];
   private previewRefresh = 0;
   private deleteDialog?: HTMLDialogElement;
+  private appearanceDialog?:HTMLDialogElement;
+  private dismissAppearance?:()=>void;
   constructor(private readonly root: HTMLElement, mode: 'characters' | 'create', actions: Actions, private readonly joiningRoom = false, private readonly occupied: readonly string[] = [], private readonly context: { profiles?: readonly CharacterProfile[]; title?: string; subtitle?: string; allowCreate?: boolean; draft?: CharacterDraft; onDraft?: (draft:CharacterDraft)=>void } = {}) {
     const header = element('header', 'selection-header');
     const title = element('div', 'selection-title');
@@ -44,12 +48,13 @@ export class CharacterSelection {
     root.append(header);
     if (mode === 'create') this.creation(actions); else this.characters(actions);
   }
-  private stage(classId: CharacterClass, sex = characterSex(classId)): { stage: HTMLElement; preview: CharacterShowcase } {
-    const stage = element('div', 'character-stage'), preview = new CharacterShowcase(classId, sex);
+  private stage(classId: CharacterClass, sex = characterSex(classId),look:CharacterAppearance=appearance(),species:CompanionSpecies='symbiont'): { stage: HTMLElement; preview: CharacterShowcase } {
+    const stage = element('div', 'character-stage'), preview = new CharacterShowcase(classId, sex,look,species);
     stage.append(element('div', 'stage-light'), element('div', 'stage-plinth'), preview.canvas, preview.caption);
     this.previews.push(preview); return { stage, preview };
   }
   private creation(actions: Actions): void {
+    let look=appearance(this.context.draft?.appearance);
     const gallery = element('div', 'class-gallery'); gallery.setAttribute('role', 'group'); gallery.setAttribute('aria-label', 'Classes disponíveis');
     const selectedTitle = element('h3', '', 'Uma identidade. Uma nova jornada.');
     const description = element('p', '', 'Quatro classes disponíveis. Escolha a sua para começar.');
@@ -74,15 +79,15 @@ export class CharacterSelection {
           if(old.sex===sexSelect.value)continue;
           const card=gallery.querySelector<HTMLElement>(`[data-class="${old.classId}"]`)!;
           old.destroy();this.previews.splice(this.previews.indexOf(old),1);
-          const next=this.stage(old.classId,sexSelect.value as CharacterSex);
+          const next=this.stage(old.classId,sexSelect.value as CharacterSex,look);
           card.querySelector('.character-stage')!.replaceWith(next.stage);
           if(old.classId===selected)next.preview.play();
         }
       });
     };
-    const remember=()=>{if(selected)this.context.onDraft?.({name:input.value,classId:selected,sex:sexSelect.value as CharacterSex});};
+    const remember=()=>{if(selected)this.context.onDraft?.({name:input.value,classId:selected,sex:sexSelect.value as CharacterSex,appearance:look});};
     sexSelect.addEventListener('change',()=>{remember();refreshPreviews();});
-    const create = button(this.joiningRoom ? 'CRIAR E ENTRAR NA SALA →' : 'CONTINUAR →', 'create', () => { if (selected) actions.create(input.value, selected, sexSelect.value as CharacterSex); });
+    const create = button(this.joiningRoom ? 'CRIAR E ENTRAR NA SALA →' : 'CONTINUAR →', 'create', () => { if (selected) actions.create(input.value, selected, sexSelect.value as CharacterSex,look); });
     create.className = 'selection-primary'; create.disabled = true;
     input.addEventListener('input', () => {create.disabled = !selected || !input.value.trim();remember();});
     input.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.isComposing && !create.disabled) { event.preventDefault(); create.click(); } });
@@ -101,7 +106,7 @@ export class CharacterSelection {
       card.disabled=this.occupied.includes(classId);
       if(card.disabled)card.title='Classe ocupada nesta equipe (inclui vaga em reconexão).';
       card.setAttribute('aria-label', `Selecionar ${CLASS_NAMES[classId]}`);
-      card.append(this.stage(classId,sexSelect.value as CharacterSex).stage, element('strong', 'class-name', CLASS_NAMES[classId]), element('small', 'class-role', identity[classId].role)); gallery.append(card);
+      card.append(this.stage(classId,sexSelect.value as CharacterSex,look).stage, element('strong', 'class-name', CLASS_NAMES[classId]), element('small', 'class-role', identity[classId].role)); gallery.append(card);
     }
     for (const {name,role:subtitle} of Object.values(CLASS_REGISTRY).filter(c=>!c.playable)) {
       const card = button('', 'future-class', () => {}); card.className = 'class-display class-future'; card.disabled = true;
@@ -110,7 +115,8 @@ export class CharacterSelection {
     }
     const footer = element('div', 'creation-footer'), controls = element('div', 'selection-controls'); controls.append(sexLabel,label, create);
     const detail = element('div', 'selection-detail'); detail.append(info, replay);
-    footer.append(detail, controls); this.root.append(gallery, footer);
+    const customize=document.createElement('details');customize.className='creation-customization';const summary=document.createElement('summary');summary.textContent='EDITAR APARÊNCIA';customize.append(summary,appearanceControls(look,next=>{look=next;for(const p of this.previews)p.setAppearance(look);remember();}));
+    footer.append(detail, controls); this.root.append(gallery,customize,footer);
     const draft=this.context.draft;
     if(draft&&!this.occupied.includes(draft.classId)){
       input.value=draft.name;
@@ -132,12 +138,13 @@ export class CharacterSelection {
     const remove = button('EXCLUIR PERSONAGEM', 'delete-character', () => this.confirmDelete(selected, actions.remove, remove));
     remove.className = 'selection-delete';
     const tools = element('div', 'saved-display-actions'); tools.append(replay, remove);
+    const edit=button('EDITAR APARÊNCIA / VÍNCULO','edit-appearance',()=>{const hero=profiles.find(p=>p.id===selected);if(hero&&current)this.editPresentation(hero,current,edit,()=>show(selected));});tools.prepend(edit);
     const show = (id: string) => {
       const hero = profiles.find(h => h.id === id); if (!hero) return;
       selected = id; current?.destroy(); this.previews.length = 0;
       play.disabled=this.occupied.includes(hero.classId);
       play.textContent=play.disabled?'CLASSE OCUPADA':this.joiningRoom?'ENTRAR NA SALA →':'CONTINUAR JORNADA →';
-      const entry = this.stage(hero.classId,characterSex(hero.classId,hero.sex)); current = entry.preview; display.replaceChildren(entry.stage, details, tools, play);
+      const entry = this.stage(hero.classId,characterSex(hero.classId,hero.sex),appearance(hero.appearance),hero.companion); current = entry.preview; display.replaceChildren(entry.stage, details, tools, play);
       details.replaceChildren(element('h3', '', hero.name), element('p', '', CLASS_NAMES[hero.classId]), element('small', 'selection-kit', identity[hero.classId].kit));
       for (const b of Array.from(list.querySelectorAll<HTMLButtonElement>('button'))) b.setAttribute('aria-pressed', String(b.dataset.shell === `character-${id}`));
       current.play();
@@ -171,8 +178,28 @@ export class CharacterSelection {
     dialog.addEventListener('cancel', event => { event.preventDefault(); dismiss(); });
     dialog.showModal(); cancel.focus();
   }
-  get confirmingDeletion(): boolean { return this.deleteDialog?.open ?? false; }
+  private editPresentation(hero:CharacterProfile,preview:CharacterShowcase,trigger:HTMLButtonElement,saved:()=>void):void{
+    if(this.appearanceDialog)return;
+    let look=appearance(hero.appearance),species=hero.companion??'symbiont';
+    const dialog=document.createElement('dialog');dialog.className='character-delete-dialog character-appearance-dialog';dialog.setAttribute('aria-labelledby','appearance-title');
+    const title=element('h3','','Editar '+hero.name);title.id='appearance-title';
+    const status=element('p','shell-status','');status.setAttribute('role','status');
+    const stage=preview.canvas.closest<HTMLElement>('.character-stage'),parent=stage?.parentElement;
+    const restore=()=>{preview.setAppearance(appearance(hero.appearance));preview.setCompanion(hero.companion??'symbiont');if(stage&&parent?.isConnected)parent.prepend(stage);dialog.close();dialog.remove();this.appearanceDialog=undefined;this.dismissAppearance=undefined;if(trigger.isConnected)trigger.focus();};
+    this.dismissAppearance=restore;
+    dialog.append(title,appearanceControls(look,next=>{look=next;preview.setAppearance(next);}));
+    if(stage)dialog.insertBefore(stage,dialog.children[1]);
+    if(hero.classId==='xenobinder'){
+      const label=element('label','companion-choice','Companheiro ativo'),select=document.createElement('select');select.name='companion-species';
+      for(const[id,text]of Object.entries(PRESENTATION.companions)){const option=document.createElement('option');option.value=id;option.textContent=text;option.disabled=id==='hollow'&&!characterProfiles.canChooseHollow(hero.id);select.append(option);}
+      select.value=species;select.addEventListener('change',()=>{species=select.value as CompanionSpecies;preview.setCompanion(species);});label.append(select);dialog.append(label,element('p','appearance-note',characterProfiles.canChooseHollow(hero.id)?'Pesquisa da fauna concluída: você pode estabelecer o vínculo com um Hollow. Uma fera ativa; mesmo kit de comando e recuperação.':'Conclua e entregue a pesquisa de sobrevivência e fauna à Dra. Lia para liberar o vínculo com o Hollow. Uma fera ativa por vez.'));
+    }
+    const actions=element('div','delete-confirm-controls');actions.append(button('CANCELAR','cancel-appearance',restore),button('SALVAR','save-appearance',()=>{if(!characterProfiles.updatePresentation(hero.id,look,species)){status.textContent='Não foi possível salvar. Confira a pesquisa e o armazenamento do navegador.';return;}restore();saved();}));
+    dialog.append(status,actions);this.root.append(dialog);this.appearanceDialog=dialog;dialog.addEventListener('cancel',e=>{e.preventDefault();restore();});dialog.showModal();dialog.querySelector('select')?.focus();
+  }
+  get confirmingDeletion(): boolean { return !!(this.deleteDialog?.open||this.appearanceDialog?.open); }
   cancelDeletion(): boolean {
+    if(this.appearanceDialog){this.dismissAppearance?.();return true;}
     if (!this.deleteDialog) return false;
     this.deleteDialog.close(); this.deleteDialog.remove(); this.deleteDialog = undefined; return true;
   }

@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import {pixelEffect}from'./PixelFX';
 import { clamp, type Vec2 } from '../utils/math';
 
 type Burst = { image: Phaser.GameObjects.Image; at: number; scale: number };
@@ -35,6 +36,7 @@ export class SoterradoImpact {
     for(const burst of this.bursts) {
       const t=clamp((now-burst.at)/650,0,1);
       burst.image.setVisible(t<1).setDisplaySize((100+125*t)*burst.scale,(80+100*t)*burst.scale).setAlpha((1-t)*.9);
+      if(t<1)pixelEffect(burst.image,'ground-impact',t*.65,225*burst.scale,.65);
     }
   }
   clear():void { for(const burst of this.bursts){burst.at=-Infinity;burst.image.setVisible(false);} }

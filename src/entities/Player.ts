@@ -18,6 +18,7 @@ import { ModularTorso } from '../visual/ModularTorso';
 import { ASTRAL,HUNTER,XENOBINDER, type PlayableClass } from '../config/classes';
 import { CompleteActorArt } from '../visual/CompleteActorArt';
 import { completeKey } from '../visual/CompleteActorFrames';
+import {hasCompleteSource}from'../visual/CompleteActorSources';
 import { PlayerVitals } from '../visual/PlayerVitals';
 
 export type PlayerAnimationState = 'IDLE' | 'WALK' | 'ATTACK_WINDUP' | 'ATTACK_SWING' | 'ATTACK_RECOVERY' | 'DASH' | 'CHARGE' | 'CHARGE_RELEASE' | 'HURT' | 'DEAD';
@@ -96,7 +97,7 @@ export class Player {
     this.handAnchor = scene.add.container(0, 0, [this.weapon.view, glove]);
     this.bodyRig = scene.add.container(0, 0, [this.torso, this.supportUpperArm, this.supportArm, this.saberArm, this.handAnchor, this.supportGlove, this.hurtOverlay]);
     this.view = scene.add.container(x, y, [this.legsRig, this.bodyRig]).setDepth(y);
-    if(paintedPresentation&&classId==='warrior'&&scene.textures.exists(completeKey(classId,sex,'none'))){
+    if(paintedPresentation&&classId==='warrior'&&hasCompleteSource(scene,completeKey(classId,sex,'none'))){
       this.completeArt=new CompleteActorArt(scene,this.view,x,y,sex,classId);
     }else if (paintedPresentation && classId==='warrior') {
       this.paintedArt = new WarriorArt(this.torso,sex);
@@ -118,6 +119,7 @@ export class Player {
     if(this.modularTorso)this.paintedArms?.setProtection(this.modularTorso.look);
     this.weapon.setStyle(weaponStyle(slots.weapon));
   }
+  setCharacterAppearance(value?:unknown):void{this.completeArt?.setAppearance(value);}
 
   setWeaponLook(style:WeaponStyle):void {this.completeArt?.setWeaponLook(style);this.weapon.setStyle(style);}
   setEquipmentLook(look:EquipmentLook):void {this.completeArt?.setEquipmentLook(look);this.modularTorso?.setLook(look);this.paintedArms?.setProtection(look);}

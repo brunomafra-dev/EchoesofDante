@@ -1,0 +1,146 @@
+{
+  "passed": true,
+  "base": "http://localhost:5185",
+  "checks": [
+    "Native guest invitation preserves lab isolation and custom appearance; guest renders the host Hollow with the current source, protocol 16 additive presentation:1.",
+    "Guest Q produces the same new electric field on host and visitor through the existing authoritative snapshot.",
+    "Guest native movement continues with the new complete actor and personal appearance."
+  ],
+  "errors": [],
+  "fixture": "Host character/coop campaign and completed recon/survival research are explicit isolated DEV fixtures, no bosses defeated. Guest creation/invite, inputs and combat fields are native. Two independent browsers, not two human players.",
+  "profiles": [
+    {
+      "characterId": "664da200-5c20-4de1-ad59-5964dc4d98d0",
+      "appearance": {
+        "skin": "warm",
+        "hair": "copper",
+        "head": "practical"
+      },
+      "companion": "hollow",
+      "name": "Vinculo anfitriao",
+      "classId": "xenobinder",
+      "sex": "male",
+      "bagFree": 24,
+      "potions": 3,
+      "equipment": {},
+      "build": {
+        "xp": 0,
+        "abilityUpgrades": {
+          "saberArc": 0,
+          "saberReach": 0,
+          "dashCooldown": 0,
+          "dashDuration": 0,
+          "chargeWidth": 0,
+          "chargePower": 0
+        },
+        "bossRewards": []
+      }
+    },
+    {
+      "characterId": "655b8073-9776-4979-bd1b-c29aea153523",
+      "appearance": {
+        "skin": "deep",
+        "hair": "silver",
+        "head": "stellar"
+      },
+      "companion": "symbiont",
+      "name": "Astral convidada",
+      "classId": "astral",
+      "sex": "female",
+      "bagFree": 24,
+      "potions": 3,
+      "equipment": {},
+      "build": {
+        "xp": 0,
+        "abilityUpgrades": {
+          "saberArc": 0,
+          "saberReach": 0,
+          "dashCooldown": 0,
+          "dashDuration": 0,
+          "chargeWidth": 0,
+          "chargePower": 0
+        },
+        "bossRewards": []
+      }
+    }
+  ],
+  "fields": [
+    {
+      "ready": true,
+      "area": "base",
+      "position": {
+        "x": 1040,
+        "y": 800
+      },
+      "actor": {
+        "identity": "xenobinder",
+        "sex": "male",
+        "frame": 20,
+        "bakes": 2,
+        "width": 128,
+        "height": 128
+      },
+      "sources": {
+        "inputs": 24,
+        "decodedBytes": 233570304,
+        "storage": "CPU baking inputs; no source texture in the Phaser renderer"
+      },
+      "companion": {
+        "species": "hollow",
+        "bond": 35,
+        "active": true,
+        "state": "FOLLOW",
+        "owner": {
+          "x": 1040,
+          "y": 800
+        },
+        "pet": {
+          "x": 1084.7877667641405,
+          "y": 851.7750626425297,
+          "frame": 0,
+          "flip": true
+        },
+        "linked": false,
+        "shots": [],
+        "heals": []
+      },
+      "effects": [
+        {
+          "key": "pixelfx-energy-field",
+          "frame": 7,
+          "x": 1016.7252463351977,
+          "y": 527.9944274217937
+        }
+      ]
+    },
+    {
+      "ready": true,
+      "area": "base",
+      "position": {
+        "x": 1120,
+        "y": 800
+      },
+      "actor": {
+        "identity": "astral",
+        "sex": "female",
+        "frame": 20,
+        "bakes": 2,
+        "width": 128,
+        "height": 128
+      },
+      "sources": {
+        "inputs": 24,
+        "decodedBytes": 233570304,
+        "storage": "CPU baking inputs; no source texture in the Phaser renderer"
+      },
+      "effects": [
+        {
+          "key": "pixelfx-energy-field",
+          "frame": 6,
+          "x": 1016.7252463351977,
+          "y": 527.9944274217937
+        }
+      ]
+    }
+  ]
+}

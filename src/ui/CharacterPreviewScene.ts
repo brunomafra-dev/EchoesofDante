@@ -1,6 +1,10 @@
 import Phaser from 'phaser';
+import {preloadPixelFX}from'../visual/PixelFX';
+import {preloadCharacterAppearance}from'../visual/CharacterAppearance';
+import {appearance,type CharacterAppearance,type CompanionSpecies}from'../config/characterPresentation';
 import { CompleteActorArt } from '../visual/CompleteActorArt';
-import { COMPLETE_FRAME,completeAsset,completeKey } from '../visual/CompleteActorFrames';
+import { completeAsset,completeKey } from '../visual/CompleteActorFrames';
+import {preloadCompleteSource,completeSource,aliasCompleteSource,hasCompleteSource}from'../visual/CompleteActorSources';
 import { SaberAttack } from '../combat/Attack';
 import { KineticCharge } from '../combat/KineticCharge';
 import { HunterCombat } from '../combat/HunterCombat';
@@ -24,11 +28,15 @@ export class CharacterPreviewScene extends Phaser.Scene {
  private wave!:Phaser.GameObjects.Ellipse;
  private started=0;private cueMask=0;private element:AstralElement='energy';
  private readonly owner={x:400,y:400,position:{x:400,y:400},health:{current:65,max:100},isDead:false};
- constructor(readonly identity:PlayableClass,readonly sex:CharacterSex,private status:(phase:string,caption:string,frame:number)=>void,private loaded:()=>void){super('Showcase');}
+ constructor(readonly identity:PlayableClass,readonly sex:CharacterSex,private status:(phase:string,caption:string,frame:number)=>void,private loaded:()=>void,private look:CharacterAppearance=appearance(),private species:CompanionSpecies='symbiont'){super('Showcase');}
  preload():void{
+  preloadPixelFX(this);
+  preloadCharacterAppearance(this,this.sex,this.identity);
   const base=import.meta.env.BASE_URL+'assets/visual/';
-  this.load.spritesheet(completeKey(this.identity,this.sex,'none'),completeAsset(this.identity,this.sex,'none'),{frameWidth:COMPLETE_FRAME,frameHeight:COMPLETE_FRAME});
+  preloadCompleteSource(this,completeKey(this.identity,this.sex,'none'),completeAsset(this.identity,this.sex,'none'));
+  if(this.identity==='hunter')preloadCompleteSource(this,completeKey('hunter',this.sex,'basic'),completeAsset('hunter',this.sex,'basic'));
   for(const key of ['hollow-body','hollow-forelimbs','hollow-rear-limbs'])this.load.image(key,`${base}characters/${key}.png`);
+  this.load.spritesheet('finish-hollow',`${import.meta.env.BASE_URL}assets/experiments/forest-finish/hollow-v3.webp`,{frameWidth:256,frameHeight:256});
   if(this.identity==='warrior')this.load.image('warrior-starter-weapon',base+'characters/warrior-starter-weapon.png');
   if(this.identity==='astral')for(const element of ASTRAL_ELEMENTS)for(const [kind,w,h]of [['bolt',128,96],['ground',128,128],['field',192,192]]as const)
    this.load.spritesheet(`astral-${element}-${kind}`,`${base}astral/astral-${element}-${kind}-v2.png`,{frameWidth:w,frameHeight:h});
@@ -39,20 +47,28 @@ export class CharacterPreviewScene extends Phaser.Scene {
   this.load.on('loaderror',()=>this.status('error','PRÉVIA INDISPONÍVEL',0));
  }
  create():void{
-  const image=this.textures.get(completeKey(this.identity,this.sex,'none')).getSourceImage() as HTMLImageElement;
+  const image=completeSource(this,completeKey(this.identity,this.sex,'none'));
   // Initial outfit only: aliases share one source, never load unused wardrobes.
-  for(const style of ['basic','reinforced']as const)this.textures.addSpriteSheet(completeKey(this.identity,this.sex,style),image,{frameWidth:192,frameHeight:192});
+  for(const style of ['basic','reinforced']as const)if(!hasCompleteSource(this,completeKey(this.identity,this.sex,style)))aliasCompleteSource(this,completeKey(this.identity,this.sex,style),image);
   this.add.ellipse(400,439,57,16,0x020e14,.4).setDepth(397);
   this.actor=new CompleteActorArt(this,this.add.container(400,400).setDepth(400),400,400,this.sex,this.identity);
+  this.actor.setAppearance(this.look);
   const existing=new Set(this.children.list);
-  this.target=new HollowCrawler(this,520,400,undefined,true);this.target.health.max=1000;this.target.health.current=1000;
+  this.target=new HollowCrawler(this,520,400,undefined,'forest');this.target.health.max=1000;this.target.health.current=1000;
   this.targetParts=this.children.list.filter(p=>!existing.has(p)) as unknown as Phaser.GameObjects.Components.Visible[];
   this.wave=this.add.ellipse(0,0,20,120,0x5fe6d8,.6).setVisible(false).setDepth(14999);
   if(this.identity==='warrior'){this.saber=new EnergySaber(this,true);this.saber.view.setVisible(false);}
   if(this.identity==='hunter')this.hunter=new HunterCombat(this,()=>0,a=>this.actor.muzzle(a));
   if(this.identity==='astral')this.astral=new AstralCombat(this,()=>0);
   if(this.identity==='xenobinder')this.xeno=new XenobinderCombat(this,()=>0,this.owner);
+  this.xeno?.setSpecies(this.species);
   this.ready=true;this.idle();this.loaded();
+ }
+ setAppearance(value:CharacterAppearance):void{this.look=appearance(value);if(this.ready){this.actor.setAppearance(this.look);this.game.loop.wake();this.game.events.once(Phaser.Core.Events.POST_RENDER,()=>{if(!this.running)this.game.loop.sleep();});}}
+ setCompanion(value:CompanionSpecies):void{this.species=value;this.xeno?.setSpecies(value);if(this.ready)this.idle();}
+ inspect(){
+  const target=this.target?.view.getByName('finish-whole-hollow')as Phaser.GameObjects.Image|undefined;
+  return{ready:this.ready,running:this.running,identity:this.identity,sex:this.sex,frame:this.actor?.body.frame.name,bakes:this.actor?.bakeCount,hollow:target?{texture:target.texture.key,frame:target.frame.name,rotation:this.target.view.rotation}:null,companion:this.xeno?.species,effects:this.children.list.filter(v=>v instanceof Phaser.GameObjects.Image&&v.visible&&v.alpha>.02&&v.texture.key.startsWith('pixelfx-')).map(v=>{const image=v as Phaser.GameObjects.Image;return{key:image.texture.key,frame:image.frame.name,x:image.x,y:image.y};})};
  }
  begin(element:AstralElement='energy'):void{
   if(!this.ready)return;this.running=true;this.started=this.time.now;this.cueMask=0;this.element=element;
@@ -61,7 +77,7 @@ export class CharacterPreviewScene extends Phaser.Scene {
   this.target.health.current=1000;this.target.isDead=false;for(const part of this.targetParts)part.setVisible(true);
   if(this.astral)this.astral.element=element;
   if(this.xeno){this.xeno.bond=XENOBINDER.bondMax;Object.assign(this.xeno.position,{x:355,y:426});}
-  this.cameras.main.setZoom(1.3).centerOn(448,380);this.game.loop.wake();
+  this.cameras.main.setZoom(1.05).centerOn(455,380);this.game.loop.wake();
  }
  idle():void{
   if(!this.ready)return;this.running=false;this.charge.stop();this.saber?.clearEffects();this.hunter?.clear();this.astral?.clear();this.xeno?.clear();this.wave.setVisible(false);
@@ -95,7 +111,7 @@ export class CharacterPreviewScene extends Phaser.Scene {
   this.hunter?.update(dt,this.owner,false,targets,[],{left:220,right:780,top:220,bottom:580},hit);
   this.astral?.update(now,dt,targets,[],{left:220,right:535,top:220,bottom:580},hit,heavy.phase==='CHARGING');
   this.xeno?.update(now,dt,this.owner,aim,false,targets,[],undefined,hit,[this.owner],heavy.phase==='CHARGING');
-  this.target.update(now,dt,this.target.position,true,[],()=>{});this.target.view.setRotation(Math.PI);
+  this.target.update(now,dt,this.target.position,true,[],()=>{});this.target.view.setRotation(0);
   const firing=this.hunter?now<this.hunter.firedUntil:this.astral?now<this.astral.firedUntil:this.xeno?now<this.xeno.firedUntil:pose.phase!=='READY';
   this.actor.update(400,400,aim,firing,false,heavy,this.element);
   const phase=heavy.phase==='CHARGING'?'charge':heavy.phase==='RELEASE'||elapsed>=2300?'release':firing?'attack':'idle';

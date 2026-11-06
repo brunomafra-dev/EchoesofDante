@@ -8,6 +8,8 @@ import {campaignCredentials,canJoinCampaign,crewIdentity,campaignState,campaignR
 
 const areas = new Set(['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest','cinder','obsidian','caldera','springs','terraces']);
 const connections = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid','springs'], springs:['valley','terraces'],terraces:['springs'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave','cinder'], cinder:['icenest','obsidian'], obsidian:['cinder','caldera'], caldera: ['obsidian'] };
+const presentation=JSON.parse(readFileSync(new URL('../src/config/presentation-catalog.json',import.meta.url),'utf8'));
+const cleanAppearance=raw=>Object.fromEntries(['skin','hair','head'].map(key=>[key,typeof raw?.[key]==='string'&&Object.hasOwn(presentation[key],raw[key])?raw[key]:'original']));
 const equipmentIds=new Set(Object.keys(catalogue));
 const missionIds=new Set(['recon','survival','signal','beyond','water-source','safe-route','shelter',...permanence.ids,...regional.map(m=>m.id)]);
 const missionEvidence=new Set(['clearing','roots','water','biology','echo1','echo2','echo3','passage','first-echo','warden','spring','route-west','route-east','soil','site','shelter-built','after-soterrado','after-vesper',...permanence.evidence,...regional.flatMap(m=>m.sites.map((_,i)=>m.id+'-'+(i+1)))]);
@@ -41,7 +43,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
     ws.send(JSON.stringify(message));
   };
   const profile = p => p && ['warrior', 'hunter','astral','xenobinder'].includes(p.classId) && typeof p.name === 'string' && p.name.trim()
-    ? { characterId:p.characterId,name: p.name.trim().slice(0, 24), classId: p.classId, sex: p.sex === 'male' || p.sex === 'female' ? p.sex : p.classId === 'hunter' ? 'female' : 'male', bagFree:bagFree(p.bagFree),potions:Number.isInteger(p.potions)?Math.max(0,Math.min(20,p.potions)):0,equipment:cleanEquipment(p.equipment),build:cleanBuild(p.build) } : null;
+    ? { characterId:p.characterId,appearance:cleanAppearance(p.appearance),companion:p.classId==='xenobinder'&&p.companion==='hollow'?'hollow':'symbiont',name: p.name.trim().slice(0, 24), classId: p.classId, sex: p.sex === 'male' || p.sex === 'female' ? p.sex : p.classId === 'hunter' ? 'female' : 'male', bagFree:bagFree(p.bagFree),potions:Number.isInteger(p.potions)?Math.max(0,Math.min(20,p.potions)):0,equipment:cleanEquipment(p.equipment),build:cleanBuild(p.build) } : null;
   const seat = (ws, p, id = randomBytes(8).toString('hex')) => ({ id, ws, profile: p, ready:false, token: randomBytes(24).toString('hex'), receipt: randomBytes(16).toString('hex'), total: 0, bosses:new Set(), items:new Map(),resources:{credits:0,materials:[0,0,0],used:0},timer: undefined });
   const members = room => [room.host, ...room.guests.values()];
   const roster = room => members(room).map(m => ({id:m.id, profile:m.profile, connected:!!m.ws}));
@@ -74,7 +76,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
     member.timer.unref();
   }
   function joined(room, member) {
-    send(member.ws, { type: 'joined', protocol:16, outposts:1, signals:1, circuits:1, wind:1, dunes:1, buried:1, frost:1, icecave:1, chatHistory:room.chat, campaign:campaignState(room),id:member.id, role:member===room.host?'host':'guest', code: room.code, token: member.token, epoch: room.epoch,
+    send(member.ws, { type: 'joined', protocol:16,presentation:1, outposts:1, signals:1, circuits:1, wind:1, dunes:1, buried:1, frost:1, icecave:1, chatHistory:room.chat, campaign:campaignState(room),id:member.id, role:member===room.host?'host':'guest', code: room.code, token: member.token, epoch: room.epoch,
       area: room.area, members:roster(room), paused: room.paused === true, receipt: member.receipt, total: member.total, bosses:[...member.bosses], items:[...member.items.values()],resources:member.resources });
     notify(room);
   }
@@ -94,7 +96,7 @@ export function attachCoop(server, { path = '/coop' } = {}) {
       if(['input','equipment','world','service-request','pause','travel'].includes(m.type))ws.messageTypes[m.type]=(ws.messageTypes[m.type]??0)+1;
       if(m.type==='inspect') {
         const room=rooms.get(String(m.code).replace(/\s/g,'').toUpperCase());
-        return send(ws,room?{type:'lobby',protocol:16,outposts:1, signals:1, circuits:1, wind:1, dunes:1, buried:1, frost:1, icecave:1,campaign:campaignState(room),members:roster(room),area:room.area}:{type:'error',message:'Sala não encontrada. Peça um novo convite.'});
+        return send(ws,room?{type:'lobby',protocol:16,presentation:1,outposts:1, signals:1, circuits:1, wind:1, dunes:1, buried:1, frost:1, icecave:1,campaign:campaignState(room),members:roster(room),area:room.area}:{type:'error',message:'Sala não encontrada. Peça um novo convite.'});
       }
       if (m.type === 'resume') {
         if (typeof m.token !== 'string' || !/^[a-f0-9]{48}$/.test(m.token)) return send(ws, { type: 'error', message: 'Credencial de reconexão inválida.' });
@@ -230,6 +232,6 @@ export function attachCoop(server, { path = '/coop' } = {}) {
   server.once('close', close);
   return {
     close,
-    status: () => ({ service: 'Dante regional co-op', protocol: 16, outposts:1, signals:1, circuits:1, wind:1, dunes:1, buried:1, frost:1, icecave:1, missions:true, chat:true, capacity:4, uniqueClasses:true,fixedCampaigns:true, revision:process.env.RENDER_GIT_COMMIT??'local', campaign: true, rooms: rooms.size, players: clients.size }),
+    status: () => ({ service: 'Dante regional co-op', protocol: 16, presentation:1, outposts:1, signals:1, circuits:1, wind:1, dunes:1, buried:1, frost:1, icecave:1, missions:true, chat:true, capacity:4, uniqueClasses:true,fixedCampaigns:true, revision:process.env.RENDER_GIT_COMMIT??'local', campaign: true, rooms: rooms.size, players: clients.size }),
   };
 }

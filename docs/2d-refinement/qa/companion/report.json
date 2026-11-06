@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "base": "http://localhost:5185",
+  "checks": [
+    "Second species is locked before research; explicit isolated research unlocks it. Cancelling changes neither profile nor journey.",
+    "Save changes only presentation; world and reload show one active Hollow companion, with its own source poses.",
+    "Both species preserve actual assist/command damage and bounded recovery; Hollow maps only the six existing poses. DEV targets/ticks are explicit combat fixtures."
+  ],
+  "errors": [],
+  "fixture": "Explicit native lab button simulates recon/survival research completed. Signal remains pending; no boss victory simulated.",
+  "combat": [
+    {
+      "species": "symbiont",
+      "assist": {
+        "hp": 464,
+        "bond": 53
+      },
+      "commandHp": 400,
+      "heal": 64,
+      "texture": "dante-symbiont-motion",
+      "frames": [
+        5,
+        6,
+        2,
+        1
+      ]
+    },
+    {
+      "species": "hollow",
+      "assist": {
+        "hp": 464,
+        "bond": 53
+      },
+      "commandHp": 400,
+      "heal": 64,
+      "texture": "finish-hollow",
+      "frames": [
+        3,
+        0,
+        2,
+        1
+      ]
+    }
+  ]
+}

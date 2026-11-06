@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "base": "http://localhost:5185",
+  "cases": [
+    {
+      "checked": 288,
+      "identity": "warrior",
+      "sex": "male"
+    },
+    {
+      "checked": 288,
+      "identity": "warrior",
+      "sex": "female"
+    },
+    {
+      "checked": 256,
+      "identity": "hunter",
+      "sex": "male"
+    },
+    {
+      "checked": 256,
+      "identity": "hunter",
+      "sex": "female"
+    },
+    {
+      "checked": 256,
+      "identity": "astral",
+      "sex": "male"
+    },
+    {
+      "checked": 256,
+      "identity": "astral",
+      "sex": "female"
+    },
+    {
+      "checked": 256,
+      "identity": "xenobinder",
+      "sex": "male"
+    },
+    {
+      "checked": 256,
+      "identity": "xenobinder",
+      "sex": "female"
+    }
+  ],
+  "errors": [],
+  "method": "DEV equipment/pose sampling of actual baked atlases, local/remote pixel equality, opaque margins and connected whole figures. Native controls are covered separately."
+}

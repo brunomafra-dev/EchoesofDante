@@ -94,6 +94,7 @@ export class PartyExpedition {
    if((!b||p.x>b.left+18&&p.x<b.right-18&&p.y>b.top+18&&p.y<b.bottom-18)&&(!b?.walkable||fitsGround(p,18,b.walkable,39))&&a.obstacles.every(o=>Math.hypot(o.x-p.x,o.y-p.y)>o.radius+20)&&this.players.every(actor=>Math.hypot(actor.position.x-p.x,actor.position.y-p.y)>40))return p;
   }return{...a.player.position};
  }
+ inspectPresentation(){return[...this.actors.values(),...this.playerMirrors.values()].map(actor=>({classId:actor.profile.classId,sex:actor.player.sex,appearance:actor.profile.appearance,companion:actor.xeno?{species:actor.xeno.species,texture:actor.xeno.body.texture.key,frame:actor.xeno.body.frame.name}:undefined}));}
  updateHost(now:number,dt:number):void{
   if(room.role!=='host'){
    if(this.balanced){for(const e of this.access().enemies){const base=this.resilience.get(e);if(base!==undefined)this.resizeHealth(e,base);}this.balanced=false;this.resilience=new WeakMap();}
@@ -109,7 +110,7 @@ export class PartyExpedition {
   for(const member of room.guests){
    let actor=this.actors.get(member.id);
    if(!actor){actor=new PartyActor(this.scene,member.profile,this.safePosition(),a.baseMaxHp);const state=room.state(member.id);if(state.travelHp!==undefined){actor.player.health.current=Math.max(1,Math.min(state.travelHp,actor.player.maxHp));state.travelHp=undefined;}this.actors.set(member.id,actor);}
-   actor.profile.equipment=member.profile.equipment;actor.profile.build=member.profile.build;
+   actor.profile.equipment=member.profile.equipment;actor.profile.build=member.profile.build;actor.profile.appearance=member.profile.appearance;actor.profile.companion=member.profile.companion;
    const state=room.state(member.id),age=performance.now()-state.inputAt;
    let input=member.connected&&age<500&&!state.input.cancel?{...state.input,attack:state.input.attack||state.attackTap}:{...NO_INPUT,aim:actor.player.rotation,cancel:true};
    // A short jitter must not release/fire a held skill. Movement stays stopped;
@@ -206,7 +207,7 @@ export class PartyExpedition {
   if(freshWorld){if(p.dash&&!previousPose?.dash)a.cue('dash');if(p.phase==='CHARGING'&&previousPose?.phase!=='CHARGING')a.cue('charge');if(p.phase==='RELEASE'&&previousPose?.phase!=='RELEASE')a.cue('release');if(previousPose&&p.hp<previousPose.hp)a.cue('hurt');}
   const otherIds=new Set(room.members.filter(m=>m.id!==room.id).map(m=>m.id));
   for(const [id,mirror]of this.playerMirrors)if(!otherIds.has(id)){mirror.destroy();this.playerMirrors.delete(id);}
-  for(const member of room.members){if(member.id===room.id)continue;const pose=world.players[member.id];if(!pose)continue;let mirror=this.playerMirrors.get(member.id);if(!mirror){mirror=new PartyActor(this.scene,member.profile,pose,pose.maxHp);this.playerMirrors.set(member.id,mirror);}mirror.profile.equipment=member.profile.equipment;mirror.render(pose,now,dt);}
+  for(const member of room.members){if(member.id===room.id)continue;const pose=world.players[member.id];if(!pose)continue;let mirror=this.playerMirrors.get(member.id);if(!mirror){mirror=new PartyActor(this.scene,member.profile,pose,pose.maxHp);this.playerMirrors.set(member.id,mirror);}mirror.profile.equipment=member.profile.equipment;mirror.profile.appearance=member.profile.appearance;mirror.profile.companion=member.profile.companion;mirror.render(pose,now,dt);}
   this.visitorWave.setVisible(!!p.wave);if(p.wave)this.visitorWave.setPosition(p.wave.x,p.wave.y).setRotation(p.wave.rotation).setDisplaySize(p.wave.width,p.wave.height);
   a.hud.setHunterMomentum(p.momentum??0);
   a.hud.update(p.hp,p.maxHp,readiness,p.chargeReady??1,p.phase as 'READY'|'CHARGING'|'RELEASE',p.level,p.dashCooldown??a.player.dashCooldown,p.chargeCooldown);

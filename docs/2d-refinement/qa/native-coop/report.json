@@ -1,0 +1,129 @@
+{
+  "passed": true,
+  "base": "http://localhost:5193",
+  "checks": [
+    "Native custom characters form a two-player campaign through a reserved invitation.",
+    "Original team continues after native menu/save/relaunch; visitor renders the newly chosen Hollow, with no boss victory or identity replacement.",
+    "Native guest Q displays the new electric spell on both compiled/public clients."
+  ],
+  "errors": [],
+  "relay": [
+    {
+      "role": "host",
+      "protocol": 16,
+      "presentation": 1
+    },
+    {
+      "role": "guest",
+      "protocol": 16,
+      "presentation": 1
+    },
+    {
+      "role": "host",
+      "protocol": 16,
+      "presentation": 1
+    },
+    {
+      "role": "guest",
+      "protocol": 16,
+      "presentation": 1
+    }
+  ],
+  "fixture": "Native two-browser creation, invitations and continuation. The explicit reserved lab button completes only recon/survival research; no boss is defeated. No DEV exports or direct combat commands.",
+  "research": {
+    "completed": [
+      "recon",
+      "survival"
+    ],
+    "bosses": [],
+    "warden": false
+  },
+  "states": [
+    {
+      "actor": {
+        "identity": "xenobinder",
+        "sex": "male",
+        "frame": 20,
+        "bakes": 2,
+        "width": 128,
+        "height": 128
+      },
+      "peers": [
+        {
+          "classId": "astral",
+          "sex": "female",
+          "appearance": {
+            "skin": "deep",
+            "hair": "silver",
+            "head": "original"
+          }
+        }
+      ],
+      "sources": {
+        "inputs": 24,
+        "decodedBytes": 233570304,
+        "storage": "CPU baking inputs; no source texture in the Phaser renderer"
+      },
+      "effects": [
+        {
+          "key": "pixelfx-energy-ground",
+          "frame": 10,
+          "x": 1001.6282051282058,
+          "y": 527.9076923076937
+        },
+        {
+          "key": "pixelfx-energy-field",
+          "frame": 10,
+          "x": 1001.6282051282058,
+          "y": 527.9076923076937
+        }
+      ],
+      "companion": "hollow"
+    },
+    {
+      "actor": {
+        "identity": "astral",
+        "sex": "female",
+        "frame": 20,
+        "bakes": 2,
+        "width": 128,
+        "height": 128
+      },
+      "peers": [
+        {
+          "classId": "xenobinder",
+          "sex": "male",
+          "appearance": {
+            "skin": "warm",
+            "hair": "copper",
+            "head": "original"
+          },
+          "companion": {
+            "species": "hollow",
+            "texture": "finish-hollow",
+            "frame": 0
+          }
+        }
+      ],
+      "sources": {
+        "inputs": 24,
+        "decodedBytes": 233570304,
+        "storage": "CPU baking inputs; no source texture in the Phaser renderer"
+      },
+      "effects": [
+        {
+          "key": "pixelfx-energy-ground",
+          "frame": 10,
+          "x": 1001.6282051282058,
+          "y": 527.9076923076937
+        },
+        {
+          "key": "pixelfx-energy-field",
+          "frame": 10,
+          "x": 1001.6282051282058,
+          "y": 527.9076923076937
+        }
+      ]
+    }
+  ]
+}

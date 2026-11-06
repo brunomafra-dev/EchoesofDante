@@ -1,0 +1,110 @@
+{
+  "energy-field": {
+    "width": 145,
+    "height": 160,
+    "origin": [
+      0.5,
+      0.8636363636363636
+    ],
+    "frames": 16,
+    "duration": 1.35,
+    "bytes": 171939,
+    "sha256": "a457805f41ec95b356caa973cef84d2e69d5a09533888a1b47644125f95fe644"
+  },
+  "energy-ground": {
+    "width": 160,
+    "height": 87,
+    "origin": [
+      0.5,
+      0.7948717948717948
+    ],
+    "frames": 16,
+    "duration": 1.35,
+    "bytes": 88417,
+    "sha256": "28b8bf19bc649f95210d0e8f67aa746d5451bfb6e255b400b4743123abaf0c08"
+  },
+  "fire-field": {
+    "width": 160,
+    "height": 91,
+    "origin": [
+      0.5,
+      0.71875
+    ],
+    "frames": 16,
+    "duration": 3,
+    "bytes": 152310,
+    "sha256": "de79c04d42f11caf8d2c62d7eddd65072de5c191f2e52ec0f8c8ab70eba5c0bd"
+  },
+  "water-ground": {
+    "width": 128,
+    "height": 84,
+    "origin": [
+      0.5,
+      0.5
+    ],
+    "frames": 16,
+    "duration": 2.5,
+    "bytes": 136012,
+    "sha256": "0aab3402cb2ce003601381ef41ca4aba844a40be57d7bae53849f0ecf58690ee"
+  },
+  "water-field": {
+    "width": 160,
+    "height": 91,
+    "origin": [
+      0.5,
+      0.78
+    ],
+    "frames": 16,
+    "duration": 1.15,
+    "bytes": 137667,
+    "sha256": "75dfa447e53ee8d6e8e0793b771be65e335b8e40285aae4c1ef5f3f6e8a4be27"
+  },
+  "earth-field": {
+    "width": 160,
+    "height": 88,
+    "origin": [
+      0.5,
+      0.88
+    ],
+    "frames": 16,
+    "duration": 0.85,
+    "bytes": 99175,
+    "sha256": "25631c94f154a2f2b303c971c54ded48e882b48f4f11aa471fcc3b2597131c50"
+  },
+  "frost-shatter": {
+    "width": 160,
+    "height": 80,
+    "origin": [
+      0.30357142857142855,
+      0.8035714285714286
+    ],
+    "frames": 16,
+    "duration": 0.65,
+    "bytes": 77509,
+    "sha256": "93c4d9d35402a720bafec292f76b4f4f18ee862967fc557f6e815c16ebe17dee"
+  },
+  "ground-impact": {
+    "width": 160,
+    "height": 116,
+    "origin": [
+      0.5,
+      0.7884615384615384
+    ],
+    "frames": 16,
+    "duration": 0.65,
+    "bytes": 163227,
+    "sha256": "507db5630e8138a41ddd5675352977005de452cea2d0d7cf349d6b563ddaaa79"
+  },
+  "hit-spark": {
+    "width": 136,
+    "height": 80,
+    "origin": [
+      0.3235294117647059,
+      0.8
+    ],
+    "frames": 16,
+    "duration": 0.18,
+    "bytes": 21248,
+    "sha256": "b51b3613d3abdf8b76aef7ce62ceef8e055395f0310f7161174fc1c6b264a005"
+  }
+}

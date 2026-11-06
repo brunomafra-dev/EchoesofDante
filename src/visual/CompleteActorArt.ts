@@ -3,13 +3,20 @@ import { equipmentLook, weaponStyle, type CharacterSex, type EquipmentLook, type
 import { equipmentAppearance, type EquipmentSnapshot } from '../config/equipment';
 import { ASTRAL,ELEMENT_COLORS,XENOBINDER,type AstralElement,type PlayableClass } from '../config/classes';
 import type { KineticPose } from '../combat/KineticCharge';
-import { COMPLETE_DISPLAY,COMPLETE_FEET,COMPLETE_FRAME,COMPLETE_STYLES,completeAsset,completeFrameCount,completeFrame,completeKey,completeMuzzle,composeCompleteAtlas,stableCompleteDirection } from './CompleteActorFrames';
+import {preloadPixelFX}from'./PixelFX';
+import {preloadCharacterAppearance,applyCharacterAppearance}from'./CharacterAppearance';
+import {appearance,type CharacterAppearance}from'../config/characterPresentation';
+import {preloadCompleteSource,completeSource}from'./CompleteActorSources';
+import { COMPLETE_DISPLAY,COMPLETE_FEET,COMPLETE_FRAME,COMPLETE_COLUMNS,COMPLETE_STYLES,completeAsset,completeFrameCount,completeFrame,completeKey,completeMuzzle,composeCompleteAtlas,stableCompleteDirection } from './CompleteActorFrames';
 
 let serial=0;
-export function preloadCompleteActors(scene:Phaser.Scene):void {
- for(const cls of ['warrior','hunter','astral','xenobinder'] as const)for(const sex of ['male','female'])for(const style of COMPLETE_STYLES){
+export function preloadCompleteActors(scene:Phaser.Scene,cast?:readonly {classId:PlayableClass;sex:CharacterSex}[]):void {
+ preloadPixelFX(scene);
+ for(const cls of ['warrior','hunter','astral','xenobinder'] as const)for(const sex of ['male','female']as const)for(const style of COMPLETE_STYLES){
+  if(cast&&!cast.some(actor=>actor.classId===cls&&actor.sex===sex))continue;
+  if(style==='none')preloadCharacterAppearance(scene,sex,cls);
   const key=completeKey(cls,sex,style);
-  if(!scene.textures.exists(key))scene.load.spritesheet(key,completeAsset(cls,sex,style),{frameWidth:COMPLETE_FRAME,frameHeight:COMPLETE_FRAME});
+  preloadCompleteSource(scene,key,completeAsset(cls,sex,style));
  }
  // Existing ability/pet assets; the retired articulated wardrobes are not loaded.
  for(const element of ['energy','fire','water','earth'])for(const [kind,width,height] of [['ground',128,128],['field',192,192],['bolt',128,96]] as const){
@@ -26,6 +33,7 @@ export class CompleteActorArt {
  private previous:{x:number;y:number};private travel=0;
  private walking=false;private facing?:number;
  private look=equipmentLook();private style:WeaponStyle='starter';private signature='';
+ private appearance:CharacterAppearance=appearance();
  private readonly texture:Phaser.Textures.CanvasTexture;
  private readonly guide:Phaser.GameObjects.Graphics;
  private guideVisible=false;private hurtUntil=0;
@@ -35,8 +43,8 @@ export class CompleteActorArt {
   view.list.forEach(part=>(part as unknown as Phaser.GameObjects.Components.Visible).setVisible(false));
   const key=`complete-dressed-${identity}-${sex}-${++serial}`;
   const count=completeFrameCount(identity);
-  this.texture=scene.textures.createCanvas(key,COMPLETE_FRAME*4,COMPLETE_FRAME*Math.ceil(count/4))!;
-  for(let f=0;f<count;f++)this.texture.add(f,0,f%4*COMPLETE_FRAME,Math.floor(f/4)*COMPLETE_FRAME,COMPLETE_FRAME,COMPLETE_FRAME);
+  this.texture=scene.textures.createCanvas(key,COMPLETE_FRAME*COMPLETE_COLUMNS,COMPLETE_FRAME*Math.ceil(count/COMPLETE_COLUMNS))!;
+  for(let f=0;f<count;f++)this.texture.add(f,0,f%COMPLETE_COLUMNS*COMPLETE_FRAME,Math.floor(f/COMPLETE_COLUMNS)*COMPLETE_FRAME,COMPLETE_FRAME,COMPLETE_FRAME);
   this.body=scene.add.image(0,39,key,0).setOrigin(.5,COMPLETE_FEET/COMPLETE_FRAME).setDisplaySize(COMPLETE_DISPLAY,COMPLETE_DISPLAY);
   this.guide=scene.add.graphics().setVisible(false);view.add([this.body,this.guide]);view.setData('completeActor',this);
   this.body.once(Phaser.GameObjects.Events.DESTROY,()=>{if(scene.textures.exists(key))scene.textures.remove(key);});
@@ -45,10 +53,11 @@ export class CompleteActorArt {
  setEquipment(slots:EquipmentSnapshot['slots']):void{this.look=equipmentAppearance(slots);this.style=weaponStyle(slots.weapon);this.bake();}
  setEquipmentLook(look:EquipmentLook):void{this.look={...look};this.bake();}
  setWeaponLook(style:WeaponStyle):void{this.style=style;this.bake();}
+ setAppearance(value?:unknown):void{this.appearance=appearance(value);this.bake();}
  private bake():void{
-  const signature=JSON.stringify([this.look,this.style]);if(signature===this.signature)return;this.signature=signature;
-  const sources=Object.fromEntries(COMPLETE_STYLES.map(style=>[style,this.scene.textures.get(completeKey(this.identity,this.sex,style)).getSourceImage()])) as Record<typeof COMPLETE_STYLES[number],HTMLImageElement>;
-  composeCompleteAtlas(this.texture.context,sources,this.look,this.style,this.identity,this.sex);this.texture.refresh();this.bakeCount++;
+  const signature=JSON.stringify([this.look,this.style,this.appearance]);if(signature===this.signature)return;this.signature=signature;
+  const sources=Object.fromEntries(COMPLETE_STYLES.map(style=>[style,completeSource(this.scene,completeKey(this.identity,this.sex,style))])) as Record<typeof COMPLETE_STYLES[number],CanvasImageSource>;
+  composeCompleteAtlas(this.texture.context,sources,this.look,this.style,this.identity,this.sex);applyCharacterAppearance(this.scene,this.texture.context,this.identity,this.sex,this.look,this.appearance);this.texture.refresh();this.bakeCount++;
  }
  muzzle(aim:number):{x:number;y:number}{return completeMuzzle(this.identity,aim,this.sex,this.look.torso);}
  projectileOffset(aim:number):{x:number;y:number}{const p=this.muzzle(aim);return{x:p.x-Math.cos(aim)*ASTRAL.muzzleDistance,y:p.y-Math.sin(aim)*ASTRAL.muzzleDistance};}
@@ -56,14 +65,14 @@ export class CompleteActorArt {
  update(x:number,y:number,aim:number,firing:boolean,dash=false,heavy:Pick<KineticPose,'phase'|'level'>={phase:'READY',level:0},element:AstralElement='energy'):void{
   const dx=x-this.previous.x,dy=y-this.previous.y,moved=Math.hypot(dx,dy);
   this.walking=moved>.05&&moved<32&&!dash&&heavy.phase==='READY';
-  if(this.walking)this.travel+=(this.identity==='warrior'?1:dx*Math.cos(aim)+dy*Math.sin(aim)<-.05?-1:1)*moved;
+  if(this.walking)this.travel+=moved;
   this.previous.x=x;this.previous.y=y;
   this.present(aim,firing,dash,heavy,element);
  }
  // Aim/attack events can redraw between simulation ticks. They must not sample
  // zero displacement and turn a moving Warrior back into idle for one frame.
  present(aim:number,firing:boolean,dash=false,heavy:Pick<KineticPose,'phase'|'level'>={phase:'READY',level:0},element:AstralElement='energy'):void{
-  if(this.identity==='warrior')this.facing=stableCompleteDirection(aim,this.facing);
+  this.facing=stableCompleteDirection(aim,this.facing);
   const visualAim=this.facing===undefined?aim:Math.PI/2-this.facing*Math.PI/4;
   this.view.setRotation(0);this.body.setFrame(completeFrame(visualAim,this.travel,this.walking&&!dash,firing||heavy.phase!=='READY',this.identity)).setRotation(0).setFlip(false,false);
   if(this.scene.time.now<this.hurtUntil)this.body.setTint(0xffac98);else this.body.clearTint();

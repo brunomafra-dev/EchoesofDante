@@ -1,0 +1,6 @@
+{
+  "skin": {"original":"Original","fair":"Clara","warm":"Morena","deep":"Escura"},
+  "hair": {"original":"Original","black":"Preto","brown":"Castanho","copper":"Acobreado","silver":"Prateado"},
+  "head": {"original":"Original","practical":"Explorador","astral":"Astral","stellar":"Estelar"},
+  "companions": {"symbiont":"Simbionte de Dante","hollow":"Hollow vinculado"}
+}

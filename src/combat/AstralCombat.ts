@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import {pixelEffect}from'../visual/PixelFX';
 import { ASTRAL,ASTRAL_ELEMENTS,type AstralElement } from '../config/classes';
 import type { AbilityUpgradeId } from '../config/abilityUpgrades';
 import type { Enemy } from '../entities/Enemy';
@@ -97,6 +98,10 @@ export class AstralCombat {
    form.setTexture(`astral-${z.element}-field`,z.element==='earth'?Math.min(3,Math.floor(age/.18*4)):frame)
     .setOrigin(.5,z.element==='energy'?.75:.92).setDisplaySize(size,size).setPosition(z.x,z.y+12).setRotation(0).setDepth(z.y+4).setAlpha(z.alpha*.9);
    if(z.element==='water'){const surge=Math.min(1,age/.18),travel=Math.min(24,age*30);form.setDisplaySize(size*(.65+.35*surge),size*(.65+.35*surge)).setOrigin(.5,.75).setPosition(z.x+Math.cos(z.angle??0)*travel,z.y+Math.sin(z.angle??0)*travel).setRotation((z.angle??0)+Math.PI/2).setAlpha(z.alpha*Math.max(0,1-age/1.15)*.8);}
+   pixelEffect(form,`${z.element}-field`,age,size,z.element==='water'?1.15:z.element==='fire'?3:z.element==='earth'?.85:1.35);
+   form.setPosition(z.x,z.y+12).setRotation(0).setAlpha(z.alpha*(z.element==='water'?Math.max(0,1-age/1.15):.9));
+   if(z.element==='water'){pixelEffect(v,'water-ground',age%2.5,size,2.5);v.setDisplaySize(size,size);}
+   if(z.element==='energy')pixelEffect(v,'energy-ground',age,size*1.2,1.35);
   });
  }
  clear():void{this.pending=undefined;this.zones=[];this.shots.forEach(s=>s.active=false);this.controls=new WeakMap();this.render();}

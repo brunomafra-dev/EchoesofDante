@@ -1,0 +1,197 @@
+{
+  "method": "Complete-figure registration plus one-source DIS optical-flow lower-body in-betweens; no transparency blend or generated limbs. Four extra frames per direction, protected reflective blades and bounded ground-plane deformation. Warrior idle uses its matching authored passing pose.",
+  "assets": [
+    {
+      "file": "public/assets/visual/complete-actors/warrior-male-none-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/warrior-male-none-walk-v2.png",
+      "frames": 72,
+      "columns": 8,
+      "bytes": 1858662,
+      "sha256": "15a312243cb1cdcdff5b0c9a7ddf2b4a3de72f428a9dc9246eecb505269d302e"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/warrior-male-basic-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/warrior-male-basic-walk-v2.png",
+      "frames": 72,
+      "columns": 8,
+      "bytes": 2177963,
+      "sha256": "7756257b60c567da26f5ab4fb9da55cba475c7fe1485c067c2ae068f98a085b4"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/warrior-male-reinforced-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/warrior-male-reinforced-walk-v2.png",
+      "frames": 72,
+      "columns": 8,
+      "bytes": 2301627,
+      "sha256": "8e731f4512409bdeb2a6f1f3071665788fabec14d86e3e65565b1f61e9ee40e3"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/warrior-female-none-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/warrior-female-none-walk-v2.png",
+      "frames": 72,
+      "columns": 8,
+      "bytes": 1819308,
+      "sha256": "c88ecd494867c58d2f43d7ebde31914589afa2f41cdad9f3965186ae2c80d048"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/warrior-female-basic-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/warrior-female-basic-walk-v2.png",
+      "frames": 72,
+      "columns": 8,
+      "bytes": 2155646,
+      "sha256": "a89347a793353f920f156ba4ab6ff271e660e656a35e61ab04cf520dbb6e87f1"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/warrior-female-reinforced-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/warrior-female-reinforced-walk-v2.png",
+      "frames": 72,
+      "columns": 8,
+      "bytes": 2159719,
+      "sha256": "73b04a8566576ffdba3ad9f61fb89d6d07a0bca0082a6d682b45a97429b9c243"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/hunter-male-none-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/hunter-male-none.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1481698,
+      "sha256": "641a4598884a174c0db7969d2a0bbbc17ef8464f5856096d4cd68e67e4183add"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/hunter-male-basic-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/hunter-male-basic.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1541560,
+      "sha256": "1cc877032c4007471e18a780379002459d66a65c99cd8aaa028656791cc3b1a2"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/hunter-male-reinforced-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/hunter-male-reinforced.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1542377,
+      "sha256": "5d784a658d85b6e5883f62ff3912c23c232292bd6fea13d58f25705d4dbfa503"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/hunter-female-none-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/hunter-female-none.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1493885,
+      "sha256": "a638d801500a9bcbc4b59b8f6f7972b633204b7bb94b512c132b8606bc516ac8"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/hunter-female-basic-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/hunter-female-basic.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1533372,
+      "sha256": "8f0314752aa014d6b504c624e81df5f69b1f2e9d4f56378d24c724d1b43739f6"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/hunter-female-reinforced-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/hunter-female-reinforced.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1567158,
+      "sha256": "26d0e16905723157e435fc5adeb70ffe741f7dc1caea8e64125222d8f2b082a7"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/astral-male-none-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/astral-male-none.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1398673,
+      "sha256": "500f7108e5ded391b85400720077428ca400d23ce4b7d46e70dd98a09a36b486"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/astral-male-basic-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/astral-male-basic.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1489034,
+      "sha256": "654de42955a7f4a8a0295721396f2558ae34d312e120c5ceb5aa54058e8921f6"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/astral-male-reinforced-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/astral-male-reinforced.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1630236,
+      "sha256": "9a62e3c754fe7ea31d8eee2c210e1564359f220cb7bde1936291419492b1c60e"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/astral-female-none-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/astral-female-none.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1221383,
+      "sha256": "04b3130e358ada1fc60e6545ef28b34cdbbfd53d9ce8fb9a545f02deb8963217"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/astral-female-basic-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/astral-female-basic.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1327943,
+      "sha256": "30d9bd586a2aa42d19d041634102023cdf10509b0ffc4687c457a5400cf1d139"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/astral-female-reinforced-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/astral-female-reinforced.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1445416,
+      "sha256": "e1e1620219f8e3ec4cdd5803c56360ef1273da94a506ff2a368179840bca4a74"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/xenobinder-male-none-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/xenobinder-male-none.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1419704,
+      "sha256": "4cd3696445fa638fb59bebcb4c163c58b378f04493b112eb840b1ea2d02cd79a"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/xenobinder-male-basic-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/xenobinder-male-basic.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1549770,
+      "sha256": "01c9f1f6ab4464177164547bae6d54d0a4804daaae91f5360db06ba2339f42f6"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/xenobinder-male-reinforced-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/xenobinder-male-reinforced.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1788448,
+      "sha256": "36f626d8037baa828600c0e7766e17aa1c981293ff72b1d25fab5970ce38bc36"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/xenobinder-female-none-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/xenobinder-female-none.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1405411,
+      "sha256": "bede846ff0c5f968287c609238067a61c729d7157c080c88aa1f1ef4416c059b"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/xenobinder-female-basic-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/xenobinder-female-basic.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1722925,
+      "sha256": "760e2018f0d5d279d695edfcf0b032defae23e9f0974c743265e0c58efb7b7d2"
+    },
+    {
+      "file": "public/assets/visual/complete-actors/xenobinder-female-reinforced-motion-v3.png",
+      "source": "public/assets/visual/complete-actors/xenobinder-female-reinforced.png",
+      "frames": 64,
+      "columns": 8,
+      "bytes": 1811156,
+      "sha256": "62ba84feaa8a93bdde25cf13d0819065aaceb8554b38777f595dba18a77b4cc9"
+    }
+  ]
+}

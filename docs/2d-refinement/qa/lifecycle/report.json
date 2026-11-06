@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "base": "http://localhost:5193",
+  "checks": [
+    "Twelve native gender switches while model sheets are deliberately delayed finish with exactly four working previews; no destroyed-loader callbacks.",
+    "Repeated selector entry/exit recreates complete previews with valid source lifetimes."
+  ],
+  "errors": [],
+  "warnings": []
+}

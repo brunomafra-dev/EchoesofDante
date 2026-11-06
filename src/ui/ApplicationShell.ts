@@ -11,8 +11,6 @@ import { CharacterSelection, type CharacterDraft } from './CharacterSelection';
 import { Prologue } from './Prologue';
 import { AUDIO } from '../config/audio';
 import { AudioManager } from '../systems/Sound';
-import type { CharacterClass } from '../systems/CharacterProfiles';
-import type { CharacterSex } from '../config/appearance';
 import { LocalJourney } from '../systems/LocalJourney';
 import { CoopChat } from './CoopChat';
 import { MobileDisplay } from './MobileDisplay';
@@ -37,7 +35,7 @@ export class ApplicationShell {
   private launchOnce = false;
   private entry?: 'create' | 'join';
   private creation: CampaignCreation = { mode: 'solo', difficulty: 'normal', size: 1 };
-  private pendingCharacter?: { name: string; classId: CharacterClass; sex: CharacterSex };
+  private pendingCharacter?: CharacterDraft;
   private draft?: CharacterDraft;
   private creating=false;
   private code = roomCode(location.href) ?? '';
@@ -154,7 +152,7 @@ export class ApplicationShell {
     const pending = this.pendingCharacter;
     if (!pending || this.launching || this.creating || this.playing || coopSession.role!=='offline') return;
     this.creating=true;
-    const hero = characterProfiles.create(pending.name, pending.classId, pending.sex, this.creation);
+    const hero = characterProfiles.create(pending.name, pending.classId, pending.sex, this.creation,pending.appearance);
     if (!hero) { this.creating=false;this.status('Não foi possível criar o personagem. Confira o nome, o limite de personagens e o armazenamento do navegador.'); return; }
     this.pendingCharacter = undefined;
     this.launch(hero.id);
@@ -290,14 +288,14 @@ export class ApplicationShell {
           if (!characterProfiles.remove(id)) { this.status('Não foi possível excluir o personagem.'); return; }
           if (active) this.returnHome(); else this.render();
         },
-        create: (name, classId, sex) => {
+        create: (name, classId, sex,appearance) => {
           if (this.launching) return;
           if (this.pendingInvite) {
-            const hero = characterProfiles.create(name, classId, sex, this.creation);
+            const hero = characterProfiles.create(name, classId, sex, this.creation,appearance);
             if (hero) this.launch(hero.id); else this.status('Informe um nome e verifique o espaço de personagens e o armazenamento do navegador.');
             return;
           }
-          this.pendingCharacter = { name, classId, sex };
+          this.pendingCharacter = { name, classId, sex,appearance };
           this.show(this.creation.mode==='coop'?'party-size':'difficulty');
         },
       }, this.pendingInvite, this.pendingInvite && this.page==='create' ? this.lobby?.members.map(m => m.profile.classId):[], {
@@ -405,10 +403,10 @@ export class ApplicationShell {
     if(this.chat.frame(this.dialog.open&&this.page==='coop'?this.content:document.body,down,this.padPrevious,chatAllowed)){this.padPrevious=down;this.padFrame=requestAnimationFrame(this.pollPad);return;}
     if (down[9] && !this.padPrevious[9] && !document.querySelector('dialog[open]:not(.application-shell)')) { if (this.dialog.open) this.back(); else this.openPause(); }
     if (this.dialog.open) {
-      const buttons = Array.from((this.content.querySelector('.character-delete-dialog[open]') ?? this.content).querySelectorAll<HTMLElement>('button:not(:disabled),select:not(:disabled),input:not(:disabled)')).filter(element=>element.getClientRects().length>0);
+      const buttons = Array.from((this.content.querySelector('.character-delete-dialog[open]') ?? this.content).querySelectorAll<HTMLElement>('button:not(:disabled),select:not(:disabled),input:not(:disabled),summary')).filter(element=>element.getClientRects().length>0);
       const index = Math.max(0, buttons.indexOf(document.activeElement as HTMLButtonElement));
       const horizontal=(down[15]&&!this.padPrevious[15]?1:0)-(down[14]&&!this.padPrevious[14]?1:0),focused=document.activeElement;
-      if(horizontal&&focused instanceof HTMLSelectElement){focused.selectedIndex=Math.max(0,Math.min(focused.options.length-1,focused.selectedIndex+horizontal));focused.dispatchEvent(new Event('change'));}
+      if(horizontal&&focused instanceof HTMLSelectElement){let next=focused.selectedIndex+horizontal;while(next>=0&&next<focused.options.length&&focused.options[next].disabled)next+=horizontal;if(next>=0&&next<focused.options.length){focused.selectedIndex=next;focused.dispatchEvent(new Event('change'));}}
       else if(horizontal&&focused instanceof HTMLInputElement&&focused.type==='range'){focused.value=String(Math.max(0,Math.min(100,Number(focused.value)+horizontal*5)));focused.dispatchEvent(new Event('input'));}
       else if(horizontal)buttons[(index+horizontal+buttons.length)%buttons.length]?.focus();
       if (down[13] && !this.padPrevious[13]) buttons[(index + 1) % buttons.length]?.focus();

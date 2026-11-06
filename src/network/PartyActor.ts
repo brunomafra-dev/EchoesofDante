@@ -93,7 +93,7 @@ export class PartyActor {
   const build=this.profile.build,key=JSON.stringify(build);if(key===this.buildKey)return;this.buildKey=key;
   this.progression.restore({xp:build?.xp??0,abilityUpgrades:build?.abilityUpgrades,bossRewards:build?.bossRewards,echoes:[],sourceLocated:false,passageOpen:false,rewardedHollows:[],rewardedRoutes:[]});
  }
- private setAppearance():void {const slots=this.profile.equipment??{},key=JSON.stringify(slots);if(key===this.appearanceKey)return;this.appearanceKey=key;this.player.setEquipmentAppearance(slots);this.art?.setEquipment(slots);this.astralArt?.setEquipment(slots);this.xenoArt?.setEquipment(slots);}
+ private setAppearance():void {const slots=this.profile.equipment??{},key=JSON.stringify([slots,this.profile.appearance,this.profile.companion]);if(key===this.appearanceKey)return;this.appearanceKey=key;this.player.setEquipmentAppearance(slots);this.art?.setEquipment(slots);this.astralArt?.setEquipment(slots);this.xenoArt?.setEquipment(slots);this.player.setCharacterAppearance(this.profile.appearance);this.art?.setAppearance(this.profile.appearance);this.astralArt?.setAppearance(this.profile.appearance);this.xenoArt?.setAppearance(this.profile.appearance);this.xeno?.setSpecies(this.profile.companion);}
  render(pose:PartyPose&{potionUsed?:number},now:number,dt:number):void {
   this.setAppearance();
   this.player.health.max=pose.maxHp;this.player.health.current=pose.hp;

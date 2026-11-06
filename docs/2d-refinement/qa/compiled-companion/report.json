@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "base": "http://localhost:5193",
+  "checks": [
+    "Second species is locked before research; explicit isolated research unlocks it. Cancelling changes neither profile nor journey.",
+    "Save changes only presentation; world and reload show one active Hollow companion, with its own source poses."
+  ],
+  "errors": [],
+  "fixture": "Explicit native lab button simulates recon/survival research completed. Signal remains pending; no boss victory simulated."
+}

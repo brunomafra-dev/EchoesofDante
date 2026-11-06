@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import {companion,type CompanionSpecies}from'../config/characterPresentation';
 import { XENOBINDER as X } from '../config/classes';
 import type { AbilityUpgradeId } from '../config/abilityUpgrades';
 import type { Enemy } from '../entities/Enemy';
@@ -9,12 +10,13 @@ import { distance,type Vec2 } from '../utils/math';
 export type LinkedAlly={position:Vec2;health:{current:number;max:number};isDead:boolean};
 type Hit=(enemy:Enemy,damage:number,angle:number,origin:Vec2,heavy:boolean)=>void;
 type State='FOLLOW'|'ASSIST'|'COMMAND'|'RETURN';
-export type XenobinderPose={bond:number;active:boolean;state:State;owner:Vec2;pet:Vec2&{frame:number;flip:boolean};
+export type XenobinderPose={species?:CompanionSpecies;bond:number;active:boolean;state:State;owner:Vec2;pet:Vec2&{frame:number;flip:boolean};
  shots:{x:number;y:number;angle:number}[];mark?:Vec2;pulse?:Vec2&{radius:number;alpha:number};heals:{x:number;y:number;amount:number}[];linked:boolean};
 
 // One original companion and fixed presentation pools per actor. Visitors render snapshots.
 export class XenobinderCombat {
  bond:number=X.bondInitial;firedUntil=0;state:State='FOLLOW';active=true;
+ species:CompanionSpecies='symbiont';
  readonly position:Vec2;
  private lastShot=-Infinity;private lastBite=-Infinity;private biteUntil=0;private markUntil=0;private marked?:Enemy;
  private goal?:Vec2;private commandLevel=0;private commandHits=new Set<Enemy>();private travelled=0;
@@ -34,6 +36,13 @@ export class XenobinderCombat {
   this.healViews=Array.from({length:4},()=>scene.add.text(0,0,'',{fontFamily:'Barlow Condensed',fontSize:'14px',color:'#a6dc94',stroke:'#10251b',strokeThickness:2}).setOrigin(.5).setVisible(false));
  }
  get canCharge():boolean{return this.active&&this.bond>=X.commandCost&&this.state!=='COMMAND';}
+ setSpecies(value:unknown):void{
+  const species=companion(value);this.species=species;
+  const size=species==='hollow'?76:X.companionSize;
+  this.body.setTexture(species==='hollow'?'finish-hollow':'dante-symbiont-motion',0).setOrigin(.5,(species==='hollow'?225:244)/256).setDisplaySize(size,size);
+  this.shadow.setDisplaySize(species==='hollow'?45:55,species==='hollow'?14:16);
+  this.shadow.setStrokeStyle(species==='hollow'?1:0,0x92cd87,.7);
+ }
  fire(now:number,origin:Vec2,angle:number,offset:Vec2={x:0,y:0}):boolean{
   if(now-this.lastShot<X.shotCooldown)return false;const shot=this.shots.find(s=>!s.active);if(!shot)return false;
   Object.assign(shot,origin,{angle,offset,travel:0,active:true});this.lastShot=now;this.firedUntil=now+180;return true;
@@ -111,14 +120,16 @@ export class XenobinderCombat {
   }
   moveWithCollisions(this.position,{x:Math.cos(best)*speed,y:Math.sin(best)*speed},Math.min(dt,length/speed),X.companionRadius,obstacles,bounds);
  }
- snapshot():XenobinderPose{return{bond:this.bond,active:this.active,state:this.state,owner:{...this.owner},pet:{...this.position,frame:this.frame,flip:this.flip},
+ snapshot():XenobinderPose{return{species:this.species,bond:this.bond,active:this.active,state:this.state,owner:{...this.owner},pet:{...this.position,frame:this.frame,flip:this.flip},
   linked:this.charging||this.state==='COMMAND',mark:this.marked&&!this.marked.isDead?{...this.marked.position}:undefined,
   shots:this.shots.filter(s=>s.active&&s.travel>=X.muzzleDistance).map(s=>({x:s.x+s.offset.x,y:s.y+s.offset.y,angle:s.angle})),
   pulse:this.pulse?{...this.pulse,radius:X.pulseRadius,alpha:this.pulseRemaining/.65}:undefined,heals:this.heals.slice(0,4)};}
  render(pose?:XenobinderPose,dt=.016):void{
+  if(pose?.species&&pose.species!==this.species)this.setSpecies(pose.species);
   const active=!!pose?.active;this.body.setVisible(active);this.shadow.setVisible(active);
   if(pose&&active){const gap=distance(this.body,pose.pet),t=gap>300?1:Math.min(1,dt*20);const x=Phaser.Math.Linear(this.body.x,pose.pet.x,t),y=Phaser.Math.Linear(this.body.y-10,pose.pet.y,t);
-   this.body.setPosition(x,y+10).setFrame(pose.pet.frame).setFlipX(pose.pet.flip).setRotation(0).setDepth(y+1);this.shadow.setPosition(x,y+8).setDepth(y-2);
+   const frame=this.species==='hollow'?[0,1,2,5,4,3,0,0][pose.pet.frame]??0:pose.pet.frame;
+   this.body.setPosition(x,y+10).setFrame(frame).setFlipX(pose.pet.flip).setRotation(0).setDepth(y+1);this.shadow.setPosition(x,y+8).setDepth(y-2);
   }
   this.shotViews.forEach((v,i)=>{const s=pose?.shots[i];v.setVisible(active&&!!s);if(s)v.setPosition(s.x,s.y).setRotation(s.angle).setDisplaySize(47,19).setDepth(s.y+5)});
   this.linkView.setVisible(active&&!!pose?.linked);if(pose?.linked){const angle=Math.atan2(pose.pet.y-pose.owner.y,pose.pet.x-pose.owner.x);this.linkView.setPosition(pose.owner.x,pose.owner.y).setDisplaySize(distance(pose.owner,pose.pet),8).setRotation(angle).setAlpha(.45).setDepth(Math.max(pose.pet.y,pose.owner.y)+1);}

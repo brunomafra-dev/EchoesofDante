@@ -1,0 +1,8 @@
+{
+  "passed": false,
+  "base": "http://localhost:5185",
+  "method": "Actual keyboard/mouse movement and firing; read-only compiled lab diagnostics. Cosmetic/gear/region fixtures are explicit URL options. No real save writes.",
+  "cases": [],
+  "errors": [],
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n+   '{\"schema\":1,\"selected\":\"legacy-warrior\",\"characters\":[{\"id\":\"legacy-warrior\",\"name\":\"Guerreiro\",\"classId\":\"warrior\",\"createdAt\":1793983441693}]}',\n-   'pose-real-save',\n    'pose-real-journey'\n  ]\n\n    at file:///C:/Users/1/Desktop/Bruno%20Mafra/Echoes%20of%20Dante/scripts/qa-2d-refinement198-poses.mjs:22:10"
+}

@@ -1,0 +1,20 @@
+{
+  "passed": false,
+  "base": "http://localhost:5193",
+  "checks": [],
+  "errors": [],
+  "relay": [
+    {
+      "role": "host",
+      "protocol": 16
+    },
+    {
+      "role": "host",
+      "protocol": 16
+    }
+  ],
+  "fixture": "Native two-browser creation, invitations and continuation. The explicit reserved lab button completes only recon/survival research; no boss is defeated. No DEV exports or direct combat commands.",
+  "failure": "Error: Room did not produce a native invitation\n    at invite (file:///C:/Users/1/Desktop/Bruno%20Mafra/Echoes%20of%20Dante/scripts/qa-2d-refinement198-native-coop.mjs:11:353)\n    at async file:///C:/Users/1/Desktop/Bruno%20Mafra/Echoes%20of%20Dante/scripts/qa-2d-refinement198-native-coop.mjs:15:36",
+  "relayCount": 558,
+  "diagnosis": "Preview process was started before relay source changes; restart of the owned preview process required. DEV relay already advertised presentation:1. No runtime fix required."
+}

@@ -1,0 +1,34 @@
+{
+  "passed": false,
+  "base": "http://localhost:5185",
+  "cases": [
+    {
+      "checked": 288,
+      "identity": "warrior",
+      "sex": "male"
+    },
+    {
+      "checked": 288,
+      "identity": "warrior",
+      "sex": "female"
+    },
+    {
+      "checked": 256,
+      "identity": "hunter",
+      "sex": "male"
+    },
+    {
+      "checked": 256,
+      "identity": "hunter",
+      "sex": "female"
+    },
+    {
+      "checked": 256,
+      "identity": "astral",
+      "sex": "male"
+    }
+  ],
+  "errors": [],
+  "method": "DEV equipment/pose sampling of actual baked atlases, local/remote pixel equality, opaque margins and connected whole figures. Native controls are covered separately.",
+  "failure": "page.evaluate: Error: Disconnected/empty figure {\"cls\":\"astral\",\"sex\":\"female\",\"tier\":\"mixed\",\"f\":31,\"body\":{\"count\":5890,\"minY\":19,\"maxY\":144}}\n    at eval (eval at evaluate (:311:30), <anonymous>:10:84)\n    at async <anonymous>:337:30\n    at C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\scripts\\qa-2d-refinement198-atlas.mjs:9:24"
+}
