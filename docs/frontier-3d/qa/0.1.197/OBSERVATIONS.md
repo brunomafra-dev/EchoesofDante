@@ -27,3 +27,7 @@ Uma malha de personagem com seis grupos de material, nove ossos e mapas de 512 p
 Medição em `performance/report.json`: Chrome headless 156, ANGLE D3D11, Intel UHD 0x4E61 / Celeron N5105, 1440×900 DPR 1. Cena parada com boss vivo/dormente, oito segundos de aquecimento e três amostras de dois segundos, em série e sem build/autoria/QA paralelo. Não extrapolar para combate, celular físico ou outro computador. Toque e gamepad são emulados. 3D permanece solo.
 
 Fontes canônicas de gameplay/rede 2D, métodos de colisão/movimento do mundo e métodos de combate/poses do Warden são conferidos sem mudanças no verificador. O menu 2D altera apenas a versão do acesso 3D. Builds, modelos e dependências públicos serão conferidos por hash após o push. Avaliação estética e adoção como padrão dependem do playtest do usuário.
+
+## Publication gate
+
+Application `738d815` is synchronized with `origin/main`. The first Vercel deployment failed; GitHub exposes no underlying build error, and Vercel CLI requires unavailable login. Private build logs were requested. A clean official Hollow input download/preparation passed independently. Public hash comparison correctly rejected the still-previous `/arrival-3d.html`; no publication or public QA is claimed. Local scene QA was repeated against the final production preview, including the 44 px comparison controls and orientation changes, and passed.

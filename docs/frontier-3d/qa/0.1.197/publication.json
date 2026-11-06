@@ -1,0 +1,34 @@
+{
+  "version": "0.1.197",
+  "published": false,
+  "verifiedAtUTC": "2026-11-06T14:20:58.776719+00:00",
+  "applicationCommit": "738d8158f990d076db0b3d222ba7a3c0509814a0",
+  "vercel": {
+    "state": "failure",
+    "url": "https://vercel.com/brunomafra-devs-projects/echosofdante/5AZMx2Gc9CeSSkDEAaBiCxykXgZj",
+    "details": "GitHub status exposes no build error; private logs requested. CLI requires login and was stopped."
+  },
+  "base": "https://echosofdante.vercel.app",
+  "matchingPublicHashes": null,
+  "expectedPublicHashes": 138,
+  "localReports": [
+    "docs/frontier-3d/qa/0.1.197/art/report.json",
+    "docs/frontier-3d/qa/0.1.197/boss/report.json",
+    "docs/frontier-3d/qa/0.1.197/entry/report.json",
+    "docs/frontier-3d/qa/0.1.197/input/report.json",
+    "docs/frontier-3d/qa/0.1.197/performance/report.json",
+    "docs/frontier-3d/qa/0.1.197/scene/report.json",
+    "docs/frontier-3d/qa/0.1.197/state/report.json"
+  ],
+  "publicReports": [],
+  "cleanAssetPreparationPassed": true,
+  "humanApproval": "pending",
+  "limits": [
+    "Isolated visual review only; previous model remains default in the normal journey.",
+    "Boss prerequisites simulated in a separate save; boss starts alive at 900 HP.",
+    "Solo 3D; no shared 2D inventory or 3D co-op.",
+    "Touch and gamepad emulated; no physical phone test.",
+    "Idle desktop FPS measurement is not a combat or mobile guarantee.",
+    "Computer remains on."
+  ]
+}

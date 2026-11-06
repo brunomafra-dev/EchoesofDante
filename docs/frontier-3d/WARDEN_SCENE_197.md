@@ -35,7 +35,10 @@ Warden, mapas matemáticos e chão/incisões: originais Echoes of Dante, CC0-1.0
 - [x] Combate real pelas quatro classes, fases, morte/vitória e reload.
 - [x] Touch/gamepad emulados, resoluções e armazenamento protegido.
 - [x] Medição local de desempenho em condições registradas.
-- [ ] Commit/push sincronizados e publicação verificada.
+- [x] Aplicação `738d815` enviada e sincronizada com `origin/main`.
+- [ ] Publicação verificada: primeiro deploy da Vercel falhou; logs privados pendentes.
 - [ ] Avaliação visual humana.
 
 Evidências finais em `qa/0.1.197/`: sete relatórios locais passaram. Amostra parada em Celeron N5105 / Intel UHD, Chrome 156, 1440×900 DPR 1: proposta em aproximadamente 59,5–60 FPS, 60 chamadas/102.600 triângulos contabilizados pelo renderer incluindo sombras; anterior no mesmo ambiente em 58 chamadas/92.732 triângulos. Não é medição de combate. Veja `performance/report.json`, `build-verification.json` e `OBSERVATIONS.md`. QA técnico não é aprovação estética, teste em iPhone físico ou garantia de FPS em outro equipamento. O 3D continua solo; esta cena não adiciona inventário ou coop sincronizado com o 2D. A proposta é uma malha real revisável, não uma reprodução garantida da imagem de referência. Aguardar o playtest antes de adotar o visual como padrão ou seguir para outro território.
+
+O primeiro deploy foi marcado como `failure` pela integração Vercel, sem expor o erro do build na API do GitHub. [Deploy e logs privados](https://vercel.com/brunomafra-devs-projects/echosofdante/5AZMx2Gc9CeSSkDEAaBiCxykXgZj). Não há credencial Vercel local; a consulta CLI exigiu login e foi encerrada. A obtenção oficial dos inputs do Hollow foi repetida do zero e passou, sem alterar os pins, licença ou arquivos publicados. Até a conferência dos hashes públicos, os links acima representam o destino da entrega, não confirmação de disponibilidade. Revisão local: `http://localhost:5193/arrival-3d.html?v=0.1.197&lab=warden&scene=197`.
