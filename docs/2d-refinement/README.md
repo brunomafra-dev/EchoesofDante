@@ -54,6 +54,12 @@ Relatórios e capturas em [qa](qa/), scripts `scripts/qa-2d-refinement198-*.mjs`
 
 As capturas foram inspecionadas pelo agente. [Falhas encontradas e correções](qa/OBSERVATIONS.md). Testes com fixtures têm seus pré-requisitos explícitos nos próprios relatórios. QA técnico não substitui playtest humano, controle físico ou celular físico.
 
+### Publicação em conferência
+
+Aplicação `e5afbc3` sincronizada em main e publicada pela Vercel (success). Criação/edição/reload, quatro campos e escolha/desbloqueio/cancelamento/reload do Hollow passaram no endereço público em `qa/public/{menu,effects,companion}`. Correção posterior dos links de boss `c4537c0` passou no compilado, mas seu primeiro deploy Vercel falhou; logs privados solicitados, sem atribuir causa não demonstrada. O manifesto de 188 hashes representa essa build corrigida, cuja publicação integral ainda precisa ser confirmada.
+
+Relay público respondeu protocolo 16, revisão `42de5a0`, sem `presentation:1` (`qa/relay-before-publication.json`). Atualização manual solicitada após o push. Coop personalizado e Hollow passaram com dois navegadores no relay local atualizado; **coop personalizado público pendente da atualização do Render e do reteste**, sem declarar compatibilidade pública já entregue. Uma revisão de documentação não exige outra versão do protocolo.
+
 ## Entrega
 
 - [x] Figuras e movimento.
