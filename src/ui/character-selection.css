@@ -1,4 +1,24 @@
 .application-shell.is-character-page { background-color: #10130f; background-image: radial-gradient(ellipse at 50% 0%,#55503944,transparent 60%),linear-gradient(120deg,#111912f5,#0e110ff5) !important; }
+.hero-creation{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.8fr);gap:clamp(24px,5vw,72px);align-items:start;max-width:980px;margin:auto}
+.hero-creation-display{position:sticky;top:12px;text-align:center;border:1px solid #89774e55;background:radial-gradient(ellipse at 50% 35%,#65705225,transparent 68%),linear-gradient(160deg,#252b2122,#0e160c99);padding:20px 12px 12px;border-radius:3px;overflow:hidden}
+.hero-preset-title{margin:0;color:#d8c59a;font:600 25px 'Barlow Condensed',sans-serif;letter-spacing:.08em}
+.hero-preview-host .character-stage{height:clamp(300px,49vh,470px);max-width:430px;margin:auto}
+.hero-creation-controls{display:grid;gap:14px;min-width:0;padding:8px 0}
+.shell-content .hero-choice{display:flex;flex-direction:column;gap:7px;margin:0;color:#bdb99e;font-size:13px;letter-spacing:.05em;min-width:0}
+.hero-choice select,.hero-choice input{box-sizing:border-box;width:100%;min-height:48px;margin:0;background:#141e16;border:1px solid #84724b88;border-radius:3px;color:#f0e9d5;padding:10px 12px;font-size:16px;font-family:inherit;letter-spacing:normal}
+.hero-choice select:focus-visible,.hero-choice input:focus-visible{outline:2px solid #dfc28c;outline-offset:3px}
+.hero-profession-detail{padding-top:16px;margin-top:2px;border-top:1px solid #89774e55}
+.hero-profession-detail h3{font:600 27px 'Barlow Condensed',sans-serif;margin:4px 0 8px;color:#e8dfc4}
+.hero-profession-role{margin:0;color:#acb692;font-size:10px;letter-spacing:.13em}
+.hero-profession-fantasy{font-size:14px;line-height:1.5;color:#c8cebb;margin:0 0 8px}
+.hero-combination-status{font-size:13px;line-height:1.5;color:#e9c598;border-left:2px solid #bb8f55;padding:8px 12px;background:#8a692015;margin:0}
+.hero-combination-status[hidden]{display:none}
+.is-character-page .hero-demonstration{width:100%;min-height:46px;padding:10px;border:1px solid #96825466;border-radius:3px;background:#222b1c;color:#e5d5ae;font-size:13px;letter-spacing:.08em}
+.hero-demonstration:disabled{opacity:.45}
+.hero-creation-controls>.selection-primary{width:100%;margin-top:4px;white-space:normal}
+.hero-choice[hidden],.is-character-page .saved-display-actions [hidden]{display:none}
+@media(max-width:650px) and (orientation:portrait){.hero-creation{grid-template-columns:1fr;gap:18px}.hero-creation-display{position:relative;top:0;padding:12px}.hero-preview-host .character-stage{height:260px;max-width:280px}.hero-creation-controls{gap:12px}}
+@media(max-height:500px) and (orientation:landscape){.hero-creation{grid-template-columns:minmax(200px,.9fr) minmax(280px,1fr);gap:24px}.hero-creation-display{top:0;padding:8px}.hero-preset-title{font-size:19px}.hero-preview-host .character-stage{height:205px;max-width:235px}.hero-creation-controls{gap:9px;padding:0}.hero-profession-detail{padding-top:10px}.hero-choice select,.hero-choice input{min-height:44px}.hero-creation-display .showcase-caption{font-size:9px}}
 .creation-customization{margin:16px 0;color:#dedcc6}.creation-customization>summary{cursor:pointer;min-height:44px;display:list-item;padding:12px 4px;font-weight:700}
 .selection-header-actions{flex-wrap:wrap;justify-content:flex-end;max-width:55%}.is-character-page .creation-editor-launch{white-space:normal;max-width:100%}
 @media(max-width:600px){.selection-header-actions{max-width:100%;width:100%;justify-content:space-between;gap:8px}.creation-editor-launch{font-size:14px!important;padding:10px!important}}

@@ -2361,7 +2361,7 @@ export class GameScene extends Phaser.Scene {
 
   // Explicit isolated post-Vesper preview. No Titan victory or arena shortcut.
   seedEmbersRoutePlaytest(area:'cinder'|'obsidian'|'caldera'):boolean{
-    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||(!new URLSearchParams(location.search).has('embers')&&!['199','200'].includes(new URLSearchParams(location.search).get('refinement')??''))||coopSession.role!=='offline'||this.transitioning||this.inputModalOpen)return false;
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||(!new URLSearchParams(location.search).has('embers')&&!['199','200','201'].includes(new URLSearchParams(location.search).get('refinement')??''))||coopSession.role!=='offline'||this.transitioning||this.inputModalOpen)return false;
     for(const flag of JOURNEY_FLAGS)this[flag]=false;
     for(const flag of ['cavernDepthSeen','deepPassageOpen','deepAreaSeen','deepCavernEntered','deepEndSeen','deeperEntered','exteriorEntered','fragmentSeen','approachSeen','firstEchoSeen','wardenReached','wardenGateOpen','wardenDefeated','wardenEndingSeen','valleyVisited','valleyLandmarkSeen','valleyEndSeen','valleyCheckpointReached','valleyFrontierReached','valleyFrontierSignalSeen','valleyFrontierEndSeen','aridVisited','aridSignalSeen','aridFrontierEntered','aridFrontierReached','dunesVisited','dunesRuinsSeen','dunesDepthSeen','soterradoReached','soterradoDefeated','soterradoClueSeen','frostVisited','frostSignalSeen','frostEndSeen','icecaveVisited','icecaveSignalSeen','icenestVisited','vesperReached','vesperDefeated','vesperClueSeen','cinderVisited'] as const)this[flag]=true;
     const index=['cinder','obsidian','caldera'].indexOf(area);
@@ -2523,7 +2523,7 @@ export class GameScene extends Phaser.Scene {
   inspectCompanionImpactReview(){return this.impactReviewTargets.map(t=>({x:t.position.x,y:t.position.y,hp:t.health.current,maxHp:t.health.max,dead:t.isDead}));}
   prepareCompanionImpactReview():boolean{
     const params=new URLSearchParams(location.search);
-    if(!location.pathname.endsWith('/character-playtest.html')||params.get('refinement')!=='200'||params.get('targets')!=='1'||this.classId!=='xenobinder'||!this.player?.view.active)return false;
+    if(!location.pathname.endsWith('/character-playtest.html')||!['200','201'].includes(params.get('refinement')??'')||params.get('targets')!=='1'||this.classId!=='xenobinder'||!this.player?.view.active)return false;
     for(const target of this.impactReviewTargets)if(!target.isDead)target.die();
     this.enemies=this.enemies.filter(e=>!this.impactReviewTargets.includes(e as HollowCrawler));this.impactReviewTargets=[];
     const owner=this.player.position;

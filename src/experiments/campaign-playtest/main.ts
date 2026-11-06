@@ -5,7 +5,7 @@ import {NPC_REVIEW_STOPS,npcReviewPeople,npcReviewSelection} from '../../config/
 // character, setting or one-shot launch in the real game is read or modified.
 const get=Storage.prototype.getItem,set=Storage.prototype.setItem,remove=Storage.prototype.removeItem;
 const refinementVersion=new URLSearchParams(location.search).get('refinement');
-const refinementTest=['198','199','200'].includes(refinementVersion??'');
+const refinementTest=['198','199','200','201'].includes(refinementVersion??'');
 const visualReviewTest=new URLSearchParams(location.search).has('visual-review');
 const uxReviewTest=new URLSearchParams(location.search).has('ux-review');
 const settlementMotionTest=new URLSearchParams(location.search).has('settlement-motion');
@@ -314,8 +314,8 @@ if(missionTest)for(const b of Array.from(details.querySelectorAll<HTMLButtonElem
 
 if(refinementTest){
  if(bossTest)for(const link of Array.from(details.querySelectorAll<HTMLAnchorElement>('a'))){const url=new URL(link.href);if(url.pathname.endsWith('/campaign-playtest.html')&&url.searchParams.has('class')){url.searchParams.set('refinement',refinementVersion!);url.searchParams.set('v','0.1.'+refinementVersion);link.href=url.href;}}
- details.classList.add('is-mobile-lab');details.querySelector('summary')!.textContent='REVISÃO 2D · MOVIMENTO, MAGIAS E EDIÇÃO · 0.1.'+refinementVersion;
- const note=document.createElement('p');note.textContent=bossTest?'Arena isolada: este acesso simula a campanha e os bosses anteriores necessários. O boss selecionado começa vivo. Os personagens reais ficam preservados. Os testes de criação e vínculo têm uma sessão separada.':'Teste isolado nesta aba. Crie um personagem ou edite um dos personagens temporários; seus saves reais ficam preservados. Confira rosto/cabelo/pele, caminhada, básico e Q. Não há campanha ou boss vencido na entrada.';details.append(note);
+ details.classList.add('is-mobile-lab');details.querySelector('summary')!.textContent='REVISÃO 2D · PERSONAGENS, MOVIMENTO E MAGIAS · 0.1.'+refinementVersion;
+ const note=document.createElement('p');note.textContent=bossTest?'Arena isolada: este acesso simula a campanha e os bosses anteriores necessários. O boss selecionado começa vivo. Os personagens reais ficam preservados. Os testes de criação e vínculo têm uma sessão separada.':'Teste isolado nesta aba. Escolha uma das quatro classes e o gênero: cada personagem usa suas pinturas completas, sem edição de rosto, cabelo ou pele. Confira caminhada, básico e Q. Não há campanha ou boss vencido na entrada; seus saves reais ficam preservados.';details.append(note);
  for(const[cls,label]of [['warrior','Guerreiro'],['hunter','Caçador'],['astral','Astral'],['xenobinder','Domador']]){const a=document.createElement('a');a.href='character-cohesion.html?class='+cls+'&kit=clothes&refinement='+refinementVersion+'&v=0.1.'+refinementVersion;a.textContent='Movimento: '+label;details.append(a);}
  const bond=document.createElement('button');bond.textContent='SIMULAR VÍNCULOS - BOSSES ANTERIORES CONCLUÍDOS - SOLO';bond.dataset.refinement='bond';
  const status=document.createElement('p');status.setAttribute('role','status');

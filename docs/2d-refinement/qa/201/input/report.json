@@ -1,0 +1,147 @@
+{
+  "passed": true,
+  "base": "http://localhost:5194",
+  "checks": [
+    "warrior: actual touch joystick/dash and standard gamepad movement/dash with complete female actor.",
+    "hunter: actual touch joystick/dash and standard gamepad movement/dash with complete female actor.",
+    "astral: actual touch joystick/dash and standard gamepad movement/dash with complete female actor.",
+    "xenobinder: actual touch joystick/dash and standard gamepad movement/dash with complete female actor.",
+    "Gamepad D-pad changes actual gender, preset and profession selects; four viewport layouts have one preview, readable controls and no horizontal overflow."
+  ],
+  "layouts": [
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "metrics": {
+        "width": 844,
+        "overflow": 844,
+        "canvasCount": 1,
+        "controls": [
+          {
+            "width": 406.328125,
+            "height": 45,
+            "font": "16px"
+          },
+          {
+            "width": 406.328125,
+            "height": 45,
+            "font": "16px"
+          },
+          {
+            "width": 406.328125,
+            "height": 45,
+            "font": "16px"
+          },
+          {
+            "width": 406.328125,
+            "height": 44,
+            "font": "16px"
+          }
+        ]
+      }
+    },
+    {
+      "viewport": {
+        "width": 393,
+        "height": 852
+      },
+      "metrics": {
+        "width": 393,
+        "overflow": 393,
+        "canvasCount": 1,
+        "controls": [
+          {
+            "width": 345,
+            "height": 48,
+            "font": "16px"
+          },
+          {
+            "width": 345,
+            "height": 48,
+            "font": "16px"
+          },
+          {
+            "width": 345,
+            "height": 48,
+            "font": "16px"
+          },
+          {
+            "width": 345,
+            "height": 48,
+            "font": "16px"
+          }
+        ]
+      }
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "metrics": {
+        "width": 1024,
+        "overflow": 1024,
+        "canvasCount": 1,
+        "controls": [
+          {
+            "width": 348.421875,
+            "height": 48,
+            "font": "16px"
+          },
+          {
+            "width": 348.421875,
+            "height": 48,
+            "font": "16px"
+          },
+          {
+            "width": 348.421875,
+            "height": 48,
+            "font": "16px"
+          },
+          {
+            "width": 348.421875,
+            "height": 48,
+            "font": "16px"
+          }
+        ]
+      }
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "metrics": {
+        "width": 1920,
+        "overflow": 1920,
+        "canvasCount": 1,
+        "controls": [
+          {
+            "width": 354.34375,
+            "height": 48,
+            "font": "16px"
+          },
+          {
+            "width": 354.34375,
+            "height": 48,
+            "font": "16px"
+          },
+          {
+            "width": 354.34375,
+            "height": 48,
+            "font": "16px"
+          },
+          {
+            "width": 354.34375,
+            "height": 48,
+            "font": "16px"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "method": "Chrome touch via CDP and standard Gamepad API mock. Native selectOption events and explicit focus fixtures. No physical iPhone/controller claim."
+}

@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 import {preloadPixelFX}from'../visual/PixelFX';
-import {preloadCharacterAppearance}from'../visual/CharacterAppearance';
 import {appearance,type CharacterAppearance,type CompanionSpecies}from'../config/characterPresentation';
 import { CompleteActorArt } from '../visual/CompleteActorArt';
 import { completeAsset,completeKey } from '../visual/CompleteActorFrames';
@@ -30,10 +29,9 @@ export class CharacterPreviewScene extends Phaser.Scene {
  private wave!:Phaser.GameObjects.Ellipse;
  private started=0;private cueMask=0;private element:AstralElement='energy';
  private readonly owner={x:400,y:400,position:{x:400,y:400},health:{current:65,max:100,guardRemaining:0,guardReduction:0},isDead:false};
- constructor(readonly identity:PlayableClass,readonly sex:CharacterSex,private status:(phase:string,caption:string,frame:number)=>void,private loaded:()=>void,private look:CharacterAppearance=appearance(),private species:CompanionSpecies='symbiont'){super('Showcase');}
+ constructor(readonly identity:PlayableClass,readonly sex:CharacterSex,private status:(phase:string,caption:string,frame:number)=>void,private loaded:()=>void,private look:CharacterAppearance=appearance(),private species:CompanionSpecies='symbiont'){super('Showcase');this.look=appearance();}
  preload():void{
   preloadPixelFX(this);
-  preloadCharacterAppearance(this,this.sex,this.identity);
   const base=import.meta.env.BASE_URL+'assets/visual/';
   preloadCompleteSource(this,completeKey(this.identity,this.sex,'none'),completeAsset(this.identity,this.sex,'none'));
   if(this.identity==='hunter')preloadCompleteSource(this,completeKey('hunter',this.sex,'basic'),completeAsset('hunter',this.sex,'basic'));
@@ -67,7 +65,7 @@ export class CharacterPreviewScene extends Phaser.Scene {
   this.xeno?.setSpecies(this.species);this.actor.setCompanion(this.species);
   this.ready=true;this.idle();this.loaded();
  }
- setAppearance(value:CharacterAppearance):void{this.look=appearance(value);if(this.ready){this.actor.setAppearance(this.look);this.game.loop.wake();this.game.events.once(Phaser.Core.Events.POST_RENDER,()=>{if(!this.running)this.game.loop.sleep();});}}
+ setAppearance(_value:CharacterAppearance):void{this.look=appearance();}
  setCompanion(value:CompanionSpecies):void{this.species=value;this.xeno?.setSpecies(value);this.actor?.setCompanion(value);if(this.ready)this.idle();}
  inspect(){
   if(!this.ready)return{ready:false,identity:this.identity,sex:this.sex,appearance:this.look};

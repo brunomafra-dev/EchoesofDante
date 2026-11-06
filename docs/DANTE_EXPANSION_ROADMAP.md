@@ -1,5 +1,7 @@
 # Dante — aprofundar antes de multiplicar
 
+**06/11/2026 · Prioridade de personagens / 0.1.201:** editor de cabelo/rosto/pele rejeitado. Retornar às figuras completas prontas e revisar a seleção com um só personagem. Visual independente da profissão é a direção confirmada; [correção e protótipo](2d-refinement/REVISION_201.md). Os 12 cruzamentos entre visuais e outras profissões ainda carecem de poses; não estão entregues nem liberam jornadas. Preservar quatro pares originais, feras, saves e progressão. Não iniciar expansão de níveis ou colônia nesta correção.
+
 **06/11/2026 · Continuação 2D / 0.1.200:** após gostar da revisão 0.1.199, usuário solicitou corrigir os comandos das feras, personalização compartilhada, falta de cortes próprios e movimento/escala do Guerreiro, e depois ampliar níveis e aprofundar a civilização. [Correções atuais](2d-refinement/REVISION_200.md) e [sequência de progressão/colônia](2d-refinement/NEXT_2D_CAMPAIGN.md). O próximo trabalho deverá inventariar XP finito e escolhas além do nível 10; em seguida, selecionar um núcleo habitado com função que não duplique água/alimento/transporte/energia/Posto já existentes. Não há novo território ou teto de nível entregue na 0.1.200. QA técnico e avaliação humana permanecem separados; aguardar playtest desta correção.
 
 0.1.195 publicada e conferida: aplicação `003323b`, Vercel success/104 hashes, nove relatórios locais e quatro públicos passaram. [Registro](frontier-3d/qa/0.1.195/publication.json). Permanecem o mesmo acampamento/floresta e a espera pela aprovação visual humana.

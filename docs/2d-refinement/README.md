@@ -1,4 +1,6 @@
-# Retorno ao 2D — revisão 0.1.200
+# Retorno ao 2D — revisão 0.1.201
+
+O usuário rejeitou o editor de partes. [Retirada, personagens prontos e protótipo de seleção individual](REVISION_201.md). Qualquer visual com qualquer profissão é a direção confirmada, mas os 12 cruzamentos ainda precisam de poses completas e não estão jogáveis. Os quatro pares originais, saves e feras permanecem. A revisão abaixo é histórica e seus controles de cabelo/rosto/pele foram retirados.
 
 Após o playtest da 0.1.199, correções de impacto das feras, rascunhos independentes por classe, dois cortes novos e passada/ação do Guerreiro. [Escopo, limites, fontes e QA](REVISION_200.md); [continuação solicitada de níveis e civilização](NEXT_2D_CAMPAIGN.md). Os acessos isolados estão na biblioteca. Aprovação humana da nova revisão permanece pendente.
 

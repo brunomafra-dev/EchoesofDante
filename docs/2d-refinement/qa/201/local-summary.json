@@ -1,0 +1,26 @@
+{
+  "technicalLocalQA": {
+    "passed": true,
+    "suites": [
+      "selection",
+      "input",
+      "motion",
+      "native-coop",
+      "impact"
+    ],
+    "build": {
+      "passed": true,
+      "modules": 327,
+      "warnings": "Existing large chunks"
+    },
+    "diffCheck": true
+  },
+  "version": "0.1.201",
+  "supportedPairs": 4,
+  "unsupportedPairsAwaitingFullPoses": 12,
+  "independentFlow": "Isolated review only; incompatible pairs cannot create a character or demonstrate another body. Live game retains original profession/body pairs.",
+  "fullIndependentSelectionDelivered": false,
+  "humanApproval": "pending",
+  "physicalDeviceTest": false,
+  "existingUntracked199Evidence": "Preserved and excluded from this revision."
+}

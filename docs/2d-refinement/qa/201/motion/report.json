@@ -1,0 +1,410 @@
+{
+  "passed": true,
+  "base": "http://localhost:5194",
+  "fixture": "Native inputs with complete original figures; historical appearance query parameters must be ignored. Real campaign untouched.",
+  "cases": [
+    {
+      "cls": "warrior",
+      "sex": "male",
+      "kit": "clothes",
+      "head": "original",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          20,
+          48,
+          49,
+          50,
+          2,
+          42,
+          46,
+          5,
+          51
+        ],
+        "left": [
+          20,
+          64,
+          65,
+          66,
+          67
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          11
+        ]
+      }
+    },
+    {
+      "cls": "warrior",
+      "sex": "male",
+      "kit": "basic",
+      "head": "original",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          48,
+          49,
+          50,
+          2,
+          42,
+          46,
+          5,
+          51
+        ],
+        "left": [
+          67,
+          64,
+          65,
+          66
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "warrior",
+      "sex": "male",
+      "kit": "reinforced",
+      "head": "original",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          20,
+          48,
+          49,
+          50,
+          2,
+          42,
+          46,
+          5,
+          51
+        ],
+        "left": [
+          67,
+          64,
+          65,
+          66,
+          20
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "warrior",
+      "sex": "female",
+      "kit": "clothes",
+      "head": "original",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          20,
+          48,
+          49,
+          50,
+          2,
+          42,
+          46,
+          5,
+          51
+        ],
+        "left": [
+          20,
+          67,
+          64,
+          65,
+          66,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "warrior",
+      "sex": "female",
+      "kit": "basic",
+      "head": "original",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          48,
+          49,
+          50,
+          2,
+          42,
+          46,
+          5,
+          51
+        ],
+        "left": [
+          67,
+          64,
+          65,
+          66
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "warrior",
+      "sex": "female",
+      "kit": "reinforced",
+      "head": "original",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          48,
+          49,
+          50,
+          2,
+          42,
+          46,
+          5,
+          51
+        ],
+        "left": [
+          20,
+          67,
+          64,
+          65,
+          66
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "hunter",
+      "sex": "male",
+      "kit": "clothes",
+      "head": "original",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          20,
+          9,
+          40,
+          10,
+          2,
+          6,
+          38,
+          42
+        ],
+        "left": [
+          20,
+          26,
+          58,
+          25,
+          56
+        ],
+        "basic": [
+          11,
+          8
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "hunter",
+      "sex": "female",
+      "kit": "clothes",
+      "head": "original",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          20,
+          9,
+          40,
+          10,
+          2,
+          6,
+          38,
+          42
+        ],
+        "left": [
+          58,
+          25,
+          56,
+          26
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          11
+        ]
+      }
+    },
+    {
+      "cls": "astral",
+      "sex": "male",
+      "kit": "clothes",
+      "head": "original",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          20,
+          9,
+          40,
+          10,
+          2,
+          34,
+          38,
+          5
+        ],
+        "left": [
+          58,
+          25,
+          56,
+          26,
+          20
+        ],
+        "basic": [
+          11,
+          8
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "astral",
+      "sex": "female",
+      "kit": "clothes",
+      "head": "original",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          9,
+          40,
+          10,
+          2,
+          34,
+          38,
+          5
+        ],
+        "left": [
+          26,
+          58,
+          25,
+          56
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "sex": "male",
+      "kit": "clothes",
+      "head": "original",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          9,
+          40,
+          10,
+          2,
+          34,
+          38,
+          5
+        ],
+        "left": [
+          26,
+          58,
+          25,
+          56,
+          8
+        ],
+        "basic": [
+          11,
+          8
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "sex": "female",
+      "kit": "clothes",
+      "head": "original",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          9,
+          40,
+          10,
+          2,
+          34,
+          38,
+          5,
+          42
+        ],
+        "left": [
+          58,
+          25,
+          56,
+          26
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          11
+        ]
+      }
+    }
+  ],
+  "errors": []
+}

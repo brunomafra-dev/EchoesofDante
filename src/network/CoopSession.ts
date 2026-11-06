@@ -131,7 +131,7 @@ export class CoopSession {
   this.clearChat();this.url=target.href;this.role='connecting';this.endedMessage='';this.message='Conectando à expedição…';this.personalXpGained=0;this.sequence=0;this.epoch=0;this.rewards=new LocalJourney();this.changed();
   this.campaign=undefined;this.campaignSaved=true;this.members=[];this.states.clear();this.requests=[];this.peerDeathId='';this.earnedBosses=[];this.lootAwarded.clear();this.resourceAwarded.clear();this.personalItems=[];this.receipt='';this.rewardTotal=0;this.rewardSaved=true;this.rewardResources={credits:0,materials:[0,0,0],used:0};
   const inventory=validEquipment(this.rewards.load()?.equipment);
-  profile={...profile,characterId:hero.id,appearance:hero.appearance,companion:characterProfiles.canChooseCompanion(hero.id,hero.companion??'symbiont')?hero.companion:'symbiont',build:this.rewards.load()?.progression,potions:this.rewards.load()?.economy?.potions??0,equipment:inventory.slots,bagFree:24-(inventory.items!.length-Object.keys(inventory.equipped!).length)};
+  profile={...profile,characterId:hero.id,appearance:{skin:'original',hair:'original',head:'original'},companion:characterProfiles.canChooseCompanion(hero.id,hero.companion??'symbiont')?hero.companion:'symbiont',build:this.rewards.load()?.progression,potions:this.rewards.load()?.economy?.potions??0,equipment:inventory.slots,bagFree:24-(inventory.items!.length-Object.keys(inventory.equipped!).length)};
   this.needsBonds=profile.companion==='bulwark'||profile.companion==='frostling';
   this.needsCuts=profile.appearance?.head==='curly'||profile.appearance?.head==='tied';
   this.needsPresentation=Object.values(profile.appearance??{}).some(v=>v!=='original')||profile.companion!=='symbiont';

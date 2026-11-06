@@ -5,8 +5,7 @@ import { ASTRAL,ELEMENT_COLORS,XENOBINDER,type AstralElement,type PlayableClass 
 import type { KineticPose } from '../combat/KineticCharge';
 import {preloadPixelFX}from'./PixelFX';
 import{preloadCompanionArt}from'./CompanionArt';
-import {preloadCharacterAppearance,applyCharacterAppearance}from'./CharacterAppearance';
-import {appearance,companion,type CharacterAppearance,type CompanionSpecies}from'../config/characterPresentation';
+import {companion,type CompanionSpecies}from'../config/characterPresentation';
 import{companionInfo,GUARDIAN_RADIUS,glacialRadius}from'../config/companions';
 import {preloadCompleteSource,completeSource}from'./CompleteActorSources';
 import { COMPLETE_DISPLAY,COMPLETE_FEET,COMPLETE_FRAME,COMPLETE_COLUMNS,COMPLETE_STYLES,completeAsset,completeFrameCount,completeFrame,completeKey,completeMuzzle,composeCompleteAtlas,stableCompleteDirection } from './CompleteActorFrames';
@@ -17,7 +16,6 @@ export function preloadCompleteActors(scene:Phaser.Scene,cast?:readonly {classId
  if(!cast||cast.some(p=>p.classId==='xenobinder'))preloadCompanionArt(scene);
  for(const cls of ['warrior','hunter','astral','xenobinder'] as const)for(const sex of ['male','female']as const)for(const style of COMPLETE_STYLES){
   if(cast&&!cast.some(actor=>actor.classId===cls&&actor.sex===sex))continue;
-  if(style==='none')preloadCharacterAppearance(scene,sex,cls);
   const key=completeKey(cls,sex,style);
   preloadCompleteSource(scene,key,completeAsset(cls,sex,style));
  }
@@ -39,7 +37,6 @@ export class CompleteActorArt {
  private aimingUntil=0;
  private contacts:{x:number;y:number}[][]=[];
  private look=equipmentLook();private style:WeaponStyle='starter';private signature='';
- private appearance:CharacterAppearance=appearance();
  private species:CompanionSpecies='symbiont';
  private readonly texture:Phaser.Textures.CanvasTexture;
  private readonly guide:Phaser.GameObjects.Graphics;
@@ -60,12 +57,14 @@ export class CompleteActorArt {
  setEquipment(slots:EquipmentSnapshot['slots']):void{this.look=equipmentAppearance(slots);this.style=weaponStyle(slots.weapon);this.bake();}
  setEquipmentLook(look:EquipmentLook):void{this.look={...look};this.bake();}
  setWeaponLook(style:WeaponStyle):void{this.style=style;this.bake();}
- setAppearance(value?:unknown):void{this.appearance=appearance(value);this.bake();}
+ // Old profiles/snapshots retain their metadata; every 2D body uses its
+ // authored class/sex/equipment paintings, including heads and action poses.
+ setAppearance(_value?:unknown):void{}
  setCompanion(value?:unknown):void{this.species=companion(value);}
  private bake():void{
-  const signature=JSON.stringify([this.look,this.style,this.appearance]);if(signature===this.signature)return;this.signature=signature;
+  const signature=JSON.stringify([this.look,this.style]);if(signature===this.signature)return;this.signature=signature;
   const sources=Object.fromEntries(COMPLETE_STYLES.map(style=>[style,completeSource(this.scene,completeKey(this.identity,this.sex,style))])) as Record<typeof COMPLETE_STYLES[number],CanvasImageSource>;
-  composeCompleteAtlas(this.texture.context,sources,this.look,this.style,this.identity,this.sex);applyCharacterAppearance(this.scene,this.texture.context,this.identity,this.sex,this.look,this.appearance);this.texture.refresh();this.bakeCount++;
+  composeCompleteAtlas(this.texture.context,sources,this.look,this.style,this.identity,this.sex);this.texture.refresh();this.bakeCount++;
   this.contacts=[];
   for(let f=0;f<completeFrameCount(this.identity);f++){
    const pixels=this.texture.context.getImageData(f%COMPLETE_COLUMNS*COMPLETE_FRAME+30,Math.floor(f/COMPLETE_COLUMNS)*COMPLETE_FRAME+160,135,24).data;

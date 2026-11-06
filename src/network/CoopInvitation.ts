@@ -19,7 +19,7 @@ export function invitationLink(code: string): string {
   const url = new URL(lab?filename:import.meta.env.BASE_URL, location.href);
   url.search = ''; url.hash = '';
   url.searchParams.set('sala', code);
-  if(filename==='campaign-playtest.html'&&['198','199','200'].includes(new URLSearchParams(location.search).get('refinement')??''))url.searchParams.set('refinement',new URLSearchParams(location.search).get('refinement')!);
+  if(filename==='campaign-playtest.html'&&['198','199','200','201'].includes(new URLSearchParams(location.search).get('refinement')??''))url.searchParams.set('refinement',new URLSearchParams(location.search).get('refinement')!);
   if(filename==='campaign-playtest.html'&&new URLSearchParams(location.search).has('chat'))url.searchParams.set('chat','1');
   if(filename==='campaign-playtest.html'&&new URLSearchParams(location.search).has('missions'))url.searchParams.set('missions','1');
   if(filename==='campaign-playtest.html'&&new URLSearchParams(location.search).has('settlement'))url.searchParams.set('settlement','1');
