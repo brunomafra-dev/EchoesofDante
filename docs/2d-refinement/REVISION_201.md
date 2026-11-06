@@ -6,7 +6,7 @@ O usuário rejeitou os cortes e toda a edição por partes da 0.1.200: quer os q
 
 - Controles de edição retirados da criação, da lista salva e dos laboratórios. Composição de cabeças/cores removida do runtime; os atlas de customização não são mais requisitados. Os arquivos históricos ficam preservados, sem carregamento.
 - Os dados `appearance` antigos continuam legíveis e guardados no perfil, sem migração destrutiva. O corpo exibido usa as pinturas originais da classe/gênero/equipamento; coop anuncia a apresentação original. Nenhum cabelo antigo é aplicado a aliados.
-- A criação usa uma única prévia por vez, com formulário e detalhes de profissão ao lado, responsivos. Demonstração manual reaproveita combate, arma, básico e Q da classe; movimento reduzido é respeitado fora do botão explícito. Não reutiliza assets de Warcraft/Diablo.
+- A criação usa uma única prévia por vez, com formulário e detalhes de profissão ao lado, responsivos. Escolher um par existente demonstra a profissão automaticamente; o botão permite repetir. A demonstração reaproveita combate, arma, básico e Q da classe; movimento reduzido é respeitado fora do botão explícito. Não reutiliza assets de Warcraft/Diablo.
 - O Domador mantém **Escolher fera**, com bloqueios pelas vitórias originais, cancelar/salvar e demonstração. Outras classes não mostram esse botão. Broto/Filhote, progressão, IDs, recompensas e protocolo permanecem.
 
 ## Limite da proposta independente

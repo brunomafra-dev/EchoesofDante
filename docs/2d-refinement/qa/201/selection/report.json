@@ -2,6 +2,8 @@
   "passed": true,
   "base": "http://localhost:5194",
   "checks": [
+    "Live bound selector: one complete preview follows profession; legacy editor URLs expose no cosmetic controls.",
+    "Matching profession auto-demonstrates basic and Q; unsupported pair stops it. Reduced motion remains idle until explicit replay.",
     "One preview and ordered controls; no face/hair/skin editor or atlas downloads.",
     "All 32 body/profession/gender selections preserve the selected complete body. Eight existing pairs playable; 24 missing-pose pairs explicitly blocked.",
     "Eight original profession demonstrations, draft/back, original profile creation and reload.",

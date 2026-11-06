@@ -95,6 +95,7 @@ export class CharacterSelection {
       status.hidden=available();status.textContent=available()?'':this.occupied.includes(profession)?'Esta profissão já está ocupada na equipe. Escolha outra.':'Este personagem ainda não tem poses completas para esta profissão. A combinação está em preparação e não pode iniciar uma jornada nesta revisão.';
       replay.disabled=!available();create.disabled=!available()||!input.value.trim();
       layout.dataset.preset=preset;layout.dataset.profession=profession;layout.dataset.available=String(available());
+      if(available())current.play();
       remember();
     };
     sexSelect.addEventListener('change',update);
