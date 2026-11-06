@@ -21,7 +21,7 @@ export class CaveArt{
   this.sites('forest');this.sites('cavern');
  }
  private build(zone:'cavern'|'warden',contour:{x:number;y:number}[]){
-  const group=this.world.groups[zone],shape=new T.Shape(contour.map(p=>new T.Vector2(p.x,-p.y))),ground=new T.ShapeGeometry(shape);ground.rotateX(-Math.PI/2);
+  const group=new T.Group();group.name=zone==='warden'?'warden-environment196':'cavern-environment196';this.world.groups[zone].add(group);const shape=new T.Shape(contour.map(p=>new T.Vector2(p.x,-p.y))),ground=new T.ShapeGeometry(shape);ground.rotateX(-Math.PI/2);
   const p=ground.attributes.position,uv=ground.attributes.uv;for(let i=0;i<p.count;i++)uv.setXY(i,p.getX(i)/4,p.getZ(i)/4);
   const floor=material('#b6b3a9',.04,.94);floor.map=this.texture('/assets/arrival-3d/cavern-stone-196.webp',true);
   floor.normalMap=this.texture('/assets/frontier-3d/Rock035_1K-JPG_NormalGL.webp');floor.normalMap.wrapS=floor.normalMap.wrapT=T.RepeatWrapping;floor.normalScale.set(.38,.38);

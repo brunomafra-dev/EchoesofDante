@@ -1,0 +1,10 @@
+{
+  "passed": false,
+  "base": "http://127.0.0.1:5193",
+  "checks": [],
+  "layouts": [],
+  "resources": [],
+  "fallbacks": [],
+  "errors": [],
+  "failure": "page.waitForFunction: Timeout 120000ms exceeded.\n    at ready (C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\scripts\\qa-warden-scene197.mjs:7:18)\n    at C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\scripts\\qa-warden-scene197.mjs:13:96"
+}

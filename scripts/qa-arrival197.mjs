@@ -1,0 +1,4 @@
+import{spawn}from'node:child_process';
+const base=process.env.QA_BASE??'http://127.0.0.1:5193',root=process.env.QA_ROOT??'docs/frontier-3d/qa/0.1.197';
+const jobs=[['scene','scripts/qa-warden-scene197.mjs'],['state','scripts/qa-arrival196-state.mjs'],['art','scripts/qa-arrival196-warden-art.mjs'],['boss','scripts/qa-arrival196-boss.mjs'],['input','scripts/qa-arrival3d-input.mjs'],['entry','scripts/qa-arrival-entry191.mjs'],['performance','scripts/qa-warden-scene197-performance.mjs']];
+for(const[id,file]of jobs){if(process.env.QA_ONLY&&!process.env.QA_ONLY.split(',').includes(id))continue;console.log('ARRIVAL197',id);const code=await new Promise(resolve=>{const p=spawn(process.execPath,[file],{stdio:'inherit',env:{...process.env,QA_BASE:base,QA_VERSION:'0.1.197',QA_OUT:root+'/'+id,QA_SCENE:'197',QA_WARDEN_MODEL:'proposal',QA_CLASSES:'warrior,hunter,astral,xenobinder'}});p.on('exit',resolve);p.on('error',()=>resolve(1));});if(code!==0){process.exitCode=1;break;}}

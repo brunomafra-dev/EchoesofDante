@@ -1,4 +1,6 @@
 import {CaveArt,caveContour}from'./Caves';
+import{WardenScene}from'./WardenScene';
+import type{WardenVisual}from'./Warden';
 import {SITES}from'./Journey';
 import type{Trial}from'./model';
 import{NPC_LOOKS}from'./looks';
@@ -33,12 +35,12 @@ export class ArrivalWorld{
  bossBody?:T.Vector3;zone:Zone='base';private environment:T.WebGLRenderTarget;private randomState=319;private wind={value:0};
  private trees={base:[] as Tree[],forest:[] as Tree[]};private rocks={base:[] as {x:number;z:number;radius:number}[],forest:[] as {x:number;z:number;radius:number}[]};
  readonly cameraObstacles:Record<Zone,T.Sphere[]>={base:[],forest:[],cavern:[],warden:[]};
- private caves:CaveArt;private progress?:Trial;private sky:T.Mesh;
+ private caves:CaveArt;private progress?:Trial;private sky:T.Mesh;private review?:WardenScene;
  private authored:{name:string;x:number;z:number}[]=[];
  private batches={base:new Batches(),forest:new Batches()};private materials:T.Material[]=[];
  private steel=material('#a9aca0',.28,.72);private dark=material('#3f4b48',.35,.7);private amber=material('#b0743b',.3,.64);private glass=material('#243f45',.65,.22);private canvas=material('#aaa187');private wood=material('#68674c');private glow=material('#72cfc0',.2,.3);
  private rand(){this.randomState=(1664525*this.randomState+1013904223)>>>0;return this.randomState/4294967296;}
- constructor(readonly renderer:T.WebGLRenderer){
+ constructor(readonly renderer:T.WebGLRenderer,readonly sceneReview=false,readonly wardenVisual:WardenVisual='original'){
   const s=this.scene;s.background=new T.Color('#a6b4ae');s.fog=new T.FogExp2('#a6b4ae',.012);
   const pmrem=new T.PMREMGenerator(renderer),room=new RoomEnvironment();this.environment=pmrem.fromScene(room,.04);s.environment=this.environment.texture;s.environmentIntensity=.3;room.dispose();pmrem.dispose();
   s.add(new T.HemisphereLight('#c3dae4','#4a4435',1.45),new T.AmbientLight('#c4d2c5',.18));this.sun=new T.DirectionalLight('#ffe0b4',3.6);this.sun.position.set(-18,30,8);this.sun.castShadow=true;this.sun.shadow.mapSize.set(1536,1536);Object.assign(this.sun.shadow.camera,{left:-25,right:25,top:25,bottom:-25,near:1,far:90});this.sun.shadow.normalBias=.035;s.add(this.sun,this.sun.target);
@@ -46,7 +48,7 @@ export class ArrivalWorld{
   s.add(...Object.values(this.groups));for(const zone of['forest','cavern','warden']as const)this.groups[zone].visible=false;
   const paint=paintedMetal();for(const m of[this.steel,this.dark,this.amber])m.map=paint;this.glow.emissive.set('#458b7a');this.glow.emissiveIntensity=.5;
   this.materials.push(this.steel,this.dark,this.amber,this.glass,this.canvas,this.wood,this.glow);
-  this.ground('base');this.ground('forest');this.camp();this.forest();this.grass('base');this.grass('forest');this.caves=new CaveArt(this);
+  this.ground('base');this.ground('forest');this.camp();this.forest();this.grass('base');this.grass('forest');this.caves=new CaveArt(this);if(sceneReview)this.review=new WardenScene(this);
   for(const zone of['base','forest']as const){for(const tree of this.trees[zone]){this.cameraObstacles[zone].push(new T.Sphere(new T.Vector3(tree.x,tree.height*.72,tree.z),tree.height*.36));for(const y of[.8,1.8,2.8])if(y<tree.height*.5)this.cameraObstacles[zone].push(new T.Sphere(new T.Vector3(tree.x,y,tree.z),.24));}for(const rock of this.rocks[zone])this.cameraObstacles[zone].push(new T.Sphere(new T.Vector3(rock.x,rock.radius*.7,rock.z),rock.radius*.85));}
  }
  private add(zone:Zone,g:T.BufferGeometry,m:T.Material,x:number,y:number,z:number,sx=1,sy=1,sz=1,yaw=0,solid=true,shadow=true){this.batches[zone as 'base'|'forest'].add(g,m,x,y,z,sx,sy,sz,yaw,solid,shadow);}
@@ -102,12 +104,13 @@ export class ArrivalWorld{
  lineOfSight(zone:Zone,a:T.Vector3,b:T.Vector3){const dist=a.distanceTo(b);for(let i=1;i<Math.ceil(dist/.3);i++){const t=i/Math.ceil(dist/.3);if(this.blocked(zone,T.MathUtils.lerp(a.x,b.x,t),T.MathUtils.lerp(a.z,b.z,t),.05))return false;}return true;}
  ceilingHeight(zone:Zone,x:number,z:number){if(zone!=='base')return Infinity;for(const n of NPCS.slice(0,3))if(Math.abs(x-n.x/40)<2.5&&z>n.y/40-2.5&&z<n.y/40+.2)return 2.4;return Infinity;}
  setProgress(trial:Trial){this.progress=trial;this.caves.update(trial);}
- setZone(zone:Zone){this.zone=zone;for(const [id,g]of Object.entries(this.groups))g.visible=id===zone;const cave=zone==='cavern'||zone==='warden';this.sky.visible=!cave;this.sun.intensity=cave?1.7:3.6;this.sun.color.set(cave?'#b4b4d3':'#ffe0b4');this.scene.background=new T.Color(cave?'#252a30':'#a6b4ae');this.scene.fog=new T.FogExp2(cave?'#252a30':'#a6b4ae',cave?.026:.012);}
- updateFocus(p:T.Vector3){this.sun.position.set(p.x-18,30,p.z+8);this.sun.target.position.set(p.x,0,p.z);}
+ setZone(zone:Zone){this.zone=zone;for(const [id,g]of Object.entries(this.groups))g.visible=id===zone;const cave=zone==='cavern'||zone==='warden';this.sky.visible=!cave;this.sun.intensity=cave?1.7:3.6;this.sun.color.set(cave?'#b4b4d3':'#ffe0b4');this.scene.background=new T.Color(cave?'#252a30':'#a6b4ae');this.scene.fog=new T.FogExp2(cave?'#252a30':'#a6b4ae',cave?.026:.012);this.review?.setZone(zone);}
+ updateFocus(p:T.Vector3){this.sun.position.set(p.x-18,30,p.z+8);this.sun.target.position.set(p.x,0,p.z);this.review?.focus(p);}
+ inspectReview(){return this.review?.inspect();}
  async load(){
   await loadIdentity();batchIdentity(this.batches.forest,'mechanism',layout.discovery.SIGNAL_THRESHOLD.mechanismX/40,0,layout.discovery.SIGNAL_THRESHOLD.mechanismY/40);for(const item of this.authored)batchIdentity(this.batches.base,item.name,item.x,0,item.z);
   const loader=new GLTFLoader(),[rocks,tree,ferns,farTree]=await Promise.all(['rock-moss-far.glb','tree_small_02.glb','fern_02.glb','tree_small_02_far.glb'].map(f=>loader.loadAsync('/assets/frontier-3d/'+f)));
-  for(const asset of[rocks,tree,ferns,farTree])asset.scene.updateMatrixWorld(true);const shared=new Map<string,T.Material>();for(const asset of[tree,farTree])asset.scene.traverse(o=>{if(o instanceof T.Mesh){const m=o.material as T.Material;if(shared.has(m.name)){o.material=shared.get(m.name)!;for(const value of Object.values(m))if(value instanceof T.Texture)value.dispose();m.dispose();}else shared.set(m.name,m);}});
+  for(const asset of[rocks,tree,ferns,farTree])asset.scene.updateMatrixWorld(true);await this.review?.load(rocks.scene);const shared=new Map<string,T.Material>();for(const asset of[tree,farTree])asset.scene.traverse(o=>{if(o instanceof T.Mesh){const m=o.material as T.Material;if(shared.has(m.name)){o.material=shared.get(m.name)!;for(const value of Object.values(m))if(value instanceof T.Texture)value.dispose();m.dispose();}else shared.set(m.name,m);}});
   const rockMeshes:T.Mesh[]=[],fernMeshes:T.Mesh[]=[];rocks.scene.traverse(o=>{if(o instanceof T.Mesh)rockMeshes.push(o);});ferns.scene.traverse(o=>{if(o instanceof T.Mesh)fernMeshes.push(o);});
   const canopy=await Promise.all([0,1].map(i=>new T.TextureLoader().loadAsync('/assets/frontier-3d/tree-canopy-'+i+'.webp'))),canopyMats=canopy.map(map=>{map.colorSpace=T.SRGBColorSpace;return new T.MeshBasicMaterial({map,alphaTest:.38,side:T.DoubleSide,toneMapped:false});});
   const foliageMaterials=new Set<T.Material>(canopyMats);for(const source of[tree,farTree])source.scene.traverse(o=>{if(o instanceof T.Mesh)for(const m of Array.isArray(o.material)?o.material:[o.material])foliageMaterials.add(m);});for(const m of foliageMaterials)this.foliage.apply(m);

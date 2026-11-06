@@ -1,0 +1,18 @@
+{
+  "file": "warden-197.glb",
+  "author": "Echoes of Dante",
+  "license": "CC0-1.0",
+  "source": "scripts/asset-tools/author-warden197.py",
+  "bytes": 1671088,
+  "sha256": "1ed6fe9b32b03468c861b03ba95794ff8bd0b87dab53264402ff219236212262",
+  "triangles": 10938,
+  "bones": 9,
+  "materials": 6,
+  "textureResolution": [
+    512,
+    512
+  ],
+  "rootMotion": false,
+  "animations": "Nine-bone poses driven by the existing encounter events; no imported animation clips.",
+  "reviewOnly": true
+}

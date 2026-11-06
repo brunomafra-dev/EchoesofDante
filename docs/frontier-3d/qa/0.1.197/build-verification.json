@@ -1,0 +1,58 @@
+{
+  "version": "0.1.197",
+  "passed": true,
+  "baseline": "3383376 / published 0.1.196",
+  "canonical2DGameplaySourcesUnchanged": true,
+  "wardenGameplayMethodsUnchanged": true,
+  "physicalWorldMethodsUnchanged": true,
+  "menuChange": "Only the existing 3D entry URL version.",
+  "preservedPreviousPublishedFiles": 99,
+  "expectedRebuiltOrUpdatedFiles": [
+    "/arrival-3d.html",
+    "/arrival-workshop.html",
+    "/assets/Effects-blnFtl7S.js",
+    "/assets/OrbitControls-gAFM1cj3.js",
+    "/assets/arrival-3d/CREDITS.md",
+    "/assets/arrival3d-BsOsE8CS.css",
+    "/assets/arrival3d-DtSZO00V.js",
+    "/assets/arrivalWorkshop-DmXDLIdW.js",
+    "/assets/main-1bCKBxf4.js",
+    "/index.html",
+    "/test-library.html"
+  ],
+  "localReports": [
+    "docs/frontier-3d/qa/0.1.197/scene/report.json",
+    "docs/frontier-3d/qa/0.1.197/state/report.json",
+    "docs/frontier-3d/qa/0.1.197/art/report.json",
+    "docs/frontier-3d/qa/0.1.197/boss/report.json",
+    "docs/frontier-3d/qa/0.1.197/input/report.json",
+    "docs/frontier-3d/qa/0.1.197/entry/report.json",
+    "docs/frontier-3d/qa/0.1.197/performance/report.json"
+  ],
+  "models": [
+    {
+      "file": "warden-197.glb",
+      "bytes": 1671088,
+      "triangles": 10938,
+      "vertices": 6632,
+      "materials": 6,
+      "textures": 12,
+      "images": 3,
+      "bones": 9,
+      "sha256": "1ed6fe9b32b03468c861b03ba95794ff8bd0b87dab53264402ff219236212262"
+    },
+    {
+      "file": "warden-arena-197.glb",
+      "bytes": 60172,
+      "triangles": 2320,
+      "vertices": 1377,
+      "materials": 2,
+      "textures": 0,
+      "images": 0,
+      "bones": 0,
+      "sha256": "485863c1d1c561ce1a75776c3fb30eaef70329d9acec6aa56dad4c9525ae6c05"
+    }
+  ],
+  "publicationFiles": 138,
+  "humanApproval": "pending"
+}

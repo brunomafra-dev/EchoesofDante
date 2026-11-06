@@ -1,0 +1,18 @@
+{
+  "version": "0.1.197",
+  "date": "2026-11-06",
+  "cpu": "Intel Celeron N5105 @ 2.00 GHz",
+  "gpu": "Intel UHD Graphics 0x4E61, ANGLE D3D11",
+  "browser": "Headless Chrome 156, Playwright native input/mock standard gamepad",
+  "viewport": [
+    1440,
+    900
+  ],
+  "dpr": 1,
+  "build": "npm run build includes TypeScript; Vite 320 modules; existing chunk-size warning",
+  "runtime": "Three.js 0.187.0, original Phaser campaign unchanged",
+  "production": "Blender 4.5.15 LTS CPU mesh/texture export, no offline render or cloud 3D generation",
+  "physicalPhoneTest": false,
+  "humanApproval": "pending",
+  "published": false
+}

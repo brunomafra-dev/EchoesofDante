@@ -1,0 +1,383 @@
+{
+  "passed": true,
+  "base": "http://127.0.0.1:5193",
+  "checks": [
+    "Real model is rendered (6004 triangles), nine-bone poses change through all five attacks; death holds; repeated model swaps retain stable geometry/texture counts; no console error."
+  ],
+  "errors": [],
+  "poses": [
+    {
+      "motion": "sweep",
+      "wind": {
+        "art": {
+          "requested": "proposal",
+          "active": "proposal",
+          "message": "",
+          "geometry": {
+            "triangles": 10938,
+            "meshes": 6,
+            "materials": 6
+          }
+        },
+        "hp": 900,
+        "maxHp": 900,
+        "state": "TELEGRAPH",
+        "phase": 1,
+        "attack": "sweep",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 0.4166999999999998,
+        "active": 0.4166999999999998,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 25.415758733658016
+      },
+      "strike": {
+        "art": {
+          "requested": "proposal",
+          "active": "proposal",
+          "message": "",
+          "geometry": {
+            "triangles": 10938,
+            "meshes": 6,
+            "materials": 6
+          }
+        },
+        "hp": 900,
+        "maxHp": 900,
+        "state": "EXECUTE",
+        "phase": 1,
+        "attack": "sweep",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 1.1999999999999995,
+        "active": 0.39999999999999947,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 23.536359066380697
+      }
+    },
+    {
+      "motion": "slam",
+      "wind": {
+        "art": {
+          "requested": "proposal",
+          "active": "proposal",
+          "message": "",
+          "geometry": {
+            "triangles": 10938,
+            "meshes": 6,
+            "materials": 6
+          }
+        },
+        "hp": 900,
+        "maxHp": 900,
+        "state": "TELEGRAPH",
+        "phase": 1,
+        "attack": "slam",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 0.4166000000000004,
+        "active": 0.4166000000000004,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 26.247368339510558
+      },
+      "strike": {
+        "art": {
+          "requested": "proposal",
+          "active": "proposal",
+          "message": "",
+          "geometry": {
+            "triangles": 10938,
+            "meshes": 6,
+            "materials": 6
+          }
+        },
+        "hp": 900,
+        "maxHp": 900,
+        "state": "EXECUTE",
+        "phase": 1,
+        "attack": "slam",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 1.1666000000000007,
+        "active": 0.3666000000000007,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 25.899896528522433
+      }
+    },
+    {
+      "motion": "rush",
+      "wind": {
+        "art": {
+          "requested": "proposal",
+          "active": "proposal",
+          "message": "",
+          "geometry": {
+            "triangles": 10938,
+            "meshes": 6,
+            "materials": 6
+          }
+        },
+        "hp": 900,
+        "maxHp": 900,
+        "state": "TELEGRAPH",
+        "phase": 1,
+        "attack": "rush",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 0.4332000000000009,
+        "active": 0.4332000000000009,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 25.587724108540712
+      },
+      "strike": {
+        "art": {
+          "requested": "proposal",
+          "active": "proposal",
+          "message": "",
+          "geometry": {
+            "triangles": 10938,
+            "meshes": 6,
+            "materials": 6
+          }
+        },
+        "hp": 900,
+        "maxHp": 900,
+        "state": "EXECUTE",
+        "phase": 1,
+        "attack": "rush",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 1.1832000000000011,
+        "active": 0.3832000000000011,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 25.461476709701273
+      }
+    },
+    {
+      "motion": "signal",
+      "wind": {
+        "art": {
+          "requested": "proposal",
+          "active": "proposal",
+          "message": "",
+          "geometry": {
+            "triangles": 10938,
+            "meshes": 6,
+            "materials": 6
+          }
+        },
+        "hp": 900,
+        "maxHp": 900,
+        "state": "TELEGRAPH",
+        "phase": 1,
+        "attack": "signal",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 0.41669999999999996,
+        "active": 0.41669999999999996,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 26.304573610856934
+      },
+      "strike": {
+        "art": {
+          "requested": "proposal",
+          "active": "proposal",
+          "message": "",
+          "geometry": {
+            "triangles": 10938,
+            "meshes": 6,
+            "materials": 6
+          }
+        },
+        "hp": 900,
+        "maxHp": 900,
+        "state": "EXECUTE",
+        "phase": 1,
+        "attack": "signal",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 1.1667000000000003,
+        "active": 0.36670000000000025,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 26.28479276910808
+      }
+    },
+    {
+      "motion": "echoes",
+      "wind": {
+        "art": {
+          "requested": "proposal",
+          "active": "proposal",
+          "message": "",
+          "geometry": {
+            "triangles": 10938,
+            "meshes": 6,
+            "materials": 6
+          }
+        },
+        "hp": 900,
+        "maxHp": 900,
+        "state": "TELEGRAPH",
+        "phase": 1,
+        "attack": "echoes",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 0.4166000000000003,
+        "active": 0.4166000000000003,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 26.317142260618915
+      },
+      "strike": {
+        "art": {
+          "requested": "proposal",
+          "active": "proposal",
+          "message": "",
+          "geometry": {
+            "triangles": 10938,
+            "meshes": 6,
+            "materials": 6
+          }
+        },
+        "hp": 900,
+        "maxHp": 900,
+        "state": "EXECUTE",
+        "phase": 1,
+        "attack": "echoes",
+        "exposed": false,
+        "connected": false,
+        "yaw": 0,
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "elapsed": 1.1666000000000005,
+        "active": 0.3666000000000005,
+        "until": 0,
+        "marks": [],
+        "bolts": [],
+        "bones": 9,
+        "pose": 26.284797044696404
+      }
+    }
+  ],
+  "resources": [
+    {
+      "calls": 16,
+      "triangles": 21940,
+      "textures": 26,
+      "geometries": 22
+    },
+    {
+      "calls": 16,
+      "triangles": 21940,
+      "textures": 26,
+      "geometries": 22
+    },
+    {
+      "calls": 16,
+      "triangles": 21940,
+      "textures": 26,
+      "geometries": 22
+    },
+    {
+      "calls": 16,
+      "triangles": 21940,
+      "textures": 26,
+      "geometries": 22
+    },
+    {
+      "calls": 16,
+      "triangles": 21940,
+      "textures": 26,
+      "geometries": 22
+    },
+    {
+      "calls": 16,
+      "triangles": 21940,
+      "textures": 26,
+      "geometries": 22
+    }
+  ]
+}

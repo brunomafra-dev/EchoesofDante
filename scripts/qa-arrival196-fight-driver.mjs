@@ -17,6 +17,9 @@ export async function driveFight(p){return p.evaluate(()=>new Promise(resolve=>{
    if(b.attack==='echoes'&&['TELEGRAPH','EXECUTE'].includes(b.state)&&b.marks.some(m=>Math.hypot(x-m[0],z-m[2])<2.7))continue;
    // Reject a route that crosses the guardian's physical footprint.
    const vx=x-px,vz=z-pz,l=vx*vx+vz*vz,k=l?Math.max(0,Math.min(1,((bx-px)*vx+(bz-pz)*vz)/l)):0;if(Math.hypot(px+vx*k-bx,pz+vz*k-bz)<Math.min(1.88,dist-.03))continue;
+   // A clear destination can still lie behind a native obstacle. Reject paths
+   // through those footprints; permit an outward escape when already at an edge.
+   let crosses=false;for(const o of s.solids){if(o.zone!=='warden')continue;const k=l?Math.max(0,Math.min(1,((o.x-px)*vx+(o.z-pz)*vz)/l)):0,closest=Math.hypot(px+vx*k-o.x,pz+vz*k-o.z),initial=Math.hypot(px-o.x,pz-o.z);if(closest<Math.min(o.radius+.42,initial-.015)){crosses=true;break;}}if(crosses)continue;
    const cost=Math.hypot(x-px,z-pz)+Math.abs(i)*.08;if(cost<score){score=cost;target=[x,z];}
   }
   target??=[Math.max(14,Math.min(39,px-dz*.25)),Math.max(12,Math.min(25,pz+dx*.25))];if(b.state==='DORMANT')target=[22.1,19];

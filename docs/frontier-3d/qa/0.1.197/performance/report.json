@@ -1,0 +1,148 @@
+{
+  "passed": true,
+  "base": "http://127.0.0.1:5193",
+  "conditions": "Sequential isolated idle scenes. 1440x900, DPR 1, eight-second warmup and three samples two seconds apart. Live dormant boss, no combat; no other QA/build/authoring in parallel. FPS is the existing real rendered-frame counter. Not an iPhone or combat benchmark.",
+  "samples": [
+    {
+      "model": "proposal",
+      "gpu": {
+        "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "cores": 4
+      },
+      "samples": [
+        {
+          "fps": 60.00793493354489,
+          "renderer": {
+            "calls": 60,
+            "triangles": 102600,
+            "textures": 45,
+            "geometries": 34
+          },
+          "boss": "DORMANT",
+          "art": {
+            "requested": "proposal",
+            "active": "proposal",
+            "message": "",
+            "geometry": {
+              "triangles": 10938,
+              "meshes": 6,
+              "materials": 6
+            }
+          }
+        },
+        {
+          "fps": 59.49107633854924,
+          "renderer": {
+            "calls": 60,
+            "triangles": 102600,
+            "textures": 45,
+            "geometries": 34
+          },
+          "boss": "DORMANT",
+          "art": {
+            "requested": "proposal",
+            "active": "proposal",
+            "message": "",
+            "geometry": {
+              "triangles": 10938,
+              "meshes": 6,
+              "materials": 6
+            }
+          }
+        },
+        {
+          "fps": 59.51495313197443,
+          "renderer": {
+            "calls": 60,
+            "triangles": 102600,
+            "textures": 45,
+            "geometries": 34
+          },
+          "boss": "DORMANT",
+          "art": {
+            "requested": "proposal",
+            "active": "proposal",
+            "message": "",
+            "geometry": {
+              "triangles": 10938,
+              "meshes": 6,
+              "materials": 6
+            }
+          }
+        }
+      ]
+    },
+    {
+      "model": "previous",
+      "gpu": {
+        "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00004E61) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "cores": 4
+      },
+      "samples": [
+        {
+          "fps": 59.999008280854895,
+          "renderer": {
+            "calls": 58,
+            "triangles": 92732,
+            "textures": 44,
+            "geometries": 33
+          },
+          "boss": "DORMANT",
+          "art": {
+            "requested": "original",
+            "active": "original",
+            "message": "",
+            "geometry": {
+              "triangles": 6004,
+              "meshes": 5,
+              "materials": 5
+            }
+          }
+        },
+        {
+          "fps": 59.49702514874255,
+          "renderer": {
+            "calls": 58,
+            "triangles": 92732,
+            "textures": 44,
+            "geometries": 33
+          },
+          "boss": "DORMANT",
+          "art": {
+            "requested": "original",
+            "active": "original",
+            "message": "",
+            "geometry": {
+              "triangles": 6004,
+              "meshes": 5,
+              "materials": 5
+            }
+          }
+        },
+        {
+          "fps": 59.50314870828579,
+          "renderer": {
+            "calls": 58,
+            "triangles": 92732,
+            "textures": 44,
+            "geometries": 33
+          },
+          "boss": "DORMANT",
+          "art": {
+            "requested": "original",
+            "active": "original",
+            "message": "",
+            "geometry": {
+              "triangles": 6004,
+              "meshes": 5,
+              "materials": 5
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

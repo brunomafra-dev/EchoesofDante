@@ -1,0 +1,20 @@
+{
+  "file": "warden-arena-197.glb",
+  "author": "Echoes of Dante",
+  "license": "CC0-1.0",
+  "source": "scripts/asset-tools/author-warden197.py",
+  "bytes": 60172,
+  "sha256": "485863c1d1c561ce1a75776c3fb30eaef70329d9acec6aa56dad4c9525ae6c05",
+  "triangles": 2320,
+  "materials": 2,
+  "textures": 0,
+  "sharedRuntimeTextures": "Existing cave material and Poly Haven rock maps, shared without a new download",
+  "placement": [
+    27,
+    0,
+    18.75
+  ],
+  "nativeFootprints": 13,
+  "collisionChanges": false,
+  "reviewOnly": true
+}

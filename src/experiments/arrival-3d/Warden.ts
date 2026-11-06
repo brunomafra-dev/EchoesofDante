@@ -4,8 +4,14 @@ import {clone}from'three/addons/utils/SkeletonUtils.js';
 import {WARDEN as W,WARDEN_PATTERNS,type WardenAttack,type WardenPhase}from'../../config/warden';
 import {WARDEN_ARENA as A}from'../../config/wardenArena';
 import type{ArrivalWorld}from'./World';
-let source:GLTF|undefined;
-export async function loadWarden(){source??=await new GLTFLoader().loadAsync('/assets/arrival-3d/warden-196.glb');}
+export type WardenVisual='original'|'proposal';
+const sources=new Map<WardenVisual,{gltf:GLTF;visual:WardenVisual;message:string}>(),pending=new Map<WardenVisual,Promise<void>>();
+export function wardenArtStatus(visual:WardenVisual){const s=sources.get(visual);return{requested:visual,active:s?.visual??null,message:s?.message??''};}
+export function loadWarden(visual:WardenVisual='original'):Promise<void>{
+ if(sources.has(visual))return Promise.resolve();const existing=pending.get(visual);if(existing)return existing;
+ const p=(async()=>{try{const gltf=await new GLTFLoader().loadAsync('/assets/arrival-3d/warden-'+(visual==='proposal'?'197':'196')+'.glb');sources.set(visual,{gltf,visual,message:''});}
+ catch(error){if(visual==='original')throw error;await loadWarden('original');sources.set(visual,{...sources.get('original')!,message:'A proposta não carregou; Warden 0.1.196 ativo.'});}})();pending.set(visual,p);return p;
+}
 type State='DORMANT'|'INTRO'|'IDLE'|'TELEGRAPH'|'EXECUTE'|'RECOVER'|'PHASE'|'DEATH'|'DEFEATED';
 const circle=(r:number,width=.055,color='#e0aa67',fill=false)=>new T.Mesh(new T.RingGeometry(fill?0:r-width,r,64).rotateX(-Math.PI/2),new T.MeshBasicMaterial({color,transparent:true,opacity:fill?.12:.9,depthWrite:false,side:T.DoubleSide}));
 const seconds=(ms:number)=>ms/1000;
@@ -13,12 +19,14 @@ function sector(r:number,half:number){const p=[0,.035,0];for(let i=0;i<=40;i++){
 export class Warden{
  readonly root=new T.Group();readonly position=new T.Vector3(A.home.x/40,0,A.home.y/40);hp:number=W.maxHp;state:State='DORMANT';phase:WardenPhase=1;attack:WardenAttack|null=null;yaw=-Math.PI/2;
  private model:T.Object3D;private bones=new Map<string,T.Bone>();private pose=new Map<string,T.Quaternion>();private core:T.MeshStandardMaterial[]=[];
+ private artGeometry={triangles:0,meshes:0,materials:0};
  private elapsed=0;private until=0;private active=0;private pattern=0;private guardYaw=this.yaw;private connected=false;private pressure=0;private pressureAt=-100;private blockUntil=0;private origin=this.position.clone();private direction=new T.Vector3();private travelled=0;private fired=new Set<number>();private victims=new Set<number>();private lastWave=W.slam.waveStart/40;
  private warning=new T.Group();private sweep=sector(W.sweep.range/40,W.sweep.halfAngle);private slam=circle(W.slam.radius/40,.07,'#efac68',true);private slamEdge=circle(W.slam.radius/40);private lane=new T.Mesh(new T.PlaneGeometry(W.rush.halfWidth/20,W.rush.distance/40).rotateX(-Math.PI/2),new T.MeshBasicMaterial({color:'#e8ac68',transparent:true,opacity:.24,side:T.DoubleSide,depthWrite:false}));private wave=circle(1,.025,'#cfb2ef');private guard=new T.Mesh(new T.RingGeometry(1.87,1.94,48,1,-Math.PI/2-W.guardHalfAngle,W.guardHalfAngle*2).rotateX(-Math.PI/2),new T.MeshBasicMaterial({color:'#c0a2df',side:T.DoubleSide}));private rear=sector(1.95,Math.PI-W.guardHalfAngle);
  private marks=Array.from({length:3},()=>{const root=new T.Group();root.add(circle(W.echoes.radius/40),circle(W.echoes.radius/40,.03,'#e5ad65',true));return root;});
  private bolts=Array.from({length:6},()=>({mesh:new T.Mesh(new T.IcosahedronGeometry(.23,1),new T.MeshBasicMaterial({color:'#e5b281'})),p:new T.Vector3(),dir:new T.Vector3(),distance:0,active:false,pulse:0}));
- constructor(readonly world:ArrivalWorld,defeated:boolean,private victory:()=>void,private impact:(p:T.Vector3)=>void){
-  if(!source)throw Error('Warden ainda não carregado');this.model=clone(source.scene);this.root.add(this.model);this.model.traverse(o=>{if(o instanceof T.Bone){this.bones.set(o.name,o);this.pose.set(o.name,o.quaternion.clone());}if(o instanceof T.Mesh){o.castShadow=true;o.receiveShadow=true;o.frustumCulled=false;const materials=Array.isArray(o.material)?o.material:[o.material];const owned=materials.map(m=>{const c=m.clone();if(c instanceof T.MeshStandardMaterial&&c.emissiveIntensity>0)this.core.push(c);return c;});o.material=Array.isArray(o.material)?owned:owned[0];}});
+ constructor(readonly world:ArrivalWorld,defeated:boolean,private victory:()=>void,private impact:(p:T.Vector3)=>void,readonly visual:WardenVisual='original'){
+  const source=sources.get(visual);if(!source)throw Error('Warden ainda não carregado');this.model=clone(source.gltf.scene);this.root.add(this.model);this.model.traverse(o=>{if(o instanceof T.Bone){this.bones.set(o.name,o);this.pose.set(o.name,o.quaternion.clone());}if(o instanceof T.Mesh){o.castShadow=true;o.receiveShadow=true;o.frustumCulled=false;const materials=Array.isArray(o.material)?o.material:[o.material];const owned=materials.map(m=>{const c=m.clone();if(c instanceof T.MeshStandardMaterial&&c.emissiveIntensity>0)this.core.push(c);return c;});o.material=Array.isArray(o.material)?owned:owned[0];}});
+  const artMaterials=new Set<T.Material>();this.model.traverse(o=>{if(o instanceof T.Mesh){this.artGeometry.triangles+=(o.geometry.index?.count??o.geometry.attributes.position.count)/3;this.artGeometry.meshes++;for(const m of Array.isArray(o.material)?o.material:[o.material])artMaterials.add(m);}});this.artGeometry.materials=artMaterials.size;
   this.warning.add(this.sweep,this.slam,this.slamEdge,this.lane);this.rear.rotation.y=Math.PI;this.root.add(this.guard,this.rear);this.guard.position.y=.04;this.rear.position.y=.02;
   world.groups.warden.add(this.root,this.warning,this.wave,...this.marks,...this.bolts.map(b=>b.mesh));this.reset(defeated);
  }
@@ -83,8 +91,8 @@ export class Warden{
   // A visible locked facing and real skeletal windup accompany every damage event.
   this.guard.material.color.set(this.elapsed<this.blockUntil?'#ffe0a7':'#c0a2df');if(dt)this.root.updateMatrixWorld(true);
  }
- inspect(){return{hp:this.hp,maxHp:W.maxHp,state:this.state,phase:this.phase,attack:this.attack,exposed:this.exposed,connected:this.connected,yaw:this.yaw,position:this.position.toArray(),elapsed:this.elapsed,active:this.active,until:this.until,marks:this.marks.filter(m=>m.visible).map(m=>m.position.toArray()),bolts:this.bolts.filter(b=>b.active).map(b=>b.p.toArray()),bones:this.bones.size,pose:[...this.bones.values()].reduce((sum,b,i)=>sum+(i+1)*(b.quaternion.x+b.quaternion.y*.7+b.quaternion.z*.3+b.quaternion.w*.1),0)};}
+ inspect(){return{art:{...wardenArtStatus(this.visual),geometry:{...this.artGeometry}},hp:this.hp,maxHp:W.maxHp,state:this.state,phase:this.phase,attack:this.attack,exposed:this.exposed,connected:this.connected,yaw:this.yaw,position:this.position.toArray(),elapsed:this.elapsed,active:this.active,until:this.until,marks:this.marks.filter(m=>m.visible).map(m=>m.position.toArray()),bolts:this.bolts.filter(b=>b.active).map(b=>b.p.toArray()),bones:this.bones.size,pose:[...this.bones.values()].reduce((sum,b,i)=>sum+(i+1)*(b.quaternion.x+b.quaternion.y*.7+b.quaternion.z*.3+b.quaternion.w*.1),0)};}
  // Offline visual workshop only: no gameplay event, damage, save or victory callback.
  preview(attack:WardenAttack|'Idle'|'Death',time:number){this.position.set(0,0,0);this.yaw=0;this.elapsed=time;this.active=attack==='Death'?Math.min(time,seconds(W.deathMs)):time%2;this.attack=attack==='Idle'||attack==='Death'?null:attack;this.state=attack==='Death'?'DEATH':attack==='Idle'?'IDLE':this.active<.8?'TELEGRAPH':'EXECUTE';if(this.state==='EXECUTE')this.active-=.8;this.animate(0);this.guard.visible=false;this.rear.visible=false;}
- dispose(){this.clear();this.root.traverse(o=>{if(o instanceof T.SkinnedMesh)o.skeleton.dispose();if(o instanceof T.Mesh)for(const m of Array.isArray(o.material)?o.material:[o.material])m.dispose();});const objects=[this.root,this.warning,this.wave,...this.marks,...this.bolts.map(b=>b.mesh)];for(const o of objects){o.removeFromParent();if(o!==this.root)o.traverse(m=>{if(m instanceof T.Mesh){m.geometry.dispose();(m.material as T.Material).dispose();}});}}
+ dispose(){this.clear();this.guard.geometry.dispose();this.rear.geometry.dispose();this.root.traverse(o=>{if(o instanceof T.SkinnedMesh)o.skeleton.dispose();if(o instanceof T.Mesh)for(const m of Array.isArray(o.material)?o.material:[o.material])m.dispose();});const objects=[this.root,this.warning,this.wave,...this.marks,...this.bolts.map(b=>b.mesh)];for(const o of objects){o.removeFromParent();if(o!==this.root)o.traverse(m=>{if(m instanceof T.Mesh){m.geometry.dispose();(m.material as T.Material).dispose();}});}}
 }

@@ -51,6 +51,12 @@ Modificações: LOD1 3.826 triângulos, sete clipes de gameplay, translação XZ
 
 `cavern-stone-196.webp`: 512 px palette/dust adaptation of the already included [ambientCG Rock035](https://ambientcg.com/view?id=Rock035), CC0-1.0. Normal map reused from that same existing material. CPU-only generation in `prepare-arrival196-stone.mjs`; exact input/output hashes in `cavern-stone-196.json`. No new external download. Cavern floor and stone formations share these maps; forest and camp surfaces are preserved.
 
+## 0.1.197 — isolated Warden scene
+
+`warden-197.glb` and `warden-arena-197.glb`: original Echoes of Dante geometry, mineral texture maps, UVs and armature authoring in Blender 4.5.15, CPU only, no offline render or 3D generation service. CC0-1.0. Reproducible source: `scripts/asset-tools/author-warden197.py`; editable source under ignored `.local/warden197/`. Exact sizes/hashes/counts: the corresponding JSON manifests. Skeletal poses reuse existing combat events, not imported clips.
+
+The review arena reuses **Poly Haven Rock Moss Set 02 by Kless Gyzen, CC0-1.0**, from the already incorporated optimized model and shared PBR textures; scaled/oriented and shaded for the cave. Source: https://polyhaven.com/a/rock_moss_set_02 . Existing ambientCG Rock035 CC0-derived cave textures are shared by the new floor. Full source credits/licenses remain in `assets/frontier-3d/CREDITS.md`. Existing hero, equipment, flora and fauna keep their prior credits. No Sumiro code or assets were copied. These models remain an optional review scene; the normal journey retains `warden-196.glb` pending human review.
+
 ## Warden — Tripo evaluation reference, 6 November 2026
 
 `warden-tripo-reference-v1.png`: AI-generated concept image for Echoes of Dante, created with the built-in image generation tool using the existing Dante 2D `visual/creature-finish/warden-v1.webp` sprite sheet as identity reference. This is a **raster proposal**, not a Tripo output, 3D model or in-game render. No third-party model was downloaded; no Tripo license is being asserted. The existing `warden-196.glb` and its gameplay remain active. Source prompt, access blocker, manual generation steps and pending technical/license checks are recorded in `docs/frontier-3d/warden-tripo/README.md` and `image-prompt.txt`.

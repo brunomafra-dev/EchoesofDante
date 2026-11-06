@@ -57,3 +57,7 @@ Original equipment: run Blender 4.5 LTS background with `scripts/asset-tools/aut
 ## Original Warden and cave material (0.1.196)
 
 Run Blender 4.5 LTS in background with `--python scripts/asset-tools/author-arrival196.py` (no rendering), then `node scripts/asset-tools/prepare-arrival196-stone.mjs`. The Warden is original CC0 geometry with one complete weighted shell, nine bones and event-driven skeletal poses. Editable `.blend` is saved under ignored `.local/warden196/`; only runtime GLB/metadata are public. The 512px cave map adapts the already included ambientCG Rock035 CC0 reference; source/output hashes and modifications are recorded in `cavern-stone-196.json`. No new external download, paid tool or dedicated GPU required.
+
+## Isolated Warden scene (0.1.197)
+
+Run Blender 4.5 LTS with `--background --factory-startup --python scripts/asset-tools/author-warden197.py`. No offline rendering or external generation service. Produces an original nine-bone review actor with UVs/tangents and 512px periodic PBR maps, plus the cutaway fighting floor/incisions. Editable source stays under `.local/warden197/`. The runtime review shares existing Poly Haven rock geometry/maps and cave textures; the normal journey keeps the prior actor. Use `node scripts/qa-arrival197.mjs` after the production build. See `docs/frontier-3d/WARDEN_SCENE_197.md` for access, simulated prerequisites and limits.
