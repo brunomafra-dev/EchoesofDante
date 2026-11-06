@@ -10,6 +10,8 @@ import { KineticCharge } from '../combat/KineticCharge';
 import { HunterCombat } from '../combat/HunterCombat';
 import { AstralCombat } from '../combat/AstralCombat';
 import { XenobinderCombat } from '../combat/XenobinderCombat';
+import{preloadCompanionArt}from'../visual/CompanionArt';
+import{companionInfo}from'../config/companions';
 import { EnergySaber } from '../entities/EnergySaber';
 import { HollowCrawler } from '../entities/HollowCrawler';
 import type { Enemy } from '../entities/Enemy';
@@ -27,7 +29,7 @@ export class CharacterPreviewScene extends Phaser.Scene {
  private attack=new SaberAttack();private charge=new KineticCharge();
  private wave!:Phaser.GameObjects.Ellipse;
  private started=0;private cueMask=0;private element:AstralElement='energy';
- private readonly owner={x:400,y:400,position:{x:400,y:400},health:{current:65,max:100},isDead:false};
+ private readonly owner={x:400,y:400,position:{x:400,y:400},health:{current:65,max:100,guardRemaining:0,guardReduction:0},isDead:false};
  constructor(readonly identity:PlayableClass,readonly sex:CharacterSex,private status:(phase:string,caption:string,frame:number)=>void,private loaded:()=>void,private look:CharacterAppearance=appearance(),private species:CompanionSpecies='symbiont'){super('Showcase');}
  preload():void{
   preloadPixelFX(this);
@@ -41,6 +43,7 @@ export class CharacterPreviewScene extends Phaser.Scene {
   if(this.identity==='astral')for(const element of ASTRAL_ELEMENTS)for(const [kind,w,h]of [['bolt',128,96],['ground',128,128],['field',192,192]]as const)
    this.load.spritesheet(`astral-${element}-${kind}`,`${base}astral/astral-${element}-${kind}-v2.png`,{frameWidth:w,frameHeight:h});
   if(this.identity==='xenobinder'){
+   preloadCompanionArt(this);
    for(const key of ['xeno-bolt','xeno-link','xeno-pulse'])this.load.image(key,`${base}xenobinder/${key}.png`);
    this.load.spritesheet('dante-symbiont-motion',base+'characters/dante-symbiont-motion.png',{frameWidth:256,frameHeight:256});
   }
@@ -61,19 +64,20 @@ export class CharacterPreviewScene extends Phaser.Scene {
   if(this.identity==='hunter')this.hunter=new HunterCombat(this,()=>0,a=>this.actor.muzzle(a));
   if(this.identity==='astral')this.astral=new AstralCombat(this,()=>0);
   if(this.identity==='xenobinder')this.xeno=new XenobinderCombat(this,()=>0,this.owner);
-  this.xeno?.setSpecies(this.species);
+  this.xeno?.setSpecies(this.species);this.actor.setCompanion(this.species);
   this.ready=true;this.idle();this.loaded();
  }
  setAppearance(value:CharacterAppearance):void{this.look=appearance(value);if(this.ready){this.actor.setAppearance(this.look);this.game.loop.wake();this.game.events.once(Phaser.Core.Events.POST_RENDER,()=>{if(!this.running)this.game.loop.sleep();});}}
- setCompanion(value:CompanionSpecies):void{this.species=value;this.xeno?.setSpecies(value);if(this.ready)this.idle();}
+ setCompanion(value:CompanionSpecies):void{this.species=value;this.xeno?.setSpecies(value);this.actor?.setCompanion(value);if(this.ready)this.idle();}
  inspect(){
   const target=this.target?.view.getByName('finish-whole-hollow')as Phaser.GameObjects.Image|undefined;
-  return{ready:this.ready,running:this.running,identity:this.identity,sex:this.sex,frame:this.actor?.body.frame.name,bakes:this.actor?.bakeCount,hollow:target?{texture:target.texture.key,frame:target.frame.name,rotation:this.target.view.rotation}:null,companion:this.xeno?.species,effects:this.children.list.filter(v=>v instanceof Phaser.GameObjects.Image&&v.visible&&v.alpha>.02&&v.texture.key.startsWith('pixelfx-')).map(v=>{const image=v as Phaser.GameObjects.Image;return{key:image.texture.key,frame:image.frame.name,x:image.x,y:image.y};})};
+  return{ready:this.ready,running:this.running,identity:this.identity,sex:this.sex,frame:this.actor?.body.frame.name,bakes:this.actor?.bakeCount,hollow:target?{texture:target.texture.key,frame:target.frame.name,rotation:this.target.view.rotation}:null,companion:this.xeno?.species,companionPose:this.xeno?.snapshot(),guardRemaining:this.owner.health.guardRemaining,command:companionInfo(this.species).command,effects:this.children.list.filter(v=>v instanceof Phaser.GameObjects.Image&&v.visible&&v.alpha>.02&&v.texture.key.startsWith('pixelfx-')).map(v=>{const image=v as Phaser.GameObjects.Image;return{key:image.texture.key,frame:image.frame.name,x:image.x,y:image.y};})};
  }
  begin(element:AstralElement='energy'):void{
   if(!this.ready)return;this.running=true;this.started=this.time.now;this.cueMask=0;this.element=element;
   this.attack=new SaberAttack();this.charge=new KineticCharge();this.hunter?.clear();this.astral?.clear();this.xeno?.clear();
   this.owner.health.current=65;
+    this.owner.health.guardRemaining=this.owner.health.guardReduction=0;
   this.target.health.current=1000;this.target.isDead=false;for(const part of this.targetParts)part.setVisible(true);
   if(this.astral)this.astral.element=element;
   if(this.xeno){this.xeno.bond=XENOBINDER.bondMax;Object.assign(this.xeno.position,{x:355,y:426});}
@@ -89,7 +93,7 @@ export class CharacterPreviewScene extends Phaser.Scene {
   this.game.events.once(Phaser.Core.Events.POST_RENDER,()=>{if(!this.running)this.game.loop.sleep();});
  }
  update(now:number,delta:number):void{
-  if(!this.ready||!this.running)return;
+  if(!this.ready||!this.running)return;this.owner.health.guardRemaining=Math.max(0,this.owner.health.guardRemaining-delta/1000);
   const elapsed=now-this.started,dt=Math.min(delta/1000,.04),aim=0;
   if(elapsed>=5600){this.idle();return;}
   const hit=(enemy:Enemy,damage:number)=>{enemy.health.current=Math.max(1,enemy.health.current-damage);enemy.hurt(now,this.owner,0);};
@@ -115,7 +119,7 @@ export class CharacterPreviewScene extends Phaser.Scene {
   const firing=this.hunter?now<this.hunter.firedUntil:this.astral?now<this.astral.firedUntil:this.xeno?now<this.xeno.firedUntil:pose.phase!=='READY';
   this.actor.update(400,400,aim,firing,false,heavy,this.element);
   const phase=heavy.phase==='CHARGING'?'charge':heavy.phase==='RELEASE'||elapsed>=2300?'release':firing?'attack':'idle';
-  const title=heavy.phase==='CHARGING'?'Q · SEGURAR E MIRAR':elapsed>=2300?({warrior:'Q · ONDA CINÉTICA',hunter:'Q · FEIXE PERFURANTE',astral:`Q · CAMPO DE ${ELEMENT_NAMES[this.element].toLocaleUpperCase('pt-BR')}`,xenobinder:'Q · INVESTIDA E RECUPERAÇÃO'})[this.identity]:({warrior:'BÁSICO · CORTE DO SABRE',hunter:'BÁSICO · DISPARO DE PULSO',astral:`BÁSICO · ${ELEMENT_NAMES[this.element].toLocaleUpperCase('pt-BR')}`,xenobinder:'BÁSICO · MARCA E ASSISTÊNCIA'})[this.identity];
+  const title=heavy.phase==='CHARGING'?'Q · SEGURAR E MIRAR':elapsed>=2300?({warrior:'Q · ONDA CINÉTICA',hunter:'Q · FEIXE PERFURANTE',astral:`Q · CAMPO DE ${ELEMENT_NAMES[this.element].toLocaleUpperCase('pt-BR')}`,xenobinder:'Q - '+companionInfo(this.species).command})[this.identity]:({warrior:'BÁSICO · CORTE DO SABRE',hunter:'BÁSICO · DISPARO DE PULSO',astral:`BÁSICO · ${ELEMENT_NAMES[this.element].toLocaleUpperCase('pt-BR')}`,xenobinder:'BÁSICO · MARCA E ASSISTÊNCIA'})[this.identity];
   this.status(phase,title,Number(this.actor.body.frame.name));
  }
  private basic(now:number):void{

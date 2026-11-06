@@ -1,10 +1,11 @@
+import{COMPANIONS,companionInfo}from'../config/companions';
 import { characterProfiles, type CharacterClass, type CharacterProfile } from '../systems/CharacterProfiles';
 import { DIFFICULTIES, difficultyId } from '../config/difficulty';
 import { CLASS_NAMES, CLASS_REGISTRY } from '../config/classes';
 import { characterSex, SEX_NAMES, type CharacterSex } from '../config/appearance';
 import { PROGRESSION } from '../config/progression';
 import { CharacterShowcase } from './CharacterShowcase';
-import {appearance,PRESENTATION,type CharacterAppearance,type CompanionSpecies}from'../config/characterPresentation';
+import {appearance,type CharacterAppearance,type CompanionSpecies}from'../config/characterPresentation';
 import{appearanceControls}from'./AppearanceControls';
 import './character-selection.css';
 
@@ -35,8 +36,8 @@ export class CharacterSelection {
     const header = element('header', 'selection-header');
     const title = element('div', 'selection-title');
     title.append(element('small', '', 'ECHOES OF DANTE / EXPEDIÇÃO'));
-    const h = element('h2', '', context.title ?? (joiningRoom ? mode === 'create' ? 'Crie seu personagem para a sala' : 'Com qual personagem você vai jogar?' : mode === 'create' ? 'Escolha quem você será' : 'Suas expedições')); h.id = 'shell-title'; title.append(h);
-    title.append(element('p', '', context.subtitle ?? (joiningRoom ? 'Use o personagem vinculado a esta campanha.' : mode === 'create' ? 'Selecione uma classe para ver seu estilo de combate.' : 'Escolha um personagem. Sua jornada começa de onde você parou.')));
+    const h = element('h2', '', context.title ?? (joiningRoom ? mode === 'create' ? 'Crie seu personagem para a sala' : 'Com qual personagem você vai jogar?' : mode === 'create' ? 'Crie o seu personagem' : 'Suas expedições')); h.id = 'shell-title'; title.append(h);
+    title.append(element('p', '', context.subtitle ?? (joiningRoom ? 'Use o personagem vinculado a esta campanha.' : mode === 'create' ? 'A classe define suas habilidades. Personalize rosto, cabelo e pele nos controles abertos abaixo.' : 'Escolha um personagem. Sua jornada começa de onde você parou.')));
     header.append(title);
     const headerActions = element('div', 'selection-header-actions');
     headerActions.append(button('← VOLTAR', 'back', actions.back)); header.append(headerActions);
@@ -115,8 +116,8 @@ export class CharacterSelection {
     }
     const footer = element('div', 'creation-footer'), controls = element('div', 'selection-controls'); controls.append(sexLabel,label, create);
     const detail = element('div', 'selection-detail'); detail.append(info, replay);
-    const customize=document.createElement('details');customize.className='creation-customization';const summary=document.createElement('summary');summary.textContent='EDITAR APARÊNCIA';customize.append(summary,appearanceControls(look,next=>{look=next;for(const p of this.previews)p.setAppearance(look);remember();}));
-    footer.append(detail, controls); this.root.append(gallery,customize,footer);
+    const customize=document.createElement('details');customize.className='creation-customization';customize.open=true;const summary=document.createElement('summary');summary.textContent='EDITAR APARÊNCIA';customize.append(summary,appearanceControls(look,next=>{look=next;for(const p of this.previews){p.stop();p.setAppearance(look);}remember();}));
+    const edit=button('PERSONALIZAR PERSONAGEM','customize-character',()=>{customize.open=true;customize.scrollIntoView({behavior:'smooth',block:'center'});customize.querySelector('select')?.focus({preventScroll:true});});edit.className='selection-primary creation-editor-launch';this.root.querySelector('.selection-header>div:last-child')?.append(edit);footer.append(detail, controls); this.root.append(gallery,customize,footer);
     const draft=this.context.draft;
     if(draft&&!this.occupied.includes(draft.classId)){
       input.value=draft.name;
@@ -139,13 +140,14 @@ export class CharacterSelection {
     remove.className = 'selection-delete';
     const tools = element('div', 'saved-display-actions'); tools.append(replay, remove);
     const edit=button('EDITAR APARÊNCIA / VÍNCULO','edit-appearance',()=>{const hero=profiles.find(p=>p.id===selected);if(hero&&current)this.editPresentation(hero,current,edit,()=>show(selected));});tools.prepend(edit);
+    edit.className='selection-primary';const directEdit=button('PERSONALIZAR PERSONAGEM','customize-character',()=>edit.click());directEdit.className='selection-primary creation-editor-launch';this.root.querySelector('.selection-header-actions')?.append(directEdit);
     const show = (id: string) => {
       const hero = profiles.find(h => h.id === id); if (!hero) return;
       selected = id; current?.destroy(); this.previews.length = 0;
       play.disabled=this.occupied.includes(hero.classId);
       play.textContent=play.disabled?'CLASSE OCUPADA':this.joiningRoom?'ENTRAR NA SALA →':'CONTINUAR JORNADA →';
       const entry = this.stage(hero.classId,characterSex(hero.classId,hero.sex),appearance(hero.appearance),hero.companion); current = entry.preview; display.replaceChildren(entry.stage, details, tools, play);
-      details.replaceChildren(element('h3', '', hero.name), element('p', '', CLASS_NAMES[hero.classId]), element('small', 'selection-kit', identity[hero.classId].kit));
+      details.replaceChildren(element('h3', '', hero.name), element('p', '', CLASS_NAMES[hero.classId]), element('small', 'selection-kit', hero.classId==='xenobinder'?companionInfo(hero.companion).name+' - Q: '+companionInfo(hero.companion).command:identity[hero.classId].kit));
       for (const b of Array.from(list.querySelectorAll<HTMLButtonElement>('button'))) b.setAttribute('aria-pressed', String(b.dataset.shell === `character-${id}`));
       current.play();
     };
@@ -191,8 +193,8 @@ export class CharacterSelection {
     if(stage)dialog.insertBefore(stage,dialog.children[1]);
     if(hero.classId==='xenobinder'){
       const label=element('label','companion-choice','Companheiro ativo'),select=document.createElement('select');select.name='companion-species';
-      for(const[id,text]of Object.entries(PRESENTATION.companions)){const option=document.createElement('option');option.value=id;option.textContent=text;option.disabled=id==='hollow'&&!characterProfiles.canChooseHollow(hero.id);select.append(option);}
-      select.value=species;select.addEventListener('change',()=>{species=select.value as CompanionSpecies;preview.setCompanion(species);});label.append(select);dialog.append(label,element('p','appearance-note',characterProfiles.canChooseHollow(hero.id)?'Pesquisa da fauna concluída: você pode estabelecer o vínculo com um Hollow. Uma fera ativa; mesmo kit de comando e recuperação.':'Conclua e entregue a pesquisa de sobrevivência e fauna à Dra. Lia para liberar o vínculo com o Hollow. Uma fera ativa por vez.'));
+      for(const[id,info]of Object.entries(COMPANIONS)){const option=document.createElement('option');option.value=id;option.disabled=!characterProfiles.canChooseCompanion(hero.id,id as CompanionSpecies);option.textContent=info.name+' - '+info.role+(option.disabled?' (bloqueado)':'');select.append(option);}
+      select.value=species;const note=element('p','appearance-note','');const describe=()=>{const info=companionInfo(species);note.textContent=info.description+' '+info.unlock+' Uma fera ativa por vez; troca fora de combate.';};describe();select.addEventListener('change',()=>{species=select.value as CompanionSpecies;preview.setCompanion(species);describe();});label.append(select);dialog.append(label,note,button('VER COMANDO DA FERA','preview-companion',()=>preview.play(true)));
     }
     const actions=element('div','delete-confirm-controls');actions.append(button('CANCELAR','cancel-appearance',restore),button('SALVAR','save-appearance',()=>{if(!characterProfiles.updatePresentation(hero.id,look,species)){status.textContent='Não foi possível salvar. Confira a pesquisa e o armazenamento do navegador.';return;}restore();saved();}));
     dialog.append(status,actions);this.root.append(dialog);this.appearanceDialog=dialog;dialog.addEventListener('cancel',e=>{e.preventDefault();restore();});dialog.showModal();dialog.querySelector('select')?.focus();

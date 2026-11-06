@@ -71,7 +71,7 @@ export class PartyActor {
    this.charge.takeHits(now,[]);
    this.hunter.update(dt,this.player.position,Math.hypot(this.player.velocity.x,this.player.velocity.y)>1,targets,obstacles,bounds,
     (enemy,damage,angle,precision)=>hit([enemy],damage,angle,this.player.position,precision));
-  }else if(this.xeno){this.charge.takeHits(now,[]);this.xeno.update(now,dt,this.player.position,aim,this.player.isDead,targets,obstacles,bounds,(enemy,damage,angle,origin,heavy)=>hit([enemy],damage,angle,origin,heavy,undefined,XENOBINDER.color),allies.length?allies:[this.player],heavy.phase==='CHARGING',solidObstacles);}
+  }else if(this.xeno){this.charge.takeHits(now,[]);this.xeno.update(now,dt,this.player.position,aim,this.player.isDead,targets,obstacles,bounds,(enemy,damage,angle,origin,heavy,color)=>hit([enemy],damage,angle,origin,heavy,undefined,color??XENOBINDER.color),allies.length?allies:[this.player],heavy.phase==='CHARGING',solidObstacles);}
   else if(this.astral){this.charge.takeHits(now,[]);this.astral.update(now,dt,targets,obstacles,bounds,(enemy,damage,angle,heavy,element,origin,force)=>hit([enemy],damage,angle,origin,heavy,force,ELEMENT_COLORS[element],element),heavy.phase==='CHARGING');}
   else{
    const sweep=this.attack.advance(now,this.player.position,aim,targets);if(sweep.hits.length)hit(sweep.hits,this.player.attackDamage,sweep.pose.worldAngle,this.player.position,false);
@@ -83,7 +83,7 @@ export class PartyActor {
  }
  snapshot():PartyPose {
   const p=this.player;
-  return{strike:{...this.pose},releaseProgress:this.charge.pose(this.now).swingProgress,velocity:{...p.velocity},x:p.position.x,y:p.position.y,aim:p.rotation,hp:p.hp,maxHp:p.maxHp,dead:p.isDead,dash:p.isDashing,
+  return{guardRemaining:p.health.guardRemaining,guardReduction:p.health.guardReduction,strike:{...this.pose},releaseProgress:this.charge.pose(this.now).swingProgress,velocity:{...p.velocity},x:p.position.x,y:p.position.y,aim:p.rotation,hp:p.hp,maxHp:p.maxHp,dead:p.isDead,dash:p.isDashing,
    phase:this.charge.phase,level:this.charge.pose(this.now).level,xenobinder:this.xeno?.snapshot(),astral:this.astral?.snapshot(),firing:(this.xeno?.firedUntil??0)>this.now||(this.astral?.firedUntil??0)>this.now||this.pose.phase!=='READY'||(this.hunter?.firedUntil??0)>this.now,
    swingProgress:this.pose.swingProgress,dashCooldown:p.dashCooldown,chargeCooldown:this.charge.cooldown,dashReady:p.dashProgress,chargeReady:this.charge.getProgress(this.now),momentum:this.hunter?.momentum,beam:this.hunter?.beamPose(),
    wave:this.wave.visible?{x:this.wave.x,y:this.wave.y,rotation:this.wave.rotation,width:this.wave.displayWidth,height:this.wave.displayHeight}:undefined};
@@ -93,10 +93,10 @@ export class PartyActor {
   const build=this.profile.build,key=JSON.stringify(build);if(key===this.buildKey)return;this.buildKey=key;
   this.progression.restore({xp:build?.xp??0,abilityUpgrades:build?.abilityUpgrades,bossRewards:build?.bossRewards,echoes:[],sourceLocated:false,passageOpen:false,rewardedHollows:[],rewardedRoutes:[]});
  }
- private setAppearance():void {const slots=this.profile.equipment??{},key=JSON.stringify([slots,this.profile.appearance,this.profile.companion]);if(key===this.appearanceKey)return;this.appearanceKey=key;this.player.setEquipmentAppearance(slots);this.art?.setEquipment(slots);this.astralArt?.setEquipment(slots);this.xenoArt?.setEquipment(slots);this.player.setCharacterAppearance(this.profile.appearance);this.art?.setAppearance(this.profile.appearance);this.astralArt?.setAppearance(this.profile.appearance);this.xenoArt?.setAppearance(this.profile.appearance);this.xeno?.setSpecies(this.profile.companion);}
+ private setAppearance():void {const slots=this.profile.equipment??{},key=JSON.stringify([slots,this.profile.appearance,this.profile.companion]);if(key===this.appearanceKey)return;this.appearanceKey=key;this.player.setEquipmentAppearance(slots);this.art?.setEquipment(slots);this.astralArt?.setEquipment(slots);this.xenoArt?.setEquipment(slots);this.player.setCharacterAppearance(this.profile.appearance);this.art?.setAppearance(this.profile.appearance);this.astralArt?.setAppearance(this.profile.appearance);this.xenoArt?.setAppearance(this.profile.appearance);this.xeno?.setSpecies(this.profile.companion);this.xenoArt?.setCompanion(this.xeno?.species);}
  render(pose:PartyPose&{potionUsed?:number},now:number,dt:number):void {
   this.setAppearance();
-  this.player.health.max=pose.maxHp;this.player.health.current=pose.hp;
+  this.player.health.max=pose.maxHp;this.player.health.current=pose.hp;this.player.health.guardRemaining=Math.max(0,Math.min(5,pose.guardRemaining??0));this.player.health.guardReduction=Math.max(0,Math.min(.45,pose.guardReduction??0));
   this.player.vitals.observePotion(pose.potionUsed);
   const gap=Math.hypot(pose.x-this.player.position.x,pose.y-this.player.position.y),t=gap>300?1:Math.min(1,dt*18);
   const position={x:Phaser.Math.Linear(this.player.position.x,pose.x,t),y:Phaser.Math.Linear(this.player.position.y,pose.y,t)};

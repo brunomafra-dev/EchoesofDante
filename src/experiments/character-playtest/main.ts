@@ -1,3 +1,4 @@
+import{COMPANIONS}from'../../config/companions';
 import Phaser from 'phaser';
 import {equipmentLook,PROTECTION_PARTS,type ProtectionStyle,type WeaponStyle} from '../../config/appearance';
 import { GameScene } from '../../scenes/GameScene';
@@ -12,7 +13,7 @@ const sex=params.get('sex')==='female'?'female':'male';
 // Display laboratories must not register a legacy character or normalize the
 // real registry, including when only an old journey/corrupt registry exists.
 const storageGet=Storage.prototype.getItem,storageSet=Storage.prototype.setItem,storageRemove=Storage.prototype.removeItem;
-const storagePrefix=`dante-complete-actor-display198.${classId}.${sex}.`;
+const storagePrefix=`dante-complete-actor-display${params.get('refinement')==='199'?'199':'198'}.${classId}.${sex}.`;
 const storageKey=(storage:Storage,key:string)=>storagePrefix+(storage===localStorage?'local.':'session.')+key;
 Storage.prototype.getItem=function(key){return key.startsWith('echoes-of-dante.')?storageGet.call(sessionStorage,storageKey(this,key)):storageGet.call(this,key);};
 Storage.prototype.setItem=function(key,value){if(key.startsWith('echoes-of-dante.'))storageSet.call(sessionStorage,storageKey(this,key),String(value));else storageSet.call(this,key,value);};
@@ -36,11 +37,12 @@ for(const link of Array.from(document.querySelectorAll<HTMLAnchorElement>('[data
 const game=new Phaser.Game({type:Phaser.AUTO,width:VIEW_WIDTH,height:VIEW_HEIGHT,parent:'game',backgroundColor:'#102d2c',
  scale:{mode:Phaser.Scale.FIT,autoCenter:Phaser.Scale.CENTER_BOTH},render:{antialias:true,pixelArt:false},
  scene:[new GameScene(false,false,undefined,{area:'forest',classId,sex,pilot,look,weaponLook,appearance:visualAppearance,companion:species})]});
-if(params.get('refinement')==='198'){
- document.querySelector('.playtest-navigation summary')!.textContent='REVISÃO 2D · PERSONAGENS E MAGIAS · 0.1.198';
+if(['198','199'].includes(params.get('refinement')??'')){
+ document.querySelector('.playtest-navigation summary')!.textContent='REVISÃO 2D · PERSONAGENS E MAGIAS · 0.1.'+params.get('refinement');
  const nav=document.querySelector('.playtest-navigation nav')!;
+ if(params.get('refinement')==='199'){const label=document.createElement('label');label.textContent='Comparar marcha';const select=document.createElement('select');select.name='gait-comparison';for(const[id,name]of [['199','Revisão 0.1.199'],['198','Anterior 0.1.198']]){const o=document.createElement('option');o.value=id;o.textContent=name;select.append(o);}select.value=params.get('gait')==='198'?'198':'199';select.onchange=()=>{const next=new URLSearchParams(params);next.set('gait',select.value);location.assign(location.pathname+'?'+next);};label.append(select);nav.append(label);}
  nav.append(appearanceControls(visualAppearance,value=>{const next=new URLSearchParams(params);for(const[key,v]of Object.entries(value))next.set(key,v);location.assign(location.pathname+'?'+next);}));
- if(classId==='xenobinder'){const label=document.createElement('label');label.textContent='Fera de teste (sem desbloqueio real)';const select=document.createElement('select');select.name='lab-companion';for(const[id,name]of [['symbiont','Simbionte'],['hollow','Hollow vinculado']]){const option=document.createElement('option');option.value=id;option.textContent=name;select.append(option);}select.value=species;select.onchange=()=>{const next=new URLSearchParams(params);next.set('pet',select.value);location.assign(location.pathname+'?'+next);};label.append(select);nav.append(label);}
+ if(classId==='xenobinder'){const label=document.createElement('label');label.textContent='Fera de teste (sem desbloqueio real)';const select=document.createElement('select');select.name='lab-companion';for(const[id,name]of Object.entries(COMPANIONS).map(([id,info])=>[id,info.name])){const option=document.createElement('option');option.value=id;option.textContent=name;select.append(option);}select.value=species;select.onchange=()=>{const next=new URLSearchParams(params);next.set('pet',select.value);location.assign(location.pathname+'?'+next);};label.append(select);nav.append(label);}
  Object.assign(window,{__dante2dReview:()=>({isolated:true,fixture:'Character/gear/companion display only; canonical campaign untouched.',...(game.scene.getScene('Game')as GameScene).inspectCharacterPresentation()})});
 }
 if(import.meta.env.DEV)Object.assign(window,{__danteGame:game});

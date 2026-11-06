@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "base": "http://localhost:5185",
+  "checks": [
+    "Direct editor is open and discoverable; original victories gate both mini-boss companions; no Hollow choice.",
+    "Native companion replay shows the selected command; cancel/save preserve the exact journey.",
+    "Guardian Q protects in the world; protection is transient after reload. Reopening the same hero and choosing Frostling produces its actual projectile/burst Q."
+  ],
+  "errors": [],
+  "fixture": "Native UI; explicit SOLO button simulates the original campaign through Vesper defeated, not a battle against those bosses. Boss identities/rewards outside this isolated lab remain unchanged.",
+  "simulatedBosses": [
+    "warden",
+    "vesper",
+    "soterrado"
+  ]
+}

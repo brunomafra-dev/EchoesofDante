@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "checks": [
+    "Clean Vercel-mode preparation succeeds with all networking disabled, with an injected network outage, from a verified private cache and from the exact previously published game module.",
+    "No original GLB/archive was added to public or Git; full reviewed 3D art survives the normal successful cache/recovery paths."
+  ],
+  "results": [
+    {
+      "mode": "offline-empty",
+      "stdout": "",
+      "stderr": "Optional 3D Hollow unavailable: offline build requested. Build continues with the identified legacy visual; 2D is unaffected. Use --fetch explicitly to obtain the official source."
+    },
+    {
+      "mode": "outage",
+      "stdout": "",
+      "stderr": "Optional 3D Hollow unavailable: Network outage fixture. Build continues with the identified legacy visual; 2D is unaffected. Use --fetch explicitly to obtain the official source."
+    },
+    {
+      "mode": "shipped-module",
+      "stdout": "Reviewed Hollow recovered from the verified, already shipped game module.",
+      "stderr": ""
+    },
+    {
+      "mode": "cache",
+      "stdout": "Reviewed Hollow restored from private dependency cache.",
+      "stderr": ""
+    }
+  ]
+}

@@ -1,4 +1,8 @@
-# Retorno ao 2D — revisão integrada 0.1.198
+# Retorno ao 2D — revisão 0.1.199
+
+**Continuação da 0.1.198, baseada em `9c6f54a`.** A Vercel falhou ao acessar o site de assets 3D da Easyforge. Esta revisão torna o preparo de build resiliente a esse bloqueio de rede, destaca o editor, corrige a sensação de marcha e dá comandos distintos às feras do Domador. O escopo, fontes e evidências estão em [REVISION_199.md](REVISION_199.md); QA em [qa/199](qa/199/). Estado desta entrega: typecheck/build local aprovados; editor, catálogos e comandos solo aprovados; caminhada completa em QA; coop com as duas feras em validação; deploy público pendente. Aguardar avaliação humana antes de avançar.
+
+# Revisão integrada anterior 0.1.198
 
 Autorização atual: pausar a evolução 3D e trabalhar o 2D. O usuário pediu efeitos PixelFX nas magias/classes/bosses, correção de escala e engasgos nas quatro classes, Hollow atual nas prévias, personalização e mais de uma espécie de companheiro para o Domador.
 

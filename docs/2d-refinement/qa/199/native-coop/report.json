@@ -1,0 +1,95 @@
+{
+  "passed": true,
+  "base": "http://localhost:5185",
+  "checks": [
+    "Native custom characters form their original two-player campaign.",
+    "Original team resumes with Guardian; native host Q protects the guest too and both clients display the actual timed armor."
+  ],
+  "errors": [],
+  "relay": [
+    {
+      "role": "host",
+      "protocol": 16,
+      "presentation": 1,
+      "bonds": 1
+    },
+    {
+      "role": "guest",
+      "protocol": 16,
+      "presentation": 1,
+      "bonds": 1
+    },
+    {
+      "role": "host",
+      "protocol": 16,
+      "presentation": 1,
+      "bonds": 1
+    },
+    {
+      "role": "guest",
+      "protocol": 16,
+      "presentation": 1,
+      "bonds": 1
+    }
+  ],
+  "fixture": "Native creation, invitations, companion editing and Q. An explicitly recorded isolated old-save fixture supplies prior Warden/Soterrado/Vesper victory flags only, after leaving the world. It does not claim a story playthrough or write canonical saves. No DEV combat commands.",
+  "unlockFixture": {
+    "characterId": "aefeefef-7929-4e7d-80e8-089dda4319c4",
+    "flags": [
+      "wardenDefeated",
+      "soterradoDefeated",
+      "vesperDefeated"
+    ],
+    "purpose": "Explicit isolated old-save unlock fixture; no battle or canonical save is claimed."
+  },
+  "guard": [
+    {
+      "guard": {
+        "remaining": 2.6218200000000027,
+        "reduction": 0.43618055555555557
+      },
+      "peers": [
+        {
+          "classId": "astral",
+          "sex": "female",
+          "guard": {
+            "remaining": 2.6218200000000027,
+            "reduction": 0.43618055555555557
+          },
+          "appearance": {
+            "skin": "deep",
+            "hair": "silver",
+            "head": "original"
+          }
+        }
+      ],
+      "companion": "bulwark"
+    },
+    {
+      "guard": {
+        "remaining": 2.7118100000000043,
+        "reduction": 0.43618055555555557
+      },
+      "peers": [
+        {
+          "classId": "xenobinder",
+          "sex": "male",
+          "guard": {
+            "remaining": 2.730190000000005,
+            "reduction": 0.43618055555555557
+          },
+          "appearance": {
+            "skin": "warm",
+            "hair": "copper",
+            "head": "original"
+          },
+          "companion": {
+            "species": "bulwark",
+            "texture": "companion-bulwark",
+            "frame": 0
+          }
+        }
+      ]
+    }
+  ]
+}

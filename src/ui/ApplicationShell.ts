@@ -78,6 +78,7 @@ export class ApplicationShell {
     }
     if (this.pendingInvite && !this.entry) this.page = 'invite';
     if(this.launchOnce)this.page='launching';
+    if(!this.launchOnce&&!this.pendingInvite&&location.pathname.endsWith('/campaign-playtest.html')&&url.searchParams.get('refinement')==='199'&&url.searchParams.get('editor')==='1'){this.page='create';url.searchParams.delete('editor');history.replaceState(history.state,'',url);}
     this.menuButton.className = 'main-menu-button hud-icon'; this.menuButton.type = 'button'; this.menuButton.textContent = '☰';this.menuButton.setAttribute('aria-label','Abrir menu');this.menuButton.title='Menu · Esc';
     this.menuButton.dataset.shortcut='Esc';this.menuButton.setAttribute('aria-keyshortcuts','Escape');this.menuButton.setAttribute('aria-label', 'Abrir menu — Esc'); this.menuButton.onclick = () => this.openPause();
     this.menuButton.addEventListener('pointerdown', e => { if (e.pointerType === 'touch') { e.preventDefault(); this.openPause(); } });

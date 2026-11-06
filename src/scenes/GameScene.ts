@@ -572,7 +572,7 @@ export class GameScene extends Phaser.Scene {
     this.updateEquipmentAppearance();
     const presentation=this.glacierPlaytest??characterProfiles.active;
     this.player.setCharacterAppearance(presentation.appearance);this.hunterArt?.setAppearance(presentation.appearance);this.astralArt?.setAppearance(presentation.appearance);this.xenoArt?.setAppearance(presentation.appearance);
-    this.xeno?.setSpecies(this.glacierPlaytest?this.glacierPlaytest.companion:characterProfiles.canChooseHollow(characterProfiles.active.id)?characterProfiles.active.companion:'symbiont');
+    this.xeno?.setSpecies(this.glacierPlaytest?this.glacierPlaytest.companion:characterProfiles.canChooseCompanion(characterProfiles.active.id,characterProfiles.active.companion??'symbiont')?characterProfiles.active.companion:'symbiont');this.xenoArt?.setCompanion(this.xeno?.species);
     if (this.transferHp !== undefined) this.player.health.current = Math.min(this.transferHp, this.player.maxHp);
     this.transferHp = undefined;
     this.kineticWave = this.add.graphics().setDepth(14999);
@@ -1129,8 +1129,8 @@ export class GameScene extends Phaser.Scene {
         (enemy, damage, angle, precision) => this.resolvePlayerHits(time, [enemy], damage, angle, 0x5fe6d8, this.player.position, precision));
       this.hud.setHunterMomentum(this.hunter.momentum);
     } else if(this.xeno){
-      this.xeno.update(time,dt,this.player.position,facing,this.player.isDead,targets,this.arena.obstacles,this.movementBounds,(enemy,damage,angle,origin,heavy)=>this.resolvePlayerHits(time,[enemy],damage,angle,XENOBINDER.color,origin,heavy),[this.player,...(this.party?.players??[])],heavy.phase==='CHARGING',this.playerObstacles.length?this.playerObstacles:this.arena.obstacles);
-      this.xenoPanel?.update(this.xeno.snapshot(),heavy.phase,this.player.isDead);this.hud.setXenobinderBond(this.xeno.bond);
+      this.xeno.update(time,dt,this.player.position,facing,this.player.isDead,targets,this.arena.obstacles,this.movementBounds,(enemy,damage,angle,origin,heavy,color)=>this.resolvePlayerHits(time,[enemy],damage,angle,color??XENOBINDER.color,origin,heavy),[this.player,...(this.party?.players??[])],heavy.phase==='CHARGING',this.playerObstacles.length?this.playerObstacles:this.arena.obstacles);
+      this.xenoPanel?.update(this.xeno.snapshot(),heavy.phase,this.player.isDead);this.hud.setXenobinderBond(this.xeno.bond,this.xeno.species);
     } else if(this.astral){
       this.astral.update(time,dt,targets,this.arena.obstacles,this.movementBounds,(enemy,damage,angle,heavy,element,origin,force)=>this.resolvePlayerHits(time,[enemy],damage,angle,ELEMENT_COLORS[element],origin,heavy,this.equipment.snapshot().slots,force,element),heavy.phase==='CHARGING');
       this.astralPanel?.update(this.astral.energy,this.astral.element,heavy.phase,this.player.isDead,this.inputModalOpen);
@@ -1747,12 +1747,12 @@ export class GameScene extends Phaser.Scene {
       sync: world => this.syncCoopWorld(world),
       render: pose => {
         const previousDead = this.player.isDead;
-        this.player.health.max = pose.maxHp; this.player.health.current = pose.hp;
+        this.player.health.max = pose.maxHp; this.player.health.current = pose.hp;this.player.health.guardRemaining=Math.max(0,Math.min(5,pose.guardRemaining??0));this.player.health.guardReduction=Math.max(0,Math.min(.45,pose.guardReduction??0));
         this.player.renderRemote(pose, pose.aim, pose.strike??{ phase: pose.firing ? 'SWING' : 'READY', relativeAngle: 0, worldAngle: pose.aim, swingProgress: pose.swingProgress??.5 },
           { phase: pose.phase as 'READY' | 'CHARGING' | 'RELEASE', level: pose.level, swingProgress: pose.releaseProgress??0 }, pose.dash, pose.dead);
         this.hunterArt?.update(pose.x, pose.y, pose.aim, pose.firing, pose.dash, { phase: pose.phase as 'READY' | 'CHARGING' | 'RELEASE', level: pose.level });
         this.hunter?.beamView.render(pose.beam);
-        this.xeno?.render(pose.xenobinder);if(pose.xenobinder){this.xenoArt?.update(pose.x,pose.y,pose.aim,pose.firing,pose.dash,{phase:pose.phase as 'READY'|'CHARGING'|'RELEASE',level:pose.level},'energy');this.xenoPanel?.update(pose.xenobinder,pose.phase as 'READY'|'CHARGING'|'RELEASE',pose.dead);this.hud.setXenobinderBond(pose.xenobinder.bond);}
+        this.xeno?.render(pose.xenobinder);if(pose.xenobinder){this.xenoArt?.update(pose.x,pose.y,pose.aim,pose.firing,pose.dash,{phase:pose.phase as 'READY'|'CHARGING'|'RELEASE',level:pose.level},'energy');this.xenoPanel?.update(pose.xenobinder,pose.phase as 'READY'|'CHARGING'|'RELEASE',pose.dead);this.hud.setXenobinderBond(pose.xenobinder.bond,pose.xenobinder.species);}
         this.astral?.render(pose.astral);
         if(pose.astral){this.astralArt?.update(pose.x,pose.y,pose.aim,pose.firing,pose.dash,{phase:pose.phase as 'READY'|'CHARGING'|'RELEASE',level:pose.level},pose.astral.element);this.astralPanel?.update(pose.astral.energy,pose.astral.element,pose.phase as 'READY'|'CHARGING'|'RELEASE',pose.dead,this.inputModalOpen);}
         if (pose.dead && !previousDead) this.hud.showDeath(!!coopSession.world?.boss?.active&&coopSession.members.some(m=>m.connected&&m.id!==coopSession.id&&!coopSession.world?.players[m.id]?.dead));
@@ -2361,7 +2361,7 @@ export class GameScene extends Phaser.Scene {
 
   // Explicit isolated post-Vesper preview. No Titan victory or arena shortcut.
   seedEmbersRoutePlaytest(area:'cinder'|'obsidian'|'caldera'):boolean{
-    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||!new URLSearchParams(location.search).has('embers')||coopSession.role!=='offline'||this.transitioning||this.inputModalOpen)return false;
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||(!new URLSearchParams(location.search).has('embers')&&new URLSearchParams(location.search).get('refinement')!=='199')||coopSession.role!=='offline'||this.transitioning||this.inputModalOpen)return false;
     for(const flag of JOURNEY_FLAGS)this[flag]=false;
     for(const flag of ['cavernDepthSeen','deepPassageOpen','deepAreaSeen','deepCavernEntered','deepEndSeen','deeperEntered','exteriorEntered','fragmentSeen','approachSeen','firstEchoSeen','wardenReached','wardenGateOpen','wardenDefeated','wardenEndingSeen','valleyVisited','valleyLandmarkSeen','valleyEndSeen','valleyCheckpointReached','valleyFrontierReached','valleyFrontierSignalSeen','valleyFrontierEndSeen','aridVisited','aridSignalSeen','aridFrontierEntered','aridFrontierReached','dunesVisited','dunesRuinsSeen','dunesDepthSeen','soterradoReached','soterradoDefeated','soterradoClueSeen','frostVisited','frostSignalSeen','frostEndSeen','icecaveVisited','icecaveSignalSeen','icenestVisited','vesperReached','vesperDefeated','vesperClueSeen','cinderVisited'] as const)this[flag]=true;
     const index=['cinder','obsidian','caldera'].indexOf(area);
@@ -2517,7 +2517,7 @@ export class GameScene extends Phaser.Scene {
   }
   inspectCharacterPresentation(){
     const actor=this.player?.view.active?this.player.view.getData('completeActor') as CompleteActorArt|undefined:undefined;
-    return{ready:!!this.player?.view.active,bosses:Object.entries({warden:this.warden,soterrado:this.soterrado,vesper:this.vesper,titan:this.titan}).flatMap(([id,b])=>b?[{id,state:b.state,hp:b.health.current,dead:b.isDead}]:[]),peers:this.party?.inspectPresentation()??[],area:this.area,position:this.player?{...this.player.position}:undefined,actor:actor?{identity:actor.identity,sex:actor.sex,frame:actor.body.frame.name,bakes:actor.bakeCount,width:actor.body.displayWidth,height:actor.body.displayHeight}:null,sources:completeSourceStats(this),companion:this.xeno?.snapshot(),effects:this.children.list.filter(v=>v instanceof Phaser.GameObjects.Image&&v.visible&&v.texture.key.startsWith('pixelfx-')).map(v=>{const image=v as Phaser.GameObjects.Image;return{key:image.texture.key,frame:image.frame.name,x:image.x,y:image.y};})};
+    return{ready:!!this.player?.view.active,bosses:Object.entries({warden:this.warden,soterrado:this.soterrado,vesper:this.vesper,titan:this.titan}).flatMap(([id,b])=>b?[{id,state:b.state,hp:b.health.current,dead:b.isDead}]:[]),peers:this.party?.inspectPresentation()??[],guard:{remaining:this.player?.health.guardRemaining,reduction:this.player?.health.guardReduction},area:this.area,position:this.player?{...this.player.position}:undefined,actor:actor?{identity:actor.identity,sex:actor.sex,frame:actor.body.frame.name,bakes:actor.bakeCount,contact:actor.contactPoint(0),width:actor.body.displayWidth,height:actor.body.displayHeight}:null,sources:completeSourceStats(this),companionVisual:this.xeno?.body.active?{texture:this.xeno.body.texture.key,frame:this.xeno.body.frame.name,flip:this.xeno.body.flipX}:undefined,companion:this.xeno?.snapshot(),effects:this.children.list.filter(v=>v instanceof Phaser.GameObjects.Image&&v.visible&&v.texture.key.startsWith('pixelfx-')).map(v=>{const image=v as Phaser.GameObjects.Image;return{key:image.texture.key,frame:image.frame.name,x:image.x,y:image.y};})};
   }
   seedMissionPlaytest(id:MissionId,reviewStop?:string,reviewNpc?:string):boolean{
     const params=new URLSearchParams(location.search),visualStop=params.has('visual-review')?VISUAL_REVIEW_STOPS.find(s=>s.id===reviewStop):undefined;

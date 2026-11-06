@@ -94,7 +94,7 @@ export class PartyExpedition {
    if((!b||p.x>b.left+18&&p.x<b.right-18&&p.y>b.top+18&&p.y<b.bottom-18)&&(!b?.walkable||fitsGround(p,18,b.walkable,39))&&a.obstacles.every(o=>Math.hypot(o.x-p.x,o.y-p.y)>o.radius+20)&&this.players.every(actor=>Math.hypot(actor.position.x-p.x,actor.position.y-p.y)>40))return p;
   }return{...a.player.position};
  }
- inspectPresentation(){return[...this.actors.values(),...this.playerMirrors.values()].map(actor=>({classId:actor.profile.classId,sex:actor.player.sex,appearance:actor.profile.appearance,companion:actor.xeno?{species:actor.xeno.species,texture:actor.xeno.body.texture.key,frame:actor.xeno.body.frame.name}:undefined}));}
+ inspectPresentation(){return[...this.actors.values(),...this.playerMirrors.values()].map(actor=>({classId:actor.profile.classId,sex:actor.player.sex,guard:{remaining:actor.player.health.guardRemaining,reduction:actor.player.health.guardReduction},appearance:actor.profile.appearance,companion:actor.xeno?{species:actor.xeno.species,texture:actor.xeno.body.texture.key,frame:actor.xeno.body.frame.name}:undefined}));}
  updateHost(now:number,dt:number):void{
   if(room.role!=='host'){
    if(this.balanced){for(const e of this.access().enemies){const base=this.resilience.get(e);if(base!==undefined)this.resizeHealth(e,base);}this.balanced=false;this.resilience=new WeakMap();}
@@ -125,7 +125,7 @@ export class PartyExpedition {
   if(now-this.sendAt<100)return;this.sendAt=now;
   const players:PartyWorld['players']={};
   for(const [id,actor]of this.actors){const state=room.state(id),pose=actor.snapshot(),prompt=a.prompt(pose,id);players[id]={...pose,deathId:state.deathId||undefined,potionUsed:state.potionUsed,prompt:prompt.available,action:prompt.action};}
-  const host:PartyPose={strike:a.strike,releaseProgress:a.releaseProgress,...a.player.position,aim:a.player.rotation,hp:a.player.hp,maxHp:a.player.maxHp,dead:a.player.isDead,dash:a.player.isDashing,phase:a.phase,level:a.chargeLevel,firing:a.firing,dashReady:a.player.dashProgress,dashCooldown:a.player.dashCooldown,wave:a.wave,beam:a.hunter?.beamPose(),astral:a.astral?.snapshot(),xenobinder:a.xeno?.snapshot()};
+  const host:PartyPose={guardRemaining:a.player.health.guardRemaining,guardReduction:a.player.health.guardReduction,strike:a.strike,releaseProgress:a.releaseProgress,...a.player.position,aim:a.player.rotation,hp:a.player.hp,maxHp:a.player.maxHp,dead:a.player.isDead,dash:a.player.isDashing,phase:a.phase,level:a.chargeLevel,firing:a.firing,dashReady:a.player.dashProgress,dashCooldown:a.player.dashCooldown,wave:a.wave,beam:a.hunter?.beamPose(),astral:a.astral?.snapshot(),xenobinder:a.xeno?.snapshot()};
   players.host={...host,prompt:false,action:'INVESTIGAR',potionUsed:a.potionUsed};
   const enemies:CreaturePose[]=a.enemies.filter(e=>!e.isDead).map((enemy,index)=>{
    const e=enemy as Presented;

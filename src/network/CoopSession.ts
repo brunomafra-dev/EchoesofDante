@@ -25,7 +25,7 @@ export type PartyMember={id:string;profile:PartyProfile;connected:boolean};
 export type MemberState={input:PartyInput;attackTap:boolean;inputAt:number;deathId:string;potionUsed:number;potionReady:number;travelHp?:number};
 export type PartyInput = {x:number;y:number;aim:number;attack:boolean;dash:boolean;charge:boolean;held:boolean;release:boolean;cancel:boolean;interact:boolean;restart:boolean;element?:boolean};
 export const NO_INPUT: PartyInput={x:0,y:0,aim:0,attack:false,dash:false,charge:false,held:false,release:false,cancel:false,interact:false,restart:false};
-export type PartyPose={x:number;y:number;aim:number;hp:number;maxHp:number;dead:boolean;dash:boolean;phase:string;level:number;firing:boolean;dashReady?:number;chargeReady?:number;momentum?:number;astral?:import('../combat/AstralCombat').AstralPose;xenobinder?:import('../combat/XenobinderCombat').XenobinderPose;beam?:HunterBeamPose;strike?:SaberPose;releaseProgress?:number;velocity?:{x:number;y:number};deathId?:string;dashCooldown?:number;chargeCooldown?:number;swingProgress?:number;wave?:{x:number;y:number;rotation:number;width:number;height:number}};
+export type PartyPose={guardRemaining?:number;guardReduction?:number;x:number;y:number;aim:number;hp:number;maxHp:number;dead:boolean;dash:boolean;phase:string;level:number;firing:boolean;dashReady?:number;chargeReady?:number;momentum?:number;astral?:import('../combat/AstralCombat').AstralPose;xenobinder?:import('../combat/XenobinderCombat').XenobinderPose;beam?:HunterBeamPose;strike?:SaberPose;releaseProgress?:number;velocity?:{x:number;y:number};deathId?:string;dashCooldown?:number;chargeCooldown?:number;swingProgress?:number;wave?:{x:number;y:number;rotation:number;width:number;height:number}};
 export type CreatureLayer={texture:string;frame:string;x:number;y:number;width:number;height:number;rotation:number;flip:boolean;depth:number;originX:number;originY:number};
 export type ImpactPose={id:number;at:number;x:number;y:number;color:number;damage:number;angle?:number;effective?:boolean;resisted?:boolean};
 export type CreaturePose={id:number;species:string;x:number;y:number;hp:number;maxHp:number;radius:number;texture:string;frame:string;flip:boolean;size:number;rotation:number;
@@ -37,6 +37,7 @@ export class CoopSession {
  serverProtocol?:15|16;
  presentationAvailable=false;
  private needsPresentation=false;
+ private needsBonds=false;
  outpostsAvailable=false;
  signalsAvailable=false;
  circuitsAvailable=false;
@@ -129,8 +130,9 @@ export class CoopSession {
   this.clearChat();this.url=target.href;this.role='connecting';this.endedMessage='';this.message='Conectando à expedição…';this.personalXpGained=0;this.sequence=0;this.epoch=0;this.rewards=new LocalJourney();this.changed();
   this.campaign=undefined;this.campaignSaved=true;this.members=[];this.states.clear();this.requests=[];this.peerDeathId='';this.earnedBosses=[];this.lootAwarded.clear();this.resourceAwarded.clear();this.personalItems=[];this.receipt='';this.rewardTotal=0;this.rewardSaved=true;this.rewardResources={credits:0,materials:[0,0,0],used:0};
   const inventory=validEquipment(this.rewards.load()?.equipment);
-  profile={...profile,characterId:hero.id,appearance:hero.appearance,companion:characterProfiles.canChooseHollow(hero.id)?hero.companion:'symbiont',build:this.rewards.load()?.progression,potions:this.rewards.load()?.economy?.potions??0,equipment:inventory.slots,bagFree:24-(inventory.items!.length-Object.keys(inventory.equipped!).length)};
-  this.needsPresentation=Object.values(profile.appearance??{}).some(v=>v!=='original')||profile.companion==='hollow';
+  profile={...profile,characterId:hero.id,appearance:hero.appearance,companion:characterProfiles.canChooseCompanion(hero.id,hero.companion??'symbiont')?hero.companion:'symbiont',build:this.rewards.load()?.progression,potions:this.rewards.load()?.economy?.potions??0,equipment:inventory.slots,bagFree:24-(inventory.items!.length-Object.keys(inventory.equipped!).length)};
+  this.needsBonds=profile.companion==='bulwark'||profile.companion==='frostling';
+  this.needsPresentation=Object.values(profile.appearance??{}).some(v=>v!=='original')||profile.companion!=='symbiont';
   return new Promise((resolve,reject)=>this.open({type:mode,profile,area,code,campaign},false,resolve,reject));
  }
  private open(request:object,retry:boolean,resolve:()=>void=()=>{},reject:(reason:Error)=>void=()=>{}):void {
@@ -160,6 +162,7 @@ export class CoopSession {
     const needsPermanence=new URLSearchParams(location.search).has('permanence')||this.rewards.load()?.missions?.accepted.some(isPermanence);
     if(![15,16].includes(m.protocol)||m.protocol===15&&needsPermanence){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização dos capítulos do assentamento. Seus personagens permanecem preservados.');reject(new Error(this.message));return;}
     if(this.needsPresentation&&m.presentation!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda a atualização de aparência e vínculos. Seu personagem e progresso estão preservados.');reject(new Error(this.message));return;}
+    if(this.needsBonds&&m.bonds!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda os novos companheiros e comandos. Seu personagem e progresso estão preservados.');reject(new Error(this.message));return;}
     this.serverProtocol=m.protocol;
     this.presentationAvailable=m.presentation===1;
     this.outpostsAvailable=m.outposts===1;

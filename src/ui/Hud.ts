@@ -12,7 +12,8 @@ export class Hud {
   setAreaName(name:string):void{this.areaSubtitle.setText(name);}
   private momentum = 0;
   private bond:number=XENOBINDER.bondInitial;
-  setXenobinderBond(value:number):void{this.bond=value;}
+  private xenoCommand='SALTO';
+  setXenobinderBond(value:number,species?:string):void{this.bond=value;this.xenoCommand=species==='bulwark'?'COURAÇA':species==='frostling'?'SOPRO':'SALTO';}
   setHunterMomentum(value: number): void { this.momentum = Math.round(value); }
   private hpFill: Phaser.GameObjects.Rectangle;
   private hpText: Phaser.GameObjects.Text;
@@ -140,7 +141,7 @@ export class Hud {
     this.dashText.setColor(dashProgress >= 1 ? '#b6c6b2' : '#8a9989');
     const chargeKey = this.inputMethod === 'gamepad' ? '[LT]' : this.inputMethod === 'touch' ? '' : '[Q]';
     const chargeStatus = chargePhase === 'CHARGING' ? `${Math.round(chargeLevel * 100)}%` : chargePhase === 'RELEASE' ? 'ONDA' : chargeProgress >= 1 ? 'PRONTA' : `${((1 - chargeProgress) * chargeCooldown / 1000).toFixed(1)}s`;
-    this.chargeText.setText(this.xenobinder?`${chargeKey} COMANDO · ${chargePhase==='RELEASE'?'INVESTIDA':this.bond<XENOBINDER.commandCost&&chargePhase==='READY'?'SEM VÍNCULO':chargeStatus}`.trim():this.astral?`${chargeKey} CAMPO · ${chargePhase==='RELEASE'?'ATIVO':chargeStatus}`.trim():this.hunter ? `${chargeKey} FEIXE · ${chargePhase === 'RELEASE' ? 'DISPARO' : chargeStatus}`.trim() : `${chargeKey} CARGA · ${chargeStatus}`.trim());
+    this.chargeText.setText(this.xenobinder?`${chargeKey} ${this.xenoCommand} · ${chargePhase==='RELEASE'?'ATIVO':this.bond<XENOBINDER.commandCost&&chargePhase==='READY'?'SEM VÍNCULO':chargeStatus}`.trim():this.astral?`${chargeKey} CAMPO · ${chargePhase==='RELEASE'?'ATIVO':chargeStatus}`.trim():this.hunter ? `${chargeKey} FEIXE · ${chargePhase === 'RELEASE' ? 'DISPARO' : chargeStatus}`.trim() : `${chargeKey} CARGA · ${chargeStatus}`.trim());
     this.chargeText.setColor(chargePhase === 'CHARGING' ? '#5fe6d8' : chargeProgress >= 1 ? '#b6c6b2' : '#8a9989');
     if (this.chargeFill) this.chargeFill.width = 196 * (chargePhase === 'CHARGING' ? chargeLevel : chargeProgress);
     this.momentumText?.setText(`MOM ${this.momentum}`);

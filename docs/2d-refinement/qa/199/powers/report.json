@@ -1,0 +1,238 @@
+{
+  "passed": true,
+  "base": "http://localhost:5185",
+  "checks": [
+    "Distinct landing, shield and projectile Q; one damage event, obstacle blocking, no shared healing, bounded nonstacking armor and exact expiry.",
+    "Original boss unlocks gate new species; legacy Hollow returns to the starter, granting no new boss unlock."
+  ],
+  "errors": [],
+  "fixture": "DEV laboratory integration: actual XenobinderCombat, Health and movement/obstacle methods with explicit CPU targets/ticks. No canonical saves, real boss rewards or hidden user unlocks.",
+  "results": {
+    "cases": [
+      {
+        "species": "symbiont",
+        "wall": false,
+        "accepted": true,
+        "bond": 65,
+        "hp": 400,
+        "hits": 1,
+        "heals": [
+          50,
+          50,
+          64
+        ],
+        "guard": [
+          {
+            "remaining": 0,
+            "reduction": 0
+          },
+          {
+            "remaining": 0,
+            "reduction": 0
+          },
+          {
+            "remaining": 0,
+            "reduction": 0
+          }
+        ],
+        "maxLift": 29.980153621301675,
+        "blast": false,
+        "burst": false,
+        "texture": "dante-symbiont-motion",
+        "receivedDamage": 20,
+        "damageAfterExpiry": 20,
+        "clear": {
+          "active": true
+        }
+      },
+      {
+        "species": "symbiont",
+        "wall": true,
+        "accepted": true,
+        "bond": 65,
+        "hp": 500,
+        "hits": 0,
+        "heals": [
+          50,
+          64,
+          50
+        ],
+        "guard": [
+          {
+            "remaining": 0,
+            "reduction": 0
+          },
+          {
+            "remaining": 0,
+            "reduction": 0
+          },
+          {
+            "remaining": 0,
+            "reduction": 0
+          }
+        ],
+        "maxLift": 29.984489248497454,
+        "blast": false,
+        "burst": false,
+        "texture": "dante-symbiont-motion",
+        "receivedDamage": 20,
+        "damageAfterExpiry": 20,
+        "clear": {
+          "active": true
+        }
+      },
+      {
+        "species": "bulwark",
+        "wall": false,
+        "accepted": true,
+        "bond": 65,
+        "hp": 500,
+        "hits": 0,
+        "heals": [
+          50,
+          50,
+          50
+        ],
+        "guard": [
+          {
+            "remaining": 3.420000000000021,
+            "reduction": 0.44999999999999996
+          },
+          {
+            "remaining": 3.420000000000021,
+            "reduction": 0.44999999999999996
+          },
+          {
+            "remaining": 0,
+            "reduction": 0
+          }
+        ],
+        "maxLift": 0,
+        "blast": false,
+        "burst": false,
+        "texture": "companion-bulwark",
+        "receivedDamage": 11,
+        "damageAfterExpiry": 20,
+        "clear": {
+          "active": true
+        }
+      },
+      {
+        "species": "bulwark",
+        "wall": true,
+        "accepted": true,
+        "bond": 65,
+        "hp": 500,
+        "hits": 0,
+        "heals": [
+          50,
+          50,
+          50
+        ],
+        "guard": [
+          {
+            "remaining": 3.420000000000021,
+            "reduction": 0.44999999999999996
+          },
+          {
+            "remaining": 3.420000000000021,
+            "reduction": 0.44999999999999996
+          },
+          {
+            "remaining": 0,
+            "reduction": 0
+          }
+        ],
+        "maxLift": 0,
+        "blast": false,
+        "burst": false,
+        "texture": "companion-bulwark",
+        "receivedDamage": 11,
+        "damageAfterExpiry": 20,
+        "clear": {
+          "active": true
+        }
+      },
+      {
+        "species": "frostling",
+        "wall": false,
+        "accepted": true,
+        "bond": 65,
+        "hp": 400,
+        "hits": 1,
+        "heals": [
+          50,
+          50,
+          50
+        ],
+        "guard": [
+          {
+            "remaining": 0,
+            "reduction": 0
+          },
+          {
+            "remaining": 0,
+            "reduction": 0
+          },
+          {
+            "remaining": 0,
+            "reduction": 0
+          }
+        ],
+        "maxLift": 0,
+        "blast": true,
+        "burst": true,
+        "texture": "companion-frostling",
+        "receivedDamage": 20,
+        "damageAfterExpiry": 20,
+        "clear": {
+          "active": true
+        }
+      },
+      {
+        "species": "frostling",
+        "wall": true,
+        "accepted": true,
+        "bond": 65,
+        "hp": 500,
+        "hits": 0,
+        "heals": [
+          50,
+          50,
+          50
+        ],
+        "guard": [
+          {
+            "remaining": 0,
+            "reduction": 0
+          },
+          {
+            "remaining": 0,
+            "reduction": 0
+          },
+          {
+            "remaining": 0,
+            "reduction": 0
+          }
+        ],
+        "maxLift": 0,
+        "blast": true,
+        "burst": true,
+        "texture": "companion-frostling",
+        "receivedDamage": 20,
+        "damageAfterExpiry": 20,
+        "clear": {
+          "active": true
+        }
+      }
+    ],
+    "legacy": "symbiont",
+    "locks": {
+      "starter": true,
+      "wardenLocked": false,
+      "vesperLocked": false,
+      "wardenUnlocked": true,
+      "vesperUnlocked": true
+    }
+  }
+}

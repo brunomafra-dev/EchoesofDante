@@ -1,0 +1,22 @@
+[
+  {
+    "species": "bulwark",
+    "source": "public/assets/visual/creature-finish/warden-v1.webp",
+    "file": "bulwark-v1.webp",
+    "frame": 192,
+    "frames": 8,
+    "bytes": 211720,
+    "sha256": "3b6844e1d6b2aeee5796e578123bfe4a0d3c61b0827da8e766af3aedf6dd36bb",
+    "changes": "Uniform downsample of eight complete painted poses. No assembled limbs or borrowed franchise assets."
+  },
+  {
+    "species": "frostling",
+    "source": "public/assets/visual/creature-finish/vesper-v1.webp",
+    "file": "frostling-v1.webp",
+    "frame": 192,
+    "frames": 8,
+    "bytes": 231668,
+    "sha256": "2b2304938275d1a8758572d3a89255fef186517f89f0792b337babfeccc64d4a",
+    "changes": "Uniform downsample of eight complete painted poses. No assembled limbs or borrowed franchise assets."
+  }
+]

@@ -1,3 +1,4 @@
+import{completeStride}from'../visual/CompleteActorFrames';
 import { equipmentAppearance } from '../config/equipment';
 import Phaser from 'phaser';
 import { warriorReach, warriorSweep } from '../visual/HumanPose';
@@ -186,6 +187,7 @@ export class Player {
   }
 
   update(now: number, deltaSeconds: number, input: Vec2, aim: number, obstacles: ReadonlyArray<Obstacle>, pose: SaberPose, heavy: KineticPose, bounds?: MovementBounds): void {
+    this.health.tickProtection(deltaSeconds);
     if (this.isDead) return;
     this.rotation = aim;
     if (this.isDashing && now >= this.dashUntil) this.isDashing = false;
@@ -204,12 +206,12 @@ export class Player {
     const travelled = Math.hypot(movedX, movedY);
     const walking = !this.isDashing && !heavyBusy && travelled > 0.1;
     if (walking) {
-      if (!this.wasWalking) {
+      if (!this.wasWalking&&!this.view.getData('completeActor')) {
         this.stepPhase = 0;
         this.lastStepIndex = 0;
       }
       this.travelDirection = normalized(movedX, movedY);
-      this.stepPhase += travelled / 108 * Math.PI * 2;
+      this.stepPhase += travelled / (this.view.getData('completeActor')?completeStride(this.classId):108) * Math.PI * 2;
       const stepIndex = Math.floor(this.stepPhase / Math.PI);
       if (stepIndex !== this.lastStepIndex) this.footstep(stepIndex);
       this.lastStepIndex = stepIndex;
@@ -326,6 +328,7 @@ export class Player {
   }
 
   revive(position:Vec2):void {
+    this.health.clearProtection();
     this.scene.tweens.killTweensOf([this.view,this.shadow,this.groundContact,this.ring]);
     this.isDead=false;this.isDashing=false;this.health.current=this.health.max;
     this.velocity.x=this.velocity.y=0;this.invulnerableUntil=this.scene.time.now+1500;
@@ -334,6 +337,8 @@ export class Player {
   }
 
   private footstep(stepIndex: number): void {
+    const actor=this.view.getData('completeActor') as CompleteActorArt|undefined;
+    if(actor){const point=actor.contactPoint(stepIndex);const mark=this.scene.add.ellipse(this.position.x+point.x,this.position.y+point.y,12,4,0x9bb6aa,.18).setDepth(this.position.y+point.y-2);this.scene.tweens.add({targets:mark,alpha:0,duration:180,onComplete:()=>mark.destroy()});return;}
     const direction = this.travelDirection;
     const side = stepIndex % 2 ? 1 : -1;
     const x = this.position.x - direction.x * 17 - direction.y * side * 10;
@@ -345,6 +350,7 @@ export class Player {
   setHurtGrace(until: number): void { this.invulnerableUntil = Math.max(this.invulnerableUntil, until); }
 
   die(): void {
+    this.health.clearProtection();
     this.isDead = true;
     this.animationState = 'DEAD';
     this.isDashing = false;

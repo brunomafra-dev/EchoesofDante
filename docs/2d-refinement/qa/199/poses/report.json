@@ -1,0 +1,220 @@
+{
+  "passed": true,
+  "base": "http://localhost:5185",
+  "method": "Actual keyboard/mouse movement and firing; read-only compiled lab diagnostics. Cosmetic/gear/region fixtures are explicit URL options. No real save writes.",
+  "cases": [
+    {
+      "classId": "warrior",
+      "sex": "male",
+      "head": "practical",
+      "skin": "warm",
+      "hair": "copper",
+      "frames": [
+        9,
+        48,
+        10,
+        2,
+        46,
+        50,
+        11
+      ],
+      "sources": {
+        "inputs": 3,
+        "decodedBytes": 31850496,
+        "storage": "CPU baking inputs; no source texture in the Phaser renderer"
+      },
+      "final": {
+        "x": 936.4612604214689,
+        "y": 1261.94819062676
+      },
+      "bakes": 2
+    },
+    {
+      "classId": "warrior",
+      "sex": "female",
+      "head": "practical",
+      "skin": "deep",
+      "hair": "silver",
+      "frames": [
+        20,
+        9,
+        48,
+        10,
+        2,
+        46,
+        50,
+        11
+      ],
+      "sources": {
+        "inputs": 3,
+        "decodedBytes": 31850496,
+        "storage": "CPU baking inputs; no source texture in the Phaser renderer"
+      },
+      "final": {
+        "x": 858.8706624811939,
+        "y": 1261.9509465837996
+      },
+      "bakes": 2
+    },
+    {
+      "classId": "hunter",
+      "sex": "male",
+      "head": "stellar",
+      "skin": "warm",
+      "hair": "copper",
+      "frames": [
+        9,
+        40,
+        10,
+        2,
+        6,
+        38,
+        42
+      ],
+      "sources": {
+        "inputs": 3,
+        "decodedBytes": 28311552,
+        "storage": "CPU baking inputs; no source texture in the Phaser renderer"
+      },
+      "final": {
+        "x": 838.613196085345,
+        "y": 1261.9708002780337
+      },
+      "bakes": 2
+    },
+    {
+      "classId": "hunter",
+      "sex": "female",
+      "head": "stellar",
+      "skin": "deep",
+      "hair": "silver",
+      "frames": [
+        9,
+        40,
+        10,
+        2,
+        6,
+        38,
+        42
+      ],
+      "sources": {
+        "inputs": 3,
+        "decodedBytes": 28311552,
+        "storage": "CPU baking inputs; no source texture in the Phaser renderer"
+      },
+      "final": {
+        "x": 1045.1233190120304,
+        "y": 1261.9811442745897
+      },
+      "bakes": 2
+    },
+    {
+      "classId": "astral",
+      "sex": "male",
+      "head": "astral",
+      "skin": "warm",
+      "hair": "copper",
+      "frames": [
+        9,
+        40,
+        10,
+        2,
+        34,
+        38,
+        5,
+        42
+      ],
+      "sources": {
+        "inputs": 3,
+        "decodedBytes": 28311552,
+        "storage": "CPU baking inputs; no source texture in the Phaser renderer"
+      },
+      "final": {
+        "x": 778.4160097115612,
+        "y": 1261.9556515219685
+      },
+      "bakes": 2
+    },
+    {
+      "classId": "astral",
+      "sex": "female",
+      "head": "astral",
+      "skin": "deep",
+      "hair": "silver",
+      "frames": [
+        9,
+        40,
+        10,
+        6,
+        2,
+        34,
+        38,
+        42
+      ],
+      "sources": {
+        "inputs": 3,
+        "decodedBytes": 28311552,
+        "storage": "CPU baking inputs; no source texture in the Phaser renderer"
+      },
+      "final": {
+        "x": 967.3984586074439,
+        "y": 1261.8770838011935
+      },
+      "bakes": 2
+    },
+    {
+      "classId": "xenobinder",
+      "sex": "male",
+      "head": "practical",
+      "skin": "warm",
+      "hair": "copper",
+      "frames": [
+        8,
+        9,
+        40,
+        10,
+        2,
+        34,
+        38,
+        42
+      ],
+      "sources": {
+        "inputs": 3,
+        "decodedBytes": 28311552,
+        "storage": "CPU baking inputs; no source texture in the Phaser renderer"
+      },
+      "final": {
+        "x": 878.4895028204273,
+        "y": 1261.9246716010691
+      },
+      "bakes": 2
+    },
+    {
+      "classId": "xenobinder",
+      "sex": "female",
+      "head": "practical",
+      "skin": "deep",
+      "hair": "silver",
+      "frames": [
+        9,
+        40,
+        10,
+        2,
+        34,
+        38,
+        42
+      ],
+      "sources": {
+        "inputs": 3,
+        "decodedBytes": 28311552,
+        "storage": "CPU baking inputs; no source texture in the Phaser renderer"
+      },
+      "final": {
+        "x": 845.0862707965279,
+        "y": 1261.9549966971167
+      },
+      "bakes": 2
+    }
+  ],
+  "errors": []
+}

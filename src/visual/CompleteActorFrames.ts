@@ -4,9 +4,10 @@ import registration from './actorRegistration.json';
 import warriorRegistration from './warriorWalkRegistration.json';
 
 export const COMPLETE_FRAME=192, COMPLETE_FEET=183, COMPLETE_DISPLAY=128, COMPLETE_COLUMNS=8;
+const previousGait=location.pathname.endsWith('/character-cohesion.html')&&new URLSearchParams(location.search).get('refinement')==='199'&&new URLSearchParams(location.search).get('gait')==='198';
 export const COMPLETE_STYLES=['none','basic','reinforced'] as const;
 export function completeFrameCount(classId:PlayableClass):number{return classId==='warrior'?72:64;}
-export function completeAsset(classId:PlayableClass,sex:string,style:ProtectionStyle):string{return `${import.meta.env.BASE_URL}assets/visual/complete-actors/${classId}-${sex}-${style}-motion-v3.png`;}
+export function completeAsset(classId:PlayableClass,sex:string,style:ProtectionStyle):string{return `${import.meta.env.BASE_URL}assets/visual/complete-actors/${classId}-${sex}-${style}-motion-v${previousGait?'3':'4'}.png`;}
 export function completeDirection(aim:number):number {return ((Math.round((Math.PI/2-aim)/(Math.PI/4))%8)+8)%8;}
 export function stableCompleteDirection(aim:number,previous:number|undefined):number {
  if(previous===undefined)return completeDirection(aim);
@@ -14,14 +15,14 @@ export function stableCompleteDirection(aim:number,previous:number|undefined):nu
  const gap=Math.atan2(Math.sin(aim-center),Math.cos(aim-center));
  return Math.abs(gap)<=Math.PI/8+.075?previous:completeDirection(aim);
 }
-export function completeStride(classId?:PlayableClass):number{return classId==='warrior'?144:classId==='hunter'?152:104;}
+export function completeStride(classId?:PlayableClass):number{return previousGait?(classId==='warrior'?144:classId==='hunter'?152:104):classId==='warrior'?120:classId==='hunter'?128:116;}
 export function completeFrame(aim:number,travel:number,walking:boolean,action:boolean,classId?:PlayableClass):number {
  const phase=((travel/completeStride(classId))%1+1)%1;
  // These two classes have authored opposite contact poses. The wide idle
  // stance is not a passing step: inserting it between contacts caused a hop.
  const grounded=classId==='warrior'||classId==='hunter';
  const row=completeDirection(aim);
- if(walking&&(!action||classId!=='warrior')){const base=classId==='warrior'?40:32;return [row*4+1,base+row*4,base+row*4+1,row*4+2,base+row*4+2,base+row*4+3][Math.floor(phase*6)];}
+ if(walking&&(!action||classId!=='warrior')){const base=classId==='warrior'?40:32;return previousGait?[row*4+1,base+row*4,base+row*4+1,row*4+2,base+row*4+2,base+row*4+3][Math.floor(phase*6)]:[row*4+1,base+row*4,row*4+2,base+row*4+2][Math.floor(phase*4)];}
  const column=action?3:walking?grounded?(phase<.5?1:2):[0,1,0,2][Math.floor(phase*4)]:0;
  return row*4+column;
 }

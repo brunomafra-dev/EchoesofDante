@@ -3,7 +3,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {existsSync} from 'node:fs';
-import {mkdir,readFile,writeFile} from 'node:fs/promises';
+import {mkdir,readFile,writeFile,copyFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {spawnSync} from 'node:child_process';
 import {unzipSync} from 'fflate';
@@ -11,16 +11,35 @@ import {unzipSync} from 'fflate';
 const dir=resolve(process.env.DANTE_ARRIVAL_ART_DIR??'.local/combat188');
 const hash=data=>createHash('sha256').update(data).digest('hex');
 const sourceHash='29f3d3bff81de211226bdb6329c2c7a8e304b39682a29231aa1e412412049871';
-async function check(){
- const meta=JSON.parse(await readFile(resolve(dir,'spider-runtime.json'),'utf8'));
+const cache=resolve(process.env.DANTE_HOLLOW_CACHE_DIR??'node_modules/.cache/dante-reviewed-hollow');
+async function remember(){await mkdir(cache,{recursive:true});for(const name of ['spider-runtime.glb','spider-runtime.json'])if(resolve(dir,name)!==resolve(cache,name))await copyFile(resolve(dir,name),resolve(cache,name));}
+async function check(from=dir){
+ const meta=JSON.parse(await readFile(resolve(from,'spider-runtime.json'),'utf8'));
  assert.equal(meta.inputSha256,sourceHash,'Unreviewed source model');
- assert.equal(hash(await readFile(resolve(dir,'spider-runtime.glb'))),meta.sha256,'Prepared model hash mismatch');
+ assert.equal(hash(await readFile(resolve(from,'spider-runtime.glb'))),meta.sha256,'Prepared model hash mismatch');
  assert.equal(meta.triangles,3826);assert.equal(meta.joints,107);assert.equal(meta.materials,1);
  assert.deepEqual(meta.clips,['Idle','Walk','Run','Attack','Bite','Hit','Death']);
  return meta;
 }
-if(existsSync(resolve(dir,'spider-runtime.glb'))&&existsSync(resolve(dir,'spider-runtime.json'))){await check();console.log('Reviewed Hollow art ready (ignored build input).');process.exit(0);}
-if(process.env.VERCEL!=='1'&&!process.argv.includes('--fetch')){console.log('No prepared Hollow art; local build keeps the identified legacy fallback. Use --fetch to prepare the official free sample.');process.exit(0);}
+if(existsSync(resolve(dir,'spider-runtime.glb'))&&existsSync(resolve(dir,'spider-runtime.json'))){await check();await remember();console.log('Reviewed Hollow art ready (ignored build input).');process.exit(0);}
+if(!process.argv.includes('--fetch')){
+ // Normal 2D/3D builds never require the asset author's website. Keep reviewed
+ // private inputs in Vercel's dependency cache, or recover our shipped game
+ // module (not an uploaded source archive). Its exact publication hash is pinned.
+ try{
+  if(existsSync(resolve(cache,'spider-runtime.glb'))&&existsSync(resolve(cache,'spider-runtime.json'))){
+   await check(cache);await mkdir(dir,{recursive:true});for(const name of ['spider-runtime.glb','spider-runtime.json'])await copyFile(resolve(cache,name),resolve(dir,name));await check();console.log('Reviewed Hollow restored from private dependency cache.');process.exit(0);
+  }
+  if(process.env.DANTE_HOLLOW_OFFLINE==='1')throw Error('offline build requested');
+  const artifact=await fetch('https://echosofdante.vercel.app/assets/_arrival-hollow--6LKanvv.js',{signal:AbortSignal.timeout(20000)});
+  assert.ok(artifact.ok,'Previously shipped game module unavailable');const bytes=Buffer.from(await artifact.arrayBuffer());
+  assert.equal(hash(bytes),'0549f0f9bfb3f32ab31d0a917a63c01b4ab043a5bde79bf7151df1e9ce2337b0','Shipped game module changed');
+  const {default:packed}=await import('data:text/javascript;base64,'+bytes.toString('base64'));
+  const model=Buffer.from(packed.data,'base64');assert.equal(hash(model),packed.meta.sha256);assert.equal(packed.meta.inputSha256,sourceHash);
+  await mkdir(dir,{recursive:true});await writeFile(resolve(dir,'spider-runtime.glb'),model);await writeFile(resolve(dir,'spider-runtime.json'),JSON.stringify(packed.meta));await check();await remember();
+  console.log('Reviewed Hollow recovered from the verified, already shipped game module.');process.exit(0);
+ }catch(error){console.warn('Optional 3D Hollow unavailable: '+error.message+'. Build continues with the identified legacy visual; 2D is unaffected. Use --fetch explicitly to obtain the official source.');process.exit(0);}
+}
 
 const page='https://easyforge.itch.io/giant-monster-spiders-free-sample';
 // Same public flow as the author's Download button, observed in itch's game.js.

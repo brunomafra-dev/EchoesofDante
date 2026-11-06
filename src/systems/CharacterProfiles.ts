@@ -1,6 +1,6 @@
 import { characterSex, type CharacterSex } from '../config/appearance';
 import type { PlayableClass } from '../config/classes';
-import {appearance,companion,hollowBondAvailable,type CharacterAppearance,type CompanionSpecies}from'../config/characterPresentation';
+import {appearance,companion,companionAvailable,type CharacterAppearance,type CompanionSpecies}from'../config/characterPresentation';
 import { createCampaign, validCampaign, type Campaign, type CampaignCreation, type CrewMember } from './Campaign';
 export type CharacterClass = PlayableClass;
 export type CharacterProfile = { id: string; name: string; classId: CharacterClass; sex?: CharacterSex; createdAt: number; campaign?: Campaign;appearance?:CharacterAppearance;companion?:CompanionSpecies };
@@ -68,12 +68,12 @@ export class CharacterProfiles {
   markIntroSeen(id: string): boolean {
     return this.updateCampaign(id, c => ({ ...c, introSeen: true }));
   }
-  canChooseHollow(id:string):boolean{
+  canChooseCompanion(id:string,species:CompanionSpecies):boolean{
     this.initialize();if(!this.characters.some(p=>p.id===id&&p.classId==='xenobinder'))return false;
-    try{return hollowBondAvailable(JSON.parse(localStorage.getItem(this.keyFor(id))??'null'));}catch{return false;}
+    try{return companionAvailable(JSON.parse(localStorage.getItem(this.keyFor(id))??'null'),species);}catch{return species==='symbiont';}
   }
   updatePresentation(id:string,look:unknown,species:CompanionSpecies='symbiont'):boolean{
-    this.initialize();const p=this.characters.find(hero=>hero.id===id);if(!p)return false;if(p.classId!=='xenobinder')species='symbiont';if(species==='hollow'&&!this.canChooseHollow(id))return false;
+    this.initialize();const p=this.characters.find(hero=>hero.id===id);if(!p)return false;if(p.classId!=='xenobinder')species='symbiont';species=companion(species);if(!this.canChooseCompanion(id,species)&&p.classId==='xenobinder')return false;
     const before={appearance:p.appearance,companion:p.companion};p.appearance=appearance(look);p.companion=p.classId==='xenobinder'?companion(species):'symbiont';
     if(this.persist())return true;Object.assign(p,before);return false;
   }
