@@ -21,7 +21,7 @@ import type { CharacterSex } from '../config/appearance';
 // Bounded showroom using the campaign's actor, combat and visual components.
 // No input, profiles, saves, relay or campaign state.
 export class CharacterPreviewScene extends Phaser.Scene {
- ready=false;running=false;
+ ready=false;running=false;failed=false;
  private actor!:CompleteActorArt;private target!:HollowCrawler;
  private targetParts:Phaser.GameObjects.Components.Visible[]=[];
  private saber?:EnergySaber;private hunter?:HunterCombat;private astral?:AstralCombat;private xeno?:XenobinderCombat;
@@ -29,11 +29,11 @@ export class CharacterPreviewScene extends Phaser.Scene {
  private wave!:Phaser.GameObjects.Ellipse;
  private started=0;private cueMask=0;private element:AstralElement='energy';
  private readonly owner={x:400,y:400,position:{x:400,y:400},health:{current:65,max:100,guardRemaining:0,guardReduction:0},isDead:false};
- constructor(readonly identity:PlayableClass,readonly sex:CharacterSex,private status:(phase:string,caption:string,frame:number)=>void,private loaded:()=>void,private look:CharacterAppearance=appearance(),private species:CompanionSpecies='symbiont'){super('Showcase');this.look=appearance();}
+ constructor(readonly identity:PlayableClass,readonly sex:CharacterSex,private status:(phase:string,caption:string,frame:number)=>void,private loaded:()=>void,private look:CharacterAppearance=appearance(),private species:CompanionSpecies='symbiont',readonly visualPreset:PlayableClass=identity){super('Showcase');this.look=appearance();}
  preload():void{
   preloadPixelFX(this);
   const base=import.meta.env.BASE_URL+'assets/visual/';
-  preloadCompleteSource(this,completeKey(this.identity,this.sex,'none'),completeAsset(this.identity,this.sex,'none'));
+  preloadCompleteSource(this,completeKey(this.identity,this.sex,'none',this.visualPreset),completeAsset(this.identity,this.sex,'none',this.visualPreset));
   if(this.identity==='hunter')preloadCompleteSource(this,completeKey('hunter',this.sex,'basic'),completeAsset('hunter',this.sex,'basic'));
   for(const key of ['hollow-body','hollow-forelimbs','hollow-rear-limbs'])this.load.image(key,`${base}characters/${key}.png`);
   this.load.spritesheet('finish-hollow',`${import.meta.env.BASE_URL}assets/experiments/forest-finish/hollow-v3.webp`,{frameWidth:256,frameHeight:256});
@@ -45,14 +45,15 @@ export class CharacterPreviewScene extends Phaser.Scene {
    for(const key of ['xeno-bolt','xeno-link','xeno-pulse'])this.load.image(key,`${base}xenobinder/${key}.png`);
    this.load.spritesheet('dante-symbiont-motion',base+'characters/dante-symbiont-motion.png',{frameWidth:256,frameHeight:256});
   }
-  this.load.on('loaderror',()=>this.status('error','PRÉVIA INDISPONÍVEL',0));
+  this.load.on('loaderror',()=>{this.failed=true;this.status('error','Não foi possível carregar as poses. Recarregue para tentar novamente.',0);});
  }
  create():void{
-  const image=completeSource(this,completeKey(this.identity,this.sex,'none'));
+  if(this.failed)return;
+  const image=completeSource(this,completeKey(this.identity,this.sex,'none',this.visualPreset));
   // Initial outfit only: aliases share one source, never load unused wardrobes.
-  for(const style of ['basic','reinforced']as const)if(!hasCompleteSource(this,completeKey(this.identity,this.sex,style)))aliasCompleteSource(this,completeKey(this.identity,this.sex,style),image);
+  for(const style of ['basic','reinforced']as const)if(!hasCompleteSource(this,completeKey(this.identity,this.sex,style,this.visualPreset)))aliasCompleteSource(this,completeKey(this.identity,this.sex,style,this.visualPreset),image);
   this.add.ellipse(400,439,57,16,0x020e14,.4).setDepth(397);
-  this.actor=new CompleteActorArt(this,this.add.container(400,400).setDepth(400),400,400,this.sex,this.identity);
+  this.actor=new CompleteActorArt(this,this.add.container(400,400).setDepth(400),400,400,this.sex,this.identity,undefined,this.visualPreset);
   this.actor.setAppearance(this.look);
   const existing=new Set(this.children.list);
   this.target=new HollowCrawler(this,520,400,undefined,'forest');this.target.health.max=1000;this.target.health.current=1000;
@@ -68,9 +69,9 @@ export class CharacterPreviewScene extends Phaser.Scene {
  setAppearance(_value:CharacterAppearance):void{this.look=appearance();}
  setCompanion(value:CompanionSpecies):void{this.species=value;this.xeno?.setSpecies(value);this.actor?.setCompanion(value);if(this.ready)this.idle();}
  inspect(){
-  if(!this.ready)return{ready:false,identity:this.identity,sex:this.sex,appearance:this.look};
+  if(!this.ready)return{ready:false,identity:this.identity,visualPreset:this.visualPreset,sex:this.sex,appearance:this.look};
   const target=this.target?.view.getByName('finish-whole-hollow')as Phaser.GameObjects.Image|undefined;
-  return{ready:this.ready,running:this.running,identity:this.identity,sex:this.sex,appearance:this.look,frame:this.actor?.body.frame.name,bakes:this.actor?.bakeCount,hollow:target?{texture:target.texture.key,frame:target.frame.name,rotation:this.target.view.rotation}:null,companion:this.xeno?.species,companionPose:this.xeno?.snapshot(),guardRemaining:this.owner.health.guardRemaining,command:companionInfo(this.species).command,effects:this.children.list.filter(v=>v instanceof Phaser.GameObjects.Image&&v.visible&&v.alpha>.02&&v.texture.key.startsWith('pixelfx-')).map(v=>{const image=v as Phaser.GameObjects.Image;return{key:image.texture.key,frame:image.frame.name,x:image.x,y:image.y};})};
+  return{ready:this.ready,running:this.running,identity:this.identity,visualPreset:this.visualPreset,sex:this.sex,appearance:this.look,frame:this.actor?.body.frame.name,bakes:this.actor?.bakeCount,hollow:target?{texture:target.texture.key,frame:target.frame.name,rotation:this.target.view.rotation}:null,companion:this.xeno?.species,companionPose:this.xeno?.snapshot(),guardRemaining:this.owner.health.guardRemaining,command:companionInfo(this.species).command,effects:this.children.list.filter(v=>v instanceof Phaser.GameObjects.Image&&v.visible&&v.alpha>.02&&v.texture.key.startsWith('pixelfx-')).map(v=>{const image=v as Phaser.GameObjects.Image;return{key:image.texture.key,frame:image.frame.name,x:image.x,y:image.y};})};
  }
  begin(element:AstralElement='energy'):void{
   if(!this.ready)return;this.running=true;this.started=this.time.now;this.cueMask=0;this.element=element;

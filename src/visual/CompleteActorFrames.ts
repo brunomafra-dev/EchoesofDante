@@ -8,7 +8,10 @@ const previousGait=location.pathname.endsWith('/character-cohesion.html')&&new U
 const gait199=location.pathname.endsWith('/character-cohesion.html')&&new URLSearchParams(location.search).get('refinement')==='200'&&new URLSearchParams(location.search).get('gait')==='199';
 export const COMPLETE_STYLES=['none','basic','reinforced'] as const;
 export function completeFrameCount(classId:PlayableClass):number{return classId==='warrior'?72:64;}
-export function completeAsset(classId:PlayableClass,sex:string,style:ProtectionStyle):string{return `${import.meta.env.BASE_URL}assets/visual/complete-actors/${classId}-${sex}-${style}-motion-v${previousGait?'3':classId==='warrior'&&!gait199?'5':'4'}.png`;}
+export function completeAsset(classId:PlayableClass,sex:string,style:ProtectionStyle,preset:PlayableClass=classId):string{
+ if(preset!==classId)return `${import.meta.env.BASE_URL}assets/visual/complete-actors/cross/${preset}-${classId}-${sex}-${style}-v1.png`;
+ return `${import.meta.env.BASE_URL}assets/visual/complete-actors/${classId}-${sex}-${style}-motion-v${previousGait?'3':classId==='warrior'&&!gait199?'5':'4'}.png`;
+}
 export function completeDirection(aim:number):number {return ((Math.round((Math.PI/2-aim)/(Math.PI/4))%8)+8)%8;}
 export function stableCompleteDirection(aim:number,previous:number|undefined):number {
  if(previous===undefined)return completeDirection(aim);
@@ -17,19 +20,20 @@ export function stableCompleteDirection(aim:number,previous:number|undefined):nu
  return Math.abs(gap)<=Math.PI/8+.075?previous:completeDirection(aim);
 }
 export function completeStride(classId?:PlayableClass):number{return previousGait?(classId==='warrior'?144:classId==='hunter'?152:104):classId==='warrior'?(gait199?120:104):classId==='hunter'?128:116;}
-export function completeFrame(aim:number,travel:number,walking:boolean,action:boolean,classId?:PlayableClass):number {
+export function completeFrame(aim:number,travel:number,walking:boolean,action:boolean,classId?:PlayableClass,preset=classId):number {
  const phase=((travel/completeStride(classId))%1+1)%1;
  // These two classes have authored opposite contact poses. The wide idle
  // stance is not a passing step: inserting it between contacts caused a hop.
  const grounded=classId==='warrior'||classId==='hunter';
  const row=completeDirection(aim);
  if(walking&&(!action||classId!=='warrior')){const base=classId==='warrior'?40:32;
+  if(preset!==classId)return base+row*4+Math.floor(phase*4);
   if(classId==='warrior'&&!previousGait&&!gait199&&(row===2||row===6))return base+row*4+Math.floor(phase*4);
   return previousGait?[row*4+1,base+row*4,base+row*4+1,row*4+2,base+row*4+2,base+row*4+3][Math.floor(phase*6)]:[row*4+1,base+row*4,row*4+2,base+row*4+2][Math.floor(phase*4)];}
  const column=action?3:walking?grounded?(phase<.5?1:2):[0,1,0,2][Math.floor(phase*4)]:0;
  return row*4+column;
 }
-export function completeKey(classId:PlayableClass,sex:string,style:ProtectionStyle):string{return `complete-${classId}-${sex}-${style}`;}
+export function completeKey(classId:PlayableClass,sex:string,style:ProtectionStyle,preset:PlayableClass=classId):string{return `complete-${classId}-${sex}-${style}${preset===classId?'':'-visual-'+preset}`;}
 
 // Kept for historical audit scripts. Fixed source imports now supply the
 // complete figure; a direction-dependent shrink must not conceal a bad crop.
@@ -52,8 +56,9 @@ function authoredRegistration(classId:PlayableClass,sex:CharacterSex,style:Prote
  const scale=(COMPLETE_FEET-55)/(COMPLETE_FEET-neck);
  return{scale,x:96-cx*scale,y:COMPLETE_FEET*(1-scale)};
 }
-export function completeMuzzle(classId:PlayableClass,aim:number,sex:CharacterSex='male',style:ProtectionStyle='none'):{x:number;y:number}{
- const [x,y]=EMITTERS[classId][completeDirection(aim)];
+const SCOUT_SABER_HANDS={female:[[94,106],[130,95],[116,85],[125,85],[118,80],[72,82],[71,83],[73,105]],male:[[86,117],[132,111],[121,95],[135,87],[130,81],[80,85],[65,83],[75,110]]} as const;
+export function completeMuzzle(classId:PlayableClass,aim:number,sex:CharacterSex='male',style:ProtectionStyle='none',preset:PlayableClass=classId):{x:number;y:number}{
+ const [x,y]=(preset==='hunter'&&classId==='warrior'?SCOUT_SABER_HANDS[sex]:EMITTERS[classId])[completeDirection(aim)];
  const p=classId==='warrior'&&!previousGait&&!gait199?{scale:1,x:0,y:0}:authoredRegistration(classId,sex,style,completeDirection(aim)*4+3);
  const view=completeViewScale(classId,sex,completeDirection(aim));
  return{x:(x*p.scale+p.x-96)*view*COMPLETE_DISPLAY/COMPLETE_FRAME,y:39+(y*p.scale+p.y-COMPLETE_FEET)*view*COMPLETE_DISPLAY/COMPLETE_FRAME};
@@ -61,7 +66,7 @@ export function completeMuzzle(classId:PlayableClass,aim:number,sex:CharacterSex
 
 // Clothing changes replace pixels in a complete registered pose, once on equip.
 // They never move a shoulder/elbow/hand or draw another body over the first.
-export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record<ProtectionStyle,CanvasImageSource>,look:EquipmentLook,weapon:WeaponStyle,classId:PlayableClass,sex:CharacterSex='male'):void {
+export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record<ProtectionStyle,CanvasImageSource>,look:EquipmentLook,weapon:WeaponStyle,classId:PlayableClass,sex:CharacterSex='male',preset:PlayableClass=classId):void {
  const size=COMPLETE_FRAME;
  const weaponTier:ProtectionStyle=weapon==='starter'?'none':weapon==='current'?'basic':'reinforced';
  ctx.clearRect(0,0,size*COMPLETE_COLUMNS,size*Math.ceil(completeFrameCount(classId)/COMPLETE_COLUMNS));
@@ -119,7 +124,7 @@ export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record
   // an unhelmeted action painting replace the equipped helmet.
   // A uniform Warrior outfit is already a complete authored human. Keep its
   // head connected to its neck instead of pasting an old idle head onto a step.
-  if(classId==='warrior'&&look.helmet===look.torso&&look.helmet!=='reinforced'){
+  if(classId==='warrior'&&look.helmet===look.torso&&(look.helmet!=='reinforced'||preset!==classId)){
    ctx.restore();atlas.drawImage(tile,f%COMPLETE_COLUMNS*size,Math.floor(f/COMPLETE_COLUMNS)*size);continue;
   }
   const rowHead=row*4;
@@ -132,7 +137,7 @@ export function composeCompleteAtlas(ctx:CanvasRenderingContext2D,sources:Record
   // unarmored sheet painted a different face, especially for the female Hunter.
   const hunterOpenFace=classId==='hunter'&&look.helmet==='none';
   const headStyle=hunterOpenFace?'basic':classId==='hunter'&&look.helmet==='basic'?'reinforced':look.helmet;
-  const headFrame=classId==='warrior'?(look.helmet==='reinforced'?rowHead:f):classId==='xenobinder'&&headStyle==='reinforced'&&rowHead===16?12:rowHead+((classId==='hunter'&&!hunterOpenFace&&headStyle!=='none')?1:0);
+  const headFrame=preset!==classId?f:classId==='warrior'?(look.helmet==='reinforced'?rowHead:f):classId==='xenobinder'&&headStyle==='reinforced'&&rowHead===16?12:rowHead+((classId==='hunter'&&!hunterOpenFace&&headStyle!=='none')?1:0);
   ctx.save();ctx.beginPath();
   if(classId==='warrior'){
    // A wider skull cap protects the hair silhouette. Taper before the neck

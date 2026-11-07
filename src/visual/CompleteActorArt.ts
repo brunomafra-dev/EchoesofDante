@@ -8,16 +8,17 @@ import{preloadCompanionArt}from'./CompanionArt';
 import {companion,type CompanionSpecies}from'../config/characterPresentation';
 import{companionInfo,GUARDIAN_RADIUS,glacialRadius}from'../config/companions';
 import {preloadCompleteSource,completeSource}from'./CompleteActorSources';
+import supported from '../config/visual-presets.json';
 import { COMPLETE_DISPLAY,COMPLETE_FEET,COMPLETE_FRAME,COMPLETE_COLUMNS,COMPLETE_STYLES,completeAsset,completeFrameCount,completeFrame,completeKey,completeMuzzle,composeCompleteAtlas,stableCompleteDirection } from './CompleteActorFrames';
 
 let serial=0;
-export function preloadCompleteActors(scene:Phaser.Scene,cast?:readonly {classId:PlayableClass;sex:CharacterSex}[]):void {
+export function preloadCompleteActors(scene:Phaser.Scene,cast?:readonly {classId:PlayableClass;sex:CharacterSex;visualPreset?:PlayableClass}[]):void {
  preloadPixelFX(scene);
  if(!cast||cast.some(p=>p.classId==='xenobinder'))preloadCompanionArt(scene);
- for(const cls of ['warrior','hunter','astral','xenobinder'] as const)for(const sex of ['male','female']as const)for(const style of COMPLETE_STYLES){
-  if(cast&&!cast.some(actor=>actor.classId===cls&&actor.sex===sex))continue;
-  const key=completeKey(cls,sex,style);
-  preloadCompleteSource(scene,key,completeAsset(cls,sex,style));
+ for(const cls of ['warrior','hunter','astral','xenobinder'] as const)for(const preset of supported[cls] as PlayableClass[])for(const sex of ['male','female']as const)for(const style of COMPLETE_STYLES){
+  if(cast&&!cast.some(actor=>actor.classId===cls&&actor.sex===sex&&(actor.visualPreset??actor.classId)===preset))continue;
+  const key=completeKey(cls,sex,style,preset);
+  preloadCompleteSource(scene,key,completeAsset(cls,sex,style,preset));
  }
  // Existing ability/pet assets; the retired articulated wardrobes are not loaded.
  for(const element of ['energy','fire','water','earth'])for(const [kind,width,height] of [['ground',128,128],['field',192,192],['bolt',128,96]] as const){
@@ -42,7 +43,7 @@ export class CompleteActorArt {
  private readonly guide:Phaser.GameObjects.Graphics;
  private guideVisible=false;private hurtUntil=0;
  bakeCount=0;
- constructor(private scene:Phaser.Scene,private view:Phaser.GameObjects.Container,x:number,y:number,sex:CharacterSex,identity:PlayableClass,private readonly commandWidthRank:()=>number=()=>0){
+ constructor(private scene:Phaser.Scene,private view:Phaser.GameObjects.Container,x:number,y:number,sex:CharacterSex,identity:PlayableClass,private readonly commandWidthRank:()=>number=()=>0,readonly visualPreset:PlayableClass=identity){
   this.identity=identity;this.sex=sex;this.previous={x,y};
   view.list.forEach(part=>(part as unknown as Phaser.GameObjects.Components.Visible).setVisible(false));
   const key=`complete-dressed-${identity}-${sex}-${++serial}`;
@@ -57,14 +58,14 @@ export class CompleteActorArt {
  setEquipment(slots:EquipmentSnapshot['slots']):void{this.look=equipmentAppearance(slots);this.style=weaponStyle(slots.weapon);this.bake();}
  setEquipmentLook(look:EquipmentLook):void{this.look={...look};this.bake();}
  setWeaponLook(style:WeaponStyle):void{this.style=style;this.bake();}
- // Old profiles/snapshots retain their metadata; every 2D body uses its
- // authored class/sex/equipment paintings, including heads and action poses.
+ // Old cosmetic metadata remains intact. Bodies use their authored visual /
+ // profession / sex / equipment family, including heads and action poses.
  setAppearance(_value?:unknown):void{}
  setCompanion(value?:unknown):void{this.species=companion(value);}
  private bake():void{
   const signature=JSON.stringify([this.look,this.style]);if(signature===this.signature)return;this.signature=signature;
-  const sources=Object.fromEntries(COMPLETE_STYLES.map(style=>[style,completeSource(this.scene,completeKey(this.identity,this.sex,style))])) as Record<typeof COMPLETE_STYLES[number],CanvasImageSource>;
-  composeCompleteAtlas(this.texture.context,sources,this.look,this.style,this.identity,this.sex);this.texture.refresh();this.bakeCount++;
+  const sources=Object.fromEntries(COMPLETE_STYLES.map(style=>[style,completeSource(this.scene,completeKey(this.identity,this.sex,style,this.visualPreset))])) as Record<typeof COMPLETE_STYLES[number],CanvasImageSource>;
+  composeCompleteAtlas(this.texture.context,sources,this.look,this.style,this.identity,this.sex,this.visualPreset);this.texture.refresh();this.bakeCount++;
   this.contacts=[];
   for(let f=0;f<completeFrameCount(this.identity);f++){
    const pixels=this.texture.context.getImageData(f%COMPLETE_COLUMNS*COMPLETE_FRAME+30,Math.floor(f/COMPLETE_COLUMNS)*COMPLETE_FRAME+160,135,24).data;
@@ -75,7 +76,7 @@ export class CompleteActorArt {
   }
  }
  contactPoint(step:number):{x:number;y:number}{const points=this.contacts[Number(this.body.frame.name)]??[];return points.length?points[step%points.length]:{x:0,y:39};}
- muzzle(aim:number):{x:number;y:number}{return completeMuzzle(this.identity,aim,this.sex,this.look.torso);}
+ muzzle(aim:number):{x:number;y:number}{return completeMuzzle(this.identity,aim,this.sex,this.look.torso,this.visualPreset);}
  projectileOffset(aim:number):{x:number;y:number}{const p=this.muzzle(aim);return{x:p.x-Math.cos(aim)*ASTRAL.muzzleDistance,y:p.y-Math.sin(aim)*ASTRAL.muzzleDistance};}
  flashHurt():void{this.hurtUntil=this.scene.time.now+140;}
  update(x:number,y:number,aim:number,firing:boolean,dash=false,heavy:Pick<KineticPose,'phase'|'level'>={phase:'READY',level:0},element:AstralElement='energy'):void{
@@ -92,7 +93,7 @@ export class CompleteActorArt {
   const facingAim=this.walking&&!dash&&heavy.phase==='READY'&&this.scene.time.now>=this.aimingUntil?this.movementAim:aim;
   this.facing=stableCompleteDirection(facingAim,this.facing);
   const visualAim=this.facing===undefined?aim:Math.PI/2-this.facing*Math.PI/4;
-  this.view.setRotation(0);this.body.setFrame(completeFrame(visualAim,this.travel,this.walking&&!dash,firing||heavy.phase!=='READY',this.identity)).setRotation(0).setFlip(false,false);
+  this.view.setRotation(0);this.body.setFrame(completeFrame(visualAim,this.travel,this.walking&&!dash,firing||heavy.phase!=='READY',this.identity,this.visualPreset)).setRotation(0).setFlip(false,false);
   if(this.scene.time.now<this.hurtUntil)this.body.setTint(0xffac98);else this.body.clearTint();
   const busy=heavy.phase==='CHARGING';
   if(busy&&this.identity!=='warrior'){

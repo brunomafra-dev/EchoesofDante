@@ -1,0 +1,32 @@
+{
+  "mode": "built-in imagegen",
+  "transparent_background": true,
+  "basePromptFile": "prompt.txt",
+  "prompts": "Concatenate base prompt, newline, append. Initial references were runtime-exported approved original Hunter figures; armored variants reference same-sex preceding saber sheet and original wardrobe where indicated.",
+  "requests": [
+    {
+      "source": "source/hunter-warrior-female-none.png",
+      "append": "This sheet is the FEMALE BATEDORA, initial blue clothes and orange harness, no armor or helmet. Preserve the female identity from the supplied reference, do not masculinize."
+    },
+    {
+      "source": "source/hunter-warrior-male-none.png",
+      "append": "This sheet is the MALE BATEDOR, initial blue clothes and orange harness, no armor or helmet. Match the supplied male face, short silver hair and stocky build. Use large readable hand-held saber, with actual connected gripping fingers and compact slash poses."
+    },
+    {
+      "source": "source/hunter-warrior-female-basic.png",
+      "append": "WARDROBE VARIANT: FEMALE BATEDORA in BASIC scout carapace. Retain exactly the female character's build and saber poses from the second reference; use the first reference's charcoal-blue light armor, orange harness and pouches, dark rounded helmet with amber visor, dark armored boots. Same complete 8 columns x 6 rows grid as second reference. Helmet is worn in this sheet. No rifle. No huge bloom or floating paint fragments."
+    },
+    {
+      "source": "source/hunter-warrior-male-basic.png",
+      "append": "WARDROBE VARIANT: MALE BATEDOR in BASIC scout carapace. Retain exactly the male character's build and saber poses from second reference; use first reference's charcoal-blue light armor, orange harness/pouches, dark rounded helmet with amber visor and dark armored boots. Same 8 columns x 6 rows as second reference, every cell must fit padded and isolated; helmet worn. No rifle, no large glow, no floating paint fragments."
+    },
+    {
+      "source": "source/hunter-warrior-female-reinforced.png",
+      "append": "WARDROBE VARIANT: FEMALE BATEDORA in REINFORCED scout carapace. Use the supplied armored female sheet's exact 48 poses and framing, but add distinct reinforced gunmetal shoulder caps, integrated breast/abdomen segmented carapace panels and heavier shin guards, retaining the orange harness, amber visor helmet and female proportions. A field scout fitted with protective armor, NOT a huge warrior. Blade slightly longer cyan but controlled. 8columns by6rows, true alpha, full continuous figures. No gun or text."
+    },
+    {
+      "source": "source/hunter-warrior-male-reinforced.png",
+      "append": "WARDROBE VARIANT: MALE BATEDOR in REINFORCED scout carapace. Use supplied armored male sheet's exact 48 poses and framing, but add distinct reinforced gunmetal shoulder caps, integrated breast/abdomen segmented carapace panels and heavier shin guards, retaining orange harness, amber visor helmet and stocky male proportions. Same person outfitted with heavier protective armor, not a new oversized body. Cyan saber compact controlled blade, NO fuzzy glow cloud. 8columns by6rows, true alpha, complete connected figures, no gun or text."
+    }
+  ]
+}

@@ -17,6 +17,7 @@ import {ColonizationArea,preloadColonization} from '../systems/ColonizationArea'
 import {preloadMissionProps,addSurveyProp,type SURVEY_ART} from '../visual/MissionProps';
 import { XenobinderCombat } from '../combat/XenobinderCombat';
 import { CompleteActorArt,preloadCompleteActors } from '../visual/CompleteActorArt';
+import {visualPreset} from '../config/visualPresets';
 import {PixelImpacts}from'../visual/PixelFX';
 import {completeSourceStats}from'../visual/CompleteActorSources';
 import { XenobinderPanel } from '../ui/XenobinderPanel';
@@ -324,7 +325,7 @@ export class GameScene extends Phaser.Scene {
   private get forestProof():boolean{return this.qualityReference==='forest-reference'||this.qualityReference==='forest-current';}
   constructor(private readonly qualityReference: false | 'baseline' | 'reference' | 'forest-reference' | 'forest-current' = false,
     private readonly originalWarrior = false, private readonly shellReady?: (scene: GameScene) => void,
-    private readonly glacierPlaytest?: { area: JourneyArea; classId: PlayableClass; sex?:CharacterSex; appearance?:import('../config/characterPresentation').CharacterAppearance;companion?:import('../config/characterPresentation').CompanionSpecies;pilot?:boolean; inventory?:boolean; economy?:boolean; environment?:boolean; environmentBaseline?:boolean; routeBaseline?:boolean; environmentEntry?:{x:number;y:number}; creatureBaseline?:boolean; specimen?:string; look?:import('../config/appearance').EquipmentLook; weaponLook?:import('../config/appearance').WeaponStyle },
+    private readonly glacierPlaytest?: { area: JourneyArea; classId: PlayableClass;visualPreset?:PlayableClass; sex?:CharacterSex; appearance?:import('../config/characterPresentation').CharacterAppearance;companion?:import('../config/characterPresentation').CompanionSpecies;pilot?:boolean; inventory?:boolean; economy?:boolean; environment?:boolean; environmentBaseline?:boolean; routeBaseline?:boolean; environmentEntry?:{x:number;y:number}; creatureBaseline?:boolean; specimen?:string; look?:import('../config/appearance').EquipmentLook; weaponLook?:import('../config/appearance').WeaponStyle },
     private readonly shellLoading?:(progress:number)=>void) { super('Game'); }
 
   preload(): void {
@@ -352,7 +353,12 @@ export class GameScene extends Phaser.Scene {
     for(const key of ['landing-shuttle','field-shelter','base-medic-civilian','base-smith-civilian','base-expedition-civilian','base-refugee-a','base-refugee-b'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/base/${key}.png`);
     const actorClass=this.glacierPlaytest?.classId??(this.qualityReference&&!this.forestProof?'warrior':characterProfiles.active.classId);
     const actorSex=characterSex(actorClass,this.glacierPlaytest?this.glacierPlaytest.sex:this.qualityReference&&!this.forestProof?undefined:characterProfiles.active.sex);
-    preloadCompleteActors(this,!this.glacierPlaytest&&characterProfiles.active.campaign?.mode==='coop'?undefined:[{classId:actorClass,sex:actorSex},...coopSession.members.map(m=>({classId:m.profile.classId,sex:characterSex(m.profile.classId,m.profile.sex)}))]);
+    const actorPreset=visualPreset(actorClass,this.glacierPlaytest?this.glacierPlaytest.visualPreset:this.qualityReference&&!this.forestProof?undefined:characterProfiles.active.visualPreset);
+    const cast=[{classId:actorClass,sex:actorSex,visualPreset:actorPreset},...coopSession.members.map(m=>({classId:m.profile.classId,sex:characterSex(m.profile.classId,m.profile.sex),visualPreset:m.profile.visualPreset}))];
+    // Keep the original co-op roster available across travel, but only download
+    // cross-profession wardrobes actually used by this team.
+    const originals=(['warrior','hunter','astral','xenobinder']as const).flatMap(classId=>(['male','female']as const).map(sex=>({classId,sex})));
+    preloadCompleteActors(this,!this.glacierPlaytest&&characterProfiles.active.campaign?.mode==='coop'?[...originals,...cast]:cast);
     for(const key of ['warrior-starter-weapon','warrior-pilot-weapon','warrior-saber-painted'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/visual/characters/${key}.png`);
     for(const key of ['cinder-ground','obsidian-ground'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/visual/environment/${key}.webp`);
     for(const s of Object.values(VOLCANIC_CREATURES))if(!this.textures.exists(s.texture))preloadCreatureSheet(this,s.texture,`${import.meta.env.BASE_URL}assets/visual/characters/${s.texture}.png`,256);
@@ -562,7 +568,7 @@ export class GameScene extends Phaser.Scene {
     this.returnFromFrost = false;
     this.glacierArrival = undefined;
     this.player = new Player(this, entry.x, entry.y, this.characterMaxHp, this.qualityReference === 'reference',
-      this.qualityReference !== 'baseline' && !this.originalWarrior, id => this.progression.upgradeRank(id), this.classId, characterSex(this.classId,this.glacierPlaytest?this.glacierPlaytest.sex:this.qualityReference&&!this.forestProof?undefined:characterProfiles.active.sex));
+      this.qualityReference !== 'baseline' && !this.originalWarrior, id => this.progression.upgradeRank(id), this.classId, characterSex(this.classId,this.glacierPlaytest?this.glacierPlaytest.sex:this.qualityReference&&!this.forestProof?undefined:characterProfiles.active.sex),visualPreset(this.classId,this.glacierPlaytest?this.glacierPlaytest.visualPreset:this.qualityReference&&!this.forestProof?undefined:characterProfiles.active.visualPreset));
     if (this.classId === 'hunter') {
       this.hunter = new HunterCombat(this, id => this.progression.upgradeRank(id),aim=>this.hunterArt?.muzzle(aim)??completeMuzzle('hunter',aim,this.player.sex));
       this.hunterArt = new CompleteActorArt(this, this.player.view, entry.x, entry.y,this.player.sex,'hunter');
@@ -2517,7 +2523,7 @@ export class GameScene extends Phaser.Scene {
   }
   inspectCharacterPresentation(){
     const actor=this.player?.view.active?this.player.view.getData('completeActor') as CompleteActorArt|undefined:undefined;
-    return{ready:!!this.player?.view.active,bosses:Object.entries({warden:this.warden,soterrado:this.soterrado,vesper:this.vesper,titan:this.titan}).flatMap(([id,b])=>b?[{id,state:b.state,hp:b.health.current,dead:b.isDead}]:[]),peers:this.party?.inspectPresentation()??[],guard:{remaining:this.player?.health.guardRemaining,reduction:this.player?.health.guardReduction},area:this.area,position:this.player?{...this.player.position}:undefined,actor:actor?{identity:actor.identity,sex:actor.sex,frame:actor.body.frame.name,bakes:actor.bakeCount,contact:actor.contactPoint(0),width:actor.body.displayWidth,height:actor.body.displayHeight}:null,sources:completeSourceStats(this),companionVisual:this.xeno?.body.active?{texture:this.xeno.body.texture.key,frame:this.xeno.body.frame.name,flip:this.xeno.body.flipX}:undefined,companion:this.xeno?.snapshot(),effects:this.children.list.filter(v=>v instanceof Phaser.GameObjects.Image&&v.visible&&v.texture.key.startsWith('pixelfx-')).map(v=>{const image=v as Phaser.GameObjects.Image;return{key:image.texture.key,frame:image.frame.name,x:image.x,y:image.y};})};
+    return{ready:!!this.player?.view.active,bosses:Object.entries({warden:this.warden,soterrado:this.soterrado,vesper:this.vesper,titan:this.titan}).flatMap(([id,b])=>b?[{id,state:b.state,hp:b.health.current,dead:b.isDead}]:[]),peers:this.party?.inspectPresentation()??[],guard:{remaining:this.player?.health.guardRemaining,reduction:this.player?.health.guardReduction},area:this.area,position:this.player?{...this.player.position}:undefined,actor:actor?{identity:actor.identity,visualPreset:actor.visualPreset,sex:actor.sex,frame:actor.body.frame.name,bakes:actor.bakeCount,contact:actor.contactPoint(0),width:actor.body.displayWidth,height:actor.body.displayHeight}:null,sources:completeSourceStats(this),companionVisual:this.xeno?.body.active?{texture:this.xeno.body.texture.key,frame:this.xeno.body.frame.name,flip:this.xeno.body.flipX}:undefined,companion:this.xeno?.snapshot(),effects:this.children.list.filter(v=>v instanceof Phaser.GameObjects.Image&&v.visible&&v.texture.key.startsWith('pixelfx-')).map(v=>{const image=v as Phaser.GameObjects.Image;return{key:image.texture.key,frame:image.frame.name,x:image.x,y:image.y};})};
   }
   private impactReviewTargets:HollowCrawler[]=[];
   inspectCompanionImpactReview(){return this.impactReviewTargets.map(t=>({x:t.position.x,y:t.position.y,hp:t.health.current,maxHp:t.health.max,dead:t.isDead}));}

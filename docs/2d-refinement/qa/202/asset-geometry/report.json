@@ -1,0 +1,83 @@
+{
+  "passed": true,
+  "assets": [
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-warrior-female-none-v1.png",
+      "bytes": 1920437,
+      "frames": 72,
+      "authoredFigures": 48,
+      "directions": 8,
+      "gaitPhasesPerDirection": 4,
+      "decodedBytes": 10616832,
+      "bodyHeightRange": [
+        153.88,
+        168.15
+      ]
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-warrior-female-basic-v1.png",
+      "bytes": 2042370,
+      "frames": 72,
+      "authoredFigures": 48,
+      "directions": 8,
+      "gaitPhasesPerDirection": 4,
+      "decodedBytes": 10616832,
+      "bodyHeightRange": [
+        157.85,
+        170.11
+      ]
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-warrior-female-reinforced-v1.png",
+      "bytes": 2276717,
+      "frames": 72,
+      "authoredFigures": 48,
+      "directions": 8,
+      "gaitPhasesPerDirection": 4,
+      "decodedBytes": 10616832,
+      "bodyHeightRange": [
+        153.94,
+        168.07
+      ]
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-warrior-male-none-v1.png",
+      "bytes": 2068052,
+      "frames": 72,
+      "authoredFigures": 48,
+      "directions": 8,
+      "gaitPhasesPerDirection": 4,
+      "decodedBytes": 10616832,
+      "bodyHeightRange": [
+        149.88,
+        167.24
+      ]
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-warrior-male-basic-v1.png",
+      "bytes": 2176787,
+      "frames": 72,
+      "authoredFigures": 48,
+      "directions": 8,
+      "gaitPhasesPerDirection": 4,
+      "decodedBytes": 10616832,
+      "bodyHeightRange": [
+        148.43,
+        165.05
+      ]
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-warrior-male-reinforced-v1.png",
+      "bytes": 2426697,
+      "frames": 72,
+      "authoredFigures": 48,
+      "directions": 8,
+      "gaitPhasesPerDirection": 4,
+      "decodedBytes": 10616832,
+      "bodyHeightRange": [
+        149.65,
+        166.05
+      ]
+    }
+  ]
+}

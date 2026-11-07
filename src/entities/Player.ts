@@ -74,7 +74,7 @@ export class Player {
 
   constructor(private scene: Phaser.Scene, x: number, y: number, maxHp: number = PLAYER.maxHp, private referencePresentation = false,
     paintedPresentation = false, private readonly upgradeRank: (id: AbilityUpgradeId) => number = () => 0,
-    readonly classId: PlayableClass = 'warrior', readonly sex: CharacterSex = characterSex(classId)) {
+    readonly classId: PlayableClass = 'warrior', readonly sex: CharacterSex = characterSex(classId),readonly visualPreset:PlayableClass=classId) {
     this.health = new Health(maxHp);
     this.position = { x, y };
     this.shadow = scene.add.ellipse(x, y + 39, 57, 16, 0x020e14, 0.39).setDepth(y - 3);
@@ -98,8 +98,9 @@ export class Player {
     this.handAnchor = scene.add.container(0, 0, [this.weapon.view, glove]);
     this.bodyRig = scene.add.container(0, 0, [this.torso, this.supportUpperArm, this.supportArm, this.saberArm, this.handAnchor, this.supportGlove, this.hurtOverlay]);
     this.view = scene.add.container(x, y, [this.legsRig, this.bodyRig]).setDepth(y);
-    if(paintedPresentation&&classId==='warrior'&&hasCompleteSource(scene,completeKey(classId,sex,'none'))){
-      this.completeArt=new CompleteActorArt(scene,this.view,x,y,sex,classId);
+    if(paintedPresentation&&visualPreset!==classId&&!hasCompleteSource(scene,completeKey(classId,sex,'none',visualPreset)))throw Error('Não foi possível carregar as poses deste personagem e profissão. Seu progresso está preservado.');
+    if(paintedPresentation&&classId==='warrior'&&hasCompleteSource(scene,completeKey(classId,sex,'none',visualPreset))){
+      this.completeArt=new CompleteActorArt(scene,this.view,x,y,sex,classId,undefined,visualPreset);
     }else if (paintedPresentation && classId==='warrior') {
       this.paintedArt = new WarriorArt(this.torso,sex);
       glove.setVisible(false);

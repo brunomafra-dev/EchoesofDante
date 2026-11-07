@@ -1,0 +1,100 @@
+{
+  "passed": true,
+  "base": "http://localhost:5194",
+  "checks": [
+    "Native custom characters form their original two-player campaign."
+  ],
+  "errors": [],
+  "relay": [
+    {
+      "role": "host",
+      "protocol": 16,
+      "presentation": 1,
+      "bonds": 1,
+      "bondImpact": 1,
+      "cuts": 1,
+      "identities": 1
+    },
+    {
+      "role": "guest",
+      "protocol": 16,
+      "presentation": 1,
+      "bonds": 1,
+      "bondImpact": 1,
+      "cuts": 1,
+      "identities": 1
+    }
+  ],
+  "fixture": "Native team formation, original appearances, invitation and world only; no boss fixtures or Guardian command.",
+  "scope": "Native team formation, original appearances, invitation and world only; no boss fixtures or Guardian command.",
+  "world": [
+    {
+      "classId": "warrior",
+      "visualPreset": "hunter",
+      "actor": {
+        "identity": "warrior",
+        "visualPreset": "hunter",
+        "sex": "male",
+        "frame": 20,
+        "bakes": 1,
+        "contact": {
+          "x": 0,
+          "y": 39
+        },
+        "width": 128,
+        "height": 128
+      },
+      "sex": "male",
+      "peers": [
+        {
+          "classId": "hunter",
+          "visualPreset": "hunter",
+          "sex": "female",
+          "guard": {
+            "remaining": 0,
+            "reduction": 0
+          },
+          "appearance": {
+            "skin": "original",
+            "hair": "original",
+            "head": "original"
+          }
+        }
+      ]
+    },
+    {
+      "classId": "hunter",
+      "visualPreset": "hunter",
+      "actor": {
+        "identity": "hunter",
+        "visualPreset": "hunter",
+        "sex": "female",
+        "frame": 20,
+        "bakes": 1,
+        "contact": {
+          "x": -19.666666666666668,
+          "y": 37
+        },
+        "width": 128,
+        "height": 128
+      },
+      "sex": "female",
+      "peers": [
+        {
+          "classId": "warrior",
+          "visualPreset": "hunter",
+          "sex": "male",
+          "guard": {
+            "remaining": 0,
+            "reduction": 0
+          },
+          "appearance": {
+            "skin": "original",
+            "hair": "original",
+            "head": "original"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -78,7 +78,7 @@ export class ApplicationShell {
     }
     if (this.pendingInvite && !this.entry) this.page = 'invite';
     if(this.launchOnce)this.page='launching';
-    if(!this.launchOnce&&!this.pendingInvite&&location.pathname.endsWith('/campaign-playtest.html')&&['199','200','201'].includes(url.searchParams.get('refinement')??'')&&(url.searchParams.get('editor')==='1'||url.searchParams.get('presets')==='1')){this.page='create';url.searchParams.delete('editor');url.searchParams.delete('presets');history.replaceState(history.state,'',url);}
+    if(!this.launchOnce&&!this.pendingInvite&&location.pathname.endsWith('/campaign-playtest.html')&&['199','200','201','202'].includes(url.searchParams.get('refinement')??'')&&(url.searchParams.get('editor')==='1'||url.searchParams.get('presets')==='1')){this.page='create';url.searchParams.delete('editor');url.searchParams.delete('presets');history.replaceState(history.state,'',url);}
     this.menuButton.className = 'main-menu-button hud-icon'; this.menuButton.type = 'button'; this.menuButton.textContent = '☰';this.menuButton.setAttribute('aria-label','Abrir menu');this.menuButton.title='Menu · Esc';
     this.menuButton.dataset.shortcut='Esc';this.menuButton.setAttribute('aria-keyshortcuts','Escape');this.menuButton.setAttribute('aria-label', 'Abrir menu — Esc'); this.menuButton.onclick = () => this.openPause();
     this.menuButton.addEventListener('pointerdown', e => { if (e.pointerType === 'touch') { e.preventDefault(); this.openPause(); } });
@@ -153,7 +153,7 @@ export class ApplicationShell {
     const pending = this.pendingCharacter;
     if (!pending || this.launching || this.creating || this.playing || coopSession.role!=='offline') return;
     this.creating=true;
-    const hero = characterProfiles.create(pending.name, pending.classId, pending.sex, this.creation,pending.appearance);
+    const hero = characterProfiles.create(pending.name, pending.classId, pending.sex, this.creation,pending.appearance,pending.preset);
     if (!hero) { this.creating=false;this.status('Não foi possível criar o personagem. Confira o nome, o limite de personagens e o armazenamento do navegador.'); return; }
     this.pendingCharacter = undefined;
     this.launch(hero.id);
@@ -289,14 +289,14 @@ export class ApplicationShell {
           if (!characterProfiles.remove(id)) { this.status('Não foi possível excluir o personagem.'); return; }
           if (active) this.returnHome(); else this.render();
         },
-        create: (name, classId, sex,appearance) => {
+        create: (name, classId, sex,appearance,preset) => {
           if (this.launching) return;
           if (this.pendingInvite) {
-            const hero = characterProfiles.create(name, classId, sex, this.creation,appearance);
+            const hero = characterProfiles.create(name, classId, sex, this.creation,appearance,preset);
             if (hero) this.launch(hero.id); else this.status('Informe um nome e verifique o espaço de personagens e o armazenamento do navegador.');
             return;
           }
-          this.pendingCharacter = { name, classId, sex,appearance };
+          this.pendingCharacter = { name, classId, sex,appearance,preset };
           this.show(this.creation.mode==='coop'?'party-size':'difficulty');
         },
       }, this.pendingInvite, this.pendingInvite && this.page==='create' ? this.lobby?.members.map(m => m.profile.classId):[], {

@@ -10,21 +10,23 @@ export class CharacterShowcase {
  readonly canvas=document.createElement('canvas');readonly caption=document.createElement('span');
  private game:Phaser.Game;private scene:CharacterPreviewScene;
  private disposed=false;private pending=false;private pendingManual=false;private elementIndex=0;
- constructor(readonly classId:CharacterClass,readonly sex:CharacterSex=characterSex(classId),look:CharacterAppearance=appearance(),species:CompanionSpecies='symbiont'){
+ constructor(readonly classId:CharacterClass,readonly sex:CharacterSex=characterSex(classId),look:CharacterAppearance=appearance(),species:CompanionSpecies='symbiont',readonly visualPreset:CharacterClass=classId){
   this.canvas.className='showcase-canvas';this.canvas.dataset.representation='complete';this.canvas.setAttribute('role','img');
   this.canvas.dataset.sex=sex;
   this.canvas.setAttribute('aria-label',({warrior:'Guerreiro Galáctico',hunter:'Caçador estelar',astral:'Manipulador Astral',xenobinder:'Domador de feras'})[classId]);
   this.caption.className='showcase-caption';this.caption.textContent='PREPARANDO PRÉVIA';
   this.scene=new CharacterPreviewScene(classId,sex,(phase,caption,frame)=>{
    this.canvas.dataset.demoPhase=phase;this.canvas.dataset.frame=String(frame);this.canvas.dataset.facing=phase==='idle'?'front':'right';this.caption.textContent=caption;
-  },()=>{if(this.disposed)return;if(this.pending)this.play(this.pendingManual);},look,species);
+  },()=>{if(this.disposed)return;if(this.pending)this.play(this.pendingManual);},look,species,visualPreset);
   this.game=new Phaser.Game({type:Phaser.CANVAS,canvas:this.canvas,width:320,height:360,transparent:true,banner:false,autoFocus:false,
    audio:{noAudio:true},input:{keyboard:false,mouse:false,touch:false,gamepad:false},fps:{target:30},scene:[this.scene],
    callbacks:{postBoot:game=>{game.canvas.style.width='100%';game.canvas.style.height='100%';}}});
   if(import.meta.env.DEV)Object.assign(this.canvas,{__preview:this.scene,__previewGame:this.game});
-  if(['198','199','200','201'].includes(new URLSearchParams(location.search).get('refinement')??''))Object.assign(this.canvas,{__previewRead:()=>this.scene.inspect()});
+  if(['198','199','200','201','202'].includes(new URLSearchParams(location.search).get('refinement')??''))Object.assign(this.canvas,{__previewRead:()=>this.scene.inspect()});
  }
  setAppearance(look:CharacterAppearance):void{this.scene.setAppearance(look);}
+ get ready():boolean{return this.scene.ready;}
+ get failed():boolean{return this.scene.failed;}
  setCompanion(species:CompanionSpecies):void{this.scene.setCompanion(species);}
  play(manual=false):void{
   if(this.disposed)return;this.pending=true;this.pendingManual=manual;if(!this.scene.ready)return;

@@ -94,7 +94,7 @@ export class PartyExpedition {
    if((!b||p.x>b.left+18&&p.x<b.right-18&&p.y>b.top+18&&p.y<b.bottom-18)&&(!b?.walkable||fitsGround(p,18,b.walkable,39))&&a.obstacles.every(o=>Math.hypot(o.x-p.x,o.y-p.y)>o.radius+20)&&this.players.every(actor=>Math.hypot(actor.position.x-p.x,actor.position.y-p.y)>40))return p;
   }return{...a.player.position};
  }
- inspectPresentation(){return[...this.actors.values(),...this.playerMirrors.values()].map(actor=>({classId:actor.profile.classId,sex:actor.player.sex,guard:{remaining:actor.player.health.guardRemaining,reduction:actor.player.health.guardReduction},appearance:actor.profile.appearance,companion:actor.xeno?{species:actor.xeno.species,texture:actor.xeno.body.texture.key,frame:actor.xeno.body.frame.name}:undefined}));}
+ inspectPresentation(){return[...this.actors.values(),...this.playerMirrors.values()].map(actor=>({classId:actor.profile.classId,visualPreset:actor.player.visualPreset,sex:actor.player.sex,guard:{remaining:actor.player.health.guardRemaining,reduction:actor.player.health.guardReduction},appearance:actor.profile.appearance,companion:actor.xeno?{species:actor.xeno.species,texture:actor.xeno.body.texture.key,frame:actor.xeno.body.frame.name}:undefined}));}
  updateHost(now:number,dt:number):void{
   if(room.role!=='host'){
    if(this.balanced){for(const e of this.access().enemies){const base=this.resilience.get(e);if(base!==undefined)this.resizeHealth(e,base);}this.balanced=false;this.resilience=new WeakMap();}

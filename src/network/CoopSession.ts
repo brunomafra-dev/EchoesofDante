@@ -1,5 +1,6 @@
 import type { SaberPose } from '../combat/Attack';
 import type { PlayableClass } from '../config/classes';
+import {visualPreset} from '../config/visualPresets';
 import type { JourneyArea, JourneyFlags } from '../systems/LocalJourney';
 import type { ProgressionSnapshot } from '../systems/Progression';
 import type { HunterBeamPose } from '../visual/HunterBeam';
@@ -20,7 +21,7 @@ export type MissionRequest={id:string;nonce:string;action:MissionAction;mission:
 export type RoomCampaign = CampaignLobby & { started: boolean; running: boolean };
 export const COOP_AREAS: readonly JourneyArea[] = ['base','forest','cavern','warden','valley','arid','dunes','sandpit','frost','icecave','icenest','cinder','obsidian','caldera','springs','terraces'];
 const CONNECTIONS: Partial<Record<JourneyArea, readonly JourneyArea[]>> = { forest: ['cavern'], cavern: ['forest','warden'], warden: ['cavern','valley'], valley: ['warden','arid','springs'], springs:['valley','terraces'],terraces:['springs'], arid: ['valley','dunes'], dunes: ['arid','sandpit'], sandpit: ['dunes','frost'], frost: ['sandpit','icecave'], icecave: ['frost','icenest'], icenest: ['icecave','cinder'], cinder:['icenest','obsidian'], obsidian:['cinder','caldera'], caldera: ['obsidian'] };
-export type PartyProfile = {characterId?:string;name: string; classId: PlayableClass;sex?:import('../config/appearance').CharacterSex;appearance?:CharacterAppearance;companion?:CompanionSpecies;bagFree?:number;potions?:number;equipment?:EquipmentSnapshot['slots'];build?:Pick<ProgressionSnapshot,'xp'|'abilityUpgrades'|'bossRewards'>};
+export type PartyProfile = {characterId?:string;name: string; classId: PlayableClass;visualPreset?:PlayableClass;sex?:import('../config/appearance').CharacterSex;appearance?:CharacterAppearance;companion?:CompanionSpecies;bagFree?:number;potions?:number;equipment?:EquipmentSnapshot['slots'];build?:Pick<ProgressionSnapshot,'xp'|'abilityUpgrades'|'bossRewards'>};
 export type PartyMember={id:string;profile:PartyProfile;connected:boolean};
 export type MemberState={input:PartyInput;attackTap:boolean;inputAt:number;deathId:string;potionUsed:number;potionReady:number;travelHp?:number};
 export type PartyInput = {x:number;y:number;aim:number;attack:boolean;dash:boolean;charge:boolean;held:boolean;release:boolean;cancel:boolean;interact:boolean;restart:boolean;element?:boolean};
@@ -39,6 +40,7 @@ export class CoopSession {
  private needsPresentation=false;
  private needsBonds=false;
  private needsCuts=false;
+ private needsIdentities=false;
  outpostsAvailable=false;
  signalsAvailable=false;
  circuitsAvailable=false;
@@ -131,7 +133,8 @@ export class CoopSession {
   this.clearChat();this.url=target.href;this.role='connecting';this.endedMessage='';this.message='Conectando à expedição…';this.personalXpGained=0;this.sequence=0;this.epoch=0;this.rewards=new LocalJourney();this.changed();
   this.campaign=undefined;this.campaignSaved=true;this.members=[];this.states.clear();this.requests=[];this.peerDeathId='';this.earnedBosses=[];this.lootAwarded.clear();this.resourceAwarded.clear();this.personalItems=[];this.receipt='';this.rewardTotal=0;this.rewardSaved=true;this.rewardResources={credits:0,materials:[0,0,0],used:0};
   const inventory=validEquipment(this.rewards.load()?.equipment);
-  profile={...profile,characterId:hero.id,appearance:{skin:'original',hair:'original',head:'original'},companion:characterProfiles.canChooseCompanion(hero.id,hero.companion??'symbiont')?hero.companion:'symbiont',build:this.rewards.load()?.progression,potions:this.rewards.load()?.economy?.potions??0,equipment:inventory.slots,bagFree:24-(inventory.items!.length-Object.keys(inventory.equipped!).length)};
+  profile={...profile,characterId:hero.id,visualPreset:visualPreset(hero.classId,hero.visualPreset),appearance:{skin:'original',hair:'original',head:'original'},companion:characterProfiles.canChooseCompanion(hero.id,hero.companion??'symbiont')?hero.companion:'symbiont',build:this.rewards.load()?.progression,potions:this.rewards.load()?.economy?.potions??0,equipment:inventory.slots,bagFree:24-(inventory.items!.length-Object.keys(inventory.equipped!).length)};
+  this.needsIdentities=profile.visualPreset!==profile.classId;
   this.needsBonds=profile.companion==='bulwark'||profile.companion==='frostling';
   this.needsCuts=profile.appearance?.head==='curly'||profile.appearance?.head==='tied';
   this.needsPresentation=Object.values(profile.appearance??{}).some(v=>v!=='original')||profile.companion!=='symbiont';
@@ -140,11 +143,12 @@ export class CoopSession {
  private open(request:object,retry:boolean,resolve:()=>void=()=>{},reject:(reason:Error)=>void=()=>{}):void {
   const ws=new WebSocket(this.url);this.socket=ws;let joined=false;
   this.timeout=setTimeout(()=>{if(this.socket===ws&&!joined){ws.close();if(!retry){this.fail('O cooperativo demorou para responder. Tente novamente em alguns segundos.');reject(new Error(this.message));}}},retry?5000:60000);
-  ws.onopen=()=>{if(this.socket===ws)ws.send(JSON.stringify(request));};
+  ws.onopen=()=>{if(this.socket===ws)ws.send(JSON.stringify({...request,identities:1}));};
   ws.onmessage=event=>{
    if(this.socket!==ws)return;
    let m;try{m=JSON.parse(event.data);}catch{return;}
    if(m.type==='joined'&&(m.role==='host'||m.role==='guest')){
+    if(this.needsIdentities&&m.identities!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda os personagens com profissão independente. Seu personagem e progresso estão preservados.');reject(new Error(this.message));return;}
     const needsOutpost=new URLSearchParams(location.search).get('permanence')==='outpost'||new URLSearchParams(location.search).has('outpost-support')||this.rewards.load()?.missions?.accepted.includes('settle-outpost');
     const needsSignal=new URLSearchParams(location.search).get('permanence')==='signal'||this.rewards.load()?.missions?.accepted.includes('settle-signal');
     const needsCircuit=new URLSearchParams(location.search).get('permanence')==='echo'||this.rewards.load()?.missions?.accepted.includes('settle-echo');

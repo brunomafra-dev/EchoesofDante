@@ -1,0 +1,66 @@
+{
+  "passed": true,
+  "base": "http://localhost:5194",
+  "cases": [
+    {
+      "sex": "female",
+      "kit": "reinforced",
+      "helmet": "none",
+      "actor": {
+        "identity": "warrior",
+        "visualPreset": "hunter",
+        "sex": "female",
+        "frame": 20,
+        "bakes": 4,
+        "contact": {
+          "x": -12.666666666666666,
+          "y": 38.333333333333336
+        },
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "sex": "male",
+      "kit": "reinforced",
+      "helmet": "none",
+      "actor": {
+        "identity": "warrior",
+        "visualPreset": "hunter",
+        "sex": "male",
+        "frame": 20,
+        "bakes": 4,
+        "contact": {
+          "x": -18.333333333333332,
+          "y": 38.333333333333336
+        },
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "sex": "female",
+      "kit": "clothes",
+      "helmet": "reinforced",
+      "actor": {
+        "identity": "warrior",
+        "visualPreset": "hunter",
+        "sex": "female",
+        "frame": 20,
+        "bakes": 2,
+        "contact": {
+          "x": -17.333333333333332,
+          "y": 38.333333333333336
+        },
+        "width": 128,
+        "height": 128
+      }
+    }
+  ],
+  "errors": [],
+  "fixture": "Isolated visual lab equipment URLs only; no character ownership, boss victory or progress simulated.",
+  "checks": [
+    "Helmet removal/equipment mixing preserves selected visual; screenshots recorded for inspection.",
+    "Laboratory compares original Warrior and Batedora on the same profession, and navigation to another original class does not carry an invalid cross-pair."
+  ]
+}

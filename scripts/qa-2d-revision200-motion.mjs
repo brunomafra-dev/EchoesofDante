@@ -3,16 +3,18 @@ import {chromium} from 'playwright';
 import {mkdir,writeFile} from 'node:fs/promises';
 process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY='1';
 const revision=process.env.QA_REVISION??'200';
+const preset=process.env.QA_PRESET;
 const base=process.env.QA_BASE??'http://localhost:5186',out=process.env.QA_OUT??('docs/2d-refinement/qa/'+revision+'/motion');await mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',args:['--disable-background-timer-throttling','--disable-renderer-backgrounding']}),p=await browser.newPage({viewport:{width:1280,height:720}});p.setDefaultTimeout(90000);
 const report={passed:false,base,fixture:revision==='201'?'Native inputs with complete original figures; historical appearance query parameters must be ignored. Real campaign untouched.':'Native inputs in isolated character lab. Gear/appearance URLs are display fixtures only. Real campaign untouched.',cases:[],errors:[]};
 p.on('pageerror',e=>report.errors.push(e.message));p.on('response',r=>{if(r.status()>=400)report.errors.push(r.status()+' '+r.url());});
 try{
  await p.addInitScript(()=>{localStorage['echoes-of-dante.characters.v1']='keep-real-motion';localStorage['echoes-of-dante.journey.v1']='keep-real-journey';});
- for(const cls of ['warrior','hunter','astral','xenobinder'])for(const sex of ['male','female'])for(const kit of cls==='warrior'?['clothes','basic','reinforced']:['clothes']){
+ for(const cls of process.env.QA_CLASSES?.split(',')??['warrior','hunter','astral','xenobinder'])for(const sex of ['male','female'])for(const kit of cls==='warrior'?['clothes','basic','reinforced']:['clothes']){
   const id=cls+'-'+sex+'-'+kit,head=sex==='female'?'tied':'curly';
-  await p.goto(base+'/character-playtest.html?refinement='+revision+'&class='+cls+'&sex='+sex+'&kit='+kit+'&head='+head+'&hair=copper&pet=symbiont');await p.waitForFunction(()=>window.__dante2dReview?.().ready);await p.locator('.playtest-navigation').evaluate(e=>e.open=false);await p.waitForTimeout(120);
+  await p.goto(base+'/character-playtest.html?refinement='+revision+'&class='+cls+(preset?'&preset='+preset:'')+'&sex='+sex+'&kit='+kit+'&head='+head+'&hair=copper&pet=symbiont',{waitUntil:'domcontentloaded'});await p.waitForFunction(()=>window.__dante2dReview?.().ready);await p.locator('.playtest-navigation').evaluate(e=>e.open=false);await p.waitForTimeout(120);
   const before=await p.evaluate(()=>window.__dante2dReview());
+  if(preset)assert.equal(before.actor.visualPreset,preset);
   await p.evaluate(()=>{window.motionPhase='idle';window.motionSamples=[];window.motionTimer=setInterval(()=>{const s=window.__dante2dReview();window.motionSamples.push({phase:window.motionPhase,frame:s.actor.frame,width:s.actor.width,height:s.actor.height,bakes:s.actor.bakes,x:s.position.x,y:s.position.y});},16);});
   await p.screenshot({path:out+'/'+id+'-idle.jpg',type:'jpeg',quality:86});
   for(const [key,stage]of [['d','right'],['a','left']]){

@@ -2,6 +2,7 @@ import{COMPANIONS,companionInfo}from'../config/companions';
 import { characterProfiles, type CharacterClass, type CharacterProfile } from '../systems/CharacterProfiles';
 import { DIFFICULTIES, difficultyId } from '../config/difficulty';
 import { CLASS_NAMES } from '../config/classes';
+import {PRESET_NAMES,supportsVisual,visualPreset} from '../config/visualPresets';
 import { characterSex, SEX_NAMES, type CharacterSex } from '../config/appearance';
 import { PROGRESSION } from '../config/progression';
 import { CharacterShowcase } from './CharacterShowcase';
@@ -14,7 +15,7 @@ const identity = {
   astral: { role: 'MÉDIO ALCANCE · CONTROLE', fantasy: 'Controle o campo. Conduza as forças de Dante pela manopla.', kit: 'Manopla astral · Energia, fogo, água e terra · Campos direcionais' },
   xenobinder:{role:'DOMADOR · SIMBIOSE',fantasy:'Lute em simbiose. Oriente uma criatura de Dante e proteja sua expedição.',kit:'Condutor simbiótico · Companheiro permanente · Investida e recuperação'},
 };
-type Actions = { back: () => void; create: (name: string, classId: CharacterClass, sex: CharacterSex,look:CharacterAppearance) => void; play: (id: string) => void; remove: (id: string) => void; newCharacter: () => void };
+type Actions = { back: () => void; create: (name: string, classId: CharacterClass, sex: CharacterSex,look:CharacterAppearance,preset:CharacterClass) => void; play: (id: string) => void; remove: (id: string) => void; newCharacter: () => void };
 export type CharacterDraft = { name: string; classId: CharacterClass; sex: CharacterSex;appearance?:CharacterAppearance;preset?:CharacterClass };
 function button(text: string, id: string, action: () => void): HTMLButtonElement {
   const el = document.createElement('button'); el.type = 'button'; el.textContent = text; el.dataset.shell = id;
@@ -36,7 +37,7 @@ export class CharacterSelection {
     const title = element('div', 'selection-title');
     title.append(element('small', '', 'ECHOES OF DANTE / EXPEDIÇÃO'));
     const h = element('h2', '', context.title ?? (joiningRoom ? mode === 'create' ? 'Crie seu personagem para a sala' : 'Com qual personagem você vai jogar?' : mode === 'create' ? 'Crie o seu personagem' : 'Suas expedições')); h.id = 'shell-title'; title.append(h);
-    title.append(element('p', '', context.subtitle ?? (joiningRoom ? 'Use o personagem vinculado a esta campanha.' : mode === 'create' ? 'Quatro personagens com visual próprio. Escolha sua classe, gênero e nome para começar.' : 'Escolha um personagem. Sua jornada começa de onde você parou.')));
+    title.append(element('p', '', context.subtitle ?? (joiningRoom ? 'Use o personagem vinculado a esta campanha.' : mode === 'create' ? 'Escolha gênero, personagem, profissão e nome. Batedor e Batedora também podem usar o sabre do Guerreiro.' : 'Escolha um personagem. Sua jornada começa de onde você parou.')));
     header.append(title);
     const headerActions = element('div', 'selection-header-actions');
     headerActions.append(button('← VOLTAR', 'back', actions.back)); header.append(headerActions);
@@ -48,17 +49,16 @@ export class CharacterSelection {
     root.append(header);
     if (mode === 'create') this.creation(actions); else this.characters(actions);
   }
-  private stage(classId: CharacterClass, sex = characterSex(classId),look:CharacterAppearance=appearance(),species:CompanionSpecies='symbiont'): { stage: HTMLElement; preview: CharacterShowcase } {
-    const stage = element('div', 'character-stage'), preview = new CharacterShowcase(classId, sex,look,species);
+  private stage(classId: CharacterClass, sex = characterSex(classId),look:CharacterAppearance=appearance(),species:CompanionSpecies='symbiont',preset:CharacterClass=classId): { stage: HTMLElement; preview: CharacterShowcase } {
+    const stage = element('div', 'character-stage'), preview = new CharacterShowcase(classId, sex,look,species,preset);
     stage.append(element('div', 'stage-light'), element('div', 'stage-plinth'), preview.canvas, preview.caption);
     this.previews.push(preview); return { stage, preview };
   }
   private creation(actions: Actions): void {
     const classes=['warrior','hunter','astral','xenobinder'] as const;
-    // Review the independent flow before producing the missing full-body
-    // weapon/pose combinations. The live game keeps all four original pairs.
-    const independentReview=location.pathname.endsWith('/campaign-playtest.html')&&new URLSearchParams(location.search).get('refinement')==='201';
-    const draft=this.context.draft;
+    const params=new URLSearchParams(location.search);
+    const review=location.pathname.endsWith('/campaign-playtest.html')&&params.get('refinement')==='202'&&params.has('preset')&&!this.joiningRoom;
+    const draft=this.context.draft??(review?{name:'',classId:visualPreset('warrior',params.get('class')),preset:visualPreset('warrior',params.get('preset')),sex:params.get('sex')==='male'?'male' as const:'female' as const}:undefined);
     let preset:CharacterClass=draft?.preset??draft?.classId??'warrior';
     let profession:CharacterClass=draft?.classId??(classes.find(c=>!this.occupied.includes(c))??'warrior');
     if(draft)profession=draft.classId;
@@ -74,34 +74,36 @@ export class CharacterSelection {
     const sexSelect=field('Gênero','character-sex');
     for(const id of ['male','female']as const){const option=document.createElement('option');option.value=id;option.textContent=SEX_NAMES[id];sexSelect.append(option);}sexSelect.value=draft?.sex??'male';
     const presetSelect=field('Personagem','character-preset');
-    presetSelect.closest('label')!.hidden=!independentReview;
-    const names={male:{warrior:'Pioneiro',hunter:'Batedor',astral:'Erudito',xenobinder:'Vinculado'},female:{warrior:'Pioneira',hunter:'Batedora',astral:'Erudita',xenobinder:'Vinculada'}};
+    const names=PRESET_NAMES;
     for(const id of classes){const option=document.createElement('option');option.value=id;presetSelect.append(option);}presetSelect.value=preset;
     const professionSelect=field('Profissão','character-profession');
     for(const id of classes){const option=document.createElement('option');option.value=id;option.textContent=CLASS_NAMES[id]+(this.occupied.includes(id)?' — ocupada':'');option.disabled=this.occupied.includes(id);professionSelect.append(option);}professionSelect.value=profession;
     const nameLabel=element('label','hero-choice','Nome'),input=document.createElement('input');input.name='character-name';input.maxLength=24;input.autocomplete='off';input.placeholder='Seu nome em Dante';input.value=draft?.name??'';nameLabel.append(input);controls.append(nameLabel);
     let current:CharacterShowcase|undefined;
-    const available=()=>preset===profession&&!this.occupied.includes(profession);
-    const create=button(this.joiningRoom?'CRIAR E ENTRAR NA SALA →':'CONTINUAR →','create',()=>{if(available()&&input.value.trim())actions.create(input.value,profession,sexSelect.value as CharacterSex,appearance());});create.className='selection-primary';
+    const available=()=>supportsVisual(profession,preset)&&!this.occupied.includes(profession);
+    const create=button(this.joiningRoom?'CRIAR E ENTRAR NA SALA →':'CONTINUAR →','create',()=>{if(available()&&current?.ready&&input.value.trim())actions.create(input.value,profession,sexSelect.value as CharacterSex,appearance(),preset);});create.className='selection-primary';
     const replay=button('DEMONSTRAR PROFISSÃO','replay',()=>current?.play(true));replay.className='hero-demonstration';
     const remember=()=>this.context.onDraft?.({name:input.value,classId:profession,preset,sex:sexSelect.value as CharacterSex});
     const update=()=>{
       const sex=sexSelect.value as CharacterSex;
       for(const option of Array.from(presetSelect.options))option.textContent=names[sex][option.value as CharacterClass];
+      for(const option of Array.from(professionSelect.options)){const id=option.value as CharacterClass;option.textContent=CLASS_NAMES[id]+(this.occupied.includes(id)?' — ocupada':supportsVisual(id,preset)?'':' — poses em preparação');}
       title.textContent=names[sex][preset];
-      if(current?.classId!==preset||current.sex!==sex){current?.destroy();this.previews.length=0;const next=this.stage(preset,sex);current=next.preview;previewHost.replaceChildren(next.stage);}
+      const previewClass=supportsVisual(profession,preset)?profession:preset;
+      if(current?.classId!==previewClass||current.sex!==sex||current.visualPreset!==preset){current?.destroy();this.previews.length=0;const next=this.stage(previewClass,sex,appearance(),'symbiont',preset);current=next.preview;previewHost.replaceChildren(next.stage);}
       current.stop();
       professionTitle.textContent=CLASS_NAMES[profession];role.textContent=identity[profession].role;fantasy.textContent=identity[profession].fantasy;kit.textContent=identity[profession].kit;
       status.hidden=available();status.textContent=available()?'':this.occupied.includes(profession)?'Esta profissão já está ocupada na equipe. Escolha outra.':'Este personagem ainda não tem poses completas para esta profissão. A combinação está em preparação e não pode iniciar uma jornada nesta revisão.';
-      replay.disabled=!available();create.disabled=!available()||!input.value.trim();
+      cancelAnimationFrame(this.previewRefresh);
+      const readiness=()=>{replay.disabled=!available()||!current?.ready;create.disabled=replay.disabled||!input.value.trim();if(!current?.ready&&!current?.failed)this.previewRefresh=requestAnimationFrame(readiness);};readiness();
       layout.dataset.preset=preset;layout.dataset.profession=profession;layout.dataset.available=String(available());
       if(available())current.play();
       remember();
     };
     sexSelect.addEventListener('change',update);
     presetSelect.addEventListener('change',()=>{preset=presetSelect.value as CharacterClass;update();});
-    professionSelect.addEventListener('change',()=>{profession=professionSelect.value as CharacterClass;if(!independentReview){preset=profession;presetSelect.value=preset;}update();});
-    input.addEventListener('input',()=>{create.disabled=!available()||!input.value.trim();remember();});input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing&&!create.disabled)create.click();});
+    professionSelect.addEventListener('change',()=>{profession=professionSelect.value as CharacterClass;update();});
+    input.addEventListener('input',()=>{create.disabled=!available()||!current?.ready||!input.value.trim();remember();});input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing&&!create.disabled)create.click();});
     display.append(title,previewHost,replay);controls.append(detail,status,create);layout.append(display,controls);this.root.append(layout);update();
   }
 
@@ -128,7 +130,7 @@ export class CharacterSelection {
       play.disabled=this.occupied.includes(hero.classId);
       play.textContent=play.disabled?'CLASSE OCUPADA':this.joiningRoom?'ENTRAR NA SALA →':'CONTINUAR JORNADA →';
       edit.hidden=hero.classId!=='xenobinder';
-      const entry = this.stage(hero.classId,characterSex(hero.classId,hero.sex),appearance(),hero.companion); current = entry.preview; display.replaceChildren(entry.stage, details, tools, play);
+      const entry = this.stage(hero.classId,characterSex(hero.classId,hero.sex),appearance(),hero.companion,visualPreset(hero.classId,hero.visualPreset)); current = entry.preview; display.replaceChildren(entry.stage, details, tools, play);
       details.replaceChildren(element('h3', '', hero.name), element('p', '', CLASS_NAMES[hero.classId]), element('small', 'selection-kit', hero.classId==='xenobinder'?companionInfo(hero.companion).name+' - Q: '+companionInfo(hero.companion).command:identity[hero.classId].kit));
       for (const b of Array.from(list.querySelectorAll<HTMLButtonElement>('button'))) b.setAttribute('aria-pressed', String(b.dataset.shell === `character-${id}`));
       current.play();

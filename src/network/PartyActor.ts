@@ -39,7 +39,7 @@ export class PartyActor {
   const rank=(id:AbilityUpgradeId)=>this.progression.upgradeRank(id);
   const hp=Math.round(this.progression.maxHp*(profile.classId==='hunter'?HUNTER.hpRatio:profile.classId==='xenobinder'?XENOBINDER.hpRatio:profile.classId==='astral'?ASTRAL.hpRatio:1))+equipmentStats(profile.equipment??{}).hp;
   this.attack=new SaberAttack(rank);this.charge=new KineticCharge(rank,profile.classId==='xenobinder'?XENOBINDER.commandCooldown:undefined);
-  this.player=new Player(scene,position.x,position.y,profile.build?hp:maxHp,false,true,rank,profile.classId,profile.sex);
+  this.player=new Player(scene,position.x,position.y,profile.build?hp:maxHp,false,true,rank,profile.classId,profile.sex,profile.visualPreset);
   if(profile.classId==='hunter'){this.hunter=new HunterCombat(scene,rank,aim=>this.art?.muzzle(aim)??completeMuzzle('hunter',aim,this.player.sex));this.art=new CompleteActorArt(scene,this.player.view,position.x,position.y,this.player.sex,'hunter');}
   if(profile.classId==='xenobinder'){this.xeno=new XenobinderCombat(scene,rank,position);this.xenoArt=new CompleteActorArt(scene,this.player.view,position.x,position.y,this.player.sex,'xenobinder',()=>rank('chargeWidth'));}
   if(profile.classId==='astral'){this.astral=new AstralCombat(scene,rank);this.astralArt=new CompleteActorArt(scene,this.player.view,position.x,position.y,this.player.sex,'astral');}
