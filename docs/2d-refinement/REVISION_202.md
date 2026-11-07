@@ -32,8 +32,11 @@ A criação começa na base sem requisito ou boss vencido simulado. O ensaio de 
 - [x] Capacete removido/adicionado nas roupas mistas dos dois gêneros, comparação de visual na mesma profissão e navegação do laboratório; [relatório](qa/202/mixed-gear/report.json). Capturas inspecionadas.
 - [x] Regressão de movimento/básico/Q dos quatro originais, dois gêneros e três roupas do Guerreiro: [relatório](qa/202/original-motion/report.json).
 - [x] Capturas de criação, base, marcha, Q, armadura, mobile e dupla inspecionadas pelo agente. Isso não é aprovação estética humana.
-- [ ] Commit/push/sincronização e publicação Vercel conferidos.
+- [x] Aplicação `edacbb34274e0910c6fc39060434bdb3d596659a` em `origin/main`, Vercel success e 46 hashes de HTML/JS/CSS/novos atlas conferidos; [hashes públicos](qa/202/publication-hashes.json). HTML normaliza apenas quebras de linha e linhas vazias; demais recursos são comparados byte a byte.
+- [x] Seleção/criação/reload/falha de download e movimento/básico/Q públicos nos dois gêneros e três roupas; [seleção](qa/202/public-selection/report.json), [movimento](qa/202/public-motion/report.json). Capturas públicas de base, sabre e ação inspecionadas. Os parâmetros históricos `head/hair` das suítes são ignorados e não representam edição aplicada.
 - [ ] Coop público com `identities:1` conferido. Saúde conferida em 07/11 ainda informa `512a38f`, sem a nova capacidade; [evidência](qa/202/relay-public-before.json).
 - [ ] Playtest humano do novo cruzamento. **Composição da tela aprovada; novas pinturas ainda não.** Aguardar antes de multiplicar para as outras profissões ou avançar níveis/mapas/civilização. 3D continua pausado; computador ligado.
 
 Execuções em Chrome automatizado no Windows; touch/gamepad são emulados. Não representa iPhone físico, controle físico, grupo humano de quatro ou campanha completa. Não houve medição de FPS nesta entrega.
+
+[Estado da publicação e gate do relay](qa/202/publication.json). Commits posteriores somente de documentação/QA não alteram o runtime confirmado acima.

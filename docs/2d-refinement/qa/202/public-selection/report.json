@@ -1,0 +1,241 @@
+{
+  "passed": true,
+  "base": "https://echosofdante.vercel.app",
+  "matrix": [
+    {
+      "sex": "female",
+      "preset": "hunter",
+      "profession": "warrior",
+      "available": true,
+      "shown": "warrior"
+    },
+    {
+      "sex": "female",
+      "preset": "hunter",
+      "profession": "hunter",
+      "available": true,
+      "shown": "hunter"
+    },
+    {
+      "sex": "female",
+      "preset": "hunter",
+      "profession": "astral",
+      "available": false,
+      "shown": "hunter"
+    },
+    {
+      "sex": "female",
+      "preset": "hunter",
+      "profession": "xenobinder",
+      "available": false,
+      "shown": "hunter"
+    },
+    {
+      "sex": "female",
+      "preset": "warrior",
+      "profession": "warrior",
+      "available": true,
+      "shown": "warrior"
+    },
+    {
+      "sex": "female",
+      "preset": "warrior",
+      "profession": "hunter",
+      "available": false,
+      "shown": "warrior"
+    },
+    {
+      "sex": "female",
+      "preset": "warrior",
+      "profession": "astral",
+      "available": false,
+      "shown": "warrior"
+    },
+    {
+      "sex": "female",
+      "preset": "warrior",
+      "profession": "xenobinder",
+      "available": false,
+      "shown": "warrior"
+    },
+    {
+      "sex": "female",
+      "preset": "astral",
+      "profession": "warrior",
+      "available": false,
+      "shown": "astral"
+    },
+    {
+      "sex": "female",
+      "preset": "astral",
+      "profession": "hunter",
+      "available": false,
+      "shown": "astral"
+    },
+    {
+      "sex": "female",
+      "preset": "astral",
+      "profession": "astral",
+      "available": true,
+      "shown": "astral"
+    },
+    {
+      "sex": "female",
+      "preset": "astral",
+      "profession": "xenobinder",
+      "available": false,
+      "shown": "astral"
+    },
+    {
+      "sex": "female",
+      "preset": "xenobinder",
+      "profession": "warrior",
+      "available": false,
+      "shown": "xenobinder"
+    },
+    {
+      "sex": "female",
+      "preset": "xenobinder",
+      "profession": "hunter",
+      "available": false,
+      "shown": "xenobinder"
+    },
+    {
+      "sex": "female",
+      "preset": "xenobinder",
+      "profession": "astral",
+      "available": false,
+      "shown": "xenobinder"
+    },
+    {
+      "sex": "female",
+      "preset": "xenobinder",
+      "profession": "xenobinder",
+      "available": true,
+      "shown": "xenobinder"
+    },
+    {
+      "sex": "male",
+      "preset": "hunter",
+      "profession": "warrior",
+      "available": true,
+      "shown": "warrior"
+    },
+    {
+      "sex": "male",
+      "preset": "hunter",
+      "profession": "hunter",
+      "available": true,
+      "shown": "hunter"
+    },
+    {
+      "sex": "male",
+      "preset": "hunter",
+      "profession": "astral",
+      "available": false,
+      "shown": "hunter"
+    },
+    {
+      "sex": "male",
+      "preset": "hunter",
+      "profession": "xenobinder",
+      "available": false,
+      "shown": "hunter"
+    },
+    {
+      "sex": "male",
+      "preset": "warrior",
+      "profession": "warrior",
+      "available": true,
+      "shown": "warrior"
+    },
+    {
+      "sex": "male",
+      "preset": "warrior",
+      "profession": "hunter",
+      "available": false,
+      "shown": "warrior"
+    },
+    {
+      "sex": "male",
+      "preset": "warrior",
+      "profession": "astral",
+      "available": false,
+      "shown": "warrior"
+    },
+    {
+      "sex": "male",
+      "preset": "warrior",
+      "profession": "xenobinder",
+      "available": false,
+      "shown": "warrior"
+    },
+    {
+      "sex": "male",
+      "preset": "astral",
+      "profession": "warrior",
+      "available": false,
+      "shown": "astral"
+    },
+    {
+      "sex": "male",
+      "preset": "astral",
+      "profession": "hunter",
+      "available": false,
+      "shown": "astral"
+    },
+    {
+      "sex": "male",
+      "preset": "astral",
+      "profession": "astral",
+      "available": true,
+      "shown": "astral"
+    },
+    {
+      "sex": "male",
+      "preset": "astral",
+      "profession": "xenobinder",
+      "available": false,
+      "shown": "astral"
+    },
+    {
+      "sex": "male",
+      "preset": "xenobinder",
+      "profession": "warrior",
+      "available": false,
+      "shown": "xenobinder"
+    },
+    {
+      "sex": "male",
+      "preset": "xenobinder",
+      "profession": "hunter",
+      "available": false,
+      "shown": "xenobinder"
+    },
+    {
+      "sex": "male",
+      "preset": "xenobinder",
+      "profession": "astral",
+      "available": false,
+      "shown": "xenobinder"
+    },
+    {
+      "sex": "male",
+      "preset": "xenobinder",
+      "profession": "xenobinder",
+      "available": true,
+      "shown": "xenobinder"
+    }
+  ],
+  "checks": [
+    "32 combinations: ten sex/preset/profession entries playable; 22 missing-pose entries honestly blocked.",
+    "Native Batedora + Warrior creation, profession demonstration, draft/back, base entry, saved preview and reload preserve the independent identity.",
+    "One canvas, four ordered controls, reduced motion, no retired editor, canonical saves untouched.",
+    "Explicit old-profile fixture without visualPreset falls back to its own original body; legacy appearance metadata and complete saved journey remain untouched.",
+    "Forced missing cross-pose response yields useful message, disabled start and no substituted body.",
+    "Automatic profession demonstration uses the cross-family Warrior combat and respects reduced motion.",
+    "Direct library link selects the actual Batedora/Warrior pilot without creating a profile or simulating progress."
+  ],
+  "errors": [],
+  "fixture": "Isolated creation and native input only. No boss victories, progression or unlocks simulated. Canonical registry/journey markers must remain unchanged."
+}

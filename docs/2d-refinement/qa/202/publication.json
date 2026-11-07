@@ -1,0 +1,45 @@
+{
+  "version": "0.1.202",
+  "runtimeCommit": "edacbb34274e0910c6fc39060434bdb3d596659a",
+  "vercel": {
+    "state": "success",
+    "url": "https://vercel.com/brunomafra-devs-projects/echosofdante/5FpxLYz737bYcoCmQ51v6T6zLAhs"
+  },
+  "localTechnicalQA": {
+    "passed": true,
+    "reports": [
+      "asset-geometry/report.json",
+      "selection/report.json",
+      "motion/report.json",
+      "original-motion/report.json",
+      "input/report.json",
+      "native-coop/report.json",
+      "relay/report.json",
+      "mixed-gear/report.json"
+    ],
+    "screenshotsReviewed": true
+  },
+  "publicSoloQA": {
+    "passed": true,
+    "reports": [
+      "public-selection/report.json",
+      "public-motion/report.json",
+      "publication-hashes.json"
+    ],
+    "matchingFiles": 46,
+    "screenshotsReviewed": true
+  },
+  "publicCoop": {
+    "passed": false,
+    "status": "Awaiting Render latest-commit deployment with identities:1. Real public health still reports 512a38f. A single request was sent after edacbb3 was pushed.",
+    "healthEvidence": "relay-public-before.json",
+    "protocol": 16,
+    "requiredCapability": "identities:1"
+  },
+  "humanApproval": {
+    "selectionComposition": true,
+    "newCrossFamilyPaintings": false
+  },
+  "scope": "First authored cross-pair: scout visual with Warrior profession, both sexes and three wardrobe tiers. Original four pairs preserved. Eleven remaining cross-pairs await poses and pilot playtest.",
+  "checks": "No new level cap, territory, progression, editor or 3D work."
+}

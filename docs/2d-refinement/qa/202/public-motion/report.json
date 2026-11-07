@@ -1,0 +1,221 @@
+{
+  "passed": true,
+  "base": "https://echosofdante.vercel.app",
+  "fixture": "Native inputs in isolated character lab. Gear/appearance URLs are display fixtures only. Real campaign untouched.",
+  "cases": [
+    {
+      "cls": "warrior",
+      "sex": "male",
+      "kit": "clothes",
+      "head": "curly",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          20,
+          48,
+          49,
+          50,
+          42,
+          43,
+          47,
+          44,
+          51
+        ],
+        "left": [
+          20,
+          66,
+          67,
+          64,
+          65,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          11,
+          8
+        ]
+      }
+    },
+    {
+      "cls": "warrior",
+      "sex": "male",
+      "kit": "basic",
+      "head": "curly",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          48,
+          49,
+          50,
+          42,
+          43,
+          47,
+          44,
+          51,
+          20
+        ],
+        "left": [
+          65,
+          66,
+          67,
+          64,
+          20
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "warrior",
+      "sex": "male",
+      "kit": "reinforced",
+      "head": "curly",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          20,
+          48,
+          49,
+          50,
+          42,
+          43,
+          47,
+          44,
+          51
+        ],
+        "left": [
+          20,
+          65,
+          66,
+          67,
+          64,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "warrior",
+      "sex": "female",
+      "kit": "clothes",
+      "head": "tied",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          20,
+          48,
+          49,
+          50,
+          42,
+          43,
+          47,
+          44,
+          51
+        ],
+        "left": [
+          64,
+          65,
+          66,
+          67,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "warrior",
+      "sex": "female",
+      "kit": "basic",
+      "head": "tied",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          20,
+          48,
+          49,
+          50,
+          42,
+          43,
+          47,
+          44,
+          51
+        ],
+        "left": [
+          64,
+          65,
+          66,
+          67,
+          20
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          11,
+          8
+        ]
+      }
+    },
+    {
+      "cls": "warrior",
+      "sex": "female",
+      "kit": "reinforced",
+      "head": "tied",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          20,
+          48,
+          49,
+          50,
+          42,
+          43,
+          47,
+          44,
+          51
+        ],
+        "left": [
+          20,
+          64,
+          65,
+          66,
+          67,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    }
+  ],
+  "errors": []
+}
