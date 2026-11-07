@@ -1,0 +1,300 @@
+{
+  "passed": true,
+  "version": "0.1.203",
+  "base": "https://echosofdante.vercel.app",
+  "at": "2026-11-07T15:57:42.748Z",
+  "htmlCanonicalization": "CR/CRLF to LF; discard whitespace-only empty lines. JS/CSS/PNG compared byte for byte.",
+  "files": [
+    {
+      "file": "campaign-playtest.html",
+      "bytes": 977,
+      "sha256": "2bcf477f54b31beef40b2d4e446c540ccc440485b6bb2d87fcc23e159b7892fc"
+    },
+    {
+      "file": "character-playtest.html",
+      "bytes": 5233,
+      "sha256": "862d9b03cf9626ab2de8355349daef316c1298b884938e60e9e433e828f16a7e"
+    },
+    {
+      "file": "character-cohesion.html",
+      "bytes": 5569,
+      "sha256": "ffe79dbf5bc9d3d04c79ac311af7801c21780da4e524475fc322e9099d05e1c6"
+    },
+    {
+      "file": "index.html",
+      "bytes": 5177,
+      "sha256": "58c39c0b9b3894c9de312162dc9069d1671b50e27f5833861687c49b1e796d1d"
+    },
+    {
+      "file": "test-library.html",
+      "bytes": 97282,
+      "sha256": "4e98538688ec70fed6dd8bad6fcaa00e562bd15ef367c80c4dad277b3c79edce"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-warrior-female-none-v1.png",
+      "bytes": 1920437,
+      "sha256": "27995d331af2b9048270dc38f17a9a74f73fd005db782cf47d86697f8db71ecb"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-warrior-female-basic-v1.png",
+      "bytes": 2042370,
+      "sha256": "de8feccac8cb9a7f153efb4f0af27dd187c458232796a29f8b85588dbfeb6a0a"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-warrior-female-reinforced-v1.png",
+      "bytes": 2276717,
+      "sha256": "46e79213c1a9f82405ba185c7ae5791d5b402325529295d67c91f940cfd7bd7f"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-warrior-male-none-v1.png",
+      "bytes": 2068052,
+      "sha256": "05418536479fb62871b30d61b6d4d12a0017bbd02728684bc3974bb890931ae0"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-warrior-male-reinforced-v1.png",
+      "bytes": 2426697,
+      "sha256": "87a65ed4b8209d1a51eeb38c14b18f0026baddc3ea796db429287e429065ad0a"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-astral-female-none-v1.png",
+      "bytes": 1707616,
+      "sha256": "1a1ad32e2e75a9d6a8ec2c408b86485e13568bb2307a2c5fbb9a49cc70364205"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-astral-male-none-v1.png",
+      "bytes": 1781435,
+      "sha256": "260e795cc9f9c1e52ac63077595fdf9ce73a3c380aab32454ba95a958c2e101b"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-astral-female-basic-v1.png",
+      "bytes": 1697838,
+      "sha256": "83e32a3a3df179921c36df6f207856d6ddaf53d6b748738c3cf45261d968d8a1"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-astral-female-reinforced-v1.png",
+      "bytes": 1897499,
+      "sha256": "ae9bb14cb3db94faa5e83aa15af6f09d0802191f3ef73f0118e013e0a19dcdcb"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-warrior-male-basic-v1.png",
+      "bytes": 2176787,
+      "sha256": "1bb9636278917b55431a14b60f2e537fb9659ab4c1a0ed32da24e0b1b3e6ea3e"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-astral-male-basic-v1.png",
+      "bytes": 1836199,
+      "sha256": "0fa9749a6afa7ba9128c02bf2e2cb7f5903fa8f379767b0453fd98ae4694034d"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-astral-male-reinforced-v1.png",
+      "bytes": 1987468,
+      "sha256": "040c5fa03c2228d68860877f9603d143390d64a4f28391055bfdd8def525fadc"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-xenobinder-female-none-v1.png",
+      "bytes": 1733894,
+      "sha256": "39b916176180fcbcd06d5807d07d777e52342814a28dcae447fbcb6e5d0efd5a"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-xenobinder-female-basic-v1.png",
+      "bytes": 1838377,
+      "sha256": "d21b4b06c5ca45b106ccb391d19ce5e3539248d178eabe8f77b9a2e25d0e6b54"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-xenobinder-male-none-v1.png",
+      "bytes": 1808390,
+      "sha256": "bb972065d7c42c21aa1d7bff03c8907d6f4cd3cd1247a4c2503692da26202bcf"
+    },
+    {
+      "file": "assets/modulepreload-polyfill-B5Qt9EMX.js",
+      "bytes": 711,
+      "sha256": "d2a32840421496e872ade591618d2fa5c33797605d1aec04301717e5a90757d0"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-xenobinder-male-basic-v1.png",
+      "bytes": 1908413,
+      "sha256": "1e0ea21351f721e7671967796b44ce5b0ea8b2f321bffdf9ed1ff7482938bdc4"
+    },
+    {
+      "file": "assets/visualReview-Dpbtl8tP.js",
+      "bytes": 916,
+      "sha256": "03016ff848ed4078a58b3114925ac63c1e08b2b6f35a92715daeb130a27f3779"
+    },
+    {
+      "file": "assets/phaser-BzgIAAyK.js",
+      "bytes": 1208494,
+      "sha256": "2b0793711bb035108484e2713edf30bf009d334041fa0836d944f36303725c52"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-xenobinder-male-reinforced-v1.png",
+      "bytes": 2042023,
+      "sha256": "d0a35226b3040e44fa1414e7e8259abb85fa26720508a68f3691e0156c2241af"
+    },
+    {
+      "file": "assets/warden-Bq2ZI6Js.js",
+      "bytes": 7918,
+      "sha256": "41c635269cde6d8bde53e8af23f4f020954723520704c59e2cedc2c7e3d1f1ed"
+    },
+    {
+      "file": "assets/appearance-DGTbGxQ5.js",
+      "bytes": 545,
+      "sha256": "3309c4700f2cfdfe7b8bd340a7fb933fdc9cff5ebeb2c3c22807b778559275e1"
+    },
+    {
+      "file": "assets/equipment-p5AAj_Az.js",
+      "bytes": 4695,
+      "sha256": "83af124ffaedb25a29a772c76d1b14f446adbd2e226c4bff8099ebbd9b3bfe57"
+    },
+    {
+      "file": "assets/routeIdentity-SoyqLFJ7.js",
+      "bytes": 2045,
+      "sha256": "7929b9cc32f4602cd1e52a3a51fffeb4381893b3288b87d3fd5472953df07782"
+    },
+    {
+      "file": "assets/game-DVXtJvGr.js",
+      "bytes": 607,
+      "sha256": "ffec1afd334071b492f779af618b9524335ba97bc2f67608eb558681f4cfa1b0"
+    },
+    {
+      "file": "assets/Movement-DgzBIlrV.js",
+      "bytes": 1847,
+      "sha256": "e53ddfd4d9db2d83721f8fc1cc164d4ecf327d5503c605c56a5ee1987dece548"
+    },
+    {
+      "file": "assets/characterPresentation-Dd2V7PGx.js",
+      "bytes": 1035,
+      "sha256": "0cb4645bf212976689f781538915fc04017a7aa0880a4215369e839cc4f987e4"
+    },
+    {
+      "file": "assets/classes-vxA3re7s.js",
+      "bytes": 1846,
+      "sha256": "c40262b9c18997cf5c31eac2ed1249a088e6ec8692af5e53594f41940b1d04bd"
+    },
+    {
+      "file": "assets/Controls-da1msaFu.js",
+      "bytes": 90120,
+      "sha256": "2c27859927624defe55ee424a5c4faec9cc92950bb4b27661104dd7acc34636e"
+    },
+    {
+      "file": "assets/CharacterProfiles-Be7rB6cc.js",
+      "bytes": 6228,
+      "sha256": "171428a5ae1a6f19c99a7c46ebd4da2b5362d021322d86d211f068c9f6ba3ed8"
+    },
+    {
+      "file": "assets/discovery-C5DJ8PRP.js",
+      "bytes": 638,
+      "sha256": "8baf0b234062f205e5387d0eee808f40fa9cb22b48d9344af10633a5a0143255"
+    },
+    {
+      "file": "assets/economy-DWmWhRzs.js",
+      "bytes": 1867,
+      "sha256": "229b29e880fffd689ab1fe59112449f3babc3d1153aef8b67b292dd0211ccbb6"
+    },
+    {
+      "file": "assets/permanence-C4o_KFgd.js",
+      "bytes": 38959,
+      "sha256": "1e21e6f4d24ca63cba7380304243681b6f5c7ad09556b6d5efdef18d1119c372"
+    },
+    {
+      "file": "assets/regionalExpeditions-BxveXmUl.js",
+      "bytes": 27054,
+      "sha256": "fa295a8a090c2937b9e7016416f99c80ec87dae1eadab928e3c7627af125d80f"
+    },
+    {
+      "file": "assets/Missions-eppN6E1E.js",
+      "bytes": 10860,
+      "sha256": "5cf636da5a458f138be7fd40282934aa779f419f591529103c77bda28028b758"
+    },
+    {
+      "file": "assets/visual/complete-actors/cross/hunter-xenobinder-female-reinforced-v1.png",
+      "bytes": 1918600,
+      "sha256": "b6a8cb3cc5d38b2783c4c239747f5a910275c07b6c15c07412ee158f204dc641"
+    },
+    {
+      "file": "assets/LocalJourney-DU3x3z_P.js",
+      "bytes": 29224,
+      "sha256": "ab0459ee3a9a2849f9b38800c1b980e18c022c2f3ad012172f4f07b8d27e3103"
+    },
+    {
+      "file": "assets/CoopSession-DGBrr6PQ.js",
+      "bytes": 24124,
+      "sha256": "046241bab8355f24a38159062b4311fcb78deb5bc72d769fec30ba49bdd141e5"
+    },
+    {
+      "file": "assets/npcReview-8iTRhkNP.js",
+      "bytes": 3440,
+      "sha256": "368bc7f10f7c04ce47385c7ccf4684cd7869c642ee09aee36922d8beab2bbda7"
+    },
+    {
+      "file": "assets/progression-Dx_zfhGa.js",
+      "bytes": 242,
+      "sha256": "dd6883c8a07afc0d3d2dc0ddfbeeec0d0d69396b131496152a2a1743e24762c0"
+    },
+    {
+      "file": "assets/bestiary-DoO9RUOu.js",
+      "bytes": 5493,
+      "sha256": "245dea2caebf8fc2d7a32ffc93cdfe64a6e38d280992bb96c0449c5c409d4c4f"
+    },
+    {
+      "file": "assets/Sound-Bx4KSs_F.js",
+      "bytes": 7266,
+      "sha256": "ed8bc13ffea4fae138bdf42bdaac12c42bee455acdbfc4905937db90bc5b4d68"
+    },
+    {
+      "file": "assets/GameScene-D6naPQMF.js",
+      "bytes": 561109,
+      "sha256": "4211261e3ffd480a4edc79860b5aeb2238540bdbac01a23411106aa6344401da"
+    },
+    {
+      "file": "assets/CinematicPlayback-BaSRs6Ut.js",
+      "bytes": 4138,
+      "sha256": "9507d7c6687dd086395a68394d2976351d0eed54aaa28582109ae05405a33452"
+    },
+    {
+      "file": "assets/MobileDisplay-CBxjAUtq.js",
+      "bytes": 7016,
+      "sha256": "4be572cfc2120a9981a784e367ab031f90745fc31d12265fbfeab42765e65b93"
+    },
+    {
+      "file": "assets/main-riCPYj2x.js",
+      "bytes": 62684,
+      "sha256": "4be9d76dced7ff09ecc4339f3d7cbddf1620cbe6eac67d88d63e0a16cfd6fbaa"
+    },
+    {
+      "file": "assets/GameScene-C8268zOb.css",
+      "bytes": 6084,
+      "sha256": "ad6217a55c19c2034f95532455883509a7e598ef3ba70da1d704759a487aefb8"
+    },
+    {
+      "file": "assets/main-YcmEOylF.css",
+      "bytes": 14256,
+      "sha256": "2571cd4ffb72eb5de758d5b1a057d8720739baba701e78a4c169d0b38072d2bb"
+    },
+    {
+      "file": "assets/campaignPlaytest-BTv7GqPL.js",
+      "bytes": 53082,
+      "sha256": "33a187ec9fff59acf92ac219e5f7958944debb8b6a9ad982138ebf23524edf2f"
+    },
+    {
+      "file": "assets/style-DrI_UwcV.css",
+      "bytes": 47459,
+      "sha256": "ac395d567355b1993f066062f1e8fd1849e24ca358fe3c98f83b702405e3c321"
+    },
+    {
+      "file": "assets/preload-helper-BXl3LOEh.js",
+      "bytes": 1110,
+      "sha256": "d887044e7c17fd90344fc4f74f53cac686584daf2a458ab2136d36f1946e9ab6"
+    },
+    {
+      "file": "assets/main-ByjUSU6K.js",
+      "bytes": 7008,
+      "sha256": "9380bf9bd7c2d5da3af1544991868053b64db07f17ca38c9230a6160b3de0d97"
+    },
+    {
+      "file": "assets/playtest-CdnChsHr.css",
+      "bytes": 958,
+      "sha256": "946a27d3bd567e36c1bcb72813edaf5a3e1f7d3e294bc63e1f69576e6335e28b"
+    }
+  ],
+  "errors": []
+}

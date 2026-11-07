@@ -28,12 +28,17 @@ Registrados em `test-library.html`. Dados temporários da aba; personagens reais
 - [x] Duas duplas nativas, Guerreiro/Astral e Domador/Caçador, todos Batedor/Batedora; identidade própria/remota, movimento, básico/Q, elenco tardio e protocolo 16/`scouts:1`: [coop](qa/203/coop/report.json). Quatro instâncias simultâneas não têm aprovação final; [diagnóstico inicial](qa/203/squad/README.md).
 - [x] Seis roupas mistas, retirar/colocar capacete, comparação e trocas de família: [equipamentos](qa/203/mixed-gear/report.json).
 - [x] Broto e Filhote causam impacto nos três alvos, escudo só no Broto e nenhum dano adicional de FX: [feras](qa/203/impact-lab/report.json). Desbloqueios reais continuam exigidos na campanha; fixtures só no laboratório.
-- [ ] Quatro elementos do Astral, básico/Q em ambos os gêneros e comparação com visual original.
+- [x] Quatro elementos do Astral, básico/Q em ambos os gêneros e comparação com visual original: [Astral](qa/203/astral/report.json). Básico causa dano idêntico; Q causa dano e seus efeitos cessam sem impactos extras. A duração de carga nativa varia entre execuções; não é alegada paridade numérica de Q entre toques curtos separados.
 - [x] Capturas locais de seleção, base, armaduras, marcha, emissores, equipamentos mistos, efeitos, dupla e touch inspecionadas pelo agente. Isso não é aprovação estética humana.
 - [x] `npm run typecheck`, `npm run build` (330 módulos) e `git diff --check`. Permanecem avisos de chunks grandes já existentes, inclusive do experimento 3D.
-- [ ] Commit/push e publicação conferida.
+- [x] Aplicação `784480c3dbc3d2a560649999812b1c9ce65db167` em `origin/main`, Vercel success e **58 arquivos públicos** conferidos: [hashes](qa/203/publication-hashes.json).
+- [x] Demonstração/criação/mundo, movimento, básico/Q públicos de Astral e Domador nos dois gêneros, sem erros ou assets ausentes: [solo público](qa/203/public-solo/report.json). Capturas públicas inspecionadas pelo agente.
+- [x] Três ciclos de morte/R/respawn em Astral e Domador com visual Batedora no DEV: [ciclo de vida](qa/203/lifecycle/lifecycle.json). Morte é uma fixture explícita de diagnóstico; R é nativo. Sem acúmulo de texturas, listeners ou controles; não representa combate de campanha.
+- [ ] Coop público com `scouts:1`; atualização do Render solicitada após o push.
 - [ ] Playtest humano do lote completo. Aguardar antes de outro personagem, níveis, mapas ou civilização. 3D continua pausado; computador ligado.
 
 Chrome automatizado no Windows. Touch e gamepad emulados não são iPhone ou controle físico. QA não aprova estética, não mede duração de campanha e não promete FPS.
 
-Render público consultado ainda informa `512a38f`, protocolo 16, sem `identities:1` e `scouts:1`: [saúde anterior](qa/203/relay-public-before.json). Coop local passou; coop público deste lote depende de atualizar esse serviço e conferir novamente.
+[Estado da publicação](qa/203/publication.json). Commits posteriores de QA/documentação não alteram os recursos de aplicação confirmados.
+
+Render público consultado ainda informa `512a38f`, protocolo 16, sem `identities:1` e `scouts:1`: [última saúde](qa/203/relay-public-final.json). Coop local passou; coop público deste lote depende de atualizar esse serviço e conferir novamente.

@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "base": "https://echosofdante.vercel.app",
+  "cases": [
+    {
+      "profession": "astral",
+      "sex": "male",
+      "body": "hunter",
+      "area": "base"
+    },
+    {
+      "profession": "astral",
+      "sex": "female",
+      "body": "hunter",
+      "area": "base"
+    },
+    {
+      "profession": "xenobinder",
+      "sex": "male",
+      "body": "hunter",
+      "area": "base"
+    },
+    {
+      "profession": "xenobinder",
+      "sex": "female",
+      "body": "hunter",
+      "area": "base"
+    }
+  ],
+  "errors": [],
+  "fixture": "Fresh isolated native characters, no boss or progression fixture. Published entry and actual world, native basic/Q/movement; no canonical profile writes."
+}

@@ -1,0 +1,37 @@
+{
+  "version": "0.1.203",
+  "applicationCommit": "784480c3dbc3d2a560649999812b1c9ce65db167",
+  "at": "2026-11-07T15:59:24.927281+00:00",
+  "vercel": {
+    "state": "success",
+    "url": "https://vercel.com/brunomafra-devs-projects/echosofdante/575RbM7KDuKuSxbJwdy7VvwqC7dr",
+    "verifiedFiles": 58,
+    "hashReport": "publication-hashes.json",
+    "soloReport": "public-solo/report.json"
+  },
+  "localQA": {
+    "passed": true,
+    "suites": [
+      "asset-geometry",
+      "selection",
+      "motion",
+      "input",
+      "coop",
+      "mixed-gear",
+      "impact-lab",
+      "astral",
+      "relay",
+      "lifecycle"
+    ],
+    "cooperativeMethod": "Two native browser instances per team: warrior/astral and xenobinder/hunter; all scout bodies. No final four-client approval."
+  },
+  "publicCoop": {
+    "passed": false,
+    "state": "Awaiting Render deployment with scouts:1; requested after GitHub push. Protocol stays 16.",
+    "healthReport": "relay-public-final.json"
+  },
+  "visualApproval": "Human playtest pending. Stop before another character or campaign expansion.",
+  "saves": "All direct laboratories use temporary tab namespaces; canonical registry markers preserved. No new progression/boss wins granted by creation.",
+  "sources": "docs/scout-professions/README.md",
+  "followupCommits": "QA/documentation only; application assets remain those verified above."
+}

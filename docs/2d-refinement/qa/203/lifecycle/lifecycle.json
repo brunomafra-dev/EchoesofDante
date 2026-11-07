@@ -1,0 +1,80 @@
+{
+  "passed": true,
+  "errors": [],
+  "classes": [
+    {
+      "classId": "astral",
+      "before": {
+        "objects": 416,
+        "textures": 228,
+        "actors": 1,
+        "tweens": 19,
+        "listeners": 36,
+        "touch": 1
+      },
+      "cycles": [
+        {
+          "objects": 416,
+          "textures": 228,
+          "actors": 1,
+          "tweens": 19,
+          "listeners": 36,
+          "touch": 1
+        },
+        {
+          "objects": 416,
+          "textures": 228,
+          "actors": 1,
+          "tweens": 19,
+          "listeners": 36,
+          "touch": 1
+        },
+        {
+          "objects": 416,
+          "textures": 228,
+          "actors": 1,
+          "tweens": 19,
+          "listeners": 36,
+          "touch": 1
+        }
+      ]
+    },
+    {
+      "classId": "xenobinder",
+      "before": {
+        "objects": 417,
+        "textures": 235,
+        "actors": 1,
+        "tweens": 19,
+        "listeners": 36,
+        "touch": 1
+      },
+      "cycles": [
+        {
+          "objects": 417,
+          "textures": 235,
+          "actors": 1,
+          "tweens": 19,
+          "listeners": 36,
+          "touch": 1
+        },
+        {
+          "objects": 417,
+          "textures": 235,
+          "actors": 1,
+          "tweens": 19,
+          "listeners": 36,
+          "touch": 1
+        },
+        {
+          "objects": 417,
+          "textures": 235,
+          "actors": 1,
+          "tweens": 19,
+          "listeners": 36,
+          "touch": 1
+        }
+      ]
+    }
+  ]
+}
