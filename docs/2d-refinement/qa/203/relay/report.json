@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "checks": [
+    "Legacy original client remains compatible; a new cross-family guest cannot enter an unupdated host.",
+    "Old clients and unauthored visual/profession combinations are rejected before entering a cross-family room.",
+    "Secret-token resume retains body/profession; two updated clients may share a visual while preserving unique professions and original campaign credentials.",
+    "Both new scout professions require scouts:1 in create/join/resume; old 202 clients are blocked in both directions, while updated peers and secret-token reconnection preserve the identities."
+  ],
+  "fixture": "Actual local WebSocket relay with disposable campaigns. No browser saves or public rooms."
+}

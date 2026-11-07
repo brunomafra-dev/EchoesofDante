@@ -7,11 +7,14 @@ import {preloadPixelFX}from'./PixelFX';
 import{preloadCompanionArt}from'./CompanionArt';
 import {companion,type CompanionSpecies}from'../config/characterPresentation';
 import{companionInfo,GUARDIAN_RADIUS,glacialRadius}from'../config/companions';
-import {preloadCompleteSource,completeSource}from'./CompleteActorSources';
+import {preloadCompleteSource,completeSource,hasCompleteSource}from'./CompleteActorSources';
 import supported from '../config/visual-presets.json';
 import { COMPLETE_DISPLAY,COMPLETE_FEET,COMPLETE_FRAME,COMPLETE_COLUMNS,COMPLETE_STYLES,completeAsset,completeFrameCount,completeFrame,completeKey,completeMuzzle,composeCompleteAtlas,stableCompleteDirection } from './CompleteActorFrames';
 
 let serial=0;
+export function completeActorsReady(scene:Phaser.Scene,cast:readonly {classId:PlayableClass;sex:CharacterSex;visualPreset?:PlayableClass}[]):boolean{
+ return cast.every(p=>COMPLETE_STYLES.every(style=>hasCompleteSource(scene,completeKey(p.classId,p.sex,style,p.visualPreset??p.classId))));
+}
 export function preloadCompleteActors(scene:Phaser.Scene,cast?:readonly {classId:PlayableClass;sex:CharacterSex;visualPreset?:PlayableClass}[]):void {
  preloadPixelFX(scene);
  if(!cast||cast.some(p=>p.classId==='xenobinder'))preloadCompanionArt(scene);
@@ -76,7 +79,7 @@ export class CompleteActorArt {
   }
  }
  contactPoint(step:number):{x:number;y:number}{const points=this.contacts[Number(this.body.frame.name)]??[];return points.length?points[step%points.length]:{x:0,y:39};}
- muzzle(aim:number):{x:number;y:number}{return completeMuzzle(this.identity,aim,this.sex,this.look.torso,this.visualPreset);}
+ muzzle(aim:number):{x:number;y:number}{const direction=this.visualPreset!==this.identity?stableCompleteDirection(aim,this.facing):undefined;return completeMuzzle(this.identity,direction===undefined?aim:Math.PI/2-direction*Math.PI/4,this.sex,this.look.torso,this.visualPreset);}
  projectileOffset(aim:number):{x:number;y:number}{const p=this.muzzle(aim);return{x:p.x-Math.cos(aim)*ASTRAL.muzzleDistance,y:p.y-Math.sin(aim)*ASTRAL.muzzleDistance};}
  flashHurt():void{this.hurtUntil=this.scene.time.now+140;}
  update(x:number,y:number,aim:number,firing:boolean,dash=false,heavy:Pick<KineticPose,'phase'|'level'>={phase:'READY',level:0},element:AstralElement='energy'):void{

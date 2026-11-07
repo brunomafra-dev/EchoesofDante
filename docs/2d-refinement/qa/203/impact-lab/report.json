@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "base": "http://localhost:5195",
+  "fixture": "Explicit isolated lab of three passive 500HP targets, 100 bond. Native Q; no boss wins/campaign prerequisites.",
+  "cases": [
+    {
+      "pet": "bulwark",
+      "damages": [
+        70,
+        70,
+        70
+      ],
+      "guard": {
+        "remaining": 4.8451699999999995,
+        "reduction": 0.44999999999999996
+      }
+    },
+    {
+      "pet": "frostling",
+      "damages": [
+        98,
+        98,
+        98
+      ],
+      "guard": {
+        "remaining": 0,
+        "reduction": 0
+      }
+    }
+  ],
+  "errors": []
+}

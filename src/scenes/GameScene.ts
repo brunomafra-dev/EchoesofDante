@@ -355,10 +355,9 @@ export class GameScene extends Phaser.Scene {
     const actorSex=characterSex(actorClass,this.glacierPlaytest?this.glacierPlaytest.sex:this.qualityReference&&!this.forestProof?undefined:characterProfiles.active.sex);
     const actorPreset=visualPreset(actorClass,this.glacierPlaytest?this.glacierPlaytest.visualPreset:this.qualityReference&&!this.forestProof?undefined:characterProfiles.active.visualPreset);
     const cast=[{classId:actorClass,sex:actorSex,visualPreset:actorPreset},...coopSession.members.map(m=>({classId:m.profile.classId,sex:characterSex(m.profile.classId,m.profile.sex),visualPreset:m.profile.visualPreset}))];
-    // Keep the original co-op roster available across travel, but only download
-    // cross-profession wardrobes actually used by this team.
-    const originals=(['warrior','hunter','astral','xenobinder']as const).flatMap(classId=>(['male','female']as const).map(sex=>({classId,sex})));
-    preloadCompleteActors(this,!this.glacierPlaytest&&characterProfiles.active.campaign?.mode==='coop'?[...originals,...cast]:cast);
+    // Roster additions after this preload are loaded by PartyExpedition before
+    // constructing their actors. Do not decode unused original wardrobes.
+    preloadCompleteActors(this,cast);
     for(const key of ['warrior-starter-weapon','warrior-pilot-weapon','warrior-saber-painted'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/visual/characters/${key}.png`);
     for(const key of ['cinder-ground','obsidian-ground'])if(!this.textures.exists(key))this.load.image(key,`${import.meta.env.BASE_URL}assets/visual/environment/${key}.webp`);
     for(const s of Object.values(VOLCANIC_CREATURES))if(!this.textures.exists(s.texture))preloadCreatureSheet(this,s.texture,`${import.meta.env.BASE_URL}assets/visual/characters/${s.texture}.png`,256);
@@ -571,10 +570,10 @@ export class GameScene extends Phaser.Scene {
       this.qualityReference !== 'baseline' && !this.originalWarrior, id => this.progression.upgradeRank(id), this.classId, characterSex(this.classId,this.glacierPlaytest?this.glacierPlaytest.sex:this.qualityReference&&!this.forestProof?undefined:characterProfiles.active.sex),visualPreset(this.classId,this.glacierPlaytest?this.glacierPlaytest.visualPreset:this.qualityReference&&!this.forestProof?undefined:characterProfiles.active.visualPreset));
     if (this.classId === 'hunter') {
       this.hunter = new HunterCombat(this, id => this.progression.upgradeRank(id),aim=>this.hunterArt?.muzzle(aim)??completeMuzzle('hunter',aim,this.player.sex));
-      this.hunterArt = new CompleteActorArt(this, this.player.view, entry.x, entry.y,this.player.sex,'hunter');
+      this.hunterArt = new CompleteActorArt(this, this.player.view, entry.x, entry.y,this.player.sex,'hunter',undefined,this.player.visualPreset);
     }
-    if(this.classId==='astral'){this.astral=new AstralCombat(this,id=>this.progression.upgradeRank(id));this.astralArt=new CompleteActorArt(this,this.player.view,entry.x,entry.y,this.player.sex,'astral');this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.astral?.destroy());}
-    if(this.classId==='xenobinder'){this.xeno=new XenobinderCombat(this,id=>this.progression.upgradeRank(id),entry);this.xenoArt=new CompleteActorArt(this,this.player.view,entry.x,entry.y,this.player.sex,'xenobinder',()=>this.progression.upgradeRank('chargeWidth'));const combat=this.xeno;this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>combat.destroy());}
+    if(this.classId==='astral'){this.astral=new AstralCombat(this,id=>this.progression.upgradeRank(id));this.astralArt=new CompleteActorArt(this,this.player.view,entry.x,entry.y,this.player.sex,'astral',undefined,this.player.visualPreset);this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.astral?.destroy());}
+    if(this.classId==='xenobinder'){this.xeno=new XenobinderCombat(this,id=>this.progression.upgradeRank(id),entry);this.xenoArt=new CompleteActorArt(this,this.player.view,entry.x,entry.y,this.player.sex,'xenobinder',()=>this.progression.upgradeRank('chargeWidth'),this.player.visualPreset);const combat=this.xeno;this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>combat.destroy());}
     this.updateEquipmentAppearance();
     const presentation=this.glacierPlaytest??characterProfiles.active;
     this.player.setCharacterAppearance(presentation.appearance);this.hunterArt?.setAppearance(presentation.appearance);this.astralArt?.setAppearance(presentation.appearance);this.xenoArt?.setAppearance(presentation.appearance);
@@ -2367,7 +2366,7 @@ export class GameScene extends Phaser.Scene {
 
   // Explicit isolated post-Vesper preview. No Titan victory or arena shortcut.
   seedEmbersRoutePlaytest(area:'cinder'|'obsidian'|'caldera'):boolean{
-    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||(!new URLSearchParams(location.search).has('embers')&&!['199','200','201'].includes(new URLSearchParams(location.search).get('refinement')??''))||coopSession.role!=='offline'||this.transitioning||this.inputModalOpen)return false;
+    if(location.pathname.split('/').pop()!=='campaign-playtest.html'||(!new URLSearchParams(location.search).has('embers')&&!['199','200','201','202','203'].includes(new URLSearchParams(location.search).get('refinement')??''))||coopSession.role!=='offline'||this.transitioning||this.inputModalOpen)return false;
     for(const flag of JOURNEY_FLAGS)this[flag]=false;
     for(const flag of ['cavernDepthSeen','deepPassageOpen','deepAreaSeen','deepCavernEntered','deepEndSeen','deeperEntered','exteriorEntered','fragmentSeen','approachSeen','firstEchoSeen','wardenReached','wardenGateOpen','wardenDefeated','wardenEndingSeen','valleyVisited','valleyLandmarkSeen','valleyEndSeen','valleyCheckpointReached','valleyFrontierReached','valleyFrontierSignalSeen','valleyFrontierEndSeen','aridVisited','aridSignalSeen','aridFrontierEntered','aridFrontierReached','dunesVisited','dunesRuinsSeen','dunesDepthSeen','soterradoReached','soterradoDefeated','soterradoClueSeen','frostVisited','frostSignalSeen','frostEndSeen','icecaveVisited','icecaveSignalSeen','icenestVisited','vesperReached','vesperDefeated','vesperClueSeen','cinderVisited'] as const)this[flag]=true;
     const index=['cinder','obsidian','caldera'].indexOf(area);
@@ -2529,7 +2528,7 @@ export class GameScene extends Phaser.Scene {
   inspectCompanionImpactReview(){return this.impactReviewTargets.map(t=>({x:t.position.x,y:t.position.y,hp:t.health.current,maxHp:t.health.max,dead:t.isDead}));}
   prepareCompanionImpactReview():boolean{
     const params=new URLSearchParams(location.search);
-    if(!location.pathname.endsWith('/character-playtest.html')||!['200','201'].includes(params.get('refinement')??'')||params.get('targets')!=='1'||this.classId!=='xenobinder'||!this.player?.view.active)return false;
+    if(!location.pathname.endsWith('/character-playtest.html')||!['200','201','202','203'].includes(params.get('refinement')??'')||params.get('targets')!=='1'||this.classId!=='xenobinder'&&params.get('refinement')!=='203'||!this.player?.view.active)return false;
     for(const target of this.impactReviewTargets)if(!target.isDead)target.die();
     this.enemies=this.enemies.filter(e=>!this.impactReviewTargets.includes(e as HollowCrawler));this.impactReviewTargets=[];
     const owner=this.player.position;
@@ -2542,6 +2541,7 @@ export class GameScene extends Phaser.Scene {
       this.impactReviewTargets.push(target);this.enemies.push(target);
     }
     if(this.xeno){this.xeno.clear();this.xeno.bond=100;}
+    if(this.astral){this.astral.clear();this.astral.energy=ASTRAL.energyMax;}
     return true;
   }
   seedMissionPlaytest(id:MissionId,reviewStop?:string,reviewNpc?:string):boolean{

@@ -1,0 +1,849 @@
+{
+  "passed": true,
+  "base": "http://localhost:5195",
+  "fixture": "Native inputs in isolated character lab. Gear/appearance URLs are display fixtures only. Real campaign untouched.",
+  "cases": [
+    {
+      "cls": "warrior",
+      "preset": "hunter",
+      "sex": "male",
+      "kit": "clothes",
+      "head": "original",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          20,
+          48,
+          49,
+          50,
+          42,
+          43,
+          47,
+          44,
+          51
+        ],
+        "left": [
+          20,
+          64,
+          65,
+          66,
+          67,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "warrior",
+      "preset": "hunter",
+      "sex": "male",
+      "kit": "basic",
+      "head": "original",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          20,
+          48,
+          49,
+          50,
+          42,
+          43,
+          47,
+          44,
+          51
+        ],
+        "left": [
+          67,
+          64,
+          65,
+          66,
+          20,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "warrior",
+      "preset": "hunter",
+      "sex": "male",
+      "kit": "reinforced",
+      "head": "original",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          20,
+          48,
+          49,
+          50,
+          42,
+          43,
+          47,
+          44,
+          51
+        ],
+        "left": [
+          20,
+          64,
+          65,
+          66,
+          67
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "warrior",
+      "preset": "hunter",
+      "sex": "female",
+      "kit": "clothes",
+      "head": "original",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          20,
+          48,
+          49,
+          50,
+          42,
+          43,
+          47,
+          44,
+          51
+        ],
+        "left": [
+          65,
+          66,
+          67,
+          64,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "warrior",
+      "preset": "hunter",
+      "sex": "female",
+      "kit": "basic",
+      "head": "original",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          48,
+          49,
+          50,
+          42,
+          43,
+          47,
+          44,
+          51
+        ],
+        "left": [
+          20,
+          65,
+          66,
+          67,
+          64,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "warrior",
+      "preset": "hunter",
+      "sex": "female",
+      "kit": "reinforced",
+      "head": "original",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          20,
+          48,
+          49,
+          50,
+          42,
+          43,
+          47,
+          44,
+          51
+        ],
+        "left": [
+          20,
+          67,
+          64,
+          65,
+          66,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "hunter",
+      "preset": "hunter",
+      "sex": "male",
+      "kit": "clothes",
+      "head": "original",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          9,
+          40,
+          10,
+          2,
+          6,
+          38,
+          42,
+          20
+        ],
+        "left": [
+          20,
+          25,
+          56,
+          26,
+          58,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "hunter",
+      "preset": "hunter",
+      "sex": "male",
+      "kit": "basic",
+      "head": "original",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          20,
+          9,
+          40,
+          10,
+          2,
+          6,
+          38,
+          42
+        ],
+        "left": [
+          20,
+          25,
+          56,
+          26,
+          58,
+          8
+        ],
+        "basic": [
+          11,
+          8
+        ],
+        "charge": [
+          11
+        ]
+      }
+    },
+    {
+      "cls": "hunter",
+      "preset": "hunter",
+      "sex": "male",
+      "kit": "reinforced",
+      "head": "original",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          9,
+          40,
+          10,
+          2,
+          6,
+          38,
+          42,
+          20
+        ],
+        "left": [
+          20,
+          26,
+          58,
+          25,
+          56
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "hunter",
+      "preset": "hunter",
+      "sex": "female",
+      "kit": "clothes",
+      "head": "original",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          9,
+          40,
+          10,
+          2,
+          6,
+          38,
+          42
+        ],
+        "left": [
+          20,
+          58,
+          25,
+          56,
+          26,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "hunter",
+      "preset": "hunter",
+      "sex": "female",
+      "kit": "basic",
+      "head": "original",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          20,
+          9,
+          40,
+          10,
+          2,
+          6,
+          38,
+          42
+        ],
+        "left": [
+          20,
+          25,
+          56,
+          26,
+          58
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "hunter",
+      "preset": "hunter",
+      "sex": "female",
+      "kit": "reinforced",
+      "head": "original",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          20,
+          9,
+          40,
+          10,
+          2,
+          6,
+          38,
+          42
+        ],
+        "left": [
+          25,
+          56,
+          26,
+          58,
+          20,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          11
+        ]
+      }
+    },
+    {
+      "cls": "astral",
+      "preset": "hunter",
+      "sex": "male",
+      "kit": "clothes",
+      "head": "original",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36,
+          43
+        ],
+        "left": [
+          59,
+          56,
+          57,
+          58
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          11
+        ]
+      }
+    },
+    {
+      "cls": "astral",
+      "preset": "hunter",
+      "sex": "male",
+      "kit": "basic",
+      "head": "original",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36
+        ],
+        "left": [
+          59,
+          56,
+          57,
+          58,
+          8
+        ],
+        "basic": [
+          11,
+          8
+        ],
+        "charge": [
+          11
+        ]
+      }
+    },
+    {
+      "cls": "astral",
+      "preset": "hunter",
+      "sex": "male",
+      "kit": "reinforced",
+      "head": "original",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36,
+          43
+        ],
+        "left": [
+          59,
+          56,
+          57,
+          58
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          11
+        ]
+      }
+    },
+    {
+      "cls": "astral",
+      "preset": "hunter",
+      "sex": "female",
+      "kit": "clothes",
+      "head": "original",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36,
+          20
+        ],
+        "left": [
+          59,
+          56,
+          57,
+          58
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          11
+        ]
+      }
+    },
+    {
+      "cls": "astral",
+      "preset": "hunter",
+      "sex": "female",
+      "kit": "basic",
+      "head": "original",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36,
+          43
+        ],
+        "left": [
+          20,
+          59,
+          56,
+          57,
+          58
+        ],
+        "basic": [
+          11,
+          8
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "astral",
+      "preset": "hunter",
+      "sex": "female",
+      "kit": "reinforced",
+      "head": "original",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36
+        ],
+        "left": [
+          59,
+          56,
+          57,
+          58
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          11
+        ]
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "preset": "hunter",
+      "sex": "male",
+      "kit": "clothes",
+      "head": "original",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          35,
+          39
+        ],
+        "left": [
+          58,
+          59,
+          56,
+          57,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          11
+        ]
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "preset": "hunter",
+      "sex": "male",
+      "kit": "basic",
+      "head": "original",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36,
+          43
+        ],
+        "left": [
+          20,
+          56,
+          57,
+          58,
+          59,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "preset": "hunter",
+      "sex": "male",
+      "kit": "reinforced",
+      "head": "original",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36
+        ],
+        "left": [
+          59,
+          56,
+          57,
+          58
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          11
+        ]
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "preset": "hunter",
+      "sex": "female",
+      "kit": "clothes",
+      "head": "original",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36
+        ],
+        "left": [
+          20,
+          59,
+          56,
+          57,
+          58,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "preset": "hunter",
+      "sex": "female",
+      "kit": "basic",
+      "head": "original",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36
+        ],
+        "left": [
+          58,
+          59,
+          56,
+          57,
+          8
+        ],
+        "basic": [
+          11,
+          8
+        ],
+        "charge": [
+          11
+        ]
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "preset": "hunter",
+      "sex": "female",
+      "kit": "reinforced",
+      "head": "original",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          35,
+          39
+        ],
+        "left": [
+          59,
+          56,
+          57,
+          58,
+          20
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    }
+  ],
+  "errors": []
+}

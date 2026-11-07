@@ -41,6 +41,7 @@ export class CoopSession {
  private needsBonds=false;
  private needsCuts=false;
  private needsIdentities=false;
+ private needsScouts=false;
  outpostsAvailable=false;
  signalsAvailable=false;
  circuitsAvailable=false;
@@ -135,6 +136,7 @@ export class CoopSession {
   const inventory=validEquipment(this.rewards.load()?.equipment);
   profile={...profile,characterId:hero.id,visualPreset:visualPreset(hero.classId,hero.visualPreset),appearance:{skin:'original',hair:'original',head:'original'},companion:characterProfiles.canChooseCompanion(hero.id,hero.companion??'symbiont')?hero.companion:'symbiont',build:this.rewards.load()?.progression,potions:this.rewards.load()?.economy?.potions??0,equipment:inventory.slots,bagFree:24-(inventory.items!.length-Object.keys(inventory.equipped!).length)};
   this.needsIdentities=profile.visualPreset!==profile.classId;
+  this.needsScouts=profile.visualPreset==='hunter'&&(profile.classId==='astral'||profile.classId==='xenobinder');
   this.needsBonds=profile.companion==='bulwark'||profile.companion==='frostling';
   this.needsCuts=profile.appearance?.head==='curly'||profile.appearance?.head==='tied';
   this.needsPresentation=Object.values(profile.appearance??{}).some(v=>v!=='original')||profile.companion!=='symbiont';
@@ -143,11 +145,12 @@ export class CoopSession {
  private open(request:object,retry:boolean,resolve:()=>void=()=>{},reject:(reason:Error)=>void=()=>{}):void {
   const ws=new WebSocket(this.url);this.socket=ws;let joined=false;
   this.timeout=setTimeout(()=>{if(this.socket===ws&&!joined){ws.close();if(!retry){this.fail('O cooperativo demorou para responder. Tente novamente em alguns segundos.');reject(new Error(this.message));}}},retry?5000:60000);
-  ws.onopen=()=>{if(this.socket===ws)ws.send(JSON.stringify({...request,identities:1}));};
+  ws.onopen=()=>{if(this.socket===ws)ws.send(JSON.stringify({...request,identities:1,scouts:1}));};
   ws.onmessage=event=>{
    if(this.socket!==ws)return;
    let m;try{m=JSON.parse(event.data);}catch{return;}
    if(m.type==='joined'&&(m.role==='host'||m.role==='guest')){
+    if(this.needsScouts&&m.scouts!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda o Batedor nas quatro profissões. Seu personagem e progresso estão preservados.');reject(new Error(this.message));return;}
     if(this.needsIdentities&&m.identities!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda os personagens com profissão independente. Seu personagem e progresso estão preservados.');reject(new Error(this.message));return;}
     const needsOutpost=new URLSearchParams(location.search).get('permanence')==='outpost'||new URLSearchParams(location.search).has('outpost-support')||this.rewards.load()?.missions?.accepted.includes('settle-outpost');
     const needsSignal=new URLSearchParams(location.search).get('permanence')==='signal'||this.rewards.load()?.missions?.accepted.includes('settle-signal');
@@ -194,7 +197,7 @@ export class CoopSession {
    }else if(m.type==='chat'&&joined){this.receiveChat(m.message);
    }else if(m.type==='chat-error'&&joined){this.failChat(String(m.message));
    }else if(m.type==='error'){
-    this.message=String(m.message);
+    this.message=this.needsScouts&&!joined&&m.message==='Personagem inválido.'?'O servidor cooperativo aguarda o Batedor nas quatro profissões. Seu personagem e progresso estão preservados.':String(m.message);
     if(!joined){clearTimeout(this.timeout);this.fail(this.message);reject(new Error(this.message));}
     else{this.travelling=false;this.changed();}
    }else if(m.type==='pause'&&this.role==='guest'){

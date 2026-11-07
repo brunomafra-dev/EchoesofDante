@@ -1,0 +1,203 @@
+{
+  "passed": true,
+  "base": "http://localhost:5195",
+  "cases": [
+    {
+      "pair": [
+        "warrior",
+        "astral"
+      ],
+      "samples": [
+        {
+          "profession": "warrior",
+          "actor": {
+            "identity": "warrior",
+            "visualPreset": "hunter",
+            "sex": "male",
+            "frame": 20,
+            "bakes": 1,
+            "contact": {
+              "x": 0,
+              "y": 39
+            },
+            "width": 128,
+            "height": 128
+          },
+          "peers": [
+            {
+              "classId": "astral",
+              "visualPreset": "hunter",
+              "sex": "female",
+              "guard": {
+                "remaining": 0,
+                "reduction": 0
+              },
+              "appearance": {
+                "skin": "original",
+                "hair": "original",
+                "head": "original"
+              }
+            }
+          ],
+          "sources": {
+            "inputs": 6,
+            "decodedBytes": 60162048,
+            "storage": "CPU baking inputs; no source texture in the Phaser renderer"
+          }
+        },
+        {
+          "profession": "astral",
+          "actor": {
+            "identity": "astral",
+            "visualPreset": "hunter",
+            "sex": "female",
+            "frame": 20,
+            "bakes": 1,
+            "contact": {
+              "x": -11.333333333333334,
+              "y": 38.333333333333336
+            },
+            "width": 128,
+            "height": 128
+          },
+          "peers": [
+            {
+              "classId": "warrior",
+              "visualPreset": "hunter",
+              "sex": "male",
+              "guard": {
+                "remaining": 0,
+                "reduction": 0
+              },
+              "appearance": {
+                "skin": "original",
+                "hair": "original",
+                "head": "original"
+              }
+            }
+          ],
+          "sources": {
+            "inputs": 6,
+            "decodedBytes": 60162048,
+            "storage": "CPU baking inputs; no source texture in the Phaser renderer"
+          }
+        }
+      ]
+    },
+    {
+      "pair": [
+        "xenobinder",
+        "hunter"
+      ],
+      "samples": [
+        {
+          "profession": "xenobinder",
+          "actor": {
+            "identity": "xenobinder",
+            "visualPreset": "hunter",
+            "sex": "male",
+            "frame": 20,
+            "bakes": 1,
+            "contact": {
+              "x": -14.666666666666666,
+              "y": 38.333333333333336
+            },
+            "width": 128,
+            "height": 128
+          },
+          "peers": [
+            {
+              "classId": "hunter",
+              "visualPreset": "hunter",
+              "sex": "female",
+              "guard": {
+                "remaining": 0,
+                "reduction": 0
+              },
+              "appearance": {
+                "skin": "original",
+                "hair": "original",
+                "head": "original"
+              }
+            }
+          ],
+          "sources": {
+            "inputs": 6,
+            "decodedBytes": 56623104,
+            "storage": "CPU baking inputs; no source texture in the Phaser renderer"
+          }
+        },
+        {
+          "profession": "hunter",
+          "actor": {
+            "identity": "hunter",
+            "visualPreset": "hunter",
+            "sex": "female",
+            "frame": 20,
+            "bakes": 1,
+            "contact": {
+              "x": -19.666666666666668,
+              "y": 37
+            },
+            "width": 128,
+            "height": 128
+          },
+          "peers": [
+            {
+              "classId": "xenobinder",
+              "visualPreset": "hunter",
+              "sex": "male",
+              "guard": {
+                "remaining": 0,
+                "reduction": 0
+              },
+              "appearance": {
+                "skin": "original",
+                "hair": "original",
+                "head": "original"
+              },
+              "companion": {
+                "species": "symbiont",
+                "texture": "dante-symbiont-motion",
+                "frame": 0
+              }
+            }
+          ],
+          "sources": {
+            "inputs": 6,
+            "decodedBytes": 56623104,
+            "storage": "CPU baking inputs; no source texture in the Phaser renderer"
+          }
+        }
+      ]
+    }
+  ],
+  "relay": [
+    {
+      "protocol": 16,
+      "identities": 1,
+      "scouts": 1,
+      "role": "host"
+    },
+    {
+      "protocol": 16,
+      "identities": 1,
+      "scouts": 1,
+      "role": "guest"
+    },
+    {
+      "protocol": 16,
+      "identities": 1,
+      "scouts": 1,
+      "role": "host"
+    },
+    {
+      "protocol": 16,
+      "identities": 1,
+      "scouts": 1,
+      "role": "guest"
+    }
+  ],
+  "errors": [],
+  "fixture": "Two separate automated Chrome instances per team. Native creation, invitation and gameplay. Solo reload covered separately; token compatibility by relay suite. No boss fixture or canonical saves."
+}

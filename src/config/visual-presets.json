@@ -1,6 +1,6 @@
 {
   "warrior": ["warrior", "hunter"],
   "hunter": ["hunter"],
-  "astral": ["astral"],
-  "xenobinder": ["xenobinder"]
+  "astral": ["astral", "hunter"],
+  "xenobinder": ["xenobinder", "hunter"]
 }

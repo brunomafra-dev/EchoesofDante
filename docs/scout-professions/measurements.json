@@ -1,0 +1,8117 @@
+{
+  "mode": "built-in imagegen; offline whole-figure registration",
+  "assets": [
+    {
+      "profession": "astral",
+      "sex": "female",
+      "style": "none",
+      "source": "docs/scout-professions/source/hunter-astral-female-none.png",
+      "sourceSha256": "3a75e17e211554ea435a6bc3ad964fc4af5d6925a5b7042f6d3298b2d2d9535f",
+      "file": "public/assets/visual/complete-actors/cross/hunter-astral-female-none-v1.png",
+      "sha256": "1a1ad32e2e75a9d6a8ec2c408b86485e13568bb2307a2c5fbb9a49cc70364205",
+      "bytes": 1707616,
+      "atlas": [
+        1536,
+        1536
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "emitterAnchors": [
+        [
+          74.15,
+          79.79
+        ],
+        [
+          124.91,
+          79.37
+        ],
+        [
+          145.12,
+          70.24
+        ],
+        [
+          143.21,
+          61.64
+        ],
+        [
+          143.89,
+          56.81
+        ],
+        [
+          51.45,
+          59.74
+        ],
+        [
+          49.2,
+          67.86
+        ],
+        [
+          38.06,
+          85.24
+        ]
+      ],
+      "measurements": [
+        {
+          "sourceRow": 0,
+          "direction": 0,
+          "bodyHeight": 164.0,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            17,
+            139,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            17,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 2,
+          "bodyHeight": 164.0,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            50,
+            18,
+            142,
+            185
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 3,
+          "bodyHeight": 164.0,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            18,
+            137,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            17,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            51,
+            18,
+            148,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 6,
+          "bodyHeight": 164.0,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            60,
+            18,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            18,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 0,
+          "bodyHeight": 167.04,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            57,
+            15,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 1,
+          "bodyHeight": 165.01,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            16,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 2,
+          "bodyHeight": 160.05,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            22,
+            145,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 3,
+          "bodyHeight": 162.98,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            30,
+            19,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 4,
+          "bodyHeight": 168.1,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            14,
+            150,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 5,
+          "bodyHeight": 166.04,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            16,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 6,
+          "bodyHeight": 164.0,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            59,
+            18,
+            153,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 7,
+          "bodyHeight": 162.99,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            54,
+            19,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 0,
+          "bodyHeight": 162.99,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            53,
+            19,
+            138,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            18,
+            133,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 2,
+          "bodyHeight": 156.1,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            57,
+            26,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 3,
+          "bodyHeight": 161.96,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            19,
+            141,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 4,
+          "bodyHeight": 166.05,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            57,
+            16,
+            148,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 5,
+          "bodyHeight": 162.98,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            51,
+            18,
+            139,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 6,
+          "bodyHeight": 158.94,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            23,
+            140,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 7,
+          "bodyHeight": 160.98,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            50,
+            21,
+            137,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 0,
+          "bodyHeight": 166.02,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            58,
+            15,
+            140,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            57,
+            17,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 2,
+          "bodyHeight": 159.06,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            52,
+            22,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 3,
+          "bodyHeight": 162.98,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            19,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 4,
+          "bodyHeight": 167.07,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            55,
+            14,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 5,
+          "bodyHeight": 161.96,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            19,
+            147,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 6,
+          "bodyHeight": 162.99,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            18,
+            151,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 7,
+          "bodyHeight": 162.99,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            18,
+            136,
+            185
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 0,
+          "bodyHeight": 165.01,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            16,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 1,
+          "bodyHeight": 167.04,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            57,
+            15,
+            135,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 2,
+          "bodyHeight": 160.05,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            59,
+            21,
+            139,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 3,
+          "bodyHeight": 162.98,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            17,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 4,
+          "bodyHeight": 168.1,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            55,
+            14,
+            147,
+            185
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            17,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 6,
+          "bodyHeight": 162.99,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            53,
+            18,
+            137,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 7,
+          "bodyHeight": 162.99,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            51,
+            19,
+            137,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 0,
+          "bodyHeight": 162.99,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            19,
+            151,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 1,
+          "bodyHeight": 158.94,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            23,
+            155,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 2,
+          "bodyHeight": 160.05,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            21,
+            170,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 3,
+          "bodyHeight": 159.93,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            28,
+            21,
+            162,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 4,
+          "bodyHeight": 166.05,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            28,
+            16,
+            164,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 5,
+          "bodyHeight": 165.02,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            29,
+            17,
+            163,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 6,
+          "bodyHeight": 159.95,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            27,
+            21,
+            156,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 7,
+          "bodyHeight": 159.98,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            16,
+            22,
+            162,
+            185
+          ]
+        }
+      ]
+    },
+    {
+      "profession": "astral",
+      "sex": "female",
+      "style": "basic",
+      "source": "docs/scout-professions/source/hunter-astral-female-basic.png",
+      "sourceSha256": "aec328ee8c1f1f51c0ff4b44160f836abee70750ff02b2b8a51c555f634b6d3f",
+      "file": "public/assets/visual/complete-actors/cross/hunter-astral-female-basic-v1.png",
+      "sha256": "83e32a3a3df179921c36df6f207856d6ddaf53d6b748738c3cf45261d968d8a1",
+      "bytes": 1697838,
+      "atlas": [
+        1536,
+        1536
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "emitterAnchors": [
+        [
+          74.72,
+          80.79
+        ],
+        [
+          127.27,
+          77.71
+        ],
+        [
+          142.11,
+          69.26
+        ],
+        [
+          143.62,
+          61.16
+        ],
+        [
+          145.55,
+          58.85
+        ],
+        [
+          53.04,
+          62.96
+        ],
+        [
+          54.1,
+          68.86
+        ],
+        [
+          44.93,
+          86.86
+        ]
+      ],
+      "measurements": [
+        {
+          "sourceRow": 0,
+          "direction": 0,
+          "bodyHeight": 164.0,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            18,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            43,
+            17,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 2,
+          "bodyHeight": 164.0,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            18,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 3,
+          "bodyHeight": 164.0,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            17,
+            139,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            17,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            51,
+            17,
+            151,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 6,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            60,
+            18,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            17,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 0,
+          "bodyHeight": 166.01,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            54,
+            16,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            18,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 2,
+          "bodyHeight": 160.05,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            36,
+            22,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 3,
+          "bodyHeight": 162.99,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            30,
+            19,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 4,
+          "bodyHeight": 165.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            17,
+            149,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 5,
+          "bodyHeight": 162.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            58,
+            20,
+            149,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 6,
+          "bodyHeight": 162.01,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            58,
+            20,
+            156,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 7,
+          "bodyHeight": 165.01,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            52,
+            17,
+            146,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 0,
+          "bodyHeight": 161.99,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            51,
+            20,
+            139,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 1,
+          "bodyHeight": 162.99,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            54,
+            18,
+            135,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 2,
+          "bodyHeight": 156.1,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            55,
+            25,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 3,
+          "bodyHeight": 157.96,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            23,
+            143,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 4,
+          "bodyHeight": 162.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            57,
+            19,
+            148,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 5,
+          "bodyHeight": 160.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            50,
+            21,
+            139,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 6,
+          "bodyHeight": 158.04,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            55,
+            24,
+            141,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 7,
+          "bodyHeight": 160.98,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            20,
+            141,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 0,
+          "bodyHeight": 166.01,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            52,
+            15,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 1,
+          "bodyHeight": 165.01,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            51,
+            16,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 2,
+          "bodyHeight": 160.05,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            47,
+            21,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 3,
+          "bodyHeight": 160.98,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            20,
+            145,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 4,
+          "bodyHeight": 165.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            53,
+            17,
+            145,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 5,
+          "bodyHeight": 161.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            50,
+            20,
+            151,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 6,
+          "bodyHeight": 162.01,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            57,
+            19,
+            150,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 7,
+          "bodyHeight": 166.01,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            15,
+            137,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 0,
+          "bodyHeight": 164.0,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            54,
+            18,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 1,
+          "bodyHeight": 166.02,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            57,
+            15,
+            136,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 2,
+          "bodyHeight": 159.06,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            22,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 3,
+          "bodyHeight": 161.99,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            50,
+            20,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 4,
+          "bodyHeight": 167.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            55,
+            14,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 5,
+          "bodyHeight": 161.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            21,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 6,
+          "bodyHeight": 162.01,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            57,
+            20,
+            141,
+            185
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 7,
+          "bodyHeight": 162.99,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            50,
+            18,
+            140,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 0,
+          "bodyHeight": 159.98,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            22,
+            153,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 1,
+          "bodyHeight": 157.93,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            24,
+            158,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 2,
+          "bodyHeight": 160.05,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            22,
+            164,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 3,
+          "bodyHeight": 158.97,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            29,
+            23,
+            162,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 4,
+          "bodyHeight": 163.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            31,
+            19,
+            163,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 5,
+          "bodyHeight": 161.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            32,
+            20,
+            163,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 6,
+          "bodyHeight": 159.03,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            33,
+            23,
+            158,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 7,
+          "bodyHeight": 159.98,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            25,
+            22,
+            165,
+            184
+          ]
+        }
+      ]
+    },
+    {
+      "profession": "astral",
+      "sex": "female",
+      "style": "reinforced",
+      "source": "docs/scout-professions/source/hunter-astral-female-reinforced.png",
+      "sourceSha256": "3843a00e03411ec01f0360bb1ee98ef4466f1d90188f865df6d6c4cd54de7ffa",
+      "file": "public/assets/visual/complete-actors/cross/hunter-astral-female-reinforced-v1.png",
+      "sha256": "ae9bb14cb3db94faa5e83aa15af6f09d0802191f3ef73f0118e013e0a19dcdcb",
+      "bytes": 1897499,
+      "atlas": [
+        1536,
+        1536
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "emitterAnchors": [
+        [
+          74.39,
+          83.15
+        ],
+        [
+          131.62,
+          78.26
+        ],
+        [
+          141.83,
+          73.43
+        ],
+        [
+          141.93,
+          65.23
+        ],
+        [
+          145.4,
+          65.92
+        ],
+        [
+          53.12,
+          64.51
+        ],
+        [
+          54.69,
+          70.68
+        ],
+        [
+          46.33,
+          87.36
+        ]
+      ],
+      "measurements": [
+        {
+          "sourceRow": 0,
+          "direction": 0,
+          "bodyHeight": 164.0,
+          "scale": 0.9761904761904762,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            18,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            47,
+            18,
+            142,
+            185
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 2,
+          "bodyHeight": 164.0,
+          "scale": 0.9761904761904762,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            18,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 3,
+          "bodyHeight": 164.0,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            40,
+            18,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 0.9704142011834319,
+          "floor": 183,
+          "alphaBounds": [
+            47,
+            17,
+            144,
+            183
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            53,
+            17,
+            153,
+            183
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 6,
+          "bodyHeight": 164.0,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            57,
+            17,
+            149,
+            183
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            47,
+            18,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 0,
+          "bodyHeight": 163.02,
+          "scale": 0.9761904761904762,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            19,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 1,
+          "bodyHeight": 162.02,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            20,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 2,
+          "bodyHeight": 161.07,
+          "scale": 0.9761904761904762,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            21,
+            139,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 3,
+          "bodyHeight": 161.05,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            31,
+            21,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 4,
+          "bodyHeight": 163.03,
+          "scale": 0.9704142011834319,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            19,
+            145,
+            183
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 5,
+          "bodyHeight": 162.04,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            60,
+            20,
+            147,
+            183
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 6,
+          "bodyHeight": 163.01,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            60,
+            19,
+            159,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            52,
+            18,
+            145,
+            183
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 0,
+          "bodyHeight": 161.07,
+          "scale": 0.9761904761904762,
+          "floor": 183,
+          "alphaBounds": [
+            50,
+            21,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 1,
+          "bodyHeight": 161.04,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            50,
+            21,
+            132,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 2,
+          "bodyHeight": 156.19,
+          "scale": 0.9761904761904762,
+          "floor": 183,
+          "alphaBounds": [
+            52,
+            26,
+            136,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 3,
+          "bodyHeight": 157.13,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            25,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 4,
+          "bodyHeight": 159.15,
+          "scale": 0.9704142011834319,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            23,
+            144,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 5,
+          "bodyHeight": 159.09,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            51,
+            23,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 6,
+          "bodyHeight": 159.06,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            53,
+            23,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 7,
+          "bodyHeight": 160.07,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            47,
+            21,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 0,
+          "bodyHeight": 164.0,
+          "scale": 0.9761904761904762,
+          "floor": 183,
+          "alphaBounds": [
+            51,
+            18,
+            141,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            18,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 2,
+          "bodyHeight": 161.07,
+          "scale": 0.9761904761904762,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            21,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 3,
+          "bodyHeight": 160.07,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            21,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 4,
+          "bodyHeight": 163.03,
+          "scale": 0.9704142011834319,
+          "floor": 183,
+          "alphaBounds": [
+            51,
+            19,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 5,
+          "bodyHeight": 160.07,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            53,
+            21,
+            154,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 6,
+          "bodyHeight": 163.01,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            57,
+            18,
+            152,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 7,
+          "bodyHeight": 162.04,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            20,
+            139,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 0,
+          "bodyHeight": 162.05,
+          "scale": 0.9761904761904762,
+          "floor": 183,
+          "alphaBounds": [
+            52,
+            19,
+            139,
+            185
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 1,
+          "bodyHeight": 163.01,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            18,
+            139,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 2,
+          "bodyHeight": 160.1,
+          "scale": 0.9761904761904762,
+          "floor": 183,
+          "alphaBounds": [
+            53,
+            22,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 3,
+          "bodyHeight": 162.04,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            47,
+            20,
+            141,
+            183
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 0.9704142011834319,
+          "floor": 183,
+          "alphaBounds": [
+            54,
+            17,
+            148,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 5,
+          "bodyHeight": 163.02,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            50,
+            18,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 6,
+          "bodyHeight": 162.02,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            55,
+            19,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 7,
+          "bodyHeight": 163.02,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            19,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 0,
+          "bodyHeight": 157.17,
+          "scale": 0.9761904761904762,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            25,
+            152,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 1,
+          "bodyHeight": 156.1,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            25,
+            156,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 2,
+          "bodyHeight": 156.19,
+          "scale": 0.9761904761904762,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            25,
+            163,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 3,
+          "bodyHeight": 158.11,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            29,
+            23,
+            161,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 4,
+          "bodyHeight": 158.18,
+          "scale": 0.9704142011834319,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            24,
+            163,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 5,
+          "bodyHeight": 161.05,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            30,
+            21,
+            163,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 6,
+          "bodyHeight": 158.07,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            33,
+            24,
+            159,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 7,
+          "bodyHeight": 158.11,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            24,
+            24,
+            161,
+            184
+          ]
+        }
+      ]
+    },
+    {
+      "profession": "astral",
+      "sex": "male",
+      "style": "none",
+      "source": "docs/scout-professions/source/hunter-astral-male-none.png",
+      "sourceSha256": "5ca3702d55db67597c0d88779f5ee05d8a6cb95043ff03835bf1d8f5409a9ccf",
+      "file": "public/assets/visual/complete-actors/cross/hunter-astral-male-none-v1.png",
+      "sha256": "260e795cc9f9c1e52ac63077595fdf9ce73a3c380aab32454ba95a958c2e101b",
+      "bytes": 1781435,
+      "atlas": [
+        1536,
+        1536
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "emitterAnchors": [
+        [
+          71.57,
+          97.03
+        ],
+        [
+          133.16,
+          85.25
+        ],
+        [
+          142.39,
+          70.8
+        ],
+        [
+          153.78,
+          68.46
+        ],
+        [
+          151.03,
+          60.11
+        ],
+        [
+          33.82,
+          70.33
+        ],
+        [
+          47.23,
+          67.03
+        ],
+        [
+          42.36,
+          85.52
+        ]
+      ],
+      "measurements": [
+        {
+          "sourceRow": 0,
+          "direction": 0,
+          "bodyHeight": 164.0,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            17,
+            145,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            17,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 2,
+          "bodyHeight": 164.0,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            17,
+            132,
+            185
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 3,
+          "bodyHeight": 164.0,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            17,
+            137,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            17,
+            148,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            17,
+            147,
+            185
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 6,
+          "bodyHeight": 164.0,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            17,
+            142,
+            185
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            17,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 0,
+          "bodyHeight": 162.96,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            33,
+            18,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 1,
+          "bodyHeight": 160.87,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            24,
+            20,
+            130,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 2,
+          "bodyHeight": 162.96,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            26,
+            18,
+            133,
+            185
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 3,
+          "bodyHeight": 157.65,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            24,
+            142,
+            185
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 4,
+          "bodyHeight": 165.04,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            16,
+            156,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 5,
+          "bodyHeight": 165.05,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            16,
+            152,
+            185
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 6,
+          "bodyHeight": 162.94,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            59,
+            19,
+            162,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            17,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 0,
+          "bodyHeight": 161.91,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            19,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 1,
+          "bodyHeight": 161.91,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            20,
+            136,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 2,
+          "bodyHeight": 162.96,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            47,
+            19,
+            123,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 3,
+          "bodyHeight": 156.59,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            24,
+            138,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 4,
+          "bodyHeight": 165.04,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            17,
+            149,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 5,
+          "bodyHeight": 159.79,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            21,
+            149,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 6,
+          "bodyHeight": 158.71,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            54,
+            23,
+            144,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 7,
+          "bodyHeight": 159.77,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            21,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 0,
+          "bodyHeight": 160.87,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            20,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 1,
+          "bodyHeight": 160.87,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            21,
+            139,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 2,
+          "bodyHeight": 159.82,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            21,
+            130,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 3,
+          "bodyHeight": 159.77,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            22,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 4,
+          "bodyHeight": 162.96,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            18,
+            156,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 5,
+          "bodyHeight": 161.9,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            20,
+            151,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 6,
+          "bodyHeight": 159.77,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            55,
+            21,
+            148,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 7,
+          "bodyHeight": 161.88,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            19,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 0,
+          "bodyHeight": 160.87,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            40,
+            21,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 1,
+          "bodyHeight": 162.96,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            19,
+            137,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 2,
+          "bodyHeight": 161.91,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            20,
+            124,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 3,
+          "bodyHeight": 151.3,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            31,
+            151,
+            185
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            17,
+            152,
+            185
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 5,
+          "bodyHeight": 156.64,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            25,
+            153,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 6,
+          "bodyHeight": 158.71,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            52,
+            22,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 7,
+          "bodyHeight": 162.94,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            19,
+            148,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 0,
+          "bodyHeight": 155.64,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            25,
+            152,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 1,
+          "bodyHeight": 150.42,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            23,
+            30,
+            156,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 2,
+          "bodyHeight": 155.64,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            33,
+            26,
+            168,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 3,
+          "bodyHeight": 158.71,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            29,
+            23,
+            178,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 4,
+          "bodyHeight": 156.69,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            26,
+            24,
+            167,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 5,
+          "bodyHeight": 156.64,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            13,
+            25,
+            169,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 6,
+          "bodyHeight": 149.19,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            23,
+            32,
+            176,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 7,
+          "bodyHeight": 157.65,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            20,
+            23,
+            154,
+            184
+          ]
+        }
+      ]
+    },
+    {
+      "profession": "astral",
+      "sex": "male",
+      "style": "basic",
+      "source": "docs/scout-professions/source/hunter-astral-male-basic.png",
+      "sourceSha256": "bf62dec0baa48c8fa976d436c1b497c5e07fecc8935393b478f4ba23ebb62257",
+      "file": "public/assets/visual/complete-actors/cross/hunter-astral-male-basic-v1.png",
+      "sha256": "0fa9749a6afa7ba9128c02bf2e2cb7f5903fa8f379767b0453fd98ae4694034d",
+      "bytes": 1836199,
+      "atlas": [
+        1536,
+        1536
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "emitterAnchors": [
+        [
+          68.8,
+          96.81
+        ],
+        [
+          133.93,
+          82.9
+        ],
+        [
+          142.33,
+          71.74
+        ],
+        [
+          151.87,
+          69.57
+        ],
+        [
+          152.62,
+          64.13
+        ],
+        [
+          35.44,
+          70.22
+        ],
+        [
+          52.89,
+          69.31
+        ],
+        [
+          43.37,
+          85.9
+        ]
+      ],
+      "measurements": [
+        {
+          "sourceRow": 0,
+          "direction": 0,
+          "bodyHeight": 164.0,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            37,
+            17,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            18,
+            139,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 2,
+          "bodyHeight": 164.0,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            17,
+            132,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 3,
+          "bodyHeight": 164.0,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            36,
+            17,
+            136,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            17,
+            148,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            18,
+            149,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 6,
+          "bodyHeight": 164.0,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            54,
+            18,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            40,
+            17,
+            145,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 0,
+          "bodyHeight": 162.96,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            19,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 1,
+          "bodyHeight": 161.91,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            25,
+            20,
+            135,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 2,
+          "bodyHeight": 166.1,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            21,
+            16,
+            133,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 3,
+          "bodyHeight": 158.78,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            33,
+            23,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            18,
+            156,
+            185
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 5,
+          "bodyHeight": 168.23,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            14,
+            155,
+            183
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 6,
+          "bodyHeight": 158.78,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            57,
+            23,
+            167,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 7,
+          "bodyHeight": 166.1,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            16,
+            142,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 0,
+          "bodyHeight": 161.92,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            19,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 1,
+          "bodyHeight": 161.91,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            19,
+            139,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 2,
+          "bodyHeight": 160.85,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            20,
+            125,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 3,
+          "bodyHeight": 157.73,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            23,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 4,
+          "bodyHeight": 162.97,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            19,
+            148,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 5,
+          "bodyHeight": 162.94,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            19,
+            150,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 6,
+          "bodyHeight": 157.73,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            57,
+            24,
+            148,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 7,
+          "bodyHeight": 161.9,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            20,
+            136,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 0,
+          "bodyHeight": 162.96,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            37,
+            19,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 1,
+          "bodyHeight": 160.87,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            21,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 2,
+          "bodyHeight": 158.74,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            22,
+            130,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 3,
+          "bodyHeight": 158.78,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            40,
+            23,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 4,
+          "bodyHeight": 162.97,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            43,
+            18,
+            157,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            18,
+            155,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 6,
+          "bodyHeight": 158.78,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            22,
+            149,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 7,
+          "bodyHeight": 166.1,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            16,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 0,
+          "bodyHeight": 161.92,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            20,
+            145,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            43,
+            18,
+            134,
+            183
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 2,
+          "bodyHeight": 162.95,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            19,
+            126,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 3,
+          "bodyHeight": 153.55,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            28,
+            154,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 4,
+          "bodyHeight": 165.03,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            17,
+            148,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 5,
+          "bodyHeight": 158.71,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            23,
+            158,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 6,
+          "bodyHeight": 156.69,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            54,
+            25,
+            149,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            40,
+            18,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 0,
+          "bodyHeight": 158.81,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            22,
+            154,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 1,
+          "bodyHeight": 152.51,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            22,
+            29,
+            162,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 2,
+          "bodyHeight": 155.59,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            33,
+            25,
+            171,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 3,
+          "bodyHeight": 156.69,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            31,
+            25,
+            177,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 4,
+          "bodyHeight": 155.75,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            28,
+            25,
+            171,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 5,
+          "bodyHeight": 158.71,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            11,
+            22,
+            171,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 6,
+          "bodyHeight": 149.38,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            26,
+            32,
+            175,
+            186
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 7,
+          "bodyHeight": 159.79,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            18,
+            22,
+            157,
+            185
+          ]
+        }
+      ]
+    },
+    {
+      "profession": "astral",
+      "sex": "male",
+      "style": "reinforced",
+      "source": "docs/scout-professions/source/hunter-astral-male-reinforced.png",
+      "sourceSha256": "ec44786bd71bf69356e197b5f5b5085e69bfeb03e89482232fc423a2a5a45c97",
+      "file": "public/assets/visual/complete-actors/cross/hunter-astral-male-reinforced-v1.png",
+      "sha256": "040c5fa03c2228d68860877f9603d143390d64a4f28391055bfdd8def525fadc",
+      "bytes": 1987468,
+      "atlas": [
+        1536,
+        1536
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "emitterAnchors": [
+        [
+          65.24,
+          99.47
+        ],
+        [
+          133.65,
+          82.94
+        ],
+        [
+          141.23,
+          73.5
+        ],
+        [
+          151.54,
+          69.04
+        ],
+        [
+          149.22,
+          66.1
+        ],
+        [
+          40.64,
+          73.15
+        ],
+        [
+          52.0,
+          69.24
+        ],
+        [
+          44.55,
+          88.2
+        ]
+      ],
+      "measurements": [
+        {
+          "sourceRow": 0,
+          "direction": 0,
+          "bodyHeight": 164.0,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            18,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            37,
+            17,
+            139,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 2,
+          "bodyHeight": 164.0,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            18,
+            135,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 3,
+          "bodyHeight": 164.0,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            17,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            18,
+            151,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            17,
+            153,
+            185
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 6,
+          "bodyHeight": 164.0,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            53,
+            17,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            17,
+            145,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 0,
+          "bodyHeight": 165.03,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            16,
+            145,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 1,
+          "bodyHeight": 159.85,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            20,
+            22,
+            135,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 2,
+          "bodyHeight": 159.87,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            20,
+            22,
+            133,
+            185
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 3,
+          "bodyHeight": 159.82,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            33,
+            22,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 4,
+          "bodyHeight": 161.98,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            20,
+            155,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 5,
+          "bodyHeight": 166.09,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            16,
+            155,
+            183
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 6,
+          "bodyHeight": 158.81,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            57,
+            23,
+            167,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            18,
+            145,
+            183
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 0,
+          "bodyHeight": 161.94,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            43,
+            19,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 1,
+          "bodyHeight": 161.92,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            20,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 2,
+          "bodyHeight": 158.84,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            22,
+            123,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 3,
+          "bodyHeight": 160.87,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            20,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 4,
+          "bodyHeight": 159.95,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            21,
+            146,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 5,
+          "bodyHeight": 160.87,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            20,
+            152,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 6,
+          "bodyHeight": 157.77,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            53,
+            24,
+            144,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 7,
+          "bodyHeight": 162.96,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            19,
+            137,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 0,
+          "bodyHeight": 162.97,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            18,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 1,
+          "bodyHeight": 158.81,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            23,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 2,
+          "bodyHeight": 156.78,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            25,
+            134,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 3,
+          "bodyHeight": 160.87,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            40,
+            21,
+            149,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 4,
+          "bodyHeight": 161.98,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            43,
+            20,
+            158,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 5,
+          "bodyHeight": 161.91,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            40,
+            20,
+            155,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 6,
+          "bodyHeight": 157.77,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            54,
+            23,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 7,
+          "bodyHeight": 162.96,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            19,
+            141,
+            185
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 0,
+          "bodyHeight": 162.97,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            19,
+            145,
+            183
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            43,
+            18,
+            134,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 2,
+          "bodyHeight": 162.97,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            19,
+            125,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 3,
+          "bodyHeight": 154.6,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            27,
+            153,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            17,
+            149,
+            185
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 5,
+          "bodyHeight": 160.87,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            47,
+            21,
+            158,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 6,
+          "bodyHeight": 159.85,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            52,
+            22,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 7,
+          "bodyHeight": 162.96,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            19,
+            145,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 0,
+          "bodyHeight": 156.78,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            25,
+            155,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 1,
+          "bodyHeight": 150.51,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            23,
+            31,
+            163,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 2,
+          "bodyHeight": 153.69,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            31,
+            27,
+            170,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 3,
+          "bodyHeight": 157.73,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            30,
+            24,
+            177,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 4,
+          "bodyHeight": 153.88,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            27,
+            28,
+            169,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 5,
+          "bodyHeight": 155.64,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            15,
+            25,
+            173,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 6,
+          "bodyHeight": 150.51,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            26,
+            31,
+            175,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 7,
+          "bodyHeight": 157.73,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            15,
+            23,
+            158,
+            185
+          ]
+        }
+      ]
+    },
+    {
+      "profession": "xenobinder",
+      "sex": "female",
+      "style": "none",
+      "source": "docs/scout-professions/source/hunter-xenobinder-female-none.png",
+      "sourceSha256": "3056c4db7366a7fcfc4aafbbaac61d82f8efa56f755b8131fafcd9b59a3e5602",
+      "file": "public/assets/visual/complete-actors/cross/hunter-xenobinder-female-none-v1.png",
+      "sha256": "39b916176180fcbcd06d5807d07d777e52342814a28dcae447fbcb6e5d0efd5a",
+      "bytes": 1733894,
+      "atlas": [
+        1536,
+        1536
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "emitterAnchors": [
+        [
+          80.3,
+          82.74
+        ],
+        [
+          126.3,
+          79.56
+        ],
+        [
+          134.26,
+          72.86
+        ],
+        [
+          144.1,
+          64.12
+        ],
+        [
+          144.34,
+          63.46
+        ],
+        [
+          58.4,
+          67.47
+        ],
+        [
+          53.86,
+          69.05
+        ],
+        [
+          46.23,
+          81.22
+        ]
+      ],
+      "measurements": [
+        {
+          "sourceRow": 0,
+          "direction": 0,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            18,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            18,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 2,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            50,
+            17,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 3,
+          "bodyHeight": 164.0,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            37,
+            17,
+            139,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            17,
+            148,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            54,
+            17,
+            148,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 6,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            54,
+            17,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            40,
+            17,
+            145,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 0,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            50,
+            18,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 1,
+          "bodyHeight": 165.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            17,
+            140,
+            185
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 2,
+          "bodyHeight": 161.02,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            21,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 3,
+          "bodyHeight": 166.02,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            30,
+            16,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 4,
+          "bodyHeight": 166.01,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            52,
+            16,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 5,
+          "bodyHeight": 166.01,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            53,
+            16,
+            144,
+            185
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 6,
+          "bodyHeight": 163.01,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            52,
+            19,
+            149,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 7,
+          "bodyHeight": 166.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            36,
+            16,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 0,
+          "bodyHeight": 162.01,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            20,
+            142,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 1,
+          "bodyHeight": 160.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            21,
+            140,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 2,
+          "bodyHeight": 158.04,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            57,
+            24,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 3,
+          "bodyHeight": 160.96,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            20,
+            142,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            52,
+            18,
+            147,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 5,
+          "bodyHeight": 162.99,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            18,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 6,
+          "bodyHeight": 156.05,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            51,
+            25,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 7,
+          "bodyHeight": 161.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            20,
+            136,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 0,
+          "bodyHeight": 165.99,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            55,
+            16,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            58,
+            18,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 2,
+          "bodyHeight": 163.01,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            51,
+            18,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 3,
+          "bodyHeight": 165.01,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            17,
+            141,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 4,
+          "bodyHeight": 165.01,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            53,
+            16,
+            148,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            40,
+            17,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 6,
+          "bodyHeight": 162.01,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            51,
+            19,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 7,
+          "bodyHeight": 165.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            16,
+            135,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 0,
+          "bodyHeight": 163.01,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            18,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 1,
+          "bodyHeight": 165.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            17,
+            137,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 2,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            59,
+            18,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 3,
+          "bodyHeight": 165.01,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            47,
+            16,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 4,
+          "bodyHeight": 168.02,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            52,
+            13,
+            145,
+            183
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 5,
+          "bodyHeight": 165.01,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            16,
+            142,
+            185
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 6,
+          "bodyHeight": 161.02,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            20,
+            136,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 7,
+          "bodyHeight": 165.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            16,
+            135,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 0,
+          "bodyHeight": 160.02,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            22,
+            148,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 1,
+          "bodyHeight": 158.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            24,
+            153,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 2,
+          "bodyHeight": 161.02,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            47,
+            20,
+            160,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 3,
+          "bodyHeight": 158.94,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            33,
+            22,
+            167,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 4,
+          "bodyHeight": 160.98,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            21,
+            166,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 5,
+          "bodyHeight": 158.97,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            33,
+            22,
+            158,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 6,
+          "bodyHeight": 158.04,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            25,
+            23,
+            150,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 7,
+          "bodyHeight": 158.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            25,
+            23,
+            148,
+            184
+          ]
+        }
+      ]
+    },
+    {
+      "profession": "xenobinder",
+      "sex": "female",
+      "style": "basic",
+      "source": "docs/scout-professions/source/hunter-xenobinder-female-basic.png",
+      "sourceSha256": "ada49e0b7d0a56dd1ef4ef28db2b262b0989d03b158b056422fc97612ad7e689",
+      "file": "public/assets/visual/complete-actors/cross/hunter-xenobinder-female-basic-v1.png",
+      "sha256": "d21b4b06c5ca45b106ccb391d19ce5e3539248d178eabe8f77b9a2e25d0e6b54",
+      "bytes": 1838377,
+      "atlas": [
+        1536,
+        1536
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "emitterAnchors": [
+        [
+          81.41,
+          79.78
+        ],
+        [
+          132.18,
+          75.38
+        ],
+        [
+          135.07,
+          72.16
+        ],
+        [
+          144.46,
+          62.73
+        ],
+        [
+          147.44,
+          61.26
+        ],
+        [
+          55.98,
+          66.17
+        ],
+        [
+          51.58,
+          68.51
+        ],
+        [
+          47.27,
+          78.75
+        ]
+      ],
+      "measurements": [
+        {
+          "sourceRow": 0,
+          "direction": 0,
+          "bodyHeight": 164.0,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            18,
+            146,
+            185
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            17,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 2,
+          "bodyHeight": 164.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            18,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 3,
+          "bodyHeight": 164.0,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            18,
+            146,
+            185
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            18,
+            151,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            52,
+            18,
+            150,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 6,
+          "bodyHeight": 164.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            51,
+            18,
+            141,
+            185
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            18,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 0,
+          "bodyHeight": 168.1,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            14,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 1,
+          "bodyHeight": 166.05,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            16,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 2,
+          "bodyHeight": 161.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            21,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 3,
+          "bodyHeight": 166.05,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            26,
+            15,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 4,
+          "bodyHeight": 166.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            16,
+            149,
+            185
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 5,
+          "bodyHeight": 161.99,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            19,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 6,
+          "bodyHeight": 162.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            52,
+            20,
+            151,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            17,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 0,
+          "bodyHeight": 169.12,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            52,
+            13,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            54,
+            17,
+            144,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 2,
+          "bodyHeight": 159.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            55,
+            23,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 3,
+          "bodyHeight": 161.95,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            50,
+            19,
+            146,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 4,
+          "bodyHeight": 163.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            47,
+            19,
+            148,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 5,
+          "bodyHeight": 160.98,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            43,
+            20,
+            138,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 6,
+          "bodyHeight": 156.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            47,
+            26,
+            142,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 7,
+          "bodyHeight": 165.01,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            17,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 0,
+          "bodyHeight": 168.1,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            53,
+            13,
+            145,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 1,
+          "bodyHeight": 166.05,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            50,
+            16,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 2,
+          "bodyHeight": 163.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            19,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 3,
+          "bodyHeight": 166.05,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            16,
+            147,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 4,
+          "bodyHeight": 166.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            16,
+            150,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            17,
+            149,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 6,
+          "bodyHeight": 163.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            18,
+            148,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 7,
+          "bodyHeight": 166.02,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            16,
+            137,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 0,
+          "bodyHeight": 168.1,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            52,
+            13,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 1,
+          "bodyHeight": 169.12,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            12,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 2,
+          "bodyHeight": 163.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            57,
+            18,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 3,
+          "bodyHeight": 167.07,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            14,
+            144,
+            185
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 4,
+          "bodyHeight": 167.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            14,
+            150,
+            185
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 5,
+          "bodyHeight": 165.01,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            16,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 6,
+          "bodyHeight": 162.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            19,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 7,
+          "bodyHeight": 166.02,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            15,
+            137,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 0,
+          "bodyHeight": 164.0,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            17,
+            153,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 1,
+          "bodyHeight": 162.97,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            19,
+            158,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 2,
+          "bodyHeight": 163.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            19,
+            162,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 3,
+          "bodyHeight": 161.95,
+          "scale": 1.025,
+          "floor": 183,
+          "alphaBounds": [
+            31,
+            20,
+            167,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 4,
+          "bodyHeight": 162.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            43,
+            20,
+            165,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 5,
+          "bodyHeight": 160.98,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            30,
+            21,
+            159,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 6,
+          "bodyHeight": 160.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            23,
+            22,
+            154,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 7,
+          "bodyHeight": 160.96,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            24,
+            21,
+            149,
+            184
+          ]
+        }
+      ]
+    },
+    {
+      "profession": "xenobinder",
+      "sex": "female",
+      "style": "reinforced",
+      "source": "docs/scout-professions/source/hunter-xenobinder-female-reinforced.png",
+      "sourceSha256": "ae3821ebd6d65474b6f2e4fc00211b22c3689ec8058ad2699bd6d5e8e4ac8b44",
+      "file": "public/assets/visual/complete-actors/cross/hunter-xenobinder-female-reinforced-v1.png",
+      "sha256": "b6a8cb3cc5d38b2783c4c239747f5a910275c07b6c15c07412ee158f204dc641",
+      "bytes": 1918600,
+      "atlas": [
+        1536,
+        1536
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "emitterAnchors": [
+        [
+          83.33,
+          84.71
+        ],
+        [
+          129.04,
+          79.15
+        ],
+        [
+          131.24,
+          73.44
+        ],
+        [
+          145.3,
+          64.29
+        ],
+        [
+          146.48,
+          61.87
+        ],
+        [
+          61.27,
+          66.1
+        ],
+        [
+          59.07,
+          71.78
+        ],
+        [
+          49.85,
+          81.04
+        ]
+      ],
+      "measurements": [
+        {
+          "sourceRow": 0,
+          "direction": 0,
+          "bodyHeight": 164.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            17,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            18,
+            144,
+            185
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 2,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            18,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 3,
+          "bodyHeight": 164.0,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            17,
+            150,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            17,
+            149,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            51,
+            18,
+            150,
+            185
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 6,
+          "bodyHeight": 164.0,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            54,
+            18,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            40,
+            18,
+            145,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 0,
+          "bodyHeight": 165.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            17,
+            145,
+            183
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            43,
+            18,
+            140,
+            183
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 2,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            33,
+            18,
+            141,
+            183
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 3,
+          "bodyHeight": 164.0,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            29,
+            18,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            18,
+            146,
+            183
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            18,
+            146,
+            183
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 6,
+          "bodyHeight": 162.02,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            53,
+            19,
+            152,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            18,
+            138,
+            183
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 0,
+          "bodyHeight": 165.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            54,
+            17,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 1,
+          "bodyHeight": 161.02,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            55,
+            20,
+            141,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 2,
+          "bodyHeight": 158.04,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            23,
+            143,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 3,
+          "bodyHeight": 160.98,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            47,
+            20,
+            144,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 4,
+          "bodyHeight": 163.02,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            19,
+            146,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 5,
+          "bodyHeight": 161.02,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            21,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 6,
+          "bodyHeight": 156.1,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            51,
+            26,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 7,
+          "bodyHeight": 163.01,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            37,
+            19,
+            138,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 0,
+          "bodyHeight": 165.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            53,
+            16,
+            148,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            52,
+            17,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 2,
+          "bodyHeight": 162.01,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            47,
+            19,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 3,
+          "bodyHeight": 162.99,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            40,
+            19,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            18,
+            145,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            17,
+            151,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 6,
+          "bodyHeight": 161.04,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            51,
+            20,
+            150,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            33,
+            17,
+            136,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 0,
+          "bodyHeight": 164.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            54,
+            17,
+            148,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            59,
+            17,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 2,
+          "bodyHeight": 162.01,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            19,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 3,
+          "bodyHeight": 167.02,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            14,
+            149,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 4,
+          "bodyHeight": 165.96,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            51,
+            15,
+            149,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 5,
+          "bodyHeight": 164.99,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            16,
+            143,
+            185
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 6,
+          "bodyHeight": 161.04,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            48,
+            21,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            18,
+            134,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 0,
+          "bodyHeight": 156.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            26,
+            148,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 1,
+          "bodyHeight": 156.05,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            26,
+            158,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 2,
+          "bodyHeight": 159.03,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            22,
+            159,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 3,
+          "bodyHeight": 158.97,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            33,
+            23,
+            168,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 4,
+          "bodyHeight": 161.05,
+          "scale": 0.9820359281437125,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            21,
+            163,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 5,
+          "bodyHeight": 160.02,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            33,
+            22,
+            158,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 6,
+          "bodyHeight": 157.08,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            28,
+            25,
+            157,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 7,
+          "bodyHeight": 156.05,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            25,
+            25,
+            147,
+            184
+          ]
+        }
+      ]
+    },
+    {
+      "profession": "xenobinder",
+      "sex": "male",
+      "style": "none",
+      "source": "docs/scout-professions/source/hunter-xenobinder-male-none.png",
+      "sourceSha256": "df41f55c74cdc82e4b15a347fb44d58db20ac8fcfc89e1fa7aa4b9899767df63",
+      "file": "public/assets/visual/complete-actors/cross/hunter-xenobinder-male-none-v1.png",
+      "sha256": "bb972065d7c42c21aa1d7bff03c8907d6f4cd3cd1247a4c2503692da26202bcf",
+      "bytes": 1808390,
+      "atlas": [
+        1536,
+        1536
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "emitterAnchors": [
+        [
+          58.5,
+          84.17
+        ],
+        [
+          123.19,
+          83.07
+        ],
+        [
+          155.78,
+          64.98
+        ],
+        [
+          153.62,
+          51.31
+        ],
+        [
+          155.36,
+          42.14
+        ],
+        [
+          30.17,
+          55.55
+        ],
+        [
+          47.21,
+          63.2
+        ],
+        [
+          43.79,
+          81.74
+        ]
+      ],
+      "measurements": [
+        {
+          "sourceRow": 0,
+          "direction": 0,
+          "bodyHeight": 164.0,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            33,
+            17,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            17,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 2,
+          "bodyHeight": 164.0,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            17,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 3,
+          "bodyHeight": 164.0,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            17,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            17,
+            154,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            43,
+            18,
+            153,
+            185
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 6,
+          "bodyHeight": 164.0,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            66,
+            18,
+            145,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            17,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 0,
+          "bodyHeight": 161.94,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            31,
+            19,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 1,
+          "bodyHeight": 155.7,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            24,
+            25,
+            137,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 2,
+          "bodyHeight": 160.87,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            17,
+            20,
+            128,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 3,
+          "bodyHeight": 162.94,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            30,
+            18,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 4,
+          "bodyHeight": 167.11,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            37,
+            14,
+            158,
+            185
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 5,
+          "bodyHeight": 167.11,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            13,
+            159,
+            183
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 6,
+          "bodyHeight": 159.85,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            56,
+            20,
+            164,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 7,
+          "bodyHeight": 162.95,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            18,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 0,
+          "bodyHeight": 160.91,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            20,
+            143,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 1,
+          "bodyHeight": 161.92,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            43,
+            19,
+            130,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 2,
+          "bodyHeight": 164.0,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            17,
+            134,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 3,
+          "bodyHeight": 156.59,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            25,
+            149,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 4,
+          "bodyHeight": 166.08,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            43,
+            15,
+            152,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 5,
+          "bodyHeight": 153.62,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            27,
+            152,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 6,
+          "bodyHeight": 158.81,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            22,
+            144,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 7,
+          "bodyHeight": 162.95,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            18,
+            135,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 0,
+          "bodyHeight": 160.91,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            36,
+            20,
+            145,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 1,
+          "bodyHeight": 159.85,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            22,
+            141,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 2,
+          "bodyHeight": 156.69,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            31,
+            24,
+            141,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 3,
+          "bodyHeight": 159.77,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            36,
+            21,
+            153,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            17,
+            153,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 5,
+          "bodyHeight": 160.89,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            21,
+            153,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 6,
+          "bodyHeight": 156.73,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            25,
+            145,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 7,
+          "bodyHeight": 159.79,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            36,
+            21,
+            137,
+            185
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 0,
+          "bodyHeight": 160.91,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            21,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 1,
+          "bodyHeight": 161.92,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            19,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 2,
+          "bodyHeight": 162.96,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            36,
+            18,
+            146,
+            185
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 3,
+          "bodyHeight": 154.48,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            27,
+            161,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 4,
+          "bodyHeight": 166.08,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            15,
+            152,
+            185
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 5,
+          "bodyHeight": 158.81,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            43,
+            23,
+            151,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 6,
+          "bodyHeight": 156.73,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            25,
+            145,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 7,
+          "bodyHeight": 162.95,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            19,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 0,
+          "bodyHeight": 156.78,
+          "scale": 1.0314465408805031,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            24,
+            151,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 1,
+          "bodyHeight": 150.51,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            30,
+            31,
+            152,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 2,
+          "bodyHeight": 157.73,
+          "scale": 1.0445859872611465,
+          "floor": 183,
+          "alphaBounds": [
+            30,
+            24,
+            174,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 3,
+          "bodyHeight": 161.88,
+          "scale": 1.0580645161290323,
+          "floor": 183,
+          "alphaBounds": [
+            31,
+            20,
+            166,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 4,
+          "bodyHeight": 160.89,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            29,
+            20,
+            163,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 5,
+          "bodyHeight": 156.73,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            20,
+            24,
+            168,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 6,
+          "bodyHeight": 149.47,
+          "scale": 1.0379746835443038,
+          "floor": 183,
+          "alphaBounds": [
+            25,
+            32,
+            169,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 7,
+          "bodyHeight": 157.69,
+          "scale": 1.0512820512820513,
+          "floor": 183,
+          "alphaBounds": [
+            19,
+            23,
+            150,
+            184
+          ]
+        }
+      ]
+    },
+    {
+      "profession": "xenobinder",
+      "sex": "male",
+      "style": "basic",
+      "source": "docs/scout-professions/source/hunter-xenobinder-male-basic.png",
+      "sourceSha256": "7f133aad6305b6287a2ba608f5a523276b31f84c908d1ddffc6de7e8bd918c69",
+      "file": "public/assets/visual/complete-actors/cross/hunter-xenobinder-male-basic-v1.png",
+      "sha256": "1e0ea21351f721e7671967796b44ce5b0ea8b2f321bffdf9ed1ff7482938bdc4",
+      "bytes": 1908413,
+      "atlas": [
+        1536,
+        1536
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "emitterAnchors": [
+        [
+          54.97,
+          85.11
+        ],
+        [
+          119.08,
+          86.95
+        ],
+        [
+          143.25,
+          73.75
+        ],
+        [
+          149.98,
+          62.56
+        ],
+        [
+          152.57,
+          53.99
+        ],
+        [
+          38.43,
+          64.93
+        ],
+        [
+          59.93,
+          72.64
+        ],
+        [
+          49.43,
+          83.63
+        ]
+      ],
+      "measurements": [
+        {
+          "sourceRow": 0,
+          "direction": 0,
+          "bodyHeight": 164.0,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            29,
+            18,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            17,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 2,
+          "bodyHeight": 164.0,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            17,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 3,
+          "bodyHeight": 164.0,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            18,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            17,
+            156,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            18,
+            156,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 6,
+          "bodyHeight": 164.0,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            64,
+            18,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            18,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 0,
+          "bodyHeight": 162.99,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            30,
+            19,
+            145,
+            185
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 1,
+          "bodyHeight": 157.96,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            22,
+            24,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 2,
+          "bodyHeight": 158.97,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            19,
+            22,
+            130,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 3,
+          "bodyHeight": 160.94,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            30,
+            20,
+            147,
+            183
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            18,
+            163,
+            185
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            17,
+            161,
+            183
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 6,
+          "bodyHeight": 161.98,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            49,
+            20,
+            160,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 7,
+          "bodyHeight": 161.96,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            36,
+            19,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 0,
+          "bodyHeight": 162.99,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            19,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 1,
+          "bodyHeight": 158.97,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            45,
+            22,
+            132,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 2,
+          "bodyHeight": 159.98,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            22,
+            135,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 3,
+          "bodyHeight": 153.81,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            27,
+            151,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 4,
+          "bodyHeight": 162.99,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            18,
+            151,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 5,
+          "bodyHeight": 152.8,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            28,
+            151,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 6,
+          "bodyHeight": 161.98,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            20,
+            144,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 7,
+          "bodyHeight": 161.96,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            19,
+            136,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 0,
+          "bodyHeight": 159.95,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            30,
+            22,
+            145,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 1,
+          "bodyHeight": 157.96,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            36,
+            24,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 2,
+          "bodyHeight": 153.94,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            31,
+            28,
+            146,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 3,
+          "bodyHeight": 155.85,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            25,
+            156,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 4,
+          "bodyHeight": 161.99,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            20,
+            153,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 5,
+          "bodyHeight": 160.94,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            20,
+            153,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 6,
+          "bodyHeight": 155.9,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            37,
+            25,
+            148,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 7,
+          "bodyHeight": 159.93,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            36,
+            22,
+            139,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 0,
+          "bodyHeight": 161.98,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            32,
+            20,
+            145,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 1,
+          "bodyHeight": 160.98,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            20,
+            143,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 2,
+          "bodyHeight": 160.98,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            40,
+            21,
+            149,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 3,
+          "bodyHeight": 155.85,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            26,
+            164,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 4,
+          "bodyHeight": 162.99,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            19,
+            151,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 5,
+          "bodyHeight": 161.96,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            20,
+            152,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 6,
+          "bodyHeight": 159.95,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            22,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 7,
+          "bodyHeight": 161.96,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            19,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 0,
+          "bodyHeight": 158.94,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            40,
+            23,
+            151,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 1,
+          "bodyHeight": 149.91,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            27,
+            31,
+            151,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 2,
+          "bodyHeight": 156.96,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            29,
+            24,
+            171,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 3,
+          "bodyHeight": 156.87,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            30,
+            24,
+            165,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 4,
+          "bodyHeight": 158.97,
+          "scale": 1.0061349693251533,
+          "floor": 183,
+          "alphaBounds": [
+            27,
+            23,
+            162,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 5,
+          "bodyHeight": 157.89,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            21,
+            24,
+            172,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 6,
+          "bodyHeight": 148.81,
+          "scale": 1.0123456790123457,
+          "floor": 183,
+          "alphaBounds": [
+            26,
+            32,
+            170,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 7,
+          "bodyHeight": 158.91,
+          "scale": 1.0186335403726707,
+          "floor": 183,
+          "alphaBounds": [
+            23,
+            22,
+            154,
+            185
+          ]
+        }
+      ]
+    },
+    {
+      "profession": "xenobinder",
+      "sex": "male",
+      "style": "reinforced",
+      "source": "docs/scout-professions/source/hunter-xenobinder-male-reinforced.png",
+      "sourceSha256": "0cca63a13286d3fd1cb77c22dea666a183c2fe01b89723a1fa6213115e79c8bd",
+      "file": "public/assets/visual/complete-actors/cross/hunter-xenobinder-male-reinforced-v1.png",
+      "sha256": "d0a35226b3040e44fa1414e7e8259abb85fa26720508a68f3691e0156c2241af",
+      "bytes": 2042023,
+      "atlas": [
+        1536,
+        1536
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "emitterAnchors": [
+        [
+          61.41,
+          90.35
+        ],
+        [
+          114.44,
+          87.13
+        ],
+        [
+          141.1,
+          70.46
+        ],
+        [
+          141.63,
+          66.0
+        ],
+        [
+          132.79,
+          59.73
+        ],
+        [
+          45.71,
+          71.26
+        ],
+        [
+          56.38,
+          72.95
+        ],
+        [
+          48.41,
+          87.98
+        ]
+      ],
+      "measurements": [
+        {
+          "sourceRow": 0,
+          "direction": 0,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            18,
+            151,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 1,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            18,
+            142,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 2,
+          "bodyHeight": 164.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            18,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 3,
+          "bodyHeight": 164.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            36,
+            18,
+            151,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 4,
+          "bodyHeight": 164.0,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            18,
+            158,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 5,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            43,
+            18,
+            158,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 6,
+          "bodyHeight": 164.0,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            61,
+            18,
+            148,
+            184
+          ]
+        },
+        {
+          "sourceRow": 0,
+          "direction": 7,
+          "bodyHeight": 164.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            18,
+            151,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 0,
+          "bodyHeight": 161.02,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            31,
+            21,
+            146,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 1,
+          "bodyHeight": 154.06,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            21,
+            27,
+            135,
+            185
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 2,
+          "bodyHeight": 158.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            17,
+            24,
+            131,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 3,
+          "bodyHeight": 157.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            31,
+            24,
+            147,
+            185
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 4,
+          "bodyHeight": 161.04,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            21,
+            158,
+            184
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 5,
+          "bodyHeight": 160.02,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            22,
+            157,
+            183
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 6,
+          "bodyHeight": 160.02,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            53,
+            22,
+            167,
+            183
+          ]
+        },
+        {
+          "sourceRow": 1,
+          "direction": 7,
+          "bodyHeight": 159.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            36,
+            23,
+            146,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 0,
+          "bodyHeight": 160.02,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            21,
+            139,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 1,
+          "bodyHeight": 161.02,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            40,
+            21,
+            129,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 2,
+          "bodyHeight": 159.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            22,
+            137,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 3,
+          "bodyHeight": 157.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            24,
+            148,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 4,
+          "bodyHeight": 162.02,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            20,
+            151,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 5,
+          "bodyHeight": 152.07,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            46,
+            29,
+            156,
+            185
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 6,
+          "bodyHeight": 160.02,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            38,
+            21,
+            145,
+            184
+          ]
+        },
+        {
+          "sourceRow": 2,
+          "direction": 7,
+          "bodyHeight": 162.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            43,
+            19,
+            140,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 0,
+          "bodyHeight": 159.03,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            30,
+            23,
+            145,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 1,
+          "bodyHeight": 156.05,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            35,
+            26,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 2,
+          "bodyHeight": 153.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            29,
+            28,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 3,
+          "bodyHeight": 156.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            32,
+            25,
+            158,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 4,
+          "bodyHeight": 159.06,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            22,
+            153,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 5,
+          "bodyHeight": 160.02,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            42,
+            22,
+            153,
+            184
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 6,
+          "bodyHeight": 154.06,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            36,
+            28,
+            149,
+            185
+          ]
+        },
+        {
+          "sourceRow": 3,
+          "direction": 7,
+          "bodyHeight": 158.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            34,
+            23,
+            140,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 0,
+          "bodyHeight": 161.02,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            31,
+            21,
+            145,
+            185
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 1,
+          "bodyHeight": 161.02,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            41,
+            21,
+            138,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 2,
+          "bodyHeight": 162.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            37,
+            20,
+            147,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 3,
+          "bodyHeight": 155.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            33,
+            27,
+            158,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 4,
+          "bodyHeight": 163.01,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            40,
+            19,
+            152,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 5,
+          "bodyHeight": 161.02,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            44,
+            21,
+            155,
+            184
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 6,
+          "bodyHeight": 158.04,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            37,
+            23,
+            149,
+            185
+          ]
+        },
+        {
+          "sourceRow": 4,
+          "direction": 7,
+          "bodyHeight": 161.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            39,
+            21,
+            145,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 0,
+          "bodyHeight": 158.04,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            40,
+            24,
+            151,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 1,
+          "bodyHeight": 151.08,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            26,
+            31,
+            152,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 2,
+          "bodyHeight": 156.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            27,
+            26,
+            168,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 3,
+          "bodyHeight": 156.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            30,
+            26,
+            166,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 4,
+          "bodyHeight": 158.07,
+          "scale": 0.9879518072289156,
+          "floor": 183,
+          "alphaBounds": [
+            26,
+            23,
+            160,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 5,
+          "bodyHeight": 157.04,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            22,
+            25,
+            168,
+            184
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 6,
+          "bodyHeight": 149.09,
+          "scale": 0.9939393939393939,
+          "floor": 183,
+          "alphaBounds": [
+            24,
+            33,
+            168,
+            185
+          ]
+        },
+        {
+          "sourceRow": 5,
+          "direction": 7,
+          "bodyHeight": 158.0,
+          "scale": 1.0,
+          "floor": 183,
+          "alphaBounds": [
+            20,
+            24,
+            152,
+            185
+          ]
+        }
+      ]
+    }
+  ]
+}

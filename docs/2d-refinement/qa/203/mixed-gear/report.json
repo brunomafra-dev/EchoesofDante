@@ -1,0 +1,126 @@
+{
+  "passed": true,
+  "base": "http://localhost:5195",
+  "cases": [
+    {
+      "cls": "astral",
+      "sex": "female",
+      "kit": "reinforced",
+      "helmet": "none",
+      "actor": {
+        "identity": "astral",
+        "visualPreset": "hunter",
+        "sex": "female",
+        "frame": 20,
+        "bakes": 4,
+        "contact": {
+          "x": -12,
+          "y": 38.333333333333336
+        },
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "cls": "astral",
+      "sex": "male",
+      "kit": "reinforced",
+      "helmet": "none",
+      "actor": {
+        "identity": "astral",
+        "visualPreset": "hunter",
+        "sex": "male",
+        "frame": 20,
+        "bakes": 4,
+        "contact": {
+          "x": -12,
+          "y": 38.333333333333336
+        },
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "cls": "astral",
+      "sex": "female",
+      "kit": "clothes",
+      "helmet": "reinforced",
+      "actor": {
+        "identity": "astral",
+        "visualPreset": "hunter",
+        "sex": "female",
+        "frame": 20,
+        "bakes": 2,
+        "contact": {
+          "x": -11.333333333333334,
+          "y": 38.333333333333336
+        },
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "sex": "female",
+      "kit": "reinforced",
+      "helmet": "none",
+      "actor": {
+        "identity": "xenobinder",
+        "visualPreset": "hunter",
+        "sex": "female",
+        "frame": 20,
+        "bakes": 4,
+        "contact": {
+          "x": -12,
+          "y": 38.333333333333336
+        },
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "sex": "male",
+      "kit": "reinforced",
+      "helmet": "none",
+      "actor": {
+        "identity": "xenobinder",
+        "visualPreset": "hunter",
+        "sex": "male",
+        "frame": 20,
+        "bakes": 4,
+        "contact": {
+          "x": -11,
+          "y": 38.333333333333336
+        },
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "sex": "female",
+      "kit": "clothes",
+      "helmet": "reinforced",
+      "actor": {
+        "identity": "xenobinder",
+        "visualPreset": "hunter",
+        "sex": "female",
+        "frame": 20,
+        "bakes": 2,
+        "contact": {
+          "x": -11,
+          "y": 38.333333333333336
+        },
+        "width": 128,
+        "height": 128
+      }
+    }
+  ],
+  "errors": [],
+  "fixture": "Isolated visual lab equipment URLs only; no character ownership, boss victory or progress simulated.",
+  "checks": [
+    "Helmet removal/equipment mixing preserves selected visual; screenshots recorded for inspection.",
+    "Laboratory repeatedly compares original and scout on the same profession; navigation does not carry an invalid cross-pair."
+  ]
+}

@@ -40,9 +40,9 @@ export class PartyActor {
   const hp=Math.round(this.progression.maxHp*(profile.classId==='hunter'?HUNTER.hpRatio:profile.classId==='xenobinder'?XENOBINDER.hpRatio:profile.classId==='astral'?ASTRAL.hpRatio:1))+equipmentStats(profile.equipment??{}).hp;
   this.attack=new SaberAttack(rank);this.charge=new KineticCharge(rank,profile.classId==='xenobinder'?XENOBINDER.commandCooldown:undefined);
   this.player=new Player(scene,position.x,position.y,profile.build?hp:maxHp,false,true,rank,profile.classId,profile.sex,profile.visualPreset);
-  if(profile.classId==='hunter'){this.hunter=new HunterCombat(scene,rank,aim=>this.art?.muzzle(aim)??completeMuzzle('hunter',aim,this.player.sex));this.art=new CompleteActorArt(scene,this.player.view,position.x,position.y,this.player.sex,'hunter');}
-  if(profile.classId==='xenobinder'){this.xeno=new XenobinderCombat(scene,rank,position);this.xenoArt=new CompleteActorArt(scene,this.player.view,position.x,position.y,this.player.sex,'xenobinder',()=>rank('chargeWidth'));}
-  if(profile.classId==='astral'){this.astral=new AstralCombat(scene,rank);this.astralArt=new CompleteActorArt(scene,this.player.view,position.x,position.y,this.player.sex,'astral');}
+  if(profile.classId==='hunter'){this.hunter=new HunterCombat(scene,rank,aim=>this.art?.muzzle(aim)??completeMuzzle('hunter',aim,this.player.sex));this.art=new CompleteActorArt(scene,this.player.view,position.x,position.y,this.player.sex,'hunter',undefined,this.player.visualPreset);}
+  if(profile.classId==='xenobinder'){this.xeno=new XenobinderCombat(scene,rank,position);this.xenoArt=new CompleteActorArt(scene,this.player.view,position.x,position.y,this.player.sex,'xenobinder',()=>rank('chargeWidth'),this.player.visualPreset);}
+  if(profile.classId==='astral'){this.astral=new AstralCombat(scene,rank);this.astralArt=new CompleteActorArt(scene,this.player.view,position.x,position.y,this.player.sex,'astral',undefined,this.player.visualPreset);}
   this.wave=scene.add.ellipse(0,0,10,80,0x5fe6d8,.6).setVisible(false).setDepth(14999);
  }
  update(now:number,dt:number,input:PartyInput,targets:readonly Enemy[],obstacles:readonly Obstacle[],bounds:MovementBounds|undefined,

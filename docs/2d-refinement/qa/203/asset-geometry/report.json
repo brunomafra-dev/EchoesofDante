@@ -1,0 +1,185 @@
+{
+  "passed": true,
+  "assets": [
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-astral-female-none-v1.png",
+      "sha256": "1a1ad32e2e75a9d6a8ec2c408b86485e13568bb2307a2c5fbb9a49cc70364205",
+      "bytes": 1707616,
+      "bodyHeightRange": [
+        156.1,
+        168.1
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-astral-female-basic-v1.png",
+      "sha256": "83e32a3a3df179921c36df6f207856d6ddaf53d6b748738c3cf45261d968d8a1",
+      "bytes": 1697838,
+      "bodyHeightRange": [
+        156.1,
+        167.0
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-astral-female-reinforced-v1.png",
+      "sha256": "ae9bb14cb3db94faa5e83aa15af6f09d0802191f3ef73f0118e013e0a19dcdcb",
+      "bytes": 1897499,
+      "bodyHeightRange": [
+        156.1,
+        164.0
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-astral-male-none-v1.png",
+      "sha256": "260e795cc9f9c1e52ac63077595fdf9ce73a3c380aab32454ba95a958c2e101b",
+      "bytes": 1781435,
+      "bodyHeightRange": [
+        149.19,
+        165.05
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-astral-male-basic-v1.png",
+      "sha256": "0fa9749a6afa7ba9128c02bf2e2cb7f5903fa8f379767b0453fd98ae4694034d",
+      "bytes": 1836199,
+      "bodyHeightRange": [
+        149.38,
+        168.23
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-astral-male-reinforced-v1.png",
+      "sha256": "040c5fa03c2228d68860877f9603d143390d64a4f28391055bfdd8def525fadc",
+      "bytes": 1987468,
+      "bodyHeightRange": [
+        150.51,
+        166.09
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-xenobinder-female-none-v1.png",
+      "sha256": "39b916176180fcbcd06d5807d07d777e52342814a28dcae447fbcb6e5d0efd5a",
+      "bytes": 1733894,
+      "bodyHeightRange": [
+        156.05,
+        168.02
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-xenobinder-female-basic-v1.png",
+      "sha256": "d21b4b06c5ca45b106ccb391d19ce5e3539248d178eabe8f77b9a2e25d0e6b54",
+      "bytes": 1838377,
+      "bodyHeightRange": [
+        156.0,
+        169.12
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-xenobinder-female-reinforced-v1.png",
+      "sha256": "b6a8cb3cc5d38b2783c4c239747f5a910275c07b6c15c07412ee158f204dc641",
+      "bytes": 1918600,
+      "bodyHeightRange": [
+        156.0,
+        167.02
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-xenobinder-male-none-v1.png",
+      "sha256": "bb972065d7c42c21aa1d7bff03c8907d6f4cd3cd1247a4c2503692da26202bcf",
+      "bytes": 1808390,
+      "bodyHeightRange": [
+        149.47,
+        167.11
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-xenobinder-male-basic-v1.png",
+      "sha256": "1e0ea21351f721e7671967796b44ce5b0ea8b2f321bffdf9ed1ff7482938bdc4",
+      "bytes": 1908413,
+      "bodyHeightRange": [
+        148.81,
+        164.0
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/hunter-xenobinder-male-reinforced-v1.png",
+      "sha256": "d0a35226b3040e44fa1414e7e8259abb85fa26720508a68f3691e0156c2241af",
+      "bytes": 2042023,
+      "bodyHeightRange": [
+        149.09,
+        164.0
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    }
+  ]
+}

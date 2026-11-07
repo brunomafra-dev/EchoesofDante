@@ -19,6 +19,8 @@ import { fitsGround } from '../systems/WalkableGround';
 import type { ImpactPose } from './CoopSession';
 import type { AstralElement } from '../config/classes';
 import { partyThreat } from '../config/difficulty';
+import {completeActorsReady,preloadCompleteActors}from'../visual/CompleteActorArt';
+import {characterSex}from'../config/appearance';
 
 export type PartyBridge={
  area:JourneyArea;player:Player;controls:Controls;enemies:readonly Enemy[];obstacles:readonly Obstacle[];bounds?:MovementBounds;hud:Hud;hunter?:HunterCombat;astral?:import('../combat/AstralCombat').AstralCombat;xeno?:import('../combat/XenobinderCombat').XenobinderCombat;
@@ -70,6 +72,24 @@ export class PartyExpedition {
 
  private resilience=new WeakMap<Enemy,number>();
  private balanced=false;
+ private rosterLoading=false;
+ private rosterLoadFailed=false;
+ private prepareRoster():boolean{
+  const cast=room.members.map(m=>({classId:m.profile.classId,sex:characterSex(m.profile.classId,m.profile.sex),visualPreset:m.profile.visualPreset}));
+  if(completeActorsReady(this.scene,cast))return true;
+  this.status.setVisible(true).setText(this.rosterLoadFailed?'PERSONAGEM NÃO CARREGOU · recarregue para tentar novamente':'PREPARANDO PERSONAGENS DA EQUIPE…');
+  if(!this.rosterLoading&&!this.rosterLoadFailed){
+   this.rosterLoading=true;
+   const failed=(file:Phaser.Loader.File)=>{if(file.type==='complete-source')this.rosterLoadFailed=true;};
+   const finish=()=>{this.rosterLoading=false;this.scene.load.off(Phaser.Loader.Events.FILE_LOAD_ERROR,failed);};
+   this.scene.load.on(Phaser.Loader.Events.FILE_LOAD_ERROR,failed);
+   this.scene.load.once(Phaser.Loader.Events.COMPLETE,finish);
+   this.scene.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>{this.scene.load.off(Phaser.Loader.Events.FILE_LOAD_ERROR,failed);this.scene.load.off(Phaser.Loader.Events.COMPLETE,finish);});
+   preloadCompleteActors(this.scene,cast);
+   if(!this.scene.load.isLoading())this.scene.load.start();
+  }
+  return false;
+ }
  private bossMirror:BossMirror;
  constructor(private scene:Phaser.Scene,private access:()=>PartyBridge){
   this.localPlayer=access().player;
@@ -100,7 +120,7 @@ export class PartyExpedition {
    if(this.balanced){for(const e of this.access().enemies){const base=this.resilience.get(e);if(base!==undefined)this.resizeHealth(e,base);}this.balanced=false;this.resilience=new WeakMap();}
    for(const actor of this.actors.values())actor.destroy();this.actors.clear();this.status.setVisible(false);return;
   }
-  if(!room.campaignRunning)return;
+  if(!room.campaignRunning||!this.prepareRoster())return;
   const a=this.access(),active=room.guests.filter(m=>m.connected),live=new Set(room.guests.map(m=>m.id));
   this.status.setVisible(!this.coarse.matches||!room.connected).setText(`EQUIPE ${1+active.length}/${room.campaign?.size??4} · ${room.connected?'SALA '+room.code:'RECONECTANDO'}`);
   // Fixed original team size. Disconnecting never lowers the encounter's HP.
@@ -159,7 +179,7 @@ export class PartyExpedition {
   return this.living.reduce((nearest,p)=>nearest.isDead||Phaser.Math.Distance.BetweenPoints(p.position,enemy.position)<Phaser.Math.Distance.BetweenPoints(nearest.position,enemy.position)?p:nearest,this.localPlayer);
  }
  updateGuest(now:number,dt:number):void{
-  if(!room.campaignRunning)return;
+  if(!room.campaignRunning||!this.prepareRoster())return;
   const a=this.access(),c=a.controls;
   const world=room.world;
   if(!room.connected||!room.peerConnected||room.hostPaused||!world?.players?.[room.id]||performance.now()-room.worldAt>1500){

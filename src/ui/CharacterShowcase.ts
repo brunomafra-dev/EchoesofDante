@@ -22,7 +22,7 @@ export class CharacterShowcase {
    audio:{noAudio:true},input:{keyboard:false,mouse:false,touch:false,gamepad:false},fps:{target:30},scene:[this.scene],
    callbacks:{postBoot:game=>{game.canvas.style.width='100%';game.canvas.style.height='100%';}}});
   if(import.meta.env.DEV)Object.assign(this.canvas,{__preview:this.scene,__previewGame:this.game});
-  if(['198','199','200','201','202'].includes(new URLSearchParams(location.search).get('refinement')??''))Object.assign(this.canvas,{__previewRead:()=>this.scene.inspect()});
+  if(['198','199','200','201','202','203'].includes(new URLSearchParams(location.search).get('refinement')??''))Object.assign(this.canvas,{__previewRead:()=>this.scene.inspect()});
  }
  setAppearance(look:CharacterAppearance):void{this.scene.setAppearance(look);}
  get ready():boolean{return this.scene.ready;}

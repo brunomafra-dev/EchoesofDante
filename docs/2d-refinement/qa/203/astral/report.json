@@ -1,0 +1,264 @@
+{
+  "passed": true,
+  "base": "http://localhost:5195",
+  "cases": [
+    {
+      "sex": "male",
+      "element": "energy",
+      "samples": [
+        {
+          "preset": "astral",
+          "basic": [
+            500,
+            482,
+            500
+          ],
+          "hp": [
+            444,
+            426,
+            444
+          ]
+        },
+        {
+          "preset": "hunter",
+          "basic": [
+            500,
+            482,
+            500
+          ],
+          "hp": [
+            443,
+            425,
+            443
+          ]
+        }
+      ]
+    },
+    {
+      "sex": "male",
+      "element": "fire",
+      "samples": [
+        {
+          "preset": "astral",
+          "basic": [
+            500,
+            482,
+            500
+          ],
+          "hp": [
+            422,
+            404,
+            422
+          ]
+        },
+        {
+          "preset": "hunter",
+          "basic": [
+            500,
+            482,
+            500
+          ],
+          "hp": [
+            422,
+            404,
+            422
+          ]
+        }
+      ]
+    },
+    {
+      "sex": "male",
+      "element": "water",
+      "samples": [
+        {
+          "preset": "astral",
+          "basic": [
+            500,
+            482,
+            500
+          ],
+          "hp": [
+            470,
+            452,
+            470
+          ]
+        },
+        {
+          "preset": "hunter",
+          "basic": [
+            500,
+            482,
+            500
+          ],
+          "hp": [
+            470,
+            452,
+            470
+          ]
+        }
+      ]
+    },
+    {
+      "sex": "male",
+      "element": "earth",
+      "samples": [
+        {
+          "preset": "astral",
+          "basic": [
+            500,
+            482,
+            500
+          ],
+          "hp": [
+            460,
+            442,
+            460
+          ]
+        },
+        {
+          "preset": "hunter",
+          "basic": [
+            500,
+            482,
+            500
+          ],
+          "hp": [
+            460,
+            442,
+            460
+          ]
+        }
+      ]
+    },
+    {
+      "sex": "female",
+      "element": "energy",
+      "samples": [
+        {
+          "preset": "astral",
+          "basic": [
+            500,
+            482,
+            500
+          ],
+          "hp": [
+            444,
+            426,
+            444
+          ]
+        },
+        {
+          "preset": "hunter",
+          "basic": [
+            500,
+            482,
+            500
+          ],
+          "hp": [
+            444,
+            426,
+            444
+          ]
+        }
+      ]
+    },
+    {
+      "sex": "female",
+      "element": "fire",
+      "samples": [
+        {
+          "preset": "astral",
+          "basic": [
+            500,
+            482,
+            500
+          ],
+          "hp": [
+            422,
+            404,
+            422
+          ]
+        },
+        {
+          "preset": "hunter",
+          "basic": [
+            500,
+            482,
+            500
+          ],
+          "hp": [
+            422,
+            404,
+            422
+          ]
+        }
+      ]
+    },
+    {
+      "sex": "female",
+      "element": "water",
+      "samples": [
+        {
+          "preset": "astral",
+          "basic": [
+            500,
+            482,
+            500
+          ],
+          "hp": [
+            470,
+            452,
+            470
+          ]
+        },
+        {
+          "preset": "hunter",
+          "basic": [
+            500,
+            482,
+            500
+          ],
+          "hp": [
+            470,
+            452,
+            470
+          ]
+        }
+      ]
+    },
+    {
+      "sex": "female",
+      "element": "earth",
+      "samples": [
+        {
+          "preset": "astral",
+          "basic": [
+            500,
+            482,
+            500
+          ],
+          "hp": [
+            460,
+            442,
+            460
+          ]
+        },
+        {
+          "preset": "hunter",
+          "basic": [
+            500,
+            482,
+            500
+          ],
+          "hp": [
+            460,
+            442,
+            460
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "fixture": "Explicit three passive 500 HP targets with full Astral resource; native basic/F/Q only, no boss victories or real saves."
+}

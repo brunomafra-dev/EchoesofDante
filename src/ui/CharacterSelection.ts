@@ -37,7 +37,7 @@ export class CharacterSelection {
     const title = element('div', 'selection-title');
     title.append(element('small', '', 'ECHOES OF DANTE / EXPEDIÇÃO'));
     const h = element('h2', '', context.title ?? (joiningRoom ? mode === 'create' ? 'Crie seu personagem para a sala' : 'Com qual personagem você vai jogar?' : mode === 'create' ? 'Crie o seu personagem' : 'Suas expedições')); h.id = 'shell-title'; title.append(h);
-    title.append(element('p', '', context.subtitle ?? (joiningRoom ? 'Use o personagem vinculado a esta campanha.' : mode === 'create' ? 'Escolha gênero, personagem, profissão e nome. Batedor e Batedora também podem usar o sabre do Guerreiro.' : 'Escolha um personagem. Sua jornada começa de onde você parou.')));
+    title.append(element('p', '', context.subtitle ?? (joiningRoom ? 'Use o personagem vinculado a esta campanha.' : mode === 'create' ? 'Escolha gênero, personagem, profissão e nome. Batedor e Batedora podem exercer as quatro profissões.' : 'Escolha um personagem. Sua jornada começa de onde você parou.')));
     header.append(title);
     const headerActions = element('div', 'selection-header-actions');
     headerActions.append(button('← VOLTAR', 'back', actions.back)); header.append(headerActions);
@@ -57,7 +57,7 @@ export class CharacterSelection {
   private creation(actions: Actions): void {
     const classes=['warrior','hunter','astral','xenobinder'] as const;
     const params=new URLSearchParams(location.search);
-    const review=location.pathname.endsWith('/campaign-playtest.html')&&params.get('refinement')==='202'&&params.has('preset')&&!this.joiningRoom;
+    const review=location.pathname.endsWith('/campaign-playtest.html')&&['202','203'].includes(params.get('refinement')??'')&&params.has('preset')&&!this.joiningRoom;
     const draft=this.context.draft??(review?{name:'',classId:visualPreset('warrior',params.get('class')),preset:visualPreset('warrior',params.get('preset')),sex:params.get('sex')==='male'?'male' as const:'female' as const}:undefined);
     let preset:CharacterClass=draft?.preset??draft?.classId??'warrior';
     let profession:CharacterClass=draft?.classId??(classes.find(c=>!this.occupied.includes(c))??'warrior');

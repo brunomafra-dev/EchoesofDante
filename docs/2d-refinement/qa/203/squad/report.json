@@ -1,0 +1,55 @@
+{
+  "passed": false,
+  "base": "http://localhost:5195",
+  "players": [],
+  "relay": [
+    {
+      "protocol": 16,
+      "identities": 1,
+      "scouts": 1,
+      "role": "host"
+    },
+    {
+      "protocol": 16,
+      "identities": 1,
+      "scouts": 1,
+      "role": "guest"
+    },
+    {
+      "protocol": 16,
+      "identities": 1,
+      "scouts": 1,
+      "role": "guest"
+    },
+    {
+      "protocol": 16,
+      "identities": 1,
+      "scouts": 1,
+      "role": "guest"
+    },
+    {
+      "protocol": 16,
+      "identities": 1,
+      "scouts": 1,
+      "role": "guest"
+    },
+    {
+      "protocol": 16,
+      "identities": 1,
+      "scouts": 1,
+      "role": "host"
+    },
+    {
+      "protocol": 16,
+      "identities": 1,
+      "scouts": 1,
+      "role": "guest"
+    }
+  ],
+  "errors": [
+    "Não foi possível carregar as poses deste personagem e profissão. Seu progresso está preservado."
+  ],
+  "checks": [],
+  "fixture": "Four separate automated Chrome instances; native creation, prologue skip, invitation and gameplay. Same scout visual, four unique professions. No boss victory/unlock fixture or real saves.",
+  "failure": "page.waitForFunction: Timeout 120000ms exceeded.\n    at C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\scripts\\qa-scout-squad.mjs:17:31"
+}

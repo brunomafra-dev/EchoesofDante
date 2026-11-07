@@ -10,7 +10,7 @@ const report={passed:false,base,fixture:revision==='201'?'Native inputs with com
 p.on('pageerror',e=>report.errors.push(e.message));p.on('response',r=>{if(r.status()>=400)report.errors.push(r.status()+' '+r.url());});
 try{
  await p.addInitScript(()=>{localStorage['echoes-of-dante.characters.v1']='keep-real-motion';localStorage['echoes-of-dante.journey.v1']='keep-real-journey';});
- for(const cls of process.env.QA_CLASSES?.split(',')??['warrior','hunter','astral','xenobinder'])for(const sex of ['male','female'])for(const kit of cls==='warrior'?['clothes','basic','reinforced']:['clothes']){
+ for(const cls of process.env.QA_CLASSES?.split(',')??['warrior','hunter','astral','xenobinder'])for(const sex of ['male','female'])for(const kit of cls==='warrior'||process.env.QA_ALL_KITS==='1'?['clothes','basic','reinforced']:['clothes']){
   const id=cls+'-'+sex+'-'+kit,head=sex==='female'?'tied':'curly';
   await p.goto(base+'/character-playtest.html?refinement='+revision+'&class='+cls+(preset?'&preset='+preset:'')+'&sex='+sex+'&kit='+kit+'&head='+head+'&hair=copper&pet=symbiont',{waitUntil:'domcontentloaded'});await p.waitForFunction(()=>window.__dante2dReview?.().ready);await p.locator('.playtest-navigation').evaluate(e=>e.open=false);await p.waitForTimeout(120);
   const before=await p.evaluate(()=>window.__dante2dReview());
@@ -27,8 +27,8 @@ try{
   for(const stage of ['right','left']){const walk=samples.filter(s=>s.phase===stage),frames=[...new Set(walk.map(s=>s.frame))];assert.ok(frames.length>=2,id+' has changing '+stage+' walk frames');}
   if(cls==='warrior')for(const stage of ['right','left']){const walk=samples.filter(s=>s.phase===stage),frames=[...new Set(walk.map(s=>s.frame))];assert.ok(frames.length>=4,id+' uses four genuine lateral phases '+stage);}
   assert.deepEqual(await p.evaluate(()=>[localStorage['echoes-of-dante.characters.v1'],localStorage['echoes-of-dante.journey.v1']]),['keep-real-motion','keep-real-journey']);
-  report.cases.push({cls,sex,kit,head:revision==='201'?'original':head,bakes:before.actor.bakes,frames:Object.fromEntries(['right','left','basic','charge'].map(stage=>[stage,[...new Set(samples.filter(s=>s.phase===stage).map(s=>s.frame))]]))});console.log('200 poses',id);
+  report.cases.push({cls,preset:preset??cls,sex,kit,head:['201','202','203'].includes(revision)?'original':head,bakes:before.actor.bakes,frames:Object.fromEntries(['right','left','basic','charge'].map(stage=>[stage,[...new Set(samples.filter(s=>s.phase===stage).map(s=>s.frame))]]))});console.log(revision+' poses',id);
  }
  assert.deepEqual(report.errors,[]);report.passed=true;
 }catch(e){report.failure=String(e.stack??e);await p.screenshot({path:out+'/failure.jpg',type:'jpeg',quality:90}).catch(()=>{});throw e;}
-finally{await writeFile(out+'/report.json',JSON.stringify(report,null,2)+'\n');await browser.close();console.log('200 motion',report.passed);}
+finally{await writeFile(out+'/report.json',JSON.stringify(report,null,2)+'\n');await browser.close();console.log(revision+' motion',report.passed);}
