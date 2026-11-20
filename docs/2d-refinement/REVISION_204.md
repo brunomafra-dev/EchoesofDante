@@ -26,7 +26,7 @@ Origens, limites de prompts e importação: [documentação do lote](../pioneer-
 - [x] Perfis salvos, IDs, aparência e jornadas sentinela preservados. Perfil legado sem `visualPreset` usa seu visual original; falha de asset não substitui corpo silenciosamente. Nenhuma vitória, desbloqueio ou recompensa foi simulada.
 - [x] O link registrado em `test-library.html` abre Pioneira + Manipuladora Astral e não cria perfil nem altera progresso.
 - [x] `git diff --check`.
-- [ ] GitHub/Vercel: pendente do commit/push e conferência pública desta entrega.
+- [x] Commit `e294965c502dcb870a1c2b8cd27cad4d7f3d33c` está em `origin/main`; Vercel marcou esse SHA como produção `READY` e associou o alias `echosofdante.vercel.app`. O catálogo público contém o acesso Pioneira + Manipuladora Astral; a biblioteca e a rota direta responderam HTTP 200.
 - [ ] Coop público no Render: adiado pelo usuário até o lote estar pronto para o playtest; o QA coop acima usa o relay local. O protocolo continua 16.
 
 ### Recursos medidos
@@ -35,4 +35,4 @@ Os 18 atlas somam 31.571.784 bytes (30,11 MiB) comprimidos. As 18 grades de font
 
 ## Avaliação humana — pendente
 
-QA automatizado não aprova aparência. O usuário ainda precisa revisar Pioneiro/Pioneira nas quatro profissões no link da biblioteca antes de avançar para outro personagem, níveis, mapas ou civilização. Vercel/publicação solo é verificada após o push; não implantar o Render antes desse playtest.
+QA automatizado não aprova aparência. O usuário ainda precisa revisar Pioneiro/Pioneira nas quatro profissões no [link público da biblioteca](https://echosofdante.vercel.app/test-library.html) — o acesso direto abre [Pioneira como Manipuladora Astral](https://echosofdante.vercel.app/campaign-playtest.html?refinement=204&presets=1&preset=warrior&class=astral&sex=female&v=0.1.204). A publicação solo está conferida. O coop público aguarda o deploy do Render que o usuário fará para seu playtest; não avançar para outro personagem, níveis, mapas ou civilização até receber essa avaliação.
