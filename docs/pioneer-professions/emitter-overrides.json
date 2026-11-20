@@ -1,0 +1,5 @@
+{
+  "hunter-female-none": {"4": {"point": [48, 55], "kind": "painted-muzzle", "note": "Rear-facing barrel tip has neutral metal shading, not a luminous core."}},
+  "hunter-male-none": {"4": {"point": [95, 56], "kind": "occluded-muzzle", "note": "Barrel is occluded by the rear-facing shoulder; optical origin follows the shoulder projection, with simulation ray unchanged."}},
+  "xenobinder-male-basic": {"4": {"atlasPoint": [128, 72], "kind": "painted-conductor-wrist", "note": "The rear-facing silver shell has a small colored sensor; anchor the visible green wrist conductor on the raised hand, not that helmet sensor."}}
+}

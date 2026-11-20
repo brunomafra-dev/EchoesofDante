@@ -3,6 +3,7 @@ import type { PlayableClass } from '../config/classes';
 import registration from './actorRegistration.json';
 import warriorRegistration from './warriorWalkRegistration.json';
 import scoutEmitters from './scoutEmitterAnchors.json';
+import pioneerEmitters from './pioneerEmitterAnchors.json';
 
 export const COMPLETE_FRAME=192, COMPLETE_FEET=183, COMPLETE_DISPLAY=128, COMPLETE_COLUMNS=8;
 const previousGait=location.pathname.endsWith('/character-cohesion.html')&&new URLSearchParams(location.search).get('refinement')==='199'&&new URLSearchParams(location.search).get('gait')==='198';
@@ -59,6 +60,7 @@ function authoredRegistration(classId:PlayableClass,sex:CharacterSex,style:Prote
 }
 const SCOUT_SABER_HANDS={female:[[94,106],[130,95],[116,85],[125,85],[118,80],[72,82],[71,83],[73,105]],male:[[86,117],[132,111],[121,95],[135,87],[130,81],[80,85],[65,83],[75,110]]} as const;
 function paintedEmitter(classId:PlayableClass,sex:CharacterSex,style:ProtectionStyle,preset:PlayableClass,row:number):readonly [number,number]{
+ if(preset==='warrior'&&classId!=='warrior'){const p=pioneerEmitters[classId][sex][style][row];return[p[0],p[1]];}
  if(preset==='hunter'){
   if(classId==='warrior')return SCOUT_SABER_HANDS[sex][row];
   if(classId==='astral'||classId==='xenobinder'){const p=scoutEmitters[classId][sex][style][row];return[p[0],p[1]];}

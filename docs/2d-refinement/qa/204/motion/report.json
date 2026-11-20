@@ -1,0 +1,633 @@
+{
+  "passed": true,
+  "base": "http://localhost:5185",
+  "fixture": "Native inputs in isolated character lab. Gear/appearance URLs are display fixtures only. Real campaign untouched.",
+  "cases": [
+    {
+      "cls": "hunter",
+      "preset": "warrior",
+      "sex": "male",
+      "kit": "clothes",
+      "head": "curly",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          38,
+          39,
+          43
+        ],
+        "left": [
+          59,
+          56,
+          57,
+          58,
+          20
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "hunter",
+      "preset": "warrior",
+      "sex": "male",
+      "kit": "basic",
+      "head": "curly",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          40,
+          41,
+          42,
+          34,
+          38,
+          39,
+          43
+        ],
+        "left": [
+          20,
+          59,
+          56,
+          57,
+          58
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          11
+        ]
+      }
+    },
+    {
+      "cls": "hunter",
+      "preset": "warrior",
+      "sex": "male",
+      "kit": "reinforced",
+      "head": "curly",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          40,
+          41,
+          42,
+          34,
+          38,
+          39,
+          43
+        ],
+        "left": [
+          20,
+          59,
+          56,
+          57,
+          58
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "hunter",
+      "preset": "warrior",
+      "sex": "female",
+      "kit": "clothes",
+      "head": "tied",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          40,
+          41,
+          42,
+          34,
+          38,
+          39,
+          43
+        ],
+        "left": [
+          59,
+          56,
+          57,
+          58,
+          20,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "hunter",
+      "preset": "warrior",
+      "sex": "female",
+      "kit": "basic",
+      "head": "tied",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          38,
+          39,
+          43
+        ],
+        "left": [
+          20,
+          56,
+          57,
+          58,
+          59,
+          8
+        ],
+        "basic": [
+          11,
+          8
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "hunter",
+      "preset": "warrior",
+      "sex": "female",
+      "kit": "reinforced",
+      "head": "tied",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          38,
+          39,
+          43
+        ],
+        "left": [
+          56,
+          57,
+          58,
+          59
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          11
+        ]
+      }
+    },
+    {
+      "cls": "astral",
+      "preset": "warrior",
+      "sex": "male",
+      "kit": "clothes",
+      "head": "curly",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36
+        ],
+        "left": [
+          20,
+          59,
+          56,
+          57,
+          58
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "astral",
+      "preset": "warrior",
+      "sex": "male",
+      "kit": "basic",
+      "head": "curly",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36,
+          43
+        ],
+        "left": [
+          59,
+          56,
+          57,
+          58,
+          20
+        ],
+        "basic": [
+          11,
+          8
+        ],
+        "charge": [
+          11
+        ]
+      }
+    },
+    {
+      "cls": "astral",
+      "preset": "warrior",
+      "sex": "male",
+      "kit": "reinforced",
+      "head": "curly",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36
+        ],
+        "left": [
+          59,
+          56,
+          57,
+          58,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "astral",
+      "preset": "warrior",
+      "sex": "female",
+      "kit": "clothes",
+      "head": "tied",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36,
+          43,
+          20
+        ],
+        "left": [
+          57,
+          58,
+          59,
+          56,
+          20,
+          8
+        ],
+        "basic": [
+          11,
+          8
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "astral",
+      "preset": "warrior",
+      "sex": "female",
+      "kit": "basic",
+      "head": "tied",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36
+        ],
+        "left": [
+          58,
+          59,
+          56,
+          57
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "astral",
+      "preset": "warrior",
+      "sex": "female",
+      "kit": "reinforced",
+      "head": "tied",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36
+        ],
+        "left": [
+          59,
+          56,
+          57,
+          58,
+          20,
+          8
+        ],
+        "basic": [
+          11,
+          8
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "preset": "warrior",
+      "sex": "male",
+      "kit": "clothes",
+      "head": "curly",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36,
+          43
+        ],
+        "left": [
+          59,
+          56,
+          57,
+          58
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "preset": "warrior",
+      "sex": "male",
+      "kit": "basic",
+      "head": "curly",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36
+        ],
+        "left": [
+          58,
+          59,
+          56,
+          57,
+          8
+        ],
+        "basic": [
+          11,
+          8
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "preset": "warrior",
+      "sex": "male",
+      "kit": "reinforced",
+      "head": "curly",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36,
+          43
+        ],
+        "left": [
+          59,
+          56,
+          57,
+          58,
+          20
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          11
+        ]
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "preset": "warrior",
+      "sex": "female",
+      "kit": "clothes",
+      "head": "tied",
+      "bakes": 1,
+      "frames": {
+        "right": [
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36,
+          43
+        ],
+        "left": [
+          57,
+          58,
+          59,
+          56,
+          20
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "preset": "warrior",
+      "sex": "female",
+      "kit": "basic",
+      "head": "tied",
+      "bakes": 3,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          36,
+          43
+        ],
+        "left": [
+          57,
+          58,
+          59,
+          56,
+          20,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    },
+    {
+      "cls": "xenobinder",
+      "preset": "warrior",
+      "sex": "female",
+      "kit": "reinforced",
+      "head": "tied",
+      "bakes": 4,
+      "frames": {
+        "right": [
+          20,
+          40,
+          41,
+          42,
+          34,
+          35,
+          39,
+          43
+        ],
+        "left": [
+          58,
+          59,
+          56,
+          57,
+          20,
+          8
+        ],
+        "basic": [
+          8,
+          11
+        ],
+        "charge": [
+          8,
+          11
+        ]
+      }
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "base": "http://localhost:5185",
+  "checks": [
+    {
+      "href": "campaign-playtest.html?refinement=204&presets=1&preset=warrior&class=astral&sex=female&v=0.1.204",
+      "preview": {
+        "ready": true,
+        "running": false,
+        "identity": "astral",
+        "visualPreset": "warrior",
+        "sex": "female",
+        "appearance": {
+          "skin": "original",
+          "hair": "original",
+          "head": "original"
+        },
+        "frame": 0,
+        "bakes": 1,
+        "hollow": {
+          "texture": "finish-hollow",
+          "frame": 0,
+          "rotation": 0
+        },
+        "guardRemaining": 0,
+        "command": "SALTO SIMBIÓTICO",
+        "effects": []
+      },
+      "profileCreated": false,
+      "progressChanged": false
+    }
+  ],
+  "errors": [],
+  "fixture": "Opens the registered library link in an isolated browser. Does not create a profile, change progress, or simulate a boss win."
+}

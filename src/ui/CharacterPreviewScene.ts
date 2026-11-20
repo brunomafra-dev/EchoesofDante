@@ -34,7 +34,7 @@ export class CharacterPreviewScene extends Phaser.Scene {
   preloadPixelFX(this);
   const base=import.meta.env.BASE_URL+'assets/visual/';
   preloadCompleteSource(this,completeKey(this.identity,this.sex,'none',this.visualPreset),completeAsset(this.identity,this.sex,'none',this.visualPreset));
-  if(this.identity==='hunter')preloadCompleteSource(this,completeKey('hunter',this.sex,'basic'),completeAsset('hunter',this.sex,'basic'));
+  if(this.identity==='hunter'&&this.visualPreset===this.identity)preloadCompleteSource(this,completeKey('hunter',this.sex,'basic'),completeAsset('hunter',this.sex,'basic'));
   for(const key of ['hollow-body','hollow-forelimbs','hollow-rear-limbs'])this.load.image(key,`${base}characters/${key}.png`);
   this.load.spritesheet('finish-hollow',`${import.meta.env.BASE_URL}assets/experiments/forest-finish/hollow-v3.webp`,{frameWidth:256,frameHeight:256});
   if(this.identity==='warrior')this.load.image('warrior-starter-weapon',base+'characters/warrior-starter-weapon.png');

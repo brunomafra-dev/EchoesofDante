@@ -1,0 +1,289 @@
+{
+  "passed": true,
+  "assets": [
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-hunter-female-none-v1.png",
+      "sha256": "e6e78571cacae75ecf1f0acbf80940d626698239541866c8a8377693b1ed2ee2",
+      "bytes": 1620443,
+      "bodyHeightRange": [
+        153.69,
+        167.13
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-hunter-female-basic-v1.png",
+      "sha256": "e67bf8f0aaf2fe64080cf3b333f406c1d79164cf0c2ce9b197d97de4e1976054",
+      "bytes": 1837628,
+      "bodyHeightRange": [
+        154.06,
+        168.02
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-hunter-female-reinforced-v1.png",
+      "sha256": "b91644cd965de33dba8ede39183eff85f3470c77217f949b966ccf72f6894111",
+      "bytes": 1847505,
+      "bodyHeightRange": [
+        154.06,
+        166.02
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-hunter-male-none-v1.png",
+      "sha256": "5b0f56b5a30d7890e33f9378e42e1b983718cf2789370443fa06b98d33d683cd",
+      "bytes": 1581843,
+      "bodyHeightRange": [
+        153.0,
+        165.01
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-hunter-male-basic-v1.png",
+      "sha256": "e0aac41ebded7d43dda2b01c9be33155323383a9906c734c78297b48eafccb69",
+      "bytes": 1820613,
+      "bodyHeightRange": [
+        158.18,
+        167.88
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-hunter-male-reinforced-v1.png",
+      "sha256": "bf6f5665e95f8561647f3a3092cd5c2006f8116e824c2653ea62d4317a834604",
+      "bytes": 1859149,
+      "bodyHeightRange": [
+        156.33,
+        164.96
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-astral-female-none-v1.png",
+      "sha256": "0613b8528a2021b2bef67d7575b71587af6cd100b5ec3bc8c40e9c1c2e305810",
+      "bytes": 1517892,
+      "bodyHeightRange": [
+        151.78,
+        169.22
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-astral-female-basic-v1.png",
+      "sha256": "ef982766a14d8519824c18feb083f053a90cb1455109722ca864b314013bafee",
+      "bytes": 1761866,
+      "bodyHeightRange": [
+        158.07,
+        167.98
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-astral-female-reinforced-v1.png",
+      "sha256": "c2ebf1864bb546bab33a544bb036b7778c69329f1dcbd21e572fa46a70b39c26",
+      "bytes": 1880464,
+      "bodyHeightRange": [
+        153.07,
+        164.0
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-astral-male-none-v1.png",
+      "sha256": "46dd24443577a2abf508c0ff0759e8c5c9dc8556c71f11a456d594da071f4a37",
+      "bytes": 1688532,
+      "bodyHeightRange": [
+        154.66,
+        164.0
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-astral-male-basic-v1.png",
+      "sha256": "c307f5ca377c149151e1c1abbd6e6a50a009e4e0a1b4e1c4f65b0483e909cc67",
+      "bytes": 1823419,
+      "bodyHeightRange": [
+        157.89,
+        170.15
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-astral-male-reinforced-v1.png",
+      "sha256": "c71e1296e9f10177d31b54a7dffd76d401ac5604add200e842380c0359d2cb55",
+      "bytes": 1899872,
+      "bodyHeightRange": [
+        150.08,
+        164.0
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-xenobinder-female-none-v1.png",
+      "sha256": "39e01c1a26d71caaa1fc233e0f7d891481d5c797b06984e35885fc1138641bd6",
+      "bytes": 1519466,
+      "bodyHeightRange": [
+        150.84,
+        165.01
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-xenobinder-female-basic-v1.png",
+      "sha256": "67b120de3fd3f06d3f0a06eeae6de8d78284cdb4cf9f6204fdd88d94a315b0f4",
+      "bytes": 1781898,
+      "bodyHeightRange": [
+        149.53,
+        168.8
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-xenobinder-female-reinforced-v1.png",
+      "sha256": "aacec33c152d070fe82472c339e2410c755855aafda70abb00da8cbfa428b4ac",
+      "bytes": 1803562,
+      "bodyHeightRange": [
+        145.12,
+        166.0
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-xenobinder-male-none-v1.png",
+      "sha256": "8c7859a5bd40101fbb9cccf68f7e5f2c27ba9503b2d3ea638c7efb908894baeb",
+      "bytes": 1591304,
+      "bodyHeightRange": [
+        142.2,
+        171.31
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-xenobinder-male-basic-v1.png",
+      "sha256": "33563b33c70085132312ab6507b0035275cb3f8fe62396fa541ba590a6d3702a",
+      "bytes": 1798483,
+      "bodyHeightRange": [
+        153.13,
+        168.02
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    },
+    {
+      "file": "public/assets/visual/complete-actors/cross/warrior-xenobinder-male-reinforced-v1.png",
+      "sha256": "5033e9557bfeebb921d65e50d804b9135fa133015935e14e55abbc7cc56e6486",
+      "bytes": 1937845,
+      "bodyHeightRange": [
+        148.91,
+        167.07
+      ],
+      "frames": 64,
+      "authoredFigures": 48,
+      "directions": 8,
+      "distinctWalkPhases": 4,
+      "emitterOnInstrument": true,
+      "decodedBytes": 9437184
+    }
+  ],
+  "summary": {
+    "preset": "warrior",
+    "revision": "204",
+    "atlasCount": 18,
+    "compressedBytes": 31571784,
+    "decodedBytesPerAtlas": 9437184,
+    "emitterMethods": {
+      "neutral-shaded-instrument-tip": 12,
+      "occluded-muzzle": 1,
+      "painted-conductor-wrist": 1,
+      "painted-energy-core": 129,
+      "painted-muzzle": 1
+    }
+  }
+}

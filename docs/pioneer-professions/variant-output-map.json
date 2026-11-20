@@ -1,0 +1,14 @@
+{
+  "batch": "01a173c1-3677-75b2-89b6-2f3640ffad61",
+  "assignmentBasis": "Reviewed the generated action rows and assigned the ordered outputs to profession, sex, and gear variants. Original literal prompts for these eight outputs were not archived.",
+  "outputs": [
+    {"profession":"astral","sex":"female","style":"basic","source":"warrior-astral-female-basic.png","generated":"exec-1de96228-7e86-4007-bae5-b49098960380.png"},
+    {"profession":"astral","sex":"male","style":"basic","source":"warrior-astral-male-basic.png","generated":"exec-699d4f02-13fd-4b2d-938b-5ff5911a33bd.png"},
+    {"profession":"astral","sex":"female","style":"reinforced","source":"warrior-astral-female-reinforced.png","generated":"exec-2c38fb17-542c-432f-b3a0-7edb30bbc8b8.png"},
+    {"profession":"astral","sex":"male","style":"reinforced","source":"warrior-astral-male-reinforced.png","generated":"exec-7493d2ed-c96a-48e4-b2a4-a6fa339f9699.png"},
+    {"profession":"xenobinder","sex":"female","style":"basic","source":"warrior-xenobinder-female-basic.png","generated":"exec-b5a23d19-eadd-415c-ae00-2cea7168f6d5.png"},
+    {"profession":"xenobinder","sex":"male","style":"basic","source":"warrior-xenobinder-male-basic.png","generated":"exec-0c8f4907-7577-4959-96b9-05471ad11438.png"},
+    {"profession":"xenobinder","sex":"female","style":"reinforced","source":"warrior-xenobinder-female-reinforced.png","generated":"exec-0be1ced5-e501-4cfd-980a-2dfcc92cfc2b.png"},
+    {"profession":"xenobinder","sex":"male","style":"reinforced","source":"warrior-xenobinder-male-reinforced.png","generated":"exec-655e534e-c7ca-43e4-802d-d582dc3cdc12.png"}
+  ]
+}
