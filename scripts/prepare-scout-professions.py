@@ -1,4 +1,4 @@
-"""Register complete authored scout figures for Astral/Beast Binder.
+"""Register complete authored cross-identity figures for all supported presets.
 
 No body segmentation or pose generation. Requires local Pillow/NumPy/OpenCV;
 the browser/build consume only the prepared PNGs and measured palm anchors.
@@ -9,16 +9,17 @@ import cv2
 import numpy as np
 from PIL import Image
 
-options=argparse.ArgumentParser();options.add_argument('--preset',choices=['hunter','warrior'],default='hunter');args=options.parse_args()
+options=argparse.ArgumentParser();options.add_argument('--preset',choices=['hunter','warrior','astral'],default='hunter');args=options.parse_args()
 preset=args.preset
 ROOT=Path(__file__).resolve().parents[1]
-DOC=ROOT/('docs/scout-professions' if preset=='hunter' else 'docs/pioneer-professions')
+DOC=ROOT/{'hunter':'docs/scout-professions','warrior':'docs/pioneer-professions','astral':'docs/erudite-professions'}[preset]
 OUT=ROOT/'public/assets/visual/complete-actors/cross'
 OUT.mkdir(parents=True,exist_ok=True)
 report={'mode':'built-in imagegen; offline whole-figure registration','assets':[]}
 emitters={}
 overrides=json.loads((DOC/'emitter-overrides.json').read_text(encoding='utf8')) if (DOC/'emitter-overrides.json').exists() else {}
-for profession in (['astral','xenobinder'] if preset=='hunter' else ['hunter','astral','xenobinder']):
+professions={'hunter':['astral','xenobinder'],'warrior':['hunter','astral','xenobinder'],'astral':['warrior','hunter','xenobinder']}[preset]
+for profession in professions:
  emitters[profession]={}
  for sex in ['female','male']:
   emitters[profession][sex]={}
@@ -51,10 +52,10 @@ for profession in (['astral','xenobinder'] if preset=='hunter' else ['hunter','a
      frame=Image.new('RGBA',(192,192));frame.alpha_composite(cut,(x,y));poses.append(frame)
      measurements.append({'sourceRow':row,'direction':col,'bodyHeight':round((bottom-top)*scale,2),'scale':scale,'floor':183,'alphaBounds':frame.getchannel('A').getbbox()})
      if row==5:
-      if profession in ['astral','hunter']:core=solid&(rgb[:,:,1]>125)&(rgb[:,:,2]>135)&(rgb[:,:,1]>rgb[:,:,0]*1.35)&(rgb[:,:,2]>rgb[:,:,0]*1.35)
+      if profession in ['astral','hunter','warrior']:core=solid&(rgb[:,:,1]>125)&(rgb[:,:,2]>135)&(rgb[:,:,1]>rgb[:,:,0]*1.35)&(rgb[:,:,2]>rgb[:,:,0]*1.35)
       else:core=solid&(rgb[:,:,1]>110)&(rgb[:,:,0]<210)&(rgb[:,:,1]>rgb[:,:,0]*.9)&(rgb[:,:,1]>rgb[:,:,2]*1.3)
-      if preset=='warrior':
-       if profession in ['hunter','astral']:core=solid&(rgb[:,:,1]>75)&(rgb[:,:,2]>85)&(rgb[:,:,1]>rgb[:,:,0]*1.15)&(rgb[:,:,2]>rgb[:,:,0]*1.2)
+      if preset in ('warrior','astral'):
+       if profession in ['hunter','astral','warrior']:core=solid&(rgb[:,:,1]>75)&(rgb[:,:,2]>85)&(rgb[:,:,1]>rgb[:,:,0]*1.15)&(rgb[:,:,2]>rgb[:,:,0]*1.2)
        if profession=='xenobinder':
         green=(rgb[:,:,1]>105)&(rgb[:,:,1]>rgb[:,:,0]*1.2)&(rgb[:,:,1]>rgb[:,:,2]*1.5)
         amber=(rgb[:,:,0]>115)&(rgb[:,:,1]>100)&(rgb[:,:,2]<rgb[:,:,1]*.65)&(rgb[:,:,0]>rgb[:,:,2]*1.5)
@@ -96,6 +97,7 @@ for profession in (['astral','xenobinder'] if preset=='hunter' else ['hunter','a
    emitters[profession][sex][style]=anchors
    report['assets'].append({'profession':profession,'sex':sex,'style':style,'source':source.relative_to(ROOT).as_posix(),'sourceSha256':hashlib.sha256(source.read_bytes()).hexdigest(),'file':output.relative_to(ROOT).as_posix(),'sha256':hashlib.sha256(output.read_bytes()).hexdigest(),'bytes':output.stat().st_size,'atlas':[1536,1536],'frames':64,'authoredFigures':48,'emitterAnchors':anchors,'emitterMethods':anchor_methods,'measurements':measurements})
 (DOC/'measurements.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf8')
-expected=12 if preset=='hunter' else 18
-if len(report['assets'])==expected:(ROOT/('src/visual/scoutEmitterAnchors.json' if preset=='hunter' else 'src/visual/pioneerEmitterAnchors.json')).write_text(json.dumps(emitters,indent=2)+'\n',encoding='utf8')
+expected={'hunter':12,'warrior':18,'astral':18}[preset]
+anchor_file={'hunter':'scoutEmitterAnchors.json','warrior':'pioneerEmitterAnchors.json','astral':'eruditeEmitterAnchors.json'}[preset]
+if len(report['assets'])==expected:(ROOT/'src/visual'/anchor_file).write_text(json.dumps(emitters,indent=2)+'\n',encoding='utf8')
 print('Packed',len(report['assets']),'complete',preset,'atlases')

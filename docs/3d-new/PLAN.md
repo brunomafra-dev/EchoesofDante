@@ -1,0 +1,44 @@
+# Echoes of Dante 3D (novo) · plano de partida
+
+Estado: **proposta para aprovação**. Nada implementado. Nenhum arquivo de jogo foi alterado por este plano.
+
+## Decisões do usuário
+- O 3D novo **substitui o 2D no futuro**, mas só quando estiver **extremamente maduro**. Até lá o 2D continua sendo o produto.
+- **Recomeçar do zero.** O protótipo 3D atual (`src/experiments/arrival-3d`, feito em outra ferramenta) não é continuado; permanece intocado como arquivo de referência.
+- **Não reaproveitar personagens nem armas** do protótipo: ficaram rígidos, com formas que não agradaram, e as armas foram rejeitadas. Reaproveitam-se apenas assets de cenário com licença conferida (árvores, rochas, terreno).
+- Visual alvo: ARPG sombrio (Diablo, Path of Exile). Cada passo visual passa por teste lado a lado antes de entrar.
+
+## Arquitetura
+1. **Núcleo compartilhado** (`src/core/`, sem Phaser nem Three): regras, dados, combate, missões, economia, progressão e saves. Os 55 arquivos de `src/config` já são independentes de motor; os sistemas dependentes do Phaser (28 de 43) são separados por etapas, preservando o 2D.
+2. **Renderizador 3D novo** (`src/three/`, entrada própria `3d.html`): consome o núcleo. Código legível, sem linhas minificadas.
+3. **Coop** reutiliza o `server/relay.mjs` (protocolo 16); o 3D só entra com capacidade negociada, sem quebrar clientes 2D.
+4. **2D intocado** até o portão de maturidade.
+
+## Personagens e armas (partida do zero)
+Candidatos avaliados em prévia lado a lado, na câmera do jogo, antes de qualquer escolha:
+- Humanos de pacotes livres com **biblioteca de animação grande** (caminhada natural, idles variados, golpes, magia).
+- Humanos montados no Blender (add-on livre, saída CC0), com animações livres compatíveis.
+- Personagens do Mixamo (gratuito, exige conta Adobe; o usuário baixaria).
+Critérios: formas naturais, rig compatível com muitas animações, **troca de armadura e equipamento por peças**, licença clara.
+Armas novas: sabre, carabina, manopla e luva modeladas no Blender por script, com materiais pintados e partes emissivas, ou pacotes livres de armas de ficção científica. Testadas na mão do personagem antes de aprovar.
+
+## Fatias (cada uma termina com link de teste e espera sua validação)
+- **S0 Fundação:** esqueleto do projeto 3D, extração do núcleo (primeiro `config`, depois movimento e combate), orçamento de desempenho, harness de QA.
+- **S1 Herói:** personagem novo, andar, câmera, visual sombrio.
+- **S2 Combate:** quatro profissões com os números do 2D, armas novas, efeitos.
+- **S3 Mundo:** acampamento, floresta, cavernas, bestiário.
+- **S4 Jogo:** missões, inventário, progressão, saves.
+- **S5 Coop.**
+- **S6 Paridade:** auditoria contra o 2D, desempenho em máquina fraca e celular.
+
+## Portão de maturidade (para substituir o 2D)
+Paridade de conteúdo e sistemas com o 2D, coop funcionando, desempenho aceitável em máquina fraca e celular, QA automatizado completo e **aprovação visual e de jogabilidade do usuário**. Sem todos os itens, o 2D permanece.
+
+## Processo
+Cada fatia: QA técnico e aprovação humana informados separadamente; link em `test-library.html`; aguardar validação antes da próxima; sem commit ou publicação sem autorização.
+
+## Estado em 24/11/2026
+- **Armas:** quatro armas novas modeladas por script (`scripts/asset-tools/3d-new/make_weapons.py`, GLB em `public/assets/3d-new/weapons/`). Sabre e carabina aprovados pelo usuário; manopla Astral grossa e luva do Domador fraca, a refazer.
+- **Criador de personagem:** caminho escolhido (cabelo, sobrancelha, rosto, pele, roupa, como Diablo e Path of Exile) com MPFB2 e pacotes CC0 do MakeHuman (`install_packs.py`, `make_human.py`, `patch_glb.py`). Prova com seis humanos variados: rostos, peles, cabelos e armaduras funcionam. Ajustes de gênero são assados na malha antes da exportação; materiais de exportação corrigidos para recorte e opaco.
+- **Pendente:** rig e biblioteca de animações (Mixamo, baixada pelo usuário, ou retarget), camada de roupa de base menos casual, sliders de rosto e corpo em tempo de execução, equipamento por peças, e a fundação do núcleo compartilhado.
+- **Visual:** modo opt-in `?look=arpg` no 3D atual (`src/experiments/arrival-3d/ArpgLook.ts`) como referência de clima; o 3D novo não depende dele.

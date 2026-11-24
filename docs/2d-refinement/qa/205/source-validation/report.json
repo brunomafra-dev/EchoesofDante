@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "sourceDir": "C:\\Users\\1\\Desktop\\Bruno Mafra\\Echoes of Dante\\docs\\erudite-professions\\source",
+  "expected": 18,
+  "found": 1,
+  "missing": [
+    "astral-warrior-female-basic.png",
+    "astral-warrior-female-reinforced.png",
+    "astral-warrior-male-none.png",
+    "astral-warrior-male-basic.png",
+    "astral-warrior-male-reinforced.png",
+    "astral-hunter-female-none.png",
+    "astral-hunter-female-basic.png",
+    "astral-hunter-female-reinforced.png",
+    "astral-hunter-male-none.png",
+    "astral-hunter-male-basic.png",
+    "astral-hunter-male-reinforced.png",
+    "astral-xenobinder-female-none.png",
+    "astral-xenobinder-female-basic.png",
+    "astral-xenobinder-female-reinforced.png",
+    "astral-xenobinder-male-none.png",
+    "astral-xenobinder-male-basic.png",
+    "astral-xenobinder-male-reinforced.png"
+  ],
+  "sheets": {
+    "astral-warrior-female-none.png": {
+      "errors": [],
+      "warnings": [],
+      "sha256": "f147aa1b198b8858fb3e1ce45acaf8146ae404276187fd0ec75aa4027402e97b"
+    }
+  },
+  "duplicates": [],
+  "complete": false
+}

@@ -43,6 +43,7 @@ export class CoopSession {
  private needsIdentities=false;
  private needsScouts=false;
  private needsPioneers=false;
+ private needsErudites=false;
  outpostsAvailable=false;
  signalsAvailable=false;
  circuitsAvailable=false;
@@ -139,6 +140,7 @@ export class CoopSession {
   this.needsIdentities=profile.visualPreset!==profile.classId;
   this.needsScouts=profile.visualPreset==='hunter'&&(profile.classId==='astral'||profile.classId==='xenobinder');
   this.needsPioneers=profile.visualPreset==='warrior'&&profile.classId!=='warrior';
+  this.needsErudites=profile.visualPreset==='astral'&&profile.classId!=='astral';
   this.needsBonds=profile.companion==='bulwark'||profile.companion==='frostling';
   this.needsCuts=profile.appearance?.head==='curly'||profile.appearance?.head==='tied';
   this.needsPresentation=Object.values(profile.appearance??{}).some(v=>v!=='original')||profile.companion!=='symbiont';
@@ -147,13 +149,14 @@ export class CoopSession {
  private open(request:object,retry:boolean,resolve:()=>void=()=>{},reject:(reason:Error)=>void=()=>{}):void {
   const ws=new WebSocket(this.url);this.socket=ws;let joined=false;
   this.timeout=setTimeout(()=>{if(this.socket===ws&&!joined){ws.close();if(!retry){this.fail('O cooperativo demorou para responder. Tente novamente em alguns segundos.');reject(new Error(this.message));}}},retry?5000:60000);
-  ws.onopen=()=>{if(this.socket===ws)ws.send(JSON.stringify({...request,identities:1,scouts:1,pioneers:1}));};
+  ws.onopen=()=>{if(this.socket===ws)ws.send(JSON.stringify({...request,identities:1,scouts:1,pioneers:1,erudites:1}));};
   ws.onmessage=event=>{
    if(this.socket!==ws)return;
    let m;try{m=JSON.parse(event.data);}catch{return;}
    if(m.type==='joined'&&(m.role==='host'||m.role==='guest')){
     if(this.needsPioneers&&m.pioneers!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda o Pioneiro nas quatro profissões. Seu personagem e progresso estão preservados.');reject(new Error(this.message));return;}
     if(this.needsScouts&&m.scouts!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda o Batedor nas quatro profissões. Seu personagem e progresso estão preservados.');reject(new Error(this.message));return;}
+    if(this.needsErudites&&m.erudites!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda o Erudito nas quatro profissões. Seu personagem e progresso estão preservados.');reject(new Error(this.message));return;}
     if(this.needsIdentities&&m.identities!==1){clearTimeout(this.timeout);ws.send(JSON.stringify({type:'leave'}));this.fail('O servidor cooperativo aguarda os personagens com profissão independente. Seu personagem e progresso estão preservados.');reject(new Error(this.message));return;}
     const needsOutpost=new URLSearchParams(location.search).get('permanence')==='outpost'||new URLSearchParams(location.search).has('outpost-support')||this.rewards.load()?.missions?.accepted.includes('settle-outpost');
     const needsSignal=new URLSearchParams(location.search).get('permanence')==='signal'||this.rewards.load()?.missions?.accepted.includes('settle-signal');
@@ -200,7 +203,7 @@ export class CoopSession {
    }else if(m.type==='chat'&&joined){this.receiveChat(m.message);
    }else if(m.type==='chat-error'&&joined){this.failChat(String(m.message));
    }else if(m.type==='error'){
-    this.message=this.needsPioneers&&!joined&&m.message==='Personagem inválido.'?'O servidor cooperativo aguarda o Pioneiro nas quatro profissões. Seu personagem e progresso estão preservados.':this.needsScouts&&!joined&&m.message==='Personagem inválido.'?'O servidor cooperativo aguarda o Batedor nas quatro profissões. Seu personagem e progresso estão preservados.':String(m.message);
+    this.message=this.needsErudites&&!joined&&m.message==='Personagem inválido.'?'O servidor cooperativo aguarda o Erudito nas quatro profissões. Seu personagem e progresso estão preservados.':this.needsPioneers&&!joined&&m.message==='Personagem inválido.'?'O servidor cooperativo aguarda o Pioneiro nas quatro profissões. Seu personagem e progresso estão preservados.':this.needsScouts&&!joined&&m.message==='Personagem inválido.'?'O servidor cooperativo aguarda o Batedor nas quatro profissões. Seu personagem e progresso estão preservados.':String(m.message);
     if(!joined){clearTimeout(this.timeout);this.fail(this.message);reject(new Error(this.message));}
     else{this.travelling=false;this.changed();}
    }else if(m.type==='pause'&&this.role==='guest'){

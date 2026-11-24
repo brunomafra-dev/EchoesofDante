@@ -1,0 +1,5 @@
+{
+  "status": "pending-source-art",
+  "note": "No sources exist yet. Fill one entry per delivered grid: profession (warrior|hunter|xenobinder), sex (female|male), style (none|basic|reinforced), source file under source/, and the origin of the image (tool, date, prompt archive path). Archive literal prompts this time.",
+  "outputs": []
+}

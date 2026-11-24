@@ -12,9 +12,10 @@ function request(ws,data){return new Promise((resolve,reject)=>{const timeout=se
 function campaign(id,memberId='host-person'){return{mode:'coop',id,hostId:'host-person',memberId,memberKey:(memberId==='host-person'?'ab':'cd').repeat(24),introSeen:true,difficulty:'normal',size:2,crew:[]};}
 const profile=(classId,visualPreset,characterId='host-person')=>({classId,visualPreset,characterId,name:'QA',sex:'female'});
 try{
- const oldHost=await socket(),old=await request(oldHost,{type:'create',area:'base',profile:profile('hunter'),campaign:campaign('legacy-campaign')});assert.equal(old.type,'joined');assert.equal(old.members[0].profile.visualPreset,'hunter');
+ assert.equal(relay.status().erudites,1);
+ const oldHost=await socket(),old=await request(oldHost,{type:'create',area:'base',profile:profile('hunter'),campaign:campaign('legacy-campaign')});assert.equal(old.type,'joined');assert.equal(old.erudites,1);assert.equal(old.members[0].profile.visualPreset,'hunter');
  const guest=await socket();let result=await request(guest,{type:'join',code:old.code,area:'base',identities:1,profile:profile('warrior','hunter','guest-person'),campaign:campaign('legacy-campaign','guest-person')});assert.equal(result.type,'error');assert.match(result.message,/atualizar/);
- report.checks.push('Legacy original client remains compatible; a new cross-family guest cannot enter an unupdated host.');
+ report.checks.push('Legacy original client remains compatible; the relay advertises the additive erudites capability while an old cross-family guest remains blocked from an unupdated host.');
  const host=await socket(),joined=await request(host,{type:'create',area:'base',identities:1,profile:profile('warrior','hunter'),campaign:campaign('cross-campaign')});assert.equal(joined.type,'joined');assert.equal(joined.identities,1);assert.equal(joined.protocol,16);assert.equal(joined.members[0].profile.visualPreset,'hunter');assert.equal(joined.members[0].profile.classId,'warrior');
  result=await request(guest,{type:'join',code:joined.code,area:'base',profile:profile('hunter',undefined,'guest-person'),campaign:campaign('cross-campaign','guest-person')});assert.equal(result.type,'error');assert.match(result.message,/atualizar/);
  result=await request(guest,{type:'join',code:joined.code,area:'base',identities:1,profile:profile('warrior','astral','guest-person'),campaign:campaign('cross-campaign','guest-person')});assert.equal(result.type,'error');assert.match(result.message,/inválido/);

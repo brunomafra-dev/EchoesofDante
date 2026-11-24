@@ -4,15 +4,17 @@ import json,hashlib
 import argparse
 import numpy as np
 from PIL import Image
-args=argparse.ArgumentParser();args.add_argument('--preset',choices=['hunter','warrior'],default='hunter');args.add_argument('--revision',default=None);options=args.parse_args()
-preset=options.preset;revision=options.revision or ('203' if preset=='hunter' else '204')
+args=argparse.ArgumentParser();args.add_argument('--preset',choices=['hunter','warrior','astral'],default='hunter');args.add_argument('--revision',default=None);options=args.parse_args()
+preset=options.preset;revision=options.revision or {'hunter':'203','warrior':'204','astral':'205'}[preset]
 ROOT=Path(__file__).resolve().parents[1]
-DOC=ROOT/('docs/scout-professions' if preset=='hunter' else 'docs/pioneer-professions')
+DOC=ROOT/{'hunter':'docs/scout-professions','warrior':'docs/pioneer-professions','astral':'docs/erudite-professions'}[preset]
 out=ROOT/f'docs/2d-refinement/qa/{revision}/asset-geometry';out.mkdir(parents=True,exist_ok=True)
 report={'passed':False,'assets':[]}
 try:
- data=json.loads((DOC/'measurements.json').read_text(encoding='utf8'));assert len(data['assets'])==(12 if preset=='hunter' else 18)
- anchors=json.loads((ROOT/('src/visual/scoutEmitterAnchors.json' if preset=='hunter' else 'src/visual/pioneerEmitterAnchors.json')).read_text(encoding='utf8'))
+ expected={'hunter':12,'warrior':18,'astral':18}[preset]
+ data=json.loads((DOC/'measurements.json').read_text(encoding='utf8'));assert len(data['assets'])==expected
+ anchor_file={'hunter':'scoutEmitterAnchors.json','warrior':'pioneerEmitterAnchors.json','astral':'eruditeEmitterAnchors.json'}[preset]
+ anchors=json.loads((ROOT/'src/visual'/anchor_file).read_text(encoding='utf8'))
  for asset in data['assets']:
   p=ROOT/asset['file'];image=Image.open(p).convert('RGBA');assert image.size==(1536,1536)
   assert hashlib.sha256(p.read_bytes()).hexdigest()==asset['sha256'];assert hashlib.sha256((ROOT/asset['source']).read_bytes()).hexdigest()==asset['sourceSha256']
