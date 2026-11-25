@@ -4,6 +4,7 @@ import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
 import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
 import {ShaderPass} from 'three/addons/postprocessing/ShaderPass.js';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 
 // Dark action-RPG graveyard camp: cold moon, warm fires, heavy fog, bloom and grading.
 export interface Collider{x:number;z:number;r:number}
@@ -44,13 +45,21 @@ export class World{
  private embers!:T.Points;private emberV=new Float32Array(120*2);
  composer!:EffectComposer;private bloom!:UnrealBloomPass;private grade!:ShaderPass;private rp!:RenderPass;
  readonly fire=new T.Vector3(-3.4,0,-2.2);
+ // where real flames burn (filled by the VFX system)
+ flameSpots:{p:T.Vector3;s:number}[]=[];
  constructor(renderer:T.WebGLRenderer,camera:T.PerspectiveCamera){
   const sc=this.scene;sc.background=new T.Color('#10151d');sc.fog=new T.FogExp2('#10151d',.03);
   sc.add(new T.HemisphereLight('#7f93bd','#2a2a22',1.25));
   this.moon.position.set(-14,26,10);this.moon.castShadow=true;
   const sh=this.moon.shadow;sh.mapSize.set(1024,1024);sh.camera.left=-22;sh.camera.right=22;sh.camera.top=22;sh.camera.bottom=-22;sh.camera.near=1;sh.camera.far=70;sh.bias=-.0006;sh.normalBias=.04;
   sc.add(this.moon,this.moon.target);
-  const ground=new T.Mesh(new T.CircleGeometry(150,64).rotateX(-Math.PI/2),new T.MeshStandardMaterial({map:groundTex(),roughness:1,color:'#c4beb0'}));
+  // scanned burned ground (Poly Haven, CC0) with a procedural fallback while it loads
+  const gmat=new T.MeshStandardMaterial({map:groundTex(),roughness:1,color:'#c4beb0'});
+  const ground=new T.Mesh(new T.CircleGeometry(150,64).rotateX(-Math.PI/2),gmat);
+  const tl=new T.TextureLoader(),nb=import.meta.env.BASE_URL+'assets/3d-new/nature/';
+  const tex=(n:string,srgb:boolean)=>{const t=tl.load(nb+n);t.wrapS=t.wrapT=T.RepeatWrapping;t.repeat.set(34,34);t.anisotropy=8;if(srgb)t.colorSpace=T.SRGBColorSpace;return t;};
+  Object.assign(gmat,{map:tex('burned_ground_01_diff.jpg',true),normalMap:tex('burned_ground_01_nor.jpg',false),roughnessMap:tex('burned_ground_01_rough.jpg',false),color:new T.Color('#8a8378'),roughness:1});
+  gmat.normalScale.set(.85,.85);gmat.needsUpdate=true;
   ground.receiveShadow=true;sc.add(ground);
   this.buildProps();this.buildFire();
   this.composer=new EffectComposer(renderer);
@@ -63,23 +72,20 @@ export class World{
   const r=rng(11),sc=this.scene;
   const stone=new T.MeshStandardMaterial({color:'#4a4945',roughness:.95,flatShading:true});
   const dark=new T.MeshStandardMaterial({color:'#2a1d14',roughness:.95});
-  // rocks
-  const rg=new T.DodecahedronGeometry(1,0),rocks=new T.InstancedMesh(rg,stone,90),m4=new T.Matrix4(),q=new T.Quaternion(),e=new T.Euler();
-  for(let i=0;i<90;i++){
-   const a=r()*6.283,d=7+Math.sqrt(r())*ARENA*1.1,s=.25+Math.pow(r(),2.2)*1.6;
-   const x=Math.cos(a)*d,z=Math.sin(a)*d;e.set(r()*3,r()*3,r()*3);q.setFromEuler(e);
-   m4.compose(new T.Vector3(x,s*.3,z),q,new T.Vector3(s*(1+r()*.5),s*.7,s*(1+r()*.5)));rocks.setMatrixAt(i,m4);
-   if(s>.8)this.colliders.push({x,z,r:s*.9});
-  }
-  rocks.castShadow=rocks.receiveShadow=true;sc.add(rocks);
-  // dead trees
-  for(let i=0;i<26;i++){
-   const a=r()*6.283,d=13+r()*ARENA*1.15,x=Math.cos(a)*d,z=Math.sin(a)*d,h=3.5+r()*3.5,t=new T.Group();
-   const trunk=new T.Mesh(new T.CylinderGeometry(.1+.05*r(),.32+.1*r(),h,7),dark);trunk.position.y=h/2;trunk.castShadow=true;t.add(trunk);
-   for(let b=0;b<5;b++){const bl=1.2+r()*1.8,br=new T.Mesh(new T.CylinderGeometry(.02,.08,bl,5),dark);const y=h*(.45+r()*.5);
-    br.position.set(0,y,0);br.rotation.set((r()-.5)*1.2,r()*6.28,.7+r()*.7);br.translateY(bl/2);br.castShadow=true;t.add(br);}
-   t.position.set(x,0,z);t.rotation.y=r()*6.28;sc.add(t);this.colliders.push({x,z,r:.45});
-  }
+  const m4=new T.Matrix4(),q=new T.Quaternion(),e=new T.Euler();void stone;void dark;
+  // scanned nature from Poly Haven (CC0): placements are decided now (colliders), meshes arrive async
+  const place:Record<string,{x:number;z:number;s:number;ry:number;tilt:number}[]>={};
+  const put=(kind:string,x:number,z:number,s:number,tilt=0)=>{(place[kind]??=[]).push({x,z,s,ry:r()*6.283,tilt});};
+  for(let i=0;i<22;i++){const a=r()*6.283,d=13+r()*ARENA*1.15,x=Math.cos(a)*d,z=Math.sin(a)*d;put(r()<.6?'tree_a':'tree_b',x,z,.8+r()*.5);this.colliders.push({x,z,r:.5});}
+  for(let i=0;i<10;i++){const a=r()*6.283,d=9+r()*ARENA,x=Math.cos(a)*d,z=Math.sin(a)*d;put(r()<.5?'stump_a':'stump_b',x,z,.9+r()*.5);this.colliders.push({x,z,r:.45});}
+  for(let i=0;i<8;i++){const a=r()*6.283,d=11+r()*ARENA,x=Math.cos(a)*d,z=Math.sin(a)*d;put(i%2?'log':'log_big',x,z,.9+r()*.3);this.colliders.push({x,z,r:1});}
+  for(let i=0;i<26;i++){const a=r()*6.283,d=5+r()*ARENA*1.1;put(r()<.5?'branches':'branch',Math.cos(a)*d,Math.sin(a)*d,.8+r()*.6);}
+  const rockKinds=['rock_a','rock_b','rock_c','rock_d','set_1','set_2'];
+  for(let i=0;i<70;i++){const a=r()*6.283,d=7+Math.sqrt(r())*ARENA*1.1,x=Math.cos(a)*d,z=Math.sin(a)*d,s=.5+Math.pow(r(),2)*2.2;
+   put(rockKinds[Math.floor(r()*rockKinds.length)],x,z,s,(r()-.5)*.4);if(s>1.3)this.colliders.push({x,z,r:s*.55});}
+  // big boulders framing the arena edge
+  for(let i=0;i<14;i++){const a=i/14*6.283+r()*.3,d=ARENA*(.95+r()*.2);put('boulder',Math.cos(a)*d,Math.sin(a)*d,3+r()*3);}
+  this.loadNature(place,m4,q,e);
   // gravestones and broken pillars
   const gm=new T.MeshStandardMaterial({color:'#5a5953',roughness:.9,flatShading:true});
   for(let i=0;i<22;i++){
@@ -93,20 +99,47 @@ export class World{
    const p=new T.Mesh(new T.CylinderGeometry(.5,.62,h,9),gm);p.position.set(x,h/2,z);p.rotation.z=(r()-.5)*.06;p.castShadow=p.receiveShadow=true;sc.add(p);
    const cap=new T.Mesh(new T.BoxGeometry(1.4,.3,1.4),gm);cap.position.set(x,h+.1,z);cap.rotation.y=r();cap.castShadow=true;sc.add(cap);this.colliders.push({x,z,r:.7});
   }
-  // dead grass
-  const gg=new T.ConeGeometry(.05,.5,4),grass=new T.InstancedMesh(gg,new T.MeshStandardMaterial({color:'#3a4128',roughness:1}),1800);
-  for(let i=0;i<1800;i++){const a=r()*6.283,d=Math.sqrt(r())*ARENA*1.3;e.set((r()-.5)*.5,r()*6,(r()-.5)*.5);q.setFromEuler(e);const s=.5+r()*1.3;
-   m4.compose(new T.Vector3(Math.cos(a)*d,.2*s,Math.sin(a)*d),q,new T.Vector3(s,s,s));grass.setMatrixAt(i,m4);}
-  grass.castShadow=false;grass.receiveShadow=false;sc.add(grass);
+
   // torches on posts
   const lampTex=glowTex('rgba(255,225,170,1)','rgba(255,150,60,.4)');
   for(let i=0;i<5;i++){
    const a=i/5*6.283+.2,x=Math.cos(a)*15,z=Math.sin(a)*15;
    const post=new T.Mesh(new T.CylinderGeometry(.06,.08,2.6,6),dark);post.position.set(x,1.3,z);post.castShadow=true;sc.add(post);
-   const fl=new T.Mesh(new T.ConeGeometry(.16,.5,6,1,true),new T.MeshBasicMaterial({color:'#ffb050',transparent:true,opacity:.9,blending:T.AdditiveBlending,depthWrite:false}));fl.position.set(x,2.85,z);sc.add(fl);this.flames.push(fl);
+   const fl=new T.Mesh(new T.ConeGeometry(.16,.5,6,1,true),new T.MeshBasicMaterial({color:'#ffb050',transparent:true,opacity:.9,blending:T.AdditiveBlending,depthWrite:false}));fl.position.set(x,2.85,z);fl.visible=false;sc.add(fl);this.flames.push(fl);this.flameSpots.push({p:new T.Vector3(x,2.62,z),s:.32});
    const sp=new T.Sprite(new T.SpriteMaterial({map:lampTex,blending:T.AdditiveBlending,depthWrite:false,transparent:true}));sp.scale.set(1.8,1.8,1);sp.position.set(x,2.85,z);sc.add(sp);
    const l=new T.PointLight('#ff9a48',12,12,1.8);l.position.set(x,3,z);sc.add(l);this.torches.push(l);
    this.colliders.push({x,z,r:.2});
+  }
+ }
+ // asset -> how it is used: target size (height for trees/stumps, footprint for rocks) per unit scale
+ private async loadNature(place:Record<string,{x:number;z:number;s:number;ry:number;tilt:number}[]>,m4:T.Matrix4,q:T.Quaternion,e:T.Euler){
+  const SRC:Record<string,{file:string;size:number;by:'h'|'w';mesh?:number;sink?:number}>={
+   tree_a:{file:'dead_quiver_trunk',size:5.8,by:'h'},tree_b:{file:'dead_quiver_trunk',size:4.2,by:'h'},log_big:{file:'dead_tree_trunk_02',size:4.6,by:'w',sink:.12},
+   stump_a:{file:'tree_stump_01',size:.8,by:'h'},stump_b:{file:'tree_stump_02',size:.9,by:'h'},log:{file:'dead_tree_trunk',size:3.2,by:'w',sink:.05},
+   branches:{file:'dry_branches_medium_01',size:1.6,by:'w'},branch:{file:'dead_quiver_branch_01',size:1.4,by:'w'},
+   rock_a:{file:'rock_07',size:1,by:'w',sink:.15},rock_b:{file:'rock_09',size:1,by:'w',sink:.15},rock_c:{file:'stone_01',size:.9,by:'w',sink:.1},rock_d:{file:'namaqualand_boulder_04',size:1.2,by:'w',sink:.2},
+   set_1:{file:'rock_moss_set_01',size:1,by:'w',sink:.15},set_2:{file:'rock_moss_set_02',size:1,by:'w',sink:.15},boulder:{file:'namaqualand_boulder_04',size:1,by:'w',sink:.25},
+  };
+  const loader=new GLTFLoader(),base=import.meta.env.BASE_URL+'assets/3d-new/nature/',cache=new Map<string,Promise<T.Group>>();
+  const load=(f:string)=>{let p=cache.get(f);if(!p){p=loader.loadAsync(base+f+'.glb').then(g=>g.scene);cache.set(f,p);}return p;};
+  for(const [kind,list] of Object.entries(place)){
+   const src=SRC[kind];if(!src)continue;
+   let sceneRoot:T.Group;try{sceneRoot=await load(src.file);}catch{continue;}
+   sceneRoot.updateMatrixWorld(true);
+   // each mesh of the file becomes a variant: geometry baked to its node transform, centred, base at y=0
+   const variants:{geo:T.BufferGeometry;mat:T.Material;size:number;h:number}[]=[];
+   sceneRoot.traverse(o=>{const m=o as T.Mesh;if(!m.isMesh)return;const g=m.geometry.clone().applyMatrix4(m.matrixWorld);g.computeBoundingBox();const bb=g.boundingBox!;
+    const c=bb.getCenter(new T.Vector3());g.translate(-c.x,-bb.min.y,-c.z);const sz=bb.getSize(new T.Vector3());
+    const mat=m.material as T.MeshStandardMaterial;mat.envMapIntensity=.4;
+    variants.push({geo:g,mat,size:src.by==='h'?sz.y:Math.max(sz.x,sz.z),h:sz.y});});
+   if(!variants.length)continue;
+   const per=new Map<number,typeof list>();list.forEach((p,i)=>{const v=i%variants.length;if(!per.has(v))per.set(v,[]);per.get(v)!.push(p);});
+   for(const [v,ps] of per){
+    const va=variants[v],im=new T.InstancedMesh(va.geo,va.mat,ps.length);
+    ps.forEach((p,i)=>{const k=src.size/va.size*p.s;e.set(p.tilt,p.ry,p.tilt*.6);q.setFromEuler(e);
+     m4.compose(new T.Vector3(p.x,-(src.sink??0)*va.h*k,p.z),q,new T.Vector3(k,k,k));im.setMatrixAt(i,m4);});
+    im.castShadow=true;im.receiveShadow=true;this.scene.add(im);
+   }
   }
  }
  private buildFire(){
@@ -115,8 +148,8 @@ export class World{
   for(let i=0;i<9;i++){const a=i/9*6.283,m=new T.Mesh(new T.DodecahedronGeometry(.16+.05*((i*7)%3)),stone);m.position.set(F.x+Math.cos(a)*.65,.1,F.z+Math.sin(a)*.65);m.rotation.set(a,a*2,0);m.castShadow=true;sc.add(m);}
   for(let i=0;i<4;i++){const a=i/4*Math.PI+.4,m=new T.Mesh(new T.CylinderGeometry(.07,.08,.9,6),wood);m.position.set(F.x,.14,F.z);m.rotation.set(Math.PI/2.3,a,0);m.castShadow=true;sc.add(m);}
   const fm=new T.MeshBasicMaterial({color:'#ff9a3a',transparent:true,opacity:.9,blending:T.AdditiveBlending,depthWrite:false});
-  const f1=new T.Mesh(new T.ConeGeometry(.34,1.15,8,1,true),fm);f1.position.set(F.x,.7,F.z);sc.add(f1);this.flames.push(f1);
-  const f2=new T.Mesh(new T.ConeGeometry(.17,.7,8,1,true),new T.MeshBasicMaterial({color:'#ffe9a8',transparent:true,opacity:.95,blending:T.AdditiveBlending,depthWrite:false}));f2.position.set(F.x,.5,F.z);sc.add(f2);
+  const f1=new T.Mesh(new T.ConeGeometry(.34,1.15,8,1,true),fm);f1.position.set(F.x,.7,F.z);f1.visible=false;sc.add(f1);this.flames.push(f1);this.flameSpots.push({p:new T.Vector3(F.x,.12,F.z),s:1});
+  const f2=new T.Mesh(new T.ConeGeometry(.17,.7,8,1,true),new T.MeshBasicMaterial({color:'#ffe9a8',transparent:true,opacity:.95,blending:T.AdditiveBlending,depthWrite:false}));f2.position.set(F.x,.5,F.z);f2.visible=false;sc.add(f2);
   const gl=new T.Sprite(new T.SpriteMaterial({map:glowTex('rgba(255,170,80,.95)','rgba(255,110,30,.35)'),blending:T.AdditiveBlending,depthWrite:false,transparent:true}));gl.scale.set(5.5,5.5,1);gl.position.set(F.x,.9,F.z);sc.add(gl);
   this.fireLight.position.set(F.x,1.3,F.z);sc.add(this.fireLight);this.colliders.push({x:F.x,z:F.z,r:.9});
   const N=120,pos=new Float32Array(N*3);for(let i=0;i<N;i++){pos[i*3]=F.x;pos[i*3+1]=Math.random()*5;pos[i*3+2]=F.z;this.emberV[i*2]=.4+Math.random()*1.1;this.emberV[i*2+1]=Math.random()*6.28;}

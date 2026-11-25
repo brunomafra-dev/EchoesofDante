@@ -104,25 +104,90 @@ const ELEM:Record<Kind,{core:string;glow:string;hot:string}>={
  earth:{core:'#d9b77a',glow:'#9a6a32',hot:'#ffd08a'},energy:{core:'#f0ffff',glow:'#3fe6ff',hot:'#a0f6ff'},filament:{core:'#e8ffe8',glow:'#3ccf6a',hot:'#9dff9e'},
 };
 
+
+// ---------- real-looking fire: instanced billboards shaded with animated fbm noise ----------
+const FL_V=`attribute vec3 iPos;attribute vec2 iSize;attribute float iSeed;attribute float iAlpha;attribute float iKind;
+varying vec2 vUv;varying float vSeed;varying float vAlpha;varying float vKind;
+void main(){vUv=uv;vSeed=iSeed;vAlpha=iAlpha;vKind=iKind;
+ vec3 right=vec3(viewMatrix[0][0],viewMatrix[1][0],viewMatrix[2][0]);
+ vec3 up=vec3(viewMatrix[0][1],viewMatrix[1][1],viewMatrix[2][1]);
+ vec2 p=position.xy;if(iKind<.5)p.y+=.5;
+ vec3 w=iPos+right*p.x*iSize.x+up*p.y*iSize.y;gl_Position=projectionMatrix*viewMatrix*vec4(w,1.);}`;
+const FL_F=`uniform float uTime;varying vec2 vUv;varying float vSeed;varying float vAlpha;varying float vKind;
+float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float n2(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
+float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*n2(p);p*=2.03;a*=.5;}return v;}
+void main(){vec2 uv=vUv;float t=uTime+vSeed*17.;float f;
+ if(vKind<.5){
+  // classic turbulent flame: a teardrop eaten away by rising fbm noise
+  vec2 q=vec2(uv.x-.5,uv.y-.25);float n=fbm(q*vec2(3.2,2.4)+vec2(vSeed*7.,-t*2.4));
+  float c=1.-16.*pow(max(0.,length(q*vec2((1.8+q.y*1.5)*.5,.75))-n*max(0.,q.y+.25)),1.2);
+  float c1=clamp(n*c*(1.5-pow(1.25*uv.y,4.)),0.,1.);
+  vec3 col=vec3(1.5*c1,1.5*c1*c1*c1,c1*c1*c1*c1*c1*c1);
+  float a=clamp(c*(1.-pow(uv.y,3.)),0.,1.)*vAlpha;
+  gl_FragColor=vec4(col*a*.9,1.);return;}
+ vec2 c=uv-.5;float r=length(c)*2.;float n=fbm(c*3.8+vec2(vSeed*5.,-t*2.6));f=1.15-r*1.2-n*.5+.12;
+ f=clamp(f,0.,1.);
+ vec3 col=mix(vec3(.35,.02,.0),vec3(.95,.22,.02),smoothstep(0.,.35,f));
+ col=mix(col,vec3(1.,.55,.12),smoothstep(.35,.72,f));col=mix(col,vec3(1.,.88,.55),smoothstep(.85,1.,f));
+ float a=smoothstep(0.,.25,f)*vAlpha;gl_FragColor=vec4(col*a*.62,1.);}`;
+const SCORCH_F=`uniform float uK;uniform float uSeed;varying vec2 vUv;
+float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float n2(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
+float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*n2(p);p*=2.1;a*=.5;}return v;}
+void main(){vec2 p=vUv*2.-1.;float r=length(p);float n=fbm(p*3.+uSeed);float edge=smoothstep(1.,.55,r+n*.35);if(edge<=0.)discard;
+ float cracks=1.-smoothstep(.0,.06,abs(fbm(p*6.+uSeed*2.)-.5));float heat=(1.-uK)*(1.-uK);
+ vec3 burnt=vec3(.03,.02,.015);vec3 glow=mix(vec3(1.,.25,.02),vec3(1.,.7,.25),cracks)*cracks*heat*1.6;
+ float a=edge*(.85-uK*.35)*(uK>.85?(1.-uK)/.15:1.);gl_FragColor=vec4(burnt+glow,a);}`;
+interface Flame{p:T.Vector3;v:T.Vector3;w:number;h:number;life:number;max:number;seed:number;kind:number;grow:number}
+class Flames{
+ readonly N=420;list:Flame[]=[];mesh:T.Mesh;geo:T.InstancedBufferGeometry;mat:T.ShaderMaterial;
+ private aPos:Float32Array;private aSize:Float32Array;private aSeed:Float32Array;private aAlpha:Float32Array;private aKind:Float32Array;
+ constructor(){
+  const base=new T.PlaneGeometry(1,1);this.geo=new T.InstancedBufferGeometry();
+  this.geo.index=base.index;this.geo.setAttribute('position',base.attributes.position);this.geo.setAttribute('uv',base.attributes.uv);
+  const mk=(k:number)=>new T.InstancedBufferAttribute(new Float32Array(this.N*k),k).setUsage(T.DynamicDrawUsage);
+  const ip=mk(3),is=mk(2),ise=mk(1),ia=mk(1),ik=mk(1);
+  this.geo.setAttribute('iPos',ip);this.geo.setAttribute('iSize',is);this.geo.setAttribute('iSeed',ise);this.geo.setAttribute('iAlpha',ia);this.geo.setAttribute('iKind',ik);
+  this.aPos=ip.array as Float32Array;this.aSize=is.array as Float32Array;this.aSeed=ise.array as Float32Array;this.aAlpha=ia.array as Float32Array;this.aKind=ik.array as Float32Array;
+  this.mat=new T.ShaderMaterial({vertexShader:FL_V,fragmentShader:FL_F,uniforms:{uTime:{value:0}},transparent:true,depthWrite:false,blending:T.AdditiveBlending});
+  this.mesh=new T.Mesh(this.geo,this.mat);this.mesh.frustumCulled=false;this.mesh.renderOrder=11;this.geo.instanceCount=0;
+ }
+ add(f:Partial<Flame>&{p:T.Vector3}){if(this.list.length>=this.N)return;const life=f.life??.6;this.list.push({p:f.p.clone(),v:f.v?.clone()??new T.Vector3(),w:f.w??.5,h:f.h??1,life,max:life,seed:f.seed??Math.random()*10,kind:f.kind??0,grow:f.grow??.3});}
+ update(dt:number){
+  this.mat.uniforms.uTime.value+=dt;let n=0;
+  for(let i=this.list.length-1;i>=0;i--){const f=this.list[i];f.life-=dt;if(f.life<=0){this.list.splice(i,1);continue;}
+   f.p.addScaledVector(f.v,dt);const k=1-f.life/f.max,a=Math.min(1,k*6)*Math.min(1,(1-k)*2.5),g=1+k*f.grow;
+   this.aPos[n*3]=f.p.x;this.aPos[n*3+1]=f.p.y;this.aPos[n*3+2]=f.p.z;this.aSize[n*2]=f.w*g;this.aSize[n*2+1]=f.h*g;this.aSeed[n]=f.seed;this.aAlpha[n]=a;this.aKind[n]=f.kind;n++;}
+  this.geo.instanceCount=n;for(const a of ['iPos','iSize','iSeed','iAlpha','iKind'])(this.geo.attributes[a] as T.BufferAttribute).needsUpdate=true;
+ }
+}
+
 interface Timed{t:number;life:number;update:(k:number,dt:number)=>void;done?:()=>void}
 export class VFX{
- add=new Particles(3500,true);smoke=new Particles(900,false);
+ add=new Particles(3500,true);smoke=new Particles(900,false);fire=new Flames();private emitters:{p:T.Vector3;scale:number;acc:number}[]=[];
  private timed:Timed[]=[];private shardMesh:T.InstancedMesh;private shards:{p:T.Vector3;v:T.Vector3;r:T.Euler;w:T.Vector3;s:number;life:number}[]=[];
  private bolts:T.LineSegments;private boltPos=new Float32Array(600*6);private boltCol=new Float32Array(600*6);private boltN=0;private boltList:{a:T.Vector3;b:T.Vector3;c:T.Color;life:number;jag:number}[]=[];
  shake=0;
  constructor(private scene:T.Scene){
-  scene.add(this.add.pts,this.smoke.pts);
+  scene.add(this.add.pts,this.smoke.pts,this.fire.mesh);
   this.shardMesh=new T.InstancedMesh(new T.DodecahedronGeometry(.12,0),new T.MeshStandardMaterial({color:'#6b5238',roughness:.95,flatShading:true}),220);
   this.shardMesh.count=0;this.shardMesh.castShadow=true;this.shardMesh.frustumCulled=false;scene.add(this.shardMesh);
   const bg=new T.BufferGeometry();bg.setAttribute('position',new T.BufferAttribute(this.boltPos,3).setUsage(T.DynamicDrawUsage));bg.setAttribute('color',new T.BufferAttribute(this.boltCol,3).setUsage(T.DynamicDrawUsage));
   this.bolts=new T.LineSegments(bg,new T.LineBasicMaterial({vertexColors:true,transparent:true,blending:T.AdditiveBlending,depthWrite:false}));this.bolts.frustumCulled=false;scene.add(this.bolts);
  }
+ // a fire that keeps burning (campfire, torches)
+ campfire(p:T.Vector3,scale=1){this.emitters.push({p:p.clone(),scale,acc:0});}
  setView(height:number,fov:number){const s=height/(2*Math.tan(fov*Math.PI/360));this.add.mat.uniforms.uScale.value=s;this.smoke.mat.uniforms.uScale.value=s;}
  emit(e:Emit){this.add.emit(e);}
  puff(e:Emit){this.smoke.emit(e);}
  private run(t:Timed){this.timed.push(t);}
  update(dt:number){
   this.add.update(dt);this.smoke.update(dt);
+  for(const e of this.emitters){e.acc+=dt;while(e.acc>.07){e.acc-=.07;const s=e.scale;
+   this.fire.add({p:tmp.set(e.p.x+rnd(-.22,.22)*s,e.p.y,e.p.z+rnd(-.22,.22)*s),v:tmp2.set(0,rnd(.2,.5)*s,0),w:rnd(.6,.9)*s,h:rnd(1.1,1.7)*s,life:rnd(.45,.75),grow:-.2});
+   if(Math.random()<.25)this.emit({pos:e.p.clone().setY(e.p.y+.4*s),n:1,dir:tmp2.set(0,1,0),cone:.4,speed:[.8,2],life:[.8,1.6],size:[.06,.02],c0:'#ffd08a',c1:'#ff5a1a',a:[1,0],drag:.3,spread:.2*s});}}
+  this.fire.update(dt);
   for(let i=this.timed.length-1;i>=0;i--){const t=this.timed[i];t.t+=dt;const k=Math.min(1,t.t/t.life);t.update(k,dt);if(k>=1){t.done?.();this.timed.splice(i,1);}}
   // shards
   const m=new T.Matrix4(),q=new T.Quaternion();
@@ -148,6 +213,12 @@ export class VFX{
  glow(p:T.Vector3,color:string,size:number,life:number,parent?:T.Object3D){
   const s=new T.Sprite(new T.SpriteMaterial({map:glowTex,color,blending:T.AdditiveBlending,depthWrite:false,transparent:true}));s.position.copy(p);(parent??this.scene).add(s);
   this.run({t:0,life,update:k=>{s.scale.setScalar(size*(1+k*.6));s.material.opacity=1-k;},done:()=>{s.removeFromParent();s.material.dispose();}});
+ }
+ // burnt ground with glowing cracks that cool down
+ scorch(p:T.Vector3,radius:number,life:number){
+  const m=new T.Mesh(new T.PlaneGeometry(radius*2.2,radius*2.2).rotateX(-Math.PI/2),new T.ShaderMaterial({vertexShader:ARC_V,fragmentShader:SCORCH_F,uniforms:{uK:{value:0},uSeed:{value:Math.random()*10}},transparent:true,depthWrite:false}));
+  m.position.copy(p).setY(.03);m.renderOrder=2;this.scene.add(m);
+  this.run({t:0,life,update:k=>{(m.material as T.ShaderMaterial).uniforms.uK.value=k;},done:()=>{m.removeFromParent();m.geometry.dispose();(m.material as T.Material).dispose();}});
  }
  decal(p:T.Vector3,color:string,radius:number,life:number,ripple=0,strength=1){
   const m=new T.Mesh(new T.PlaneGeometry(radius*2,radius*2).rotateX(-Math.PI/2),new T.ShaderMaterial({vertexShader:ARC_V,fragmentShader:DECAL_F,uniforms:{uColor:{value:new T.Color(color)},uProg:{value:0},uAlpha:{value:1},uRipple:{value:ripple}},transparent:true,depthWrite:false,blending:T.AdditiveBlending}));
@@ -231,7 +302,9 @@ export class VFX{
  trail(kind:Kind,o:T.Object3D,v:T.Vector3,dt:number){
   const p=o.position,c=ELEM[kind],back=tmp2.copy(v).normalize().negate();
   if(kind==='fire'){
-   this.emit({pos:p,n:4,dir:back,cone:.5,speed:[.5,2],up:.6,life:[.25,.45],size:[.45,.1],c0:'#ffd36a',c1:'#ff3a0a',a:[.9,0],drag:2,spread:.06});
+   this.fire.add({p,kind:1,w:1.05,h:1.05,life:.14,grow:-.35});
+   this.fire.add({p:tmp.copy(p).addScaledVector(back,.12),v:tmp2.copy(back).multiplyScalar(1.5).setY(.9),kind:0,w:.6,h:1,life:rnd(.2,.32),grow:-.4});
+   this.emit({pos:p,n:2,dir:back,cone:.5,speed:[.5,2],up:.6,life:[.25,.45],size:[.25,.06],c0:'#ffd36a',c1:'#ff3a0a',a:[.9,0],drag:2,spread:.06});
    if(Math.random()<.4)this.puff({pos:p,n:1,dir:back,cone:.4,speed:[.3,.8],up:.8,life:[.6,.9],size:[.3,.8],c0:'#2b2622',c1:'#151312',a:[.35,0],drag:1});
   }else if(kind==='water'){
    this.emit({pos:p,n:2,dir:back,cone:.6,speed:[.5,1.5],life:[.35,.55],size:[.12,.04],c0:'#d8f6ff',c1:'#3a8fff',a:[.9,0],grav:6,spread:.08});
@@ -257,7 +330,8 @@ export class VFX{
   const c=ELEM[kind],at=p.clone();
   if(kind==='fire'){
    this.glow(at,'#ff7a2a',2.2,.25);
-   this.emit({pos:at,n:26,speed:[1.5,5],up:.5,life:[.3,.6],size:[.55,.1],c0:'#ffe08a',c1:'#ff2a0a',a:[1,0],drag:3});
+   for(let i=0;i<10;i++)this.fire.add({p:tmp.set(at.x+rnd(-.35,.35),at.y-.3+rnd(-.2,.2),at.z+rnd(-.35,.35)),v:tmp2.set(rnd(-1.5,1.5),rnd(.5,2.2),rnd(-1.5,1.5)),kind:i<4?1:0,w:rnd(.8,1.3),h:rnd(1.1,1.8),life:rnd(.35,.6),grow:.5});
+   this.emit({pos:at,n:14,speed:[1.5,5],up:.5,life:[.3,.6],size:[.55,.1],c0:'#ffe08a',c1:'#ff2a0a',a:[1,0],drag:3});
    this.emit({pos:at,n:14,speed:[4,9],up:.6,life:[.3,.6],size:[.07,.02],c0:'#fff3c0',c1:'#ff6a20',grav:9,drag:1});
    this.puff({pos:at,n:6,speed:[.4,1.2],up:1,life:[.8,1.3],size:[.5,1.4],c0:'#2e2924',c1:'#111',a:[.45,0],drag:1});
   }else if(kind==='water'){
@@ -289,9 +363,10 @@ export class VFX{
  field(kind:Kind,at:T.Vector3,radius:number){
   const c=ELEM[kind];
   if(kind==='fire'){
-   this.decal(at,'#ff5a1a',radius,1.6);this.glow(at.clone().setY(.6),'#ff7a2a',radius*1.4,.35);
-   this.run({t:0,life:1.4,update:()=>{for(let i=0;i<5;i++){const a=rnd(0,6.28),r=radius*Math.sqrt(Math.random());
-    this.emit({pos:tmp.set(at.x+Math.cos(a)*r,.1,at.z+Math.sin(a)*r),n:1,dir:tmp2.set(0,1,0),cone:.15,speed:[1.5,3.2],life:[.35,.6],size:[.6,.1],c0:'#ffe08a',c1:'#ff2a0a',a:[.9,0],drag:1});}
+   this.scorch(at,radius,2.6);this.glow(at.clone().setY(.6),'#ff7a2a',radius*1.4,.35);
+   this.run({t:0,life:2.2,update:(k)=>{const rate=k<.7?3:1;for(let i=0;i<rate;i++){const a=rnd(0,6.28),r=radius*Math.sqrt(Math.random())*.92,big=1-r/radius*.5;
+    this.fire.add({p:tmp.set(at.x+Math.cos(a)*r,0,at.z+Math.sin(a)*r),v:tmp2.set(0,rnd(.2,.6),0),kind:0,w:rnd(.9,1.4)*big,h:rnd(1.5,2.6)*big*(1-k*.5),life:rnd(.5,.85),grow:-.15});}
+    if(Math.random()<.3)this.emit({pos:tmp.set(at.x+rnd(-radius,radius)*.7,.3,at.z+rnd(-radius,radius)*.7),n:1,dir:tmp2.set(0,1,0),cone:.5,speed:[1,2.5],life:[.6,1.2],size:[.06,.02],c0:'#ffe08a',c1:'#ff4a0a',a:[1,0],drag:.3});
     if(Math.random()<.3)this.puff({pos:tmp.set(at.x+rnd(-radius,radius)*.6,.6,at.z+rnd(-radius,radius)*.6),n:1,dir:tmp2.set(0,1,0),cone:.2,speed:[.6,1.2],life:[1,1.6],size:[.6,1.8],c0:'#2e2924',c1:'#111',a:[.35,0],drag:.6});}});
   }else if(kind==='water'){
    this.decal(at,'#3aa8ff',radius,1.4,1.5);
@@ -314,7 +389,7 @@ export class VFX{
   }
  }
  // ---------- status effects on enemies (call each frame) ----------
- burning(p:T.Vector3){this.emit({pos:tmp.set(p.x,rnd(.4,1.6),p.z),n:1,dir:tmp2.set(0,1,0),cone:.3,speed:[.8,1.8],life:[.3,.5],size:[.35,.06],c0:'#ffd36a',c1:'#ff2a0a',a:[.9,0],drag:1,spread:.25});}
+ burning(p:T.Vector3){if(Math.random()<.35)this.fire.add({p:tmp.set(p.x+rnd(-.2,.2),rnd(.3,1.1),p.z+rnd(-.2,.2)),v:tmp2.set(0,.6,0),kind:0,w:.6,h:1.1,life:.45,grow:-.2});this.emit({pos:tmp.set(p.x,rnd(.4,1.6),p.z),n:1,dir:tmp2.set(0,1,0),cone:.3,speed:[.8,1.8],life:[.3,.5],size:[.35,.06],c0:'#ffd36a',c1:'#ff2a0a',a:[.9,0],drag:1,spread:.25});}
  wet(p:T.Vector3){if(Math.random()<.5)this.emit({pos:tmp.set(p.x,rnd(1,1.8),p.z),n:1,dir:tmp2.set(0,-1,0),cone:.1,speed:[.2,.6],life:[.4,.6],size:[.09,.04],c0:'#d8f6ff',c1:'#3a8fff',a:[.9,.3],grav:6,spread:.3});}
  marked(p:T.Vector3){if(Math.random()<.5)this.emit({pos:tmp.set(p.x,2.25,p.z),n:1,dir:tmp2.set(0,1,0),cone:1,speed:[.1,.4],life:[.4,.7],size:[.12,.03],c0:'#dfffe0',c1:'#2fae5a',a:[1,0],drag:1,spread:.25});}
  petTrail(p:T.Vector3){this.emit({pos:tmp.set(p.x,.5,p.z),n:3,speed:[.3,1.2],life:[.3,.5],size:[.25,.04],c0:'#dfffe0',c1:'#2fae5a',a:[.8,0],drag:2,spread:.3});}

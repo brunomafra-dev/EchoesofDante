@@ -94,6 +94,7 @@ function updateEnemies(dt:number,now:number){
 
 // ---------- projectiles & fx ----------
 const vfx=new VFX(world.scene);
+for(const f of world.flameSpots)vfx.campfire(f.p,f.s);
 interface Proj{o:T.Object3D;kind:Kind;v:T.Vector3;life:number;dmg:number;elem?:Element;mark?:boolean}
 const projs:Proj[]=[];
 function dispose(o:T.Object3D){o.removeFromParent();o.traverse(c=>{const m=c as T.Mesh;m.geometry?.dispose();const mt=m.material as T.Material|T.Material[]|undefined;if(Array.isArray(mt))mt.forEach(x=>x.dispose());else mt?.dispose();});}
@@ -412,7 +413,7 @@ cv.addEventListener('wheel',e=>{zoom=Math.min(1.5,Math.max(.6,zoom+e.deltaY*.000
 // ---------- loop ----------
 function resize(){const w=innerWidth,h=innerHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();world.resize(w,h,renderer.getPixelRatio());}
 addEventListener('resize',resize);resize();
-let last=performance.now()/1000,time=0,hudT=0;
+let last=performance.now()/1000,time=0,hudT=0,qaAim=false;
 // adaptive quality: drop resolution, then post-processing and shadows, when frames run long
 let quality:'high'|'low'=q.get('q')==='low'?'low':'high',slowT=0,fastT=0,fpsAcc=0,fpsN=0,fpsShown=0;
 function setQuality(qv:'high'|'low'){quality=qv;renderer.shadowMap.enabled=qv==='high';world.scene.traverse(o=>{const m=(o as T.Mesh).material as T.Material|undefined;if(m)m.needsUpdate=true;});$('qbtn').textContent=qv==='high'?'Qualidade: alta':'Qualidade: leve';}
@@ -427,7 +428,7 @@ function tick(dt:number){
   for(let i=timers.length-1;i>=0;i--)if(timers[i].at<=time){const f=timers[i].fn;timers.splice(i,1);f();}
   if(mode==='creator'){heading=previewYaw;if(hero.model)hero.model.rotation.y+=(previewYaw-hero.model.rotation.y)*Math.min(1,dt*10);hero.play(hero.has(kit().idle)?kit().idle:'Idle_Loop',{fade:.25});}
   else updatePlayer(dt);
-  if(mode==='play'&&!mouseDown&&!('ontouchstart' in window))updateAim();
+  if(mode==='play'&&!mouseDown&&!qaAim&&!('ontouchstart' in window))updateAim();
   hero.update(dt);updateEnemies(dt,time);updateFx(dt);updateTexts(dt);
   torch.position.set(pos.x,pos.y+3,pos.z+.8);torch.intensity=15+Math.sin(time*9)*1.6+Math.sin(time*23)*.9;
   rim.position.set(pos.x+4,5,pos.z-5);rim.target.position.copy(pos);key.position.set(pos.x+3,4.5,pos.z+5);key.target.position.set(pos.x,pos.y+1,pos.z);key.intensity=mode==='creator'?2.6:1.1;
@@ -462,7 +463,7 @@ function frame(){
   requestAnimationFrame(frame);
 })();
 // QA hooks
-(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look};},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{aimPoint.set(x,0,z);},spawn:(x:number,z:number)=>enemies.push(new Enemy(x,z)),mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
+(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look};},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{qaAim=true;aimPoint.set(x,0,z);},spawn:(x:number,z:number)=>enemies.push(new Enemy(x,z)),mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
  const w=hero.weapon,h=hero.hand;if(!w||!h)return null;hero.model.updateMatrixWorld(true);
  const mq=hero.model.getWorldQuaternion(new T.Quaternion()),hq=h.getWorldQuaternion(new T.Quaternion());
  const hm=mq.clone().invert().multiply(hq);const wq=hm.clone().multiply(w.quaternion);
