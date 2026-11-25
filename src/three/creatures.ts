@@ -5,10 +5,10 @@ import type {VFX} from './vfx';
 // Bodies are built procedurally (chitin, plates, glowing organs) and legs walk with a procedural
 // gait. Every attack is announced on the ground in amber and its direction is fixed once shown,
 // as in the 2D game. Bosses chain several moves.
-type Body='crawler'|'skitter'|'spitter'|'carapace'|'hound'|'amphibian'|'thorn'|'golem'|'winged'|'worm';
+type Body='crawler'|'skitter'|'spitter'|'carapace'|'hound'|'amphibian'|'thorn'|'golem'|'winged'|'worm'|'warden';
 type MoveType='bite'|'dash'|'spit'|'sweep'|'fan'|'lob'|'slam'|'breath'|'marks'|'burrow';
 interface Move{type:MoveType;dmg:number;range:number;windup:number;recover:number;arc?:number;count?:number;radius?:number;color?:string;min?:number}
-interface Spec{name:string;hp:number;speed:number;radius:number;scale:number;body:Body;pal:{c:string;g:string;s?:string;wet?:boolean};moves:Move[];keep?:number;armor?:number;boss?:boolean;fly?:number}
+interface Spec{name:string;hp:number;speed:number;radius:number;scale:number;body:Body;pal:{c:string;g:string;s?:string;wet?:boolean};moves:Move[];phase2?:Move[];keep?:number;armor?:number;boss?:boolean;fly?:number}
 const P=(c:string,g:string,s?:string,wet?:boolean)=>({c,g,s,wet});
 export const SPECIES={
  // arrival forest / depths
@@ -38,6 +38,10 @@ export const SPECIES={
  glassSpitter:{name:'Cuspidor vítreo',hp:60,speed:2.2,radius:.6,scale:1,body:'spitter',pal:P('#7a5a3a','#ffc04a','#ffd06a'),keep:7,moves:[{type:'spit',dmg:13,range:11,windup:.85,recover:.8,color:'#ffd06a',min:3}]},
  soterrado:{name:'O Soterrado',hp:1300,speed:2.2,radius:1.4,scale:1,body:'worm',pal:P('#6a5236','#ffb04a'),boss:true,moves:[
   {type:'burrow',dmg:28,range:20,windup:1.4,recover:1.6,radius:2.2,count:3},{type:'dash',dmg:22,range:10,windup:.9,recover:1.2},{type:'bite',dmg:24,range:3.2,windup:.8,recover:1,arc:1.4}]},
+// guardian of the domain: changes pattern when its energy drops (2D: O Warden)
+ warden:{name:'O Warden',hp:1800,speed:2,radius:1.5,scale:1,body:'warden',pal:P('#2e3a44','#4ff0ff'),armor:.85,boss:true,moves:[
+  {type:'sweep',dmg:26,range:4.2,windup:1.05,recover:1.2,arc:2.6},{type:'slam',dmg:28,range:3.5,windup:1.1,recover:1.3,radius:4.2},{type:'marks',dmg:22,range:16,windup:1.2,recover:1,radius:1.8,count:3}],
+  phase2:[{type:'fan',dmg:16,range:14,windup:.8,recover:.8,color:'#8ff4ff',count:5,min:3},{type:'dash',dmg:26,range:11,windup:.75,recover:1},{type:'marks',dmg:24,range:16,windup:.9,recover:.8,radius:1.8,count:5}]},
 } satisfies Record<string,Spec>;
 export type SpeciesId=keyof typeof SPECIES;
 
@@ -52,7 +56,7 @@ const segGeo=new T.CylinderGeometry(1,1,1,7);segGeo.translate(0,.5,0);
 function orient(m:T.Mesh,a:T.Vector3,b:T.Vector3,r:number){const d=tmp.copy(b).sub(a),l=d.length();m.position.copy(a);m.quaternion.setFromUnitVectors(UP,d.normalize());m.scale.set(r,l,r);}
 
 interface Leg{hip:T.Vector3;out:T.Vector3;len:number;phase:number;up:T.Mesh;low:T.Mesh;r:number;knee:number}
-interface Look{chitin:T.MeshStandardMaterial;glow:T.MeshStandardMaterial;body:T.Group;legs:Leg[];sac?:T.Mesh;mandibles?:T.Mesh[];height:number;wings?:T.Object3D[];arms?:T.Object3D[];segs?:T.Mesh[]}
+interface Look{chitin:T.MeshStandardMaterial;glow:T.MeshStandardMaterial;body:T.Group;legs:Leg[];sac?:T.Mesh;mandibles?:T.Mesh[];height:number;wings?:T.Object3D[];arms?:T.Object3D[];segs?:T.Mesh[];halo?:T.Object3D[]}
 type Pal=Spec['pal'];
 function chitin(p:Pal){return new T.MeshStandardMaterial({color:p.c,roughness:p.wet?.18:.42,metalness:p.wet?.1:.25,emissive:'#000000',emissiveIntensity:1});}
 function glowMat(color:string,i=1.6){return new T.MeshStandardMaterial({color,emissive:color,emissiveIntensity:i,roughness:.3});}
@@ -169,7 +173,26 @@ function buildWorm(root:T.Group,p:Pal):Look{
  segs[0].add(ball(.2,gl,[0,0,.5]));
  return {chitin:ch,glow:gl,body,legs:[],segs,height:3};
 }
-const BUILD:Record<Body,(r:T.Group,p:Pal)=>Look>={crawler:buildCrawler,skitter:buildSkitter,spitter:buildSpitter,carapace:buildCarapace,hound:buildHound,amphibian:buildAmphibian,thorn:buildThorn,golem:buildGolem,winged:buildWinged,worm:buildWorm};
+function buildWarden(root:T.Group,p:Pal):Look{
+ const ch=chitin(p),gl=glowMat(p.g,2.4),body=new T.Group();root.add(body);
+ const plate=(w:number,h:number,d:number,pos:[number,number,number],rot:[number,number,number]=[0,0,0])=>{const m=new T.Mesh(new T.BoxGeometry(w,h,d),ch);m.position.set(...pos);m.rotation.set(...rot);m.castShadow=true;body.add(m);return m;};
+ // floating construct: no legs, a core of light held by armour plates
+ body.add(ball(.55,gl,[0,2.6,0],[1,1.2,1]));
+ plate(1.5,1.4,.35,[0,2.7,.45],[.15,0,0]);plate(1.5,1.4,.35,[0,2.7,-.45],[-.15,0,0]);
+ for(const s of[-1,1]){plate(.35,1.5,1.1,[s*.82,2.7,0],[0,0,s*.12]);plate(.9,.3,.9,[s*.75,3.5,0],[0,0,s*.4]);}
+ plate(1.1,.5,.9,[0,1.7,0],[0,0,0]);body.add(cone(.55,1.2,ch,[0,1,0],[Math.PI,0,0]));
+ const head=new T.Mesh(new T.OctahedronGeometry(.45,0),ch);head.position.set(0,3.9,.1);head.scale.set(1,1.3,.9);head.castShadow=true;body.add(head);
+ body.add(ball(.12,gl,[0,3.95,.48],[1.6,.6,.5]));
+ const arms:T.Object3D[]=[];
+ for(const s of[-1,1]){const a=new T.Group();a.position.set(s*1.25,3.2,0);body.add(a);
+  const fore=new T.Mesh(new T.BoxGeometry(.35,1.5,.35),ch);fore.position.y=-.75;fore.castShadow=true;a.add(fore);
+  const blade=new T.Mesh(new T.ConeGeometry(.18,1.6,4),gl);blade.position.y=-2.1;blade.rotation.x=Math.PI;a.add(blade);arms.push(a);}
+ const halo:T.Object3D[]=[];
+ for(let i=0;i<3;i++){const t=new T.Mesh(new T.TorusGeometry(1.1+i*.35,.04,8,48),gl);t.position.y=2.6;body.add(t);halo.push(t);}
+ for(let i=0;i<8;i++){const sh=new T.Mesh(new T.OctahedronGeometry(.16,0),ch);const a=i/8*Math.PI*2;sh.position.set(Math.cos(a)*1.9,2.6,Math.sin(a)*1.9);body.add(sh);halo.push(sh);}
+ return {chitin:ch,glow:gl,body,legs:[],arms,halo,height:4.6};
+}
+const BUILD:Record<Body,(r:T.Group,p:Pal)=>Look>={warden:buildWarden,crawler:buildCrawler,skitter:buildSkitter,spitter:buildSpitter,carapace:buildCarapace,hound:buildHound,amphibian:buildAmphibian,thorn:buildThorn,golem:buildGolem,winged:buildWinged,worm:buildWorm};
 
 // ---------- telegraphs (amber, fixed once announced) ----------
 const TELE_F=`uniform float uK;uniform vec3 uColor;void main(){float pulse=.6+.4*sin(uK*40.);gl_FragColor=vec4(uColor*(.06+uK*.28)*pulse,1.);}`;
@@ -203,21 +226,24 @@ export class Creature{
   if(!quiet){const dir=this.pos.clone().sub(from).setY(0).normalize();this.vel.addScaledVector(dir,push*(this.boss?.1:k<1?.3:1));}
   ctx.popText(this.pos.clone().setY(this.look.height*this.spec.scale+.6),String(Math.round(d*k)),color);ctx.onHit(this,quiet);
   if(this.state==='idle')this.state='chase';
+  if(this.spec.phase2&&this.phase===1&&this.hp<this.spec.hp*.5){this.phase=2;ctx.popText(this.pos.clone().setY(5.5),'O guardião muda de padrão','#8ff4ff');ctx.vfx.shake=.4;this.look.glow.color.set('#ff5a8a');this.look.glow.emissive.set('#ff5a8a');}
   if(this.hp<=0)this.die(ctx);
  }
  private die(ctx:Ctx){this.state='dead';this.clearTele();ctx.onKill(this);
   ctx.vfx.emit({pos:this.pos.clone().setY(.6),n:this.boss?90:24,speed:[1,this.boss?7:4],up:.6,life:[.4,.9],size:[.14,.03],c0:'#ffffff',c1:'#'+this.look.glow.color.getHexString(),a:[1,0],grav:6,drag:1.5,spread:this.boss?1.2:.3});}
  private clearTele(){for(const m of this.tele){m.removeFromParent();m.geometry.dispose();(m.material as T.Material).dispose();}this.tele=[];}
  private addTele(geo:T.BufferGeometry,at:T.Vector3,rot:number){const m=new T.Mesh(geo,teleMat());m.renderOrder=3;m.position.copy(at).setY(0);m.rotation.y=rot;this.scene.add(m);this.tele.push(m);}
+ phase=1;
  private pick(dist:number){
-  const ok=this.spec.moves.filter(m=>dist<=m.range&&dist>=(m.min??0));
+  const pool=this.phase===2&&this.spec.phase2?[...this.spec.moves,...this.spec.phase2]:this.spec.moves;
+  const ok=pool.filter(m=>dist<=m.range&&dist>=(m.min??0));
   return ok.length?ok[Math.floor(Math.random()*ok.length)]:null;
  }
  private announce(ctx:Ctx){
   const m=this.mv,s=1/this.spec.scale;void s;this.targets=[];
   if(m.type==='dash')this.addTele(strip(1.1*this.spec.scale,m.range),this.pos,this.heading);
   else if(m.type==='spit')this.addTele(strip(.35,m.range),this.pos,this.heading);
-  else if(m.type==='fan')for(const a of[-.35,0,.35])this.addTele(strip(.3,m.range),this.pos,this.heading+a);
+  else if(m.type==='fan'){const n=m.count??3;for(let i=0;i<n;i++)this.addTele(strip(.3,m.range),this.pos,this.heading+(i-(n-1)/2)*.32);}
   else if(m.type==='sweep'||m.type==='bite'||m.type==='breath')this.addTele(sector(m.range*(m.type==='bite'?.95:1),m.arc??1.6),this.pos,this.heading);
   else if(m.type==='slam')this.addTele(disc(m.radius!),this.pos,0);
   else{ // lob, marks, burrow: circles around the hero
@@ -244,7 +270,7 @@ export class Creature{
     this.mv=mv;this.state='wind';this.timer=mv.windup;this.heading=face;this.dir.set(Math.sin(face),0,Math.cos(face));this.announce(ctx);}
    else if(s.keep&&dist<s.keep)want=-.8;else if(dist>close+this.radius)want=1;
   }else if(this.state==='wind'){
-   const m=this.mv;this.timer-=dt*slow;const k=1-this.timer/m.windup;
+   const m=this.mv;this.timer-=dt*slow*(this.phase===2?1.25:1);const k=1-this.timer/m.windup;
    for(const te of this.tele)(te.material as T.ShaderMaterial).uniforms.uK.value=k;
    if(m.type==='bite'){L.glow.emissiveIntensity=1.6+k*5;L.mandibles?.forEach((mm,i)=>mm.rotation.z=(i?1:-1)*(.5+k*.6));}
    if((m.type==='spit'||m.type==='lob'||m.type==='fan')&&L.sac){const sc=1+k*.55;L.sac.scale.set(sc,sc,sc);}
@@ -292,7 +318,7 @@ export class Creature{
    ctx.vfx.puff({pos:this.pos.clone().setY(.4),n:16,speed:[1.5,4],up:.2,life:[.7,1.2],size:[.8,2],c0:'#7a6448',c1:'#3a3028',a:[.5,0],drag:2,spread:m.radius!*.5});
    if(dist<m.radius!+.3&&!ctx.invuln())ctx.damagePlayer(m.dmg,this.pos);}
   if(m.type==='spit')this.shoot(ctx,this.dir,m);
-  if(m.type==='fan')for(const a of[-.35,0,.35]){const d=this.dir.clone().applyAxisAngle(UP,a);this.shoot(ctx,d,m);}
+  if(m.type==='fan'){const n=m.count??3;for(let i=0;i<n;i++){const a=(i-(n-1)/2)*.32;const d=this.dir.clone().applyAxisAngle(UP,a);this.shoot(ctx,d,m);}}
   if(m.type==='lob')for(const p of this.targets)this.lob(ctx,p,m);
   if(m.type==='marks')for(const p of this.targets){ctx.vfx.field('energy',p,m.radius!*.8);for(let i=0;i<6;i++)ctx.vfx.shard(p.clone().setY(.2),tmp.set(rnd(-1,1),rnd(1,2),rnd(-1,1)).normalize().multiplyScalar(rnd(2,5)),.8);
    if(Math.hypot(p.x-ctx.player.x,p.z-ctx.player.z)<m.radius!&&!ctx.invuln())ctx.damagePlayer(m.dmg,p);}
@@ -306,6 +332,7 @@ export class Creature{
  // procedural motion: legs step in a wave, wings beat, the worm undulates out of the ground
  private pose(dead:boolean){
   const L=this.look;
+  if(L.halo){L.halo.forEach((h,i)=>{if(i<3){h.rotation.set(Math.PI/2+Math.sin(this.t*.7+i)*.6,this.t*(.8+i*.4),Math.cos(this.t*.5+i)*.5);}else{const a=(i-3)/8*Math.PI*2+this.t*(this.phase===2?1.6:.8);h.position.set(Math.cos(a)*1.9,2.6+Math.sin(this.t*2+i)*.3,Math.sin(a)*1.9);h.rotation.y+=.05;}});L.body.position.y=Math.sin(this.t*1.6)*.15+.3;}
   if(L.wings){const f=Math.sin(this.t*(this.state==='act'?9:5));L.wings.forEach((w,i)=>w.rotation.z=(i?-1:1)*(f*.6+.1));}
   if(L.segs){const h=this.hidden;L.segs.forEach((sg,i)=>{const k=i/(L.segs!.length-1);sg.position.set(Math.sin(this.t*2+i*.7)*.25,(2.4-k*2.6)*(1-h)-h*2.5+ (dead?-1:0),-k*2.2+.6);});}
   if(L.arms&&this.state!=='wind'&&this.state!=='act'&&this.state!=='recover')L.arms.forEach((a,i)=>a.rotation.x=Math.sin(this.gait+i*Math.PI)*.35);

@@ -41,3 +41,15 @@ body.play #biomes{display:flex}#biomes .chip{font-size:11px;padding:4px 8px;back
 #banner.on{animation:ban 3.2s ease forwards}@keyframes ban{0%{opacity:0;transform:scale(.96)}12%{opacity:1;transform:scale(1)}75%{opacity:1}100%{opacity:0}}
 #bossbar{display:none;position:absolute;top:56px;left:50%;transform:translateX(-50%);width:min(560px,70vw);text-align:center;color:#f0d0b8;font-size:15px;letter-spacing:.1em;text-shadow:0 1px 3px #000}
 #bossbar.on{display:block}#bossbar div{margin-top:4px;height:12px;background:#1a0c0a;border:1px solid #8a3a30;border-radius:2px;overflow:hidden}#bossbar i{display:block;height:100%;width:100%;background:linear-gradient(#e0502a,#8a1a10);transition:width .2s}
+#portalhint{position:absolute;bottom:130px;left:50%;transform:translateX(-50%);padding:6px 14px;background:#0b0a09cc;border:1px solid #6a5632;border-radius:3px;color:#f0d594;font-size:14px;letter-spacing:.06em;opacity:0;transition:opacity .3s;pointer-events:none}
+#portalhint.on{opacity:1}
+#touch{display:none;position:absolute;right:14px;bottom:130px;width:180px;height:180px;pointer-events:none}
+body.touch.play #touch{display:block}
+#touch button{position:absolute;pointer-events:auto;border-radius:50%;border:2px solid #6a5632;background:radial-gradient(#2a2016,#0e0b08);color:#f0d594;font-family:inherit;font-size:13px;box-shadow:0 0 12px #000a;touch-action:none;-webkit-user-select:none;user-select:none}
+#t-atk{width:84px;height:84px;right:0;bottom:0;font-size:15px}
+#t-q{width:62px;height:62px;right:96px;bottom:4px}
+#t-dash{width:62px;height:62px;right:8px;bottom:96px}
+#t-e{width:50px;height:50px;right:88px;bottom:84px;display:none}
+body.astral #t-e{display:block}
+body.touch #app canvas{touch-action:none}
+@media(max-width:700px){#biomes .chip{font-size:10px;padding:3px 6px}#biomes{top:6px;max-width:92vw}.orb{width:72px;height:72px;bottom:12px}.orb.hp{left:12px}.orb.mp{right:auto;left:92px}#clsname{bottom:92px;font-size:12px}#bossbar{top:64px}#banner{font-size:22px}#perf{top:40px;left:8px}}

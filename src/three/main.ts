@@ -2,7 +2,7 @@ import * as T from 'three';
 import './style.css';
 import {Character,DEFAULT_LOOK,HAIR,HAIR_COLORS,BROWS,CLOTH,OUTFITS,SKINS,type Look,type Sex} from './character';
 import {CLASSES,CLASS_ORDER,WEAPON_CLASS,ELEMENTS,ELEMENT_NAMES,ELEMENT_COLORS,type ClassId,type Element} from './classes';
-import {World} from './world';
+import {World,ARENA} from './world';
 import {VFX,type Kind} from './vfx';
 import {Creature,SPECIES,updateSpits,clearShots,type Ctx,type SpeciesId} from './creatures';
 import {BIOMES,BIOME_ORDER,type BiomeId} from './biomes';
@@ -44,7 +44,7 @@ const ctx:Ctx={scene:world.scene,get vfx(){return vfx;},player:pos,playerOk:()=>
  onKill:(c)=>{kills++;if(c.boss){bossDown(c);}else biomeKills++;hud();},onHit:(_c,quiet)=>{if(cls()==='xenobinder'&&!quiet)mana=Math.min(100,mana+6);},others:enemies} as Ctx;
 Creature.ctx=ctx;
 function spawnEnemy(kind?:SpeciesId){
-  if(!kind){const mix=BIOMES[world.biome].creatures;let r=Math.random();kind=mix[0][0];for(const [k,w] of mix){if(r<w){kind=k;break;}r-=w;}}
+  if(!kind){const mix=BIOMES[world.biome].creatures;if(!mix.length)return null;let r=Math.random();kind=mix[0][0];for(const [k,w] of mix){if(r<w){kind=k;break;}r-=w;}}
   const a=Math.random()*6.28,d=16+Math.random()*14;
   const e=new Creature(kind,Math.cos(a)*d+pos.x*.3,Math.sin(a)*d+pos.z*.3,world.scene);world.collide(e.pos,e.radius);enemies.push(e);return e;
 }
@@ -54,9 +54,10 @@ function bossDown(c:Creature){bossBeaten=true;boss=null;banner(`${c.name} foi de
 function banner(text:string){const b=$('banner');b.textContent=text;b.classList.remove('on');void b.offsetWidth;b.classList.add('on');}
 function updateEnemies(dt:number,now:number){
   const B=BIOMES[world.biome];
-  if(mode==='play'&&B.boss&&!boss&&!bossBeaten&&biomeKills>=(B.bossAfter??10)){const a=Math.random()*6.28;boss=new Creature(B.boss,pos.x+Math.cos(a)*16,pos.z+Math.sin(a)*16,world.scene);world.collide(boss.pos,boss.radius);enemies.push(boss);banner(`${boss.name} desperta`);$('bossname').textContent=boss.name;$('bossbar').classList.add('on');}
+  if(mode==='play'&&B.boss&&!boss&&!bossBeaten&&biomeKills>=(B.bossAfter??10)&&spawnT<=0){const a=Math.random()*6.28;boss=new Creature(B.boss,pos.x+Math.cos(a)*16,pos.z+Math.sin(a)*16,world.scene);world.collide(boss.pos,boss.radius);enemies.push(boss);banner(`${boss.name} desperta`);$('bossname').textContent=boss.name;$('bossbar').classList.add('on');}
   if(boss)$('bossfill').style.width=Math.max(0,boss.hp/boss.spec.hp*100)+'%';
-  spawnT-=dt;if(mode==='play'&&spawnT<=0&&enemies.filter(e=>e.state!=='dead'&&!e.boss).length<(boss?3:6)){spawnEnemy();spawnT=4.5;}
+  spawnT-=dt;if(mode==='play'&&spawnT<=0&&B.creatures.length&&enemies.filter(e=>e.state!=='dead'&&!e.boss).length<(boss?3:6)){spawnEnemy();spawnT=4.5;}
+  updatePortals();
   for(let i=enemies.length-1;i>=0;i--){const e=enemies[i];e.update(dt,now,ctx);if(e.gone)enemies.splice(i,1);}
   updateSpits(dt,ctx);
 }
@@ -280,7 +281,8 @@ function updateCamera(dt:number){
   const target=mode==='play'?1:0;camBlend+=(target-camBlend)*Math.min(1,dt*2.6);
   const k=camBlend*camBlend*(3-2*camBlend);
   // creator: close, side-lit portrait ; play: ARPG three-quarter overhead
-  const cp=cTmp.set(pos.x-.4,pos.y+1.4,pos.z+4.2),cl=new T.Vector3(pos.x-.95,pos.y+1.0,pos.z);
+  const narrow=innerWidth<700;
+  const cp=narrow?cTmp.set(pos.x,pos.y+1.5,pos.z+5.6):cTmp.set(pos.x-.4,pos.y+1.4,pos.z+4.2),cl=narrow?new T.Vector3(pos.x,pos.y+.4,pos.z):new T.Vector3(pos.x-.95,pos.y+1.0,pos.z);
   const pp=new T.Vector3(pos.x,pos.y+10.5*zoom,pos.z+8.6*zoom),pl=new T.Vector3(pos.x,pos.y+.9,pos.z);
   camPos.copy(cp).lerp(pp,k);camLook.copy(cl).lerp(pl,k);
   if(close&&hero.model){const b=hero.model.getObjectByName(close.bone);if(b){hero.model.updateMatrixWorld(true);const c=b.getWorldPosition(new T.Vector3());camLook.copy(c);camPos.copy(c).add(close.off.clone().applyAxisAngle(new T.Vector3(0,1,0),hero.model.rotation.y));}}
@@ -304,7 +306,7 @@ ui.innerHTML=`
  <div class="grp"><label>Classe</label><div class="row wrap" id="o-class"></div><div class="clsinfo" id="o-clsinfo"></div></div>
  <button id="go">Entrar no mundo</button><p class="hint">Arraste para girar o personagem</p></div>
 <div id="hud"><div class="orb hp"><i id="hp"></i><b id="hpt"></b></div><div id="clsname"></div><div class="bar" id="skillbar"></div><div class="orb mp"><i id="mp"></i><b id="mpt"></b></div><div id="kills"></div></div><div id="perf"><span id="fps"></span><button id="qbtn">Qualidade: alta</button></div>
-<div id="biomes"></div><div id="banner"></div><div id="bossbar"><span id="bossname"></span><div><i id="bossfill"></i></div></div>
+<div id="biomes"></div><div id="portalhint"></div><div id="touch"><button id="t-atk">Atacar</button><button id="t-q">Q</button><button id="t-dash">Esquiva</button><button id="t-e">Elem.</button></div><div id="banner"></div><div id="bossbar"><span id="bossname"></span><div><i id="bossfill"></i></div></div>
 <div id="deadmsg"><h2>Você caiu</h2><button id="respawn">Levantar</button></div>
 <div id="loading">Carregando…</div>`;
 const $=(id:string)=>document.getElementById(id)!;
@@ -348,16 +350,39 @@ function hud(){
 }
 function enter(){
   mode='play';document.body.classList.add('play');document.body.classList.remove('creator');
+  document.body.classList.toggle('astral',cls()==='astral');
   pos.set(0,0,0);heading=Math.PI;hpMax=kit().hp;hp=hpMax;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();hud();spawnT=1.5;
 }
 $('go').onclick=enter;
-function goBiome(id:BiomeId){
+// walking into a portal carries the expedition to the neighbouring region
+let portalLock=0;
+function updatePortals(){
+  if(mode!=='play'||dead){$('portalhint').classList.remove('on');return;}
+  let near:typeof world.portals[number]|null=null;
+  for(const pt of world.portals){const d=Math.hypot(pos.x-pt.pos.x,pos.z-pt.pos.z);if(d<6)near=pt;if(d<1.7&&now()>portalLock){goBiome(pt.to,pt.dir);return;}}
+  const h=$('portalhint');if(near){h.textContent=`Portal: ${BIOMES[near.to].name}`;h.classList.add('on');}else h.classList.remove('on');
+}
+function goBiome(id:BiomeId,from:0|1|-1=0){
   world.setBiome(id);vfx.clearEmitters();for(const f of world.flameSpots)vfx.campfire(f.p,f.s);
   for(const e of enemies)e.dispose();enemies.length=0;clearShots();boss=null;bossBeaten=false;biomeKills=0;$('bossbar').classList.remove('on');
-  pos.set(0,0,0);if(pet)pet.g.position.set(1.2,0,1);spawnT=2;banner(BIOMES[id].name);renderBiomes();
-}
-function renderBiomes(){const h=$('biomes');h.innerHTML='';for(const id of BIOME_ORDER){const b=document.createElement('button');b.className='chip'+(world.biome===id?' on':'');b.textContent=BIOMES[id].name;b.title=BIOMES[id].sub;b.onclick=()=>goBiome(id);h.appendChild(b);}}
+  pos.set(0,0,from===1?ARENA-10:from===-1?-ARENA+10:0);heading=from===-1?0:Math.PI;portalLock=now()+2;if(pet)pet.g.position.set(pos.x+1.2,0,pos.z+1);spawnT=2;banner(BIOMES[id].name);// touch: tap/hold the ground to walk, buttons for attack / skill / dodge / element; attacks aim at the nearest creature
+const touch=matchMedia('(pointer:coarse)').matches||'ontouchstart' in window;
+if(touch)document.body.classList.add('touch');
 renderBiomes();
+function autoAim(){let best:Enemy|null=null,bd=16;for(const e of enemies)if(e.state!=='dead'){const d=e.pos.distanceTo(pos);if(d<bd){bd=d;best=e;}}aimPoint.copy(best?best.pos:pos.clone().add(fwd().multiplyScalar(5)));}
+const tb=(id:string,down:()=>void,up?:()=>void)=>{const b=$(id);b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();autoAim();down();});if(up)b.addEventListener('pointerup',e=>{e.preventDefault();autoAim();up();});};
+tb('t-atk',()=>tryAttack());tb('t-q',()=>skillDown(),()=>skillUp());tb('t-dash',()=>roll());tb('t-e',()=>cycleElement());
+}
+function renderBiomes(){const h=$('biomes');h.innerHTML='';
+  if(document.body.classList.contains('touch')){const sel=document.createElement('select');sel.className='chip';for(const id of BIOME_ORDER){const o=document.createElement('option');o.value=id;o.textContent=BIOMES[id].name;o.selected=world.biome===id;sel.appendChild(o);}sel.onchange=()=>goBiome(sel.value as BiomeId);h.appendChild(sel);return;}
+ for(const id of BIOME_ORDER){const b=document.createElement('button');b.className='chip'+(world.biome===id?' on':'');b.textContent=BIOMES[id].name;b.title=BIOMES[id].sub;b.onclick=()=>goBiome(id);h.appendChild(b);}}
+// touch: tap/hold the ground to walk, buttons for attack / skill / dodge / element; attacks aim at the nearest creature
+const touch=matchMedia('(pointer:coarse)').matches||'ontouchstart' in window;
+if(touch)document.body.classList.add('touch');
+renderBiomes();
+function autoAim(){let best:Enemy|null=null,bd=16;for(const e of enemies)if(e.state!=='dead'){const d=e.pos.distanceTo(pos);if(d<bd){bd=d;best=e;}}aimPoint.copy(best?best.pos:pos.clone().add(fwd().multiplyScalar(5)));}
+const tb=(id:string,down:()=>void,up?:()=>void)=>{const b=$(id);b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();autoAim();down();});if(up)b.addEventListener('pointerup',e=>{e.preventDefault();autoAim();up();});};
+tb('t-atk',()=>tryAttack());tb('t-q',()=>skillDown(),()=>skillUp());tb('t-dash',()=>roll());tb('t-e',()=>cycleElement());
 $('qbtn').onclick=()=>setQuality(quality==='high'?'low':'high');
 $('respawn').onclick=()=>{document.body.classList.remove('dead');dead=false;hp=hpMax;mana=100;pos.set(0,0,0);hero.play('Idle_Loop',{fade:.2});if(pet)pet.g.position.set(1.2,0,1);for(const e of enemies)e.dispose();enemies.length=0;hud();};
 document.body.classList.add('creator');

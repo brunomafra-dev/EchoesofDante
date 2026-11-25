@@ -5,7 +5,7 @@ import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
 import {ShaderPass} from 'three/addons/postprocessing/ShaderPass.js';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {BIOMES,type BiomeId} from './biomes';
+import {BIOMES,BIOME_ORDER,type BiomeId} from './biomes';
 
 // Regions of Dante: scanned ground and nature (Poly Haven, CC0), procedural alien flora,
 // lava, water, ice and dunes, ambient particles, plus the dark ARPG post-processing.
@@ -56,7 +56,7 @@ const ROCKS=['rock_a','rock_b','rock_c','rock_d','set_1','set_2'];
 
 export class World{
  scene=new T.Scene();colliders:Collider[]=[];moon=new T.DirectionalLight('#9bb2e6',2.3);hemi=new T.HemisphereLight('#7f93bd','#2a2a22',1.25);
- biome:BiomeId='camp';flameSpots:{p:T.Vector3;s:number}[]=[];readonly fire=new T.Vector3(-3.4,0,-2.2);
+ biome:BiomeId='camp';portals:{pos:T.Vector3;to:BiomeId;dir:1|-1}[]=[];private portalMats:T.ShaderMaterial[]=[];flameSpots:{p:T.Vector3;s:number}[]=[];readonly fire=new T.Vector3(-3.4,0,-2.2);
  composer!:EffectComposer;private bloom!:UnrealBloomPass;private grade!:ShaderPass;private rp!:RenderPass;
  private group=new T.Group();private gmat:T.MeshStandardMaterial;private texCache=new Map<string,T.Texture>();private token=0;
  private fireLight:T.PointLight|null=null;private torches:T.PointLight[]=[];private surfaces:T.ShaderMaterial[]=[];
@@ -83,7 +83,7 @@ export class World{
  setBiome(id:BiomeId){
   this.biome=id;const b=BIOMES[id],tok=++this.token;
   this.group.traverse(o=>{const m=o as T.Mesh;if(m.isMesh&&!(m as T.InstancedMesh).userData.shared){m.geometry?.dispose();}});
-  this.group.clear();this.colliders.length=0;this.flameSpots.length=0;this.torches=[];this.fireLight=null;this.surfaces=[];this.air=null;this.airKind=b.ambient;
+  this.group.clear();this.colliders.length=0;this.flameSpots.length=0;this.torches=[];this.fireLight=null;this.surfaces=[];this.portals=[];this.portalMats=[];this.air=null;this.airKind=b.ambient;
   (this.scene.background as T.Color).set(b.bg);const fog=this.scene.fog as T.FogExp2;fog.color.set(b.bg);fog.density=b.fog;
   this.hemi.color.set(b.hemi[0]);this.hemi.groundColor.set(b.hemi[1]);this.hemi.intensity=b.hemi[2];this.moon.color.set(b.moon[0]);this.moon.intensity=b.moon[1];
   Object.assign(this.gmat,{map:this.tex(b.ground+'_diff.jpg',true),normalMap:this.tex(b.ground+'_nor.jpg',false),roughnessMap:this.tex(b.ground+'_rough.jpg',false)});
@@ -119,11 +119,19 @@ export class World{
    ring(12,10,ARENA*1.1,(x,z)=>{put(r()<.5?'tree_a':'tree_b',x,z,.8+r()*.5);col(x,z,.5);});
    rocks(60);boulders();
    this.crystals(r,22,['#6fa8c8','#9ff0ff'],['#a8d8f0','#d0f8ff'],1.4,true);this.mounds(r,26,'#e8f0f8',2.2);
+  }else if(id==='domain'){
+   rocks(30);boulders();this.domainArena(r);
   }else{
    ring(8,12,ARENA*1.1,(x,z)=>{put('tree_b',x,z,.7+r()*.4);col(x,z,.5);});
    rocks(45);boulders();
    this.mounds(r,22,'#c89a68',5);this.crystals(r,14,['#8a5a1a','#ffb04a'],['#a06a2a','#ffd06a'],1.3);this.bones(r,6);
   }
+  // portals to the neighbouring regions: north leads on, south leads back
+  const i=BIOME_ORDER.indexOf(id);
+  if(i<BIOME_ORDER.length-1)this.portal(new T.Vector3(0,0,-ARENA+5),BIOME_ORDER[i+1],1);
+  if(i>0)this.portal(new T.Vector3(0,0,ARENA-5),BIOME_ORDER[i-1],-1);
+  for(const pt of this.portals)this.colliders.splice(0,this.colliders.length,...this.colliders.filter(c=>Math.hypot(c.x-pt.pos.x,c.z-pt.pos.z)>4));
+  for(const kind of Object.keys(place))place[kind]=place[kind].filter(p=>this.portals.every(pt=>Math.hypot(p.x-pt.pos.x,p.z-pt.pos.z)>5));
   this.loadNature(place,b.rockTint,b.treeTint,tok);
   this.makeAir(b.ambient);
  }
@@ -240,6 +248,34 @@ export class World{
    const sp=new T.Sprite(new T.SpriteMaterial({map:lampTex,blending:T.AdditiveBlending,depthWrite:false,transparent:true}));sp.scale.set(1.8,1.8,1);sp.position.set(x,2.85,z);g.add(sp);
    const l=new T.PointLight('#ff9a48',12,12,1.8);l.position.set(x,3,z);g.add(l);this.torches.push(l);this.flameSpots.push({p:new T.Vector3(x,2.62,z),s:.32});this.colliders.push({x,z,r:.2});}
  }
+ // a standing ring of stone with a swirling gate tinted like the destination
+ private portal(pos:T.Vector3,to:BiomeId,dir:1|-1){
+  const g=new T.Group();g.position.copy(pos);this.group.add(g);
+  const stone=new T.MeshStandardMaterial({color:'#3a3a40',roughness:.8,flatShading:true});
+  const ringM=new T.Mesh(new T.TorusGeometry(2,.32,10,32),stone);ringM.position.y=2.3;ringM.castShadow=true;g.add(ringM);
+  for(const s of[-1,1]){const b=new T.Mesh(new T.BoxGeometry(.8,.6,.9),stone);b.position.set(s*2,.3,0);b.castShadow=true;g.add(b);}
+  const col=new T.Color(BIOMES[to].hemi[0]);
+  const mat=new T.ShaderMaterial({uniforms:{uT:{value:0},uC:{value:col}},transparent:true,depthWrite:false,blending:T.AdditiveBlending,side:T.DoubleSide,
+   vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+   fragmentShader:'uniform float uT;uniform vec3 uC;varying vec2 vUv;void main(){vec2 p=vUv-.5;float r=length(p)*2.;if(r>1.)discard;float a=atan(p.y,p.x);float sw=.5+.5*sin(a*5.+r*12.-uT*4.);float c=(1.-r)*.6+sw*(1.-r*.8)*.6+smoothstep(.75,1.,r)*.8;gl_FragColor=vec4(uC*c*1.3,1.);}'});
+  const disc=new T.Mesh(new T.CircleGeometry(1.75,40),mat);disc.position.y=2.3;g.add(disc);this.portalMats.push(mat);
+  const gl=new T.Sprite(new T.SpriteMaterial({map:glowTex('rgba(255,255,255,.5)','rgba(255,255,255,.12)'),color:col,blending:T.AdditiveBlending,depthWrite:false,transparent:true}));gl.scale.set(7,7,1);gl.position.y=2.3;g.add(gl);
+  this.portals.push({pos:pos.clone(),to,dir});
+ }
+ // the guardian's arena: a rune circle surrounded by tall obelisks
+ private domainArena(r:()=>number){
+  const stone=new T.MeshStandardMaterial({color:'#2a3238',roughness:.85,flatShading:true}),rune=new T.MeshStandardMaterial({color:'#4ff0ff',emissive:'#4ff0ff',emissiveIntensity:1.8});
+  for(let i=0;i<12;i++){const a=i/12*Math.PI*2,x=Math.cos(a)*22,z=Math.sin(a)*22,h=5+r()*3;
+   if(Math.abs(x)<5&&Math.abs(z)>15)continue;
+   const m=new T.Mesh(new T.BoxGeometry(1.4,h,1.4),stone);m.position.set(x,h/2,z);m.rotation.y=-a;m.castShadow=m.receiveShadow=true;this.group.add(m);
+   for(let k=0;k<4;k++){const b=new T.Mesh(new T.BoxGeometry(1.44,.08,1.44),rune);b.position.y=-h/2+1+k*1.1;m.add(b);}
+   this.colliders.push({x,z,r:1.1});}
+  const mat=new T.ShaderMaterial({uniforms:{uT:{value:0}},transparent:true,depthWrite:false,blending:T.AdditiveBlending,
+   vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+   fragmentShader:'uniform float uT;varying vec2 vUv;void main(){vec2 p=vUv-.5;float r=length(p)*2.;float a=atan(p.y,p.x);float rings=smoothstep(.02,0.,abs(r-.95))+smoothstep(.015,0.,abs(r-.7))+smoothstep(.015,0.,abs(r-.4));float spokes=smoothstep(.04,0.,abs(sin(a*6.+uT*.2)))*step(.4,r)*step(r,.95);float glyph=step(.5,fract(a*12./6.2831+uT*.05))*smoothstep(.02,0.,abs(r-.82))*.0+smoothstep(.03,0.,abs(r-.82))*step(.5,fract(a*24./6.2831));float c=(rings+spokes*.5+glyph)*(.6+.4*sin(uT*1.5));gl_FragColor=vec4(vec3(.3,.9,1.)*c*.7,1.);}'});
+  const m=new T.Mesh(new T.PlaneGeometry(36,36).rotateX(-Math.PI/2),mat);m.position.y=.04;this.group.add(m);this.portalMats.push(mat);
+  for(let i=0;i<24;i++){const d=new T.Mesh(new T.DodecahedronGeometry(.3+r()*.6,0),stone);const a=r()*6.28,rr=8+r()*12;d.position.set(Math.cos(a)*rr,2+r()*5,Math.sin(a)*rr);d.rotation.set(r()*3,r()*3,0);d.castShadow=true;this.group.add(d);}
+ }
  // drifting air: spores, glowing motes, ash, snow, blowing sand
  private makeAir(kind:string){
   if(kind==='none')return;
@@ -254,6 +290,7 @@ export class World{
   if(this.fireLight)this.fireLight.intensity=58+Math.sin(t*7.1)*7+Math.sin(t*17.3)*5;
   this.torches.forEach((l,i)=>l.intensity=11+Math.sin(t*5.3+i*2.1)*1.6+Math.sin(t*13+i)*.8);
   for(const s of this.surfaces)s.uniforms.uT.value+=dt;
+  for(const s of this.portalMats)s.uniforms.uT.value+=dt;
   if(this.air&&this.airV){const p=this.air.geometry.attributes.position as T.BufferAttribute,a=p.array as Float32Array,k=this.airKind;
    for(let i=0;i<this.airV.length;i++){const v=this.airV[i];let x=a[i*3],y=a[i*3+1],z=a[i*3+2];
     if(k==='snow'){y-=dt*(.8+v*.8);x+=Math.sin(t*.7+v*9)*dt*.4;}else if(k==='ash'){y-=dt*(.3+v*.4);x+=dt*.3;}else if(k==='sand'){x+=dt*(4+v*5);y+=Math.sin(t*2+v*7)*dt*.3;}else{y+=Math.sin(t*.8+v*9)*dt*.25;x+=Math.cos(t*.6+v*7)*dt*.25;}

@@ -1,13 +1,13 @@
 import type {SpeciesId} from './creatures';
 
 // Regions of Dante for the new 3D, following the 2D maps and their bestiary.
-export type BiomeId='camp'|'springs'|'valley'|'caldera'|'frost'|'dunes';
+export type BiomeId='camp'|'springs'|'valley'|'caldera'|'frost'|'dunes'|'domain';
 export interface Biome{
  name:string;sub:string;ground:string;groundTint:string;bg:string;fog:number;
  hemi:[string,string,number];moon:[string,number];ambient:'none'|'spores'|'motes'|'ash'|'snow'|'sand';
  rockTint:string;treeTint:string;creatures:[SpeciesId,number][];boss?:SpeciesId;bossAfter?:number;
 }
-export const BIOME_ORDER:BiomeId[]=['camp','springs','valley','caldera','frost','dunes'];
+export const BIOME_ORDER:BiomeId[]=['camp','springs','valley','caldera','frost','dunes','domain'];
 export const BIOMES:Record<BiomeId,Biome>={
  camp:{name:'Acampamento da Chegada',sub:'Floresta e profundezas',ground:'burned_ground_01',groundTint:'#8a8378',bg:'#10151d',fog:.03,hemi:['#7f93bd','#2a2a22',1.25],moon:['#9bb2e6',2.3],ambient:'none',
   rockTint:'#ffffff',treeTint:'#ffffff',creatures:[['crawler',.4],['skitter',.25],['spitter',.2],['carapace',.15]]},
@@ -21,4 +21,6 @@ export const BIOMES:Record<BiomeId,Biome>={
   rockTint:'#c8d8e8',treeTint:'#b8c8d8',creatures:[['frostPouncer',.4],['frostSpitter',.3],['iceCarapace',.3]],boss:'vesper',bossAfter:10},
  dunes:{name:'Bacia do Siroco',sub:'Depressão do Siroco',ground:'coast_sand_01',groundTint:'#b89a78',bg:'#2a1a12',fog:.028,hemi:['#ffc890','#3a2414',1.25],moon:['#ffb070',2.2],ambient:'sand',
   rockTint:'#d8a070',treeTint:'#a07a50',creatures:[['dunePouncer',.45],['glassSpitter',.35],['skitter',.2]],boss:'soterrado',bossAfter:10},
+ domain:{name:'Domínio do Guardião',sub:'Arena do Warden',ground:'rocky_terrain_02',groundTint:'#6a7a84',bg:'#081218',fog:.03,hemi:['#7fd8ff','#14202a',1.6],moon:['#9fe8ff',2.4],ambient:'motes',
+  rockTint:'#5a6a74',treeTint:'#3a4a54',creatures:[],boss:'warden',bossAfter:0},
 };
