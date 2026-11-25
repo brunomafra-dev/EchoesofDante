@@ -42,3 +42,10 @@ Cada fatia: QA técnico e aprovação humana informados separadamente; link em `
 - **Criador de personagem:** caminho escolhido (cabelo, sobrancelha, rosto, pele, roupa, como Diablo e Path of Exile) com MPFB2 e pacotes CC0 do MakeHuman (`install_packs.py`, `make_human.py`, `patch_glb.py`). Prova com seis humanos variados: rostos, peles, cabelos e armaduras funcionam. Ajustes de gênero são assados na malha antes da exportação; materiais de exportação corrigidos para recorte e opaco.
 - **Pendente:** rig e biblioteca de animações (Mixamo, baixada pelo usuário, ou retarget), camada de roupa de base menos casual, sliders de rosto e corpo em tempo de execução, equipamento por peças, e a fundação do núcleo compartilhado.
 - **Visual:** modo opt-in `?look=arpg` no 3D atual (`src/experiments/arrival-3d/ArpgLook.ts`) como referência de clima; o 3D novo não depende dele.
+
+## S1 — criador + primeira fatia jogável (25/11/2026)
+- Página `3d.html` + `src/three/` (character.ts, world.ts, main.ts, style.css), independente do 3D antigo e do 2D.
+- Personagens: `public/assets/3d-new/characters/{male,female}.glb` (MPFB2, CC0), um esqueleto por sexo com partes separadas (cabelo ×6, sobrancelhas ×3, roupas ×4, cílios); pele e cor de cabelo/roupa por tinta de material. Gerados por `scripts/asset-tools/3d-new/build_character.py` (a versão de trabalho fica em `.local/blender/`).
+- Animações: Universal Animation Library (Quaternius, CC0), retarget para o rig game_engine; 18 clipes (parado, andar, correr, sprint, espada, pistola, magia, soco, rolar, dano, morte).
+- Jogo: mover (WASD/clique), atacar (J/clique/botão direito), onda (Q), rolar (Espaço), correr (Shift); armas presas na mão direita; inimigos provisórios (carcaças).
+- Limitações: monstros provisórios; roupas "Herói"/armadura sci-fi descartadas (feias/quebradas); desempenho medido só em SwiftShader (sem GPU); sem salvar progresso nem coop; ajustar pegada de carabina/condutor por olho.
