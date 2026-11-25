@@ -210,7 +210,7 @@ function chargeFx(on:boolean){
   if(on&&!chargeRing){chargeRing=new T.Mesh(new T.RingGeometry(.86,1,56).rotateX(-Math.PI/2),new T.MeshBasicMaterial({color:'#7fe8ff',transparent:true,opacity:.8,blending:T.AdditiveBlending,depthWrite:false}));world.scene.add(chargeRing);}
   if(!on&&chargeRing){world.scene.remove(chargeRing);chargeRing=null;}
 }
-function cycleElement(){if(cls()!=='astral'||mode!=='play')return;element=ELEMENTS[(ELEMENTS.indexOf(element)+1)%ELEMENTS.length];popText(pos.clone().setY(2.5),ELEMENT_NAMES[element],ELEMENT_COLORS[element]);hud();}
+function cycleElement(){if(cls()!=='astral'||mode!=='play')return;element=ELEMENTS[(ELEMENTS.indexOf(element)+1)%ELEMENTS.length];hero.setGlow(ELEMENT_COLORS[element]);popText(pos.clone().setY(2.5),ELEMENT_NAMES[element],ELEMENT_COLORS[element]);hud();}
 function roll(){
   const n=now(),k=kit();if(mode!=='play'||dead||n<rollUntil||n<dashReady)return;
   const d=inputDir();if(d.lengthSq()<.01)d.set(Math.sin(heading),0,Math.cos(heading));
@@ -377,7 +377,7 @@ function hud(){
 }
 function enter(){
   mode='play';document.body.classList.add('play');document.body.classList.remove('creator');
-  pos.set(0,0,0);heading=Math.PI;hpMax=kit().hp;hp=hpMax;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';syncPet();hud();spawnT=1.5;
+  pos.set(0,0,0);heading=Math.PI;hpMax=kit().hp;hp=hpMax;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();hud();spawnT=1.5;
 }
 $('go').onclick=enter;
 $('qbtn').onclick=()=>setQuality(quality==='high'?'low':'high');

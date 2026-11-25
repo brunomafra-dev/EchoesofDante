@@ -158,41 +158,56 @@ def carbine():
     box('front_sight', (.012, .01, .03), (0, .76, .028), GUN2, bevel=.002)
 
 
+ASTRAL = mat('astral_glow', (0.2, 0.8, 0.85), 0.0, 0.2, (0.37, 0.9, 0.85), 0.9)
+VEIN = mat('vein_glow', (0.1, 0.5, 0.2), 0.0, 0.3, (0.2, 1.0, 0.45), 0.7)
+STEEL = mat('astral_steel', (0.12, 0.13, 0.15), 0.9, 0.3)
+
+
 def gauntlet():
-    # segmented forearm bracer, back-of-hand plate, knuckle guard, palm emitter
-    cyl('forearm_core', .047, .30, (0, -.1, 0), GUN, verts=24)
-    for i in range(5):
-        r = .056 - i * .0035
-        c = cyl('plate%d' % i, r, .052, (0, -.2 + i * .05, 0), GUN2, bevel=.004)
-        c.scale = (1, 1, .9)
-        torus('plate_edge%d' % i, r, .0032, (0, -.2 + i * .05 + .027, 0), BRASS)
-    box('hand_plate', (.085, .11, .02), (0, .13, .035), GUN2, rot=(-.08, 0, 0), bevel=.006)
-    for k in range(4):
-        sphere('knuckle%d' % k, .0125, (-.03 + k * .02, .2, .035), GUN2)
-    box('knuckle_bar', (.09, .02, .016), (0, .195, .042), BRASS, bevel=.004)
-    cyl('wrist_core', .021, .016, (0, .06, -.034), LENS, axis='Z', verts=18)
-    torus('palm_ring', .032, .0045, (0, .14, -.035), BRASS, axis='Z')
-    sphere('palm_emitter', .02, (0, .14, -.037), CYAN)
+    # slim astral bracer hugging the forearm, thin plate on the back of the hand, knuckle guard,
+    # palm crystal and three rings floating round the wrist (animated + tinted by element in game)
+    cyl('bracer', .047, .2, (0, -.12, 0), STEEL, r2=.041, verts=28, bevel=.002)
+    for i, y in enumerate((-.205, -.115, -.03)):
+        torus('trim%d' % i, .046 - i * .003, .0028, (0, y, 0), BRASS)
+    box('ridge', (.022, .17, .01), (0, -.12, .045), GUN2, bevel=.003)
+    box('ridge_glow', (.006, .15, .004), (0, -.12, .051), ASTRAL)
     for s in (-1, 1):
-        box('side_vane%d' % s, (.008, .16, .05), (s * .056, -.02, 0), BRASS, rot=(0, 0, s * .12), bevel=.003)
-    box('thumb_guard', (.02, .07, .02), (.05, .14, 0), GUN2, rot=(0, 0, .4), bevel=.004)
+        box('side_fin%d' % s, (.006, .1, .022), (s * .046, -.14, .006), GUN2, rot=(0, 0, s * .15), bevel=.002)
+    for i in range(3):
+        torus('astral_ring%d' % i, .058 + i * .006, .0025, (0, -.035 - i * .035, 0), ASTRAL)
+    # hand part (moves with the hand bone in game)
+    box('hand_plate', (.066, .07, .007), (0, .062, .029), STEEL, rot=(-.12, 0, 0), bevel=.003)
+    box('hand_plate_glow', (.004, .05, .003), (0, .062, .034), ASTRAL)
+    for k in range(4):
+        box('knuckle%d' % k, (.016, .016, .01), (-.027 + k * .018, .108, .022), GUN2, bevel=.004)
+    sphere('palm_emitter', .012, (0, .055, -.022), ASTRAL)
 
 
 def conductor():
-    # organic-tech glove: olive chitin shell with green filament lines and a contact sensor
-    cyl('cuff', .048, .12, (0, -.1, 0), OLIVE2, r2=.043, bevel=.004)
+    # symbiotic conductor rod: wrapped grip, olive chitin shaft, living green core caged at the tip
+    cyl('grip', .016, .16, (0, 0, 0), LEATHER, bevel=.002)
+    for i in range(6):
+        torus('wrap%d' % i, .0168, .0016, (0, -.065 + i * .026, 0), OLIVE2)
+    sphere('pommel', .021, (0, -.095, 0), OLIVE, scale=(1, 1.2, 1))
+    cyl('collar', .022, .03, (0, .095, 0), OLIVE2, r2=.017, bevel=.003)
+    cyl('shaft', .012, .36, (0, .29, 0), OLIVE, r2=.009, verts=16)
+    for i in range(5):
+        y = .14 + i * .07
+        sphere('node%d' % i, .016 - i * .0015, (0, y, 0), OLIVE2, scale=(1, .6, 1))
+    for i in range(3):
+        cyl('vein%d' % i, .0018, .3, (math.cos(i * 2.09) * .0115, .28, math.sin(i * 2.09) * .0115), VEIN, verts=6)
+    cyl('head_base', .02, .035, (0, .48, 0), OLIVE2, r2=.026, bevel=.003)
     for i in range(4):
-        b = box('shell%d' % i, (.09 - i * .006, .07, .02), (0, -.04 + i * .048, .04), OLIVE, rot=(-.1 * i, 0, 0), bevel=.006)
-    for s in (-1, 1):
-        for i in range(3):
-            box('rib%d_%d' % (s, i), (.012, .07, .02), (s * (.048 - i * .004), -.06 + i * .06, .01), OLIVE2, rot=(0, 0, s * .2), bevel=.003)
-    for i in range(3):      # filament runs along the back of the hand
-        x = (i - 1) * .026
-        cyl('fil%d' % i, .0028, .2, (x, .02, .056), GREEN, verts=8)
-        sphere('fil_node%d' % i, .006, (x, .12, .058), GREEN)
-    box('knuckle_ridge', (.085, .02, .02), (0, .19, .042), OLIVE, bevel=.005)
-    sphere('sensor', .017, (0, .09, .062), GREEN, scale=(1, 1, .7))
-    torus('sensor_ring', .021, .003, (0, .09, .055), OLIVE2, axis='Z')
+        a = i * math.pi / 2
+        p = bpy.ops.mesh.primitive_cone_add
+        p(vertices=8, radius1=.007, radius2=.002, depth=.11, location=(math.cos(a) * .028, .54, math.sin(a) * .028), rotation=(math.pi / 2 - .0, 0, 0))
+        ob = bpy.context.active_object
+        ob.name = 'prong%d' % i
+        ob.rotation_euler = (math.pi / 2 + math.sin(a) * .35, 0, -math.cos(a) * .35)
+        finish(ob, OLIVE)
+    sphere('core', .022, (0, .55, 0), GREEN)
+    sphere('core_shell', .03, (0, .55, 0), mat('core_glass', (0.3, 0.9, 0.5), 0.0, 0.05, (0.2, 1.0, 0.45), 0.6))
+    torus('tip_ring', .03, .003, (0, .6, 0), GREEN)
 
 
 for name, fn in (('saber', saber), ('carbine', carbine), ('gauntlet', gauntlet), ('conductor', conductor)):

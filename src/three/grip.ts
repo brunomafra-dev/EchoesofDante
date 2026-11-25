@@ -16,7 +16,7 @@ const v1=new T.Vector3(),v2=new T.Vector3(),v3=new T.Vector3(),v4=new T.Vector3(
 const FORE_GRIP=new T.Vector3(0,-.055,-.33),PISTOL_GRIP=new T.Vector3(0,-.1,.025);
 export const RIFLE_SCALE=.82;
 // where shots leave each weapon (weapon space; bracer muzzles live on the hand part)
-export const MUZZLE:Partial<Record<WeaponId,[number,number,number]>>={carbine:[0,0,-.83],gauntlet:[0,-.04,-.14],conductor:[0,.065,-.09]};
+export const MUZZLE:Partial<Record<WeaponId,[number,number,number]>>={carbine:[0,0,-.83],gauntlet:[0,-.03,-.06],conductor:[0,0,-.6]};
 // rifle shoulder pocket relative to the upper chest bone, in the character's model space
 const HAND_PARTS=/^(hand_plate|knuckle|wrist_core|palm|thumb_guard|shell|rib|fil|sensor)/;
 const NO_IK=/Roll|Death|Hit|Interact/;
@@ -42,26 +42,28 @@ export class Grip{
  }
  // place the weapon so its handle sits inside the right fist (bracers ride the forearm); returns the parent
  mount(id:WeaponId,w:T.Object3D):T.Object3D|null{
-  const f=this.frames.r;if(!f)return null;
+  // the conductor is held in the left hand: the casting animations reach out with the left arm
+  const f=id==='conductor'?this.frames.l:this.frames.r;if(!f)return null;
   if(id==='carbine'){w.scale.setScalar(RIFLE_SCALE);return this.model;}
-  if(id==='gauntlet'||id==='conductor'){
+  if(id==='gauntlet'){
    const h=this.b('hand_r');if(!h)return null;
    // the hand plates must bend with the wrist: move them to a group riding the hand bone
    const hg=new T.Group();hg.name='weapon_hand_part';
    for(const c of [...w.children])if(HAND_PARTS.test(c.name))hg.add(c);
    const Zv=f.D.clone().negate(),Yv=f.N.clone().negate();Yv.addScaledVector(Zv,-Yv.dot(Zv)).normalize();
    hg.quaternion.setFromRotationMatrix(m1.makeBasis(new T.Vector3().crossVectors(Yv,Zv),Yv,Zv));
-   hg.position.copy(Yv).multiplyScalar(id==='gauntlet'?-.018:-.01).addScaledVector(Zv,id==='gauntlet'?.045:.03);
+   hg.position.set(0,0,0);
    h.add(hg);w.userData.handPart=hg;
    this.bracer(id,w,this.rest.get(h)!);return this.b('lowerarm_r')??null;
   }
   let Yv:T.Vector3,Zv:T.Vector3;const handle=new T.Vector3();let origin:T.Vector3;
   if(id==='saber'){Zv=f.A.clone().negate();Yv=f.D.clone();origin=f.G.clone();}
+  else if(id==='conductor'){Zv=f.A.clone().multiplyScalar(.5).addScaledVector(f.D,.85).normalize().negate();Yv=f.N.clone();origin=f.G.clone();}
   else{Zv=f.D.clone().negate();Yv=f.N.clone().negate();origin=f.D.clone().multiplyScalar(-.01);}
   Yv.addScaledVector(Zv,-Yv.dot(Zv)).normalize();const Xv=new T.Vector3().crossVectors(Yv,Zv);
   w.quaternion.setFromRotationMatrix(m1.makeBasis(Xv,Yv,Zv));
   w.position.copy(origin).sub(handle.applyQuaternion(w.quaternion));
-  return this.b('hand_r')??null;
+  return this.b(id==='conductor'?'hand_l':'hand_r')??null;
  }
  // bracer on the forearm, rolled so its plate follows the back of the (animated) hand
  private bracer(id:WeaponId,w:T.Object3D,handQ:T.Quaternion){
@@ -85,7 +87,7 @@ export class Grip{
   if(id==='saber'){this.curl('r',1.05,1,.75);this.curl('l',.35);}
   else if(id==='carbine'){this.curl('r',1.0,.45,.6);this.curl('l',.95,1,.6);if(w)this.rifle(w,/Shoot/.test(anim),!NO_IK.test(anim));}
   else if(id==='gauntlet'){this.curl('r',1.15,1,.9);this.curl('l',.9,1,.8);const h=this.b('hand_r');if(w&&h)this.bracer(id,w,h.quaternion);}
-  else{this.curl('r',.35,.2,.15);this.curl('l',.3);const h=this.b('hand_r');if(w&&h)this.bracer(id,w,h.quaternion);}
+  else{this.curl('l',1.0,.85,.7);this.curl('r',.3);}
  }
  // rifle: the right arm keeps the animation's pose (no arm IK, no broken elbow); the gun sits in the
  // right fist pointing where the hero faces, the wrist turns to the grip and the left hand reaches the shroud

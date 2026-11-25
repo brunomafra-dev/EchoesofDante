@@ -107,5 +107,9 @@ export class Character{
   a.play();this.current=a;this.currentName=name;return a;
  }
  duration(name:string){return this.clips.get(name)?.duration??1;}
- update(dt:number){if(!this.mixer)return;this.mixer.update(dt);this.grip?.apply(this.weaponId,this.weapon,this.currentName);}
+ // tint the astral glow (rings, ridge, palm) with the active element
+ setGlow(color:string){this.weapon?.traverse(o=>{const m=(o as T.Mesh).material as T.MeshStandardMaterial|undefined;if(m&&m.name==='astral_glow'){m.color.set(color);m.emissive.set(color);}});const hp=this.weapon?.userData.handPart as T.Object3D|undefined;hp?.traverse(o=>{const m=(o as T.Mesh).material as T.MeshStandardMaterial|undefined;if(m&&m.name==='astral_glow'){m.color.set(color);m.emissive.set(color);}});}
+ private ringT=0;
+ update(dt:number){if(!this.mixer)return;this.mixer.update(dt);
+  if(this.weaponId==='gauntlet'&&this.weapon){this.ringT+=dt;this.weapon.children.forEach(c=>{const m=/^astral_ring(\d)/.exec(c.name);if(m){const i=+m[1];c.rotation.set(Math.PI/2+Math.sin(this.ringT*1.3+i)*.5,this.ringT*(2+i*.7)*(i%2?-1:1),Math.cos(this.ringT*1.1+i*2)*.5);}});}this.grip?.apply(this.weaponId,this.weapon,this.currentName);}
 }
