@@ -4,7 +4,8 @@ import {Character,DEFAULT_LOOK,HAIR,HAIR_COLORS,BROWS,CLOTH,OUTFITS,SKINS,type L
 import {CLASSES,CLASS_ORDER,WEAPON_CLASS,ELEMENTS,ELEMENT_NAMES,ELEMENT_COLORS,type ClassId,type Element} from './classes';
 import {World} from './world';
 import {VFX,type Kind} from './vfx';
-import {Creature,updateSpits,type Ctx,type SpeciesId} from './creatures';
+import {Creature,SPECIES,updateSpits,clearShots,type Ctx,type SpeciesId} from './creatures';
+import {BIOMES,BIOME_ORDER,type BiomeId} from './biomes';
 
 // Echoes of Dante — new 3D track, slice S1: character creator + first playable ARPG loop.
 const q=new URLSearchParams(location.search);
@@ -39,17 +40,23 @@ let element:Element='energy',skillReady=0,dashReady=0,chargeStart=0;
 type Enemy=Creature;
 const enemies:Enemy[]=[];let spawnT=0;
 const ctx:Ctx={scene:world.scene,get vfx(){return vfx;},player:pos,playerOk:()=>mode==='play'&&!dead,invuln:()=>now()<invulnUntil||dead,
- damagePlayer:(d,from)=>damage(d,from),collide:(p,r)=>world.collide(p,r),colliders:world.colliders,popText,
- onKill:()=>{kills++;hud();},onHit:(_c,quiet)=>{if(cls()==='xenobinder'&&!quiet)mana=Math.min(100,mana+6);},others:enemies} as Ctx;
+ damagePlayer:(d,from)=>damage(d,from),collide:(p,r)=>world.collide(p,r),colliders:()=>world.colliders,popText,
+ onKill:(c)=>{kills++;if(c.boss){bossDown(c);}else biomeKills++;hud();},onHit:(_c,quiet)=>{if(cls()==='xenobinder'&&!quiet)mana=Math.min(100,mana+6);},others:enemies} as Ctx;
 Creature.ctx=ctx;
-const MIX:[SpeciesId,number][]=[['crawler',.4],['skitter',.25],['spitter',.2],['carapace',.15]];
 function spawnEnemy(kind?:SpeciesId){
-  if(!kind){let r=Math.random();kind='crawler';for(const [k,w] of MIX){if(r<w){kind=k;break;}r-=w;}}
+  if(!kind){const mix=BIOMES[world.biome].creatures;let r=Math.random();kind=mix[0][0];for(const [k,w] of mix){if(r<w){kind=k;break;}r-=w;}}
   const a=Math.random()*6.28,d=16+Math.random()*14;
   const e=new Creature(kind,Math.cos(a)*d+pos.x*.3,Math.sin(a)*d+pos.z*.3,world.scene);world.collide(e.pos,e.radius);enemies.push(e);return e;
 }
+// region bosses wake after enough kills in their region
+let biomeKills=0,boss:Creature|null=null,bossBeaten=false;
+function bossDown(c:Creature){bossBeaten=true;boss=null;banner(`${c.name} foi derrotado`);$('bossbar').classList.remove('on');}
+function banner(text:string){const b=$('banner');b.textContent=text;b.classList.remove('on');void b.offsetWidth;b.classList.add('on');}
 function updateEnemies(dt:number,now:number){
-  spawnT-=dt;if(mode==='play'&&spawnT<=0&&enemies.filter(e=>e.state!=='dead').length<6){spawnEnemy();spawnT=4.5;}
+  const B=BIOMES[world.biome];
+  if(mode==='play'&&B.boss&&!boss&&!bossBeaten&&biomeKills>=(B.bossAfter??10)){const a=Math.random()*6.28;boss=new Creature(B.boss,pos.x+Math.cos(a)*16,pos.z+Math.sin(a)*16,world.scene);world.collide(boss.pos,boss.radius);enemies.push(boss);banner(`${boss.name} desperta`);$('bossname').textContent=boss.name;$('bossbar').classList.add('on');}
+  if(boss)$('bossfill').style.width=Math.max(0,boss.hp/boss.spec.hp*100)+'%';
+  spawnT-=dt;if(mode==='play'&&spawnT<=0&&enemies.filter(e=>e.state!=='dead'&&!e.boss).length<(boss?3:6)){spawnEnemy();spawnT=4.5;}
   for(let i=enemies.length-1;i>=0;i--){const e=enemies[i];e.update(dt,now,ctx);if(e.gone)enemies.splice(i,1);}
   updateSpits(dt,ctx);
 }
@@ -297,6 +304,7 @@ ui.innerHTML=`
  <div class="grp"><label>Classe</label><div class="row wrap" id="o-class"></div><div class="clsinfo" id="o-clsinfo"></div></div>
  <button id="go">Entrar no mundo</button><p class="hint">Arraste para girar o personagem</p></div>
 <div id="hud"><div class="orb hp"><i id="hp"></i><b id="hpt"></b></div><div id="clsname"></div><div class="bar" id="skillbar"></div><div class="orb mp"><i id="mp"></i><b id="mpt"></b></div><div id="kills"></div></div><div id="perf"><span id="fps"></span><button id="qbtn">Qualidade: alta</button></div>
+<div id="biomes"></div><div id="banner"></div><div id="bossbar"><span id="bossname"></span><div><i id="bossfill"></i></div></div>
 <div id="deadmsg"><h2>Você caiu</h2><button id="respawn">Levantar</button></div>
 <div id="loading">Carregando…</div>`;
 const $=(id:string)=>document.getElementById(id)!;
@@ -343,6 +351,13 @@ function enter(){
   pos.set(0,0,0);heading=Math.PI;hpMax=kit().hp;hp=hpMax;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();hud();spawnT=1.5;
 }
 $('go').onclick=enter;
+function goBiome(id:BiomeId){
+  world.setBiome(id);vfx.clearEmitters();for(const f of world.flameSpots)vfx.campfire(f.p,f.s);
+  for(const e of enemies)e.dispose();enemies.length=0;clearShots();boss=null;bossBeaten=false;biomeKills=0;$('bossbar').classList.remove('on');
+  pos.set(0,0,0);if(pet)pet.g.position.set(1.2,0,1);spawnT=2;banner(BIOMES[id].name);renderBiomes();
+}
+function renderBiomes(){const h=$('biomes');h.innerHTML='';for(const id of BIOME_ORDER){const b=document.createElement('button');b.className='chip'+(world.biome===id?' on':'');b.textContent=BIOMES[id].name;b.title=BIOMES[id].sub;b.onclick=()=>goBiome(id);h.appendChild(b);}}
+renderBiomes();
 $('qbtn').onclick=()=>setQuality(quality==='high'?'low':'high');
 $('respawn').onclick=()=>{document.body.classList.remove('dead');dead=false;hp=hpMax;mana=100;pos.set(0,0,0);hero.play('Idle_Loop',{fade:.2});if(pet)pet.g.position.set(1.2,0,1);for(const e of enemies)e.dispose();enemies.length=0;hud();};
 document.body.classList.add('creator');
@@ -414,18 +429,19 @@ function frame(){
   if(Object.keys(patch).length)await change(patch);
   refreshUi();
   // compile every material up front (enemy, projectile, ring) so the first fight doesn't hitch
-  const warm=(['crawler','skitter','spitter','carapace'] as SpeciesId[]).map((k,i)=>new Creature(k,i*3,-200,world.scene));const W=new T.Vector3(0,1,-200),F=new T.Vector3(0,0,1);
+  const warm=(Object.keys(SPECIES) as SpeciesId[]).map((k,i)=>new Creature(k,i*3,-200,world.scene));const W=new T.Vector3(0,1,-200),F=new T.Vector3(0,0,1);
   for(const k of ['pulse','fire','water','earth','energy','filament'] as Kind[]){fire(k,W,F,0,0);vfx.impact(k,W,F);}
   vfx.slash(W,0,false);vfx.field('energy',W,1);vfx.field('earth',W,1);vfx.decal(W,'#fff',1,.1);
   renderer.compile(world.scene,camera);warm.forEach(w=>w.dispose());for(const p of projs)dispose(p.o);projs.length=0;
   renderer.compile(world.scene,camera);warm.forEach(w=>w.dispose());
   if(quality==='low')setQuality('low');
   $('loading').remove();
+  if(q.get('biome')&&BIOMES[q.get('biome') as BiomeId])goBiome(q.get('biome') as BiomeId);
   if(q.get('auto'))enter();
   requestAnimationFrame(frame);
 })();
 // QA hooks
-(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look};},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{qaAim=true;aimPoint.set(x,0,z);},spawn:(x:number,z:number,k:SpeciesId='crawler')=>{const e=new Creature(k,x,z,world.scene);enemies.push(e);return e.kind;},mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
+(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look};},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,goBiome,bossNow:()=>{biomeKills=99;},enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{qaAim=true;aimPoint.set(x,0,z);},spawn:(x:number,z:number,k:SpeciesId='crawler')=>{const e=new Creature(k,x,z,world.scene);enemies.push(e);return e.kind;},mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
  const w=hero.weapon,h=hero.hand;if(!w||!h)return null;hero.model.updateMatrixWorld(true);
  const mq=hero.model.getWorldQuaternion(new T.Quaternion()),hq=h.getWorldQuaternion(new T.Quaternion());
  const hm=mq.clone().invert().multiply(hq);const wq=hm.clone().multiply(w.quaternion);

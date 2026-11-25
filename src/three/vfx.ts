@@ -178,6 +178,7 @@ export class VFX{
  }
  // a fire that keeps burning (campfire, torches)
  campfire(p:T.Vector3,scale=1){this.emitters.push({p:p.clone(),scale,acc:0});}
+ clearEmitters(){this.emitters.length=0;}
  setView(height:number,fov:number){const s=height/(2*Math.tan(fov*Math.PI/360));this.add.mat.uniforms.uScale.value=s;this.smoke.mat.uniforms.uScale.value=s;}
  emit(e:Emit){this.add.emit(e);}
  puff(e:Emit){this.smoke.emit(e);}
