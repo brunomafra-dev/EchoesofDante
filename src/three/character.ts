@@ -1,5 +1,6 @@
 import * as T from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {Grip} from './grip';
 
 // Character of the new 3D track: one rigged human per sex, every customisable part is a
 // separate skinned mesh sharing the same skeleton (built by scripts/asset-tools/3d-new/build_character.py).
@@ -25,13 +26,6 @@ export const WEAPONS:[WeaponId,string,string][]=[
 export const DEFAULT_LOOK:Look={sex:'male',skin:1,hair:'short02',hairColor:1,brows:'eyebrow005',outfit:'viking',cloth:0,weapon:'saber'};
 
 const clean=(s:string)=>s.replace(/[\[\].:/]/g,'');
-// where the weapon sits in the right hand bone (tuned by eye, see docs/3d-new/PLAN.md)
-const MOUNT:Record<WeaponId,{r:[number,number,number];off:[number,number,number]}>={
- saber:{r:[3.113,-.948,-1.338],off:[0,0,0]},carbine:{r:[.797,.844,-.619],off:[0,.1,-.02]},
- gauntlet:{r:[.495,.779,-1.11],off:[0,0,.14]},conductor:{r:[.461,.935,-1.994],off:[0,0,.12]},
-};
-export const mountOf=(w:WeaponId)=>MOUNT[w];
-
 const loader=new GLTFLoader();
 const cache=new Map<string,Promise<{scene:T.Group;animations:T.AnimationClip[]}>>();
 const load=(url:string)=>{let p=cache.get(url);if(!p){p=loader.loadAsync(url) as never;cache.set(url,p);}return p;};
@@ -40,7 +34,7 @@ const base=import.meta.env.BASE_URL;
 export class Character{
  root=new T.Group();model!:T.Group;mixer!:T.AnimationMixer;clips=new Map<string,T.AnimationClip>();
  current:T.AnimationAction|null=null;currentName='';look:Look=DEFAULT_LOOK;private outfitMats:T.MeshStandardMaterial[]=[];
- hand:T.Object3D|null=null;weapon:T.Object3D|null=null;private weaponId:WeaponId|null=null;
+ hand:T.Object3D|null=null;weapon:T.Object3D|null=null;private weaponId:WeaponId|null=null;private grip:Grip|null=null;
  private bodyMats:T.MeshStandardMaterial[]=[];private hairMats:T.MeshStandardMaterial[]=[];private browMats:T.MeshStandardMaterial[]=[];
  async setSex(sex:Sex){
   if(this.model&&this.look.sex===sex)return;
@@ -66,7 +60,7 @@ export class Character{
     });
    }
   });
-  this.hand=model.getObjectByName('hand_r')??null;this.weaponId=null;this.weapon=null;
+  this.hand=model.getObjectByName('hand_r')??null;this.weaponId=null;this.weapon=null;this.grip=new Grip(model);
   this.look={...this.look,sex};
  }
  apply(look:Look){
@@ -88,13 +82,11 @@ export class Character{
  async setWeapon(id:WeaponId){
   if(this.weaponId===id||!this.hand)return;
   const g=await load(`${base}assets/3d-new/weapons/${id}.glb`);
-  if(this.weapon)this.weapon.parent?.remove(this.weapon);
+  if(this.weapon){this.weapon.parent?.remove(this.weapon);const hp=this.weapon.userData.handPart as T.Object3D|undefined;hp?.parent?.remove(hp);}
   const w=g.scene.clone(true);
   w.traverse(o=>{const m=o as T.Mesh;if(m.isMesh){m.castShadow=true;}});
-  const mo=MOUNT[id];w.rotation.set(...mo.r);
-  const fin=this.hand.children.find(c=>/middle|index/i.test(c.name));const grip=fin?fin.position.clone().multiplyScalar(.6):new T.Vector3(0,.05,0);
-  w.position.copy(grip).add(new T.Vector3(...mo.off).applyQuaternion(w.quaternion));
-  this.hand.add(w);this.weapon=w;this.weaponId=id;this.look={...this.look,weapon:id};
+  const parent=this.grip?.mount(id,w)??this.hand;
+  parent.add(w);this.weapon=w;this.weaponId=id;this.look={...this.look,weapon:id};
  }
  has(name:string){return this.clips.has(name);}
  play(name:string,o:{once?:boolean;fade?:number;speed?:number}={}){
@@ -107,5 +99,5 @@ export class Character{
   a.play();this.current=a;this.currentName=name;return a;
  }
  duration(name:string){return this.clips.get(name)?.duration??1;}
- update(dt:number){this.mixer?.update(dt);}
+ update(dt:number){if(!this.mixer)return;this.mixer.update(dt);this.grip?.apply(this.weaponId,this.weapon,this.currentName);}
 }

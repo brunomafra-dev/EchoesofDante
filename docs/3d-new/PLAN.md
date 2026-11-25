@@ -49,3 +49,4 @@ Cada fatia: QA técnico e aprovação humana informados separadamente; link em `
 - Animações: Universal Animation Library (Quaternius, CC0), retarget para o rig game_engine; 18 clipes (parado, andar, correr, sprint, espada, pistola, magia, soco, rolar, dano, morte).
 - Jogo: mover (WASD/clique), atacar (J/clique/botão direito), onda (Q), rolar (Espaço), correr (Shift); armas presas na mão direita; inimigos provisórios (carcaças).
 - Limitações: monstros provisórios; roupas "Herói"/armadura sci-fi descartadas (feias/quebradas); desempenho medido só em SwiftShader (sem GPU); sem salvar progresso nem coop; ajustar pegada de carabina/condutor por olho.
+- 25/11: pegada anatômica (`src/three/grip.ts`): quadro da mão a partir dos ossos dos dedos, dedos fecham por arma, carabina apoiada no ombro com as duas mãos por IK, manopla/condutor divididos entre antebraço e dorso da mão. Ajuste fino por olho ainda pendente de playtest.
