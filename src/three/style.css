@@ -31,3 +31,7 @@ body.dead #deadmsg{display:flex}#deadmsg h2{font-size:56px;margin:0 0 18px;color
 #perf{position:absolute;top:14px;left:18px;display:flex;gap:8px;align-items:center;pointer-events:auto;font-size:12px;color:#9a917f}
 body.creator #perf{left:auto;right:18px}
 #perf button{padding:4px 8px;font-size:12px;background:#1b1814cc;color:#d8cfbd;border:1px solid #4a3d29;border-radius:3px;cursor:pointer}
+.clsinfo{margin-top:8px;padding:8px 10px;background:#15120e;border:1px solid #3a3022;border-radius:3px;font-size:12px;line-height:1.45}
+.clsinfo b{display:block;color:#e0b865;letter-spacing:.1em;font-size:11px}.clsinfo span{display:block;color:#d8cfbd;margin:3px 0}.clsinfo i{display:block;color:#9a917f}
+#clsname{position:absolute;bottom:84px;left:50%;transform:translateX(-50%);font-size:14px;color:#e8c98a;letter-spacing:.08em;text-shadow:0 1px 3px #000;white-space:nowrap}
+.sk.cd{opacity:.45}

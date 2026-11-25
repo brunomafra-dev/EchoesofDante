@@ -1,6 +1,6 @@
 import * as T from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {Grip} from './grip';
+import {Grip,MUZZLE} from './grip';
 
 // Character of the new 3D track: one rigged human per sex, every customisable part is a
 // separate skinned mesh sharing the same skeleton (built by scripts/asset-tools/3d-new/build_character.py).
@@ -89,6 +89,14 @@ export class Character{
   parent.add(w);this.weapon=w;this.weaponId=id;this.look={...this.look,weapon:id};
  }
  has(name:string){return this.clips.has(name);}
+ // world position where this weapon's shots start (falls back to the right hand)
+ muzzle(out=new T.Vector3()){
+  const id=this.weaponId,w=this.weapon;if(!id||!w){this.hand?.getWorldPosition(out);return out;}
+  const m=MUZZLE[id];const host=(w.userData.handPart as T.Object3D|undefined)??w;
+  if(!m){this.hand?.getWorldPosition(out);return out;}
+  host.updateWorldMatrix(true,false);return host.localToWorld(out.set(...m));
+ }
+ recoil(){this.grip?.recoil();}
  play(name:string,o:{once?:boolean;fade?:number;speed?:number}={}){
   const clip=this.clips.get(name);if(!clip)return null;
   if(this.currentName===name&&!o.once&&this.current)return this.current;
