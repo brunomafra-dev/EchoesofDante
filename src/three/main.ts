@@ -26,7 +26,7 @@ const pos=hero.root.position;let heading=0,hp=100,hpMax=100,mana=100,kills=0,dea
 const keys=new Set<string>();let moveTarget:T.Vector3|null=null;let mouseDown=false;const mouse=new T.Vector2();const aimPoint=new T.Vector3(0,0,-5);
 let atkUntil=0,atkImpact=0,atkPending:null|(()=>void)=null,rollUntil=0,rollDir=new T.Vector3(),stunUntil=0,comboIdx=0,invulnUntil=0,camBlend=0;
 let focusEnemy:Enemy|null=null;void focusEnemy;
-function loadLook():Look{try{const s=localStorage.getItem('dante3d.look');if(s)return{...DEFAULT_LOOK,...JSON.parse(s)};}catch{/* private mode */}return{...DEFAULT_LOOK};}
+function loadLook():Look{try{const s=localStorage.getItem('dante3d.look');if(s){const l={...DEFAULT_LOOK,...JSON.parse(s)};if(!OUTFITS.some(o=>o[0]===l.outfit))l.outfit=DEFAULT_LOOK.outfit;return l;}}catch{/* private mode */}return{...DEFAULT_LOOK};}
 function saveLook(){try{localStorage.setItem('dante3d.look',JSON.stringify(look));}catch{/* ignore */}}
 
 // ---------- class kit ----------

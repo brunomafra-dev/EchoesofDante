@@ -2,9 +2,10 @@ import bpy, sys, os
 argv = sys.argv[sys.argv.index('--') + 1:]
 src, out = argv[0], argv[1]
 os.makedirs(out, exist_ok=True)
-TARGET = {'dead_tree_trunk_02': 9000, 'dead_quiver_trunk': 7000, 'tree_stump_01': 3000, 'tree_stump_02': 3000, 'dead_tree_trunk': 5000,
+TARGET = {'quiver_tree_01': 9000, 'quiver_tree_02': 9000, 'dead_tree_trunk_02': 9000, 'dead_quiver_trunk': 7000, 'tree_stump_01': 3000, 'tree_stump_02': 3000, 'dead_tree_trunk': 5000,
           'dry_branches_medium_01': 3000, 'dead_quiver_branch_01': 2500}
 for name in sorted(os.listdir(src)):
+    if len(argv) > 2 and name not in argv[2].split(','): continue
     for o in list(bpy.data.objects): bpy.data.objects.remove(o, do_unlink=True)
     bpy.ops.import_scene.gltf(filepath=os.path.join(src, name, name + '.gltf'))
     meshes = [o for o in bpy.data.objects if o.type == 'MESH']

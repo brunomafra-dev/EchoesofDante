@@ -87,6 +87,14 @@ def build_human(spec):
         new = [o for o in bpy.data.objects if o not in before and o.type == 'MESH']
         for i, o in enumerate(new):
             o.name = name + (':%d' % i if len(new) > 1 else '')
+            # heavy garments (sci-fi armour is ~100k faces) are decimated for the web
+            n = len(o.data.polygons)
+            if kind == 'Clothes' and n > 9000:
+                md = o.modifiers.new('dec', 'DECIMATE'); md.ratio = 9000 / n
+                bpy.ops.object.select_all(action='DESELECT'); o.select_set(True); bpy.context.view_layer.objects.active = o
+                bpy.ops.object.modifier_move_to_index(modifier='dec', index=0)
+                bpy.ops.object.modifier_apply(modifier='dec')
+                print('DECIMATED', o.name, n, '->', len(o.data.polygons))
     for key, kind in ((spec.get('hair'), 'hair'), (spec.get('eyebrows'), 'eyebrows'), (spec.get('eyelashes'), 'eyelashes')):
         if key:
             add_part(kind.capitalize(), kind, key, kind + ':' + key)
@@ -242,7 +250,8 @@ def shrink_images():
         if img.size[0] <= 4 or img.type == 'RENDER_RESULT':
             continue
         n = img.name.lower()
-        cap = 1024 if ('skin' in n or 'young' in n or 'middleage' in n) else 512
+        aux = any(k in n for k in ('normal', 'nor', 'rough', 'spec', '_ao', 'bump', 'metal', 'disp', 'opac', 'trans'))
+        cap = 256 if aux else 1024 if ('skin' in n or 'young' in n or 'middleage' in n) else 512
         if max(img.size) > cap:
             k = cap / max(img.size)
             try:

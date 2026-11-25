@@ -76,7 +76,9 @@ export class World{
   // scanned nature from Poly Haven (CC0): placements are decided now (colliders), meshes arrive async
   const place:Record<string,{x:number;z:number;s:number;ry:number;tilt:number}[]>={};
   const put=(kind:string,x:number,z:number,s:number,tilt=0)=>{(place[kind]??=[]).push({x,z,s,ry:r()*6.283,tilt});};
-  for(let i=0;i<22;i++){const a=r()*6.283,d=13+r()*ARENA*1.15,x=Math.cos(a)*d,z=Math.sin(a)*d;put(r()<.6?'tree_a':'tree_b',x,z,.8+r()*.5);this.colliders.push({x,z,r:.5});}
+  for(let i=0;i<10;i++){const a=r()*6.283,d=13+r()*ARENA*1.15,x=Math.cos(a)*d,z=Math.sin(a)*d;put(r()<.6?'tree_a':'tree_b',x,z,.8+r()*.5);this.colliders.push({x,z,r:.5});}
+  // living alien trees (quiver trees: swollen trunks and spiky crowns)
+  for(let i=0;i<16;i++){const a=r()*6.283,d=10+r()*ARENA*1.1,x=Math.cos(a)*d,z=Math.sin(a)*d;put(r()<.55?'alive_a':'alive_b',x,z,.8+r()*.6);this.colliders.push({x,z,r:.6});}
   for(let i=0;i<10;i++){const a=r()*6.283,d=9+r()*ARENA,x=Math.cos(a)*d,z=Math.sin(a)*d;put(r()<.5?'stump_a':'stump_b',x,z,.9+r()*.5);this.colliders.push({x,z,r:.45});}
   for(let i=0;i<8;i++){const a=r()*6.283,d=11+r()*ARENA,x=Math.cos(a)*d,z=Math.sin(a)*d;put(i%2?'log':'log_big',x,z,.9+r()*.3);this.colliders.push({x,z,r:1});}
   for(let i=0;i<26;i++){const a=r()*6.283,d=5+r()*ARENA*1.1;put(r()<.5?'branches':'branch',Math.cos(a)*d,Math.sin(a)*d,.8+r()*.6);}
@@ -86,14 +88,34 @@ export class World{
   // big boulders framing the arena edge
   for(let i=0;i<14;i++){const a=i/14*6.283+r()*.3,d=ARENA*(.95+r()*.2);put('boulder',Math.cos(a)*d,Math.sin(a)*d,3+r()*3);}
   this.loadNature(place,m4,q,e);
-  // gravestones and broken pillars
+  // alien flora of Dante: glowing crystal clusters, bulb stalks and fungi
   const gm=new T.MeshStandardMaterial({color:'#5a5953',roughness:.9,flatShading:true});
-  for(let i=0;i<22;i++){
-   const a=r()*6.283,d=8+r()*22,x=Math.cos(a)*d,z=Math.sin(a)*d;
-   if(Math.hypot(x-this.fire.x,z-this.fire.z)<4)continue;
-   const w=.5+r()*.3,h=.7+r()*.8,g=new T.Mesh(new T.BoxGeometry(w,h,.16),gm);g.position.set(x,h/2-.05,z);g.rotation.set((r()-.5)*.25,r()*6.28,(r()-.5)*.25);g.castShadow=g.receiveShadow=true;sc.add(g);
-   this.colliders.push({x,z,r:.4});
+  const crystal=new T.MeshStandardMaterial({color:'#1d6f86',emissive:'#2fd8ff',emissiveIntensity:.85,roughness:.15,metalness:.2,flatShading:true});
+  const crystal2=new T.MeshStandardMaterial({color:'#5a2a86',emissive:'#a45cff',emissiveIntensity:.8,roughness:.15,metalness:.2,flatShading:true});
+  const cg=new T.OctahedronGeometry(.35,0);cg.scale(.6,2.4,.6);cg.translate(0,.75,0);
+  const spots:{x:number;z:number}[]=[];
+  for(let i=0;i<16;i++){const a=r()*6.283,d=7+r()*28,x=Math.cos(a)*d,z=Math.sin(a)*d;if(Math.hypot(x-this.fire.x,z-this.fire.z)<5)continue;spots.push({x,z});this.colliders.push({x,z,r:.7});}
+  for(const [mat,offset] of [[crystal,0],[crystal2,1]] as const){
+   const mine=spots.filter((_,k)=>k%2===offset),n=mine.length*5,im=new T.InstancedMesh(cg,mat,n);let c=0;
+   for(const sp of mine)for(let k=0;k<5;k++){const s=.5+r()*.9;e.set((r()-.5)*.9,r()*6.28,(r()-.5)*.9);q.setFromEuler(e);
+    m4.compose(new T.Vector3(sp.x+(r()-.5)*1.1,-.1,sp.z+(r()-.5)*1.1),q,new T.Vector3(s,s*(.8+r()*.6),s));im.setMatrixAt(c++,m4);}
+   im.castShadow=true;sc.add(im);
   }
+  const stalkG=new T.CylinderGeometry(.025,.05,1,6);stalkG.translate(0,.5,0);const bulbG=new T.SphereGeometry(.13,10,8);
+  const stalkM=new T.MeshStandardMaterial({color:'#24302a',roughness:.8}),bulbM=new T.MeshStandardMaterial({color:'#3dffb0',emissive:'#3dffb0',emissiveIntensity:1.4,roughness:.3});
+  const N=90,stalks=new T.InstancedMesh(stalkG,stalkM,N),bulbs=new T.InstancedMesh(bulbG,bulbM,N);
+  for(let i=0;i<N;i+=0){const a=r()*6.283,d=5+r()*ARENA*1.05,cx=Math.cos(a)*d,cz=Math.sin(a)*d;
+   for(let k=0;k<6&&i<N;k++,i++){const h=.5+r()*1.4,x=cx+(r()-.5)*2,z=cz+(r()-.5)*2,lean=(r()-.5)*.5;e.set(lean,r()*6.28,(r()-.5)*.5);q.setFromEuler(e);
+    m4.compose(new T.Vector3(x,0,z),q,new T.Vector3(1,h,1));stalks.setMatrixAt(i,m4);
+    const top=new T.Vector3(0,h,0).applyQuaternion(q).add(new T.Vector3(x,0,z));const b=.7+r()*.8;m4.compose(top,q,new T.Vector3(b,b*1.3,b));bulbs.setMatrixAt(i,m4);}}
+  stalks.castShadow=true;sc.add(stalks,bulbs);
+  const capG=new T.SphereGeometry(.5,14,8,0,Math.PI*2,0,Math.PI/2);capG.scale(1,.45,1);const stemG=new T.CylinderGeometry(.07,.1,1,8);stemG.translate(0,.5,0);
+  const capM=new T.MeshStandardMaterial({color:'#3a2448',emissive:'#7a3cff',emissiveIntensity:.35,roughness:.6,side:T.DoubleSide}),stemM=new T.MeshStandardMaterial({color:'#bdb3a0',roughness:.8});
+  const F=40,caps=new T.InstancedMesh(capG,capM,F),stems=new T.InstancedMesh(stemG,stemM,F);
+  for(let i=0;i<F;i+=0){const a=r()*6.283,d=6+r()*ARENA,cx=Math.cos(a)*d,cz=Math.sin(a)*d;
+   for(let k=0;k<4&&i<F;k++,i++){const h=.3+r()*.9,s=.5+r()*1.1,x=cx+(r()-.5)*1.6,z=cz+(r()-.5)*1.6;e.set((r()-.5)*.3,r()*6.28,(r()-.5)*.3);q.setFromEuler(e);
+    m4.compose(new T.Vector3(x,0,z),q,new T.Vector3(s*.6,h*s,s*.6));stems.setMatrixAt(i,m4);m4.compose(new T.Vector3(x,h*s,z),q,new T.Vector3(s,s,s));caps.setMatrixAt(i,m4);}}
+  caps.castShadow=stems.castShadow=true;sc.add(caps,stems);
   for(let i=0;i<7;i++){
    const a=i/7*6.283+.4,d=19+r()*3,x=Math.cos(a)*d,z=Math.sin(a)*d,h=2+r()*2.6;
    const p=new T.Mesh(new T.CylinderGeometry(.5,.62,h,9),gm);p.position.set(x,h/2,z);p.rotation.z=(r()-.5)*.06;p.castShadow=p.receiveShadow=true;sc.add(p);
@@ -114,7 +136,7 @@ export class World{
  // asset -> how it is used: target size (height for trees/stumps, footprint for rocks) per unit scale
  private async loadNature(place:Record<string,{x:number;z:number;s:number;ry:number;tilt:number}[]>,m4:T.Matrix4,q:T.Quaternion,e:T.Euler){
   const SRC:Record<string,{file:string;size:number;by:'h'|'w';mesh?:number;sink?:number}>={
-   tree_a:{file:'dead_quiver_trunk',size:5.8,by:'h'},tree_b:{file:'dead_quiver_trunk',size:4.2,by:'h'},log_big:{file:'dead_tree_trunk_02',size:4.6,by:'w',sink:.12},
+   tree_a:{file:'dead_quiver_trunk',size:5.8,by:'h'},alive_a:{file:'quiver_tree_01',size:6,by:'h'},alive_b:{file:'quiver_tree_02',size:4.2,by:'h'},tree_b:{file:'dead_quiver_trunk',size:4.2,by:'h'},log_big:{file:'dead_tree_trunk_02',size:4.6,by:'w',sink:.12},
    stump_a:{file:'tree_stump_01',size:.8,by:'h'},stump_b:{file:'tree_stump_02',size:.9,by:'h'},log:{file:'dead_tree_trunk',size:3.2,by:'w',sink:.05},
    branches:{file:'dry_branches_medium_01',size:1.6,by:'w'},branch:{file:'dead_quiver_branch_01',size:1.4,by:'w'},
    rock_a:{file:'rock_07',size:1,by:'w',sink:.15},rock_b:{file:'rock_09',size:1,by:'w',sink:.15},rock_c:{file:'stone_01',size:.9,by:'w',sink:.1},rock_d:{file:'namaqualand_boulder_04',size:1.2,by:'w',sink:.2},

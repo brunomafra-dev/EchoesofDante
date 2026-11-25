@@ -18,12 +18,12 @@ export const HAIR:Record<Sex,[string,string][]>={
 };
 export const CLOTH:[string,string][]=[['Original','#ffffff'],['Grafite','#5c5d62'],['Floresta','#587a4f'],['Marinho','#4b5f94'],['Vinho','#9c4a56'],['Ocre','#c59a52']];
 export const BROWS:[string,string][]=[['eyebrow001','Fina'],['eyebrow005','Média'],['eyebrow009','Grossa']];
-export const OUTFITS:[string,string][]=[['viking','Nórdico'],['monk','Monge'],['hood','Encapuzado'],['hooddown','Manto']];
+export const OUTFITS:[string,string][]=[['expedition','Expedição'],['armored','Blindado'],['fleet','Frota'],['pilot','Piloto']];
 export const WEAPONS:[WeaponId,string,string][]=[
  ['saber','Sabre de plasma','Corpo a corpo, golpes amplos'],['carbine','Carabina','Tiro à distância'],
  ['gauntlet','Manopla','Socos rápidos'],['conductor','Condutor','Descargas de energia'],
 ];
-export const DEFAULT_LOOK:Look={sex:'male',skin:1,hair:'short02',hairColor:1,brows:'eyebrow005',outfit:'viking',cloth:0,weapon:'saber'};
+export const DEFAULT_LOOK:Look={sex:'male',skin:1,hair:'short02',hairColor:1,brows:'eyebrow005',outfit:'expedition',cloth:0,weapon:'saber'};
 
 const clean=(s:string)=>s.replace(/[\[\].:/]/g,'');
 const loader=new GLTFLoader();
@@ -38,7 +38,7 @@ export class Character{
  private bodyMats:T.MeshStandardMaterial[]=[];private hairMats:T.MeshStandardMaterial[]=[];private browMats:T.MeshStandardMaterial[]=[];
  async setSex(sex:Sex){
   if(this.model&&this.look.sex===sex)return;
-  const g=await load(`${base}assets/3d-new/characters/${sex}.glb`);
+  const set=new URLSearchParams(location.search).get('set')??'';const g=await load(`${base}assets/3d-new/characters/${set}${sex}.glb`);
   if(this.model){this.root.remove(this.model);this.mixer.stopAllAction();this.current=null;this.currentName='';}
   const model=(await import('three/addons/utils/SkeletonUtils.js')).clone(g.scene) as T.Group;
   this.model=model;this.root.add(model);
