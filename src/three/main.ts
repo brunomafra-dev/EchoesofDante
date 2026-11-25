@@ -4,6 +4,7 @@ import {Character,DEFAULT_LOOK,HAIR,HAIR_COLORS,BROWS,CLOTH,OUTFITS,SKINS,type L
 import {CLASSES,CLASS_ORDER,WEAPON_CLASS,ELEMENTS,ELEMENT_NAMES,ELEMENT_COLORS,type ClassId,type Element} from './classes';
 import {World} from './world';
 import {VFX,type Kind} from './vfx';
+import {Creature,updateSpits,type Ctx,type SpeciesId} from './creatures';
 
 // Echoes of Dante — new 3D track, slice S1: character creator + first playable ARPG loop.
 const q=new URLSearchParams(location.search);
@@ -34,62 +35,23 @@ const cls=():ClassId=>WEAPON_CLASS[look.weapon];
 const kit=()=>CLASSES[cls()];
 let element:Element='energy',skillReady=0,dashReady=0,chargeStart=0;
 
-// ---------- enemies (placeholder husks, real monsters come in S4) ----------
-class Enemy{
- g=new T.Group();hp=60;slowUntil=0;burnUntil=0;burnAcc=0;markUntil=0;state:'idle'|'chase'|'wind'|'dead'='idle';cd=0;wind=0;t=Math.random()*9;vel=new T.Vector3();deadT=0;flash=0;arms:T.Mesh[]=[];body:T.Mesh;
- constructor(x:number,z:number){
-  const skin=new T.MeshStandardMaterial({color:'#30352f',roughness:.9,emissive:'#0a0000'}),bone=new T.MeshStandardMaterial({color:'#5a564b',roughness:.85});
-  this.body=new T.Mesh(new T.CapsuleGeometry(.32,.75,4,10),skin);this.body.position.set(0,1.05,0);this.body.rotation.x=.35;this.body.castShadow=true;this.g.add(this.body);
-  const head=new T.Mesh(new T.SphereGeometry(.24,12,10),bone);head.position.set(0,1.78,.28);head.scale.set(.9,1.1,1);head.castShadow=true;this.g.add(head);
-  for(const s of[-1,1]){
-   const eye=new T.Mesh(new T.SphereGeometry(.045,8,6),new T.MeshBasicMaterial({color:'#ff3a2a'}));eye.position.set(s*.09,1.82,.5);this.g.add(eye);
-   const arm=new T.Mesh(new T.CylinderGeometry(.09,.06,.95,7),skin);arm.geometry.translate(0,-.47,0);arm.position.set(s*.42,1.5,.1);arm.rotation.x=-.5;arm.castShadow=true;this.g.add(arm);this.arms.push(arm);
-   const leg=new T.Mesh(new T.CylinderGeometry(.09,.06,.8,6),skin);leg.position.set(s*.17,.4,0);leg.castShadow=true;this.g.add(leg);
-  }
-  this.g.position.set(x,0,z);world.scene.add(this.g);
- }
- get pos(){return this.g.position;}
- hit(d:number,from:T.Vector3,color='#ffd27a',quiet=false,push=5){
-  if(this.state==='dead')return;
-  this.hp-=d;this.flash=.15;if(!quiet){const dir=this.pos.clone().sub(from).setY(0).normalize();this.vel.addScaledVector(dir,push);}
-  popText(this.pos.clone().setY(2.3),String(Math.round(d)),color);if(cls()==='xenobinder'&&!quiet)mana=Math.min(100,mana+6);
-  if(this.state==='idle')this.state='chase';
-  if(this.hp<=0){this.state='dead';kills++;hud();}
- }
-}
+// ---------- creatures of Dante (bestiary of the 2D game) ----------
+type Enemy=Creature;
 const enemies:Enemy[]=[];let spawnT=0;
-function spawnEnemy(){
+const ctx:Ctx={scene:world.scene,get vfx(){return vfx;},player:pos,playerOk:()=>mode==='play'&&!dead,invuln:()=>now()<invulnUntil||dead,
+ damagePlayer:(d,from)=>damage(d,from),collide:(p,r)=>world.collide(p,r),colliders:world.colliders,popText,
+ onKill:()=>{kills++;hud();},onHit:(_c,quiet)=>{if(cls()==='xenobinder'&&!quiet)mana=Math.min(100,mana+6);},others:enemies} as Ctx;
+Creature.ctx=ctx;
+const MIX:[SpeciesId,number][]=[['crawler',.4],['skitter',.25],['spitter',.2],['carapace',.15]];
+function spawnEnemy(kind?:SpeciesId){
+  if(!kind){let r=Math.random();kind='crawler';for(const [k,w] of MIX){if(r<w){kind=k;break;}r-=w;}}
   const a=Math.random()*6.28,d=16+Math.random()*14;
-  const e=new Enemy(Math.cos(a)*d+pos.x*.3,Math.sin(a)*d+pos.z*.3);world.collide(e.pos,.4);enemies.push(e);
+  const e=new Creature(kind,Math.cos(a)*d+pos.x*.3,Math.sin(a)*d+pos.z*.3,world.scene);world.collide(e.pos,e.radius);enemies.push(e);return e;
 }
 function updateEnemies(dt:number,now:number){
-  spawnT-=dt;if(mode==='play'&&spawnT<=0&&enemies.filter(e=>e.state!=='dead').length<5){spawnEnemy();spawnT=5;}
-  for(let i=enemies.length-1;i>=0;i--){
-   const e=enemies[i];e.t+=dt;e.flash=Math.max(0,e.flash-dt);
-   if(e.state!=='dead'){if(now<e.burnUntil)vfx.burning(e.pos);if(now<e.slowUntil)vfx.wet(e.pos);if(now<e.markUntil)vfx.marked(e.pos);}
-   (e.body.material as T.MeshStandardMaterial).emissive.setRGB(e.flash*6,e.flash*2,e.flash);
-   if(e.state==='dead'){e.deadT+=dt;e.g.rotation.x=Math.min(1.4,e.deadT*3);e.g.position.y=Math.max(-.7,-(e.deadT-1.2)*.5);if(e.deadT>3){world.scene.remove(e.g);enemies.splice(i,1);}continue;}
-   if(now<e.burnUntil){e.burnAcc+=dt*7;if(e.burnAcc>=4){e.hit(e.burnAcc,e.pos,'#ff8a50',true);e.burnAcc=0;}if((e.state as string)==='dead')continue;}
-   const to=pos.clone().sub(e.pos).setY(0),dist=to.length();
-   if(e.state==='idle'&&dist<13&&mode==='play'&&!dead)e.state='chase';
-   if(e.state==='chase'){
-    if(dist>1.7){to.normalize();e.vel.addScaledVector(to,dt*14);}
-    else if(now>e.cd&&!dead){e.state='wind';e.wind=.55;}
-    e.g.rotation.y=Math.atan2(to.x,to.z);
-    e.arms.forEach((a,k)=>a.rotation.x=-.5+Math.sin(e.t*7+k*3)*.35);
-   }else if(e.state==='wind'){
-    e.wind-=dt;e.arms.forEach(a=>a.rotation.x=-2.2+(.55-e.wind)*3);
-    if(e.wind<=0){
-     if(dist<2.3&&now>invulnUntil&&!dead)damage(9+Math.random()*3,e.pos);
-     e.cd=now+1.3;e.state='chase';
-    }
-   }
-   const vmax=now<e.slowUntil?1.2:2.9,sp=e.vel.length();if(sp>vmax)e.vel.multiplyScalar(vmax/sp);
-   e.vel.multiplyScalar(Math.exp(-dt*5));
-   e.pos.addScaledVector(e.vel,dt);world.collide(e.pos,.4);
-   for(const o of enemies)if(o!==e&&o.state!=='dead'){const d=e.pos.clone().sub(o.pos).setY(0),l=d.length();if(l<.8&&l>1e-4)e.pos.addScaledVector(d.normalize(),(.8-l)*.5);}
-   e.body.position.y=1.05+Math.sin(e.t*6)*.03;
-  }
+  spawnT-=dt;if(mode==='play'&&spawnT<=0&&enemies.filter(e=>e.state!=='dead').length<6){spawnEnemy();spawnT=4.5;}
+  for(let i=enemies.length-1;i>=0;i--){const e=enemies[i];e.update(dt,now,ctx);if(e.gone)enemies.splice(i,1);}
+  updateSpits(dt,ctx);
 }
 
 // ---------- projectiles & fx ----------
@@ -107,7 +69,7 @@ function updateFx(dt:number){
    const p=projs[i];p.o.position.addScaledVector(p.v,dt);p.life-=dt;let hit:Enemy|null=null;
    p.o.position.y+=(1.15-p.o.position.y)*Math.min(1,dt*4);
    vfx.trail(p.kind,p.o,p.v,dt);
-   for(const e of enemies)if(e.state!=='dead'&&Math.hypot(e.pos.x-p.o.position.x,e.pos.z-p.o.position.z)<.7){hit=e;break;}
+   for(const e of enemies)if(e.state!=='dead'&&Math.hypot(e.pos.x-p.o.position.x,e.pos.z-p.o.position.z)<e.radius+.25){hit=e;break;}
    if(hit){applyHit(hit,p.dmg,p.o.position.clone().addScaledVector(p.v,-.05),p.elem);if(p.mark)hit.markUntil=now()+2.2;}
    if(hit||p.life<=0){if(hit||p.kind!=='pulse')vfx.impact(p.kind,p.o.position,p.v.clone().normalize());dispose(p.o);projs.splice(i,1);}
   }
@@ -382,7 +344,7 @@ function enter(){
 }
 $('go').onclick=enter;
 $('qbtn').onclick=()=>setQuality(quality==='high'?'low':'high');
-$('respawn').onclick=()=>{document.body.classList.remove('dead');dead=false;hp=hpMax;mana=100;pos.set(0,0,0);hero.play('Idle_Loop',{fade:.2});if(pet)pet.g.position.set(1.2,0,1);for(const e of enemies){world.scene.remove(e.g);}enemies.length=0;hud();};
+$('respawn').onclick=()=>{document.body.classList.remove('dead');dead=false;hp=hpMax;mana=100;pos.set(0,0,0);hero.play('Idle_Loop',{fade:.2});if(pet)pet.g.position.set(1.2,0,1);for(const e of enemies)e.dispose();enemies.length=0;hud();};
 document.body.classList.add('creator');
 
 // ---------- input ----------
@@ -452,18 +414,18 @@ function frame(){
   if(Object.keys(patch).length)await change(patch);
   refreshUi();
   // compile every material up front (enemy, projectile, ring) so the first fight doesn't hitch
-  const warm=new Enemy(0,-200);const W=new T.Vector3(0,1,-200),F=new T.Vector3(0,0,1);
+  const warm=(['crawler','skitter','spitter','carapace'] as SpeciesId[]).map((k,i)=>new Creature(k,i*3,-200,world.scene));const W=new T.Vector3(0,1,-200),F=new T.Vector3(0,0,1);
   for(const k of ['pulse','fire','water','earth','energy','filament'] as Kind[]){fire(k,W,F,0,0);vfx.impact(k,W,F);}
   vfx.slash(W,0,false);vfx.field('energy',W,1);vfx.field('earth',W,1);vfx.decal(W,'#fff',1,.1);
-  renderer.compile(world.scene,camera);world.scene.remove(warm.g);for(const p of projs)dispose(p.o);projs.length=0;
-  renderer.compile(world.scene,camera);world.scene.remove(warm.g);
+  renderer.compile(world.scene,camera);warm.forEach(w=>w.dispose());for(const p of projs)dispose(p.o);projs.length=0;
+  renderer.compile(world.scene,camera);warm.forEach(w=>w.dispose());
   if(quality==='low')setQuality('low');
   $('loading').remove();
   if(q.get('auto'))enter();
   requestAnimationFrame(frame);
 })();
 // QA hooks
-(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look};},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{qaAim=true;aimPoint.set(x,0,z);},spawn:(x:number,z:number)=>enemies.push(new Enemy(x,z)),mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
+(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look};},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{qaAim=true;aimPoint.set(x,0,z);},spawn:(x:number,z:number,k:SpeciesId='crawler')=>{const e=new Creature(k,x,z,world.scene);enemies.push(e);return e.kind;},mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
  const w=hero.weapon,h=hero.hand;if(!w||!h)return null;hero.model.updateMatrixWorld(true);
  const mq=hero.model.getWorldQuaternion(new T.Quaternion()),hq=h.getWorldQuaternion(new T.Quaternion());
  const hm=mq.clone().invert().multiply(hq);const wq=hm.clone().multiply(w.quaternion);
