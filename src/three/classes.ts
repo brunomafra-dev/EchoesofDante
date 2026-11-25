@@ -26,7 +26,7 @@ export const CLASSES:Record<ClassId,Kit>={
   idle:'Pistol_Idle_Loop',attacks:['Pistol_Shoot'],atkSpeed:1.9,impact:.18,
   primary:{kind:'shot',dmg:22,range:16,color:'#7fe9ff',speed:40},
   dash:{name:'Passo de fase',speed:10,dur:.42,cd:1.2},
-  skill:{name:'Feixe perfurante',cost:30,cd:1.4,hint:'atravessa todos'}},
+  skill:{name:'Feixe perfurante',cost:40,cd:5,hint:'carrega e dispara um feixe gigante'}},
  astral:{name:'Manipulador Astral',role:'MÉDIO ALCANCE · CONTROLE',fantasy:'Controle o campo. Conduza as forças de Dante pela manopla.',kit:'Manopla astral · Energia, fogo, água e terra · Campos direcionais',weapon:'gauntlet',
   hp:110,speed:4.3,resource:'Energia',resColor:'#5fe6d8',regen:6,
   idle:'Idle_Loop',attacks:['Punch_Jab','Punch_Cross'],atkSpeed:1.7,impact:.38,
