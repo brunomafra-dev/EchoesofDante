@@ -35,6 +35,9 @@ DEFAULT_ANIMS = ['Idle_Loop', 'Walk_Loop', 'Jog_Fwd_Loop', 'Sprint_Loop', 'Sword
 def find(asset_type, key, ext='mhclo'):
     key = key.lower()
     paths = AssetService.list_mhclo_assets(asset_type) if ext == 'mhclo' else AssetService.list_mhmat_assets(asset_type)
+    for p in paths:   # exact file name first, so 'robe' doesn't pick 'robe_hood'
+        if os.path.splitext(os.path.basename(p))[0].lower() == key:
+            return p
     for p in paths:
         if key in os.path.basename(p).lower():
             return p

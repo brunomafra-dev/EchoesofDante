@@ -18,7 +18,7 @@ export const HAIR:Record<Sex,[string,string][]>={
 };
 export const CLOTH:[string,string][]=[['Original','#ffffff'],['Grafite','#5c5d62'],['Floresta','#587a4f'],['Marinho','#4b5f94'],['Vinho','#9c4a56'],['Ocre','#c59a52']];
 export const BROWS:[string,string][]=[['eyebrow001','Fina'],['eyebrow005','Média'],['eyebrow009','Grossa']];
-export const OUTFITS:[string,string][]=[['viking','Nórdico'],['monk','Monge'],['wanderer','Viajante'],['suit','Sombrio']];
+export const OUTFITS:[string,string][]=[['viking','Nórdico'],['monk','Monge'],['hood','Encapuzado'],['hooddown','Manto']];
 export const WEAPONS:[WeaponId,string,string][]=[
  ['saber','Sabre de plasma','Corpo a corpo, golpes amplos'],['carbine','Carabina','Tiro à distância'],
  ['gauntlet','Manopla','Socos rápidos'],['conductor','Condutor','Descargas de energia'],
@@ -70,7 +70,7 @@ export class Character{
    const n=o.name;
    if(n.startsWith('hair'))o.visible=n.startsWith(hair);
    else if(n.startsWith('eyebrows'))o.visible=n.startsWith(brow);
-   else if(n.startsWith('outfit'))o.visible=n.startsWith(outEnd);
+   else if(n.startsWith('outfit'))o.visible=n.startsWith(outEnd)&&!OUTFITS.some(([id])=>id!==look.outfit&&id.startsWith(look.outfit)&&n.startsWith('outfit'+id));
   });
   const skin=new T.Color(SKINS[look.skin]??'#fff');
   this.bodyMats.forEach(m=>m.color.copy(skin));

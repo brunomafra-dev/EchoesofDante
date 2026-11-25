@@ -97,7 +97,7 @@ export class World{
   const gg=new T.ConeGeometry(.05,.5,4),grass=new T.InstancedMesh(gg,new T.MeshStandardMaterial({color:'#3a4128',roughness:1}),1800);
   for(let i=0;i<1800;i++){const a=r()*6.283,d=Math.sqrt(r())*ARENA*1.3;e.set((r()-.5)*.5,r()*6,(r()-.5)*.5);q.setFromEuler(e);const s=.5+r()*1.3;
    m4.compose(new T.Vector3(Math.cos(a)*d,.2*s,Math.sin(a)*d),q,new T.Vector3(s,s,s));grass.setMatrixAt(i,m4);}
-  sc.add(grass);
+  grass.castShadow=false;grass.receiveShadow=false;sc.add(grass);
   // torches on posts
   const lampTex=glowTex('rgba(255,225,170,1)','rgba(255,150,60,.4)');
   for(let i=0;i<5;i++){
@@ -132,7 +132,7 @@ export class World{
   pos.needsUpdate=true;
   this.moon.target.position.copy(focus);this.moon.position.set(focus.x-14,26,focus.z+10);
  }
- resize(w:number,h:number){this.composer.setSize(w,h);this.bloom.resolution.set(w,h);}
+ resize(w:number,h:number,pr=1){this.composer.setPixelRatio(pr);this.composer.setSize(w,h);this.bloom.resolution.set(w*pr/2,h*pr/2);}
  render(camera:T.PerspectiveCamera,t:number){this.rp.camera=camera;(this.grade.uniforms.time as {value:number}).value=t%100;this.composer.render();}
  // push a point out of every solid prop
  collide(p:T.Vector3,rad:number){

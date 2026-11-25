@@ -7,7 +7,7 @@ import {World} from './world';
 const q=new URLSearchParams(location.search);
 const app=document.getElementById('app')!;
 const renderer=new T.WebGLRenderer({antialias:true,powerPreference:'high-performance'});
-renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.PCFShadowMap;
+const MAX_PR=Math.min(devicePixelRatio,1.25);let pr=MAX_PR;renderer.setPixelRatio(pr);renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.PCFShadowMap;
 renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1.45;
 app.appendChild(renderer.domElement);
 const camera=new T.PerspectiveCamera(40,1,.1,200);
@@ -49,7 +49,6 @@ class Enemy{
    const arm=new T.Mesh(new T.CylinderGeometry(.09,.06,.95,7),skin);arm.geometry.translate(0,-.47,0);arm.position.set(s*.42,1.5,.1);arm.rotation.x=-.5;arm.castShadow=true;this.g.add(arm);this.arms.push(arm);
    const leg=new T.Mesh(new T.CylinderGeometry(.09,.06,.8,6),skin);leg.position.set(s*.17,.4,0);leg.castShadow=true;this.g.add(leg);
   }
-  const l=new T.PointLight('#ff2a1a',.5,2.6,2);l.position.set(0,1.8,.6);this.g.add(l);
   this.g.position.set(x,0,z);world.scene.add(this.g);
  }
  get pos(){return this.g.position;}
@@ -95,15 +94,16 @@ function updateEnemies(dt:number,now:number){
 }
 
 // ---------- projectiles & fx ----------
-interface Proj{m:T.Mesh;v:T.Vector3;life:number;dmg:number;light:T.PointLight}
+interface Proj{m:T.Mesh;v:T.Vector3;life:number;dmg:number}
 const projs:Proj[]=[];
+const GLOW=(()=>{const c=document.createElement('canvas');c.width=c.height=64;const g=c.getContext('2d')!;const r=g.createRadialGradient(32,32,0,32,32,32);r.addColorStop(0,'rgba(255,255,255,1)');r.addColorStop(.3,'rgba(255,255,255,.35)');r.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=r;g.fillRect(0,0,64,64);const t=new T.CanvasTexture(c);t.colorSpace=T.SRGBColorSpace;return t;})();
 function fire(dir:T.Vector3,color:string,speed:number,dmg:number){
   const m=new T.Mesh(new T.SphereGeometry(.11,10,8),new T.MeshBasicMaterial({color}));
   const trail=new T.Mesh(new T.CylinderGeometry(.03,.09,.9,8),new T.MeshBasicMaterial({color,transparent:true,opacity:.6,blending:T.AdditiveBlending,depthWrite:false}));
   trail.rotation.x=Math.PI/2;trail.position.z=-.45;m.add(trail);
-  const l=new T.PointLight(color,6,6,1.8);m.add(l);
+  const glow=new T.Sprite(new T.SpriteMaterial({map:GLOW,color,blending:T.AdditiveBlending,depthWrite:false,transparent:true}));glow.scale.set(1.1,1.1,1);m.add(glow);
   const p=pos.clone().add(new T.Vector3(0,1.4,0)).addScaledVector(dir,.8);m.position.copy(p);m.lookAt(p.clone().add(dir));world.scene.add(m);
-  projs.push({m,v:dir.clone().multiplyScalar(speed),life:1.1,dmg,light:l});
+  projs.push({m,v:dir.clone().multiplyScalar(speed),life:1.1,dmg});
 }
 const rings:{m:T.Mesh;t:number}[]=[];
 function ring(p:T.Vector3,color:string,r:number){
@@ -240,7 +240,7 @@ ui.innerHTML=`
  <div class="grp"><label>Cor da roupa</label><div class="row" id="o-cloth"></div></div>
  <div class="grp"><label>Arma</label><div class="row wrap" id="o-weapon"></div></div>
  <button id="go">Entrar no mundo</button><p class="hint">Arraste para girar o personagem</p></div>
-<div id="hud"><div class="orb hp"><i id="hp"></i><b id="hpt"></b></div><div class="bar"><div class="sk"><kbd>Botão esq.</kbd>mover / atacar</div><div class="sk"><kbd>J</kbd>ataque</div><div class="sk"><kbd>Q</kbd>onda (30 mana)</div><div class="sk"><kbd>Espaço</kbd>rolar</div><div class="sk"><kbd>Shift</kbd>correr</div></div><div class="orb mp"><i id="mp"></i><b id="mpt"></b></div><div id="kills"></div></div>
+<div id="hud"><div class="orb hp"><i id="hp"></i><b id="hpt"></b></div><div class="bar"><div class="sk"><kbd>Botão esq.</kbd>mover / atacar</div><div class="sk"><kbd>J</kbd>ataque</div><div class="sk"><kbd>Q</kbd>onda (30 mana)</div><div class="sk"><kbd>Espaço</kbd>rolar</div><div class="sk"><kbd>Shift</kbd>correr</div></div><div class="orb mp"><i id="mp"></i><b id="mpt"></b></div><div id="kills"></div></div><div id="perf"><span id="fps"></span><button id="qbtn">Qualidade: alta</button></div>
 <div id="deadmsg"><h2>Você caiu</h2><button id="respawn">Levantar</button></div>
 <div id="loading">Carregando…</div>`;
 const $=(id:string)=>document.getElementById(id)!;
@@ -280,6 +280,7 @@ function enter(){
   pos.set(0,0,0);heading=Math.PI;hp=100;mana=100;dead=false;kills=0;hud();spawnT=1.5;
 }
 $('go').onclick=enter;
+$('qbtn').onclick=()=>setQuality(quality==='high'?'low':'high');
 $('respawn').onclick=()=>{document.body.classList.remove('dead');dead=false;hp=100;mana=100;pos.set(0,0,0);hero.play('Idle_Loop',{fade:.2});for(const e of enemies){world.scene.remove(e.g);}enemies.length=0;hud();};
 document.body.classList.add('creator');
 
@@ -308,9 +309,18 @@ cv.addEventListener('contextmenu',e=>e.preventDefault());
 cv.addEventListener('wheel',e=>{zoom=Math.min(1.5,Math.max(.6,zoom+e.deltaY*.0008));},{passive:true});
 
 // ---------- loop ----------
-function resize(){const w=innerWidth,h=innerHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();world.resize(w,h);}
+function resize(){const w=innerWidth,h=innerHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();world.resize(w,h,renderer.getPixelRatio());}
 addEventListener('resize',resize);resize();
-let last=performance.now()/1000,time=0;
+let last=performance.now()/1000,time=0,hudT=0;
+// adaptive quality: drop resolution, then post-processing and shadows, when frames run long
+let quality:'high'|'low'=q.get('q')==='low'?'low':'high',slowT=0,fastT=0,fpsAcc=0,fpsN=0,fpsShown=0;
+function setQuality(qv:'high'|'low'){quality=qv;renderer.shadowMap.enabled=qv==='high';world.scene.traverse(o=>{const m=(o as T.Mesh).material as T.Material|undefined;if(m)m.needsUpdate=true;});$('qbtn').textContent=qv==='high'?'Qualidade: alta':'Qualidade: leve';}
+function adapt(dt:number){
+  fpsAcc+=dt;fpsN++;if(fpsAcc>.5){fpsShown=Math.round(fpsN/fpsAcc);fpsAcc=0;fpsN=0;$('fps').textContent=fpsShown+' fps';}
+  if(dt>1/40){slowT+=dt;fastT=0;}else{fastT+=dt;slowT=Math.max(0,slowT-dt*.5);}
+  if(slowT>2){slowT=0;if(pr>.75){pr=Math.max(.75,pr-.25);renderer.setPixelRatio(pr);resize();}else if(quality==='high')setQuality('low');}
+  else if(fastT>6&&pr<MAX_PR){fastT=0;pr=Math.min(MAX_PR,pr+.25);renderer.setPixelRatio(pr);resize();}
+}
 function frame(){
   const t=performance.now()/1000,dt=Math.min(.05,t-last);last=t;time+=dt;
   if(mode==='creator'){heading=previewYaw;if(hero.model)hero.model.rotation.y+=(previewYaw-hero.model.rotation.y)*Math.min(1,dt*10);hero.play(hero.has(wd().idle)?wd().idle:'Idle_Loop',{fade:.25});}
@@ -320,8 +330,9 @@ function frame(){
   torch.position.set(pos.x,pos.y+3,pos.z+.8);torch.intensity=15+Math.sin(time*9)*1.6+Math.sin(time*23)*.9;
   rim.position.set(pos.x+4,5,pos.z-5);rim.target.position.copy(pos);key.position.set(pos.x+3,4.5,pos.z+5);key.target.position.set(pos.x,pos.y+1,pos.z);key.intensity=mode==='creator'?2.6:1.1;
   world.update(time,dt,pos);updateCamera(dt);
-  world.render(camera,time);
-  if(mode==='play')hud();
+  if(quality==='high')world.render(camera,time);else renderer.render(world.scene,camera);
+  if(mode==='play'&&(hudT+=dt)>.1){hudT=0;hud();}
+  adapt(dt);
   requestAnimationFrame(frame);
 }
 (async()=>{
@@ -331,7 +342,13 @@ function frame(){
   for(const k of['skin','hairColor','cloth'] as const)if(q.get(k))patch[k]=Number(q.get(k));
   for(const k of['hair','brows','outfit','weapon'] as const)if(q.get(k))(patch as Record<string,string>)[k]=q.get(k)!;
   if(Object.keys(patch).length)await change(patch);
-  refreshUi();$('loading').remove();
+  refreshUi();
+  // compile every material up front (enemy, projectile, ring) so the first fight doesn't hitch
+  const warm=new Enemy(0,-200);fire(new T.Vector3(0,0,1),'#6fe4ff',0,0);ring(new T.Vector3(0,0,-200),'#fff',1);
+  renderer.compile(world.scene,camera);world.scene.remove(warm.g);
+  for(const p of projs)world.scene.remove(p.m);projs.length=0;for(const r of rings)world.scene.remove(r.m);rings.length=0;
+  if(quality==='low')setQuality('low');
+  $('loading').remove();
   if(q.get('auto'))enter();
   requestAnimationFrame(frame);
 })();

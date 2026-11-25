@@ -13,9 +13,10 @@ const X=new T.Vector3(1,0,0),Z=new T.Vector3(0,0,1);
 const q1=new T.Quaternion(),q2=new T.Quaternion(),q3=new T.Quaternion(),m1=new T.Matrix4();
 const v1=new T.Vector3(),v2=new T.Vector3(),v3=new T.Vector3(),v4=new T.Vector3();
 // carbine fore grip in the weapon's own space (three axes: barrel -Z, top +Y)
-const FORE_GRIP=new T.Vector3(0,-.085,-.34),PISTOL_GRIP=new T.Vector3(0,-.105,.03),BUTT=new T.Vector3(0,-.02,.385);
+const FORE_GRIP=new T.Vector3(0,-.055,-.33),PISTOL_GRIP=new T.Vector3(0,-.1,.025),BUTT=new T.Vector3(0,-.02,.385);
+export const RIFLE_SCALE=.82;
 // rifle shoulder pocket relative to the upper chest bone, in the character's model space
-const SHOULDER=new T.Vector3(-.15,.12,.1);
+const SHOULDER=new T.Vector3(-.12,.1,.04);
 const HAND_PARTS=/^(hand_plate|knuckle|wrist_core|palm|thumb_guard|shell|rib|fil|sensor)/;
 const NO_IK=/Roll|Death|Hit|Interact/;
 
@@ -41,7 +42,7 @@ export class Grip{
  // place the weapon so its handle sits inside the right fist (bracers ride the forearm); returns the parent
  mount(id:WeaponId,w:T.Object3D):T.Object3D|null{
   const f=this.frames.r;if(!f)return null;
-  if(id==='carbine')return this.model;
+  if(id==='carbine'){w.scale.setScalar(RIFLE_SCALE);return this.model;}
   if(id==='gauntlet'||id==='conductor'){
    const h=this.b('hand_r');if(!h)return null;
    // the hand plates must bend with the wrist: move them to a group riding the hand bone
@@ -81,30 +82,35 @@ export class Grip{
  apply(id:WeaponId|null,w:T.Object3D|null,anim:string){
   if(!id){this.curl('r',.3);this.curl('l',.3);return;}
   if(id==='saber'){this.curl('r',1.05,1,.75);this.curl('l',.35);}
-  else if(id==='carbine'){this.curl('r',1.0,.45,.6);this.curl('l',.95,1,.6);if(w){this.holdRifle(w,/Shoot/.test(anim));if(!NO_IK.test(anim)){this.reach('r',w,PISTOL_GRIP);this.reach('l',w,FORE_GRIP);}}}
+  else if(id==='carbine'){this.curl('r',1.0,.45,.6);this.curl('l',.95,1,.6);if(w){this.holdRifle(w,/Shoot/.test(anim));if(!NO_IK.test(anim)){
+    // right hand wraps the pistol grip from the right; left hand supports the shroud palm-up
+    const fwd=new T.Vector3(0,0,-1),up=new T.Vector3(0,1,0),right=new T.Vector3(1,0,0);
+    this.reach('r',w,PISTOL_GRIP,fwd.clone().multiplyScalar(.9).addScaledVector(up,-.45),right.clone().negate());
+    this.reach('l',w,FORE_GRIP,fwd.clone().multiplyScalar(.5).addScaledVector(right,.85),up);}}}
   else if(id==='gauntlet'){this.curl('r',1.15,1,.9);this.curl('l',.9,1,.8);const h=this.b('hand_r');if(w&&h)this.bracer(id,w,h.quaternion);}
   else{this.curl('r',.35,.2,.15);this.curl('l',.3);const h=this.b('hand_r');if(w&&h)this.bracer(id,w,h.quaternion);}
  }
  // rifle rests on the shoulder and follows the chest; barrel low-ready unless shooting
  private pitch=-.4;
  private holdRifle(w:T.Object3D,aim:boolean){
-  const c=this.b('spine_03');if(!c)return;this.model.updateMatrixWorld(true);
-  this.pitch+=((aim?-.02:-.42)-this.pitch)*.25;
+  const c=this.b('spine_03');if(!c)return;c.updateWorldMatrix(true,false);
+  this.pitch+=((aim?-.02:-.3)-this.pitch)*.25;
   const delta=this.modelQ(c).multiply(this.chestRest.clone().invert());
   const base=new T.Quaternion().setFromEuler(new T.Euler(0,Math.PI,0)).multiply(new T.Quaternion().setFromAxisAngle(X,-this.pitch));
   w.quaternion.copy(delta).multiply(base);
   const chest=this.model.worldToLocal(c.getWorldPosition(new T.Vector3()));
   const sh=chest.add(SHOULDER.clone().applyQuaternion(delta));
-  w.position.copy(sh).sub(BUTT.clone().applyQuaternion(w.quaternion));
+  w.position.copy(sh).sub(BUTT.clone().multiplyScalar(RIFLE_SCALE).applyQuaternion(w.quaternion));
   w.updateMatrixWorld(true);
  }
  // hand to a point of the weapon with two-bone IK
- private reach(side:Side,w:T.Object3D,point:T.Vector3){
+ private reach(side:Side,w:T.Object3D,point:T.Vector3,dLocal:T.Vector3,nLocal:T.Vector3){
   const f=this.frames[side],ua=this.b('upperarm_'+side),la=this.b('lowerarm_'+side),h=this.b('hand_'+side);if(!f||!ua||!la||!h)return;
-  this.model.updateMatrixWorld(true);
+  ua.updateWorldMatrix(true,true);w.updateWorldMatrix(true,false);
   // target hand orientation: knuckles along the barrel, knuckle line up the grip
   const wq=w.getWorldQuaternion(q1);
-  const Dw=v1.set(0,0,-1).applyQuaternion(wq),Aw=v2.set(0,1,0).applyQuaternion(wq),Nw=v3.crossVectors(Dw,Aw).multiplyScalar(f.s);
+  const Dw=v1.copy(dLocal).applyQuaternion(wq).normalize(),Nw=v3.copy(nLocal).applyQuaternion(wq);Nw.addScaledVector(Dw,-Nw.dot(Dw)).normalize();
+  const k=f.A.dot(new T.Vector3().crossVectors(f.N,f.D))>0?1:-1,Aw=v2.crossVectors(Nw,Dw).multiplyScalar(k);
   const R=m1.makeBasis(Dw,Aw,Nw).multiply(f.basisT);const handQ=new T.Quaternion().setFromRotationMatrix(R);
   const grip=w.localToWorld(point.clone());
   const wrist=grip.sub(f.G.clone().applyQuaternion(handQ).multiplyScalar(h.getWorldScale(v4).x));
@@ -120,6 +126,9 @@ export class Grip{
   const E3=la.getWorldPosition(new T.Vector3()),W3=h.getWorldPosition(new T.Vector3()),Wt=S.clone().addScaledVector(dir,d);
   this.rotateTo(la,W3.sub(E3).normalize(),Wt.sub(E3).normalize());
   // hand: absolute orientation in world -> local to the forearm
+  // half of the wrist twist goes to the forearm so the skin doesn't wring at the wrist
+  la.getWorldQuaternion(q2);const hl=q2.clone().invert().multiply(handQ);
+  const tw=new T.Quaternion(0,hl.y,0,hl.w).normalize();la.quaternion.multiply(new T.Quaternion().slerp(tw,.5));la.updateMatrixWorld(true);
   la.getWorldQuaternion(q2);h.quaternion.copy(q2.invert().multiply(handQ));
   h.updateMatrixWorld(true);
  }
