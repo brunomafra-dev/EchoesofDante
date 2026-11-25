@@ -214,12 +214,12 @@ const ray=new T.Raycaster(),plane=new T.Plane(new T.Vector3(0,1,0),0);
 function updateAim(){ray.setFromCamera(mouse,camera);ray.ray.intersectPlane(plane,aimPoint);}
 
 // ---------- camera ----------
-const camPos=new T.Vector3(),camLook=new T.Vector3(),cTmp=new T.Vector3();let zoom=1,previewYaw=.5;
+const camPos=new T.Vector3(),camLook=new T.Vector3(),cTmp=new T.Vector3();let zoom=1,previewYaw=-.55;
 function updateCamera(dt:number){
   const target=mode==='play'?1:0;camBlend+=(target-camBlend)*Math.min(1,dt*2.6);
   const k=camBlend*camBlend*(3-2*camBlend);
   // creator: close, side-lit portrait ; play: ARPG three-quarter overhead
-  const cp=cTmp.set(pos.x+1.0,pos.y+1.45,pos.z+4.4),cl=new T.Vector3(pos.x,pos.y+1.05,pos.z);
+  const cp=cTmp.set(pos.x-.4,pos.y+1.4,pos.z+4.2),cl=new T.Vector3(pos.x-.95,pos.y+1.0,pos.z);
   const pp=new T.Vector3(pos.x,pos.y+10.5*zoom,pos.z+8.6*zoom),pl=new T.Vector3(pos.x,pos.y+.9,pos.z);
   camPos.copy(cp).lerp(pp,k);camLook.copy(cl).lerp(pl,k);
   camera.position.copy(camPos);camera.lookAt(camLook);
@@ -335,4 +335,17 @@ function frame(){
   requestAnimationFrame(frame);
 })();
 // QA hooks
-(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look};},enter,change,tryAttack,roll,skill,keys,aim:(x:number,z:number)=>{aimPoint.set(x,0,z);},spawn:(x:number,z:number)=>enemies.push(new Enemy(x,z)),mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},setHeading:(h:number)=>{heading=h;}};
+(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look};},enter,change,tryAttack,roll,skill,keys,aim:(x:number,z:number)=>{aimPoint.set(x,0,z);},spawn:(x:number,z:number)=>enemies.push(new Enemy(x,z)),mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},calib:(tx:number,ty:number,tz:number)=>{
+ const w=hero.weapon,h=hero.hand;if(!w||!h)return null;hero.model.updateMatrixWorld(true);
+ const mq=hero.model.getWorldQuaternion(new T.Quaternion()),hq=h.getWorldQuaternion(new T.Quaternion());
+ const hm=mq.clone().invert().multiply(hq);const wq=hm.clone().multiply(w.quaternion);
+ let dt=new T.Vector3(tx,ty,tz);
+ if(dt.lengthSq()<1e-6){const la=hero.model.getObjectByName('lowerarm_r')!,a=la.getWorldPosition(new T.Vector3()),b=h.getWorldPosition(new T.Vector3());dt=b.sub(a).applyQuaternion(mq.clone().invert());}
+ dt.normalize();
+ const dc=new T.Vector3(0,0,-1).applyQuaternion(wq);let nq=new T.Quaternion().setFromUnitVectors(dc,dt).multiply(wq);
+ const up=new T.Vector3(0,1,0);up.addScaledVector(dt,-up.dot(dt)).normalize();
+ const z=new T.Vector3(0,1,0).applyQuaternion(nq);z.addScaledVector(dt,-z.dot(dt)).normalize();
+ const ang=Math.atan2(new T.Vector3().crossVectors(z,up).dot(dt),z.dot(up));
+ nq=new T.Quaternion().setFromAxisAngle(dt,ang).multiply(nq);
+ const local=hm.clone().invert().multiply(nq);const e=new T.Euler().setFromQuaternion(local,'XYZ');
+ w.quaternion.copy(local);return e.toArray().slice(0,3).map(v=>+(v as number).toFixed(3));},probe:()=>{if(!hero.weapon)return null;hero.model.updateMatrixWorld(true);const m=new T.Matrix4().copy(hero.model.matrixWorld).invert();const d=new T.Vector3(0,0,-1).transformDirection(hero.weapon.matrixWorld).transformDirection(m);const hp=new T.Vector3();hero.hand!.getWorldPosition(hp);hp.applyMatrix4(m);return{blade:d.toArray().map(v=>+v.toFixed(2)),hand:hp.toArray().map(v=>+v.toFixed(2)),t:hero.current?.time};},yaw:(y:number)=>{previewYaw=y;},setHeading:(h:number)=>{heading=h;}};

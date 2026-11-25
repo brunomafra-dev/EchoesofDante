@@ -26,8 +26,9 @@ export const DEFAULT_LOOK:Look={sex:'male',skin:1,hair:'short02',hairColor:1,bro
 
 const clean=(s:string)=>s.replace(/[\[\].:/]/g,'');
 // where the weapon sits in the right hand bone (tuned by eye, see docs/3d-new/PLAN.md)
-const MOUNT:Record<WeaponId,{p:[number,number,number];r:[number,number,number];s:number}>={
- saber:{p:[0,.02,0],r:[2.6,0,.1],s:1},carbine:{p:[0,.04,0],r:[0,0,0],s:1},gauntlet:{p:[0,0,0],r:[0,0,0],s:1},conductor:{p:[0,0,0],r:[0,0,0],s:1},
+const MOUNT:Record<WeaponId,{r:[number,number,number];off:[number,number,number]}>={
+ saber:{r:[3.113,-.948,-1.338],off:[0,0,0]},carbine:{r:[.797,.844,-.619],off:[0,.1,-.02]},
+ gauntlet:{r:[.495,.779,-1.11],off:[0,0,.14]},conductor:{r:[.461,.935,-1.994],off:[0,0,.12]},
 };
 export const mountOf=(w:WeaponId)=>MOUNT[w];
 
@@ -90,7 +91,9 @@ export class Character{
   if(this.weapon)this.weapon.parent?.remove(this.weapon);
   const w=g.scene.clone(true);
   w.traverse(o=>{const m=o as T.Mesh;if(m.isMesh){m.castShadow=true;}});
-  const mo=MOUNT[id];w.position.set(...mo.p);w.rotation.set(...mo.r);w.scale.setScalar(mo.s);
+  const mo=MOUNT[id];w.rotation.set(...mo.r);
+  const fin=this.hand.children.find(c=>/middle|index/i.test(c.name));const grip=fin?fin.position.clone().multiplyScalar(.6):new T.Vector3(0,.05,0);
+  w.position.copy(grip).add(new T.Vector3(...mo.off).applyQuaternion(w.quaternion));
   this.hand.add(w);this.weapon=w;this.weaponId=id;this.look={...this.look,weapon:id};
  }
  has(name:string){return this.clips.has(name);}
