@@ -235,7 +235,7 @@ export class World{
   const r=rng(101+id.length*13+id.charCodeAt(0));
   const pick=()=>{let x=r();for(const [k,w] of mix){if(x<w)return k;x-=w;}return mix[0][0];};
   const avoid=[{x:0,z:0,r:12},{x:0,z:ARENA-10,r:10},{x:0,z:-ARENA+10,r:10},...this.portals.map(p=>({x:p.pos.x,z:p.pos.z,r:9}))];
-  const big=new Set<SpeciesId>(['carapace','slagback','iceCarapace']);
+  const big=new Set<SpeciesId>(['carapace','slagback','iceCarapace','glassAntlion']);
   const n=id==='camp'?6:8,dMin=id==='camp'?25:11,dMax=id==='camp'?ARENA-3:ARENA-4;
   for(let i=0,tries=0;i<n&&tries<400;tries++){
    const a=r()*6.283,d=dMin+r()*(dMax-dMin),x=Math.cos(a)*d,z=Math.sin(a)*d;

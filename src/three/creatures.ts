@@ -1,5 +1,6 @@
 import * as T from 'three';
 import {mergeVertices,mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
+import {clone as skClone} from 'three/addons/utils/SkeletonUtils.js';
 import type {VFX} from './vfx';
 
 // Native fauna of Dante for the new 3D, taken from the 2D bestiary (src/config/bestiary.ts).
@@ -9,11 +10,11 @@ import type {VFX} from './vfx';
 type Body='crawler'|'skitter'|'spitter'|'carapace'|'hound'|'amphibian'|'thorn'|'golem'|'winged'|'worm'|'warden';
 type MoveType='bite'|'dash'|'spit'|'sweep'|'fan'|'lob'|'slam'|'breath'|'marks'|'burrow';
 interface Move{type:MoveType;dmg:number;range:number;windup:number;recover:number;arc?:number;count?:number;radius?:number;color?:string;min?:number}
-interface Spec{name:string;hp:number;speed:number;radius:number;scale:number;body:Body;pal:{c:string;g:string;s?:string;wet?:boolean};moves:Move[];phase2?:Move[];keep?:number;armor?:number;boss?:boolean;fly?:number}
-const P=(c:string,g:string,s?:string,wet?:boolean)=>({c,g,s,wet});
+interface Spec{name:string;hp:number;speed:number;radius:number;scale:number;body:Body;pal:{c:string;g:string;s?:string;wet?:boolean;v?:'ice'|'magma'};model?:ModelId;moves:Move[];phase2?:Move[];keep?:number;armor?:number;boss?:boolean;fly?:number}
+const P=(c:string,g:string,s?:string,wet?:boolean,v?:'ice'|'magma')=>({c,g,s,wet,v});
 export const SPECIES={
  // arrival forest / depths
- crawler:{name:'Rastejante Hollow',hp:70,speed:3.1,radius:.6,scale:1,body:'crawler',pal:P('#4a4258','#ffa040'),moves:[{type:'bite',dmg:10,range:1.7,windup:.5,recover:.6,arc:1.6}]},
+ crawler:{name:'Rastejante Hollow',hp:70,speed:3.1,radius:.75,scale:1,body:'crawler',model:'spider',pal:P('#4a4258','#ffa040'),moves:[{type:'bite',dmg:10,range:1.7,windup:.5,recover:.6,arc:1.6}]},
  skitter:{name:'Saltador',hp:45,speed:3.6,radius:.45,scale:1,body:'skitter',pal:P('#4a382a','#ff8a3d'),moves:[{type:'dash',dmg:14,range:7,windup:.7,recover:.9}]},
  spitter:{name:'Cuspidor',hp:55,speed:2.3,radius:.6,scale:1,body:'spitter',pal:P('#33402a','#9dff4a','#7dff3a'),keep:7,moves:[{type:'spit',dmg:12,range:11,windup:.8,recover:.7,color:'#9dff4a',min:3}]},
  carapace:{name:'Casco Errante',hp:230,speed:1.7,radius:1.1,scale:1,body:'carapace',pal:P('#45434c','#ff7a2a'),armor:.75,moves:[{type:'sweep',dmg:22,range:3,windup:1.05,recover:1.4,arc:2.2}]},
@@ -24,18 +25,24 @@ export const SPECIES={
  thorn:{name:'Espinhante',hp:80,speed:2,radius:.7,scale:1,body:'thorn',pal:P('#4a3a5a','#d07dff'),keep:6,moves:[{type:'fan',dmg:11,range:10,windup:.85,recover:.9,color:'#e0a0ff',count:3,min:2.5}]},
  // ash coast, obsidian and caldera
  emberHound:{name:'Rasga-brasa',hp:75,speed:3.8,radius:.7,scale:1,body:'hound',pal:P('#2a2422','#ff5a1a'),moves:[{type:'dash',dmg:16,range:8,windup:.65,recover:.9}]},
- fumarole:{name:'Fole de Magma',hp:95,speed:2,radius:.8,scale:1.15,body:'spitter',pal:P('#2c2624','#ff6a20','#ff7a2a'),keep:7,moves:[{type:'lob',dmg:18,range:12,windup:1,recover:1,radius:1.6,color:'#ff7a2a',min:3}]},
- slagback:{name:'Dorso de Basalto',hp:260,speed:1.5,radius:1.2,scale:1.1,body:'carapace',pal:P('#2b2a2e','#ff6a20'),armor:.7,moves:[{type:'slam',dmg:26,range:2.6,windup:1.1,recover:1.6,radius:3.2}]},
+ fumarole:{name:'Fole de Magma',hp:95,speed:2,radius:.8,scale:1.15,body:'spitter',pal:P('#2c2624','#ff6a20','#ff7a2a',false,'magma'),keep:7,moves:[{type:'lob',dmg:18,range:12,windup:1,recover:1,radius:1.6,color:'#ff7a2a',min:3}]},
+ slagback:{name:'Dorso de Basalto',hp:260,speed:1.5,radius:1.2,scale:1.1,body:'carapace',pal:P('#2b2a2e','#ff6a20',undefined,false,'magma'),armor:.7,moves:[{type:'slam',dmg:26,range:2.6,windup:1.1,recover:1.6,radius:3.2}]},
  titan:{name:'O Incandescente',hp:1400,speed:1.6,radius:1.6,scale:1,body:'golem',pal:P('#2a2626','#ff7a20'),armor:.8,boss:true,moves:[
   {type:'slam',dmg:30,range:3.2,windup:1.1,recover:1.3,radius:3.6},{type:'lob',dmg:22,range:16,windup:1.2,recover:1.2,radius:1.8,count:3,color:'#ff7a2a',min:4},{type:'bite',dmg:26,range:3.4,windup:.8,recover:1,arc:1.4}]},
  // thaw galleries & boreal fracture
- iceCarapace:{name:'Casco Glacial',hp:240,speed:1.6,radius:1.1,scale:1,body:'carapace',pal:P('#9fb7c8','#7fe8ff'),armor:.75,moves:[{type:'sweep',dmg:22,range:3.2,windup:1.15,recover:1.5,arc:2.2}]},
- frostPouncer:{name:'Rasga-gelo',hp:60,speed:3.6,radius:.5,scale:1.1,body:'skitter',pal:P('#c8d8e8','#6fd8ff'),moves:[{type:'dash',dmg:15,range:7.5,windup:.7,recover:.9}]},
+ iceCarapace:{name:'Casco Glacial',hp:240,speed:1.6,radius:1.1,scale:1,body:'carapace',pal:P('#9fb7c8','#7fe8ff',undefined,false,'ice'),armor:.75,moves:[{type:'sweep',dmg:22,range:3.2,windup:1.15,recover:1.5,arc:2.2}]},
+ frostPouncer:{name:'Rasga-gelo',hp:60,speed:3.6,radius:.5,scale:1.1,body:'skitter',pal:P('#c8d8e8','#6fd8ff',undefined,false,'ice'),moves:[{type:'dash',dmg:15,range:7.5,windup:.7,recover:.9}]},
  frostSpitter:{name:'Cuspidor Boreal',hp:60,speed:2.2,radius:.6,scale:1,body:'spitter',pal:P('#7f93a8','#a8f0ff','#bff6ff'),keep:7,moves:[{type:'spit',dmg:13,range:11,windup:.85,recover:.8,color:'#bff6ff',min:3}]},
- vesper:{name:'Vésper, o Sopro Branco',hp:1300,speed:2.4,radius:1.4,scale:1,body:'winged',pal:P('#d8e4ee','#8fe8ff'),boss:true,fly:.25,moves:[
+ // Flare wyverns (painted skins by Justin Nichol): a brood of the boreal fracture and its matriarch
+ frostWyvern:{name:'Serpe da Geada',hp:75,speed:3,radius:.8,scale:1,body:'winged',model:'wyvern',pal:P('#c8d8e8','#a8f0ff'),keep:6,fly:1,moves:[
+  {type:'spit',dmg:13,range:11,windup:.85,recover:.8,color:'#bff6ff',min:2.5},{type:'dash',dmg:15,range:7,windup:.75,recover:.9}]},
+ vesper:{name:'Vésper, o Sopro Branco',hp:1300,speed:2.4,radius:1.6,scale:1,body:'winged',model:'wyvernBoss',pal:P('#d8e4ee','#8fe8ff'),boss:true,fly:1.3,moves:[
   {type:'breath',dmg:24,range:9,windup:1.1,recover:1.2,arc:.9,color:'#cff6ff'},{type:'dash',dmg:22,range:10,windup:.9,recover:1.1},{type:'marks',dmg:20,range:14,windup:1.2,recover:1,radius:1.6,count:3}]},
  // sirocco basin
- dunePouncer:{name:'Rasga-areia',hp:60,speed:3.7,radius:.5,scale:1.1,body:'skitter',pal:P('#8a6a42','#ffcf6a'),moves:[{type:'dash',dmg:15,range:7.5,windup:.7,recover:.9}]},
+ // Flare antlions: the sand hunters of the basin (hatchling, hunter, armoured)
+ duneAntlion:{name:'Formiga-leão',hp:95,speed:3.1,radius:.8,scale:1,body:'skitter',model:'antlion',pal:P('#8a6a42','#ffcf6a'),moves:[{type:'bite',dmg:15,range:2.2,windup:.6,recover:.7,arc:1.4},{type:'dash',dmg:14,range:6.5,windup:.75,recover:.9}]},
+ glassAntlion:{name:'Formiga-leão couraçada',hp:220,speed:1.9,radius:1.1,scale:1,body:'carapace',model:'antlionArmored',pal:P('#6a5a48','#ffc04a'),armor:.75,moves:[{type:'sweep',dmg:22,range:3,windup:1,recover:1.3,arc:2.2}]},
+ dunePouncer:{name:'Larva de areia',hp:55,speed:3.7,radius:.55,scale:1,body:'skitter',model:'antlionHatchling',pal:P('#8a6a42','#ffcf6a'),moves:[{type:'dash',dmg:15,range:7.5,windup:.7,recover:.9}]},
  glassSpitter:{name:'Cuspidor vítreo',hp:60,speed:2.2,radius:.6,scale:1,body:'spitter',pal:P('#7a5a3a','#ffc04a','#ffd06a'),keep:7,moves:[{type:'spit',dmg:13,range:11,windup:.85,recover:.8,color:'#ffd06a',min:3}]},
  soterrado:{name:'O Soterrado',hp:1300,speed:2.2,radius:1.4,scale:1,body:'worm',pal:P('#6a5236','#ffb04a'),boss:true,moves:[
   {type:'burrow',dmg:28,range:20,windup:1.4,recover:1.6,radius:2.2,count:3},{type:'dash',dmg:22,range:10,windup:.9,recover:1.2},{type:'bite',dmg:24,range:3.2,windup:.8,recover:1,arc:1.4}]},
@@ -139,7 +146,7 @@ function skin(m:T.MeshStandardMaterial,rim:string,bump=.6,freq=6,o:{veins?:strin
 function orient(m:T.Mesh,a:T.Vector3,b:T.Vector3,r:number){const d=tmp.copy(b).sub(a),l=d.length();m.position.copy(a);m.quaternion.setFromUnitVectors(UP,d.normalize());m.scale.set(r,l,r);}
 
 interface Leg{hip:T.Vector3;out:T.Vector3;len:number;phase:number;up:T.Mesh;low:T.Mesh;r:number;knee:number;foot:T.Mesh}
-interface Look{chitin:T.MeshStandardMaterial;glow:T.MeshStandardMaterial;body:T.Group;legs:Leg[];sac?:T.Mesh;mandibles?:T.Mesh[];height:number;wings?:T.Object3D[];arms?:T.Object3D[];segs?:T.Mesh[];halo?:T.Object3D[];limbs?:T.Object3D[]}
+interface Look{mixer?:T.AnimationMixer;acts?:Partial<Record<Motion,T.AnimationAction>>;cur?:string;chitin:T.MeshStandardMaterial;glow:T.MeshStandardMaterial;body:T.Group;legs:Leg[];sac?:T.Mesh;mandibles?:T.Mesh[];height:number;wings?:T.Object3D[];arms?:T.Object3D[];segs?:T.Mesh[];halo?:T.Object3D[];limbs?:T.Object3D[]}
 type Pal=Spec['pal'];
 function chitin(p:Pal){const m=skin(new T.MeshStandardMaterial({color:p.c,roughness:p.wet?.22:.55,metalness:p.wet?.1:.12,emissive:'#000000',emissiveIntensity:1}),p.g,.3,3.2,{cells:1});m.userData.chitin=true;return m;}
 // limbs and claws: a paler, horny tone like the 2D creatures' legs
@@ -152,13 +159,21 @@ const inkMats=new Map<string,T.MeshBasicMaterial>();
 function inkMat(color:string){let m=inkMats.get(color);if(m)return m;
  m=new T.MeshBasicMaterial({color,side:T.BackSide});
  m.onBeforeCompile=sh=>{sh.vertexShader=sh.vertexShader.replace('#include <project_vertex>',`vec4 mvPosition=modelViewMatrix*vec4(transformed,1.);
-  vec3 inkN=normalize(normalMatrix*normal);mvPosition.xyz+=inkN*INK_W*max(2.,-mvPosition.z);gl_Position=projectionMatrix*mvPosition;`).replace('#include <common>','#include <common>\n#define INK_W .0032');};
+  vec3 inkN=normalize(normalMatrix*inkNormal);mvPosition.xyz+=inkN*INK_W*max(2.,-mvPosition.z);gl_Position=projectionMatrix*mvPosition;`).replace('#include <common>','#include <common>\n#define INK_W .0032\nattribute vec3 inkNormal;');};
  m.customProgramCacheKey=()=>'ink';inkMats.set(color,m);return m;}
+// outline direction: the normal averaged over every corner sharing a position, so hard edges do not open cracks
+function inkNormals(g:T.BufferGeometry){
+ if(g.attributes.inkNormal)return;const P=g.attributes.position,N=g.attributes.normal,acc=new Map<string,T.Vector3>(),keys:string[]=[];
+ const v=new T.Vector3(),n=new T.Vector3();
+ for(let i=0;i<P.count;i++){v.fromBufferAttribute(P,i);const k=Math.round(v.x*1e4)+'_'+Math.round(v.y*1e4)+'_'+Math.round(v.z*1e4);keys.push(k);n.fromBufferAttribute(N,i);const a=acc.get(k);if(a)a.add(n);else acc.set(k,n.clone());}
+ const out=new Float32Array(P.count*3);for(let i=0;i<P.count;i++){const a=acc.get(keys[i])!.clone().normalize();out[i*3]=a.x;out[i*3+1]=a.y;out[i*3+2]=a.z;}
+ g.setAttribute('inkNormal',new T.BufferAttribute(out,3));
+}
 export function ink(root:T.Object3D,color='#0d0a0c'){
  const list:T.Mesh[]=[];root.traverse(o=>{const m=o as T.Mesh;if(!m.isMesh||m.userData.ink||Array.isArray(m.material))return;const mat=m.material as T.Material;
   if(mat.transparent||mat.userData.glow||!m.geometry.attributes.normal)return;list.push(m);});
  const mat=inkMat(color);
- for(const m of list){const o=new T.Mesh(m.geometry,mat);o.userData.ink=true;o.castShadow=false;o.receiveShadow=false;o.frustumCulled=m.frustumCulled;m.add(o);}
+ for(const m of list){inkNormals(m.geometry);const sk=m as T.SkinnedMesh;const o=sk.isSkinnedMesh?new T.SkinnedMesh(m.geometry,mat):new T.Mesh(m.geometry,mat);if(sk.isSkinnedMesh)(o as unknown as T.SkinnedMesh).bind(sk.skeleton,sk.bindMatrix);o.userData.ink=true;o.castShadow=false;o.receiveShadow=false;o.frustumCulled=m.frustumCulled;m.add(o);}
 }
 function ball(r:number,m:T.Material,p:[number,number,number],s:[number,number,number]=[1,1,1]){const b=new T.Mesh(m.userData.chitin?lumpGeo(r,.08,2.4,r*7):new T.SphereGeometry(r,18,12),m);b.position.set(...p);b.scale.set(...s);b.castShadow=true;return b;}
 function cone(r:number,h:number,m:T.Material,p:[number,number,number],rot:[number,number,number]){const c=new T.Mesh(new T.ConeGeometry(r,h,7),m);c.position.set(...p);c.rotation.set(...rot);c.castShadow=true;return c;}
@@ -188,6 +203,7 @@ function buildSkitter(root:T.Group,p:Pal):Look{
  shell(body,plates(p.c,p.g),.3,[0,.62,-.05],[1,.9,1.4],2,p.g,.3);
  for(const s of[-1,1])body.add(ball(.04,gl,[s*.08,.72,.56]));
  body.add(cone(.08,.7,ch,[0,.72,-.55],[-1.9,0,0]));
+ deco(body,p,.22,.82,5);
  return {chitin:ch,glow:gl,body,legs:addLegs(body,hn,four(.18,.58,.22,.62,1.0),.07,.42,hn),height:.9};
 }
 // Cuspidor (2D: dante-spitter): lumpy hide, a translucent egg-sac on the back studded with crystals, a frilled mouth
@@ -201,6 +217,7 @@ function buildSpitter(root:T.Group,p:Pal):Look{
  const head=lump(.3,ch,[0,.75,.75],[1,.85,1],.18,3,2);body.add(head);
  for(let i=0;i<6;i++){const a=i/6*Math.PI*2;const f=cone(.06,.26,horn('#e08a6a'),[Math.cos(a)*.16,.78+Math.sin(a)*.14,1.02],[Math.PI/2+Math.sin(a)*.5,0,-Math.cos(a)*.5]);body.add(f);}
  body.add(ball(.08,gl,[0,.78,1.04]));
+ deco(body,p,.42,.95,6);
  return {chitin:ch,glow:gl,body,legs:addLegs(body,hn,four(.42,.52,.34,.7),.15,.25,hn),sac,height:1.5};
 }
 // Casco Errante (2D: carapace-v1): domed shell of olive scutes with orange seams, pale muscular limbs, two heavy pincers
@@ -216,6 +233,7 @@ function buildCarapace(root:T.Group,p:Pal):Look{
  for(const s of[-1,1]){const a=new T.Group();a.position.set(s*.75,.55,.95);body.add(a);
   a.add(lump(.26,hn,[0,0,.25],[1,1,1.6],.15,3,s+4));
   const c=new T.Mesh(clawGeo(),hn);c.scale.set(.42,.42,.55);c.position.set(0,-.15,.55);a.add(c);arms.push(a);}
+ deco(body,p,.85,1.25,p.v==='ice'?9:7);
  return {chitin:ch,glow:gl,body,legs:addLegs(body,hn,four(.78,.42,.5,.85,.9),.24,.26,hn),arms,height:1.6};
 }
 // Rasga-brasa (2D: ember-hound): a low, muscled beast with black rock plates along its spine, lava glowing in the seams
@@ -319,6 +337,52 @@ function buildWorm(root:T.Group,p:Pal):Look{
 }
 // sculpted models (Blender, scripts/asset-tools/3d-new/make_*.py) preloaded by the game
 export const MODELS:Record<string,T.Object3D>={};
+export const ANIMS:Record<string,T.AnimationClip[]>={};
+// sculpted, textured and animated creatures (see public/assets/3d-new/creatures/CREDITS.md):
+// fit = size in metres along 'by'; clips map game motions to the model's clips or to frame ranges of a single action
+type Motion='idle'|'move'|'run'|'attack'|'hit'|'death';
+type ModelId='spider'|'antlion'|'antlionArmored'|'antlionHatchling'|'wyvern'|'wyvernBoss';
+const ANT:Record<Motion,[number,number]>={idle:[0,3],move:[4,11],run:[4,11],attack:[12,15],hit:[16,18],death:[16,23]};
+export const MODEL_DEF:Record<ModelId,{file:string;fit:number;by:'len'|'h';clips:Partial<Record<Motion,string|[number,number]>>;skin?:string;tint?:string;detail?:boolean;attackSpeed?:number}>={
+ spider:{file:'',fit:3,by:'len',clips:{idle:'Idle',move:'Walk',run:'Run',attack:'Bite',hit:'Hit',death:'Death'},tint:'#a99cc4'},
+ antlion:{file:'antlion',fit:1.9,by:'len',clips:ANT,detail:true,tint:'#e8d2a8'},
+ antlionArmored:{file:'antlion_armored',fit:2.6,by:'len',clips:ANT,detail:true,tint:'#d8c8b0'},
+ antlionHatchling:{file:'antlion_hatchling',fit:1.2,by:'len',clips:ANT,detail:true,tint:'#f0dcb0'},
+ wyvern:{file:'wyvern',fit:3.2,by:'len',clips:{idle:'Hover',move:'Fly',run:'Fly',attack:'Sting',hit:'Hit',death:'Die'},skin:'water'},
+ wyvernBoss:{file:'wyvern_boss',fit:5.6,by:'len',clips:{idle:'Hover',move:'Fly',run:'Ram',attack:'Sting',hit:'Hit',death:'Die'},skin:'air'},
+};
+const skinTex=new Map<string,T.Texture>();
+function wyvernSkin(name:string){let t=skinTex.get(name);if(!t){t=new T.TextureLoader().load(import.meta.env.BASE_URL+'assets/3d-new/creatures/wyvern_'+name+'.jpg');t.colorSpace=T.SRGBColorSpace;t.flipY=false;skinTex.set(name,t);}return t;}
+const subCache=new Map<string,T.AnimationClip>();
+function buildModel(root:T.Group,id:ModelId,p:Pal):Look|null{
+ const D=MODEL_DEF[id],src=MODELS[id],clips=ANIMS[id];if(!src||!clips?.length)return null;
+ if(!src.userData.fit){const b=new T.Box3().setFromObject(src),sz=b.getSize(new T.Vector3());src.userData.fit={k:D.fit/(D.by==='h'?sz.y:Math.max(sz.x,sz.z)),minY:b.min.y,h:sz.y};}
+ const F=src.userData.fit as {k:number;minY:number;h:number};
+ const m=skClone(src) as T.Group,body=new T.Group();root.add(body);body.add(m);m.scale.setScalar(F.k);m.position.y=-F.minY*F.k;
+ let mat:T.MeshStandardMaterial|null=null;
+ m.traverse(o=>{const me=o as T.Mesh;if(!me.isMesh)return;me.castShadow=true;me.receiveShadow=true;me.frustumCulled=false;
+  const c=(me.material as T.MeshStandardMaterial).clone();if(D.skin)c.map=wyvernSkin(D.skin);if(D.tint)c.color.set(D.tint);c.envMapIntensity=.55;c.emissive=new T.Color(0);c.emissiveIntensity=1;
+  // the Flare antlions only carry baked colours: the creature skin adds scales, creases and the rim of the 2D glow
+  if(D.detail){ensureAO(me.geometry);skin(c,p.g,.15,2.6,{cells:0});}
+  me.material=c;mat??=c;});
+ const mixer=new T.AnimationMixer(m),acts:Partial<Record<Motion,T.AnimationAction>>={};
+ for(const [k,v] of Object.entries(D.clips) as [Motion,string|[number,number]][]){
+  let clip:T.AnimationClip|undefined;
+  if(typeof v==='string')clip=clips.find(c=>c.name===v);
+  else{const key=id+':'+k;clip=subCache.get(key);if(!clip){clip=T.AnimationUtils.subclip(clips[0],k,v[0],v[1]+1,8);subCache.set(key,clip);}}
+  if(clip)acts[k]=mixer.clipAction(clip);}
+ if(!acts.idle)return null;
+ return {chitin:mat!,glow:glowMat(p.g),body,legs:[],height:F.h*F.k,mixer,acts};
+}
+// ice crystals or basalt and magma on a shell, so the regional kin of a species read differently
+function deco(body:T.Group,p:Pal,R:number,y:number,n:number){
+ if(!p.v)return;const ice=p.v==='ice';
+ const m=ice?new T.MeshStandardMaterial({color:'#cfefff',emissive:'#5fd0ff',emissiveIntensity:.25,roughness:.08,metalness:.1,flatShading:true}):new T.MeshStandardMaterial({color:'#1a1616',roughness:.85,flatShading:true});
+ for(let i=0;i<n;i++){const a=i/n*Math.PI*2+i*.7,r=R*(.25+.55*((i*37)%10)/10),h=(ice?.5:.38)+((i*53)%10)/10*(ice?.55:.35);
+  const g=ice?new T.OctahedronGeometry(.13,0):new T.CylinderGeometry(.12,.15,1,6);if(ice)g.scale(1,3.2,1);
+  const c=new T.Mesh(g,m);c.position.set(Math.cos(a)*r,y+(ice?.15:h*.4),Math.sin(a)*r-.1);c.rotation.set(Math.sin(a)*.35,a,Math.cos(a)*.35);if(!ice)c.scale.y=h;c.castShadow=true;body.add(c);
+  if(!ice&&i%2===0){const e=new T.Mesh(new T.BoxGeometry(.05,.05,.3),glowMat('#ff6a1a',2.2));e.position.set(Math.cos(a)*r*.8,y+.02,Math.sin(a)*r*.8-.1);e.rotation.y=a;body.add(e);}}
+}
 function buildWardenModel(root:T.Group,src:T.Object3D):Look{
  if(!src.userData.smoothed){src.userData.smoothed=true;src.traverse(o=>{const me=o as T.Mesh;if(!me.isMesh)return;let g=me.geometry.clone();for(const k of Object.keys(g.attributes))if(k!=='position')g.deleteAttribute(k);g=mergeVertices(g,1e-3);g.computeVertexNormals();me.geometry=g;});}
  const m=src.clone(true);root.add(m);const body=new T.Group();root.add(body);body.add(m);
@@ -442,8 +506,9 @@ export class Creature{
  static ctx:Ctx;static coreColor='#a060ff';
  constructor(public kind:SpeciesId,x:number,z:number,private scene:T.Scene){
   this.spec=SPECIES[kind] as Spec;this.hp=this.spec.hp;this.g.position.set(x,0,z);this.home.set(x,0,z);this.g.scale.setScalar(this.spec.scale);scene.add(this.g);
-  const root=new T.Group();this.g.add(root);this.look=BUILD[this.spec.body](root,this.spec.pal);
-  if(!(this.spec.body==='warden'&&MODELS.warden))bakeBody(kind,this.look);
+  const root=new T.Group();this.g.add(root);
+  this.look=(this.spec.model&&buildModel(root,this.spec.model,this.spec.pal))||BUILD[this.spec.body](root,this.spec.pal);
+  if(!this.look.mixer&&!(this.spec.body==='warden'&&MODELS.warden))bakeBody(kind,this.look);
   this.g.traverse(o=>{const m=o as T.Mesh;if(m.isMesh)ensureAO(m.geometry);});
   ink(this.g,'#'+new T.Color(this.spec.pal.c).multiplyScalar(.12).getHexString());
   if(this.spec.body==='worm')this.hidden=1;
@@ -492,6 +557,8 @@ export class Creature{
   this.t+=dt;this.flash=Math.max(0,this.flash-dt);this.moveCd-=dt;
   const L=this.look;L.chitin.emissive.setRGB(this.flash*4,this.flash*2.4,this.flash*1.6);
   if(this.state==='dead'){this.deadT+=dt;
+   if(L.mixer){this.anim('death',true);L.mixer.update(dt);if(this.spec.fly)this.g.position.y=Math.max(0,this.g.position.y-dt*3);else if(this.deadT>1.6)this.g.position.y=-(this.deadT-1.6)*.5;
+    if(this.deadT>(this.boss?6:3.5)){this.g.removeFromParent();this.gone=true;}return;}
    if(this.spec.fly){this.g.position.y=Math.max(-.4,this.g.position.y-dt*4);L.body.rotation.z=Math.min(1.4,this.deadT*2);}
    else{L.body.rotation.z=Math.min(2.6,this.deadT*5)*(this.radius>1?.35:1);this.g.position.y=Math.max(-1.2,-(this.deadT-1.5)*.5);}
    this.pose(true);if(this.deadT>(this.boss?6:3.5)){this.g.removeFromParent();this.gone=true;}return;}
@@ -510,10 +577,11 @@ export class Creature{
   if(this.state==='chase'){
    const face=Math.atan2(to.x,to.z);this.turn(face,dt,4);
    const mv=this.moveCd<=0&&ctx.playerOk()?this.pick(dist):null;
-   const close=s.moves.some(m=>m.type==='bite'||m.type==='sweep'||m.type==='slam')?1.5:0;
+   // melee creatures close in until their own strike reaches (they used to stop just outside a short bite)
+   const melee=s.moves.filter(m=>m.type==='bite'||m.type==='sweep'||m.type==='slam'),stop=melee.length?Math.max(.9,Math.min(...melee.map(m=>m.range))*.75):this.radius+.4;
    if(mv&&(mv.type!=='bite'&&mv.type!=='sweep'&&mv.type!=='slam'||dist<mv.range*.9)){
     this.mv=mv;this.state='wind';this.timer=mv.windup;this.heading=face;this.dir.set(Math.sin(face),0,Math.cos(face));this.announce(ctx);}
-   else if(s.keep&&dist<s.keep*.65)want=-.45;else if(s.keep&&dist<s.keep)want=0;else if(dist>close+this.radius)want=1;
+   else if(s.keep&&dist<s.keep*.65)want=-.45;else if(s.keep&&dist<s.keep)want=0;else if(dist>stop)want=1;
   }else if(this.state==='wind'){
    const m=this.mv;this.timer-=dt*slow*(this.phase===2?1.25:1);const k=1-this.timer/m.windup;
    for(const te of this.tele){const u=(te.material as T.ShaderMaterial).uniforms;u.uK.value=k;u.uT.value=teleClock;}
@@ -546,9 +614,15 @@ export class Creature{
   this.pos.addScaledVector(this.vel,dt);ctx.collide(this.pos,this.radius);
   for(const o of ctx.others)if(o!==this&&o.state!=='dead'){const d=tmp.copy(this.pos).sub(o.pos).setY(0),l=d.length(),mm=this.radius+o.radius;if(l<mm&&l>1e-4)this.pos.addScaledVector(d.normalize(),(mm-l)*.5);}
   this.g.rotation.y=this.heading;
-  {const b=Math.sin(this.t*(this.state==='chase'?3.4:2.2));L.body.scale.set(1-b*.012,1+b*.025,1-b*.012);}
+  if(!L.mixer){const b=Math.sin(this.t*(this.state==='chase'?3.4:2.2));L.body.scale.set(1-b*.012,1+b*.025,1-b*.012);}
   if(s.fly)this.g.position.y=s.fly+Math.sin(this.t*2.2)*.25;
   this.gait+=this.vel.length()*dt*(this.radius>1?1.6:3);
+  if(L.mixer){const sp=this.vel.length();let a:Motion='idle',once=false;
+   if(this.state==='act'||(this.state==='wind'&&this.timer<.3)){a='attack';once=true;}
+   else if(this.state==='recover'&&L.cur==='attack')a='attack';
+   else if(sp>.35)a=sp>s.speed*.8&&L.acts!.run?'run':'move';
+   this.anim(a,once);const cur=L.acts![a];if(cur&&(a==='move'||a==='run'))cur.timeScale=Math.max(.6,Math.min(2,sp/(s.speed*.7)));
+   L.mixer.update(dt);}
   this.pose(false);
  }
  // the moment a prepared attack goes off
@@ -576,6 +650,10 @@ export class Creature{
    for(const q of this.targets)if(Math.hypot(q.x-ctx.player.x,q.z-ctx.player.z)<m.radius!&&q===p&&!ctx.invuln())ctx.damagePlayer(m.dmg,p);}
  }
  private toRecover(){this.state='recover';this.timer=this.mv.recover;this.vel.multiplyScalar(.2);this.look.body.position.y=Math.max(0,this.look.body.position.y);this.look.mandibles?.forEach((m,i)=>m.rotation.z=(i?1:-1)*.5);}
+ // crossfade the model's clip for a motion (attack and death play once and hold)
+ private anim(name:Motion,once=false){const L=this.look;if(!L.acts||L.cur===name)return;const a=L.acts[name]??L.acts.idle!;const prev=L.cur?L.acts[L.cur as Motion]:undefined;
+  a.reset();a.setLoop(once?T.LoopOnce:T.LoopRepeat,Infinity);a.clampWhenFinished=once;a.timeScale=name==='attack'?1.6:1;a.setEffectiveWeight(1);
+  if(prev&&prev!==a)a.crossFadeFrom(prev,.15,false);a.play();L.cur=name;}
  private turn(target:number,dt:number,rate:number){let d=target-this.heading;d=Math.atan2(Math.sin(d),Math.cos(d));this.heading+=d*Math.min(1,dt*rate);}
  // procedural motion: legs step in a wave, wings beat, the worm undulates out of the ground
  private pose(dead:boolean){

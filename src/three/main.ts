@@ -6,7 +6,7 @@ import {World,ARENA} from './world';
 import {Sound,type Sfx} from './audio';
 import {VFX,type Kind} from './vfx';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {Creature,MODELS,SPECIES,updateSpits,clearShots,tickTele,teleWarm,petModel,type Ctx,type SpeciesId} from './creatures';
+import {Creature,MODELS,ANIMS,MODEL_DEF,SPECIES,updateSpits,clearShots,tickTele,teleWarm,petModel,type Ctx,type SpeciesId} from './creatures';
 import {BIOMES,BIOME_ORDER,type BiomeId} from './biomes';
 import {Npc} from './camp';
 import {Journal,MISSIONS,NPCS,NPC_INFO,type Goal,type NpcId} from './missions';
@@ -30,7 +30,7 @@ const key=new T.DirectionalLight('#ffd9b0',2.4);world.scene.add(key,key.target);
 type Mode='creator'|'play';
 let mode:Mode='creator';let look:Look=loadLook();
 const pos=hero.root.position;let heading=0,hp=100,hpMax=100,mana=100,kills=0,dead=false;
-const keys=new Set<string>();let moveTarget:T.Vector3|null=null;let mouseDown=false;const mouse=new T.Vector2();const aimPoint=new T.Vector3(0,0,-5);
+const keys=new Set<string>();let moveTarget:T.Vector3|null=null;let mouseDown=false,rightDown=false;const mouse=new T.Vector2();const aimPoint=new T.Vector3(0,0,-5);
 let atkUntil=0,atkImpact=0,atkPending:null|(()=>void)=null,rollUntil=0,rollDir=new T.Vector3(),stunUntil=0,comboIdx=0,invulnUntil=0,camBlend=0;
 let focusEnemy:Enemy|null=null;void focusEnemy;
 function loadLook():Look{try{const s=localStorage.getItem('dante3d.look');if(s){const l={...DEFAULT_LOOK,...JSON.parse(s)};if(!OUTFITS.some(o=>o[0]===l.outfit))l.outfit=DEFAULT_LOOK.outfit;return l;}}catch{/* private mode */}return{...DEFAULT_LOOK};}
@@ -315,7 +315,7 @@ function updatePlayer(dt:number){
    if(moving)hero.play(sprinting?'Sprint_Loop':(look.weapon==='saber'&&false?'Walk_Loop':'Jog_Fwd_Loop'),{fade:.2});
    else hero.play(scan?'Interact':hero.has(w.idle)?w.idle:'Idle_Loop',{fade:.25});
   }
-  if(mouseDown&&mode==='play'&&!locked&&n>=rollUntil){updateAim();const e=enemyAt(aimPoint);if(e){focusEnemy=e;faceTo(e.pos);const l=pos.distanceTo(e.pos),lk=kit().lunge;if(l<=kit().primary.range*.8)tryAttack();else if(lk&&l<lk.range&&n>=lungeReady)lunge(e);else moveTarget=e.pos.clone();}else{moveTarget=aimPoint.clone();focusEnemy=null;}}
+  if(mouseDown&&mode==='play'&&!locked&&n>=rollUntil){updateAim();const e=enemyAt(aimPoint);if(e){focusEnemy=e;faceTo(e.pos);const l=pos.distanceTo(e.pos),lk=kit().lunge;if(lk&&l>kit().primary.range*.85&&l<lk.range&&n>=lungeReady)lunge(e);else tryAttack();}else{focusEnemy=null;faceTo(aimPoint);tryAttack();}}
   hp=Math.min(hpMax,hp+dt*.4);
   pet?.update(dt,n);
 }
@@ -395,7 +395,7 @@ function hud(){
   $('hp').style.height=(hp/hpMax*100)+'%';$('mp').style.height=mana+'%';$('hpt').textContent=String(Math.ceil(hp));$('mpt').textContent=String(Math.floor(mana));
   const col=cls()==='astral'?ELEMENT_COLORS[element]:k.resColor;$('mp').style.background=`radial-gradient(circle at 40% 30%,${col},#0b1420 75%)`;
   const n=now(),cdq=Math.max(0,skillReady-n),cdd=Math.max(0,dashReady-n);
-  const sb=`<div class="sk"><kbd>Botão esq. / J</kbd>${k.primary.kind==='melee'?'golpe':'disparo'}</div><div class="sk${cdq?' cd':''}"><kbd>Q</kbd>${k.skill.name}${k.skill.cost?` · ${k.skill.cost}`:''}${cdq?` (${cdq.toFixed(1)})`:''}</div>${cls()==='astral'?`<div class="sk"><kbd>E</kbd><span style="color:${ELEMENT_COLORS[element]}">${ELEMENT_NAMES[element]}</span></div>`:''}${k.lunge?`<div class="sk${n<lungeReady?' cd':''}"><kbd>Alvo longe</kbd>Investida</div>`:''}<div class="sk${cdd?' cd':''}"><kbd>Espaço</kbd>${k.dash.name}</div><div class="sk"><kbd>Shift</kbd>correr</div>`;
+  const sb=`<div class="sk"><kbd>Botão esq. / J</kbd>${k.primary.kind==='melee'?'golpe':'disparo'}</div><div class="sk${cdq?' cd':''}"><kbd>Dir. / Q</kbd>${k.skill.name}${k.skill.cost?` · ${k.skill.cost}`:''}${cdq?` (${cdq.toFixed(1)})`:''}</div>${cls()==='astral'?`<div class="sk"><kbd>E</kbd><span style="color:${ELEMENT_COLORS[element]}">${ELEMENT_NAMES[element]}</span></div>`:''}${k.lunge?`<div class="sk${n<lungeReady?' cd':''}"><kbd>Alvo longe</kbd>Investida</div>`:''}<div class="sk${cdd?' cd':''}"><kbd>Espaço</kbd>${k.dash.name}</div><div class="sk"><kbd>Shift</kbd>correr</div>`;
   if($('skillbar').innerHTML!==sb)$('skillbar').innerHTML=sb;
   const cn=`${k.name} · <span style="color:${col}">${k.resource}</span>`;if($('clsname').innerHTML!==cn)$('clsname').innerHTML=cn;
   $('kills').textContent=kills?`Abates: ${kills}`:'';
@@ -463,7 +463,7 @@ tb('t-atk',()=>tryAttack());$('t-act').addEventListener('pointerdown',e=>{e.prev
 // options & help: one closable panel; controls are explained there, shown once on the first run
 function openModal(kind:'options'|'help'){
   const m=$('modal'),body=$('mbody');m.classList.remove('talking');talking=null;$('mtitle').textContent=kind==='help'?'Controles':'Opções';
-  const pc=`<h3>Computador</h3><ul><li><b>WASD</b> ou clique no chão: andar · <b>Shift</b>: correr</li><li><b>Clique no inimigo</b>, <b>J</b> ou botão direito: atacar</li><li><b>Q</b>: habilidade da classe (Guerreiro: segure e solte)</li><li><b>E</b>: trocar elemento (Astral)</li><li><b>Espaço</b>: esquiva · roda do mouse: zoom</li><li><b>F</b>: falar com alguém da base ou analisar um ponto da missão</li></ul>`;
+  const pc=`<h3>Computador</h3><ul><li><b>WASD</b> ou <b>setas</b>: andar · <b>Shift</b>: correr</li><li><b>Botão esquerdo</b> (segure para continuar) ou <b>J</b>: atacar na direção do cursor · Guerreiro: clique num inimigo distante para a investida</li><li><b>Botão direito</b> ou <b>Q</b>: habilidade da classe (Guerreiro: segure e solte)</li><li><b>E</b>: trocar elemento (Astral)</li><li><b>Espaço</b>: esquiva · roda do mouse: zoom</li><li><b>F</b>: falar com alguém da base ou analisar um ponto da missão</li></ul>`;
   const mob=`<h3>Celular</h3><ul><li>Toque e arraste no lado esquerdo da tela: <b>andar</b></li><li><b>Atacar</b>: mira sozinho no inimigo mais próximo</li><li>Botão da <b>habilidade</b>: toque para usar no mais próximo ou <b>arraste para mirar</b> e solte</li><li><b>Esquiva</b> e <b>elemento</b> (Astral) nos botões menores</li><li>Perto de alguém ou de um ponto da missão aparece o botão <b>Falar</b> / <b>Analisar</b></li></ul>`;
   const help=(touch?mob+pc:pc+mob)+`<p class="note">Portais de pedra levam às outras regiões: norte avança, sul volta. A seta dourada aponta o próximo objetivo da missão.</p>`;
   body.innerHTML=kind==='help'?help:`<div class="opts"><button id="o-help">Ver controles</button><button id="o-quality">${quality==='high'?'Qualidade: alta':'Qualidade: leve'}</button><button id="o-music">${sound.musicOn?'Música: ligada':'Música: desligada'}</button><button id="o-sfx">${sound.sfxOn?'Efeitos: ligados':'Efeitos: desligados'}</button><button id="o-journal">Diário de missões</button><button id="o-creator">Mudar personagem</button><p class="note" id="o-fps">${fpsShown?fpsShown+' quadros por segundo':''}</p></div>`;
@@ -643,10 +643,11 @@ cv.addEventListener('pointerdown',e=>{
   mouse.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);
   if(mode!=='play')return;
   if(touch)return;
-  if(e.button===2){updateAim();faceTo(aimPoint);tryAttack();return;}
-  mouseDown=true;updateAim();
+  updateAim();
+  if(e.button===2){rightDown=true;faceTo(aimPoint);skillDown();return;}
+  if(e.button===0){mouseDown=true;faceTo(aimPoint);tryAttack();}
 });
-addEventListener('pointerup',()=>{mouseDown=false;});
+addEventListener('pointerup',e=>{if(e.button===2&&rightDown){rightDown=false;updateAim();skillUp();}if(e.button===0)mouseDown=false;});
 cv.addEventListener('contextmenu',e=>e.preventDefault());
 cv.addEventListener('wheel',e=>{zoom=Math.min(1.5,Math.max(.6,zoom+e.deltaY*.0008));},{passive:true});
 
@@ -693,7 +694,14 @@ function frame(){
   if(Object.keys(patch).length)await change(patch);
   refreshUi();
   // compile every material up front (enemy, projectile, ring) so the first fight doesn't hitch
-  try{const g=await new GLTFLoader().loadAsync(import.meta.env.BASE_URL+'assets/3d-new/creatures/warden.glb');MODELS.warden=g.scene;}catch{/* procedural fallback */}
+  // sculpted creatures: Warden (ours), Flare antlions and wyverns, and the Easyforge spider (incorporated game module);
+  // a species whose model fails keeps its procedural body
+  const gl=new GLTFLoader(),put=(k:string,g:{scene:T.Group;animations:T.AnimationClip[]})=>{MODELS[k]=g.scene;ANIMS[k]=g.animations;};
+  await Promise.all([
+   gl.loadAsync(import.meta.env.BASE_URL+'assets/3d-new/creatures/warden.glb').then(g=>{MODELS.warden=g.scene;}).catch(()=>{}),
+   ...Object.entries(MODEL_DEF).filter(([,d])=>d.file).map(([k,d])=>gl.loadAsync(import.meta.env.BASE_URL+'assets/3d-new/creatures/'+d.file+'.glb').then(g=>put(k,g)).catch(()=>{})),
+   import('virtual:arrival-hollow').then(async m=>{const p=m.default;if(!p)return;const bytes=Uint8Array.from(atob(p.data),c=>c.charCodeAt(0));put('spider',await gl.parseAsync(bytes.buffer,''));}).catch(()=>{}),
+  ]);
   const warm=(Object.keys(SPECIES) as SpeciesId[]).map((k,i)=>new Creature(k,i*3,-200,world.scene));const W=new T.Vector3(0,1,-200),F=new T.Vector3(0,0,1);
   for(const k of ['pulse','fire','water','earth','energy','filament'] as Kind[]){fire(k,W,F,0,0);vfx.impact(k,W,F);}
   vfx.slash(W,0,false);vfx.field('energy',W,1);vfx.field('earth',W,1);vfx.decal(W,'#fff',1,.1);
