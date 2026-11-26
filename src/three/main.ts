@@ -193,6 +193,7 @@ function inputDir(){
   const d=new T.Vector3();
   if(keys.has('KeyW')||keys.has('ArrowUp'))d.z-=1;if(keys.has('KeyS')||keys.has('ArrowDown'))d.z+=1;
   if(keys.has('KeyA')||keys.has('ArrowLeft'))d.x-=1;if(keys.has('KeyD')||keys.has('ArrowRight'))d.x+=1;
+  if(joy.id!==-1&&Math.hypot(joy.x,joy.y)>.15){d.x+=joy.x;d.z+=joy.y;}
   return d;
 }
 
@@ -305,8 +306,8 @@ ui.innerHTML=`
  <div class="grp"><label>Cor da roupa</label><div class="row" id="o-cloth"></div></div>
  <div class="grp"><label>Classe</label><div class="row wrap" id="o-class"></div><div class="clsinfo" id="o-clsinfo"></div></div>
  <button id="go">Entrar no mundo</button><p class="hint">Arraste para girar o personagem</p></div>
-<div id="hud"><div class="orb hp"><i id="hp"></i><b id="hpt"></b></div><div id="clsname"></div><div class="bar" id="skillbar"></div><div class="orb mp"><i id="mp"></i><b id="mpt"></b></div><div id="kills"></div></div><div id="perf"><span id="fps"></span><button id="qbtn">Qualidade: alta</button></div>
-<div id="biomes"></div><div id="portalhint"></div><div id="touch"><button id="t-atk">Atacar</button><button id="t-q">Q</button><button id="t-dash">Esquiva</button><button id="t-e">Elem.</button></div><div id="banner"></div><div id="bossbar"><span id="bossname"></span><div><i id="bossfill"></i></div></div>
+<div id="hud"><div class="orb hp"><i id="hp"></i><b id="hpt"></b></div><div id="clsname"></div><div class="bar" id="skillbar"></div><div class="orb mp"><i id="mp"></i><b id="mpt"></b></div><div id="kills"></div></div><button id="optbtn" title="Opções">&#9776;</button><div id="perf"><span id="fps"></span></div>
+<div id="biomes"></div><div id="portalhint"></div><div id="touch"><button id="t-atk">Atacar</button><button id="t-q">Carga</button><button id="t-dash">Esquiva</button><button id="t-e">Energia</button></div><div id="joy"><i></i></div><div id="modal"><div class="box"><h2 id="mtitle"></h2><div id="mbody"></div><button id="mclose">Fechar</button></div></div><div id="banner"></div><div id="bossbar"><span id="bossname"></span><div><i id="bossfill"></i></div></div>
 <div id="deadmsg"><h2>Você caiu</h2><button id="respawn">Levantar</button></div>
 <div id="loading">Carregando…</div>`;
 const $=(id:string)=>document.getElementById(id)!;
@@ -351,7 +352,7 @@ function hud(){
 function enter(){
   mode='play';document.body.classList.add('play');document.body.classList.remove('creator');
   document.body.classList.toggle('astral',cls()==='astral');
-  pos.set(0,0,0);heading=Math.PI;hpMax=kit().hp;hp=hpMax;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();hud();spawnT=1.5;
+  pos.set(0,0,0);heading=Math.PI;hpMax=kit().hp;hp=hpMax;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();hud();spawnT=1.5;labelButtons();firstHelp();
 }
 $('go').onclick=enter;
 // walking into a portal carries the expedition to the neighbouring region
@@ -365,25 +366,64 @@ function updatePortals(){
 function goBiome(id:BiomeId,from:0|1|-1=0){
   world.setBiome(id);vfx.clearEmitters();for(const f of world.flameSpots)vfx.campfire(f.p,f.s);
   for(const e of enemies)e.dispose();enemies.length=0;clearShots();boss=null;bossBeaten=false;biomeKills=0;$('bossbar').classList.remove('on');
-  pos.set(0,0,from===1?ARENA-10:from===-1?-ARENA+10:0);heading=from===-1?0:Math.PI;portalLock=now()+2;if(pet)pet.g.position.set(pos.x+1.2,0,pos.z+1);spawnT=2;banner(BIOMES[id].name);// touch: tap/hold the ground to walk, buttons for attack / skill / dodge / element; attacks aim at the nearest creature
-const touch=matchMedia('(pointer:coarse)').matches||'ontouchstart' in window;
-if(touch)document.body.classList.add('touch');
-renderBiomes();
-function autoAim(){let best:Enemy|null=null,bd=16;for(const e of enemies)if(e.state!=='dead'){const d=e.pos.distanceTo(pos);if(d<bd){bd=d;best=e;}}aimPoint.copy(best?best.pos:pos.clone().add(fwd().multiplyScalar(5)));}
-const tb=(id:string,down:()=>void,up?:()=>void)=>{const b=$(id);b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();autoAim();down();});if(up)b.addEventListener('pointerup',e=>{e.preventDefault();autoAim();up();});};
-tb('t-atk',()=>tryAttack());tb('t-q',()=>skillDown(),()=>skillUp());tb('t-dash',()=>roll());tb('t-e',()=>cycleElement());
+  pos.set(0,0,from===1?ARENA-10:from===-1?-ARENA+10:0);heading=from===-1?0:Math.PI;portalLock=now()+2;if(pet)pet.g.position.set(pos.x+1.2,0,pos.z+1);spawnT=2;banner(BIOMES[id].name);renderBiomes();
 }
-function renderBiomes(){const h=$('biomes');h.innerHTML='';
-  if(document.body.classList.contains('touch')){const sel=document.createElement('select');sel.className='chip';for(const id of BIOME_ORDER){const o=document.createElement('option');o.value=id;o.textContent=BIOMES[id].name;o.selected=world.biome===id;sel.appendChild(o);}sel.onchange=()=>goBiome(sel.value as BiomeId);h.appendChild(sel);return;}
- for(const id of BIOME_ORDER){const b=document.createElement('button');b.className='chip'+(world.biome===id?' on':'');b.textContent=BIOMES[id].name;b.title=BIOMES[id].sub;b.onclick=()=>goBiome(id);h.appendChild(b);}}
-// touch: tap/hold the ground to walk, buttons for attack / skill / dodge / element; attacks aim at the nearest creature
+// touch devices: left thumb joystick to walk, right-hand buttons; the skill button can be dragged to aim
 const touch=matchMedia('(pointer:coarse)').matches||'ontouchstart' in window;
 if(touch)document.body.classList.add('touch');
+function renderBiomes(){const h=$('biomes');h.innerHTML='';
+  if(touch){const sel=document.createElement('select');sel.className='chip';for(const id of BIOME_ORDER){const o=document.createElement('option');o.value=id;o.textContent=BIOMES[id].name;o.selected=world.biome===id;sel.appendChild(o);}sel.onchange=()=>goBiome(sel.value as BiomeId);h.appendChild(sel);return;}
+  for(const id of BIOME_ORDER){const b=document.createElement('button');b.className='chip'+(world.biome===id?' on':'');b.textContent=BIOMES[id].name;b.title=BIOMES[id].sub;b.onclick=()=>goBiome(id);h.appendChild(b);}
+}
 renderBiomes();
 function autoAim(){let best:Enemy|null=null,bd=16;for(const e of enemies)if(e.state!=='dead'){const d=e.pos.distanceTo(pos);if(d<bd){bd=d;best=e;}}aimPoint.copy(best?best.pos:pos.clone().add(fwd().multiplyScalar(5)));}
-const tb=(id:string,down:()=>void,up?:()=>void)=>{const b=$(id);b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();autoAim();down();});if(up)b.addEventListener('pointerup',e=>{e.preventDefault();autoAim();up();});};
-tb('t-atk',()=>tryAttack());tb('t-q',()=>skillDown(),()=>skillUp());tb('t-dash',()=>roll());tb('t-e',()=>cycleElement());
-$('qbtn').onclick=()=>setQuality(quality==='high'?'low':'high');
+const SKILL_SHORT:Record<ClassId,string>={warrior:'Carga',hunter:'Feixe',astral:'Campo',xenobinder:'Investida'};
+function labelButtons(){$('t-q').textContent=SKILL_SHORT[cls()];$('t-dash').textContent='Esquiva';$('t-e').textContent=ELEMENT_NAMES[element];($('t-e') as HTMLElement).style.borderColor=ELEMENT_COLORS[element];}
+// joystick
+const joy={id:-1,ox:0,oy:0,x:0,y:0};
+function joyShow(on:boolean,x=0,y=0){const j=$('joy');j.classList.toggle('on',on);if(on){j.style.left=x+'px';j.style.top=y+'px';}}
+cvJoy();
+function cvJoy(){
+  const cv=renderer.domElement;
+  cv.addEventListener('pointerdown',e=>{if(!touch||mode!=='play'||joy.id!==-1)return;if(e.clientX>innerWidth*.6)return;joy.id=e.pointerId;joy.ox=e.clientX;joy.oy=e.clientY;joy.x=joy.y=0;joyShow(true,e.clientX,e.clientY);});
+  addEventListener('pointermove',e=>{if(e.pointerId!==joy.id)return;let dx=e.clientX-joy.ox,dy=e.clientY-joy.oy;const l=Math.hypot(dx,dy),m=60;if(l>m){dx*=m/l;dy*=m/l;}joy.x=dx/m;joy.y=dy/m;($('joy').firstElementChild as HTMLElement).style.transform=`translate(${dx}px,${dy}px)`;});
+  const end=(e:PointerEvent)=>{if(e.pointerId!==joy.id)return;joy.id=-1;joy.x=joy.y=0;joyShow(false);($('joy').firstElementChild as HTMLElement).style.transform='';};
+  addEventListener('pointerup',end);addEventListener('pointercancel',end);
+}
+// skill button: tap = cast at the nearest creature, drag = aim (direction, or spot for the astral field)
+const aimRing=new T.Mesh(new T.RingGeometry(.7,1,40).rotateX(-Math.PI/2),new T.MeshBasicMaterial({color:'#ffd27a',transparent:true,opacity:.7,blending:T.AdditiveBlending,depthWrite:false}));aimRing.visible=false;world.scene.add(aimRing);
+const qd={id:-1,sx:0,sy:0,moved:false};
+function qAim(dx:number,dy:number){
+  const l=Math.hypot(dx,dy);if(l<14){autoAim();qd.moved=false;}else{qd.moved=true;const dir=new T.Vector3(dx/l,0,dy/l),dist=cls()==='astral'?T.MathUtils.clamp(l/90*9,2,9):7;aimPoint.copy(pos).addScaledVector(dir,dist);}
+  aimRing.position.copy(aimPoint).setY(.06);aimRing.scale.setScalar(cls()==='astral'?2.7:.8);
+}
+{
+  const b=$('t-q');
+  b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();qd.id=e.pointerId;qd.sx=e.clientX;qd.sy=e.clientY;qAim(0,0);aimRing.visible=cls()!=='warrior';if(cls()==='warrior')skillDown();});
+  addEventListener('pointermove',e=>{if(e.pointerId!==qd.id)return;qAim(e.clientX-qd.sx,e.clientY-qd.sy);});
+  const up=(e:PointerEvent)=>{if(e.pointerId!==qd.id)return;qd.id=-1;aimRing.visible=false;if(cls()==='warrior')skillUp();else{if(!qd.moved)autoAim();faceTo(aimPoint);skillDown();}};
+  addEventListener('pointerup',up);addEventListener('pointercancel',up);
+}
+const tb=(id:string,down:()=>void)=>{const b=$(id);b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();autoAim();down();});};
+tb('t-atk',()=>tryAttack());tb('t-dash',()=>roll());tb('t-e',()=>{cycleElement();labelButtons();});
+// options & help: one closable panel; controls are explained there, shown once on the first run
+function openModal(kind:'options'|'help'){
+  const m=$('modal'),body=$('mbody');$('mtitle').textContent=kind==='help'?'Controles':'Opções';
+  const pc=`<h3>Computador</h3><ul><li><b>WASD</b> ou clique no chão: andar · <b>Shift</b>: correr</li><li><b>Clique no inimigo</b>, <b>J</b> ou botão direito: atacar</li><li><b>Q</b>: habilidade da classe (Guerreiro: segure e solte)</li><li><b>E</b>: trocar elemento (Astral)</li><li><b>Espaço</b>: esquiva · roda do mouse: zoom</li></ul>`;
+  const mob=`<h3>Celular</h3><ul><li>Toque e arraste no lado esquerdo da tela: <b>andar</b></li><li><b>Atacar</b>: mira sozinho no inimigo mais próximo</li><li>Botão da <b>habilidade</b>: toque para usar no mais próximo ou <b>arraste para mirar</b> e solte</li><li><b>Esquiva</b> e <b>elemento</b> (Astral) nos botões menores</li></ul>`;
+  const help=(touch?mob+pc:pc+mob)+`<p class="note">Portais de pedra levam às outras regiões: norte avança, sul volta.</p>`;
+  body.innerHTML=kind==='help'?help:`<div class="opts"><button id="o-help">Ver controles</button><button id="o-quality">${quality==='high'?'Qualidade: alta':'Qualidade: leve'}</button><button id="o-creator">Mudar personagem</button><p class="note" id="o-fps">${fpsShown?fpsShown+' quadros por segundo':''}</p></div>`;
+  m.classList.add('on');
+  if(kind==='options'){
+   $('o-help').onclick=()=>openModal('help');
+   $('o-quality').onclick=()=>{setQuality(quality==='high'?'low':'high');($('o-quality')).textContent=quality==='high'?'Qualidade: alta':'Qualidade: leve';};
+   $('o-creator').onclick=()=>{m.classList.remove('on');mode='creator';document.body.classList.remove('play','dead');document.body.classList.add('creator');for(const e of enemies)e.dispose();enemies.length=0;clearShots();if(pet){pet.remove();pet=null;}pos.set(0,0,0);refreshUi();};
+  }
+}
+$('optbtn').onclick=()=>openModal('options');
+$('mclose').onclick=()=>$('modal').classList.remove('on');
+$('modal').addEventListener('pointerdown',e=>{if(e.target===$('modal'))$('modal').classList.remove('on');});
+function firstHelp(){try{if(localStorage.getItem('dante3d.help'))return;localStorage.setItem('dante3d.help','1');}catch{/* ignore */}openModal('help');}
 $('respawn').onclick=()=>{document.body.classList.remove('dead');dead=false;hp=hpMax;mana=100;pos.set(0,0,0);hero.play('Idle_Loop',{fade:.2});if(pet)pet.g.position.set(1.2,0,1);for(const e of enemies)e.dispose();enemies.length=0;hud();};
 document.body.classList.add('creator');
 
@@ -405,6 +445,7 @@ cv.addEventListener('pointermove',e=>{
 cv.addEventListener('pointerdown',e=>{
   mouse.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);
   if(mode!=='play')return;
+  if(touch)return;
   if(e.button===2){updateAim();faceTo(aimPoint);tryAttack();return;}
   mouseDown=true;updateAim();
 });
@@ -418,7 +459,7 @@ addEventListener('resize',resize);resize();
 let last=performance.now()/1000,time=0,hudT=0,qaAim=false;
 // adaptive quality: drop resolution, then post-processing and shadows, when frames run long
 let quality:'high'|'low'=q.get('q')==='low'?'low':'high',slowT=0,fastT=0,fpsAcc=0,fpsN=0,fpsShown=0;
-function setQuality(qv:'high'|'low'){quality=qv;renderer.shadowMap.enabled=qv==='high';world.scene.traverse(o=>{const m=(o as T.Mesh).material as T.Material|undefined;if(m)m.needsUpdate=true;});$('qbtn').textContent=qv==='high'?'Qualidade: alta':'Qualidade: leve';}
+function setQuality(qv:'high'|'low'){quality=qv;renderer.shadowMap.enabled=qv==='high';world.scene.traverse(o=>{const m=(o as T.Mesh).material as T.Material|undefined;if(m)m.needsUpdate=true;});}
 function adapt(dt:number){
   fpsAcc+=dt;fpsN++;if(fpsAcc>.5){fpsShown=Math.round(fpsN/fpsAcc);fpsAcc=0;fpsN=0;$('fps').textContent=fpsShown+' fps';}
   if(dt>1/40){slowT+=dt;fastT=0;}else{fastT+=dt;slowT=Math.max(0,slowT-dt*.5);}
