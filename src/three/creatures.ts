@@ -205,23 +205,35 @@ function buildHound(root:T.Group,p:Pal):Look{
  body.add(cone(.05,.3,rock,[0,.7,-1.6],[-1.7,0,0]));
  return {chitin:ch,glow:gl,body,legs:addLegs(body,ch,[[.3,.62,.6,1.35,.55],[-.3,.62,.6,Math.PI-1.35,.55],[.28,.62,-.4,-1.45,.5],[-.28,.62,-.4,Math.PI+1.45,.5]],.16,.06,hn),mandibles:[jaw],height:1.1};
 }
+// Vigia das Margens: a broad, wet salamander of the river banks with a low crest and glowing spots
 function buildAmphibian(root:T.Group,p:Pal):Look{
- const ch=chitin(p),gl=glowMat(p.g,1.2),body=new T.Group();root.add(body);
- body.add(ball(.55,ch,[0,.55,0],[1.15,.55,1.35]));
- const head=ball(.38,ch,[0,.58,.75],[1.3,.6,.9]);body.add(head);
- for(const s of[-1,1]){body.add(ball(.1,ch,[s*.28,.82,.78]));body.add(ball(.06,gl,[s*.3,.86,.84]));}
- for(let i=0;i<4;i++){const pl=new T.Mesh(new T.SphereGeometry(.3,12,8,0,Math.PI*2,0,Math.PI/2),ch);pl.position.set(0,.8,.35-i*.3);pl.scale.set(1.2,.35,.8);pl.castShadow=true;body.add(pl);}
- for(let i=0;i<8;i++)body.add(ball(.04,gl,[Math.sin(i)*.45,.72,.4-i*.12]));
- const arm=cone(.07,.7,ch,[0,.5,1.05],[Math.PI/2.3,0,0]);body.add(arm);
- return {chitin:ch,glow:gl,body,legs:addLegs(body,ch,six(.5,.45,.45,.75),.08,.25),mandibles:[arm],height:1};
+ const ch=chitin(p),gl=glowMat(p.g,1.2),body=new T.Group();root.add(body);const belly=horn('#c8b890');
+ body.add(lump(.5,ch,[0,.45,0],[1.1,.5,1.6],.1,2.2,91));body.add(lump(.4,belly,[0,.32,.05],[1.05,.35,1.4],.08,2,92));
+ const head=lump(.36,ch,[0,.48,.82],[1.35,.55,1],.1,2.4,93);body.add(head);
+ for(const s of[-1,1]){body.add(lump(.1,ch,[s*.3,.66,.86],[1,1,1],.1,3,94+s));body.add(ball(.055,gl,[s*.31,.7,.92]));}
+ for(let i=0;i<7;i++)body.add(cone(.06,.2-Math.abs(i-3)*.02,ch,[0,.7-Math.abs(i-2)*.01,.5-i*.22],[-.3,0,0]));
+ for(let i=0;i<10;i++)body.add(ball(.035,gl,[Math.sin(i*2.3)*.38,.62,.45-i*.12]));
+ for(let i=0;i<6;i++){const k=i/5;body.add(lump(.22-k*.16,ch,[Math.sin(k*2)*.2,.38-k*.15,-.9-i*.32],[1,.7,1.3],.1,3,98+i));}
+ const arm=lump(.12,ch,[0,.36,1.12],[1.6,.4,.8],.1,3,105);body.add(arm);
+ return {chitin:ch,glow:gl,body,legs:addLegs(body,ch,four(.5,.42,.45,.62),.13,.18,belly),mandibles:[arm],height:1};
 }
+// Espinhante (2D: dante-thorn): an upright raptor of olive bark, beaked head, violet throat sac, orange-tipped quills, curled spiked tail
 function buildThorn(root:T.Group,p:Pal):Look{
- const ch=chitin(p),gl=glowMat(p.g,2),body=new T.Group();root.add(body);
- body.add(ball(.55,ch,[0,.9,0],[1,.9,1]));
- for(let i=0;i<26;i++){const a=i*2.4,y=Math.cos(i*.7)*.4;const d=new T.Vector3(Math.cos(a),y+.3,Math.sin(a)).normalize();
-  const c=cone(.05,.5,ch,[d.x*.5,.9+d.y*.5,d.z*.5],[0,0,0]);c.quaternion.setFromUnitVectors(UP,d);body.add(c);body.add(ball(.03,gl,[d.x*.78,.9+d.y*.78,d.z*.78]));}
- body.add(ball(.12,gl,[0,.95,.5]));
- return {chitin:ch,glow:gl,body,legs:addLegs(body,ch,four(.3,.6,.3,.7),.06,.3),height:1.6};
+ const ch=chitin(p),gl=glowMat(p.g,2),body=new T.Group();root.add(body);const hn=horn('#d8cfb0'),bark=skin(new T.MeshStandardMaterial({color:'#5a6236',roughness:.7}),p.g,.4,3.5);
+ const tip=new T.MeshStandardMaterial({color:'#e8902a',emissive:'#ff8a1a',emissiveIntensity:.6,roughness:.4});
+ body.add(lump(.34,bark,[0,1.25,-.05],[1,1.25,.9],.16,2.6,61));
+ body.add(lump(.28,bark,[0,.95,-.15],[1.05,.8,1],.16,2.6,62));
+ const sac=lump(.2,new T.MeshStandardMaterial({color:'#7a5ad8',emissive:'#8a5aff',emissiveIntensity:.5,roughness:.2,transparent:true,opacity:.9}),[0,1.45,.22],[1,1.2,.8],.1,3,63);body.add(sac);
+ body.add(lump(.2,hn,[0,1.78,.18],[.9,.85,1.3],.12,3,64));
+ body.add(cone(.08,.32,hn,[0,1.72,.45],[Math.PI/2+.5,0,0]));
+ for(const s of[-1,1])body.add(ball(.035,glowMat('#ffb030',2),[s*.1,1.82,.3]));
+ for(let i=0;i<7;i++){const a=(i-3)*.28,len=.7+Math.abs(Math.sin(i*1.7))*.3;const d=new T.Vector3(Math.sin(a)*.6,1,-.55).normalize();
+  const q=cone(.045,len,bark,[Math.sin(a)*.12+d.x*len*.5,1.5+d.y*len*.5,-.25+d.z*len*.5],[0,0,0]);q.quaternion.setFromUnitVectors(UP,d);body.add(q);
+  const t=cone(.05,.16,tip,[Math.sin(a)*.12+d.x*(len+.05),1.5+d.y*(len+.05),-.25+d.z*(len+.05)],[0,0,0]);t.quaternion.setFromUnitVectors(UP,d);body.add(t);}
+ for(let i=0;i<9;i++){const k=i/8,a=k*Math.PI*1.4;const x=0,y=.75-Math.sin(a)*.35+k*.25,z=-.4-Math.sin(a*.7)*.9-k*.2;body.add(lump(.13-k*.08,bark,[x,y,z],[1,1,1.2],.15,3,70+i));
+  if(i%2===0)body.add(cone(.03,.16,tip,[x,y+.12,z],[-.3,0,0]));}
+ const arms:T.Object3D[]=[];for(const s of[-1,1]){const a=new T.Group();a.position.set(s*.25,1.3,.12);body.add(a);a.add(lump(.07,bark,[0,-.15,.05],[1,2.2,1],.15,3,80+s));a.add(cone(.025,.12,hn,[0,-.34,.1],[Math.PI*.7,0,0]));arms.push(a);}
+ return {chitin:ch,glow:gl,body,legs:addLegs(body,bark,[[.16,.85,-.1,1.15,.5],[-.16,.85,-.1,Math.PI-1.15,.5]],.11,.12,hn),arms,height:2};
 }
 function buildGolem(root:T.Group,p:Pal):Look{
  const ch=skin(new T.MeshStandardMaterial({color:'#6e5040',roughness:.85,metalness:.05}),p.g,.45,1.6,{veins:p.g});ch.userData.chitin=true;
@@ -263,15 +275,21 @@ function buildWinged(root:T.Group,p:Pal):Look{
   wings.push(w);}
  return {chitin:dark,glow:gl,body,legs:addLegs(body,dark,four(.45,1.0,.75,1.05),.16,.28,hn),wings,height:2.8};
 }
+// O Soterrado (2D: soterrado-v1): a giant sand crab of overlapping golden scales, maroon flesh, dark scythe claws; it burrows
 function buildWorm(root:T.Group,p:Pal):Look{
  const ch=chitin(p),gl=glowMat(p.g,2),body=new T.Group();root.add(body);
- const segs:T.Mesh[]=[];
- for(let i=0;i<9;i++){const r=.75-i*.05;const s=ball(r,ch,[0,0,0],[1,1,.85]);body.add(s);segs.push(s);
-  for(let k=0;k<5;k++){const a=k/5*Math.PI*2;s.add(cone(.07,.3,ch,[Math.cos(a)*.95,Math.sin(a)*.95,0],[0,0,a-Math.PI/2]));}}
- const mouth=new T.Mesh(new T.TorusGeometry(.42,.12,8,16),ch);segs[0].add(mouth);mouth.position.z=.6;
- for(let k=0;k<6;k++){const a=k/6*Math.PI*2;segs[0].add(cone(.06,.45,gl,[Math.cos(a)*.35,Math.sin(a)*.35,.75],[Math.PI/2,0,0]));}
- segs[0].add(ball(.2,gl,[0,0,.5]));
- return {chitin:ch,glow:gl,body,legs:[],segs,height:3};
+ const pl=plates('#8a5a2a','#c8883a'),sand=skin(new T.MeshStandardMaterial({color:'#8a5e30',roughness:.55,metalness:.1}),'#ffcf7a',.35,3),flesh=skin(new T.MeshStandardMaterial({color:'#5a1e22',roughness:.5}),'#ff6a3a',.4,4),dark=horn('#2a1e1a');
+ body.add(lump(1.1,flesh,[0,1.05,0],[1.2,.6,1.3],.12,2,111));
+ shell(body,pl,1.25,[0,1.1,-.1],[1.25,.8,1.35],4,'#d89a48',.5);
+ for(let i=0;i<9;i++){const a=(i/9)*Math.PI*2;body.add(cone(.14,.7,dark,[Math.cos(a)*.9,2.0-Math.abs(Math.sin(a))*.15,Math.sin(a)*.8-.2],[-.6*Math.sin(a),0,.6*Math.cos(a)]));}
+ body.add(lump(.5,sand,[0,1.0,1.35],[1.4,.7,.9],.12,2.5,112));
+ for(const s of[-1,1])body.add(ball(.09,gl,[s*.3,1.18,1.75]));
+ for(let k=0;k<6;k++)body.add(cone(.05,.25,dark,[(k-2.5)*.12,.82,1.75],[Math.PI*.55,0,0]));
+ const arms:T.Object3D[]=[];
+ for(const s of[-1,1]){const a=new T.Group();a.position.set(s*1.3,1.0,1.1);body.add(a);
+  a.add(lump(.4,sand,[s*.1,0,.3],[1,.9,1.6],.15,2.5,115+s));
+  const c=new T.Mesh(clawGeo(),dark);c.scale.set(.42,.42,.7);c.position.set(s*.15,-.15,.85);a.add(c);arms.push(a);}
+ return {chitin:ch,glow:gl,body,legs:addLegs(body,sand,six(1.0,.95,.75,1.5),.2,.55,dark),arms,height:2.4};
 }
 // sculpted models (Blender, scripts/asset-tools/3d-new/make_*.py) preloaded by the game
 export const MODELS:Record<string,T.Object3D>={};
@@ -306,6 +324,40 @@ function buildWarden(root:T.Group,p:Pal):Look{
  for(let i=0;i<3;i++){const t=new T.Mesh(new T.TorusGeometry(1.1+i*.35,.04,8,48),gl);t.position.y=2.6;body.add(t);halo.push(t);}
  for(let i=0;i<8;i++){const sh=new T.Mesh(new T.OctahedronGeometry(.16,0),ch);const a=i/8*Math.PI*2;sh.position.set(Math.cos(a)*1.9,2.6,Math.sin(a)*1.9);body.add(sh);halo.push(sh);}
  return {chitin:ch,glow:gl,body,legs:[],arms,halo,height:4.6};
+}
+// merge the parts that never move on their own into one mesh per material (fewer draw calls per creature);
+// geometry is cached per species, materials stay per creature (hit flashes, burn tint)
+const bakeCache=new Map<string,T.BufferGeometry>();
+function bakeBody(kind:string,L:Look){
+ const keep=new Set<T.Object3D>([...(L.mandibles??[]),...(L.arms??[]),...(L.wings??[]),...(L.segs??[]),...(L.halo??[]),...(L.limbs??[])]);if(L.sac)keep.add(L.sac);
+ const body=L.body;body.updateMatrixWorld(true);const inv=body.matrixWorld.clone().invert();
+ const slots:T.Material[]=[],parts=new Map<T.Material,T.BufferGeometry[]>(),drop:T.Mesh[]=[];
+ for(const c of [...body.children]){if(keep.has(c))continue;
+  c.traverse(o=>{const m=o as T.Mesh;if(!m.isMesh||Array.isArray(m.material))return;const mat=m.material as T.MeshStandardMaterial;if(mat.transparent)return;
+   if(!parts.has(mat)){parts.set(mat,[]);slots.push(mat);}
+   const k=kind+':'+slots.indexOf(mat);if(!bakeCache.has(k)){let g=m.geometry.index?m.geometry.toNonIndexed():m.geometry.clone();
+    for(const a of Object.keys(g.attributes))if(a!=='position'&&a!=='normal'&&!(a==='color'&&mat.vertexColors))g.deleteAttribute(a);
+    if(mat.vertexColors&&!g.attributes.color){g=g.clone();g.setAttribute('color',new T.Float32BufferAttribute(new Float32Array(g.attributes.position.count*3).fill(1),3));}
+    g.applyMatrix4(new T.Matrix4().multiplyMatrices(inv,m.matrixWorld));parts.get(mat)!.push(g);}
+   drop.push(m);});}
+ for(const m of drop)m.removeFromParent();
+ slots.forEach((mat,i)=>{const k=kind+':'+i;let g=bakeCache.get(k);if(!g){const list=parts.get(mat)!;if(!list.length)return;g=mergeGeometries(list,false)!;bakeCache.set(k,g);}
+  const mesh=new T.Mesh(g,mat);mesh.castShadow=true;mesh.receiveShadow=true;body.add(mesh);});
+}
+// the Domador's Simbionte (2D: dante-symbiont): a mossy hound with leaf-plate ears and violet tufts; legs pivot at the hips
+export function petModel(){
+ const g=new T.Group(),moss=skin(new T.MeshStandardMaterial({color:'#5a6a3a',roughness:.75}),'#7dff9e',.4,4),hide=horn('#8a8270'),leaf=plates('#6a7a3c','#9ab060'),leafS=skin(new T.MeshStandardMaterial({color:'#6a7a3c',roughness:.6}),'#7dff9e',.3,4);
+ const tuft=new T.MeshStandardMaterial({color:'#9a7ad0',emissive:'#7a5ab0',emissiveIntensity:.25,roughness:.5,side:T.DoubleSide});
+ g.add(lump(.3,moss,[0,.62,0],[1,.9,1.5],.12,2.4,131));shell(g,leaf,.34,[0,.66,-.05],[1,.8,1.5],2,'#c8d890',.4);
+ g.add(lump(.22,moss,[0,.78,.5],[1,.95,1.1],.12,2.6,132));
+ for(const s of[-1,1]){const e=cone(.08,.42,leafS,[s*.14,1.02,.4],[-.5,0,s*.5]);e.scale.z=.35;g.add(e);g.add(ball(.03,glowMat('#ffd060',2),[s*.09,.82,.7]));}
+ for(let i=0;i<3;i++){const t=cone(.06,.32,tuft,[(i-1)*.05,.95,-.55],[-.9,0,(i-1)*.35]);t.scale.z=.3;g.add(t);}
+ const legs:T.Object3D[]=[];
+ for(const [x,z] of[[-.18,.32],[.18,.32],[-.18,-.32],[.18,-.32]]){const l=new T.Group();l.position.set(x,.58,z);
+  l.add(lump(.11,hide,[0,-.12,0],[1,1.6,1.1],.12,3,140+x*10+z));l.add(lump(.07,hide,[0,-.38,.03],[1,1.6,1],.12,3,150+x*10+z));
+  const paw=new T.Mesh(clawGeo(),hide);paw.scale.setScalar(.1);paw.position.set(0,-.56,.02);l.add(paw);g.add(l);legs.push(l);}
+ g.traverse(o=>{(o as T.Mesh).castShadow=true;});
+ return {g,legs};
 }
 const BUILD:Record<Body,(r:T.Group,p:Pal)=>Look>={warden:buildWarden,crawler:buildCrawler,skitter:buildSkitter,spitter:buildSpitter,carapace:buildCarapace,hound:buildHound,amphibian:buildAmphibian,thorn:buildThorn,golem:buildGolem,winged:buildWinged,worm:buildWorm};
 
@@ -346,6 +398,7 @@ export class Creature{
  constructor(public kind:SpeciesId,x:number,z:number,private scene:T.Scene){
   this.spec=SPECIES[kind] as Spec;this.hp=this.spec.hp;this.g.position.set(x,0,z);this.g.scale.setScalar(this.spec.scale);scene.add(this.g);
   const root=new T.Group();this.g.add(root);this.look=BUILD[this.spec.body](root,this.spec.pal);
+  if(!(this.spec.body==='warden'&&MODELS.warden))bakeBody(kind,this.look);
   if(this.spec.body==='worm')this.hidden=1;
  }
  get pos(){return this.g.position;}
@@ -472,7 +525,8 @@ export class Creature{
   if(L.wings){const f=Math.sin(this.t*(this.state==='act'?9:5));L.wings.forEach((w,i)=>w.rotation.z=(i?-1:1)*(f*.6+.1));}
   if(L.segs){const h=this.hidden;L.segs.forEach((sg,i)=>{const k=i/(L.segs!.length-1);sg.position.set(Math.sin(this.t*2+i*.7)*.25,(2.4-k*2.6)*(1-h)-h*2.5+ (dead?-1:0),-k*2.2+.6);});}
   if(L.arms&&this.state!=='wind'&&this.state!=='act'&&this.state!=='recover')L.arms.forEach((a,i)=>a.rotation.x=Math.sin(this.gait+i*Math.PI)*.35);
-  if(!L.legs.length)return;
+  if(this.spec.body==='worm'){const rt=L.body.parent!;rt.position.y=-3.4*this.hidden;rt.visible=this.hidden<.98;}
+  if(!L.legs.length||this.hidden>.05)return;
   L.body.updateMatrixWorld(true);
   for(const leg of L.legs){
    const hip=L.body.localToWorld(leg.hip.clone());

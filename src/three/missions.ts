@@ -57,9 +57,9 @@ const L=(o:Partial<Look>):Look=>({sex:'female',skin:2,hair:'long01',hairColor:0,
 const at=(k:'medic'|'smith'|'expedition',x:number,z:number):[number,number]=>{const p=shelterPoint(k,x,z);return[p.x,p.z];};
 const face=(k:'medic'|'smith'|'expedition',a:number)=>{const p=shelterPoint(k,0,0);return p.ry+a;};
 export const NPCS:NpcDef[]=[
- {id:'nara',npc:'nara',name:'Nara',role:'Expedições e cofre',look:L({skin:2,hair:'ponytail01',hairColor:0,tint:'#8f7c58'}),at:at('expedition',1.7,2.1),face:face('expedition',.2),anim:'Idle_Loop',hold:'tablet'},
- {id:'lia',npc:'lia',name:'Dra. Lia',role:'Enfermaria e suprimentos',look:L({skin:4,hair:'short03',hairColor:0,tint:'#d9d3c3'}),at:at('medic',1.5,2.1),face:face('medic',.1),anim:'Idle_Loop',hold:'tablet'},
- {id:'ivo',npc:'ivo',name:'Ivo',role:'Oficina e fabricação',look:L({sex:'male',skin:1,hair:'none',hairColor:4,brows:'eyebrow009',tint:'#5d6646'}),at:at('smith',2.3,2.2),face:face('smith',-.5),anim:'Idle_Loop',hold:'wrench'},
+ {id:'nara',npc:'nara',name:'Nara',role:'Expedições e cofre',look:L({skin:2,hair:'ponytail01',hairColor:0,tint:'#5a5a40',garb:'jacket'}),at:at('expedition',1.7,2.1),face:face('expedition',.2),anim:'Idle_Loop',hold:'tablet'},
+ {id:'lia',npc:'lia',name:'Dra. Lia',role:'Enfermaria e suprimentos',look:L({skin:4,hair:'short03',hairColor:0,tint:'#5a5a46',garb:'coat'}),at:at('medic',1.5,2.1),face:face('medic',.1),anim:'Idle_Loop',hold:'tablet'},
+ {id:'ivo',npc:'ivo',name:'Ivo',role:'Oficina e fabricação',look:L({sex:'male',skin:1,hair:'none',hairColor:4,brows:'eyebrow009',tint:'#56603e',garb:'apron'}),at:at('smith',2.3,2.2),face:face('smith',-.5),anim:'Idle_Loop',hold:'wrench'},
  {id:'elisa',name:'Elisa',role:'Mudas da nave',look:L({skin:1,hair:'braid01',hairColor:2,tint:'#6f7a5a'}),at:[-9,-4],face:0,anim:'Idle_Loop',route:[[-9,-4],[-12.2,-4.5],[-11,-1.5]],
   lines:['As mudas vieram da nave. Estou separando o que podemos levar para o canteiro sem misturar com as plantas de Dante.']},
  {id:'gui',name:'Tio Gui',role:'Infraestrutura',look:L({sex:'male',skin:3,hair:'short04',hairColor:4,tint:'#4f5560'}),at:(()=>{const p=shuttlePoint(3.6,2.6);return[p.x,p.z] as [number,number];})(),face:Math.PI*.85,anim:'Interact',

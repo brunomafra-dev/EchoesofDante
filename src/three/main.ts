@@ -6,7 +6,7 @@ import {World,ARENA} from './world';
 import {Sound,type Sfx} from './audio';
 import {VFX,type Kind} from './vfx';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {Creature,MODELS,SPECIES,updateSpits,clearShots,tickTele,teleWarm,type Ctx,type SpeciesId} from './creatures';
+import {Creature,MODELS,SPECIES,updateSpits,clearShots,tickTele,teleWarm,petModel,type Ctx,type SpeciesId} from './creatures';
 import {BIOMES,BIOME_ORDER,type BiomeId} from './biomes';
 import {Npc} from './camp';
 import {Journal,MISSIONS,NPCS,NPC_INFO,type Goal,type NpcId} from './missions';
@@ -15,16 +15,15 @@ import {Journal,MISSIONS,NPCS,NPC_INFO,type Goal,type NpcId} from './missions';
 const q=new URLSearchParams(location.search);
 const app=document.getElementById('app')!;
 const renderer=new T.WebGLRenderer({antialias:true,powerPreference:'high-performance'});
-const MAX_PR=Math.min(devicePixelRatio,1.25);let pr=MAX_PR;renderer.setPixelRatio(pr);renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.PCFShadowMap;
-renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1.45;
+const isTouch=matchMedia('(pointer:coarse)').matches||'ontouchstart' in window;
+const MAX_PR=Math.min(devicePixelRatio,1.25);let pr=isTouch?1:MAX_PR;renderer.setPixelRatio(pr);renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.PCFShadowMap;
+renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
 app.appendChild(renderer.domElement);
 const camera=new T.PerspectiveCamera(40,1,.1,200);
 const world=new World(renderer,camera);
 const hero=new Character();world.scene.add(hero.root);
 const sound=new Sound();
 const sfx=(n:Sfx,at?:T.Vector3)=>sound.play(n,at?Math.hypot(at.x-hero.root.position.x,at.z-hero.root.position.z):0);
-const torch=new T.PointLight('#ffb070',16,10,1.7);world.scene.add(torch);
-const rim=new T.DirectionalLight('#6f8fd8',.8);world.scene.add(rim,rim.target);
 const key=new T.DirectionalLight('#ffd9b0',2.4);world.scene.add(key,key.target);   // soft portrait key that follows the hero
 
 // ---------- state ----------
@@ -208,15 +207,9 @@ function inputDir(){
 // ---------- companion (Domador) ----------
 class Pet{
  g=new T.Group();legs:T.Mesh[]=[];t=0;cd=0;target:Enemy|null=null;dash:{to:T.Vector3;t:number;hit:Set<Enemy>}|null=null;
+ legs2:T.Object3D[]=[];
  constructor(){
-  const hide=new T.MeshStandardMaterial({color:'#3d4a36',roughness:.8}),glow=new T.MeshBasicMaterial({color:'#7dff9e'});
-  const body=new T.Mesh(new T.CapsuleGeometry(.26,.7,4,10).rotateX(Math.PI/2),hide);body.position.y=.62;body.castShadow=true;this.g.add(body);
-  const head=new T.Mesh(new T.SphereGeometry(.22,12,10),hide);head.scale.set(1,.85,1.25);head.position.set(0,.78,.55);head.castShadow=true;this.g.add(head);
-  for(const s of[-1,1]){const e=new T.Mesh(new T.SphereGeometry(.035,6,5),glow);e.position.set(s*.1,.84,.78);this.g.add(e);
-   const horn=new T.Mesh(new T.ConeGeometry(.04,.22,6),hide);horn.position.set(s*.12,.98,.45);horn.rotation.x=-.6;this.g.add(horn);}
-  for(let i=0;i<3;i++){const sp=new T.Mesh(new T.SphereGeometry(.04,6,5),glow);sp.position.set(0,.9-i*.02,.15-i*.25);this.g.add(sp);}
-  for(const [x,z] of [[-.17,.32],[.17,.32],[-.17,-.3],[.17,-.3]]){const l=new T.Mesh(new T.CylinderGeometry(.06,.045,.5,6),hide);l.geometry.translate(0,-.25,0);l.position.set(x,.5,z);l.castShadow=true;this.g.add(l);this.legs.push(l);}
-  const tail=new T.Mesh(new T.ConeGeometry(.07,.6,6),hide);tail.rotation.x=-2;tail.position.set(0,.68,-.62);this.g.add(tail);
+  const m=petModel();this.g.add(m.g);this.legs2=m.legs;
   world.scene.add(this.g);
  }
  charge(to:T.Vector3){this.dash={to:to.clone(),t:0,hit:new Set()};}
@@ -238,7 +231,7 @@ class Pet{
   }
   p.addScaledVector(v,dt);world.collide(p,.35);
   if(moving)this.g.rotation.y=Math.atan2(v.x,v.z);
-  const sw=moving?Math.sin(this.t*14)*.6:0;this.legs.forEach((l,i)=>l.rotation.x=(i%2?1:-1)*(i<2?1:-1)*sw);
+  const sw=moving?Math.sin(this.t*14)*.6:0;this.legs2.forEach((l,i)=>l.rotation.x=(i%2?1:-1)*(i<2?1:-1)*sw);
   this.g.position.y=moving?Math.abs(Math.sin(this.t*14))*.04:0;
  }
  remove(){world.scene.remove(this.g);}
@@ -446,7 +439,7 @@ document.body.classList.add('creator');
 // ---------- people of the base, missions and guidance ----------
 const journal=new Journal();
 const npcs=NPCS.map(d=>new Npc(d,world.scene));
-let talking:Npc|null=null,scan:{g:Goal;t:number}|null=null;const SCAN_TIME=1.6;
+let npcHidden=false;let talking:Npc|null=null,scan:{g:Goal;t:number}|null=null;const SCAN_TIME=1.6;
 const IDLE:Record<NpcId,string>={nara:'Os civis ficam junto da nave enquanto a equipe explora. Quando houver uma nova rota, eu aviso.',lia:'A enfermaria está aberta. Volte inteira; ainda temos muito a aprender sobre Dante.',ivo:'A oficina fica aqui. Cuidado com os cabos: água e energia continuam em circuitos separados.'};
 function interactable():{kind:'npc';n:Npc}|{kind:'scan';g:Goal}|null{
   if(mode!=='play'||dead)return null;
@@ -570,7 +563,7 @@ function updatePrompt(){
 let trackT=0;
 function updateMissions(dt:number){
   const inCamp=world.biome==='camp';
-  for(const n of npcs){n.char.root.visible=inCamp;if(inCamp){n.setMarker(n.def.npc?journal.marker(n.def.npc):'');n.update(dt,pos,talking===n);}}
+  for(const n of npcs){const near=Math.hypot(n.pos.x-pos.x,n.pos.z-pos.z)<26;n.char.root.visible=inCamp&&!npcHidden&&near;if(inCamp&&near){n.setMarker(n.def.npc?journal.marker(n.def.npc):'');n.update(dt,pos,talking===n);}}
   if(mode!=='play'||dead){scan=null;$('guide').classList.remove('on');return;}
   for(const g of journal.open())if(g.kind==='visit'&&g.biome===world.biome&&Math.hypot(g.x-pos.x,g.z-pos.z)<3.2)goalDone(g);
   if(scan){
@@ -629,8 +622,7 @@ function tick(dt:number){
   else updatePlayer(dt);
   if(mode==='play'&&!mouseDown&&!qaAim&&!('ontouchstart' in window))updateAim();
   hero.update(dt);updateEnemies(dt,time);updateMissions(dt);updateFx(dt);updateTexts(dt);
-  torch.position.set(pos.x,pos.y+3,pos.z+.8);torch.intensity=15+Math.sin(time*9)*1.6+Math.sin(time*23)*.9;
-  rim.position.set(pos.x+4,5,pos.z-5);rim.target.position.copy(pos);key.position.set(pos.x+3,4.5,pos.z+5);key.target.position.set(pos.x,pos.y+1,pos.z);key.intensity=mode==='creator'?2.6:1.1;
+  key.position.set(pos.x+3,4.5,pos.z+5);key.target.position.set(pos.x,pos.y+1,pos.z);key.intensity=mode==='creator'?2.4:.35;
   world.update(time,dt,pos);updateCamera(dt);
 }
 function frame(){
@@ -667,7 +659,7 @@ function frame(){
   requestAnimationFrame(frame);
 })();
 // QA hooks
-(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look};},cam:(px:number,py:number,pz:number,tx:number,ty:number,tz:number)=>{fixedCam=px===undefined?null:[new T.Vector3(px,py,pz),new T.Vector3(tx,ty,tz)];},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,goBiome,bossNow:()=>{biomeKills=99;},journal:()=>journal,tp:(x:number,z:number)=>{pos.set(x,0,z);},interact,talkTo:(id:string)=>{const n=npcs.find(x=>x.def.id===id);if(n){pos.set(n.pos.x,0,n.pos.z+1.6);openTalk(n);}},goal:(id:string)=>{const g=journal.open().find(x=>x.id===id);if(g)goalDone(g);},enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{qaAim=true;aimPoint.set(x,0,z);},spawn:(x:number,z:number,k:SpeciesId='crawler')=>{const e=new Creature(k,x,z,world.scene);enemies.push(e);return e.kind;},mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
+(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look};},cam:(px:number,py:number,pz:number,tx:number,ty:number,tz:number)=>{fixedCam=px===undefined?null:[new T.Vector3(px,py,pz),new T.Vector3(tx,ty,tz)];},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,goBiome,bossNow:()=>{biomeKills=99;},scene:world.scene,hero,renderer,npcs:(v:boolean)=>{for(const n of npcs)n.char.root.visible=v;npcHidden=!v;},shadows:(v:boolean)=>{renderer.shadowMap.enabled=v;world.scene.traverse(o=>{const m=(o as T.Mesh).material as T.Material|undefined;if(m)m.needsUpdate=true;});},perf:(n=10)=>{const t0=performance.now();for(let i=0;i<n;i++)tick(1/30);const t1=performance.now();renderer.info.autoReset=false;renderer.info.reset();world.render(camera,time);const calls=renderer.info.render.calls,tris=renderer.info.render.triangles;renderer.info.autoReset=true;const t2=performance.now();for(let i=0;i<n;i++){if(quality==='high')world.render(camera,time);else renderer.render(world.scene,camera);}const t3=performance.now();let lights=0,meshes=0,skinned=0;world.scene.traverseVisible(o=>{if((o as T.Light).isLight)lights++;if((o as T.Mesh).isMesh)meshes++;if((o as T.SkinnedMesh).isSkinnedMesh)skinned++;});return{tick:+((t1-t0)/n).toFixed(2),render:+((t3-t2)/n).toFixed(1),calls,tris,programs:renderer.info.programs?.length,lights,meshes,skinned,pr:renderer.getPixelRatio()};},journal:()=>journal,tp:(x:number,z:number)=>{pos.set(x,0,z);},interact,talkTo:(id:string)=>{const n=npcs.find(x=>x.def.id===id);if(n){pos.set(n.pos.x,0,n.pos.z+1.6);openTalk(n);}},goal:(id:string)=>{const g=journal.open().find(x=>x.id===id);if(g)goalDone(g);},enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{qaAim=true;aimPoint.set(x,0,z);},spawn:(x:number,z:number,k:SpeciesId='crawler')=>{const e=new Creature(k,x,z,world.scene);enemies.push(e);return e;},mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
  const w=hero.weapon,h=hero.hand;if(!w||!h)return null;hero.model.updateMatrixWorld(true);
  const mq=hero.model.getWorldQuaternion(new T.Quaternion()),hq=h.getWorldQuaternion(new T.Quaternion());
  const hm=mq.clone().invert().multiply(hq);const wq=hm.clone().multiply(w.quaternion);

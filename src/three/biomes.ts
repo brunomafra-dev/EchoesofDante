@@ -1,6 +1,7 @@
 import type {SpeciesId} from './creatures';
 
 // Regions of Dante for the new 3D, following the 2D maps and their bestiary.
+// Dante was chosen because it resembles Earth: natural daylight, forests, meadows, snow, volcanic and desert ground.
 export type BiomeId='camp'|'springs'|'valley'|'caldera'|'frost'|'dunes'|'domain';
 export interface Biome{
  name:string;sub:string;ground:string;groundTint:string;bg:string;fog:number;
@@ -8,19 +9,20 @@ export interface Biome{
  rockTint:string;treeTint:string;creatures:[SpeciesId,number][];boss?:SpeciesId;bossAfter?:number;
 }
 export const BIOME_ORDER:BiomeId[]=['camp','springs','valley','caldera','frost','dunes','domain'];
+// hemi = sky colour, ground colour, intensity; moon = the sun (colour, intensity)
 export const BIOMES:Record<BiomeId,Biome>={
- camp:{name:'Acampamento da Chegada',sub:'Floresta e profundezas',ground:'burned_ground_01',groundTint:'#8a8378',bg:'#10151d',fog:.03,hemi:['#7f93bd','#2a2a22',1.25],moon:['#9bb2e6',2.3],ambient:'none',
-  rockTint:'#ffffff',treeTint:'#ffffff',creatures:[['crawler',.4],['skitter',.25],['spitter',.2],['carapace',.15]]},
- springs:{name:'Bacia das Nascentes',sub:'Nascentes e Terraços do Amanhecer',ground:'forest_ground_04',groundTint:'#b4c0aa',bg:'#12201f',fog:.028,hemi:['#9fd2d8','#2a3a2e',1.9],moon:['#b8e8f0',2.8],ambient:'spores',
-  rockTint:'#a8c8a0',treeTint:'#d8ffd0',creatures:[['bankGrazer',.45],['reedSpitter',.35],['crawler',.2]]},
- valley:{name:'Vale da Ressonância',sub:'Desvios do Vale',ground:'rocky_terrain_02',groundTint:'#b0a8bc',bg:'#161226',fog:.026,hemi:['#b0a0e8','#2e2638',1.8],moon:['#c8b8ff',2.8],ambient:'motes',
-  rockTint:'#b0a8c0',treeTint:'#e0d0ff',creatures:[['thorn',.4],['carapace',.3],['skitter',.3]]},
- caldera:{name:'Caldeira de Dante',sub:'Costa das Cinzas e Garganta de Obsidiana',ground:'aerial_rocks_02',groundTint:'#7a6a62',bg:'#200e08',fog:.028,hemi:['#d88a68','#3a1a10',1.6],moon:['#ffae80',2.2],ambient:'ash',
-  rockTint:'#4a4040',treeTint:'#2a2220',creatures:[['emberHound',.4],['fumarole',.3],['slagback',.3]],boss:'titan',bossAfter:10},
- frost:{name:'Fratura Boreal',sub:'Galerias do Degelo e Ninho da Geada',ground:'snow_02',groundTint:'#c8d4e0',bg:'#141c26',fog:.035,hemi:['#b8d8ff','#506070',1.3],moon:['#cfe6ff',2.4],ambient:'snow',
-  rockTint:'#c8d8e8',treeTint:'#b8c8d8',creatures:[['frostPouncer',.4],['frostSpitter',.3],['iceCarapace',.3]],boss:'vesper',bossAfter:10},
- dunes:{name:'Bacia do Siroco',sub:'Depressão do Siroco',ground:'coast_sand_01',groundTint:'#b89a78',bg:'#2a1a12',fog:.028,hemi:['#ffc890','#3a2414',1.25],moon:['#ffb070',2.2],ambient:'sand',
-  rockTint:'#d8a070',treeTint:'#a07a50',creatures:[['dunePouncer',.45],['glassSpitter',.35],['skitter',.2]],boss:'soterrado',bossAfter:10},
- domain:{name:'Domínio do Guardião',sub:'Arena do Warden',ground:'rocky_terrain_02',groundTint:'#6a7a84',bg:'#081218',fog:.03,hemi:['#7fd8ff','#14202a',1.6],moon:['#9fe8ff',2.4],ambient:'motes',
-  rockTint:'#5a6a74',treeTint:'#3a4a54',creatures:[],boss:'warden',bossAfter:0},
+ camp:{name:'Acampamento da Chegada',sub:'Floresta e profundezas',ground:'sparse_grass',groundTint:'#d6d4c4',bg:'#9db0c0',fog:.011,hemi:['#d6e4f4','#5a5440',1.35],moon:['#fff0d6',3.1],ambient:'spores',
+  rockTint:'#d8d8d0',treeTint:'#ffffff',creatures:[['crawler',.4],['skitter',.25],['spitter',.2],['carapace',.15]]},
+ springs:{name:'Bacia das Nascentes',sub:'Nascentes e Terraços do Amanhecer',ground:'leafy_grass',groundTint:'#d8dcc8',bg:'#a6c2c6',fog:.011,hemi:['#d8ecf4','#4a5a3a',1.4],moon:['#fff4e0',3.2],ambient:'spores',
+  rockTint:'#c8d0c0',treeTint:'#f4ffe8',creatures:[['bankGrazer',.45],['reedSpitter',.35],['crawler',.2]]},
+ valley:{name:'Vale da Ressonância',sub:'Desvios do Vale',ground:'aerial_grass_rock',groundTint:'#d0ccc4',bg:'#a4aabb',fog:.013,hemi:['#d4dcf0','#4e4a46',1.35],moon:['#ffeed8',3],ambient:'motes',
+  rockTint:'#c4c0c4',treeTint:'#eef4ea',creatures:[['thorn',.4],['carapace',.3],['skitter',.3]]},
+ caldera:{name:'Caldeira de Dante',sub:'Costa das Cinzas e Garganta de Obsidiana',ground:'aerial_rocks_02',groundTint:'#9a8478',bg:'#6a4a3c',fog:.017,hemi:['#f0c0a0','#3a2018',1.3],moon:['#ffc8a0',2.7],ambient:'ash',
+  rockTint:'#6a5a56',treeTint:'#4a3a34',creatures:[['emberHound',.4],['fumarole',.3],['slagback',.3]],boss:'titan',bossAfter:10},
+ frost:{name:'Fratura Boreal',sub:'Galerias do Degelo e Ninho da Geada',ground:'snow_02',groundTint:'#e4ecf4',bg:'#c4d2de',fog:.015,hemi:['#e4f0ff','#8a96a4',1.3],moon:['#fff6ee',2.8],ambient:'snow',
+  rockTint:'#d8e0ea',treeTint:'#dfe8ee',creatures:[['frostPouncer',.4],['frostSpitter',.3],['iceCarapace',.3]],boss:'vesper',bossAfter:10},
+ dunes:{name:'Bacia do Siroco',sub:'Depressão do Siroco',ground:'coast_sand_01',groundTint:'#e0c8a4',bg:'#e2cca6',fog:.011,hemi:['#fff0d4','#8a6a44',1.3],moon:['#fff2d4',2.7],ambient:'sand',
+  rockTint:'#e4b88a',treeTint:'#d8c8a0',creatures:[['dunePouncer',.45],['glassSpitter',.35],['skitter',.2]],boss:'soterrado',bossAfter:10},
+ domain:{name:'Domínio do Guardião',sub:'Arena do Warden',ground:'rocky_terrain_02',groundTint:'#a4acb2',bg:'#8a98a6',fog:.015,hemi:['#cfe0f0','#3a4048',1.3],moon:['#eef4ff',2.7],ambient:'motes',
+  rockTint:'#8a949c',treeTint:'#c8d4cc',creatures:[],boss:'warden',bossAfter:0},
 };

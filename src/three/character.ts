@@ -2,12 +2,13 @@ import * as T from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {Grip,MUZZLE} from './grip';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
+import {dress,classKit,garbKit} from './outfit';
 
 // Character of the new 3D track: one rigged human per sex, every customisable part is a
 // separate skinned mesh sharing the same skeleton (built by scripts/asset-tools/3d-new/build_character.py).
 export type Sex='male'|'female';
 export type WeaponId='saber'|'carbine'|'gauntlet'|'conductor';
-export interface Look{sex:Sex;skin:number;hair:string;hairColor:number;brows:string;outfit:string;cloth:number;weapon:WeaponId;helmet?:boolean;tint?:string}
+export interface Look{sex:Sex;skin:number;hair:string;hairColor:number;brows:string;outfit:string;cloth:number;weapon:WeaponId;helmet?:boolean;tint?:string;garb?:string}
 
 export const SKINS=['#ffffff','#f1d2bd','#d8a98a','#b47d58','#8a5a3b','#5a3a28'];
 export const HAIR_COLORS:[string,[number,number,number]][]=[
@@ -24,9 +25,9 @@ export const OUTFITS:[string,string][]=[['work','Sem proteção'],['basic','Bás
 // 2D class palettes: suit underlayer, armour plates, work clothes, visor/accent
 const PALETTE:Record<WeaponId,{suit:string;plate:string;work:string;accent:string}>={
  saber:{suit:'#3a3a42',plate:'#ece4d4',work:'#6e6c4a',accent:'#e07a2a'},
- carbine:{suit:'#1a1a1e',plate:'#d8ccb0',work:'#6a6848',accent:'#e0782a'},
- gauntlet:{suit:'#3b4e70',plate:'#eef2f6',work:'#3c4c6c',accent:'#4fe6ff'},
- conductor:{suit:'#353a2c',plate:'#9a9a78',work:'#5a5a40',accent:'#7dff9e'},
+ carbine:{suit:'#2c3a5c',plate:'#d8ccb0',work:'#6a6848',accent:'#e0782a'},
+ gauntlet:{suit:'#33436c',plate:'#eef2f6',work:'#3c4c6c',accent:'#4fe6ff'},
+ conductor:{suit:'#3a3f2c',plate:'#9a9a78',work:'#5a5a40',accent:'#7dff9e'},
 };
 export const WEAPONS:[WeaponId,string,string][]=[
  ['saber','Sabre de plasma','Corpo a corpo, golpes amplos'],['carbine','Carabina','Tiro à distância'],
@@ -71,7 +72,7 @@ export class Character{
    }
   });
   this.hand=model.getObjectByName('hand_r')??null;this.weaponId=null;this.weapon=null;this.grip=new Grip(model);
-  model.updateMatrixWorld(true);this.restHead.copy(model.getObjectByName('head')!.matrixWorld);this.restChest.copy(model.getObjectByName('spine_03')!.matrixWorld);this.gearKey='';
+  model.updateMatrixWorld(true);this.restHead.copy(model.getObjectByName('head')!.matrixWorld);this.restChest.copy(model.getObjectByName('spine_03')!.matrixWorld);this.gearKey='';this.fitKey='';this.fitted=[];
   this.look={...this.look,sex};
  }
  apply(look:Look){
@@ -88,8 +89,10 @@ export class Character{
   // "Da classe" paints suit, plates and work clothes with the 2D class palette; other swatches tint the fabric
   const P=PALETTE[look.weapon],own=look.cloth===0&&!look.tint,cl=new T.Color(look.tint??(own?P.suit:CLOTH[look.cloth]?.[1]??'#fff'));
   this.outfitMats.forEach(m=>{const n=m.name.toLowerCase();if(/boots/.test(n))return;
-   if(/armor/.test(n))m.color.set(own?P.plate:'#ffffff');else if(/worksuit/.test(n))m.color.copy(own?new T.Color(P.work):cl);else m.color.copy(cl);});
-  this.equip(look);
+   // the bodysuits are dark textures: the class colour has to be pushed above 1 to read as the 2D navy/olive
+   if(/bodysuit|skinsuit/.test(n)){if(m.userData.map0===undefined)m.userData.map0=m.map;const flat=own&&look.weapon!=='saber';const want=flat?null:m.userData.map0;if(m.map!==want){m.map=want;m.needsUpdate=true;}if(flat){m.color.set(P.suit);return;}}
+   if(/armor/.test(n))m.color.set(own?P.plate:'#ffffff');else if(/worksuit/.test(n)){if(m.userData.map0===undefined)m.userData.map0=m.map;const want=look.tint?null:m.userData.map0;if(m.map!==want){m.map=want;m.needsUpdate=true;}m.color.copy(own?new T.Color(P.work):cl);}else m.color.copy(cl);});
+  this.equip(look);this.fit(look);
   const hc=HAIR_COLORS[look.hairColor]??HAIR_COLORS[1];
   this.hairMats.forEach(m=>m.color.setRGB(hc[1][0],hc[1][1],hc[1][2]));
   this.browMats.forEach(m=>m.color.setRGB(hc[1][0]*.8,hc[1][1]*.8,hc[1][2]*.8));
@@ -136,6 +139,15 @@ export class Character{
   hideHair();
  }
  private gearParts:T.Object3D[]=[];
+ // armour and garments of the 2D wardrobe, fitted to this body (outfit.ts); the generic MPFB armour meshes are hidden
+ private fitted:T.Object3D[]=[];private fitKey='';
+ private fit(look:Look){
+  const kit=look.garb?garbKit(look.garb):classKit(look.weapon,look.outfit),key=look.sex+'|'+look.weapon+'|'+look.outfit+'|'+(look.garb??'');
+  this.model.traverse(o=>{const m=o as T.Mesh;if(m.isMesh&&/scifi-armor/i.test(((m.material as T.Material).name||'')))m.visible=m.visible&&!kit.length;});
+  if(key===this.fitKey)return;this.fitKey=key;
+  for(const f of this.fitted)f.removeFromParent();
+  const set=new URLSearchParams(location.search).get('set')??'';this.fitted=dress(this.model,set+look.sex+'|'+look.outfit,kit);
+ }
  async setWeapon(id:WeaponId){
   if(this.weaponId===id||!this.hand)return;
   const g=await load(`${base}assets/3d-new/weapons/${id}.glb`);

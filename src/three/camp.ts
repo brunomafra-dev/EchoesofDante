@@ -257,6 +257,8 @@ export class Npc{
  }
  async load(){
   await this.char.setSex(this.def.look.sex);this.char.apply(this.def.look);this.char.model.rotation.y=this.def.face;
+  // people of the base don't cast shadows: skinned shadow passes were a large part of the camp's cost
+  this.char.model.traverse(o=>{o.castShadow=false;});
   if(this.def.hold){const hand=this.char.model.getObjectByName(this.def.hold==='tablet'?'hand_l':'hand_r');if(hand){const t=this.def.hold==='tablet'?new T.Mesh(box(.2,.012,.14,.006),M.dark()):new T.Mesh(box(.04,.28,.04,.01),M.dark());const sc=1/(hand.getWorldScale(new T.Vector3()).x||1);t.scale.setScalar(sc);t.position.set(0,.09*sc,.03*sc);hand.add(t);
    if(this.def.hold==='tablet'){const s=new T.Mesh(new T.PlaneGeometry(.17,.11),M.cyan());s.rotation.x=-Math.PI/2;s.position.y=.007;t.add(s);}}}
   this.char.play(this.def.anim,{fade:0});const a=this.char.current;if(a)a.time=Math.random()*a.getClip().duration;

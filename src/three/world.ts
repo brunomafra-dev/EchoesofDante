@@ -25,10 +25,10 @@ const GRADE={
  float hash(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}
  void main(){
   vec4 c=texture2D(tDiffuse,vUv);float l=dot(c.rgb,vec3(.2126,.7152,.0722));
-  vec3 g=mix(vec3(l),c.rgb,.78);
-  g=mix(g*vec3(.86,.96,1.1),g*vec3(1.14,1.0,.84),smoothstep(.05,.5,l));
-  g=pow(max(g,0.),vec3(1.1))*1.14;
-  vec2 d=vUv-.5;float v=smoothstep(.95,.3,length(d*vec2(1.,.9)));g*=mix(.55,1.,v);g=g*.97+.012;
+  vec3 g=mix(vec3(l),c.rgb,.95);
+  g=mix(g*vec3(.94,.98,1.04),g*vec3(1.05,1.0,.95),smoothstep(.05,.5,l));
+  g=pow(max(g,0.),vec3(1.04))*1.04;
+  vec2 d=vUv-.5;float v=smoothstep(.95,.3,length(d*vec2(1.,.9)));g*=mix(.72,1.,v);g=g*.97+.012;
   g+=(hash(vUv*vec2(1920.,1080.)+time)-.5)*.02;
   gl_FragColor=vec4(max(g,0.),c.a);}`,
 };
@@ -57,6 +57,13 @@ const SRC:Record<string,{file:string;size:number;by:'h'|'w';sink?:number}>={
  branches:{file:'dry_branches_medium_01',size:1.6,by:'w'},branch:{file:'dead_quiver_branch_01',size:1.4,by:'w'},
  rock_a:{file:'rock_07',size:1,by:'w',sink:.15},rock_b:{file:'rock_09',size:1,by:'w',sink:.15},rock_c:{file:'stone_01',size:.9,by:'w',sink:.1},rock_d:{file:'namaqualand_boulder_04',size:1.2,by:'w',sink:.2},
  set_1:{file:'rock_moss_set_01',size:1,by:'w',sink:.15},set_2:{file:'rock_moss_set_02',size:1,by:'w',sink:.15},boulder:{file:'namaqualand_boulder_04',size:1,by:'w',sink:.25},
+ // Earth-like Dante (Poly Haven, CC0): broadleaf and conifer trees, shrubs, ferns, ground plants, cliffs
+ oak:{file:'island_tree_02',size:8.5,by:'h'},bush_tree:{file:'searsia_lucida',size:4.6,by:'h'},fir:{file:'fir_sapling',size:5.2,by:'h'},pine:{file:'pine_sapling_small',size:4.4,by:'h'},
+ succulent_tree:{file:'othonna_cerarioides',size:2.6,by:'h'},shrub_a:{file:'shrub_02',size:1.4,by:'w'},shrub_b:{file:'shrub_03',size:1.3,by:'w'},shrub_c:{file:'shrub_04',size:1.6,by:'w'},
+ fern:{file:'fern_02',size:1.2,by:'w'},weed:{file:'weed_plant_02',size:.9,by:'w'},nettle:{file:'nettle_plant',size:.9,by:'w'},dandelion:{file:'dandelion_01',size:.45,by:'w'},
+ grass_clump:{file:'grass_medium_02',size:.9,by:'w'},rooibos:{file:'wild_rooibos_bush',size:1.3,by:'w'},succulent:{file:'cheiridopsis_succulent',size:.6,by:'w'},roots:{file:'root_cluster_01',size:2.2,by:'w',sink:.1},
+ cliff:{file:'mountainside',size:18,by:'w',sink:.05},cliff_b:{file:'namaqualand_cliff_01',size:12,by:'w',sink:.05},rock_face:{file:'rock_face_01',size:5,by:'w',sink:.1},rock_face_b:{file:'rock_face_02',size:5,by:'w',sink:.1},
+ big_boulder:{file:'namaqualand_boulder_02',size:2.4,by:'w',sink:.2},
 };
 const ROCKS=['rock_a','rock_b','rock_c','rock_d','set_1','set_2'];
 
@@ -65,7 +72,7 @@ export class World{
  biome:BiomeId='camp';portals:{pos:T.Vector3;to:BiomeId;dir:1|-1}[]=[];private portalMats:T.ShaderMaterial[]=[];flameSpots:{p:T.Vector3;s:number}[]=[];readonly fire=new T.Vector3(CAMP.fire.x,0,CAMP.fire.z);
  composer!:EffectComposer;private bloom!:UnrealBloomPass;private grade!:ShaderPass;private rp!:RenderPass;
  private group=new T.Group();private gmat:T.MeshStandardMaterial;private texCache=new Map<string,T.Texture>();private token=0;
- private fireLight:T.PointLight|null=null;private torches:T.PointLight[]=[];private surfaces:T.ShaderMaterial[]=[];
+ private glows:{m:T.Mesh;base:number;flick:number}[]=[];private surfaces:T.ShaderMaterial[]=[];
  private air:T.Points|null=null;private airV:Float32Array|null=null;private airKind='none';
  private pmrem:T.PMREMGenerator;private envRT:T.WebGLRenderTarget|null=null;
  private loader=new GLTFLoader();private glbCache=new Map<string,Promise<T.Group>>();
@@ -94,15 +101,19 @@ export class World{
   const size=renderer.getSize(new T.Vector2());this.composer.setPixelRatio(renderer.getPixelRatio());this.composer.setSize(size.x,size.y);
   this.rp=new RenderPass(sc,camera);this.composer.addPass(this.rp);
   this.bloom=new UnrealBloomPass(new T.Vector2(size.x,size.y),.34,.5,.8);this.composer.addPass(this.bloom);
+  // phones: bloom is the most expensive pass; the grade still runs
+  if(matchMedia('(pointer:coarse)').matches)this.bloom.enabled=false;
   this.grade=new ShaderPass(GRADE);this.composer.addPass(this.grade);this.composer.addPass(new OutputPass());
   this.setBiome('camp');
+  // fetch the other regions' ground in the background so a portal never shows bare ground
+  setTimeout(()=>{for(const b of Object.values(BIOMES))for(const [k,srgb] of [['_diff.jpg',true],['_nor.jpg',false],['_rough.jpg',false]] as const)this.tex(b.ground+k,srgb);},4000);
  }
  private tex(n:string,srgb:boolean){let t=this.texCache.get(n);if(!t){t=new T.TextureLoader().load(import.meta.env.BASE_URL+'assets/3d-new/nature/'+n);t.wrapS=t.wrapT=T.RepeatWrapping;t.repeat.set(34,34);t.anisotropy=8;if(srgb)t.colorSpace=T.SRGBColorSpace;this.texCache.set(n,t);}return t;}
  // rebuild everything that belongs to a region
  setBiome(id:BiomeId){
   this.biome=id;const b=BIOMES[id],tok=++this.token;
   this.group.traverse(o=>{const m=o as T.Mesh;if(m.isMesh&&!(m as T.InstancedMesh).userData.shared){m.geometry?.dispose();}});
-  this.group.clear();this.colliders.length=0;this.flameSpots.length=0;this.torches=[];this.fireLight=null;this.surfaces=[];this.portals=[];this.portalMats=[];this.air=null;this.airKind=b.ambient;
+  this.group.clear();this.colliders.length=0;this.flameSpots.length=0;this.glows=[];this.surfaces=[];this.portals=[];this.portalMats=[];this.air=null;this.airKind=b.ambient;
   (this.scene.background as T.Color).set(b.bg);const fog=this.scene.fog as T.FogExp2;fog.color.set(b.bg);fog.density=b.fog;
   this.hemi.color.set(b.hemi[0]);this.hemi.groundColor.set(b.hemi[1]);this.hemi.intensity=b.hemi[2];this.moon.color.set(b.moon[0]);this.moon.intensity=b.moon[1];
   Object.assign(this.gmat,{map:this.tex(b.ground+'_diff.jpg',true),normalMap:this.tex(b.ground+'_nor.jpg',false),roughnessMap:this.tex(b.ground+'_rough.jpg',false)});
@@ -115,37 +126,46 @@ export class World{
   const col=(x:number,z:number,rr:number)=>this.colliders.push({x,z,r:rr});
   const rocks=(n:number)=>ring(n,7,ARENA*1.1,(x,z)=>{const s=.5+Math.pow(r(),2)*2.2;put(ROCKS[Math.floor(r()*ROCKS.length)],x,z,s,(r()-.5)*.4);if(s>1.3)col(x,z,s*.55);});
   const boulders=()=>{for(let i=0;i<14;i++){const a=i/14*6.283+r()*.3,d=ARENA*(.95+r()*.2);put('boulder',Math.cos(a)*d,Math.sin(a)*d,3+r()*3);}};
+  // a wall of cliffs just outside the walkable ground frames every region
+  const cliffs=(kinds:string[])=>{for(let i=0;i<16;i++){const a=i/16*6.283+r()*.15,d=ARENA+6+r()*5;put(kinds[i%kinds.length],Math.cos(a)*d,Math.sin(a)*d,.8+r()*.5);}};
+  const trees=(n:number,kinds:string[],dMin=10,s0=.8,s1=1.25)=>ring(n,dMin,ARENA*1.12,(x,z)=>{put(kinds[Math.floor(r()*kinds.length)],x,z,s0+r()*(s1-s0));col(x,z,.6);});
+  const plants=(n:number,kinds:string[],s0=.7,s1=1.3)=>{let c=this.spot(r,5,ARENA);for(let k=0;k<n;k++){if(k%5===0)c=this.spot(r,5,ARENA*1.05);put(kinds[Math.floor(r()*kinds.length)],c.x+(r()-.5)*4,c.z+(r()-.5)*4,s0+r()*(s1-s0));}};
   if(id==='camp'){
-   ring(10,13,ARENA*1.15,(x,z)=>{put(r()<.6?'tree_a':'tree_b',x,z,.8+r()*.5);col(x,z,.5);});
-   ring(16,10,ARENA*1.1,(x,z)=>{put(r()<.55?'alive_a':'alive_b',x,z,.8+r()*.6);col(x,z,.6);});
-   ring(10,9,ARENA,(x,z)=>{put(r()<.5?'stump_a':'stump_b',x,z,.9+r()*.5);col(x,z,.45);});
-   ring(8,11,ARENA,(x,z,i)=>{put(i%2?'log':'log_big',x,z,.9+r()*.3);col(x,z,1);});
-   ring(26,5,ARENA*1.1,(x,z)=>put(r()<.5?'branches':'branch',x,z,.8+r()*.6));
-   rocks(70);boulders();
-   this.crystals(r,16,['#1d6f86','#2fd8ff'],['#5a2a86','#a45cff'],1);this.bulbs(r,90,'#3dffb0');this.fungi(r,40);this.camp();this.keepOut=13;this.grass(r,1400,'#1e2a1c','#6f8a52',.5,.0);this.keepOut=20;
+   trees(16,['oak'],22);trees(10,['bush_tree'],20);trees(8,['fir'],24);
+   ring(8,21,ARENA,(x,z)=>{put(r()<.5?'stump_a':'stump_b',x,z,.9+r()*.5);col(x,z,.45);});
+   ring(6,22,ARENA,(x,z,i)=>{put(i%2?'log':'log_big',x,z,.9+r()*.3);col(x,z,1);});
+   ring(14,20,ARENA*1.1,(x,z)=>put('branches',x,z,.8+r()*.6));
+   rocks(45);cliffs(['cliff','cliff_b']);
+   plants(30,['shrub_a','shrub_b','shrub_c']);plants(24,['fern']);plants(20,['weed','grass_clump']);plants(6,['roots'],.8,1.1);
+   this.camp();this.keepOut=13;this.grass(r,1300,'#2c3a1e','#8aa05a',.3,0);this.keepOut=20;
   }else if(id==='springs'){
-   ring(24,9,ARENA*1.1,(x,z)=>{put(r()<.6?'alive_a':'alive_b',x,z,.9+r()*.7);col(x,z,.6);});
+   trees(18,['oak'],10);trees(12,['bush_tree'],9);
    ring(8,10,ARENA,(x,z,i)=>{put(i%2?'log':'stump_a',x,z,.9+r()*.4);col(x,z,.6);});
-   rocks(55);boulders();
-   this.pools(r,9,'#164a52');this.reeds(r,240,'#3f6a3a');this.bulbs(r,70,'#6fe8ff');this.fungi(r,30);this.grass(r,1800,'#163028','#58b89a',.6,.08);
+   rocks(40);cliffs(['cliff','rock_face']);
+   this.pools(r,9,'#1e5258');this.reeds(r,240,'#4f7a3a');
+   plants(30,['fern']);plants(24,['nettle','weed']);plants(30,['dandelion']);plants(20,['shrub_a','shrub_c']);plants(26,['grass_clump']);
+   this.grass(r,1600,'#24401e','#7aa84e',.34,0);
   }else if(id==='valley'){
-   ring(10,12,ARENA*1.1,(x,z)=>{put(r()<.5?'tree_a':'alive_b',x,z,.8+r()*.5);col(x,z,.5);});
-   rocks(80);boulders();
-   this.crystals(r,26,['#2a1d6a','#7a5cff'],['#5a2a86','#d07dff'],1.8);this.monoliths(r,9);this.bulbs(r,40,'#d07dff');this.grass(r,1100,'#1c1630','#8a6ad8',.45,.12);
+   trees(16,['fir'],10);trees(14,['pine'],10);
+   ring(8,12,ARENA*.95,(x,z)=>{put(r()<.5?'rock_face':'rock_face_b',x,z,.7+r()*.5);col(x,z,1.6);});
+   rocks(55);boulders();cliffs(['cliff','rock_face','cliff_b']);
+   this.monoliths(r,9);plants(20,['shrub_b','shrub_c']);plants(16,['grass_clump']);
+   this.grass(r,1300,'#2a3420','#8a9a58',.3,0);
   }else if(id==='caldera'){
    ring(12,10,ARENA*1.1,(x,z)=>{put(r()<.5?'tree_a':'tree_b',x,z,.7+r()*.5);col(x,z,.5);});
-   rocks(75);boulders();
+   rocks(75);boulders();cliffs(['cliff','cliff_b']);
    this.lava(r,14);this.obsidian(r,48);
   }else if(id==='frost'){
-   ring(12,10,ARENA*1.1,(x,z)=>{put(r()<.5?'tree_a':'tree_b',x,z,.8+r()*.5);col(x,z,.5);});
-   rocks(60);boulders();
-   this.crystals(r,22,['#6fa8c8','#9ff0ff'],['#a8d8f0','#d0f8ff'],1.4,true);this.mounds(r,26,'#e8f0f8',2.2);
+   trees(16,['fir'],10);trees(10,['pine'],10);
+   rocks(60);boulders();cliffs(['cliff','rock_face']);
+   this.crystals(r,8,['#8fb8d0','#cfe8f4'],['#b8d8ec','#e8f6ff'],1.1,true);this.mounds(r,26,'#e8f0f8',2.2);
   }else if(id==='domain'){
-   rocks(30);boulders();this.domainArena(r);
+   rocks(30);boulders();trees(8,['fir'],26);cliffs(['cliff','cliff_b','rock_face']);this.domainArena(r);
   }else{
-   ring(8,12,ARENA*1.1,(x,z)=>{put('tree_b',x,z,.7+r()*.4);col(x,z,.5);});
-   rocks(45);boulders();
-   this.mounds(r,22,'#c89a68',5);this.crystals(r,14,['#8a5a1a','#ffb04a'],['#a06a2a','#ffd06a'],1.3);this.bones(r,6);
+   trees(10,['succulent_tree'],10,.8,1.3);ring(10,12,ARENA*1.1,(x,z)=>{put(r()<.5?'alive_a':'alive_b',x,z,.7+r()*.5);col(x,z,.6);});
+   ring(6,12,ARENA*1.1,(x,z)=>{put('tree_b',x,z,.7+r()*.4);col(x,z,.5);});
+   rocks(45);boulders();cliffs(['cliff_b','cliff']);
+   this.mounds(r,16,'#c89a68',3);this.bones(r,6);plants(30,['succulent']);plants(20,['rooibos']);
   }
   // portals to the neighbouring regions: north leads on, south leads back
   const i=BIOME_ORDER.indexOf(id);
@@ -159,25 +179,36 @@ export class World{
  private async loadNature(place:Place,rockTint:string,treeTint:string,tok:number){
   const m4=new T.Matrix4(),q=new T.Quaternion(),e=new T.Euler(),rc=new T.Color(rockTint),tc=new T.Color(treeTint);
   const load=(f:string)=>{let p=this.glbCache.get(f);if(!p){p=this.loader.loadAsync(import.meta.env.BASE_URL+'assets/3d-new/nature/'+f+'.glb').then(g=>g.scene);this.glbCache.set(f,p);}return p;};
+  type Variant={parts:{geo:T.BufferGeometry;mat:T.Material}[];size:number;h:number};
   for(const [kind,list] of Object.entries(place)){
    const src=SRC[kind];if(!src)continue;
    let root:T.Group;try{root=await load(src.file);}catch{continue;}
    if(tok!==this.token)return;
-   root.updateMatrixWorld(true);
-   const variants:{geo:T.BufferGeometry;mat:T.Material;size:number;h:number}[]=[];
-   root.traverse(o=>{const m=o as T.Mesh;if(!m.isMesh)return;
-    let g=m.userData.baked as T.BufferGeometry|undefined;
-    if(!g){g=m.geometry.clone().applyMatrix4(m.matrixWorld);g.computeBoundingBox();const bb=g.boundingBox!;const c=bb.getCenter(new T.Vector3());g.translate(-c.x,-bb.min.y,-c.z);g.computeBoundingBox();m.userData.baked=g;}
-    const sz=g.boundingBox!.getSize(new T.Vector3());(m.material as T.MeshStandardMaterial).envMapIntensity=.4;
-    variants.push({geo:g,mat:m.material as T.Material,size:src.by==='h'?sz.y:Math.max(sz.x,sz.z),h:sz.y});});
+   // one variant per top-level node, so a trunk and its crown stay together
+   let variants=root.userData.variants as Variant[]|undefined;
+   if(!variants){
+    root.updateMatrixWorld(true);variants=[];
+    for(const top of root.children){const parts:{geo:T.BufferGeometry;mat:T.Material}[]=[],bb=new T.Box3();
+     top.traverse(o=>{const m=o as T.Mesh;if(!m.isMesh)return;const g=m.geometry.clone().applyMatrix4(m.matrixWorld);g.computeBoundingBox();bb.union(g.boundingBox!);
+      const mat=m.material as T.MeshStandardMaterial;mat.envMapIntensity=.4;
+      // leaves and grass: cut-out instead of blended transparency (no sorting, no overdraw, correct shadows)
+      if(mat.transparent){mat.transparent=false;mat.alphaTest=.5;mat.depthWrite=true;mat.needsUpdate=true;}
+      parts.push({geo:g,mat});});
+     if(!parts.length)continue;const c=bb.getCenter(new T.Vector3());for(const p of parts){p.geo.translate(-c.x,-bb.min.y,-c.z);p.geo.computeBoundingSphere();}
+     const sz=bb.getSize(new T.Vector3());variants.push({parts,size:src.by==='h'?sz.y:Math.max(sz.x,sz.z),h:sz.y});}
+    root.userData.variants=variants;
+   }
    if(!variants.length)continue;
-   const tint=kind.startsWith('rock')||kind.startsWith('set')||kind==='boulder'?rc:tc;
-   const per=new Map<number,typeof list>();list.forEach((p,i)=>{const v=i%variants.length;if(!per.has(v))per.set(v,[]);per.get(v)!.push(p);});
-   for(const [v,ps] of per){
-    const va=variants[v],im=new T.InstancedMesh(va.geo,va.mat,ps.length);im.userData.shared=true;
-    ps.forEach((p,i)=>{const k=src.size/va.size*p.s;e.set(p.tilt,p.ry,p.tilt*.6);q.setFromEuler(e);
-     m4.compose(new T.Vector3(p.x,-(src.sink??0)*va.h*k,p.z),q,new T.Vector3(k,k,k));im.setMatrixAt(i,m4);im.setColorAt(i,tint);});
-    im.castShadow=true;im.receiveShadow=true;this.group.add(im);
+   const tint=kind.startsWith('rock')||kind.startsWith('set')||kind.includes('boulder')||kind.startsWith('cliff')?rc:tc;
+   // instances split in 40 m cells so whatever is off screen is culled
+   const cells=new Map<string,{v:number;ps:typeof list}>();
+   list.forEach((p,i)=>{const v=i%variants!.length,k=v+':'+Math.floor(p.x/40)+':'+Math.floor(p.z/40);if(!cells.has(k))cells.set(k,{v,ps:[]});cells.get(k)!.ps.push(p);});
+   for(const {v,ps} of cells.values()){
+    const va=variants[v];
+    for(const part of va.parts){const im=new T.InstancedMesh(part.geo,part.mat,ps.length);im.userData.shared=true;
+     ps.forEach((p,i)=>{const k=src.size/va.size*p.s;e.set(p.tilt,p.ry,p.tilt*.6);q.setFromEuler(e);
+      m4.compose(new T.Vector3(p.x,-(src.sink??0)*va.h*k,p.z),q,new T.Vector3(k,k,k));im.setMatrixAt(i,m4);im.setColorAt(i,tint);});
+     im.computeBoundingSphere();im.castShadow=src.size>.7;im.receiveShadow=true;this.group.add(im);}
    }
   }
  }
@@ -203,26 +234,10 @@ export class World{
   for(const [mat,off] of [[mk(a),0],[mk(b),1]] as const){const mine=spots.filter((_,k)=>k%2===off);
    this.inst(geo,mat,mine.length*5,(i,m)=>{const sp=mine[Math.floor(i/5)],s=(.5+r()*.9)*big;e.set((r()-.5)*.9,r()*6.28,(r()-.5)*.9);q.setFromEuler(e);m.compose(new T.Vector3(sp.x+(r()-.5)*1.1*big,-.1,sp.z+(r()-.5)*1.1*big),q,new T.Vector3(s,s*(.8+r()*.6),s));});}
  }
- private bulbs(r:()=>number,N:number,color:string){
-  const stalkG=new T.CylinderGeometry(.025,.05,1,6);stalkG.translate(0,.5,0);const bulbG=new T.SphereGeometry(.13,10,8);
-  const sm=new T.MeshStandardMaterial({color:'#24302a',roughness:.8}),bm=new T.MeshStandardMaterial({color,emissive:color,emissiveIntensity:1.4,roughness:.3});
-  const q=new T.Quaternion(),e=new T.Euler(),pts:{x:number;z:number;h:number;q:T.Quaternion}[]=[];
-  let c=this.spot(r,5,ARENA);for(let i=0;i<N;i++){if(i%6===0)c=this.spot(r,5,ARENA);e.set((r()-.5)*.5,r()*6.28,(r()-.5)*.5);pts.push({x:c.x+(r()-.5)*2,z:c.z+(r()-.5)*2,h:.5+r()*1.4,q:q.setFromEuler(e).clone()});}
-  this.inst(stalkG,sm,N,(i,m)=>{const p=pts[i];m.compose(new T.Vector3(p.x,0,p.z),p.q,new T.Vector3(1,p.h,1));});
-  this.inst(bulbG,bm,N,(i,m)=>{const p=pts[i],top=new T.Vector3(0,p.h,0).applyQuaternion(p.q).add(new T.Vector3(p.x,0,p.z)),b=.7+r()*.8;m.compose(top,p.q,new T.Vector3(b,b*1.3,b));},false);
- }
- private fungi(r:()=>number,F:number){
-  const capG=new T.SphereGeometry(.5,14,8,0,Math.PI*2,0,Math.PI/2);capG.scale(1,.45,1);const stemG=new T.CylinderGeometry(.07,.1,1,8);stemG.translate(0,.5,0);
-  const capM=new T.MeshStandardMaterial({color:'#3a2448',emissive:'#7a3cff',emissiveIntensity:.35,roughness:.6,side:T.DoubleSide}),stemM=new T.MeshStandardMaterial({color:'#bdb3a0',roughness:.8});
-  const q=new T.Quaternion(),e=new T.Euler(),pts:{x:number;z:number;h:number;s:number;q:T.Quaternion}[]=[];
-  let c=this.spot(r,6,ARENA);for(let i=0;i<F;i++){if(i%4===0)c=this.spot(r,6,ARENA);e.set((r()-.5)*.3,r()*6.28,(r()-.5)*.3);pts.push({x:c.x+(r()-.5)*1.6,z:c.z+(r()-.5)*1.6,h:.3+r()*.9,s:.5+r()*1.1,q:q.setFromEuler(e).clone()});}
-  this.inst(stemG,stemM,F,(i,m)=>{const p=pts[i];m.compose(new T.Vector3(p.x,0,p.z),p.q,new T.Vector3(p.s*.6,p.h*p.s,p.s*.6));});
-  this.inst(capG,capM,F,(i,m)=>{const p=pts[i];m.compose(new T.Vector3(p.x,p.h*p.s,p.z),p.q,new T.Vector3(p.s,p.s,p.s));});
- }
  // ground cover: tufts of curved blades that sway in the wind, dark at the root, tinted at the tips
  private grass(r:()=>number,N:number,base:string,tip:string,h=.55,glow=0){
   const pos:number[]=[],col:number[]=[],cb=new T.Color(base),ct=new T.Color(tip);
-  for(let b=0;b<7;b++){const a=b/7*6.283+r()*.6,lean=.25+r()*.35,hh=h*(.6+r()*.7),w=.035+r()*.02,ox=Math.cos(a)*.08,oz=Math.sin(a)*.08;
+  for(let b=0;b<7;b++){const a=b/7*6.283+r()*.6,lean=.2+r()*.3,hh=h*(.6+r()*.7),w=.018+r()*.012,ox=Math.cos(a)*.08,oz=Math.sin(a)*.08;
    const P=(t:number,side:number)=>{const bend=lean*t*t;return[ox+Math.cos(a)*bend+Math.cos(a+1.57)*w*(1-t)*side,hh*t,oz+Math.sin(a)*bend+Math.sin(a+1.57)*w*(1-t)*side];};
    for(let k=0;k<3;k++){const t0=k/3,t1=(k+1)/3;const A=P(t0,-1),B=P(t0,1),C=P(t1,-1),D=P(t1,1);
     pos.push(...A,...B,...C,...B,...D,...C);for(const t of[t0,t0,t1,t0,t1,t1]){const c=cb.clone().lerp(ct,t);col.push(c.r,c.g,c.b);}}}
@@ -288,22 +303,29 @@ export class World{
   for(let i=0;i<9;i++){const a=i/9*6.283,m=new T.Mesh(new T.DodecahedronGeometry(.16+.05*((i*7)%3)),stone);m.position.set(F.x+Math.cos(a)*.65,.1,F.z+Math.sin(a)*.65);m.rotation.set(a,a*2,0);m.castShadow=true;g.add(m);}
   for(let i=0;i<4;i++){const a=i/4*Math.PI+.4,m=new T.Mesh(new T.CylinderGeometry(.07,.08,.9,6),wood);m.position.set(F.x,.14,F.z);m.rotation.set(Math.PI/2.3,a,0);m.castShadow=true;g.add(m);}
   const gl=new T.Sprite(new T.SpriteMaterial({map:glowTex('rgba(255,170,80,.95)','rgba(255,110,30,.35)'),blending:T.AdditiveBlending,depthWrite:false,transparent:true}));gl.scale.set(5.5,5.5,1);gl.position.set(F.x,.9,F.z);g.add(gl);
-  this.fireLight=new T.PointLight('#ff8a3c',60,22,1.5);this.fireLight.position.set(F.x,1.3,F.z);g.add(this.fireLight);this.colliders.push({x:F.x,z:F.z,r:.9});this.flameSpots.push({p:new T.Vector3(F.x,.12,F.z),s:1});
+  this.fakeLight(F.x,F.z,'#ff8a3c',7,.75,1);this.colliders.push({x:F.x,z:F.z,r:.9});this.flameSpots.push({p:new T.Vector3(F.x,.12,F.z),s:1});
   // the shuttle that brought the expedition
   const sh=buildShuttle();sh.position.set(CAMP.shuttle.x,0,CAMP.shuttle.z);sh.rotation.y=CAMP.shuttle.ry;g.add(sh);
   for(let x=-6.4;x<=6.6;x+=1.3){const p=shuttlePoint(x,0);this.colliders.push({x:p.x,z:p.z,r:1.85});}
   for(const z of[-2.55,2.55]){const p=shuttlePoint(-4.7,z);this.colliders.push({x:p.x,z:p.z,r:1.25});}
-  const door=shuttlePoint(2.3,2.2),dl=new T.PointLight('#ffb070',14,9,1.6);dl.position.set(door.x,2.4,door.z);g.add(dl);this.torches.push(dl);
+  const door=shuttlePoint(2.3,3.6);this.fakeLight(door.x,door.z,'#ffb070',3.2,.45,0);
   // shelters with their lamps
   for(const k of ['medic','smith','expedition'] as Service[]){const s=CAMP.shelters[k],b=buildShelter(k);b.position.set(s.x,0,s.z);b.rotation.y=s.ry;g.add(b);
    const m=shelterPoint(k,-1.35,0);this.colliders.push({x:m.x,z:m.z,r:1.5});const f=shelterPoint(k,1.3,-.6);this.colliders.push({x:f.x,z:f.z,r:.9});
-   const lp=shelterPoint(k,2.4,.4),l=new T.PointLight('#ffc080',5,7,1.8);l.position.set(lp.x,1.35,lp.z);g.add(l);this.torches.push(l);}
+   const lp=shelterPoint(k,1.8,.6);this.fakeLight(lp.x,lp.z,'#ffc080',2.6,.35,0);}
   for(const [x,z,ry] of CAMP.crates){const c=buildProps('crates');c.position.set(x,0,z);c.rotation.y=ry;g.add(c);this.colliders.push({x,z,r:1.2});}
   for(const [x,z] of CAMP.barrels){const c=buildProps('barrels');c.position.set(x,0,z);g.add(c);this.colliders.push({x:x+.15,z:z+.3,r:.8});}
   {const d=buildProps('decon'),c=CAMP.decon;d.position.set(c.x,0,c.z);d.rotation.y=c.ry;g.add(d);for(const s of[-1,1])this.colliders.push({x:c.x+s*Math.cos(c.ry),z:c.z-s*Math.sin(c.ry),r:.35});}
   const lampTex=glowTex('rgba(255,225,170,1)','rgba(255,150,60,.4)');
   for(const [x,z] of CAMP.floods){const f=buildProps('flood');f.position.set(x,0,z);f.rotation.y=Math.atan2(-x,-z);g.add(f);this.colliders.push({x,z,r:.3});
    const sp=new T.Sprite(new T.SpriteMaterial({map:lampTex,blending:T.AdditiveBlending,depthWrite:false,transparent:true,opacity:.7}));sp.scale.set(2.2,2.2,1);sp.position.set(x,4.3,z);g.add(sp);}
+ }
+ // light painted on the ground (additive), instead of a real point light: real ones multiplied the cost of every pixel
+ private glowTexCache:T.Texture|null=null;
+ private fakeLight(x:number,z:number,color:string,r:number,a:number,flick:number){
+  this.glowTexCache??=glowTex('rgba(255,255,255,1)','rgba(255,255,255,.35)');
+  const m=new T.Mesh(new T.PlaneGeometry(r*2,r*2).rotateX(-Math.PI/2),new T.MeshBasicMaterial({map:this.glowTexCache,color,transparent:true,opacity:a,blending:T.AdditiveBlending,depthWrite:false,fog:false}));
+  m.position.set(x,.04,z);m.renderOrder=2;this.group.add(m);this.glows.push({m,base:a,flick});
  }
  // a standing ring of stone with a swirling gate tinted like the destination
  private portal(pos:T.Vector3,to:BiomeId,dir:1|-1){
@@ -339,12 +361,12 @@ export class World{
   const N=kind==='snow'?900:kind==='sand'?700:500,pos=new Float32Array(N*3),v=new Float32Array(N);
   for(let i=0;i<N;i++){pos[i*3]=(Math.random()-.5)*50;pos[i*3+1]=Math.random()*12;pos[i*3+2]=(Math.random()-.5)*50;v[i]=Math.random();}
   const geo=new T.BufferGeometry();geo.setAttribute('position',new T.BufferAttribute(pos,3));
-  const C:Record<string,[string,number,boolean]>={spores:['#9dffcf',.08,true],motes:['#c8a8ff',.09,true],ash:['#8a8580',.09,false],snow:['#f4f8ff',.11,false],sand:['#d8b48a',.06,false]};
+  const C:Record<string,[string,number,boolean]>={spores:['#f2f0d8',.045,false],motes:['#e8e0ff',.05,false],ash:['#8a8580',.09,false],snow:['#f4f8ff',.11,false],sand:['#d8b48a',.06,false]};
   const [c,s,add]=C[kind];
   this.air=new T.Points(geo,new T.PointsMaterial({color:c,size:s,transparent:true,opacity:add?.9:.75,depthWrite:false,blending:add?T.AdditiveBlending:T.NormalBlending}));this.air.frustumCulled=false;this.airV=v;this.group.add(this.air);
  }
  update(t:number,dt:number,focus:T.Vector3){
-  if(this.fireLight)this.fireLight.intensity=58+Math.sin(t*7.1)*7+Math.sin(t*17.3)*5;
+  for(const gl of this.glows){const k=gl.base*(1+gl.flick*(Math.sin(t*7.1)*.12+Math.sin(t*17.3)*.08));(gl.m.material as T.MeshBasicMaterial).opacity=k;}
   for(const s of this.surfaces)s.uniforms.uT.value+=dt;
   for(const s of this.portalMats)s.uniforms.uT.value+=dt;
   if(this.air&&this.airV){const p=this.air.geometry.attributes.position as T.BufferAttribute,a=p.array as Float32Array,k=this.airKind;
