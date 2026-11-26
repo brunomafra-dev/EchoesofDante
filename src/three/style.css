@@ -98,3 +98,12 @@ body.can-act #t-act{display:block}body.can-act.astral #t-e{right:176px}
 .jm{padding:8px 10px;margin:0 0 6px;background:#15120e;border:1px solid #3a3022;border-radius:3px}.jm b{display:block;color:#f0d594}.jm span{font-size:12px;color:#9a917f}
 .jm.locked{opacity:.5}.jm.active,.jm.ready{border-color:#c89a4a}.jm.completed b{color:#7d9a72}
 @media(max-width:700px){#tracker{top:44px;right:8px;width:52vw;font-size:11px;padding:6px 8px}#tracker b{font-size:12px}.talk img{width:76px}.talk .say{font-size:14px}#prompt{bottom:200px;font-size:13px}#toast{font-size:13px;top:24%}}
+/* creature health bars (name + bar), drawn over the 3D view */
+.ebar{position:absolute;left:0;top:0;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:2px;will-change:transform}
+.ebar b{font-size:11px;font-weight:600;letter-spacing:.04em;color:#f0e2c0;text-shadow:0 0 3px #000,0 1px 2px #000;white-space:nowrap}
+.ebar i{display:block;width:64px;height:6px;background:#140c0c;border:1px solid #000;box-shadow:0 0 0 1px rgba(240,210,150,.25)}
+.ebar u{display:block;height:100%;background:linear-gradient(#e0574a,#8e1c18);transition:width .12s}
+.ebar.low u{background:linear-gradient(#ff8a3a,#b0300e)}
+/* black fade between regions */
+#fade{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity .35s ease;z-index:50}
+#fade.on{opacity:1}

@@ -6,11 +6,14 @@ import {ShaderPass} from 'three/addons/postprocessing/ShaderPass.js';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {BIOMES,BIOME_ORDER,type BiomeId} from './biomes';
+import type {SpeciesId} from './creatures';
 import {buildShuttle,buildShelter,buildProps,CAMP,shelterPoint,shuttlePoint,type Service} from './camp';
 
 // Regions of Dante: scanned ground and nature (Poly Haven, CC0), procedural alien flora,
 // lava, water, ice and dunes, ambient particles, plus the dark ARPG post-processing.
 export interface Collider{x:number;z:number;r:number}
+// a fixed home for a small group of creatures (2D encounter habitats): same place every visit, renewed later
+export interface Habitat{id:number;x:number;z:number;kinds:SpeciesId[]}
 export const ARENA=40;
 const rng=(seed:number)=>()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
 function glowTex(inner:string,outer:string){
@@ -69,7 +72,7 @@ const ROCKS=['rock_a','rock_b','rock_c','rock_d','set_1','set_2'];
 
 export class World{
  scene=new T.Scene();colliders:Collider[]=[];moon=new T.DirectionalLight('#9bb2e6',2.3);hemi=new T.HemisphereLight('#7f93bd','#2a2a22',1.25);
- biome:BiomeId='camp';portals:{pos:T.Vector3;to:BiomeId;dir:1|-1}[]=[];private portalMats:T.ShaderMaterial[]=[];flameSpots:{p:T.Vector3;s:number}[]=[];readonly fire=new T.Vector3(CAMP.fire.x,0,CAMP.fire.z);
+ habitats:Habitat[]=[];biome:BiomeId='camp';portals:{pos:T.Vector3;to:BiomeId;dir:1|-1}[]=[];private portalMats:T.ShaderMaterial[]=[];flameSpots:{p:T.Vector3;s:number}[]=[];readonly fire=new T.Vector3(CAMP.fire.x,0,CAMP.fire.z);
  composer!:EffectComposer;private bloom!:UnrealBloomPass;private grade!:ShaderPass;private rp!:RenderPass;
  private group=new T.Group();private gmat:T.MeshStandardMaterial;private texCache=new Map<string,T.Texture>();private token=0;
  private glows:{m:T.Mesh;base:number;flick:number}[]=[];private surfaces:T.ShaderMaterial[]=[];
@@ -173,6 +176,7 @@ export class World{
   if(i>0)this.portal(new T.Vector3(0,0,ARENA-5),BIOME_ORDER[i-1],-1);
   for(const pt of this.portals)this.colliders.splice(0,this.colliders.length,...this.colliders.filter(c=>Math.hypot(c.x-pt.pos.x,c.z-pt.pos.z)>4));
   for(const kind of Object.keys(place))place[kind]=place[kind].filter(p=>this.portals.every(pt=>Math.hypot(p.x-pt.pos.x,p.z-pt.pos.z)>5));
+  this.makeHabitats(id);
   this.loadNature(place,b.rockTint,b.treeTint,tok);
   this.makeAir(b.ambient);
  }
@@ -224,6 +228,25 @@ export class World{
    const im=new T.InstancedMesh(g,mat,list.length);
    list.forEach((p,k)=>{const h=size*p.s,sc=h/4.556741;q.setFromAxisAngle(up,p.ry+i*Math.PI/2);m4.compose(new T.Vector3(p.x,h*.5,p.z),q,new T.Vector3(sc,sc,sc));im.setMatrixAt(k,m4);});
    im.computeBoundingSphere();im.castShadow=true;im.receiveShadow=true;this.group.add(im);});
+ }
+ // 6-8 groups of 1-3 residents spread over the region, away from the arrival points, portals and the camp
+ private makeHabitats(id:BiomeId){
+  this.habitats=[];const mix=BIOMES[id].creatures;if(!mix.length)return;
+  const r=rng(101+id.length*13+id.charCodeAt(0));
+  const pick=()=>{let x=r();for(const [k,w] of mix){if(x<w)return k;x-=w;}return mix[0][0];};
+  const avoid=[{x:0,z:0,r:12},{x:0,z:ARENA-10,r:10},{x:0,z:-ARENA+10,r:10},...this.portals.map(p=>({x:p.pos.x,z:p.pos.z,r:9}))];
+  const big=new Set<SpeciesId>(['carapace','slagback','iceCarapace']);
+  const n=id==='camp'?6:8,dMin=id==='camp'?25:11,dMax=id==='camp'?ARENA-3:ARENA-4;
+  for(let i=0,tries=0;i<n&&tries<400;tries++){
+   const a=r()*6.283,d=dMin+r()*(dMax-dMin),x=Math.cos(a)*d,z=Math.sin(a)*d;
+   if(avoid.some(o=>Math.hypot(x-o.x,z-o.z)<o.r))continue;
+   if(this.colliders.some(c=>Math.hypot(x-c.x,z-c.z)<c.r+1.6))continue;
+   if(this.habitats.some(h=>Math.hypot(x-h.x,z-h.z)<9))continue;
+   const first=pick(),kinds:SpeciesId[]=[first];
+   const size=big.has(first)?(r()<.5?1:2):(r()<.25?1:r()<.75?2:3);
+   while(kinds.length<size){const k=pick();kinds.push(big.has(k)&&kinds.some(q=>big.has(q))?first:k);}
+   this.habitats.push({id:i,x,z,kinds});i++;
+  }
  }
  // soft image-based light for metal, glass and wet surfaces: a sky-to-ground gradient tinted like the region
  private makeEnv(sky:string,horizon:string,ground:string){

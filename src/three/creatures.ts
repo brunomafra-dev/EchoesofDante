@@ -106,9 +106,9 @@ function clawGeo(){let g=geoCache.get('claw');if(g)return g;
 function skin(m:T.MeshStandardMaterial,rim:string,bump=.6,freq=6,o:{veins?:string;lichen?:string;cells?:number}={}){
  m.onBeforeCompile=sh=>{
   sh.uniforms.uRim={value:new T.Color(rim)};sh.uniforms.uBump={value:bump};sh.uniforms.uFreq={value:freq};sh.uniforms.uVein={value:new T.Color(o.veins??'#000000')};sh.uniforms.uLichen={value:new T.Color(o.lichen??'#000000')};sh.uniforms.uCell={value:o.cells??.7};
-  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\nvarying vec3 vOP;varying vec3 vWN;').replace('#include <begin_vertex>','#include <begin_vertex>\nvOP=position*vec3(length(modelMatrix[0].xyz),length(modelMatrix[1].xyz),length(modelMatrix[2].xyz));vWN=normalize(mat3(modelMatrix)*objectNormal);');
+  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\nvarying vec3 vOP;varying vec3 vWN;attribute float ao;varying float vAO;').replace('#include <begin_vertex>','#include <begin_vertex>\nvAO=ao;vOP=position*vec3(length(modelMatrix[0].xyz),length(modelMatrix[1].xyz),length(modelMatrix[2].xyz));vWN=normalize(mat3(modelMatrix)*objectNormal);');
   sh.fragmentShader=sh.fragmentShader.replace('#include <common>',`#include <common>
-   varying vec3 vOP;varying vec3 vWN;uniform vec3 uRim;uniform float uBump;uniform float uFreq;uniform vec3 uVein;uniform vec3 uLichen;uniform float uCell;
+   varying vec3 vOP;varying vec3 vWN;varying float vAO;uniform vec3 uRim;uniform float uBump;uniform float uFreq;uniform vec3 uVein;uniform vec3 uLichen;uniform float uCell;
    float h3(vec3 p){return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453);}
    float n3(vec3 p){vec3 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(mix(h3(i),h3(i+vec3(1,0,0)),f.x),mix(h3(i+vec3(0,1,0)),h3(i+vec3(1,1,0)),f.x),f.y),mix(mix(h3(i+vec3(0,0,1)),h3(i+vec3(1,0,1)),f.x),mix(h3(i+vec3(0,1,1)),h3(i+vec3(1,1,1)),f.x),f.y),f.z);}
    float skinH(vec3 p){return n3(p)*.7+n3(p*2.2)*.3;}
@@ -124,7 +124,9 @@ function skin(m:T.MeshStandardMaterial,rim:string,bump=.6,freq=6,o:{veins?:strin
     float blot=n3(vOP*uFreq*.35);diffuseColor.rgb*=mix(.82,1.1,blot)*mix(.72,1.,smoothstep(.25,.6,hh));
     // depth: dark seams between scales, darker belly and lighter back, pale worn edges, uneven gloss
     diffuseColor.rgb*=1.-seam*.28;
-    diffuseColor.rgb*=mix(.52,1.08,smoothstep(-.75,.65,vWN.y));
+    float upL=smoothstep(-.75,.65,vWN.y);diffuseColor.rgb*=mix(.52,1.08,upL);
+    // painted light: warm on top, cool and a touch more saturated in the shade, dark in the contact creases
+    diffuseColor.rgb*=mix(vec3(.84,.88,1.08),vec3(1.07,1.02,.93),upL);diffuseColor.rgb*=mix(.32,1.,vAO);
     float edge=clamp(length(fwidth(vNormal))*6.,0.,1.);diffuseColor.rgb+=edge*.07*(1.-seam);
     roughnessFactor=clamp(roughnessFactor*mix(.65,1.3,n3(vOP*uFreq*1.7+11.))+seam*.25,.04,1.);
     float li=smoothstep(.64,.72,n3(vOP*uFreq*1.1+7.));diffuseColor.rgb=mix(diffuseColor.rgb,uLichen,li*step(.01,uLichen.r+uLichen.g+uLichen.b)*.85);}`)
@@ -352,6 +354,21 @@ function buildWarden(root:T.Group,p:Pal):Look{
 // merge the parts that never move on their own into one mesh per material (fewer draw calls per creature);
 // geometry is cached per species, materials stay per creature (hit flashes, burn tint)
 const bakeCache=new Map<string,T.BufferGeometry>();
+// every mesh drawn with a creature skin needs an 'ao' value (1 = open) — shared limb shapes get a flat one
+export function ensureAO(g:T.BufferGeometry){if(!g.attributes.ao)g.setAttribute('ao',new T.BufferAttribute(new Float32Array(g.attributes.position.count).fill(1),1));}
+// contact shadow baked per vertex from the other parts of the body (analytic sphere occlusion), plus the ground below:
+// the hand-painted darkening where a head meets a body or a shell rests on flesh
+function bakeAO(list:T.BufferGeometry[]){
+ const sph=list.map(g=>{g.computeBoundingSphere();return g.boundingSphere!.clone();});
+ const p=new T.Vector3(),n=new T.Vector3(),d=new T.Vector3();
+ list.forEach((g,gi)=>{const P=g.attributes.position,N=g.attributes.normal,ao=new Float32Array(P.count);
+  for(let i=0;i<P.count;i++){p.fromBufferAttribute(P,i);if(N)n.fromBufferAttribute(N,i);else n.set(0,1,0);let occ=0;
+   for(let j=0;j<sph.length;j++){if(j===gi)continue;const S=sph[j];d.copy(S.center).sub(p);const l=Math.max(d.length(),S.radius*.5);if(l>S.radius*3.5)continue;
+    occ+=Math.max(0,n.dot(d)/l)*(S.radius*S.radius)/(l*l);}
+   const ground=Math.max(0,-n.y)*(1-Math.min(1,p.y/.9))*.5;
+   ao[i]=Math.max(.3,1-Math.min(1,occ*.55)-ground);}
+  g.setAttribute('ao',new T.BufferAttribute(ao,1));});
+}
 function bakeBody(kind:string,L:Look){
  const keep=new Set<T.Object3D>([...(L.mandibles??[]),...(L.arms??[]),...(L.wings??[]),...(L.segs??[]),...(L.halo??[]),...(L.limbs??[])]);if(L.sac)keep.add(L.sac);
  const body=L.body;body.updateMatrixWorld(true);const inv=body.matrixWorld.clone().invert();
@@ -361,10 +378,12 @@ function bakeBody(kind:string,L:Look){
    if(!parts.has(mat)){parts.set(mat,[]);slots.push(mat);}
    const k=kind+':'+slots.indexOf(mat);if(!bakeCache.has(k)){let g=m.geometry.index?m.geometry.toNonIndexed():m.geometry.clone();
     for(const a of Object.keys(g.attributes))if(a!=='position'&&a!=='normal'&&!(a==='color'&&mat.vertexColors))g.deleteAttribute(a);
+    if(!g.attributes.normal)g.computeVertexNormals();
     if(mat.vertexColors&&!g.attributes.color){g=g.clone();g.setAttribute('color',new T.Float32BufferAttribute(new Float32Array(g.attributes.position.count*3).fill(1),3));}
     g.applyMatrix4(new T.Matrix4().multiplyMatrices(inv,m.matrixWorld));parts.get(mat)!.push(g);}
    drop.push(m);});}
  for(const m of drop)m.removeFromParent();
+ if(!bakeCache.has(kind+':0'))bakeAO([...parts.values()].flat());
  slots.forEach((mat,i)=>{const k=kind+':'+i;let g=bakeCache.get(k);if(!g){const list=parts.get(mat)!;if(!list.length)return;g=mergeGeometries(list,false)!;bakeCache.set(k,g);}
   const mesh=new T.Mesh(g,mat);mesh.castShadow=true;mesh.receiveShadow=true;body.add(mesh);});
 }
@@ -380,7 +399,7 @@ export function petModel(){
  for(const [x,z] of[[-.18,.32],[.18,.32],[-.18,-.32],[.18,-.32]]){const l=new T.Group();l.position.set(x,.58,z);
   l.add(lump(.11,hide,[0,-.12,0],[1,1.6,1.1],.12,3,140+x*10+z));l.add(lump(.07,hide,[0,-.38,.03],[1,1.6,1],.12,3,150+x*10+z));
   const paw=new T.Mesh(clawGeo(),hide);paw.scale.setScalar(.1);paw.position.set(0,-.56,.02);l.add(paw);g.add(l);legs.push(l);}
- g.traverse(o=>{(o as T.Mesh).castShadow=true;});ink(g,'#0c1008');
+ g.traverse(o=>{const m=o as T.Mesh;m.castShadow=true;if(m.isMesh)ensureAO(m.geometry);});ink(g,'#0c1008');
  return {g,legs};
 }
 const BUILD:Record<Body,(r:T.Group,p:Pal)=>Look>={warden:buildWarden,crawler:buildCrawler,skitter:buildSkitter,spitter:buildSpitter,carapace:buildCarapace,hound:buildHound,amphibian:buildAmphibian,thorn:buildThorn,golem:buildGolem,winged:buildWinged,worm:buildWorm};
@@ -414,19 +433,26 @@ interface Shot{m:T.Mesh;v:T.Vector3;life:number;dmg:number;color:string;arc?:{fr
 const shots:Shot[]=[];
 
 export class Creature{
- g=new T.Group();spec:Spec;look:Look;hp:number;state:'idle'|'chase'|'wind'|'act'|'recover'|'dead'='idle';
+ g=new T.Group();spec:Spec;look:Look;hp:number;state:'idle'|'chase'|'wind'|'act'|'recover'|'return'|'dead'='idle';
+ // habitat of the 2D game: each creature lives at a fixed spot, notices the player nearby, gives up and walks home
+ home=new T.Vector3();habitat=-1;
  t=Math.random()*9;timer=0;vel=new T.Vector3();deadT=0;flash=0;gone=false;
  slowUntil=0;burnUntil=0;burnAcc=0;markUntil=0;heading=Math.random()*6.28;
  private tele:T.Mesh[]=[];private dir=new T.Vector3();private hitDone=false;private gait=0;private mv!:Move;private targets:T.Vector3[]=[];private hidden=0;private moveCd=0;
  static ctx:Ctx;static coreColor='#a060ff';
  constructor(public kind:SpeciesId,x:number,z:number,private scene:T.Scene){
-  this.spec=SPECIES[kind] as Spec;this.hp=this.spec.hp;this.g.position.set(x,0,z);this.g.scale.setScalar(this.spec.scale);scene.add(this.g);
+  this.spec=SPECIES[kind] as Spec;this.hp=this.spec.hp;this.g.position.set(x,0,z);this.home.set(x,0,z);this.g.scale.setScalar(this.spec.scale);scene.add(this.g);
   const root=new T.Group();this.g.add(root);this.look=BUILD[this.spec.body](root,this.spec.pal);
   if(!(this.spec.body==='warden'&&MODELS.warden))bakeBody(kind,this.look);
+  this.g.traverse(o=>{const m=o as T.Mesh;if(m.isMesh)ensureAO(m.geometry);});
   ink(this.g,'#'+new T.Color(this.spec.pal.c).multiplyScalar(.12).getHexString());
   if(this.spec.body==='worm')this.hidden=1;
  }
  get pos(){return this.g.position;}
+ get aggro(){return this.boss?22:9.5;}
+ // the whole group answers when one of them notices the player (2D encounter groups)
+ wake(){if(this.state!=='idle'&&this.state!=='return')return;this.state='chase';this.moveCd=rnd(.3,.8);
+  if(this.habitat>=0)for(const o of Creature.ctx.others)if(o!==this&&o.habitat===this.habitat&&(o.state==='idle'||o.state==='return'))o.wake();}
  get radius(){return this.spec.radius;}
  get boss(){return !!this.spec.boss;}
  get name(){return this.spec.name;}
@@ -436,7 +462,7 @@ export class Creature{
   const k=this.spec.armor??1;this.hp-=d*k;this.flash=.15;
   if(!quiet){const dir=this.pos.clone().sub(from).setY(0).normalize();this.vel.addScaledVector(dir,push*(this.boss?.1:k<1?.3:1));}
   ctx.popText(this.pos.clone().setY(this.look.height*this.spec.scale+.6),String(Math.round(d*k)),color);ctx.onHit(this,quiet);
-  if(this.state==='idle')this.state='chase';
+  if(this.state==='idle'||this.state==='return')this.wake();
   if(this.spec.phase2&&this.phase===1&&this.hp<this.spec.hp*.5){this.phase=2;ctx.popText(this.pos.clone().setY(5.5),'O guardião muda de padrão','#8ff4ff');ctx.sfx?.('roar',this.pos);ctx.vfx.shake=.4;this.look.glow.color.set('#ff5a8a');this.look.glow.emissive.set('#ff5a8a');}
   if(this.hp<=0)this.die(ctx);
  }
@@ -473,14 +499,21 @@ export class Creature{
   if(now<this.slowUntil)ctx.vfx.wet(this.pos);if(now<this.markUntil)ctx.vfx.marked(this.pos);
   const s=this.spec,to=tmp2.copy(ctx.player).sub(this.pos).setY(0),dist=to.length();
   const slow=now<this.slowUntil?(this.boss?.7:.45):1;let want=0;
-  if(this.state==='idle'){if(dist<(this.boss?22:14)&&ctx.playerOk())this.state='chase';else{this.heading+=Math.sin(this.t*.7)*dt*.6;want=.25;}}
+  const fromHome=Math.hypot(this.pos.x-this.home.x,this.pos.z-this.home.z);
+  if(this.state==='idle'){if(dist<this.aggro&&ctx.playerOk())this.wake();
+   else if(fromHome>2.5){this.turn(Math.atan2(this.home.x-this.pos.x,this.home.z-this.pos.z),dt,3);want=.3;}
+   else{this.heading+=Math.sin(this.t*.7+this.home.x)*dt*.6;want=Math.sin(this.t*.4+this.home.z)>.3?.18:0;}}
+  // leash: too far from home or the player ran away -> walk back and recover
+  if(this.state==='chase'&&!this.boss&&(fromHome>18||dist>this.aggro*2.2||!ctx.playerOk())){this.state='return';this.clearTele();}
+  if(this.state==='return'){this.turn(Math.atan2(this.home.x-this.pos.x,this.home.z-this.pos.z),dt,5);want=1;this.hp=Math.min(this.spec.hp,this.hp+this.spec.hp*.25*dt);
+   if(fromHome<1.5){this.state='idle';this.hp=this.spec.hp;}}
   if(this.state==='chase'){
    const face=Math.atan2(to.x,to.z);this.turn(face,dt,4);
    const mv=this.moveCd<=0&&ctx.playerOk()?this.pick(dist):null;
    const close=s.moves.some(m=>m.type==='bite'||m.type==='sweep'||m.type==='slam')?1.5:0;
    if(mv&&(mv.type!=='bite'&&mv.type!=='sweep'&&mv.type!=='slam'||dist<mv.range*.9)){
     this.mv=mv;this.state='wind';this.timer=mv.windup;this.heading=face;this.dir.set(Math.sin(face),0,Math.cos(face));this.announce(ctx);}
-   else if(s.keep&&dist<s.keep)want=-.8;else if(dist>close+this.radius)want=1;
+   else if(s.keep&&dist<s.keep*.65)want=-.45;else if(s.keep&&dist<s.keep)want=0;else if(dist>close+this.radius)want=1;
   }else if(this.state==='wind'){
    const m=this.mv;this.timer-=dt*slow*(this.phase===2?1.25:1);const k=1-this.timer/m.windup;
    for(const te of this.tele){const u=(te.material as T.ShaderMaterial).uniforms;u.uK.value=k;u.uT.value=teleClock;}
@@ -503,7 +536,8 @@ export class Creature{
   }else if(this.state==='recover'){
    this.timer-=dt;L.body.rotation.y*=Math.exp(-dt*6);L.body.rotation.x*=Math.exp(-dt*6);L.arms?.forEach(a=>a.rotation.x*=Math.exp(-dt*5));if(L.body.position.y>0)L.body.position.y*=Math.exp(-dt*8);
    if(this.hidden>0&&this.mv?.type!=='burrow')this.hidden=Math.max(0,this.hidden-dt*2);
-   if(this.timer<=0){this.state='chase';this.moveCd=this.boss?.3:0;}
+   // a breath between attacks, like the 2D cooldowns: openings for melee
+   if(this.timer<=0){this.state='chase';this.moveCd=this.boss?.55:rnd(.9,1.7);}
   }
   if(this.spec.body==='worm'&&this.state!=='wind'&&this.state!=='act'&&this.hidden>0&&this.mv?.type==='burrow')this.hidden=Math.max(0,this.hidden-dt*1.5);
   if(want!==0&&!(this.spec.body==='worm'&&this.hidden>.5)){const f=tmp.set(Math.sin(this.heading),0,Math.cos(this.heading));this.vel.addScaledVector(f,dt*s.speed*6*want);}
@@ -512,6 +546,7 @@ export class Creature{
   this.pos.addScaledVector(this.vel,dt);ctx.collide(this.pos,this.radius);
   for(const o of ctx.others)if(o!==this&&o.state!=='dead'){const d=tmp.copy(this.pos).sub(o.pos).setY(0),l=d.length(),mm=this.radius+o.radius;if(l<mm&&l>1e-4)this.pos.addScaledVector(d.normalize(),(mm-l)*.5);}
   this.g.rotation.y=this.heading;
+  {const b=Math.sin(this.t*(this.state==='chase'?3.4:2.2));L.body.scale.set(1-b*.012,1+b*.025,1-b*.012);}
   if(s.fly)this.g.position.y=s.fly+Math.sin(this.t*2.2)*.25;
   this.gait+=this.vel.length()*dt*(this.radius>1?1.6:3);
   this.pose(false);

@@ -39,7 +39,7 @@ function saveLook(){try{localStorage.setItem('dante3d.look',JSON.stringify(look)
 // ---------- class kit ----------
 const cls=():ClassId=>WEAPON_CLASS[look.weapon];
 const kit=()=>CLASSES[cls()];
-let element:Element='energy',skillReady=0,dashReady=0,chargeStart=0;
+let element:Element='energy',skillReady=0,dashReady=0,chargeStart=0,lungeReady=0,lungeSpeed=0,lungeBonus=1;
 
 // ---------- creatures of Dante (bestiary of the 2D game) ----------
 type Enemy=Creature;
@@ -49,10 +49,20 @@ const ctx:Ctx={scene:world.scene,get vfx(){return vfx;},player:pos,playerOk:()=>
  sfx:(n,p)=>sfx(n as Sfx,p),
  onKill:(c)=>{kills++;if(c.boss){bossDown(c);}else biomeKills++;hud();},onHit:(c,quiet)=>{if(!quiet)sfx('hit',c.pos);if(cls()==='xenobinder'&&!quiet)mana=Math.min(100,mana+6);},others:enemies} as Ctx;
 Creature.ctx=ctx;
-function spawnEnemy(kind?:SpeciesId){
-  if(!kind){const mix=BIOMES[world.biome].creatures;if(!mix.length)return null;let r=Math.random();kind=mix[0][0];for(const [k,w] of mix){if(r<w){kind=k;break;}r-=w;}}
-  const camp=world.biome==='camp',a=Math.random()*6.28,d=camp?26+Math.random()*10:16+Math.random()*14;
-  const e=new Creature(kind,Math.cos(a)*d+(camp?0:pos.x*.3),Math.sin(a)*d+(camp?0:pos.z*.3),world.scene);world.collide(e.pos,e.radius);enemies.push(e);return e;
+// residents of the region live in fixed habitats (as in the 2D maps): the same groups at the same places on every
+// visit; a cleared habitat is renewed after a while, only when the player is far from it
+interface Hab{id:number;x:number;z:number;kinds:SpeciesId[];alive:Enemy[];clearedAt:number}
+let habs:Hab[]=[];
+const HAB_RENEW=60,HAB_SAFE=20;
+function spawnHab(h:Hab){
+  h.alive=h.kinds.map((k,i)=>{const a=i*2.4+h.id,r=i?1.8:0;const e=new Creature(k,h.x+Math.cos(a)*r,h.z+Math.sin(a)*r,world.scene);e.habitat=h.id;world.collide(e.pos,e.radius);e.home.copy(e.pos);e.heading=Math.random()*6.28;enemies.push(e);return e;});
+  h.clearedAt=-1;
+}
+function populate(){habs=world.habitats.map(h=>({...h,alive:[],clearedAt:-1}));for(const h of habs)spawnHab(h);}
+function renewHabitats(){
+  const n=now();
+  for(const h of habs){if(h.alive.some(e=>e.state!=='dead'))continue;if(h.clearedAt<0){h.clearedAt=n;continue;}
+   if(n-h.clearedAt>HAB_RENEW&&Math.hypot(pos.x-h.x,pos.z-h.z)>HAB_SAFE)spawnHab(h);}
 }
 // region bosses wake after enough kills in their region
 let biomeKills=0,boss:Creature|null=null,bossBeaten=false;
@@ -62,7 +72,7 @@ function updateEnemies(dt:number,now:number){
   const B=BIOMES[world.biome];
   if(mode==='play'&&B.boss&&!boss&&!bossBeaten&&(biomeKills>=(B.bossAfter??10)||journal.bossCalled(world.biome))&&spawnT<=0){const a=Math.random()*6.28;boss=new Creature(B.boss,pos.x+Math.cos(a)*16,pos.z+Math.sin(a)*16,world.scene);world.collide(boss.pos,boss.radius);enemies.push(boss);banner(`${boss.name} desperta`);sound.music(B.boss);sfx('roar');$('bossname').textContent=boss.name;$('bossbar').classList.add('on');}
   if(boss)$('bossfill').style.width=Math.max(0,boss.hp/boss.spec.hp*100)+'%';
-  spawnT-=dt;if(mode==='play'&&spawnT<=0&&B.creatures.length&&enemies.filter(e=>e.state!=='dead'&&!e.boss).length<(boss?3:6)){spawnEnemy();spawnT=4.5;}
+  spawnT-=dt;if(mode==='play')renewHabitats();
   updatePortals();
   for(let i=enemies.length-1;i>=0;i--){const e=enemies[i];e.update(dt,now,ctx);if(world.biome==='camp'&&e.state!=='dead'){const d=Math.hypot(e.pos.x,e.pos.z);if(d<19&&d>.01){e.pos.x*=19/d;e.pos.z*=19/d;}}if(e.gone)enemies.splice(i,1);}
   updateSpits(dt,ctx);tickTele(dt);
@@ -88,12 +98,28 @@ function updateFx(dt:number){
    if(hit||p.life<=0){if(hit||p.kind!=='pulse')vfx.impact(p.kind,p.o.position,p.v.clone().normalize());dispose(p.o);projs.splice(i,1);}
   }
   // twisting slash damage ticks
-  if(twist){const n=now();if(n>=twist.next){twist.next=n+.16;for(const e of enemies)if(e.state!=='dead'&&e.pos.distanceTo(pos)<twist.r){e.hit(twist.dmg,pos,'#9ff4ff',false,4);vfx.hitSpark(e.pos.clone().setY(1.1),e.pos.clone().sub(pos).normalize());}}if(n>=twist.until){twist=null;}}
+  if(twist){const n=now();if(n>=twist.next){twist.next=n+.16;for(const e of enemies)if(e.state!=='dead'&&e.pos.distanceTo(pos)<twist.r){e.hit(twist.dmg,pos,'#9ff4ff',false,4);if(kit().leech)hp=Math.min(hpMax,hp+twist.dmg*kit().leech!);vfx.hitSpark(e.pos.clone().setY(1.1),e.pos.clone().sub(pos).normalize());}}if(n>=twist.until){twist=null;}}
   vfx.update(dt);
 }
 let twist:{until:number;next:number;r:number;dmg:number}|null=null,spinUntil=0;
 const texts:{el:HTMLElement;p:T.Vector3;t:number}[]=[];
 function popText(p:T.Vector3,s:string,color:string){const el=document.createElement('div');el.className='dmg';el.textContent=s;el.style.color=color;ui.appendChild(el);texts.push({el,p,t:0});}
+// health bar and name over every creature that is fighting or hurt (bosses keep the big bar on top)
+const bars=new Map<Enemy,HTMLElement>();
+function updateBars(){
+  const v=new T.Vector3();
+  for(const [e,el] of bars)if(e.gone||!enemies.includes(e)){el.remove();bars.delete(e);}
+  for(const e of enemies){
+   const show=mode==='play'&&!e.boss&&e.state!=='dead'&&(e.state!=='idle'&&e.state!=='return'||e.hp<e.spec.hp)&&e.pos.distanceTo(pos)<26;
+   let el=bars.get(e);
+   if(!show){if(el)el.style.display='none';continue;}
+   if(!el){el=document.createElement('div');el.className='ebar';el.innerHTML=`<b></b><i><u></u></i>`;el.querySelector('b')!.textContent=e.name;ui.appendChild(el);bars.set(e,el);}
+   v.copy(e.pos);v.y+=e.look.height*e.spec.scale+.35;v.project(camera);
+   if(v.z>1){el.style.display='none';continue;}
+   el.style.display='';el.style.transform=`translate(${(v.x*.5+.5)*innerWidth}px,${(-v.y*.5+.5)*innerHeight}px) translate(-50%,-100%)`;
+   const k=Math.max(0,e.hp/e.spec.hp);(el.querySelector('u') as HTMLElement).style.width=(k*100).toFixed(1)+'%';el.classList.toggle('low',k<.3);
+  }
+}
 function updateTexts(dt:number){
   const v=new T.Vector3();
   for(let i=texts.length-1;i>=0;i--){
@@ -106,6 +132,7 @@ function updateTexts(dt:number){
 // ---------- combat ----------
 function faceTo(p:T.Vector3){heading=Math.atan2(p.x-pos.x,p.z-pos.z);}
 function damage(d:number,from:T.Vector3){
+  d*=1-(kit().guard??0);
   hp=Math.max(0,hp-d);scan=null;sfx('hurt');popText(pos.clone().setY(2.2),String(Math.round(d)),'#ff6a5a');stunUntil=now()+.28;atkUntil=0;atkPending=null;chargeStart=0;chargeFx(false);
   const dir=pos.clone().sub(from).setY(0).normalize();pos.addScaledVector(dir,.35);
   if(hp<=0){dead=true;hero.play('Death01',{once:true,fade:.1});document.body.classList.add('dead');}else hero.play('Hit_Chest',{once:true,fade:.06});
@@ -126,8 +153,26 @@ function applyHit(e:Enemy,dmg:number,from:T.Vector3,elem?:Element,color='#ffd27a
 const fwd=()=>new T.Vector3(Math.sin(heading),0,Math.cos(heading));
 // shots fly flat toward the cursor, starting at the weapon's muzzle
 function shotDir(from:T.Vector3){const d=aimPoint.clone().sub(from).setY(0);if(d.lengthSq()<.5)return fwd();d.normalize();if(d.dot(fwd())<.6)return fwd();return d;}
+// warrior: a target out of reach (but close) is reached with a void lunge, untouchable on the way; the strike lands harder
+function lungeTarget(){
+  const k=kit();if(!k.lunge||now()<lungeReady)return null;
+  const aim=aimPoint.clone().sub(pos).setY(0);const dir=aim.lengthSq()>.5?aim.normalize():fwd();
+  let best:Enemy|null=null,bd=1e9;
+  for(const e of enemies)if(e.state!=='dead'){const d=e.pos.clone().sub(pos).setY(0),l=d.length();
+   if(l>k.primary.range*.85&&l<k.lunge.range&&dir.angleTo(d.normalize())<.75&&l<bd){bd=l;best=e;}}
+  return best;
+}
+function lunge(e:Enemy){
+  const n=now(),k=kit();const d=e.pos.clone().sub(pos).setY(0),l=d.length(),travel=Math.max(0,l-e.radius-.9);
+  rollDir.copy(d.normalize());heading=Math.atan2(rollDir.x,rollDir.z);lungeSpeed=k.lunge!.speed;
+  const dur=travel/lungeSpeed;rollUntil=n+dur;invulnUntil=n+dur+.1;lungeReady=n+k.lunge!.cd;moveTarget=null;atkPending=null;
+  hero.play('Sprint_Loop',{fade:.04,speed:1.8});sfx('dash');vfx.decal(pos.clone(),'#7fe8ff',1.4,.35);
+  later(dur,()=>{lungeSpeed=0;lungeBonus=1.4;vfx.shake=Math.max(vfx.shake,.12);tryAttack();});
+}
 function tryAttack(){
   const n=now();if(mode!=='play'||dead||n<atkUntil||n<rollUntil||n<stunUntil||chargeStart)return;
+  {const t=lungeBonus===1?lungeTarget():null;if(t){const near=enemies.some(e=>e.state!=='dead'&&e.pos.distanceTo(pos)<kit().primary.range*.85);if(!near){lunge(t);return;}}}
+  const bonus=lungeBonus;lungeBonus=1;
   const k=kit(),clip=k.attacks[comboIdx++%k.attacks.length];
   const dur=hero.duration(clip)/k.atkSpeed;
   faceTo(aimPoint);hero.play(clip,{once:true,speed:k.atkSpeed,fade:.08});
@@ -143,7 +188,7 @@ function tryAttack(){
    }else{
     vfx.slash(pos,heading,comboIdx%2===0);sfx('swing');let struck=false;
     for(const e of enemies)if(e.state!=='dead'){const d=e.pos.clone().sub(pos).setY(0),l=d.length();
-     if(l<pr.range&&(l<.9||dir.angleTo(d.normalize())<pr.arc!/2)){if(!struck){struck=true;sfx('slashHit');}e.hit(pr.dmg*(.9+Math.random()*.25),pos);vfx.hitSpark(e.pos.clone().setY(1.15),d);mana=Math.min(100,mana+8);}}
+     if(l<pr.range&&(l<.9||dir.angleTo(d.normalize())<pr.arc!/2)){if(!struck){struck=true;sfx('slashHit');}const dmg=pr.dmg*bonus*(.9+Math.random()*.25);e.hit(dmg,pos);vfx.hitSpark(e.pos.clone().setY(1.15),d);mana=Math.min(100,mana+8);if(k.leech)hp=Math.min(hpMax,hp+dmg*k.leech);}}
     // the wind blade keeps cutting in a line in front of the swing
     for(const e of enemies)if(e.state!=='dead'){const r=e.pos.clone().sub(pos).setY(0),along=r.dot(dir);if(along>=pr.range&&along<pr.range+2.2&&r.addScaledVector(dir,-along).length()<1.1)e.hit(pr.dmg*.6,pos,'#bff6ff');}
    }
@@ -194,7 +239,7 @@ function roll(){
   const d=inputDir();if(d.lengthSq()<.01)d.set(Math.sin(heading),0,Math.cos(heading));
   rollDir.copy(d.normalize());heading=Math.atan2(rollDir.x,rollDir.z);sfx('dash');
   const sp=hero.duration('Roll')/k.dash.dur;hero.play('Roll',{once:true,speed:sp,fade:.06});
-  rollUntil=n+k.dash.dur;invulnUntil=n+k.dash.dur*.8;dashReady=n+k.dash.cd;atkUntil=0;atkPending=null;moveTarget=null;chargeStart=0;chargeFx(false);
+  lungeSpeed=0;rollUntil=n+k.dash.dur;invulnUntil=n+k.dash.dur*.9;dashReady=n+k.dash.cd;atkUntil=0;atkPending=null;moveTarget=null;chargeStart=0;chargeFx(false);
 }
 function inputDir(){
   const d=new T.Vector3();
@@ -248,7 +293,7 @@ function updatePlayer(dt:number){
   mana=Math.min(100,mana+dt*kit().regen);
   const locked=n<atkUntil||n<stunUntil;
   const v=new T.Vector3();
-  if(n<rollUntil){v.copy(rollDir).multiplyScalar(kit().dash.speed);}
+  if(n<rollUntil){v.copy(rollDir).multiplyScalar(lungeSpeed||kit().dash.speed);if(lungeSpeed)vfx.emit({pos:pos.clone().setY(1),n:2,dir:rollDir.clone().negate(),cone:.4,speed:[1,3],life:[.2,.35],size:[.25,.05],c0:'#e8fbff',c1:'#5fd8ff',a:[.8,0],drag:2});}
   else if(!locked){
    const d=inputDir();
    if(d.lengthSq()>0){moveTarget=null;d.normalize();}
@@ -270,7 +315,7 @@ function updatePlayer(dt:number){
    if(moving)hero.play(sprinting?'Sprint_Loop':(look.weapon==='saber'&&false?'Walk_Loop':'Jog_Fwd_Loop'),{fade:.2});
    else hero.play(scan?'Interact':hero.has(w.idle)?w.idle:'Idle_Loop',{fade:.25});
   }
-  if(mouseDown&&mode==='play'&&!locked){updateAim();const e=enemyAt(aimPoint);if(e){focusEnemy=e;faceTo(e.pos);if(pos.distanceTo(e.pos)<=kit().primary.range*.8)tryAttack();else moveTarget=e.pos.clone();}else{moveTarget=aimPoint.clone();focusEnemy=null;}}
+  if(mouseDown&&mode==='play'&&!locked&&n>=rollUntil){updateAim();const e=enemyAt(aimPoint);if(e){focusEnemy=e;faceTo(e.pos);const l=pos.distanceTo(e.pos),lk=kit().lunge;if(l<=kit().primary.range*.8)tryAttack();else if(lk&&l<lk.range&&n>=lungeReady)lunge(e);else moveTarget=e.pos.clone();}else{moveTarget=aimPoint.clone();focusEnemy=null;}}
   hp=Math.min(hpMax,hp+dt*.4);
   pet?.update(dt,n);
 }
@@ -311,7 +356,7 @@ ui.innerHTML=`
  <div class="grp"><label>Classe</label><div class="row wrap" id="o-class"></div><div class="clsinfo" id="o-clsinfo"></div></div>
  <button id="go">Entrar no mundo</button><p class="hint">Arraste para girar o personagem</p></div>
 <div id="hud"><div class="orb hp"><i id="hp"></i><b id="hpt"></b></div><div id="clsname"></div><div class="bar" id="skillbar"></div><div class="orb mp"><i id="mp"></i><b id="mpt"></b></div><div id="kills"></div></div><button id="optbtn" title="Opções">&#9776;</button><div id="perf"><span id="fps"></span></div>
-<div id="biomes"></div><div id="portalhint"></div><div id="touch"><button id="t-atk">Atacar</button><button id="t-q">Carga</button><button id="t-dash">Esquiva</button><button id="t-e">Energia</button><button id="t-act">Falar</button></div><div id="joy"><i></i></div><div id="modal"><div class="box"><h2 id="mtitle"></h2><div id="mbody"></div><button id="mclose">Fechar</button></div></div><div id="banner"></div><div id="bossbar"><span id="bossname"></span><div><i id="bossfill"></i></div></div>
+<div id="biomes"></div><div id="portalhint"></div><div id="touch"><button id="t-atk">Atacar</button><button id="t-q">Carga</button><button id="t-dash">Esquiva</button><button id="t-e">Energia</button><button id="t-act">Falar</button></div><div id="joy"><i></i></div><div id="modal"><div class="box"><h2 id="mtitle"></h2><div id="mbody"></div><button id="mclose">Fechar</button></div></div><div id="banner"></div><div id="fade"></div><div id="bossbar"><span id="bossname"></span><div><i id="bossfill"></i></div></div>
 <div id="tracker"></div><div id="prompt"></div><div id="guide"><i></i><span></span></div><div id="toast"></div>
 <div id="deadmsg"><h2>Você caiu</h2><button id="respawn">Levantar</button></div>
 <div id="loading">Carregando…</div>`;
@@ -350,7 +395,7 @@ function hud(){
   $('hp').style.height=(hp/hpMax*100)+'%';$('mp').style.height=mana+'%';$('hpt').textContent=String(Math.ceil(hp));$('mpt').textContent=String(Math.floor(mana));
   const col=cls()==='astral'?ELEMENT_COLORS[element]:k.resColor;$('mp').style.background=`radial-gradient(circle at 40% 30%,${col},#0b1420 75%)`;
   const n=now(),cdq=Math.max(0,skillReady-n),cdd=Math.max(0,dashReady-n);
-  const sb=`<div class="sk"><kbd>Botão esq. / J</kbd>${k.primary.kind==='melee'?'golpe':'disparo'}</div><div class="sk${cdq?' cd':''}"><kbd>Q</kbd>${k.skill.name}${k.skill.cost?` · ${k.skill.cost}`:''}${cdq?` (${cdq.toFixed(1)})`:''}</div>${cls()==='astral'?`<div class="sk"><kbd>E</kbd><span style="color:${ELEMENT_COLORS[element]}">${ELEMENT_NAMES[element]}</span></div>`:''}<div class="sk${cdd?' cd':''}"><kbd>Espaço</kbd>${k.dash.name}</div><div class="sk"><kbd>Shift</kbd>correr</div>`;
+  const sb=`<div class="sk"><kbd>Botão esq. / J</kbd>${k.primary.kind==='melee'?'golpe':'disparo'}</div><div class="sk${cdq?' cd':''}"><kbd>Q</kbd>${k.skill.name}${k.skill.cost?` · ${k.skill.cost}`:''}${cdq?` (${cdq.toFixed(1)})`:''}</div>${cls()==='astral'?`<div class="sk"><kbd>E</kbd><span style="color:${ELEMENT_COLORS[element]}">${ELEMENT_NAMES[element]}</span></div>`:''}${k.lunge?`<div class="sk${n<lungeReady?' cd':''}"><kbd>Alvo longe</kbd>Investida</div>`:''}<div class="sk${cdd?' cd':''}"><kbd>Espaço</kbd>${k.dash.name}</div><div class="sk"><kbd>Shift</kbd>correr</div>`;
   if($('skillbar').innerHTML!==sb)$('skillbar').innerHTML=sb;
   const cn=`${k.name} · <span style="color:${col}">${k.resource}</span>`;if($('clsname').innerHTML!==cn)$('clsname').innerHTML=cn;
   $('kills').textContent=kills?`Abates: ${kills}`:'';
@@ -358,6 +403,7 @@ function hud(){
 function enter(){
   mode='play';document.body.classList.add('play');document.body.classList.remove('creator');
   document.body.classList.toggle('astral',cls()==='astral');
+  if(!enemies.length)populate();
   pos.set(0,0,0);heading=Math.PI;hpMax=kit().hp;hp=hpMax;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();hud();spawnT=1.5;labelButtons();firstHelp();refreshMarkers();renderTracker();sound.music(world.biome);sound.ambient(world.biome);
 }
 $('go').onclick=enter;
@@ -369,9 +415,11 @@ function updatePortals(){
   for(const pt of world.portals){const d=Math.hypot(pos.x-pt.pos.x,pos.z-pt.pos.z);if(d<6)near=pt;if(d<1.7&&now()>portalLock){goBiome(pt.to,pt.dir);return;}}
   const h=$('portalhint');if(near){h.textContent=`Portal: ${BIOMES[near.to].name}`;h.classList.add('on');}else h.classList.remove('on');
 }
+let fading=false;
 function goBiome(id:BiomeId,from:0|1|-1=0){
+  if(from&&!fading){fading=true;const f=$('fade');f.classList.add('on');setTimeout(()=>{goBiome(id,from);fading=true;setTimeout(()=>{f.classList.remove('on');fading=false;},60);},380);return;}
   world.setBiome(id);if(from)sfx('portal');if(mode==='play'){sound.music(id);sound.ambient(id);}vfx.clearEmitters();for(const f of world.flameSpots)vfx.campfire(f.p,f.s);
-  for(const e of enemies)e.dispose();enemies.length=0;clearShots();boss=null;bossBeaten=false;biomeKills=0;$('bossbar').classList.remove('on');
+  for(const e of enemies)e.dispose();enemies.length=0;clearShots();boss=null;bossBeaten=false;biomeKills=0;$('bossbar').classList.remove('on');populate();
   pos.set(0,0,from===1?ARENA-10:from===-1?-ARENA+10:0);heading=from===-1?0:Math.PI;portalLock=now()+2;scan=null;refreshMarkers();if(pet)pet.g.position.set(pos.x+1.2,0,pos.z+1);spawnT=2;banner(BIOMES[id].name);renderBiomes();
 }
 // touch devices: left thumb joystick to walk, right-hand buttons; the skill button can be dragged to aim
@@ -433,7 +481,7 @@ const closeModal=()=>{$('modal').classList.remove('on');$('modal').classList.rem
 $('mclose').onclick=closeModal;
 $('modal').addEventListener('pointerdown',e=>{if(e.target===$('modal'))closeModal();});
 function firstHelp(){try{if(localStorage.getItem('dante3d.help'))return;localStorage.setItem('dante3d.help','1');}catch{/* ignore */}openModal('help');}
-$('respawn').onclick=()=>{document.body.classList.remove('dead');dead=false;hp=hpMax;mana=100;pos.set(0,0,0);hero.play('Idle_Loop',{fade:.2});if(pet)pet.g.position.set(1.2,0,1);for(const e of enemies)e.dispose();enemies.length=0;hud();};
+$('respawn').onclick=()=>{document.body.classList.remove('dead');dead=false;hp=hpMax;mana=100;pos.set(0,0,0);hero.play('Idle_Loop',{fade:.2});if(pet)pet.g.position.set(1.2,0,1);for(const e of enemies)e.dispose();enemies.length=0;populate();hud();};
 document.body.classList.add('creator');
 
 // ---------- people of the base, missions and guidance ----------
@@ -621,7 +669,7 @@ function tick(dt:number){
   if(mode==='creator'){heading=previewYaw;if(hero.model)hero.model.rotation.y+=(previewYaw-hero.model.rotation.y)*Math.min(1,dt*10);hero.play(hero.has(kit().idle)?kit().idle:'Idle_Loop',{fade:.25});}
   else updatePlayer(dt);
   if(mode==='play'&&!mouseDown&&!qaAim&&!('ontouchstart' in window))updateAim();
-  hero.update(dt);updateEnemies(dt,time);updateMissions(dt);updateFx(dt);updateTexts(dt);
+  hero.update(dt);updateEnemies(dt,time);updateMissions(dt);updateFx(dt);updateTexts(dt);updateBars();
   key.position.set(pos.x+3,4.5,pos.z+5);key.target.position.set(pos.x,pos.y+1,pos.z);key.intensity=mode==='creator'?2.4:.35;
   world.update(time,dt,pos);updateCamera(dt);
 }
@@ -659,7 +707,7 @@ function frame(){
   requestAnimationFrame(frame);
 })();
 // QA hooks
-(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look};},cam:(px:number,py:number,pz:number,tx:number,ty:number,tz:number)=>{fixedCam=px===undefined?null:[new T.Vector3(px,py,pz),new T.Vector3(tx,ty,tz)];},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,goBiome,bossNow:()=>{biomeKills=99;},scene:world.scene,hero,renderer,npcs:(v:boolean)=>{for(const n of npcs)n.char.root.visible=v;npcHidden=!v;},shadows:(v:boolean)=>{renderer.shadowMap.enabled=v;world.scene.traverse(o=>{const m=(o as T.Mesh).material as T.Material|undefined;if(m)m.needsUpdate=true;});},perf:(n=10)=>{const t0=performance.now();for(let i=0;i<n;i++)tick(1/30);const t1=performance.now();renderer.info.autoReset=false;renderer.info.reset();world.render(camera,time);const calls=renderer.info.render.calls,tris=renderer.info.render.triangles;renderer.info.autoReset=true;const t2=performance.now();for(let i=0;i<n;i++){if(quality==='high')world.render(camera,time);else renderer.render(world.scene,camera);}const t3=performance.now();let lights=0,meshes=0,skinned=0;world.scene.traverseVisible(o=>{if((o as T.Light).isLight)lights++;if((o as T.Mesh).isMesh)meshes++;if((o as T.SkinnedMesh).isSkinnedMesh)skinned++;});return{tick:+((t1-t0)/n).toFixed(2),render:+((t3-t2)/n).toFixed(1),calls,tris,programs:renderer.info.programs?.length,lights,meshes,skinned,pr:renderer.getPixelRatio()};},journal:()=>journal,tp:(x:number,z:number)=>{pos.set(x,0,z);},interact,talkTo:(id:string)=>{const n=npcs.find(x=>x.def.id===id);if(n){pos.set(n.pos.x,0,n.pos.z+1.6);openTalk(n);}},goal:(id:string)=>{const g=journal.open().find(x=>x.id===id);if(g)goalDone(g);},enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{qaAim=true;aimPoint.set(x,0,z);},spawn:(x:number,z:number,k:SpeciesId='crawler')=>{const e=new Creature(k,x,z,world.scene);enemies.push(e);return e;},mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
+(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look};},cam:(px:number,py:number,pz:number,tx:number,ty:number,tz:number)=>{fixedCam=px===undefined?null:[new T.Vector3(px,py,pz),new T.Vector3(tx,ty,tz)];},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,goBiome,bossNow:()=>{biomeKills=99;},scene:world.scene,hero,renderer,npcs:(v:boolean)=>{for(const n of npcs)n.char.root.visible=v;npcHidden=!v;},shadows:(v:boolean)=>{renderer.shadowMap.enabled=v;world.scene.traverse(o=>{const m=(o as T.Mesh).material as T.Material|undefined;if(m)m.needsUpdate=true;});},perf:(n=10)=>{const t0=performance.now();for(let i=0;i<n;i++)tick(1/30);const t1=performance.now();renderer.info.autoReset=false;renderer.info.reset();world.render(camera,time);const calls=renderer.info.render.calls,tris=renderer.info.render.triangles;renderer.info.autoReset=true;const t2=performance.now();for(let i=0;i<n;i++){if(quality==='high')world.render(camera,time);else renderer.render(world.scene,camera);}const t3=performance.now();let lights=0,meshes=0,skinned=0;world.scene.traverseVisible(o=>{if((o as T.Light).isLight)lights++;if((o as T.Mesh).isMesh)meshes++;if((o as T.SkinnedMesh).isSkinnedMesh)skinned++;});return{tick:+((t1-t0)/n).toFixed(2),render:+((t3-t2)/n).toFixed(1),calls,tris,programs:renderer.info.programs?.length,lights,meshes,skinned,pr:renderer.getPixelRatio()};},journal:()=>journal,tp:(x:number,z:number)=>{pos.set(x,0,z);},interact,talkTo:(id:string)=>{const n=npcs.find(x=>x.def.id===id);if(n){pos.set(n.pos.x,0,n.pos.z+1.6);openTalk(n);}},goal:(id:string)=>{const g=journal.open().find(x=>x.id===id);if(g)goalDone(g);},enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{qaAim=true;aimPoint.set(x,0,z);},list:()=>enemies,habs:()=>habs,hp:()=>hp,bars:()=>[bars.size,mode],spawn:(x:number,z:number,k:SpeciesId='crawler')=>{const e=new Creature(k,x,z,world.scene);enemies.push(e);return e;},mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
  const w=hero.weapon,h=hero.hand;if(!w||!h)return null;hero.model.updateMatrixWorld(true);
  const mq=hero.model.getWorldQuaternion(new T.Quaternion()),hq=h.getWorldQuaternion(new T.Quaternion());
  const hm=mq.clone().invert().multiply(hq);const wq=hm.clone().multiply(w.quaternion);

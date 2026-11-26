@@ -12,14 +12,17 @@ export interface Kit{
  primary:{kind:'melee'|'shot';dmg:number;range:number;arc?:number;color?:string;speed?:number};
  dash:{name:string;speed:number;dur:number;cd:number};
  skill:{name:string;cost:number;cd:number;hint:string};
+ // melee extras: void lunge to a target out of reach, damage taken reduced, life drawn from each hit
+ lunge?:{range:number;speed:number;cd:number};guard?:number;leech?:number;
 }
 export const CLASS_ORDER:ClassId[]=['warrior','hunter','astral','xenobinder'];
 export const CLASSES:Record<ClassId,Kit>={
- warrior:{name:'Guerreiro Galáctico',role:'CORPO A CORPO · RESISTÊNCIA',fantasy:'Entre na batalha. Domine o espaço próximo.',kit:'Sabre de energia · Esquiva do vazio · Carga cinética',weapon:'saber',
-  hp:130,speed:4.3,resource:'Carga',resColor:'#ff9a48',regen:9,
-  idle:'Sword_Idle',attacks:['Sword_Attack'],atkSpeed:1.5,impact:.42,
-  primary:{kind:'melee',dmg:26,range:2.8,arc:2.4},
-  dash:{name:'Esquiva do vazio',speed:7.5,dur:.55,cd:1.4},
+ warrior:{name:'Guerreiro Galáctico',role:'CORPO A CORPO · RESISTÊNCIA',fantasy:'Entre na batalha. Domine o espaço próximo.',kit:'Sabre de energia · Investida do vazio · Esquiva do vazio · Carga cinética',weapon:'saber',
+  hp:140,speed:4.6,resource:'Carga',resColor:'#ff9a48',regen:9,
+  idle:'Sword_Idle',attacks:['Sword_Attack'],atkSpeed:1.65,impact:.42,
+  primary:{kind:'melee',dmg:30,range:3,arc:2.5},
+  dash:{name:'Esquiva do vazio',speed:13,dur:.32,cd:.85},
+  lunge:{range:9,speed:20,cd:2.2},guard:.25,leech:.06,
   skill:{name:'Carga cinética',cost:0,cd:3.2,hint:'segure e solte'}},
  hunter:{name:'Caçador estelar',role:'DISTÂNCIA · PRECISÃO',fantasy:'Controle a distância. Encontre sua janela de disparo.',kit:'Rifle de pulso · Passo de fase · Feixe perfurante',weapon:'carbine',
   hp:105,speed:4.7,resource:'Foco',resColor:'#6fe4ff',regen:7,
