@@ -64,7 +64,7 @@ export class Character{
     mats.forEach((mat,i)=>{
      const n=(mat.name||'').toLowerCase();const mine=mat.clone();
      if(Array.isArray(m.material))(m.material as T.Material[])[i]=mine;else m.material=mine;
-     if(/body$/.test(n))this.bodyMats.push(mine);
+     if(/body$/.test(n)){this.bodyMats.push(mine);this.coverable(m,mine);}
      let g:T.Object3D|null=m,grp='';while(g&&!grp){if(g.name.startsWith('hair'))grp='hair';else if(g.name.startsWith('eyebrows'))grp='brow';else if(g.name.startsWith('outfit'))grp='outfit';g=g.parent;}
      if(grp==='hair')this.hairMats.push(mine);else if(grp==='brow')this.browMats.push(mine);else if(grp==='outfit'){this.outfitMats.push(mine);mine.userData.out=g?.name;}
      mine.envMapIntensity=.3;mine.metalness=0;mine.roughness=/body$/.test(n)?.62:Math.max(.88,mine.roughness);
@@ -75,6 +75,22 @@ export class Character{
   model.updateMatrixWorld(true);this.restHead.copy(model.getObjectByName('head')!.matrixWorld);this.restChest.copy(model.getObjectByName('spine_03')!.matrixWorld);this.gearKey='';this.fitKey='';this.fitted=[];
   this.look={...this.look,sex};
  }
+ // skin under a garment: the body keeps every vertex and hides only what the worn garments cover
+ // (per-garment masks exported as _H_<garment> attributes by build_character.py, packed into one bit field here)
+ private coverBits=new Map<string,number>();private coverU={value:0};
+ private coverable(m:T.Mesh,mat:T.MeshStandardMaterial){
+  const g=m.geometry;let bits=g.userData.coverBits as Map<string,number>|undefined;
+  if(!bits){bits=new Map();const keys=Object.keys(g.attributes).filter(k=>k.startsWith('_h_'));if(!keys.length)return;
+   const packed=new Float32Array(g.attributes.position.count);
+   keys.forEach((k,i)=>{const a=g.attributes[k];for(let v=0;v<packed.length;v++)if(a.getX(v)>.5)packed[v]+=1<<i;bits!.set(k.slice(3),1<<i);g.deleteAttribute(k);});
+   g.setAttribute('cover',new T.BufferAttribute(packed,1));g.userData.coverBits=bits;}
+  this.coverBits=bits;const u=this.coverU;
+  mat.onBeforeCompile=sh=>{sh.uniforms.uCover=u;
+   sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\nattribute float cover;uniform int uCover;varying float vCover;').replace('#include <begin_vertex>','#include <begin_vertex>\nvCover=(int(cover+.5)&uCover)!=0?1.:0.;');
+   sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>\nvarying float vCover;').replace('#include <clipping_planes_fragment>','#include <clipping_planes_fragment>\nif(vCover>.5)discard;');};
+  mat.customProgramCacheKey=()=>'coverable';
+ }
+ private updateCover(){let b=0;this.model.traverse(o=>{if(o.visible&&o.name.startsWith('outfit')){let p:T.Object3D|null=o,vis=true;while(p&&p!==this.model){if(!p.visible)vis=false;p=p.parent;}const n=o.name.toLowerCase(),bit=this.coverBits.get(n)??(n.startsWith('outfitfleet')?this.coverBits.get('outfitbasic0'):0);if(vis&&bit)b|=bit;}});this.coverU.value=b;}
  apply(look:Look){
   this.look=look;
   const hair='hair'+clean(look.hair),brow='eyebrows'+clean(look.brows),out='outfit'+look.outfit;const outEnd=out;
@@ -92,7 +108,7 @@ export class Character{
    // the bodysuits are dark textures: the class colour has to be pushed above 1 to read as the 2D navy/olive
    if(/bodysuit|skinsuit/.test(n)){if(m.userData.map0===undefined)m.userData.map0=m.map;const flat=own&&look.weapon!=='saber';const want=flat?null:m.userData.map0;if(m.map!==want){m.map=want;m.needsUpdate=true;}if(flat){m.color.set(P.suit);return;}}
    if(/armor/.test(n))m.color.set(own?P.plate:'#ffffff');else if(/worksuit/.test(n)){if(m.userData.map0===undefined)m.userData.map0=m.map;const want=look.tint?null:m.userData.map0;if(m.map!==want){m.map=want;m.needsUpdate=true;}m.color.copy(own?new T.Color(P.work):cl);}else m.color.copy(cl);});
-  this.equip(look);this.fit(look);
+  this.equip(look);this.fit(look);this.updateCover();
   const hc=HAIR_COLORS[look.hairColor]??HAIR_COLORS[1];
   this.hairMats.forEach(m=>m.color.setRGB(hc[1][0],hc[1][1],hc[1][2]));
   this.browMats.forEach(m=>m.color.setRGB(hc[1][0]*.8,hc[1][1]*.8,hc[1][2]*.8));

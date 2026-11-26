@@ -7,7 +7,7 @@ def get(url, path):
     with urllib.request.urlopen(urllib.request.Request(url, headers=UA)) as r, open(path, 'wb') as f: f.write(r.read())
 def files(i): return json.load(urllib.request.urlopen(urllib.request.Request('https://api.polyhaven.com/files/' + i, headers=UA)))
 root = sys.argv[1]
-models = ['jacaranda_tree', 'fir_sapling', 'pine_sapling_small', 'searsia_lucida', 'island_tree_02', 'othonna_cerarioides',
+models = ['jacaranda_tree', 'fir_sapling', 'pine_sapling_small', 'searsia_lucida', 'island_tree_02', 'tree_small_02', 'othonna_cerarioides',
           'shrub_02', 'shrub_03', 'shrub_04', 'fern_02', 'weed_plant_02', 'nettle_plant', 'grass_bermuda_01', 'grass_medium_02',
           'dandelion_01', 'root_cluster_01', 'wild_rooibos_bush', 'cheiridopsis_succulent',
           'mountainside', 'rock_face_01', 'rock_face_02', 'namaqualand_cliff_01', 'namaqualand_boulder_02']

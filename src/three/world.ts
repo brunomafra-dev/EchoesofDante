@@ -58,7 +58,7 @@ const SRC:Record<string,{file:string;size:number;by:'h'|'w';sink?:number}>={
  rock_a:{file:'rock_07',size:1,by:'w',sink:.15},rock_b:{file:'rock_09',size:1,by:'w',sink:.15},rock_c:{file:'stone_01',size:.9,by:'w',sink:.1},rock_d:{file:'namaqualand_boulder_04',size:1.2,by:'w',sink:.2},
  set_1:{file:'rock_moss_set_01',size:1,by:'w',sink:.15},set_2:{file:'rock_moss_set_02',size:1,by:'w',sink:.15},boulder:{file:'namaqualand_boulder_04',size:1,by:'w',sink:.25},
  // Earth-like Dante (Poly Haven, CC0): broadleaf and conifer trees, shrubs, ferns, ground plants, cliffs
- oak:{file:'island_tree_02',size:8.5,by:'h'},bush_tree:{file:'searsia_lucida',size:4.6,by:'h'},fir:{file:'fir_sapling',size:5.2,by:'h'},pine:{file:'pine_sapling_small',size:4.4,by:'h'},
+ oak:{file:'island_tree_02',size:8.5,by:'h'},elm:{file:'tree_small_02',size:6.5,by:'h'},bush_tree:{file:'searsia_lucida',size:4.6,by:'h'},fir:{file:'fir_sapling',size:5.2,by:'h'},pine:{file:'pine_sapling_small',size:4.4,by:'h'},
  succulent_tree:{file:'othonna_cerarioides',size:2.6,by:'h'},shrub_a:{file:'shrub_02',size:1.4,by:'w'},shrub_b:{file:'shrub_03',size:1.3,by:'w'},shrub_c:{file:'shrub_04',size:1.6,by:'w'},
  fern:{file:'fern_02',size:1.2,by:'w'},weed:{file:'weed_plant_02',size:.9,by:'w'},nettle:{file:'nettle_plant',size:.9,by:'w'},dandelion:{file:'dandelion_01',size:.45,by:'w'},
  grass_clump:{file:'grass_medium_02',size:.9,by:'w'},rooibos:{file:'wild_rooibos_bush',size:1.3,by:'w'},succulent:{file:'cheiridopsis_succulent',size:.6,by:'w'},roots:{file:'root_cluster_01',size:2.2,by:'w',sink:.1},
@@ -131,7 +131,7 @@ export class World{
   const trees=(n:number,kinds:string[],dMin=10,s0=.8,s1=1.25)=>ring(n,dMin,ARENA*1.12,(x,z)=>{put(kinds[Math.floor(r()*kinds.length)],x,z,s0+r()*(s1-s0));col(x,z,.6);});
   const plants=(n:number,kinds:string[],s0=.7,s1=1.3)=>{let c=this.spot(r,5,ARENA);for(let k=0;k<n;k++){if(k%5===0)c=this.spot(r,5,ARENA*1.05);put(kinds[Math.floor(r()*kinds.length)],c.x+(r()-.5)*4,c.z+(r()-.5)*4,s0+r()*(s1-s0));}};
   if(id==='camp'){
-   trees(16,['oak'],22);trees(10,['bush_tree'],20);trees(8,['fir'],24);
+   trees(10,['oak'],22);trees(10,['elm'],21);trees(8,['bush_tree'],20);trees(8,['fir'],24);
    ring(8,21,ARENA,(x,z)=>{put(r()<.5?'stump_a':'stump_b',x,z,.9+r()*.5);col(x,z,.45);});
    ring(6,22,ARENA,(x,z,i)=>{put(i%2?'log':'log_big',x,z,.9+r()*.3);col(x,z,1);});
    ring(14,20,ARENA*1.1,(x,z)=>put('branches',x,z,.8+r()*.6));
@@ -139,14 +139,14 @@ export class World{
    plants(30,['shrub_a','shrub_b','shrub_c']);plants(24,['fern']);plants(20,['weed','grass_clump']);plants(6,['roots'],.8,1.1);
    this.camp();this.keepOut=13;this.grass(r,1300,'#2c3a1e','#8aa05a',.3,0);this.keepOut=20;
   }else if(id==='springs'){
-   trees(18,['oak'],10);trees(12,['bush_tree'],9);
+   trees(12,['oak'],10);trees(12,['elm'],10);trees(10,['bush_tree'],9);
    ring(8,10,ARENA,(x,z,i)=>{put(i%2?'log':'stump_a',x,z,.9+r()*.4);col(x,z,.6);});
    rocks(40);cliffs(['cliff','rock_face']);
    this.pools(r,9,'#1e5258');this.reeds(r,240,'#4f7a3a');
    plants(30,['fern']);plants(24,['nettle','weed']);plants(30,['dandelion']);plants(20,['shrub_a','shrub_c']);plants(26,['grass_clump']);
    this.grass(r,1600,'#24401e','#7aa84e',.34,0);
   }else if(id==='valley'){
-   trees(16,['fir'],10);trees(14,['pine'],10);
+   trees(14,['fir'],10);trees(10,['pine'],10);trees(6,['elm'],14);
    ring(8,12,ARENA*.95,(x,z)=>{put(r()<.5?'rock_face':'rock_face_b',x,z,.7+r()*.5);col(x,z,1.6);});
    rocks(55);boulders();cliffs(['cliff','rock_face','cliff_b']);
    this.monoliths(r,9);plants(20,['shrub_b','shrub_c']);plants(16,['grass_clump']);
@@ -210,7 +210,20 @@ export class World{
       m4.compose(new T.Vector3(p.x,-(src.sink??0)*va.h*k,p.z),q,new T.Vector3(k,k,k));im.setMatrixAt(i,m4);im.setColorAt(i,tint);});
      im.computeBoundingSphere();im.castShadow=src.size>.7;im.receiveShadow=true;this.group.add(im);}
    }
+   if(kind==='elm')this.canopy(list,src.size);
   }
+ }
+ // full crown for Tree Small 02, as in the first 3D: two crossed cards baked offline from the complete tree
+ // (tree-canopy-0/1.webp) around the reduced trunk, lit from above so both cards match
+ private canopyMats:T.MeshStandardMaterial[]=[];
+ private canopy(list:{x:number;z:number;s:number;ry:number}[],size:number){
+  if(!this.canopyMats.length)this.canopyMats=[0,1].map(i=>{const map=new T.TextureLoader().load(import.meta.env.BASE_URL+'assets/3d-new/nature/tree-canopy-'+i+'.webp');map.colorSpace=T.SRGBColorSpace;
+   const m=new T.MeshStandardMaterial({map,alphaTest:.38,side:T.DoubleSide,roughness:1,envMapIntensity:.3});m.userData.shared=true;return m;});
+  const m4=new T.Matrix4(),q=new T.Quaternion(),up=new T.Vector3(0,1,0);
+  this.canopyMats.forEach((mat,i)=>{const g=new T.PlaneGeometry(4.101067,5.468089);const n=g.attributes.normal as T.BufferAttribute;for(let k=0;k<n.count;k++)n.setXYZ(k,0,1,0);
+   const im=new T.InstancedMesh(g,mat,list.length);
+   list.forEach((p,k)=>{const h=size*p.s,sc=h/4.556741;q.setFromAxisAngle(up,p.ry+i*Math.PI/2);m4.compose(new T.Vector3(p.x,h*.5,p.z),q,new T.Vector3(sc,sc,sc));im.setMatrixAt(k,m4);});
+   im.computeBoundingSphere();im.castShadow=true;im.receiveShadow=true;this.group.add(im);});
  }
  // soft image-based light for metal, glass and wet surfaces: a sky-to-ground gradient tinted like the region
  private makeEnv(sky:string,horizon:string,ground:string){

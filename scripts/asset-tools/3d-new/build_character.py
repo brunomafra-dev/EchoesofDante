@@ -32,6 +32,9 @@ DEFAULT_ANIMS = ['Idle_Loop', 'Walk_Loop', 'Jog_Fwd_Loop', 'Sprint_Loop', 'Sword
                  'Spell_Simple_Idle_Loop', 'Spell_Simple_Shoot', 'Roll', 'Hit_Chest', 'Death01', 'Interact']
 
 
+DELETE_OF = {}
+
+
 def find(asset_type, key, ext='mhclo'):
     key = key.lower()
     paths = AssetService.list_mhclo_assets(asset_type) if ext == 'mhclo' else AssetService.list_mhmat_assets(asset_type)
@@ -87,6 +90,8 @@ def build_human(spec):
         new = [o for o in bpy.data.objects if o not in before and o.type == 'MESH']
         for i, o in enumerate(new):
             o.name = name + (':%d' % i if len(new) > 1 else '')
+            # the skin this garment covers (MPFB delete group), hidden at runtime only while the garment is worn
+            DELETE_OF[o.name] = 'Delete.' + os.path.splitext(os.path.basename(p))[0].replace(' ', '_')
             # heavy garments (sci-fi armour is ~100k faces) are decimated for the web
             n = len(o.data.polygons)
             if kind == 'Clothes' and n > 9000:
@@ -110,6 +115,11 @@ def bake_masks_and_pose_t(arm):
     ms = meshes_of(arm)
     for ob in ms:
         drop_shape_keys(ob)
+        for md in list(ob.modifiers):
+            # garment delete groups are kept as vertex groups (exported as attributes), not cut out of the body:
+            # every outfit shares this body, so cutting the union left only head and hands
+            if md.type == 'MASK' and md.vertex_group.startswith('Delete.'):
+                ob.modifiers.remove(md)
         for md in list(ob.modifiers):
             if md.type == 'MASK':
                 select_only(ob)
@@ -260,15 +270,33 @@ def shrink_images():
                 print('scale fail', img.name, e)
 
 
+def hide_attributes(arm):
+    """One float attribute per garment on the body: 1 where the garment covers the skin (_H_<garment object>)."""
+    for ob in meshes_of(arm):
+        groups = {g.name: g.index for g in ob.vertex_groups if g.name.startswith('Delete.')}
+        if not groups:
+            continue
+        for cloth, grp in DELETE_OF.items():
+            gi = groups.get(grp)
+            if gi is None:
+                continue
+            name = '_H_' + cloth.replace(':', '')
+            attr = ob.data.attributes.new(name, 'FLOAT', 'POINT')
+            for v in ob.data.vertices:
+                attr.data[v.index].value = 1.0 if any(g.group == gi and g.weight > .5 for g in v.groups) else 0.0
+            print('HIDE ATTR', ob.name, name, sum(1 for d in attr.data if d.value > .5))
+
+
 def export(arm, path):
     shrink_images()
+    hide_attributes(arm)
     bpy.ops.object.select_all(action='DESELECT')
     arm.select_set(True)
     for ob in meshes_of(arm):
         ob.select_set(True)
     bpy.ops.export_scene.gltf(filepath=path, export_format='GLB', use_selection=True, export_apply=False, export_yup=True,
                               export_animations=True, export_animation_mode='NLA_TRACKS', export_skins=True,
-                              export_image_format='JPEG', export_jpeg_quality=85)
+                              export_image_format='JPEG', export_jpeg_quality=85, export_attributes=True)
 
 
 try:

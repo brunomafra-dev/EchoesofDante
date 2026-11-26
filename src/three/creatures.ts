@@ -103,37 +103,61 @@ function clawGeo(){let g=geoCache.get('claw');if(g)return g;
  for(const q of parts){q.deleteAttribute('uv');}
  g=mergeGeometries(parts.map(q=>q.index?q.toNonIndexed():q))!;g.computeVertexNormals();geoCache.set('claw',g);return g;}
 // skin: object-space bumps and blotches + a rim of the creature's glow colour so silhouettes read on dark ground
-function skin(m:T.MeshStandardMaterial,rim:string,bump=.6,freq=6,o:{veins?:string;lichen?:string}={}){
+function skin(m:T.MeshStandardMaterial,rim:string,bump=.6,freq=6,o:{veins?:string;lichen?:string;cells?:number}={}){
  m.onBeforeCompile=sh=>{
-  sh.uniforms.uRim={value:new T.Color(rim)};sh.uniforms.uBump={value:bump};sh.uniforms.uFreq={value:freq};sh.uniforms.uVein={value:new T.Color(o.veins??'#000000')};sh.uniforms.uLichen={value:new T.Color(o.lichen??'#000000')};
-  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\nvarying vec3 vOP;').replace('#include <begin_vertex>','#include <begin_vertex>\nvOP=position*vec3(length(modelMatrix[0].xyz),length(modelMatrix[1].xyz),length(modelMatrix[2].xyz));');
+  sh.uniforms.uRim={value:new T.Color(rim)};sh.uniforms.uBump={value:bump};sh.uniforms.uFreq={value:freq};sh.uniforms.uVein={value:new T.Color(o.veins??'#000000')};sh.uniforms.uLichen={value:new T.Color(o.lichen??'#000000')};sh.uniforms.uCell={value:o.cells??.7};
+  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\nvarying vec3 vOP;varying vec3 vWN;').replace('#include <begin_vertex>','#include <begin_vertex>\nvOP=position*vec3(length(modelMatrix[0].xyz),length(modelMatrix[1].xyz),length(modelMatrix[2].xyz));vWN=normalize(mat3(modelMatrix)*objectNormal);');
   sh.fragmentShader=sh.fragmentShader.replace('#include <common>',`#include <common>
-   varying vec3 vOP;uniform vec3 uRim;uniform float uBump;uniform float uFreq;uniform vec3 uVein;uniform vec3 uLichen;
+   varying vec3 vOP;varying vec3 vWN;uniform vec3 uRim;uniform float uBump;uniform float uFreq;uniform vec3 uVein;uniform vec3 uLichen;uniform float uCell;
    float h3(vec3 p){return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453);}
    float n3(vec3 p){vec3 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(mix(h3(i),h3(i+vec3(1,0,0)),f.x),mix(h3(i+vec3(0,1,0)),h3(i+vec3(1,1,0)),f.x),f.y),mix(mix(h3(i+vec3(0,0,1)),h3(i+vec3(1,0,1)),f.x),mix(h3(i+vec3(0,1,1)),h3(i+vec3(1,1,1)),f.x),f.y),f.z);}
-   float skinH(vec3 p){return n3(p)*.7+n3(p*2.2)*.3;}`)
+   float skinH(vec3 p){return n3(p)*.7+n3(p*2.2)*.3;}
+   // scales and plates: distance to the nearest cell border (3D Voronoi)
+   float cells(vec3 p){vec3 i=floor(p),f=fract(p);float d1=8.,d2=8.;
+    for(int x=-1;x<=1;x++)for(int y=-1;y<=1;y++)for(int z=-1;z<=1;z++){vec3 g=vec3(x,y,z),o=vec3(h3(i+g),h3(i+g+17.3),h3(i+g+31.7));float d=length(g+o-f);if(d<d1){d2=d1;d1=d;}else if(d<d2)d2=d;}
+    return d2-d1;}`)
   .replace('#include <normal_fragment_maps>',`#include <normal_fragment_maps>
-   {float hh=skinH(vOP*uFreq);vec3 vp=-vViewPosition;vec3 dpx=dFdx(vp),dpy=dFdy(vp);float dhx=dFdx(hh),dhy=dFdy(hh);
+   {vec3 cq=vOP*uFreq*2.4;float cb=cells(cq);float caa=uCell*(1.-smoothstep(.1,.35,length(fwidth(cq))));float seam=(1.-smoothstep(.0,.07,cb))*caa;
+    float hh=skinH(vOP*uFreq)*.85+smoothstep(0.,.2,cb)*.25*caa;vec3 vp=-vViewPosition;vec3 dpx=dFdx(vp),dpy=dFdy(vp);float dhx=dFdx(hh),dhy=dFdy(hh);
     vec3 r1=cross(dpy,normal),r2=cross(normal,dpx);float det=dot(dpx,r1);vec3 gr=sign(det)*(dhx*r1+dhy*r2);
     normal=normalize(abs(det)*normal-gr*uBump);
-    float blot=n3(vOP*uFreq*.35);diffuseColor.rgb*=mix(.88,1.06,blot)*mix(.84,1.,smoothstep(.25,.6,hh));
+    float blot=n3(vOP*uFreq*.35);diffuseColor.rgb*=mix(.82,1.1,blot)*mix(.72,1.,smoothstep(.25,.6,hh));
+    // depth: dark seams between scales, darker belly and lighter back, pale worn edges, uneven gloss
+    diffuseColor.rgb*=1.-seam*.28;
+    diffuseColor.rgb*=mix(.52,1.08,smoothstep(-.75,.65,vWN.y));
+    float edge=clamp(length(fwidth(vNormal))*6.,0.,1.);diffuseColor.rgb+=edge*.07*(1.-seam);
+    roughnessFactor=clamp(roughnessFactor*mix(.65,1.3,n3(vOP*uFreq*1.7+11.))+seam*.25,.04,1.);
     float li=smoothstep(.64,.72,n3(vOP*uFreq*1.1+7.));diffuseColor.rgb=mix(diffuseColor.rgb,uLichen,li*step(.01,uLichen.r+uLichen.g+uLichen.b)*.85);}`)
   .replace('#include <emissivemap_fragment>',`#include <emissivemap_fragment>
-   {float fr=1.-abs(dot(normal,normalize(vViewPosition)));totalEmissiveRadiance+=uRim*pow(fr,3.)*.35;
+   {float fr=1.-abs(dot(normal,normalize(vViewPosition)));totalEmissiveRadiance+=uRim*pow(fr,3.)*.45;
     float vr=1.-abs(n3(vOP*uFreq*.45+3.)*2.-1.);totalEmissiveRadiance+=uVein*pow(vr,10.)*2.2;}`);
  };
- m.customProgramCacheKey=()=>'skin'+bump+freq+(o.veins?'v':'')+(o.lichen?'l':'');return m;
+ m.customProgramCacheKey=()=>'skin'+bump+freq+(o.veins?'v':'')+(o.lichen?'l':'')+(o.cells??.7);return m;
 }
 function orient(m:T.Mesh,a:T.Vector3,b:T.Vector3,r:number){const d=tmp.copy(b).sub(a),l=d.length();m.position.copy(a);m.quaternion.setFromUnitVectors(UP,d.normalize());m.scale.set(r,l,r);}
 
 interface Leg{hip:T.Vector3;out:T.Vector3;len:number;phase:number;up:T.Mesh;low:T.Mesh;r:number;knee:number;foot:T.Mesh}
 interface Look{chitin:T.MeshStandardMaterial;glow:T.MeshStandardMaterial;body:T.Group;legs:Leg[];sac?:T.Mesh;mandibles?:T.Mesh[];height:number;wings?:T.Object3D[];arms?:T.Object3D[];segs?:T.Mesh[];halo?:T.Object3D[];limbs?:T.Object3D[]}
 type Pal=Spec['pal'];
-function chitin(p:Pal){const m=skin(new T.MeshStandardMaterial({color:p.c,roughness:p.wet?.22:.55,metalness:p.wet?.1:.12,emissive:'#000000',emissiveIntensity:1}),p.g,.3,3.2);m.userData.chitin=true;return m;}
+function chitin(p:Pal){const m=skin(new T.MeshStandardMaterial({color:p.c,roughness:p.wet?.22:.55,metalness:p.wet?.1:.12,emissive:'#000000',emissiveIntensity:1}),p.g,.3,3.2,{cells:1});m.userData.chitin=true;return m;}
 // limbs and claws: a paler, horny tone like the 2D creatures' legs
-function horn(c:string){return skin(new T.MeshStandardMaterial({color:c,roughness:.6,metalness:.05}),'#000000',.25,4);}
-function plates(c:string,rim:string){const m=skin(new T.MeshStandardMaterial({color:c,roughness:.5,metalness:.15,vertexColors:true}),rim,.2,3);return m;}
-function glowMat(color:string,i=1.6){return new T.MeshStandardMaterial({color,emissive:color,emissiveIntensity:i,roughness:.3});}
+function horn(c:string){return skin(new T.MeshStandardMaterial({color:c,roughness:.6,metalness:.05}),'#000000',.25,4,{cells:.3});}
+function plates(c:string,rim:string){const m=skin(new T.MeshStandardMaterial({color:c,roughness:.5,metalness:.15,vertexColors:true}),rim,.2,3,{cells:.4});return m;}
+function glowMat(color:string,i=1.6){const m=new T.MeshStandardMaterial({color,emissive:color,emissiveIntensity:i,roughness:.3});m.userData.glow=true;return m;}
+// ink outline (inverted hull): a dark back-face shell pushed out along the normals, about the same width on screen
+// at any distance, so every creature reads as a drawn silhouette like the 2D art
+const inkMats=new Map<string,T.MeshBasicMaterial>();
+function inkMat(color:string){let m=inkMats.get(color);if(m)return m;
+ m=new T.MeshBasicMaterial({color,side:T.BackSide});
+ m.onBeforeCompile=sh=>{sh.vertexShader=sh.vertexShader.replace('#include <project_vertex>',`vec4 mvPosition=modelViewMatrix*vec4(transformed,1.);
+  vec3 inkN=normalize(normalMatrix*normal);mvPosition.xyz+=inkN*INK_W*max(2.,-mvPosition.z);gl_Position=projectionMatrix*mvPosition;`).replace('#include <common>','#include <common>\n#define INK_W .0032');};
+ m.customProgramCacheKey=()=>'ink';inkMats.set(color,m);return m;}
+export function ink(root:T.Object3D,color='#0d0a0c'){
+ const list:T.Mesh[]=[];root.traverse(o=>{const m=o as T.Mesh;if(!m.isMesh||m.userData.ink||Array.isArray(m.material))return;const mat=m.material as T.Material;
+  if(mat.transparent||mat.userData.glow||!m.geometry.attributes.normal)return;list.push(m);});
+ const mat=inkMat(color);
+ for(const m of list){const o=new T.Mesh(m.geometry,mat);o.userData.ink=true;o.castShadow=false;o.receiveShadow=false;o.frustumCulled=m.frustumCulled;m.add(o);}
+}
 function ball(r:number,m:T.Material,p:[number,number,number],s:[number,number,number]=[1,1,1]){const b=new T.Mesh(m.userData.chitin?lumpGeo(r,.08,2.4,r*7):new T.SphereGeometry(r,18,12),m);b.position.set(...p);b.scale.set(...s);b.castShadow=true;return b;}
 function cone(r:number,h:number,m:T.Material,p:[number,number,number],rot:[number,number,number]){const c=new T.Mesh(new T.ConeGeometry(r,h,7),m);c.position.set(...p);c.rotation.set(...rot);c.castShadow=true;return c;}
 function addLegs(g:T.Group,m:T.Material,defs:[number,number,number,number,number][],r:number,knee:number,clawM?:T.Material):Leg[]{
@@ -356,7 +380,7 @@ export function petModel(){
  for(const [x,z] of[[-.18,.32],[.18,.32],[-.18,-.32],[.18,-.32]]){const l=new T.Group();l.position.set(x,.58,z);
   l.add(lump(.11,hide,[0,-.12,0],[1,1.6,1.1],.12,3,140+x*10+z));l.add(lump(.07,hide,[0,-.38,.03],[1,1.6,1],.12,3,150+x*10+z));
   const paw=new T.Mesh(clawGeo(),hide);paw.scale.setScalar(.1);paw.position.set(0,-.56,.02);l.add(paw);g.add(l);legs.push(l);}
- g.traverse(o=>{(o as T.Mesh).castShadow=true;});
+ g.traverse(o=>{(o as T.Mesh).castShadow=true;});ink(g,'#0c1008');
  return {g,legs};
 }
 const BUILD:Record<Body,(r:T.Group,p:Pal)=>Look>={warden:buildWarden,crawler:buildCrawler,skitter:buildSkitter,spitter:buildSpitter,carapace:buildCarapace,hound:buildHound,amphibian:buildAmphibian,thorn:buildThorn,golem:buildGolem,winged:buildWinged,worm:buildWorm};
@@ -399,6 +423,7 @@ export class Creature{
   this.spec=SPECIES[kind] as Spec;this.hp=this.spec.hp;this.g.position.set(x,0,z);this.g.scale.setScalar(this.spec.scale);scene.add(this.g);
   const root=new T.Group();this.g.add(root);this.look=BUILD[this.spec.body](root,this.spec.pal);
   if(!(this.spec.body==='warden'&&MODELS.warden))bakeBody(kind,this.look);
+  ink(this.g,'#'+new T.Color(this.spec.pal.c).multiplyScalar(.12).getHexString());
   if(this.spec.body==='worm')this.hidden=1;
  }
  get pos(){return this.g.position;}
