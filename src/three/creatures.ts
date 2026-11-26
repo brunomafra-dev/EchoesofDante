@@ -48,7 +48,7 @@ export type SpeciesId=keyof typeof SPECIES;
 export interface Ctx{
  scene:T.Scene;vfx:VFX;player:T.Vector3;playerOk:()=>boolean;invuln:()=>boolean;
  damagePlayer:(d:number,from:T.Vector3)=>void;collide:(p:T.Vector3,r:number)=>void;colliders:()=>{x:number;z:number;r:number}[];
- popText:(p:T.Vector3,s:string,c:string)=>void;onKill:(c:Creature)=>void;onHit:(c:Creature,quiet:boolean)=>void;others:Creature[];
+ popText:(p:T.Vector3,s:string,c:string)=>void;sfx?:(name:string,p:T.Vector3)=>void;onKill:(c:Creature)=>void;onHit:(c:Creature,quiet:boolean)=>void;others:Creature[];
 }
 const rnd=(a:number,b:number)=>a+Math.random()*(b-a);
 const UP=new T.Vector3(0,1,0),tmp=new T.Vector3(),tmp2=new T.Vector3();
@@ -240,10 +240,10 @@ export class Creature{
   if(!quiet){const dir=this.pos.clone().sub(from).setY(0).normalize();this.vel.addScaledVector(dir,push*(this.boss?.1:k<1?.3:1));}
   ctx.popText(this.pos.clone().setY(this.look.height*this.spec.scale+.6),String(Math.round(d*k)),color);ctx.onHit(this,quiet);
   if(this.state==='idle')this.state='chase';
-  if(this.spec.phase2&&this.phase===1&&this.hp<this.spec.hp*.5){this.phase=2;ctx.popText(this.pos.clone().setY(5.5),'O guardião muda de padrão','#8ff4ff');ctx.vfx.shake=.4;this.look.glow.color.set('#ff5a8a');this.look.glow.emissive.set('#ff5a8a');}
+  if(this.spec.phase2&&this.phase===1&&this.hp<this.spec.hp*.5){this.phase=2;ctx.popText(this.pos.clone().setY(5.5),'O guardião muda de padrão','#8ff4ff');ctx.sfx?.('roar',this.pos);ctx.vfx.shake=.4;this.look.glow.color.set('#ff5a8a');this.look.glow.emissive.set('#ff5a8a');}
   if(this.hp<=0)this.die(ctx);
  }
- private die(ctx:Ctx){this.state='dead';this.clearTele();ctx.onKill(this);
+ private die(ctx:Ctx){this.state='dead';this.clearTele();ctx.onKill(this);ctx.sfx?.(this.boss?'roar':'death',this.pos);
   ctx.vfx.emit({pos:this.pos.clone().setY(.6),n:this.boss?90:24,speed:[1,this.boss?7:4],up:.6,life:[.4,.9],size:[.14,.03],c0:'#ffffff',c1:'#'+this.look.glow.color.getHexString(),a:[1,0],grav:6,drag:1.5,spread:this.boss?1.2:.3});}
  private clearTele(){for(const m of this.tele){m.removeFromParent();m.geometry.dispose();(m.material as T.Material).dispose();}this.tele=[];}
  private addTele(geo:T.BufferGeometry,at:T.Vector3,rot:number){const m=new T.Mesh(geo,teleMat());m.renderOrder=3;m.position.copy(at).setY(0);m.rotation.y=rot;this.scene.add(m);this.tele.push(m);}
@@ -254,6 +254,7 @@ export class Creature{
   return ok.length?ok[Math.floor(Math.random()*ok.length)]:null;
  }
  private announce(ctx:Ctx){
+  ctx.sfx?.(this.boss?'roar':'warn',this.pos);
   const m=this.mv,s=1/this.spec.scale;void s;this.targets=[];
   if(m.type==='dash')this.addTele(strip(1.1*this.spec.scale,m.range),this.pos,this.heading);
   else if(m.type==='spit')this.addTele(strip(.35,m.range),this.pos,this.heading);
@@ -321,7 +322,8 @@ export class Creature{
  // the moment a prepared attack goes off
  private release(ctx:Ctx){
   const m=this.mv,L=this.look,to=tmp2.copy(ctx.player).sub(this.pos).setY(0),dist=to.length();
-  this.clearTele();this.timer=m.type==='dash'?.36:m.type==='breath'?.5:.15;L.glow.emissiveIntensity=this.spec.body==='golem'?2.4:1.6;
+  this.clearTele();this.timer=m.type==='dash'?.36:m.type==='breath'?.5:.15;
+  const SND:Record<string,string>={bite:'bite',dash:'dash',spit:'spit',fan:'spit',sweep:'swing',slam:'earth',lob:'fire',breath:'dash',marks:'energy',burrow:'earth'};ctx.sfx?.(SND[m.type]??'hit',this.pos);L.glow.emissiveIntensity=this.spec.body==='golem'?2.4:1.6;
   if(L.sac)L.sac.scale.set(1,1,1);
   const inSector=(r:number,arc:number)=>dist<r+.4&&this.dir.angleTo(to.clone().normalize())<arc/2+.1;
   if(m.type==='bite'){if(inSector(m.range,m.arc??1.6)&&!ctx.invuln())ctx.damagePlayer(m.dmg+rnd(0,3),this.pos);L.mandibles?.forEach((mm,i)=>mm.rotation.z=(i?1:-1)*.5);if(L.arms)L.arms[0].rotation.x=-1.6;}
@@ -386,7 +388,7 @@ export function updateSpits(dt:number,ctx:Ctx){
   const s=shots[i],p=s.m.position;let end=false;
   if(s.arc){const a=s.arc;a.t+=dt;const k=Math.min(1,a.t/a.dur);p.lerpVectors(a.from,a.to,k);p.y=a.from.y*(1-k)+Math.sin(k*Math.PI)*4;s.m.rotation.x+=dt*8;
    ctx.vfx.fire.add({p,kind:1,w:.7,h:.7,life:.12,grow:-.3});
-   if(k>=1){end=true;ctx.vfx.impact('fire',p,UP);ctx.vfx.scorch(p,a.r,1.6);ctx.vfx.shake=Math.max(ctx.vfx.shake,.15);if(Math.hypot(p.x-ctx.player.x,p.z-ctx.player.z)<a.r&&!ctx.invuln())ctx.damagePlayer(s.dmg,p);}}
+   if(k>=1){end=true;ctx.sfx?.('fire',p);ctx.vfx.impact('fire',p,UP);ctx.vfx.scorch(p,a.r,1.6);ctx.vfx.shake=Math.max(ctx.vfx.shake,.15);if(Math.hypot(p.x-ctx.player.x,p.z-ctx.player.z)<a.r&&!ctx.invuln())ctx.damagePlayer(s.dmg,p);}}
   else{
    p.addScaledVector(s.v,dt);s.life-=dt;end=s.life<=0;
    ctx.vfx.emit({pos:p,n:1,dir:s.v.clone().negate(),cone:.4,speed:[.3,1],life:[.25,.4],size:[.12,.03],c0:'#ffffff',c1:s.color,a:[.9,0],grav:3});

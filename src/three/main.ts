@@ -3,6 +3,7 @@ import './style.css';
 import {Character,DEFAULT_LOOK,HAIR,HAIR_COLORS,BROWS,CLOTH,OUTFITS,SKINS,type Look,type Sex} from './character';
 import {CLASSES,CLASS_ORDER,WEAPON_CLASS,ELEMENTS,ELEMENT_NAMES,ELEMENT_COLORS,type ClassId,type Element} from './classes';
 import {World,ARENA} from './world';
+import {Sound,type Sfx} from './audio';
 import {VFX,type Kind} from './vfx';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {Creature,MODELS,SPECIES,updateSpits,clearShots,type Ctx,type SpeciesId} from './creatures';
@@ -18,6 +19,8 @@ app.appendChild(renderer.domElement);
 const camera=new T.PerspectiveCamera(40,1,.1,200);
 const world=new World(renderer,camera);
 const hero=new Character();world.scene.add(hero.root);
+const sound=new Sound();
+const sfx=(n:Sfx,at?:T.Vector3)=>sound.play(n,at?Math.hypot(at.x-hero.root.position.x,at.z-hero.root.position.z):0);
 const torch=new T.PointLight('#ffb070',16,10,1.7);world.scene.add(torch);
 const rim=new T.DirectionalLight('#6f8fd8',.8);world.scene.add(rim,rim.target);
 const key=new T.DirectionalLight('#ffd9b0',2.4);world.scene.add(key,key.target);   // soft portrait key that follows the hero
@@ -42,7 +45,8 @@ type Enemy=Creature;
 const enemies:Enemy[]=[];let spawnT=0;
 const ctx:Ctx={scene:world.scene,get vfx(){return vfx;},player:pos,playerOk:()=>mode==='play'&&!dead,invuln:()=>now()<invulnUntil||dead,
  damagePlayer:(d,from)=>damage(d,from),collide:(p,r)=>world.collide(p,r),colliders:()=>world.colliders,popText,
- onKill:(c)=>{kills++;if(c.boss){bossDown(c);}else biomeKills++;hud();},onHit:(_c,quiet)=>{if(cls()==='xenobinder'&&!quiet)mana=Math.min(100,mana+6);},others:enemies} as Ctx;
+ sfx:(n,p)=>sfx(n as Sfx,p),
+ onKill:(c)=>{kills++;if(c.boss){bossDown(c);}else biomeKills++;hud();},onHit:(c,quiet)=>{if(!quiet)sfx('hit',c.pos);if(cls()==='xenobinder'&&!quiet)mana=Math.min(100,mana+6);},others:enemies} as Ctx;
 Creature.ctx=ctx;
 function spawnEnemy(kind?:SpeciesId){
   if(!kind){const mix=BIOMES[world.biome].creatures;if(!mix.length)return null;let r=Math.random();kind=mix[0][0];for(const [k,w] of mix){if(r<w){kind=k;break;}r-=w;}}
@@ -51,11 +55,11 @@ function spawnEnemy(kind?:SpeciesId){
 }
 // region bosses wake after enough kills in their region
 let biomeKills=0,boss:Creature|null=null,bossBeaten=false;
-function bossDown(c:Creature){bossBeaten=true;boss=null;banner(`${c.name} foi derrotado`);$('bossbar').classList.remove('on');}
+function bossDown(c:Creature){bossBeaten=true;boss=null;sound.music(world.biome);banner(`${c.name} foi derrotado`);$('bossbar').classList.remove('on');}
 function banner(text:string){const b=$('banner');b.textContent=text;b.classList.remove('on');void b.offsetWidth;b.classList.add('on');}
 function updateEnemies(dt:number,now:number){
   const B=BIOMES[world.biome];
-  if(mode==='play'&&B.boss&&!boss&&!bossBeaten&&biomeKills>=(B.bossAfter??10)&&spawnT<=0){const a=Math.random()*6.28;boss=new Creature(B.boss,pos.x+Math.cos(a)*16,pos.z+Math.sin(a)*16,world.scene);world.collide(boss.pos,boss.radius);enemies.push(boss);banner(`${boss.name} desperta`);$('bossname').textContent=boss.name;$('bossbar').classList.add('on');}
+  if(mode==='play'&&B.boss&&!boss&&!bossBeaten&&biomeKills>=(B.bossAfter??10)&&spawnT<=0){const a=Math.random()*6.28;boss=new Creature(B.boss,pos.x+Math.cos(a)*16,pos.z+Math.sin(a)*16,world.scene);world.collide(boss.pos,boss.radius);enemies.push(boss);banner(`${boss.name} desperta`);sound.music(B.boss);sfx('roar');$('bossname').textContent=boss.name;$('bossbar').classList.add('on');}
   if(boss)$('bossfill').style.width=Math.max(0,boss.hp/boss.spec.hp*100)+'%';
   spawnT-=dt;if(mode==='play'&&spawnT<=0&&B.creatures.length&&enemies.filter(e=>e.state!=='dead'&&!e.boss).length<(boss?3:6)){spawnEnemy();spawnT=4.5;}
   updatePortals();
@@ -79,7 +83,7 @@ function updateFx(dt:number){
    p.o.position.y+=(1.15-p.o.position.y)*Math.min(1,dt*4);
    vfx.trail(p.kind,p.o,p.v,dt);
    for(const e of enemies)if(e.state!=='dead'&&Math.hypot(e.pos.x-p.o.position.x,e.pos.z-p.o.position.z)<e.radius+.25){hit=e;break;}
-   if(hit){applyHit(hit,p.dmg,p.o.position.clone().addScaledVector(p.v,-.05),p.elem);if(p.mark)hit.markUntil=now()+2.2;}
+   if(hit){const IMP:Record<string,Sfx>={pulse:'hit',fire:'fire',water:'water',earth:'earth',energy:'energy',filament:'bite'};sfx(IMP[p.kind],p.o.position);applyHit(hit,p.dmg,p.o.position.clone().addScaledVector(p.v,-.05),p.elem);if(p.mark)hit.markUntil=now()+2.2;}
    if(hit||p.life<=0){if(hit||p.kind!=='pulse')vfx.impact(p.kind,p.o.position,p.v.clone().normalize());dispose(p.o);projs.splice(i,1);}
   }
   // twisting slash damage ticks
@@ -101,7 +105,7 @@ function updateTexts(dt:number){
 // ---------- combat ----------
 function faceTo(p:T.Vector3){heading=Math.atan2(p.x-pos.x,p.z-pos.z);}
 function damage(d:number,from:T.Vector3){
-  hp=Math.max(0,hp-d);popText(pos.clone().setY(2.2),String(Math.round(d)),'#ff6a5a');stunUntil=now()+.28;atkUntil=0;atkPending=null;chargeStart=0;chargeFx(false);
+  hp=Math.max(0,hp-d);sfx('hurt');popText(pos.clone().setY(2.2),String(Math.round(d)),'#ff6a5a');stunUntil=now()+.28;atkUntil=0;atkPending=null;chargeStart=0;chargeFx(false);
   const dir=pos.clone().sub(from).setY(0).normalize();pos.addScaledVector(dir,.35);
   if(hp<=0){dead=true;hero.play('Death01',{once:true,fade:.1});document.body.classList.add('dead');}else hero.play('Hit_Chest',{once:true,fade:.06});
   hud();
@@ -132,12 +136,13 @@ function tryAttack(){
    if(pr.kind==='shot'){
     const from=hero.muzzle();const d=shotDir(from);
     const kind:Kind=cls()==='astral'?element:cls()==='hunter'?'pulse':'filament';
+    sfx(kind==='pulse'?'shot':kind==='filament'?'filament':kind as Sfx);
     fire(kind,from,d,pr.speed!,pr.dmg,{elem:cls()==='astral'?element:undefined,mark:cls()==='xenobinder'});
     if(cls()==='hunter'){hero.recoil();mana=Math.min(100,mana+4);}
    }else{
-    vfx.slash(pos,heading,comboIdx%2===0);
+    vfx.slash(pos,heading,comboIdx%2===0);sfx('swing');let struck=false;
     for(const e of enemies)if(e.state!=='dead'){const d=e.pos.clone().sub(pos).setY(0),l=d.length();
-     if(l<pr.range&&(l<.9||dir.angleTo(d.normalize())<pr.arc!/2)){e.hit(pr.dmg*(.9+Math.random()*.25),pos);vfx.hitSpark(e.pos.clone().setY(1.15),d);mana=Math.min(100,mana+8);}}
+     if(l<pr.range&&(l<.9||dir.angleTo(d.normalize())<pr.arc!/2)){if(!struck){struck=true;sfx('slashHit');}e.hit(pr.dmg*(.9+Math.random()*.25),pos);vfx.hitSpark(e.pos.clone().setY(1.15),d);mana=Math.min(100,mana+8);}}
     // the wind blade keeps cutting in a line in front of the swing
     for(const e of enemies)if(e.state!=='dead'){const r=e.pos.clone().sub(pos).setY(0),along=r.dot(dir);if(along>=pr.range&&along<pr.range+2.2&&r.addScaledVector(dir,-along).length()<1.1)e.hit(pr.dmg*.6,pos,'#bff6ff');}
    }
@@ -146,13 +151,13 @@ function tryAttack(){
 // Q: each class has its own skill
 function skillDown(){
   const n=now(),k=kit();if(mode!=='play'||dead||n<atkUntil||n<rollUntil||n<stunUntil||n<skillReady)return;
-  if(cls()==='warrior'){chargeStart=n;moveTarget=null;hero.play('Sword_Idle',{fade:.1});chargeFx(true);return;}
+  if(cls()==='warrior'){sfx('charge');chargeStart=n;moveTarget=null;hero.play('Sword_Idle',{fade:.1});chargeFx(true);return;}
   if(mana<k.skill.cost){popText(pos.clone().setY(2.4),`Sem ${k.resource.toLowerCase()}`,'#9a917f');return;}
   mana-=k.skill.cost;skillReady=n+k.skill.cd;faceTo(aimPoint);moveTarget=null;
   if(cls()==='hunter'){
    // gather energy, then a huge spark beam (Lux-style)
    const dir0=shotDir(hero.muzzle()),charge=.55,L=24;atkUntil=n+charge+.8;moveTarget=null;hero.play('Pistol_Idle_Loop',{fade:.1});
-   vfx.spark(()=>hero.muzzle(),()=>dir0,L,charge,()=>{
+   sfx('charge');vfx.spark(()=>hero.muzzle(),()=>dir0,L,charge,()=>{sfx('beam');
     hero.play('Pistol_Shoot',{once:true,speed:.8,fade:.05});hero.recoil();
     const hitBeam=(dmg:number)=>{const from=hero.muzzle();for(const e of enemies)if(e.state!=='dead'){const r=e.pos.clone().sub(from).setY(0),along=r.dot(dir0);if(along>0&&along<L&&r.addScaledVector(dir0,-along).length()<1.25){e.hit(dmg,from,'#bff6ff',false,6);vfx.hitSpark(e.pos.clone().setY(1.1),dir0,'#bff6ff');}}};
     hitBeam(40);later(.22,()=>hitBeam(25));later(.44,()=>hitBeam(25));
@@ -161,10 +166,10 @@ function skillDown(){
    const dur=hero.duration('Spell_Simple_Shoot')/1.4;hero.play('Spell_Simple_Shoot',{once:true,speed:1.4,fade:.08});atkUntil=n+dur*.85;atkImpact=n+dur*.45;
    const at=aimPoint.clone();const off=at.clone().sub(pos).setY(0);if(off.length()>9)at.copy(pos).addScaledVector(off.normalize(),9);
    const el=element;vfx.decal(at,ELEMENT_COLORS[el],2.6,.5);
-   atkPending=()=>{vfx.field(el,at,2.7);for(const e of enemies)if(e.state!=='dead'&&Math.hypot(e.pos.x-at.x,e.pos.z-at.z)<2.9)applyHit(e,30,at,el);};
+   atkPending=()=>{sfx(el as Sfx,at);vfx.field(el,at,2.7);for(const e of enemies)if(e.state!=='dead'&&Math.hypot(e.pos.x-at.x,e.pos.z-at.z)<2.9)applyHit(e,30,at,el);};
   }else{
    const dur=hero.duration('Spell_Simple_Shoot')/1.5;hero.play('Spell_Simple_Shoot',{once:true,speed:1.5,fade:.08});atkUntil=n+dur*.7;
-   pet?.charge(aimPoint.clone());
+   pet?.charge(aimPoint.clone());sfx('dash');
   }
   hud();
 }
@@ -174,7 +179,7 @@ function skillUp(){
   const n=now(),level=Math.min(1,Math.max(0,(n-chargeStart-.08)/.72));chargeStart=0;chargeFx(false);
   skillReady=n+kit().skill.cd;
   const dur=.75+level*.25,r=2.6+level*1.3;hero.play('Sword_Attack',{once:true,speed:1.2,fade:.05});atkUntil=n+dur;spinUntil=n+dur;
-  vfx.twist(()=>pos,r,dur);vfx.shake=.15+level*.15;
+  vfx.twist(()=>pos,r,dur);sfx('twist');vfx.shake=.15+level*.15;
   twist={until:n+dur,next:n+.05,r,dmg:Math.round((50+60*level)/4)};
 }
 let chargeRing:T.Mesh|null=null;
@@ -186,7 +191,7 @@ function cycleElement(){if(cls()!=='astral'||mode!=='play')return;element=ELEMEN
 function roll(){
   const n=now(),k=kit();if(mode!=='play'||dead||n<rollUntil||n<dashReady)return;
   const d=inputDir();if(d.lengthSq()<.01)d.set(Math.sin(heading),0,Math.cos(heading));
-  rollDir.copy(d.normalize());heading=Math.atan2(rollDir.x,rollDir.z);
+  rollDir.copy(d.normalize());heading=Math.atan2(rollDir.x,rollDir.z);sfx('dash');
   const sp=hero.duration('Roll')/k.dash.dur;hero.play('Roll',{once:true,speed:sp,fade:.06});
   rollUntil=n+k.dash.dur;invulnUntil=n+k.dash.dur*.8;dashReady=n+k.dash.cd;atkUntil=0;atkPending=null;moveTarget=null;chargeStart=0;chargeFx(false);
 }
@@ -217,7 +222,7 @@ class Pet{
   this.t+=dt;const p=this.g.position;let v=new T.Vector3(),moving=false;
   if(this.dash){
    const d=this.dash.to.clone().sub(p).setY(0);this.dash.t+=dt;
-   if(d.length()<.4||this.dash.t>.9){vfx.decal(p.clone(),'#7dff9e',2.4,.7,1);vfx.emit({pos:pos.clone().setY(1),n:24,speed:[.5,2],up:.8,life:[.5,.9],size:[.16,.03],c0:'#e8ffe8',c1:'#2fae5a',a:[1,0],drag:1,spread:.4});const heal=Math.round(hpMax*.08);hp=Math.min(hpMax,hp+heal);popText(pos.clone().setY(2.4),'+'+heal,'#7dff9e');this.dash=null;}
+   if(d.length()<.4||this.dash.t>.9){vfx.decal(p.clone(),'#7dff9e',2.4,.7,1);vfx.emit({pos:pos.clone().setY(1),n:24,speed:[.5,2],up:.8,life:[.5,.9],size:[.16,.03],c0:'#e8ffe8',c1:'#2fae5a',a:[1,0],drag:1,spread:.4});sfx('heal');const heal=Math.round(hpMax*.08);hp=Math.min(hpMax,hp+heal);popText(pos.clone().setY(2.4),'+'+heal,'#7dff9e');this.dash=null;}
    else{v=d.normalize().multiplyScalar(16);moving=true;vfx.petTrail(p);for(const e of enemies)if(e.state!=='dead'&&!this.dash.hit.has(e)&&e.pos.distanceTo(p)<1.1){this.dash.hit.add(e);e.hit(60,p,'#7dff9e',false,10);}}
   }else{
    if(!this.target||this.target.state==='dead'||this.target.pos.distanceTo(pos)>9){
@@ -225,7 +230,7 @@ class Pet{
    }
    const goal=this.target?this.target.pos:pos.clone().add(new T.Vector3(Math.sin(heading+2.2)*1.6,0,Math.cos(heading+2.2)*1.6));
    const d=goal.clone().sub(p).setY(0),l=d.length();
-   if(this.target&&l<1.2){if(n>this.cd){this.cd=n+.85;this.target.hit(n<this.target.markUntil?28:20,p,'#a6ffbf');}}
+   if(this.target&&l<1.2){if(n>this.cd){this.cd=n+.85;this.target.hit(n<this.target.markUntil?28:20,p,'#a6ffbf');sfx('bite',p);}}
    else if(l>(this.target?1:.6)){v=d.normalize().multiplyScalar(Math.min(this.target?7:6.2,l*3));moving=true;}
    if(this.target)this.g.rotation.y=Math.atan2(d.x,d.z);
   }
@@ -316,7 +321,7 @@ ui.innerHTML=`
 const $=(id:string)=>document.getElementById(id)!;
 function chips(host:string,items:[string,string][],cur:()=>string,pick:(id:string)=>void){
   const h=$(host);h.innerHTML='';
-  for(const [id,label] of items){const b=document.createElement('button');b.className='chip'+(cur()===id?' on':'');b.textContent=label;b.onclick=()=>{pick(id);refreshUi();};h.appendChild(b);}
+  for(const [id,label] of items){const b=document.createElement('button');b.className='chip'+(cur()===id?' on':'');b.textContent=label;b.onclick=()=>{sfx('ui');pick(id);refreshUi();};h.appendChild(b);}
 }
 function swatches(host:string,cols:string[],cur:()=>number,pick:(i:number)=>void){
   const h=$(host);h.innerHTML='';
@@ -356,7 +361,7 @@ function hud(){
 function enter(){
   mode='play';document.body.classList.add('play');document.body.classList.remove('creator');
   document.body.classList.toggle('astral',cls()==='astral');
-  pos.set(0,0,0);heading=Math.PI;hpMax=kit().hp;hp=hpMax;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();hud();spawnT=1.5;labelButtons();firstHelp();
+  pos.set(0,0,0);heading=Math.PI;hpMax=kit().hp;hp=hpMax;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();hud();spawnT=1.5;labelButtons();firstHelp();sound.music(world.biome);sound.ambient(world.biome);
 }
 $('go').onclick=enter;
 // walking into a portal carries the expedition to the neighbouring region
@@ -368,7 +373,7 @@ function updatePortals(){
   const h=$('portalhint');if(near){h.textContent=`Portal: ${BIOMES[near.to].name}`;h.classList.add('on');}else h.classList.remove('on');
 }
 function goBiome(id:BiomeId,from:0|1|-1=0){
-  world.setBiome(id);vfx.clearEmitters();for(const f of world.flameSpots)vfx.campfire(f.p,f.s);
+  world.setBiome(id);if(from)sfx('portal');if(mode==='play'){sound.music(id);sound.ambient(id);}vfx.clearEmitters();for(const f of world.flameSpots)vfx.campfire(f.p,f.s);
   for(const e of enemies)e.dispose();enemies.length=0;clearShots();boss=null;bossBeaten=false;biomeKills=0;$('bossbar').classList.remove('on');
   pos.set(0,0,from===1?ARENA-10:from===-1?-ARENA+10:0);heading=from===-1?0:Math.PI;portalLock=now()+2;if(pet)pet.g.position.set(pos.x+1.2,0,pos.z+1);spawnT=2;banner(BIOMES[id].name);renderBiomes();
 }
@@ -416,10 +421,12 @@ function openModal(kind:'options'|'help'){
   const pc=`<h3>Computador</h3><ul><li><b>WASD</b> ou clique no chão: andar · <b>Shift</b>: correr</li><li><b>Clique no inimigo</b>, <b>J</b> ou botão direito: atacar</li><li><b>Q</b>: habilidade da classe (Guerreiro: segure e solte)</li><li><b>E</b>: trocar elemento (Astral)</li><li><b>Espaço</b>: esquiva · roda do mouse: zoom</li></ul>`;
   const mob=`<h3>Celular</h3><ul><li>Toque e arraste no lado esquerdo da tela: <b>andar</b></li><li><b>Atacar</b>: mira sozinho no inimigo mais próximo</li><li>Botão da <b>habilidade</b>: toque para usar no mais próximo ou <b>arraste para mirar</b> e solte</li><li><b>Esquiva</b> e <b>elemento</b> (Astral) nos botões menores</li></ul>`;
   const help=(touch?mob+pc:pc+mob)+`<p class="note">Portais de pedra levam às outras regiões: norte avança, sul volta.</p>`;
-  body.innerHTML=kind==='help'?help:`<div class="opts"><button id="o-help">Ver controles</button><button id="o-quality">${quality==='high'?'Qualidade: alta':'Qualidade: leve'}</button><button id="o-creator">Mudar personagem</button><p class="note" id="o-fps">${fpsShown?fpsShown+' quadros por segundo':''}</p></div>`;
+  body.innerHTML=kind==='help'?help:`<div class="opts"><button id="o-help">Ver controles</button><button id="o-quality">${quality==='high'?'Qualidade: alta':'Qualidade: leve'}</button><button id="o-music">${sound.musicOn?'Música: ligada':'Música: desligada'}</button><button id="o-sfx">${sound.sfxOn?'Efeitos: ligados':'Efeitos: desligados'}</button><button id="o-creator">Mudar personagem</button><p class="note" id="o-fps">${fpsShown?fpsShown+' quadros por segundo':''}</p></div>`;
   m.classList.add('on');
   if(kind==='options'){
    $('o-help').onclick=()=>openModal('help');
+   $('o-music').onclick=()=>{sound.toggleMusic();$('o-music').textContent=sound.musicOn?'Música: ligada':'Música: desligada';};
+   $('o-sfx').onclick=()=>{sound.toggleSfx();$('o-sfx').textContent=sound.sfxOn?'Efeitos: ligados':'Efeitos: desligados';};
    $('o-quality').onclick=()=>{setQuality(quality==='high'?'low':'high');($('o-quality')).textContent=quality==='high'?'Qualidade: alta':'Qualidade: leve';};
    $('o-creator').onclick=()=>{m.classList.remove('on');mode='creator';document.body.classList.remove('play','dead');document.body.classList.add('creator');for(const e of enemies)e.dispose();enemies.length=0;clearShots();if(pet){pet.remove();pet=null;}pos.set(0,0,0);refreshUi();};
   }
