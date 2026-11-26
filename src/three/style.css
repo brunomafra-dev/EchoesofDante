@@ -67,3 +67,34 @@ body.creator #optbtn{display:none}
 #joy.on{display:block}#joy i{position:absolute;left:35px;top:35px;width:50px;height:50px;border-radius:50%;background:#f0d594aa;box-shadow:0 0 12px #000}
 body.touch .bar{display:none}
 body.touch #clsname{bottom:96px}
+
+/* missions: tracker, interaction prompt, guide arrow, toast, conversation */
+#tracker{display:none;position:absolute;top:52px;right:16px;width:min(270px,44vw);padding:8px 12px 10px;background:linear-gradient(#14110ee6,#0d0b09e6);border:1px solid #5a4a30;border-left:3px solid #c89a4a;border-radius:3px;pointer-events:auto;cursor:pointer;font-size:13px;color:#d8cfbd;box-shadow:0 4px 18px #0008}
+body.play #tracker{display:block}
+#tracker small{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#a88c58}
+#tracker b{display:block;margin:2px 0 4px;color:#f0d594;font-weight:600;font-size:14px}
+#tracker ul{margin:0;padding:0;list-style:none;line-height:1.5}#tracker li.done{color:#7d9a72;text-decoration:line-through;text-decoration-color:#7d9a7288}
+#tracker em{display:block;margin-top:4px;color:#ffc24a;font-style:normal}
+#kills{top:auto;bottom:122px;right:22px;font-size:13px;color:#a88c58}
+#prompt{position:absolute;bottom:166px;left:50%;transform:translateX(-50%);padding:7px 16px;background:#0b0a09dd;border:1px solid #c89a4a;border-radius:3px;color:#ffe2a0;font-size:15px;letter-spacing:.04em;white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none}
+#prompt.on{opacity:1}
+#guide{position:absolute;left:0;top:0;display:none;pointer-events:none}
+#guide.on{display:block}
+#guide i{position:absolute;left:-14px;top:-10px;width:0;height:0;border-left:28px solid #ffc24a;border-top:10px solid transparent;border-bottom:10px solid transparent;filter:drop-shadow(0 0 6px #ff9a2a) drop-shadow(0 1px 2px #000);transform-origin:14px 10px}
+#guide span{position:absolute;left:0;top:16px;transform:translateX(-50%);white-space:nowrap;font-size:12px;color:#ffe2a0;text-shadow:0 1px 3px #000,0 0 6px #000}
+#toast{position:absolute;top:30%;left:50%;transform:translateX(-50%);padding:8px 18px;background:#0b0a09dd;border:1px solid #6a5632;border-radius:3px;color:#f0d594;font-size:16px;letter-spacing:.04em;opacity:0;pointer-events:none;white-space:nowrap}
+#toast.on{animation:toast 3.4s ease forwards}@keyframes toast{0%{opacity:0;transform:translate(-50%,8px)}10%{opacity:1;transform:translate(-50%,0)}80%{opacity:1}100%{opacity:0}}
+#t-act{width:70px;height:70px;right:100px;bottom:96px;display:none;border-color:#c89a4a!important;color:#ffe2a0!important}
+body.can-act #t-act{display:block}body.can-act.astral #t-e{right:176px}
+#modal.talking .box{width:min(640px,94vw)}
+.talk{display:flex;gap:14px;align-items:flex-start}
+.talk img{width:120px;flex:none;filter:drop-shadow(0 4px 10px #000)}
+.talk .say{flex:1;font-size:15px;line-height:1.55;color:#e4dccb}.talk .say p{margin:0 0 8px}
+.talk .role{font-size:11px!important;letter-spacing:.16em;text-transform:uppercase;color:#a88c58}
+.talk h3{margin:4px 0 6px!important;color:#f0d594!important;font-size:16px!important;letter-spacing:.04em!important;text-transform:none!important}
+.goals{margin:6px 0!important;padding:0!important;list-style:none}.goals li.done{color:#7d9a72}
+.reward{font-size:13px!important;color:#c89a4a}
+.talk .act{width:100%;margin-top:6px;padding:11px;font-family:inherit;font-size:15px;letter-spacing:.06em;color:#1a1208;background:linear-gradient(#e6c277,#b58a3c);border:1px solid #f0d594;border-radius:3px;cursor:pointer;font-weight:700}
+.jm{padding:8px 10px;margin:0 0 6px;background:#15120e;border:1px solid #3a3022;border-radius:3px}.jm b{display:block;color:#f0d594}.jm span{font-size:12px;color:#9a917f}
+.jm.locked{opacity:.5}.jm.active,.jm.ready{border-color:#c89a4a}.jm.completed b{color:#7d9a72}
+@media(max-width:700px){#tracker{top:44px;right:8px;width:52vw;font-size:11px;padding:6px 8px}#tracker b{font-size:12px}.talk img{width:76px}.talk .say{font-size:14px}#prompt{bottom:200px;font-size:13px}#toast{font-size:13px;top:24%}}

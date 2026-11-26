@@ -7,7 +7,7 @@ import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js'
 // separate skinned mesh sharing the same skeleton (built by scripts/asset-tools/3d-new/build_character.py).
 export type Sex='male'|'female';
 export type WeaponId='saber'|'carbine'|'gauntlet'|'conductor';
-export interface Look{sex:Sex;skin:number;hair:string;hairColor:number;brows:string;outfit:string;cloth:number;weapon:WeaponId;helmet?:boolean}
+export interface Look{sex:Sex;skin:number;hair:string;hairColor:number;brows:string;outfit:string;cloth:number;weapon:WeaponId;helmet?:boolean;tint?:string}
 
 export const SKINS=['#ffffff','#f1d2bd','#d8a98a','#b47d58','#8a5a3b','#5a3a28'];
 export const HAIR_COLORS:[string,[number,number,number]][]=[
@@ -86,9 +86,9 @@ export class Character{
   const skin=new T.Color(SKINS[look.skin]??'#fff');
   this.bodyMats.forEach(m=>m.color.copy(skin));
   // "Da classe" paints suit, plates and work clothes with the 2D class palette; other swatches tint the fabric
-  const P=PALETTE[look.weapon],own=look.cloth===0,cl=new T.Color(own?P.suit:CLOTH[look.cloth]?.[1]??'#fff');
+  const P=PALETTE[look.weapon],own=look.cloth===0&&!look.tint,cl=new T.Color(look.tint??(own?P.suit:CLOTH[look.cloth]?.[1]??'#fff'));
   this.outfitMats.forEach(m=>{const n=m.name.toLowerCase();if(/boots/.test(n))return;
-   if(/armor/.test(n))m.color.set(own?P.plate:'#ffffff');else if(/worksuit/.test(n))m.color.set(own?P.work:cl);else m.color.copy(cl);});
+   if(/armor/.test(n))m.color.set(own?P.plate:'#ffffff');else if(/worksuit/.test(n))m.color.copy(own?new T.Color(P.work):cl);else m.color.copy(cl);});
   this.equip(look);
   const hc=HAIR_COLORS[look.hairColor]??HAIR_COLORS[1];
   this.hairMats.forEach(m=>m.color.setRGB(hc[1][0],hc[1][1],hc[1][2]));

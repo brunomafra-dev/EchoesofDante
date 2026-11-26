@@ -6,8 +6,10 @@ import {World,ARENA} from './world';
 import {Sound,type Sfx} from './audio';
 import {VFX,type Kind} from './vfx';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {Creature,MODELS,SPECIES,updateSpits,clearShots,type Ctx,type SpeciesId} from './creatures';
+import {Creature,MODELS,SPECIES,updateSpits,clearShots,tickTele,teleWarm,type Ctx,type SpeciesId} from './creatures';
 import {BIOMES,BIOME_ORDER,type BiomeId} from './biomes';
+import {Npc} from './camp';
+import {Journal,MISSIONS,NPCS,NPC_INFO,type Goal,type NpcId} from './missions';
 
 // Echoes of Dante — new 3D track, slice S1: character creator + first playable ARPG loop.
 const q=new URLSearchParams(location.search);
@@ -50,21 +52,21 @@ const ctx:Ctx={scene:world.scene,get vfx(){return vfx;},player:pos,playerOk:()=>
 Creature.ctx=ctx;
 function spawnEnemy(kind?:SpeciesId){
   if(!kind){const mix=BIOMES[world.biome].creatures;if(!mix.length)return null;let r=Math.random();kind=mix[0][0];for(const [k,w] of mix){if(r<w){kind=k;break;}r-=w;}}
-  const a=Math.random()*6.28,d=16+Math.random()*14;
-  const e=new Creature(kind,Math.cos(a)*d+pos.x*.3,Math.sin(a)*d+pos.z*.3,world.scene);world.collide(e.pos,e.radius);enemies.push(e);return e;
+  const camp=world.biome==='camp',a=Math.random()*6.28,d=camp?26+Math.random()*10:16+Math.random()*14;
+  const e=new Creature(kind,Math.cos(a)*d+(camp?0:pos.x*.3),Math.sin(a)*d+(camp?0:pos.z*.3),world.scene);world.collide(e.pos,e.radius);enemies.push(e);return e;
 }
 // region bosses wake after enough kills in their region
 let biomeKills=0,boss:Creature|null=null,bossBeaten=false;
-function bossDown(c:Creature){bossBeaten=true;boss=null;sound.music(world.biome);banner(`${c.name} foi derrotado`);$('bossbar').classList.remove('on');}
+function bossDown(c:Creature){bossBeaten=true;boss=null;for(const g of journal.open())if(g.kind==='boss'&&g.boss===c.kind)goalDone(g);sound.music(world.biome);banner(`${c.name} foi derrotado`);$('bossbar').classList.remove('on');}
 function banner(text:string){const b=$('banner');b.textContent=text;b.classList.remove('on');void b.offsetWidth;b.classList.add('on');}
 function updateEnemies(dt:number,now:number){
   const B=BIOMES[world.biome];
-  if(mode==='play'&&B.boss&&!boss&&!bossBeaten&&biomeKills>=(B.bossAfter??10)&&spawnT<=0){const a=Math.random()*6.28;boss=new Creature(B.boss,pos.x+Math.cos(a)*16,pos.z+Math.sin(a)*16,world.scene);world.collide(boss.pos,boss.radius);enemies.push(boss);banner(`${boss.name} desperta`);sound.music(B.boss);sfx('roar');$('bossname').textContent=boss.name;$('bossbar').classList.add('on');}
+  if(mode==='play'&&B.boss&&!boss&&!bossBeaten&&(biomeKills>=(B.bossAfter??10)||journal.bossCalled(world.biome))&&spawnT<=0){const a=Math.random()*6.28;boss=new Creature(B.boss,pos.x+Math.cos(a)*16,pos.z+Math.sin(a)*16,world.scene);world.collide(boss.pos,boss.radius);enemies.push(boss);banner(`${boss.name} desperta`);sound.music(B.boss);sfx('roar');$('bossname').textContent=boss.name;$('bossbar').classList.add('on');}
   if(boss)$('bossfill').style.width=Math.max(0,boss.hp/boss.spec.hp*100)+'%';
   spawnT-=dt;if(mode==='play'&&spawnT<=0&&B.creatures.length&&enemies.filter(e=>e.state!=='dead'&&!e.boss).length<(boss?3:6)){spawnEnemy();spawnT=4.5;}
   updatePortals();
-  for(let i=enemies.length-1;i>=0;i--){const e=enemies[i];e.update(dt,now,ctx);if(e.gone)enemies.splice(i,1);}
-  updateSpits(dt,ctx);
+  for(let i=enemies.length-1;i>=0;i--){const e=enemies[i];e.update(dt,now,ctx);if(world.biome==='camp'&&e.state!=='dead'){const d=Math.hypot(e.pos.x,e.pos.z);if(d<19&&d>.01){e.pos.x*=19/d;e.pos.z*=19/d;}}if(e.gone)enemies.splice(i,1);}
+  updateSpits(dt,ctx);tickTele(dt);
 }
 
 // ---------- projectiles & fx ----------
@@ -105,7 +107,7 @@ function updateTexts(dt:number){
 // ---------- combat ----------
 function faceTo(p:T.Vector3){heading=Math.atan2(p.x-pos.x,p.z-pos.z);}
 function damage(d:number,from:T.Vector3){
-  hp=Math.max(0,hp-d);sfx('hurt');popText(pos.clone().setY(2.2),String(Math.round(d)),'#ff6a5a');stunUntil=now()+.28;atkUntil=0;atkPending=null;chargeStart=0;chargeFx(false);
+  hp=Math.max(0,hp-d);scan=null;sfx('hurt');popText(pos.clone().setY(2.2),String(Math.round(d)),'#ff6a5a');stunUntil=now()+.28;atkUntil=0;atkPending=null;chargeStart=0;chargeFx(false);
   const dir=pos.clone().sub(from).setY(0).normalize();pos.addScaledVector(dir,.35);
   if(hp<=0){dead=true;hero.play('Death01',{once:true,fade:.1});document.body.classList.add('dead');}else hero.play('Hit_Chest',{once:true,fade:.06});
   hud();
@@ -263,6 +265,7 @@ function updatePlayer(dt:number){
   }
   moving=v.lengthSq()>.01;
   pos.addScaledVector(v,dt);world.collide(pos,.4);
+  if(world.biome==='camp')for(const n of npcs){const dx=pos.x-n.pos.x,dz=pos.z-n.pos.z,d=Math.hypot(dx,dz);if(d<.8&&d>1e-4){pos.x=n.pos.x+dx/d*.8;pos.z=n.pos.z+dz/d*.8;}}
   // turn smoothly
   const cur=hero.model?.rotation.y??0;let dh=heading-cur;dh=Math.atan2(Math.sin(dh),Math.cos(dh));
   if(hero.model){if(n<spinUntil)hero.model.rotation.y=cur-dt*19;else hero.model.rotation.y=cur+dh*Math.min(1,dt*14);}
@@ -272,7 +275,7 @@ function updatePlayer(dt:number){
   if(n>=rollUntil&&n>=atkUntil&&n>=stunUntil&&!chargeStart){
    const w=kit();
    if(moving)hero.play(sprinting?'Sprint_Loop':(look.weapon==='saber'&&false?'Walk_Loop':'Jog_Fwd_Loop'),{fade:.2});
-   else hero.play(hero.has(w.idle)?w.idle:'Idle_Loop',{fade:.25});
+   else hero.play(scan?'Interact':hero.has(w.idle)?w.idle:'Idle_Loop',{fade:.25});
   }
   if(mouseDown&&mode==='play'&&!locked){updateAim();const e=enemyAt(aimPoint);if(e){focusEnemy=e;faceTo(e.pos);if(pos.distanceTo(e.pos)<=kit().primary.range*.8)tryAttack();else moveTarget=e.pos.clone();}else{moveTarget=aimPoint.clone();focusEnemy=null;}}
   hp=Math.min(hpMax,hp+dt*.4);
@@ -315,7 +318,8 @@ ui.innerHTML=`
  <div class="grp"><label>Classe</label><div class="row wrap" id="o-class"></div><div class="clsinfo" id="o-clsinfo"></div></div>
  <button id="go">Entrar no mundo</button><p class="hint">Arraste para girar o personagem</p></div>
 <div id="hud"><div class="orb hp"><i id="hp"></i><b id="hpt"></b></div><div id="clsname"></div><div class="bar" id="skillbar"></div><div class="orb mp"><i id="mp"></i><b id="mpt"></b></div><div id="kills"></div></div><button id="optbtn" title="Opções">&#9776;</button><div id="perf"><span id="fps"></span></div>
-<div id="biomes"></div><div id="portalhint"></div><div id="touch"><button id="t-atk">Atacar</button><button id="t-q">Carga</button><button id="t-dash">Esquiva</button><button id="t-e">Energia</button></div><div id="joy"><i></i></div><div id="modal"><div class="box"><h2 id="mtitle"></h2><div id="mbody"></div><button id="mclose">Fechar</button></div></div><div id="banner"></div><div id="bossbar"><span id="bossname"></span><div><i id="bossfill"></i></div></div>
+<div id="biomes"></div><div id="portalhint"></div><div id="touch"><button id="t-atk">Atacar</button><button id="t-q">Carga</button><button id="t-dash">Esquiva</button><button id="t-e">Energia</button><button id="t-act">Falar</button></div><div id="joy"><i></i></div><div id="modal"><div class="box"><h2 id="mtitle"></h2><div id="mbody"></div><button id="mclose">Fechar</button></div></div><div id="banner"></div><div id="bossbar"><span id="bossname"></span><div><i id="bossfill"></i></div></div>
+<div id="tracker"></div><div id="prompt"></div><div id="guide"><i></i><span></span></div><div id="toast"></div>
 <div id="deadmsg"><h2>Você caiu</h2><button id="respawn">Levantar</button></div>
 <div id="loading">Carregando…</div>`;
 const $=(id:string)=>document.getElementById(id)!;
@@ -361,7 +365,7 @@ function hud(){
 function enter(){
   mode='play';document.body.classList.add('play');document.body.classList.remove('creator');
   document.body.classList.toggle('astral',cls()==='astral');
-  pos.set(0,0,0);heading=Math.PI;hpMax=kit().hp;hp=hpMax;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();hud();spawnT=1.5;labelButtons();firstHelp();sound.music(world.biome);sound.ambient(world.biome);
+  pos.set(0,0,0);heading=Math.PI;hpMax=kit().hp;hp=hpMax;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();hud();spawnT=1.5;labelButtons();firstHelp();refreshMarkers();renderTracker();sound.music(world.biome);sound.ambient(world.biome);
 }
 $('go').onclick=enter;
 // walking into a portal carries the expedition to the neighbouring region
@@ -375,7 +379,7 @@ function updatePortals(){
 function goBiome(id:BiomeId,from:0|1|-1=0){
   world.setBiome(id);if(from)sfx('portal');if(mode==='play'){sound.music(id);sound.ambient(id);}vfx.clearEmitters();for(const f of world.flameSpots)vfx.campfire(f.p,f.s);
   for(const e of enemies)e.dispose();enemies.length=0;clearShots();boss=null;bossBeaten=false;biomeKills=0;$('bossbar').classList.remove('on');
-  pos.set(0,0,from===1?ARENA-10:from===-1?-ARENA+10:0);heading=from===-1?0:Math.PI;portalLock=now()+2;if(pet)pet.g.position.set(pos.x+1.2,0,pos.z+1);spawnT=2;banner(BIOMES[id].name);renderBiomes();
+  pos.set(0,0,from===1?ARENA-10:from===-1?-ARENA+10:0);heading=from===-1?0:Math.PI;portalLock=now()+2;scan=null;refreshMarkers();if(pet)pet.g.position.set(pos.x+1.2,0,pos.z+1);spawnT=2;banner(BIOMES[id].name);renderBiomes();
 }
 // touch devices: left thumb joystick to walk, right-hand buttons; the skill button can be dragged to aim
 const touch=matchMedia('(pointer:coarse)').matches||'ontouchstart' in window;
@@ -414,17 +418,17 @@ function qAim(dx:number,dy:number){
   addEventListener('pointerup',up);addEventListener('pointercancel',up);
 }
 const tb=(id:string,down:()=>void)=>{const b=$(id);b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();autoAim();down();});};
-tb('t-atk',()=>tryAttack());tb('t-dash',()=>roll());tb('t-e',()=>{cycleElement();labelButtons();});
+tb('t-atk',()=>tryAttack());$('t-act').addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();interact();});tb('t-dash',()=>roll());tb('t-e',()=>{cycleElement();labelButtons();});
 // options & help: one closable panel; controls are explained there, shown once on the first run
 function openModal(kind:'options'|'help'){
-  const m=$('modal'),body=$('mbody');$('mtitle').textContent=kind==='help'?'Controles':'Opções';
-  const pc=`<h3>Computador</h3><ul><li><b>WASD</b> ou clique no chão: andar · <b>Shift</b>: correr</li><li><b>Clique no inimigo</b>, <b>J</b> ou botão direito: atacar</li><li><b>Q</b>: habilidade da classe (Guerreiro: segure e solte)</li><li><b>E</b>: trocar elemento (Astral)</li><li><b>Espaço</b>: esquiva · roda do mouse: zoom</li></ul>`;
-  const mob=`<h3>Celular</h3><ul><li>Toque e arraste no lado esquerdo da tela: <b>andar</b></li><li><b>Atacar</b>: mira sozinho no inimigo mais próximo</li><li>Botão da <b>habilidade</b>: toque para usar no mais próximo ou <b>arraste para mirar</b> e solte</li><li><b>Esquiva</b> e <b>elemento</b> (Astral) nos botões menores</li></ul>`;
-  const help=(touch?mob+pc:pc+mob)+`<p class="note">Portais de pedra levam às outras regiões: norte avança, sul volta.</p>`;
-  body.innerHTML=kind==='help'?help:`<div class="opts"><button id="o-help">Ver controles</button><button id="o-quality">${quality==='high'?'Qualidade: alta':'Qualidade: leve'}</button><button id="o-music">${sound.musicOn?'Música: ligada':'Música: desligada'}</button><button id="o-sfx">${sound.sfxOn?'Efeitos: ligados':'Efeitos: desligados'}</button><button id="o-creator">Mudar personagem</button><p class="note" id="o-fps">${fpsShown?fpsShown+' quadros por segundo':''}</p></div>`;
+  const m=$('modal'),body=$('mbody');m.classList.remove('talking');talking=null;$('mtitle').textContent=kind==='help'?'Controles':'Opções';
+  const pc=`<h3>Computador</h3><ul><li><b>WASD</b> ou clique no chão: andar · <b>Shift</b>: correr</li><li><b>Clique no inimigo</b>, <b>J</b> ou botão direito: atacar</li><li><b>Q</b>: habilidade da classe (Guerreiro: segure e solte)</li><li><b>E</b>: trocar elemento (Astral)</li><li><b>Espaço</b>: esquiva · roda do mouse: zoom</li><li><b>F</b>: falar com alguém da base ou analisar um ponto da missão</li></ul>`;
+  const mob=`<h3>Celular</h3><ul><li>Toque e arraste no lado esquerdo da tela: <b>andar</b></li><li><b>Atacar</b>: mira sozinho no inimigo mais próximo</li><li>Botão da <b>habilidade</b>: toque para usar no mais próximo ou <b>arraste para mirar</b> e solte</li><li><b>Esquiva</b> e <b>elemento</b> (Astral) nos botões menores</li><li>Perto de alguém ou de um ponto da missão aparece o botão <b>Falar</b> / <b>Analisar</b></li></ul>`;
+  const help=(touch?mob+pc:pc+mob)+`<p class="note">Portais de pedra levam às outras regiões: norte avança, sul volta. A seta dourada aponta o próximo objetivo da missão.</p>`;
+  body.innerHTML=kind==='help'?help:`<div class="opts"><button id="o-help">Ver controles</button><button id="o-quality">${quality==='high'?'Qualidade: alta':'Qualidade: leve'}</button><button id="o-music">${sound.musicOn?'Música: ligada':'Música: desligada'}</button><button id="o-sfx">${sound.sfxOn?'Efeitos: ligados':'Efeitos: desligados'}</button><button id="o-journal">Diário de missões</button><button id="o-creator">Mudar personagem</button><p class="note" id="o-fps">${fpsShown?fpsShown+' quadros por segundo':''}</p></div>`;
   m.classList.add('on');
   if(kind==='options'){
-   $('o-help').onclick=()=>openModal('help');
+   $('o-help').onclick=()=>openModal('help');$('o-journal').onclick=openJournal;
    $('o-music').onclick=()=>{sound.toggleMusic();$('o-music').textContent=sound.musicOn?'Música: ligada':'Música: desligada';};
    $('o-sfx').onclick=()=>{sound.toggleSfx();$('o-sfx').textContent=sound.sfxOn?'Efeitos: ligados':'Efeitos: desligados';};
    $('o-quality').onclick=()=>{setQuality(quality==='high'?'low':'high');($('o-quality')).textContent=quality==='high'?'Qualidade: alta':'Qualidade: leve';};
@@ -432,11 +436,151 @@ function openModal(kind:'options'|'help'){
   }
 }
 $('optbtn').onclick=()=>openModal('options');
-$('mclose').onclick=()=>$('modal').classList.remove('on');
-$('modal').addEventListener('pointerdown',e=>{if(e.target===$('modal'))$('modal').classList.remove('on');});
+const closeModal=()=>{$('modal').classList.remove('on');$('modal').classList.remove('talking');talking=null;};
+$('mclose').onclick=closeModal;
+$('modal').addEventListener('pointerdown',e=>{if(e.target===$('modal'))closeModal();});
 function firstHelp(){try{if(localStorage.getItem('dante3d.help'))return;localStorage.setItem('dante3d.help','1');}catch{/* ignore */}openModal('help');}
 $('respawn').onclick=()=>{document.body.classList.remove('dead');dead=false;hp=hpMax;mana=100;pos.set(0,0,0);hero.play('Idle_Loop',{fade:.2});if(pet)pet.g.position.set(1.2,0,1);for(const e of enemies)e.dispose();enemies.length=0;hud();};
 document.body.classList.add('creator');
+
+// ---------- people of the base, missions and guidance ----------
+const journal=new Journal();
+const npcs=NPCS.map(d=>new Npc(d,world.scene));
+let talking:Npc|null=null,scan:{g:Goal;t:number}|null=null;const SCAN_TIME=1.6;
+const IDLE:Record<NpcId,string>={nara:'Os civis ficam junto da nave enquanto a equipe explora. Quando houver uma nova rota, eu aviso.',lia:'A enfermaria está aberta. Volte inteira; ainda temos muito a aprender sobre Dante.',ivo:'A oficina fica aqui. Cuidado com os cabos: água e energia continuam em circuitos separados.'};
+function interactable():{kind:'npc';n:Npc}|{kind:'scan';g:Goal}|null{
+  if(mode!=='play'||dead)return null;
+  if(world.biome==='camp')for(const n of npcs)if(n.ready&&Math.hypot(n.pos.x-pos.x,n.pos.z-pos.z)<2.6)return{kind:'npc',n};
+  for(const g of journal.open())if(g.kind==='scan'&&g.biome===world.biome&&Math.hypot(g.x-pos.x,g.z-pos.z)<2.6)return{kind:'scan',g};
+  return null;
+}
+function interact(){
+  const it=interactable();if(!it)return false;
+  if(it.kind==='npc')openTalk(it.n);else if(!scan){scan={g:it.g,t:0};moveTarget=null;sfx('charge');}
+  return true;
+}
+function toast(text:string){const t=$('toast');t.textContent=text;t.classList.remove('on');void t.offsetWidth;t.classList.add('on');}
+function goalDone(g:Goal){
+  if(!journal.complete(g.id))return;sfx('heal');toast(`Registrado: ${g.label}`);
+  const m=journal.current();if(m&&journal.status(m.id)==='ready')later(2.6,()=>toast(`Relatório pronto · volte para falar com ${NPC_INFO[m.npc].name}`));
+  refreshMarkers();renderTracker();
+}
+function openTalk(n:Npc,report?:{id:string;credits:number}){
+  talking=n;const id=n.def.npc,m=$('modal'),body=$('mbody');m.classList.add('talking');
+  $('mtitle').textContent=n.def.name;
+  const portrait=import.meta.env.BASE_URL+(id?NPC_INFO[id].portrait:n.def.id==='elisa'?'assets/base/base-refugee-a.png':'assets/base/base-refugee-b.png');
+  let html=`<div class="talk"><img src="${portrait}" alt=""><div class="say"><p class="role">${n.def.role}</p>`;
+  let action='';
+  if(report){const done=MISSIONS.find(x=>x.id===report.id)!,next=id?journal.offerFor(id):null;
+   html+=`<h3>${done.title} · concluída</h3>`+done.report.map(l=>`<p>${l}</p>`).join('')+`<p class="reward">Relatório entregue · +${report.credits} créditos</p>`;
+   if(next)action=`<button class="act" data-next="1">Próxima missão</button>`;}
+  else if(!id)html+=(n.def.lines??[]).map(l=>`<p>${l}</p>`).join('');
+  else{
+   const mi=journal.offerFor(id);
+   if(!mi)html+=`<p>${IDLE[id]}</p>`;
+   else{
+    const st=journal.status(mi.id);
+    html+=`<h3>${mi.title}</h3>`+(st==='ready'?mi.report:mi.offer).map(l=>`<p>${l}</p>`).join('');
+    html+=`<ul class="goals">${mi.goals.map(g=>`<li class="${journal.goals.has(g.id)?'done':''}">${journal.goals.has(g.id)?'✓':'◇'} ${g.label}</li>`).join('')}</ul><p class="reward">Recompensa pessoal: ${mi.credits} créditos</p>`;
+    if(st==='available')action=`<button class="act" data-id="${mi.id}" data-do="accept">Aceitar missão</button>`;
+    else if(st==='ready')action=`<button class="act" data-id="${mi.id}" data-do="deliver">Entregar relatório</button>`;
+    else html+=`<p class="note">Missão em andamento. A seta dourada indica o próximo objetivo.</p>`;
+   }
+  }
+  body.innerHTML=html+action+'</div></div>';m.classList.add('on');sfx('ui');
+  body.querySelector<HTMLButtonElement>('.act')?.addEventListener('click',e=>{
+   const b=e.currentTarget as HTMLButtonElement,mid=b.dataset.id!;
+   if(b.dataset.next){openTalk(n);return;}
+   if(b.dataset.do==='accept'){if(journal.accept(mid)){toast(`Missão aceita: ${MISSIONS.find(x=>x.id===mid)!.title}`);closeModal();}}
+   else{const c=journal.deliver(mid);if(c){sfx('heal');toast(`Relatório entregue · +${c} créditos`);openTalk(n,{id:mid,credits:c});}}
+   refreshMarkers();renderTracker();
+  });
+}
+function openJournal(){
+  const m=$('modal'),body=$('mbody');m.classList.remove('talking');talking=null;$('mtitle').textContent='Diário de missões';
+  const ST:Record<string,string>={locked:'Bloqueada',available:'Disponível',active:'Em andamento',ready:'Relatório pronto',completed:'Concluída'};
+  body.innerHTML=`<p class="note">Créditos pessoais: ${journal.credits}</p>`+MISSIONS.map(mi=>{const st=journal.status(mi.id);return`<div class="jm ${st}"><b>${mi.title}</b><span>${NPC_INFO[mi.npc].name} · ${ST[st]}</span>${st==='active'||st==='ready'?`<ul class="goals">${mi.goals.map(g=>`<li class="${journal.goals.has(g.id)?'done':''}">${journal.goals.has(g.id)?'✓':'◇'} ${g.label}</li>`).join('')}</ul>`:''}</div>`;}).join('');
+  m.classList.add('on');
+}
+function renderTracker(){
+  const t=$('tracker'),mi=journal.current();let html='';
+  if(mi){const st=journal.status(mi.id);
+   html=`<small>Missão · ${journal.credits} créditos</small><b>${mi.title}</b><ul>${mi.goals.filter(g=>!(g.after??[]).some(a=>!journal.goals.has(a))||journal.goals.has(g.id)).map(g=>`<li class="${journal.goals.has(g.id)?'done':''}">${journal.goals.has(g.id)?'✓':'◇'} ${g.label}</li>`).join('')}</ul>`+(st==='ready'?`<em>Volte para falar com ${NPC_INFO[mi.npc].name}</em>`:'');}
+  else{const next=MISSIONS.find(x=>journal.status(x.id)==='available');
+   html=next?`<small>Missão · ${journal.credits} créditos</small><b>${next.title}</b><em>! Converse com ${NPC_INFO[next.npc].name} no acampamento</em>`:`<small>Diário · ${journal.credits} créditos</small><b>Todas as missões concluídas</b>`;}
+  if(t.innerHTML!==html)t.innerHTML=html;
+}
+$('tracker').addEventListener('click',openJournal);
+// beacons on the open goals of this region
+const markers=new T.Group();world.scene.add(markers);
+const BEAM=new T.ShaderMaterial({uniforms:{uT:{value:0},uC:{value:new T.Color('#ffc24a')}},transparent:true,depthWrite:false,blending:T.AdditiveBlending,side:T.DoubleSide,
+ vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+ fragmentShader:'uniform float uT;uniform vec3 uC;varying vec2 vUv;void main(){float a=pow(1.-vUv.y,1.8)*(.35+.2*sin(vUv.y*24.-uT*3.))*smoothstep(0.,.08,vUv.y+.02);gl_FragColor=vec4(uC*a,a);}'});
+const RING=new T.MeshBasicMaterial({color:'#ffc24a',transparent:true,opacity:.75,blending:T.AdditiveBlending,depthWrite:false});
+const GEM=new T.MeshStandardMaterial({color:'#ffd27a',emissive:'#ffb040',emissiveIntensity:1.5,roughness:.3});
+const ECHO=new T.MeshStandardMaterial({color:'#9ff4ff',emissive:'#4fe6ff',emissiveIntensity:1.8,roughness:.2,flatShading:true});
+function refreshMarkers(){
+  for(const c of [...markers.children])c.traverse(o=>(o as T.Mesh).geometry?.dispose());markers.clear();
+  for(const g of journal.open()){
+   if(g.biome!==world.biome||g.kind==='boss')continue;
+   const m=new T.Group();m.position.set(g.x,0,g.z);
+   m.add(new T.Mesh(new T.CylinderGeometry(.55,.9,12,20,1,true).translate(0,6,0),BEAM));
+   const ring=new T.Mesh(new T.RingGeometry(1.7,1.95,48).rotateX(-Math.PI/2),RING);ring.position.y=.06;ring.name='ring';m.add(ring);
+   const echo=g.id.startsWith('echo')||g.id==='passage'||g.id==='origin';
+   const gem=new T.Mesh(echo?new T.OctahedronGeometry(.5,0).scale(.6,1.6,.6):new T.OctahedronGeometry(.3,0),echo?ECHO:GEM);gem.position.y=echo?1.6:1.8;gem.name='gem';gem.castShadow=true;m.add(gem);
+   markers.add(m);
+  }
+}
+function updateMarkers(dt:number){
+  BEAM.uniforms.uT.value+=dt;
+  for(const m of markers.children){const r=m.getObjectByName('ring'),g=m.getObjectByName('gem');if(r){const s=1+Math.sin(time*2.4)*.06;r.scale.setScalar(s);}if(g){g.rotation.y+=dt*1.2;g.position.y=(g.position.y>1.7?1.8:1.6)+Math.sin(time*2)*.08;}}
+}
+// where to go next: a goal here, a portal toward the goal's region, or the person to report to
+function portalTo(b:BiomeId){const dir=BIOME_ORDER.indexOf(b)>BIOME_ORDER.indexOf(world.biome)?1:-1;const pt=world.portals.find(p=>p.dir===dir);return pt?{p:pt.pos,label:`Portal · ${BIOMES[pt.to].name}`}:null;}
+function guideTarget():{p:T.Vector3;label:string}|null{
+  const mi=journal.current();let who:NpcId|null=null;
+  if(!mi){const next=MISSIONS.find(x=>journal.status(x.id)==='available');if(!next)return null;who=next.npc;}
+  else if(journal.status(mi.id)==='ready')who=mi.npc;
+  if(who){if(world.biome!=='camp')return portalTo('camp');const n=npcs.find(x=>x.def.npc===who);return n?{p:n.pos,label:n.def.name}:null;}
+  const open=journal.open(),here=open.filter(g=>g.biome===world.biome);
+  if(here.length){let best=here[0],bd=1e9;for(const g of here){const d=Math.hypot(g.x-pos.x,g.z-pos.z);if(d<bd){bd=d;best=g;}}
+   if(best.kind==='boss')return boss?{p:boss.pos,label:boss.name}:null;
+   return{p:new T.Vector3(best.x,0,best.z),label:best.label};}
+  return open.length?portalTo(open[0].biome):null;
+}
+const gv=new T.Vector3();
+function updateGuide(){
+  const el=$('guide'),tg=mode==='play'&&!dead?guideTarget():null;
+  const d=tg?Math.hypot(tg.p.x-pos.x,tg.p.z-pos.z):0;
+  if(!tg||d<4){el.classList.remove('on');return;}
+  gv.copy(pos).setY(1);gv.project(camera);
+  const cx=(gv.x*.5+.5)*innerWidth,cy=(-gv.y*.5+.5)*innerHeight,a=Math.atan2(tg.p.z-pos.z,tg.p.x-pos.x),R=Math.min(innerWidth,innerHeight)*.2;
+  el.classList.add('on');el.style.transform=`translate(${cx+Math.cos(a)*R}px,${cy+Math.sin(a)*R}px)`;
+  (el.firstElementChild as HTMLElement).style.transform=`rotate(${a}rad)`;
+  const txt=`${tg.label} · ${Math.round(d)} m`;const sp=el.lastElementChild as HTMLElement;if(sp.textContent!==txt)sp.textContent=txt;
+}
+function updatePrompt(){
+  const el=$('prompt'),it=talking?null:interactable();let txt='',btn='';
+  if(scan){txt=`Analisando ${scan.g.label.toLowerCase()} · ${Math.round(scan.t/SCAN_TIME*100)}%`;}
+  else if(it?.kind==='npc'){txt=`${touch?'':'F · '}Falar com ${it.n.def.name}`;btn='Falar';}
+  else if(it?.kind==='scan'){txt=`${touch?'':'F · '}Analisar: ${it.g.label}`;btn='Analisar';}
+  if(el.textContent!==txt)el.textContent=txt;el.classList.toggle('on',!!txt);
+  document.body.classList.toggle('can-act',!!btn&&!scan);if(btn&&$('t-act').textContent!==btn)$('t-act').textContent=btn;
+}
+let trackT=0;
+function updateMissions(dt:number){
+  const inCamp=world.biome==='camp';
+  for(const n of npcs){n.char.root.visible=inCamp;if(inCamp){n.setMarker(n.def.npc?journal.marker(n.def.npc):'');n.update(dt,pos,talking===n);}}
+  if(mode!=='play'||dead){scan=null;$('guide').classList.remove('on');return;}
+  for(const g of journal.open())if(g.kind==='visit'&&g.biome===world.biome&&Math.hypot(g.x-pos.x,g.z-pos.z)<3.2)goalDone(g);
+  if(scan){
+   if(moving||now()<rollUntil||Math.hypot(scan.g.x-pos.x,scan.g.z-pos.z)>3)scan=null;
+   else{scan.t+=dt;faceTo(new T.Vector3(scan.g.x,0,scan.g.z));if(scan.t>=SCAN_TIME){const g=scan.g;scan=null;goalDone(g);}}
+  }
+  if(talking&&Math.hypot(talking.pos.x-pos.x,talking.pos.z-pos.z)>5)closeModal();
+  updateMarkers(dt);updatePrompt();updateGuide();
+  if((trackT+=dt)>1){trackT=0;renderTracker();}
+}
 
 // ---------- input ----------
 addEventListener('keydown',e=>{
@@ -445,7 +589,8 @@ addEventListener('keydown',e=>{
   if(e.code==='Space'){e.preventDefault();roll();}
   else if(e.code==='KeyJ'){updateAim();tryAttack();}
   else if(e.code==='KeyQ'&&!e.repeat){updateAim();skillDown();}
-  else if(e.code==='KeyE'&&!e.repeat)cycleElement();
+  else if(e.code==='KeyF'&&!e.repeat)interact();
+  else if(e.code==='KeyE'&&!e.repeat){if(!interact())cycleElement();}
 });
 addEventListener('keyup',e=>{keys.delete(e.code);if(e.code==='KeyQ'){updateAim();skillUp();}});
 const cv=renderer.domElement;
@@ -483,7 +628,7 @@ function tick(dt:number){
   if(mode==='creator'){heading=previewYaw;if(hero.model)hero.model.rotation.y+=(previewYaw-hero.model.rotation.y)*Math.min(1,dt*10);hero.play(hero.has(kit().idle)?kit().idle:'Idle_Loop',{fade:.25});}
   else updatePlayer(dt);
   if(mode==='play'&&!mouseDown&&!qaAim&&!('ontouchstart' in window))updateAim();
-  hero.update(dt);updateEnemies(dt,time);updateFx(dt);updateTexts(dt);
+  hero.update(dt);updateEnemies(dt,time);updateMissions(dt);updateFx(dt);updateTexts(dt);
   torch.position.set(pos.x,pos.y+3,pos.z+.8);torch.intensity=15+Math.sin(time*9)*1.6+Math.sin(time*23)*.9;
   rim.position.set(pos.x+4,5,pos.z-5);rim.target.position.copy(pos);key.position.set(pos.x+3,4.5,pos.z+5);key.target.position.set(pos.x,pos.y+1,pos.z);key.intensity=mode==='creator'?2.6:1.1;
   world.update(time,dt,pos);updateCamera(dt);
@@ -498,6 +643,7 @@ function frame(){
 }
 (async()=>{
   await hero.setSex(look.sex);hero.apply(look);await hero.setWeapon(look.weapon);
+  await Promise.all(npcs.map(n=>n.load()));
   if(q.get('sex'))await change({sex:q.get('sex') as Sex});
   if(q.get('cls')&&CLASSES[q.get('cls') as ClassId])await change({weapon:CLASSES[q.get('cls') as ClassId].weapon});
   const patch:Partial<Look>={};
@@ -511,7 +657,8 @@ function frame(){
   const warm=(Object.keys(SPECIES) as SpeciesId[]).map((k,i)=>new Creature(k,i*3,-200,world.scene));const W=new T.Vector3(0,1,-200),F=new T.Vector3(0,0,1);
   for(const k of ['pulse','fire','water','earth','energy','filament'] as Kind[]){fire(k,W,F,0,0);vfx.impact(k,W,F);}
   vfx.slash(W,0,false);vfx.field('energy',W,1);vfx.field('earth',W,1);vfx.decal(W,'#fff',1,.1);
-  renderer.compile(world.scene,camera);warm.forEach(w=>w.dispose());for(const p of projs)dispose(p.o);projs.length=0;
+  const tw=teleWarm();tw.position.copy(W);world.scene.add(tw);const mw=new T.Group();mw.position.copy(W);for(const m of[BEAM,RING,GEM,ECHO])mw.add(new T.Mesh(new T.PlaneGeometry(1,1),m));world.scene.add(mw);
+  renderer.compile(world.scene,camera);warm.forEach(w=>w.dispose());for(const p of projs)dispose(p.o);projs.length=0;tw.removeFromParent();mw.removeFromParent();
   renderer.compile(world.scene,camera);warm.forEach(w=>w.dispose());
   if(quality==='low')setQuality('low');
   $('loading').remove();
@@ -520,7 +667,7 @@ function frame(){
   requestAnimationFrame(frame);
 })();
 // QA hooks
-(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look};},cam:(px:number,py:number,pz:number,tx:number,ty:number,tz:number)=>{fixedCam=px===undefined?null:[new T.Vector3(px,py,pz),new T.Vector3(tx,ty,tz)];},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,goBiome,bossNow:()=>{biomeKills=99;},enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{qaAim=true;aimPoint.set(x,0,z);},spawn:(x:number,z:number,k:SpeciesId='crawler')=>{const e=new Creature(k,x,z,world.scene);enemies.push(e);return e.kind;},mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
+(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look};},cam:(px:number,py:number,pz:number,tx:number,ty:number,tz:number)=>{fixedCam=px===undefined?null:[new T.Vector3(px,py,pz),new T.Vector3(tx,ty,tz)];},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,goBiome,bossNow:()=>{biomeKills=99;},journal:()=>journal,tp:(x:number,z:number)=>{pos.set(x,0,z);},interact,talkTo:(id:string)=>{const n=npcs.find(x=>x.def.id===id);if(n){pos.set(n.pos.x,0,n.pos.z+1.6);openTalk(n);}},goal:(id:string)=>{const g=journal.open().find(x=>x.id===id);if(g)goalDone(g);},enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{qaAim=true;aimPoint.set(x,0,z);},spawn:(x:number,z:number,k:SpeciesId='crawler')=>{const e=new Creature(k,x,z,world.scene);enemies.push(e);return e.kind;},mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
  const w=hero.weapon,h=hero.hand;if(!w||!h)return null;hero.model.updateMatrixWorld(true);
  const mq=hero.model.getWorldQuaternion(new T.Quaternion()),hq=h.getWorldQuaternion(new T.Quaternion());
  const hm=mq.clone().invert().multiply(hq);const wq=hm.clone().multiply(w.quaternion);
