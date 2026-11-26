@@ -4,7 +4,8 @@ import {Character,DEFAULT_LOOK,HAIR,HAIR_COLORS,BROWS,CLOTH,OUTFITS,SKINS,type L
 import {CLASSES,CLASS_ORDER,WEAPON_CLASS,ELEMENTS,ELEMENT_NAMES,ELEMENT_COLORS,type ClassId,type Element} from './classes';
 import {World,ARENA} from './world';
 import {VFX,type Kind} from './vfx';
-import {Creature,SPECIES,updateSpits,clearShots,type Ctx,type SpeciesId} from './creatures';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {Creature,MODELS,SPECIES,updateSpits,clearShots,type Ctx,type SpeciesId} from './creatures';
 import {BIOMES,BIOME_ORDER,type BiomeId} from './biomes';
 
 // Echoes of Dante — new 3D track, slice S1: character creator + first playable ARPG loop.
@@ -277,7 +278,7 @@ const ray=new T.Raycaster(),plane=new T.Plane(new T.Vector3(0,1,0),0);
 function updateAim(){ray.setFromCamera(mouse,camera);ray.ray.intersectPlane(plane,aimPoint);}
 
 // ---------- camera ----------
-const camPos=new T.Vector3(),camLook=new T.Vector3(),cTmp=new T.Vector3();let zoom=1,previewYaw=-.55;let close:{bone:string;off:T.Vector3}|null=null;
+const camPos=new T.Vector3(),camLook=new T.Vector3(),cTmp=new T.Vector3();let zoom=1,previewYaw=-.55;let close:{bone:string;off:T.Vector3}|null=null;let fixedCam:[T.Vector3,T.Vector3]|null=null;
 function updateCamera(dt:number){
   const target=mode==='play'?1:0;camBlend+=(target-camBlend)*Math.min(1,dt*2.6);
   const k=camBlend*camBlend*(3-2*camBlend);
@@ -288,6 +289,7 @@ function updateCamera(dt:number){
   camPos.copy(cp).lerp(pp,k);camLook.copy(cl).lerp(pl,k);
   if(close&&hero.model){const b=hero.model.getObjectByName(close.bone);if(b){hero.model.updateMatrixWorld(true);const c=b.getWorldPosition(new T.Vector3());camLook.copy(c);camPos.copy(c).add(close.off.clone().applyAxisAngle(new T.Vector3(0,1,0),hero.model.rotation.y));}}
   if(vfx.shake>.01){const s=vfx.shake*.35;camPos.x+=(Math.random()-.5)*s;camPos.y+=(Math.random()-.5)*s;camPos.z+=(Math.random()-.5)*s;}
+  if(fixedCam){camPos.copy(fixedCam[0]);camLook.copy(fixedCam[1]);}
   camera.position.copy(camPos);camera.lookAt(camLook);
   vfx.setView(renderer.domElement.height,camera.fov);
   camera.fov=T.MathUtils.lerp(32,40,k);camera.updateProjectionMatrix();
@@ -304,6 +306,7 @@ ui.innerHTML=`
  <div class="grp"><label>Sobrancelhas</label><div class="row" id="o-brow"></div></div>
  <div class="grp"><label>Vestimenta</label><div class="row wrap" id="o-outfit"></div></div>
  <div class="grp"><label>Cor da roupa</label><div class="row" id="o-cloth"></div></div>
+ <div class="grp"><label>Capacete</label><div class="row" id="o-helmet"></div></div>
  <div class="grp"><label>Classe</label><div class="row wrap" id="o-class"></div><div class="clsinfo" id="o-clsinfo"></div></div>
  <button id="go">Entrar no mundo</button><p class="hint">Arraste para girar o personagem</p></div>
 <div id="hud"><div class="orb hp"><i id="hp"></i><b id="hpt"></b></div><div id="clsname"></div><div class="bar" id="skillbar"></div><div class="orb mp"><i id="mp"></i><b id="mpt"></b></div><div id="kills"></div></div><button id="optbtn" title="Opções">&#9776;</button><div id="perf"><span id="fps"></span></div>
@@ -336,6 +339,7 @@ function refreshUi(){
   chips('o-brow',BROWS,()=>look.brows,id=>void change({brows:id}));
   chips('o-outfit',OUTFITS,()=>look.outfit,id=>void change({outfit:id}));
   swatches('o-cloth',CLOTH.map(c=>c[1]),()=>look.cloth,i=>void change({cloth:i}));
+  chips('o-helmet',[['0','Sem'],['1','Com visor']],()=>look.helmet?'1':'0',id=>void change({helmet:id==='1'}));
   chips('o-class',CLASS_ORDER.map(c=>[c,CLASSES[c].name] as [string,string]),()=>cls(),id=>void change({weapon:CLASSES[id as ClassId].weapon}));
   const k=kit();$('o-clsinfo').innerHTML=`<b>${k.role}</b><span>${k.fantasy}</span><i>${k.kit}</i>`;
 }
@@ -491,10 +495,12 @@ function frame(){
   if(q.get('cls')&&CLASSES[q.get('cls') as ClassId])await change({weapon:CLASSES[q.get('cls') as ClassId].weapon});
   const patch:Partial<Look>={};
   for(const k of['skin','hairColor','cloth'] as const)if(q.get(k))patch[k]=Number(q.get(k));
+  if(q.get('helmet'))patch.helmet=q.get('helmet')==='1';
   for(const k of['hair','brows','outfit','weapon'] as const)if(q.get(k))(patch as Record<string,string>)[k]=q.get(k)!;
   if(Object.keys(patch).length)await change(patch);
   refreshUi();
   // compile every material up front (enemy, projectile, ring) so the first fight doesn't hitch
+  try{const g=await new GLTFLoader().loadAsync(import.meta.env.BASE_URL+'assets/3d-new/creatures/warden.glb');MODELS.warden=g.scene;}catch{/* procedural fallback */}
   const warm=(Object.keys(SPECIES) as SpeciesId[]).map((k,i)=>new Creature(k,i*3,-200,world.scene));const W=new T.Vector3(0,1,-200),F=new T.Vector3(0,0,1);
   for(const k of ['pulse','fire','water','earth','energy','filament'] as Kind[]){fire(k,W,F,0,0);vfx.impact(k,W,F);}
   vfx.slash(W,0,false);vfx.field('energy',W,1);vfx.field('earth',W,1);vfx.decal(W,'#fff',1,.1);
@@ -507,7 +513,7 @@ function frame(){
   requestAnimationFrame(frame);
 })();
 // QA hooks
-(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look};},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,goBiome,bossNow:()=>{biomeKills=99;},enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{qaAim=true;aimPoint.set(x,0,z);},spawn:(x:number,z:number,k:SpeciesId='crawler')=>{const e=new Creature(k,x,z,world.scene);enemies.push(e);return e.kind;},mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
+(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look};},cam:(px:number,py:number,pz:number,tx:number,ty:number,tz:number)=>{fixedCam=px===undefined?null:[new T.Vector3(px,py,pz),new T.Vector3(tx,ty,tz)];},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,goBiome,bossNow:()=>{biomeKills=99;},enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{qaAim=true;aimPoint.set(x,0,z);},spawn:(x:number,z:number,k:SpeciesId='crawler')=>{const e=new Creature(k,x,z,world.scene);enemies.push(e);return e.kind;},mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
  const w=hero.weapon,h=hero.hand;if(!w||!h)return null;hero.model.updateMatrixWorld(true);
  const mq=hero.model.getWorldQuaternion(new T.Quaternion()),hq=h.getWorldQuaternion(new T.Quaternion());
  const hm=mq.clone().invert().multiply(hq);const wq=hm.clone().multiply(w.quaternion);

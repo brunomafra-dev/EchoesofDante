@@ -1,12 +1,13 @@
 import * as T from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {Grip,MUZZLE} from './grip';
+import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 
 // Character of the new 3D track: one rigged human per sex, every customisable part is a
 // separate skinned mesh sharing the same skeleton (built by scripts/asset-tools/3d-new/build_character.py).
 export type Sex='male'|'female';
 export type WeaponId='saber'|'carbine'|'gauntlet'|'conductor';
-export interface Look{sex:Sex;skin:number;hair:string;hairColor:number;brows:string;outfit:string;cloth:number;weapon:WeaponId}
+export interface Look{sex:Sex;skin:number;hair:string;hairColor:number;brows:string;outfit:string;cloth:number;weapon:WeaponId;helmet?:boolean}
 
 export const SKINS=['#ffffff','#f1d2bd','#d8a98a','#b47d58','#8a5a3b','#5a3a28'];
 export const HAIR_COLORS:[string,[number,number,number]][]=[
@@ -16,14 +17,22 @@ export const HAIR:Record<Sex,[string,string][]>={
  male:[['short02','Curto'],['short04','Repicado'],['cortu_short_messy_hair','Bagunçado'],['ponytail01','Rabo de cavalo'],['long01','Longo'],['afro01','Black power']],
  female:[['long01','Longo'],['bob01','Chanel'],['ponytail01','Rabo de cavalo'],['braid01','Trança'],['toigo_blunt_bob','Chanel reto'],['short03','Curto']],
 };
-export const CLOTH:[string,string][]=[['Original','#ffffff'],['Grafite','#5c5d62'],['Floresta','#587a4f'],['Marinho','#4b5f94'],['Vinho','#9c4a56'],['Ocre','#c59a52']];
+export const CLOTH:[string,string][]=[['Da classe','linear-gradient(135deg,#e8e0d0 50%,#e07a2a 50%)'],['Original','#ffffff'],['Grafite','#5c5d62'],['Floresta','#587a4f'],['Marinho','#4b5f94'],['Vinho','#9c4a56'],['Ocre','#c59a52']];
 export const BROWS:[string,string][]=[['eyebrow001','Fina'],['eyebrow005','Média'],['eyebrow009','Grossa']];
-export const OUTFITS:[string,string][]=[['expedition','Expedição'],['armored','Blindado'],['fleet','Frota'],['pilot','Piloto']];
+// equipment tiers of the 2D wardrobe: no protection, basic, reinforced (+ ship crew uniform)
+export const OUTFITS:[string,string][]=[['work','Sem proteção'],['basic','Básico'],['reinforced','Reforçado'],['fleet','Tripulação']];
+// 2D class palettes: suit underlayer, armour plates, work clothes, visor/accent
+const PALETTE:Record<WeaponId,{suit:string;plate:string;work:string;accent:string}>={
+ saber:{suit:'#3a3a42',plate:'#ece4d4',work:'#6e6c4a',accent:'#e07a2a'},
+ carbine:{suit:'#1a1a1e',plate:'#d8ccb0',work:'#6a6848',accent:'#e0782a'},
+ gauntlet:{suit:'#3b4e70',plate:'#eef2f6',work:'#3c4c6c',accent:'#4fe6ff'},
+ conductor:{suit:'#353a2c',plate:'#9a9a78',work:'#5a5a40',accent:'#7dff9e'},
+};
 export const WEAPONS:[WeaponId,string,string][]=[
  ['saber','Sabre de plasma','Corpo a corpo, golpes amplos'],['carbine','Carabina','Tiro à distância'],
  ['gauntlet','Manopla','Socos rápidos'],['conductor','Condutor','Descargas de energia'],
 ];
-export const DEFAULT_LOOK:Look={sex:'male',skin:1,hair:'short02',hairColor:1,brows:'eyebrow005',outfit:'expedition',cloth:0,weapon:'saber'};
+export const DEFAULT_LOOK:Look={sex:'male',skin:1,hair:'short02',hairColor:1,brows:'eyebrow005',outfit:'basic',cloth:0,weapon:'saber',helmet:false};
 
 const clean=(s:string)=>s.replace(/[\[\].:/]/g,'');
 const loader=new GLTFLoader();
@@ -35,6 +44,7 @@ export class Character{
  root=new T.Group();model!:T.Group;mixer!:T.AnimationMixer;clips=new Map<string,T.AnimationClip>();
  current:T.AnimationAction|null=null;currentName='';look:Look=DEFAULT_LOOK;private outfitMats:T.MeshStandardMaterial[]=[];
  hand:T.Object3D|null=null;weapon:T.Object3D|null=null;private weaponId:WeaponId|null=null;private grip:Grip|null=null;
+ private gear=new T.Group();private restHead=new T.Matrix4();private restChest=new T.Matrix4();
  private bodyMats:T.MeshStandardMaterial[]=[];private hairMats:T.MeshStandardMaterial[]=[];private browMats:T.MeshStandardMaterial[]=[];
  async setSex(sex:Sex){
   if(this.model&&this.look.sex===sex)return;
@@ -61,6 +71,7 @@ export class Character{
    }
   });
   this.hand=model.getObjectByName('hand_r')??null;this.weaponId=null;this.weapon=null;this.grip=new Grip(model);
+  model.updateMatrixWorld(true);this.restHead.copy(model.getObjectByName('head')!.matrixWorld);this.restChest.copy(model.getObjectByName('spine_03')!.matrixWorld);this.gearKey='';
   this.look={...this.look,sex};
  }
  apply(look:Look){
@@ -74,11 +85,57 @@ export class Character{
   });
   const skin=new T.Color(SKINS[look.skin]??'#fff');
   this.bodyMats.forEach(m=>m.color.copy(skin));
-  const cl=new T.Color(CLOTH[look.cloth]?.[1]??'#fff');this.outfitMats.forEach(m=>{if(!/boots/i.test(m.name))m.color.copy(cl);});
+  // "Da classe" paints suit, plates and work clothes with the 2D class palette; other swatches tint the fabric
+  const P=PALETTE[look.weapon],own=look.cloth===0,cl=new T.Color(own?P.suit:CLOTH[look.cloth]?.[1]??'#fff');
+  this.outfitMats.forEach(m=>{const n=m.name.toLowerCase();if(/boots/.test(n))return;
+   if(/armor/.test(n))m.color.set(own?P.plate:'#ffffff');else if(/worksuit/.test(n))m.color.set(own?P.work:cl);else m.color.copy(cl);});
+  this.equip(look);
   const hc=HAIR_COLORS[look.hairColor]??HAIR_COLORS[1];
   this.hairMats.forEach(m=>m.color.setRGB(hc[1][0],hc[1][1],hc[1][2]));
   this.browMats.forEach(m=>m.color.setRGB(hc[1][0]*.8,hc[1][1]*.8,hc[1][2]*.8));
  }
+ // rigid expedition gear on the bones: helmet with visor (head), backpack (upper chest)
+ private gearKey='';
+ private equip(look:Look){
+  const helmet=!!look.helmet,pack=look.outfit==='basic'||look.outfit==='reinforced',key=[helmet,pack,look.weapon,look.outfit,look.cloth].join('|');
+  const hideHair=()=>this.model.traverse(o=>{if(o.name.startsWith('hair')&&helmet)o.visible=false;});
+  if(key===this.gearKey){hideHair();return;}this.gearKey=key;
+  this.gear.clear();this.gear.removeFromParent();for(const c of [...this.gearParts])c.removeFromParent();this.gearParts=[];
+  const P=PALETTE[look.weapon];
+  const shell=new T.MeshStandardMaterial({color:new T.Color(look.outfit==='work'?P.work:P.plate).multiplyScalar(.58),roughness:.62,metalness:.15});
+  const dark=new T.MeshStandardMaterial({color:'#1c1d22',roughness:.6,metalness:.4});
+  const glow=new T.MeshStandardMaterial({color:P.accent,emissive:P.accent,emissiveIntensity:.7});
+  const visor=new T.MeshStandardMaterial({color:'#0a2a33',emissive:look.weapon==='carbine'?'#ff7a2a':'#2fd8ff',emissiveIntensity:.22,roughness:.05,metalness:.7});
+  const head=this.model.getObjectByName('head'),chest=this.model.getObjectByName('spine_03');
+  const attach=(bone:T.Object3D,rest:T.Matrix4,obj:T.Object3D,off:[number,number,number])=>{
+   // place obj in model space (aligned with the model) at rest, then express it in the bone's space
+   const want=new T.Matrix4().makeTranslation(...off).premultiply(new T.Matrix4().makeTranslation(new T.Vector3().setFromMatrixPosition(rest).x,new T.Vector3().setFromMatrixPosition(rest).y,new T.Vector3().setFromMatrixPosition(rest).z));
+   const local=rest.clone().invert().multiply(want);local.decompose(obj.position,obj.quaternion,obj.scale);bone.add(obj);this.gearParts.push(obj);
+  };
+  if(helmet&&head){
+   const h=new T.Group();
+   const dome=new T.Mesh(new T.SphereGeometry(.135,28,18),shell);dome.scale.set(1,1.08,1.12);h.add(dome);
+   const vz=look.weapon==='carbine'?[.55,.45]:[.95,.7];
+   const v=new T.Mesh(new T.SphereGeometry(.138,28,18,Math.PI/2-vz[0],vz[0]*2,1.1,vz[1]),visor);v.rotation.y=0;v.scale.set(1,1.08,1.12);h.add(v);
+   const ring=new T.Mesh(new T.TorusGeometry(.115,.022,10,28),dark);ring.rotation.x=Math.PI/2;ring.position.y=-.12;h.add(ring);
+   for(const sx of[-1,1]){const ear=new T.Mesh(new T.CylinderGeometry(.04,.04,.03,16),dark);ear.rotation.z=Math.PI/2;ear.position.set(sx*.135,0,0);h.add(ear);const l=new T.Mesh(new T.SphereGeometry(.01,8,6),glow);l.position.set(sx*.152,0,.02);h.add(l);}
+   const fin=new T.Mesh(new RoundedBoxGeometry(.025,.035,.18,2,.01),dark);fin.position.set(0,.145,-.02);h.add(fin);
+   h.traverse(o=>{(o as T.Mesh).castShadow=true;});
+   attach(head,this.restHead,h,[0,.075,.012]);
+  }
+  if(pack&&chest){
+   const b=new T.Group();
+   const body=new T.Mesh(new RoundedBoxGeometry(.3,.38,.15,3,.04),shell);b.add(body);
+   const lid=new T.Mesh(new RoundedBoxGeometry(.3,.1,.19,2,.03),dark);lid.position.set(0,.2,0);b.add(lid);
+   for(const sx of[-1,1]){const can=new T.Mesh(new T.CylinderGeometry(.045,.045,.34,14),dark);can.position.set(sx*.2,-.02,-.02);b.add(can);const band=new T.Mesh(new T.TorusGeometry(.047,.006,6,16),glow);band.rotation.x=Math.PI/2;band.position.set(sx*.2,.08,-.02);b.add(band);}
+   const strip=new T.Mesh(new T.BoxGeometry(.2,.02,.01),glow);strip.position.set(0,.05,-.09);b.add(strip);
+   const ant=new T.Mesh(new T.CylinderGeometry(.006,.006,.3,6),dark);ant.position.set(.16,.33,-.06);ant.rotation.z=-.25;b.add(ant);const tip=new T.Mesh(new T.SphereGeometry(.016,8,6),glow);tip.position.set(.2,.48,-.06);b.add(tip);
+   b.traverse(o=>{(o as T.Mesh).castShadow=true;});
+   attach(chest,this.restChest,b,[0,-.06,-.19]);
+  }
+  hideHair();
+ }
+ private gearParts:T.Object3D[]=[];
  async setWeapon(id:WeaponId){
   if(this.weaponId===id||!this.hand)return;
   const g=await load(`${base}assets/3d-new/weapons/${id}.glb`);

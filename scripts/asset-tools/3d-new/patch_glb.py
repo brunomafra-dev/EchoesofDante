@@ -6,7 +6,7 @@ def patch(path):
     rest = b[20 + jl:]
     for m in j['materials']:
         n = (m.get('name') or '').lower()
-        if n.endswith('.body') or 'low-poly' in n or 'high-poly' in n or any(k in n for k in ('matcreator','culturalibre','donitz','rehmanpolanski','toigo','joachip','thegreatengineer')):
+        if n.endswith('.body') or 'low-poly' in n or 'high-poly' in n or any(k in n for k in ('matcreator','culturalibre','donitz','rehmanpolanski','toigo','joachip','thegreatengineer','worksuit')):
             m['alphaMode'] = 'OPAQUE'
             m.pop('alphaCutoff', None)
         else:

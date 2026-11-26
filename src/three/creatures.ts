@@ -56,7 +56,7 @@ const segGeo=new T.CylinderGeometry(1,1,1,7);segGeo.translate(0,.5,0);
 function orient(m:T.Mesh,a:T.Vector3,b:T.Vector3,r:number){const d=tmp.copy(b).sub(a),l=d.length();m.position.copy(a);m.quaternion.setFromUnitVectors(UP,d.normalize());m.scale.set(r,l,r);}
 
 interface Leg{hip:T.Vector3;out:T.Vector3;len:number;phase:number;up:T.Mesh;low:T.Mesh;r:number;knee:number}
-interface Look{chitin:T.MeshStandardMaterial;glow:T.MeshStandardMaterial;body:T.Group;legs:Leg[];sac?:T.Mesh;mandibles?:T.Mesh[];height:number;wings?:T.Object3D[];arms?:T.Object3D[];segs?:T.Mesh[];halo?:T.Object3D[]}
+interface Look{chitin:T.MeshStandardMaterial;glow:T.MeshStandardMaterial;body:T.Group;legs:Leg[];sac?:T.Mesh;mandibles?:T.Mesh[];height:number;wings?:T.Object3D[];arms?:T.Object3D[];segs?:T.Mesh[];halo?:T.Object3D[];limbs?:T.Object3D[]}
 type Pal=Spec['pal'];
 function chitin(p:Pal){return new T.MeshStandardMaterial({color:p.c,roughness:p.wet?.18:.42,metalness:p.wet?.1:.25,emissive:'#000000',emissiveIntensity:1});}
 function glowMat(color:string,i=1.6){return new T.MeshStandardMaterial({color,emissive:color,emissiveIntensity:i,roughness:.3});}
@@ -173,7 +173,21 @@ function buildWorm(root:T.Group,p:Pal):Look{
  segs[0].add(ball(.2,gl,[0,0,.5]));
  return {chitin:ch,glow:gl,body,legs:[],segs,height:3};
 }
+// sculpted models (Blender, scripts/asset-tools/3d-new/make_*.py) preloaded by the game
+export const MODELS:Record<string,T.Object3D>={};
+function buildWardenModel(root:T.Group,src:T.Object3D):Look{
+ const m=src.clone(true);root.add(m);const body=new T.Group();root.add(body);body.add(m);
+ let stone:T.MeshStandardMaterial|null=null,core:T.MeshStandardMaterial|null=null;
+ m.traverse(o=>{const me=o as T.Mesh;if(!me.isMesh)return;me.castShadow=true;me.receiveShadow=true;
+  const mats=(Array.isArray(me.material)?me.material:[me.material]) as T.MeshStandardMaterial[];
+  const own=mats.map(x=>{const c=x.clone();if(/core/.test(x.name))core=c;else if(/stone/.test(x.name)&&!stone)stone=c;return c;});
+  me.material=Array.isArray(me.material)?own:own[0];});
+ m.traverse(o=>{const me=o as T.Mesh;if(!me.isMesh)return;const ms=(Array.isArray(me.material)?me.material:[me.material]) as T.MeshStandardMaterial[];ms.forEach(x=>{if(/stone/.test(x.name))x.color.set('#d6b386');if(/flesh/.test(x.name))x.color.set('#c9a0e0');});});
+ const n=(k:string)=>m.getObjectByName(k)!;
+ return {chitin:stone??new T.MeshStandardMaterial(),glow:core??glowMat(Creature.coreColor),body,legs:[],arms:[n('arm_l'),n('arm_r')],limbs:[n('leg_l'),n('leg_r')],height:4.6};
+}
 function buildWarden(root:T.Group,p:Pal):Look{
+ if(MODELS.warden)return buildWardenModel(root,MODELS.warden);
  const ch=chitin(p),gl=glowMat(p.g,2.4),body=new T.Group();root.add(body);
  const plate=(w:number,h:number,d:number,pos:[number,number,number],rot:[number,number,number]=[0,0,0])=>{const m=new T.Mesh(new T.BoxGeometry(w,h,d),ch);m.position.set(...pos);m.rotation.set(...rot);m.castShadow=true;body.add(m);return m;};
  // floating construct: no legs, a core of light held by armour plates
@@ -209,7 +223,7 @@ export class Creature{
  t=Math.random()*9;timer=0;vel=new T.Vector3();deadT=0;flash=0;gone=false;
  slowUntil=0;burnUntil=0;burnAcc=0;markUntil=0;heading=Math.random()*6.28;
  private tele:T.Mesh[]=[];private dir=new T.Vector3();private hitDone=false;private gait=0;private mv!:Move;private targets:T.Vector3[]=[];private hidden=0;private moveCd=0;
- static ctx:Ctx;
+ static ctx:Ctx;static coreColor='#a060ff';
  constructor(public kind:SpeciesId,x:number,z:number,private scene:T.Scene){
   this.spec=SPECIES[kind] as Spec;this.hp=this.spec.hp;this.g.position.set(x,0,z);this.g.scale.setScalar(this.spec.scale);scene.add(this.g);
   const root=new T.Group();this.g.add(root);this.look=BUILD[this.spec.body](root,this.spec.pal);
@@ -332,6 +346,7 @@ export class Creature{
  // procedural motion: legs step in a wave, wings beat, the worm undulates out of the ground
  private pose(dead:boolean){
   const L=this.look;
+  if(L.limbs){const w=Math.min(1,this.vel.length()/1.5);L.limbs.forEach((l,i)=>l.rotation.x=Math.sin(this.gait*1.2+i*Math.PI)*.45*w);if(dead)L.limbs.forEach(l=>l.rotation.x=.8);}
   if(L.halo){L.halo.forEach((h,i)=>{if(i<3){h.rotation.set(Math.PI/2+Math.sin(this.t*.7+i)*.6,this.t*(.8+i*.4),Math.cos(this.t*.5+i)*.5);}else{const a=(i-3)/8*Math.PI*2+this.t*(this.phase===2?1.6:.8);h.position.set(Math.cos(a)*1.9,2.6+Math.sin(this.t*2+i)*.3,Math.sin(a)*1.9);h.rotation.y+=.05;}});L.body.position.y=Math.sin(this.t*1.6)*.15+.3;}
   if(L.wings){const f=Math.sin(this.t*(this.state==='act'?9:5));L.wings.forEach((w,i)=>w.rotation.z=(i?-1:1)*(f*.6+.1));}
   if(L.segs){const h=this.hidden;L.segs.forEach((sg,i)=>{const k=i/(L.segs!.length-1);sg.position.set(Math.sin(this.t*2+i*.7)*.25,(2.4-k*2.6)*(1-h)-h*2.5+ (dead?-1:0),-k*2.2+.6);});}
