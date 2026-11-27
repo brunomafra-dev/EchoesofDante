@@ -14,3 +14,12 @@ wyvern skins resized to 1024 px JPEG); meshes, rigs, weights and animations are 
 The Hollow spider ("Squinty", **Easyforge**, Giant Monster Spiders Free Sample, Giant Monster Spiders Asset Licence 1.0,
 https://easyforge.itch.io/giant-monster-spiders-free-sample) is not in this folder: it is incorporated in the game build only, through the
 same reviewed module as the first 3D (`virtual:arrival-hollow`, see `public/assets/arrival-3d/CREDITS.md`).
+
+## Quaternius — Ultimate Monsters (CC0 1.0) — `q/`
+
+`q/alien.glb`, `q/frog.glb`, `q/squidle.glb`, `q/dino.glb`, `q/green_spiky_blob.glb`, `q/dragon.glb`, `q/demon.glb`, `q/blue_demon.glb`,
+`q/alpaking_evolved.glb`, `q/yeti.glb`: **Quaternius**, Ultimate Monsters, CC0 1.0 (https://quaternius.com/packs/ultimatemonsters.html),
+downloaded unchanged from the author's Poly Pizza mirror (https://poly.pizza/bundle/Ultimate-Monsters-Bundle-5oyGWAmOB6).
+In the game (`menace()` in `src/three/creatures.ts`) the eyes become dark with a glowing pupil, colours are muted and the creature
+skin shader adds scales, creases and rim light; crowns are hidden.
+

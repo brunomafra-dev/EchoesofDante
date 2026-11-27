@@ -15,23 +15,23 @@ const P=(c:string,g:string,s?:string,wet?:boolean,v?:'ice'|'magma')=>({c,g,s,wet
 export const SPECIES={
  // arrival forest / depths
  crawler:{name:'Rastejante Hollow',hp:70,speed:3.1,radius:.75,scale:1,body:'crawler',model:'spider',pal:P('#4a4258','#ffa040'),moves:[{type:'bite',dmg:10,range:1.7,windup:.5,recover:.6,arc:1.6}]},
- skitter:{name:'Saltador',hp:45,speed:3.6,radius:.45,scale:1,body:'skitter',pal:P('#4a382a','#ff8a3d'),moves:[{type:'dash',dmg:14,range:7,windup:.7,recover:.9}]},
+ skitter:{name:'Saltador',model:'qAlien',hp:45,speed:3.6,radius:.45,scale:1,body:'skitter',pal:P('#4a382a','#ff8a3d'),moves:[{type:'dash',dmg:14,range:7,windup:.7,recover:.9}]},
  spitter:{name:'Cuspidor',hp:55,speed:2.3,radius:.6,scale:1,body:'spitter',pal:P('#33402a','#9dff4a','#7dff3a'),keep:7,moves:[{type:'spit',dmg:12,range:11,windup:.8,recover:.7,color:'#9dff4a',min:3}]},
- carapace:{name:'Casco Errante',hp:230,speed:1.7,radius:1.1,scale:1,body:'carapace',pal:P('#45434c','#ff7a2a'),armor:.75,moves:[{type:'sweep',dmg:22,range:3,windup:1.05,recover:1.4,arc:2.2}]},
+ carapace:{name:'Casco Errante',model:'qSpiky',hp:230,speed:1.7,radius:1.1,scale:1,body:'carapace',pal:P('#45434c','#ff7a2a'),armor:.75,moves:[{type:'sweep',dmg:22,range:3,windup:1.05,recover:1.4,arc:2.2}]},
  // springs & terraces
- bankGrazer:{name:'Vigia das Margens',hp:110,speed:2.4,radius:.8,scale:1,body:'amphibian',pal:P('#2f5a52','#7dfcd0',undefined,true),moves:[{type:'bite',dmg:16,range:2.6,windup:.8,recover:1,arc:1.1}]},
- reedSpitter:{name:'Fole dos Juncos',hp:60,speed:2.2,radius:.6,scale:1,body:'spitter',pal:P('#3a5a3e','#6fd8ff','#5fc8ff'),keep:7,moves:[{type:'spit',dmg:12,range:11,windup:.9,recover:.8,color:'#6fd8ff',min:3}]},
+ bankGrazer:{name:'Vigia das Margens',model:'qFrog',hp:110,speed:2.4,radius:.8,scale:1,body:'amphibian',pal:P('#2f5a52','#7dfcd0',undefined,true),moves:[{type:'bite',dmg:16,range:2.6,windup:.8,recover:1,arc:1.1}]},
+ reedSpitter:{name:'Fole dos Juncos',model:'qSquidle',fly:.6,hp:60,speed:2.2,radius:.6,scale:1,body:'spitter',pal:P('#3a5a3e','#6fd8ff','#5fc8ff'),keep:7,moves:[{type:'spit',dmg:12,range:11,windup:.9,recover:.8,color:'#6fd8ff',min:3}]},
  // resonance valley
- thorn:{name:'Espinhante',hp:80,speed:2,radius:.7,scale:1,body:'thorn',pal:P('#4a3a5a','#d07dff'),keep:6,moves:[{type:'fan',dmg:11,range:10,windup:.85,recover:.9,color:'#e0a0ff',count:3,min:2.5}]},
+ thorn:{name:'Espinhante',model:'qDino',hp:80,speed:2,radius:.7,scale:1,body:'thorn',pal:P('#4a3a5a','#d07dff'),keep:6,moves:[{type:'fan',dmg:11,range:10,windup:.85,recover:.9,color:'#e0a0ff',count:3,min:2.5}]},
  // ash coast, obsidian and caldera
- emberHound:{name:'Rasga-brasa',hp:75,speed:3.8,radius:.7,scale:1,body:'hound',pal:P('#2a2422','#ff5a1a'),moves:[{type:'dash',dmg:16,range:8,windup:.65,recover:.9}]},
- fumarole:{name:'Fole de Magma',hp:95,speed:2,radius:.8,scale:1.15,body:'spitter',pal:P('#2c2624','#ff6a20','#ff7a2a',false,'magma'),keep:7,moves:[{type:'lob',dmg:18,range:12,windup:1,recover:1,radius:1.6,color:'#ff7a2a',min:3}]},
- slagback:{name:'Dorso de Basalto',hp:260,speed:1.5,radius:1.2,scale:1.1,body:'carapace',pal:P('#2b2a2e','#ff6a20',undefined,false,'magma'),armor:.7,moves:[{type:'slam',dmg:26,range:2.6,windup:1.1,recover:1.6,radius:3.2}]},
+ emberHound:{name:'Rasga-brasa',model:'qDragon',fly:.5,hp:75,speed:3.8,radius:.7,scale:1,body:'hound',pal:P('#2a2422','#ff5a1a'),moves:[{type:'dash',dmg:16,range:8,windup:.65,recover:.9}]},
+ fumarole:{name:'Fole de Magma',model:'qDemon',fly:.6,hp:95,speed:2,radius:.8,scale:1.15,body:'spitter',pal:P('#2c2624','#ff6a20','#ff7a2a',false,'magma'),keep:7,moves:[{type:'lob',dmg:18,range:12,windup:1,recover:1,radius:1.6,color:'#ff7a2a',min:3}]},
+ slagback:{name:'Dorso de Basalto',model:'qBrute',hp:260,speed:1.5,radius:1.2,scale:1.1,body:'carapace',pal:P('#2b2a2e','#ff6a20',undefined,false,'magma'),armor:.7,moves:[{type:'slam',dmg:26,range:2.6,windup:1.1,recover:1.6,radius:3.2}]},
  titan:{name:'O Incandescente',hp:1400,speed:1.6,radius:1.6,scale:1,body:'golem',pal:P('#2a2626','#ff7a20'),armor:.8,boss:true,moves:[
   {type:'slam',dmg:30,range:3.2,windup:1.1,recover:1.3,radius:3.6},{type:'lob',dmg:22,range:16,windup:1.2,recover:1.2,radius:1.8,count:3,color:'#ff7a2a',min:4},{type:'bite',dmg:26,range:3.4,windup:.8,recover:1,arc:1.4}]},
  // thaw galleries & boreal fracture
- iceCarapace:{name:'Casco Glacial',hp:240,speed:1.6,radius:1.1,scale:1,body:'carapace',pal:P('#9fb7c8','#7fe8ff',undefined,false,'ice'),armor:.75,moves:[{type:'sweep',dmg:22,range:3.2,windup:1.15,recover:1.5,arc:2.2}]},
- frostPouncer:{name:'Rasga-gelo',hp:60,speed:3.6,radius:.5,scale:1.1,body:'skitter',pal:P('#c8d8e8','#6fd8ff',undefined,false,'ice'),moves:[{type:'dash',dmg:15,range:7.5,windup:.7,recover:.9}]},
+ iceCarapace:{name:'Casco Glacial',model:'qYeti',hp:240,speed:1.6,radius:1.1,scale:1,body:'carapace',pal:P('#9fb7c8','#7fe8ff',undefined,false,'ice'),armor:.75,moves:[{type:'sweep',dmg:22,range:3.2,windup:1.15,recover:1.5,arc:2.2}]},
+ frostPouncer:{name:'Rasga-gelo',model:'qAlpaking',fly:.5,hp:60,speed:3.6,radius:.5,scale:1.1,body:'skitter',pal:P('#c8d8e8','#6fd8ff',undefined,false,'ice'),moves:[{type:'dash',dmg:15,range:7.5,windup:.7,recover:.9}]},
  frostSpitter:{name:'Cuspidor Boreal',hp:60,speed:2.2,radius:.6,scale:1,body:'spitter',pal:P('#7f93a8','#a8f0ff','#bff6ff'),keep:7,moves:[{type:'spit',dmg:13,range:11,windup:.85,recover:.8,color:'#bff6ff',min:3}]},
  // Flare wyverns (painted skins by Justin Nichol): a brood of the boreal fracture and its matriarch
  frostWyvern:{name:'Serpe da Geada',hp:75,speed:3,radius:.8,scale:1,body:'winged',model:'wyvern',pal:P('#c8d8e8','#a8f0ff'),keep:6,fly:1,moves:[
@@ -341,9 +341,23 @@ export const ANIMS:Record<string,T.AnimationClip[]>={};
 // sculpted, textured and animated creatures (see public/assets/3d-new/creatures/CREDITS.md):
 // fit = size in metres along 'by'; clips map game motions to the model's clips or to frame ranges of a single action
 type Motion='idle'|'move'|'run'|'attack'|'hit'|'death';
-type ModelId='spider'|'antlion'|'antlionArmored'|'antlionHatchling'|'wyvern'|'wyvernBoss';
+type ModelId='spider'|'antlion'|'antlionArmored'|'antlionHatchling'|'wyvern'|'wyvernBoss'|'qAlien'|'qFrog'|'qSquidle'|'qDino'|'qSpiky'|'qDragon'|'qDemon'|'qBrute'|'qAlpaking'|'qYeti';
+// Quaternius Ultimate Monsters (CC0): three rig families share clip names
+const QF:Partial<Record<Motion,string>>={idle:'Flying_Idle',move:'Fast_Flying',run:'Fast_Flying',attack:'Headbutt',hit:'HitReact',death:'Death'};
+const QB:Partial<Record<Motion,string>>={idle:'Idle',move:'Walk',run:'Run',attack:'Punch',hit:'HitReact',death:'Death'};
+const QC:Partial<Record<Motion,string>>={idle:'Idle',move:'Walk',run:'Walk',attack:'Bite_Front',hit:'HitRecieve',death:'Death'};
 const ANT:Record<Motion,[number,number]>={idle:[0,3],move:[4,11],run:[4,11],attack:[12,15],hit:[16,18],death:[16,23]};
-export const MODEL_DEF:Record<ModelId,{file:string;fit:number;by:'len'|'h';clips:Partial<Record<Motion,string|[number,number]>>;skin?:string;tint?:string;detail?:boolean;attackSpeed?:number}>={
+export const MODEL_DEF:Record<ModelId,{file:string;fit:number;by:'len'|'h';clips:Partial<Record<Motion,string|[number,number]>>;skin?:string;tint?:string;detail?:boolean;attackSpeed?:number;menace?:boolean;hue?:string}>={
+ qAlien:{file:'q/alien',fit:1.5,by:'len',clips:QC,menace:true},
+ qFrog:{file:'q/frog',fit:1.6,by:'h',clips:QB,menace:true},
+ qSquidle:{file:'q/squidle',fit:1.5,by:'h',clips:QF,menace:true},
+ qDino:{file:'q/dino',fit:2.2,by:'h',clips:QB,menace:true},
+ qSpiky:{file:'q/green_spiky_blob',fit:2.3,by:'len',clips:QC,menace:true},
+ qDragon:{file:'q/dragon',fit:2.2,by:'len',clips:QF,menace:true},
+ qDemon:{file:'q/demon',fit:1.7,by:'h',clips:QF,menace:true},
+ qBrute:{file:'q/blue_demon',fit:2.7,by:'h',clips:{...QB,attack:'Weapon'},menace:true,hue:'#3e302c'},
+ qAlpaking:{file:'q/alpaking_evolved',fit:1.5,by:'h',clips:QF,menace:true},
+ qYeti:{file:'q/yeti',fit:2.5,by:'h',clips:QB,menace:true},
  spider:{file:'',fit:3,by:'len',clips:{idle:'Idle',move:'Walk',run:'Run',attack:'Bite',hit:'Hit',death:'Death'},tint:'#a99cc4'},
  antlion:{file:'antlion',fit:1.9,by:'len',clips:ANT,detail:true,tint:'#e8d2a8'},
  antlionArmored:{file:'antlion_armored',fit:2.6,by:'len',clips:ANT,detail:true,tint:'#d8c8b0'},
@@ -365,14 +379,30 @@ function buildModel(root:T.Group,id:ModelId,p:Pal):Look|null{
   // the Flare antlions only carry baked colours: the creature skin adds scales, creases and the rim of the 2D glow
   if(D.detail){ensureAO(me.geometry);skin(c,p.g,.15,2.6,{cells:0});}
   me.material=c;mat??=c;});
+ if(D.menace){menace(m,p.g,{cells:.3,bump:.25,freq:2.4,hue:D.hue});mat=null;m.traverse(o=>{const me=o as T.Mesh;if(me.isMesh&&!mat){const mm=(Array.isArray(me.material)?me.material:[me.material]) as T.MeshStandardMaterial[];mat=mm.find(x=>!x.userData.glow&&!/eye/i.test(x.name))??null;}});}
  const mixer=new T.AnimationMixer(m),acts:Partial<Record<Motion,T.AnimationAction>>={};
  for(const [k,v] of Object.entries(D.clips) as [Motion,string|[number,number]][]){
   let clip:T.AnimationClip|undefined;
-  if(typeof v==='string')clip=clips.find(c=>c.name===v);
+  if(typeof v==='string')clip=clips.find(c=>c.name===v||c.name.endsWith('|'+v));
   else{const key=id+':'+k;clip=subCache.get(key);if(!clip){clip=T.AnimationUtils.subclip(clips[0],k,v[0],v[1]+1,8);subCache.set(key,clip);}}
   if(clip)acts[k]=mixer.clipAction(clip);}
  if(!acts.idle)return null;
  return {chitin:mat!,glow:glowMat(p.g),body,legs:[],height:F.h*F.k,mixer,acts};
+}
+// Quaternius monsters (CC0) are flat-coloured cartoon creatures: turn them into Dante fauna — dark eyes with a glowing
+// pupil in the creature's colour, muted colours, and the creature skin (scales, creases, rim light) over every surface
+export function menace(root:T.Object3D,glow:string,o:{cells?:number;bump?:number;freq?:number;dim?:number;hue?:string}={}){
+ const done=new Map<T.Material,T.Material>();
+ root.traverse(ob=>{const me=ob as T.Mesh;if(!me.isMesh||me.userData.ink)return;
+  const fix=(m0:T.Material)=>{let m=done.get(m0);if(m)return m;const c=(m0 as T.MeshStandardMaterial).clone();const n=(c.name||'').toLowerCase();
+   if(/eye_white/.test(n)){c.color.set('#140c0c');c.roughness=.3;}
+   else if(/gold|crown/.test(n)){c.visible=false;}
+   else if(/tongue/.test(n)){c.color.set('#24080c');c.roughness=.4;}
+   else if(/eye_black|pupil/.test(n)){c.color.set(glow);c.emissive=new T.Color(glow);c.emissiveIntensity=2.4;c.userData.glow=true;}
+   else{const hsl={h:0,s:0,l:0};c.color.getHSL(hsl);c.color.setHSL(hsl.h,hsl.s*.72,hsl.l*(o.dim??.92));if(o.hue)c.color.lerp(new T.Color(o.hue),.75);c.roughness=.62;c.metalness=.08;c.emissive=new T.Color(0);c.emissiveIntensity=1;
+    ensureAO(me.geometry);skin(c,glow,o.bump??.32,o.freq??3.2,{cells:o.cells??.75});}
+   c.envMapIntensity=.55;done.set(m0,c);return c;};
+  me.material=Array.isArray(me.material)?me.material.map(fix):fix(me.material);});
 }
 // ice crystals or basalt and magma on a shell, so the regional kin of a species read differently
 function deco(body:T.Group,p:Pal,R:number,y:number,n:number){
