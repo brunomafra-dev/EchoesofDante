@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import type { PreviewServer, ViteDevServer } from 'vite';
 import { attachCoop } from './server/relay.mjs';
+import { attachCoop3d } from './server/relay3d.mjs';
 import { coopConfig } from './server/coop-config.mjs';
 import {arrivalHollow}from'./scripts/arrival-hollow-plugin';
 
@@ -10,6 +11,7 @@ function rooms(server: ViteDevServer | PreviewServer) {
   const base = server.config.base.startsWith('/') ? server.config.base : '/';
   const path = base.replace(/\/$/, '') + '/coop';
   const relay = attachCoop(server.httpServer, { path });
+  attachCoop3d(server.httpServer, { path: path + '3d' });
   server.middlewares.use(base.replace(/\/$/, '') + '/api/coop-config', (req, res) => coopConfig(req, res, { integratedPath: path }));
   server.middlewares.use(path + '/health', (_req, res) => {
     res.setHeader('Content-Type', 'application/json');

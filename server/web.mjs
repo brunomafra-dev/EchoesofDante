@@ -4,6 +4,7 @@ import { stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { resolve, relative, isAbsolute, extname } from 'node:path';
 import { attachCoop } from './relay.mjs';
+import { attachCoop3d } from './relay3d.mjs';
 import { coopConfig } from './coop-config.mjs';
 
 // The built game and rooms share one port, including in a Node deployment.
@@ -52,7 +53,8 @@ const server = createServer(async (req, res) => {
   } catch { res.writeHead(404); res.end(); }
 });
 const relay = attachCoop(server);
+const relay3d = attachCoop3d(server);
 const port = Number(process.env.PORT ?? 8080);
 server.listen(port, '0.0.0.0', () => console.log(`Echoes of Dante + salas: http://localhost:${port}`));
-const stop = () => { relay.close(); server.close(); };
+const stop = () => { relay.close(); relay3d.close(); server.close(); };
 process.on('SIGINT', stop); process.on('SIGTERM', stop);

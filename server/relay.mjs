@@ -36,6 +36,8 @@ export function attachCoop(server, { path = '/coop' } = {}) {
     let pathname; try { pathname = new URL(request.url, 'http://localhost').pathname; } catch { return; }
     // Leave Vite HMR and other upgrade routes to their existing listeners.
     if (path && pathname !== path) return;
+    // the 3D rooms (relay3d.mjs) share the server on their own path
+    if (!path && pathname === '/coop3d') return;
     wss.handleUpgrade(request, socket, head, ws => wss.emit('connection', ws, request));
   };
   server.on('upgrade', upgrade);

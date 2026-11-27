@@ -13,6 +13,7 @@ import {BIOMES,BIOME_ORDER,type BiomeId} from './biomes';
 import {Npc,CAMP} from './camp';
 import {Journal,MISSIONS,EXPEDITIONS,NPCS,NPC_INFO,missionById,type Goal,type NpcId,type Mission} from './missions';
 import {ART_NAMES,ART_COLORS,type Art} from './expeditions';
+import {Net,type Profile} from './net';
 import {Gear,REGION_LOOT,GOAL_XP,POTION_HEAL,POTION_CD,type Stats} from './gear';
 import {gearKey} from './save';
 import type {Armour} from './outfit';
@@ -532,7 +533,7 @@ function enter(){
   mode='play';document.body.classList.add('play');document.body.classList.remove('creator');
   document.body.classList.toggle('astral',cls()==='astral');
   if(!enemies.length)populate();
-  pos.set(0,0,0);heading=Math.PI;gstats=gear.stats();hero.setArmour(wornArmour(gear));hpMax=gear.maxHp(kit().hp);hp=hpMax;potionReady=0;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();if(pet)pet.g.position.set(1.2,0,1);shieldUntil=0;sealPortals();renderBiomes();hud();spawnT=1.5;labelButtons();firstHelp();refreshMarkers();renderTracker();sound.music(world.biome);sound.ambient(world.biome);
+  pos.set(0,0,0);heading=Math.PI;gstats=gear.stats();hero.setArmour(wornArmour(gear));hpMax=gear.maxHp(kit().hp);hp=hpMax;potionReady=0;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();if(pet)pet.g.position.set(1.2,0,1);shieldUntil=0;sealPortals();renderBiomes();hud();spawnT=1.5;labelButtons();firstHelp();refreshMarkers();renderTracker();maybeAutoJoin();if(net.on)net.profile(myProfile());sound.music(world.biome);sound.ambient(world.biome);
 }
 $('go').onclick=confirmCreator;
 // walking into a portal carries the expedition to the neighbouring region
@@ -608,10 +609,10 @@ function openModal(kind:'options'|'help'){
   const pc=`<h3>Computador</h3><ul><li><b>WASD</b> ou <b>setas</b>: andar · <b>Shift</b>: correr</li><li><b>Botão esquerdo</b> (segure para continuar) ou <b>J</b>: atacar na direção do cursor · Guerreiro: clique num inimigo distante para a investida</li><li><b>Botão direito</b> ou <b>Q</b>: habilidade da classe (Guerreiro: segure e solte)</li><li><b>E</b>: trocar elemento (Astral)</li><li><b>Espaço</b>: esquiva · roda do mouse: zoom</li><li><b>F</b>: falar com alguém da base ou analisar um ponto da missão</li><li><b>R</b>: poção de cura · <b>I</b>: equipamento e mochila</li></ul>`;
   const mob=`<h3>Celular</h3><ul><li>Toque e arraste no lado esquerdo da tela: <b>andar</b></li><li><b>Atacar</b>: mira sozinho no inimigo mais próximo</li><li>Botão da <b>habilidade</b>: toque para usar no mais próximo ou <b>arraste para mirar</b> e solte</li><li><b>Esquiva</b> e <b>elemento</b> (Astral) nos botões menores</li><li>Perto de alguém ou de um ponto da missão aparece o botão <b>Falar</b> / <b>Analisar</b></li><li>Botão <b>R</b> ao lado da vida: poção · botão da <b>mochila</b> no canto: equipamento</li></ul>`;
   const help=(touch?mob+pc:pc+mob)+`<p class="note">Portais de pedra levam às outras regiões: norte avança, sul volta. A seta dourada aponta o próximo objetivo da missão.</p>`;
-  body.innerHTML=kind==='help'?help:`<div class="opts"><button id="o-help">Ver controles</button><button id="o-quality">${quality==='high'?'Qualidade: alta':'Qualidade: leve'}</button><button id="o-music">${sound.musicOn?'Música: ligada':'Música: desligada'}</button><button id="o-sfx">${sound.sfxOn?'Efeitos: ligados':'Efeitos: desligados'}</button><button id="o-journal">Diário de missões</button><button id="o-atlas">Atlas de Dante</button><button id="o-prologue">Rever a chegada a Dante</button><button id="o-gear">Equipamento e mochila</button><button id="o-creator">Trocar de personagem</button><p class="note" id="o-fps">${fpsShown?fpsShown+' quadros por segundo':''}</p></div>`;
+  body.innerHTML=kind==='help'?help:`<div class="opts"><button id="o-help">Ver controles</button><button id="o-quality">${quality==='high'?'Qualidade: alta':'Qualidade: leve'}</button><button id="o-music">${sound.musicOn?'Música: ligada':'Música: desligada'}</button><button id="o-sfx">${sound.sfxOn?'Efeitos: ligados':'Efeitos: desligados'}</button><button id="o-journal">Diário de missões</button><button id="o-atlas">Atlas de Dante</button><button id="o-coop">Jogar junto (online)</button><button id="o-prologue">Rever a chegada a Dante</button><button id="o-gear">Equipamento e mochila</button><button id="o-creator">Trocar de personagem</button><p class="note" id="o-fps">${fpsShown?fpsShown+' quadros por segundo':''}</p></div>`;
   m.classList.add('on');
   if(kind==='options'){
-   $('o-help').onclick=()=>openModal('help');$('o-journal').onclick=()=>openJournal();$('o-atlas').onclick=()=>openAtlas();$('o-prologue').onclick=()=>{closeModal();playPrologue();};$('o-gear').onclick=openGear;
+   $('o-help').onclick=()=>openModal('help');$('o-journal').onclick=()=>openJournal();$('o-atlas').onclick=()=>openAtlas();$('o-coop').onclick=()=>openCoop();$('o-prologue').onclick=()=>{closeModal();playPrologue();};$('o-gear').onclick=openGear;
    $('o-music').onclick=()=>{sound.toggleMusic();$('o-music').textContent=sound.musicOn?'Música: ligada':'Música: desligada';};
    $('o-sfx').onclick=()=>{sound.toggleSfx();$('o-sfx').textContent=sound.sfxOn?'Efeitos: ligados':'Efeitos: desligados';};
    $('o-quality').onclick=()=>{setQuality(quality==='high'?'low':'high');($('o-quality')).textContent=quality==='high'?'Qualidade: alta':'Qualidade: leve';};
@@ -657,6 +658,82 @@ function openAtlas(){
   body.querySelectorAll<HTMLButtonElement>('.node[data-b]').forEach(b=>b.onclick=()=>{const id=b.dataset.b as BiomeId;if(!reachable(id)||id===world.biome)return;closeModal();goBiome(id,BIOME_ORDER.indexOf(id)>BIOME_ORDER.indexOf(world.biome)?1:-1);});
 }
 $('mapbtn').onclick=()=>openAtlas();
+
+// ---------- playing together online (net.ts, server/relay3d.mjs) ----------
+// The others in the room are drawn by this game: their character, equipment and animation, where they are, when they
+// are in the same region. Each player keeps their own progress, missions and backpack.
+interface Peer{id:string;profile:Profile;char:Character;ready:boolean;biome:BiomeId|'';x:number;z:number;h:number;anim:string;hp:number;label:HTMLDivElement;seen:boolean}
+const peers=new Map<string,Peer>();
+const peerBox=document.createElement('div');peerBox.id='peers';document.body.appendChild(peerBox);
+const myProfile=():Profile=>({name:heroName()||'Explorador',cls:cls(),look:{...look},armour:wornArmour(gear),pet:petId,level:gear.level});
+async function addPeer(id:string,p:Profile){
+  dropPeer(id);
+  const char=new Character(),label=document.createElement('div');label.className='peer';peerBox.appendChild(label);
+  const peer:Peer={id,profile:p,char,ready:false,biome:'',x:0,z:0,h:0,anim:'Idle_Loop',hp:1,label,seen:false};peers.set(id,peer);renderRoomChip();
+  char.root.visible=false;world.scene.add(char.root);
+  try{await char.setSex(p.look.sex==='female'?'female':'male');char.setArmour(p.armour??{});char.apply({...DEFAULT_LOOK,...p.look});await char.setWeapon(p.look.weapon??DEFAULT_LOOK.weapon);peer.ready=peers.get(id)===peer;}
+  catch{/* a model that fails to load leaves only the name */}
+  renderRoomChip();
+}
+function dropPeer(id:string){const p=peers.get(id);if(!p)return;p.char.root.removeFromParent();p.label.remove();peers.delete(id);renderRoomChip();}
+function peerProfile(id:string,p:Profile){const peer=peers.get(id);if(!peer){void addPeer(id,p);return;}
+  const relook=JSON.stringify(peer.profile.look)!==JSON.stringify(p.look);peer.profile=p;
+  if(relook)void addPeer(id,p);else if(peer.ready)peer.char.setArmour(p.armour??{});}
+const net=new Net({
+  room:(code,members)=>{for(const id of [...peers.keys()])dropPeer(id);for(const m of members)void addPeer(m.id,m.profile);toast(`Sala ${code} · ${members.length+1} ${members.length?'exploradores':'explorador'}`);renderRoomChip();if($('mtitle').textContent==='Jogar junto')openCoop();},
+  joined:(id,p)=>{void addPeer(id,p);toast(`${p.name} entrou na sala`);sfx('ui');if($('mtitle').textContent==='Jogar junto')openCoop();},
+  profile:peerProfile,
+  left:id=>{const p=peers.get(id);if(p)toast(`${p.profile.name} saiu da sala`);dropPeer(id);if($('mtitle').textContent==='Jogar junto')openCoop();},
+  state:(id,s)=>{const p=peers.get(id);if(!p)return;if(p.biome!==s.b)p.seen=false;p.biome=s.b;p.x=s.x;p.z=s.z;p.h=s.h;p.anim=s.a;p.hp=s.hp;},
+  event:()=>{},
+  error:text=>{coopError=text;toast(text);if($('mtitle').textContent==='Jogar junto')openCoop();},
+  closed:()=>{for(const id of [...peers.keys()])dropPeer(id);toast('Você saiu da sala');renderRoomChip();},
+  slow:()=>toast('Acordando o servidor de salas · pode levar até um minuto'),
+});
+let coopError='';
+function updatePeers(dt:number){
+  if(!peers.size)return;
+  const show=mode==='play',covered=$('modal').classList.contains('on');
+  for(const p of peers.values()){
+   const here=show&&p.ready&&p.biome===world.biome;p.char.root.visible=here;
+   if(!here){p.label.style.display='none';continue;}
+   const r=p.char.root.position;if(!p.seen){r.set(p.x,0,p.z);p.seen=true;}
+   const k=Math.min(1,dt*10);r.x+=(p.x-r.x)*k;r.z+=(p.z-r.z)*k;
+   if(p.char.model){const m=p.char.model;let d=p.h-m.rotation.y;d=Math.atan2(Math.sin(d),Math.cos(d));m.rotation.y+=d*Math.min(1,dt*12);}
+   if(p.char.has(p.anim))p.char.play(p.anim,{fade:.15});
+   p.char.update(dt);
+   gv.copy(r).setY(2.25);gv.project(camera);
+   if(gv.z>1||covered){p.label.style.display='none';continue;}
+   p.label.style.display='block';p.label.style.transform=`translate(${(gv.x*.5+.5)*innerWidth}px,${(-gv.y*.5+.5)*innerHeight}px)`;
+   const html=`<b>${p.profile.name.replace(/</g,'')}</b><span>Nv ${p.profile.level} · ${CLASSES[p.profile.cls as ClassId]?.name??''}</span><i style="width:${Math.round(p.hp*100)}%"></i>`;
+   if(p.label.dataset.k!==html){p.label.dataset.k=html;p.label.innerHTML=html;}
+  }
+}
+function sendState(){if(!net.on||mode!=='play')return;net.state({x:pos.x,z:pos.z,h:hero.model?.rotation.y??0,a:hero.currentName||'Idle_Loop',b:world.biome,hp:dead?0:hp/Math.max(1,hpMax)},time);}
+const roomChip=document.createElement('button');roomChip.id='roomchip';roomChip.onclick=()=>openCoop();document.body.appendChild(roomChip);
+function renderRoomChip(){roomChip.classList.toggle('on',net.on);if(net.on)roomChip.textContent=`Sala ${net.code} · ${peers.size+1}/4`;}
+function openCoop(){
+  const m=$('modal'),body=$('mbody');m.classList.remove('talking','wide');talking=null;$('mtitle').textContent='Jogar junto';
+  if(net.on){
+   const link=`${location.origin}${location.pathname}?sala=${net.code}`;
+   body.innerHTML=`<p class="note">Passe o código ou o link para até três amigos. Cada um joga com o próprio personagem e guarda o próprio progresso; vocês se veem na mesma região.</p><div class="roomcode">${net.code}</div><p class="roomlink"><input readonly value="${link}"><button id="c-copy">Copiar link</button></p>`+
+    `<ul class="members"><li><b>${heroName()||'Você'}</b> · ${kit().name} · Nv ${gear.level} · ${BIOMES[world.biome].name} <em>você</em></li>${[...peers.values()].map(p=>`<li><b>${p.profile.name.replace(/</g,'')}</b> · ${CLASSES[p.profile.cls as ClassId]?.name??''} · Nv ${p.profile.level} · ${p.biome?BIOMES[p.biome].name:'chegando…'}</li>`).join('')}</ul>`+
+    `<p class="note">Nesta etapa os jogadores se veem andando, lutando e equipados. Inimigos, saque e missões ainda são de cada um (próximo passo do coop).</p><button class="act" id="c-leave">Sair da sala</button>`;
+   m.classList.add('on');
+   $('c-copy').onclick=()=>{void navigator.clipboard?.writeText(link).then(()=>toast('Link copiado'),()=>{});(body.querySelector('.roomlink input') as HTMLInputElement).select();};
+   $('c-leave').onclick=()=>{net.close();for(const id of [...peers.keys()])dropPeer(id);renderRoomChip();openCoop();};
+   return;
+  }
+  body.innerHTML=`<p class="note">Jogue com até quatro exploradores, cada um com o próprio personagem. Crie uma sala e passe o código, ou entre com o código de um amigo.</p>${coopError?`<p class="warn">${coopError}</p>`:''}`+
+   `<button class="act" id="c-host">Criar sala</button><p class="roomjoin"><input id="c-code" maxlength="4" placeholder="Código" autocomplete="off"><button id="c-join">Entrar</button></p>`;
+  m.classList.add('on');coopError='';
+  $('c-host').onclick=()=>{body.querySelector('#c-host')!.textContent='Conectando…';void net.connect('host',myProfile());};
+  const join=()=>{const c=($('c-code') as HTMLInputElement).value.trim().toUpperCase();if(c.length!==4){toast('O código tem quatro letras');return;}$('c-join').textContent='Conectando…';void net.connect('join',myProfile(),c);};
+  $('c-join').onclick=join;($('c-code') as HTMLInputElement).onkeydown=e=>{e.stopPropagation();if(e.key==='Enter')join();};
+}
+// a shared link (3d.html?sala=CODE) joins the room once the hero is in the world
+let autoJoin=q.get('sala')?.toUpperCase()??'';
+function maybeAutoJoin(){if(!autoJoin||net.on||FITTING)return;const c=autoJoin;autoJoin='';void net.connect('join',myProfile(),c);}
 
 // ---------- people of the base, missions and guidance ----------
 const npcs=NPCS.map(d=>new Npc(d,world.scene));
@@ -871,7 +948,7 @@ const pct=(v:number)=>Math.round(v*100)+'%';
 // what is worn shows on the hero: each equipped piece on its part of the body (outfit.ts), the accessory as a pendant
 const SLOT_PART=[['helmet','helmet'],['armor','torso'],['legs','legs'],['boots','boots'],['gloves','gloves'],['accessory','accessory']] as const;
 function wornArmour(g:Gear):Armour{const a:Armour={},sl=g.slots;for(const [slot,part] of SLOT_PART){const id=sl[slot];if(id)a[part]=EQUIPMENT[id].tier as 1|2|3;}return a;}
-function refreshGear(){hero.setArmour(wornArmour(gear));gstats=gear.stats();const m=gear.maxHp(kit().hp);if(m!==hpMax){hp=Math.max(1,Math.min(m,hp+Math.max(0,m-hpMax)));hpMax=m;}hud();}
+function refreshGear(){hero.setArmour(wornArmour(gear));if(net.on)net.profile(myProfile());gstats=gear.stats();const m=gear.maxHp(kit().hp);if(m!==hpMax){hp=Math.max(1,Math.min(m,hp+Math.max(0,m-hpMax)));hpMax=m;}hud();}
 function gainXp(xp:number,at:T.Vector3){
   if(mode!=='play'||xp<=0)return;
   popText(at.clone().setY(2.7),`+${xp} XP`,'#d4b8ff');
@@ -1059,7 +1136,7 @@ function tick(dt:number){
   else updatePlayer(dt);
   if(mode==='play'&&!mouseDown&&!qaAim&&!('ontouchstart' in window))updateAim();
   if(best)updateBestiary(dt);
-  hero.update(dt);updateEnemies(dt,time);updateMissions(dt);updateFx(dt);updateDrops(dt);updateTexts(dt);updateBars();
+  hero.update(dt);updatePeers(dt);sendState();updateEnemies(dt,time);updateMissions(dt);updateFx(dt);updateDrops(dt);updateTexts(dt);updateBars();
   key.position.set(pos.x+3,4.5,pos.z+5);key.target.position.set(pos.x,pos.y+1,pos.z);key.intensity=mode==='creator'?2.4:.35;
   world.update(time,dt,pos);updateCamera(dt);
 }
