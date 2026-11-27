@@ -57,6 +57,7 @@ export interface Ctx{
  scene:T.Scene;vfx:VFX;player:T.Vector3;playerOk:()=>boolean;invuln:()=>boolean;
  damagePlayer:(d:number,from:T.Vector3)=>void;collide:(p:T.Vector3,r:number)=>void;colliders:()=>{x:number;z:number;r:number}[];
  popText:(p:T.Vector3,s:string,c:string)=>void;sfx?:(name:string,p:T.Vector3)=>void;onKill:(c:Creature)=>void;onHit:(c:Creature,quiet:boolean)=>void;others:Creature[];
+ power?:()=>number;   // damage bonus of the hero's equipment (creatures only ever take hits from the expedition)
 }
 const rnd=(a:number,b:number)=>a+Math.random()*(b-a);
 const UP=new T.Vector3(0,1,0),tmp=new T.Vector3(),tmp2=new T.Vector3();
@@ -569,7 +570,7 @@ export class Creature{
  hit(d:number,from:T.Vector3,color='#ffd27a',quiet=false,push=5){
   const ctx=Creature.ctx;if(this.state==='dead')return;
   if(this.hidden>.6){ctx.popText(this.pos.clone().setY(1),'Soterrado','#9a917f');return;}
-  const k=this.spec.armor??1;this.hp-=d*k;this.flash=.15;
+  d*=ctx.power?.()??1;const k=this.spec.armor??1;this.hp-=d*k;this.flash=.15;
   if(!quiet){const dir=this.pos.clone().sub(from).setY(0).normalize();this.vel.addScaledVector(dir,push*(this.boss?.1:k<1?.3:1));}
   ctx.popText(this.pos.clone().setY(this.look.height*this.spec.scale+.6),String(Math.round(d*k)),color);ctx.onHit(this,quiet);
   if(this.state==='idle'||this.state==='return')this.wake();

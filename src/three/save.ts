@@ -27,4 +27,5 @@ export function loadRoster():Roster{
 export function saveRoster(r:Roster){try{localStorage.setItem(KEY,JSON.stringify(r));}catch{/* private mode */}}
 export function newId(){return'h'+Date.now().toString(36)+Math.floor(Math.random()*1e6).toString(36);}
 export const journalKey=(id:string)=>'dante3d.missions.'+id;
-export function forget(id:string){try{localStorage.removeItem(journalKey(id));}catch{/* ignore */}}
+export const gearKey=(id:string)=>'dante3d.gear.'+id;
+export function forget(id:string){try{localStorage.removeItem(journalKey(id));localStorage.removeItem(gearKey(id));}catch{/* ignore */}}

@@ -143,3 +143,33 @@ body.creator.selecting #select{display:block}body.selecting #creator,body.play #
 #modal .pen b{font-size:15px;color:#fff2cf}#modal .pen em{font-size:11px;letter-spacing:.1em;color:#e0b865;font-style:normal}#modal .pen span{font-size:13px;line-height:1.45}#modal .pen i{font-size:12px;color:#8adf7a;font-style:normal}
 @media(max-width:700px){#select{top:auto;height:46vh;left:8px;right:8px;bottom:8px;width:auto}}
 body.bestiary #select{display:none!important}
+/* level, potion, backpack (gear.ts) */
+#xpbar{position:absolute;left:50%;bottom:4px;transform:translateX(-50%);width:min(560px,58vw);height:12px;background:#0b0a09d0;border:1px solid #4a3d29;border-radius:2px;overflow:hidden}
+#xpbar i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(#b48cff,#6a3fc0);transition:width .3s}
+#xpbar span{position:relative;display:block;text-align:center;font-size:9px;line-height:11px;letter-spacing:.1em;color:#efe6ff;text-shadow:0 1px 2px #000}
+.bar{bottom:22px}
+#clsname .lvl{color:#d4b8ff;font-weight:600}
+#potbtn{position:absolute;left:128px;bottom:24px;width:46px;height:46px;pointer-events:auto;border-radius:50%;border:2px solid #6a5632;background:radial-gradient(circle at 40% 35%,#3fd47a,#0f3a22 72%);color:#fff;font-family:inherit;cursor:pointer;box-shadow:0 0 10px #000a;touch-action:none}
+#potbtn b{display:block;font-size:16px;text-shadow:0 1px 3px #000}#potbtn kbd{position:absolute;right:-4px;bottom:-4px;padding:0 4px;font-size:10px;font-family:inherit;background:#1d1812;border:1px solid #6a5632;border-radius:3px;color:#f0d594}
+#potbtn.cd{filter:grayscale(.8) brightness(.7)}
+body.touch #potbtn kbd{display:none}
+#bagbtn{display:none;position:absolute;top:56px;left:12px;width:40px;height:40px;pointer-events:auto;background:#14110ecc;color:#f0d594;border:1px solid #6a5632;border-radius:4px;cursor:pointer;place-items:center}
+body.play #bagbtn{display:grid}body.bestiary #bagbtn{display:none!important}
+#modal .gstats{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:8px}
+#modal .gstats div{padding:6px 4px;text-align:center;background:#1b1814;border:1px solid #4a3d29;border-radius:3px}
+#modal .gstats b{display:block;color:#fff2cf;font-size:15px}#modal .gstats span{font-size:10px;color:#9a917f;letter-spacing:.04em}
+#modal .gstats div:first-child b{color:#d4b8ff}
+#modal .wallet{margin:4px 0 6px;font-size:12px;color:#b9ae98}#modal .wallet b{color:#fff2cf}
+#modal .items{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#modal .item{display:flex;flex-direction:column;gap:2px;padding:8px 10px;text-align:left;font-family:inherit;background:#1b1814;color:#d8cfbd;border:1px solid #4a3d29;border-radius:3px}
+#modal button.item{cursor:pointer}#modal button.item:hover:not(:disabled){border-color:#a88c58}#modal button.item:disabled{opacity:.45;cursor:default}
+#modal .item em{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#a88c58;font-style:normal}
+#modal .item b{font-size:14px}#modal .item span{font-size:12px;line-height:1.35}
+#modal .item i{margin-top:2px;font-size:11px;color:#e0b865;font-style:normal}
+#modal .item.worn{border-color:#6a5632;background:#221c14}#modal .item.empty{opacity:.55}
+#modal .item .two{display:flex;gap:4px;margin-top:4px}
+#modal .item .two button{flex:1;padding:5px 4px;font-family:inherit;font-size:11px;background:#14110e;color:#f0d594;border:1px solid #6a5632;border-radius:3px;cursor:pointer}
+#modal .tier{margin:8px 0 4px;font-size:12px;color:#d8cfbd}
+#modal .svc{display:block;width:100%;margin-top:8px;padding:9px;font-family:inherit;font-size:14px;background:#1d1812;color:#ffe2a0;border:1px solid #c89a4a;border-radius:3px;cursor:pointer}
+#modal .opts button:disabled{opacity:.45;cursor:default}
+@media(max-width:700px){#xpbar{left:12px;right:12px;width:auto;transform:none;bottom:1px;height:10px}#xpbar span{font-size:8px;line-height:9px}#potbtn{left:170px;bottom:22px;width:42px;height:42px}#modal .items{grid-template-columns:1fr}#modal .gstats{grid-template-columns:repeat(3,1fr)}#bagbtn{top:52px}}
