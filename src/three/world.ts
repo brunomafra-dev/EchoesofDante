@@ -341,6 +341,21 @@ export class World{
    const spine=new T.Mesh(new T.CylinderGeometry(.12,.12,4.4,6),mat);spine.rotation.x=Math.PI/2;spine.position.set(-size*.2,size*.95,0);g.add(spine);this.group.add(g);this.colliders.push({x:s.x,z:s.z,r:size*.6});}
  }
  // arrival camp: the landing shuttle, the three field shelters, cargo and the campfire (2D base)
+ /** the first shelter of the colony on the terraces (the 2D mission "O primeiro abrigo"): module, reservoir, crates and a lamp */
+ settlement(x:number,z:number){
+  if(this.group.getObjectByName('settlement'))return;
+  const g=new T.Group();g.name='settlement';g.position.set(x,0,z);const ry=Math.atan2(-x,-z);g.rotation.y=ry;
+  const s=buildShelter('expedition');g.add(s);
+  const tank=new T.Mesh(new T.CylinderGeometry(.9,.9,1.6,20),new T.MeshStandardMaterial({color:'#c8ccc4',roughness:.5,metalness:.3}));tank.position.set(3.2,.8,-.6);tank.castShadow=true;g.add(tank);
+  const band=new T.Mesh(new T.TorusGeometry(.91,.04,6,24),new T.MeshStandardMaterial({color:'#4fa8ff',emissive:'#2f88ff',emissiveIntensity:.8}));band.rotation.x=Math.PI/2;band.position.set(3.2,1.2,-.6);g.add(band);
+  const bed=new T.Mesh(new T.BoxGeometry(2.4,.25,1.4),new T.MeshStandardMaterial({color:'#4a3626',roughness:.95}));bed.position.set(-1.2,.12,2.6);g.add(bed);
+  const sprout=new T.MeshStandardMaterial({color:'#6aa84e',roughness:.8});for(let i=0;i<10;i++){const p=new T.Mesh(new T.ConeGeometry(.07,.3,5),sprout);p.position.set(-2.2+(i%5)*.5,.38,2.3+Math.floor(i/5)*.55);g.add(p);}
+  const c=buildProps('crates');c.position.set(2.6,0,2.2);g.add(c);const f=buildProps('flood');f.position.set(-3.2,0,1.6);g.add(f);
+  this.group.add(g);g.updateMatrixWorld(true);
+  const at=(lx:number,lz:number)=>new T.Vector3(lx,0,lz).applyMatrix4(g.matrixWorld);
+  for(const [lx,lz,r] of [[-1.35,0,1.5],[1.3,-.6,.9],[3.2,-.6,1],[2.6,2.2,1.1]] as const){const p=at(lx,lz);this.colliders.push({x:p.x,z:p.z,r});}
+  const lp=at(-3.2,1.6);this.fakeLight(lp.x,lp.z,'#ffc080',3,.4,0);
+ }
  private camp(){
   const F=this.fire,g=this.group;
   const stone=new T.MeshStandardMaterial({color:'#3b3a38',roughness:.95,flatShading:true}),wood=new T.MeshStandardMaterial({color:'#2a1c12',roughness:.9});

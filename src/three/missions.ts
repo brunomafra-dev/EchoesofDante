@@ -8,7 +8,8 @@ import {EXPEDITIONS} from './expeditions';
 // goals are places to reach, readings to take and the guardians that hold each region.
 export type NpcId='nara'|'lia'|'ivo';
 export type GoalKind='visit'|'scan'|'boss';
-export interface Goal{id:string;label:string;biome:BiomeId;kind:GoalKind;x:number;z:number;after?:string[];boss?:SpeciesId;finding?:string;art?:string}
+// place: the goal sits on free ground near x/z (placed when the region is built)
+export interface Goal{id:string;label:string;biome:BiomeId;kind:GoalKind;x:number;z:number;after?:string[];boss?:SpeciesId;finding?:string;art?:string;place?:boolean}
 // side: a regional expedition (expeditions.ts), worked on beside the story mission
 export interface Mission{id:string;title:string;npc:NpcId;credits:number;offer:string[];report:string[];goals:Goal[];requires?:string;side?:boolean;region?:BiomeId}
 
@@ -61,6 +62,16 @@ export const MISSIONS:Mission[]=[
   offer:['As primeiras famílias não podem atravessar correndo como nossa equipe. Precisamos escolher onde parar a caravana sem ocupar o território das criaturas.','No Vale da Ressonância, registre o abrigo das cristas, a bacia de descanso e a margem da passagem oriental.'],
   report:['O abrigo das cristas protege uma parada curta. A bacia é firme nas bordas, mas o centro úmido deve ficar livre.','Marquei os pontos de apoio. Com água, energia e uma rota segura, as primeiras famílias podem deixar a nave.'],
   goals:[{id:'v-shelter',label:'Registrar o abrigo das cristas',biome:'valley',kind:'scan',x:-18,z:-6},{id:'v-basin',label:'Examinar a bacia de descanso',biome:'valley',kind:'scan',x:18,z:-12},{id:'v-pass',label:'Registrar a margem da passagem oriental',biome:'valley',kind:'scan',x:6,z:17}]},
+ // the end of the 2D story (config/missions.ts): the Terraces of Dawn lie in the springs region of the 3D
+ {id:'safe-route',title:'Uma rota segura',npc:'ivo',requires:'caravan',credits:55,
+  offer:['A carga da nave inclui um módulo habitável, um reservatório e um canteiro de testes. Só precisamos de uma rota viável.','Confirme o acesso pela crista e a travessia inferior dos Terraços do Amanhecer. A caravana poderá evitar as margens ocupadas.'],
+  report:['Os dois acessos foram registrados. Podemos escolher a passagem conforme a atividade das criaturas.','Separei a carga do primeiro abrigo. Nara precisa aprovar o terreno antes de enviarmos os primeiros colonos.'],
+  goals:[{id:'route-west',label:'Confirmar o acesso pela crista',biome:'springs',kind:'scan',x:-26,z:-2,place:true},{id:'route-east',label:'Confirmar a travessia inferior',biome:'springs',kind:'scan',x:22,z:-28,place:true}]},
+ {id:'shelter',title:'O primeiro abrigo',npc:'nara',requires:'safe-route',credits:75,
+  offer:['Temos água e uma rota. Agora precisamos de um lugar onde as primeiras famílias possam ficar.','Analise o solo e confirme o local nos terraços. Depois instale o módulo reservado da expedição. A carga já está separada; não precisa fabricar nem comprar.'],
+  report:['O módulo está instalado, com reservatório e um canteiro experimental. Os primeiros colonos chegaram.','Ainda somos poucos. Mas Dante já não é só um ponto no mapa: alguém vai chamar este lugar de casa.'],
+  goals:[{id:'soil',label:'Analisar o solo dos terraços',biome:'springs',kind:'scan',x:8,z:-20,place:true},{id:'site',label:'Validar o local do abrigo',biome:'springs',kind:'scan',x:20,z:-17,place:true,after:['soil']},
+   {id:'shelter-built',label:'Instalar o módulo da expedição',biome:'springs',kind:'scan',x:20,z:-17,place:true,after:['site']}]},
 ];
 export {EXPEDITIONS};
 export const ALL_MISSIONS:Mission[]=[...MISSIONS,...EXPEDITIONS];

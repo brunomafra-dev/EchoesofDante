@@ -11,7 +11,7 @@ import {PETS,PET_ORDER,type PetId,type PetDef} from './pets';
 import {loadRoster,saveRoster,newId,journalKey,forget,cleanName,NAME_MAX,type HeroSave} from './save';
 import {BIOMES,BIOME_ORDER,type BiomeId} from './biomes';
 import {Npc,CAMP} from './camp';
-import {Journal,MISSIONS,EXPEDITIONS,NPCS,NPC_INFO,missionById,type Goal,type NpcId,type Mission} from './missions';
+import {Journal,MISSIONS,EXPEDITIONS,ALL_MISSIONS,NPCS,NPC_INFO,missionById,type Goal,type NpcId,type Mission} from './missions';
 import {ART_NAMES,ART_COLORS,type Art} from './expeditions';
 import {Net,type Profile} from './net';
 import {Gear,REGION_LOOT,GOAL_XP,POTION_HEAL,POTION_CD,type Stats} from './gear';
@@ -533,7 +533,7 @@ function enter(){
   mode='play';document.body.classList.add('play');document.body.classList.remove('creator');
   document.body.classList.toggle('astral',cls()==='astral');
   if(!enemies.length)populate();
-  pos.set(0,0,0);heading=Math.PI;gstats=gear.stats();hero.setArmour(wornArmour(gear));hpMax=gear.maxHp(kit().hp);hp=hpMax;potionReady=0;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();if(pet)pet.g.position.set(1.2,0,1);shieldUntil=0;sealPortals();renderBiomes();hud();spawnT=1.5;labelButtons();firstHelp();refreshMarkers();renderTracker();maybeAutoJoin();if(net.on)net.profile(myProfile());sound.music(world.biome);sound.ambient(world.biome);
+  placeSites();if(world.biome==='springs'&&journal.goals.has('shelter-built'))settle();pos.set(0,0,0);heading=Math.PI;gstats=gear.stats();hero.setArmour(wornArmour(gear));hpMax=gear.maxHp(kit().hp);hp=hpMax;potionReady=0;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();if(pet)pet.g.position.set(1.2,0,1);shieldUntil=0;sealPortals();renderBiomes();hud();spawnT=1.5;labelButtons();firstHelp();refreshMarkers();renderTracker();maybeAutoJoin();if(net.on)net.profile(myProfile());sound.music(world.biome);sound.ambient(world.biome);
 }
 $('go').onclick=confirmCreator;
 // walking into a portal carries the expedition to the neighbouring region
@@ -561,7 +561,7 @@ function goBiome(id:BiomeId,from:0|1|-1=0){
   if(from&&!fading){fading=true;const f=$('fade');f.classList.add('on');setTimeout(()=>{goBiome(id,from);fading=true;setTimeout(()=>{f.classList.remove('on');fading=false;},60);},380);return;}
   collectDrops();world.setBiome(id);sealPortals();if(from)sfx('portal');if(mode==='play'){sound.music(id);sound.ambient(id);}vfx.clearEmitters();for(const f of world.flameSpots)vfx.campfire(f.p,f.s);
   for(const e of enemies)e.dispose();enemies.length=0;clearShots();boss=null;bossBeaten=false;biomeKills=0;$('bossbar').classList.remove('on');populate();
-  placeSites();guarded.clear();pos.set(0,0,from===1?ARENA-10:from===-1?-ARENA+10:0);heading=from===-1?0:Math.PI;portalLock=now()+2;scan=null;refreshMarkers();if(pet)pet.g.position.set(pos.x+1.2,0,pos.z+1);spawnT=2;banner(BIOMES[id].name);renderBiomes();
+  placeSites();if(id==='springs'&&journal.goals.has('shelter-built'))settle();guarded.clear();pos.set(0,0,from===1?ARENA-10:from===-1?-ARENA+10:0);heading=from===-1?0:Math.PI;portalLock=now()+2;scan=null;refreshMarkers();if(pet)pet.g.position.set(pos.x+1.2,0,pos.z+1);spawnT=2;banner(BIOMES[id].name);renderBiomes();
 }
 // touch devices: left thumb joystick to walk, right-hand buttons; the skill button can be dragged to aim
 const touch=matchMedia('(pointer:coarse)').matches||'ontouchstart' in window;
@@ -755,6 +755,7 @@ function toast(text:string){const t=$('toast');t.textContent=text;t.classList.re
 function goalDone(g:Goal){
   if(!journal.complete(g.id))return;sfx('heal');toast(`Registrado: ${g.label}`);if(g.kind!=='boss')gainXp(g.id.startsWith('echo')?GOAL_XP.echo:GOAL_XP.route,pos);
   if(g.finding)showRecord(g);
+  if(g.id==='shelter-built'){settle();banner('O primeiro abrigo de Dante');}
   for(const m of [journal.current(),journal.sideCurrent()])if(m&&m.goals.some(x=>x.id===g.id)&&journal.status(m.id)==='ready')later(g.finding?9:2.6,()=>toast(`Relatório pronto · volte para falar com ${NPC_INFO[m.npc].name}`));
   refreshMarkers();renderTracker();
 }
@@ -812,12 +813,14 @@ function showRecord(g:Goal){
 const siteHome=new Map<string,[number,number]>();
 function placeSites(){
   const free=(x:number,z:number)=>!world.colliders.some(c=>Math.hypot(x-c.x,z-c.z)<c.r+1.8)&&Math.abs(x)<ARENA-4&&Math.abs(z)<ARENA-4;
-  for(const m of EXPEDITIONS)for(const g of m.goals){if(g.biome!==world.biome)continue;
+  for(const m of ALL_MISSIONS)for(const g of m.goals){if(g.biome!==world.biome||!(g.finding||g.place))continue;
    let base=siteHome.get(g.id);if(!base){base=[g.x,g.z];siteHome.set(g.id,base);}
    let best:[number,number]=base;
    if(!free(...base))search:for(let r=1.5;r<12;r+=1.5)for(let a=0;a<6.28;a+=.5){const x=base[0]+Math.cos(a)*r,z=base[1]+Math.sin(a)*r;if(free(x,z)){best=[x,z];break search;}}
    g.x=best[0];g.z=best[1];}
 }
+// the module of the first shelter stands where it was installed
+function settle(){const g=ALL_MISSIONS.flatMap(m=>m.goals).find(x=>x.id==='shelter-built')!;world.settlement(g.x+2.5,g.z-2.5);}
 // each discovery of an expedition is watched by residents of the region, who wake when the hero comes near
 const guarded=new Set<string>();
 function updateGuards(){
@@ -857,7 +860,7 @@ function renderTracker(){
   if(mi){const st=journal.status(mi.id);
    html=`<small>Missão · ${gear.economy.credits} créditos</small><b>${mi.title}</b><ul>${mi.goals.filter(g=>!(g.after??[]).some(a=>!journal.goals.has(a))||journal.goals.has(g.id)).map(g=>`<li class="${journal.goals.has(g.id)?'done':''}">${journal.goals.has(g.id)?'✓':'◇'} ${g.label}</li>`).join('')}</ul>`+(st==='ready'?`<em>Volte para falar com ${NPC_INFO[mi.npc].name}</em>`:'');}
   else{const next=MISSIONS.find(x=>journal.status(x.id)==='available');
-   html=next?`<small>Missão · ${gear.economy.credits} créditos</small><b>${next.title}</b><em>! Converse com ${NPC_INFO[next.npc].name} no acampamento</em>`:`<small>Diário · ${gear.economy.credits} créditos</small><b>Todas as missões concluídas</b>`;}
+   html=next?`<small>Missão · ${gear.economy.credits} créditos</small><b>${next.title}</b><em>! Converse com ${NPC_INFO[next.npc].name} no acampamento</em>`:(()=>{const ex=journal.side?null:EXPEDITIONS.find(x=>journal.status(x.id)==='available');return ex?`<small>História concluída · ${gear.economy.credits} créditos</small><b>${ex.title}</b><em>! Expedição com ${NPC_INFO[ex.npc].name} no acampamento</em>`:`<small>Diário · ${gear.economy.credits} créditos</small><b>Todas as missões concluídas</b>`;})();}
   const sd=journal.sideCurrent();
   if(sd){const st=journal.status(sd.id),left=sd.goals.filter(g=>!journal.goals.has(g.id));
    html+=`<div class="side"><small>Expedição · ${sd.goals.length-left.length}/${sd.goals.length}</small><b>${sd.title}</b>${st==='ready'?`<em>Volte para falar com ${NPC_INFO[sd.npc].name}</em>`:`<span>◇ ${left[0].label} · ${BIOMES[left[0].biome].name}</span>`}</div>`;}
