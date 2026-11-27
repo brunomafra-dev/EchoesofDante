@@ -49,6 +49,8 @@ export class Sound{
   if(this.curUrl)this.playTrack(this.curUrl,true);if(this.pendingBed)this.ambient(this.pendingBed);
  }
  toggleMusic(){this.musicOn=!this.musicOn;this.save();const t=this.tracks[this.cur];if(this.musicOn){void t.play().catch(()=>{});this.fade(t,.45);}else this.fade(t,0);}
+ /** lowers the music while a film plays, and brings it back */
+ hush(on:boolean){const t=this.tracks[this.cur];if(!this.musicOn)return;if(on)this.fade(t,0,()=>t.pause());else{void t.play().catch(()=>{});this.fade(t,.45);}}
  toggleSfx(){this.sfxOn=!this.sfxOn;this.save();if(this.ready)this.master.gain.rampTo(this.sfxOn?.9:0,.2);}
  // ---------- music ----------
  music(key:string){const f=MUSIC[key];if(!f)return;const url=import.meta.env.BASE_URL+'assets/audio/'+f;if(url===this.curUrl)return;this.curUrl=url;if(this.ready)this.playTrack(url,false);}

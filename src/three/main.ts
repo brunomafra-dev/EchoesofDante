@@ -416,7 +416,7 @@ ui.innerHTML=`
  <div class="grp"><label>Classe</label><div class="row wrap" id="o-class"></div><div class="clsinfo" id="o-clsinfo"></div></div>
  <div class="grp" id="g-pet"><label>Fera companheira</label><div class="row wrap" id="o-pet"></div><div class="clsinfo" id="o-petinfo"></div></div>
  <button id="go">Criar e entrar no mundo</button><button class="chip" id="back">Voltar aos personagens</button><p class="hint">Arraste para girar o personagem</p></div>
-<div id="hud"><div class="orb hp"><i id="hp"></i><b id="hpt"></b></div><div id="clsname"></div><div class="bar" id="skillbar"></div><div class="orb mp"><i id="mp"></i><b id="mpt"></b></div><div id="kills"></div><div id="xpbar"><i id="xpfill"></i><span id="xpt"></span></div><button id="potbtn" title="Poção de cura (R)"><svg viewBox="0 0 32 32" width="34" height="34" aria-hidden="true"><defs><linearGradient id="potliq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff5a4a"/><stop offset="1" stop-color="#7a0a0a"/></linearGradient></defs><path d="M12 3h8v2h-1v6.2c4 1.5 7 5.3 7 9.8 0 5.8-4.5 9-10 9S6 26.8 6 21c0-4.5 3-8.3 7-9.8V5h-1z" fill="#1a1512" stroke="#c9a45a" stroke-width="1.4" stroke-linejoin="round"/><path d="M7.6 19.5h16.8c.3.5.4 1 .4 1.5 0 4.7-3.8 7.3-8.8 7.3S7.2 25.7 7.2 21c0-.5.1-1 .4-1.5z" fill="url(#potliq)"/><ellipse cx="12" cy="21.5" rx="1.6" ry="2.4" fill="#ffd0c8" opacity=".55"/><rect x="11.5" y="2" width="9" height="2.6" rx="1" fill="#8a6a3a"/></svg><i id="potcd"></i><b id="pott"></b><kbd>R</kbd></button></div><button id="optbtn" title="Opções">&#9776;</button><button id="bagbtn" title="Equipamento e mochila (I)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M8 7V5.5a4 4 0 0 1 8 0V7"/><path d="M5 9a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M9 13h6v3H9z"/></svg></button><div id="perf"><span id="fps"></span></div>
+<div id="hud"><div class="orb hp"><i id="hp"></i><b id="hpt"></b></div><div id="clsname"></div><div class="bar" id="skillbar"></div><div class="orb mp"><i id="mp"></i><b id="mpt"></b></div><div id="kills"></div><div id="xpbar"><i id="xpfill"></i><span id="xpt"></span></div><button id="potbtn" title="Poção de cura (R)"><svg viewBox="0 0 32 32" width="34" height="34" aria-hidden="true"><defs><linearGradient id="potliq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff5a4a"/><stop offset="1" stop-color="#7a0a0a"/></linearGradient></defs><path d="M12 3h8v2h-1v6.2c4 1.5 7 5.3 7 9.8 0 5.8-4.5 9-10 9S6 26.8 6 21c0-4.5 3-8.3 7-9.8V5h-1z" fill="#1a1512" stroke="#c9a45a" stroke-width="1.4" stroke-linejoin="round"/><path d="M7.6 19.5h16.8c.3.5.4 1 .4 1.5 0 4.7-3.8 7.3-8.8 7.3S7.2 25.7 7.2 21c0-.5.1-1 .4-1.5z" fill="url(#potliq)"/><ellipse cx="12" cy="21.5" rx="1.6" ry="2.4" fill="#ffd0c8" opacity=".55"/><rect x="11.5" y="2" width="9" height="2.6" rx="1" fill="#8a6a3a"/></svg><i id="potcd"></i><b id="pott"></b><kbd>R</kbd></button></div><button id="optbtn" title="Opções">&#9776;</button><button id="bagbtn" title="Equipamento e mochila (I)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M8 7V5.5a4 4 0 0 1 8 0V7"/><path d="M5 9a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M9 13h6v3H9z"/></svg></button><button id="mapbtn" title="Atlas de Dante (M)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg></button><div id="perf"><span id="fps"></span></div>
 <div id="biomes"></div><div id="portalhint"></div><div id="touch"><button id="t-atk">Atacar</button><button id="t-q">Carga</button><button id="t-dash">Esquiva</button><button id="t-e">Energia</button><button id="t-act">Falar</button></div><div id="joy"><i></i></div><div id="modal"><div class="box"><h2 id="mtitle"></h2><div id="mbody"></div><button id="mclose">Fechar</button></div></div><div id="banner"></div><div id="fade"></div><div id="bossbar"><span id="bossname"></span><div><i id="bossfill"></i></div></div>
 <div id="tracker"></div><div id="prompt"></div><div id="guide"><i></i><span></span></div><div id="record"></div><div id="toast"></div>
 <div id="deadmsg"><h2>Você caiu</h2><button id="respawn">Levantar</button></div>
@@ -503,9 +503,10 @@ function confirmCreator(){
   const inp=$('o-name') as HTMLInputElement,name=cleanName(inp.value);
   if(!name){inp.classList.remove('bad');void inp.offsetWidth;inp.classList.add('bad');inp.focus();toast('Dê um nome ao seu personagem');return;}
   let h:HeroSave;
-  if(editing==='new'||!heroRec){h={id:newId(),name,look:{...look},pet:petId,created:Date.now(),played:Date.now()};roster.list.push(h);}
+  let fresh=false;
+  if(editing==='new'||!heroRec){h={id:newId(),name,look:{...look},pet:petId,created:Date.now(),played:Date.now()};roster.list.push(h);fresh=!q.get('auto');}
   else{h=heroRec;h.name=name;h.look={...look};h.pet=petId;}
-  enterAs(h);
+  enterAs(h);if(fresh)playPrologue();
 }
 function enterAs(h:HeroSave){
   heroRec=h;h.played=Date.now();roster.current=h.id;saveRoster(roster);
@@ -607,10 +608,10 @@ function openModal(kind:'options'|'help'){
   const pc=`<h3>Computador</h3><ul><li><b>WASD</b> ou <b>setas</b>: andar · <b>Shift</b>: correr</li><li><b>Botão esquerdo</b> (segure para continuar) ou <b>J</b>: atacar na direção do cursor · Guerreiro: clique num inimigo distante para a investida</li><li><b>Botão direito</b> ou <b>Q</b>: habilidade da classe (Guerreiro: segure e solte)</li><li><b>E</b>: trocar elemento (Astral)</li><li><b>Espaço</b>: esquiva · roda do mouse: zoom</li><li><b>F</b>: falar com alguém da base ou analisar um ponto da missão</li><li><b>R</b>: poção de cura · <b>I</b>: equipamento e mochila</li></ul>`;
   const mob=`<h3>Celular</h3><ul><li>Toque e arraste no lado esquerdo da tela: <b>andar</b></li><li><b>Atacar</b>: mira sozinho no inimigo mais próximo</li><li>Botão da <b>habilidade</b>: toque para usar no mais próximo ou <b>arraste para mirar</b> e solte</li><li><b>Esquiva</b> e <b>elemento</b> (Astral) nos botões menores</li><li>Perto de alguém ou de um ponto da missão aparece o botão <b>Falar</b> / <b>Analisar</b></li><li>Botão <b>R</b> ao lado da vida: poção · botão da <b>mochila</b> no canto: equipamento</li></ul>`;
   const help=(touch?mob+pc:pc+mob)+`<p class="note">Portais de pedra levam às outras regiões: norte avança, sul volta. A seta dourada aponta o próximo objetivo da missão.</p>`;
-  body.innerHTML=kind==='help'?help:`<div class="opts"><button id="o-help">Ver controles</button><button id="o-quality">${quality==='high'?'Qualidade: alta':'Qualidade: leve'}</button><button id="o-music">${sound.musicOn?'Música: ligada':'Música: desligada'}</button><button id="o-sfx">${sound.sfxOn?'Efeitos: ligados':'Efeitos: desligados'}</button><button id="o-journal">Diário de missões</button><button id="o-gear">Equipamento e mochila</button><button id="o-creator">Trocar de personagem</button><p class="note" id="o-fps">${fpsShown?fpsShown+' quadros por segundo':''}</p></div>`;
+  body.innerHTML=kind==='help'?help:`<div class="opts"><button id="o-help">Ver controles</button><button id="o-quality">${quality==='high'?'Qualidade: alta':'Qualidade: leve'}</button><button id="o-music">${sound.musicOn?'Música: ligada':'Música: desligada'}</button><button id="o-sfx">${sound.sfxOn?'Efeitos: ligados':'Efeitos: desligados'}</button><button id="o-journal">Diário de missões</button><button id="o-atlas">Atlas de Dante</button><button id="o-prologue">Rever a chegada a Dante</button><button id="o-gear">Equipamento e mochila</button><button id="o-creator">Trocar de personagem</button><p class="note" id="o-fps">${fpsShown?fpsShown+' quadros por segundo':''}</p></div>`;
   m.classList.add('on');
   if(kind==='options'){
-   $('o-help').onclick=()=>openModal('help');$('o-journal').onclick=()=>openJournal();$('o-gear').onclick=openGear;
+   $('o-help').onclick=()=>openModal('help');$('o-journal').onclick=()=>openJournal();$('o-atlas').onclick=()=>openAtlas();$('o-prologue').onclick=()=>{closeModal();playPrologue();};$('o-gear').onclick=openGear;
    $('o-music').onclick=()=>{sound.toggleMusic();$('o-music').textContent=sound.musicOn?'Música: ligada':'Música: desligada';};
    $('o-sfx').onclick=()=>{sound.toggleSfx();$('o-sfx').textContent=sound.sfxOn?'Efeitos: ligados':'Efeitos: desligados';};
    $('o-quality').onclick=()=>{setQuality(quality==='high'?'low':'high');($('o-quality')).textContent=quality==='high'?'Qualidade: alta':'Qualidade: leve';};
@@ -618,12 +619,44 @@ function openModal(kind:'options'|'help'){
   }
 }
 $('optbtn').onclick=()=>openModal('options');
-const closeModal=()=>{$('modal').classList.remove('on');$('modal').classList.remove('talking');talking=null;};
+const closeModal=()=>{$('modal').classList.remove('on');$('modal').classList.remove('talking','wide');talking=null;};
 $('mclose').onclick=closeModal;
 $('modal').addEventListener('pointerdown',e=>{if(e.target===$('modal'))closeModal();});
 function firstHelp(){try{if(localStorage.getItem('dante3d.help'))return;localStorage.setItem('dante3d.help','1');}catch{/* ignore */}openModal('help');}
 $('respawn').onclick=()=>{document.body.classList.remove('dead');dead=false;hp=hpMax;mana=100;pos.set(0,0,0);hero.play('Idle_Loop',{fade:.2});if(pet)pet.g.position.set(1.2,0,1);for(const e of enemies)e.dispose();enemies.length=0;populate();hud();};
 document.body.classList.add('creator');
+
+// ---------- the arrival film and the Atlas of Dante (both from the 2D) ----------
+// The 2D opening film (evacuation of the Earth and the landing on Dante, docs/cinematic-opening), with its Portuguese
+// subtitles. A new character sees it once on entering; the options menu plays it again.
+function playPrologue(){
+  if($('prologue'))return;
+  const el=document.createElement('div');el.id='prologue';const B=import.meta.env.BASE_URL+'assets/cinematic-opening/';
+  el.innerHTML=`<video playsinline preload="auto"><source src="${B}arrival-compatible-v1.webm" type="video/webm"><source src="${B}arrival-compatible-v1.mp4" type="video/mp4"><track kind="subtitles" srclang="pt-BR" label="Português" src="${B}arrival.pt-BR.vtt" default></video><button class="skip">Pular</button><p class="hint">Toque para começar</p>`;
+  document.body.appendChild(el);const v=el.querySelector('video')!;sound.hush(true);
+  const end=()=>{if(!el.isConnected)return;el.classList.add('out');sound.hush(false);setTimeout(()=>el.remove(),500);};
+  v.onended=end;el.querySelector<HTMLButtonElement>('.skip')!.onclick=e=>{e.stopPropagation();end();};
+  v.onerror=end;
+  const go=()=>{void v.play().then(()=>el.classList.add('playing')).catch(()=>{/* waits for a tap */});};
+  el.onclick=()=>{if(v.paused)go();};go();
+  for(const t of Array.from(v.textTracks))t.mode='showing';
+}
+// Atlas: the painted chart of the 2D expedition, with the 3D regions where their 2D areas lie. Open regions are
+// revealed, the closed ones stay under fog; the story mission and the expedition are marked; a tap travels.
+const ATLAS_AT:Record<BiomeId,[number,number]>={camp:[185,600],domain:[420,300],dunes:[930,520],frost:[900,215],caldera:[330,150],springs:[700,345],valley:[560,460]};
+function openAtlas(){
+  const m=$('modal'),body=$('mbody');m.classList.remove('talking');talking=null;$('mtitle').textContent='Atlas de Dante';
+  const open=BIOME_ORDER.filter(b=>reachable(b)),story=journal.open().filter(g=>!g.finding).map(g=>g.biome),side=journal.open().filter(g=>g.finding).map(g=>g.biome);
+  const reveal=open.map(b=>`<circle cx="${ATLAS_AT[b][0]}" cy="${ATLAS_AT[b][1]}" r="150" fill="black"/>`).join('');
+  const route=BIOME_ORDER.slice(1).map((b,i)=>{const [x,y]=ATLAS_AT[BIOME_ORDER[i]],[a,c]=ATLAS_AT[b];const known=reachable(b);return`<path d="M ${x} ${y} Q ${(x+a)/2+26} ${(y+c)/2-18} ${a} ${c}" class="${known?'known':'unknown'}"/>`;}).join('');
+  const nodes=BIOME_ORDER.map(b=>{const [x,y]=ATLAS_AT[b],here=b===world.biome,ok=reachable(b);
+   const marks=(story.includes(b)?'<i class="m-story">◆ Missão</i>':'')+(side.includes(b)?'<i class="m-side">◆ Expedição</i>':'');
+   return`<button class="node${here?' here':''}${ok?'':' locked'}" data-b="${b}" style="left:${x/1120*100}%;top:${y/748*100}%" ${here||!ok?'disabled':''}><span class="dot">${here?'◆':ok?'●':'?'}</span><b>${ok?BIOMES[b].name:'Não explorado'}</b>${here?'<small>Você está aqui</small>':ok?`<small>${BIOMES[b].sub}</small>`:`<small>${lockReason(b)}</small>`}${marks}</button>`;}).join('');
+  body.innerHTML=`<div class="atlas"><img src="${import.meta.env.BASE_URL}assets/base/dante-expedition-atlas.webp" alt="" draggable="false"><svg viewBox="0 0 1120 748" aria-hidden="true"><defs><filter id="afog"><feGaussianBlur stdDeviation="24"/></filter><mask id="amask"><rect width="1120" height="748" fill="white"/><g filter="url(#afog)">${reveal}</g></mask></defs><rect width="1120" height="748" fill="#091820" fill-opacity=".7" mask="url(#amask)"/>${route}</svg>${nodes}</div><p class="note">◆ você está aqui · ● região aberta · ? fechada até o guardião anterior cair · toque numa região aberta para viajar até ela</p>`;
+  m.classList.add('on','wide');sfx('ui');
+  body.querySelectorAll<HTMLButtonElement>('.node[data-b]').forEach(b=>b.onclick=()=>{const id=b.dataset.b as BiomeId;if(!reachable(id)||id===world.biome)return;closeModal();goBiome(id,BIOME_ORDER.indexOf(id)>BIOME_ORDER.indexOf(world.biome)?1:-1);});
+}
+$('mapbtn').onclick=()=>openAtlas();
 
 // ---------- people of the base, missions and guidance ----------
 const npcs=NPCS.map(d=>new Npc(d,world.scene));
@@ -984,6 +1017,7 @@ addEventListener('keydown',e=>{
   else if(e.code==='KeyQ'&&!e.repeat){updateAim();skillDown();}
   else if(e.code==='KeyF'&&!e.repeat)interact();
   else if(e.code==='KeyR'&&!e.repeat)drinkPotion();
+  else if(e.code==='KeyM'&&!e.repeat&&mode==='play'){if($('modal').classList.contains('on')&&$('mtitle').textContent==='Atlas de Dante')closeModal();else openAtlas();}
   else if(e.code==='KeyI'&&!e.repeat){if($('modal').classList.contains('on')&&$('mtitle').textContent==='Equipamento')closeModal();else openGear();}
   else if(e.code==='KeyE'&&!e.repeat){if(!interact())cycleElement();}
 });

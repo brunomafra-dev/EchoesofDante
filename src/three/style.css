@@ -209,3 +209,40 @@ body.play #bagbtn{display:grid}body.bestiary #bagbtn{display:none!important}
 #record.on{opacity:1;transform:translate(-50%,0)}
 #record small{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase}#record b{display:block;font-size:16px;color:#f0f8f4;margin:3px 0 5px}#record p{margin:0}
 @media (max-height:500px){#tracker .side{display:none}#record{top:8px;font-size:12px;padding:8px 12px}}
+
+/* arrival film */
+#prologue{position:fixed;inset:0;z-index:50;background:#000;display:grid;place-items:center;cursor:pointer;transition:opacity .5s}
+#prologue.out{opacity:0}
+#prologue video{width:100%;height:100%;object-fit:contain}
+#prologue video::cue{font-family:Georgia,serif;font-size:clamp(14px,2.4vw,24px);background:#000a;color:#f4ecd8}
+#prologue .skip{position:absolute;right:18px;bottom:18px;padding:8px 18px;font:inherit;font-size:13px;letter-spacing:.12em;text-transform:uppercase;background:#14110ecc;color:#f0d594;border:1px solid #8a6a3a;border-radius:3px;cursor:pointer}
+#prologue .hint{position:absolute;bottom:22%;color:#f0d594;font-size:15px;letter-spacing:.1em;opacity:.85}
+#prologue.playing .hint{display:none}
+/* atlas */
+#mapbtn{display:none;position:absolute;top:100px;left:12px;width:40px;height:40px;pointer-events:auto;background:#14110ecc;color:#f0d594;border:1px solid #6a5632;border-radius:4px;cursor:pointer;place-items:center}
+body.play #mapbtn{display:grid}body.bestiary #mapbtn{display:none!important}
+#modal.wide .box{width:min(980px,96vw);max-width:none}
+.atlas{position:relative;width:100%;max-width:calc((84vh - 120px)*1.4973);margin:0 auto;aspect-ratio:1120/748;border:1px solid #5a4a30;border-radius:3px;overflow:hidden;background:#0c1418}
+.atlas img,.atlas svg{position:absolute;inset:0;width:100%;height:100%;user-select:none}
+.atlas svg path{fill:none;stroke-width:4;stroke-linecap:round}
+.atlas svg path.known{stroke:#e8b860;stroke-dasharray:2 10;opacity:.95}
+.atlas svg path.unknown{stroke:#c8d0d0;stroke-dasharray:2 12;opacity:.3}
+.atlas .node{position:absolute;transform:translate(-50%,-14px);display:flex;flex-direction:column;align-items:center;gap:1px;padding:3px 7px 4px;font:inherit;background:#0e0c0ad8;border:1px solid #6a5632;border-radius:3px;color:#e8dcc0;cursor:pointer;max-width:170px;text-align:center}
+.atlas .node:hover:not([disabled]){border-color:#f0d594;background:#1e1810ee}
+.atlas .node .dot{color:#e8b860;font-size:13px;line-height:1}
+.atlas .node b{font-size:12px;font-weight:600;color:#f0d594}
+.atlas .node small{font-size:10px;color:#a89c84;line-height:1.2}
+.atlas .node.here{border-color:#ffd27a;box-shadow:0 0 14px #ffc24a66}.atlas .node.here .dot{color:#ffd27a}
+.atlas .node.locked{opacity:.75;cursor:default}.atlas .node.locked b{color:#a8a8a0}.atlas .node.locked .dot{color:#a8a8a0}
+.atlas .node[disabled]{cursor:default}
+.atlas .node i{font-style:normal;font-size:10px;letter-spacing:.06em}.atlas .m-story{color:#ffc24a}.atlas .m-side{color:#4fffc8}
+@media (max-width:700px),(max-height:500px){.atlas .node{padding:2px 4px;max-width:110px}.atlas .node small{display:none}.atlas .node b{font-size:10px}#mapbtn{top:96px}}
+@media (max-height:500px){#mapbtn{top:94px}}
+@media (max-height:500px){
+ #modal.wide .box{padding:6px 10px 8px;max-height:98vh}
+ #modal.wide #mtitle{font-size:14px;margin:0 0 4px}
+ #modal.wide .note{display:none}
+ #modal.wide .atlas{max-width:calc((98vh - 78px)*1.4973)}
+ .atlas .node.locked b,.atlas .node.locked small{display:none}
+ #modal.wide #mclose{padding:4px;margin-top:4px}
+}
