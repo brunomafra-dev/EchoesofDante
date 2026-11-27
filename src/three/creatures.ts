@@ -681,7 +681,7 @@ export class Creature{
  }
  private toRecover(){this.state='recover';this.timer=this.mv.recover;this.vel.multiplyScalar(.2);this.look.body.position.y=Math.max(0,this.look.body.position.y);this.look.mandibles?.forEach((m,i)=>m.rotation.z=(i?1:-1)*.5);}
  // crossfade the model's clip for a motion (attack and death play once and hold)
- private anim(name:Motion,once=false){const L=this.look;if(!L.acts||L.cur===name)return;const a=L.acts[name]??L.acts.idle!;const prev=L.cur?L.acts[L.cur as Motion]:undefined;
+ anim(name:Motion,once=false){const L=this.look;if(!L.acts||L.cur===name)return;const a=L.acts[name]??L.acts.idle!;const prev=L.cur?L.acts[L.cur as Motion]:undefined;
   a.reset();a.setLoop(once?T.LoopOnce:T.LoopRepeat,Infinity);a.clampWhenFinished=once;a.timeScale=name==='attack'?1.6:1;a.setEffectiveWeight(1);
   if(prev&&prev!==a)a.crossFadeFrom(prev,.15,false);a.play();L.cur=name;}
  private turn(target:number,dt:number,rate:number){let d=target-this.heading;d=Math.atan2(Math.sin(d),Math.cos(d));this.heading+=d*Math.min(1,dt*rate);}

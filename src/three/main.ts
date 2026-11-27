@@ -670,9 +670,49 @@ function tick(dt:number){
   if(mode==='creator'){heading=previewYaw;if(hero.model)hero.model.rotation.y+=(previewYaw-hero.model.rotation.y)*Math.min(1,dt*10);hero.play(hero.has(kit().idle)?kit().idle:'Idle_Loop',{fade:.25});}
   else updatePlayer(dt);
   if(mode==='play'&&!mouseDown&&!qaAim&&!('ontouchstart' in window))updateAim();
+  if(best)updateBestiary(dt);
   hero.update(dt);updateEnemies(dt,time);updateMissions(dt);updateFx(dt);updateTexts(dt);updateBars();
   key.position.set(pos.x+3,4.5,pos.z+5);key.target.position.set(pos.x,pos.y+1,pos.z);key.intensity=mode==='creator'?2.4:.35;
   world.update(time,dt,pos);updateCamera(dt);
+}
+// ---------- bestiary: the creatures alone, one at a time, turning, with their animations (3d.html?bestiario) ----------
+const NEW_MONSTERS:SpeciesId[]=['skitter','bankGrazer','reedSpitter','thorn','carapace','emberHound','fumarole','slagback','frostPouncer','iceCarapace'];
+const OLDER_MODELS:SpeciesId[]=['crawler','duneAntlion','glassAntlion','dunePouncer','frostWyvern','vesper'];
+const ORIGIN:Record<string,string>={q:'Quaternius · Ultimate Monsters (CC0), adaptado ao Dante',antlion:'Flare · Clint Bellanger (CC BY)',wyvern:'Flare · Clint Bellanger e Justin Nichol (CC BY-SA)',spider:'Easyforge · Giant Monster Spiders'};
+let best:{list:SpeciesId[];i:number;c:Creature|null;yaw:number;motion:string}|null=null;
+function bestiary(all:boolean){
+  document.body.classList.add('bestiary');goBiome('springs');for(const e of enemies)e.dispose();enemies.length=0;habs=[];
+  hero.root.visible=false;for(const n of npcs)n.char.root.visible=false;
+  best={list:all?[...NEW_MONSTERS,...OLDER_MODELS]:[...NEW_MONSTERS],i:0,c:null,yaw:0,motion:'idle'};
+  const box=document.createElement('div');box.id='bestiary';
+  box.innerHTML=`<div class="bt"><button id="b-prev">◀</button><div><b id="b-name"></b><span id="b-info"></span></div><button id="b-next">▶</button></div><div class="bm">${[['idle','Parado'],['move','Andar'],['run','Correr'],['attack','Atacar'],['hit','Dano'],['death','Morrer']].map(([k,l])=>`<button data-m="${k}">${l}</button>`).join('')}</div><div class="bc"><span id="b-count"></span> · arraste para girar · <a href="3d.html?bestiario${all?'':'=todos'}">${all?'só os novos':'ver também aranha, formigas-leão e wyverns'}</a></div>`;
+  document.body.appendChild(box);
+  $('b-prev').onclick=()=>showMonster(-1);$('b-next').onclick=()=>showMonster(1);
+  box.querySelectorAll<HTMLButtonElement>('.bm button').forEach(b=>b.onclick=()=>{if(best){best.motion=b.dataset.m!;playMotion();}});
+  addEventListener('keydown',e=>{if(e.code==='ArrowRight')showMonster(1);if(e.code==='ArrowLeft')showMonster(-1);});
+  let drag=-1;cv.addEventListener('pointerdown',e=>{drag=e.clientX;});addEventListener('pointerup',()=>{drag=-1;});
+  cv.addEventListener('pointermove',e=>{if(drag>=0&&best){best.yaw+=(e.clientX-drag)*.01;drag=e.clientX;}});
+  showMonster(0);
+}
+function showMonster(step:number){
+  if(!best)return;best.c?.dispose();best.i=(best.i+step+best.list.length)%best.list.length;
+  const k=best.list[best.i],c=new Creature(k,0,0,world.scene);best.c=c;best.motion='idle';
+  const file=c.spec.model?MODEL_DEF[c.spec.model].file:'';const src=file.startsWith('q/')?'q':file.startsWith('antlion')?'antlion':file.startsWith('wyvern')?'wyvern':c.spec.model==='spider'?'spider':'';
+  $('b-name').textContent=c.name;$('b-info').textContent=(BIOME_ORDER.filter(b=>BIOMES[b].creatures.some(([s])=>s===k)).map(b=>BIOMES[b].name).join(', ')||'Chefe')+' · '+(ORIGIN[src]??'corpo procedural');
+  $('b-count').textContent=`${best.i+1} de ${best.list.length}`;playMotion();
+}
+function playMotion(){
+  if(!best?.c)return;best.c.t=0;best.c.anim(best.motion as 'idle',best.motion==='attack'||best.motion==='death'||best.motion==='hit');
+  document.querySelectorAll<HTMLButtonElement>('#bestiary .bm button').forEach(b=>b.classList.toggle('on',b.dataset.m===best!.motion));
+}
+function updateBestiary(dt:number){
+  if(!best?.c)return;const c=best.c,L=c.look;best.yaw+=dt*.35;
+  c.g.rotation.y=best.yaw;c.g.position.set(0,c.spec.fly??0,0);L.mixer?.update(dt);
+  // once an attack, hit or death ends, return to the idle loop after a pause
+  const a=L.cur?L.acts?.[L.cur as 'idle']:null;if(a&&!a.isRunning()&&L.cur!=='idle'){c.t+=dt;if(c.t>1.2){c.t=0;best.motion='idle';playMotion();}}
+  // portrait phones: farther away and the creature framed above the buttons
+  const narrow=camera.aspect<1,h=L.height*c.spec.scale,r=Math.max(3.2,h*2.1)*(narrow?Math.min(2.4,1.15/camera.aspect):1),fy=c.spec.fly??0;
+  fixedCam=[new T.Vector3(0,h*.75+r*.32+fy,r),new T.Vector3(0,h*.5+fy-(narrow?r*.16:r*.08),0)];
 }
 function frame(){
   const t=performance.now()/1000,dt=Math.min(.05,t-last);last=t;
@@ -712,6 +752,7 @@ function frame(){
   $('loading').remove();
   if(q.get('biome')&&BIOMES[q.get('biome') as BiomeId])goBiome(q.get('biome') as BiomeId);
   if(q.get('auto'))enter();
+  if(q.has('bestiario'))bestiary(q.get('bestiario')==='todos');
   requestAnimationFrame(frame);
 })();
 // QA hooks
