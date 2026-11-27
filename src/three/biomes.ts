@@ -8,9 +8,10 @@ export interface Biome{
  hemi:[string,string,number];moon:[string,number];ambient:'none'|'spores'|'motes'|'ash'|'snow'|'sand';
  rockTint:string;treeTint:string;creatures:[SpeciesId,number][];boss?:SpeciesId;bossAfter?:number;
 }
-// journey order of the 2D: the arrival forest, its depths and the Warden; water and the valley route; then the
-// outer regions and their guardians: sirocco (Soterrado), frost (Vésper), caldera (Incandescente)
-export const BIOME_ORDER:BiomeId[]=['camp','domain','springs','valley','dunes','frost','caldera'];
+// journey order: the arrival forest and its depths with the Warden, then straight on to the three guardians of the
+// outer regions, sirocco (Soterrado), frost (Vésper) and caldera (Incandescente); with energy secured, water
+// (springs) and the caravan route (valley) close the journey, without a guardian
+export const BIOME_ORDER:BiomeId[]=['camp','domain','dunes','frost','caldera','springs','valley'];
 // hemi = sky colour, ground colour, intensity; moon = the sun (colour, intensity)
 export const BIOMES:Record<BiomeId,Biome>={
  camp:{name:'Acampamento da Chegada',sub:'Floresta da chegada',ground:'sparse_grass',groundTint:'#d6d4c4',bg:'#9db0c0',fog:.011,hemi:['#d6e4f4','#5a5440',1.35],moon:['#fff0d6',3.1],ambient:'spores',

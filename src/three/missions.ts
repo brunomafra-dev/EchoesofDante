@@ -16,8 +16,8 @@ export const NPC_INFO:Record<NpcId,{name:string;service:string;portrait:string}>
  ivo:{name:'Ivo',service:'Oficina e fabricação',portrait:'assets/base/base-smith-civilian.png'},
 };
 
-// Order of the 2D journey: the forest and its depths up to the Warden, then water and the valley route, and the
-// three guardians of the outer regions (sirocco, frost, caldera). Ids are kept so saved progress still counts.
+// Journey order: the forest and its depths up to the Warden, the three guardians of the outer regions (sirocco,
+// frost, caldera), then water and the caravan route. Ids are kept so saved progress still counts.
 export const MISSIONS:Mission[]=[
  {id:'recon',title:'Primeiro reconhecimento',npc:'nara',credits:20,
   offer:['A nave trouxe quem ainda podíamos salvar. Para receber mais gente, precisamos conhecer o terreno.','Reconheça a clareira e a trilha das raízes ao redor do acampamento. Registre uma rota de ida e volte para me contar o que encontrou.'],
@@ -34,18 +34,10 @@ export const MISSIONS:Mission[]=[
    {id:'passage',label:'Ativar o mecanismo da fissura',biome:'domain',kind:'scan',x:0,z:-25,after:['echo1','echo2','echo3']}]},
  {id:'beyond',title:'Além da fissura',npc:'nara',requires:'signal',credits:60,
   offer:['A passagem está aberta. Se existe algo capaz de responder à nossa presença, precisamos entender seus limites.','Siga o sinal até o centro do círculo de pedra. Investigue o que houver além e volte com um relatório; os civis dependem de uma rota segura.'],
-  report:['Um arquivo ancestral reconheceu uma assinatura humana, mas sua data e origem continuam ilegíveis. Isso exige mais investigação.','A travessia abriu possibilidades. Nosso próximo objetivo será encontrar água estável e terreno para o primeiro abrigo.'],
+  report:['Um arquivo ancestral reconheceu uma assinatura humana, mas sua data e origem continuam ilegíveis. Isso exige mais investigação.','A travessia abriu possibilidades. Ivo detectou o mesmo padrão dos Ecos além das Profundezas, sob as dunas do Siroco.'],
   goals:[{id:'origin',label:'Investigar a origem do sinal',biome:'domain',kind:'scan',x:0,z:-9},{id:'warden',label:'Confirmar a segurança além do limiar',biome:'domain',kind:'boss',x:0,z:0,boss:'warden',after:['origin']}]},
- {id:'source',title:'Água para permanecer',npc:'lia',requires:'beyond',credits:45,
-  offer:['Com o Guardião vencido, o portal além das Profundezas leva à Bacia das Nascentes. Precisamos de uma fonte estável, não apenas de umidade no solo.','Investigue a nascente da bacia. Registre vazão e composição; a água ainda passará pelo nosso tratamento.'],
-  report:['A nascente tem vazão suficiente para o módulo e pode alimentar o reservatório após filtragem.','Uma fonte de água nos dá uma possibilidade real de permanecer. Nara quer planejar a travessia do vale para as primeiras famílias.'],
-  goals:[{id:'spring',label:'Analisar a nascente na nova bacia',biome:'springs',kind:'scan',x:-15,z:-10},{id:'flow',label:'Registrar a vazão e a composição',biome:'springs',kind:'scan',x:16,z:7}]},
- {id:'caravan',title:'Uma caravana atravessa o vale',npc:'nara',requires:'source',credits:50,
-  offer:['As primeiras famílias não podem atravessar correndo como nossa equipe. Precisamos escolher onde parar a caravana sem ocupar o território das criaturas.','No Vale da Ressonância, registre o abrigo das cristas, a bacia de descanso e a margem da passagem oriental.'],
-  report:['O abrigo das cristas protege uma parada curta. A bacia é firme nas bordas, mas o centro úmido deve ficar livre.','Marquei os pontos de apoio para uma futura caravana. Ivo quer saber o que há além do vale, nas dunas.'],
-  goals:[{id:'v-shelter',label:'Registrar o abrigo das cristas',biome:'valley',kind:'scan',x:-18,z:-6},{id:'v-basin',label:'Examinar a bacia de descanso',biome:'valley',kind:'scan',x:18,z:-12},{id:'v-pass',label:'Registrar a margem da passagem oriental',biome:'valley',kind:'scan',x:6,z:17}]},
- {id:'dunes',title:'Sob a pele das dunas',npc:'ivo',requires:'caravan',credits:80,
-  offer:['A crista divide a aproximação: por cima há uma borda firme; por baixo, um canal expõe partes de uma estrutura soterrada.','Registre a encosta norte e examine as nervuras junto da depressão. Se a areia vibrar, afaste-se do centro.'],
+ {id:'dunes',title:'Sob a pele das dunas',npc:'ivo',requires:'beyond',credits:80,
+  offer:['Com o Guardião vencido, o portal além das Profundezas leva à Bacia do Siroco. A crista divide a aproximação: por cima há uma borda firme; por baixo, um canal expõe partes de uma estrutura soterrada.','Registre a encosta norte e examine as nervuras junto da depressão. Se a areia vibrar, afaste-se do centro.'],
   report:['O caminho alto oferece visão e uma entrada pelas ruínas. A carga deve acompanhar a borda firme.','O Soterrado não guarda mais a depressão. As ruínas sob a areia falam a mesma língua dos Ecos.'],
   goals:[{id:'ridge',label:'Registrar a encosta norte',biome:'dunes',kind:'scan',x:-14,z:-18},{id:'ribs',label:'Examinar as nervuras da depressão',biome:'dunes',kind:'scan',x:13,z:-11},
    {id:'soterrado',label:'Enfrentar o Soterrado',biome:'dunes',kind:'boss',x:0,z:-14,boss:'soterrado',after:['ridge','ribs']}]},
@@ -56,9 +48,17 @@ export const MISSIONS:Mission[]=[
    {id:'vesper',label:'Enfrentar Vésper, o Sopro Branco',biome:'frost',kind:'boss',x:0,z:-16,boss:'vesper',after:['warmwater','lichen']}]},
  {id:'forges',title:'Antes de acender as forjas',npc:'ivo',requires:'frost',credits:90,
   offer:['O frio do relatório mostrou a falta de energia confiável. A Caldeira de Dante guarda calor que pode servir, mas algo vigia as forjas.','Registre o calor da margem interna e as marcas antes do limiar. Depois confirme o que guarda a caldeira. Não fique sobre a lava.'],
-  report:['O pátio comporta uma patrulha leve com isolamento nos pés. O calor pode alimentar a oficina sem tocar nas estruturas originais.','O Incandescente caiu. Pela primeira vez, uma fonte de energia em Dante não depende só da nave.'],
+  report:['O pátio comporta uma patrulha leve com isolamento nos pés. O calor pode alimentar a oficina sem tocar nas estruturas originais.','O Incandescente caiu. Pela primeira vez, uma fonte de energia em Dante não depende só da nave. Agora Lia precisa de água estável para o primeiro abrigo.'],
   goals:[{id:'heat',label:'Registrar o calor da margem interna',biome:'caldera',kind:'scan',x:-15,z:-12},{id:'marks',label:'Examinar as marcas antes do limiar',biome:'caldera',kind:'scan',x:15,z:-15},
    {id:'titan',label:'Enfrentar o Incandescente',biome:'caldera',kind:'boss',x:0,z:-18,boss:'titan',after:['heat','marks']}]},
+ {id:'source',title:'Água para permanecer',npc:'lia',requires:'forges',credits:45,
+  offer:['Com as forjas acesas, o portal além da Caldeira leva à Bacia das Nascentes. Precisamos de uma fonte estável, não apenas de umidade no solo.','Investigue a nascente da bacia. Registre vazão e composição; a água ainda passará pelo nosso tratamento.'],
+  report:['A nascente tem vazão suficiente para o módulo e pode alimentar o reservatório após filtragem.','Uma fonte de água nos dá uma possibilidade real de permanecer. Nara quer planejar a travessia do vale para as primeiras famílias.'],
+  goals:[{id:'spring',label:'Analisar a nascente na nova bacia',biome:'springs',kind:'scan',x:-15,z:-10},{id:'flow',label:'Registrar a vazão e a composição',biome:'springs',kind:'scan',x:16,z:7}]},
+ {id:'caravan',title:'Uma caravana atravessa o vale',npc:'nara',requires:'source',credits:50,
+  offer:['As primeiras famílias não podem atravessar correndo como nossa equipe. Precisamos escolher onde parar a caravana sem ocupar o território das criaturas.','No Vale da Ressonância, registre o abrigo das cristas, a bacia de descanso e a margem da passagem oriental.'],
+  report:['O abrigo das cristas protege uma parada curta. A bacia é firme nas bordas, mas o centro úmido deve ficar livre.','Marquei os pontos de apoio. Com água, energia e uma rota segura, as primeiras famílias podem deixar a nave.'],
+  goals:[{id:'v-shelter',label:'Registrar o abrigo das cristas',biome:'valley',kind:'scan',x:-18,z:-6},{id:'v-basin',label:'Examinar a bacia de descanso',biome:'valley',kind:'scan',x:18,z:-12},{id:'v-pass',label:'Registrar a margem da passagem oriental',biome:'valley',kind:'scan',x:6,z:17}]},
 ];
 export const missionById=(id:string)=>MISSIONS.find(m=>m.id===id)!;
 
