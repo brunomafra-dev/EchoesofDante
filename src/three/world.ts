@@ -116,7 +116,7 @@ export class World{
  setBiome(id:BiomeId){
   this.biome=id;const b=BIOMES[id],tok=++this.token;
   this.group.traverse(o=>{const m=o as T.Mesh;if(m.isMesh&&!(m as T.InstancedMesh).userData.shared){m.geometry?.dispose();}});
-  this.group.clear();this.colliders.length=0;this.flameSpots.length=0;this.glows=[];this.surfaces=[];this.portals=[];this.portalMats=[];this.air=null;this.airKind=b.ambient;
+  this.group.clear();this.colliders.length=0;this.flameSpots.length=0;this.glows=[];this.surfaces=[];this.portals=[];this.portalMats=[];this.portalLook.clear();this.air=null;this.airKind=b.ambient;
   (this.scene.background as T.Color).set(b.bg);const fog=this.scene.fog as T.FogExp2;fog.color.set(b.bg);fog.density=b.fog;
   this.hemi.color.set(b.hemi[0]);this.hemi.groundColor.set(b.hemi[1]);this.hemi.intensity=b.hemi[2];this.moon.color.set(b.moon[0]);this.moon.intensity=b.moon[1];
   Object.assign(this.gmat,{map:this.tex(b.ground+'_diff.jpg',true),normalMap:this.tex(b.ground+'_nor.jpg',false),roughnessMap:this.tex(b.ground+'_rough.jpg',false)});
@@ -124,7 +124,7 @@ export class World{
   this.makeEnv(b.hemi[0],b.bg,b.hemi[1]);
   const r=rng(11+id.length*7),place:Place={};
   const put=(kind:string,x:number,z:number,s:number,tilt=0)=>{(place[kind]??=[]).push({x,z,s,ry:r()*6.283,tilt});};
-  this.keepOut=id==='camp'?20:0;
+  this.keepOut=id==='camp'?20:id==='domain'?24:0;
   const ring=(n:number,dMin:number,dMax:number,f:(x:number,z:number,i:number)=>void)=>{for(let i=0;i<n;i++){const a=r()*6.283,d=dMin+r()*(dMax-dMin),x=Math.cos(a)*d,z=Math.sin(a)*d;if(Math.hypot(x,z)<Math.max(4,this.keepOut))continue;f(x,z,i);}};
   const col=(x:number,z:number,rr:number)=>this.colliders.push({x,z,r:rr});
   const rocks=(n:number)=>ring(n,7,ARENA*1.1,(x,z)=>{const s=.5+Math.pow(r(),2)*2.2;put(ROCKS[Math.floor(r()*ROCKS.length)],x,z,s,(r()-.5)*.4);if(s>1.3)col(x,z,s*.55);});
@@ -163,7 +163,14 @@ export class World{
    rocks(60);boulders();cliffs(['cliff','rock_face']);
    this.crystals(r,8,['#8fb8d0','#cfe8f4'],['#b8d8ec','#e8f6ff'],1.1,true);this.mounds(r,26,'#e8f0f8',2.2);
   }else if(id==='domain'){
-   rocks(30);boulders();trees(8,['fir'],26);cliffs(['cliff','cliff_b','rock_face']);this.domainArena(r);
+   // the deep forest around the guardian's stone circle
+   trees(14,['oak'],27);trees(12,['fir'],26);trees(10,['elm'],27);trees(8,['bush_tree'],26);
+   ring(10,26,ARENA,(x,z)=>{put(r()<.5?'stump_a':'stump_b',x,z,.9+r()*.5);col(x,z,.45);});
+   ring(8,26,ARENA,(x,z,i)=>{put(i%2?'log':'log_big',x,z,.9+r()*.3);col(x,z,1);});
+   ring(16,25,ARENA*1.1,(x,z)=>put('branches',x,z,.8+r()*.6));
+   rocks(30);boulders();cliffs(['cliff','cliff_b','rock_face']);
+   plants(30,['fern']);plants(22,['shrub_a','shrub_b','shrub_c']);plants(14,['roots'],.8,1.2);plants(16,['nettle','weed']);
+   this.grass(r,1100,'#26361c','#7e9a52',.3,0);this.domainArena(r);
   }else{
    trees(10,['succulent_tree'],10,.8,1.3);ring(10,12,ARENA*1.1,(x,z)=>{put(r()<.5?'alive_a':'alive_b',x,z,.7+r()*.5);col(x,z,.6);});
    ring(6,12,ARENA*1.1,(x,z)=>{put('tree_b',x,z,.7+r()*.4);col(x,z,.5);});
@@ -236,7 +243,8 @@ export class World{
   const pick=()=>{let x=r();for(const [k,w] of mix){if(x<w)return k;x-=w;}return mix[0][0];};
   const avoid=[{x:0,z:0,r:12},{x:0,z:ARENA-10,r:10},{x:0,z:-ARENA+10,r:10},...this.portals.map(p=>({x:p.pos.x,z:p.pos.z,r:9}))];
   const big=new Set<SpeciesId>(['carapace','slagback','iceCarapace','glassAntlion']);
-  const n=id==='camp'?6:8,dMin=id==='camp'?25:11,dMax=id==='camp'?ARENA-3:ARENA-4;
+  if(id==='domain')avoid.push({x:0,z:0,r:25});
+  const n=id==='camp'?6:8,dMin=id==='camp'?25:id==='domain'?26:11,dMax=id==='camp'?ARENA-3:ARENA-4;
   for(let i=0,tries=0;i<n&&tries<400;tries++){
    const a=r()*6.283,d=dMin+r()*(dMax-dMin),x=Math.cos(a)*d,z=Math.sin(a)*d;
    if(avoid.some(o=>Math.hypot(x-o.x,z-o.z)<o.r))continue;
@@ -352,9 +360,29 @@ export class World{
   for(const [x,z,ry] of CAMP.crates){const c=buildProps('crates');c.position.set(x,0,z);c.rotation.y=ry;g.add(c);this.colliders.push({x,z,r:1.2});}
   for(const [x,z] of CAMP.barrels){const c=buildProps('barrels');c.position.set(x,0,z);g.add(c);this.colliders.push({x:x+.15,z:z+.3,r:.8});}
   {const d=buildProps('decon'),c=CAMP.decon;d.position.set(c.x,0,c.z);d.rotation.y=c.ry;g.add(d);for(const s of[-1,1])this.colliders.push({x:c.x+s*Math.cos(c.ry),z:c.z-s*Math.sin(c.ry),r:.35});}
+  this.pen();
   const lampTex=glowTex('rgba(255,225,170,1)','rgba(255,150,60,.4)');
   for(const [x,z] of CAMP.floods){const f=buildProps('flood');f.position.set(x,0,z);f.rotation.y=Math.atan2(-x,-z);g.add(f);this.colliders.push({x,z,r:.3});
    const sp=new T.Sprite(new T.SpriteMaterial({map:lampTex,blending:T.AdditiveBlending,depthWrite:false,transparent:true,opacity:.7}));sp.scale.set(2.2,2.2,1);sp.position.set(x,4.3,z);g.add(sp);}
+ }
+ // beast pen of the Domador: a ring of posts with a rope, a trough and a green lantern (where a companion is traded)
+ private pen(){
+  const P=CAMP.pen,g=new T.Group();g.position.set(P.x,0,P.z);this.group.add(g);
+  const wood=new T.MeshStandardMaterial({color:'#5a4430',roughness:.9}),rope=new T.MeshStandardMaterial({color:'#b8a27a',roughness:.95});
+  // an opening that faces the camp centre
+  const N=12,R=2.1,gate=Math.atan2(-P.z,-P.x),open=(a:number)=>Math.abs(Math.atan2(Math.sin(a-gate),Math.cos(a-gate)))<.5;
+  for(let i=0;i<N;i++){const a=i/N*Math.PI*2,a2=(i+1)/N*Math.PI*2;if(open(a))continue;
+   const post=new T.Mesh(new T.CylinderGeometry(.07,.09,1,6),wood);post.position.set(Math.cos(a)*R,.5,Math.sin(a)*R);post.castShadow=true;g.add(post);
+   if(open(a2))continue;
+   const p0=new T.Vector3(Math.cos(a)*R,.85,Math.sin(a)*R),p1=new T.Vector3(Math.cos(a2)*R,.85,Math.sin(a2)*R),l=p0.distanceTo(p1);
+   const rp=new T.Mesh(new T.CylinderGeometry(.025,.025,l,5),rope);rp.position.copy(p0).lerp(p1,.5);rp.quaternion.setFromUnitVectors(new T.Vector3(0,1,0),p1.clone().sub(p0).normalize());g.add(rp);}
+  const trough=new T.Mesh(new T.BoxGeometry(1.1,.3,.45),wood);trough.position.set(-.6,.15,-.9);trough.castShadow=true;g.add(trough);
+  const moss=new T.Mesh(new T.BoxGeometry(1,.06,.36),new T.MeshStandardMaterial({color:'#4a6a2a',roughness:1}));moss.position.set(-.6,.3,-.9);g.add(moss);
+  const pole=new T.Mesh(new T.CylinderGeometry(.05,.06,2.2,6),wood);pole.position.set(R+.2,1.1,.4);pole.castShadow=true;g.add(pole);
+  const lamp=new T.Mesh(new T.SphereGeometry(.13,12,8),new T.MeshStandardMaterial({color:'#9dffb0',emissive:'#5dff8a',emissiveIntensity:2}));lamp.position.set(R+.2,2.25,.4);g.add(lamp);
+  const sp=new T.Sprite(new T.SpriteMaterial({map:glowTex('rgba(160,255,180,.9)','rgba(80,255,130,.25)'),blending:T.AdditiveBlending,depthWrite:false,transparent:true}));sp.scale.set(1.6,1.6,1);sp.position.copy(lamp.position);g.add(sp);
+  this.fakeLight(P.x+R+.2,P.z+.4,'#5dff8a',2.4,.3,0);
+  this.colliders.push({x:P.x-.6,z:P.z-.9,r:.6},{x:P.x+R+.2,z:P.z+.4,r:.2});
  }
  // light painted on the ground (additive), instead of a real point light: real ones multiplied the cost of every pixel
  private glowTexCache:T.Texture|null=null;
@@ -370,13 +398,16 @@ export class World{
   const ringM=new T.Mesh(new T.TorusGeometry(2,.32,10,32),stone);ringM.position.y=2.3;ringM.castShadow=true;g.add(ringM);
   for(const s of[-1,1]){const b=new T.Mesh(new T.BoxGeometry(.8,.6,.9),stone);b.position.set(s*2,.3,0);b.castShadow=true;g.add(b);}
   const col=new T.Color(BIOMES[to].hemi[0]);
-  const mat=new T.ShaderMaterial({uniforms:{uT:{value:0},uC:{value:col}},transparent:true,depthWrite:false,blending:T.AdditiveBlending,side:T.DoubleSide,
+  const mat=new T.ShaderMaterial({uniforms:{uT:{value:0},uC:{value:col.clone()},uS:{value:0}},transparent:true,depthWrite:false,blending:T.AdditiveBlending,side:T.DoubleSide,
    vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
-   fragmentShader:'uniform float uT;uniform vec3 uC;varying vec2 vUv;void main(){vec2 p=vUv-.5;float r=length(p)*2.;if(r>1.)discard;float a=atan(p.y,p.x);float sw=.5+.5*sin(a*5.+r*12.-uT*4.);float c=(1.-r)*.6+sw*(1.-r*.8)*.6+smoothstep(.75,1.,r)*.8;gl_FragColor=vec4(uC*c*1.3,1.);}'});
+   fragmentShader:'uniform float uT;uniform vec3 uC;uniform float uS;varying vec2 vUv;void main(){vec2 p=vUv-.5;float r=length(p)*2.;if(r>1.)discard;float a=atan(p.y,p.x);float sw=.5+.5*sin(a*5.+r*12.-uT*4.*(1.-uS));float c=(1.-r)*.6+sw*(1.-r*.8)*.6+smoothstep(.75,1.,r)*.8;gl_FragColor=vec4(uC*c*1.3,1.);}'});
   const disc=new T.Mesh(new T.CircleGeometry(1.75,40),mat);disc.position.y=2.3;g.add(disc);this.portalMats.push(mat);
   const gl=new T.Sprite(new T.SpriteMaterial({map:glowTex('rgba(255,255,255,.5)','rgba(255,255,255,.12)'),color:col,blending:T.AdditiveBlending,depthWrite:false,transparent:true}));gl.scale.set(7,7,1);gl.position.y=2.3;g.add(gl);
-  this.portals.push({pos:pos.clone(),to,dir});
+  this.portals.push({pos:pos.clone(),to,dir});this.portalLook.set(dir,{mat,col:col.clone(),glow:gl});
  }
+ // a portal onward stays sealed (grey, still) until the region's guardian falls
+ private portalLook=new Map<number,{mat:T.ShaderMaterial;col:T.Color;glow:T.Sprite}>();
+ seal(dir:1|-1,sealed:boolean){const p=this.portalLook.get(dir);if(!p)return;(p.mat.uniforms.uC.value as T.Color).copy(sealed?new T.Color('#5a5650'):p.col);p.mat.uniforms.uS.value=sealed?1:0;p.glow.visible=!sealed;}
  // the guardian's arena: a rune circle surrounded by tall obelisks
  private domainArena(r:()=>number){
   const stone=new T.MeshStandardMaterial({color:'#2a3238',roughness:.85,flatShading:true}),rune=new T.MeshStandardMaterial({color:'#4ff0ff',emissive:'#4ff0ff',emissiveIntensity:1.8});

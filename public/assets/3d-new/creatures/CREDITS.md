@@ -18,7 +18,7 @@ same reviewed module as the first 3D (`virtual:arrival-hollow`, see `public/asse
 ## Quaternius — Ultimate Monsters (CC0 1.0) — `q/`
 
 `q/alien.glb`, `q/frog.glb`, `q/squidle.glb`, `q/dino.glb`, `q/green_spiky_blob.glb`, `q/dragon.glb`, `q/demon.glb`, `q/blue_demon.glb`,
-`q/alpaking_evolved.glb`, `q/yeti.glb`: **Quaternius**, Ultimate Monsters, CC0 1.0 (https://quaternius.com/packs/ultimatemonsters.html),
+`q/alpaking_evolved.glb`, `q/yeti.glb`, and the Domador's companions `q/cat.glb`, `q/mushnub_evolved.glb`, `q/birb.glb`: **Quaternius**, Ultimate Monsters, CC0 1.0 (https://quaternius.com/packs/ultimatemonsters.html),
 downloaded unchanged from the author's Poly Pizza mirror (https://poly.pizza/bundle/Ultimate-Monsters-Bundle-5oyGWAmOB6).
 In the game (`menace()` in `src/three/creatures.ts`) the eyes become dark with a glowing pupil, colours are muted and the creature
 skin shader adds scales, creases and rim light; crowns are hidden.

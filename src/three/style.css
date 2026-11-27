@@ -118,3 +118,28 @@ body.bestiary #ui,body.bestiary #creator,body.bestiary #optbtn,body.bestiary #pe
 #bestiary .bm{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}#bestiary .bm button.on{background:#6a4a22;color:#fff}
 #bestiary .bc{font-size:12px;opacity:.85}#bestiary a{color:#f0d594}
 
+/* saved characters: list, name, companion, beast pen, sealed regions */
+#select{position:absolute;left:24px;top:24px;bottom:24px;width:min(340px,calc(100vw - 48px));padding:20px 20px 16px;overflow:auto;pointer-events:auto;background:linear-gradient(180deg,rgba(18,16,14,.88),rgba(10,9,8,.9));border:1px solid #5a4a30;box-shadow:0 0 0 1px #000,0 12px 40px #000a;border-radius:4px;display:none}
+#select h1{margin:0;font-size:22px;letter-spacing:.06em;color:#e8c98a;font-weight:600;text-shadow:0 1px 0 #000}
+body.creator.selecting #select{display:block}body.selecting #creator,body.play #select{display:none}
+#s-list{display:flex;flex-direction:column;gap:6px;margin:12px 0}
+#s-list .card{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:9px 12px;text-align:left;font-family:inherit;background:#1b1814;color:#d8cfbd;border:1px solid #4a3d29;border-radius:3px;cursor:pointer}
+#s-list .card:hover{border-color:#a88c58}#s-list .card.on{background:#3a2c14;border-color:#e0b865}
+#s-list .card b{font-size:16px;color:#fff2cf;letter-spacing:.04em;font-weight:600}#s-list .card span{font-size:12px;color:#e0b865}#s-list .card i{font-size:11px;color:#9a917f;font-style:normal}
+#s-play{width:100%;padding:12px;font-family:inherit;font-size:16px;letter-spacing:.08em;color:#1a1208;background:linear-gradient(#e6c277,#b58a3c);border:1px solid #f0d594;border-radius:3px;cursor:pointer;font-weight:700}
+#s-play:disabled{opacity:.4;cursor:default}
+.s-row{display:flex;gap:6px;margin-top:8px}.s-row .chip{flex:1}.s-new{width:100%;margin-top:8px;padding:9px}
+#o-name{width:100%;box-sizing:border-box;padding:8px 10px;font-family:inherit;font-size:16px;color:#fff2cf;background:#15120e;border:1px solid #6a5632;border-radius:3px;outline:none}
+#o-name:focus{border-color:#e0b865}#o-name.bad{border-color:#ff6a5a;animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+#o-class .fixed{font-size:14px;color:#fff2cf;padding:4px 0}
+#back{width:100%;margin-top:6px}
+#clsname .hname{color:#fff2cf}
+#biomes .chip.locked{opacity:.55}
+#portalhint.sealed{color:#d8cfbd;border-color:#5a5650}
+#modal .pens{display:flex;flex-direction:column;gap:8px}
+#modal .pen{display:flex;flex-direction:column;gap:3px;padding:10px 12px;text-align:left;font-family:inherit;background:#1b1814;color:#d8cfbd;border:1px solid #4a3d29;border-radius:3px;cursor:pointer}
+#modal .pen:hover:not(:disabled){border-color:#a88c58}#modal .pen.on{background:#2a3a1c;border-color:#8adf7a}#modal .pen:disabled{opacity:.6;cursor:default}
+#modal .pen b{font-size:15px;color:#fff2cf}#modal .pen em{font-size:11px;letter-spacing:.1em;color:#e0b865;font-style:normal}#modal .pen span{font-size:13px;line-height:1.45}#modal .pen i{font-size:12px;color:#8adf7a;font-style:normal}
+@media(max-width:700px){#select{top:auto;height:46vh;left:8px;right:8px;bottom:8px;width:auto}}
+body.bestiary #select{display:none!important}

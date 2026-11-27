@@ -297,6 +297,8 @@ export const CAMP={
  barrels:[[9,4.5],[-15.5,7]] as [number,number][],
  decon:{x:-1.2,z:-4.8,ry:-.22},
  floods:[[-15,-3],[10,-13],[16,6.5],[-6,9.5]] as [number,number][],
+ // beast pen of the Domador (trade the companion here)
+ pen:{x:-5.6,z:4.2},
 };
 // a point in a shelter's local frame, in world space
 export function shelterPoint(k:Service,lx:number,lz:number){const s=CAMP.shelters[k],c=Math.cos(s.ry),si=Math.sin(s.ry);return{x:s.x+lx*c+lz*si,z:s.z-lx*si+lz*c,ry:s.ry};}

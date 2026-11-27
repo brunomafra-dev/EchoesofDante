@@ -16,39 +16,49 @@ export const NPC_INFO:Record<NpcId,{name:string;service:string;portrait:string}>
  ivo:{name:'Ivo',service:'Oficina e fabricação',portrait:'assets/base/base-smith-civilian.png'},
 };
 
+// Order of the 2D journey: the forest and its depths up to the Warden, then water and the valley route, and the
+// three guardians of the outer regions (sirocco, frost, caldera). Ids are kept so saved progress still counts.
 export const MISSIONS:Mission[]=[
  {id:'recon',title:'Primeiro reconhecimento',npc:'nara',credits:20,
   offer:['A nave trouxe quem ainda podíamos salvar. Para receber mais gente, precisamos conhecer o terreno.','Reconheça a clareira e a trilha das raízes ao redor do acampamento. Registre uma rota de ida e volte para me contar o que encontrou.'],
   report:['Temos uma rota inicial e sabemos onde as criaturas circulam. Vou manter os civis junto da nave.','Lia precisa analisar água e atividade biológica antes de planejarmos qualquer permanência.'],
   goals:[{id:'clearing',label:'Reconhecer a clareira',biome:'camp',kind:'visit',x:25,z:-17},{id:'roots',label:'Reconhecer a trilha das raízes',biome:'camp',kind:'visit',x:-26,z:-13}]},
  {id:'survival',title:'Condições de sobrevivência',npc:'lia',requires:'recon',credits:30,
-  offer:['Dante parece vivo, mas ainda sabemos pouco sobre o que pode nos sustentar.','Siga pelo portal norte até a Bacia das Nascentes. Analise a umidade acumulada nas raízes e registre a atividade biológica. Traga as leituras para a enfermaria.'],
+  offer:['Dante parece vivo, mas ainda sabemos pouco sobre o que pode nos sustentar.','Siga pelo portal norte até as Profundezas da floresta. Analise a umidade acumulada nas raízes e registre a atividade biológica. Traga as leituras para a enfermaria.'],
   report:['As leituras confirmam água superficial e atividade biológica. Vou estudar a compatibilidade com o que trouxemos.','Ainda precisamos de uma fonte estável para um abrigo. Ivo está investigando outra parte do seu relatório: os vestígios luminosos.'],
-  goals:[{id:'water',label:'Analisar a umidade nas raízes',biome:'springs',kind:'scan',x:-15,z:-10},{id:'biology',label:'Registrar atividade biológica',biome:'springs',kind:'scan',x:16,z:7}]},
+  goals:[{id:'water',label:'Analisar a umidade nas raízes',biome:'domain',kind:'scan',x:-27,z:16},{id:'biology',label:'Registrar atividade biológica',biome:'domain',kind:'scan',x:26,z:20}]},
  {id:'signal',title:'Energia desconhecida',npc:'ivo',requires:'survival',credits:40,
-  offer:['Os vestígios não parecem isolados. O equipamento registrou o mesmo padrão em pontos diferentes do Vale da Ressonância.','Investigue os três Ecos e a estrutura junto da fissura. Quero saber se o mecanismo responde ao conjunto.'],
+  offer:['Os vestígios não parecem isolados. O equipamento registrou o mesmo padrão em pontos diferentes das Profundezas.','Investigue os três Ecos e a estrutura junto da fissura, na borda do círculo de pedra. Quero saber se o mecanismo responde ao conjunto.'],
   report:['O mecanismo respondeu aos Ecos. Há uma ligação entre o que vimos na superfície e as estruturas sob a rocha.','Não vou conectar os sistemas da nave a essa energia. Nara precisa do seu relatório antes de enviar a equipe mais fundo.'],
-  goals:[{id:'echo1',label:'Investigar o primeiro Eco',biome:'valley',kind:'scan',x:-18,z:-6},{id:'echo2',label:'Investigar o segundo Eco',biome:'valley',kind:'scan',x:18,z:-12},{id:'echo3',label:'Investigar o terceiro Eco',biome:'valley',kind:'scan',x:6,z:17},
-   {id:'passage',label:'Ativar o mecanismo da fissura',biome:'valley',kind:'scan',x:0,z:-22,after:['echo1','echo2','echo3']}]},
- {id:'forges',title:'Antes de acender as forjas',npc:'ivo',requires:'signal',credits:60,
-  offer:['O frio do relatório mostrou a falta de energia confiável. A Caldeira de Dante guarda calor que pode servir, mas algo vigia as forjas.','Registre o calor da margem interna e as marcas antes do limiar. Depois confirme o que guarda a caldeira. Não fique sobre a lava.'],
-  report:['O pátio comporta uma patrulha leve com isolamento nos pés. O calor pode alimentar a oficina sem tocar nas estruturas originais.','O Incandescente caiu. Pela primeira vez, uma fonte de energia em Dante não depende só da nave.'],
-  goals:[{id:'heat',label:'Registrar o calor da margem interna',biome:'caldera',kind:'scan',x:-15,z:-12},{id:'marks',label:'Examinar as marcas antes do limiar',biome:'caldera',kind:'scan',x:15,z:-15},
-   {id:'titan',label:'Enfrentar o Incandescente',biome:'caldera',kind:'boss',x:0,z:-18,boss:'titan',after:['heat','marks']}]},
- {id:'frost',title:'Um abrigo contra a geada',npc:'lia',requires:'forges',credits:70,
-  offer:['Além da caldeira, o frio ameaça quem transporta água e suprimentos. Precisamos distinguir abrigo de uma encosta apenas bonita.','Na Fratura Boreal, compare o olho de água morna e os líquens das fissuras. Dizem que algo branco sopra sobre o gelo; volte viva.'],
-  report:['A face protegida conserva calor e os líquens revelam fissuras mornas. A encosta aberta exige ancoragem.','Vésper não sopra mais sobre a fratura. Vamos marcar o abrigo para a próxima caravana.'],
-  goals:[{id:'warmwater',label:'Analisar o olho de água morna',biome:'frost',kind:'scan',x:-13,z:-14},{id:'lichen',label:'Registrar os líquens das fissuras',biome:'frost',kind:'scan',x:15,z:-8},
-   {id:'vesper',label:'Enfrentar Vésper, o Sopro Branco',biome:'frost',kind:'boss',x:0,z:-16,boss:'vesper',after:['warmwater','lichen']}]},
- {id:'dunes',title:'Sob a pele das dunas',npc:'ivo',requires:'frost',credits:80,
+  goals:[{id:'echo1',label:'Investigar o primeiro Eco',biome:'domain',kind:'scan',x:-31,z:-6},{id:'echo2',label:'Investigar o segundo Eco',biome:'domain',kind:'scan',x:30,z:-10},{id:'echo3',label:'Investigar o terceiro Eco',biome:'domain',kind:'scan',x:-19,z:-27},
+   {id:'passage',label:'Ativar o mecanismo da fissura',biome:'domain',kind:'scan',x:0,z:-25,after:['echo1','echo2','echo3']}]},
+ {id:'beyond',title:'Além da fissura',npc:'nara',requires:'signal',credits:60,
+  offer:['A passagem está aberta. Se existe algo capaz de responder à nossa presença, precisamos entender seus limites.','Siga o sinal até o centro do círculo de pedra. Investigue o que houver além e volte com um relatório; os civis dependem de uma rota segura.'],
+  report:['Um arquivo ancestral reconheceu uma assinatura humana, mas sua data e origem continuam ilegíveis. Isso exige mais investigação.','A travessia abriu possibilidades. Nosso próximo objetivo será encontrar água estável e terreno para o primeiro abrigo.'],
+  goals:[{id:'origin',label:'Investigar a origem do sinal',biome:'domain',kind:'scan',x:0,z:-9},{id:'warden',label:'Confirmar a segurança além do limiar',biome:'domain',kind:'boss',x:0,z:0,boss:'warden',after:['origin']}]},
+ {id:'source',title:'Água para permanecer',npc:'lia',requires:'beyond',credits:45,
+  offer:['Com o Guardião vencido, o portal além das Profundezas leva à Bacia das Nascentes. Precisamos de uma fonte estável, não apenas de umidade no solo.','Investigue a nascente da bacia. Registre vazão e composição; a água ainda passará pelo nosso tratamento.'],
+  report:['A nascente tem vazão suficiente para o módulo e pode alimentar o reservatório após filtragem.','Uma fonte de água nos dá uma possibilidade real de permanecer. Nara quer planejar a travessia do vale para as primeiras famílias.'],
+  goals:[{id:'spring',label:'Analisar a nascente na nova bacia',biome:'springs',kind:'scan',x:-15,z:-10},{id:'flow',label:'Registrar a vazão e a composição',biome:'springs',kind:'scan',x:16,z:7}]},
+ {id:'caravan',title:'Uma caravana atravessa o vale',npc:'nara',requires:'source',credits:50,
+  offer:['As primeiras famílias não podem atravessar correndo como nossa equipe. Precisamos escolher onde parar a caravana sem ocupar o território das criaturas.','No Vale da Ressonância, registre o abrigo das cristas, a bacia de descanso e a margem da passagem oriental.'],
+  report:['O abrigo das cristas protege uma parada curta. A bacia é firme nas bordas, mas o centro úmido deve ficar livre.','Marquei os pontos de apoio para uma futura caravana. Ivo quer saber o que há além do vale, nas dunas.'],
+  goals:[{id:'v-shelter',label:'Registrar o abrigo das cristas',biome:'valley',kind:'scan',x:-18,z:-6},{id:'v-basin',label:'Examinar a bacia de descanso',biome:'valley',kind:'scan',x:18,z:-12},{id:'v-pass',label:'Registrar a margem da passagem oriental',biome:'valley',kind:'scan',x:6,z:17}]},
+ {id:'dunes',title:'Sob a pele das dunas',npc:'ivo',requires:'caravan',credits:80,
   offer:['A crista divide a aproximação: por cima há uma borda firme; por baixo, um canal expõe partes de uma estrutura soterrada.','Registre a encosta norte e examine as nervuras junto da depressão. Se a areia vibrar, afaste-se do centro.'],
   report:['O caminho alto oferece visão e uma entrada pelas ruínas. A carga deve acompanhar a borda firme.','O Soterrado não guarda mais a depressão. As ruínas sob a areia falam a mesma língua dos Ecos.'],
   goals:[{id:'ridge',label:'Registrar a encosta norte',biome:'dunes',kind:'scan',x:-14,z:-18},{id:'ribs',label:'Examinar as nervuras da depressão',biome:'dunes',kind:'scan',x:13,z:-11},
    {id:'soterrado',label:'Enfrentar o Soterrado',biome:'dunes',kind:'boss',x:0,z:-14,boss:'soterrado',after:['ridge','ribs']}]},
- {id:'beyond',title:'Além da fissura',npc:'nara',requires:'dunes',credits:120,
-  offer:['Todos os sinais apontam para o mesmo lugar. Se existe algo capaz de responder à nossa presença, precisamos entender seus limites.','Siga o sinal até o Domínio do Guardião. Investigue o que houver além e volte com um relatório; os civis dependem de uma rota segura.'],
-  report:['Um arquivo ancestral reconheceu uma assinatura humana, mas sua data e origem continuam ilegíveis. Isso exige mais investigação.','A travessia abriu possibilidades. Dante já não é só um ponto no mapa: alguém vai chamar este lugar de casa.'],
-  goals:[{id:'origin',label:'Investigar a origem do sinal',biome:'domain',kind:'scan',x:0,z:-12},{id:'warden',label:'Confirmar a segurança além do limiar',biome:'domain',kind:'boss',x:0,z:0,boss:'warden'}]},
+ {id:'frost',title:'Um abrigo contra a geada',npc:'lia',requires:'dunes',credits:70,
+  offer:['Além das dunas, o frio ameaça quem transporta água e suprimentos. Precisamos distinguir abrigo de uma encosta apenas bonita.','Na Fratura Boreal, compare o olho de água morna e os líquens das fissuras. Dizem que algo branco sopra sobre o gelo; volte viva.'],
+  report:['A face protegida conserva calor e os líquens revelam fissuras mornas. A encosta aberta exige ancoragem.','Vésper não sopra mais sobre a fratura. Vamos marcar o abrigo para a próxima caravana.'],
+  goals:[{id:'warmwater',label:'Analisar o olho de água morna',biome:'frost',kind:'scan',x:-13,z:-14},{id:'lichen',label:'Registrar os líquens das fissuras',biome:'frost',kind:'scan',x:15,z:-8},
+   {id:'vesper',label:'Enfrentar Vésper, o Sopro Branco',biome:'frost',kind:'boss',x:0,z:-16,boss:'vesper',after:['warmwater','lichen']}]},
+ {id:'forges',title:'Antes de acender as forjas',npc:'ivo',requires:'frost',credits:90,
+  offer:['O frio do relatório mostrou a falta de energia confiável. A Caldeira de Dante guarda calor que pode servir, mas algo vigia as forjas.','Registre o calor da margem interna e as marcas antes do limiar. Depois confirme o que guarda a caldeira. Não fique sobre a lava.'],
+  report:['O pátio comporta uma patrulha leve com isolamento nos pés. O calor pode alimentar a oficina sem tocar nas estruturas originais.','O Incandescente caiu. Pela primeira vez, uma fonte de energia em Dante não depende só da nave.'],
+  goals:[{id:'heat',label:'Registrar o calor da margem interna',biome:'caldera',kind:'scan',x:-15,z:-12},{id:'marks',label:'Examinar as marcas antes do limiar',biome:'caldera',kind:'scan',x:15,z:-15},
+   {id:'titan',label:'Enfrentar o Incandescente',biome:'caldera',kind:'boss',x:0,z:-18,boss:'titan',after:['heat','marks']}]},
 ];
 export const missionById=(id:string)=>MISSIONS.find(m=>m.id===id)!;
 
@@ -69,9 +79,14 @@ export const NPCS:NpcDef[]=[
 // ---------- progress (saved on this device) ----------
 export type Status='locked'|'available'|'active'|'ready'|'completed';
 export class Journal{
- active:string|null=null;done=new Set<string>();goals=new Set<string>();credits=0;
- constructor(){try{const s=JSON.parse(localStorage.getItem('dante3d.missions')??'null');if(s){this.active=s.active;this.done=new Set(s.done);this.goals=new Set(s.goals);this.credits=s.credits??0;}}catch{/* private mode */}}
- save(){try{localStorage.setItem('dante3d.missions',JSON.stringify({active:this.active,done:[...this.done],goals:[...this.goals],credits:this.credits}));}catch{/* ignore */}}
+ active:string|null=null;done=new Set<string>();goals=new Set<string>();credits=0;bosses=new Set<string>();
+ // one journal per saved character; without a key (preview) it lives only in memory
+ constructor(private key:string|null=null){if(!key)return;try{const s=JSON.parse(localStorage.getItem(key)??'null');if(s){this.active=s.active;this.done=new Set(s.done);this.goals=new Set(s.goals);this.credits=s.credits??0;this.bosses=new Set(s.bosses??[]);}}catch{/* private mode */}
+  if(this.active&&!MISSIONS.some(m=>m.id===this.active))this.active=null;}
+ save(){if(!this.key)return;try{localStorage.setItem(this.key,JSON.stringify({active:this.active,done:[...this.done],goals:[...this.goals],credits:this.credits,bosses:[...this.bosses]}));}catch{/* ignore */}}
+ // a guardian counts as beaten when it fell in a fight or its mission goal was completed
+ beaten(kind:string){return this.bosses.has(kind)||this.goals.has(kind);}
+ beat(kind:string){if(this.bosses.has(kind))return;this.bosses.add(kind);this.save();}
  status(id:string):Status{
   const m=missionById(id);if(this.done.has(id))return'completed';
   if(this.active===id)return m.goals.every(g=>this.goals.has(g.id))?'ready':'active';
@@ -88,5 +103,5 @@ export class Journal{
  complete(goal:string){if(this.goals.has(goal))return false;this.goals.add(goal);this.save();return true;}
  // a region boss wakes when the mission readings that lead to it are complete
  bossCalled(biome:BiomeId){return this.open().some(g=>g.kind==='boss'&&g.biome===biome);}
- reset(){this.active=null;this.done.clear();this.goals.clear();this.credits=0;this.save();}
+ reset(){this.active=null;this.done.clear();this.goals.clear();this.bosses.clear();this.credits=0;this.save();}
 }

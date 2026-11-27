@@ -340,14 +340,18 @@ export const MODELS:Record<string,T.Object3D>={};
 export const ANIMS:Record<string,T.AnimationClip[]>={};
 // sculpted, textured and animated creatures (see public/assets/3d-new/creatures/CREDITS.md):
 // fit = size in metres along 'by'; clips map game motions to the model's clips or to frame ranges of a single action
-type Motion='idle'|'move'|'run'|'attack'|'hit'|'death';
-type ModelId='spider'|'antlion'|'antlionArmored'|'antlionHatchling'|'wyvern'|'wyvernBoss'|'qAlien'|'qFrog'|'qSquidle'|'qDino'|'qSpiky'|'qDragon'|'qDemon'|'qBrute'|'qAlpaking'|'qYeti';
+export type Motion='idle'|'move'|'run'|'attack'|'hit'|'death'|'jump';
+export type ModelId='pCat'|'pMush'|'pBirb'|'spider'|'antlion'|'antlionArmored'|'antlionHatchling'|'wyvern'|'wyvernBoss'|'qAlien'|'qFrog'|'qSquidle'|'qDino'|'qSpiky'|'qDragon'|'qDemon'|'qBrute'|'qAlpaking'|'qYeti';
 // Quaternius Ultimate Monsters (CC0): three rig families share clip names
 const QF:Partial<Record<Motion,string>>={idle:'Flying_Idle',move:'Fast_Flying',run:'Fast_Flying',attack:'Headbutt',hit:'HitReact',death:'Death'};
 const QB:Partial<Record<Motion,string>>={idle:'Idle',move:'Walk',run:'Run',attack:'Punch',hit:'HitReact',death:'Death'};
-const QC:Partial<Record<Motion,string>>={idle:'Idle',move:'Walk',run:'Walk',attack:'Bite_Front',hit:'HitRecieve',death:'Death'};
-const ANT:Record<Motion,[number,number]>={idle:[0,3],move:[4,11],run:[4,11],attack:[12,15],hit:[16,18],death:[16,23]};
-export const MODEL_DEF:Record<ModelId,{file:string;fit:number;by:'len'|'h';clips:Partial<Record<Motion,string|[number,number]>>;skin?:string;tint?:string;detail?:boolean;attackSpeed?:number;menace?:boolean;hue?:string}>={
+const QC:Partial<Record<Motion,string>>={idle:'Idle',move:'Walk',run:'Walk',attack:'Bite_Front',hit:'HitRecieve',death:'Death',jump:'Jump'};
+const ANT:Partial<Record<Motion,[number,number]>>={idle:[0,3],move:[4,11],run:[4,11],attack:[12,15],hit:[16,18],death:[16,23]};
+export const MODEL_DEF:Record<ModelId,{file:string;fit:number;by:'len'|'h';clips:Partial<Record<Motion,string|[number,number]>>;skin?:string;tint?:string;detail?:boolean;attackSpeed?:number;menace?:boolean;hue?:string;hueMix?:number}>={
+ // the Domador's companions (Quaternius Ultimate Monsters, CC0): beasts that live nowhere else on the map
+ pCat:{file:'q/cat',fit:.85,by:'h',clips:QC,menace:true,hue:'#58703c',hueMix:.6},
+ pMush:{file:'q/mushnub_evolved',fit:1.0,by:'h',clips:QC,menace:true,hue:'#a08450',hueMix:.35},
+ pBirb:{file:'q/birb',fit:.8,by:'h',clips:QC,menace:true,hue:'#9cc4dc',hueMix:.3},
  qAlien:{file:'q/alien',fit:1.5,by:'len',clips:QC,menace:true},
  qFrog:{file:'q/frog',fit:1.6,by:'h',clips:QB,menace:true},
  qSquidle:{file:'q/squidle',fit:1.5,by:'h',clips:QF,menace:true},
@@ -379,7 +383,7 @@ function buildModel(root:T.Group,id:ModelId,p:Pal):Look|null{
   // the Flare antlions only carry baked colours: the creature skin adds scales, creases and the rim of the 2D glow
   if(D.detail){ensureAO(me.geometry);skin(c,p.g,.15,2.6,{cells:0});}
   me.material=c;mat??=c;});
- if(D.menace){menace(m,p.g,{cells:.3,bump:.25,freq:2.4,hue:D.hue});mat=null;m.traverse(o=>{const me=o as T.Mesh;if(me.isMesh&&!mat){const mm=(Array.isArray(me.material)?me.material:[me.material]) as T.MeshStandardMaterial[];mat=mm.find(x=>!x.userData.glow&&!/eye/i.test(x.name))??null;}});}
+ if(D.menace){menace(m,p.g,{cells:.3,bump:.25,freq:2.4,hue:D.hue,hueMix:D.hueMix});mat=null;m.traverse(o=>{const me=o as T.Mesh;if(me.isMesh&&!mat){const mm=(Array.isArray(me.material)?me.material:[me.material]) as T.MeshStandardMaterial[];mat=mm.find(x=>!x.userData.glow&&!/eye/i.test(x.name))??null;}});}
  const mixer=new T.AnimationMixer(m),acts:Partial<Record<Motion,T.AnimationAction>>={};
  for(const [k,v] of Object.entries(D.clips) as [Motion,string|[number,number]][]){
   let clip:T.AnimationClip|undefined;
@@ -391,7 +395,7 @@ function buildModel(root:T.Group,id:ModelId,p:Pal):Look|null{
 }
 // Quaternius monsters (CC0) are flat-coloured cartoon creatures: turn them into Dante fauna — dark eyes with a glowing
 // pupil in the creature's colour, muted colours, and the creature skin (scales, creases, rim light) over every surface
-export function menace(root:T.Object3D,glow:string,o:{cells?:number;bump?:number;freq?:number;dim?:number;hue?:string}={}){
+export function menace(root:T.Object3D,glow:string,o:{cells?:number;bump?:number;freq?:number;dim?:number;hue?:string;hueMix?:number}={}){
  const done=new Map<T.Material,T.Material>();
  root.traverse(ob=>{const me=ob as T.Mesh;if(!me.isMesh||me.userData.ink)return;
   const fix=(m0:T.Material)=>{let m=done.get(m0);if(m)return m;const c=(m0 as T.MeshStandardMaterial).clone();const n=(c.name||'').toLowerCase();
@@ -399,7 +403,7 @@ export function menace(root:T.Object3D,glow:string,o:{cells?:number;bump?:number
    else if(/gold|crown/.test(n)){c.visible=false;}
    else if(/tongue/.test(n)){c.color.set('#24080c');c.roughness=.4;}
    else if(/eye_black|pupil/.test(n)){c.color.set(glow);c.emissive=new T.Color(glow);c.emissiveIntensity=2.4;c.userData.glow=true;}
-   else{const hsl={h:0,s:0,l:0};c.color.getHSL(hsl);c.color.setHSL(hsl.h,hsl.s*.72,hsl.l*(o.dim??.92));if(o.hue)c.color.lerp(new T.Color(o.hue),.75);c.roughness=.62;c.metalness=.08;c.emissive=new T.Color(0);c.emissiveIntensity=1;
+   else{const hsl={h:0,s:0,l:0};c.color.getHSL(hsl);c.color.setHSL(hsl.h,hsl.s*.72,hsl.l*(o.dim??.92));if(o.hue)c.color.lerp(new T.Color(o.hue),o.hueMix??.75);c.roughness=.62;c.metalness=.08;c.emissive=new T.Color(0);c.emissiveIntensity=1;
     ensureAO(me.geometry);skin(c,glow,o.bump??.32,o.freq??3.2,{cells:o.cells??.75});}
    c.envMapIntensity=.55;done.set(m0,c);return c;};
   me.material=Array.isArray(me.material)?me.material.map(fix):fix(me.material);});
@@ -496,6 +500,17 @@ export function petModel(){
  g.traverse(o=>{const m=o as T.Mesh;m.castShadow=true;if(m.isMesh)ensureAO(m.geometry);});ink(g,'#0c1008');
  return {g,legs};
 }
+// a companion of the Domador: an animated model adapted like the wild fauna, with an ink outline; the old
+// procedural Simbionte stays as the fallback if the model cannot load
+export function petBody(root:T.Group,id:ModelId,glow:string,base:string):Look|null{
+ const L=buildModel(root,id,P(base,glow));if(!L)return null;
+ root.traverse(o=>{const m=o as T.Mesh;if(m.isMesh){ensureAO(m.geometry);m.castShadow=true;}});ink(root,'#'+new T.Color(base).multiplyScalar(.12).getHexString());return L;
+}
+export type PetLook=Look;
+// crossfade a model's clip for a motion (attack, hit, jump and death play once and hold)
+export function motion(L:Look,name:Motion,once=false,speed?:number){if(!L.acts||L.cur===name)return;const a=L.acts[name]??L.acts.idle!;const prev=L.cur?L.acts[L.cur as Motion]:undefined;
+ a.reset();a.setLoop(once?T.LoopOnce:T.LoopRepeat,Infinity);a.clampWhenFinished=once;a.timeScale=speed??(name==='attack'?1.6:1);a.setEffectiveWeight(1);
+ if(prev&&prev!==a)a.crossFadeFrom(prev,.15,false);a.play();L.cur=name;}
 const BUILD:Record<Body,(r:T.Group,p:Pal)=>Look>={warden:buildWarden,crawler:buildCrawler,skitter:buildSkitter,spitter:buildSpitter,carapace:buildCarapace,hound:buildHound,amphibian:buildAmphibian,thorn:buildThorn,golem:buildGolem,winged:buildWinged,worm:buildWorm};
 
 // ---------- telegraphs (amber, fixed once announced) ----------
@@ -681,9 +696,7 @@ export class Creature{
  }
  private toRecover(){this.state='recover';this.timer=this.mv.recover;this.vel.multiplyScalar(.2);this.look.body.position.y=Math.max(0,this.look.body.position.y);this.look.mandibles?.forEach((m,i)=>m.rotation.z=(i?1:-1)*.5);}
  // crossfade the model's clip for a motion (attack and death play once and hold)
- anim(name:Motion,once=false){const L=this.look;if(!L.acts||L.cur===name)return;const a=L.acts[name]??L.acts.idle!;const prev=L.cur?L.acts[L.cur as Motion]:undefined;
-  a.reset();a.setLoop(once?T.LoopOnce:T.LoopRepeat,Infinity);a.clampWhenFinished=once;a.timeScale=name==='attack'?1.6:1;a.setEffectiveWeight(1);
-  if(prev&&prev!==a)a.crossFadeFrom(prev,.15,false);a.play();L.cur=name;}
+ anim(name:Motion,once=false){motion(this.look,name,once);}
  private turn(target:number,dt:number,rate:number){let d=target-this.heading;d=Math.atan2(Math.sin(d),Math.cos(d));this.heading+=d*Math.min(1,dt*rate);}
  // procedural motion: legs step in a wave, wings beat, the worm undulates out of the ground
  private pose(dead:boolean){

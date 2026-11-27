@@ -6,9 +6,11 @@ import {World,ARENA} from './world';
 import {Sound,type Sfx} from './audio';
 import {VFX,type Kind} from './vfx';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {Creature,MODELS,ANIMS,MODEL_DEF,SPECIES,ink,menace,updateSpits,clearShots,tickTele,teleWarm,petModel,type Ctx,type SpeciesId} from './creatures';
+import {Creature,MODELS,ANIMS,MODEL_DEF,SPECIES,ink,menace,updateSpits,clearShots,tickTele,teleWarm,petModel,petBody,motion,type Ctx,type SpeciesId,type Motion,type PetLook} from './creatures';
+import {PETS,PET_ORDER,type PetId,type PetDef} from './pets';
+import {loadRoster,saveRoster,newId,journalKey,forget,cleanName,NAME_MAX,type HeroSave} from './save';
 import {BIOMES,BIOME_ORDER,type BiomeId} from './biomes';
-import {Npc} from './camp';
+import {Npc,CAMP} from './camp';
 import {Journal,MISSIONS,NPCS,NPC_INFO,type Goal,type NpcId} from './missions';
 
 // Echoes of Dante — new 3D track, slice S1: character creator + first playable ARPG loop.
@@ -28,13 +30,16 @@ const key=new T.DirectionalLight('#ffd9b0',2.4);world.scene.add(key,key.target);
 
 // ---------- state ----------
 type Mode='creator'|'play';
-let mode:Mode='creator';let look:Look=loadLook();
+let mode:Mode='creator';
+// saved characters (name, look, companion) and the one being played or previewed
+const roster=loadRoster();let heroRec:HeroSave|null=roster.list.find(h=>h.id===roster.current)??null;let editing:'new'|'edit'='new';
+let look:Look=heroRec?{...heroRec.look}:{...DEFAULT_LOOK};let petId:PetId=heroRec?.pet??'symbiont';
+let journal=new Journal(heroRec?journalKey(heroRec.id):null);
 const pos=hero.root.position;let heading=0,hp=100,hpMax=100,mana=100,kills=0,dead=false;
 const keys=new Set<string>();let moveTarget:T.Vector3|null=null;let mouseDown=false,rightDown=false;const mouse=new T.Vector2();const aimPoint=new T.Vector3(0,0,-5);
 let atkUntil=0,atkImpact=0,atkPending:null|(()=>void)=null,rollUntil=0,rollDir=new T.Vector3(),stunUntil=0,comboIdx=0,invulnUntil=0,camBlend=0;
 let focusEnemy:Enemy|null=null;void focusEnemy;
-function loadLook():Look{try{const s=localStorage.getItem('dante3d.look');if(s){const l={...DEFAULT_LOOK,...JSON.parse(s)};if(!OUTFITS.some(o=>o[0]===l.outfit))l.outfit=DEFAULT_LOOK.outfit;return l;}}catch{/* private mode */}return{...DEFAULT_LOOK};}
-function saveLook(){try{localStorage.setItem('dante3d.look',JSON.stringify(look));}catch{/* ignore */}}
+
 
 // ---------- class kit ----------
 const cls=():ClassId=>WEAPON_CLASS[look.weapon];
@@ -66,11 +71,11 @@ function renewHabitats(){
 }
 // region bosses wake after enough kills in their region
 let biomeKills=0,boss:Creature|null=null,bossBeaten=false;
-function bossDown(c:Creature){bossBeaten=true;boss=null;for(const g of journal.open())if(g.kind==='boss'&&g.boss===c.kind)goalDone(g);sound.music(world.biome);banner(`${c.name} foi derrotado`);$('bossbar').classList.remove('on');}
+function bossDown(c:Creature){bossBeaten=true;boss=null;const was=nextOpen();journal.beat(c.kind);sealPortals();renderBiomes();if(!was&&nextOpen())later(3,()=>toast(`O portal norte se abriu: ${BIOMES[BIOME_ORDER[BIOME_ORDER.indexOf(world.biome)+1]].name}`));for(const g of journal.open())if(g.kind==='boss'&&g.boss===c.kind)goalDone(g);sound.music(world.biome);banner(`${c.name} foi derrotado`);$('bossbar').classList.remove('on');}
 function banner(text:string){const b=$('banner');b.textContent=text;b.classList.remove('on');void b.offsetWidth;b.classList.add('on');}
 function updateEnemies(dt:number,now:number){
   const B=BIOMES[world.biome];
-  if(mode==='play'&&B.boss&&!boss&&!bossBeaten&&(biomeKills>=(B.bossAfter??10)||journal.bossCalled(world.biome))&&spawnT<=0){const a=Math.random()*6.28;boss=new Creature(B.boss,pos.x+Math.cos(a)*16,pos.z+Math.sin(a)*16,world.scene);world.collide(boss.pos,boss.radius);enemies.push(boss);banner(`${boss.name} desperta`);sound.music(B.boss);sfx('roar');$('bossname').textContent=boss.name;$('bossbar').classList.add('on');}
+  if(mode==='play'&&B.boss&&!boss&&!bossBeaten&&(biomeKills>=(B.bossAfter??10)||journal.bossCalled(world.biome))&&spawnT<=0){const a=Math.random()*6.28,arena=world.biome==='domain';boss=new Creature(B.boss,arena?0:pos.x+Math.cos(a)*16,arena?0:pos.z+Math.sin(a)*16,world.scene);world.collide(boss.pos,boss.radius);enemies.push(boss);banner(`${boss.name} desperta`);sound.music(B.boss);sfx('roar');$('bossname').textContent=boss.name;$('bossbar').classList.add('on');}
   if(boss)$('bossfill').style.width=Math.max(0,boss.hp/boss.spec.hp*100)+'%';
   spawnT-=dt;if(mode==='play')renewHabitats();
   updatePortals();
@@ -81,12 +86,12 @@ function updateEnemies(dt:number,now:number){
 // ---------- projectiles & fx ----------
 const vfx=new VFX(world.scene);
 for(const f of world.flameSpots)vfx.campfire(f.p,f.s);
-interface Proj{o:T.Object3D;kind:Kind;v:T.Vector3;life:number;dmg:number;elem?:Element;mark?:boolean}
+interface Proj{o:T.Object3D;kind:Kind;v:T.Vector3;life:number;dmg:number;elem?:Element;mark?:boolean;burst?:{r:number;dmg:number}}
 const projs:Proj[]=[];
 function dispose(o:T.Object3D){o.removeFromParent();o.traverse(c=>{const m=c as T.Mesh;m.geometry?.dispose();const mt=m.material as T.Material|T.Material[]|undefined;if(Array.isArray(mt))mt.forEach(x=>x.dispose());else mt?.dispose();});}
-function fire(kind:Kind,from:T.Vector3,dir:T.Vector3,speed:number,dmg:number,o:{elem?:Element;mark?:boolean}={}){
+function fire(kind:Kind,from:T.Vector3,dir:T.Vector3,speed:number,dmg:number,o:{elem?:Element;mark?:boolean;burst?:{r:number;dmg:number};life?:number}={}){
   const g=vfx.projectile(kind);g.position.copy(from);g.lookAt(from.clone().add(dir));vfx.muzzle(kind,from,dir);
-  projs.push({o:g,kind,v:dir.clone().multiplyScalar(speed),life:1.2,dmg,elem:o.elem,mark:o.mark});
+  projs.push({o:g,kind,v:dir.clone().multiplyScalar(speed),life:o.life??1.2,dmg,elem:o.elem,mark:o.mark,burst:o.burst});
 }
 function updateFx(dt:number){
   for(let i=projs.length-1;i>=0;i--){
@@ -94,7 +99,8 @@ function updateFx(dt:number){
    p.o.position.y+=(1.15-p.o.position.y)*Math.min(1,dt*4);
    vfx.trail(p.kind,p.o,p.v,dt);
    for(const e of enemies)if(e.state!=='dead'&&Math.hypot(e.pos.x-p.o.position.x,e.pos.z-p.o.position.z)<e.radius+.25){hit=e;break;}
-   if(hit){const IMP:Record<string,Sfx>={pulse:'hit',fire:'fire',water:'water',earth:'earth',energy:'energy',filament:'bite'};sfx(IMP[p.kind],p.o.position);applyHit(hit,p.dmg,p.o.position.clone().addScaledVector(p.v,-.05),p.elem);if(p.mark)hit.markUntil=now()+2.2;}
+   if(hit){const IMP:Record<string,Sfx>={pulse:'hit',fire:'fire',water:'water',earth:'earth',energy:'energy',filament:'bite'};sfx(IMP[p.kind],p.o.position);applyHit(hit,p.dmg,p.o.position.clone().addScaledVector(p.v,-.05),p.elem);if(p.mark)hit.markUntil=now()+2.2;
+    if(p.burst){const c=p.o.position.clone().setY(0);vfx.field('water',c,p.burst.r);vfx.decal(c,'#a8f0ff',p.burst.r,.6,1);vfx.shake=Math.max(vfx.shake,.2);for(const e of enemies)if(e!==hit&&e.state!=='dead'&&Math.hypot(e.pos.x-c.x,e.pos.z-c.z)<p.burst.r+e.radius*.5)applyHit(e,p.burst.dmg,c,'water');}}
    if(hit||p.life<=0){if(hit||p.kind!=='pulse')vfx.impact(p.kind,p.o.position,p.v.clone().normalize());dispose(p.o);projs.splice(i,1);}
   }
   // twisting slash damage ticks
@@ -132,7 +138,7 @@ function updateTexts(dt:number){
 // ---------- combat ----------
 function faceTo(p:T.Vector3){heading=Math.atan2(p.x-pos.x,p.z-pos.z);}
 function damage(d:number,from:T.Vector3){
-  d*=1-(kit().guard??0);
+  d*=1-(kit().guard??0);if(now()<shieldUntil)d*=.6;
   hp=Math.max(0,hp-d);scan=null;sfx('hurt');popText(pos.clone().setY(2.2),String(Math.round(d)),'#ff6a5a');stunUntil=now()+.28;atkUntil=0;atkPending=null;chargeStart=0;chargeFx(false);
   const dir=pos.clone().sub(from).setY(0).normalize();pos.addScaledVector(dir,.35);
   if(hp<=0){dead=true;hero.play('Death01',{once:true,fade:.1});document.body.classList.add('dead');}else hero.play('Hit_Chest',{once:true,fade:.06});
@@ -215,7 +221,7 @@ function skillDown(){
    atkPending=()=>{sfx(el as Sfx,at);vfx.field(el,at,2.7);for(const e of enemies)if(e.state!=='dead'&&Math.hypot(e.pos.x-at.x,e.pos.z-at.z)<2.9)applyHit(e,30,at,el);};
   }else{
    const dur=hero.duration('Spell_Simple_Shoot')/1.5;hero.play('Spell_Simple_Shoot',{once:true,speed:1.5,fade:.08});atkUntil=n+dur*.7;
-   pet?.charge(aimPoint.clone());sfx('dash');
+   pet?.command(aimPoint.clone());
   }
   hud();
 }
@@ -250,39 +256,78 @@ function inputDir(){
 }
 
 // ---------- companion (Domador) ----------
+// one of three beasts (pets.ts), chosen when the character is created and traded at the beast pen of the base
+let shieldUntil=0;
+const shieldDome=new T.Mesh(new T.SphereGeometry(1.15,24,16),new T.MeshBasicMaterial({color:'#ffd27a',transparent:true,opacity:.1,blending:T.AdditiveBlending,depthWrite:false}));shieldDome.scale.set(1,1.35,1);shieldDome.visible=false;world.scene.add(shieldDome);
+const rnd=(a:number,b:number)=>a+Math.random()*(b-a);
 class Pet{
- g=new T.Group();legs:T.Mesh[]=[];t=0;cd=0;target:Enemy|null=null;dash:{to:T.Vector3;t:number;hit:Set<Enemy>}|null=null;
- legs2:T.Object3D[]=[];
- constructor(){
-  const m=petModel();this.g.add(m.g);this.legs2=m.legs;
+ g=new T.Group();root=new T.Group();look:PetLook|null;legs2:T.Object3D[]=[];t=0;cd=0;target:Enemy|null=null;def:PetDef;
+ leap:{from:T.Vector3;to:T.Vector3;t:number;dur:number}|null=null;busy=0;acting=0;
+ constructor(public id:PetId){
+  this.def=PETS[id];this.g.add(this.root);
+  this.look=petBody(this.root,this.def.model,this.def.glow,this.def.base);
+  if(!this.look){const m=petModel();this.root.add(m.g);this.legs2=m.legs;}
   world.scene.add(this.g);
  }
- charge(to:T.Vector3){this.dash={to:to.clone(),t:0,hit:new Set()};}
- update(dt:number,n:number){
-  this.t+=dt;const p=this.g.position;let v=new T.Vector3(),moving=false;
-  if(this.dash){
-   const d=this.dash.to.clone().sub(p).setY(0);this.dash.t+=dt;
-   if(d.length()<.4||this.dash.t>.9){vfx.decal(p.clone(),'#7dff9e',2.4,.7,1);vfx.emit({pos:pos.clone().setY(1),n:24,speed:[.5,2],up:.8,life:[.5,.9],size:[.16,.03],c0:'#e8ffe8',c1:'#2fae5a',a:[1,0],drag:1,spread:.4});sfx('heal');const heal=Math.round(hpMax*.08);hp=Math.min(hpMax,hp+heal);popText(pos.clone().setY(2.4),'+'+heal,'#7dff9e');this.dash=null;}
-   else{v=d.normalize().multiplyScalar(16);moving=true;vfx.petTrail(p);for(const e of enemies)if(e.state!=='dead'&&!this.dash.hit.has(e)&&e.pos.distanceTo(p)<1.1){this.dash.hit.add(e);e.hit(60,p,'#7dff9e',false,10);}}
+ play(m:Motion,once=false,speed?:number){if(this.look)motion(this.look,m,once,speed);}
+ // Q: the companion's own command, as in the 2D (leap, ground slam, glacial shot)
+ command(at:T.Vector3){
+  const p=this.g.position,n=now();this.target=null;
+  if(this.id==='symbiont'){
+   const to=at.clone().setY(0),off=to.clone().sub(pos).setY(0);if(off.length()>10)to.copy(pos).addScaledVector(off.normalize(),10);world.collide(to,.35);
+   this.leap={from:p.clone(),to,t:0,dur:Math.max(.35,Math.min(.7,to.distanceTo(p)/14))};this.play('jump',true,1.5);sfx('dash',p);
+  }else if(this.id==='bulwark'){
+   this.busy=n+.8;this.acting=n+.8;this.play('attack',true,1.1);
+   later(.35,()=>{const c=this.g.position.clone().setY(0);sfx('earth',c);vfx.shake=Math.max(vfx.shake,.3);vfx.field('earth',c,3);vfx.decal(c,'#ffd27a',3.4,.6,1);
+    for(let i=0;i<10;i++)vfx.shard(c.clone().setY(.3),new T.Vector3(rnd(-1,1),rnd(.8,1.6),rnd(-1,1)).normalize().multiplyScalar(rnd(4,8)),1);
+    for(const e of enemies)if(e.state!=='dead'&&Math.hypot(e.pos.x-c.x,e.pos.z-c.z)<3.4+e.radius*.5)e.hit(n<e.markUntil?52:40,c,'#ffd27a',false,8);
+    if(pos.distanceTo(c)<7){shieldUntil=now()+5;sfx('heal');popText(pos.clone().setY(2.4),'Protegido','#ffd27a');}});
   }else{
-   if(!this.target||this.target.state==='dead'||this.target.pos.distanceTo(pos)>9){
-    this.target=null;let bd=7;for(const e of enemies)if(e.state!=='dead'){const d=e.pos.distanceTo(pos)-(n<e.markUntil?4:0);if(d<bd){bd=d;this.target=e;}}
-   }
-   const goal=this.target?this.target.pos:pos.clone().add(new T.Vector3(Math.sin(heading+2.2)*1.6,0,Math.cos(heading+2.2)*1.6));
-   const d=goal.clone().sub(p).setY(0),l=d.length();
-   if(this.target&&l<1.2){if(n>this.cd){this.cd=n+.85;this.target.hit(n<this.target.markUntil?28:20,p,'#a6ffbf');sfx('bite',p);}}
-   else if(l>(this.target?1:.6)){v=d.normalize().multiplyScalar(Math.min(this.target?7:6.2,l*3));moving=true;}
-   if(this.target)this.g.rotation.y=Math.atan2(d.x,d.z);
+   this.busy=n+.55;this.acting=n+.55;const dir=at.clone().sub(p).setY(0);if(dir.lengthSq()<.01)dir.copy(fwd());dir.normalize();this.g.rotation.y=Math.atan2(dir.x,dir.z);this.play('attack',true);
+   later(.15,()=>{const from=this.g.position.clone().setY(.75).addScaledVector(dir,.5);sfx('water',from);fire('water',from,dir,20,30,{elem:'water',burst:{r:3,dmg:45},life:1});});
   }
-  p.addScaledVector(v,dt);world.collide(p,.35);
+ }
+ private land(){
+  const c=this.g.position.clone().setY(0);sfx('slashHit',c);vfx.decal(c,'#7dff9e',2.8,.7,1);vfx.shake=Math.max(vfx.shake,.15);
+  vfx.emit({pos:c.clone().setY(.4),n:30,speed:[1.5,4],up:.6,life:[.4,.8],size:[.18,.04],c0:'#e8ffe8',c1:'#2fae5a',a:[1,0],drag:1.5,spread:.8});
+  for(const e of enemies)if(e.state!=='dead'&&Math.hypot(e.pos.x-c.x,e.pos.z-c.z)<2.6+e.radius*.5)e.hit(n2(e)?58:45,c,'#7dff9e',false,10);
+  if(pos.distanceTo(c)<7){const heal=Math.round(hpMax*.08);hp=Math.min(hpMax,hp+heal);popText(pos.clone().setY(2.4),'+'+heal,'#7dff9e');sfx('heal');
+   vfx.emit({pos:pos.clone().setY(1),n:20,speed:[.5,2],up:.8,life:[.5,.9],size:[.16,.03],c0:'#e8ffe8',c1:'#2fae5a',a:[1,0],drag:1,spread:.4});}
+  function n2(e:Enemy){return now()<e.markUntil;}
+ }
+ // the beast beside the hero in the character creator
+ preview(dt:number){this.g.position.set(-1.25,0,-1.1);this.g.rotation.y=.45;this.play('idle');this.look?.mixer?.update(dt);}
+ update(dt:number,n:number){
+  this.t+=dt;const p=this.g.position,d=this.def;let v=new T.Vector3(),moving=false;
+  if(this.leap){const L=this.leap;L.t+=dt;const k=Math.min(1,L.t/L.dur);p.lerpVectors(L.from,L.to,k);p.y=Math.sin(k*Math.PI)*1.8;vfx.petTrail(p);
+   this.g.rotation.y=Math.atan2(L.to.x-L.from.x,L.to.z-L.from.z);if(k>=1){p.y=0;this.leap=null;this.acting=n+.25;this.land();}}
+  else if(n>=this.busy){
+   if(!this.target||this.target.state==='dead'||this.target.pos.distanceTo(pos)>9){
+    this.target=null;let bd=7;for(const e of enemies)if(e.state!=='dead'){const dd=e.pos.distanceTo(pos)-(n<e.markUntil?4:0);if(dd<bd){bd=dd;this.target=e;}}
+   }
+   const reach=d.shot?d.shot.range*.8:d.reach+(this.target?.radius??0)*.6;
+   const goal=this.target?this.target.pos:pos.clone().add(new T.Vector3(Math.sin(heading+2.2)*1.6,0,Math.cos(heading+2.2)*1.6));
+   const dv=goal.clone().sub(p).setY(0),l=dv.length();
+   if(this.target&&l<reach){this.g.rotation.y=Math.atan2(dv.x,dv.z);
+    if(n>this.cd){this.cd=n+d.biteCd;this.acting=n+.45;this.play('attack',true);const tg=this.target;
+     if(d.shot){const sh=d.shot;later(.12,()=>{if(tg.state==='dead')return;const from=this.g.position.clone().setY(.75),dir=tg.pos.clone().sub(from).setY(0).normalize();from.addScaledVector(dir,.4);fire('water',from,dir,sh.speed,n<tg.markUntil?sh.dmg*1.4:sh.dmg,{elem:'water',life:.6});});}
+     else{later(.12,()=>{if(tg.state==='dead')return;tg.hit(n<tg.markUntil?d.bite*1.4:d.bite,p,d.glow);sfx('bite',p);});}}}
+   else if(l>(this.target?reach*.9:.6)){v=dv.normalize().multiplyScalar(Math.min(d.speed,l*3));moving=true;}
+  }
+  p.addScaledVector(v,dt);if(!this.leap)world.collide(p,.35);
   if(moving)this.g.rotation.y=Math.atan2(v.x,v.z);
-  const sw=moving?Math.sin(this.t*14)*.6:0;this.legs2.forEach((l,i)=>l.rotation.x=(i%2?1:-1)*(i<2?1:-1)*sw);
-  this.g.position.y=moving?Math.abs(Math.sin(this.t*14))*.04:0;
+  if(this.look){if(!this.leap&&n>=this.acting){const sp=v.length();if(moving&&sp>.3){this.play(sp>d.speed*.75?'run':'move');const a=this.look.acts?.[this.look.cur as Motion];if(a)a.timeScale=Math.max(.7,Math.min(2,sp/3));}else this.play('idle');}
+   this.look.mixer?.update(dt);}
+  else{const sw=moving?Math.sin(this.t*14)*.6:0;this.legs2.forEach((l,i)=>l.rotation.x=(i%2?1:-1)*(i<2?1:-1)*sw);if(!this.leap)p.y=moving?Math.abs(Math.sin(this.t*14))*.04:0;}
  }
  remove(){world.scene.remove(this.g);}
 }
 let pet:Pet|null=null;
-function syncPet(){if(cls()==='xenobinder'&&mode==='play'){if(!pet){pet=new Pet();pet.g.position.copy(pos).add(new T.Vector3(1.2,0,1));}}else if(pet){pet.remove();pet=null;}}
+function syncPet(){
+  const want=cls()==='xenobinder'&&!best;
+  if(pet&&(!want||pet.id!==petId)){pet.remove();pet=null;}
+  if(want&&!pet){pet=new Pet(petId);if(mode==='play')pet.g.position.copy(pos).add(new T.Vector3(1.2,0,1));}
+}
 
 // ---------- update ----------
 let moving=false,sprinting=false;
@@ -318,6 +363,7 @@ function updatePlayer(dt:number){
   if(mouseDown&&mode==='play'&&!locked&&n>=rollUntil){updateAim();const e=enemyAt(aimPoint);if(e){focusEnemy=e;faceTo(e.pos);const l=pos.distanceTo(e.pos),lk=kit().lunge;if(lk&&l>kit().primary.range*.85&&l<lk.range&&n>=lungeReady)lunge(e);else tryAttack();}else{focusEnemy=null;faceTo(aimPoint);tryAttack();}}
   hp=Math.min(hpMax,hp+dt*.4);
   pet?.update(dt,n);
+  shieldDome.visible=n<shieldUntil;if(shieldDome.visible){shieldDome.position.copy(pos).setY(1);(shieldDome.material as T.MeshBasicMaterial).opacity=.08+.04*Math.sin(n*6)+(shieldUntil-n<1?-.08*(1-(shieldUntil-n)):0);}
 }
 function enemyAt(p:T.Vector3){let best:Enemy|null=null,bd=1.4;for(const e of enemies)if(e.state!=='dead'){const d=Math.hypot(e.pos.x-p.x,e.pos.z-p.z);if(d<bd){bd=d;best=e;}}return best;}
 const ray=new T.Raycaster(),plane=new T.Plane(new T.Vector3(0,1,0),0);
@@ -344,7 +390,12 @@ function updateCamera(dt:number){
 // ---------- ui ----------
 const ui=document.createElement('div');ui.id='ui';app.appendChild(ui);
 ui.innerHTML=`
-<div id="creator"><h1>Crie seu personagem</h1><p class="sub">Echoes of Dante · nova experiência 3D (primeira fatia jogável)</p>
+<div id="select"><h1>Seus personagens</h1><p class="sub">Echoes of Dante · nova experiência 3D · salvos neste aparelho</p>
+ <div id="s-list"></div><button id="s-play">Entrar no mundo</button>
+ <div class="row s-row"><button class="chip" id="s-edit">Editar aparência</button><button class="chip" id="s-del">Excluir</button></div>
+ <button class="chip s-new" id="s-new">+ Novo personagem</button><p class="hint">Arraste para girar o personagem</p></div>
+<div id="creator"><h1 id="c-title">Crie seu personagem</h1><p class="sub">Echoes of Dante · nova experiência 3D (primeira fatia jogável)</p>
+ <div class="grp"><label for="o-name">Nome</label><input id="o-name" maxlength="18" autocomplete="off" spellcheck="false" placeholder="Como vão chamar você em Dante?"></div>
  <div class="grp"><label>Corpo</label><div class="row" id="o-sex"></div></div>
  <div class="grp"><label>Pele</label><div class="row" id="o-skin"></div></div>
  <div class="grp"><label>Cabelo</label><div class="row wrap" id="o-hair"></div></div>
@@ -354,7 +405,8 @@ ui.innerHTML=`
  <div class="grp"><label>Cor da roupa</label><div class="row" id="o-cloth"></div></div>
  <div class="grp"><label>Capacete</label><div class="row" id="o-helmet"></div></div>
  <div class="grp"><label>Classe</label><div class="row wrap" id="o-class"></div><div class="clsinfo" id="o-clsinfo"></div></div>
- <button id="go">Entrar no mundo</button><p class="hint">Arraste para girar o personagem</p></div>
+ <div class="grp" id="g-pet"><label>Fera companheira</label><div class="row wrap" id="o-pet"></div><div class="clsinfo" id="o-petinfo"></div></div>
+ <button id="go">Criar e entrar no mundo</button><button class="chip" id="back">Voltar aos personagens</button><p class="hint">Arraste para girar o personagem</p></div>
 <div id="hud"><div class="orb hp"><i id="hp"></i><b id="hpt"></b></div><div id="clsname"></div><div class="bar" id="skillbar"></div><div class="orb mp"><i id="mp"></i><b id="mpt"></b></div><div id="kills"></div></div><button id="optbtn" title="Opções">&#9776;</button><div id="perf"><span id="fps"></span></div>
 <div id="biomes"></div><div id="portalhint"></div><div id="touch"><button id="t-atk">Atacar</button><button id="t-q">Carga</button><button id="t-dash">Esquiva</button><button id="t-e">Energia</button><button id="t-act">Falar</button></div><div id="joy"><i></i></div><div id="modal"><div class="box"><h2 id="mtitle"></h2><div id="mbody"></div><button id="mclose">Fechar</button></div></div><div id="banner"></div><div id="fade"></div><div id="bossbar"><span id="bossname"></span><div><i id="bossfill"></i></div></div>
 <div id="tracker"></div><div id="prompt"></div><div id="guide"><i></i><span></span></div><div id="toast"></div>
@@ -376,7 +428,6 @@ async function change(patch:Partial<Look>){
   look=next;
   if(patch.sex)await hero.setSex(look.sex);
   hero.apply(look);if(patch.weapon||patch.sex)await hero.setWeapon(look.weapon);
-  saveLook();
 }
 function refreshUi(){
   chips('o-sex',[['male','Masculino'],['female','Feminino']],()=>look.sex,id=>void change({sex:id as Sex}).then(refreshUi));
@@ -387,38 +438,113 @@ function refreshUi(){
   chips('o-outfit',OUTFITS,()=>look.outfit,id=>void change({outfit:id}));
   swatches('o-cloth',CLOTH.map(c=>c[1]),()=>look.cloth,i=>void change({cloth:i}));
   chips('o-helmet',[['0','Sem'],['1','Com visor']],()=>look.helmet?'1':'0',id=>void change({helmet:id==='1'}));
-  chips('o-class',CLASS_ORDER.map(c=>[c,CLASSES[c].name] as [string,string]),()=>cls(),id=>void change({weapon:CLASSES[id as ClassId].weapon}));
+  // the class is chosen once, when the character is created
+  if(editing==='new')chips('o-class',CLASS_ORDER.map(c=>[c,CLASSES[c].name] as [string,string]),()=>cls(),id=>void change({weapon:CLASSES[id as ClassId].weapon}).then(()=>{syncPet();refreshUi();}));
+  else $('o-class').innerHTML=`<span class="fixed">${kit().name}</span>`;
   const k=kit();$('o-clsinfo').innerHTML=`<b>${k.role}</b><span>${k.fantasy}</span><i>${k.kit}</i>`;
+  $('g-pet').style.display=cls()==='xenobinder'?'':'none';
+  chips('o-pet',PET_ORDER.map(id=>[id,PETS[id].name] as [string,string]),()=>petId,id=>{petId=id as PetId;syncPet();});
+  const pd=PETS[petId];$('o-petinfo').innerHTML=`<b>${pd.role} · ${pd.command}</b><span>${pd.desc}</span><i>Pode ser trocada depois no abrigo das feras, no acampamento.</i>`;
+  $('c-title').textContent=editing==='new'?'Crie seu personagem':'Editar aparência';
+  $('go').textContent=editing==='new'?'Criar e entrar no mundo':'Salvar e entrar no mundo';
+  $('back').style.display=roster.list.length?'':'none';
 }
 function hud(){
   const k=kit();
   $('hp').style.height=(hp/hpMax*100)+'%';$('mp').style.height=mana+'%';$('hpt').textContent=String(Math.ceil(hp));$('mpt').textContent=String(Math.floor(mana));
   const col=cls()==='astral'?ELEMENT_COLORS[element]:k.resColor;$('mp').style.background=`radial-gradient(circle at 40% 30%,${col},#0b1420 75%)`;
   const n=now(),cdq=Math.max(0,skillReady-n),cdd=Math.max(0,dashReady-n);
-  const sb=`<div class="sk"><kbd>Botão esq. / J</kbd>${k.primary.kind==='melee'?'golpe':'disparo'}</div><div class="sk${cdq?' cd':''}"><kbd>Dir. / Q</kbd>${k.skill.name}${k.skill.cost?` · ${k.skill.cost}`:''}${cdq?` (${cdq.toFixed(1)})`:''}</div>${cls()==='astral'?`<div class="sk"><kbd>E</kbd><span style="color:${ELEMENT_COLORS[element]}">${ELEMENT_NAMES[element]}</span></div>`:''}${k.lunge?`<div class="sk${n<lungeReady?' cd':''}"><kbd>Alvo longe</kbd>Investida</div>`:''}<div class="sk${cdd?' cd':''}"><kbd>Espaço</kbd>${k.dash.name}</div><div class="sk"><kbd>Shift</kbd>correr</div>`;
+  const sb=`<div class="sk"><kbd>Botão esq. / J</kbd>${k.primary.kind==='melee'?'golpe':'disparo'}</div><div class="sk${cdq?' cd':''}"><kbd>Dir. / Q</kbd>${skillName()}${k.skill.cost?` · ${k.skill.cost}`:''}${cdq?` (${cdq.toFixed(1)})`:''}</div>${cls()==='astral'?`<div class="sk"><kbd>E</kbd><span style="color:${ELEMENT_COLORS[element]}">${ELEMENT_NAMES[element]}</span></div>`:''}${k.lunge?`<div class="sk${n<lungeReady?' cd':''}"><kbd>Alvo longe</kbd>Investida</div>`:''}<div class="sk${cdd?' cd':''}"><kbd>Espaço</kbd>${k.dash.name}</div><div class="sk"><kbd>Shift</kbd>correr</div>`;
   if($('skillbar').innerHTML!==sb)$('skillbar').innerHTML=sb;
-  const cn=`${k.name} · <span style="color:${col}">${k.resource}</span>`;if($('clsname').innerHTML!==cn)$('clsname').innerHTML=cn;
+  const cn=`<b class="hname"></b>${k.name} · <span style="color:${col}">${k.resource}</span>`;if($('clsname').dataset.k!==cn+heroName()){$('clsname').dataset.k=cn+heroName();$('clsname').innerHTML=cn;($('clsname').querySelector('.hname') as HTMLElement).textContent=heroName()?heroName()+' · ':'';}
   $('kills').textContent=kills?`Abates: ${kills}`:'';
 }
+const heroName=()=>heroRec?.name??'';
+const skillName=()=>cls()==='xenobinder'?PETS[petId].command:kit().skill.name;
+// ---------- saved characters: list, create, edit, delete ----------
+async function applyLook(l:Look){
+  const prev=look;look={...l};
+  if(prev.sex!==look.sex)await hero.setSex(look.sex);
+  hero.apply(look);if(prev.sex!==look.sex||prev.weapon!==look.weapon)await hero.setWeapon(look.weapon);
+}
+async function previewHero(h:HeroSave){heroRec=h;petId=h.pet;await applyLook(h.look);syncPet();renderSelect();}
+function renderSelect(){
+  const host=$('s-list');host.innerHTML='';
+  for(const h of roster.list){const j=new Journal(journalKey(h.id)),c=CLASSES[WEAPON_CLASS[h.look.weapon]];
+   const b=document.createElement('button');b.className='card'+(heroRec?.id===h.id?' on':'');
+   b.innerHTML=`<b></b><span>${c.name}${WEAPON_CLASS[h.look.weapon]==='xenobinder'?' · '+PETS[h.pet].name:''}</span><i>${j.done.size} de ${MISSIONS.length} missões · ${j.credits} créditos</i>`;
+   b.querySelector('b')!.textContent=h.name;b.onclick=()=>{sfx('ui');void previewHero(h);};host.appendChild(b);}
+  ($('s-play') as HTMLButtonElement).disabled=!heroRec;
+}
+function showSelect(){
+  editing='edit';document.body.classList.add('selecting');
+  if(heroRec)void previewHero(heroRec);else renderSelect();
+}
+function openCreator(kind:'new'|'edit'){
+  editing=kind;document.body.classList.remove('selecting');
+  const inp=$('o-name') as HTMLInputElement;
+  if(kind==='new'){inp.value='';petId='symbiont';void applyLook({...DEFAULT_LOOK,weapon:look.weapon}).then(()=>{syncPet();refreshUi();});}
+  else{inp.value=heroRec?.name??'';refreshUi();}
+  refreshUi();
+}
+function confirmCreator(){
+  const inp=$('o-name') as HTMLInputElement,name=cleanName(inp.value);
+  if(!name){inp.classList.remove('bad');void inp.offsetWidth;inp.classList.add('bad');inp.focus();toast('Dê um nome ao seu personagem');return;}
+  let h:HeroSave;
+  if(editing==='new'||!heroRec){h={id:newId(),name,look:{...look},pet:petId,created:Date.now(),played:Date.now()};roster.list.push(h);}
+  else{h=heroRec;h.name=name;h.look={...look};h.pet=petId;}
+  enterAs(h);
+}
+function enterAs(h:HeroSave){
+  heroRec=h;h.played=Date.now();roster.current=h.id;saveRoster(roster);
+  journal=new Journal(journalKey(h.id));petId=h.pet;document.body.classList.remove('selecting');
+  // progress from before the journey order: a mission waiting in a region that is still closed goes back to its giver
+  {const act=journal.current();if(act&&act.goals.some(g=>!journal.goals.has(g.id)&&!reachable(g.biome))){journal.active=null;journal.save();}}
+  if(!reachable(world.biome))goBiome('camp');
+  enter();
+}
+$('s-play').onclick=()=>{if(heroRec)enterAs(heroRec);};
+$('s-edit').onclick=()=>{if(heroRec)openCreator('edit');};
+$('s-new').onclick=()=>openCreator('new');
+$('s-del').onclick=()=>{
+  if(!heroRec||!confirm(`Excluir ${heroRec.name}? As missões e o progresso deste personagem serão apagados deste aparelho.`))return;
+  const id=heroRec.id;roster.list=roster.list.filter(h=>h.id!==id);forget(id);roster.current=roster.list[0]?.id??null;saveRoster(roster);
+  heroRec=roster.list[0]??null;if(heroRec)showSelect();else openCreator('new');
+};
+$('back').onclick=()=>{const h=roster.list.find(x=>x.id===roster.current)??roster.list[0];if(h){heroRec=h;showSelect();}};
+($('o-name') as HTMLInputElement).maxLength=NAME_MAX;
+$('o-name').addEventListener('keydown',e=>{e.stopPropagation();if(e.key==='Enter')confirmCreator();});
 function enter(){
   mode='play';document.body.classList.add('play');document.body.classList.remove('creator');
   document.body.classList.toggle('astral',cls()==='astral');
   if(!enemies.length)populate();
-  pos.set(0,0,0);heading=Math.PI;hpMax=kit().hp;hp=hpMax;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();hud();spawnT=1.5;labelButtons();firstHelp();refreshMarkers();renderTracker();sound.music(world.biome);sound.ambient(world.biome);
+  pos.set(0,0,0);heading=Math.PI;hpMax=kit().hp;hp=hpMax;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();if(pet)pet.g.position.set(1.2,0,1);shieldUntil=0;sealPortals();renderBiomes();hud();spawnT=1.5;labelButtons();firstHelp();refreshMarkers();renderTracker();sound.music(world.biome);sound.ambient(world.biome);
 }
-$('go').onclick=enter;
+$('go').onclick=confirmCreator;
 // walking into a portal carries the expedition to the neighbouring region
 let portalLock=0;
+// regions open in journey order: each guardian (Warden, Soterrado, Vésper) opens the way onward. ?livre opens all (tests)
+const FREE=q.has('livre');
+function reachable(id:BiomeId){if(FREE)return true;const i=BIOME_ORDER.indexOf(id);for(let k=0;k<i;k++){const b=BIOMES[BIOME_ORDER[k]];if(b.boss&&!journal.beaten(b.boss))return false;}return true;}
+function nextOpen(){const i=BIOME_ORDER.indexOf(world.biome);return i<BIOME_ORDER.length-1&&reachable(BIOME_ORDER[i+1]);}
+function sealPortals(){const i=BIOME_ORDER.indexOf(world.biome);world.seal(1,i<BIOME_ORDER.length-1&&!nextOpen());}
+function lockReason(id:BiomeId){const i=BIOME_ORDER.indexOf(id);for(let k=0;k<i;k++){const b=BIOMES[BIOME_ORDER[k]];if(b.boss&&!journal.beaten(b.boss))return`derrote ${SPECIES[b.boss].name} (${b.name})`;}return'';}
+let sealT=0;
 function updatePortals(){
   if(mode!=='play'||dead){$('portalhint').classList.remove('on');return;}
   let near:typeof world.portals[number]|null=null;
-  for(const pt of world.portals){const d=Math.hypot(pos.x-pt.pos.x,pos.z-pt.pos.z);if(d<6)near=pt;if(d<1.7&&now()>portalLock){goBiome(pt.to,pt.dir);return;}}
-  const h=$('portalhint');if(near){h.textContent=`Portal: ${BIOMES[near.to].name}`;h.classList.add('on');}else h.classList.remove('on');
+  for(const pt of world.portals){const d=Math.hypot(pos.x-pt.pos.x,pos.z-pt.pos.z);if(d<6)near=pt;
+   if(d<1.7&&now()>portalLock){
+    if(reachable(pt.to)){goBiome(pt.to,pt.dir);return;}
+    // sealed: the stone pushes the hero back
+    const back=pos.clone().sub(pt.pos).setY(0);if(back.lengthSq()<1e-4)back.set(0,0,1);pos.copy(pt.pos).addScaledVector(back.normalize(),1.75);
+    if(now()>sealT){sealT=now()+3;toast(`Portal selado · ${lockReason(pt.to)}`);sfx('ui');}}}
+  const h=$('portalhint');if(near){const open=reachable(near.to);h.textContent=open?`Portal: ${BIOMES[near.to].name}`:`Portal selado · ${lockReason(near.to)}`;h.classList.toggle('sealed',!open);h.classList.add('on');}else h.classList.remove('on');
 }
 let fading=false;
 function goBiome(id:BiomeId,from:0|1|-1=0){
   if(from&&!fading){fading=true;const f=$('fade');f.classList.add('on');setTimeout(()=>{goBiome(id,from);fading=true;setTimeout(()=>{f.classList.remove('on');fading=false;},60);},380);return;}
-  world.setBiome(id);if(from)sfx('portal');if(mode==='play'){sound.music(id);sound.ambient(id);}vfx.clearEmitters();for(const f of world.flameSpots)vfx.campfire(f.p,f.s);
+  world.setBiome(id);sealPortals();if(from)sfx('portal');if(mode==='play'){sound.music(id);sound.ambient(id);}vfx.clearEmitters();for(const f of world.flameSpots)vfx.campfire(f.p,f.s);
   for(const e of enemies)e.dispose();enemies.length=0;clearShots();boss=null;bossBeaten=false;biomeKills=0;$('bossbar').classList.remove('on');populate();
   pos.set(0,0,from===1?ARENA-10:from===-1?-ARENA+10:0);heading=from===-1?0:Math.PI;portalLock=now()+2;scan=null;refreshMarkers();if(pet)pet.g.position.set(pos.x+1.2,0,pos.z+1);spawnT=2;banner(BIOMES[id].name);renderBiomes();
 }
@@ -426,13 +552,15 @@ function goBiome(id:BiomeId,from:0|1|-1=0){
 const touch=matchMedia('(pointer:coarse)').matches||'ontouchstart' in window;
 if(touch)document.body.classList.add('touch');
 function renderBiomes(){const h=$('biomes');h.innerHTML='';
-  if(touch){const sel=document.createElement('select');sel.className='chip';for(const id of BIOME_ORDER){const o=document.createElement('option');o.value=id;o.textContent=BIOMES[id].name;o.selected=world.biome===id;sel.appendChild(o);}sel.onchange=()=>goBiome(sel.value as BiomeId);h.appendChild(sel);return;}
-  for(const id of BIOME_ORDER){const b=document.createElement('button');b.className='chip'+(world.biome===id?' on':'');b.textContent=BIOMES[id].name;b.title=BIOMES[id].sub;b.onclick=()=>goBiome(id);h.appendChild(b);}
+  const go=(id:BiomeId)=>{if(id===world.biome)return;if(!reachable(id)){toast(`Região fechada · ${lockReason(id)}`);renderBiomes();return;}goBiome(id);};
+  if(touch){const sel=document.createElement('select');sel.className='chip';for(const id of BIOME_ORDER){const o=document.createElement('option');o.value=id;o.textContent=(reachable(id)?'':'🔒 ')+BIOMES[id].name;o.selected=world.biome===id;sel.appendChild(o);}sel.onchange=()=>go(sel.value as BiomeId);h.appendChild(sel);return;}
+  for(const id of BIOME_ORDER){const b=document.createElement('button'),open=reachable(id);b.className='chip'+(world.biome===id?' on':'')+(open?'':' locked');b.textContent=(open?'':'🔒 ')+BIOMES[id].name;b.title=open?BIOMES[id].sub:`Fechada · ${lockReason(id)}`;b.onclick=()=>go(id);h.appendChild(b);}
 }
 renderBiomes();
 function autoAim(){let best:Enemy|null=null,bd=16;for(const e of enemies)if(e.state!=='dead'){const d=e.pos.distanceTo(pos);if(d<bd){bd=d;best=e;}}aimPoint.copy(best?best.pos:pos.clone().add(fwd().multiplyScalar(5)));}
-const SKILL_SHORT:Record<ClassId,string>={warrior:'Carga',hunter:'Feixe',astral:'Campo',xenobinder:'Investida'};
-function labelButtons(){$('t-q').textContent=SKILL_SHORT[cls()];$('t-dash').textContent='Esquiva';$('t-e').textContent=ELEMENT_NAMES[element];($('t-e') as HTMLElement).style.borderColor=ELEMENT_COLORS[element];}
+const SKILL_SHORT:Record<ClassId,string>={warrior:'Carga',hunter:'Feixe',astral:'Campo',xenobinder:'Fera'};
+const PET_SHORT:Record<PetId,string>={symbiont:'Salto',bulwark:'Abalo',frostling:'Sopro'};
+function labelButtons(){$('t-q').textContent=cls()==='xenobinder'?PET_SHORT[petId]:SKILL_SHORT[cls()];$('t-dash').textContent='Esquiva';$('t-e').textContent=ELEMENT_NAMES[element];($('t-e') as HTMLElement).style.borderColor=ELEMENT_COLORS[element];}
 // joystick
 const joy={id:-1,ox:0,oy:0,x:0,y:0};
 function joyShow(on:boolean,x=0,y=0){const j=$('joy');j.classList.toggle('on',on);if(on){j.style.left=x+'px';j.style.top=y+'px';}}
@@ -466,14 +594,14 @@ function openModal(kind:'options'|'help'){
   const pc=`<h3>Computador</h3><ul><li><b>WASD</b> ou <b>setas</b>: andar · <b>Shift</b>: correr</li><li><b>Botão esquerdo</b> (segure para continuar) ou <b>J</b>: atacar na direção do cursor · Guerreiro: clique num inimigo distante para a investida</li><li><b>Botão direito</b> ou <b>Q</b>: habilidade da classe (Guerreiro: segure e solte)</li><li><b>E</b>: trocar elemento (Astral)</li><li><b>Espaço</b>: esquiva · roda do mouse: zoom</li><li><b>F</b>: falar com alguém da base ou analisar um ponto da missão</li></ul>`;
   const mob=`<h3>Celular</h3><ul><li>Toque e arraste no lado esquerdo da tela: <b>andar</b></li><li><b>Atacar</b>: mira sozinho no inimigo mais próximo</li><li>Botão da <b>habilidade</b>: toque para usar no mais próximo ou <b>arraste para mirar</b> e solte</li><li><b>Esquiva</b> e <b>elemento</b> (Astral) nos botões menores</li><li>Perto de alguém ou de um ponto da missão aparece o botão <b>Falar</b> / <b>Analisar</b></li></ul>`;
   const help=(touch?mob+pc:pc+mob)+`<p class="note">Portais de pedra levam às outras regiões: norte avança, sul volta. A seta dourada aponta o próximo objetivo da missão.</p>`;
-  body.innerHTML=kind==='help'?help:`<div class="opts"><button id="o-help">Ver controles</button><button id="o-quality">${quality==='high'?'Qualidade: alta':'Qualidade: leve'}</button><button id="o-music">${sound.musicOn?'Música: ligada':'Música: desligada'}</button><button id="o-sfx">${sound.sfxOn?'Efeitos: ligados':'Efeitos: desligados'}</button><button id="o-journal">Diário de missões</button><button id="o-creator">Mudar personagem</button><p class="note" id="o-fps">${fpsShown?fpsShown+' quadros por segundo':''}</p></div>`;
+  body.innerHTML=kind==='help'?help:`<div class="opts"><button id="o-help">Ver controles</button><button id="o-quality">${quality==='high'?'Qualidade: alta':'Qualidade: leve'}</button><button id="o-music">${sound.musicOn?'Música: ligada':'Música: desligada'}</button><button id="o-sfx">${sound.sfxOn?'Efeitos: ligados':'Efeitos: desligados'}</button><button id="o-journal">Diário de missões</button><button id="o-creator">Trocar de personagem</button><p class="note" id="o-fps">${fpsShown?fpsShown+' quadros por segundo':''}</p></div>`;
   m.classList.add('on');
   if(kind==='options'){
    $('o-help').onclick=()=>openModal('help');$('o-journal').onclick=openJournal;
    $('o-music').onclick=()=>{sound.toggleMusic();$('o-music').textContent=sound.musicOn?'Música: ligada':'Música: desligada';};
    $('o-sfx').onclick=()=>{sound.toggleSfx();$('o-sfx').textContent=sound.sfxOn?'Efeitos: ligados':'Efeitos: desligados';};
    $('o-quality').onclick=()=>{setQuality(quality==='high'?'low':'high');($('o-quality')).textContent=quality==='high'?'Qualidade: alta':'Qualidade: leve';};
-   $('o-creator').onclick=()=>{m.classList.remove('on');mode='creator';document.body.classList.remove('play','dead');document.body.classList.add('creator');for(const e of enemies)e.dispose();enemies.length=0;clearShots();if(pet){pet.remove();pet=null;}pos.set(0,0,0);refreshUi();};
+   $('o-creator').onclick=()=>{m.classList.remove('on');mode='creator';document.body.classList.remove('play','dead');document.body.classList.add('creator');if(world.biome!=='camp')goBiome('camp');for(const e of enemies)e.dispose();enemies.length=0;clearShots();boss=null;$('bossbar').classList.remove('on');if(pet){pet.remove();pet=null;}pos.set(0,0,0);shieldUntil=0;refreshUi();showSelect();};
   }
 }
 $('optbtn').onclick=()=>openModal('options');
@@ -485,19 +613,19 @@ $('respawn').onclick=()=>{document.body.classList.remove('dead');dead=false;hp=h
 document.body.classList.add('creator');
 
 // ---------- people of the base, missions and guidance ----------
-const journal=new Journal();
 const npcs=NPCS.map(d=>new Npc(d,world.scene));
 let npcHidden=false;let talking:Npc|null=null,scan:{g:Goal;t:number}|null=null;const SCAN_TIME=1.6;
 const IDLE:Record<NpcId,string>={nara:'Os civis ficam junto da nave enquanto a equipe explora. Quando houver uma nova rota, eu aviso.',lia:'A enfermaria está aberta. Volte inteira; ainda temos muito a aprender sobre Dante.',ivo:'A oficina fica aqui. Cuidado com os cabos: água e energia continuam em circuitos separados.'};
-function interactable():{kind:'npc';n:Npc}|{kind:'scan';g:Goal}|null{
+function interactable():{kind:'npc';n:Npc}|{kind:'scan';g:Goal}|{kind:'pen'}|null{
   if(mode!=='play'||dead)return null;
   if(world.biome==='camp')for(const n of npcs)if(n.ready&&Math.hypot(n.pos.x-pos.x,n.pos.z-pos.z)<2.6)return{kind:'npc',n};
+  if(world.biome==='camp'&&Math.hypot(CAMP.pen.x-pos.x,CAMP.pen.z-pos.z)<3.2)return{kind:'pen'};
   for(const g of journal.open())if(g.kind==='scan'&&g.biome===world.biome&&Math.hypot(g.x-pos.x,g.z-pos.z)<2.6)return{kind:'scan',g};
   return null;
 }
 function interact(){
   const it=interactable();if(!it)return false;
-  if(it.kind==='npc')openTalk(it.n);else if(!scan){scan={g:it.g,t:0};moveTarget=null;sfx('charge');}
+  if(it.kind==='npc')openTalk(it.n);else if(it.kind==='pen')openPen();else if(!scan){scan={g:it.g,t:0};moveTarget=null;sfx('charge');}
   return true;
 }
 function toast(text:string){const t=$('toast');t.textContent=text;t.classList.remove('on');void t.offsetWidth;t.classList.add('on');}
@@ -536,6 +664,16 @@ function openTalk(n:Npc,report?:{id:string;credits:number}){
    else{const c=journal.deliver(mid);if(c){sfx('heal');toast(`Relatório entregue · +${c} créditos`);openTalk(n,{id:mid,credits:c});}}
    refreshMarkers();renderTracker();
   });
+}
+// beast pen: the Domador trades the companion that goes on expedition
+function openPen(){
+  const m=$('modal'),body=$('mbody');m.classList.remove('talking');talking=null;$('mtitle').textContent='Abrigo das feras';
+  const xeno=cls()==='xenobinder';
+  body.innerHTML=(xeno?`<p class="note">Escolha a fera que segue ${heroName()||'você'} nas expedições. A troca vale até você voltar aqui.</p>`:`<p class="note">As feras ficam aos cuidados do abrigo. Só o Domador de feras leva uma companheira em expedição.</p>`)+
+   `<div class="pens">${PET_ORDER.map(id=>{const d=PETS[id];return`<button class="pen${petId===id&&xeno?' on':''}" data-p="${id}" ${xeno?'':'disabled'}><b>${d.name}</b><em>${d.role} · ${d.command}</em><span>${d.desc}</span>${petId===id&&xeno?'<i>Acompanhando você</i>':''}</button>`;}).join('')}</div>`;
+  m.classList.add('on');sfx('ui');
+  body.querySelectorAll<HTMLButtonElement>('.pen').forEach(b=>b.onclick=()=>{const id=b.dataset.p as PetId;if(id===petId)return;
+   petId=id;if(heroRec){heroRec.pet=id;saveRoster(roster);}syncPet();sfx('heal');toast(`${PETS[id].name} agora acompanha você`);openPen();hud();labelButtons();});
 }
 function openJournal(){
   const m=$('modal'),body=$('mbody');m.classList.remove('talking');talking=null;$('mtitle').textContent='Diário de missões';
@@ -605,6 +743,7 @@ function updatePrompt(){
   if(scan){txt=`Analisando ${scan.g.label.toLowerCase()} · ${Math.round(scan.t/SCAN_TIME*100)}%`;}
   else if(it?.kind==='npc'){txt=`${touch?'':'F · '}Falar com ${it.n.def.name}`;btn='Falar';}
   else if(it?.kind==='scan'){txt=`${touch?'':'F · '}Analisar: ${it.g.label}`;btn='Analisar';}
+  else if(it?.kind==='pen'){txt=`${touch?'':'F · '}Abrigo das feras`;btn='Abrigo';}
   if(el.textContent!==txt)el.textContent=txt;el.classList.toggle('on',!!txt);
   document.body.classList.toggle('can-act',!!btn&&!scan);if(btn&&$('t-act').textContent!==btn)$('t-act').textContent=btn;
 }
@@ -667,7 +806,7 @@ function adapt(dt:number){
 function tick(dt:number){
   time+=dt;
   for(let i=timers.length-1;i>=0;i--)if(timers[i].at<=time){const f=timers[i].fn;timers.splice(i,1);f();}
-  if(mode==='creator'){heading=previewYaw;if(hero.model)hero.model.rotation.y+=(previewYaw-hero.model.rotation.y)*Math.min(1,dt*10);hero.play(hero.has(kit().idle)?kit().idle:'Idle_Loop',{fade:.25});}
+  if(mode==='creator'){heading=previewYaw;if(hero.model)hero.model.rotation.y+=(previewYaw-hero.model.rotation.y)*Math.min(1,dt*10);hero.play(hero.has(kit().idle)?kit().idle:'Idle_Loop',{fade:.25});pet?.preview(dt);}
   else updatePlayer(dt);
   if(mode==='play'&&!mouseDown&&!qaAim&&!('ontouchstart' in window))updateAim();
   if(best)updateBestiary(dt);
@@ -682,7 +821,7 @@ const ORIGIN:Record<string,string>={q:'Quaternius · Ultimate Monsters (CC0), ad
 let best:{list:SpeciesId[];i:number;c:Creature|null;yaw:number;motion:string}|null=null;
 function bestiary(all:boolean){
   document.body.classList.add('bestiary');goBiome('springs');for(const e of enemies)e.dispose();enemies.length=0;habs=[];
-  hero.root.visible=false;for(const n of npcs)n.char.root.visible=false;
+  hero.root.visible=false;for(const n of npcs)n.char.root.visible=false;if(pet){pet.remove();pet=null;}
   best={list:all?[...NEW_MONSTERS,...OLDER_MODELS]:[...NEW_MONSTERS],i:0,c:null,yaw:0,motion:'idle'};
   const box=document.createElement('div');box.id='bestiary';
   box.innerHTML=`<div class="bt"><button id="b-prev">◀</button><div><b id="b-name"></b><span id="b-info"></span></div><button id="b-next">▶</button></div><div class="bm">${[['idle','Parado'],['move','Andar'],['run','Correr'],['attack','Atacar'],['hit','Dano'],['death','Morrer']].map(([k,l])=>`<button data-m="${k}">${l}</button>`).join('')}</div><div class="bc"><span id="b-count"></span> · arraste para girar · <a href="3d.html?bestiario${all?'':'=todos'}">${all?'só os novos':'ver também aranha, formigas-leão e wyverns'}</a></div>`;
@@ -732,6 +871,7 @@ function frame(){
   if(q.get('helmet'))patch.helmet=q.get('helmet')==='1';
   for(const k of['hair','brows','outfit','weapon'] as const)if(q.get(k))(patch as Record<string,string>)[k]=q.get(k)!;
   if(Object.keys(patch).length)await change(patch);
+  if(q.get('fera')&&PETS[q.get('fera') as PetId])petId=q.get('fera') as PetId;
   refreshUi();
   // compile every material up front (enemy, projectile, ring) so the first fight doesn't hitch
   // sculpted creatures: Warden (ours), Flare antlions and wyverns, and the Easyforge spider (incorporated game module);
@@ -742,21 +882,26 @@ function frame(){
    ...Object.entries(MODEL_DEF).filter(([,d])=>d.file).map(([k,d])=>gl.loadAsync(import.meta.env.BASE_URL+'assets/3d-new/creatures/'+d.file+'.glb').then(g=>put(k,g)).catch(()=>{})),
    import('virtual:arrival-hollow').then(async m=>{const p=m.default;if(!p)return;const bytes=Uint8Array.from(atob(p.data),c=>c.charCodeAt(0));put('spider',await gl.parseAsync(bytes.buffer,''));}).catch(()=>{}),
   ]);
-  const warm=(Object.keys(SPECIES) as SpeciesId[]).map((k,i)=>new Creature(k,i*3,-200,world.scene));const W=new T.Vector3(0,1,-200),F=new T.Vector3(0,0,1);
+  const warm=(Object.keys(SPECIES) as SpeciesId[]).map((k,i)=>new Creature(k,i*3,-200,world.scene));
+  const warmPets=PET_ORDER.map((id,i)=>{const g=new T.Group();g.position.set(i*3,0,-206);petBody(g,PETS[id].model,PETS[id].glow,PETS[id].base);world.scene.add(g);return g;});const W=new T.Vector3(0,1,-200),F=new T.Vector3(0,0,1);
   for(const k of ['pulse','fire','water','earth','energy','filament'] as Kind[]){fire(k,W,F,0,0);vfx.impact(k,W,F);}
   vfx.slash(W,0,false);vfx.field('energy',W,1);vfx.field('earth',W,1);vfx.decal(W,'#fff',1,.1);
   const tw=teleWarm();tw.position.copy(W);world.scene.add(tw);const mw=new T.Group();mw.position.copy(W);for(const m of[BEAM,RING,GEM,ECHO])mw.add(new T.Mesh(new T.PlaneGeometry(1,1),m));world.scene.add(mw);
-  renderer.compile(world.scene,camera);warm.forEach(w=>w.dispose());for(const p of projs)dispose(p.o);projs.length=0;tw.removeFromParent();mw.removeFromParent();
+  renderer.compile(world.scene,camera);warm.forEach(w=>w.dispose());warmPets.forEach(g=>g.removeFromParent());for(const p of projs)dispose(p.o);projs.length=0;tw.removeFromParent();mw.removeFromParent();
   renderer.compile(world.scene,camera);warm.forEach(w=>w.dispose());
   if(quality==='low')setQuality('low');
   $('loading').remove();
   if(q.get('biome')&&BIOMES[q.get('biome') as BiomeId])goBiome(q.get('biome') as BiomeId);
-  if(q.get('auto'))enter();
+  if(q.get('auto')){
+   // tests: play the current character, or a new one made from the look in the address
+   if(!heroRec){heroRec={id:newId(),name:q.get('nome')??'Explorador',look:{...look},pet:(q.get('fera') as PetId)??'symbiont',created:Date.now(),played:Date.now()};roster.list.push(heroRec);}
+   enterAs(heroRec);
+  }else if(roster.list.length)showSelect();else openCreator('new');
   if(q.has('bestiario'))bestiary(q.get('bestiario')==='todos');
   requestAnimationFrame(frame);
 })();
 // QA hooks
-(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look};},cam:(px:number,py:number,pz:number,tx:number,ty:number,tz:number)=>{fixedCam=px===undefined?null:[new T.Vector3(px,py,pz),new T.Vector3(tx,ty,tz)];},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,goBiome,bossNow:()=>{biomeKills=99;},scene:world.scene,hero,renderer,npcs:(v:boolean)=>{for(const n of npcs)n.char.root.visible=v;npcHidden=!v;},shadows:(v:boolean)=>{renderer.shadowMap.enabled=v;world.scene.traverse(o=>{const m=(o as T.Mesh).material as T.Material|undefined;if(m)m.needsUpdate=true;});},perf:(n=10)=>{const t0=performance.now();for(let i=0;i<n;i++)tick(1/30);const t1=performance.now();renderer.info.autoReset=false;renderer.info.reset();world.render(camera,time);const calls=renderer.info.render.calls,tris=renderer.info.render.triangles;renderer.info.autoReset=true;const t2=performance.now();for(let i=0;i<n;i++){if(quality==='high')world.render(camera,time);else renderer.render(world.scene,camera);}const t3=performance.now();let lights=0,meshes=0,skinned=0;world.scene.traverseVisible(o=>{if((o as T.Light).isLight)lights++;if((o as T.Mesh).isMesh)meshes++;if((o as T.SkinnedMesh).isSkinnedMesh)skinned++;});return{tick:+((t1-t0)/n).toFixed(2),render:+((t3-t2)/n).toFixed(1),calls,tris,programs:renderer.info.programs?.length,lights,meshes,skinned,pr:renderer.getPixelRatio()};},journal:()=>journal,tp:(x:number,z:number)=>{pos.set(x,0,z);},interact,talkTo:(id:string)=>{const n=npcs.find(x=>x.def.id===id);if(n){pos.set(n.pos.x,0,n.pos.z+1.6);openTalk(n);}},goal:(id:string)=>{const g=journal.open().find(x=>x.id===id);if(g)goalDone(g);},enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{qaAim=true;aimPoint.set(x,0,z);},qa:{T,ink,menace,glb:(u:string)=>new GLTFLoader().loadAsync(u)},list:()=>enemies,habs:()=>habs,hp:()=>hp,bars:()=>[bars.size,mode],spawn:(x:number,z:number,k:SpeciesId='crawler')=>{const e=new Creature(k,x,z,world.scene);enemies.push(e);return e;},mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
+(window as unknown as {__d3:unknown}).__d3={get state(){return{mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look,name:heroName(),pet:pet?.id??null,petPos:pet?pet.g.position.toArray():null,petAnim:pet?.look?.cur??null,shield:now()<shieldUntil,biome:world.biome,roster:roster.list.map(h=>h.name),reachable:BIOME_ORDER.filter(reachable)};},cam:(px:number,py:number,pz:number,tx:number,ty:number,tz:number)=>{fixedCam=px===undefined?null:[new T.Vector3(px,py,pz),new T.Vector3(tx,ty,tz)];},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,goBiome,bossNow:()=>{biomeKills=99;},scene:world.scene,hero,renderer,npcs:(v:boolean)=>{for(const n of npcs)n.char.root.visible=v;npcHidden=!v;},shadows:(v:boolean)=>{renderer.shadowMap.enabled=v;world.scene.traverse(o=>{const m=(o as T.Mesh).material as T.Material|undefined;if(m)m.needsUpdate=true;});},perf:(n=10)=>{const t0=performance.now();for(let i=0;i<n;i++)tick(1/30);const t1=performance.now();renderer.info.autoReset=false;renderer.info.reset();world.render(camera,time);const calls=renderer.info.render.calls,tris=renderer.info.render.triangles;renderer.info.autoReset=true;const t2=performance.now();for(let i=0;i<n;i++){if(quality==='high')world.render(camera,time);else renderer.render(world.scene,camera);}const t3=performance.now();let lights=0,meshes=0,skinned=0;world.scene.traverseVisible(o=>{if((o as T.Light).isLight)lights++;if((o as T.Mesh).isMesh)meshes++;if((o as T.SkinnedMesh).isSkinnedMesh)skinned++;});return{tick:+((t1-t0)/n).toFixed(2),render:+((t3-t2)/n).toFixed(1),calls,tris,programs:renderer.info.programs?.length,lights,meshes,skinned,pr:renderer.getPixelRatio()};},journal:()=>journal,tp:(x:number,z:number)=>{pos.set(x,0,z);},interact,openPen,pet:()=>pet,beat:(k:string)=>{journal.beat(k);sealPortals();renderBiomes();},talkTo:(id:string)=>{const n=npcs.find(x=>x.def.id===id);if(n){pos.set(n.pos.x,0,n.pos.z+1.6);openTalk(n);}},goal:(id:string)=>{const g=journal.open().find(x=>x.id===id);if(g)goalDone(g);},enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{qaAim=true;aimPoint.set(x,0,z);},qa:{T,ink,menace,glb:(u:string)=>new GLTFLoader().loadAsync(u)},list:()=>enemies,habs:()=>habs,hp:()=>hp,bars:()=>[bars.size,mode],spawn:(x:number,z:number,k:SpeciesId='crawler')=>{const e=new Creature(k,x,z,world.scene);enemies.push(e);return e;},mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
  const w=hero.weapon,h=hero.hand;if(!w||!h)return null;hero.model.updateMatrixWorld(true);
  const mq=hero.model.getWorldQuaternion(new T.Quaternion()),hq=h.getWorldQuaternion(new T.Quaternion());
  const hm=mq.clone().invert().multiply(hq);const wq=hm.clone().multiply(w.quaternion);

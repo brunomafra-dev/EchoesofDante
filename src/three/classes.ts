@@ -36,12 +36,12 @@ export const CLASSES:Record<ClassId,Kit>={
   primary:{kind:'shot',dmg:18,range:12,speed:26},
   dash:{name:'Passo astral',speed:7.5,dur:.55,cd:1.5},
   skill:{name:'Campo direcional',cost:30,cd:1.2,hint:'no cursor'}},
- xenobinder:{name:'Domador de feras',role:'DOMADOR · SIMBIOSE',fantasy:'Lute em simbiose. Oriente uma criatura de Dante e proteja sua expedição.',kit:'Condutor simbiótico · Companheiro permanente · Investida e recuperação',weapon:'conductor',
+ xenobinder:{name:'Domador de feras',role:'DOMADOR · SIMBIOSE',fantasy:'Lute em simbiose. Oriente uma criatura de Dante e proteja sua expedição.',kit:'Condutor simbiótico · Fera companheira (uma de três) · Comando da fera',weapon:'conductor',
   hp:118,speed:4.3,resource:'Vínculo',resColor:'#6bb464',regen:2,
   idle:'Spell_Simple_Idle_Loop',attacks:['Spell_Simple_Shoot'],atkSpeed:1.7,impact:.35,
   primary:{kind:'shot',dmg:16,range:12,color:'#7dff9e',speed:28},
   dash:{name:'Esquiva',speed:7.5,dur:.55,cd:1.75},
-  skill:{name:'Investida',cost:35,cd:6,hint:'a fera avança e cura você'}},
+  skill:{name:'Comando da fera',cost:35,cd:6,hint:'salto, abalo ou sopro, conforme a fera'}},
 };
 export const WEAPON_CLASS:Record<WeaponId,ClassId>={saber:'warrior',carbine:'hunter',gauntlet:'astral',conductor:'xenobinder'};
 export const ELEMENTS:Element[]=['energy','fire','water','earth'];
