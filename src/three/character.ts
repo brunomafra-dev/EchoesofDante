@@ -2,7 +2,7 @@ import * as T from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {Grip,MUZZLE} from './grip';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
-import {dress,classKit,garbKit} from './outfit';
+import {dress,classKit,garbKit,TIER_TRIM,type Armour} from './outfit';
 
 // Character of the new 3D track: one rigged human per sex, every customisable part is a
 // separate skinned mesh sharing the same skeleton (built by scripts/asset-tools/3d-new/build_character.py).
@@ -40,12 +40,14 @@ const loader=new GLTFLoader();
 const cache=new Map<string,Promise<{scene:T.Group;animations:T.AnimationClip[]}>>();
 const load=(url:string)=>{let p=cache.get(url);if(!p){p=loader.loadAsync(url) as never;cache.set(url,p);}return p;};
 const base=import.meta.env.BASE_URL;
+// the accessory pendant hangs from the neck, over the sternum (rest pose, model space)
+const NECK_DROP=-.13,NECK_OUT=.15;
 
 export class Character{
  root=new T.Group();model!:T.Group;mixer!:T.AnimationMixer;clips=new Map<string,T.AnimationClip>();
  current:T.AnimationAction|null=null;currentName='';look:Look=DEFAULT_LOOK;private outfitMats:T.MeshStandardMaterial[]=[];
  hand:T.Object3D|null=null;weapon:T.Object3D|null=null;private weaponId:WeaponId|null=null;private grip:Grip|null=null;
- private gear=new T.Group();private restHead=new T.Matrix4();private restChest=new T.Matrix4();
+ private gear=new T.Group();private restHead=new T.Matrix4();private restChest=new T.Matrix4();private restNeck=new T.Matrix4();
  private bodyMats:T.MeshStandardMaterial[]=[];private hairMats:T.MeshStandardMaterial[]=[];private browMats:T.MeshStandardMaterial[]=[];
  async setSex(sex:Sex){
   if(this.model&&this.look.sex===sex)return;
@@ -72,7 +74,7 @@ export class Character{
    }
   });
   this.hand=model.getObjectByName('hand_r')??null;this.weaponId=null;this.weapon=null;this.grip=new Grip(model);
-  model.updateMatrixWorld(true);this.restHead.copy(model.getObjectByName('head')!.matrixWorld);this.restChest.copy(model.getObjectByName('spine_03')!.matrixWorld);this.gearKey='';this.fitKey='';this.fitted=[];
+  model.updateMatrixWorld(true);this.restHead.copy(model.getObjectByName('head')!.matrixWorld);this.restChest.copy(model.getObjectByName('spine_03')!.matrixWorld);this.restNeck.copy((model.getObjectByName('neck_01')??model.getObjectByName('spine_03')!).matrixWorld);this.gearKey='';this.fitKey='';this.fitted=[];
   this.look={...this.look,sex};
  }
  // skin under a garment: the body keeps every vertex and hides only what the worn garments cover
@@ -113,10 +115,14 @@ export class Character{
   this.hairMats.forEach(m=>m.color.setRGB(hc[1][0],hc[1][1],hc[1][2]));
   this.browMats.forEach(m=>m.color.setRGB(hc[1][0]*.8,hc[1][1]*.8,hc[1][2]*.8));
  }
- // rigid expedition gear on the bones: helmet with visor (head), backpack (upper chest)
+ // equipment worn by the hero in play (not part of the saved look): each piece shows on its part of the body
+ armour:Armour={};
+ setArmour(a:Armour){if(JSON.stringify(a)===JSON.stringify(this.armour))return;this.armour={...a};if(this.model)this.apply(this.look);}
+ // rigid expedition gear on the bones: helmet with visor (head), backpack (upper chest), the accessory as a pendant
  private gearKey='';
  private equip(look:Look){
-  const helmet=!!look.helmet,pack=look.outfit==='basic'||look.outfit==='reinforced',key=[helmet,pack,look.weapon,look.outfit,look.cloth].join('|');
+  const ht=this.armour.helmet??0,at=this.armour.accessory??0;
+  const helmet=!!look.helmet||ht>0,pack=look.outfit==='basic'||look.outfit==='reinforced',key=[helmet,ht,at,pack,look.weapon,look.outfit,look.cloth].join('|');
   const hideHair=()=>this.model.traverse(o=>{if(o.name.startsWith('hair')&&helmet)o.visible=false;});
   if(key===this.gearKey){hideHair();return;}this.gearKey=key;
   this.gear.clear();this.gear.removeFromParent();for(const c of [...this.gearParts])c.removeFromParent();this.gearParts=[];
@@ -139,6 +145,11 @@ export class Character{
    const ring=new T.Mesh(new T.TorusGeometry(.115,.022,10,28),dark);ring.rotation.x=Math.PI/2;ring.position.y=-.12;h.add(ring);
    for(const sx of[-1,1]){const ear=new T.Mesh(new T.CylinderGeometry(.04,.04,.03,16),dark);ear.rotation.z=Math.PI/2;ear.position.set(sx*.135,0,0);h.add(ear);const l=new T.Mesh(new T.SphereGeometry(.01,8,6),glow);l.position.set(sx*.152,0,.02);h.add(l);}
    const fin=new T.Mesh(new RoundedBoxGeometry(.025,.035,.18,2,.01),dark);fin.position.set(0,.145,-.02);h.add(fin);
+   // reinforced helmet (tier 2 and 3): cheek guards and a crest lit in the colour of its rarity
+   if(ht>1){const rim=new T.MeshStandardMaterial({color:TIER_TRIM[ht],emissive:TIER_TRIM[ht],emissiveIntensity:.6,roughness:.4});
+    for(const sx of[-1,1]){const cheek=new T.Mesh(new RoundedBoxGeometry(.03,.11,.12,2,.012),shell);cheek.position.set(sx*.128,-.07,.04);cheek.rotation.z=sx*.12;h.add(cheek);}
+    const crest=new T.Mesh(new RoundedBoxGeometry(.012,.02,.2,2,.005),rim);crest.position.set(0,.168,-.02);h.add(crest);
+    const brow=new T.Mesh(new T.TorusGeometry(.128,.008,6,24,Math.PI*.7),rim);brow.rotation.set(0,0,Math.PI*.15);brow.position.set(0,.035,.0);brow.rotation.x=-.1;h.add(brow);}
    h.traverse(o=>{(o as T.Mesh).castShadow=true;});
    attach(head,this.restHead,h,[0,.075,.012]);
   }
@@ -152,13 +163,19 @@ export class Character{
    b.traverse(o=>{(o as T.Mesh).castShadow=true;});
    attach(chest,this.restChest,b,[0,-.06,-.19]);
   }
+  // accessory: a pendant on the chest that glows in the colour of its rarity (the 2D shows the accessory too)
+  const neck=this.model.getObjectByName('neck_01');
+  if(at&&neck){const c=TIER_TRIM[at]??'#cad4ca';const p=new T.Group();
+   const gem=new T.Mesh(new T.OctahedronGeometry(.028),new T.MeshStandardMaterial({color:c,emissive:c,emissiveIntensity:1.4,roughness:.25,flatShading:true}));gem.scale.set(1,1.4,.6);p.add(gem);
+   const cord=new T.Mesh(new T.TorusGeometry(.012,.004,6,12),dark);cord.position.y=.045;p.add(cord);
+   attach(neck,this.restNeck,p,[0,NECK_DROP,NECK_OUT]);}
   hideHair();
  }
  private gearParts:T.Object3D[]=[];
  // armour and garments of the 2D wardrobe, fitted to this body (outfit.ts); the generic MPFB armour meshes are hidden
  private fitted:T.Object3D[]=[];private fitKey='';
  private fit(look:Look){
-  const kit=look.garb?garbKit(look.garb):classKit(look.weapon,look.outfit),key=look.sex+'|'+look.weapon+'|'+look.outfit+'|'+(look.garb??'');
+  const worn=look.garb?{}:this.armour,kit=look.garb?garbKit(look.garb):classKit(look.weapon,look.outfit,worn),key=look.sex+'|'+look.weapon+'|'+look.outfit+'|'+(look.garb??'')+'|'+JSON.stringify(worn);
   this.model.traverse(o=>{const m=o as T.Mesh;if(m.isMesh&&/scifi-armor/i.test(((m.material as T.Material).name||'')))m.visible=m.visible&&!kit.length;});
   if(key===this.fitKey)return;this.fitKey=key;
   for(const f of this.fitted)f.removeFromParent();

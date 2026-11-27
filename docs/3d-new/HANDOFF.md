@@ -37,7 +37,7 @@ Escrito em 27/11/2026, na troca do Claude Code para o Antigravity. Serve para o 
 
 ## 3. Estado atual (fim de 27/11/2026)
 
-Último commit: `deba61f`, **aprovado pelo usuário** ("ficou ótimo"). Não há etapa em andamento.
+Último commit aprovado: `deba61f` ("ficou ótimo"). Depois disso, ainda no Claude Code, foi entregue o passo 1 abaixo (**equipamento visível no herói**, 27/11 (6) no PLAN.md), que **aguarda o playtest do usuário**. Confira o `git log` e o topo da `test-library.html`.
 
 O que já existe no 3D novo:
 
@@ -76,7 +76,7 @@ O que já existe no 3D novo:
 
 O usuário ainda não escolheu. Pergunte qual seguir. Esta é a ordem sugerida:
 
-1. **Equipamento visível no herói:** as peças vestidas mudam a roupa e o capacete. O 2D tem `equipmentAppearance()` em `src/config/equipment.ts`: nível 1 = básico, nível 2 ou mais = reforçado.
+1. ~~**Equipamento visível no herói**~~: entregue (`outfit.ts` por partes, `Character.setArmour`), aguardando aprovação. O que sobrou: visual da arma por nível (`weaponStyle` do 2D) e a cor da raridade na camuflagem do Domador.
 2. **Melhorias de habilidade por nível:** `src/config/abilityUpgrades.ts`, com os marcos dos níveis 4, 6, 8 e 10 e os pontos ganhos com chefes. No 2D, isso fica em `src/systems/Progression.ts`.
 3. **Vida própria das feras:** elas recebem dano, caem e voltam depois de um tempo.
 4. **Fatias maiores do PLAN.md:**

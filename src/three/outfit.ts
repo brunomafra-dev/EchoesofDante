@@ -1,4 +1,5 @@
 import * as T from 'three';
+import {RARITY_COLORS} from '../config/equipment';
 
 // Garments and armour fitted to the body, after the 2D wardrobe. Each piece reads the body vertices driven by one
 // bone, measures the body's radius per slice and angle around that bone, and builds a thick shell slightly outside it.
@@ -108,45 +109,60 @@ export function dress(model:T.Object3D,sexKey:string,kit:Wrap[]){
 // ---------- kits after the 2D wardrobe ----------
 const LR=(f:(s:'l'|'r')=>Wrap[])=>[...f('l'),...f('r')];
 // field boots: shaft over the ankle and a shell over the foot
-const boots=(c:string):Wrap[]=>LR(s=>[{bone:'calf_'+s,t0:.8,t1:1,finish:'leather',color:c,trim:'#4a4038',pad:.016,th:.012,rows:3,cols:16},
+const boots=(c:string,trim='#4a4038'):Wrap[]=>LR(s=>[{bone:'calf_'+s,t0:.8,t1:1,finish:'leather',color:c,trim,pad:.016,th:.012,rows:3,cols:16},
  {bone:'foot_'+s,also:['ball_'+s],finish:'leather',color:c,pad:.012,th:.012,rows:5,cols:16}]);
+// The armour is split in the parts of the 2D equipment look (config/appearance: torso, legs, boots, gloves; the
+// helmet is rigid gear in character.ts). Each part is worn at one level: basic (tier 1 pieces) or reinforced
+// (tier 2 and 3). Equipped pieces of tier 2 and 3 carry the trim of their rarity (config/equipment RARITY_COLORS).
+export type Part='torso'|'legs'|'boots'|'gloves';
+export const PARTS:Part[]=['torso','legs','boots','gloves'];
+export type Level='basic'|'reinforced';
+/** what is worn per part; parts left out follow the outfit picked in the creator */
+export type Armour=Partial<Record<Part|'helmet'|'accessory',1|2|3>>;
+export const TIER_TRIM:Record<number,string|undefined>={2:RARITY_COLORS.aprimorado,3:RARITY_COLORS.raro};
+type Spec=Partial<Record<Part,{level:Level;trim?:string}>>;
 // shoulder cap, bracer, knee and shin: the shared armour silhouette of the 2D basic tier
-function armour(plate:string,trim:string,level:'basic'|'reinforced',finish:Finish='plate'):Wrap[]{
- const k:Wrap[]=[
-  {bone:'spine_03',also:['clavicle_l','clavicle_r'],t0:.08,t1:.95,a0:-78,a1:78,finish,color:plate,trim,pad:.03,th:.02,rows:7,cols:16},
-  ...LR(s=>[{bone:'upperarm_'+s,t0:0,t1:.34,finish,color:plate,trim,pad:.035,flare:.05,th:.018,rows:5,cols:16},
-   {bone:'lowerarm_'+s,t0:.4,t1:.97,finish,color:plate,trim,pad:.018,th:.014,rows:5,cols:14},
-   {bone:'calf_'+s,t0:0,t1:.16,a0:-80,a1:80,finish,color:plate,trim,pad:.03,th:.018,rows:4,cols:10},
-   {bone:'calf_'+s,t0:.22,t1:.82,a0:-70,a1:70,finish,color:plate,trim,pad:.022,th:.014,rows:6,cols:10}]),
-  {bone:'pelvis',t0:.55,t1:.8,finish:'leather',color:'#3a2c20',trim:'#8a6030',pad:.022,th:.012,rows:3,cols:20},
-  ...boots('#2a2622'),
- ];
- if(level==='reinforced')k.push(
-  {bone:'spine_03',t0:.08,t1:.95,a0:110,a1:250,finish,color:plate,trim,pad:.03,th:.02,rows:6,cols:12},
-  {bone:'spine_02',a0:-70,a1:70,finish,color:plate,trim,pad:.03,th:.016,rows:4,cols:12},
-  ...LR(s=>[{bone:'thigh_'+s,t0:.15,t1:.72,a0:-58,a1:58,finish,color:plate,trim,pad:.018,th:.016,rows:6,cols:10},
-   {bone:'upperarm_'+s,t0:.38,t1:.9,finish,color:plate,trim,pad:.02,th:.014,rows:5,cols:14}]));
+function armour(plate:string,trim:string,spec:Spec,finish:Finish='plate'):Wrap[]{
+ const k:Wrap[]=[];
+ const t=(p:Part)=>spec[p]?.trim??trim,on=(p:Part)=>!!spec[p],rf=(p:Part)=>spec[p]?.level==='reinforced';
+ if(on('torso')){const tr=t('torso');k.push(
+  {bone:'spine_03',also:['clavicle_l','clavicle_r'],t0:.08,t1:.95,a0:-78,a1:78,finish,color:plate,trim:tr,pad:.03,th:.02,rows:7,cols:16},
+  ...LR(s=>[{bone:'upperarm_'+s,t0:0,t1:.34,finish,color:plate,trim:tr,pad:.035,flare:.05,th:.018,rows:5,cols:16}]),
+  {bone:'pelvis',t0:.55,t1:.8,finish:'leather',color:'#3a2c20',trim:'#8a6030',pad:.022,th:.012,rows:3,cols:20});
+  if(rf('torso'))k.push({bone:'spine_03',t0:.08,t1:.95,a0:110,a1:250,finish,color:plate,trim:tr,pad:.03,th:.02,rows:6,cols:12},
+   {bone:'spine_02',a0:-70,a1:70,finish,color:plate,trim:tr,pad:.03,th:.016,rows:4,cols:12},
+   ...LR(s=>[{bone:'upperarm_'+s,t0:.38,t1:.9,finish,color:plate,trim:tr,pad:.02,th:.014,rows:5,cols:14}]));}
+ if(on('gloves'))k.push(...LR(s=>[{bone:'lowerarm_'+s,t0:.4,t1:.97,finish,color:plate,trim:t('gloves'),pad:.018,th:.014,rows:5,cols:14}]));
+ if(on('legs')){const tr=t('legs');k.push(...LR(s=>[{bone:'calf_'+s,t0:0,t1:.16,a0:-80,a1:80,finish,color:plate,trim:tr,pad:.03,th:.018,rows:4,cols:10},
+   {bone:'calf_'+s,t0:.22,t1:.82,a0:-70,a1:70,finish,color:plate,trim:tr,pad:.022,th:.014,rows:6,cols:10}]));
+  if(rf('legs'))k.push(...LR(s=>[{bone:'thigh_'+s,t0:.15,t1:.72,a0:-58,a1:58,finish,color:plate,trim:tr,pad:.018,th:.016,rows:6,cols:10}]));}
+ if(on('boots'))k.push(...boots('#2a2622',spec.boots?.trim));
  return k;
 }
-export function classKit(weapon:string,outfit:string):Wrap[]{
- if(outfit!=='basic'&&outfit!=='reinforced')return[];
- const lv=outfit as 'basic'|'reinforced';
- if(weapon==='saber')return armour('#cfccc2','#c8902a',lv);
- if(weapon==='gauntlet')return armour('#ebe5d6','#d0a040',lv);
- if(weapon==='conductor')return armour('#ffffff','#ffffff',lv,'camo').map(w=>w.finish==='camo'?{...w,trim:undefined,pad:(w.pad??.02)+.012,flare:w.bone.startsWith('upperarm')?.02:w.flare}:w);
- // hunter: leather harness over the suit, dark pads; the reinforced tier adds a dark chest plate and thigh guards
- const k:Wrap[]=[
+// the parts worn: the creator outfit gives every part its level, equipped pieces replace their own part
+function specOf(outfit:string,worn:Armour={}):Spec{
+ const sp:Spec={};const lv=outfit==='basic'||outfit==='reinforced'?outfit as Level:null;
+ for(const p of PARTS){const tier=worn[p];if(tier)sp[p]={level:tier>1?'reinforced':'basic',trim:TIER_TRIM[tier]};else if(lv)sp[p]={level:lv};}
+ return sp;
+}
+export function classKit(weapon:string,outfit:string,worn:Armour={}):Wrap[]{
+ const sp=specOf(outfit,worn);
+ if(weapon==='saber')return armour('#cfccc2','#c8902a',sp);
+ if(weapon==='gauntlet')return armour('#ebe5d6','#d0a040',sp);
+ if(weapon==='conductor')return armour('#ffffff','#ffffff',sp,'camo').map(w=>w.finish==='camo'?{...w,trim:undefined,pad:(w.pad??.02)+.012,flare:w.bone.startsWith('upperarm')?.02:w.flare}:w);
+ // hunter: leather harness over the suit, dark pads; the reinforced torso adds a dark chest plate, reinforced legs thigh guards
+ const k:Wrap[]=[],tr=(p:Part)=>sp[p]?.trim??'#c07a2a';
+ if(sp.torso)k.push(
   {bone:'spine_03',t0:.05,t1:1,a0:12,a1:30,finish:'leather',color:'#b8742e',pad:.018,th:.01,rows:6,cols:3},
   {bone:'spine_03',t0:.05,t1:1,a0:-30,a1:-12,finish:'leather',color:'#b8742e',pad:.018,th:.01,rows:6,cols:3},
   {bone:'spine_02',a0:-80,a1:80,t0:.3,t1:.7,finish:'leather',color:'#8a5424',pad:.02,th:.01,rows:2,cols:12},
   {bone:'pelvis',t0:.55,t1:.8,finish:'leather',color:'#5a3a20',trim:'#c07a2a',pad:.022,th:.012,rows:3,cols:20},
-  ...LR(s=>[{bone:'upperarm_'+s,t0:0,t1:.3,a0:-100,a1:100,finish:'plate',color:'#2a2e36',trim:'#c07a2a',pad:.03,flare:.03,th:.016,rows:4,cols:12},
-   {bone:'calf_'+s,t0:0,t1:.18,a0:-80,a1:80,finish:'plate',color:'#24272e',pad:.03,th:.02,rows:4,cols:10},
-   {bone:'lowerarm_'+s,t0:.55,t1:.97,finish:'leather',color:'#3a2a1e',pad:.016,th:.012,rows:4,cols:12}]),
-  ...boots('#1e1e22'),
- ];
- if(lv==='reinforced')k.push({bone:'spine_03',also:['clavicle_l','clavicle_r'],t0:.1,t1:.92,a0:-70,a1:70,finish:'plate',color:'#2c3038',trim:'#c07a2a',pad:.035,th:.02,rows:7,cols:14},
-  ...LR(s=>[{bone:'thigh_'+s,t0:.15,t1:.7,a0:-55,a1:55,finish:'plate',color:'#2a2e36',pad:.018,th:.016,rows:5,cols:10} as Wrap]));
+  ...LR(s=>[{bone:'upperarm_'+s,t0:0,t1:.3,a0:-100,a1:100,finish:'plate',color:'#2a2e36',trim:tr('torso'),pad:.03,flare:.03,th:.016,rows:4,cols:12} as Wrap]));
+ if(sp.torso?.level==='reinforced')k.push({bone:'spine_03',also:['clavicle_l','clavicle_r'],t0:.1,t1:.92,a0:-70,a1:70,finish:'plate',color:'#2c3038',trim:tr('torso'),pad:.035,th:.02,rows:7,cols:14});
+ if(sp.gloves)k.push(...LR(s=>[{bone:'lowerarm_'+s,t0:.55,t1:.97,finish:'leather',color:'#3a2a1e',trim:sp.gloves?.trim,pad:.016,th:.012,rows:4,cols:12} as Wrap]));
+ if(sp.legs){k.push(...LR(s=>[{bone:'calf_'+s,t0:0,t1:.18,a0:-80,a1:80,finish:'plate',color:'#24272e',trim:sp.legs?.trim,pad:.03,th:.02,rows:4,cols:10} as Wrap]));
+  if(sp.legs.level==='reinforced')k.push(...LR(s=>[{bone:'thigh_'+s,t0:.15,t1:.7,a0:-55,a1:55,finish:'plate',color:'#2a2e36',trim:sp.legs?.trim,pad:.018,th:.016,rows:5,cols:10} as Wrap]));}
+ if(sp.boots)k.push(...boots('#1e1e22',sp.boots.trim));
  return k;
 }
 // clothes of the people of the base (2D portraits): Lia's lab coat, Nara's field jacket and scarf, Ivo's leather apron

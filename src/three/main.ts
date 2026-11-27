@@ -14,6 +14,7 @@ import {Npc,CAMP} from './camp';
 import {Journal,MISSIONS,NPCS,NPC_INFO,type Goal,type NpcId} from './missions';
 import {Gear,REGION_LOOT,GOAL_XP,POTION_HEAL,POTION_CD,type Stats} from './gear';
 import {gearKey} from './save';
+import type {Armour} from './outfit';
 import {EQUIPMENT,EQUIPMENT_IDS,EQUIPMENT_SLOTS,SLOT_NAMES,RARITY_COLORS,BAG_SIZE,equipmentName,type EquipmentId,type EquipmentSlot} from '../config/equipment';
 import {MATERIAL_NAMES,recipe,salePrice,POTION_PRICE} from '../config/economy';
 
@@ -477,7 +478,7 @@ async function applyLook(l:Look){
   if(prev.sex!==look.sex)await hero.setSex(look.sex);
   hero.apply(look);if(prev.sex!==look.sex||prev.weapon!==look.weapon)await hero.setWeapon(look.weapon);
 }
-async function previewHero(h:HeroSave){heroRec=h;petId=h.pet;await applyLook(h.look);syncPet();renderSelect();}
+async function previewHero(h:HeroSave){heroRec=h;petId=h.pet;hero.setArmour(wornArmour(new Gear(gearKey(h.id),new Journal(journalKey(h.id)).credits)));await applyLook(h.look);syncPet();renderSelect();}
 function renderSelect(){
   const host=$('s-list');host.innerHTML='';
   for(const h of roster.list){const j=new Journal(journalKey(h.id)),g=new Gear(gearKey(h.id),j.credits),c=CLASSES[WEAPON_CLASS[h.look.weapon]];
@@ -491,7 +492,7 @@ function showSelect(){
   if(heroRec)void previewHero(heroRec);else renderSelect();
 }
 function openCreator(kind:'new'|'edit'){
-  editing=kind;document.body.classList.remove('selecting');
+  editing=kind;document.body.classList.remove('selecting');hero.setArmour({});   // the creator shows the base outfit
   const inp=$('o-name') as HTMLInputElement;
   if(kind==='new'){inp.value='';petId='symbiont';void applyLook({...DEFAULT_LOOK,weapon:look.weapon}).then(()=>{syncPet();refreshUi();});}
   else{inp.value=heroRec?.name??'';refreshUi();}
@@ -528,7 +529,7 @@ function enter(){
   mode='play';document.body.classList.add('play');document.body.classList.remove('creator');
   document.body.classList.toggle('astral',cls()==='astral');
   if(!enemies.length)populate();
-  pos.set(0,0,0);heading=Math.PI;gstats=gear.stats();hpMax=gear.maxHp(kit().hp);hp=hpMax;potionReady=0;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();if(pet)pet.g.position.set(1.2,0,1);shieldUntil=0;sealPortals();renderBiomes();hud();spawnT=1.5;labelButtons();firstHelp();refreshMarkers();renderTracker();sound.music(world.biome);sound.ambient(world.biome);
+  pos.set(0,0,0);heading=Math.PI;gstats=gear.stats();hero.setArmour(wornArmour(gear));hpMax=gear.maxHp(kit().hp);hp=hpMax;potionReady=0;mana=cls()==='xenobinder'?35:100;dead=false;kills=0;element='energy';hero.setGlow(ELEMENT_COLORS.energy);syncPet();if(pet)pet.g.position.set(1.2,0,1);shieldUntil=0;sealPortals();renderBiomes();hud();spawnT=1.5;labelButtons();firstHelp();refreshMarkers();renderTracker();sound.music(world.biome);sound.ambient(world.biome);
 }
 $('go').onclick=confirmCreator;
 // walking into a portal carries the expedition to the neighbouring region
@@ -777,7 +778,10 @@ function updateMissions(dt:number){
 // ---------- level, loot and equipment (gear.ts: the 2D rules) ----------
 const pct=(v:number)=>Math.round(v*100)+'%';
 // equipment or a new level changes the maximum life; what was gained is added, a loss only caps it
-function refreshGear(){gstats=gear.stats();const m=gear.maxHp(kit().hp);if(m!==hpMax){hp=Math.max(1,Math.min(m,hp+Math.max(0,m-hpMax)));hpMax=m;}hud();}
+// what is worn shows on the hero: each equipped piece on its part of the body (outfit.ts), the accessory as a pendant
+const SLOT_PART=[['helmet','helmet'],['armor','torso'],['legs','legs'],['boots','boots'],['gloves','gloves'],['accessory','accessory']] as const;
+function wornArmour(g:Gear):Armour{const a:Armour={},sl=g.slots;for(const [slot,part] of SLOT_PART){const id=sl[slot];if(id)a[part]=EQUIPMENT[id].tier as 1|2|3;}return a;}
+function refreshGear(){hero.setArmour(wornArmour(gear));gstats=gear.stats();const m=gear.maxHp(kit().hp);if(m!==hpMax){hp=Math.max(1,Math.min(m,hp+Math.max(0,m-hpMax)));hpMax=m;}hud();}
 function gainXp(xp:number,at:T.Vector3){
   if(mode!=='play'||xp<=0)return;
   popText(at.clone().setY(2.7),`+${xp} XP`,'#d4b8ff');
