@@ -73,3 +73,44 @@ Cada fatia: QA técnico e aprovação humana informados separadamente; link em `
 - 27/11 (5): o usuário vai continuar o projeto no Antigravity. Passagem completa (estado, regras, próximos passos, como testar, lições) em [HANDOFF.md](HANDOFF.md).
 - 27/11 (6): o usuário seguiu aqui mesmo com o passo 1 do HANDOFF, **equipamento visível no herói**. A armadura de placas (`outfit.ts`) foi dividida nas partes do visual de equipamento do 2D (`config/appearance.ts`): torso (peito, ombros, cinto; reforçado acrescenta costas, abdômen e braço), luvas (braçadeiras), calça (joelho e canela; reforçada acrescenta coxas) e botas. Cada peça vestida troca a sua parte: nível 1 = básico, níveis 2 e 3 = reforçado com o acabamento na cor da raridade do 2D (âmbar e roxo). Partes sem peça seguem a vestimenta escolhida no criador, então quem não tem equipamento continua igual. Capacete vestido mostra o capacete com visor (níveis 2 e 3 ganham protetores laterais e crista acesa); acessório vira um pingente aceso no peito, preso ao pescoço. A tela "Seus personagens" mostra o herói equipado; o criador mostra a roupa base. Equipamento não entra no `Look` salvo (`Character.setArmour`). Limitações: na camuflagem do Domador a cor da raridade não aparece nas bordas (o tecido camuflado pinta a peça inteira); a arma ainda não muda de visual por nível (o 2D tem `weaponStyle`). QA: as quatro classes sem peças, níveis 1, 2 e 3 completos e mistura (frente e costas); seleção, edição e volta; tirar peça em jogo; regressão completa da etapa anterior.
 - 27/11 (7): pedido do usuário — um teste com personagem pronto para vestir os conjuntos completos. **Provador** `3d.html?provador=<classe>` (warrior, hunter, astral, xenobinder; `&sex=female` opcional): personagem temporário fora da lista, diário e mochila só em memória, com as 21 peças do 2D (níveis 1 a 3) e botões na ficha para vestir cada conjunto ou tirar tudo. QA: Guerreiro e Domador vestindo os conjuntos 1 e 2 (vida 140 → 163 → 182 no Guerreiro); armazenamento do personagem real idêntico antes e depois.
+- 27/11 (8), lote grande feito com o usuário ausente, que pediu "mete bala" e um commit final "pronto para teste":
+  - **Pedidos:**
+    - polir os conjuntos e dar sensação de evolução de um para o outro (o conjunto 1 era o 2 com peças faltando; de costas aparecia a farda);
+    - aproximar o 3D da história do 2D, mapa a mapa e momento a momento;
+    - aumentar a interação, o tempo de jogo e a retenção;
+    - preparar o coop online com o render do próprio 3D;
+    - celular deitado: o painel da missão cobria a tela e a poção não parecia poção.
+  - **Feito:**
+    1. Os conjuntos viraram três roupas próprias, que cobrem as costas (`outfit.ts` `setKit`, `character.ts`):
+       - Expedição: colete, gola, calça, joelheiras e mochila;
+       - Âmbar: carapaça segmentada, linhas acesas, gerador nas costas e capacete com cristas;
+       - Boreal: aço polido, gorjal, ombreiras em camadas, faldas, cristais nas costas e nos joelhos, e capacete com chifres.
+
+       As bordas das placas ficaram nítidas e em relevo (linhas duplicadas em `wrapGeo`). As ombreiras cobrem só o alto do braço (`Wrap.up`).
+    2. A poção virou um frasco num encaixe, com recarga circular. Com o celular deitado, o rastreador fica numa linha no canto.
+    3. 8 expedições regionais do 2D (`expeditions.ts`), paralelas à história:
+       - a NPC mostra os dois assuntos na conversa;
+       - os achados são guardados por criaturas;
+       - cada achado abre um Registro de Dante (cartão e aba do diário);
+       - a entrega dá uma peça de equipamento.
+    4. Atlas de Dante, com a arte do 2D, na tecla M e no botão de mapa. Prólogo do 2D para personagem novo.
+    5. Coop, primeiro passo:
+       - `server/relay3d.mjs` no caminho `/coop3d` (Vite, `web.mjs` e o serviço do Render), com o protocolo 16 do 2D intacto;
+       - `net.ts`: salas por código ou pelo link `?sala=`; os outros jogadores são desenhados com personagem, armadura, animação, nome, nível e vida.
+    6. Fim da história do 2D: "Uma rota segura" e "O primeiro abrigo" nos Terraços (Nascentes). O módulo instalado aparece no mundo (`World.settlement`).
+    7. Personagem de teste `?teste=fim`, que não salva nada.
+    8. `docs/3d-new/STORY_AUDIT.md`: o que é igual, o que foi adaptado e o que falta (permanência, segunda equipe).
+  - **QA técnico:**
+    - capturas dos conjuntos nas 4 classes e nos 2 corpos;
+    - fluxo completo de uma expedição, até recarregar a página;
+    - rota e abrigo, até recarregar;
+    - atlas e prólogo no computador e no celular deitado;
+    - sala com 2 navegadores;
+    - relé avulso servindo `/coop3d` e o 2D ao mesmo tempo;
+    - armazenamento real intacto no `?teste=fim`;
+    - build.
+  - **Limites:**
+    - a imagem do filme não sai nas capturas do SwiftShader;
+    - o coop publicado depende de o Render reimplantar `server/coop.mjs`;
+    - inimigos, saque e missões ainda não são compartilhados.
+  - **Aprovação humana:** pendente.

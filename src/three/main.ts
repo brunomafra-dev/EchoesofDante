@@ -1034,6 +1034,18 @@ function enterFitting(){
   document.body.classList.remove('selecting');document.body.classList.add('fitting');try{localStorage.setItem('dante3d.help','1');}catch{/* ignore */}
   enter();zoom=.6;later(.6,openGear);
 }
+// trial journey (3d.html?teste=fim&cls=...): a temporary character, never saved, with the story done up to the
+// caravan and the four guardians beaten, to try the terraces, the first shelter and every regional expedition
+const TRIAL=q.get('teste')==='fim';
+function enterTrial(){
+  heroRec={id:'teste',name:q.get('nome')??'Teste',look:{...look},pet:petId,created:Date.now(),played:Date.now()};   // not in the roster
+  journal=new Journal(null);gear=new Gear(null);
+  for(const id of ['recon','survival','signal','beyond','dunes','frost','forges','source','caravan'])journal.done.add(id);
+  for(const b of ['warden','soterrado','vesper','titan']){journal.bosses.add(b);journal.goals.add(b);gear.bosses.add(b);}
+  gear.xp=900;gear.economy.credits=400;gear.economy.potions=6;gstats=gear.stats();clearDrops();
+  document.body.classList.remove('selecting');try{localStorage.setItem('dante3d.help','1');}catch{/* ignore */}
+  enter();later(1,()=>toast('Personagem de teste · nada é salvo · fale com Ivo (história) ou com Lia, Ivo e Nara (expedições)'));
+}
 function wearSet(t:number){
   for(const sl of EQUIPMENT_SLOTS)gear.unequip(sl);
   if(t)for(const it of gear.bag.filter(i=>EQUIPMENT[i.id].tier===t))gear.equip(it.uid);
@@ -1222,6 +1234,7 @@ function frame(){
   $('loading').remove();
   if(q.get('biome')&&BIOMES[q.get('biome') as BiomeId])goBiome(q.get('biome') as BiomeId);
   if(FITTING){const c=q.get('provador') as ClassId;if(CLASSES[c])await change({weapon:CLASSES[c].weapon});enterFitting();}
+  else if(TRIAL){const c=q.get('cls') as ClassId;if(CLASSES[c])await change({weapon:CLASSES[c].weapon});enterTrial();}
   else if(q.get('auto')){
    // tests: play the current character, or a new one made from the look in the address
    if(!heroRec){heroRec={id:newId(),name:q.get('nome')??'Explorador',look:{...look},pet:(q.get('fera') as PetId)??'symbiont',created:Date.now(),played:Date.now()};roster.list.push(heroRec);}

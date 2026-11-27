@@ -72,6 +72,23 @@ O que já existe no 3D novo:
   - No acampamento: Lia vende poções e cura, Ivo fabrica, vende e desmonta, Nara guarda até 48 peças no cofre.
 - **Som** (`audio.ts`): Tone.js e as músicas do 2D por região.
 
+### Atualização de 27/11/2026 (noite): lote "pronto para teste"
+
+Ainda **aguarda o playtest** do usuário. Veja 27/11 (8) no PLAN.md e o topo da `test-library.html`. O que entrou:
+- conjuntos redesenhados;
+- 8 expedições regionais com Registros de Dante;
+- fim da história nos Terraços (rota segura e primeiro abrigo);
+- Atlas de Dante (M) e prólogo do 2D;
+- poção em frasco e celular deitado;
+- coop, primeiro passo: salas `/coop3d`, `net.ts` e `server/relay3d.mjs`.
+
+A comparação completa com o 2D está em [STORY_AUDIT.md](STORY_AUDIT.md).
+
+Novos parâmetros de URL:
+- `?teste=fim&cls=<classe>`: personagem temporário, com a história concluída até a caravana;
+- `?sala=CÓDIGO`: entra numa sala;
+- `?relay=ws://…`: troca o endereço do serviço de salas.
+
 ## 4. Próximos passos possíveis
 
 O usuário ainda não escolheu. Pergunte qual seguir. Esta é a ordem sugerida:
