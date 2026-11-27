@@ -194,3 +194,18 @@ body.play #bagbtn{display:grid}body.bestiary #bagbtn{display:none!important}
  #biomes{left:auto;right:10px;transform:none;top:6px}
  #bagbtn{top:52px}
 }
+
+/* regional expeditions: topics of a conversation, journal tabs, the expedition under the tracker, Records of Dante */
+.topics{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px}
+.topics button{font:inherit;font-size:12px;padding:5px 10px;background:#1d1812;color:#cdbf9f;border:1px solid #5a4a30;border-radius:3px;cursor:pointer}
+.topics button.on{background:#3a2c18;color:#ffe2a0;border-color:#c89a4a}
+.say h3 small{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#4fffc8;font-weight:500}
+#tracker .side{margin-top:7px;padding-top:6px;border-top:1px solid #5a4a3088}
+#tracker .side small{color:#4fe8b8}#tracker .side b{font-size:13px;color:#c8fff0}#tracker .side span{display:block;color:#a8d8c8;font-size:12px}
+#modal .rec{margin:8px 0;padding:8px 10px;background:#ffffff08;border-left:2px solid #3fe8b8;border-radius:2px}
+#modal .rec small{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+#modal .rec b{display:block;color:#f0d594;margin:2px 0}#modal .rec p{margin:2px 0 4px;line-height:1.45}#modal .rec span{font-size:11px;color:#9a8f78}
+#record{position:absolute;left:50%;top:15%;transform:translate(-50%,-10px);width:min(440px,86vw);padding:12px 16px 14px;background:linear-gradient(#0e1614f0,#0a0f0ef0);border:1px solid #2f6a5a;border-top:2px solid #3fe8b8;border-radius:3px;color:#d8e8e0;font-size:14px;line-height:1.5;opacity:0;pointer-events:none;transition:opacity .4s,transform .4s;box-shadow:0 8px 30px #000a;z-index:5}
+#record.on{opacity:1;transform:translate(-50%,0)}
+#record small{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase}#record b{display:block;font-size:16px;color:#f0f8f4;margin:3px 0 5px}#record p{margin:0}
+@media (max-height:500px){#tracker .side{display:none}#record{top:8px;font-size:12px;padding:8px 12px}}

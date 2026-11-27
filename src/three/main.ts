@@ -11,7 +11,8 @@ import {PETS,PET_ORDER,type PetId,type PetDef} from './pets';
 import {loadRoster,saveRoster,newId,journalKey,forget,cleanName,NAME_MAX,type HeroSave} from './save';
 import {BIOMES,BIOME_ORDER,type BiomeId} from './biomes';
 import {Npc,CAMP} from './camp';
-import {Journal,MISSIONS,NPCS,NPC_INFO,type Goal,type NpcId} from './missions';
+import {Journal,MISSIONS,EXPEDITIONS,NPCS,NPC_INFO,missionById,type Goal,type NpcId,type Mission} from './missions';
+import {ART_NAMES,ART_COLORS,type Art} from './expeditions';
 import {Gear,REGION_LOOT,GOAL_XP,POTION_HEAL,POTION_CD,type Stats} from './gear';
 import {gearKey} from './save';
 import type {Armour} from './outfit';
@@ -417,7 +418,7 @@ ui.innerHTML=`
  <button id="go">Criar e entrar no mundo</button><button class="chip" id="back">Voltar aos personagens</button><p class="hint">Arraste para girar o personagem</p></div>
 <div id="hud"><div class="orb hp"><i id="hp"></i><b id="hpt"></b></div><div id="clsname"></div><div class="bar" id="skillbar"></div><div class="orb mp"><i id="mp"></i><b id="mpt"></b></div><div id="kills"></div><div id="xpbar"><i id="xpfill"></i><span id="xpt"></span></div><button id="potbtn" title="Poção de cura (R)"><svg viewBox="0 0 32 32" width="34" height="34" aria-hidden="true"><defs><linearGradient id="potliq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff5a4a"/><stop offset="1" stop-color="#7a0a0a"/></linearGradient></defs><path d="M12 3h8v2h-1v6.2c4 1.5 7 5.3 7 9.8 0 5.8-4.5 9-10 9S6 26.8 6 21c0-4.5 3-8.3 7-9.8V5h-1z" fill="#1a1512" stroke="#c9a45a" stroke-width="1.4" stroke-linejoin="round"/><path d="M7.6 19.5h16.8c.3.5.4 1 .4 1.5 0 4.7-3.8 7.3-8.8 7.3S7.2 25.7 7.2 21c0-.5.1-1 .4-1.5z" fill="url(#potliq)"/><ellipse cx="12" cy="21.5" rx="1.6" ry="2.4" fill="#ffd0c8" opacity=".55"/><rect x="11.5" y="2" width="9" height="2.6" rx="1" fill="#8a6a3a"/></svg><i id="potcd"></i><b id="pott"></b><kbd>R</kbd></button></div><button id="optbtn" title="Opções">&#9776;</button><button id="bagbtn" title="Equipamento e mochila (I)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M8 7V5.5a4 4 0 0 1 8 0V7"/><path d="M5 9a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M9 13h6v3H9z"/></svg></button><div id="perf"><span id="fps"></span></div>
 <div id="biomes"></div><div id="portalhint"></div><div id="touch"><button id="t-atk">Atacar</button><button id="t-q">Carga</button><button id="t-dash">Esquiva</button><button id="t-e">Energia</button><button id="t-act">Falar</button></div><div id="joy"><i></i></div><div id="modal"><div class="box"><h2 id="mtitle"></h2><div id="mbody"></div><button id="mclose">Fechar</button></div></div><div id="banner"></div><div id="fade"></div><div id="bossbar"><span id="bossname"></span><div><i id="bossfill"></i></div></div>
-<div id="tracker"></div><div id="prompt"></div><div id="guide"><i></i><span></span></div><div id="toast"></div>
+<div id="tracker"></div><div id="prompt"></div><div id="guide"><i></i><span></span></div><div id="record"></div><div id="toast"></div>
 <div id="deadmsg"><h2>Você caiu</h2><button id="respawn">Levantar</button></div>
 <div id="loading">Carregando…</div>`;
 const $=(id:string)=>document.getElementById(id)!;
@@ -510,7 +511,8 @@ function enterAs(h:HeroSave){
   heroRec=h;h.played=Date.now();roster.current=h.id;saveRoster(roster);
   journal=new Journal(journalKey(h.id));gear=new Gear(gearKey(h.id),journal.credits);gstats=gear.stats();clearDrops();petId=h.pet;document.body.classList.remove('selecting');
   // progress from before the journey order: a mission waiting in a region that is still closed goes back to its giver
-  {const act=journal.current();if(act&&act.goals.some(g=>!journal.goals.has(g.id)&&!reachable(g.biome))){journal.active=null;journal.save();}}
+  {const act=journal.current();if(act&&act.goals.some(g=>!journal.goals.has(g.id)&&!reachable(g.biome))){journal.active=null;journal.save();}
+   const sd=journal.sideCurrent();if(sd&&sd.goals.some(g=>!journal.goals.has(g.id)&&!reachable(g.biome))){journal.side=null;journal.save();}}
   if(!reachable(world.biome))goBiome('camp');
   enter();
 }
@@ -557,7 +559,7 @@ function goBiome(id:BiomeId,from:0|1|-1=0){
   if(from&&!fading){fading=true;const f=$('fade');f.classList.add('on');setTimeout(()=>{goBiome(id,from);fading=true;setTimeout(()=>{f.classList.remove('on');fading=false;},60);},380);return;}
   collectDrops();world.setBiome(id);sealPortals();if(from)sfx('portal');if(mode==='play'){sound.music(id);sound.ambient(id);}vfx.clearEmitters();for(const f of world.flameSpots)vfx.campfire(f.p,f.s);
   for(const e of enemies)e.dispose();enemies.length=0;clearShots();boss=null;bossBeaten=false;biomeKills=0;$('bossbar').classList.remove('on');populate();
-  pos.set(0,0,from===1?ARENA-10:from===-1?-ARENA+10:0);heading=from===-1?0:Math.PI;portalLock=now()+2;scan=null;refreshMarkers();if(pet)pet.g.position.set(pos.x+1.2,0,pos.z+1);spawnT=2;banner(BIOMES[id].name);renderBiomes();
+  placeSites();guarded.clear();pos.set(0,0,from===1?ARENA-10:from===-1?-ARENA+10:0);heading=from===-1?0:Math.PI;portalLock=now()+2;scan=null;refreshMarkers();if(pet)pet.g.position.set(pos.x+1.2,0,pos.z+1);spawnT=2;banner(BIOMES[id].name);renderBiomes();
 }
 // touch devices: left thumb joystick to walk, right-hand buttons; the skill button can be dragged to aim
 const touch=matchMedia('(pointer:coarse)').matches||'ontouchstart' in window;
@@ -608,7 +610,7 @@ function openModal(kind:'options'|'help'){
   body.innerHTML=kind==='help'?help:`<div class="opts"><button id="o-help">Ver controles</button><button id="o-quality">${quality==='high'?'Qualidade: alta':'Qualidade: leve'}</button><button id="o-music">${sound.musicOn?'Música: ligada':'Música: desligada'}</button><button id="o-sfx">${sound.sfxOn?'Efeitos: ligados':'Efeitos: desligados'}</button><button id="o-journal">Diário de missões</button><button id="o-gear">Equipamento e mochila</button><button id="o-creator">Trocar de personagem</button><p class="note" id="o-fps">${fpsShown?fpsShown+' quadros por segundo':''}</p></div>`;
   m.classList.add('on');
   if(kind==='options'){
-   $('o-help').onclick=()=>openModal('help');$('o-journal').onclick=openJournal;$('o-gear').onclick=openGear;
+   $('o-help').onclick=()=>openModal('help');$('o-journal').onclick=()=>openJournal();$('o-gear').onclick=openGear;
    $('o-music').onclick=()=>{sound.toggleMusic();$('o-music').textContent=sound.musicOn?'Música: ligada':'Música: desligada';};
    $('o-sfx').onclick=()=>{sound.toggleSfx();$('o-sfx').textContent=sound.sfxOn?'Efeitos: ligados':'Efeitos: desligados';};
    $('o-quality').onclick=()=>{setQuality(quality==='high'?'low':'high');($('o-quality')).textContent=quality==='high'?'Qualidade: alta':'Qualidade: leve';};
@@ -642,41 +644,80 @@ function interact(){
 function toast(text:string){const t=$('toast');t.textContent=text;t.classList.remove('on');void t.offsetWidth;t.classList.add('on');}
 function goalDone(g:Goal){
   if(!journal.complete(g.id))return;sfx('heal');toast(`Registrado: ${g.label}`);if(g.kind!=='boss')gainXp(g.id.startsWith('echo')?GOAL_XP.echo:GOAL_XP.route,pos);
-  const m=journal.current();if(m&&journal.status(m.id)==='ready')later(2.6,()=>toast(`Relatório pronto · volte para falar com ${NPC_INFO[m.npc].name}`));
+  if(g.finding)showRecord(g);
+  for(const m of [journal.current(),journal.sideCurrent()])if(m&&m.goals.some(x=>x.id===g.id)&&journal.status(m.id)==='ready')later(g.finding?9:2.6,()=>toast(`Relatório pronto · volte para falar com ${NPC_INFO[m.npc].name}`));
   refreshMarkers();renderTracker();
 }
-function openTalk(n:Npc,report?:{id:string;credits:number}){
+function openTalk(n:Npc,report?:{id:string;credits:number;item?:EquipmentId|null},pick?:string){
   talking=n;const id=n.def.npc,m=$('modal'),body=$('mbody');m.classList.add('talking');
   $('mtitle').textContent=n.def.name;
   const portrait=import.meta.env.BASE_URL+(id?NPC_INFO[id].portrait:n.def.id==='elisa'?'assets/base/base-refugee-a.png':'assets/base/base-refugee-b.png');
   let html=`<div class="talk"><img src="${portrait}" alt=""><div class="say"><p class="role">${n.def.role}</p>`;
   let action='';
-  if(report){const done=MISSIONS.find(x=>x.id===report.id)!,next=id?journal.offerFor(id):null;
-   html+=`<h3>${done.title} · concluída</h3>`+done.report.map(l=>`<p>${l}</p>`).join('')+`<p class="reward">Relatório entregue · +${report.credits} créditos</p>`;
-   if(next)action=`<button class="act" data-next="1">Próxima missão</button>`;}
+  if(report){const done=missionById(report.id),next=id?journal.offersFor(id):[];
+   html+=`<h3>${done.title} · concluída</h3>`+done.report.map(l=>`<p>${l}</p>`).join('')+`<p class="reward">Relatório entregue · +${report.credits} créditos${report.item?` · <b style="color:${RARITY_COLORS[EQUIPMENT[report.item].rarity]}">${itemName(report.item)}</b> na mochila`:''}</p>`;
+   if(next.length)action=`<button class="act" data-next="1">Próxima conversa</button>`;}
   else if(!id)html+=(n.def.lines??[]).map(l=>`<p>${l}</p>`).join('');
   else{
-   const mi=journal.offerFor(id);
+   // the story first, then the regional expedition; the one with a report ready opens first
+   const offers=journal.offersFor(id),mi=offers.find(x=>x.id===pick)??offers.find(x=>journal.status(x.id)==='ready')??offers[0];
    if(!mi)html+=`<p>${IDLE[id]}</p>`;
    else{
     const st=journal.status(mi.id);
-    html+=`<h3>${mi.title}</h3>`+(st==='ready'?mi.report:mi.offer).map(l=>`<p>${l}</p>`).join('');
-    html+=`<ul class="goals">${mi.goals.map(g=>`<li class="${journal.goals.has(g.id)?'done':''}">${journal.goals.has(g.id)?'✓':'◇'} ${g.label}</li>`).join('')}</ul><p class="reward">Recompensa pessoal: ${mi.credits} créditos</p>`;
-    if(st==='available')action=`<button class="act" data-id="${mi.id}" data-do="accept">Aceitar missão</button>`;
+    if(offers.length>1)html+=`<div class="topics">${offers.map(o=>`<button data-topic="${o.id}" class="${o===mi?'on':''}">${o.side?'Expedição':'História'} · ${o.title}${journal.status(o.id)==='ready'?' ✓':''}</button>`).join('')}</div>`;
+    html+=`<h3>${mi.side?'<small>Expedição regional</small>':''}${mi.title}</h3>`+(st==='ready'?mi.report:mi.offer).map(l=>`<p>${l}</p>`).join('');
+    html+=`<ul class="goals">${mi.goals.map(g=>`<li class="${journal.goals.has(g.id)?'done':''}">${journal.goals.has(g.id)?'✓':'◇'} ${g.label}</li>`).join('')}</ul><p class="reward">Recompensa pessoal: ${mi.credits} créditos${mi.side?' e uma peça de equipamento da região':''}</p>`;
+    if(st==='available')action=`<button class="act" data-id="${mi.id}" data-do="accept">${mi.side?'Aceitar expedição':'Aceitar missão'}</button>`;
     else if(st==='ready')action=`<button class="act" data-id="${mi.id}" data-do="deliver">Entregar relatório</button>`;
-    else html+=`<p class="note">Missão em andamento. A seta dourada indica o próximo objetivo.</p>`;
+    else html+=`<p class="note">${mi.side?'Expedição em andamento. Os achados aparecem com feixe verde-água na região.':'Missão em andamento. A seta dourada indica o próximo objetivo.'}</p>`;
    }
   }
   if(id&&!report)action+=`<button class="svc">${SVC[id]}</button>`;
   body.innerHTML=html+action+'</div></div>';m.classList.add('on');sfx('ui');
   if(id)body.querySelector<HTMLButtonElement>('.svc')?.addEventListener('click',()=>openService(id,n));
+  body.querySelectorAll<HTMLButtonElement>('[data-topic]').forEach(b=>b.onclick=()=>openTalk(n,undefined,b.dataset.topic));
   body.querySelector<HTMLButtonElement>('.act')?.addEventListener('click',e=>{
    const b=e.currentTarget as HTMLButtonElement,mid=b.dataset.id!;
    if(b.dataset.next){openTalk(n);return;}
-   if(b.dataset.do==='accept'){if(journal.accept(mid)){toast(`Missão aceita: ${MISSIONS.find(x=>x.id===mid)!.title}`);closeModal();}}
-   else{const c=journal.deliver(mid);if(c){gear.collect({tier:1,credits:c,amount:0});hud();sfx('heal');toast(`Relatório entregue · +${c} créditos`);openTalk(n,{id:mid,credits:c});}}
+   if(b.dataset.do==='accept'){if(journal.accept(mid)){const mm=missionById(mid);toast(`${mm.side?'Expedição aceita':'Missão aceita'}: ${mm.title}`);placeSites();closeModal();}}
+   else{const mm=missionById(mid),c=journal.deliver(mid);if(c){gear.collect({tier:1,credits:c,amount:0});const item=mm.side?expeditionItem(mm):null;hud();sfx('heal');toast(`Relatório entregue · +${c} créditos`);openTalk(n,{id:mid,credits:c,item});}}
    refreshMarkers();renderTracker();
   });
+}
+// the piece of equipment an expedition leaves: of the tier of its region, for a slot the hero has no piece of if possible
+function expeditionItem(m:Mission):EquipmentId|null{
+  const tier=REGION_LOOT[m.region??'camp'].gear,order=['armor','helmet','legs','gloves','boots','accessory','weapon'],pool=EQUIPMENT_IDS.filter(i=>EQUIPMENT[i].tier===tier).sort((a,b)=>order.indexOf(EQUIPMENT[a].slot)-order.indexOf(EQUIPMENT[b].slot));
+  const have=new Set<string>([...gear.bag.map(i=>EQUIPMENT[i.id].slot),...Object.keys(gear.slots)]);
+  const pick=pool.find(i=>!have.has(EQUIPMENT[i].slot))??pool[Math.floor(Math.random()*pool.length)];
+  return pick&&gear.take(pick)?pick:null;
+}
+// Records of Dante: the finding of a discovery shows on a card and stays in the journal
+let recordT=0;
+function showRecord(g:Goal){
+  const el=$('record'),art=(g.art??'record') as Art;
+  el.innerHTML=`<small style="color:${ART_COLORS[art]}">${ART_NAMES[art]} · Registro de Dante</small><b>${g.label}</b><p>${g.finding}</p>`;
+  el.classList.remove('on');void el.offsetWidth;el.classList.add('on');clearTimeout(recordT);recordT=window.setTimeout(()=>el.classList.remove('on'),9000);
+}
+// the finds of an expedition sit on free ground of the region (rocks and trees are placed by seed)
+const siteHome=new Map<string,[number,number]>();
+function placeSites(){
+  const free=(x:number,z:number)=>!world.colliders.some(c=>Math.hypot(x-c.x,z-c.z)<c.r+1.8)&&Math.abs(x)<ARENA-4&&Math.abs(z)<ARENA-4;
+  for(const m of EXPEDITIONS)for(const g of m.goals){if(g.biome!==world.biome)continue;
+   let base=siteHome.get(g.id);if(!base){base=[g.x,g.z];siteHome.set(g.id,base);}
+   let best:[number,number]=base;
+   if(!free(...base))search:for(let r=1.5;r<12;r+=1.5)for(let a=0;a<6.28;a+=.5){const x=base[0]+Math.cos(a)*r,z=base[1]+Math.sin(a)*r;if(free(x,z)){best=[x,z];break search;}}
+   g.x=best[0];g.z=best[1];}
+}
+// each discovery of an expedition is watched by residents of the region, who wake when the hero comes near
+const guarded=new Set<string>();
+function updateGuards(){
+  if(mode!=='play'||dead)return;
+  const mix=BIOMES[world.biome].creatures;if(!mix.length)return;
+  for(const g of journal.open()){if(!g.finding||g.biome!==world.biome||guarded.has(g.id))continue;
+   if(Math.hypot(g.x-pos.x,g.z-pos.z)>17)continue;guarded.add(g.id);
+   for(let i=0;i<2;i++){let x=Math.random(),k=mix[0][0];for(const [kk,w] of mix){if(x<w){k=kk;break;}x-=w;}
+    const a=i*3.1+Math.random(),e=new Creature(k,g.x+Math.cos(a)*3.2,g.z+Math.sin(a)*3.2,world.scene);world.collide(e.pos,e.radius);e.home.copy(e.pos);e.heading=Math.random()*6.28;enemies.push(e);}
+  }
 }
 // beast pen: the Domador trades the companion that goes on expedition
 function openPen(){
@@ -688,11 +729,18 @@ function openPen(){
   body.querySelectorAll<HTMLButtonElement>('.pen').forEach(b=>b.onclick=()=>{const id=b.dataset.p as PetId;if(id===petId)return;
    petId=id;if(heroRec){heroRec.pet=id;saveRoster(roster);}syncPet();sfx('heal');toast(`${PETS[id].name} agora acompanha você`);openPen();hud();labelButtons();});
 }
-function openJournal(){
-  const m=$('modal'),body=$('mbody');m.classList.remove('talking');talking=null;$('mtitle').textContent='Diário de missões';
+function openJournal(tab:'story'|'side'|'records'='story'){
+  const m=$('modal'),body=$('mbody');m.classList.remove('talking');talking=null;$('mtitle').textContent='Diário da expedição';
   const ST:Record<string,string>={locked:'Bloqueada',available:'Disponível',active:'Em andamento',ready:'Relatório pronto',completed:'Concluída'};
-  body.innerHTML=`<p class="note">Créditos: ${gear.economy.credits}</p>`+MISSIONS.map(mi=>{const st=journal.status(mi.id);return`<div class="jm ${st}"><b>${mi.title}</b><span>${NPC_INFO[mi.npc].name} · ${ST[st]}</span>${st==='active'||st==='ready'?`<ul class="goals">${mi.goals.map(g=>`<li class="${journal.goals.has(g.id)?'done':''}">${journal.goals.has(g.id)?'✓':'◇'} ${g.label}</li>`).join('')}</ul>`:''}</div>`;}).join('');
-  m.classList.add('on');
+  const row=(mi:Mission)=>{const st=journal.status(mi.id);return`<div class="jm ${st}"><b>${mi.title}</b><span>${NPC_INFO[mi.npc].name}${mi.region?' · '+BIOMES[mi.region].name:''} · ${ST[st]}</span>${st==='active'||st==='ready'?`<ul class="goals">${mi.goals.map(g=>`<li class="${journal.goals.has(g.id)?'done':''}">${journal.goals.has(g.id)?'✓':'◇'} ${g.label}</li>`).join('')}</ul>`:''}</div>`;};
+  const recs=journal.records(),total=EXPEDITIONS.reduce((n,x)=>n+x.goals.length,0);
+  const tabs=`<div class="topics jtabs"><button data-tab="story" class="${tab==='story'?'on':''}">História</button><button data-tab="side" class="${tab==='side'?'on':''}">Expedições · ${EXPEDITIONS.filter(x=>journal.done.has(x.id)).length}/${EXPEDITIONS.length}</button><button data-tab="records" class="${tab==='records'?'on':''}">Registros · ${recs.length}/${total}</button></div>`;
+  let html=`<p class="note">Créditos: ${gear.economy.credits}</p>`+tabs;
+  if(tab==='story')html+=MISSIONS.map(row).join('');
+  else if(tab==='side')html+=`<p class="note">Expedições regionais correm junto com a história: uma de cada vez. Cada uma tem três achados guardados por criaturas e paga com créditos e uma peça de equipamento da região.</p>`+EXPEDITIONS.map(row).join('');
+  else html+=recs.length?recs.map(({mission,goal})=>{const art=(goal.art??'record') as Art;return`<div class="rec"><small style="color:${ART_COLORS[art]}">${ART_NAMES[art]} · ${BIOMES[goal.biome].name}</small><b>${goal.label}</b><p>${goal.finding}</p><span>${mission.title}</span></div>`;}).join(''):`<p class="note">Nenhum registro ainda. Os achados das expedições regionais ficam guardados aqui.</p>`;
+  body.innerHTML=html;m.classList.add('on');
+  body.querySelectorAll<HTMLButtonElement>('[data-tab]').forEach(b=>b.onclick=()=>openJournal(b.dataset.tab as 'story'));
 }
 function renderTracker(){
   const t=$('tracker'),mi=journal.current();let html='';
@@ -700,15 +748,20 @@ function renderTracker(){
    html=`<small>Missão · ${gear.economy.credits} créditos</small><b>${mi.title}</b><ul>${mi.goals.filter(g=>!(g.after??[]).some(a=>!journal.goals.has(a))||journal.goals.has(g.id)).map(g=>`<li class="${journal.goals.has(g.id)?'done':''}">${journal.goals.has(g.id)?'✓':'◇'} ${g.label}</li>`).join('')}</ul>`+(st==='ready'?`<em>Volte para falar com ${NPC_INFO[mi.npc].name}</em>`:'');}
   else{const next=MISSIONS.find(x=>journal.status(x.id)==='available');
    html=next?`<small>Missão · ${gear.economy.credits} créditos</small><b>${next.title}</b><em>! Converse com ${NPC_INFO[next.npc].name} no acampamento</em>`:`<small>Diário · ${gear.economy.credits} créditos</small><b>Todas as missões concluídas</b>`;}
+  const sd=journal.sideCurrent();
+  if(sd){const st=journal.status(sd.id),left=sd.goals.filter(g=>!journal.goals.has(g.id));
+   html+=`<div class="side"><small>Expedição · ${sd.goals.length-left.length}/${sd.goals.length}</small><b>${sd.title}</b>${st==='ready'?`<em>Volte para falar com ${NPC_INFO[sd.npc].name}</em>`:`<span>◇ ${left[0].label} · ${BIOMES[left[0].biome].name}</span>`}</div>`;}
   if(t.innerHTML!==html)t.innerHTML=html;
 }
-$('tracker').addEventListener('click',openJournal);
+$('tracker').addEventListener('click',()=>openJournal());
 // beacons on the open goals of this region
 const markers=new T.Group();world.scene.add(markers);
 const BEAM=new T.ShaderMaterial({uniforms:{uT:{value:0},uC:{value:new T.Color('#ffc24a')}},transparent:true,depthWrite:false,blending:T.AdditiveBlending,side:T.DoubleSide,
  vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
  fragmentShader:'uniform float uT;uniform vec3 uC;varying vec2 vUv;void main(){float a=pow(1.-vUv.y,1.8)*(.35+.2*sin(vUv.y*24.-uT*3.))*smoothstep(0.,.08,vUv.y+.02);gl_FragColor=vec4(uC*a,a);}'});
 const RING=new T.MeshBasicMaterial({color:'#ffc24a',transparent:true,opacity:.75,blending:T.AdditiveBlending,depthWrite:false});
+const BEAM_SIDE=BEAM.clone();BEAM_SIDE.uniforms.uC.value=new T.Color('#4fffc8');const RING_SIDE=RING.clone();RING_SIDE.color.set('#4fffc8');
+const FIND=new T.MeshStandardMaterial({color:'#b8fff0',emissive:'#3fe8b8',emissiveIntensity:1.5,roughness:.3,flatShading:true});
 const GEM=new T.MeshStandardMaterial({color:'#ffd27a',emissive:'#ffb040',emissiveIntensity:1.5,roughness:.3});
 const ECHO=new T.MeshStandardMaterial({color:'#9ff4ff',emissive:'#4fe6ff',emissiveIntensity:1.8,roughness:.2,flatShading:true});
 function refreshMarkers(){
@@ -716,15 +769,16 @@ function refreshMarkers(){
   for(const g of journal.open()){
    if(g.biome!==world.biome||g.kind==='boss')continue;
    const m=new T.Group();m.position.set(g.x,0,g.z);
-   m.add(new T.Mesh(new T.CylinderGeometry(.55,.9,12,20,1,true).translate(0,6,0),BEAM));
-   const ring=new T.Mesh(new T.RingGeometry(1.7,1.95,48).rotateX(-Math.PI/2),RING);ring.position.y=.06;ring.name='ring';m.add(ring);
+   const side=!!g.finding;
+   m.add(new T.Mesh(new T.CylinderGeometry(.55,.9,12,20,1,true).translate(0,6,0),side?BEAM_SIDE:BEAM));
+   const ring=new T.Mesh(new T.RingGeometry(1.7,1.95,48).rotateX(-Math.PI/2),side?RING_SIDE:RING);ring.position.y=.06;ring.name='ring';m.add(ring);
    const echo=g.id.startsWith('echo')||g.id==='passage'||g.id==='origin';
-   const gem=new T.Mesh(echo?new T.OctahedronGeometry(.5,0).scale(.6,1.6,.6):new T.OctahedronGeometry(.3,0),echo?ECHO:GEM);gem.position.y=echo?1.6:1.8;gem.name='gem';gem.castShadow=true;m.add(gem);
+   const gem=new T.Mesh(echo?new T.OctahedronGeometry(.5,0).scale(.6,1.6,.6):side?new T.IcosahedronGeometry(.32,0):new T.OctahedronGeometry(.3,0),echo?ECHO:side?FIND:GEM);gem.position.y=echo?1.6:1.8;gem.name='gem';gem.castShadow=true;m.add(gem);
    markers.add(m);
   }
 }
 function updateMarkers(dt:number){
-  BEAM.uniforms.uT.value+=dt;
+  BEAM.uniforms.uT.value+=dt;BEAM_SIDE.uniforms.uT.value+=dt;
   for(const m of markers.children){const r=m.getObjectByName('ring'),g=m.getObjectByName('gem');if(r){const s=1+Math.sin(time*2.4)*.06;r.scale.setScalar(s);}if(g){g.rotation.y+=dt*1.2;g.position.y=(g.position.y>1.7?1.8:1.6)+Math.sin(time*2)*.08;}}
 }
 // where to go next: a goal here, a portal toward the goal's region, or the person to report to
@@ -734,11 +788,14 @@ function guideTarget():{p:T.Vector3;label:string}|null{
   if(!mi){const next=MISSIONS.find(x=>journal.status(x.id)==='available');if(!next)return null;who=next.npc;}
   else if(journal.status(mi.id)==='ready')who=mi.npc;
   if(who){if(world.biome!=='camp')return portalTo('camp');const n=npcs.find(x=>x.def.npc===who);return n?{p:n.pos,label:n.def.name}:null;}
-  const open=journal.open(),here=open.filter(g=>g.biome===world.biome);
+  const sd=journal.sideCurrent(),sideReady=sd&&journal.status(sd.id)==='ready';
+  const open=journal.open(),story=open.filter(g=>!g.finding),storyHere=story.filter(g=>g.biome===world.biome);
+  const here=storyHere.length||!mi?storyHere:open.filter(g=>g.finding&&g.biome===world.biome);
+  if(!here.length&&!story.length&&sideReady){if(world.biome!=='camp')return portalTo('camp');const n=npcs.find(x=>x.def.npc===sd!.npc);return n?{p:n.pos,label:n.def.name}:null;}
   if(here.length){let best=here[0],bd=1e9;for(const g of here){const d=Math.hypot(g.x-pos.x,g.z-pos.z);if(d<bd){bd=d;best=g;}}
    if(best.kind==='boss')return boss?{p:boss.pos,label:boss.name}:null;
    return{p:new T.Vector3(best.x,0,best.z),label:best.label};}
-  return open.length?portalTo(open[0].biome):null;
+  return story.length?portalTo(story[0].biome):open.length?portalTo(open[0].biome):null;
 }
 const gv=new T.Vector3();
 function updateGuide(){
@@ -771,7 +828,7 @@ function updateMissions(dt:number){
    else{scan.t+=dt;faceTo(new T.Vector3(scan.g.x,0,scan.g.z));if(scan.t>=SCAN_TIME){const g=scan.g;scan=null;goalDone(g);}}
   }
   if(talking&&Math.hypot(talking.pos.x-pos.x,talking.pos.z-pos.z)>5)closeModal();
-  updateMarkers(dt);updatePrompt();updateGuide();
+  updateGuards();updateMarkers(dt);updatePrompt();updateGuide();
   if((trackT+=dt)>1){trackT=0;renderTracker();}
 }
 

@@ -2,13 +2,15 @@ import type {BiomeId} from './biomes';
 import type {SpeciesId} from './creatures';
 import type {Look} from './character';
 import {shelterPoint,shuttlePoint,type NpcDef} from './camp';
+import {EXPEDITIONS} from './expeditions';
 
 // Story missions of the 2D expedition, carried into the 3D regions. Same people, same words;
 // goals are places to reach, readings to take and the guardians that hold each region.
 export type NpcId='nara'|'lia'|'ivo';
 export type GoalKind='visit'|'scan'|'boss';
-export interface Goal{id:string;label:string;biome:BiomeId;kind:GoalKind;x:number;z:number;after?:string[];boss?:SpeciesId}
-export interface Mission{id:string;title:string;npc:NpcId;credits:number;offer:string[];report:string[];goals:Goal[];requires?:string}
+export interface Goal{id:string;label:string;biome:BiomeId;kind:GoalKind;x:number;z:number;after?:string[];boss?:SpeciesId;finding?:string;art?:string}
+// side: a regional expedition (expeditions.ts), worked on beside the story mission
+export interface Mission{id:string;title:string;npc:NpcId;credits:number;offer:string[];report:string[];goals:Goal[];requires?:string;side?:boolean;region?:BiomeId}
 
 export const NPC_INFO:Record<NpcId,{name:string;service:string;portrait:string}>={
  nara:{name:'Nara',service:'Expedições e cofre',portrait:'assets/base/base-expedition-civilian.png'},
@@ -60,7 +62,9 @@ export const MISSIONS:Mission[]=[
   report:['O abrigo das cristas protege uma parada curta. A bacia é firme nas bordas, mas o centro úmido deve ficar livre.','Marquei os pontos de apoio. Com água, energia e uma rota segura, as primeiras famílias podem deixar a nave.'],
   goals:[{id:'v-shelter',label:'Registrar o abrigo das cristas',biome:'valley',kind:'scan',x:-18,z:-6},{id:'v-basin',label:'Examinar a bacia de descanso',biome:'valley',kind:'scan',x:18,z:-12},{id:'v-pass',label:'Registrar a margem da passagem oriental',biome:'valley',kind:'scan',x:6,z:17}]},
 ];
-export const missionById=(id:string)=>MISSIONS.find(m=>m.id===id)!;
+export {EXPEDITIONS};
+export const ALL_MISSIONS:Mission[]=[...MISSIONS,...EXPEDITIONS];
+export const missionById=(id:string)=>ALL_MISSIONS.find(m=>m.id===id)!;
 
 // people of the base: the three services (2D portraits and roles) and two settlers
 const L=(o:Partial<Look>):Look=>({sex:'female',skin:2,hair:'long01',hairColor:0,brows:'eyebrow005',outfit:'work',cloth:1,weapon:'saber',helmet:false,...o});
@@ -79,29 +83,37 @@ export const NPCS:NpcDef[]=[
 // ---------- progress (saved on this device) ----------
 export type Status='locked'|'available'|'active'|'ready'|'completed';
 export class Journal{
- active:string|null=null;done=new Set<string>();goals=new Set<string>();credits=0;bosses=new Set<string>();
+ // active: the story mission; side: the regional expedition taken beside it
+ active:string|null=null;side:string|null=null;done=new Set<string>();goals=new Set<string>();credits=0;bosses=new Set<string>();
  // one journal per saved character; without a key (preview) it lives only in memory
- constructor(private key:string|null=null){if(!key)return;try{const s=JSON.parse(localStorage.getItem(key)??'null');if(s){this.active=s.active;this.done=new Set(s.done);this.goals=new Set(s.goals);this.credits=s.credits??0;this.bosses=new Set(s.bosses??[]);}}catch{/* private mode */}
-  if(this.active&&!MISSIONS.some(m=>m.id===this.active))this.active=null;}
- save(){if(!this.key)return;try{localStorage.setItem(this.key,JSON.stringify({active:this.active,done:[...this.done],goals:[...this.goals],credits:this.credits,bosses:[...this.bosses]}));}catch{/* ignore */}}
+ constructor(private key:string|null=null){if(!key)return;try{const s=JSON.parse(localStorage.getItem(key)??'null');if(s){this.active=s.active;this.side=s.side??null;this.done=new Set(s.done);this.goals=new Set(s.goals);this.credits=s.credits??0;this.bosses=new Set(s.bosses??[]);}}catch{/* private mode */}
+  if(this.active&&!MISSIONS.some(m=>m.id===this.active))this.active=null;if(this.side&&!EXPEDITIONS.some(m=>m.id===this.side))this.side=null;}
+ save(){if(!this.key)return;try{localStorage.setItem(this.key,JSON.stringify({active:this.active,side:this.side,done:[...this.done],goals:[...this.goals],credits:this.credits,bosses:[...this.bosses]}));}catch{/* ignore */}}
  // a guardian counts as beaten when it fell in a fight or its mission goal was completed
  beaten(kind:string){return this.bosses.has(kind)||this.goals.has(kind);}
  beat(kind:string){if(this.bosses.has(kind))return;this.bosses.add(kind);this.save();}
  status(id:string):Status{
   const m=missionById(id);if(this.done.has(id))return'completed';
-  if(this.active===id)return m.goals.every(g=>this.goals.has(g.id))?'ready':'active';
-  if(this.active)return'locked';
+  const slot=m.side?this.side:this.active;
+  if(slot===id)return m.goals.every(g=>this.goals.has(g.id))?'ready':'active';
+  if(slot)return'locked';
   return!m.requires||this.done.has(m.requires)?'available':'locked';
  }
  offerFor(npc:NpcId){return MISSIONS.find(m=>m.npc===npc&&['available','active','ready'].includes(this.status(m.id)))??null;}
- marker(npc:NpcId):'!'|'?'|''{const m=this.offerFor(npc);if(!m)return'';const s=this.status(m.id);return s==='ready'?'?':s==='available'?'!':'';}
+ sideOfferFor(npc:NpcId){return EXPEDITIONS.find(m=>m.npc===npc&&['available','active','ready'].includes(this.status(m.id)))??null;}
+ /** everything this person has to say about missions: the story first, then an expedition */
+ offersFor(npc:NpcId){return[this.offerFor(npc),this.sideOfferFor(npc)].filter((m):m is Mission=>!!m);}
+ marker(npc:NpcId):'!'|'?'|''{const st=this.offersFor(npc).map(m=>this.status(m.id));return st.includes('ready')?'?':st.includes('available')?'!':'';}
  current(){return this.active?missionById(this.active):null;}
- // goals that can be worked on now (their prerequisites are done)
- open(){const m=this.current();if(!m)return[];return m.goals.filter(g=>!this.goals.has(g.id)&&(g.after??[]).every(a=>this.goals.has(a)));}
- accept(id:string){if(this.status(id)!=='available')return false;this.active=id;this.save();return true;}
- deliver(id:string){if(this.status(id)!=='ready')return 0;const m=missionById(id);this.done.add(id);this.active=null;this.credits+=m.credits;this.save();return m.credits;}
+ sideCurrent(){return this.side?missionById(this.side):null;}
+ // goals that can be worked on now (their prerequisites are done), of the story mission and of the expedition
+ open(){return[this.current(),this.sideCurrent()].flatMap(m=>m?m.goals.filter(g=>!this.goals.has(g.id)&&(g.after??[]).every(a=>this.goals.has(a))):[]);}
+ accept(id:string){if(this.status(id)!=='available')return false;if(missionById(id).side)this.side=id;else this.active=id;this.save();return true;}
+ deliver(id:string){if(this.status(id)!=='ready')return 0;const m=missionById(id);this.done.add(id);if(m.side)this.side=null;else this.active=null;this.credits+=m.credits;this.save();return m.credits;}
+ /** findings kept from the discoveries already registered (Records of Dante) */
+ records(){return EXPEDITIONS.flatMap(m=>m.goals.filter(g=>g.finding&&this.goals.has(g.id)).map(g=>({mission:m,goal:g})));}
  complete(goal:string){if(this.goals.has(goal))return false;this.goals.add(goal);this.save();return true;}
  // a region boss wakes when the mission readings that lead to it are complete
  bossCalled(biome:BiomeId){return this.open().some(g=>g.kind==='boss'&&g.biome===biome);}
- reset(){this.active=null;this.done.clear();this.goals.clear();this.bosses.clear();this.credits=0;this.save();}
+ reset(){this.active=null;this.side=null;this.done.clear();this.goals.clear();this.bosses.clear();this.credits=0;this.save();}
 }
