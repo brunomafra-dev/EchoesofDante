@@ -852,6 +852,23 @@ const itemName=(id:EquipmentId)=>equipmentName(id,cls());
 const RARITY:Record<string,string>={comum:'Comum',aprimorado:'Aprimorado',raro:'Raro'};
 function itemHead(id:EquipmentId){const it=EQUIPMENT[id];return`<em>${SLOT_NAMES[it.slot]} · ${RARITY[it.rarity]}</em><b style="color:${RARITY_COLORS[it.rarity]}">${itemName(id)}</b><span>${it.description}</span>`;}
 const wallet=()=>{const e=gear.economy;return`<p class="wallet"><b>${e.credits}</b> créditos${MATERIAL_NAMES.map((n,i)=>` · <b style="color:${MAT_COLORS[i]}">${e.materials[i]}</b> ${n}`).join('')} · <b>${e.potions}</b> ${e.potions===1?'poção':'poções'}</p>`;};
+// fitting room (3d.html?provador=warrior|hunter|astral|xenobinder): a temporary character that is never saved, with the
+// 2D sets of every tier in the backpack and one button per set. Saved characters and their progress are not touched.
+const FITTING=q.has('provador');
+const SET_NAMES=['','Conjunto 1 · comum','Conjunto 2 · aprimorado','Conjunto 3 · raro'];
+function enterFitting(){
+  heroRec={id:'provador',name:q.get('nome')??'Provador',look:{...look},pet:petId,created:Date.now(),played:Date.now()};   // not in the roster
+  journal=new Journal(null);gear=new Gear(null);
+  for(const t of [1,2,3])for(const id of EQUIPMENT_IDS)if(EQUIPMENT[id].tier===t)gear.take(id);
+  gear.economy.credits=999;gear.economy.materials=[40,40,40];gear.economy.potions=20;gstats=gear.stats();clearDrops();
+  document.body.classList.remove('selecting');document.body.classList.add('fitting');try{localStorage.setItem('dante3d.help','1');}catch{/* ignore */}
+  enter();zoom=.6;later(.6,openGear);
+}
+function wearSet(t:number){
+  for(const sl of EQUIPMENT_SLOTS)gear.unequip(sl);
+  if(t)for(const it of gear.bag.filter(i=>EQUIPMENT[i.id].tier===t))gear.equip(it.uid);
+  sfx('heal');refreshGear();
+}
 // character sheet: level, what is worn (click to take off) and the backpack (click to wear)
 function openGear(){
   if(mode!=='play')return;
@@ -862,10 +879,12 @@ function openGear(){
   const bag=gear.bag;
   const items=bag.length?bag.map(i=>{const cur=gear.slots[EQUIPMENT[i.id].slot];return`<button class="item" data-eq="${i.uid}">${itemHead(i.id)}<i>${cur?`Vestir no lugar de ${itemName(cur)}`:'Vestir'}</i></button>`;}).join('')
    :'<p class="note">Vazia. As criaturas às vezes deixam equipamento (os chefes sempre deixam), e o Ivo fabrica peças na oficina do acampamento.</p>';
-  body.innerHTML=head+`<h3>Vestindo</h3><div class="items">${slots}</div><h3>Mochila · ${bag.length} / ${BAG_SIZE}</h3><div class="items">${items}</div>`;
+  const fit=FITTING?`<p class="note fitnote">Provador: personagem temporário, nada é salvo. Vista um conjunto inteiro ou peça por peça; feche a ficha para ver o herói.</p><div class="sets">${[1,2,3].map(t=>`<button data-set="${t}">${SET_NAMES[t]}</button>`).join('')}<button data-set="0">Tirar tudo</button></div>`:'';
+  body.innerHTML=fit+head+`<h3>Vestindo</h3><div class="items">${slots}</div><h3>Mochila · ${bag.length} / ${BAG_SIZE}</h3><div class="items">${items}</div>`;
   m.classList.add('on');sfx('ui');
   body.querySelectorAll<HTMLButtonElement>('[data-un]').forEach(b=>b.onclick=()=>{if(gear.unequip(b.dataset.un as EquipmentSlot)){sfx('ui');refreshGear();openGear();}else toast('Mochila cheia: libere um espaço antes de tirar a peça');});
   body.querySelectorAll<HTMLButtonElement>('[data-eq]').forEach(b=>b.onclick=()=>{if(gear.equip(b.dataset.eq!)){sfx('heal');refreshGear();openGear();}});
+  body.querySelectorAll<HTMLButtonElement>('[data-set]').forEach(b=>b.onclick=()=>{const t=Number(b.dataset.set);wearSet(t);closeModal();toast(t?`${SET_NAMES[t]} vestido · I abre a ficha de novo`:'Sem equipamento · I abre a ficha de novo');});
 }
 // base services, the same as the 2D panel: Lia (potions, free healing), Ivo (craft, sell, dismantle), Nara (vault)
 const SVC:Record<NpcId,string>={lia:'Enfermaria · poções e cura',ivo:'Oficina · fabricar, vender e desmontar',nara:'Cofre da base'};
@@ -1031,7 +1050,8 @@ function frame(){
   if(quality==='low')setQuality('low');
   $('loading').remove();
   if(q.get('biome')&&BIOMES[q.get('biome') as BiomeId])goBiome(q.get('biome') as BiomeId);
-  if(q.get('auto')){
+  if(FITTING){const c=q.get('provador') as ClassId;if(CLASSES[c])await change({weapon:CLASSES[c].weapon});enterFitting();}
+  else if(q.get('auto')){
    // tests: play the current character, or a new one made from the look in the address
    if(!heroRec){heroRec={id:newId(),name:q.get('nome')??'Explorador',look:{...look},pet:(q.get('fera') as PetId)??'symbiont',created:Date.now(),played:Date.now()};roster.list.push(heroRec);}
    enterAs(heroRec);

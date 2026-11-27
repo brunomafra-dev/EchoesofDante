@@ -173,3 +173,8 @@ body.play #bagbtn{display:grid}body.bestiary #bagbtn{display:none!important}
 #modal .svc{display:block;width:100%;margin-top:8px;padding:9px;font-family:inherit;font-size:14px;background:#1d1812;color:#ffe2a0;border:1px solid #c89a4a;border-radius:3px;cursor:pointer}
 #modal .opts button:disabled{opacity:.45;cursor:default}
 @media(max-width:700px){#xpbar{left:12px;right:12px;width:auto;transform:none;bottom:1px;height:10px}#xpbar span{font-size:8px;line-height:9px}#potbtn{left:170px;bottom:22px;width:42px;height:42px}#modal .items{grid-template-columns:1fr}#modal .gstats{grid-template-columns:repeat(3,1fr)}#bagbtn{top:52px}}
+/* fitting room (?provador) */
+#modal .sets{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+#modal .sets button{padding:9px 6px;font-family:inherit;font-size:13px;background:#1d1812;color:#ffe2a0;border:1px solid #c89a4a;border-radius:3px;cursor:pointer}
+#modal .sets button:hover{background:#2a2218}
+#modal .fitnote{color:#e0b865}
