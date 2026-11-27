@@ -5,9 +5,10 @@ import {RARITY_COLORS} from '../config/equipment';
 // bone, measures the body's radius per slice and angle around that bone, and builds a thick shell slightly outside it.
 // The shell is parented to the bone, so it moves with it without skinning. Shapes are cached per body (sex).
 
-export type Finish='plate'|'cloth'|'leather'|'camo';
+export type Finish='plate'|'cloth'|'leather'|'camo'|'steel';
+// emit: a lit strip in its own colour (glow lines of the better sets), drawn with an emissive material
 export interface Wrap{bone:string;also?:string[];t0?:number;t1?:number;a0?:number;a1?:number;pad?:number;flare?:number;th?:number;rows?:number;cols?:number;
- finish:Finish;color:string;trim?:string;key?:string}
+ finish:Finish;color:string;trim?:string;key?:string;emit?:number;up?:boolean}
 interface Samples{world:Map<string,T.Vector3[]>;inv:Map<string,T.Matrix4>;front:T.Vector3}
 const samples=new Map<string,Samples>(),geos=new Map<string,T.BufferGeometry>();
 
@@ -48,7 +49,9 @@ function wrapGeo(S:Samples,w:Wrap,sexKey:string){
  const Y=new T.Vector3(0,1,0),F=S.front.clone().transformDirection(inv);F.addScaledVector(Y,-F.dot(Y));if(F.lengthSq()<1e-6)F.set(0,0,1);F.normalize();const R=new T.Vector3().crossVectors(Y,F).normalize();
  let ymin=1e9,ymax=-1e9;for(const p of pts){ymin=Math.min(ymin,p.y);ymax=Math.max(ymax,p.y);}
  const t0=w.t0??0,t1=w.t1??1,y0=ymin+(ymax-ymin)*t0,y1=ymin+(ymax-ymin)*t1;
- const RW=w.rows??8,CW=w.cols??18,a0=(w.a0??-180)*Math.PI/180,a1=(w.a1??180)*Math.PI/180,full=a1-a0>=Math.PI*2-1e-3;
+ // up: turn the window so its centre faces the body's up direction (rest pose), whatever the side of the limb
+ const upA=w.up?(()=>{const u=new T.Vector3(0,1,0).transformDirection(inv);return Math.atan2(u.dot(R),u.dot(F));})():0;
+ const RW=w.rows??8,CW=w.cols??18,a0=(w.a0??-180)*Math.PI/180+upA,a1=(w.a1??180)*Math.PI/180+upA,full=a1-a0>=Math.PI*2-1e-3;
  // per row: centre of the slice, then the outermost radius per angle bin
  const band=(y1-y0)/Math.max(1,RW-1)*.75+.01*U;
  const cen:T.Vector2[]=[],rad:number[][]=[];
@@ -65,23 +68,35 @@ function wrapGeo(S:Samples,w:Wrap,sexKey:string){
  for(let k=0;k<2;k++){const nr=rad.map(r=>r.slice());for(let i=0;i<RW;i++)for(let j=0;j<CW;j++){let s=rad[i][j]*2,n=2;for(const [di,dj] of[[0,1],[0,-1],[1,0],[-1,0]]){const ii=i+di;let jj=j+dj;if(full)jj=(jj+CW)%CW;if(ii<0||ii>=RW||jj<0||jj>=CW)continue;s+=rad[ii][jj];n++;}nr[i][j]=s/n;}for(let i=0;i<RW;i++)rad[i]=nr[i];}
  const pad=(w.pad??.012)*U,th=(w.th??.012)*U,flare=(w.flare??0)*U,base=new T.Color(w.color),trim=new T.Color(w.trim??w.color);
  const P:number[]=[],C:number[]=[],I:number[]=[];
- const cols=full?CW+1:CW;
- const pt=(i:number,j:number,off:number)=>{const jj=full?j%CW:j,ang=full?a0+(j/CW)*Math.PI*2:a0+(a1-a0)*j/(CW-1),t=i/(RW-1),y=y0+(y1-y0)*t;
-  const r=rad[i][jj]+pad+flare*t*t+off;return new T.Vector3().addScaledVector(R,cen[i].x+Math.sin(ang)*r).addScaledVector(F,cen[i].y+Math.cos(ang)*r).addScaledVector(Y,y);};
- const colOf=(i:number,j:number,p:T.Vector3)=>{const edge=w.trim&&(i===0||i===RW-1||(!full&&(j===0||j===cols-1)));let c=edge?trim:base;
+ // Rows and columns of the mesh, as fractions of the piece. With a trim, a narrow band runs along each edge with a hard
+ // colour change (a doubled row at the same place) and stands slightly proud of the plate, like a rolled edge.
+ type Line={u:number;edge:boolean};
+ const lines=(n:number,open:boolean):Line[]=>{const L:Line[]=[];const e=Math.min(.3,.55/Math.max(1,n-1));
+  if(!w.trim||!open){for(let k=0;k<n;k++)L.push({u:k/(n-1),edge:false});return L;}
+  L.push({u:0,edge:true},{u:e,edge:true},{u:e,edge:false});for(let k=1;k<n-1;k++){const u=k/(n-1);if(u>e&&u<1-e)L.push({u,edge:false});}L.push({u:1-e,edge:false},{u:1-e,edge:true},{u:1,edge:true});return L;};
+ const RL=lines(RW,true),CL=full?Array.from({length:CW+1},(_,k)=>({u:k/CW,edge:false})):lines(CW,true);
+ const NR=RL.length,NC=CL.length;
+ const radAt=(t:number,u:number)=>{const fi=t*(RW-1),i0=Math.min(RW-2,Math.floor(fi)),fr=fi-i0,i1=i0+1;
+  let j0:number,j1:number,fc:number;if(full){const fj=u*CW;j0=Math.floor(fj)%CW;j1=(j0+1)%CW;fc=fj-Math.floor(fj);}else{const fj=u*(CW-1);j0=Math.min(CW-2,Math.floor(fj));j1=j0+1;fc=fj-j0;}
+  const r0=rad[i0][j0]*(1-fc)+rad[i0][j1]*fc,r1=rad[i1][j0]*(1-fc)+rad[i1][j1]*fc;return{r:r0*(1-fr)+r1*fr,cx:cen[i0].x*(1-fr)+cen[i1].x*fr,cz:cen[i0].y*(1-fr)+cen[i1].y*fr};};
+ const pt=(i:number,j:number,off:number)=>{const t=RL[i].u,u=CL[j].u,ang=full?a0+u*Math.PI*2:a0+(a1-a0)*u,y=y0+(y1-y0)*t;const q=radAt(t,u);
+  const r=q.r+pad+flare*t*t+off;return new T.Vector3().addScaledVector(R,q.cx+Math.sin(ang)*r).addScaledVector(F,q.cz+Math.cos(ang)*r).addScaledVector(Y,y);};
+ const isEdge=(i:number,j:number)=>!!w.trim&&(RL[i].edge||CL[j].edge);
+ const colOf=(i:number,j:number,p:T.Vector3)=>{let c=isEdge(i,j)?trim:base;
   if(w.finish==='camo'){const q=p.clone().divideScalar(U),n=vn(q.x*9+3,q.y*9,q.z*9),m=vn(q.x*4,q.y*4+7,q.z*4);c=n>.55?new T.Color('#5a5a32'):m>.5?new T.Color('#7a6a44'):new T.Color('#3a4a2c');}
   return c;};
- // outer skin, inner skin (offset in by the thickness) and the lip between them
- for(const layer of[0,1])for(let i=0;i<RW;i++)for(let j=0;j<cols;j++){const p=pt(i,j,layer?-th:0);P.push(p.x,p.y,p.z);const c=colOf(i,j,p).clone().multiplyScalar(layer?.6:1);C.push(c.r,c.g,c.b);}
- const id=(l:number,i:number,j:number)=>l*RW*cols+i*cols+j;
- for(let i=0;i<RW-1;i++)for(let j=0;j<cols-1;j++){I.push(id(0,i,j),id(0,i,j+1),id(0,i+1,j),id(0,i,j+1),id(0,i+1,j+1),id(0,i+1,j));I.push(id(1,i,j),id(1,i+1,j),id(1,i,j+1),id(1,i,j+1),id(1,i+1,j),id(1,i+1,j+1));}
+ // outer skin (edges raised a little), inner skin (offset in by the thickness) and the lip between them
+ for(const layer of[0,1])for(let i=0;i<NR;i++)for(let j=0;j<NC;j++){const p=pt(i,j,layer?-th:isEdge(i,j)?th*.45:0);P.push(p.x,p.y,p.z);const c=colOf(i,j,p).clone().multiplyScalar(layer?.6:1);C.push(c.r,c.g,c.b);}
+ const id=(l:number,i:number,j:number)=>l*NR*NC+i*NC+j;
+ for(let i=0;i<NR-1;i++)for(let j=0;j<NC-1;j++){I.push(id(0,i,j),id(0,i,j+1),id(0,i+1,j),id(0,i,j+1),id(0,i+1,j+1),id(0,i+1,j));I.push(id(1,i,j),id(1,i+1,j),id(1,i,j+1),id(1,i,j+1),id(1,i+1,j),id(1,i+1,j+1));}
  const lip=(a:[number,number],b:[number,number])=>{I.push(id(0,...a),id(1,...a),id(0,...b),id(0,...b),id(1,...a),id(1,...b));};
- for(let j=0;j<cols-1;j++){lip([0,j+1],[0,j]);lip([RW-1,j],[RW-1,j+1]);}
- if(!full)for(let i=0;i<RW-1;i++){lip([i,0],[i+1,0]);lip([i+1,cols-1],[i,cols-1]);}
+ for(let j=0;j<NC-1;j++){lip([0,j+1],[0,j]);lip([NR-1,j],[NR-1,j+1]);}
+ if(!full)for(let i=0;i<NR-1;i++){lip([i,0],[i+1,0]);lip([i+1,NC-1],[i,NC-1]);}
  g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(P,3));g.setAttribute('color',new T.Float32BufferAttribute(C,3));g.setIndex(I);g.computeVertexNormals();
  geos.set(key,g);return g;
 }
 const MAT:Record<Finish,T.MeshStandardMaterial>={
+ steel:new T.MeshStandardMaterial({vertexColors:true,roughness:.2,metalness:.8,side:T.DoubleSide,envMapIntensity:1.5}),
  plate:new T.MeshStandardMaterial({vertexColors:true,roughness:.38,metalness:.45,side:T.DoubleSide,envMapIntensity:.9}),
  cloth:new T.MeshStandardMaterial({vertexColors:true,roughness:.92,metalness:0,side:T.DoubleSide}),
  leather:new T.MeshStandardMaterial({vertexColors:true,roughness:.62,metalness:.05,side:T.DoubleSide}),
@@ -98,11 +113,13 @@ MAT.camo.onBeforeCompile=sh=>{
    vec3 c=vec3(.06,.09,.04);c=mix(c,vec3(.17,.12,.06),smoothstep(.5,.56,a));c=mix(c,vec3(.11,.12,.05),smoothstep(.56,.62,b));c=mix(c,vec3(.025,.03,.018),smoothstep(.66,.7,a*b*1.6));
    diffuseColor.rgb=c*mix(.7,1.,vColor.r);}`);
 };MAT.camo.customProgramCacheKey=()=>'camo';
+const GLOW=new Map<string,T.MeshStandardMaterial>();
+const glowMat=(c:string,e:number)=>{const k=c+e;let m=GLOW.get(k);if(!m){m=new T.MeshStandardMaterial({color:c,emissive:c,emissiveIntensity:e,roughness:.3,side:T.DoubleSide});GLOW.set(k,m);}return m;};
 // build every piece of a kit on the bones of this model; returns the meshes so the caller can remove them later
 export function dress(model:T.Object3D,sexKey:string,kit:Wrap[]){
  const S=sample(model,sexKey);if(!S)return[];const out:T.Mesh[]=[];
  for(const w of kit){const g=wrapGeo(S,w,sexKey),bone=model.getObjectByName(w.bone);if(!g||!bone)continue;
-  const m=new T.Mesh(g,MAT[w.finish]);m.castShadow=true;m.frustumCulled=false;bone.add(m);out.push(m);}
+  const m=new T.Mesh(g,w.emit?glowMat(w.color,w.emit):MAT[w.finish]);m.castShadow=true;m.frustumCulled=false;bone.add(m);out.push(m);}
  return out;
 }
 
@@ -142,10 +159,14 @@ function armour(plate:string,trim:string,spec:Spec,finish:Finish='plate'):Wrap[]
 // the parts worn: the creator outfit gives every part its level, equipped pieces replace their own part
 function specOf(outfit:string,worn:Armour={}):Spec{
  const sp:Spec={};const lv=outfit==='basic'||outfit==='reinforced'?outfit as Level:null;
- for(const p of PARTS){const tier=worn[p];if(tier)sp[p]={level:tier>1?'reinforced':'basic',trim:TIER_TRIM[tier]};else if(lv)sp[p]={level:lv};}
+ for(const p of PARTS)if(!worn[p]&&lv)sp[p]={level:lv};
  return sp;
 }
 export function classKit(weapon:string,outfit:string,worn:Armour={}):Wrap[]{
+ // pieces shared by both sides (the waist under a pair of legs) are listed once
+ const seen=new Set<string>();return[...outfitKit(weapon,outfit,worn),...setKit(weapon,worn)].filter(w=>{const k=JSON.stringify(w);if(seen.has(k))return false;seen.add(k);return true;});
+}
+function outfitKit(weapon:string,outfit:string,worn:Armour):Wrap[]{
  const sp=specOf(outfit,worn);
  if(weapon==='saber')return armour('#cfccc2','#c8902a',sp);
  if(weapon==='gauntlet')return armour('#ebe5d6','#d0a040',sp);
@@ -163,6 +184,106 @@ export function classKit(weapon:string,outfit:string,worn:Armour={}):Wrap[]{
  if(sp.legs){k.push(...LR(s=>[{bone:'calf_'+s,t0:0,t1:.18,a0:-80,a1:80,finish:'plate',color:'#24272e',trim:sp.legs?.trim,pad:.03,th:.02,rows:4,cols:10} as Wrap]));
   if(sp.legs.level==='reinforced')k.push(...LR(s=>[{bone:'thigh_'+s,t0:.15,t1:.7,a0:-55,a1:55,finish:'plate',color:'#2a2e36',trim:sp.legs?.trim,pad:.018,th:.016,rows:5,cols:10} as Wrap]));}
  if(sp.boots)k.push(...boots('#1e1e22',sp.boots.trim));
+ return k;
+}
+// ---------- equipment sets (equipped pieces, 2D catalogue tiers) ----------
+// Each tier is its own outfit, not the next one with parts missing, and each covers the back as well as the front:
+//  1 Expedição  (forest): field vest, collar, leather pads, gaiters and belt, in the class field colour
+//  2 Âmbar      (sirocco): segmented sand carapace over dark chitin, double pauldrons, lit amber lines
+//  3 Boreal     (glacier): polished frost steel over deep blue, layered pauldrons, gorget, tassets, violet lines
+export const SET_LOOK={
+ 1:{name:'Expedição',plate:'#8a7c5a',under:'#4a3626',glow:'#cad4ca'},
+ 2:{name:'Âmbar',plate:'#b47a36',under:'#3e2614',glow:'#ffb347'},
+ 3:{name:'Boreal',plate:'#dbe4ee',under:'#26304c',glow:'#b090ff'},
+} as const;
+// field colour of the expedition vest per class (2D work clothes): khaki, brown, slate; the Domador wears camouflage
+const FIELD:Record<string,string>={saber:'#8a7c5a',carbine:'#6e5438',gauntlet:'#5e6c80',conductor:'#5a5a40'};
+// a run of overlapping bands along a bone: segmented plates (each band a bit wider than the one under it)
+function bands(w:Omit<Wrap,'t0'|'t1'>,t0:number,t1:number,n:number,grow=.004):Wrap[]{
+ const step=(t1-t0)/n;return Array.from({length:n},(_,i)=>({...w,t0:t0+step*i,t1:Math.min(1,t0+step*(i+1)+step*.18),pad:(w.pad??.02)+grow*(n-1-i)}));
+}
+function setKit(weapon:string,worn:Armour):Wrap[]{
+ const k:Wrap[]=[];
+ const camo=weapon==='conductor',field=FIELD[weapon]??FIELD.saber,f1:Finish=camo?'camo':'cloth',dk='#3a2c20';
+ // ----- tier 1: expedition -----
+ const t1=(p:Part)=>worn[p]===1;
+ if(t1('torso'))k.push(
+  {bone:'spine_03',also:['clavicle_l','clavicle_r'],t0:.04,t1:.98,finish:f1,color:field,trim:camo?undefined:dk,pad:.024,th:.012,rows:8,cols:26},
+  {bone:'spine_02',finish:f1,color:field,pad:.026,th:.012,rows:4,cols:24},
+  {bone:'spine_01',t0:.25,finish:f1,color:field,pad:.028,th:.012,rows:3,cols:24},
+  {bone:'neck_01',t0:0,t1:.4,finish:'cloth',color:dk,pad:.022,flare:.018,th:.012,rows:3,cols:18},
+  // padded shoulders, short sleeves and the field belt
+  ...LR(s=>[{bone:'upperarm_'+s,up:true,a0:-115,a1:115,t0:0,t1:.28,finish:'leather',color:'#5a4230',trim:dk,pad:.03,flare:.014,th:.014,rows:4,cols:16} as Wrap,
+   {bone:'upperarm_'+s,t0:.3,t1:.62,finish:f1,color:field,pad:.014,th:.008,rows:3,cols:14} as Wrap]),
+  {bone:'pelvis',t0:.5,t1:.82,finish:'leather',color:'#3a2a1c',trim:'#9a7040',pad:.026,th:.014,rows:3,cols:24});
+ if(t1('gloves'))k.push(...LR(s=>[{bone:'lowerarm_'+s,t0:.58,t1:.98,finish:'leather',color:'#4a3424',trim:'#2a1e14',pad:.018,flare:.012,th:.012,rows:4,cols:16} as Wrap]));
+ if(t1('legs'))k.push(...LR(s=>[
+  // field trousers with a strap over the thigh
+  {bone:'thigh_'+s,t0:.04,t1:.96,finish:f1,color:camo?field:'#4e4a38',pad:.012,th:.008,rows:6,cols:18} as Wrap,
+  {bone:'thigh_'+s,t0:.42,t1:.5,finish:'leather',color:'#3a2a1c',pad:.022,th:.01,rows:2,cols:16} as Wrap,
+  {bone:'pelvis',t0:0,t1:.55,finish:f1,color:camo?field:'#4e4a38',pad:.014,th:.008,rows:4,cols:20} as Wrap,
+  {bone:'calf_'+s,t0:0,t1:.17,a0:-80,a1:80,finish:'leather',color:'#4a3626',trim:'#2a1e14',pad:.03,th:.018,rows:4,cols:12} as Wrap,
+  {bone:'calf_'+s,t0:.3,t1:.8,finish:f1,color:field,trim:camo?undefined:dk,pad:.016,th:.01,rows:5,cols:16} as Wrap]));
+ if(t1('boots'))k.push(...boots('#4a3626','#2a1e14'));
+ // ----- tier 2: amber carapace -----
+ const t2=(p:Part)=>worn[p]===2,A=SET_LOOK[2];
+ if(t2('torso'))k.push(
+  {bone:'spine_03',also:['clavicle_l','clavicle_r'],t0:.06,t1:.97,a0:-84,a1:84,finish:'plate',color:A.plate,trim:A.under,pad:.034,th:.02,rows:8,cols:20},
+  {bone:'spine_03',also:['clavicle_l','clavicle_r'],t0:.06,t1:.97,a0:96,a1:264,finish:'plate',color:A.plate,trim:A.under,pad:.034,th:.02,rows:8,cols:20},
+  // chitin under the gaps and down the sides
+  {bone:'spine_03',t0:.1,t1:.9,finish:'leather',color:A.under,pad:.012,th:.01,rows:6,cols:24},
+  ...bands({bone:'spine_02',finish:'plate',color:A.plate,trim:A.under,pad:.03,th:.016,rows:3,cols:24},0,1,2),
+  ...bands({bone:'spine_01',finish:'plate',color:A.plate,trim:A.under,pad:.03,th:.016,rows:3,cols:24},.2,1,2),
+  {bone:'spine_03',t0:.52,t1:.57,a0:-62,a1:62,finish:'plate',color:A.glow,emit:1.6,pad:.056,th:.006,rows:2,cols:14},
+  {bone:'spine_03',t0:.52,t1:.57,a0:122,a1:238,finish:'plate',color:A.glow,emit:1.6,pad:.056,th:.006,rows:2,cols:14},
+  ...LR(s=>[{bone:'upperarm_'+s,up:true,a0:-115,a1:115,t0:0,t1:.28,finish:'plate',color:A.plate,trim:A.under,pad:.038,flare:.026,th:.018,rows:5,cols:18} as Wrap,
+   {bone:'upperarm_'+s,up:true,a0:-105,a1:105,t0:.22,t1:.42,finish:'plate',color:A.plate,trim:A.under,pad:.028,flare:.014,th:.016,rows:4,cols:18} as Wrap,
+   {bone:'upperarm_'+s,t0:.5,t1:.9,finish:'leather',color:A.under,pad:.014,th:.01,rows:4,cols:14} as Wrap]),
+  {bone:'pelvis',t0:.48,t1:.82,finish:'plate',color:A.under,trim:A.plate,pad:.03,th:.016,rows:3,cols:24});
+ if(t2('gloves'))k.push(...LR(s=>[...bands({bone:'lowerarm_'+s,finish:'plate',color:A.plate,trim:A.under,pad:.02,flare:.01,th:.014,rows:4,cols:16},.28,.98,2),
+  {bone:'lowerarm_'+s,t0:.6,t1:.64,finish:'plate',color:A.glow,emit:1.6,pad:.04,th:.005,rows:2,cols:16} as Wrap]));
+ if(t2('legs'))k.push(...LR(s=>[
+  {bone:'pelvis',t0:0,t1:.55,finish:'leather',color:A.under,pad:.016,th:.01,rows:4,cols:20} as Wrap,
+  {bone:'thigh_'+s,t0:.12,t1:.78,finish:'leather',color:A.under,pad:.016,th:.01,rows:5,cols:16} as Wrap,
+  {bone:'thigh_'+s,t0:.12,t1:.78,a0:-66,a1:66,finish:'plate',color:A.plate,trim:A.under,pad:.022,th:.016,rows:6,cols:12} as Wrap,
+  {bone:'calf_'+s,t0:0,t1:.17,a0:-90,a1:90,finish:'plate',color:A.plate,trim:A.under,pad:.036,flare:.01,th:.02,rows:4,cols:14} as Wrap,
+  ...bands({bone:'calf_'+s,finish:'plate',color:A.plate,trim:A.under,pad:.022,th:.016,rows:4,cols:18},.2,.82,2),
+  {bone:'calf_'+s,t0:.48,t1:.52,a0:-50,a1:50,finish:'plate',color:A.glow,emit:1.6,pad:.04,th:.005,rows:2,cols:10} as Wrap]));
+ if(t2('boots'))k.push(...LR(s=>[{bone:'calf_'+s,t0:.8,t1:1,finish:'plate',color:A.plate,trim:A.under,pad:.022,flare:.008,th:.014,rows:3,cols:18} as Wrap,
+  {bone:'foot_'+s,also:['ball_'+s],finish:'leather',color:A.under,pad:.014,th:.012,rows:5,cols:16} as Wrap,
+  {bone:'foot_'+s,t0:0,t1:.6,a0:-70,a1:70,finish:'plate',color:A.plate,trim:A.under,pad:.022,th:.012,rows:4,cols:10} as Wrap]));
+ // ----- tier 3: boreal plate -----
+ const t3=(p:Part)=>worn[p]===3,B=SET_LOOK[3];
+ if(t3('torso'))k.push(
+  {bone:'spine_03',also:['clavicle_l','clavicle_r'],t0:.04,t1:.98,a0:-86,a1:86,finish:'steel',color:B.plate,trim:B.under,pad:.044,th:.024,rows:9,cols:22},
+  {bone:'spine_03',also:['clavicle_l','clavicle_r'],t0:.04,t1:.98,a0:94,a1:266,finish:'steel',color:B.plate,trim:B.under,pad:.044,th:.024,rows:9,cols:22},
+  {bone:'spine_03',t0:.06,t1:.94,finish:'plate',color:B.under,pad:.016,th:.012,rows:6,cols:26},
+  {bone:'neck_01',t0:0,t1:.55,finish:'steel',color:B.plate,trim:B.under,pad:.03,flare:.03,th:.016,rows:4,cols:22},
+  ...bands({bone:'spine_02',finish:'steel',color:B.plate,trim:B.under,pad:.034,th:.016,rows:3,cols:24},0,1,3,.003),
+  ...bands({bone:'spine_01',finish:'steel',color:B.plate,trim:B.under,pad:.034,th:.016,rows:3,cols:24},.1,1,2,.003),
+  // violet lines: across the chest, down the back
+  {bone:'spine_03',t0:.6,t1:.645,a0:-70,a1:70,finish:'plate',color:B.glow,emit:2.2,pad:.07,th:.006,rows:2,cols:16},
+  {bone:'spine_03',t0:.2,t1:.9,a0:174,a1:186,finish:'plate',color:B.glow,emit:2.2,pad:.07,th:.006,rows:6,cols:3},
+  ...LR(s=>[
+   {bone:'upperarm_'+s,up:true,a0:-115,a1:115,t0:0,t1:.26,finish:'steel',color:B.plate,trim:B.under,pad:.048,flare:.034,th:.02,rows:5,cols:20} as Wrap,
+   {bone:'upperarm_'+s,up:true,a0:-108,a1:108,t0:.2,t1:.38,finish:'steel',color:B.plate,trim:B.under,pad:.038,flare:.022,th:.018,rows:4,cols:20} as Wrap,
+   {bone:'upperarm_'+s,up:true,a0:-100,a1:100,t0:.34,t1:.5,finish:'steel',color:B.plate,trim:B.under,pad:.03,flare:.012,th:.016,rows:4,cols:20} as Wrap,
+   {bone:'upperarm_'+s,t0:.52,t1:.92,finish:'plate',color:B.under,pad:.018,th:.012,rows:4,cols:16} as Wrap]),
+  {bone:'pelvis',t0:.46,t1:.84,finish:'steel',color:B.plate,trim:B.under,pad:.034,th:.018,rows:3,cols:26});
+ if(t3('gloves'))k.push(...LR(s=>[...bands({bone:'lowerarm_'+s,finish:'steel',color:B.plate,trim:B.under,pad:.024,flare:.016,th:.016,rows:4,cols:18},.2,.99,3),
+  {bone:'lowerarm_'+s,t0:.46,t1:.5,finish:'plate',color:B.glow,emit:2.2,pad:.048,th:.005,rows:2,cols:18} as Wrap]));
+ if(t3('legs'))k.push(...LR(s=>[
+  {bone:'pelvis',t0:0,t1:.55,finish:'plate',color:B.under,pad:.018,th:.01,rows:4,cols:20} as Wrap,
+  // tassets hanging from the waist over the thighs, front and back
+  {bone:'thigh_'+s,t0:0,t1:.36,a0:-74,a1:74,finish:'steel',color:B.plate,trim:B.under,pad:.044,flare:.03,th:.018,rows:4,cols:14} as Wrap,
+  {bone:'thigh_'+s,t0:0,t1:.3,a0:106,a1:254,finish:'steel',color:B.plate,trim:B.under,pad:.04,flare:.025,th:.018,rows:4,cols:14} as Wrap,
+  {bone:'thigh_'+s,t0:.3,t1:.84,finish:'plate',color:B.under,pad:.022,th:.014,rows:5,cols:18} as Wrap,
+  {bone:'calf_'+s,t0:0,t1:.18,a0:-96,a1:96,finish:'steel',color:B.plate,trim:B.under,pad:.044,flare:.012,th:.022,rows:5,cols:16} as Wrap,
+  ...bands({bone:'calf_'+s,finish:'steel',color:B.plate,trim:B.under,pad:.026,th:.018,rows:4,cols:20},.18,.84,3,.003),
+  {bone:'calf_'+s,t0:.2,t1:.78,a0:-6,a1:6,finish:'plate',color:B.glow,emit:2.2,pad:.05,th:.005,rows:5,cols:3} as Wrap]));
+ if(t3('boots'))k.push(...LR(s=>[{bone:'calf_'+s,t0:.8,t1:1,finish:'steel',color:B.plate,trim:B.under,pad:.028,flare:.012,th:.016,rows:3,cols:20} as Wrap,
+  {bone:'foot_'+s,also:['ball_'+s],finish:'plate',color:B.under,pad:.016,th:.014,rows:5,cols:16} as Wrap,
+  ...bands({bone:'foot_'+s,also:['ball_'+s],a0:-80,a1:80,finish:'steel',color:B.plate,trim:B.under,pad:.026,th:.012,rows:3,cols:10},0,1,3,.002)]));
  return k;
 }
 // clothes of the people of the base (2D portraits): Lia's lab coat, Nara's field jacket and scarf, Ivo's leather apron

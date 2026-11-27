@@ -2,7 +2,7 @@ import * as T from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {Grip,MUZZLE} from './grip';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
-import {dress,classKit,garbKit,TIER_TRIM,type Armour} from './outfit';
+import {dress,classKit,garbKit,TIER_TRIM,SET_LOOK,type Armour} from './outfit';
 
 // Character of the new 3D track: one rigged human per sex, every customisable part is a
 // separate skinned mesh sharing the same skeleton (built by scripts/asset-tools/3d-new/build_character.py).
@@ -47,7 +47,7 @@ export class Character{
  root=new T.Group();model!:T.Group;mixer!:T.AnimationMixer;clips=new Map<string,T.AnimationClip>();
  current:T.AnimationAction|null=null;currentName='';look:Look=DEFAULT_LOOK;private outfitMats:T.MeshStandardMaterial[]=[];
  hand:T.Object3D|null=null;weapon:T.Object3D|null=null;private weaponId:WeaponId|null=null;private grip:Grip|null=null;
- private gear=new T.Group();private restHead=new T.Matrix4();private restChest=new T.Matrix4();private restNeck=new T.Matrix4();
+ private gear=new T.Group();private restHead=new T.Matrix4();private restChest=new T.Matrix4();private restNeck=new T.Matrix4();private rest=new Map<string,T.Matrix4>();
  private bodyMats:T.MeshStandardMaterial[]=[];private hairMats:T.MeshStandardMaterial[]=[];private browMats:T.MeshStandardMaterial[]=[];
  async setSex(sex:Sex){
   if(this.model&&this.look.sex===sex)return;
@@ -74,7 +74,7 @@ export class Character{
    }
   });
   this.hand=model.getObjectByName('hand_r')??null;this.weaponId=null;this.weapon=null;this.grip=new Grip(model);
-  model.updateMatrixWorld(true);this.restHead.copy(model.getObjectByName('head')!.matrixWorld);this.restChest.copy(model.getObjectByName('spine_03')!.matrixWorld);this.restNeck.copy((model.getObjectByName('neck_01')??model.getObjectByName('spine_03')!).matrixWorld);this.gearKey='';this.fitKey='';this.fitted=[];
+  model.updateMatrixWorld(true);this.restHead.copy(model.getObjectByName('head')!.matrixWorld);this.restChest.copy(model.getObjectByName('spine_03')!.matrixWorld);this.restNeck.copy((model.getObjectByName('neck_01')??model.getObjectByName('spine_03')!).matrixWorld);this.rest.clear();model.traverse(o=>{if((o as T.Bone).isBone)this.rest.set(o.name,o.matrixWorld.clone());});this.gearKey='';this.fitKey='';this.fitted=[];
   this.look={...this.look,sex};
  }
  // skin under a garment: the body keeps every vertex and hides only what the worn garments cover
@@ -122,12 +122,22 @@ export class Character{
  private gearKey='';
  private equip(look:Look){
   const ht=this.armour.helmet??0,at=this.armour.accessory??0;
-  const helmet=!!look.helmet||ht>0,pack=look.outfit==='basic'||look.outfit==='reinforced',key=[helmet,ht,at,pack,look.weapon,look.outfit,look.cloth].join('|');
+  // the torso of a set decides what is on the back: the expedition pack (creator outfit, set 1), the amber
+  // generator (set 2) or the boreal crystal spines (set 3)
+  const tt=this.armour.torso??0,lt=this.armour.legs??0;
+  const helmet=!!look.helmet||ht>0,pack=tt===1||(!tt&&(look.outfit==='basic'||look.outfit==='reinforced')),key=[helmet,ht,at,tt,lt,pack,look.weapon,look.outfit,look.cloth].join('|');
   const hideHair=()=>this.model.traverse(o=>{if(o.name.startsWith('hair')&&helmet)o.visible=false;});
   if(key===this.gearKey){hideHair();return;}this.gearKey=key;
   this.gear.clear();this.gear.removeFromParent();for(const c of [...this.gearParts])c.removeFromParent();this.gearParts=[];
   const P=PALETTE[look.weapon];
-  const shell=new T.MeshStandardMaterial({color:new T.Color(look.outfit==='work'?P.work:P.plate).multiplyScalar(.58),roughness:.62,metalness:.15});
+  const shell=new T.MeshStandardMaterial({color:ht===1?SET_LOOK[1].plate:new T.Color(look.outfit==='work'?P.work:P.plate).multiplyScalar(.58),roughness:.62,metalness:.15});
+  const packShell=tt===1?new T.MeshStandardMaterial({color:SET_LOOK[1].plate,roughness:.8,metalness:0}):shell;
+  const lit=(c:string,e=1.6)=>new T.MeshStandardMaterial({color:c,emissive:c,emissiveIntensity:e,roughness:.25});
+  const sand=new T.MeshStandardMaterial({color:SET_LOOK[2].plate,roughness:.42,metalness:.4,envMapIntensity:.9});
+  const chitin=new T.MeshStandardMaterial({color:SET_LOOK[2].under,roughness:.55,metalness:.2});
+  const steel=new T.MeshStandardMaterial({color:SET_LOOK[3].plate,roughness:.2,metalness:.8,envMapIntensity:1.5});
+  const deep=new T.MeshStandardMaterial({color:SET_LOOK[3].under,roughness:.4,metalness:.5});
+  const crystal=new T.MeshStandardMaterial({color:SET_LOOK[3].glow,emissive:SET_LOOK[3].glow,emissiveIntensity:1.5,roughness:.15,metalness:.1,flatShading:true,transparent:true,opacity:.92});
   const dark=new T.MeshStandardMaterial({color:'#1c1d22',roughness:.6,metalness:.4});
   const glow=new T.MeshStandardMaterial({color:P.accent,emissive:P.accent,emissiveIntensity:.7});
   const visor=new T.MeshStandardMaterial({color:'#0a2a33',emissive:look.weapon==='carbine'?'#ff7a2a':'#2fd8ff',emissiveIntensity:.22,roughness:.05,metalness:.7});
@@ -139,23 +149,53 @@ export class Character{
   };
   if(helmet&&head){
    const h=new T.Group();
-   const dome=new T.Mesh(new T.SphereGeometry(.135,28,18),shell);dome.scale.set(1,1.08,1.12);h.add(dome);
-   const vz=look.weapon==='carbine'?[.55,.45]:[.95,.7];
-   const v=new T.Mesh(new T.SphereGeometry(.138,28,18,Math.PI/2-vz[0],vz[0]*2,1.1,vz[1]),visor);v.rotation.y=0;v.scale.set(1,1.08,1.12);h.add(v);
-   const ring=new T.Mesh(new T.TorusGeometry(.115,.022,10,28),dark);ring.rotation.x=Math.PI/2;ring.position.y=-.12;h.add(ring);
-   for(const sx of[-1,1]){const ear=new T.Mesh(new T.CylinderGeometry(.04,.04,.03,16),dark);ear.rotation.z=Math.PI/2;ear.position.set(sx*.135,0,0);h.add(ear);const l=new T.Mesh(new T.SphereGeometry(.01,8,6),glow);l.position.set(sx*.152,0,.02);h.add(l);}
-   const fin=new T.Mesh(new RoundedBoxGeometry(.025,.035,.18,2,.01),dark);fin.position.set(0,.145,-.02);h.add(fin);
-   // reinforced helmet (tier 2 and 3): cheek guards and a crest lit in the colour of its rarity
-   if(ht>1){const rim=new T.MeshStandardMaterial({color:TIER_TRIM[ht],emissive:TIER_TRIM[ht],emissiveIntensity:.6,roughness:.4});
-    for(const sx of[-1,1]){const cheek=new T.Mesh(new RoundedBoxGeometry(.03,.11,.12,2,.012),shell);cheek.position.set(sx*.128,-.07,.04);cheek.rotation.z=sx*.12;h.add(cheek);}
-    const crest=new T.Mesh(new RoundedBoxGeometry(.012,.02,.2,2,.005),rim);crest.position.set(0,.168,-.02);h.add(crest);
-    const brow=new T.Mesh(new T.TorusGeometry(.128,.008,6,24,Math.PI*.7),rim);brow.rotation.set(0,0,Math.PI*.15);brow.position.set(0,.035,.0);brow.rotation.x=-.1;h.add(brow);}
+   // helmet of each set: expedition dome (base and set 1), amber carapace with ridges (2), boreal steel with crystal horns (3)
+   const hs=ht===2?sand:ht===3?steel:shell,hd=ht===2?chitin:ht===3?deep:dark;
+   const hv=ht===2?new T.MeshStandardMaterial({color:'#3a2208',emissive:'#ff9a2a',emissiveIntensity:.35,roughness:.05,metalness:.7}):ht===3?new T.MeshStandardMaterial({color:'#1a1038',emissive:'#9a70ff',emissiveIntensity:.45,roughness:.05,metalness:.7}):visor;
+   const dome=new T.Mesh(new T.SphereGeometry(.135,32,20),hs);dome.scale.set(1,1.08,1.12);h.add(dome);
+   const vz=look.weapon==='carbine'||ht===3?[.55,.45]:[.95,.7];
+   const v=new T.Mesh(new T.SphereGeometry(.138,32,20,Math.PI/2-vz[0],vz[0]*2,1.1,vz[1]),hv);v.scale.set(1,1.08,1.12);h.add(v);
+   const ring=new T.Mesh(new T.TorusGeometry(.115,.022,10,28),hd);ring.rotation.x=Math.PI/2;ring.position.y=-.12;h.add(ring);
+   for(const sx of[-1,1]){const ear=new T.Mesh(new T.CylinderGeometry(.04,.04,.03,16),hd);ear.rotation.z=Math.PI/2;ear.position.set(sx*.135,0,0);h.add(ear);
+    const l=new T.Mesh(new T.SphereGeometry(.01,8,6),ht>1?lit(ht===2?SET_LOOK[2].glow:SET_LOOK[3].glow):glow);l.position.set(sx*.152,0,.02);h.add(l);}
+   if(ht<2){const fin=new T.Mesh(new RoundedBoxGeometry(.025,.035,.18,2,.01),dark);fin.position.set(0,.145,-.02);h.add(fin);}
+   if(ht>1)for(const sx of[-1,1]){const cheek=new T.Mesh(new RoundedBoxGeometry(.034,.12,.13,3,.014),hs);cheek.position.set(sx*.13,-.07,.04);cheek.rotation.z=sx*.12;h.add(cheek);}
+   if(ht===2){
+    // carapace ridges over the crown and an amber line under the visor
+    for(let i=0;i<3;i++){const r=new T.Mesh(new RoundedBoxGeometry(.05-.008*i,.03,.07,2,.012),chitin);const a=.35-i*.42;r.position.set(0,.15*Math.cos(a),-.15*Math.sin(a)+.01);r.rotation.x=a;h.add(r);}
+    const line=new T.Mesh(new T.TorusGeometry(.142,.005,6,32,Math.PI*.6),lit(SET_LOOK[2].glow));line.rotation.set(Math.PI/2,0,Math.PI*.2);line.position.y=-.055;h.add(line);
+   }
+   if(ht===3){
+    // chin guard, a lit brow and two crystal horns swept back
+    const chin=new T.Mesh(new RoundedBoxGeometry(.14,.05,.06,3,.02),steel);chin.position.set(0,-.115,.12);h.add(chin);
+    const brow=new T.Mesh(new T.TorusGeometry(.142,.006,6,32,Math.PI*.62),lit(SET_LOOK[3].glow,2));brow.rotation.set(Math.PI/2,0,Math.PI*.19);brow.position.y=.045;h.add(brow);
+    for(const sx of[-1,1]){const horn=new T.Mesh(new T.OctahedronGeometry(.05),crystal);horn.scale.set(.35,.4,2.1);horn.position.set(sx*.085,.12,-.07);horn.rotation.set(.55,sx*.25,0);h.add(horn);}
+   }
    h.traverse(o=>{(o as T.Mesh).castShadow=true;});
    attach(head,this.restHead,h,[0,.075,.012]);
   }
+  if(tt===2&&chest){
+   // amber generator: a compact carapace housing with two lit vents and coils
+   const b=new T.Group();
+   const body=new T.Mesh(new RoundedBoxGeometry(.22,.27,.08,3,.03),sand);b.add(body);
+   const frame=new T.Mesh(new RoundedBoxGeometry(.25,.07,.1,2,.025),chitin);frame.position.y=.14;b.add(frame);
+   for(const sx of[-1,1]){const vent=new T.Mesh(new RoundedBoxGeometry(.03,.18,.012,2,.006),lit(SET_LOOK[2].glow,1.8));vent.position.set(sx*.055,-.01,-.043);b.add(vent);
+    const coil=new T.Mesh(new T.CylinderGeometry(.028,.028,.22,14),chitin);coil.position.set(sx*.13,-.02,.0);b.add(coil);}
+   b.traverse(o=>{(o as T.Mesh).castShadow=true;});attach(chest,this.restChest,b,[0,-.04,-.155]);
+  }
+  if(tt===3&&chest){
+   // boreal spines: a mount on the back plate and a fan of violet crystals
+   const b=new T.Group();
+   const mount=new T.Mesh(new RoundedBoxGeometry(.16,.2,.05,3,.02),deep);b.add(mount);
+   for(const [x,ry,rz,s] of [[0,0,0,1.15],[-.06,-.1,.42,.9],[.06,.1,-.42,.9]] as const){const c=new T.Mesh(new T.OctahedronGeometry(.06),crystal);c.scale.set(.42*s,2.4*s,.42*s);c.position.set(x,.1,-.035);c.rotation.set(-.32,ry,rz);b.add(c);}
+   b.traverse(o=>{(o as T.Mesh).castShadow=true;});attach(chest,this.restChest,b,[0,-.03,-.155]);
+  }
+  // knee crystals of the boreal legs
+  if(lt===3)for(const s of['l','r']){const calf=this.model.getObjectByName('calf_'+s);const rest=this.rest.get('calf_'+s);if(!calf||!rest)continue;
+   const c=new T.Mesh(new T.OctahedronGeometry(.03),crystal);c.scale.set(.8,1.4,.5);attach(calf,rest,c,[0,.01,.085]);}
   if(pack&&chest){
    const b=new T.Group();
-   const body=new T.Mesh(new RoundedBoxGeometry(.3,.38,.15,3,.04),shell);b.add(body);
+   const body=new T.Mesh(new RoundedBoxGeometry(.3,.38,.15,3,.04),packShell);b.add(body);
    const lid=new T.Mesh(new RoundedBoxGeometry(.3,.1,.19,2,.03),dark);lid.position.set(0,.2,0);b.add(lid);
    for(const sx of[-1,1]){const can=new T.Mesh(new T.CylinderGeometry(.045,.045,.34,14),dark);can.position.set(sx*.2,-.02,-.02);b.add(can);const band=new T.Mesh(new T.TorusGeometry(.047,.006,6,16),glow);band.rotation.x=Math.PI/2;band.position.set(sx*.2,.08,-.02);b.add(band);}
    const strip=new T.Mesh(new T.BoxGeometry(.2,.02,.01),glow);strip.position.set(0,.05,-.09);b.add(strip);
