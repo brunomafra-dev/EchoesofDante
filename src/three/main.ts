@@ -680,13 +680,13 @@ function peerProfile(id:string,p:Profile){const peer=peers.get(id);if(!peer){voi
   const relook=JSON.stringify(peer.profile.look)!==JSON.stringify(p.look);peer.profile=p;
   if(relook)void addPeer(id,p);else if(peer.ready)peer.char.setArmour(p.armour??{});}
 const net=new Net({
-  room:(code,members)=>{for(const id of [...peers.keys()])dropPeer(id);for(const m of members)void addPeer(m.id,m.profile);toast(`Sala ${code} · ${members.length+1} ${members.length?'exploradores':'explorador'}`);renderRoomChip();if($('mtitle').textContent==='Jogar junto')openCoop();},
-  joined:(id,p)=>{void addPeer(id,p);toast(`${p.name} entrou na sala`);sfx('ui');if($('mtitle').textContent==='Jogar junto')openCoop();},
+  room:(code,members)=>{for(const id of [...peers.keys()])dropPeer(id);for(const m of members)void addPeer(m.id,m.profile);toast(`Sala ${code} · ${members.length+1} ${members.length?'exploradores':'explorador'}`);renderRoomChip();if(coopShown())openCoop();},
+  joined:(id,p)=>{void addPeer(id,p);toast(`${p.name} entrou na sala`);sfx('ui');if(coopShown())openCoop();},
   profile:peerProfile,
-  left:id=>{const p=peers.get(id);if(p)toast(`${p.profile.name} saiu da sala`);dropPeer(id);if($('mtitle').textContent==='Jogar junto')openCoop();},
+  left:id=>{const p=peers.get(id);if(p)toast(`${p.profile.name} saiu da sala`);dropPeer(id);if(coopShown())openCoop();},
   state:(id,s)=>{const p=peers.get(id);if(!p)return;if(p.biome!==s.b)p.seen=false;p.biome=s.b;p.x=s.x;p.z=s.z;p.h=s.h;p.anim=s.a;p.hp=s.hp;},
   event:()=>{},
-  error:text=>{coopError=text;toast(text);if($('mtitle').textContent==='Jogar junto')openCoop();},
+  error:text=>{coopError=text;toast(text);if(coopShown())openCoop();},
   closed:()=>{for(const id of [...peers.keys()])dropPeer(id);toast('Você saiu da sala');renderRoomChip();},
   slow:()=>toast('Acordando o servidor de salas · pode levar até um minuto'),
 });
@@ -710,6 +710,8 @@ function updatePeers(dt:number){
   }
 }
 function sendState(){if(!net.on||mode!=='play')return;net.state({x:pos.x,z:pos.z,h:hero.model?.rotation.y??0,a:hero.currentName||'Idle_Loop',b:world.biome,hp:dead?0:hp/Math.max(1,hpMax)},time);}
+// the room window refreshes only while it is on screen (the title stays after it closes)
+const coopShown=()=>$('modal').classList.contains('on')&&$('mtitle').textContent==='Jogar junto';
 const roomChip=document.createElement('button');roomChip.id='roomchip';roomChip.onclick=()=>openCoop();document.body.appendChild(roomChip);
 function renderRoomChip(){roomChip.classList.toggle('on',net.on);if(net.on)roomChip.textContent=`Sala ${net.code} · ${peers.size+1}/4`;}
 function openCoop(){
