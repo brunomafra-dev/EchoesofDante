@@ -7,13 +7,13 @@ import {Sound,type Sfx} from './audio';
 import {VFX,type Kind} from './vfx';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {Creature,MODELS,ANIMS,MODEL_DEF,SPECIES,ink,menace,updateSpits,clearShots,tickTele,teleWarm,petModel,petBody,motion,type Ctx,type SpeciesId,type Motion,type PetLook} from './creatures';
-import {PETS,PET_ORDER,type PetId,type PetDef} from './pets';
+import {PETS,PET_ORDER,isPet,type PetId,type PetDef} from './pets';
 import {loadRoster,saveRoster,newId,journalKey,forget,cleanName,NAME_MAX,type HeroSave} from './save';
 import {BIOMES,BIOME_ORDER,type BiomeId} from './biomes';
 import {Npc,CAMP} from './camp';
 import {Journal,MISSIONS,EXPEDITIONS,ALL_MISSIONS,NPCS,NPC_INFO,missionById,type Goal,type NpcId,type Mission} from './missions';
 import {ART_NAMES,ART_COLORS,type Art} from './expeditions';
-import {Net,type Profile} from './net';
+import {Net,type Profile,type NetEvent,type PetState} from './net';
 import {Gear,REGION_LOOT,GOAL_XP,POTION_HEAL,POTION_CD,type Stats} from './gear';
 import {gearKey} from './save';
 import type {Armour} from './outfit';
@@ -96,19 +96,26 @@ function updateEnemies(dt:number,now:number){
 // ---------- projectiles & fx ----------
 const vfx=new VFX(world.scene);
 for(const f of world.flameSpots)vfx.campfire(f.p,f.s);
-interface Proj{o:T.Object3D;kind:Kind;v:T.Vector3;life:number;dmg:number;elem?:Element;mark?:boolean;burst?:{r:number;dmg:number}}
+// ghost: a projectile of another player in the room, only to be seen
+interface Proj{o:T.Object3D;kind:Kind;v:T.Vector3;life:number;dmg:number;elem?:Element;mark?:boolean;burst?:{r:number;dmg:number};ghost?:boolean}
 const projs:Proj[]=[];
 function dispose(o:T.Object3D){o.removeFromParent();o.traverse(c=>{const m=c as T.Mesh;m.geometry?.dispose();const mt=m.material as T.Material|T.Material[]|undefined;if(Array.isArray(mt))mt.forEach(x=>x.dispose());else mt?.dispose();});}
 function fire(kind:Kind,from:T.Vector3,dir:T.Vector3,speed:number,dmg:number,o:{elem?:Element;mark?:boolean;burst?:{r:number;dmg:number};life?:number}={}){
   const g=vfx.projectile(kind);g.position.copy(from);g.lookAt(from.clone().add(dir));vfx.muzzle(kind,from,dir);
   projs.push({o:g,kind,v:dir.clone().multiplyScalar(speed),life:o.life??1.2,dmg,elem:o.elem,mark:o.mark,burst:o.burst});
+  if(speed>0)net.event({k:'shot',x:from.x,y:from.y,z:from.z,h:Math.atan2(dir.x,dir.z),w:kind,v:speed,l:o.life??1.2});
+}
+// what another player of the room shoots: the same projectile, only to be seen (each one still fights their own creatures)
+function ghostShot(kind:Kind,from:T.Vector3,dir:T.Vector3,speed:number,life:number){
+  const g=vfx.projectile(kind);g.position.copy(from);g.lookAt(from.clone().add(dir));vfx.muzzle(kind,from,dir);
+  projs.push({o:g,kind,v:dir.clone().multiplyScalar(speed),life,dmg:0,ghost:true});
 }
 function updateFx(dt:number){
   for(let i=projs.length-1;i>=0;i--){
    const p=projs[i];p.o.position.addScaledVector(p.v,dt);p.life-=dt;let hit:Enemy|null=null;
    p.o.position.y+=(1.15-p.o.position.y)*Math.min(1,dt*4);
    vfx.trail(p.kind,p.o,p.v,dt);
-   for(const e of enemies)if(e.state!=='dead'&&Math.hypot(e.pos.x-p.o.position.x,e.pos.z-p.o.position.z)<e.radius+.25){hit=e;break;}
+   if(!p.ghost)for(const e of enemies)if(e.state!=='dead'&&Math.hypot(e.pos.x-p.o.position.x,e.pos.z-p.o.position.z)<e.radius+.25){hit=e;break;}
    if(hit){const IMP:Record<string,Sfx>={pulse:'hit',fire:'fire',water:'water',earth:'earth',energy:'energy',filament:'bite'};sfx(IMP[p.kind],p.o.position);applyHit(hit,p.dmg,p.o.position.clone().addScaledVector(p.v,-.05),p.elem);if(p.mark)hit.markUntil=now()+2.2;
     if(p.burst){const c=p.o.position.clone().setY(0);vfx.field('water',c,p.burst.r);vfx.decal(c,'#a8f0ff',p.burst.r,.6,1);vfx.shake=Math.max(vfx.shake,.2);for(const e of enemies)if(e!==hit&&e.state!=='dead'&&Math.hypot(e.pos.x-c.x,e.pos.z-c.z)<p.burst.r+e.radius*.5)applyHit(e,p.burst.dmg,c,'water');}}
    if(hit||p.life<=0){if(hit||p.kind!=='pulse')vfx.impact(p.kind,p.o.position,p.v.clone().normalize());dispose(p.o);projs.splice(i,1);}
@@ -182,7 +189,7 @@ function lunge(e:Enemy){
   const n=now(),k=kit();const d=e.pos.clone().sub(pos).setY(0),l=d.length(),travel=Math.max(0,l-e.radius-.9);
   rollDir.copy(d.normalize());heading=Math.atan2(rollDir.x,rollDir.z);lungeSpeed=k.lunge!.speed;
   const dur=travel/lungeSpeed;rollUntil=n+dur;invulnUntil=n+dur+.1;lungeReady=n+k.lunge!.cd;moveTarget=null;atkPending=null;
-  hero.play('Sprint_Loop',{fade:.04,speed:1.8});sfx('dash');vfx.decal(pos.clone(),'#7fe8ff',1.4,.35);
+  hero.play('Sprint_Loop',{fade:.04,speed:1.8});sfx('dash');vfx.decal(pos.clone(),'#7fe8ff',1.4,.35);net.event({k:'dash',x:pos.x,z:pos.z,h:heading});
   later(dur,()=>{lungeSpeed=0;lungeBonus=1.4;vfx.shake=Math.max(vfx.shake,.12);tryAttack();});
 }
 function tryAttack(){
@@ -202,7 +209,7 @@ function tryAttack(){
     fire(kind,from,d,pr.speed!,pr.dmg,{elem:cls()==='astral'?element:undefined,mark:cls()==='xenobinder'});
     if(cls()==='hunter'){hero.recoil();mana=Math.min(100,mana+4);}
    }else{
-    vfx.slash(pos,heading,comboIdx%2===0);sfx('swing');let struck=false;
+    vfx.slash(pos,heading,comboIdx%2===0);sfx('swing');net.event({k:'slash',x:pos.x,z:pos.z,h:heading,r:comboIdx%2===0?1:0});let struck=false;
     for(const e of enemies)if(e.state!=='dead'){const d=e.pos.clone().sub(pos).setY(0),l=d.length();
      if(l<pr.range&&(l<.9||dir.angleTo(d.normalize())<pr.arc!/2)){if(!struck){struck=true;sfx('slashHit');}const dmg=pr.dmg*bonus*(.9+Math.random()*.25);e.hit(dmg,pos);vfx.hitSpark(e.pos.clone().setY(1.15),d);mana=Math.min(100,mana+8);if(k.leech)hp=Math.min(hpMax,hp+dmg*k.leech);}}
     // the wind blade keeps cutting in a line in front of the swing
@@ -219,6 +226,7 @@ function skillDown(){
   if(cls()==='hunter'){
    // gather energy, then a huge spark beam (Lux-style)
    const dir0=shotDir(hero.muzzle()),charge=.55,L=24;atkUntil=n+charge+.8;moveTarget=null;hero.play('Pistol_Idle_Loop',{fade:.1});
+   net.event({k:'beam',x:pos.x,z:pos.z,h:Math.atan2(dir0.x,dir0.z)});
    sfx('charge');vfx.spark(()=>hero.muzzle(),()=>dir0,L,charge,()=>{sfx('beam');
     hero.play('Pistol_Shoot',{once:true,speed:.8,fade:.05});hero.recoil();
     const hitBeam=(dmg:number)=>{const from=hero.muzzle();for(const e of enemies)if(e.state!=='dead'){const r=e.pos.clone().sub(from).setY(0),along=r.dot(dir0);if(along>0&&along<L&&r.addScaledVector(dir0,-along).length()<1.25){e.hit(dmg,from,'#bff6ff',false,6);vfx.hitSpark(e.pos.clone().setY(1.1),dir0,'#bff6ff');}}};
@@ -227,7 +235,7 @@ function skillDown(){
   }else if(cls()==='astral'){
    const dur=hero.duration('Spell_Simple_Shoot')/1.4;hero.play('Spell_Simple_Shoot',{once:true,speed:1.4,fade:.08});atkUntil=n+dur*.85;atkImpact=n+dur*.45;
    const at=aimPoint.clone();const off=at.clone().sub(pos).setY(0);if(off.length()>9)at.copy(pos).addScaledVector(off.normalize(),9);
-   const el=element;vfx.decal(at,ELEMENT_COLORS[el],2.6,.5);
+   const el=element;vfx.decal(at,ELEMENT_COLORS[el],2.6,.5);net.event({k:'field',x:at.x,z:at.z,h:0,w:el,l:dur*.45});
    atkPending=()=>{sfx(el as Sfx,at);vfx.field(el,at,2.7);for(const e of enemies)if(e.state!=='dead'&&Math.hypot(e.pos.x-at.x,e.pos.z-at.z)<2.9)applyHit(e,30*qMul(),at,el);};
   }else{
    const dur=hero.duration('Spell_Simple_Shoot')/1.5;hero.play('Spell_Simple_Shoot',{once:true,speed:1.5,fade:.08});atkUntil=n+dur*.7;
@@ -241,7 +249,7 @@ function skillUp(){
   const n=now(),level=Math.min(1,Math.max(0,(n-chargeStart-.08)/.72));chargeStart=0;chargeFx(false);
   skillReady=n+kit().skill.cd;
   const dur=.75+level*.25,r=2.6+level*1.3;hero.play('Sword_Attack',{once:true,speed:1.2,fade:.05});atkUntil=n+dur;spinUntil=n+dur;
-  vfx.twist(()=>pos,r,dur);sfx('twist');vfx.shake=.15+level*.15;
+  vfx.twist(()=>pos,r,dur);sfx('twist');net.event({k:'twist',x:pos.x,z:pos.z,h:heading,r,l:dur});vfx.shake=.15+level*.15;
   twist={until:n+dur,next:n+.05,r,dmg:Math.round((50+60*level)/4*qMul())};
 }
 let chargeRing:T.Mesh|null=null;
@@ -288,7 +296,7 @@ class Pet{
    this.leap={from:p.clone(),to,t:0,dur:Math.max(.35,Math.min(.7,to.distanceTo(p)/14))};this.play('jump',true,1.5);sfx('dash',p);
   }else if(this.id==='bulwark'){
    this.busy=n+.8;this.acting=n+.8;this.play('attack',true,1.1);
-   later(.35,()=>{const c=this.g.position.clone().setY(0);sfx('earth',c);vfx.shake=Math.max(vfx.shake,.3);vfx.field('earth',c,3);vfx.decal(c,'#ffd27a',3.4,.6,1);
+   later(.35,()=>{const c=this.g.position.clone().setY(0);sfx('earth',c);net.event({k:'pet',x:c.x,z:c.z,h:0,w:'slam'});vfx.shake=Math.max(vfx.shake,.3);vfx.field('earth',c,3);vfx.decal(c,'#ffd27a',3.4,.6,1);
     for(let i=0;i<10;i++)vfx.shard(c.clone().setY(.3),new T.Vector3(rnd(-1,1),rnd(.8,1.6),rnd(-1,1)).normalize().multiplyScalar(rnd(4,8)),1);
     for(const e of enemies)if(e.state!=='dead'&&Math.hypot(e.pos.x-c.x,e.pos.z-c.z)<3.4+e.radius*.5)e.hit((n<e.markUntil?52:40)*qMul(),c,'#ffd27a',false,8);
     if(pos.distanceTo(c)<7){shieldUntil=now()+5;sfx('heal');popText(pos.clone().setY(2.4),'Protegido','#ffd27a');}});
@@ -298,7 +306,7 @@ class Pet{
   }
  }
  private land(){
-  const c=this.g.position.clone().setY(0);sfx('slashHit',c);vfx.decal(c,'#7dff9e',2.8,.7,1);vfx.shake=Math.max(vfx.shake,.15);
+  const c=this.g.position.clone().setY(0);sfx('slashHit',c);vfx.decal(c,'#7dff9e',2.8,.7,1);net.event({k:'pet',x:c.x,z:c.z,h:0,w:'land'});vfx.shake=Math.max(vfx.shake,.15);
   vfx.emit({pos:c.clone().setY(.4),n:30,speed:[1.5,4],up:.6,life:[.4,.8],size:[.18,.04],c0:'#e8ffe8',c1:'#2fae5a',a:[1,0],drag:1.5,spread:.8});
   for(const e of enemies)if(e.state!=='dead'&&Math.hypot(e.pos.x-c.x,e.pos.z-c.z)<2.6+e.radius*.5)e.hit((n2(e)?58:45)*qMul(),c,'#7dff9e',false,10);
   if(pos.distanceTo(c)<7){const heal=Math.round(hpMax*.08);hp=Math.min(hpMax,hp+heal);popText(pos.clone().setY(2.4),'+'+heal,'#7dff9e');sfx('heal');
@@ -662,20 +670,20 @@ $('mapbtn').onclick=()=>openAtlas();
 // ---------- playing together online (net.ts, server/relay3d.mjs) ----------
 // The others in the room are drawn by this game: their character, equipment and animation, where they are, when they
 // are in the same region. Each player keeps their own progress, missions and backpack.
-interface Peer{id:string;profile:Profile;char:Character;ready:boolean;biome:BiomeId|'';x:number;z:number;h:number;anim:string;hp:number;label:HTMLDivElement;seen:boolean}
+interface Peer{id:string;profile:Profile;char:Character;ready:boolean;biome:BiomeId|'';x:number;z:number;h:number;anim:string;hp:number;label:HTMLDivElement;seen:boolean;pet:Pet|null;ps:PetState|null;spinUntil:number}
 const peers=new Map<string,Peer>();
 const peerBox=document.createElement('div');peerBox.id='peers';document.body.appendChild(peerBox);
 const myProfile=():Profile=>({name:heroName()||'Explorador',cls:cls(),look:{...look},armour:wornArmour(gear),pet:petId,level:gear.level});
 async function addPeer(id:string,p:Profile){
   dropPeer(id);
   const char=new Character(),label=document.createElement('div');label.className='peer';peerBox.appendChild(label);
-  const peer:Peer={id,profile:p,char,ready:false,biome:'',x:0,z:0,h:0,anim:'Idle_Loop',hp:1,label,seen:false};peers.set(id,peer);renderRoomChip();
+  const peer:Peer={id,profile:p,char,ready:false,biome:'',x:0,z:0,h:0,anim:'Idle_Loop',hp:1,label,seen:false,pet:null,ps:null,spinUntil:0};peers.set(id,peer);renderRoomChip();
   char.root.visible=false;world.scene.add(char.root);
   try{await char.setSex(p.look.sex==='female'?'female':'male');char.setArmour(p.armour??{});char.apply({...DEFAULT_LOOK,...p.look});await char.setWeapon(p.look.weapon??DEFAULT_LOOK.weapon);peer.ready=peers.get(id)===peer;}
   catch{/* a model that fails to load leaves only the name */}
   renderRoomChip();
 }
-function dropPeer(id:string){const p=peers.get(id);if(!p)return;p.char.root.removeFromParent();p.label.remove();peers.delete(id);renderRoomChip();}
+function dropPeer(id:string){const p=peers.get(id);if(!p)return;p.pet?.remove();p.char.root.removeFromParent();p.label.remove();peers.delete(id);renderRoomChip();}
 function peerProfile(id:string,p:Profile){const peer=peers.get(id);if(!peer){void addPeer(id,p);return;}
   const relook=JSON.stringify(peer.profile.look)!==JSON.stringify(p.look);peer.profile=p;
   if(relook)void addPeer(id,p);else if(peer.ready)peer.char.setArmour(p.armour??{});}
@@ -684,8 +692,8 @@ const net=new Net({
   joined:(id,p)=>{void addPeer(id,p);toast(`${p.name} entrou na sala`);sfx('ui');if(coopShown())openCoop();},
   profile:peerProfile,
   left:id=>{const p=peers.get(id);if(p)toast(`${p.profile.name} saiu da sala`);dropPeer(id);if(coopShown())openCoop();},
-  state:(id,s)=>{const p=peers.get(id);if(!p)return;if(p.biome!==s.b)p.seen=false;p.biome=s.b;p.x=s.x;p.z=s.z;p.h=s.h;p.anim=s.a;p.hp=s.hp;},
-  event:()=>{},
+  state:(id,s)=>{const p=peers.get(id);if(!p)return;if(p.biome!==s.b)p.seen=false;p.biome=s.b;p.x=s.x;p.z=s.z;p.h=s.h;p.anim=s.a;p.hp=s.hp;p.ps=s.p??null;},
+  event:(id,e)=>peerEvent(id,e),
   error:text=>{coopError=text;toast(text);if(coopShown())openCoop();},
   closed:()=>{for(const id of [...peers.keys()])dropPeer(id);toast('Você saiu da sala');renderRoomChip();},
   slow:()=>toast('Acordando o servidor de salas · pode levar até um minuto'),
@@ -696,10 +704,11 @@ function updatePeers(dt:number){
   const show=mode==='play',covered=$('modal').classList.contains('on');
   for(const p of peers.values()){
    const here=show&&p.ready&&p.biome===world.biome;p.char.root.visible=here;
-   if(!here){p.label.style.display='none';continue;}
+   if(!here){p.label.style.display='none';if(p.pet)p.pet.g.visible=false;continue;}
    const r=p.char.root.position;if(!p.seen){r.set(p.x,0,p.z);p.seen=true;}
    const k=Math.min(1,dt*10);r.x+=(p.x-r.x)*k;r.z+=(p.z-r.z)*k;
-   if(p.char.model){const m=p.char.model;let d=p.h-m.rotation.y;d=Math.atan2(Math.sin(d),Math.cos(d));m.rotation.y+=d*Math.min(1,dt*12);}
+   if(p.char.model){const m=p.char.model;if(now()<p.spinUntil)m.rotation.y-=dt*19;else{let d=p.h-m.rotation.y;d=Math.atan2(Math.sin(d),Math.cos(d));m.rotation.y+=d*Math.min(1,dt*12);}}
+   syncPeerPet(p,dt);
    if(p.char.has(p.anim))p.char.play(p.anim,{fade:.15});
    p.char.update(dt);
    gv.copy(r).setY(2.25);gv.project(camera);
@@ -709,7 +718,37 @@ function updatePeers(dt:number){
    if(p.label.dataset.k!==html){p.label.dataset.k=html;p.label.innerHTML=html;}
   }
 }
-function sendState(){if(!net.on||mode!=='play')return;net.state({x:pos.x,z:pos.z,h:hero.model?.rotation.y??0,a:hero.currentName||'Idle_Loop',b:world.biome,hp:dead?0:hp/Math.max(1,hpMax)},time);}
+function sendState(){if(!net.on||mode!=='play')return;const g=pet?.g;
+  net.state({x:pos.x,z:pos.z,h:hero.model?.rotation.y??0,a:hero.currentName||'Idle_Loop',b:world.biome,hp:dead?0:hp/Math.max(1,hpMax),p:g?{x:g.position.x,z:g.position.z,h:g.rotation.y,y:g.position.y,a:pet!.look?.cur??'idle'}:undefined},time);}
+// the beast of another tamer: the same creature, following what its owner's game says
+const PET_MOTIONS=new Set<string>(['idle','move','run','attack','hit','jump']);
+function syncPeerPet(p:Peer,dt:number){
+  const id=p.ps&&isPet(p.profile.pet)?p.profile.pet:null;
+  if(p.pet&&p.pet.id!==id){p.pet.remove();p.pet=null;}
+  if(!id||!p.ps)return;
+  const s=p.ps;if(!p.pet){p.pet=new Pet(id);p.pet.g.visible=false;}
+  const g=p.pet.g;if(!g.visible){g.position.set(s.x,s.y,s.z);g.rotation.y=s.h;g.visible=true;}
+  const k=Math.min(1,dt*10);g.position.x+=(s.x-g.position.x)*k;g.position.z+=(s.z-g.position.z)*k;g.position.y+=(s.y-g.position.y)*Math.min(1,dt*14);
+  let d=s.h-g.rotation.y;d=Math.atan2(Math.sin(d),Math.cos(d));g.rotation.y+=d*Math.min(1,dt*12);
+  if(PET_MOTIONS.has(s.a))p.pet.play(s.a as Motion);p.pet.look?.mixer?.update(dt);
+  if(s.y>.2)vfx.petTrail(g.position);
+}
+// a moment of another player's fight, drawn here (only when they are in this region)
+const SHOT_SFX:Record<Kind,Sfx>={pulse:'shot',filament:'filament',fire:'fire',water:'water',earth:'earth',energy:'energy'};
+const isElement=(w:string|undefined):w is Element=>!!w&&w in ELEMENT_COLORS;
+function peerEvent(id:string,e:NetEvent){
+  const p=peers.get(id);if(!p||!p.char.root.visible)return;
+  const at=new T.Vector3(e.x,0,e.z),dir=new T.Vector3(Math.sin(e.h),0,Math.cos(e.h));
+  const astral=p.profile.cls==='astral';
+  if(e.k==='shot'&&e.w&&e.w in SHOT_SFX){const k=e.w as Kind;ghostShot(k,at.clone().setY(e.y??1.2),dir,e.v??20,e.l??1.2);sfx(SHOT_SFX[k],at);if(astral&&isElement(k))p.char.setGlow(ELEMENT_COLORS[k]);}
+  else if(e.k==='slash'){vfx.slash(p.char.root.position,e.h,!!e.r);sfx('swing',at);}
+  else if(e.k==='dash'){vfx.decal(at,'#7fe8ff',1.4,.35);sfx('dash',at);}
+  else if(e.k==='beam'){const ch=p.char;sfx('charge',at);vfx.spark(()=>ch.muzzle(),()=>dir,24,.55,()=>{sfx('beam',ch.root.position);ch.recoil();});}
+  else if(e.k==='field'&&isElement(e.w)){const el=e.w;if(astral)p.char.setGlow(ELEMENT_COLORS[el]);vfx.decal(at,ELEMENT_COLORS[el],2.6,.5);later(e.l??.3,()=>{vfx.field(el,at,2.7);sfx(el as Sfx,at);});}
+  else if(e.k==='twist'){const dur=e.l??.8;vfx.twist(()=>p.char.root.position,e.r??3,dur);sfx('twist',at);p.spinUntil=now()+dur;}
+  else if(e.k==='pet'&&e.w==='land'){sfx('slashHit',at);vfx.decal(at,'#7dff9e',2.8,.7,1);vfx.emit({pos:at.clone().setY(.4),n:30,speed:[1.5,4],up:.6,life:[.4,.8],size:[.18,.04],c0:'#e8ffe8',c1:'#2fae5a',a:[1,0],drag:1.5,spread:.8});}
+  else if(e.k==='pet'&&e.w==='slam'){sfx('earth',at);vfx.field('earth',at,3);vfx.decal(at,'#ffd27a',3.4,.6,1);for(let i=0;i<10;i++)vfx.shard(at.clone().setY(.3),new T.Vector3(rnd(-1,1),rnd(.8,1.6),rnd(-1,1)).normalize().multiplyScalar(rnd(4,8)),1);}
+}
 // the room window refreshes only while it is on screen (the title stays after it closes)
 const coopShown=()=>$('modal').classList.contains('on')&&$('mtitle').textContent==='Jogar junto';
 const roomChip=document.createElement('button');roomChip.id='roomchip';roomChip.onclick=()=>openCoop();document.body.appendChild(roomChip);
@@ -1246,7 +1285,7 @@ function frame(){
   requestAnimationFrame(frame);
 })();
 // QA hooks
-(window as unknown as {__d3:unknown}).__d3={get state(){return{level:gear.level,xp:gear.xp,hpMax,potions:gear.potions,credits:gear.economy.credits,materials:[...gear.economy.materials],bag:gear.bag.map(i=>i.id),worn:{...gear.slots},drops:drops.length,mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look,name:heroName(),pet:pet?.id??null,petPos:pet?pet.g.position.toArray():null,petAnim:pet?.look?.cur??null,shield:now()<shieldUntil,biome:world.biome,roster:roster.list.map(h=>h.name),reachable:BIOME_ORDER.filter(reachable)};},cam:(px:number,py:number,pz:number,tx:number,ty:number,tz:number)=>{fixedCam=px===undefined?null:[new T.Vector3(px,py,pz),new T.Vector3(tx,ty,tz)];},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,goBiome,bossNow:()=>{biomeKills=99;},scene:world.scene,hero,renderer,npcs:(v:boolean)=>{for(const n of npcs)n.char.root.visible=v;npcHidden=!v;},shadows:(v:boolean)=>{renderer.shadowMap.enabled=v;world.scene.traverse(o=>{const m=(o as T.Mesh).material as T.Material|undefined;if(m)m.needsUpdate=true;});},perf:(n=10)=>{const t0=performance.now();for(let i=0;i<n;i++)tick(1/30);const t1=performance.now();renderer.info.autoReset=false;renderer.info.reset();world.render(camera,time);const calls=renderer.info.render.calls,tris=renderer.info.render.triangles;renderer.info.autoReset=true;const t2=performance.now();for(let i=0;i<n;i++){if(quality==='high')world.render(camera,time);else renderer.render(world.scene,camera);}const t3=performance.now();let lights=0,meshes=0,skinned=0;world.scene.traverseVisible(o=>{if((o as T.Light).isLight)lights++;if((o as T.Mesh).isMesh)meshes++;if((o as T.SkinnedMesh).isSkinnedMesh)skinned++;});return{tick:+((t1-t0)/n).toFixed(2),render:+((t3-t2)/n).toFixed(1),calls,tris,programs:renderer.info.programs?.length,lights,meshes,skinned,pr:renderer.getPixelRatio()};},journal:()=>journal,tp:(x:number,z:number)=>{pos.set(x,0,z);},interact,openPen,pet:()=>pet,beat:(k:string)=>{journal.beat(k);sealPortals();renderBiomes();},gear:()=>gear,xp:(n:number)=>gainXp(n,pos),give:(id:EquipmentId)=>{gear.take(id);hud();},openGear,openService:(id:NpcId)=>openService(id),drink:drinkPotion,refreshGear,hurt:(d:number)=>damage(d,pos.clone().setZ(pos.z+1)),dropAt:()=>drops.map(d=>[d.g.position.x,d.g.position.z,d.item??null]),talkTo:(id:string)=>{const n=npcs.find(x=>x.def.id===id);if(n){pos.set(n.pos.x,0,n.pos.z+1.6);openTalk(n);}},goal:(id:string)=>{const g=journal.open().find(x=>x.id===id);if(g)goalDone(g);},enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{qaAim=true;aimPoint.set(x,0,z);},qa:{T,ink,menace,glb:(u:string)=>new GLTFLoader().loadAsync(u)},list:()=>enemies,habs:()=>habs,hp:()=>hp,bars:()=>[bars.size,mode],spawn:(x:number,z:number,k:SpeciesId='crawler')=>{const e=new Creature(k,x,z,world.scene);enemies.push(e);return e;},mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
+(window as unknown as {__d3:unknown}).__d3={get state(){return{level:gear.level,xp:gear.xp,hpMax,potions:gear.potions,credits:gear.economy.credits,materials:[...gear.economy.materials],bag:gear.bag.map(i=>i.id),worn:{...gear.slots},drops:drops.length,mode,hp,mana,kills,dead,anim:hero.currentName,pos:pos.toArray(),clips:[...hero.clips.keys()],enemies:enemies.length,look,name:heroName(),pet:pet?.id??null,petPos:pet?pet.g.position.toArray():null,petAnim:pet?.look?.cur??null,shield:now()<shieldUntil,biome:world.biome,roster:roster.list.map(h=>h.name),reachable:BIOME_ORDER.filter(reachable)};},cam:(px:number,py:number,pz:number,tx:number,ty:number,tz:number)=>{fixedCam=px===undefined?null:[new T.Vector3(px,py,pz),new T.Vector3(tx,ty,tz)];},advance:(sec:number)=>{for(let i=0;i<sec*30;i++)tick(1/30);},vfx,goBiome,bossNow:()=>{biomeKills=99;},scene:world.scene,hero,renderer,npcs:(v:boolean)=>{for(const n of npcs)n.char.root.visible=v;npcHidden=!v;},shadows:(v:boolean)=>{renderer.shadowMap.enabled=v;world.scene.traverse(o=>{const m=(o as T.Mesh).material as T.Material|undefined;if(m)m.needsUpdate=true;});},perf:(n=10)=>{const t0=performance.now();for(let i=0;i<n;i++)tick(1/30);const t1=performance.now();renderer.info.autoReset=false;renderer.info.reset();world.render(camera,time);const calls=renderer.info.render.calls,tris=renderer.info.render.triangles;renderer.info.autoReset=true;const t2=performance.now();for(let i=0;i<n;i++){if(quality==='high')world.render(camera,time);else renderer.render(world.scene,camera);}const t3=performance.now();let lights=0,meshes=0,skinned=0;world.scene.traverseVisible(o=>{if((o as T.Light).isLight)lights++;if((o as T.Mesh).isMesh)meshes++;if((o as T.SkinnedMesh).isSkinnedMesh)skinned++;});return{tick:+((t1-t0)/n).toFixed(2),render:+((t3-t2)/n).toFixed(1),calls,tris,programs:renderer.info.programs?.length,lights,meshes,skinned,pr:renderer.getPixelRatio()};},journal:()=>journal,peerInfo:()=>[...peers.values()].map(p=>({name:p.profile.name,cls:p.profile.cls,vis:p.char.root.visible,pet:p.pet?.id??null,petVis:p.pet?.g.visible??false,petPos:p.pet?p.pet.g.position.toArray().map(v=>+v.toFixed(2)):null})),ghosts:()=>projs.filter(x=>x.ghost).length,tp:(x:number,z:number)=>{pos.set(x,0,z);},interact,openPen,pet:()=>pet,beat:(k:string)=>{journal.beat(k);sealPortals();renderBiomes();},gear:()=>gear,xp:(n:number)=>gainXp(n,pos),give:(id:EquipmentId)=>{gear.take(id);hud();},openGear,openService:(id:NpcId)=>openService(id),drink:drinkPotion,refreshGear,hurt:(d:number)=>damage(d,pos.clone().setZ(pos.z+1)),dropAt:()=>drops.map(d=>[d.g.position.x,d.g.position.z,d.item??null]),talkTo:(id:string)=>{const n=npcs.find(x=>x.def.id===id);if(n){pos.set(n.pos.x,0,n.pos.z+1.6);openTalk(n);}},goal:(id:string)=>{const g=journal.open().find(x=>x.id===id);if(g)goalDone(g);},enter,change,tryAttack,roll,skill:(hold=.6)=>{skillDown();later(hold,skillUp);},cycleElement,keys,aim:(x:number,z:number)=>{qaAim=true;aimPoint.set(x,0,z);},qa:{T,ink,menace,glb:(u:string)=>new GLTFLoader().loadAsync(u)},list:()=>enemies,habs:()=>habs,hp:()=>hp,bars:()=>[bars.size,mode],spawn:(x:number,z:number,k:SpeciesId='crawler')=>{const e=new Creature(k,x,z,world.scene);enemies.push(e);return e;},mount:(px:number,py:number,pz:number,rx:number,ry:number,rz:number)=>{if(hero.weapon){hero.weapon.position.set(px,py,pz);hero.weapon.rotation.set(rx,ry,rz);}},zoom:(z:number)=>{zoom=z;},close:(bone:string,x:number,y:number,z:number)=>{close=bone?{bone,off:new T.Vector3(x,y,z)}:null;},calib:(tx:number,ty:number,tz:number)=>{
  const w=hero.weapon,h=hero.hand;if(!w||!h)return null;hero.model.updateMatrixWorld(true);
  const mq=hero.model.getWorldQuaternion(new T.Quaternion()),hq=h.getWorldQuaternion(new T.Quaternion());
  const hm=mq.clone().invert().multiply(hq);const wq=hm.clone().multiply(w.quaternion);

@@ -7,8 +7,14 @@ import type {BiomeId} from './biomes';
 // sends who they are (profile) once and where they are (state) a few times a second; the others are drawn by this
 // game with its own characters, armour and animations.
 export interface Profile{name:string;cls:string;look:Look;armour:Armour;pet?:string;level:number}
-export interface State{x:number;z:number;h:number;a:string;b:BiomeId;hp:number;t:number}
-export interface NetEvent{k:'attack'|'skill'|'dash'|'down'|'up'|'emote';x:number;z:number;h:number}
+// the tamer's beast walks beside its owner on the other screens: place, facing, height (leap) and motion
+export interface PetState{x:number;z:number;h:number;y:number;a:string}
+export interface State{x:number;z:number;h:number;a:string;b:BiomeId;hp:number;t:number;p?:PetState}
+// what the others see of a fight: a projectile (shot: kind w, speed v, life l, height y), a melee swing (slash, r=1 flips),
+// the hunter's beam, the astral field (element w, after l seconds), the warrior's whirl (radius r, l seconds), a lunge
+// (dash) and the beast's leap landing or ground slam (pet, w=land|slam)
+export type EventKind='attack'|'skill'|'dash'|'down'|'up'|'emote'|'shot'|'slash'|'beam'|'field'|'twist'|'pet';
+export interface NetEvent{k:EventKind;x:number;z:number;h:number;y?:number;w?:string;r?:number;v?:number;l?:number}
 type Msg={type:'room';code:string;id:string;members:{id:string;profile:Profile}[]}|{type:'joined'|'profile';id:string;profile:Profile}|{type:'left';id:string}
  |{type:'state';id:string;s:State}|{type:'event';id:string;e:NetEvent}|{type:'error';message:string};
 export interface NetHandlers{room(code:string,members:{id:string;profile:Profile}[]):void;joined(id:string,p:Profile):void;profile(id:string,p:Profile):void;left(id:string):void;state(id:string,s:State):void;event(id:string,e:NetEvent):void;error(text:string):void;closed():void;slow?():void}

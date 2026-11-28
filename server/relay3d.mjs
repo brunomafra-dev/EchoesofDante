@@ -7,7 +7,7 @@ import { WebSocketServer, WebSocket } from 'ws';
 const CLASSES = new Set(['warrior', 'hunter', 'astral', 'xenobinder']);
 const BIOMES = new Set(['camp', 'domain', 'dunes', 'frost', 'caldera', 'springs', 'valley']);
 const CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-const MAX = 4, RATE = 30;
+const MAX = 4, RATE = 40;
 const num = (v, lo, hi) => typeof v === 'number' && Number.isFinite(v) ? Math.max(lo, Math.min(hi, v)) : 0;
 const str = (v, n) => typeof v === 'string' ? v.slice(0, n) : '';
 
@@ -27,14 +27,24 @@ function cleanProfile(p) {
 // one moment of a player: place, facing, animation, region and life
 function cleanState(s) {
   if (!s || typeof s !== 'object' || !BIOMES.has(s.b)) return null;
-  return { x: num(s.x, -60, 60), z: num(s.z, -60, 60), h: num(s.h, -100, 100), a: str(s.a, 24), b: s.b, hp: num(s.hp, 0, 1), t: num(s.t, 0, 1e12) };
+  const out = { x: num(s.x, -60, 60), z: num(s.z, -60, 60), h: num(s.h, -100, 100), a: str(s.a, 24), b: s.b, hp: num(s.hp, 0, 1), t: num(s.t, 0, 1e12) };
+  // the tamer's beast, drawn beside its owner on the other screens
+  if (s.p && typeof s.p === 'object') out.p = { x: num(s.p.x, -60, 60), z: num(s.p.z, -60, 60), h: num(s.p.h, -100, 100), y: num(s.p.y, 0, 4), a: str(s.p.a, 12) };
+  return out;
 }
 // a moment worth seeing on the other screens: an attack, a skill, a hit, a fall
 function cleanEvent(e) {
   if (!e || typeof e !== 'object') return null;
   const kind = str(e.k, 16);
-  if (!['attack', 'skill', 'dash', 'down', 'up', 'emote'].includes(kind)) return null;
-  return { k: kind, x: num(e.x, -60, 60), z: num(e.z, -60, 60), h: num(e.h, -100, 100) };
+  if (!['attack', 'skill', 'dash', 'down', 'up', 'emote', 'shot', 'slash', 'beam', 'field', 'twist', 'pet'].includes(kind)) return null;
+  // shots carry height, kind, speed and life; fields their element and delay; the whirl its radius and length
+  const out = { k: kind, x: num(e.x, -60, 60), z: num(e.z, -60, 60), h: num(e.h, -100, 100) };
+  if (typeof e.y === 'number') out.y = num(e.y, 0, 4);
+  if (typeof e.w === 'string') out.w = str(e.w, 12);
+  if (typeof e.r === 'number') out.r = num(e.r, 0, 10);
+  if (typeof e.v === 'number') out.v = num(e.v, 0, 60);
+  if (typeof e.l === 'number') out.l = num(e.l, 0, 3);
+  return out;
 }
 
 export function attachCoop3d(server, { path = '/coop3d' } = {}) {

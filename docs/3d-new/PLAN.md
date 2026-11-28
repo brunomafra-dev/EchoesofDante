@@ -114,3 +114,11 @@ Cada fatia: QA técnico e aprovação humana informados separadamente; link em `
     - o coop publicado depende de o Render reimplantar `server/coop.mjs`;
     - inimigos, saque e missões ainda não são compartilhados.
   - **Aprovação humana:** pendente.
+- 28/11, coop: ataques e feras visíveis para a sala.
+  - O usuário jogou Domador + Astral e nenhum via o ataque nem a fera do outro: o jogo só enviava posição e animação.
+  - `net.ts`/`relay3d.mjs`: o estado leva a fera (`p`: posição, altura, direção e movimento); eventos novos `shot`, `slash`, `dash`, `beam`, `field`, `twist` e `pet` (pouso e golpe no chão).
+  - `main.ts`: `fire()` envia todo projétil do herói e da fera; quem recebe desenha um projétil fantasma (sem dano) e os efeitos de cada classe; a fera do outro é a mesma criatura (`Pet`), guiada pelo estado.
+  - Corrigido antes: a janela da sala reabria sozinha para o anfitrião (64f73c0).
+  - **QA técnico:** Domador + Astral e Guerreiro + Caçador em dois navegadores, capturas dos dois lados, regressão da sala, build.
+  - **Limites:** só visual, as criaturas ainda são de cada um; o Render não reimplanta sozinho e precisa de deploy manual.
+  - **Aprovação humana:** pendente.
